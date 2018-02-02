@@ -1,0 +1,31 @@
+engines:
+  radon:
+    enabled: true
+  pep8:
+    enabled: true
+  fixme:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - python:
+ratings:
+  paths:
+    - "**.py"
+exclude_paths:
+- "**/tests/"
+- "Dockerfile"
+- "docker/"
+- "README.md"
+- "LICENCE"
+- "*.yml"
+- "**/conftest.py"
+- "**/*.html"
+- "**/static/*.css"
+- "**/static/*.map"
+- "**/static/govuk-0.18/"
+- "**/static/govuk-toolkit/"
+- "**/static/icons/"
+- "**/static/images/"
+- "**/static/vendor/"

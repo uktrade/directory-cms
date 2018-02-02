@@ -1,0 +1,18 @@
+{% extends 'directory_components/base.html' %}
+
+{% load static from staticfiles %}
+
+{% block head_title %}Welcome to great.gov.uk{% endblock %}
+
+{% block head_css %}
+    <link href="{% static 'styles/default.css' %}" media="all" rel="stylesheet" />
+    <link href="{% static 'Dit-Pattern-Styling/public/css/main.css' %}" media="all" rel="stylesheet" />
+{% endblock %}
+
+{% block body_header %}
+    {% include 'directory_header_footer/header_static.html' %}
+{% endblock %}
+
+{% block body_footer %}
+    {% include 'directory_header_footer/footer_static.html' %}
+{% endblock %}

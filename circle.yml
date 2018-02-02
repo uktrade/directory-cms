@@ -1,0 +1,25 @@
+machine:
+  node:
+    version: 8.1.0
+  pre:
+   - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
+  services:
+    - docker
+
+dependencies:
+  override:
+    - npm install
+    - sudo pip install docker-compose==1.8.0
+
+test:
+  override:
+    - make docker_test
+    - npm test
+
+deployment:
+  dev:
+    branch: master
+    commands:
+      - docker login --email=$HEROKU_EMAIL --username=$HEROKU_EMAIL --password=$HEROKU_API_KEY registry.heroku.com
+      - make heroku_deploy_dev
+      - make integration_tests
