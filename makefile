@@ -36,7 +36,7 @@ docker_run:
 
 DOCKER_SET_DEBUG_ENV_VARS := \
 	export DIRECTORY_CMS_SESSION_COOKIE_SECURE=false; \
-	export DIRECTORY_CMS_PORT=8009; \
+	export DIRECTORY_CMS_PORT=8010; \
 	export DIRECTORY_CMS_SECRET_KEY=debug; \
 	export DIRECTORY_CMS_DEBUG=true; \
 	export DIRECTORY_CMS_UTM_COOKIE_DOMAIN=.great; \
@@ -102,7 +102,7 @@ docker_build:
 	docker build -t ukti/directory-ui-export-readiness:latest .
 
 DEBUG_SET_ENV_VARS := \
-	export PORT=8009; \
+	export PORT=8010; \
 	export SECRET_KEY=debug; \
 	export DEBUG=true ;\
 	export SESSION_COOKIE_SECURE=false; \
