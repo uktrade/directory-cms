@@ -1,0 +1,11 @@
+version: '2'
+services:
+
+  sut:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /usr/src/app
+    command: ./docker/cmd-test.sh
+    env_file: ./docker/.env.test
+    restart: "no"

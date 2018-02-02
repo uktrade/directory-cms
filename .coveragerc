@@ -1,0 +1,2 @@
+[run]
+omit = .venv/*,ui/wsgi.py,manage.py,**/tests/*

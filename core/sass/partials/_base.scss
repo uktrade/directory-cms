@@ -1,0 +1,6 @@
+@import 'staticfiles/export_elements/stylesheets/govuk-elements-styles';
+@import './reset';
+
+#content {
+	max-width: 1200px;
+}

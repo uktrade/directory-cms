@@ -1,0 +1,13 @@
+version: '2'
+services:
+
+  webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    working_dir: /usr/src/app
+    command: ./docker/cmd-webserver.sh
+    ports: ["8001:8001"]
+    env_file: ./docker/.env
+    restart: "always"

@@ -1,0 +1,14 @@
+{
+  "name": "directory-ui-export-readiness",
+  "version": "0.0.1",
+  "description": "Directory of UK exporters UI service",
+  "main": "index.js",
+  "private": true,
+  "author": "DIT",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.1"
+  }
+}
