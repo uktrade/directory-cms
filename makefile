@@ -154,14 +154,8 @@ debug_shell:
 debug: test_requirements debug_test
 
 heroku_deploy_dev:
-	docker build -t registry.heroku.com/directory-ui-exp-readiness-dev/web .
-	docker push registry.heroku.com/directory-ui-exp-readiness-dev/web
-
-integration_tests:
-	cd $(mktemp -d) && \
-	git clone https://github.com/uktrade/directory-tests && \
-	cd directory-tests && \
-	make docker_integration_tests
+	docker build -t registry.heroku.com/directory-cms-dev/web .
+	docker push registry.heroku.com/directory-cms-dev/web
 
 compile_requirements:
 	python3 -m piptools compile requirements.in
