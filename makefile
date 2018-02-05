@@ -26,7 +26,7 @@ django_webserver:
 	$(DJANGO_WEBSERVER)
 
 DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose -f docker-compose.yml -f docker-compose-test.yml rm -f && docker-compose -f docker-compose.yml -f docker-compose-test.yml pull
-DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py ./docker/env.json ./docker/env.test.json
+DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py ./docker/env.json ./docker/env.test.json ./docker/env-postgres.test.json ./docker/env-postgres.json 
 
 docker_run:
 	$(DOCKER_COMPOSE_CREATE_ENVS) && \
@@ -68,7 +68,7 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 	export DIRECTORY_CMS_HEALTH_CHECK_TOKEN=debug; \
 	export DIRECTORY_CMS_SIGNATURE_SECRET=debug; \
 	export DIRECTORY_CMS_BASE_URL=cms.trade.great; \
-	export DIRECTORY_CMS_DATABASE_URL=postgres://debug:debug@localhost:5432/directory_cms_debug; \
+	export DIRECTORY_CMS_DATABASE_URL=postgres://debug:debug@postgres:5432/directory_cms_debug; \
 	export DIRECTORY_CMS_CSRF_COOKIE_SECURE=false
 
 

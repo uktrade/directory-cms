@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "config",
     "directory_header_footer",
     "core",
+    "demo",
     "directory_healthcheck",
     "health_check",
     "export_elements",
@@ -131,6 +132,7 @@ USE_L10N = True
 USE_TZ = True
 
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
+MEDIA_URL = '/media/'
 
 # Static files served with Whitenoise and AWS Cloudfront
 # http://whitenoise.evans.io/en/stable/django.html#instructions-for-amazon-cloudfront

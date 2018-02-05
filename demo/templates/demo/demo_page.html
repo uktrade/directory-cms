@@ -1,0 +1,54 @@
+{% extends 'core/base.html' %}
+
+{% load static from staticfiles %}
+{% load image from wagtailimages_tags %}
+{% load richtext from wagtailcore_tags %}
+
+{% block head_css %}
+    {{ block.super }}
+    <link href="{% static 'styles/demo.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <p class="breadcrumbs">
+        <span class="label verbose">You are here:</span>
+        <a href="/">Export</a><span class="separator">,</span>
+        <span class="current">{{ page.title }}</span>
+    </p>
+    <article id="top">
+        <div class="container">
+            <h1 class="heading-xlarge">{{ page.title }}</h1>
+            <p class="type">Case study</p>
+            <p class="description">{{ page.lede|richtext }}</p>
+            <div class="image">
+                {% image page.image original alt=page.image_description %}
+                <blockquote class="quote">
+                    <span class="text">{{ page.quote_one_text }}</span>
+                    <cite>
+                        <span class="name">{{ page.quote_one_name }}</span>
+                        <span class="verbose">,</span>
+                        <span class="role">{{ page.quote_one_job_title }}</span>
+                        <a href="{{ page.quote_one_link }}" class="company link">Hello Baby</a>
+                    </cite>
+                </blockquote>
+            </div>
+            <div class="content">
+                {{ page.body|richtext }}
+            </div>
+            <blockquote class="quote">
+                <span class="text">{{ page.quote_two_text }}</span>
+                <cite>
+                    <span class="name">{{ page.quote_two_name }}</span>
+                    <span class="verbose">,</span>
+                    <span class="role">{{ page.quote_two_job_title }}</span>
+                    <a href="{{ page.quote_two_link }}" class="company link">Hello Baby</a>
+                </cite>
+            </blockquote>
+        </div>
+        {% include 'core/social-share-links.html' %}
+    </article>
+    <p class="footnote">Find out how our <a href="https://selling-online-overseas.export.great.gov.uk/" class="link">Selling online overseas service</a> can help you export through online marketplaces like Amazon and eBay.
+    </p>
+</div>
+{% endblock %}
