@@ -14,14 +14,23 @@ beautifulsoup4==4.6.0
 codecov==2.0.9
 contextlib2==0.5.5        # via raven
 coverage==4.4.1           # via codecov, pytest-cov
+dj-database-url==0.4.2
 django-health-check==3.0.0
+django-modelcluster==4.0  # via wagtail
+django-taggit==0.22.2     # via wagtail
+django-treebeard==4.2.0   # via wagtail
 django==1.11.5
-djangorestframework==3.4.7
+djangorestframework==3.4.7  # via wagtail
+draftjs-exporter==2.0.0   # via wagtail
 flake8==3.0.4
 freezegun==0.3.8
 gunicorn==19.5.0
+html5lib==0.999999999     # via wagtail
 mccabe==0.5.3             # via flake8
 mohawk==0.3.4
+olefile==0.45.1           # via pillow
+pillow==4.3.0             # via wagtail
+psycopg2==2.7.3.2
 py==1.4.34                # via pytest, pytest-catchlog
 pycodestyle==2.0.0        # via flake8
 pyflakes==1.2.3           # via flake8
@@ -31,11 +40,15 @@ pytest-django==3.1.2
 pytest-sugar==0.8.0
 pytest==3.0.2
 python-dateutil==2.6.1    # via freezegun
-pytz==2017.2              # via django
+pytz==2017.2              # via django, django-modelcluster
 raven==5.19.0
-requests==2.13.0          # via codecov, requests-mock
+requests==2.13.0          # via codecov, requests-mock, wagtail
 requests_mock==1.1.0
 setuptools-git==1.2
-six==1.11.0               # via freezegun, mohawk, python-dateutil, requests-mock
+six==1.11.0               # via freezegun, html5lib, mohawk, python-dateutil, requests-mock
 termcolor==1.1.0          # via pytest-sugar
+unidecode==0.4.21         # via wagtail
+wagtail==2.0b1
+webencodings==0.5.1       # via html5lib
 whitenoise==3.1
+willow==1.1               # via wagtail
