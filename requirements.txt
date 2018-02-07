@@ -11,14 +11,32 @@
 -e git+https://github.com/uktrade/export-elements.git@v0.3.0#egg=export_elements
 -e git+https://github.com/uktrade/directory-signature-auth.git@v2.0.0#egg=sigauth
 beautifulsoup4==4.6.0
+certifi==2018.1.18        # via requests
+chardet==3.0.4            # via requests
 contextlib2==0.5.5        # via raven
+dj-database-url==0.4.2
 django-health-check==3.0.0
+django-modelcluster==4.0  # via wagtail
+django-taggit==0.22.2     # via wagtail
+django-treebeard==4.2.0   # via wagtail
 django==1.11.5
-djangorestframework==3.4.7
+djangorestframework==3.4.7  # via wagtail
+draftjs-exporter==2.0.0   # via wagtail
 gunicorn==19.5.0
+html5lib==0.999999999     # via wagtail
+idna==2.6                 # via requests
 mohawk==0.3.4
-pytz==2017.2              # via django
+olefile==0.45.1           # via pillow
+pillow==4.3.0             # via wagtail
+psycopg2==2.7.3.2
+pytz==2017.2              # via django, django-modelcluster
 raven==5.19.0
+requests==2.18.4          # via wagtail
 setuptools-git==1.2
-six==1.11.0               # via mohawk
+six==1.11.0               # via html5lib, mohawk
+unidecode==0.4.21         # via wagtail
+urllib3==1.22             # via requests
+wagtail==2.0b1
+webencodings==0.5.1       # via html5lib
 whitenoise==3.1
+willow==1.1               # via wagtail

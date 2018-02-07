@@ -1,0 +1,38 @@
+@import '../partials/vars';
+@import '../partials/colours';
+@import '../partials/mixins';
+@import '../partials/typography';
+
+.breadcrumbs {
+  background-color: $white;
+  border-bottom: $light-grey solid 2px;
+  padding: $spacing-3 0;
+
+  a {
+    color: $grey;
+  }
+
+  .separator {
+    @include right-chevron-2($light-grey);
+    box-sizing: initial;
+    overflow: hidden;
+    text-indent: -1000px;
+  }
+
+  span:last-child:after {
+    border: none;
+  }
+}
+
+
+// MOBILE
+@media (max-width: 480px) {
+  .breadcrumbs {
+    padding: $spacing-4 0;
+    
+    a,
+    span {
+      @include body-s-mob;
+    }
+  }
+}

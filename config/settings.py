@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -39,27 +40,48 @@ APPEND_SLASH = True
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.auth',
+    "django.contrib.auth",
     "django.contrib.staticfiles",
-    'django.contrib.contenttypes',
+    "django.contrib.contenttypes",
+    "django.contrib.messages",
     "raven.contrib.django.raven_compat",
     "django.contrib.sessions",
     "config",
     "directory_header_footer",
     "core",
+    "demo",
     "directory_healthcheck",
     "health_check",
     "export_elements",
     "directory_components",
+    "wagtail.contrib.forms",
+    "wagtail.contrib.redirects",
+    "wagtail.contrib.settings",
+    "wagtail.embeds",
+    "wagtail.sites",
+    "wagtail.users",
+    "wagtail.snippets",
+    "wagtail.documents",
+    "wagtail.images",
+    "wagtail.search",
+    "wagtail.admin",
+    "wagtail.core",
+    "modelcluster",
+    "taggit",
 ]
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'wagtail.core.middleware.SiteMiddleware',
+    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware'
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -87,10 +109,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # # Database
 # hard to get rid of this
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': dj_database_url.config()
 }
 
 CACHES = {
@@ -113,6 +132,7 @@ USE_L10N = True
 USE_TZ = True
 
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
+MEDIA_URL = '/media/'
 
 # Static files served with Whitenoise and AWS Cloudfront
 # http://whitenoise.evans.io/en/stable/django.html#instructions-for-amazon-cloudfront
@@ -255,7 +275,7 @@ RAVEN_CONFIG = {
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 SESSION_COOKIE_SECURE = os.getenv('SESSION_COOKIE_SECURE', 'true') == 'true'
 SESSION_COOKIE_HTTPONLY = True
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = os.getenv('CSRF_COOKIE_SECURE', 'true') == 'true'
 
 # security
 X_FRAME_OPTIONS = 'DENY'
@@ -264,3 +284,6 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # Healthcheck
 HEALTH_CHECK_TOKEN = os.environ['HEALTH_CHECK_TOKEN']
+
+WAGTAIL_SITE_NAME = 'directory-cms'
+BASE_URL = os.environ['BASE_URL']

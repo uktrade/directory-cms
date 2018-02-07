@@ -1,10 +1,12 @@
 from unittest.mock import patch
 
+import pytest
 from rest_framework import status
 
 from django.core.urlresolvers import reverse
 
 
+@pytest.mark.django_db
 def test_ping(client):
     response = client.get(reverse('health-check-ping'))
 
@@ -14,6 +16,7 @@ def test_ping(client):
 @patch(
     'health_check.db.backends.DatabaseBackend.check_status', return_value=True
 )
+@pytest.mark.django_db
 def test_database(mock_check_status, client, settings):
     response = client.get(
         reverse('health-check-database'),

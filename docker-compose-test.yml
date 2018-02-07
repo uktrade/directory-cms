@@ -1,10 +1,15 @@
 version: '2'
 services:
 
+  postgres:
+    image: postgres:9.5.2
+    env_file: ./docker/.env-postgres.test
+
   sut:
     build:
       context: .
       dockerfile: Dockerfile
+    depends_on: [postgres]
     working_dir: /usr/src/app
     command: ./docker/cmd-test.sh
     env_file: ./docker/.env.test

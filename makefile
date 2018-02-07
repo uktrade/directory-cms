@@ -26,7 +26,7 @@ django_webserver:
 	$(DJANGO_WEBSERVER)
 
 DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose -f docker-compose.yml -f docker-compose-test.yml rm -f && docker-compose -f docker-compose.yml -f docker-compose-test.yml pull
-DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py ./docker/env.json ./docker/env.test.json
+DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py ./docker/env.json ./docker/env.test.json ./docker/env-postgres.test.json ./docker/env-postgres.json 
 
 docker_run:
 	$(DOCKER_COMPOSE_CREATE_ENVS) && \
@@ -37,6 +37,9 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 	export DIRECTORY_CMS_SESSION_COOKIE_SECURE=false; \
 	export DIRECTORY_CMS_PORT=8010; \
 	export DIRECTORY_CMS_SECRET_KEY=debug; \
+	export DIRECTORY_CMS_POSTGRES_USER=debug; \
+	export DIRECTORY_CMS_POSTGRES_PASSWORD=debug; \
+	export DIRECTORY_CMS_POSTGRES_DB=directory_cms_debug; \
 	export DIRECTORY_CMS_DEBUG=true; \
 	export DIRECTORY_CMS_UTM_COOKIE_DOMAIN=.great; \
 	export DIRECTORY_CMS_SECURE_HSTS_SECONDS=0; \
@@ -63,8 +66,10 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 	export DIRECTORY_CMS_INFO_TERMS_AND_CONDITIONS=/terms-and-conditions; \
 	export DIRECTORY_CMS_SECURE_SSL_REDIRECT=false; \
 	export DIRECTORY_CMS_HEALTH_CHECK_TOKEN=debug; \
-	export DIRECTORY_CMS_SIGNATURE_SECRET=debug
-
+	export DIRECTORY_CMS_SIGNATURE_SECRET=debug; \
+	export DIRECTORY_CMS_BASE_URL=cms.trade.great; \
+	export DIRECTORY_CMS_DATABASE_URL=postgres://debug:debug@postgres:5432/directory_cms_debug; \
+	export DIRECTORY_CMS_CSRF_COOKIE_SECURE=false
 
 
 docker_test_env_files:
@@ -130,7 +135,10 @@ DEBUG_SET_ENV_VARS := \
 	export INFO_TERMS_AND_CONDITIONS=/terms-and-conditions; \
 	export SECURE_SSL_REDIRECT=false; \
 	export HEALTH_CHECK_TOKEN=debug; \
-	export SIGNATURE_SECRET=debug
+	export SIGNATURE_SECRET=debug; \
+	export BASE_URL=cms.trade.great; \
+	export DATABASE_URL=postgres://debug:debug@localhost:5432/directory_cms_debug; \
+	export CSRF_COOKIE_SECURE=false
 
 
 debug_webserver:
@@ -154,14 +162,8 @@ debug_shell:
 debug: test_requirements debug_test
 
 heroku_deploy_dev:
-	docker build -t registry.heroku.com/directory-ui-exp-readiness-dev/web .
-	docker push registry.heroku.com/directory-ui-exp-readiness-dev/web
-
-integration_tests:
-	cd $(mktemp -d) && \
-	git clone https://github.com/uktrade/directory-tests && \
-	cd directory-tests && \
-	make docker_integration_tests
+	docker build -t registry.heroku.com/directory-cms-dev/web .
+	docker push registry.heroku.com/directory-cms-dev/web
 
 compile_requirements:
 	python3 -m piptools compile requirements.in

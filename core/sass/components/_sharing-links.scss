@@ -1,0 +1,96 @@
+@import '../partials/vars';
+@import '../partials/colours';
+
+.sharing-links {
+  @include body-s;
+  margin-bottom: 15px;
+
+  img {
+    display: block;
+    margin-bottom: $spacing-4;
+  }
+
+  span {
+    display: block;
+    margin-bottom: $spacing-4;
+  }
+  li {
+    padding: 0;
+    &::before {
+      background-color: transparent;
+    }
+  }
+}
+
+
+// TABLET
+@media (max-width: 767px) {
+  .sharing-links {
+    max-width: none;
+    display: table-cell;
+    padding-bottom: $spacing-3;
+
+    li {
+      padding: 0;
+      display: inline;
+      list-style-type: none;
+      padding-right: 20px;
+      float: left;
+    }
+
+    .label {
+      display: inline;
+      float: left;
+      margin-top: 6px;
+      margin-right: 20px;
+    }
+    .ExpanderControl {
+      border-color: $active-blue;
+      border-style: solid;
+      border-width: 1px 1px 0 1px;
+      color: $active-blue;
+      cursor: pointer;
+      margin-bottom: 0;
+      padding: 5px;
+
+      &.active {
+        outline: none;
+        padding-bottom: $spacing-4;
+      }
+    }
+
+
+    .Expander {
+      background-color: $white;
+      border-color: $active-blue;
+      border-style: solid;
+      border-width: 0 1px 1px 1px;
+      max-height: 200px;
+      overflow: hidden;
+      -moz-transition: max-height 0.5s ease;
+      -webkit-transition: max-height 0.5s ease;
+      -o-transition: max-height 0.5s ease;
+      transition: max-height 0.5s ease;
+
+      a {
+        display: inline-block;
+      }
+    }
+
+    .collapsed {
+      max-height: 0;
+      -moz-transition: max-height 0.5s ease;
+      -webkit-transition: max-height 0.5s ease;
+      -o-transition: max-height 0.5s ease;
+      transition: max-height 0.5s ease;
+    }
+  }
+}
+
+
+// MOBILE
+@media (max-width: 480px) {
+  .sharing-links {
+    padding-bottom: 0;
+  }
+}
