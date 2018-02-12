@@ -1,16 +1,12 @@
 import pytest
 
-from core import constants, permissions
-from demo.models import DemoPage
+from core import permissions
+from find_a_supplier.models import CaseStudyPage
 
 
 @pytest.fixture
 def page():
-    return DemoPage(
-        view_app=constants.FIND_A_SUPPLIER,
-        view_path='/things/',
-        pk=2,
-    )
+    return CaseStudyPage(pk=2)
 
 
 def test_valid_draft_token(rf, page):

@@ -1,14 +1,16 @@
+import functools
 from urllib.parse import urljoin
-from django.core import signing
 
 from wagtail.core.models import Page
 
-from core import constants
-
+from django.core import signing
 from django.shortcuts import redirect
+
+from core import constants
 
 
 class BasePage(Page):
+
     class Meta:
         abstract = True
 
@@ -30,15 +32,14 @@ class BasePage(Page):
     @property
     def published_url(self):
         app_url = dict(constants.APP_URLS)[self.view_app]
-        return urljoin(app_url, self.view_path)
+        url_parts = [
+            app_url, self.view_path, str(self.pk) + '/', self.slug + '/'
+        ]
+        return functools.reduce(urljoin, url_parts)
 
     @property
-    def preview_url(self):
+    def draft_url(self):
         return self.published_url + '?draft_token=' + self.get_draft_token()
 
     def serve(self, request, *args, **kwargs):
-        if getattr(request, 'is_preview', False):
-            url = self.preview_url
-        else:
-            url = self.published_url
-        return redirect(url)
+        return redirect(self.published_url)

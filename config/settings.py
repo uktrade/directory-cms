@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     "config",
     "directory_header_footer",
     "core",
-    "demo",
+    "find_a_supplier",
     "directory_healthcheck",
     "health_check",
     "export_elements",
@@ -298,4 +298,4 @@ REST_FRAMEWORK = {
 }
 
 APP_URL_EXPORT_READINESS = os.environ['APP_URL_EXPORT_READINESS']
-APP_URL_FIND_A_SUPPLIER = os.environ['APP_URL_EXPORT_READINESS']
+APP_URL_FIND_A_SUPPLIER = os.environ['APP_URL_FIND_A_SUPPLIER']

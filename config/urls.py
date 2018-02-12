@@ -14,6 +14,7 @@ import healthcheck.views
 api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
 
+
 urlpatterns = [
     url(
         r'^healthcheck/database/$',
@@ -26,6 +27,12 @@ urlpatterns = [
         name='health-check-ping'
     ),
 
+
+    url(
+        r'^admin/pages/(?P<pk>[0-9])/view_draft/$',
+        core.views.DraftRedirectView.as_view({'get': 'get'}),
+        name='draft-view',
+    ),
 
     url(r'^api/', api_router.urls),
     url(r'^admin/', include(wagtailadmin_urls)),

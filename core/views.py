@@ -1,5 +1,7 @@
-from wagtail.api.v2.endpoints import PagesAPIEndpoint
+from wagtail.api.v2.endpoints import BaseAPIEndpoint, PagesAPIEndpoint
+from wagtail.core.models import Page
 
+from django.shortcuts import redirect
 from django.views.generic import TemplateView
 
 from config.signature import SignatureCheckPermission
@@ -25,3 +27,11 @@ class PagesOptionalDraftAPIEndpoint(PagesAPIEndpoint):
         if self.request.GET.get(DraftTokenPermisison.TOKEN_PARAM):
             instance = instance.get_latest_revision_as_page()
         return instance
+
+
+class DraftRedirectView(BaseAPIEndpoint):
+    permission_classes = []
+    model = Page
+
+    def get(self, request, *args, **kwargs):
+        return redirect(self.get_object().specific.draft_url)
