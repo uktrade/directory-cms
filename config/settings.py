@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     "config",
     "directory_header_footer",
     "core",
-    "demo",
+    "find_a_supplier",
     "directory_healthcheck",
     "health_check",
     "export_elements",
@@ -66,8 +66,10 @@ INSTALLED_APPS = [
     "wagtail.search",
     "wagtail.admin",
     "wagtail.core",
+    "wagtail.api.v2",
     "modelcluster",
     "taggit",
+    "rest_framework",
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -287,3 +289,13 @@ HEALTH_CHECK_TOKEN = os.environ['HEALTH_CHECK_TOKEN']
 
 WAGTAIL_SITE_NAME = 'directory-cms'
 BASE_URL = os.environ['BASE_URL']
+
+# DRF
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'config.signature.SignatureCheckPermission',
+    ),
+}
+
+APP_URL_EXPORT_READINESS = os.environ['APP_URL_EXPORT_READINESS']
+APP_URL_FIND_A_SUPPLIER = os.environ['APP_URL_FIND_A_SUPPLIER']

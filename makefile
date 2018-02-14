@@ -8,7 +8,7 @@ test_requirements:
 	pip install -r requirements_test.txt
 
 FLAKE8 := flake8 . --exclude=migrations,.venv,node_modules
-PYTEST := pytest . -v --ignore=node_modules --cov=. --cov-config=.coveragerc --capture=no -x $(pytest_args)
+PYTEST := pytest . -v --ignore=node_modules --cov=. --cov-config=.coveragerc --capture=no $(pytest_args)
 COLLECT_STATIC := python manage.py collectstatic --noinput
 CODECOV := \
 	if [ "$$CODECOV_REPO_TOKEN" != "" ]; then \
@@ -69,7 +69,9 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 	export DIRECTORY_CMS_SIGNATURE_SECRET=debug; \
 	export DIRECTORY_CMS_BASE_URL=cms.trade.great; \
 	export DIRECTORY_CMS_DATABASE_URL=postgres://debug:debug@postgres:5432/directory_cms_debug; \
-	export DIRECTORY_CMS_CSRF_COOKIE_SECURE=false
+	export DIRECTORY_CMS_CSRF_COOKIE_SECURE=false; \
+	export DIRECTORY_CMS_APP_URL_EXPORT_READINESS=http://exred.trade.great:8007; \
+	export DIRECTORY_CMS_APP_URL_FIND_A_SUPPLIER=http://supplier.trade.great:8005
 
 
 docker_test_env_files:
@@ -138,8 +140,9 @@ DEBUG_SET_ENV_VARS := \
 	export SIGNATURE_SECRET=debug; \
 	export BASE_URL=cms.trade.great; \
 	export DATABASE_URL=postgres://debug:debug@localhost:5432/directory_cms_debug; \
-	export CSRF_COOKIE_SECURE=false
-
+	export CSRF_COOKIE_SECURE=false; \
+	export APP_URL_EXPORT_READINESS=http://exred.trade.great:8007; \
+	export APP_URL_FIND_A_SUPPLIER=http://supplier.trade.great:8005
 
 debug_webserver:
 	$(DEBUG_SET_ENV_VARS) && $(DJANGO_WEBSERVER)
