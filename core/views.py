@@ -1,5 +1,5 @@
 from wagtail.api.v2.endpoints import BaseAPIEndpoint, PagesAPIEndpoint
-from wagtail.core.models import Page
+from wagtail.wagtailcore.models import Page
 
 from django.shortcuts import redirect
 from django.views.generic import TemplateView

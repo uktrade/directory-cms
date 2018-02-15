@@ -1,7 +1,7 @@
 import functools
 from urllib.parse import urljoin
 
-from wagtail.core.models import Page
+from wagtail.wagtailcore.models import Page
 
 from django.core import signing
 from django.shortcuts import redirect

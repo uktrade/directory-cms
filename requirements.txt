@@ -16,12 +16,12 @@ chardet==3.0.4            # via requests
 contextlib2==0.5.5        # via raven
 dj-database-url==0.4.2
 django-health-check==3.0.0
-django-modelcluster==4.0  # via wagtail
+django-modelcluster==3.1  # via wagtail
+django-modeltranslation==0.12.2  # via wagtail-modeltranslation
 django-taggit==0.22.2     # via wagtail
 django-treebeard==4.2.0   # via wagtail
 django==1.11.5
 djangorestframework==3.4.7  # via wagtail
-draftjs-exporter==2.0.0   # via wagtail
 gunicorn==19.5.0
 html5lib==0.999999999     # via wagtail
 idna==2.6                 # via requests
@@ -36,7 +36,8 @@ setuptools-git==1.2
 six==1.11.0               # via html5lib, mohawk
 unidecode==0.4.21         # via wagtail
 urllib3==1.22             # via requests
-wagtail==2.0b1
+wagtail-modeltranslation==0.8
+wagtail==1.13
 webencodings==0.5.1       # via html5lib
 whitenoise==3.1
-willow==1.1               # via wagtail
+willow==1.0               # via wagtail

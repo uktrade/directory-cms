@@ -16,12 +16,12 @@ contextlib2==0.5.5        # via raven
 coverage==4.4.1           # via codecov, pytest-cov
 dj-database-url==0.4.2
 django-health-check==3.0.0
-django-modelcluster==4.0  # via wagtail
+django-modelcluster==3.1  # via wagtail
+django-modeltranslation==0.12.2  # via wagtail-modeltranslation
 django-taggit==0.22.2     # via wagtail
 django-treebeard==4.2.0   # via wagtail
 django==1.11.5
 djangorestframework==3.4.7  # via wagtail
-draftjs-exporter==2.0.0   # via wagtail
 factory-boy==2.8.1
 faker==0.8.11             # via factory-boy
 flake8==3.0.4
@@ -51,7 +51,8 @@ six==1.11.0               # via faker, freezegun, html5lib, mohawk, python-dateu
 termcolor==1.1.0          # via pytest-sugar
 text-unidecode==1.1       # via faker
 unidecode==0.4.21         # via wagtail
-wagtail==2.0b1
+wagtail-modeltranslation==0.8
+wagtail==1.13
 webencodings==0.5.1       # via html5lib
 whitenoise==3.1
-willow==1.1               # via wagtail
+willow==1.0               # via wagtail

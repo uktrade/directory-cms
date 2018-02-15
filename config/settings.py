@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+
+from django.utils.translation import gettext_lazy as _
+
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -48,41 +51,42 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "config",
     "directory_header_footer",
-    "core",
-    "find_a_supplier",
     "directory_healthcheck",
     "health_check",
     "export_elements",
     "directory_components",
-    "wagtail.contrib.forms",
-    "wagtail.contrib.redirects",
-    "wagtail.contrib.settings",
-    "wagtail.embeds",
-    "wagtail.sites",
-    "wagtail.users",
-    "wagtail.snippets",
-    "wagtail.documents",
-    "wagtail.images",
-    "wagtail.search",
-    "wagtail.admin",
-    "wagtail.core",
+    'wagtail.wagtailforms',
+    'wagtail.wagtailredirects',
+    'wagtail.wagtailembeds',
+    'wagtail.wagtailsites',
+    'wagtail.wagtailusers',
+    'wagtail.wagtailsnippets',
+    'wagtail.wagtaildocs',
+    'wagtail.wagtailimages',
+    'wagtail.wagtailsearch',
+    'wagtail.wagtailadmin',
+    'wagtail.wagtailcore',
     "wagtail.api.v2",
+    'wagtail_modeltranslation',  # add when management commands are needed.
+    'wagtail_modeltranslation.makemigrations',
     "modelcluster",
     "taggit",
     "rest_framework",
+    "core",
+    "find_a_supplier",
 ]
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'wagtail.core.middleware.SiteMiddleware',
-    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+    'wagtail.wagtailcore.middleware.SiteMiddleware',
+    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware'
 ]
 
@@ -132,6 +136,19 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# https://github.com/django/django/blob/master/django/conf/locale/__init__.py
+LANGUAGES = (
+    ('en-gb', 'English'),
+    ('de', 'German'),
+    ('ja', 'Japanese'),
+    ('zh-hans', 'Simplified Chinese'),
+    ('fr', 'French'),
+    ('es', 'Spanish'),
+    ('pt', 'Portuguese'),
+    ('pt-br', 'Portuguese (Brazilian)'),
+    ('ar', 'Arabic'),
+)
 
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
