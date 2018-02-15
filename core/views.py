@@ -1,30 +1,29 @@
 from wagtail.api.v2.endpoints import BaseAPIEndpoint, PagesAPIEndpoint
-from wagtail.core.models import Page
+from wagtail.wagtailcore.models import Page
 
 from django.shortcuts import redirect
-from django.views.generic import TemplateView
 
 from config.signature import SignatureCheckPermission
-from core.permissions import DraftTokenPermisison
-
-
-class HelloWorldView(TemplateView):
-    template_name = 'core/hello-world.html'
+from core import permissions
 
 
 class PagesOptionalDraftAPIEndpoint(PagesAPIEndpoint):
+    queryset = Page.objects.all()
     meta_fields = []
 
     @property
     def permission_classes(self):
-        permissions = [SignatureCheckPermission]
-        if DraftTokenPermisison.TOKEN_PARAM in self.request.GET:
-            permissions.append(DraftTokenPermisison)
-        return permissions
+        permission_classes = [SignatureCheckPermission]
+        if permissions.DraftTokenPermisison.TOKEN_PARAM in self.request.GET:
+            permission_classes.append(permissions.DraftTokenPermisison)
+        return permission_classes
+
+    def get_queryset(self):
+        return self.queryset
 
     def get_object(self):
         instance = super().get_object()
-        if self.request.GET.get(DraftTokenPermisison.TOKEN_PARAM):
+        if self.request.GET.get(permissions.DraftTokenPermisison.TOKEN_PARAM):
             instance = instance.get_latest_revision_as_page()
         return instance
 

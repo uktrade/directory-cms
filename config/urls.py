@@ -1,7 +1,7 @@
-from wagtail.admin import urls as wagtailadmin_urls
+from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.api.v2.router import WagtailAPIRouter
-from wagtail.core import urls as wagtail_urls
-from wagtail.documents import urls as wagtaildocs_urls
+from wagtail.wagtailcore import urls as wagtail_urls
+from wagtail.wagtaildocs import urls as wagtaildocs_urls
 
 from django.conf.urls import include, url
 from django.conf.urls.static import static
@@ -27,9 +27,8 @@ urlpatterns = [
         name='health-check-ping'
     ),
 
-
     url(
-        r'^admin/pages/(?P<pk>[0-9])/view_draft/$',
+        r'^admin/pages/(?P<pk>[0-9]+)/view_draft/$',
         core.views.DraftRedirectView.as_view({'get': 'get'}),
         name='draft-view',
     ),

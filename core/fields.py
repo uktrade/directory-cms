@@ -1,4 +1,4 @@
-from wagtail.images.api.fields import ImageRenditionField
+from wagtail.wagtailimages.api.fields import ImageRenditionField
 
 
 class AbsoluteUrlImageRenditionField(ImageRenditionField):
