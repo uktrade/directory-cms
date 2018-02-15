@@ -24,4 +24,5 @@ class CaseStudyPageFactory(factory.django.DjangoModelFactory):
     depth = 1
     title = factory.fuzzy.FuzzyText(length=255)
     path = '/thing/'
-    slug = 'things-things'
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))

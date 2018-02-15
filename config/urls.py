@@ -27,9 +27,8 @@ urlpatterns = [
         name='health-check-ping'
     ),
 
-
     url(
-        r'^admin/pages/(?P<pk>[0-9])/view_draft/$',
+        r'^admin/pages/(?P<pk>[0-9]+)/view_draft/$',
         core.views.DraftRedirectView.as_view({'get': 'get'}),
         name='draft-view',
     ),
