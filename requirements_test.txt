@@ -18,6 +18,7 @@ dj-database-url==0.4.2
 django-health-check==3.0.0
 django-modelcluster==3.1  # via wagtail
 django-modeltranslation==0.12.2  # via wagtail-modeltranslation
+django-pglocks==1.0.2
 django-taggit==0.22.2     # via wagtail
 django-treebeard==4.2.0   # via wagtail
 django==1.11.5
