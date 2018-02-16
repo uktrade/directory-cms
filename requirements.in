@@ -6,6 +6,7 @@ beautifulsoup4==4.6.0
 dj-database-url==0.4.2
 psycopg2==2.7.3.2
 wagtail==1.13.0
+django-pglocks==1.0.2
 wagtail-modeltranslation==0.8
 -e git+https://github.com/uktrade/directory-signature-auth.git@v2.0.0#egg=sigauth
 -e git+https://github.com/uktrade/directory-healthcheck.git@v0.3.0#egg=directory_healthcheck
