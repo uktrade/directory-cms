@@ -3,39 +3,15 @@ from modeltranslation.translator import TranslationOptions
 from modeltranslation.decorators import register
 
 
-@register(models.Company)
-class CompanyTranslationOptions(TranslationOptions):
+@register(models.IndustryPage)
+class IndustryPageTranslationOptions(TranslationOptions):
     fields = (
-        'image_alt',
-        'name',
-        'description',
-        'url',
-    )
-
-
-@register(models.Showcase)
-class ShowcaseTranslationOptions(TranslationOptions):
-    fields = (
-        'image_alt',
-        'image_caption',
-        'title',
-        'synopsis',
-        'testimonial',
-        'testimonial_name',
-        'testimonial_company',
-        'company_name',
-    )
-
-
-@register(models.CaseStudyPage)
-class CaseStudyPageTranslationOptions(TranslationOptions):
-    fields = (
-        'footer_text',
-        'footer_title',
-        'companies_section_title',
+        'hero_text',
         'lede',
-        'body',
-        'key_facts',
-        'read_more_text',
+        'lede_column_one',
+        'lede_column_two',
+        'lede_column_three',
+        'case_study',
+        'sector_label',
         'seo_description',
     )

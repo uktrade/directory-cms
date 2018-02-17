@@ -2,18 +2,17 @@ import pytest
 
 from django.utils import translation
 
-from find_a_supplier.models import CaseStudyPage
-from find_a_supplier.tests.factories import CaseStudyPageFactory
+from find_a_supplier.tests.factories import IndustryPageFactory
 
 
 @pytest.fixture
 def page():
-    return CaseStudyPage(pk=2)
+    return IndustryPageFactory.build(pk=2)
 
 
 @pytest.fixture
 def translated_page():
-    return CaseStudyPageFactory(
+    return IndustryPageFactory(
         title_en_gb='ENGLISH',
         title_de='GERMAN',
         title_ja='JAPANESE',
