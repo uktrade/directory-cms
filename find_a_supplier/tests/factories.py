@@ -1,12 +1,13 @@
 import factory
 import factory.fuzzy
+import wagtail_factories
 
 from directory_constants.constants import choices
 
 from find_a_supplier.models import IndustryPage
 
 
-class IndustryPageFactory(factory.django.DjangoModelFactory):
+class IndustryPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
         model = IndustryPage
@@ -22,7 +23,6 @@ class IndustryPageFactory(factory.django.DjangoModelFactory):
         [i[0] for i in choices.INDUSTRIES]
     )
     seo_description = factory.fuzzy.FuzzyText(length=255)
-    depth = 1
     title = factory.fuzzy.FuzzyText(length=255)
-    path = '/thing/'
     slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None

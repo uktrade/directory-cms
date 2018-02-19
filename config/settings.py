@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'directory_healthcheck',
     'health_check',
     'export_elements',
+    'core',
     'directory_components',
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
@@ -70,7 +71,6 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
     'rest_framework',
-    'core',
     'find_a_supplier.apps.FindASupplierConfig',
 ]
 
@@ -315,3 +315,5 @@ REST_FRAMEWORK = {
 
 APP_URL_EXPORT_READINESS = os.environ['APP_URL_EXPORT_READINESS']
 APP_URL_FIND_A_SUPPLIER = os.environ['APP_URL_FIND_A_SUPPLIER']
+
+COPY_DESTINATION_URLS = os.environ['COPY_DESTINATION_URLS'].split(',')

@@ -10,7 +10,7 @@
 -e git+https://github.com/uktrade/directory-healthcheck.git@v0.3.0#egg=directory_healthcheck
 -e git+https://github.com/uktrade/export-elements.git@v0.3.0#egg=export_elements
 -e git+https://github.com/uktrade/directory-signature-auth.git@v2.0.0#egg=sigauth
-beautifulsoup4==4.6.0
+beautifulsoup4==4.6.0     # via wagtail
 certifi==2018.1.18        # via requests
 chardet==3.0.4            # via requests
 contextlib2==0.5.5        # via raven
@@ -23,6 +23,8 @@ django-taggit==0.22.2     # via wagtail
 django-treebeard==4.2.0   # via wagtail
 django==1.11.5
 djangorestframework==3.4.7  # via wagtail
+factory-boy==2.10.0       # via wagtail-factories
+faker==0.8.11             # via factory-boy
 gunicorn==19.5.0
 html5lib==0.999999999     # via wagtail
 idna==2.6                 # via requests
@@ -30,13 +32,16 @@ mohawk==0.3.4
 olefile==0.45.1           # via pillow
 pillow==4.3.0             # via wagtail
 psycopg2==2.7.3.2
+python-dateutil==2.6.1    # via faker
 pytz==2017.2              # via django, django-modelcluster
 raven==5.19.0
 requests==2.18.4          # via wagtail
 setuptools-git==1.2
-six==1.11.0               # via html5lib, mohawk
+six==1.11.0               # via faker, html5lib, mohawk, python-dateutil
+text-unidecode==1.1       # via faker
 unidecode==0.4.21         # via wagtail
 urllib3==1.22             # via requests
+wagtail-factories==0.3.0
 wagtail-modeltranslation==0.8
 wagtail==1.13
 webencodings==0.5.1       # via html5lib

@@ -33,6 +33,12 @@ urlpatterns = [
         name='draft-view',
     ),
 
+    url(
+        r'^admin/pages/(?P<pk>[0-9]+)/copy-to-environment/$',
+        core.views.CopyPageView.as_view(),
+        name='copy-to-environment',
+    ),
+
     url(r'^api/', api_router.urls),
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
