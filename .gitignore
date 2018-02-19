@@ -102,3 +102,4 @@ package-lock.json
 
 # Docker
 .env
+config/media

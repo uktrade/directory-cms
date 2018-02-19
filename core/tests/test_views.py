@@ -4,17 +4,17 @@ from django.urls import reverse
 
 from core import permissions, views
 from config.signature import SignatureCheckPermission
-from find_a_supplier.tests.factories import CaseStudyPageFactory
+from find_a_supplier.tests.factories import IndustryPageFactory
 
 
 @pytest.fixture
 def page():
-    return CaseStudyPageFactory.create()
+    return IndustryPageFactory.create()
 
 
 @pytest.fixture
 def translated_page():
-    return CaseStudyPageFactory(
+    return IndustryPageFactory(
         title_en_gb='ENGLISH',
         title_de='GERMAN',
         title_ja='JAPANESE',

@@ -1,12 +1,12 @@
 import pytest
 
 from core import permissions
-from find_a_supplier.models import CaseStudyPage
+from find_a_supplier.tests.factories import IndustryPageFactory
 
 
 @pytest.fixture
 def page():
-    return CaseStudyPage(pk=2)
+    return IndustryPageFactory.build(pk=2)
 
 
 def test_valid_draft_token(rf, page):

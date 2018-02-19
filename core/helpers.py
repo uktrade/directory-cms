@@ -27,11 +27,8 @@ def make_language_panels(content_panels):
     ]
 
 
-def make_translated_interface(content_panels, settings_panels):
-    return TabbedInterface(
-        make_language_panels(content_panels) +
-        [ObjectList(settings_panels, heading='Settings', classname='settings')]
-    )
+def make_translated_interface(content_panels, other_panels):
+    return TabbedInterface(make_language_panels(content_panels) + other_panels)
 
 
 def get_language_from_querystring(request):
