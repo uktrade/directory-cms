@@ -52,6 +52,7 @@ six==1.11.0               # via faker, freezegun, html5lib, mohawk, python-dateu
 termcolor==1.1.0          # via pytest-sugar
 text-unidecode==1.1       # via faker
 unidecode==0.4.21         # via wagtail
+wagtail-factories==0.3.0
 wagtail-modeltranslation==0.8
 wagtail==1.13
 webencodings==0.5.1       # via html5lib

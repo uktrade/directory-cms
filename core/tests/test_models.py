@@ -7,7 +7,7 @@ from find_a_supplier.tests.factories import IndustryPageFactory
 
 @pytest.fixture
 def page():
-    return IndustryPageFactory.build(pk=2)
+    return IndustryPageFactory(title='1')
 
 
 @pytest.fixture
@@ -22,6 +22,7 @@ def translated_page():
         title_pt='PORTUGUESE',
         title_pt_br='BRAZILIAN',
         title_ar='ARABIC',
+        title='2',
     )
 
 

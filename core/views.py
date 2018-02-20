@@ -2,9 +2,10 @@ from wagtail.api.v2.endpoints import BaseAPIEndpoint, PagesAPIEndpoint
 from wagtail.wagtailcore.models import Page
 
 from django.shortcuts import redirect
+from django.views.generic.edit import FormView
 
 from config.signature import SignatureCheckPermission
-from core import permissions
+from core import forms, permissions
 
 
 class PagesOptionalDraftAPIEndpoint(PagesAPIEndpoint):
@@ -34,3 +35,19 @@ class DraftRedirectView(BaseAPIEndpoint):
 
     def get(self, request, *args, **kwargs):
         return redirect(self.get_object().specific.draft_url)
+
+
+class CopyPageView(FormView):
+    form_class = forms.CopyToEnvironmentForm
+    template_name = 'core/copy_to_environment.html'
+
+    def get_object(self):
+        return Page.objects.get(id=self.kwargs['pk']).specific
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(page=self.get_object(), **kwargs)
+
+    def form_valid(self, form):
+        page = self.get_object()
+        url = page.build_prepopulate_url(form.cleaned_data['environment'])
+        return redirect(url)
