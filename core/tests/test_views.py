@@ -1,7 +1,9 @@
 import pytest
 from urllib import parse
+from unittest.mock import call, patch
 
 from bs4 import BeautifulSoup
+from directory_constants.constants import sectors
 
 from django.urls import reverse
 
@@ -105,7 +107,7 @@ def test_copy_to_environment_prepopulate(
     url = reverse('copy-to-environment', kwargs={'pk': translated_page.pk})
     environment = settings.COPY_DESTINATION_URLS[0]
 
-    response = client.post(url, {'environment': environment})
+    response = admin_client.post(url, {'environment': environment})
     params = dict(parse.parse_qsl(parse.urlsplit(response.url).query))
     path = response.url.replace(environment, '')
 
@@ -143,3 +145,98 @@ def test_copy_to_environment_prepopulate(
         else:
             actual = element.get('value')
         assert actual == value
+
+
+@pytest.mark.django_db
+def test_copy_to_environment_not_prepopulate(
+    admin_client, translated_page
+):
+    url = reverse(
+        'wagtailadmin_pages:add',
+        args=(
+            translated_page._meta.app_label,
+            translated_page._meta.model_name,
+            2
+        )
+    )
+
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+@patch('core.helpers.auto_populate_translations')
+@patch('wagtail.wagtailcore.models.Page.save_revision')
+def test_translate_page(
+    mock_save_revision, mock_auto_populate_translations, translated_page,
+    admin_client, admin_user, settings
+):
+    settings.LANGUAGES = [
+        ['de', 'German'],
+        [settings.LANGUAGE_CODE, 'default'],
+    ]
+    url = reverse('wagtailadmin_pages:edit', args=(translated_page.pk,))
+
+    response = admin_client.post(
+        url,
+        data={
+            'action-translate': True,
+            'sector_value': sectors.AUTOMOTIVE,
+            'slug_en_gb': 'this-is-great',
+            'title_en_gb': 'this-is-great',
+        }
+    )
+
+    assert response.status_code == 302
+    assert response.url == reverse(
+        'wagtailadmin_pages:edit', args=(translated_page.pk,)
+    )
+    assert mock_auto_populate_translations.call_count == 1
+    assert mock_auto_populate_translations.call_args == call(
+        translated_page, ['de']
+    )
+    assert mock_save_revision.call_count == 2
+    assert mock_save_revision.call_args == call(user=admin_user)
+
+
+@pytest.mark.django_db
+@patch('core.helpers.auto_populate_translations')
+def test_translate_page_not_called_always(
+     mock_auto_populate_translations, translated_page, admin_client,
+     admin_user
+):
+    url = reverse('wagtailadmin_pages:edit', args=(translated_page.pk,))
+
+    response = admin_client.post(
+        url,
+        data={
+            'sector_value': sectors.AUTOMOTIVE,
+            'slug_en_gb': 'this-is-great',
+            'title_en_gb': 'this-is-great',
+            'lede_en_gb': 'Good',
+            'lede_column_three_en_gb': 'get this',
+            'lede_column_two_en_gb': 'this good',
+            'case_study_en_gb': 'so good',
+            'seo_description_en_gb': 'this is good',
+            'hero_text_en_gb': 'good times',
+            'sector_label_en_gb': 'Good',
+            'lede_column_one_en_gb': 'goodies',
+        }
+    )
+
+    assert response.status_code == 302
+    assert response.url == reverse(
+        'wagtailadmin_pages:edit', args=(translated_page.pk,)
+    )
+
+    assert mock_auto_populate_translations.call_count == 0
+
+
+@pytest.mark.django_db
+def test_page_listing(translated_page, admin_client):
+    url = reverse('wagtailadmin_pages:edit', args=(2,))
+
+    response = admin_client.get(url)
+
+    assert response.status_code == 200

@@ -61,6 +61,6 @@ def translate_page(request, page):
     ]
     helpers.auto_populate_translations(page, language_codes)
 
-    page.save_revision(user=request.user,)
+    page.save_revision(user=request.user)
 
     return redirect(reverse('wagtailadmin_pages:edit', args=(page.pk,)))

@@ -23,19 +23,16 @@ def test_generate_google_translate_cerdentials(settings):
         call('config/6.json', 'w'),
         call().__enter__(),
         call().write(
-            '{\n  '
-            '"type": "service_account",\n  '
-            '"project_id": "directory-cms",\n  '
-            '"private_key_id": "1",\n  '
-            '"private_key": "2",\n  '
-            '"client_email": "3",\n  '
-            '"client_id": "4",\n  '
-            '"auth_uri": "https://accounts.google.com/o/oauth2/auth",\n  '
-            '"token_uri": "https://accounts.google.com/o/oauth2/token",\n  '
+            '{'
+            '"type": "service_account", "project_id": "directory-cms", '
+            '"private_key_id": "1", "private_key": "2", "client_email": "3", '
+            '"client_id": "4", '
+            '"auth_uri": "https://accounts.google.com/o/oauth2/auth", '
+            '"token_uri": "https://accounts.google.com/o/oauth2/token", '
             '"auth_provider_x509_cert_url": '
-            '"https://www.googleapis.com/oauth2/v1/certs",\n  '
-            '"client_x509_cert_url": "5"\n'
-            '}\n'
+            '"https://www.googleapis.com/oauth2/v1/certs", '
+            '"client_x509_cert_url": "5"'
+            '}'
         ),
         call().__exit__(None, None, None)
     ]

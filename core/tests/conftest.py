@@ -7,7 +7,9 @@ from find_a_supplier.tests.factories import IndustryPageFactory
 
 @pytest.fixture
 def page():
-    return IndustryPageFactory(title='1')
+    return IndustryPageFactory(
+        parent=Page.objects.get(pk=1)
+    )
 
 
 @pytest.fixture
