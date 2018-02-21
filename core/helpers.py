@@ -12,9 +12,6 @@ from django.utils.translation import trans_real
 from django.utils.text import slugify, Truncator
 
 
-translate_client = translate.Client()
-
-
 def build_translated_fieldname(field_name):
     return 'translated_' + field_name
 
@@ -47,14 +44,13 @@ def get_language_from_querystring(request):
 
 
 def auto_populate_translations(page, language_codes):
+    translate_client = translate.Client()
 
     field_names = page.get_translatable_fields()
-
     language_codes = [
         {'django': code, 'google': language_code_django_to_google(code)}
         for code in language_codes
     ]
-
     translator = functools.partial(
         gevent.Greenlet.spawn,
         translate_client.translate,

@@ -19,6 +19,7 @@ test:
 	$(COLLECT_STATIC) && $(FLAKE8) && $(PYTEST) && $(CODECOV)
 
 DJANGO_WEBSERVER := \
+	python manage.py generate_google_translate_cerdentials && \
 	python manage.py collectstatic --noinput && \
 	python manage.py runserver 0.0.0.0:$$PORT
 
@@ -72,7 +73,13 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 	export DIRECTORY_CMS_CSRF_COOKIE_SECURE=false; \
 	export DIRECTORY_CMS_APP_URL_EXPORT_READINESS=http://exred.trade.great:8007; \
 	export DIRECTORY_CMS_APP_URL_FIND_A_SUPPLIER=http://supplier.trade.great:8005; \
-	export DIRECTORY_CMS_COPY_DESTINATION_URLS=https://dev.cms.directory.uktrade.io,https://stage.cms.directory.uktrade.io
+	export DIRECTORY_CMS_COPY_DESTINATION_URLS=https://dev.cms.directory.uktrade.io,https://stage.cms.directory.uktrade.io; \
+	export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_ID=debug; \
+	export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY=debug; \
+	export DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_EMAIL=debug; \
+	export DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_ID=debug; \
+	export DIRECTORY_CMS_GOOGLE_TRANSLATE_CERT_URL=debug; \
+	export DIRECTORY_CMS_GOOGLE_APPLICATION_CREDENTIALS=config/google-cloud-credentials.json
 
 
 docker_test_env_files:
@@ -145,7 +152,12 @@ DEBUG_SET_ENV_VARS := \
 	export APP_URL_EXPORT_READINESS=http://exred.trade.great:8007; \
 	export APP_URL_FIND_A_SUPPLIER=http://supplier.trade.great:8005; \
 	export COPY_DESTINATION_URLS=https://directory-cms-dev.herokuapp.com,https://dev.cms.directory.uktrade.io,https://stage.cms.directory.uktrade.io,http://cms.trade.great:8010; \
-	export GOOGLE_APPLICATION_CREDENTIALS=config/google-cloud-credentials.json
+	export GOOGLE_APPLICATION_CREDENTIALS=config/google-cloud-credentials.json; \
+	export GOOGLE_TRANSLATE_PRIVATE_KEY_ID=debug; \
+	export GOOGLE_TRANSLATE_PRIVATE_KEY=debug; \
+	export GOOGLE_TRANSLATE_CLIENT_EMAIL=debug; \
+	export GOOGLE_TRANSLATE_CLIENT_ID=debug; \
+	export GOOGLE_TRANSLATE_CERT_URL=debug
 
 debug_webserver:
 	$(DEBUG_SET_ENV_VARS) && $(DJANGO_WEBSERVER)
