@@ -141,6 +141,7 @@ LANGUAGES = (
     ('en-gb', 'English'),
     ('de', 'German'),
     ('ja', 'Japanese'),
+    ('ru', 'Russian'),
     ('zh-hans', 'Simplified Chinese'),
     ('fr', 'French'),
     ('es', 'Spanish'),
