@@ -44,7 +44,7 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
         max_length=255,
         choices=choices.INDUSTRIES,
     )
-    seo_description = models.CharField(max_length=255,)
+    seo_description = models.CharField(max_length=1000)
 
     image_panels = [
         ImageChooserPanel('hero_image'),

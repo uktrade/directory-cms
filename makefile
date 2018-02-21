@@ -144,7 +144,8 @@ DEBUG_SET_ENV_VARS := \
 	export CSRF_COOKIE_SECURE=false; \
 	export APP_URL_EXPORT_READINESS=http://exred.trade.great:8007; \
 	export APP_URL_FIND_A_SUPPLIER=http://supplier.trade.great:8005; \
-	export COPY_DESTINATION_URLS=https://directory-cms-dev.herokuapp.com,https://dev.cms.directory.uktrade.io,https://stage.cms.directory.uktrade.io,http://cms.trade.great:8010
+	export COPY_DESTINATION_URLS=https://directory-cms-dev.herokuapp.com,https://dev.cms.directory.uktrade.io,https://stage.cms.directory.uktrade.io,http://cms.trade.great:8010; \
+	export GOOGLE_APPLICATION_CREDENTIALS=config/google-cloud-credentials.json
 
 debug_webserver:
 	$(DEBUG_SET_ENV_VARS) && $(DJANGO_WEBSERVER)

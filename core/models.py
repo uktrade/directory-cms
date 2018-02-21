@@ -50,16 +50,19 @@ class BasePage(Page):
         return self.published_url + '?draft_token=' + self.get_draft_token()
 
     def build_prepopulate_url(self, environment_url):
-        params = {
-            key: value for key, value in model_to_dict(self).items()
-            if value is not None
-        }
+        params = self.serialize_fields()
         querystring = urlencode({constants.PREOPPULATE_PARAM: True, **params})
         path = reverse(
             'wagtailadmin_pages:add',
             args=(self._meta.app_label, self._meta.model_name, 2)
         )
         return urljoin(environment_url, path) + '?' + querystring
+
+    def serialize_fields(self):
+        return {
+            key: value for key, value in model_to_dict(self).items()
+            if value is not None
+        }
 
     def serve(self, request, *args, **kwargs):
         return redirect(self.published_url)
@@ -95,7 +98,7 @@ class AddTranslationsBrokerFieldsMixin:
 
     @classmethod
     def get_translatable_fields(cls):
-        return translator.get_options_for_model(cls).fields
+        return list(translator.get_options_for_model(cls).fields.keys())
 
     @classmethod
     def add_translations_broker_fields(cls):

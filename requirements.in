@@ -8,6 +8,7 @@ wagtail==1.13.0
 django-pglocks==1.0.2
 wagtail-modeltranslation==0.8
 wagtail-factories==0.3.0
+google-cloud-translate==1.3.0
 -e git+https://github.com/uktrade/directory-signature-auth.git@v2.0.0#egg=sigauth
 -e git+https://github.com/uktrade/directory-healthcheck.git@v0.3.0#egg=directory_healthcheck
 -e git+https://github.com/uktrade/directory-header-footer.git@v2.12.2#egg=directory_header_footer
