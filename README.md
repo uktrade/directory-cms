@@ -98,22 +98,22 @@ Google Translate is used to automatically translate pages. To facilitate the aut
 | env var | source                      |
 | --------  | ------------------------ |
 | DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_ID | private_key_id    |
-| DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY | private_key |
+| DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_B64* | private_key |
 | DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_EMAIL | client_email      |
 | DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_ID | client_email_id      |
 | DIRECTORY_CMS_GOOGLE_TRANSLATE_CERT_URL | client_x509_cert_url  |
 
-Note that when setting `DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY` in `~/.bashrc`, encapsulate the value in `$'...'` to avoid literal characters being treated as control characters. Do not use double quotes there. Your `~/.bashrc` would look something like this:
+*`DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_B64` is derived from the value of `private_key` by base64 encoding `private_key`. This is done to avoid complications surrounding control characters and white space across different environments (Linux, Mac, Heroku).
 
 ```
 export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_ID=...
 export DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_EMAIL=...
 export DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_ID=...
 export DIRECTORY_CMS_GOOGLE_TRANSLATE_CERT_URL=...
-export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY=$'-----BEGIN PRIVATE KEY-----...-----END PRIVATE KEY-----\n'
+export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_B64=...
 ```
 
-The steps for generateing a new key can be found [here](https://cloud.google.com/translate/docs/reference/libraries#setting_up_authentication)
+The steps for generating a new key file can be found [here](https://cloud.google.com/translate/docs/reference/libraries#setting_up_authentication)
 
 
 [circle-ci-image]: https://circleci.com/gh/uktrade/directory-cms/tree/master.svg?style=svg
