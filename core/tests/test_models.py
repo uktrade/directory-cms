@@ -2,29 +2,6 @@ import pytest
 
 from django.utils import translation
 
-from find_a_supplier.tests.factories import IndustryPageFactory
-
-
-@pytest.fixture
-def page():
-    return IndustryPageFactory(title='1')
-
-
-@pytest.fixture
-def translated_page():
-    return IndustryPageFactory(
-        title_en_gb='ENGLISH',
-        title_de='GERMAN',
-        title_ja='JAPANESE',
-        title_zh_hans='SIMPLIFIED CHINESE',
-        title_fr='FRENCH',
-        title_es='SPANISH',
-        title_pt='PORTUGUESE',
-        title_pt_br='BRAZILIAN',
-        title_ar='ARABIC',
-        title='2',
-    )
-
 
 @pytest.mark.django_db
 def test_base_model_check_valid_draft_token(page):

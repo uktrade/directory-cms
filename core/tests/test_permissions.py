@@ -1,12 +1,6 @@
 import pytest
 
 from core import permissions
-from find_a_supplier.tests.factories import IndustryPageFactory
-
-
-@pytest.fixture
-def page():
-    return IndustryPageFactory(pk=2, title='3')
 
 
 @pytest.mark.django_db

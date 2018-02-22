@@ -19,6 +19,7 @@ test:
 	$(COLLECT_STATIC) && $(FLAKE8) && $(PYTEST) && $(CODECOV)
 
 DJANGO_WEBSERVER := \
+	python manage.py generate_google_translate_cerdentials && \
 	python manage.py collectstatic --noinput && \
 	python manage.py runserver 0.0.0.0:$$PORT
 
@@ -72,7 +73,13 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 	export DIRECTORY_CMS_CSRF_COOKIE_SECURE=false; \
 	export DIRECTORY_CMS_APP_URL_EXPORT_READINESS=http://exred.trade.great:8007; \
 	export DIRECTORY_CMS_APP_URL_FIND_A_SUPPLIER=http://supplier.trade.great:8005; \
-	export DIRECTORY_CMS_COPY_DESTINATION_URLS=https://dev.cms.directory.uktrade.io,https://stage.cms.directory.uktrade.io
+	export DIRECTORY_CMS_COPY_DESTINATION_URLS=https://dev.cms.directory.uktrade.io,https://stage.cms.directory.uktrade.io; \
+	export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_ID=$$DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_ID; \
+	export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY="$$DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY"; \
+	export DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_EMAIL=$$DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_EMAIL; \
+	export DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_ID=$$DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_ID; \
+	export DIRECTORY_CMS_GOOGLE_TRANSLATE_CERT_URL=$$DIRECTORY_CMS_GOOGLE_TRANSLATE_CERT_URL; \
+	export DIRECTORY_CMS_GOOGLE_APPLICATION_CREDENTIALS=config/google-cloud-credentials.json
 
 
 docker_test_env_files:
@@ -144,7 +151,13 @@ DEBUG_SET_ENV_VARS := \
 	export CSRF_COOKIE_SECURE=false; \
 	export APP_URL_EXPORT_READINESS=http://exred.trade.great:8007; \
 	export APP_URL_FIND_A_SUPPLIER=http://supplier.trade.great:8005; \
-	export COPY_DESTINATION_URLS=https://directory-cms-dev.herokuapp.com,https://dev.cms.directory.uktrade.io,https://stage.cms.directory.uktrade.io,http://cms.trade.great:8010
+	export COPY_DESTINATION_URLS=https://directory-cms-dev.herokuapp.com,https://dev.cms.directory.uktrade.io,https://stage.cms.directory.uktrade.io,http://cms.trade.great:8010; \
+	export GOOGLE_APPLICATION_CREDENTIALS=config/google-cloud-credentials.json; \
+	export GOOGLE_TRANSLATE_PRIVATE_KEY_ID=$$DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_ID; \
+	export GOOGLE_TRANSLATE_PRIVATE_KEY="$$DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY"; \
+	export GOOGLE_TRANSLATE_CLIENT_EMAIL=$$DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_EMAIL; \
+	export GOOGLE_TRANSLATE_CLIENT_ID=$$DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_ID; \
+	export GOOGLE_TRANSLATE_CERT_URL=$$DIRECTORY_CMS_GOOGLE_TRANSLATE_CERT_URL
 
 debug_webserver:
 	$(DEBUG_SET_ENV_VARS) && $(DJANGO_WEBSERVER)

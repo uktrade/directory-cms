@@ -91,26 +91,29 @@ You should not edit CSS files directly, instead edit their SCSS counterparts.
 
 Signed cookies are used as the session backend to avoid using a database. We therefore must avoid storing non-trivial data in the session, because the browser will be exposed to the data.
 
-## SSO
-To make sso work locally add the following to your machine's `/etc/hosts`:
+## Page auto-translations
 
-| IP Adress | URL                      |
+Google Translate is used to automatically translate pages. To facilitate the authentication with Google, ask a colleague to share the Google authentication key file with you, then transpose the values from the keyfile to env vars on your machine:
+
+| env var | source                      |
 | --------  | ------------------------ |
-| 127.0.0.1 | buyer.trade.great    |
-| 127.0.0.1 | supplier.trade.great |
-| 127.0.0.1 | sso.trade.great      |
-| 127.0.0.1 | api.trade.great      |
-| 127.0.0.1 | profile.trade.great  |
-| 127.0.0.1 | exred.trade.great    |
-| 127.0.0.1 | cms.trade.great      |
+| DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_ID | private_key_id    |
+| DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY | private_key |
+| DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_EMAIL | client_email      |
+| DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_ID | client_email_id      |
+| DIRECTORY_CMS_GOOGLE_TRANSLATE_CERT_URL | client_x509_cert_url  |
 
-Then log into `directory-sso` via `sso.trade.great:8001`, and use `directory-cms` on `exred.trade.great:8009`
+Note that when setting `DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY` in `~/.bashrc`, encapsulate the value in `$'...'` to avoid literal characters being treated as control characters. Do not use double quotes there. Your `~/.bashrc` would look something like this:
 
-Note in production, the `directory-sso` session cookie is shared with all subdomains that are on the same parent domain as `directory-sso`. However in development we cannot share cookies between subdomains using `localhost` - that would be like trying to set a cookie for `.com`, which is not supported by any RFC.
+```
+export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_ID=...
+export DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_EMAIL=...
+export DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_ID=...
+export DIRECTORY_CMS_GOOGLE_TRANSLATE_CERT_URL=...
+export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY=$'-----BEGIN PRIVATE KEY-----...-----END PRIVATE KEY-----\n'
+```
 
-Therefore to make cookie sharing work in development we need the apps to be running on subdomains. Some stipulations:
- - `directory-cms` and `directory-sso` must both be running on sibling subdomains (with same parent domain)
- - `directory-sso` must be told to target cookies at the parent domain.
+The steps for generateing a new key can be found [here](https://cloud.google.com/translate/docs/reference/libraries#setting_up_authentication)
 
 
 [circle-ci-image]: https://circleci.com/gh/uktrade/directory-cms/tree/master.svg?style=svg
