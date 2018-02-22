@@ -12,6 +12,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 '''
 
+import base64
 import os
 
 import dj_database_url
@@ -318,8 +319,13 @@ APP_URL_EXPORT_READINESS = os.environ['APP_URL_EXPORT_READINESS']
 APP_URL_FIND_A_SUPPLIER = os.environ['APP_URL_FIND_A_SUPPLIER']
 COPY_DESTINATION_URLS = os.environ['COPY_DESTINATION_URLS'].split(',')
 
+
+def base64_value(key):
+    return base64.b64decode(os.environ[key]).decode()
+
+
 GOOGLE_TRANSLATE_PRIVATE_KEY_ID = os.environ['GOOGLE_TRANSLATE_PRIVATE_KEY_ID']
-GOOGLE_TRANSLATE_PRIVATE_KEY = os.environ['GOOGLE_TRANSLATE_PRIVATE_KEY']
+GOOGLE_TRANSLATE_PRIVATE_KEY = base64_value('GOOGLE_TRANSLATE_PRIVATE_KEY_B64')
 GOOGLE_TRANSLATE_CLIENT_EMAIL = os.environ['GOOGLE_TRANSLATE_CLIENT_EMAIL']
 GOOGLE_TRANSLATE_CLIENT_ID = os.environ['GOOGLE_TRANSLATE_CLIENT_ID']
 GOOGLE_TRANSLATE_CERT_URL = os.environ['GOOGLE_TRANSLATE_CERT_URL']
