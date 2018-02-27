@@ -1,5 +1,5 @@
 import functools
-from urllib.parse import urljoin, urlencode
+from urllib.parse import urljoin
 
 from modeltranslation.translator import translator
 from modeltranslation.utils import build_localized_fieldname
@@ -7,9 +7,7 @@ from rest_framework.fields import CharField
 from wagtail.wagtailcore.models import Page
 
 from django.core import signing
-from django.forms.models import model_to_dict
 from django.shortcuts import redirect
-from django.urls import reverse
 from django.utils import translation
 
 from core import constants, helpers
@@ -48,21 +46,6 @@ class BasePage(Page):
     @property
     def draft_url(self):
         return self.published_url + '?draft_token=' + self.get_draft_token()
-
-    def build_prepopulate_url(self, environment_url):
-        params = self.serialize_fields()
-        querystring = urlencode({constants.PREOPPULATE_PARAM: True, **params})
-        path = reverse(
-            'wagtailadmin_pages:add',
-            args=(self._meta.app_label, self._meta.model_name, 2)
-        )
-        return urljoin(environment_url, path) + '?' + querystring
-
-    def serialize_fields(self):
-        return {
-            key: value for key, value in model_to_dict(self).items()
-            if value is not None
-        }
 
     def serve(self, request, *args, **kwargs):
         return redirect(self.published_url)

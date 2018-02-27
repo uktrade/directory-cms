@@ -1,15 +1,14 @@
 import pytest
-from urllib import parse
 from unittest.mock import call, patch
 
 from bs4 import BeautifulSoup
 from directory_constants.constants import sectors
 
+from django.forms.models import model_to_dict
 from django.urls import reverse
 
-from core import constants, permissions, views
+from core import permissions, views
 from config.signature import SignatureCheckPermission
-from find_a_supplier.translation import IndustryPageTranslationOptions
 
 
 def test_permissions_draft(rf):
@@ -79,65 +78,41 @@ def test_api_draft(client, page_with_reversion):
 
 
 @pytest.mark.django_db
-def test_copy_to_environment_redirect(client, translated_page, settings):
+def test_copy_to_environment(client, translated_page, settings):
     url = reverse('copy-to-environment', kwargs={'pk': translated_page.pk})
-    environment = settings.COPY_DESTINATION_URLS[0]
 
-    response = client.post(url, {'environment': environment})
+    response = client.get(url)
 
-    assert response.status_code == 302
-
-    params = parse.parse_qs(parse.urlsplit(response.url).query)
-
-    assert params['title_en_gb'] == [translated_page.title_en_gb]
-    assert params['title_de'] == [translated_page.title_de]
-    assert params['title_ja'] == [translated_page.title_ja]
-    assert params['title_zh_hans'] == [translated_page.title_zh_hans]
-    assert params['title_fr'] == [translated_page.title_fr]
-    assert params['title_es'] == [translated_page.title_es]
-    assert params['title_pt'] == [translated_page.title_pt]
-    assert params['title_pt_br'] == [translated_page.title_pt_br]
-    assert params['title_ar'] == [translated_page.title_ar]
+    assert response.context['page'] == translated_page
 
 
 @pytest.mark.django_db
-def test_copy_to_environment_prepopulate(
+def test_add_page_prepopulate(
     client, translated_page, settings, admin_client
 ):
-    url = reverse('copy-to-environment', kwargs={'pk': translated_page.pk})
-    environment = settings.COPY_DESTINATION_URLS[0]
+    url = reverse(
+        'preload-add-page',
+        kwargs={
+            'app_name': translated_page._meta.app_label,
+            'model_name': translated_page._meta.model_name,
+            'parent_pk': 1,
+        }
+    )
 
-    response = admin_client.post(url, {'environment': environment})
-    params = dict(parse.parse_qsl(parse.urlsplit(response.url).query))
-    path = response.url.replace(environment, '')
-
-    response = admin_client.get(path)
+    data = model_to_dict(translated_page, exclude=[
+        'go_live_at',
+        'case_study_image',
+        'expire_at',
+        'hero_image',
+    ])
+    response = admin_client.post(url, data)
 
     soup = BeautifulSoup(response.content, 'html.parser')
 
-    ignore_fields = IndustryPageTranslationOptions.fields + (
-        'content_type',
-        'depth',
-        'draft_title',
-        'expired',
-        'id',
-        'live',
-        'locked',
-        'numchild',
-        'owner',
-        'page_ptr',
-        'path',
-        'show_in_menus',
-        'slug',
-        'title',
-        'url_path',
-        constants.PREOPPULATE_PARAM,
-    )
-
-    for name, value in params.items():
-        if name in ignore_fields:
-            continue
+    for name, value in data.items():
         element = soup.find(id='id_' + name)
+        if not element or not value:
+            continue
         if element.name == 'textarea':
             actual = element.contents[0].strip()
         elif element.name == 'select':
@@ -148,21 +123,27 @@ def test_copy_to_environment_prepopulate(
 
 
 @pytest.mark.django_db
-def test_copy_to_environment_not_prepopulate(
-    admin_client, translated_page
+def test_add_page_prepopulate_missing_content_type(
+    client, translated_page, settings, admin_client
 ):
     url = reverse(
-        'wagtailadmin_pages:add',
-        args=(
-            translated_page._meta.app_label,
-            translated_page._meta.model_name,
-            2
-        )
+        'preload-add-page',
+        kwargs={
+            'app_name': translated_page._meta.app_label,
+            'model_name': 'doesnotexist',
+            'parent_pk': 1,
+        }
     )
 
-    response = admin_client.get(url)
+    data = model_to_dict(translated_page, exclude=[
+        'go_live_at',
+        'case_study_image',
+        'expire_at',
+        'hero_image',
+    ])
+    response = admin_client.post(url, data)
 
-    assert response.status_code == 200
+    assert response.status_code == 404
 
 
 @pytest.mark.django_db
@@ -198,6 +179,17 @@ def test_translate_page(
     )
     assert mock_save_revision.call_count == 2
     assert mock_save_revision.call_args == call(user=admin_user)
+
+
+@pytest.mark.django_db
+def test_list_page(
+    admin_client, translated_page
+):
+    url = reverse('wagtailadmin_explore', args=(2,))
+
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
 
 
 @pytest.mark.django_db
