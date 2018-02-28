@@ -6,10 +6,10 @@ from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 
 import core.views
 import healthcheck.views
-
 
 api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
@@ -37,6 +37,14 @@ urlpatterns = [
         r'^admin/pages/(?P<pk>[0-9]+)/copy-to-environment/$',
         core.views.CopyPageView.as_view(),
         name='copy-to-environment',
+    ),
+    url(
+        (
+            r'^admin/pages/preload/(?P<app_name>[a-zA-Z_]+)/'
+            r'(?P<model_name>[a-zA-Z]+)/(?P<parent_pk>[0-9]+)/$'
+        ),
+        csrf_exempt(core.views.PeloadPageView.as_view()),
+        name='preload-add-page',
     ),
 
     url(r'^api/', api_router.urls),
