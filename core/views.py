@@ -54,7 +54,7 @@ class CopyPageView(FormView):
         initial = model_to_dict(instance)
         for f in instance._meta.concrete_fields:
             field = getattr(instance, f.name)
-            if isinstance(field, Image):
+            if isinstance(field, Image) and field.file.name:
                 initial[f.name] = field.file.name
         return {
             **super().get_form_kwargs(),

@@ -7,7 +7,7 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from django.db import models
 
 from core import constants
-from core.fields import AbsoluteUrlImageRenditionField
+from wagtail.wagtailimages.api.fields import ImageRenditionField
 from core.models import AddTranslationsBrokerFieldsMixin, BasePage
 from core.helpers import make_translated_interface
 
@@ -80,7 +80,7 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
     api_fields = [
         APIField(
             'hero_image',
-            serializer=AbsoluteUrlImageRenditionField('original')
+            serializer=ImageRenditionField('original')
         ),
         APIField('hero_text'),
         APIField('lede'),
@@ -90,7 +90,7 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
         APIField('case_study'),
         APIField(
             'case_study_image',
-            serializer=AbsoluteUrlImageRenditionField('original')
+            serializer=ImageRenditionField('original')
         ),
         APIField('sector_label'),
         APIField('sector_value'),
