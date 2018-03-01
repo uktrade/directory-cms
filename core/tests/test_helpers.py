@@ -1,9 +1,13 @@
 from unittest.mock import call, patch
-import pytest
 
-from find_a_supplier.models import IndustryPage
+import pytest
+from wagtail.wagtailimages.models import Image
+
+from django.core.files.storage import default_storage
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from core import helpers
+from find_a_supplier.models import IndustryPage
 
 
 @pytest.fixture(autouse=True)
@@ -79,3 +83,42 @@ def test_clean_translated_value_long_text():
     )
 
     assert actual == 'a'*1000
+
+
+@pytest.fixture
+def uploaded_file():
+    return SimpleUploadedFile(
+        name='test_image.png',
+        content=open('core/static/core/logo.png', 'rb').read(),
+        content_type='image/png'
+    )
+
+
+@pytest.fixture
+def image(uploaded_file):
+    image = Image.objects.create(
+        file=uploaded_file,
+        title='test',
+        width=100,
+        height=100,
+    )
+    yield image
+    default_storage.delete(image.file.name)
+
+
+@pytest.mark.django_db
+def test_get_or_create_image_existing(image):
+    actual = helpers.get_or_create_image(image.file.name)
+
+    assert actual == image
+
+
+@pytest.mark.django_db
+def test_get_or_create_image_new(image, uploaded_file):
+    image.delete()
+
+    from ipdb import set_trace
+    set_trace()
+    actual = helpers.get_or_create_image('original_images/test_image.png')
+
+    assert actual.file.name == 'original_images/test_image.png'

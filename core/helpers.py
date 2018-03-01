@@ -11,6 +11,7 @@ from wagtail.wagtailimages.models import Image
 
 from django.conf import settings
 from django.core.files.storage import default_storage
+from django.core.files.images import get_image_dimensions
 from django.utils.translation import trans_real
 from django.utils.text import slugify, Truncator
 
@@ -96,17 +97,18 @@ def get_or_create_image(image_path):
         bucket_name=default_storage.bucket_name,
         key=image_path
     )
-
     queryset = models.ImageHash.objects.filter(
         content_hash=object_summary.e_tag[1:-1]
     )
-
     if queryset.exists():
         image = queryset.first().image
     else:
         image_file = default_storage.open(image_path)
-        title = os.path.basename(image_path)
-        image = Image(title=title, file=image_file)
-        image.file.save(name=title, content=image_file.file)
-        image.save()
+        width, height = get_image_dimensions(image_file)
+        image = Image.objects.create(
+            title=os.path.basename(image_path),
+            width=width,
+            height=height,
+            file=image_path,
+        )
     return image

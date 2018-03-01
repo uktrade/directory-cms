@@ -95,6 +95,16 @@ Signed cookies are used as the session backend to avoid using a database. We the
 
 Pages and images can be copied "upstream" from one environment to another. To facilitate this a single S3 bucket is used by all environments. A constraint of this approach is the bucket is immutable insofar as images can be uploaded but not deleted or changed.
 
+The following environment variables must be set on your host machine:
+
+| env var |
+| --------  |
+| DIRECTORY_CMS_AWS_STORAGE_BUCKET_NAME |
+| DIRECTORY_CMS_AWS_ACCESS_KEY_ID |
+| DIRECTORY_CMS_AWS_SECRET_ACCESS_KEY |
+
+Speak to a team mate or consult heroku settings to retrieve the `DIRECTORY_CMS_AWS_STORAGE_BUCKET_NAME`.
+
 ## Page auto-translations
 
 Google Translate is used to automatically translate pages. To facilitate the authentication with Google, ask a colleague to share the Google authentication key file with you, then transpose the values from the keyfile to env vars on your machine:
