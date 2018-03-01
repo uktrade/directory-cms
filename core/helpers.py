@@ -1,4 +1,5 @@
 import functools
+import os
 
 import gevent
 from google.cloud import translate
@@ -6,10 +7,14 @@ from modeltranslation.utils import build_localized_fieldname
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, ObjectList, TabbedInterface
 )
+from wagtail.wagtailimages.models import Image
 
 from django.conf import settings
+from django.core.files.storage import default_storage
 from django.utils.translation import trans_real
 from django.utils.text import slugify, Truncator
+
+from core import models
 
 
 def build_translated_fieldname(field_name):
@@ -84,3 +89,24 @@ def language_code_django_to_google(code):
     return {
         'zh-hans': 'zh-CN',
     }.get(code, code)
+
+
+def get_or_create_image(image_path):
+    object_summary = default_storage.connection.ObjectSummary(
+        bucket_name=default_storage.bucket_name,
+        key=image_path
+    )
+
+    queryset = models.ImageHash.objects.filter(
+        content_hash=object_summary.e_tag[1:-1]
+    )
+
+    if queryset.exists():
+        image = queryset.first().image
+    else:
+        image_file = default_storage.open(image_path)
+        title = os.path.basename(image_path)
+        image = Image(title=title, file=image_file)
+        image.file.save(name=title, content=image_file.file)
+        image.save()
+    return image

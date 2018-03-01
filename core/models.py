@@ -1,4 +1,5 @@
 import functools
+import hashlib
 from urllib.parse import urljoin
 
 from modeltranslation.translator import translator
@@ -7,6 +8,7 @@ from rest_framework.fields import CharField
 from wagtail.wagtailcore.models import Page
 
 from django.core import signing
+from django.db import models
 from django.shortcuts import redirect
 from django.utils import translation
 
@@ -100,3 +102,23 @@ class AddTranslationsBrokerFieldsMixin:
                 api_field.serializer = CharField(
                     source=helpers.build_translated_fieldname(api_field.name)
                 )
+
+
+class ImageHash(models.Model):
+
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name='+'
+    )
+    content_hash = models.CharField(
+        max_length=1000
+    )
+
+    @staticmethod
+    def generate_content_hash(file):
+        filehash = hashlib.md5()
+        filehash.update(file.read())
+        return filehash.hexdigest()
