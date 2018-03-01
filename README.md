@@ -91,6 +91,10 @@ You should not edit CSS files directly, instead edit their SCSS counterparts.
 
 Signed cookies are used as the session backend to avoid using a database. We therefore must avoid storing non-trivial data in the session, because the browser will be exposed to the data.
 
+## Image storage
+
+Pages and images can be copied "upstream" from one environment to another. To facilitate this a single S3 bucket is used by all environments. A constraint of this approach is the bucket is immutable insofar as images can be uploaded but not deleted or changed.
+
 ## Page auto-translations
 
 Google Translate is used to automatically translate pages. To facilitate the authentication with Google, ask a colleague to share the Google authentication key file with you, then transpose the values from the keyfile to env vars on your machine:
@@ -111,7 +115,12 @@ export DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_EMAIL=...
 export DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_ID=...
 export DIRECTORY_CMS_GOOGLE_TRANSLATE_CERT_URL=...
 export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY=$'-----BEGIN PRIVATE KEY-----...-----END PRIVATE KEY-----\n'
-export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_B64=`base64 -w 0 <<< $DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY`
+export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_B64=`python -c "
+import os
+import base64
+value = bytes(os.environ['DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY'], 'utf8')
+print(base64.b64encode(value).decode())
+"`
 ```
 
 The steps for generating a new key file can be found [here](https://cloud.google.com/translate/docs/reference/libraries#setting_up_authentication)
