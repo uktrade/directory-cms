@@ -78,7 +78,10 @@ def test_api_draft(client, page_with_reversion):
 
 
 @pytest.mark.django_db
-def test_copy_to_environment(client, translated_page, settings):
+def test_copy_to_environment(client, translated_page, settings, image):
+    translated_page.hero_image = image
+    translated_page.save()
+
     url = reverse('copy-to-environment', kwargs={'pk': translated_page.pk})
 
     response = client.get(url)
@@ -88,7 +91,7 @@ def test_copy_to_environment(client, translated_page, settings):
 
 @pytest.mark.django_db
 def test_add_page_prepopulate(
-    client, translated_page, settings, admin_client
+    client, translated_page, settings, admin_client, image
 ):
     url = reverse(
         'preload-add-page',
@@ -99,17 +102,18 @@ def test_add_page_prepopulate(
         }
     )
 
-    data = model_to_dict(translated_page, exclude=[
-        'go_live_at',
-        'case_study_image',
-        'expire_at',
-        'hero_image',
-    ])
-    response = admin_client.post(url, data)
+    model_as_dict = model_to_dict(
+        translated_page,
+        exclude=['go_live_at', 'expire_at', 'case_study_image']
+    )
+    post_data = {**model_as_dict, 'hero_image': image.file.name}
+    expected_data = {**post_data, 'hero_image': str(image.pk)}
+
+    response = admin_client.post(url, post_data)
 
     soup = BeautifulSoup(response.content, 'html.parser')
 
-    for name, value in data.items():
+    for name, value in expected_data.items():
         element = soup.find(id='id_' + name)
         if not element or not value:
             continue

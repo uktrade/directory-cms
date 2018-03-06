@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'directory_healthcheck',
     'health_check',
     'export_elements',
-    'core',
+    'core.apps.CoreConfig',
     'directory_components',
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'wagtail_modeltranslation.makemigrations',
     'modelcluster',
     'taggit',
+    'storages',
     'rest_framework',
     'find_a_supplier.apps.FindASupplierConfig',
 ]
@@ -161,6 +162,7 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_HOST = os.environ.get('STATIC_HOST', '')
 STATIC_URL = STATIC_HOST + '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Logging for development
 if DEBUG:
@@ -330,3 +332,16 @@ GOOGLE_TRANSLATE_CLIENT_EMAIL = os.environ['GOOGLE_TRANSLATE_CLIENT_EMAIL']
 GOOGLE_TRANSLATE_CLIENT_ID = os.environ['GOOGLE_TRANSLATE_CLIENT_ID']
 GOOGLE_TRANSLATE_CERT_URL = os.environ['GOOGLE_TRANSLATE_CERT_URL']
 GOOGLE_APPLICATION_CREDENTIALS = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
+
+# django-storages
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+AWS_DEFAULT_ACL = 'public-read'
+AWS_AUTO_CREATE_BUCKET = False
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_ENCRYPTION = False
+AWS_S3_FILE_OVERWRITE = False
+AWS_S3_CUSTOM_DOMAIN = os.getenv('AWS_S3_CUSTOM_DOMAIN')
+WS_S3_URL_PROTOCOL = os.getenv('AWS_S3_URL_PROTOCOL', 'https:')
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_S3_HOST = 's3-us-west-1.amazonaws.com'

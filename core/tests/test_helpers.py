@@ -1,9 +1,9 @@
 from unittest.mock import call, patch
+
 import pytest
 
-from find_a_supplier.models import IndustryPage
-
 from core import helpers
+from find_a_supplier.models import IndustryPage
 
 
 @pytest.fixture(autouse=True)
@@ -79,3 +79,19 @@ def test_clean_translated_value_long_text():
     )
 
     assert actual == 'a'*1000
+
+
+@pytest.mark.django_db
+def test_get_or_create_image_existing(image):
+    actual = helpers.get_or_create_image(image.file.name)
+
+    assert actual == image
+
+
+@pytest.mark.django_db
+def test_get_or_create_image_new(image, uploaded_file):
+    image.delete()
+
+    actual = helpers.get_or_create_image('original_images/test_image.png')
+
+    assert actual.file.name == 'original_images/test_image.png'

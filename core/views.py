@@ -1,14 +1,15 @@
 from wagtail.api.v2.endpoints import BaseAPIEndpoint, PagesAPIEndpoint
 from wagtail.wagtailcore.models import Page
+from wagtail.wagtailimages.models import Image
 
 from django.contrib.contenttypes.models import ContentType
+from django.forms.models import model_to_dict, ModelChoiceField
 from django.shortcuts import get_object_or_404, redirect, Http404
 from django.template.response import TemplateResponse
 from django.views.generic.edit import FormView
 
-
 from config.signature import SignatureCheckPermission
-from core import forms, permissions
+from core import forms, helpers, permissions
 
 
 class PagesOptionalDraftAPIEndpoint(PagesAPIEndpoint):
@@ -49,9 +50,15 @@ class CopyPageView(FormView):
         return page.get_edit_handler().get_form_class(page.__class__)
 
     def get_form_kwargs(self):
+        instance = self.get_object()
+        initial = model_to_dict(instance)
+        for f in instance._meta.concrete_fields:
+            field = getattr(instance, f.name)
+            if isinstance(field, Image) and field.file.name:
+                initial[f.name] = field.file.name
         return {
             **super().get_form_kwargs(),
-            'instance': self.get_object()
+            'initial': initial,
         }
 
     def get_object(self):
@@ -110,8 +117,18 @@ class PeloadPageView(FormView):
             'preview_modes': page.preview_modes,
             'form': form,
             'has_unsaved_changes': True,
-            **super().get_context_data(),
+            **super().get_context_data(form=form),
         }
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['data'] = kwargs['data'].dict()
+        form = self.get_form_class()()
+        for name, field in form.fields.items():
+            if isinstance(field, ModelChoiceField) and name in kwargs['data']:
+                image = helpers.get_or_create_image(kwargs['data'][name])
+                kwargs['data'][name] = image.pk
+        return kwargs
 
     def form_valid(self, form):
         return TemplateResponse(
