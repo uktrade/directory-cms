@@ -1,0 +1,15 @@
+body .object fieldset {
+	max-width: none;
+}
+
+.field-row-panel {
+	width: 91.75%;
+	padding-bottom: 20px;
+}
+
+
+.tab-nav li a,
+.tab-nav  li.settings a{
+	padding-left: 10px;
+	padding-right: 10px;
+}

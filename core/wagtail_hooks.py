@@ -2,8 +2,10 @@ from wagtail.wagtailadmin.widgets import Button
 from wagtail.wagtailcore import hooks
 
 from django.conf import settings
-from django.urls import reverse
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.shortcuts import redirect
+from django.urls import reverse
+from django.utils.html import format_html
 
 from core import helpers
 
@@ -37,3 +39,11 @@ def translate_page(request, page):
     page.save_revision(user=request.user)
 
     return redirect(reverse('wagtailadmin_pages:edit', args=(page.pk,)))
+
+
+@hooks.register('insert_editor_css')
+def editor_css():
+    return format_html(
+        '<link rel="stylesheet" href="{}">',
+        static('core/css/main.css')
+    )

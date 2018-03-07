@@ -4,12 +4,6 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
--e git+https://github.com/uktrade/directory-components.git@v0.4.1#egg=directory_components
--e git+https://github.com/uktrade/directory-constants.git@v6.4.0#egg=directory_constants
--e git+https://github.com/uktrade/directory-header-footer.git@v2.12.2#egg=directory_header_footer
--e git+https://github.com/uktrade/directory-healthcheck.git@v0.3.0#egg=directory_healthcheck
--e git+https://github.com/uktrade/export-elements.git@v0.3.0#egg=export_elements
--e git+https://github.com/uktrade/directory-signature-auth.git@v2.0.0#egg=sigauth
 beautifulsoup4==4.6.0     # via wagtail
 boto3==1.6.3
 botocore==1.9.3           # via boto3, s3transfer
@@ -17,8 +11,10 @@ cachetools==2.0.1         # via google-auth
 certifi==2018.1.18        # via requests
 chardet==3.0.4            # via requests
 contextlib2==0.5.5        # via raven
+directory-healthcheck==0.4.1
+directory_constants==6.5.2
 dj-database-url==0.4.2
-django-health-check==3.0.0
+django-health-check==3.0.0  # via directory-healthcheck
 django-modelcluster==3.1  # via wagtail
 django-modeltranslation==0.12.2  # via wagtail-modeltranslation
 django-pglocks==1.0.2
@@ -26,8 +22,9 @@ django-taggit==0.22.2     # via wagtail
 django-treebeard==4.2.0   # via wagtail
 django==1.11.5
 django_storages==1.6.5
-djangorestframework==3.4.7  # via wagtail
+djangorestframework==3.4.7  # via sigauth, wagtail
 docutils==0.14            # via botocore
+export-elements==0.8.1
 factory-boy==2.10.0       # via wagtail-factories
 faker==0.8.11             # via factory-boy
 gevent==1.2.2
@@ -41,7 +38,7 @@ gunicorn==19.5.0
 html5lib==0.999999999     # via wagtail
 idna==2.6                 # via requests
 jmespath==0.9.3           # via boto3, botocore
-mohawk==0.3.4
+mohawk==0.3.4             # via sigauth
 olefile==0.45.1           # via pillow
 pillow==4.3.0             # via wagtail
 protobuf==3.5.1           # via google-api-core, googleapis-common-protos
@@ -49,12 +46,12 @@ psycopg2==2.7.3.2
 pyasn1-modules==0.2.1     # via google-auth
 pyasn1==0.4.2             # via pyasn1-modules, rsa
 python-dateutil==2.6.1    # via botocore, faker
-pytz==2017.2              # via django, django-modelcluster, google-api-core
+pytz==2017.2              # via directory-constants, directory-healthcheck, django, django-modelcluster, google-api-core
 raven==5.19.0
 requests==2.18.4          # via google-api-core, wagtail
 rsa==3.4.2                # via google-auth
 s3transfer==0.1.13        # via boto3
-setuptools-git==1.2
+sigauth==2.1.2
 six==1.11.0               # via faker, google-api-core, google-auth, html5lib, mohawk, protobuf, python-dateutil
 text-unidecode==1.1       # via faker
 unidecode==0.4.21         # via wagtail
