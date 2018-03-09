@@ -14,6 +14,10 @@ from core.models import AddTranslationsBrokerFieldsMixin, BasePage
 from core.helpers import make_translated_interface
 
 
+class ImageChooserPanel(ImageChooserPanel):
+    classname = ""
+
+
 class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
 
     view_app = constants.FIND_A_SUPPLIER
@@ -31,23 +35,26 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
     lede_column_one = RichTextField()
     lede_column_two = RichTextField()
     lede_column_three = RichTextField()
-    lede_column_one_icon = models.CharField(
-        max_length=255,
-        choices=constants.ICONS,
+    lede_column_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
     )
-    lede_column_two_icon = models.CharField(
-        max_length=255,
-        choices=constants.ICONS,
+    lede_column_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
     )
-    lede_column_three_icon = models.CharField(
-        max_length=255,
-        choices=constants.ICONS,
+    lede_column_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
     )
     case_study = RichTextField()
     case_study_image = models.ForeignKey(
@@ -84,9 +91,9 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
         ),
         FieldRowPanel(
             children=[
-                FieldPanel('lede_column_one_icon'),
-                FieldPanel('lede_column_two_icon'),
-                FieldPanel('lede_column_three_icon'),
+                ImageChooserPanel('lede_column_one_icon'),
+                ImageChooserPanel('lede_column_two_icon'),
+                ImageChooserPanel('lede_column_three_icon'),
             ],
             classname='full field-row-panel'
         ),
@@ -120,9 +127,18 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
         APIField('lede_column_one'),
         APIField('lede_column_two'),
         APIField('lede_column_three'),
-        APIField('lede_column_one_icon'),
-        APIField('lede_column_two_icon'),
-        APIField('lede_column_three_icon'),
+        APIField(
+            'lede_column_one_icon',
+            serializer=ImageRenditionField('original')
+        ),
+        APIField(
+            'lede_column_two_icon',
+            serializer=ImageRenditionField('original')
+        ),
+        APIField(
+            'lede_column_three_icon',
+            serializer=ImageRenditionField('original')
+        ),
         APIField('case_study'),
         APIField(
             'case_study_image',

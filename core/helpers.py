@@ -27,7 +27,7 @@ def make_language_panel(untranslated_panel, language_code):
     That is achieved by cloning the English panel and then changing the
     field_name property of the clone.
 
-    Some panels are not fields, but really are fieldsets (which have not name)
+    Some panels are not fields, but really are fieldsets (which have no name)
     so we just clone then without trying to set the name.
 
     Arguments:

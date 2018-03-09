@@ -14,7 +14,7 @@ CODECOV := \
 	if [ "$$CODECOV_REPO_TOKEN" != "" ]; then \
 	   codecov --token=$$CODECOV_REPO_TOKEN ;\
 	fi
-UPLOAD_ICONS :=  python manage.py upload_icons
+
 test:
 	$(COLLECT_STATIC) && $(FLAKE8) && $(PYTEST) && $(CODECOV)
 
@@ -166,7 +166,7 @@ DEBUG_SET_ENV_VARS := \
 	export AWS_SECRET_ACCESS_KEY=$$DIRECTORY_CMS_AWS_SECRET_ACCESS_KEY
 
 debug_webserver:
-	$(DEBUG_SET_ENV_VARS) && $(UPLOAD_ICONS) && $(DJANGO_WEBSERVER)
+	$(DEBUG_SET_ENV_VARS) && $(DJANGO_WEBSERVER)
 
 debug_pytest:
 	$(DEBUG_SET_ENV_VARS) && $(COLLECT_STATIC) && $(PYTEST)
