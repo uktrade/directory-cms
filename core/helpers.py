@@ -22,6 +22,23 @@ def build_translated_fieldname(field_name):
 
 
 def make_language_panel(untranslated_panel, language_code):
+    """Convert an English admin editor field ("panel") to e.g, French.
+
+    That is achieved by cloning the English panel and then changing the
+    field_name property of the clone.
+
+    Some panels are not fields, but really are fieldsets (which have not name)
+    so we just clone then without trying to set the name.
+
+    Arguments:
+        untranslated_panel {Panel} -- English panel to convert
+        language_code {str} -- Target conversion language
+
+    Returns:
+        Panel -- Translated panel
+
+    """
+
     panel = copy.deepcopy(untranslated_panel)
     if hasattr(panel, 'field_name'):
         panel.field_name = build_localized_fieldname(
@@ -30,7 +47,21 @@ def make_language_panel(untranslated_panel, language_code):
     return panel
 
 
-def make_language_panels(content_panels, language_code=None):
+def make_language_panels(content_panels, language_code):
+    """Convert English admin editor fields ("panels") to e.g, French.
+
+    Given a list of panels with names such as "intro" and "image"
+    return a new list of panels with names such as "intro_fr" and "image_fr".
+
+    Arguments:
+        content_panels {Panel[]} -- English panels to convert
+        language_code {str} -- Target conversion language
+
+    Returns:
+        Panel[] -- Translated panels
+
+    """
+
     translated_panel_builder = functools.partial(
         make_language_panel, language_code=language_code
     )
