@@ -13,11 +13,18 @@ APP_URLS = {
     EXPORT_READINESS: settings.APP_URL_EXPORT_READINESS,
 }
 PREOPPULATE_PARAM = 'prepopulate'
+NETWORK_ICON_PATH = 'core/icons/infrastructure.png'
+INNOVATION_ICON_PATH = 'core/icons/innovation.png'
+INVESTMENT_ICON_PATH = 'core/icons/investment.png'
+QUALITY_ICON_PATH = 'core/icons/quality.png'
+RESEARCH_ICON_PATH = 'core/icons/research.png'
+SKILLS_ICON_PATH = 'core/icons/skills.png'
+
 ICONS = [
-    (default_storage.url('core/icons/infrastructure.png'), 'Network'),
-    (default_storage.url('core/icons/innovation.png'), 'Light bulb'),
-    (default_storage.url('core/icons/investment.png'), 'Money'),
-    (default_storage.url('core/icons/quality.png'), 'Rosette'),
-    (default_storage.url('core/icons/research.png'), 'Magnifying glass'),
-    (default_storage.url('core/icons/skills.png'), 'Cogs'),
+    (default_storage.url(PREOPPULATE_PARAM), 'Network'),
+    (default_storage.url(INNOVATION_ICON_PATH), 'Light bulb'),
+    (default_storage.url(INVESTMENT_ICON_PATH), 'Money'),
+    (default_storage.url(QUALITY_ICON_PATH), 'Rosette'),
+    (default_storage.url(RESEARCH_ICON_PATH), 'Magnifying glass'),
+    (default_storage.url(SKILLS_ICON_PATH), 'Cogs'),
 ]
