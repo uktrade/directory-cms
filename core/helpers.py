@@ -1,12 +1,11 @@
+import copy
 import functools
 import os
 
 import gevent
 from google.cloud import translate
 from modeltranslation.utils import build_localized_fieldname
-from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, ObjectList, TabbedInterface
-)
+from wagtail.wagtailadmin.edit_handlers import ObjectList, TabbedInterface
 from wagtail.wagtailimages.models import Image
 
 from django.conf import settings
@@ -22,24 +21,65 @@ def build_translated_fieldname(field_name):
     return 'translated_' + field_name
 
 
-def make_language_panel(content_panels, language_code=None):
-    return [
-        FieldPanel(
-            build_localized_fieldname(content_panel.field_name, language_code),
-            classname=content_panel.classname
-        ) for content_panel in content_panels
-    ]
+def make_language_panel(untranslated_panel, language_code):
+    """Convert an English admin editor field ("panel") to e.g, French.
+
+    That is achieved by cloning the English panel and then changing the
+    field_name property of the clone.
+
+    Some panels are not fields, but really are fieldsets (which have no name)
+    so we just clone then without trying to set the name.
+
+    Arguments:
+        untranslated_panel {Panel} -- English panel to convert
+        language_code {str} -- Target conversion language
+
+    Returns:
+        Panel -- Translated panel
+
+    """
+
+    panel = copy.deepcopy(untranslated_panel)
+    if hasattr(panel, 'field_name'):
+        panel.field_name = build_localized_fieldname(
+            field_name=untranslated_panel.field_name, lang=language_code
+        )
+    return panel
 
 
-def make_language_panels(content_panels):
-    return [
-        ObjectList(make_language_panel(content_panels, code), heading=name)
-        for code, name in settings.LANGUAGES
-    ]
+def make_language_panels(content_panels, language_code):
+    """Convert English admin editor fields ("panels") to e.g, French.
+
+    Given a list of panels with names such as "intro" and "image"
+    return a new list of panels with names such as "intro_fr" and "image_fr".
+
+    Arguments:
+        content_panels {Panel[]} -- English panels to convert
+        language_code {str} -- Target conversion language
+
+    Returns:
+        Panel[] -- Translated panels
+
+    """
+
+    translated_panel_builder = functools.partial(
+        make_language_panel, language_code=language_code
+    )
+    panels = []
+    for untranslated_panel in content_panels:
+        panel = translated_panel_builder(untranslated_panel)
+        if hasattr(panel, 'children'):
+            panel.children = map(translated_panel_builder, panel.children)
+        panels.append(panel)
+    return panels
 
 
 def make_translated_interface(content_panels, other_panels):
-    return TabbedInterface(make_language_panels(content_panels) + other_panels)
+    translated_panels = [
+        ObjectList(make_language_panels(content_panels, code), heading=name)
+        for code, name in settings.LANGUAGES
+    ]
+    return TabbedInterface(translated_panels + other_panels)
 
 
 def get_language_from_querystring(request):

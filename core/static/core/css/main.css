@@ -1,0 +1,30 @@
+body .object fieldset {
+	max-width: none;
+}
+
+.field-row-panel {
+	width: 91.75%;
+	padding-bottom: 20px;
+}
+
+.field-row-panel .field-col.model_choice_field {
+	width: 33.33%
+}
+
+.tab-nav li a,
+.tab-nav  li.settings a{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.admin_image_chooser label{
+	width: 100%;
+}
+
+body .image-chooser .chosen .preview-image {
+	margin-left: 0;
+}
+
+body .image-chooser .chosen {
+	padding-left: 0;
+}

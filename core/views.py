@@ -126,8 +126,10 @@ class PeloadPageView(FormView):
         form = self.get_form_class()()
         for name, field in form.fields.items():
             if isinstance(field, ModelChoiceField) and name in kwargs['data']:
-                image = helpers.get_or_create_image(kwargs['data'][name])
-                kwargs['data'][name] = image.pk
+                value = kwargs['data'][name]
+                if value not in ['None', None]:
+                    image = helpers.get_or_create_image(kwargs['data'][name])
+                    kwargs['data'][name] = image.pk
         return kwargs
 
     def form_valid(self, form):

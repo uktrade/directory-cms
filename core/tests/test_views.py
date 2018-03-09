@@ -102,10 +102,15 @@ def test_add_page_prepopulate(
         }
     )
 
-    model_as_dict = model_to_dict(
-        translated_page,
-        exclude=['go_live_at', 'expire_at', 'case_study_image']
-    )
+    model_as_dict = model_to_dict(translated_page, exclude=[
+        'go_live_at',
+        'expire_at',
+        'case_study_image',
+        'lede_column_one_icon',
+        'lede_column_two_icon',
+        'lede_column_three_icon',
+        'hero_image',
+    ])
     post_data = {**model_as_dict, 'hero_image': image.file.name}
     expected_data = {**post_data, 'hero_image': str(image.pk)}
 

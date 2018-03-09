@@ -99,9 +99,11 @@ class AddTranslationsBrokerFieldsMixin:
         translated_fields = cls.get_translatable_fields()
         for api_field in cls.api_fields:
             if api_field.name in translated_fields:
-                api_field.serializer = CharField(
-                    source=helpers.build_translated_fieldname(api_field.name)
-                )
+                source = helpers.build_translated_fieldname(api_field.name)
+                if api_field.serializer:
+                    api_field.serializer.source = source
+                else:
+                    api_field.serializer = CharField(source=source)
 
 
 class ImageHash(models.Model):
