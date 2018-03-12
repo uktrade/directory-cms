@@ -18,3 +18,13 @@ class IndustryPageTranslationOptions(TranslationOptions):
         'lede_column_two_icon',
         'lede_column_three_icon',
     )
+
+
+@register(models.IndustryArticlePage)
+class IndustryArticlePageTranslationOptions(TranslationOptions):
+    fields = (
+        'author_name',
+        'job_title',
+        'date',
+        'body',
+    )
