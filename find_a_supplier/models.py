@@ -149,3 +149,40 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
         APIField('seo_description'),
         APIField('title'),
     ]
+
+
+class IndustryArticlePage(AddTranslationsBrokerFieldsMixin, BasePage):
+
+    view_app = constants.FIND_A_SUPPLIER
+    view_path = 'industry-articles/'
+
+    body = RichTextField()
+    author_name = models.CharField(max_length=255)
+    job_title = models.CharField(max_length=255)
+    date = models.DateField()
+
+    content_panels = [
+        FieldPanel('author_name'),
+        FieldPanel('job_title'),
+        FieldPanel('date'),
+        FieldPanel('body', classname='full'),
+        FieldPanel('slug'),
+        FieldPanel('title'),
+    ]
+    settings_panels = BasePage.settings_panels
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        other_panels=[
+            ObjectList(
+                settings_panels, heading='Settings', classname='settings'
+            ),
+        ]
+    )
+
+    api_fields = [
+        APIField('author_name'),
+        APIField('job_title'),
+        APIField('date'),
+        APIField('body'),
+    ]
