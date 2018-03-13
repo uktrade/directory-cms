@@ -1,6 +1,6 @@
 from directory_constants.constants import choices
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, ObjectList, FieldRowPanel
+    FieldPanel, FieldRowPanel, ObjectList, PageChooserPanel
 )
 from wagtail.api import APIField
 from wagtail.wagtailcore.fields import RichTextField
@@ -73,11 +73,52 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
     )
     seo_description = models.CharField(max_length=1000)
 
+    article_one = models.ForeignKey(
+        'find_a_supplier.IndustryArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    article_two = models.ForeignKey(
+        'find_a_supplier.IndustryArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    article_three = models.ForeignKey(
+        'find_a_supplier.IndustryArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    article_four = models.ForeignKey(
+        'find_a_supplier.IndustryArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    article_five = models.ForeignKey(
+        'find_a_supplier.IndustryArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    article_six = models.ForeignKey(
+        'find_a_supplier.IndustryArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
     image_panels = [
         ImageChooserPanel('hero_image'),
         ImageChooserPanel('case_study_image'),
     ]
-
     content_panels = [
         FieldPanel('hero_text', classname='full'),
         FieldPanel('lede', classname='full'),
@@ -106,6 +147,20 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
     settings_panels = BasePage.settings_panels + [
         FieldPanel('sector_value'),
     ]
+    article_panels = [
+        PageChooserPanel('article_one', 'find_a_supplier.IndustryArticlePage'),
+        PageChooserPanel('article_two', 'find_a_supplier.IndustryArticlePage'),
+        PageChooserPanel(
+            'article_three', 'find_a_supplier.IndustryArticlePage'
+        ),
+        PageChooserPanel(
+            'article_four', 'find_a_supplier.IndustryArticlePage'
+        ),
+        PageChooserPanel(
+            'article_five', 'find_a_supplier.IndustryArticlePage'
+        ),
+        PageChooserPanel('article_six', 'find_a_supplier.IndustryArticlePage'),
+    ]
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
@@ -114,6 +169,7 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
                 settings_panels, heading='Settings', classname='settings'
             ),
             ObjectList(image_panels, heading='Images'),
+            ObjectList(article_panels, heading='Articles')
         ]
     )
 
@@ -148,6 +204,15 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
         APIField('sector_value'),
         APIField('seo_description'),
         APIField('title'),
+        APIField(
+            'article_one'
+        ),
+        APIField('article_two'),
+        APIField('article_three'),
+        APIField('article_four'),
+        APIField('article_five'),
+        APIField('article_six'),
+
     ]
 
 
@@ -162,12 +227,12 @@ class IndustryArticlePage(AddTranslationsBrokerFieldsMixin, BasePage):
     date = models.DateField()
 
     content_panels = [
+        FieldPanel('slug'),
+        FieldPanel('title'),
         FieldPanel('author_name'),
         FieldPanel('job_title'),
         FieldPanel('date'),
         FieldPanel('body', classname='full'),
-        FieldPanel('slug'),
-        FieldPanel('title'),
     ]
     settings_panels = BasePage.settings_panels
 
@@ -185,4 +250,12 @@ class IndustryArticlePage(AddTranslationsBrokerFieldsMixin, BasePage):
         APIField('job_title'),
         APIField('date'),
         APIField('body'),
+    ]
+
+    nested_api_fields = [
+        'author_name',
+        'job_title',
+        'date',
+        'body',
+        'title',
     ]

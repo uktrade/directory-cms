@@ -52,6 +52,18 @@ class BasePage(Page):
     def serve(self, request, *args, **kwargs):
         return redirect(self.published_url)
 
+    def get_latest_nested_revision_as_page(self):
+        revision = self.get_latest_revision_as_page()
+        foreign_key_names = [
+            field.name for field in revision._meta.get_fields()
+            if isinstance(field, models.ForeignKey)
+        ]
+        for name in foreign_key_names:
+            field = getattr(revision, name)
+            if hasattr(field, 'get_latest_revision_as_page'):
+                setattr(revision, name, field.get_latest_revision_as_page())
+        return revision
+
 
 class TranslationsBrokerField:
     def __init__(self, field_name):

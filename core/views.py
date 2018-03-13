@@ -3,6 +3,7 @@ from wagtail.wagtailcore.models import Page
 from wagtail.wagtailimages.models import Image
 
 from django.contrib.contenttypes.models import ContentType
+from django.db import models
 from django.forms.models import model_to_dict, ModelChoiceField
 from django.shortcuts import get_object_or_404, redirect, Http404
 from django.template.response import TemplateResponse
@@ -15,6 +16,13 @@ from core import forms, helpers, permissions
 class PagesOptionalDraftAPIEndpoint(PagesAPIEndpoint):
     queryset = Page.objects.all()
     meta_fields = []
+    detail_only_fields = []
+
+    @classmethod
+    def get_nested_default_fields(cls, model):
+        if hasattr(model, 'nested_api_fields'):
+            return model.nested_api_fields
+        return super().get_nested_default_fields()
 
     @property
     def permission_classes(self):
@@ -29,7 +37,7 @@ class PagesOptionalDraftAPIEndpoint(PagesAPIEndpoint):
     def get_object(self):
         instance = super().get_object()
         if self.request.GET.get(permissions.DraftTokenPermisison.TOKEN_PARAM):
-            instance = instance.get_latest_revision_as_page()
+            instance = instance.get_latest_nested_revision_as_page()
         return instance
 
 
@@ -127,8 +135,8 @@ class PeloadPageView(FormView):
         for name, field in form.fields.items():
             if isinstance(field, ModelChoiceField) and name in kwargs['data']:
                 value = kwargs['data'][name]
-                if value not in ['None', None]:
-                    image = helpers.get_or_create_image(kwargs['data'][name])
+                if value not in ['', 'None', None]:
+                    image = helpers.get_or_create_image(value)
                     kwargs['data'][name] = image.pk
         return kwargs
 
