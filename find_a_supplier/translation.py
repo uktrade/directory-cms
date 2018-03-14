@@ -11,7 +11,6 @@ class IndustryPageTranslationOptions(TranslationOptions):
         'lede_column_one',
         'lede_column_two',
         'lede_column_three',
-        'case_study',
         'sector_label',
         'seo_description',
         'lede_column_one_icon',

@@ -17,7 +17,6 @@ class IndustryPageFactory(wagtail_factories.PageFactory):
     lede_column_one = factory.fuzzy.FuzzyText(length=255)
     lede_column_two = factory.fuzzy.FuzzyText(length=255)
     lede_column_three = factory.fuzzy.FuzzyText(length=255)
-    case_study = factory.fuzzy.FuzzyText(length=255)
     sector_label = factory.fuzzy.FuzzyText(length=255)
     sector_value = factory.fuzzy.FuzzyChoice(
         [i[0] for i in choices.INDUSTRIES]

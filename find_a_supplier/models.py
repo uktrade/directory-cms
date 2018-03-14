@@ -12,7 +12,7 @@ from django.db import models
 from core import constants
 from core.models import AddTranslationsBrokerFieldsMixin, BasePage
 from core.helpers import make_translated_interface
-from core.fields import APIHyperlinkField
+from core.fields import APIHyperlinkField, APIRichTextField
 
 
 class ImageChooserPanel(ImageChooserPanel):
@@ -51,14 +51,6 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
         related_name='+'
     )
     lede_column_three_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    case_study = RichTextField()
-    case_study_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
@@ -118,7 +110,6 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
     )
     image_panels = [
         ImageChooserPanel('hero_image'),
-        ImageChooserPanel('case_study_image'),
     ]
     content_panels = [
         FieldPanel('hero_text', classname='full'),
@@ -139,7 +130,6 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
             ],
             classname='full field-row-panel'
         ),
-        FieldPanel('case_study', classname='full'),
         FieldPanel('sector_label'),
         FieldPanel('slug'),
         FieldPanel('seo_description'),
@@ -196,11 +186,6 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
             'lede_column_three_icon',
             serializer=ImageRenditionField('original')
         ),
-        APIField('case_study'),
-        APIField(
-            'case_study_image',
-            serializer=ImageRenditionField('original')
-        ),
         APIField('sector_label'),
         APIField('sector_value'),
         APIField('seo_description'),
@@ -248,6 +233,7 @@ class IndustryArticlePage(AddTranslationsBrokerFieldsMixin, BasePage):
         APIField('author_name'),
         APIField('job_title'),
         APIField('date'),
-        APIField('body'),
+        APIRichTextField('body'),
+        APIField('title'),
         APIHyperlinkField('url'),
     ]
