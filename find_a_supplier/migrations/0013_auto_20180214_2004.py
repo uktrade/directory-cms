@@ -13,7 +13,7 @@ def sync_page_translation_fields(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('find_a_supplier', '0012_auto_20180313_1155'),
+        ('find_a_supplier', '0012_industryarticlepage'),
     ]
 
     operations = [

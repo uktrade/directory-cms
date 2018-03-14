@@ -3,7 +3,6 @@ from wagtail.wagtailcore.models import Page
 from wagtail.wagtailimages.models import Image
 
 from django.contrib.contenttypes.models import ContentType
-from django.db import models
 from django.forms.models import model_to_dict, ModelChoiceField
 from django.shortcuts import get_object_or_404, redirect, Http404
 from django.template.response import TemplateResponse
@@ -20,14 +19,12 @@ class PagesOptionalDraftAPIEndpoint(PagesAPIEndpoint):
 
     @classmethod
     def get_nested_default_fields(cls, model):
-        if hasattr(model, 'nested_api_fields'):
-            return model.nested_api_fields
-        return super().get_nested_default_fields()
+        return [field.name for field in model.api_fields]
 
     @property
     def permission_classes(self):
         permission_classes = [SignatureCheckPermission]
-        if permissions.DraftTokenPermisison.TOKEN_PARAM in self.request.GET:
+        if helpers.is_draft_requested(self.request):
             permission_classes.append(permissions.DraftTokenPermisison)
         return permission_classes
 
@@ -36,7 +33,7 @@ class PagesOptionalDraftAPIEndpoint(PagesAPIEndpoint):
 
     def get_object(self):
         instance = super().get_object()
-        if self.request.GET.get(permissions.DraftTokenPermisison.TOKEN_PARAM):
+        if helpers.is_draft_requested(self.request):
             instance = instance.get_latest_nested_revision_as_page()
         return instance
 

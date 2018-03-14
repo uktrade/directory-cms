@@ -4,14 +4,15 @@ from wagtail.wagtailadmin.edit_handlers import (
 )
 from wagtail.api import APIField
 from wagtail.wagtailcore.fields import RichTextField
+from wagtail.wagtailimages.api.fields import ImageRenditionField
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from django.db import models
 
 from core import constants
-from wagtail.wagtailimages.api.fields import ImageRenditionField
 from core.models import AddTranslationsBrokerFieldsMixin, BasePage
 from core.helpers import make_translated_interface
+from core.fields import APIHyperlinkField
 
 
 class ImageChooserPanel(ImageChooserPanel):
@@ -204,15 +205,13 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
         APIField('sector_value'),
         APIField('seo_description'),
         APIField('title'),
-        APIField(
-            'article_one'
-        ),
+        APIField('article_one'),
         APIField('article_two'),
         APIField('article_three'),
         APIField('article_four'),
         APIField('article_five'),
         APIField('article_six'),
-
+        APIHyperlinkField('url'),
     ]
 
 
@@ -250,12 +249,5 @@ class IndustryArticlePage(AddTranslationsBrokerFieldsMixin, BasePage):
         APIField('job_title'),
         APIField('date'),
         APIField('body'),
-    ]
-
-    nested_api_fields = [
-        'author_name',
-        'job_title',
-        'date',
-        'body',
-        'title',
+        APIHyperlinkField('url'),
     ]

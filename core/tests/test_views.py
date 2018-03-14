@@ -68,13 +68,17 @@ def test_api_draft(client, page_with_reversion):
     draft_response = client.get(url, {
         param: page_with_reversion.get_draft_token()
     })
+    draft_data = draft_response.json()
     published_response = client.get(url)
+    published_data = published_response.json()
 
     assert draft_response.status_code == 200
-    assert draft_response.json()['title'] == 'draft-title'
+    assert draft_data['title'] == 'draft-title'
+    assert draft_data['url'] == page_with_reversion.draft_url
 
     assert published_response.status_code == 200
-    assert published_response.json()['title'] == 'published-title'
+    assert published_data['title'] == 'published-title'
+    assert published_data['url'] == page_with_reversion.published_url
 
 
 @pytest.mark.django_db

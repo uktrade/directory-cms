@@ -14,7 +14,7 @@ from django.core.files.images import get_image_dimensions
 from django.utils.translation import trans_real
 from django.utils.text import slugify, Truncator
 
-from core import models
+from core import models, permissions
 
 
 def build_translated_fieldname(field_name):
@@ -152,3 +152,7 @@ def get_or_create_image(image_path):
             file=image_path,
         )
     return image
+
+
+def is_draft_requested(request):
+    return permissions.DraftTokenPermisison.TOKEN_PARAM in request.GET
