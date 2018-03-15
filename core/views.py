@@ -1,4 +1,5 @@
-from wagtail.api.v2.endpoints import BaseAPIEndpoint, PagesAPIEndpoint
+from wagtail.api.v2.endpoints import BaseAPIEndpoint
+from wagtail.wagtailadmin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailimages.models import Image
 
@@ -12,10 +13,12 @@ from config.signature import SignatureCheckPermission
 from core import forms, helpers, permissions
 
 
-class PagesOptionalDraftAPIEndpoint(PagesAPIEndpoint):
+class PagesOptionalDraftAPIEndpoint(PagesAdminAPIEndpoint):
     queryset = Page.objects.all()
     meta_fields = []
-    detail_only_fields = []
+    known_query_parameters = (
+        PagesAdminAPIEndpoint.known_query_parameters.union(['lang'])
+    )
 
     @classmethod
     def get_nested_default_fields(cls, model):
@@ -27,9 +30,6 @@ class PagesOptionalDraftAPIEndpoint(PagesAPIEndpoint):
         if helpers.is_draft_requested(self.request):
             permission_classes.append(permissions.DraftTokenPermisison)
         return permission_classes
-
-    def get_queryset(self):
-        return self.queryset
 
     def get_object(self):
         instance = super().get_object()
