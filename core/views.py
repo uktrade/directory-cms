@@ -15,11 +15,16 @@ from core import forms, helpers, permissions
 class PagesOptionalDraftAPIEndpoint(PagesAPIEndpoint):
     queryset = Page.objects.all()
     meta_fields = []
+    detail_only_fields = []
+
+    @classmethod
+    def get_nested_default_fields(cls, model):
+        return [field.name for field in model.api_fields]
 
     @property
     def permission_classes(self):
         permission_classes = [SignatureCheckPermission]
-        if permissions.DraftTokenPermisison.TOKEN_PARAM in self.request.GET:
+        if helpers.is_draft_requested(self.request):
             permission_classes.append(permissions.DraftTokenPermisison)
         return permission_classes
 
@@ -28,8 +33,8 @@ class PagesOptionalDraftAPIEndpoint(PagesAPIEndpoint):
 
     def get_object(self):
         instance = super().get_object()
-        if self.request.GET.get(permissions.DraftTokenPermisison.TOKEN_PARAM):
-            instance = instance.get_latest_revision_as_page()
+        if helpers.is_draft_requested(self.request):
+            instance = instance.get_latest_nested_revision_as_page()
         return instance
 
 
@@ -127,8 +132,8 @@ class PeloadPageView(FormView):
         for name, field in form.fields.items():
             if isinstance(field, ModelChoiceField) and name in kwargs['data']:
                 value = kwargs['data'][name]
-                if value not in ['None', None]:
-                    image = helpers.get_or_create_image(kwargs['data'][name])
+                if value not in ['', 'None', None]:
+                    image = helpers.get_or_create_image(value)
                     kwargs['data'][name] = image.pk
         return kwargs
 

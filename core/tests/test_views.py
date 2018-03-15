@@ -68,13 +68,17 @@ def test_api_draft(client, page_with_reversion):
     draft_response = client.get(url, {
         param: page_with_reversion.get_draft_token()
     })
+    draft_data = draft_response.json()
     published_response = client.get(url)
+    published_data = published_response.json()
 
     assert draft_response.status_code == 200
-    assert draft_response.json()['title'] == 'draft-title'
+    assert draft_data['title'] == 'draft-title'
+    assert draft_data['url'] == page_with_reversion.draft_url
 
     assert published_response.status_code == 200
-    assert published_response.json()['title'] == 'published-title'
+    assert published_data['title'] == 'published-title'
+    assert published_data['url'] == page_with_reversion.published_url
 
 
 @pytest.mark.django_db
@@ -105,12 +109,12 @@ def test_add_page_prepopulate(
     model_as_dict = model_to_dict(translated_page, exclude=[
         'go_live_at',
         'expire_at',
-        'case_study_image',
         'lede_column_one_icon',
         'lede_column_two_icon',
         'lede_column_three_icon',
         'hero_image',
     ])
+    model_as_dict = {key: val for key, val in model_as_dict.items() if val}
     post_data = {**model_as_dict, 'hero_image': image.file.name}
     expected_data = {**post_data, 'hero_image': str(image.pk)}
 
@@ -146,7 +150,6 @@ def test_add_page_prepopulate_missing_content_type(
 
     data = model_to_dict(translated_page, exclude=[
         'go_live_at',
-        'case_study_image',
         'expire_at',
         'hero_image',
     ])
@@ -218,7 +221,6 @@ def test_translate_page_not_called_always(
             'lede_en_gb': 'Good',
             'lede_column_three_en_gb': 'get this',
             'lede_column_two_en_gb': 'this good',
-            'case_study_en_gb': 'so good',
             'seo_description_en_gb': 'this is good',
             'hero_text_en_gb': 'good times',
             'sector_label_en_gb': 'Good',
