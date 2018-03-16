@@ -38,12 +38,13 @@ class BasePage(Page):
             return str(self.pk) == str(value)
 
     @property
+    def url_path_parts(self):
+        return [self.view_path, str(self.pk) + '/', self.slug + '/']
+
+    @property
     def published_url(self):
-        app_url = dict(constants.APP_URLS)[self.view_app]
-        url_parts = [
-            app_url, self.view_path, str(self.pk) + '/', self.slug + '/'
-        ]
-        return functools.reduce(urljoin, url_parts)
+        domain = dict(constants.APP_URLS)[self.view_app]
+        return functools.reduce(urljoin, [domain] + self.url_path_parts)
 
     @property
     def draft_url(self):

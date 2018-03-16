@@ -26,7 +26,7 @@ class PagesOptionalDraftAPIEndpoint(PagesAdminAPIEndpoint):
 
     @property
     def permission_classes(self):
-        permission_classes = [SignatureCheckPermission]
+        permission_classes = []#SignatureCheckPermission]
         if helpers.is_draft_requested(self.request):
             permission_classes.append(permissions.DraftTokenPermisison)
         return permission_classes

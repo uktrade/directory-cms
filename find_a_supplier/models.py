@@ -4,7 +4,6 @@ from wagtail.wagtailadmin.edit_handlers import (
 )
 from wagtail.api import APIField
 from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailimages.api.fields import ImageRenditionField
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from django.db import models
@@ -12,11 +11,68 @@ from django.db import models
 from core import constants
 from core.models import AddTranslationsBrokerFieldsMixin, BasePage
 from core.helpers import make_translated_interface
-from core.fields import APIHyperlinkField, APIRichTextField
+from core.fields import APIHyperlinkField, APIRichTextField, APIImageField
 
 
 class ImageChooserPanel(ImageChooserPanel):
     classname = ""
+
+
+class IndustryLandingPage(AddTranslationsBrokerFieldsMixin, BasePage):
+    view_app = constants.FIND_A_SUPPLIER
+    view_path = 'industries/'
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    proposition_text = models.CharField(max_length=500)
+    call_to_action_text = models.CharField(max_length=500)
+    breadcrumbs_label = models.CharField(max_length=500)
+    seo_description = models.CharField(max_length=1000)
+
+    @property
+    def url_path_parts(self):
+        return [self.view_path]
+
+    api_fields = [
+        APIImageField('hero_image'),
+        APIField('proposition_text'),
+        APIField('call_to_action_text'),
+        APIHyperlinkField('url'),
+        APIField('title'),
+        APIField('seo_description'),
+        APIField('breadcrumbs_label'),
+    ]
+
+    image_panels = [
+        ImageChooserPanel('hero_image'),
+    ]
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        FieldPanel('title'),
+        FieldRowPanel(
+            children=[
+                FieldPanel('proposition_text'),
+                FieldPanel('call_to_action_text'),
+            ],
+            classname='full field-row-panel'
+        ),
+        FieldPanel('slug'),
+        FieldPanel('seo_description'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        other_panels=[
+            ObjectList(image_panels, heading='Images'),
+        ]
+    )
 
 
 class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
@@ -155,37 +211,23 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
+        settings_panels=settings_panels,
         other_panels=[
-            ObjectList(
-                settings_panels, heading='Settings', classname='settings'
-            ),
             ObjectList(image_panels, heading='Images'),
             ObjectList(article_panels, heading='Articles')
         ]
     )
 
     api_fields = [
-        APIField(
-            'hero_image',
-            serializer=ImageRenditionField('original')
-        ),
+        APIField('hero_image'),
         APIField('hero_text'),
         APIField('lede'),
         APIField('lede_column_one'),
         APIField('lede_column_two'),
         APIField('lede_column_three'),
-        APIField(
-            'lede_column_one_icon',
-            serializer=ImageRenditionField('original')
-        ),
-        APIField(
-            'lede_column_two_icon',
-            serializer=ImageRenditionField('original')
-        ),
-        APIField(
-            'lede_column_three_icon',
-            serializer=ImageRenditionField('original')
-        ),
+        APIImageField('lede_column_one_icon'),
+        APIImageField('lede_column_two_icon'),
+        APIField('lede_column_three_icon'),
         APIField('sector_label'),
         APIField('sector_value'),
         APIField('seo_description'),
@@ -218,15 +260,10 @@ class IndustryArticlePage(AddTranslationsBrokerFieldsMixin, BasePage):
         FieldPanel('date'),
         FieldPanel('body', classname='full'),
     ]
-    settings_panels = BasePage.settings_panels
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
-        other_panels=[
-            ObjectList(
-                settings_panels, heading='Settings', classname='settings'
-            ),
-        ]
+        settings_panels=BasePage.settings_panels
     )
 
     api_fields = [

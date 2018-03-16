@@ -27,3 +27,13 @@ class IndustryArticlePageTranslationOptions(TranslationOptions):
         'date',
         'body',
     )
+
+
+@register(models.IndustryLandingPage)
+class IndustryLandingPageTranslationOptions(TranslationOptions):
+    fields = (
+        'proposition_text',
+        'call_to_action_text',
+        'breadcrumbs_label',
+        'seo_description',
+    )
