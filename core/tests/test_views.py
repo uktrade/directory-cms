@@ -243,3 +243,40 @@ def test_page_listing(translated_page, admin_client):
     response = admin_client.get(url)
 
     assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_lookup_by_page_type(translated_page, admin_client):
+    url = reverse(
+        'lookup-by-page-type',
+        kwargs={'page_type': 'find_a_supplier.IndustryPage'}
+    )
+
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    assert response.json()['id'] == translated_page.id
+
+
+@pytest.mark.django_db
+def test_lookup_by_page_type_misisng_page(admin_client):
+    url = reverse(
+        'lookup-by-page-type',
+        kwargs={'page_type': 'find_a_supplier.IndustryPage'}
+    )
+
+    response = admin_client.get(url)
+
+    assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_lookup_by_page_type_invalid_page_name(admin_client):
+    url = reverse(
+        'lookup-by-page-type',
+        kwargs={'page_type': 'find_a_supplier.IstryPage'}
+    )
+
+    response = admin_client.get(url)
+
+    assert response.status_code == 400

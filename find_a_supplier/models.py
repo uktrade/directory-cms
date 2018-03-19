@@ -219,7 +219,7 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
     )
 
     api_fields = [
-        APIField('hero_image'),
+        APIImageField('hero_image'),
         APIField('hero_text'),
         APIField('lede'),
         APIField('lede_column_one'),
