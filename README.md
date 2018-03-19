@@ -27,13 +27,6 @@ To use Docker in your local development environment you will also need the follo
 
 [Docker Compose >= 1.8](https://docs.docker.com/compose/install/)
 
-### SASS
-We use SASS CSS pre-compiler. If you're doing front-end work your local machine will also need the following dependencies:
-
-[node](https://nodejs.org/en/download/)
-
-[SASS](https://rubygems.org/gems/sass/versions/3.4.22)
-
 ## Running locally with Docker
 This requires all host environment variables to be set.
 
@@ -68,24 +61,6 @@ This requires all host environment variables to be set.
 ### Running the tests
 
     $ make debug_test
-
-### CSS development
-
-When doing front-end development work you will need to be able to compile SASS to CSS. First run:
-
-    $ npm install
-
-Then:
-
-    $ gulp sass
-
-...to compile sass. You can also watch for changes by running:
-
-    $ gulp sass:watch
-
-We add compiled CSS files to version control. This will sometimes result in conflicts if multiple developers are working on the same SASS files. However, by adding the compiled CSS to version control we avoid having to install node, npm, node-sass, etc to non-development machines.
-
-You should not edit CSS files directly, instead edit their SCSS counterparts.
 
 ## Session
 

@@ -29,3 +29,13 @@ def test_url_hyperlink_serializer_published(page, rf):
     actual = serializer.get_attribute(page)
 
     assert actual == page.published_url
+
+
+@pytest.mark.django_db
+def test_rich_text_serializer(page, rf):
+
+    serializer = serializers.APIRichTextSerializer()
+
+    actual = serializer.to_representation(page)
+
+    assert actual

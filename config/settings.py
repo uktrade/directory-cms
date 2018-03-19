@@ -307,13 +307,6 @@ HEALTH_CHECK_TOKEN = os.environ['HEALTH_CHECK_TOKEN']
 WAGTAIL_SITE_NAME = 'directory-cms'
 BASE_URL = os.environ['BASE_URL']
 
-# DRF
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'config.signature.SignatureCheckPermission',
-    ),
-}
-
 APP_URL_EXPORT_READINESS = os.environ['APP_URL_EXPORT_READINESS']
 APP_URL_FIND_A_SUPPLIER = os.environ['APP_URL_FIND_A_SUPPLIER']
 COPY_DESTINATION_URLS = os.environ['COPY_DESTINATION_URLS'].split(',')

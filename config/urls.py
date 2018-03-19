@@ -48,6 +48,16 @@ urlpatterns = [
     ),
 
     url(r'^api/', api_router.urls),
+    url(
+        r'^api/pages/lookup-by-type/(?P<page_type>[a-zA-Z\._]+)/',
+        api_router.wrap_view(
+            core.views.PageLookupByTypeAPIEndpoint.as_view(
+                {'get': 'detail_view'}
+            )
+        ),
+        name='lookup-by-page-type'
+    ),
+
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
 

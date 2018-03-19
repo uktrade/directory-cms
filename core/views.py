@@ -1,4 +1,8 @@
-from wagtail.api.v2.endpoints import BaseAPIEndpoint, PagesAPIEndpoint
+from wagtail.api.v2.endpoints import (
+    BaseAPIEndpoint, filter_page_type, page_models_from_string
+)
+from wagtail.api.v2.utils import BadRequestError
+from wagtail.wagtailadmin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailimages.models import Image
 
@@ -12,10 +16,12 @@ from config.signature import SignatureCheckPermission
 from core import forms, helpers, permissions
 
 
-class PagesOptionalDraftAPIEndpoint(PagesAPIEndpoint):
+class APIEndpointBase(PagesAdminAPIEndpoint):
     queryset = Page.objects.all()
     meta_fields = []
-    detail_only_fields = []
+    known_query_parameters = (
+        PagesAdminAPIEndpoint.known_query_parameters.union(['lang'])
+    )
 
     @classmethod
     def get_nested_default_fields(cls, model):
@@ -28,14 +34,34 @@ class PagesOptionalDraftAPIEndpoint(PagesAPIEndpoint):
             permission_classes.append(permissions.DraftTokenPermisison)
         return permission_classes
 
-    def get_queryset(self):
-        return self.queryset
 
+class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
     def get_object(self):
         instance = super().get_object()
         if helpers.is_draft_requested(self.request):
             instance = instance.get_latest_nested_revision_as_page()
         return instance
+
+
+class PageLookupByTypeAPIEndpoint(APIEndpointBase):
+    lookup_url_kwarg = 'page_type'
+    detail_only_fields = ['id']
+
+    def get_queryset(self):
+        try:
+            models = page_models_from_string(self.kwargs['page_type'])
+        except (LookupError, ValueError):
+            raise BadRequestError("type doesn't exist")
+        return filter_page_type(models[0].objects.all(), models)
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        if not queryset.exists():
+            raise Http404()
+        return queryset.first()
+
+    def detail_view(self, *args, **kwargs):
+        return super().detail_view(self.request, pk=None)
 
 
 class DraftRedirectView(BaseAPIEndpoint):

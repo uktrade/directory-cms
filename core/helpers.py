@@ -74,12 +74,23 @@ def make_language_panels(content_panels, language_code):
     return panels
 
 
-def make_translated_interface(content_panels, other_panels):
-    translated_panels = [
+def make_translated_interface(
+    content_panels, settings_panels=None, other_panels=None
+):
+    panels = [
         ObjectList(make_language_panels(content_panels, code), heading=name)
         for code, name in settings.LANGUAGES
     ]
-    return TabbedInterface(translated_panels + other_panels)
+
+    if settings_panels:
+        panels.append(
+            ObjectList(
+                settings_panels, classname='settings', heading='Settings'
+            )
+        )
+    if other_panels:
+        panels += other_panels
+    return TabbedInterface(panels)
 
 
 def get_language_from_querystring(request):
