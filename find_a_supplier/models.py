@@ -87,11 +87,11 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    hero_text = RichTextField()
-    lede = RichTextField()
-    lede_column_one = RichTextField()
-    lede_column_two = RichTextField()
-    lede_column_three = RichTextField()
+    hero_text = RichTextField(blank=False)
+    lede = RichTextField(blank=False)
+    lede_column_one = RichTextField(blank=False)
+    lede_column_two = RichTextField(blank=False)
+    lede_column_three = RichTextField(blank=False)
     lede_column_one_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -247,7 +247,7 @@ class IndustryArticlePage(AddTranslationsBrokerFieldsMixin, BasePage):
     view_app = constants.FIND_A_SUPPLIER
     view_path = 'industry-articles/'
 
-    body = RichTextField()
+    body = RichTextField(blank=False)
     author_name = models.CharField(max_length=255)
     job_title = models.CharField(max_length=255)
     date = models.DateField()

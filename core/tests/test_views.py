@@ -3,6 +3,7 @@ from unittest.mock import call, patch
 
 from bs4 import BeautifulSoup
 from directory_constants.constants import sectors
+import wagtail_factories
 
 from django.forms.models import model_to_dict
 from django.urls import reverse
@@ -109,14 +110,22 @@ def test_add_page_prepopulate(
     model_as_dict = model_to_dict(translated_page, exclude=[
         'go_live_at',
         'expire_at',
-        'lede_column_one_icon',
-        'lede_column_two_icon',
-        'lede_column_three_icon',
-        'hero_image',
     ])
     model_as_dict = {key: val for key, val in model_as_dict.items() if val}
-    post_data = {**model_as_dict, 'hero_image': image.file.name}
-    expected_data = {**post_data, 'hero_image': str(image.pk)}
+    post_data = {
+        **model_as_dict,
+        'hero_image': image.file.name,
+        'lede_column_one_icon_en_gb': image.file.name,
+        'lede_column_two_icon_en_gb': image.file.name,
+        'lede_column_three_icon_en_gb': image.file.name,
+    }
+    expected_data = {
+        **model_as_dict,
+        'hero_image': str(image.pk),
+        'lede_column_one_icon_en_gb': str(image.pk),
+        'lede_column_two_icon_en_gb': str(image.pk),
+        'lede_column_three_icon_en_gb': str(image.pk),
+    }
 
     response = admin_client.post(url, post_data)
 
@@ -163,7 +172,7 @@ def test_add_page_prepopulate_missing_content_type(
 @patch('wagtail.wagtailcore.models.Page.save_revision')
 def test_translate_page(
     mock_save_revision, mock_auto_populate_translations, translated_page,
-    admin_client, admin_user, settings
+    admin_client, admin_user, settings, image
 ):
     settings.LANGUAGES = [
         ['de', 'German'],
@@ -178,6 +187,16 @@ def test_translate_page(
             'sector_value': sectors.AUTOMOTIVE,
             'slug_en_gb': 'this-is-great',
             'title_en_gb': 'this-is-great',
+            'sector_label_en_gb': 'Mining',
+            'lede_en_gb': 'introduction',
+            'lede_column_one_en_gb': 'column one',
+            'lede_column_two_en_gb': 'column two',
+            'hero_text_en_gb': 'hero',
+            'lede_column_three_en_gb': 'column three',
+            'lede_column_one_icon_en_gb': image.pk,
+            'lede_column_two_icon_en_gb': image.pk,
+            'lede_column_three_icon_en_gb': image.pk,
+            'seo_description_en_gb': 'description',
         }
     )
 
@@ -208,9 +227,10 @@ def test_list_page(
 @patch('core.helpers.auto_populate_translations')
 def test_translate_page_not_called_always(
      mock_auto_populate_translations, translated_page, admin_client,
-     admin_user
+     admin_user,
 ):
     url = reverse('wagtailadmin_pages:edit', args=(translated_page.pk,))
+    image = wagtail_factories.ImageFactory()
 
     response = admin_client.post(
         url,
@@ -225,6 +245,9 @@ def test_translate_page_not_called_always(
             'hero_text_en_gb': 'good times',
             'sector_label_en_gb': 'Good',
             'lede_column_one_en_gb': 'goodies',
+            'lede_column_two_icon_en_gb': image.pk,
+            'lede_column_three_icon_en_gb': image.pk,
+            'lede_column_one_icon_en_gb': image.pk,
         }
     )
 

@@ -25,3 +25,12 @@ class IndustryPageFactory(wagtail_factories.PageFactory):
     title = factory.fuzzy.FuzzyText(length=255)
     slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
+    lede_column_two_icon_en_gb = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    lede_column_three_icon_en_gb = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    lede_column_one_icon_en_gb = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
