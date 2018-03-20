@@ -1,6 +1,9 @@
-from find_a_supplier import models
 from modeltranslation.translator import TranslationOptions
 from modeltranslation.decorators import register
+
+from django.conf import settings
+
+from find_a_supplier import models
 
 
 @register(models.IndustryPage)
@@ -17,6 +20,7 @@ class IndustryPageTranslationOptions(TranslationOptions):
         'lede_column_two_icon',
         'lede_column_three_icon',
     )
+    required_languages = (settings.LANGUAGE_CODE,)
 
 
 @register(models.IndustryArticlePage)
@@ -27,6 +31,7 @@ class IndustryArticlePageTranslationOptions(TranslationOptions):
         'date',
         'body',
     )
+    required_languages = (settings.LANGUAGE_CODE,)
 
 
 @register(models.IndustryLandingPage)
@@ -37,3 +42,4 @@ class IndustryLandingPageTranslationOptions(TranslationOptions):
         'breadcrumbs_label',
         'seo_description',
     )
+    required_languages = (settings.LANGUAGE_CODE,)
