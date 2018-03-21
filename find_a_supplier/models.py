@@ -227,7 +227,7 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
         APIField('lede_column_three'),
         APIImageField('lede_column_one_icon'),
         APIImageField('lede_column_two_icon'),
-        APIField('lede_column_three_icon'),
+        APIImageField('lede_column_three_icon'),
         APIField('sector_label'),
         APIField('sector_value'),
         APIField('seo_description'),
