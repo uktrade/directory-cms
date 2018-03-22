@@ -20,7 +20,9 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
     queryset = Page.objects.all()
     meta_fields = []
     known_query_parameters = (
-        PagesAdminAPIEndpoint.known_query_parameters.union(['lang'])
+        PagesAdminAPIEndpoint.known_query_parameters.union(
+            ['lang', 'draft_token']
+        )
     )
 
     @classmethod
@@ -34,13 +36,16 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
             permission_classes.append(permissions.DraftTokenPermisison)
         return permission_classes
 
+    def handle_serve_draft_object(self, instance):
+        if helpers.is_draft_requested(self.request):
+            instance = instance.get_latest_nested_revision_as_page()
+        return instance
+
 
 class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
     def get_object(self):
         instance = super().get_object()
-        if helpers.is_draft_requested(self.request):
-            instance = instance.get_latest_nested_revision_as_page()
-        return instance
+        return self.handle_serve_draft_object(instance)
 
 
 class PageLookupByTypeAPIEndpoint(APIEndpointBase):
@@ -58,7 +63,7 @@ class PageLookupByTypeAPIEndpoint(APIEndpointBase):
         queryset = self.get_queryset()
         if not queryset.exists():
             raise Http404()
-        return queryset.first()
+        return self.handle_serve_draft_object(queryset.first())
 
     def detail_view(self, *args, **kwargs):
         return super().detail_view(self.request, pk=None)

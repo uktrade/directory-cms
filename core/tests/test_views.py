@@ -303,3 +303,28 @@ def test_lookup_by_page_type_invalid_page_name(admin_client):
     response = admin_client.get(url)
 
     assert response.status_code == 400
+
+
+@pytest.mark.django_db
+def test_lookup_by_page_type_draft(page_with_reversion, client):
+    url = reverse(
+        'lookup-by-page-type',
+        kwargs={'page_type': 'find_a_supplier.IndustryPage'}
+    )
+
+    param = permissions.DraftTokenPermisison.TOKEN_PARAM
+
+    draft_response = client.get(url, {
+        param: page_with_reversion.get_draft_token()
+    })
+    draft_data = draft_response.json()
+    published_response = client.get(url)
+    published_data = published_response.json()
+
+    assert draft_response.status_code == 200
+    assert draft_data['title'] == 'draft-title'
+    assert draft_data['url'] == page_with_reversion.draft_url
+
+    assert published_response.status_code == 200
+    assert published_data['title'] == 'published-title'
+    assert published_data['url'] == page_with_reversion.published_url
