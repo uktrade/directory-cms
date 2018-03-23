@@ -9,16 +9,18 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from django.db import models
 
 from core import constants
-from core.models import AddTranslationsBrokerFieldsMixin, BasePage
+from core.models import BasePage
 from core.helpers import make_translated_interface
-from core.fields import APIHyperlinkField, APIRichTextField, APIImageField
+from core.fields import (
+    APIHyperlinkField, APIRichTextField, APIImageField, APITranslationsField
+)
 
 
 class ImageChooserPanel(ImageChooserPanel):
     classname = ""
 
 
-class IndustryLandingPage(AddTranslationsBrokerFieldsMixin, BasePage):
+class IndustryLandingPage(BasePage):
     view_app = constants.FIND_A_SUPPLIER
     view_path = 'industries/'
 
@@ -47,6 +49,7 @@ class IndustryLandingPage(AddTranslationsBrokerFieldsMixin, BasePage):
         APIField('title'),
         APIField('seo_description'),
         APIField('breadcrumbs_label'),
+        APITranslationsField('languages'),
     ]
 
     image_panels = [
@@ -75,7 +78,7 @@ class IndustryLandingPage(AddTranslationsBrokerFieldsMixin, BasePage):
     )
 
 
-class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
+class IndustryPage(BasePage):
 
     view_app = constants.FIND_A_SUPPLIER
     view_path = 'industries/'
@@ -245,10 +248,11 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
         APIField('article_five'),
         APIField('article_six'),
         APIHyperlinkField('url'),
+        APITranslationsField('languages'),
     ]
 
 
-class IndustryArticlePage(AddTranslationsBrokerFieldsMixin, BasePage):
+class IndustryArticlePage(BasePage):
 
     view_app = constants.FIND_A_SUPPLIER
     view_path = 'industry-articles/'
@@ -279,10 +283,11 @@ class IndustryArticlePage(AddTranslationsBrokerFieldsMixin, BasePage):
         APIRichTextField('body'),
         APIField('title'),
         APIHyperlinkField('url'),
+        APITranslationsField('languages'),
     ]
 
 
-class LandingPage(AddTranslationsBrokerFieldsMixin, BasePage):
+class LandingPage(BasePage):
     view_app = constants.FIND_A_SUPPLIER
     view_path = '/'
 
@@ -409,6 +414,7 @@ class LandingPage(AddTranslationsBrokerFieldsMixin, BasePage):
         APIField('seo_description'),
         APIHyperlinkField('url'),
         APIField('title'),
+        APITranslationsField('languages'),
     ]
 
     image_panels = [

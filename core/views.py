@@ -6,10 +6,12 @@ from wagtail.wagtailadmin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailimages.models import Image
 
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.forms.models import model_to_dict, ModelChoiceField
 from django.shortcuts import get_object_or_404, redirect, Http404
 from django.template.response import TemplateResponse
+from django.utils import translation
 from django.views.generic.edit import FormView
 
 from config.signature import SignatureCheckPermission
@@ -41,11 +43,19 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
             instance = instance.get_latest_nested_revision_as_page()
         return instance
 
+    def handle_activate_language(self, instance):
+        if translation.get_language() not in instance.translated_languages:
+            translation.activate(settings.LANGUAGE_CODE)
 
-class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
     def get_object(self):
         instance = super().get_object()
-        return self.handle_serve_draft_object(instance)
+        instance = self.handle_serve_draft_object(instance)
+        self.handle_activate_language(instance)
+        return instance
+
+
+class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
+    pass
 
 
 class PageLookupByTypeAPIEndpoint(APIEndpointBase):
@@ -63,7 +73,10 @@ class PageLookupByTypeAPIEndpoint(APIEndpointBase):
         queryset = self.get_queryset()
         if not queryset.exists():
             raise Http404()
-        return self.handle_serve_draft_object(queryset.first())
+        instance = queryset.first()
+        instance = self.handle_serve_draft_object(instance)
+        self.handle_activate_language(instance)
+        return instance
 
     def detail_view(self, *args, **kwargs):
         return super().detail_view(self.request, pk=None)

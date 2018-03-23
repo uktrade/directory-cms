@@ -69,6 +69,6 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(core.models.AddTranslationsBrokerFieldsMixin, 'wagtailcore.page'),
+            bases=('wagtailcore.page',),
         ),
     ]

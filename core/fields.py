@@ -23,3 +23,9 @@ class APIImageField(APIField):
     def __init__(self, name):
         serializer = ImageRenditionField('original')
         super().__init__(name=name, serializer=serializer)
+
+
+class APITranslationsField(APIField):
+    def __init__(self, name):
+        serializer = serializers.APITranslationsSerializer(name)
+        super().__init__(name=name, serializer=serializer)
