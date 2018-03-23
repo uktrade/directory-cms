@@ -43,3 +43,27 @@ class IndustryLandingPageTranslationOptions(TranslationOptions):
         'seo_description',
     )
     required_languages = (settings.LANGUAGE_CODE,)
+
+
+@register(models.LandingPage)
+class LandingPageTranslationOptions(TranslationOptions):
+    fields = (
+        'hero_text',
+        'search_field_placeholder',
+        'search_button_text',
+        'proposition_text',
+        'call_to_action_text',
+        'industries_list_text',
+        'industries_list_call_to_action_text',
+        'services_list_text',
+        'services_column_one',
+        'services_column_two',
+        'services_column_three',
+        'services_column_four',
+        'services_column_one_icon',
+        'services_column_two_icon',
+        'services_column_three_icon',
+        'services_column_four_icon',
+        'seo_description',
+    )
+    required_languages = (settings.LANGUAGE_CODE,)

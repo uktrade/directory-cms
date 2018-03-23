@@ -3,12 +3,7 @@ body .object fieldset {
 }
 
 .field-row-panel {
-	width: 91.75%;
 	padding-bottom: 20px;
-}
-
-.field-row-panel .field-col.model_choice_field {
-	width: 33.33%
 }
 
 .tab-nav li a,
@@ -17,7 +12,7 @@ body .object fieldset {
 	padding-right: 10px;
 }
 
-.admin_image_chooser label{
+label{
 	width: 100%;
 }
 
@@ -27,4 +22,13 @@ body .image-chooser .chosen .preview-image {
 
 body .image-chooser .chosen {
 	padding-left: 0;
+}
+
+.field-col.multi-field {
+	padding: 0;
+}
+
+.field-content {
+	clear: both;
+	width: 100%!important;
 }

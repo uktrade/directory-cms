@@ -1,6 +1,6 @@
 from directory_constants.constants import choices
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, FieldRowPanel, ObjectList, PageChooserPanel
+    FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList, PageChooserPanel
 )
 from wagtail.api import APIField
 from wagtail.wagtailcore.fields import RichTextField
@@ -169,22 +169,28 @@ class IndustryPage(AddTranslationsBrokerFieldsMixin, BasePage):
     ]
     content_panels = [
         FieldPanel('hero_text', classname='full'),
-        FieldPanel('lede', classname='full'),
-        FieldRowPanel(
+        MultiFieldPanel(
+            heading='Introduction',
             children=[
-                FieldPanel('lede_column_one'),
-                FieldPanel('lede_column_two'),
-                FieldPanel('lede_column_three'),
-            ],
-            classname='full field-row-panel'
-        ),
-        FieldRowPanel(
-            children=[
-                ImageChooserPanel('lede_column_one_icon'),
-                ImageChooserPanel('lede_column_two_icon'),
-                ImageChooserPanel('lede_column_three_icon'),
-            ],
-            classname='full field-row-panel'
+                FieldPanel('lede', classname='full'),
+                FieldRowPanel(
+                    classname='full field-row-panel',
+                    children=[
+                        MultiFieldPanel([
+                            FieldPanel('lede_column_one'),
+                            ImageChooserPanel('lede_column_one_icon'),
+                        ]),
+                        MultiFieldPanel([
+                            FieldPanel('lede_column_two'),
+                            ImageChooserPanel('lede_column_two_icon'),
+                        ]),
+                        MultiFieldPanel([
+                            FieldPanel('lede_column_three'),
+                            ImageChooserPanel('lede_column_three_icon'),
+                        ])
+                    ]
+                )
+            ]
         ),
         FieldPanel('sector_label'),
         FieldPanel('slug'),
@@ -274,3 +280,218 @@ class IndustryArticlePage(AddTranslationsBrokerFieldsMixin, BasePage):
         APIField('title'),
         APIHyperlinkField('url'),
     ]
+
+
+class LandingPage(AddTranslationsBrokerFieldsMixin, BasePage):
+    view_app = constants.FIND_A_SUPPLIER
+    view_path = '/'
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    hero_text = RichTextField(blank=False)
+    search_field_placeholder = models.CharField(max_length=500)
+    search_button_text = models.CharField(max_length=500)
+    proposition_text = RichTextField(blank=False)
+    call_to_action_text = models.CharField(max_length=500)
+    industries_list_text = RichTextField(blank=False)
+    industries_list_call_to_action_text = models.CharField(max_length=500)
+    services_list_text = RichTextField(blank=False)
+    services_column_one = RichTextField(blank=False)
+    services_column_two = RichTextField(blank=False)
+    services_column_three = RichTextField(blank=False)
+    services_column_four = RichTextField(blank=False)
+    services_column_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    services_column_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    services_column_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    services_column_four_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    article_one = models.ForeignKey(
+        'find_a_supplier.IndustryArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    article_two = models.ForeignKey(
+        'find_a_supplier.IndustryArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    article_three = models.ForeignKey(
+        'find_a_supplier.IndustryArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    article_four = models.ForeignKey(
+        'find_a_supplier.IndustryArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    article_five = models.ForeignKey(
+        'find_a_supplier.IndustryArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    article_six = models.ForeignKey(
+        'find_a_supplier.IndustryArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    seo_description = models.CharField(max_length=1000)
+
+    @property
+    def url_path_parts(self):
+        return [self.view_path]
+
+    api_fields = [
+        APIImageField('hero_image'),
+        APIRichTextField('hero_text'),
+        APIField('search_field_placeholder'),
+        APIField('search_button_text'),
+        APIRichTextField('proposition_text'),
+        APIField('call_to_action_text'),
+        APIRichTextField('industries_list_text'),
+        APIField('industries_list_call_to_action_text'),
+        APIRichTextField('services_list_text'),
+        APIRichTextField('services_column_one'),
+        APIRichTextField('services_column_two'),
+        APIRichTextField('services_column_three'),
+        APIRichTextField('services_column_four'),
+        APIImageField('services_column_one_icon'),
+        APIImageField('services_column_two_icon'),
+        APIImageField('services_column_three_icon'),
+        APIImageField('services_column_four_icon'),
+        APIField('article_one'),
+        APIField('article_two'),
+        APIField('article_three'),
+        APIField('article_four'),
+        APIField('article_five'),
+        APIField('article_six'),
+        APIField('seo_description'),
+        APIHyperlinkField('url'),
+        APIField('title'),
+    ]
+
+    image_panels = [
+        ImageChooserPanel('hero_image'),
+    ]
+    article_panels = [
+        PageChooserPanel('article_one', 'find_a_supplier.IndustryArticlePage'),
+        PageChooserPanel('article_two', 'find_a_supplier.IndustryArticlePage'),
+        PageChooserPanel(
+            'article_three', 'find_a_supplier.IndustryArticlePage'
+        ),
+        PageChooserPanel(
+            'article_four', 'find_a_supplier.IndustryArticlePage'
+        ),
+        PageChooserPanel(
+            'article_five', 'find_a_supplier.IndustryArticlePage'
+        ),
+        PageChooserPanel('article_six', 'find_a_supplier.IndustryArticlePage'),
+    ]
+
+    content_panels = [
+        FieldPanel('title'),
+        MultiFieldPanel(
+            heading='Hero',
+            children=[
+                FieldPanel('hero_text'),
+                FieldPanel('search_field_placeholder'),
+                FieldPanel('search_button_text'),
+            ],
+            classname='collapsible',
+        ),
+        MultiFieldPanel(
+            heading='Contact us',
+            children=[
+                FieldPanel('proposition_text'),
+                FieldPanel('call_to_action_text'),
+            ],
+            classname='collapsible',
+        ),
+        MultiFieldPanel(
+            heading='Industries',
+            children=[
+                FieldPanel('industries_list_text'),
+                FieldPanel('industries_list_call_to_action_text'),
+            ],
+            classname='collapsible',
+        ),
+        MultiFieldPanel(
+            heading='Services',
+            children=[
+                FieldPanel('services_list_text'),
+                FieldRowPanel(
+                    classname='full field-row-panel',
+                    children=[
+                        MultiFieldPanel([
+                            ImageChooserPanel('services_column_one_icon'),
+                            FieldPanel('services_column_one'),
+                        ]),
+                        MultiFieldPanel([
+                            ImageChooserPanel('services_column_two_icon'),
+                            FieldPanel('services_column_two'),
+                        ]),
+                        MultiFieldPanel([
+                            ImageChooserPanel('services_column_three_icon'),
+                            FieldPanel('services_column_three'),
+                        ]),
+                        MultiFieldPanel([
+                            ImageChooserPanel('services_column_four_icon'),
+                            FieldPanel('services_column_four'),
+                        ]),
+                    ]
+                ),
+            ],
+            classname='collapsible',
+        ),
+        FieldPanel('slug'),
+        FieldPanel('seo_description'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        other_panels=[
+            ObjectList(image_panels, heading='Images'),
+            ObjectList(article_panels, heading='Articles'),
+        ]
+    )

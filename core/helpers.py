@@ -21,7 +21,7 @@ def build_translated_fieldname(field_name):
     return 'translated_' + field_name
 
 
-def make_language_panel(untranslated_panel, language_code):
+def translate_panel(panel, language_code):
     """Convert an English admin editor field ("panel") to e.g, French.
 
     That is achieved by cloning the English panel and then changing the
@@ -30,8 +30,10 @@ def make_language_panel(untranslated_panel, language_code):
     Some panels are not fields, but really are fieldsets (which have no name)
     so we just clone then without trying to set the name.
 
+    Some panels have child panels, so those child panels are translated too.
+
     Arguments:
-        untranslated_panel {Panel} -- English panel to convert
+        panel {Panel} -- English panel to convert
         language_code {str} -- Target conversion language
 
     Returns:
@@ -39,48 +41,29 @@ def make_language_panel(untranslated_panel, language_code):
 
     """
 
-    panel = copy.deepcopy(untranslated_panel)
+    panel = copy.deepcopy(panel)
     if hasattr(panel, 'field_name'):
         panel.field_name = build_localized_fieldname(
-            field_name=untranslated_panel.field_name, lang=language_code
+            field_name=panel.field_name, lang=language_code
         )
+    if hasattr(panel, 'children'):
+        panel.children = [
+            translate_panel(child, language_code) for child in panel.children
+        ]
     return panel
-
-
-def make_language_panels(content_panels, language_code):
-    """Convert English admin editor fields ("panels") to e.g, French.
-
-    Given a list of panels with names such as "intro" and "image"
-    return a new list of panels with names such as "intro_fr" and "image_fr".
-
-    Arguments:
-        content_panels {Panel[]} -- English panels to convert
-        language_code {str} -- Target conversion language
-
-    Returns:
-        Panel[] -- Translated panels
-
-    """
-
-    translated_panel_builder = functools.partial(
-        make_language_panel, language_code=language_code
-    )
-    panels = []
-    for untranslated_panel in content_panels:
-        panel = translated_panel_builder(untranslated_panel)
-        if hasattr(panel, 'children'):
-            panel.children = map(translated_panel_builder, panel.children)
-        panels.append(panel)
-    return panels
 
 
 def make_translated_interface(
     content_panels, settings_panels=None, other_panels=None
 ):
-    panels = [
-        ObjectList(make_language_panels(content_panels, code), heading=name)
-        for code, name in settings.LANGUAGES
-    ]
+    panels = []
+    for code, name in settings.LANGUAGES:
+        panels.append(
+            ObjectList(
+                [translate_panel(panel, code) for panel in content_panels],
+                heading=name
+            )
+        )
 
     if settings_panels:
         panels.append(
