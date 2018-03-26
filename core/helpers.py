@@ -17,10 +17,6 @@ from django.utils.text import slugify, Truncator
 from core import models, permissions
 
 
-def build_translated_fieldname(field_name):
-    return 'translated_' + field_name
-
-
 def translate_panel(panel, language_code):
     """Convert an English admin editor field ("panel") to e.g, French.
 

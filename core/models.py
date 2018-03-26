@@ -1,10 +1,9 @@
-import functools
+from functools import partial, reduce
 import hashlib
 from urllib.parse import urljoin
 
 from modeltranslation.translator import translator
 from modeltranslation.utils import build_localized_fieldname
-from rest_framework.fields import CharField
 from wagtail.wagtailcore.models import Page
 
 from django.core import signing
@@ -12,7 +11,7 @@ from django.db import models
 from django.shortcuts import redirect
 from django.utils import translation
 
-from core import constants, helpers
+from core import constants
 
 
 class BasePage(Page):
@@ -44,7 +43,7 @@ class BasePage(Page):
     @property
     def published_url(self):
         domain = dict(constants.APP_URLS)[self.view_app]
-        return functools.reduce(urljoin, [domain] + self.url_path_parts)
+        return reduce(urljoin, [domain] + self.url_path_parts)
 
     @property
     def draft_url(self):
@@ -65,58 +64,25 @@ class BasePage(Page):
                 setattr(revision, name, field.get_latest_revision_as_page())
         return revision
 
-
-class TranslationsBrokerField:
-    def __init__(self, field_name):
-        self.field_name = field_name
-
-    def __get__(self, instance, owner):
-        language_code = translation.get_language()
-        field_name = build_localized_fieldname(self.field_name, language_code)
-        if instance:
-            return getattr(instance, field_name)
-
-
-class AddTranslationsBrokerFieldsMixin:
-    """
-    For each field specified as "translatable" via modeltranslation's
-    translation.py, add a field to the model called `translated_<FIELD>`,
-    which will return different content depending on the value returned by
-    Django's `translation.get_language()`.
-
-    e.g., `translated_title` will return `title_de` if the current language is
-    German.
-
-    """
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.add_translations_broker_fields()
-        self.add_translations_broker_api_fields()
-
     @classmethod
     def get_translatable_fields(cls):
         return list(translator.get_options_for_model(cls).fields.keys())
 
     @classmethod
-    def add_translations_broker_fields(cls):
-        for field_name in cls.get_translatable_fields():
-            setattr(
-                cls,
-                helpers.build_translated_fieldname(field_name),
-                TranslationsBrokerField(field_name)
-            )
+    def get_required_translatable_fields(cls):
+        names = cls.get_translatable_fields()
+        return [name for name in names if not cls._meta.get_field(name).blank]
 
-    @classmethod
-    def add_translations_broker_api_fields(cls):
-        translated_fields = cls.get_translatable_fields()
-        for api_field in cls.api_fields:
-            if api_field.name in translated_fields:
-                source = helpers.build_translated_fieldname(api_field.name)
-                if api_field.serializer:
-                    api_field.serializer.source = source
-                else:
-                    api_field.serializer = CharField(source=source)
+    @property
+    def translated_languages(self):
+        fields = self.get_required_translatable_fields()
+        language_codes = translation.trans_real.get_languages()
+        translated_languages = []
+        for language_code in language_codes:
+            builder = partial(build_localized_fieldname, lang=language_code)
+            if all(getattr(self, builder(name)) for name in fields):
+                translated_languages.append(language_code)
+        return translated_languages
 
 
 class ImageHash(models.Model):

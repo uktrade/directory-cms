@@ -136,18 +136,20 @@ USE_L10N = True
 USE_TZ = True
 
 # https://github.com/django/django/blob/master/django/conf/locale/__init__.py
-LANGUAGES = (
-    ('en-gb', 'English'),
-    ('de', 'German'),
-    ('ja', 'Japanese'),
-    ('ru', 'Russian'),
-    ('zh-hans', 'Simplified Chinese'),
-    ('fr', 'French'),
-    ('es', 'Spanish'),
-    ('pt', 'Portuguese'),
-    ('pt-br', 'Portuguese (Brazilian)'),
-    ('ar', 'Arabic'),
+LANGUAGES_DETAILS = (
+    ('en-gb', 'English', 'English'),
+    ('de', 'German', 'Deutsch'),
+    ('ja', 'Japanese', '日本語'),
+    ('ru', 'Russian', 'Russian'),
+    ('zh-hans', 'Simplified Chinese', '简体中文'),
+    ('fr', 'French', 'Français'),
+    ('es', 'Spanish', 'español'),
+    ('pt', 'Portuguese', 'Português'),
+    ('pt-br', 'Portuguese (Brazilian)', 'Português Brasileiro'),
+    ('ar', 'Arabic', 'العربيّة'),
 )
+LANGUAGES = [(code, label) for code, label, _ in LANGUAGES_DETAILS]
+LANGUAGES_LOCALIZED = [(code, label) for code, _, label in LANGUAGES_DETAILS]
 
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
@@ -189,6 +191,36 @@ if DEBUG:
                 'propagate': False,
             },
             'requests': {
+                'handlers': ['console'],
+                'level': 'WARNING',
+                'propagate': False,
+            },
+            'boto3': {
+                'handlers': ['console'],
+                'level': 'WARNING',
+                'propagate': False,
+            },
+            'botocore': {
+                'handlers': ['console'],
+                'level': 'WARNING',
+                'propagate': False,
+            },
+            's3transfer': {
+                'handlers': ['console'],
+                'level': 'WARNING',
+                'propagate': False,
+            },
+            'storages': {
+                'handlers': ['console'],
+                'level': 'WARNING',
+                'propagate': False,
+            },
+            'wagtail_factories': {
+                'handlers': ['console'],
+                'level': 'WARNING',
+                'propagate': False,
+            },
+            'factory': {
                 'handlers': ['console'],
                 'level': 'WARNING',
                 'propagate': False,

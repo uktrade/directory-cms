@@ -61,6 +61,20 @@ def test_api_translations(client, translated_page, languaue_code, expected):
     assert response.json()['title'] == expected
 
 
+@pytest.mark.parametrize('languaue_code', (
+    'en-gb' 'de' 'ja', 'zh-hans', 'fr', 'es', 'pt', 'pt-br', 'ar',
+))
+@pytest.mark.django_db
+def test_api_translations_not_populated(
+    client, untranslated_page, languaue_code
+):
+    url = reverse('api:pages:detail', kwargs={'pk': untranslated_page.pk})
+    response = client.get(url, {'lang': languaue_code})
+
+    assert response.status_code == 200
+    assert response.json()['title'] == 'ENGLISH'
+
+
 @pytest.mark.django_db
 def test_api_draft(client, page_with_reversion):
     url = reverse('api:pages:detail', kwargs={'pk': page_with_reversion.pk})
@@ -328,3 +342,56 @@ def test_lookup_by_page_type_draft(page_with_reversion, client):
     assert published_response.status_code == 200
     assert published_data['title'] == 'published-title'
     assert published_data['url'] == page_with_reversion.published_url
+
+
+@pytest.mark.django_db
+def test_translations_exposed(page, translated_page, settings, client):
+    url = reverse('api:pages:detail', kwargs={'pk': translated_page.pk})
+
+    response = client.get(url)
+
+    expected = [[code, label] for code, label in settings.LANGUAGES_LOCALIZED]
+
+    assert response.json()['languages'] == expected
+
+
+@pytest.mark.parametrize('languaue_code', (
+    'en-gb' 'de' 'ja', 'zh-hans', 'fr', 'es', 'pt', 'pt-br', 'ar',
+))
+@pytest.mark.django_db
+def test_lookup_by_page_type_translations_not_populated(
+    client, untranslated_page, languaue_code
+):
+    url = reverse(
+        'lookup-by-page-type',
+        kwargs={'page_type': 'find_a_supplier.IndustryPage'}
+    )
+    response = client.get(url, {'lang': languaue_code})
+
+    assert response.status_code == 200
+    assert response.json()['title'] == 'ENGLISH'
+
+
+@pytest.mark.parametrize('languaue_code,expected', (
+    ('en-gb', 'ENGLISH'),
+    ('de', 'GERMAN'),
+    ('ja', 'JAPANESE'),
+    ('zh-hans', 'SIMPLIFIED CHINESE'),
+    ('fr', 'FRENCH'),
+    ('es', 'SPANISH'),
+    ('pt', 'PORTUGUESE'),
+    ('pt-br', 'BRAZILIAN'),
+    ('ar', 'ARABIC'),
+))
+@pytest.mark.django_db
+def test_lookup_by_page_type_translations(
+    client, translated_page, languaue_code, expected
+):
+    url = reverse(
+        'lookup-by-page-type',
+        kwargs={'page_type': 'find_a_supplier.IndustryPage'}
+    )
+    response = client.get(url, {'lang': languaue_code})
+
+    assert response.status_code == 200
+    assert response.json()['title'] == expected

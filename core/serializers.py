@@ -1,6 +1,8 @@
 from rest_framework import fields
 from wagtail.wagtailcore.rich_text import expand_db_html
 
+from django.conf import settings
+
 from core import helpers
 
 
@@ -26,3 +28,11 @@ class APIRichTextSerializer(fields.CharField):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         return expand_db_html(representation)
+
+
+class APITranslationsSerializer(fields.ListField):
+    def get_attribute(self, instance):
+        return [
+            (code, label) for (code, label) in settings.LANGUAGES_LOCALIZED
+            if code in instance.translated_languages
+        ]
