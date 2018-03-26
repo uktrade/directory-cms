@@ -129,16 +129,16 @@ def test_add_page_prepopulate(
     post_data = {
         **model_as_dict,
         'hero_image': image.file.name,
-        'lede_column_one_icon_en_gb': image.file.name,
-        'lede_column_two_icon_en_gb': image.file.name,
-        'lede_column_three_icon_en_gb': image.file.name,
+        'introduction_column_one_icon_en_gb': image.file.name,
+        'introduction_column_two_icon_en_gb': image.file.name,
+        'introduction_column_three_icon_en_gb': image.file.name,
     }
     expected_data = {
         **model_as_dict,
         'hero_image': str(image.pk),
-        'lede_column_one_icon_en_gb': str(image.pk),
-        'lede_column_two_icon_en_gb': str(image.pk),
-        'lede_column_three_icon_en_gb': str(image.pk),
+        'introduction_column_one_icon_en_gb': str(image.pk),
+        'introduction_column_two_icon_en_gb': str(image.pk),
+        'introduction_column_three_icon_en_gb': str(image.pk),
     }
 
     response = admin_client.post(url, post_data)
@@ -202,14 +202,17 @@ def test_translate_page(
             'slug_en_gb': 'this-is-great',
             'title_en_gb': 'this-is-great',
             'sector_label_en_gb': 'Mining',
-            'lede_en_gb': 'introduction',
-            'lede_column_one_en_gb': 'column one',
-            'lede_column_two_en_gb': 'column two',
+            'introduction_text_en_gb': 'introduction',
+            'introduction_column_one_text_en_gb': 'column one',
+            'introduction_column_two_text_en_gb': 'column two',
             'hero_text_en_gb': 'hero',
-            'lede_column_three_en_gb': 'column three',
-            'lede_column_one_icon_en_gb': image.pk,
-            'lede_column_two_icon_en_gb': image.pk,
-            'lede_column_three_icon_en_gb': image.pk,
+            'introduction_column_three_text_en_gb': 'column three',
+            'company_list_text_en_gb': 'companies',
+            'company_list_call_to_action_text_en_gb': 'view all',
+            'introduction_column_two_icon_en_gb': image.pk,
+            'introduction_column_one_icon_en_gb': image.pk,
+            'introduction_column_two_icon_en_gb': image.pk,
+            'introduction_column_three_icon_en_gb': image.pk,
             'seo_description_en_gb': 'description',
         }
     )
@@ -252,16 +255,18 @@ def test_translate_page_not_called_always(
             'sector_value': sectors.AUTOMOTIVE,
             'slug_en_gb': 'this-is-great',
             'title_en_gb': 'this-is-great',
-            'lede_en_gb': 'Good',
-            'lede_column_three_en_gb': 'get this',
-            'lede_column_two_en_gb': 'this good',
+            'introduction_text_en_gb': 'Good',
+            'introduction_column_three_text_en_gb': 'get this',
+            'introduction_column_two_text_en_gb': 'this good',
             'seo_description_en_gb': 'this is good',
             'hero_text_en_gb': 'good times',
             'sector_label_en_gb': 'Good',
-            'lede_column_one_en_gb': 'goodies',
-            'lede_column_two_icon_en_gb': image.pk,
-            'lede_column_three_icon_en_gb': image.pk,
-            'lede_column_one_icon_en_gb': image.pk,
+            'introduction_column_one_text_en_gb': 'goodies',
+            'company_list_text_en_gb': 'companies',
+            'company_list_call_to_action_text_en_gb': 'view all',
+            'introduction_column_two_icon_en_gb': image.pk,
+            'introduction_column_three_icon_en_gb': image.pk,
+            'introduction_column_one_icon_en_gb': image.pk,
         }
     )
 

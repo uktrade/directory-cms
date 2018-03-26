@@ -91,25 +91,25 @@ class IndustryPage(BasePage):
         related_name='+'
     )
     hero_text = RichTextField(blank=False)
-    lede = RichTextField(blank=False)
-    lede_column_one = RichTextField(blank=False)
-    lede_column_two = RichTextField(blank=False)
-    lede_column_three = RichTextField(blank=False)
-    lede_column_one_icon = models.ForeignKey(
+    introduction_text = RichTextField(blank=False)
+    introduction_column_one_text = RichTextField(blank=False)
+    introduction_column_two_text = RichTextField(blank=False)
+    introduction_column_three_text = RichTextField(blank=False)
+    introduction_column_one_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    lede_column_two_icon = models.ForeignKey(
+    introduction_column_two_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    lede_column_three_icon = models.ForeignKey(
+    introduction_column_three_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
@@ -122,6 +122,12 @@ class IndustryPage(BasePage):
     sector_value = models.CharField(
         max_length=255,
         choices=choices.INDUSTRIES,
+    )
+    company_list_text = RichTextField(
+        blank=False,
+    )
+    company_list_call_to_action_text = models.CharField(
+        max_length=255,
     )
     seo_description = models.CharField(max_length=1000)
 
@@ -171,34 +177,53 @@ class IndustryPage(BasePage):
         ImageChooserPanel('hero_image'),
     ]
     content_panels = [
-        FieldPanel('hero_text', classname='full'),
+        MultiFieldPanel(
+            heading='Hero',
+            children=[
+                FieldPanel('hero_text', classname='full'),
+                FieldPanel('sector_label'),
+            ]
+        ),
         MultiFieldPanel(
             heading='Introduction',
             children=[
-                FieldPanel('lede', classname='full'),
+                FieldPanel('introduction_text', classname='full'),
                 FieldRowPanel(
                     classname='full field-row-panel',
                     children=[
                         MultiFieldPanel([
-                            FieldPanel('lede_column_one'),
-                            ImageChooserPanel('lede_column_one_icon'),
+                            FieldPanel('introduction_column_one_text'),
+                            ImageChooserPanel('introduction_column_one_icon'),
                         ]),
                         MultiFieldPanel([
-                            FieldPanel('lede_column_two'),
-                            ImageChooserPanel('lede_column_two_icon'),
+                            FieldPanel('introduction_column_two_text'),
+                            ImageChooserPanel('introduction_column_two_icon'),
                         ]),
                         MultiFieldPanel([
-                            FieldPanel('lede_column_three'),
-                            ImageChooserPanel('lede_column_three_icon'),
+                            FieldPanel('introduction_column_three_text'),
+                            ImageChooserPanel(
+                                'introduction_column_three_icon'
+                            ),
                         ])
                     ]
                 )
             ]
         ),
-        FieldPanel('sector_label'),
-        FieldPanel('slug'),
-        FieldPanel('seo_description'),
-        FieldPanel('title'),
+        MultiFieldPanel(
+            heading='Companies',
+            children=[
+                FieldPanel('company_list_text'),
+                FieldPanel('company_list_call_to_action_text'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Search Engine Optimisation',
+            children=[
+                FieldPanel('slug'),
+                FieldPanel('seo_description'),
+                FieldPanel('title'),
+            ]
+        )
     ]
     settings_panels = BasePage.settings_panels + [
         FieldPanel('sector_value'),
@@ -230,13 +255,13 @@ class IndustryPage(BasePage):
     api_fields = [
         APIImageField('hero_image'),
         APIField('hero_text'),
-        APIField('lede'),
-        APIField('lede_column_one'),
-        APIField('lede_column_two'),
-        APIField('lede_column_three'),
-        APIImageField('lede_column_one_icon'),
-        APIImageField('lede_column_two_icon'),
-        APIImageField('lede_column_three_icon'),
+        APIField('introduction_text'),
+        APIField('introduction_column_one_text'),
+        APIField('introduction_column_two_text'),
+        APIField('introduction_column_three_text'),
+        APIImageField('introduction_column_one_icon'),
+        APIImageField('introduction_column_two_icon'),
+        APIImageField('introduction_column_three_icon'),
         APIField('sector_label'),
         APIField('sector_value'),
         APIField('seo_description'),
