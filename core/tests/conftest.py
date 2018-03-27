@@ -20,12 +20,14 @@ def untranslated_page():
         parent=Page.objects.get(pk=1),
         title_en_gb='ENGLISH',
         sector_label_en_gb='label',
-        lede_en_gb='lede',
+        introduction_text_en_gb='lede',
         seo_description_en_gb='description',
         hero_text_en_gb='hero text',
-        lede_column_one_en_gb='lede column one',
-        lede_column_two_en_gb='lede column two',
-        lede_column_three_en_gb='lede column three',
+        introduction_column_one_text_en_gb='lede column one',
+        introduction_column_two_text_en_gb='lede column two',
+        introduction_column_three_text_en_gb='lede column three',
+        company_list_text_en_gb='companies',
+        company_list_call_to_action_text_en_gb='view all',
     )
 
 
@@ -43,12 +45,14 @@ def translated_page(settings):
         title_pt_br='BRAZILIAN',
         title_ar='ARABIC',
         sector_label_en_gb='label',
-        lede_en_gb='lede',
+        introduction_text_en_gb='lede',
         seo_description_en_gb='description',
         hero_text_en_gb='hero text',
-        lede_column_one_en_gb='lede column one',
-        lede_column_two_en_gb='lede column two',
-        lede_column_three_en_gb='lede column three',
+        introduction_column_one_text_en_gb='lede column one',
+        introduction_column_two_text_en_gb='lede column two',
+        introduction_column_three_text_en_gb='lede column three',
+        company_list_call_to_action_text_en_gb='view all',
+        company_list_text_en_gb='the title',
     )
     field_names = page.get_required_translatable_fields()
     language_codes = settings.LANGUAGES

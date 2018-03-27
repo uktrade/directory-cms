@@ -74,7 +74,7 @@ def test_clean_translated_value_truncate():
 
 def test_clean_translated_value_long_text():
     actual = helpers.clean_translated_value(
-        field=IndustryPage._meta.get_field('lede_column_one'),
+        field=IndustryPage._meta.get_field('introduction_column_one_text'),
         value='a'*1000,
     )
 

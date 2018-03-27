@@ -10,15 +10,17 @@ from find_a_supplier import models
 class IndustryPageTranslationOptions(TranslationOptions):
     fields = (
         'hero_text',
-        'lede',
-        'lede_column_one',
-        'lede_column_two',
-        'lede_column_three',
+        'introduction_text',
+        'introduction_column_one_text',
+        'introduction_column_two_text',
+        'introduction_column_three_text',
         'sector_label',
         'seo_description',
-        'lede_column_one_icon',
-        'lede_column_two_icon',
-        'lede_column_three_icon',
+        'introduction_column_one_icon',
+        'introduction_column_two_icon',
+        'introduction_column_three_icon',
+        'company_list_text',
+        'company_list_call_to_action_text',
     )
     required_languages = (settings.LANGUAGE_CODE,)
 
