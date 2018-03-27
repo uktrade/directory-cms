@@ -36,3 +36,19 @@ class APITranslationsSerializer(fields.ListField):
             (code, label) for (code, label) in settings.LANGUAGES_LOCALIZED
             if code in instance.translated_languages
         ]
+
+
+class APIMetaSerializer(fields.DictField):
+
+    languages = APITranslationsSerializer()
+    url = URLHyperlinkSerializer(
+        draft_url_attribute='draft_url',
+        published_url_attribute='published_url',
+    )
+
+    def get_attribute(self, instance):
+        self.url.context = self.context
+        return {
+            'languages': self.languages.get_attribute(instance),
+            'url': self.url.get_attribute(instance)
+        }

@@ -11,9 +11,7 @@ from django.db import models
 from core import constants
 from core.models import BasePage
 from core.helpers import make_translated_interface
-from core.fields import (
-    APIHyperlinkField, APIRichTextField, APIImageField, APITranslationsField
-)
+from core.fields import APIRichTextField, APIImageField, APIMetaField
 
 
 class ImageChooserPanel(ImageChooserPanel):
@@ -45,11 +43,10 @@ class IndustryLandingPage(BasePage):
         APIImageField('hero_image'),
         APIField('proposition_text'),
         APIField('call_to_action_text'),
-        APIHyperlinkField('url'),
         APIField('title'),
         APIField('seo_description'),
         APIField('breadcrumbs_label'),
-        APITranslationsField('languages'),
+        APIMetaField('meta'),
     ]
 
     image_panels = [
@@ -274,8 +271,7 @@ class IndustryPage(BasePage):
         APIField('article_four'),
         APIField('article_five'),
         APIField('article_six'),
-        APIHyperlinkField('url'),
-        APITranslationsField('languages'),
+        APIMetaField('meta'),
     ]
 
 
@@ -309,8 +305,7 @@ class IndustryArticlePage(BasePage):
         APIField('date'),
         APIRichTextField('body'),
         APIField('title'),
-        APIHyperlinkField('url'),
-        APITranslationsField('languages'),
+        APIMetaField('meta'),
     ]
 
 
@@ -439,9 +434,8 @@ class LandingPage(BasePage):
         APIField('article_five'),
         APIField('article_six'),
         APIField('seo_description'),
-        APIHyperlinkField('url'),
         APIField('title'),
-        APITranslationsField('languages'),
+        APIMetaField('meta'),
     ]
 
     image_panels = [
