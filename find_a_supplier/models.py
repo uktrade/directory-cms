@@ -9,7 +9,7 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from django.db import models
 
 from core import constants
-from core.models import BasePage
+from core.models import BasePage, ExcludeivePageMixin
 from core.helpers import make_translated_interface
 from core.fields import APIRichTextField, APIImageField, APIMetaField
 from find_a_supplier import fields
@@ -70,7 +70,6 @@ class IndustryPage(BasePage):
     company_list_call_to_action_text = models.CharField(
         max_length=255,
     )
-    seo_description = models.CharField(max_length=1000)
 
     article_one = models.ForeignKey(
         'find_a_supplier.IndustryArticlePage',
@@ -161,12 +160,13 @@ class IndustryPage(BasePage):
             heading='Search Engine Optimisation',
             children=[
                 FieldPanel('slug'),
-                FieldPanel('seo_description'),
-                FieldPanel('title'),
+                FieldPanel('seo_title'),
+                FieldPanel('search_description'),
             ]
         )
     ]
-    settings_panels = BasePage.settings_panels + [
+    settings_panels = [
+        FieldPanel('title_en_gb'),
         FieldPanel('sector_value'),
     ]
     article_panels = [
@@ -207,7 +207,6 @@ class IndustryPage(BasePage):
         APIField('company_list_call_to_action_text'),
         APIField('sector_label'),
         APIField('sector_value'),
-        APIField('seo_description'),
         APIField('title'),
         APIField('article_one'),
         APIField('article_two'),
@@ -215,11 +214,13 @@ class IndustryPage(BasePage):
         APIField('article_four'),
         APIField('article_five'),
         APIField('article_six'),
+        APIField('seo_title'),
+        APIField('search_description'),
         APIMetaField('meta'),
     ]
 
 
-class IndustryLandingPage(BasePage):
+class IndustryLandingPage(ExcludeivePageMixin, BasePage):
     view_app = constants.FIND_A_SUPPLIER
     view_path = 'industries/'
 
@@ -231,22 +232,24 @@ class IndustryLandingPage(BasePage):
         related_name='+'
     )
 
+    hero_title = models.CharField(max_length=500)
     proposition_text = models.CharField(max_length=500)
     call_to_action_text = models.CharField(max_length=500)
     breadcrumbs_label = models.CharField(max_length=500)
-    seo_description = models.CharField(max_length=1000)
 
     @property
     def url_path_parts(self):
         return [self.view_path]
 
     api_fields = [
+        APIField('hero_title'),
         APIImageField('hero_image'),
         APIField('proposition_text'),
         APIField('call_to_action_text'),
         APIField('title'),
-        APIField('seo_description'),
         APIField('breadcrumbs_label'),
+        APIField('seo_title'),
+        APIField('search_description'),
         APIMetaField('meta'),
         fields.APIIndustriesListField(
             'industries',
@@ -260,20 +263,35 @@ class IndustryLandingPage(BasePage):
 
     content_panels = [
         FieldPanel('breadcrumbs_label'),
-        FieldPanel('title'),
-        FieldRowPanel(
+        FieldPanel('hero_title'),
+        MultiFieldPanel(
+            heading='Contact us',
             children=[
-                FieldPanel('proposition_text'),
-                FieldPanel('call_to_action_text'),
-            ],
-            classname='full field-row-panel'
+                FieldRowPanel(
+                    children=[
+                        FieldPanel('proposition_text'),
+                        FieldPanel('call_to_action_text'),
+                    ],
+                    classname='full field-row-panel'
+                ),
+            ]
         ),
-        FieldPanel('slug'),
-        FieldPanel('seo_description'),
+        MultiFieldPanel(
+            heading='Search Engine Optimisation',
+            children=[
+                FieldPanel('slug'),
+                FieldPanel('seo_title'),
+                FieldPanel('search_description'),
+            ]
+        )
+    ]
+    settings_panels = [
+        FieldPanel('title_en_gb'),
     ]
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
+        settings_panels=settings_panels,
         other_panels=[
             ObjectList(image_panels, heading='Images'),
         ]
@@ -285,23 +303,45 @@ class IndustryArticlePage(BasePage):
     view_app = constants.FIND_A_SUPPLIER
     view_path = 'industry-articles/'
 
+    introduction_title = models.CharField(max_length=255)
     body = RichTextField(blank=False)
     author_name = models.CharField(max_length=255)
     job_title = models.CharField(max_length=255)
     date = models.DateField()
 
     content_panels = [
-        FieldPanel('slug'),
-        FieldPanel('title'),
-        FieldPanel('author_name'),
-        FieldPanel('job_title'),
-        FieldPanel('date'),
-        FieldPanel('body', classname='full'),
+        MultiFieldPanel(
+            heading='Article',
+            children=[
+                FieldPanel('introduction_title'),
+                FieldPanel('body', classname='full'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Author',
+            children=[
+                FieldPanel('author_name'),
+                FieldPanel('job_title'),
+                FieldPanel('date'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Search Engine Optimisation',
+            children=[
+                FieldPanel('slug'),
+                FieldPanel('seo_title'),
+                FieldPanel('search_description'),
+            ]
+        )
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb')
     ]
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
-        settings_panels=BasePage.settings_panels
+        settings_panels=settings_panels
     )
 
     api_fields = [
@@ -310,11 +350,13 @@ class IndustryArticlePage(BasePage):
         APIField('date'),
         APIRichTextField('body'),
         APIField('title'),
+        APIField('seo_title'),
+        APIField('search_description'),
         APIMetaField('meta'),
     ]
 
 
-class LandingPage(BasePage):
+class LandingPage(ExcludeivePageMixin, BasePage):
     view_app = constants.FIND_A_SUPPLIER
     view_path = '/'
 
@@ -408,8 +450,6 @@ class LandingPage(BasePage):
         related_name='+',
     )
 
-    seo_description = models.CharField(max_length=1000)
-
     @property
     def url_path_parts(self):
         return [self.view_path]
@@ -438,8 +478,9 @@ class LandingPage(BasePage):
         APIField('article_four'),
         APIField('article_five'),
         APIField('article_six'),
-        APIField('seo_description'),
         APIField('title'),
+        APIField('search_description'),
+        APIField('seo_title'),
         fields.APIIndustriesListField(
             'industries',
             queryset=IndustryPage.objects.all()[0:9],
@@ -466,7 +507,6 @@ class LandingPage(BasePage):
     ]
 
     content_panels = [
-        FieldPanel('title'),
         MultiFieldPanel(
             heading='Hero',
             children=[
@@ -520,12 +560,21 @@ class LandingPage(BasePage):
             ],
             classname='collapsible',
         ),
-        FieldPanel('slug'),
-        FieldPanel('seo_description'),
+        MultiFieldPanel(
+            heading='Search Engine Optimisation',
+            children=[
+                FieldPanel('slug'),
+                FieldPanel('seo_title'),
+                FieldPanel('search_description'),
+            ]
+        )
     ]
+
+    settings_panels = [FieldPanel('title_en_gb')]
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
+        settings_panels=settings_panels,
         other_panels=[
             ObjectList(image_panels, heading='Images'),
             ObjectList(article_panels, heading='Articles'),

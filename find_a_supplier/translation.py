@@ -15,7 +15,6 @@ class IndustryPageTranslationOptions(TranslationOptions):
         'introduction_column_two_text',
         'introduction_column_three_text',
         'sector_label',
-        'seo_description',
         'introduction_column_one_icon',
         'introduction_column_two_icon',
         'introduction_column_three_icon',
@@ -32,6 +31,7 @@ class IndustryArticlePageTranslationOptions(TranslationOptions):
         'job_title',
         'date',
         'body',
+        'introduction_title',
     )
     required_languages = (settings.LANGUAGE_CODE,)
 
@@ -39,10 +39,10 @@ class IndustryArticlePageTranslationOptions(TranslationOptions):
 @register(models.IndustryLandingPage)
 class IndustryLandingPageTranslationOptions(TranslationOptions):
     fields = (
+        'hero_title',
         'proposition_text',
         'call_to_action_text',
         'breadcrumbs_label',
-        'seo_description',
     )
     required_languages = (settings.LANGUAGE_CODE,)
 
@@ -66,6 +66,5 @@ class LandingPageTranslationOptions(TranslationOptions):
         'services_column_two_icon',
         'services_column_three_icon',
         'services_column_four_icon',
-        'seo_description',
     )
     required_languages = (settings.LANGUAGE_CODE,)

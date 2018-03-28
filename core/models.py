@@ -103,3 +103,9 @@ class ImageHash(models.Model):
         filehash = hashlib.md5()
         filehash.update(file.read())
         return filehash.hexdigest()
+
+
+class ExcludeivePageMixin:
+    @classmethod
+    def can_create_at(cls, parent):
+        return super().can_create_at(parent) and not cls.objects.exists()
