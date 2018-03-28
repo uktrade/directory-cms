@@ -4,15 +4,6 @@ from wagtail.wagtailimages.api.fields import ImageRenditionField
 from core import serializers
 
 
-class APIHyperlinkField(APIField):
-    def __init__(self, name):
-        serializer = serializers.URLHyperlinkSerializer(
-            draft_url_attribute='draft_url',
-            published_url_attribute='published_url',
-        )
-        super().__init__(name=name, serializer=serializer)
-
-
 class APIRichTextField(APIField):
     def __init__(self, name):
         serializer = serializers.APIRichTextSerializer()
@@ -25,7 +16,7 @@ class APIImageField(APIField):
         super().__init__(name=name, serializer=serializer)
 
 
-class APITranslationsField(APIField):
+class APIMetaField(APIField):
     def __init__(self, name):
-        serializer = serializers.APITranslationsSerializer(name)
+        serializer = serializers.APIMetaSerializer(name)
         super().__init__(name=name, serializer=serializer)

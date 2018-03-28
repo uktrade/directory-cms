@@ -1,6 +1,6 @@
 import pytest
 
-from core.fields import APIHyperlinkField
+from core.fields import APIMetaField
 from find_a_supplier import models
 
 
@@ -10,7 +10,7 @@ from find_a_supplier import models
 def test_url_api_field(model):
     fields = {field.name: field for field in model.api_fields}
 
-    assert isinstance(fields['url'], APIHyperlinkField)
+    assert isinstance(fields['meta'], APIMetaField)
 
 
 @pytest.mark.django_db

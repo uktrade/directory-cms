@@ -11,71 +11,12 @@ from django.db import models
 from core import constants
 from core.models import BasePage
 from core.helpers import make_translated_interface
-from core.fields import (
-    APIHyperlinkField, APIRichTextField, APIImageField, APITranslationsField
-)
+from core.fields import APIRichTextField, APIImageField, APIMetaField
+from find_a_supplier import fields
 
 
 class ImageChooserPanel(ImageChooserPanel):
     classname = ""
-
-
-class IndustryLandingPage(BasePage):
-    view_app = constants.FIND_A_SUPPLIER
-    view_path = 'industries/'
-
-    hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    proposition_text = models.CharField(max_length=500)
-    call_to_action_text = models.CharField(max_length=500)
-    breadcrumbs_label = models.CharField(max_length=500)
-    seo_description = models.CharField(max_length=1000)
-
-    @property
-    def url_path_parts(self):
-        return [self.view_path]
-
-    api_fields = [
-        APIImageField('hero_image'),
-        APIField('proposition_text'),
-        APIField('call_to_action_text'),
-        APIHyperlinkField('url'),
-        APIField('title'),
-        APIField('seo_description'),
-        APIField('breadcrumbs_label'),
-        APITranslationsField('languages'),
-    ]
-
-    image_panels = [
-        ImageChooserPanel('hero_image'),
-    ]
-
-    content_panels = [
-        FieldPanel('breadcrumbs_label'),
-        FieldPanel('title'),
-        FieldRowPanel(
-            children=[
-                FieldPanel('proposition_text'),
-                FieldPanel('call_to_action_text'),
-            ],
-            classname='full field-row-panel'
-        ),
-        FieldPanel('slug'),
-        FieldPanel('seo_description'),
-    ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        other_panels=[
-            ObjectList(image_panels, heading='Images'),
-        ]
-    )
 
 
 class IndustryPage(BasePage):
@@ -274,9 +215,69 @@ class IndustryPage(BasePage):
         APIField('article_four'),
         APIField('article_five'),
         APIField('article_six'),
-        APIHyperlinkField('url'),
-        APITranslationsField('languages'),
+        APIMetaField('meta'),
     ]
+
+
+class IndustryLandingPage(BasePage):
+    view_app = constants.FIND_A_SUPPLIER
+    view_path = 'industries/'
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    proposition_text = models.CharField(max_length=500)
+    call_to_action_text = models.CharField(max_length=500)
+    breadcrumbs_label = models.CharField(max_length=500)
+    seo_description = models.CharField(max_length=1000)
+
+    @property
+    def url_path_parts(self):
+        return [self.view_path]
+
+    api_fields = [
+        APIImageField('hero_image'),
+        APIField('proposition_text'),
+        APIField('call_to_action_text'),
+        APIField('title'),
+        APIField('seo_description'),
+        APIField('breadcrumbs_label'),
+        APIMetaField('meta'),
+        fields.APIIndustriesListField(
+            'industries',
+            queryset=IndustryPage.objects.all()[0:9],
+        ),
+    ]
+
+    image_panels = [
+        ImageChooserPanel('hero_image'),
+    ]
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        FieldPanel('title'),
+        FieldRowPanel(
+            children=[
+                FieldPanel('proposition_text'),
+                FieldPanel('call_to_action_text'),
+            ],
+            classname='full field-row-panel'
+        ),
+        FieldPanel('slug'),
+        FieldPanel('seo_description'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        other_panels=[
+            ObjectList(image_panels, heading='Images'),
+        ]
+    )
 
 
 class IndustryArticlePage(BasePage):
@@ -309,8 +310,7 @@ class IndustryArticlePage(BasePage):
         APIField('date'),
         APIRichTextField('body'),
         APIField('title'),
-        APIHyperlinkField('url'),
-        APITranslationsField('languages'),
+        APIMetaField('meta'),
     ]
 
 
@@ -439,9 +439,12 @@ class LandingPage(BasePage):
         APIField('article_five'),
         APIField('article_six'),
         APIField('seo_description'),
-        APIHyperlinkField('url'),
         APIField('title'),
-        APITranslationsField('languages'),
+        fields.APIIndustriesListField(
+            'industries',
+            queryset=IndustryPage.objects.all()[0:9],
+        ),
+        APIMetaField('meta'),
     ]
 
     image_panels = [
