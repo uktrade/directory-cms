@@ -1,12 +1,13 @@
 from functools import partial, reduce
 import hashlib
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlencode
 
 from modeltranslation.translator import translator
 from modeltranslation.utils import build_localized_fieldname
 from wagtail.wagtailcore.models import Page
 
 from django.core import signing
+from django.conf import settings
 from django.db import models
 from django.shortcuts import redirect
 from django.utils import translation
@@ -36,21 +37,35 @@ class BasePage(Page):
         else:
             return str(self.pk) == str(value)
 
-    @property
-    def url_path_parts(self):
-        return [self.view_path, str(self.pk) + '/', self.slug + '/']
+    def get_url_path_parts(self, language_code):
+        slug_fieldname = build_localized_fieldname('slug', lang=language_code)
+        slug = getattr(self, slug_fieldname) or self.slug_en_gb
+        return [self.view_path, str(self.pk) + '/', slug + '/']
 
-    @property
-    def published_url(self):
+    def get_url(self, is_draft=False, language_code=settings.LANGUAGE_CODE):
         domain = dict(constants.APP_URLS)[self.view_app]
-        return reduce(urljoin, [domain] + self.url_path_parts)
+        url_path_parts = self.get_url_path_parts(language_code=language_code)
+        url = reduce(urljoin, [domain] + url_path_parts)
+        querystring = {}
+        if is_draft:
+            querystring['draft_token'] = self.get_draft_token()
+        if language_code != settings.LANGUAGE_CODE:
+            querystring['lang'] = language_code
+        if querystring:
+            url += '?' + urlencode(querystring)
+        return url
 
-    @property
-    def draft_url(self):
-        return self.published_url + '?draft_token=' + self.get_draft_token()
+    def get_localized_urls(self):
+        # localized urls are used to tell google of alternative urls for
+        # available languages, so there should be no need to expose the draft
+        # url
+        return [
+            (language_code, self.get_url(language_code=language_code))
+            for language_code in self.translated_languages
+        ]
 
     def serve(self, request, *args, **kwargs):
-        return redirect(self.published_url)
+        return redirect(self.get_url())
 
     def get_latest_nested_revision_as_page(self):
         revision = self.get_latest_revision_as_page()
