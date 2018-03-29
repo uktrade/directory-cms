@@ -213,7 +213,7 @@ def test_translate_page(
             'introduction_column_one_icon_en_gb': image.pk,
             'introduction_column_two_icon_en_gb': image.pk,
             'introduction_column_three_icon_en_gb': image.pk,
-            'seo_description_en_gb': 'description',
+            'search_description_en_gb': 'description',
         }
     )
 
@@ -258,7 +258,7 @@ def test_translate_page_not_called_always(
             'introduction_text_en_gb': 'Good',
             'introduction_column_three_text_en_gb': 'get this',
             'introduction_column_two_text_en_gb': 'this good',
-            'seo_description_en_gb': 'this is good',
+            'search_description_en_gb': 'this is good',
             'hero_text_en_gb': 'good times',
             'sector_label_en_gb': 'Good',
             'introduction_column_one_text_en_gb': 'goodies',

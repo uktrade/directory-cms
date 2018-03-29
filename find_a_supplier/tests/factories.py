@@ -25,7 +25,7 @@ class IndustryPageFactory(wagtail_factories.PageFactory):
     sector_value = factory.fuzzy.FuzzyChoice(
         [i[0] for i in choices.INDUSTRIES]
     )
-    seo_description_en_gb = factory.fuzzy.FuzzyText(length=255)
+    search_description_en_gb = factory.fuzzy.FuzzyText(length=255)
     title_en_gb = factory.fuzzy.FuzzyText(length=255)
     slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
@@ -71,7 +71,7 @@ class LandingPageFactory(wagtail_factories.PageFactory):
     services_column_four_icon_en_gb = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
-    seo_description_en_gb = factory.fuzzy.FuzzyText(length=255)
+    search_description_en_gb = factory.fuzzy.FuzzyText(length=255)
     slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
@@ -82,13 +82,14 @@ class IndustryLandingPagePageFactory(wagtail_factories.PageFactory):
     class Meta:
         model = models.IndustryLandingPage
 
+    hero_title_en_gb = factory.fuzzy.FuzzyText(length=255)
     hero_image = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
     proposition_text_en_gb = factory.fuzzy.FuzzyText(length=255)
     call_to_action_text_en_gb = factory.fuzzy.FuzzyText(length=255)
     breadcrumbs_label_en_gb = factory.fuzzy.FuzzyText(length=255)
-    seo_description_en_gb = factory.fuzzy.FuzzyText(length=255)
+    search_description_en_gb = factory.fuzzy.FuzzyText(length=255)
     slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None

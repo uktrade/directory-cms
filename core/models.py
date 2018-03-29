@@ -69,6 +69,13 @@ class BasePage(Page):
         return list(translator.get_options_for_model(cls).fields.keys())
 
     @classmethod
+    def get_translatable_string_fields(cls):
+        return [
+            name for name in cls.get_translatable_fields()
+            if isinstance(cls._meta.get_field(name), models.CharField)
+        ]
+
+    @classmethod
     def get_required_translatable_fields(cls):
         names = cls.get_translatable_fields()
         return [name for name in names if not cls._meta.get_field(name).blank]
@@ -103,3 +110,9 @@ class ImageHash(models.Model):
         filehash = hashlib.md5()
         filehash.update(file.read())
         return filehash.hexdigest()
+
+
+class ExcludeivePageMixin:
+    @classmethod
+    def can_create_at(cls, parent):
+        return super().can_create_at(parent) and not cls.objects.exists()
