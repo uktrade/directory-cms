@@ -70,9 +70,10 @@ class BasePage(Page):
 
     @classmethod
     def get_translatable_string_fields(cls):
+        text_fields = ['TextField', 'CharField']
         return [
             name for name in cls.get_translatable_fields()
-            if isinstance(cls._meta.get_field(name), models.CharField)
+            if cls._meta.get_field(name).get_internal_type() in text_fields
         ]
 
     @classmethod

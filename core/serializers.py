@@ -50,7 +50,8 @@ class APIMetaSerializer(fields.DictField):
         self.url.context = self.context
         return {
             'languages': self.languages.get_attribute(instance),
-            'url': self.url.get_attribute(instance)
+            'url': self.url.get_attribute(instance),
+            'slug': instance.slug,
         }
 
 
