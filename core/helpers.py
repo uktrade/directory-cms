@@ -81,7 +81,7 @@ def get_language_from_querystring(request):
 
 def auto_populate_translations(page, language_codes):
     translate_client = translate.Client()
-    field_names = page.get_translatable_fields()
+    field_names = page.get_translatable_string_fields()
     language_codes = [
         {'django': code, 'google': language_code_django_to_google(code)}
         for code in language_codes
