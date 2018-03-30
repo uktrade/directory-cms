@@ -87,7 +87,7 @@ class DraftRedirectView(BaseAPIEndpoint):
     model = Page
 
     def get(self, request, *args, **kwargs):
-        return redirect(self.get_object().specific.draft_url)
+        return redirect(self.get_object().specific.get_url(is_draft=True))
 
 
 class CopyPageView(FormView):

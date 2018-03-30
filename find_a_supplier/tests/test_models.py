@@ -17,6 +17,6 @@ def test_url_api_field(model):
 def test_industries_page_published_url_field():
     instance = models.IndustryLandingPage()
 
-    assert instance.published_url == (
+    assert instance.get_url() == (
         'http://supplier.trade.great:8005/industries/'
     )

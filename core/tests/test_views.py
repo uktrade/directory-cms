@@ -38,7 +38,7 @@ def test_draft_view(client, translated_page):
     response = client.get(url)
 
     assert response.status_code == 302
-    assert response.url == translated_page.draft_url
+    assert response.url == translated_page.get_url(is_draft=True)
 
 
 @pytest.mark.parametrize('languaue_code,expected', (
@@ -89,11 +89,13 @@ def test_api_draft(client, page_with_reversion):
 
     assert draft_response.status_code == 200
     assert draft_data['title'] == 'draft-title'
-    assert draft_data['meta']['url'] == page_with_reversion.draft_url
+    assert draft_data['meta']['url'] == page_with_reversion.get_url(
+        is_draft=True
+    )
 
     assert published_response.status_code == 200
     assert published_data['title'] == 'published-title'
-    assert published_data['meta']['url'] == page_with_reversion.published_url
+    assert published_data['meta']['url'] == page_with_reversion.get_url()
 
 
 @pytest.mark.django_db
@@ -342,11 +344,13 @@ def test_lookup_by_page_type_draft(page_with_reversion, client):
 
     assert draft_response.status_code == 200
     assert draft_data['title'] == 'draft-title'
-    assert draft_data['meta']['url'] == page_with_reversion.draft_url
+    assert draft_data['meta']['url'] == page_with_reversion.get_url(
+        is_draft=True
+    )
 
     assert published_response.status_code == 200
     assert published_data['title'] == 'published-title'
-    assert published_data['meta']['url'] == page_with_reversion.published_url
+    assert published_data['meta']['url'] == page_with_reversion.get_url()
 
 
 @pytest.mark.django_db

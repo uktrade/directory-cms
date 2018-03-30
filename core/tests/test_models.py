@@ -25,7 +25,7 @@ def test_base_model_redirect_published_url(rf, page):
     response = page.serve(request)
 
     assert response.status_code == 302
-    assert response.url == page.published_url
+    assert response.url == page.get_url()
 
 
 @pytest.mark.parametrize('languaue_code,expected', (
@@ -59,3 +59,34 @@ def test_translated_languages(page, language_code):
     else:
         expected = [settings.LANGUAGE_CODE, language_code]
     assert page.translated_languages == expected
+
+
+@pytest.mark.django_db
+def test_translated_localised_urls(translated_page):
+    translated_page.slug = 'slug'
+    translated_page.pk = 3
+
+    domain = 'http://supplier.trade.great:8005'
+
+    assert translated_page.get_localized_urls() == [
+        ('en-gb', domain + '/industries/3/slug/'),
+        ('de', domain + '/industries/3/slug_de-value/?lang=de'),
+        ('ja', domain + '/industries/3/slug_ja-value/?lang=ja'),
+        ('ru', domain + '/industries/3/slug_ru-value/?lang=ru'),
+        ('zh-hans', domain + '/industries/3/slug_zh_hans-value/?lang=zh-hans'),
+        ('fr', domain + '/industries/3/slug_fr-value/?lang=fr'),
+        ('es', domain + '/industries/3/slug_es-value/?lang=es'),
+        ('pt', domain + '/industries/3/slug_pt-value/?lang=pt'),
+        ('pt-br', domain + '/industries/3/slug_pt_br-value/?lang=pt-br'),
+        ('ar', domain + '/industries/3/slug_ar-value/?lang=ar')
+    ]
+
+
+@pytest.mark.django_db
+def test_translated_localised_urls_untranslated_page(page):
+    page.slug = 'slug'
+    page.pk = 3
+
+    assert page.get_localized_urls() == [
+        ('en-gb', 'http://supplier.trade.great:8005/industries/3/slug/'),
+    ]

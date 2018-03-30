@@ -237,8 +237,7 @@ class IndustryLandingPage(ExcludeivePageMixin, BasePage):
     call_to_action_text = models.CharField(max_length=500)
     breadcrumbs_label = models.CharField(max_length=500)
 
-    @property
-    def url_path_parts(self):
+    def get_url_path_parts(self, *args, **kwargs):
         return [self.view_path]
 
     api_fields = [
@@ -450,8 +449,7 @@ class LandingPage(ExcludeivePageMixin, BasePage):
         related_name='+',
     )
 
-    @property
-    def url_path_parts(self):
+    def get_url_path_parts(self, *args, **kwargs):
         return [self.view_path]
 
     api_fields = [

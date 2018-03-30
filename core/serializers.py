@@ -2,26 +2,21 @@ from rest_framework import fields
 from wagtail.wagtailcore.rich_text import expand_db_html
 
 from django.conf import settings
+from django.utils import translation
 
 from core import helpers
 
 
 class URLHyperlinkSerializer(fields.CharField):
 
-    draft_url_attribute = None
-    published_url_attribute = None
-
     def __init__(self, *args, **kwargs):
-        self.draft_url_attribute = kwargs.pop('draft_url_attribute')
-        self.published_url_attribute = kwargs.pop('published_url_attribute')
         super().__init__(*args, **kwargs)
 
     def get_attribute(self, instance):
-        if helpers.is_draft_requested(self.context['request']):
-            attribute = self.draft_url_attribute
-        else:
-            attribute = self.published_url_attribute
-        return getattr(instance, attribute)
+        return instance.get_url(
+            is_draft=helpers.is_draft_requested(self.context['request']),
+            language_code=translation.get_language(),
+        )
 
 
 class APIRichTextSerializer(fields.CharField):
@@ -41,16 +36,15 @@ class APITranslationsSerializer(fields.ListField):
 class APIMetaSerializer(fields.DictField):
 
     languages = APITranslationsSerializer()
-    url = URLHyperlinkSerializer(
-        draft_url_attribute='draft_url',
-        published_url_attribute='published_url',
-    )
+    url = URLHyperlinkSerializer()
 
     def get_attribute(self, instance):
         self.url.context = self.context
         return {
             'languages': self.languages.get_attribute(instance),
-            'url': self.url.get_attribute(instance)
+            'url': self.url.get_attribute(instance),
+            'slug': instance.slug,
+            'localised_urls': instance.get_localized_urls()
         }
 
 
