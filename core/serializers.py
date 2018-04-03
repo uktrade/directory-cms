@@ -44,7 +44,8 @@ class APIMetaSerializer(fields.DictField):
             'languages': self.languages.get_attribute(instance),
             'url': self.url.get_attribute(instance),
             'slug': instance.slug,
-            'localised_urls': instance.get_localized_urls()
+            'localised_urls': instance.get_localized_urls(),
+            'pk': instance.pk,
         }
 
 
