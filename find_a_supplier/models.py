@@ -113,6 +113,13 @@ class IndustryPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+',
     )
+
+    contact_breadcrumb_label = models.CharField(max_length=500)
+    contact_introduction_text = RichTextField(blank=False)
+    contact_button_text = models.CharField(max_length=100)
+    contact_success_message_text = RichTextField(blank=False)
+    contact_success_back_link_text = models.CharField(max_length=100)
+
     image_panels = [
         ImageChooserPanel('hero_image'),
     ]
@@ -154,6 +161,16 @@ class IndustryPage(BasePage):
             children=[
                 FieldPanel('company_list_text'),
                 FieldPanel('company_list_call_to_action_text'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Contact form',
+            children=[
+                FieldPanel('contact_breadcrumb_label'),
+                FieldPanel('contact_introduction_text'),
+                FieldPanel('contact_button_text'),
+                FieldPanel('contact_success_message_text'),
+                FieldPanel('contact_success_back_link_text'),
             ]
         ),
         MultiFieldPanel(
@@ -216,6 +233,11 @@ class IndustryPage(BasePage):
         APIField('article_six'),
         APIField('seo_title'),
         APIField('search_description'),
+        APIField('contact_breadcrumb_label'),
+        APIField('contact_introduction_text'),
+        APIField('contact_button_text'),
+        APIField('contact_success_message_text'),
+        APIField('contact_success_back_link_text'),
         APIMetaField('meta'),
     ]
 

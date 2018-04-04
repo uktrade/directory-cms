@@ -20,6 +20,11 @@ class IndustryPageTranslationOptions(TranslationOptions):
         'introduction_column_three_icon',
         'company_list_text',
         'company_list_call_to_action_text',
+        'contact_breadcrumb_label',
+        'contact_introduction_text',
+        'contact_button_text',
+        'contact_success_message_text',
+        'contact_success_back_link_text',
     )
     required_languages = (settings.LANGUAGE_CODE,)
 

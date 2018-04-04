@@ -63,6 +63,7 @@ def test_meta_serializer(page, rf):
                     'http://supplier.trade.great:8005/industries/4/test-slug/'
                 )
             ],
-            'slug': 'test-slug'
+            'slug': 'test-slug',
+            'pk': page.pk,
         }
     }

@@ -27,6 +27,11 @@ class IndustryPageFactory(wagtail_factories.PageFactory):
     )
     search_description_en_gb = factory.fuzzy.FuzzyText(length=255)
     title_en_gb = factory.fuzzy.FuzzyText(length=255)
+    contact_breadcrumb_label_en_gb = factory.fuzzy.FuzzyText(length=255)
+    contact_introduction_text_en_gb = factory.fuzzy.FuzzyText(length=255)
+    contact_button_text_en_gb = factory.fuzzy.FuzzyText(length=100)
+    contact_success_message_text_en_gb = factory.fuzzy.FuzzyText(length=255)
+    contact_success_back_link_text_en_gb = factory.fuzzy.FuzzyText(length=100)
     slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
     introduction_column_two_icon_en_gb = factory.SubFactory(
