@@ -8,6 +8,7 @@ from wagtail.wagtailimages.models import Image
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
+from django.db.models.fields.related import RelatedField
 from django.forms.models import model_to_dict, ModelChoiceField
 from django.shortcuts import get_object_or_404, redirect, Http404
 from django.template.response import TemplateResponse
@@ -101,10 +102,12 @@ class CopyPageView(FormView):
     def get_form_kwargs(self):
         instance = self.get_object()
         initial = model_to_dict(instance)
-        for f in instance._meta.concrete_fields:
-            field = getattr(instance, f.name)
-            if isinstance(field, Image) and field.file.name:
-                initial[f.name] = field.file.name
+        for field in instance._meta.concrete_fields:
+            field_value = getattr(instance, field.name)
+            if isinstance(field_value, Image) and field_value.file.name:
+                initial[field.name] = field_value.file.name
+            elif isinstance(field, RelatedField):
+                initial.pop(field.name, None)
         return {
             **super().get_form_kwargs(),
             'initial': initial,

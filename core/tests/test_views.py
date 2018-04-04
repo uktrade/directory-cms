@@ -4,7 +4,9 @@ from unittest.mock import call, patch
 from bs4 import BeautifulSoup
 from directory_constants.constants import sectors
 import wagtail_factories
+from wagtail.wagtailimages.models import Image
 
+from django.db.models.fields.related import RelatedField
 from django.forms.models import model_to_dict
 from django.urls import reverse
 
@@ -108,6 +110,25 @@ def test_copy_to_environment(client, translated_page, settings, image):
     response = client.get(url)
 
     assert response.context['page'] == translated_page
+
+
+@pytest.mark.django_db
+def test_copy_to_environment_excludes_related(
+    client, translated_page, settings, image
+):
+    translated_page.hero_image = image
+    translated_page.save()
+
+    url = reverse('copy-to-environment', kwargs={'pk': translated_page.pk})
+
+    response = client.get(url)
+    related_field_names = [
+        f.name for f in translated_page._meta.get_fields()
+        if isinstance(f, RelatedField)
+        and not isinstance(getattr(translated_page, f.name), Image)
+    ]
+    for field_name in related_field_names:
+        assert field_name not in response.context['form'].initial
 
 
 @pytest.mark.django_db
