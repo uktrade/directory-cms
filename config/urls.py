@@ -6,6 +6,7 @@ from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
 import core.views
@@ -29,13 +30,13 @@ urlpatterns = [
 
     url(
         r'^admin/pages/(?P<pk>[0-9]+)/view_draft/$',
-        core.views.DraftRedirectView.as_view({'get': 'get'}),
+        login_required(core.views.DraftRedirectView.as_view({'get': 'get'})),
         name='draft-view',
     ),
 
     url(
         r'^admin/pages/(?P<pk>[0-9]+)/copy-to-environment/$',
-        core.views.CopyPageView.as_view(),
+        login_required(core.views.CopyPageView.as_view()),
         name='copy-to-environment',
     ),
     url(
@@ -43,7 +44,7 @@ urlpatterns = [
             r'^admin/pages/preload/(?P<app_name>[a-zA-Z_]+)/'
             r'(?P<model_name>[a-zA-Z]+)/(?P<parent_pk>[0-9]+)/$'
         ),
-        csrf_exempt(core.views.PeloadPageView.as_view()),
+        login_required(csrf_exempt(core.views.PeloadPageView.as_view())),
         name='preload-add-page',
     ),
 

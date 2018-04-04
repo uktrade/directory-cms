@@ -33,12 +33,20 @@ def test_permissions_published(rf):
 
 
 @pytest.mark.django_db
-def test_draft_view(client, translated_page):
+def test_draft_view(admin_client, translated_page):
+    url = reverse('draft-view', kwargs={'pk': translated_page.pk})
+    response = admin_client.get(url)
+
+    assert response.status_code == 302
+    assert response.url == translated_page.get_url(is_draft=True)
+
+
+@pytest.mark.django_db
+def test_draft_view_anon(client, translated_page):
     url = reverse('draft-view', kwargs={'pk': translated_page.pk})
     response = client.get(url)
 
     assert response.status_code == 302
-    assert response.url == translated_page.get_url(is_draft=True)
 
 
 @pytest.mark.parametrize('languaue_code,expected', (
@@ -99,7 +107,20 @@ def test_api_draft(client, page_with_reversion):
 
 
 @pytest.mark.django_db
-def test_copy_to_environment(client, translated_page, settings, image):
+def test_copy_to_environment(admin_client, translated_page, settings, image):
+    translated_page.hero_image = image
+    translated_page.save()
+
+    url = reverse('copy-to-environment', kwargs={'pk': translated_page.pk})
+
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    assert response.context['page'] == translated_page
+
+
+@pytest.mark.django_db
+def test_copy_to_environment_anon(client, translated_page, settings, image):
     translated_page.hero_image = image
     translated_page.save()
 
@@ -107,7 +128,7 @@ def test_copy_to_environment(client, translated_page, settings, image):
 
     response = client.get(url)
 
-    assert response.context['page'] == translated_page
+    assert response.status_code == 302
 
 
 @pytest.mark.django_db
