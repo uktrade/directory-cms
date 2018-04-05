@@ -367,3 +367,10 @@ WS_S3_URL_PROTOCOL = os.getenv('AWS_S3_URL_PROTOCOL', 'https:')
 AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_S3_HOST = 's3-us-west-1.amazonaws.com'
+
+
+# Admin restrictor
+RESTRICT_ADMIN = os.getenv('RESTRICT_ADMIN') == 'true'
+ALLOWED_ADMIN_IPS = os.getenv('ALLOWED_ADMIN_IPS', [])
+ALLOWED_ADMIN_IP_RANGES = os.getenv('ALLOWED_ADMIN_IP_RANGES', [])
+RESTRICTED_APP_NAMES = ['admin', 'wagtailadmin']
