@@ -224,7 +224,7 @@ def test_translate_page(
             'sector_value': sectors.AUTOMOTIVE,
             'slug_en_gb': 'this-is-great',
             'title_en_gb': 'this-is-great',
-            'sector_label_en_gb': 'Mining',
+            'breadcrumbs_label_en_gb': 'Mining',
             'introduction_text_en_gb': 'introduction',
             'introduction_column_one_text_en_gb': 'column one',
             'introduction_column_two_text_en_gb': 'column two',
@@ -242,6 +242,7 @@ def test_translate_page(
             'contact_button_text_en_gb': 'submit',
             'contact_success_message_text_en_gb': 'thanks',
             'contact_success_back_link_text_en_gb': 'go back',
+            'company_list_search_input_placeholder_text_en_gb': 'enter value',
         }
     )
 
@@ -288,7 +289,7 @@ def test_translate_page_not_called_always(
             'introduction_column_two_text_en_gb': 'this good',
             'search_description_en_gb': 'this is good',
             'hero_text_en_gb': 'good times',
-            'sector_label_en_gb': 'Good',
+            'breadcrumbs_label_en_gb': 'Good',
             'introduction_column_one_text_en_gb': 'goodies',
             'company_list_text_en_gb': 'companies',
             'company_list_call_to_action_text_en_gb': 'view all',
@@ -300,6 +301,7 @@ def test_translate_page_not_called_always(
             'contact_button_text_en_gb': 'submit',
             'contact_success_message_text_en_gb': 'thanks',
             'contact_success_back_link_text_en_gb': 'go back',
+            'company_list_search_input_placeholder_text_en_gb': 'enter value',
         }
     )
 
