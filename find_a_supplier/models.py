@@ -9,9 +9,10 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from django.db import models
 
 from core import constants
-from core.models import BasePage, ExcludeivePageMixin
-from core.helpers import make_translated_interface
 from core.fields import APIRichTextField, APIImageField, APIMetaField
+from core.helpers import make_translated_interface
+from core.models import BasePage, ExclusivePageMixin
+from core.panels import SearchEngineOptimisationPanel
 from find_a_supplier import fields
 
 
@@ -114,12 +115,6 @@ class IndustryPage(BasePage):
         related_name='+',
     )
 
-    contact_breadcrumb_label = models.CharField(max_length=500)
-    contact_introduction_text = RichTextField(blank=False)
-    contact_button_text = models.CharField(max_length=100)
-    contact_success_message_text = RichTextField(blank=False)
-    contact_success_back_link_text = models.CharField(max_length=100)
-
     image_panels = [
         ImageChooserPanel('hero_image'),
     ]
@@ -163,24 +158,7 @@ class IndustryPage(BasePage):
                 FieldPanel('company_list_call_to_action_text'),
             ]
         ),
-        MultiFieldPanel(
-            heading='Contact form',
-            children=[
-                FieldPanel('contact_breadcrumb_label'),
-                FieldPanel('contact_introduction_text'),
-                FieldPanel('contact_button_text'),
-                FieldPanel('contact_success_message_text'),
-                FieldPanel('contact_success_back_link_text'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading='Search Engine Optimisation',
-            children=[
-                FieldPanel('slug'),
-                FieldPanel('seo_title'),
-                FieldPanel('search_description'),
-            ]
-        )
+        SearchEngineOptimisationPanel(),
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
@@ -233,16 +211,11 @@ class IndustryPage(BasePage):
         APIField('article_six'),
         APIField('seo_title'),
         APIField('search_description'),
-        APIField('contact_breadcrumb_label'),
-        APIField('contact_introduction_text'),
-        APIField('contact_button_text'),
-        APIField('contact_success_message_text'),
-        APIField('contact_success_back_link_text'),
         APIMetaField('meta'),
     ]
 
 
-class IndustryLandingPage(ExcludeivePageMixin, BasePage):
+class IndustryLandingPage(ExclusivePageMixin, BasePage):
     view_app = constants.FIND_A_SUPPLIER
     view_path = 'industries/'
 
@@ -297,14 +270,7 @@ class IndustryLandingPage(ExcludeivePageMixin, BasePage):
                 ),
             ]
         ),
-        MultiFieldPanel(
-            heading='Search Engine Optimisation',
-            children=[
-                FieldPanel('slug'),
-                FieldPanel('seo_title'),
-                FieldPanel('search_description'),
-            ]
-        )
+        SearchEngineOptimisationPanel(),
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
@@ -346,14 +312,7 @@ class IndustryArticlePage(BasePage):
                 FieldPanel('date'),
             ]
         ),
-        MultiFieldPanel(
-            heading='Search Engine Optimisation',
-            children=[
-                FieldPanel('slug'),
-                FieldPanel('seo_title'),
-                FieldPanel('search_description'),
-            ]
-        )
+        SearchEngineOptimisationPanel(),
     ]
 
     settings_panels = [
@@ -377,7 +336,7 @@ class IndustryArticlePage(BasePage):
     ]
 
 
-class LandingPage(ExcludeivePageMixin, BasePage):
+class LandingPage(ExclusivePageMixin, BasePage):
     view_app = constants.FIND_A_SUPPLIER
     view_path = '/'
 
@@ -580,14 +539,7 @@ class LandingPage(ExcludeivePageMixin, BasePage):
             ],
             classname='collapsible',
         ),
-        MultiFieldPanel(
-            heading='Search Engine Optimisation',
-            children=[
-                FieldPanel('slug'),
-                FieldPanel('seo_title'),
-                FieldPanel('search_description'),
-            ]
-        )
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [FieldPanel('title_en_gb')]
@@ -600,3 +552,54 @@ class LandingPage(ExcludeivePageMixin, BasePage):
             ObjectList(article_panels, heading='Articles'),
         ]
     )
+
+
+class IndustryContactPage(ExclusivePageMixin, BasePage):
+
+    view_app = constants.FIND_A_SUPPLIER
+    view_path = 'industries/contact/'
+
+    breadcrumb_label = models.CharField(max_length=500)
+    introduction_text = RichTextField(blank=False)
+    submit_button_text = models.CharField(max_length=100)
+    success_message_text = RichTextField(blank=False)
+    success_back_link_text = models.CharField(max_length=100)
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='Contact form',
+            children=[
+                FieldPanel('breadcrumb_label'),
+                FieldPanel('introduction_text'),
+                FieldPanel('submit_button_text'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Success page',
+            children=[
+                FieldPanel('success_message_text'),
+                FieldPanel('success_back_link_text'),
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels,
+    )
+
+    api_fields = [
+        APIField('seo_title'),
+        APIField('search_description'),
+        APIField('breadcrumb_label'),
+        APIField('introduction_text'),
+        APIField('submit_button_text'),
+        APIField('success_message_text'),
+        APIField('success_back_link_text'),
+        APIMetaField('meta'),
+    ]

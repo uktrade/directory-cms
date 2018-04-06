@@ -20,11 +20,6 @@ class IndustryPageTranslationOptions(TranslationOptions):
         'introduction_column_three_icon',
         'company_list_text',
         'company_list_call_to_action_text',
-        'contact_breadcrumb_label',
-        'contact_introduction_text',
-        'contact_button_text',
-        'contact_success_message_text',
-        'contact_success_back_link_text',
     )
     required_languages = (settings.LANGUAGE_CODE,)
 
@@ -71,5 +66,17 @@ class LandingPageTranslationOptions(TranslationOptions):
         'services_column_two_icon',
         'services_column_three_icon',
         'services_column_four_icon',
+    )
+    required_languages = (settings.LANGUAGE_CODE,)
+
+
+@register(models.IndustryContactPage)
+class IndustryContactPageTranslationOptions(TranslationOptions):
+    fields = (
+        'breadcrumb_label',
+        'introduction_text',
+        'submit_button_text',
+        'success_message_text',
+        'success_back_link_text',
     )
     required_languages = (settings.LANGUAGE_CODE,)
