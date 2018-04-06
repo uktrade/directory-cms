@@ -9,7 +9,9 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from django.db import models
 
 from core import constants
-from core.fields import APIRichTextField, APIImageField, APIMetaField
+from core.fields import (
+    APIBreadcrumbsField, APIRichTextField, APIImageField, APIMetaField
+)
 from core.helpers import make_translated_interface
 from core.models import BasePage, ExclusivePageMixin
 from core.panels import SearchEngineOptimisationPanel
@@ -58,15 +60,16 @@ class IndustryPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    sector_label = models.CharField(
-        max_length=255,
-    )
+    breadcrumbs_label = models.CharField(max_length=50)
     sector_value = models.CharField(
         max_length=255,
         choices=choices.INDUSTRIES,
     )
     company_list_text = RichTextField(
         blank=False,
+    )
+    company_list_search_input_placeholder_text = models.CharField(
+        max_length=255,
     )
     company_list_call_to_action_text = models.CharField(
         max_length=255,
@@ -123,7 +126,7 @@ class IndustryPage(BasePage):
             heading='Hero',
             children=[
                 FieldPanel('hero_text', classname='full'),
-                FieldPanel('sector_label'),
+                FieldPanel('breadcrumbs_label'),
             ]
         ),
         MultiFieldPanel(
@@ -155,6 +158,7 @@ class IndustryPage(BasePage):
             heading='Companies',
             children=[
                 FieldPanel('company_list_text'),
+                FieldPanel('company_list_search_input_placeholder_text'),
                 FieldPanel('company_list_call_to_action_text'),
             ]
         ),
@@ -200,7 +204,7 @@ class IndustryPage(BasePage):
         APIImageField('introduction_column_three_icon'),
         APIRichTextField('company_list_text'),
         APIField('company_list_call_to_action_text'),
-        APIField('sector_label'),
+        APIField('company_list_search_input_placeholder_text'),
         APIField('sector_value'),
         APIField('title'),
         APIField('article_one'),
@@ -211,6 +215,8 @@ class IndustryPage(BasePage):
         APIField('article_six'),
         APIField('seo_title'),
         APIField('search_description'),
+        APIField('breadcrumbs_label'),
+        APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
         APIMetaField('meta'),
     ]
 
@@ -226,11 +232,10 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-
+    breadcrumbs_label = models.CharField(max_length=50)
     hero_title = models.CharField(max_length=500)
     proposition_text = models.CharField(max_length=500)
     call_to_action_text = models.CharField(max_length=500)
-    breadcrumbs_label = models.CharField(max_length=500)
 
     def get_url_path_parts(self, *args, **kwargs):
         return [self.view_path]
@@ -249,6 +254,7 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
             'industries',
             queryset=IndustryPage.objects.all()[0:9],
         ),
+        APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
     ]
 
     image_panels = [
@@ -290,13 +296,26 @@ class IndustryArticlePage(BasePage):
     view_app = constants.FIND_A_SUPPLIER
     view_path = 'industry-articles/'
 
+    breadcrumbs_label = models.CharField(max_length=50)
     introduction_title = models.CharField(max_length=255)
     body = RichTextField(blank=False)
     author_name = models.CharField(max_length=255)
     job_title = models.CharField(max_length=255)
+    proposition_text = RichTextField(blank=False)
+    call_to_action_text = models.CharField(max_length=500)
+
     date = models.DateField()
 
     content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading='Contact us',
+            children=[
+                FieldPanel('proposition_text'),
+                FieldPanel('call_to_action_text'),
+            ],
+            classname='collapsible',
+        ),
         MultiFieldPanel(
             heading='Article',
             children=[
@@ -325,6 +344,7 @@ class IndustryArticlePage(BasePage):
     )
 
     api_fields = [
+        APIField('breadcrumbs_label'),
         APIField('author_name'),
         APIField('job_title'),
         APIField('date'),
@@ -332,6 +352,10 @@ class IndustryArticlePage(BasePage):
         APIField('title'),
         APIField('seo_title'),
         APIField('search_description'),
+        APIRichTextField('proposition_text'),
+        APIField('call_to_action_text'),
+        APIField('introduction_title'),
+        APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
         APIMetaField('meta'),
     ]
 
@@ -347,6 +371,8 @@ class LandingPage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+
+    breadcrumbs_label = models.CharField(max_length=50)
     hero_text = RichTextField(blank=False)
     search_field_placeholder = models.CharField(max_length=500)
     search_button_text = models.CharField(max_length=500)
@@ -435,6 +461,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
 
     api_fields = [
         APIImageField('hero_image'),
+        APIField('breadcrumbs_label'),
         APIRichTextField('hero_text'),
         APIField('search_field_placeholder'),
         APIField('search_button_text'),
@@ -464,6 +491,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
             'industries',
             queryset=IndustryPage.objects.all()[0:9],
         ),
+        APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
         APIMetaField('meta'),
     ]
 
@@ -489,6 +517,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
         MultiFieldPanel(
             heading='Hero',
             children=[
+                FieldPanel('breadcrumbs_label'),
                 FieldPanel('hero_text'),
                 FieldPanel('search_field_placeholder'),
                 FieldPanel('search_button_text'),
@@ -559,7 +588,7 @@ class IndustryContactPage(ExclusivePageMixin, BasePage):
     view_app = constants.FIND_A_SUPPLIER
     view_path = 'industries/contact/'
 
-    breadcrumb_label = models.CharField(max_length=500)
+    breadcrumbs_label = models.CharField(max_length=50)
     introduction_text = RichTextField(blank=False)
     submit_button_text = models.CharField(max_length=100)
     success_message_text = RichTextField(blank=False)
@@ -569,7 +598,7 @@ class IndustryContactPage(ExclusivePageMixin, BasePage):
         MultiFieldPanel(
             heading='Contact form',
             children=[
-                FieldPanel('breadcrumb_label'),
+                FieldPanel('breadcrumbs_label'),
                 FieldPanel('introduction_text'),
                 FieldPanel('submit_button_text'),
             ]
@@ -596,10 +625,11 @@ class IndustryContactPage(ExclusivePageMixin, BasePage):
     api_fields = [
         APIField('seo_title'),
         APIField('search_description'),
-        APIField('breadcrumb_label'),
+        APIField('breadcrumbs_label'),
         APIField('introduction_text'),
         APIField('submit_button_text'),
         APIField('success_message_text'),
         APIField('success_back_link_text'),
+        APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
         APIMetaField('meta'),
     ]
