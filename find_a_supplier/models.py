@@ -13,13 +13,17 @@ from core.fields import (
     APIBreadcrumbsField, APIRichTextField, APIImageField, APIMetaField
 )
 from core.helpers import make_translated_interface
-from core.models import BasePage, ExclusivePageMixin
+from core.models import BasePage, BaseApp, ExclusivePageMixin
 from core.panels import SearchEngineOptimisationPanel
 from find_a_supplier import fields
 
 
 class ImageChooserPanel(ImageChooserPanel):
     classname = ""
+
+
+class FindASupplierApp(ExclusivePageMixin, BaseApp):
+    view_app = constants.FIND_A_SUPPLIER
 
 
 class IndustryPage(BasePage):
