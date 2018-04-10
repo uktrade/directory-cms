@@ -14,17 +14,13 @@ class IndustryPageTranslationOptions(TranslationOptions):
         'introduction_column_one_text',
         'introduction_column_two_text',
         'introduction_column_three_text',
-        'sector_label',
+        'breadcrumbs_label',
         'introduction_column_one_icon',
         'introduction_column_two_icon',
         'introduction_column_three_icon',
         'company_list_text',
+        'company_list_search_input_placeholder_text',
         'company_list_call_to_action_text',
-        'contact_breadcrumb_label',
-        'contact_introduction_text',
-        'contact_button_text',
-        'contact_success_message_text',
-        'contact_success_back_link_text',
     )
     required_languages = (settings.LANGUAGE_CODE,)
 
@@ -37,6 +33,9 @@ class IndustryArticlePageTranslationOptions(TranslationOptions):
         'date',
         'body',
         'introduction_title',
+        'breadcrumbs_label',
+        'proposition_text',
+        'call_to_action_text',
     )
     required_languages = (settings.LANGUAGE_CODE,)
 
@@ -55,6 +54,7 @@ class IndustryLandingPageTranslationOptions(TranslationOptions):
 @register(models.LandingPage)
 class LandingPageTranslationOptions(TranslationOptions):
     fields = (
+        'breadcrumbs_label',
         'hero_text',
         'search_field_placeholder',
         'search_button_text',
@@ -71,5 +71,17 @@ class LandingPageTranslationOptions(TranslationOptions):
         'services_column_two_icon',
         'services_column_three_icon',
         'services_column_four_icon',
+    )
+    required_languages = (settings.LANGUAGE_CODE,)
+
+
+@register(models.IndustryContactPage)
+class IndustryContactPageTranslationOptions(TranslationOptions):
+    fields = (
+        'breadcrumbs_label',
+        'introduction_text',
+        'submit_button_text',
+        'success_message_text',
+        'success_back_link_text',
     )
     required_languages = (settings.LANGUAGE_CODE,)

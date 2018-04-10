@@ -2,6 +2,7 @@ import pytest
 from rest_framework.serializers import Serializer
 
 from core import permissions, serializers
+from find_a_supplier.tests import factories
 
 
 @pytest.mark.django_db
@@ -65,5 +66,48 @@ def test_meta_serializer(page, rf):
             ],
             'slug': 'test-slug',
             'pk': page.pk,
+        }
+    }
+
+
+@pytest.mark.django_db
+def test_breadcrums_serializer(page, rf):
+    factories.IndustryLandingPageFactory(
+        slug_en_gb='slug-one', breadcrumbs_label_en_gb='label-one'
+    )
+    factories.IndustryPageFactory(
+        slug_en_gb='slug-two', breadcrumbs_label_en_gb='label-two'
+    )
+    factories.LandingPageFactory(
+        slug_en_gb='slug-three', breadcrumbs_label_en_gb='label-three'
+    )
+    factories.IndustryContactPageFactory(
+        slug_en_gb='slug-four', breadcrumbs_label_en_gb='label-four'
+    )
+
+    class TestSerializer(Serializer):
+        breadcrumbs = serializers.APIBreadcrumsSerializer(
+            app_label='find_a_supplier'
+        )
+
+    serializer = TestSerializer(
+        instance=page,
+        context={'request': rf.get('/')}
+    )
+
+    assert serializer.data == {
+        'breadcrumbs': {
+            'industrylandingpage': {
+                'slug': 'slug-one',
+                'label': 'label-one'
+            },
+            'industrycontactpage': {
+                'slug': 'slug-four',
+                'label': 'label-four'
+            },
+            'landingpage': {
+                'slug': 'slug-three',
+                'label': 'label-three'
+            }
         }
     }

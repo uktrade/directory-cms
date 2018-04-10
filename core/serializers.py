@@ -1,10 +1,11 @@
 from rest_framework import fields
+from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.rich_text import expand_db_html
 
 from django.conf import settings
 from django.utils import translation
 
-from core import helpers
+from core import helpers, models
 
 
 class URLHyperlinkSerializer(fields.CharField):
@@ -68,3 +69,24 @@ class APIQuerysetSerializer(fields.ListField):
             self.queryset, many=True, context=self.context
         )
         return serializer.data
+
+
+class APIBreadcrumsSerializer(fields.DictField):
+    def __init__(self, app_label, *args, **kwargs):
+        self.app_label = app_label
+        super().__init__(*args, **kwargs)
+
+    def get_attribute(self, instance):
+        queryset = (
+            Page.objects.all()
+                .filter(content_type__app_label=self.app_label)
+                .only('breadcrumbs_label', 'slug')
+                .select_related('content_tyle__model')
+                .specific()
+        )
+        return {
+            item.content_type.model: {
+                'label': item.breadcrumbs_label, 'slug': item.slug,
+            }
+            for item in queryset if isinstance(item, models.ExclusivePageMixin)
+        }

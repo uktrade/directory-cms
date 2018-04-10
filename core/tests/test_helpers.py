@@ -65,11 +65,11 @@ def test_clean_translated_value_slug():
 
 def test_clean_translated_value_truncate():
     actual = helpers.clean_translated_value(
-        field=IndustryPage._meta.get_field('sector_label'),
+        field=IndustryPage._meta.get_field('breadcrumbs_label'),
         value='a'*300,
     )
 
-    assert actual == 'a'*252 + '...'
+    assert actual == 'a'*47 + '...'
 
 
 def test_clean_translated_value_long_text():
