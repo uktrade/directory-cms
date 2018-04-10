@@ -20,3 +20,14 @@ def test_industries_page_published_url_field():
     assert instance.get_url() == (
         'http://supplier.trade.great:8005/industries/'
     )
+
+
+def test_app_models():
+    assert models.FindASupplierApp.allowed_subpage_models() == [
+        models.FindASupplierApp,
+        models.IndustryPage,
+        models.IndustryLandingPage,
+        models.IndustryArticlePage,
+        models.LandingPage,
+        models.IndustryContactPage
+    ]

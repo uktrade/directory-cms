@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'storages',
     'rest_framework',
     'find_a_supplier.apps.FindASupplierConfig',
+    'export_readiness.apps.ExportReadinessConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
