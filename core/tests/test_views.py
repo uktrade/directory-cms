@@ -33,12 +33,20 @@ def test_permissions_published(rf):
 
 
 @pytest.mark.django_db
-def test_draft_view(client, translated_page):
+def test_draft_view(admin_client, translated_page):
+    url = reverse('draft-view', kwargs={'pk': translated_page.pk})
+    response = admin_client.get(url)
+
+    assert response.status_code == 302
+    assert response.url == translated_page.get_url(is_draft=True)
+
+
+@pytest.mark.django_db
+def test_draft_view_anon(client, translated_page):
     url = reverse('draft-view', kwargs={'pk': translated_page.pk})
     response = client.get(url)
 
     assert response.status_code == 302
-    assert response.url == translated_page.get_url(is_draft=True)
 
 
 @pytest.mark.parametrize('languaue_code,expected', (
@@ -99,7 +107,20 @@ def test_api_draft(client, page_with_reversion):
 
 
 @pytest.mark.django_db
-def test_copy_to_environment(client, translated_page, settings, image):
+def test_copy_to_environment(admin_client, translated_page, settings, image):
+    translated_page.hero_image = image
+    translated_page.save()
+
+    url = reverse('copy-to-environment', kwargs={'pk': translated_page.pk})
+
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    assert response.context['page'] == translated_page
+
+
+@pytest.mark.django_db
+def test_copy_to_environment_anon(client, translated_page, settings, image):
     translated_page.hero_image = image
     translated_page.save()
 
@@ -107,7 +128,7 @@ def test_copy_to_environment(client, translated_page, settings, image):
 
     response = client.get(url)
 
-    assert response.context['page'] == translated_page
+    assert response.status_code == 302
 
 
 @pytest.mark.django_db
@@ -203,7 +224,7 @@ def test_translate_page(
             'sector_value': sectors.AUTOMOTIVE,
             'slug_en_gb': 'this-is-great',
             'title_en_gb': 'this-is-great',
-            'sector_label_en_gb': 'Mining',
+            'breadcrumbs_label_en_gb': 'Mining',
             'introduction_text_en_gb': 'introduction',
             'introduction_column_one_text_en_gb': 'column one',
             'introduction_column_two_text_en_gb': 'column two',
@@ -221,6 +242,7 @@ def test_translate_page(
             'contact_button_text_en_gb': 'submit',
             'contact_success_message_text_en_gb': 'thanks',
             'contact_success_back_link_text_en_gb': 'go back',
+            'company_list_search_input_placeholder_text_en_gb': 'enter value',
         }
     )
 
@@ -267,7 +289,7 @@ def test_translate_page_not_called_always(
             'introduction_column_two_text_en_gb': 'this good',
             'search_description_en_gb': 'this is good',
             'hero_text_en_gb': 'good times',
-            'sector_label_en_gb': 'Good',
+            'breadcrumbs_label_en_gb': 'Good',
             'introduction_column_one_text_en_gb': 'goodies',
             'company_list_text_en_gb': 'companies',
             'company_list_call_to_action_text_en_gb': 'view all',
@@ -279,6 +301,7 @@ def test_translate_page_not_called_always(
             'contact_button_text_en_gb': 'submit',
             'contact_success_message_text_en_gb': 'thanks',
             'contact_success_back_link_text_en_gb': 'go back',
+            'company_list_search_input_placeholder_text_en_gb': 'enter value',
         }
     )
 

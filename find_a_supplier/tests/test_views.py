@@ -24,7 +24,7 @@ def test_landing_page_exposes_industries(admin_client):
 @pytest.mark.django_db
 def test_industry_landing_page_exposes_industries(admin_client):
     factories.IndustryPageFactory()
-    factories.IndustryLandingPagePageFactory()
+    factories.IndustryLandingPageFactory()
 
     url = reverse(
         'lookup-by-page-type',

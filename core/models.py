@@ -128,7 +128,7 @@ class ImageHash(models.Model):
         return filehash.hexdigest()
 
 
-class ExcludeivePageMixin:
+class ExclusivePageMixin:
     @classmethod
     def can_create_at(cls, parent):
         return super().can_create_at(parent) and not cls.objects.exists()

@@ -19,7 +19,7 @@ def untranslated_page():
     return IndustryPageFactory(
         parent=Page.objects.get(pk=1),
         title_en_gb='ENGLISH',
-        sector_label_en_gb='label',
+        breadcrumbs_label_en_gb='label',
         introduction_text_en_gb='lede',
         search_description_en_gb='description',
         hero_text_en_gb='hero text',
@@ -44,7 +44,7 @@ def translated_page(settings):
         title_pt='PORTUGUESE',
         title_pt_br='BRAZILIAN',
         title_ar='ARABIC',
-        sector_label_en_gb='label',
+        breadcrumbs_label_en_gb='label',
         introduction_text_en_gb='lede',
         search_description_en_gb='description',
         hero_text_en_gb='hero text',
