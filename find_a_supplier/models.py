@@ -1,8 +1,10 @@
 from directory_constants.constants import choices
+from modelcluster.fields import ParentalKey
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList, PageChooserPanel
+    FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList, InlinePanel
 )
 from wagtail.api import APIField
+from wagtail.wagtailcore.models import Orderable
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
@@ -10,7 +12,8 @@ from django.db import models
 
 from core import constants
 from core.fields import (
-    APIBreadcrumbsField, APIRichTextField, APIImageField, APIMetaField
+    APIBreadcrumbsField, APIRichTextField, APIImageField, APIMetaField,
+    APIVideoField
 )
 from core.helpers import make_translated_interface
 from core.models import BasePage, BaseApp, ExclusivePageMixin
@@ -24,6 +27,59 @@ class ImageChooserPanel(ImageChooserPanel):
 
 class FindASupplierApp(ExclusivePageMixin, BaseApp):
     view_app = constants.FIND_A_SUPPLIER
+
+
+class ArticleSummary(models.Model):
+    industry_name = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
+    body = RichTextField()
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    video = models.URLField(blank=True)
+
+    panels = [
+        FieldPanel('industry_name'),
+        FieldPanel('title'),
+        FieldPanel('body'),
+        ImageChooserPanel('image'),
+        FieldPanel('video')
+    ]
+
+    api_fields = [
+        APIField('industry_name'),
+        APIField('title'),
+        APIRichTextField('body'),
+        APIImageField('image'),
+        APIVideoField('video'),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class IndustryPageArticleSummary(Orderable, ArticleSummary):
+    page = ParentalKey(
+        'find_a_supplier.IndustryPage',
+        on_delete=models.CASCADE,
+        related_name='article_summaries',
+        blank=True,
+        null=True,
+    )
+
+
+class LandingPageArticleSummary(Orderable, ArticleSummary):
+    page = ParentalKey(
+        'find_a_supplier.LandingPage',
+        on_delete=models.CASCADE,
+        related_name='article_summaries',
+        blank=True,
+        null=True,
+    )
 
 
 class IndustryPage(BasePage):
@@ -78,12 +134,7 @@ class IndustryPage(BasePage):
     company_list_call_to_action_text = models.CharField(
         max_length=255,
     )
-    marketing_section_one = RichTextField(blank=True)
-    marketing_section_two = RichTextField(blank=True)
-    marketing_section_three = RichTextField(blank=True)
-    marketing_section_four = RichTextField(blank=True)
-    marketing_section_five = RichTextField(blank=True)
-    marketing_section_six = RichTextField(blank=True)
+
     image_panels = [
         ImageChooserPanel('hero_image'),
     ]
@@ -128,17 +179,7 @@ class IndustryPage(BasePage):
                 FieldPanel('company_list_call_to_action_text'),
             ]
         ),
-        MultiFieldPanel(
-            heading='Marketing',
-            children=[
-                FieldPanel('marketing_section_one'),
-                FieldPanel('marketing_section_two'),
-                FieldPanel('marketing_section_three'),
-                FieldPanel('marketing_section_four'),
-                FieldPanel('marketing_section_five'),
-                FieldPanel('marketing_section_six'),
-            ]
-        ),
+        InlinePanel('article_summaries', label="Articles"),
         SearchEngineOptimisationPanel(),
     ]
     settings_panels = [
@@ -167,14 +208,9 @@ class IndustryPage(BasePage):
         APIRichTextField('company_list_text'),
         APIField('company_list_call_to_action_text'),
         APIField('company_list_search_input_placeholder_text'),
-        APIRichTextField('marketing_section_one'),
-        APIRichTextField('marketing_section_two'),
-        APIRichTextField('marketing_section_three'),
-        APIRichTextField('marketing_section_four'),
-        APIRichTextField('marketing_section_five'),
-        APIRichTextField('marketing_section_six'),
         APIField('sector_value'),
         APIField('title'),
+        fields.APIArticleSummariesField('article_summaries'),
         APIField('seo_title'),
         APIField('search_description'),
         APIField('breadcrumbs_label'),
@@ -375,48 +411,6 @@ class LandingPage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    article_one = models.ForeignKey(
-        'find_a_supplier.IndustryArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    article_two = models.ForeignKey(
-        'find_a_supplier.IndustryArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    article_three = models.ForeignKey(
-        'find_a_supplier.IndustryArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    article_four = models.ForeignKey(
-        'find_a_supplier.IndustryArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    article_five = models.ForeignKey(
-        'find_a_supplier.IndustryArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    article_six = models.ForeignKey(
-        'find_a_supplier.IndustryArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
 
     def get_url_path_parts(self, *args, **kwargs):
         return [self.view_path]
@@ -440,12 +434,6 @@ class LandingPage(ExclusivePageMixin, BasePage):
         APIImageField('services_column_two_icon'),
         APIImageField('services_column_three_icon'),
         APIImageField('services_column_four_icon'),
-        APIField('article_one'),
-        APIField('article_two'),
-        APIField('article_three'),
-        APIField('article_four'),
-        APIField('article_five'),
-        APIField('article_six'),
         APIField('title'),
         APIField('search_description'),
         APIField('seo_title'),
@@ -453,26 +441,13 @@ class LandingPage(ExclusivePageMixin, BasePage):
             'industries',
             queryset=IndustryPage.objects.all()[0:9],
         ),
+        fields.APIArticleSummariesField('article_summaries'),
         APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
         APIMetaField('meta'),
     ]
 
     image_panels = [
         ImageChooserPanel('hero_image'),
-    ]
-    article_panels = [
-        PageChooserPanel('article_one', 'find_a_supplier.IndustryArticlePage'),
-        PageChooserPanel('article_two', 'find_a_supplier.IndustryArticlePage'),
-        PageChooserPanel(
-            'article_three', 'find_a_supplier.IndustryArticlePage'
-        ),
-        PageChooserPanel(
-            'article_four', 'find_a_supplier.IndustryArticlePage'
-        ),
-        PageChooserPanel(
-            'article_five', 'find_a_supplier.IndustryArticlePage'
-        ),
-        PageChooserPanel('article_six', 'find_a_supplier.IndustryArticlePage'),
     ]
 
     content_panels = [
@@ -530,6 +505,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
             ],
             classname='collapsible',
         ),
+        InlinePanel('article_summaries', label="Articles"),
         SearchEngineOptimisationPanel()
     ]
 
@@ -540,7 +516,6 @@ class LandingPage(ExclusivePageMixin, BasePage):
         settings_panels=settings_panels,
         other_panels=[
             ObjectList(image_panels, heading='Images'),
-            ObjectList(article_panels, heading='Articles'),
         ]
     )
 

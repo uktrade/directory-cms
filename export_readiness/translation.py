@@ -1,8 +1,6 @@
 from modeltranslation.translator import TranslationOptions
 from modeltranslation.decorators import register
 
-from django.conf import settings
-
 from export_readiness import models
 
 

@@ -1,8 +1,6 @@
 from modeltranslation.translator import TranslationOptions
 from modeltranslation.decorators import register
 
-from django.conf import settings
-
 from find_a_supplier import models
 
 
@@ -21,14 +19,15 @@ class IndustryPageTranslationOptions(TranslationOptions):
         'company_list_text',
         'company_list_search_input_placeholder_text',
         'company_list_call_to_action_text',
-        'marketing_section_one',
-        'marketing_section_two',
-        'marketing_section_three',
-        'marketing_section_four',
-        'marketing_section_five',
-        'marketing_section_six',
     )
     required_languages = []
+
+
+@register(models.IndustryPageArticleSummary)
+class IndustryPageArticleSummaryTranslationOptions(TranslationOptions):
+    fields = (
+        'page',
+    )
 
 
 @register(models.IndustryArticlePage)
@@ -79,6 +78,13 @@ class LandingPageTranslationOptions(TranslationOptions):
         'services_column_four_icon',
     )
     required_languages = []
+
+
+@register(models.LandingPageArticleSummary)
+class LandingPageArticleSummaryTranslationOptions(TranslationOptions):
+    fields = (
+        'page',
+    )
 
 
 @register(models.IndustryContactPage)

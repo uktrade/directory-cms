@@ -1,7 +1,8 @@
 from rest_framework import fields
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.rich_text import expand_db_html
-
+from wagtail.wagtailembeds import embeds
+from wagtail.wagtailembeds.exceptions import EmbedUnsupportedProviderException
 from django.conf import settings
 from django.utils import translation
 
@@ -92,3 +93,11 @@ class APIBreadcrumsSerializer(fields.DictField):
             if isinstance(item, models.ExclusivePageMixin)
             and isinstance(item, models.BasePage)
         }
+
+
+class APIVideoSerializer(fields.CharField):
+    def to_representation(self, value):
+        try:
+            return embeds.get_embed(value).html
+        except EmbedUnsupportedProviderException:
+            return ''

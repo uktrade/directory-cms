@@ -42,6 +42,10 @@ def translate_panel(panel, language_code):
         panel.field_name = build_localized_fieldname(
             field_name=panel.field_name, lang=language_code
         )
+    if hasattr(panel, 'relation_name'):
+        panel.relation_name = build_localized_fieldname(
+            field_name=panel.relation_name, lang=language_code
+        )
     if hasattr(panel, 'children'):
         panel.children = [
             translate_panel(child, language_code) for child in panel.children
