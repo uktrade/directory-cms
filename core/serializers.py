@@ -88,5 +88,7 @@ class APIBreadcrumsSerializer(fields.DictField):
             item.content_type.model: {
                 'label': item.breadcrumbs_label, 'slug': item.slug,
             }
-            for item in queryset if isinstance(item, models.ExclusivePageMixin)
+            for item in queryset
+            if isinstance(item, models.ExclusivePageMixin)
+            and isinstance(item, models.BasePage)
         }
