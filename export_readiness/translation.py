@@ -12,10 +12,10 @@ class TermsAndConditionsPageTranslationOptions(TranslationOptions):
         'terms_title',
         'body',
     )
-    required_languages = (settings.LANGUAGE_CODE,)
+    required_languages = []
 
 
 @register(models.ExportReadinessApp)
 class ExportReadinessAppTranslationOptions(TranslationOptions):
     fields = []
-    required_languages = (settings.LANGUAGE_CODE,)
+    required_languages = []

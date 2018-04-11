@@ -78,50 +78,12 @@ class IndustryPage(BasePage):
     company_list_call_to_action_text = models.CharField(
         max_length=255,
     )
-
-    article_one = models.ForeignKey(
-        'find_a_supplier.IndustryArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    article_two = models.ForeignKey(
-        'find_a_supplier.IndustryArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    article_three = models.ForeignKey(
-        'find_a_supplier.IndustryArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    article_four = models.ForeignKey(
-        'find_a_supplier.IndustryArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    article_five = models.ForeignKey(
-        'find_a_supplier.IndustryArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    article_six = models.ForeignKey(
-        'find_a_supplier.IndustryArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-
+    marketing_section_one = RichTextField(blank=True)
+    marketing_section_two = RichTextField(blank=True)
+    marketing_section_three = RichTextField(blank=True)
+    marketing_section_four = RichTextField(blank=True)
+    marketing_section_five = RichTextField(blank=True)
+    marketing_section_six = RichTextField(blank=True)
     image_panels = [
         ImageChooserPanel('hero_image'),
     ]
@@ -166,25 +128,22 @@ class IndustryPage(BasePage):
                 FieldPanel('company_list_call_to_action_text'),
             ]
         ),
+        MultiFieldPanel(
+            heading='Marketing',
+            children=[
+                FieldPanel('marketing_section_one'),
+                FieldPanel('marketing_section_two'),
+                FieldPanel('marketing_section_three'),
+                FieldPanel('marketing_section_four'),
+                FieldPanel('marketing_section_five'),
+                FieldPanel('marketing_section_six'),
+            ]
+        ),
         SearchEngineOptimisationPanel(),
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('sector_value'),
-    ]
-    article_panels = [
-        PageChooserPanel('article_one', 'find_a_supplier.IndustryArticlePage'),
-        PageChooserPanel('article_two', 'find_a_supplier.IndustryArticlePage'),
-        PageChooserPanel(
-            'article_three', 'find_a_supplier.IndustryArticlePage'
-        ),
-        PageChooserPanel(
-            'article_four', 'find_a_supplier.IndustryArticlePage'
-        ),
-        PageChooserPanel(
-            'article_five', 'find_a_supplier.IndustryArticlePage'
-        ),
-        PageChooserPanel('article_six', 'find_a_supplier.IndustryArticlePage'),
     ]
 
     edit_handler = make_translated_interface(
@@ -192,7 +151,6 @@ class IndustryPage(BasePage):
         settings_panels=settings_panels,
         other_panels=[
             ObjectList(image_panels, heading='Images'),
-            ObjectList(article_panels, heading='Articles')
         ]
     )
 
@@ -209,14 +167,14 @@ class IndustryPage(BasePage):
         APIRichTextField('company_list_text'),
         APIField('company_list_call_to_action_text'),
         APIField('company_list_search_input_placeholder_text'),
+        APIRichTextField('marketing_section_one'),
+        APIRichTextField('marketing_section_two'),
+        APIRichTextField('marketing_section_three'),
+        APIRichTextField('marketing_section_four'),
+        APIRichTextField('marketing_section_five'),
+        APIRichTextField('marketing_section_six'),
         APIField('sector_value'),
         APIField('title'),
-        APIField('article_one'),
-        APIField('article_two'),
-        APIField('article_three'),
-        APIField('article_four'),
-        APIField('article_five'),
-        APIField('article_six'),
         APIField('seo_title'),
         APIField('search_description'),
         APIField('breadcrumbs_label'),

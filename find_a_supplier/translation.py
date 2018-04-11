@@ -21,8 +21,14 @@ class IndustryPageTranslationOptions(TranslationOptions):
         'company_list_text',
         'company_list_search_input_placeholder_text',
         'company_list_call_to_action_text',
+        'marketing_section_one',
+        'marketing_section_two',
+        'marketing_section_three',
+        'marketing_section_four',
+        'marketing_section_five',
+        'marketing_section_six',
     )
-    required_languages = (settings.LANGUAGE_CODE,)
+    required_languages = []
 
 
 @register(models.IndustryArticlePage)
@@ -37,7 +43,7 @@ class IndustryArticlePageTranslationOptions(TranslationOptions):
         'proposition_text',
         'call_to_action_text',
     )
-    required_languages = (settings.LANGUAGE_CODE,)
+    required_languages = []
 
 
 @register(models.IndustryLandingPage)
@@ -48,7 +54,7 @@ class IndustryLandingPageTranslationOptions(TranslationOptions):
         'call_to_action_text',
         'breadcrumbs_label',
     )
-    required_languages = (settings.LANGUAGE_CODE,)
+    required_languages = []
 
 
 @register(models.LandingPage)
@@ -72,7 +78,7 @@ class LandingPageTranslationOptions(TranslationOptions):
         'services_column_three_icon',
         'services_column_four_icon',
     )
-    required_languages = (settings.LANGUAGE_CODE,)
+    required_languages = []
 
 
 @register(models.IndustryContactPage)
@@ -84,4 +90,4 @@ class IndustryContactPageTranslationOptions(TranslationOptions):
         'success_message_text',
         'success_back_link_text',
     )
-    required_languages = (settings.LANGUAGE_CODE,)
+    required_languages = []
