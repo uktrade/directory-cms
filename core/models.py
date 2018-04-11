@@ -4,6 +4,7 @@ from urllib.parse import urljoin, urlencode
 
 from modeltranslation.translator import translator
 from modeltranslation.utils import build_localized_fieldname
+from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailcore.models import Page
 
 from django.core import signing
@@ -11,6 +12,7 @@ from django.conf import settings
 from django.db import models
 from django.shortcuts import redirect
 from django.utils import translation
+from django.utils.text import slugify
 
 from core import constants
 
@@ -132,3 +134,27 @@ class ExclusivePageMixin:
     @classmethod
     def can_create_at(cls, parent):
         return super().can_create_at(parent) and not cls.objects.exists()
+
+
+class BaseApp(Page):
+    view_app = None
+
+    class Meta:
+        abstract = True
+
+    @classmethod
+    def allowed_subpage_models(cls):
+        return [
+            model for model in super().allowed_subpage_models()
+            if getattr(model, 'view_app', None) == cls.view_app
+        ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb')
+    ]
+    content_panels = []
+    promote_panels = []
+
+    def save(self, *args, **kwargs):
+        self.slug_en_gb = slugify(self.title_en_gb)
+        return super().save(*args, **kwargs)
