@@ -28,3 +28,9 @@ class APIBreadcrumbsField(APIField):
             app_label
         )
         super().__init__(name=name, serializer=serializer)
+
+
+class APIVideoField(APIField):
+    def __init__(self, name):
+        serializer = serializers.APIVideoSerializer()
+        super().__init__(name=name, serializer=serializer)

@@ -42,6 +42,10 @@ def translate_panel(panel, language_code):
         panel.field_name = build_localized_fieldname(
             field_name=panel.field_name, lang=language_code
         )
+    if hasattr(panel, 'relation_name'):
+        panel.relation_name = build_localized_fieldname(
+            field_name=panel.relation_name, lang=language_code
+        )
     if hasattr(panel, 'children'):
         panel.children = [
             translate_panel(child, language_code) for child in panel.children
@@ -146,3 +150,46 @@ def get_or_create_image(image_path):
 
 def is_draft_requested(request):
     return permissions.DraftTokenPermisison.TOKEN_PARAM in request.GET
+
+
+# from https://github.com/wagtail/wagtail/wagtail/tests/utils/form_data.py
+def _nested_form_data(data):
+    if isinstance(data, dict):
+        items = data.items()
+    elif isinstance(data, list):
+        items = enumerate(data)
+
+    for key, value in items:
+        key = str(key)
+        if isinstance(value, (dict, list)):
+            for child_keys, child_value in _nested_form_data(value):
+                yield [key] + child_keys, child_value
+        else:
+            yield [key], value
+
+
+# from https://github.com/wagtail/wagtail/wagtail/tests/utils/form_data.py
+def nested_form_data(data):
+    return {'-'.join(key): value for key, value in _nested_form_data(data)}
+
+
+# from https://github.com/wagtail/wagtail/wagtail/tests/utils/form_data.py
+def inline_formset(items, initial=0, min=0, max=1000):
+    def to_form(index, item):
+        defaults = {
+            'ORDER': str(index),
+            'DELETE': '',
+        }
+        defaults.update(item)
+        return defaults
+
+    data_dict = {str(index): to_form(index, item)
+                 for index, item in enumerate(items)}
+
+    data_dict.update({
+        'TOTAL_FORMS': str(len(data_dict)),
+        'INITIAL_FORMS': str(initial),
+        'MIN_NUM_FORMS': str(min),
+        'MAX_NUM_FORMS': str(max),
+    })
+    return data_dict

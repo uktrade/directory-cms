@@ -5,6 +5,7 @@ from wagtail.api.v2.utils import BadRequestError
 from wagtail.wagtailadmin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailimages.models import Image
+from wagtail.wagtailcore.models import Orderable
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
@@ -105,6 +106,7 @@ class CopyPageView(FormView):
             field = getattr(instance, f.name)
             if isinstance(field, Image) and field.file.name:
                 initial[f.name] = field.file.name
+
         return {
             **super().get_form_kwargs(),
             'initial': initial,
@@ -115,6 +117,17 @@ class CopyPageView(FormView):
             self.object = Page.objects.get(id=self.kwargs['pk']).specific
         return self.object
 
+    def get_cluster_form_data(self):
+        instance = self.get_object()
+        cluster_data = {}
+        for field in instance._meta.related_objects:
+            if issubclass(field.related_model, Orderable):
+                data = helpers.nested_form_data({
+                    field.name: helpers.inline_formset([])
+                })
+                cluster_data.update(data)
+        return cluster_data.items()
+
     def get_context_data(self, **kwargs):
         page = self.get_object()
         return super().get_context_data(
@@ -122,6 +135,7 @@ class CopyPageView(FormView):
             page=page,
             app_label=page._meta.app_label,
             model_name=page._meta.model_name,
+            cluster_data=self.get_cluster_form_data(),
             **kwargs
         )
 
@@ -179,6 +193,7 @@ class PeloadPageView(FormView):
                 if value not in ['', 'None', None]:
                     image = helpers.get_or_create_image(value)
                     kwargs['data'][name] = image.pk
+
         return kwargs
 
     def form_valid(self, form):

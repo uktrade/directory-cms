@@ -57,6 +57,10 @@ class BasePage(Page):
             url += '?' + urlencode(querystring)
         return url
 
+    @property
+    def url(self):
+        return self.get_url()
+
     def get_localized_urls(self):
         # localized urls are used to tell google of alternative urls for
         # available languages, so there should be no need to expose the draft

@@ -1,6 +1,7 @@
 from wagtail.api import APIField
 
 from core.serializers import APIQuerysetSerializer
+from find_a_supplier import serializers
 
 
 class APIIndustriesListField(APIField):
@@ -19,4 +20,10 @@ class APIIndustriesListField(APIField):
             fields_config=fields_config,
             queryset=queryset,
         )
+        super().__init__(name=name, serializer=serializer)
+
+
+class APIArticleSummariesField(APIField):
+    def __init__(self, name):
+        serializer = serializers.APIArticleSummariesSerializer(name)
         super().__init__(name=name, serializer=serializer)

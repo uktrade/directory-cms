@@ -6,6 +6,9 @@
     {% include "wagtailadmin/shared/header.html" with title=copy_str subtitle=page.get_admin_display_title icon="doc-empty-inverse" %}
     <div class="nice-padding">
         <form id="form" path="{% url 'preload-add-page' app_name=app_label model_name=model_name parent_pk=2 %}" method="POST" novalidate>
+            {% for name, value in cluster_data %}
+                <input type="hidden" value="{{ value}}" name="{{ name }}" id="id_{{ name }}" />
+            {% endfor %}
             {% for field in form.visible_fields %}
                 {{ field.as_hidden }}
             {% endfor %}
