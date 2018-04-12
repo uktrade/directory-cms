@@ -523,7 +523,10 @@ class LandingPage(ExclusivePageMixin, BasePage):
 class IndustryContactPage(ExclusivePageMixin, BasePage):
 
     view_app = constants.FIND_A_SUPPLIER
-    view_path = 'industries/contact/'
+    view_path = 'industries/help/contact-us/'
+
+    def get_url_path_parts(self, *args, **kwargs):
+        return [self.view_path]
 
     breadcrumbs_label = models.CharField(max_length=50)
     introduction_text = RichTextField(blank=False)
