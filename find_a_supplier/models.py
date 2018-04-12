@@ -505,7 +505,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
             ],
             classname='collapsible',
         ),
-        InlinePanel('article_summaries', label="Articles"),
+        InlinePanel('article_summaries', label='Articles'),
         SearchEngineOptimisationPanel()
     ]
 
