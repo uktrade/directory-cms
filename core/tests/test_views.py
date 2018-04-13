@@ -46,23 +46,6 @@ def test_permissions_published(rf):
     ]
 
 
-@pytest.mark.django_db
-def test_draft_view(admin_client, translated_page):
-    url = reverse('draft-view', kwargs={'pk': translated_page.pk})
-    response = admin_client.get(url)
-
-    assert response.status_code == 302
-    assert response.url == translated_page.get_url(is_draft=True)
-
-
-@pytest.mark.django_db
-def test_draft_view_anon(client, translated_page):
-    url = reverse('draft-view', kwargs={'pk': translated_page.pk})
-    response = client.get(url)
-
-    assert response.status_code == 302
-
-
 @pytest.mark.parametrize('languaue_code,expected', (
     ('en-gb', 'ENGLISH'),
     ('de', 'GERMAN'),
@@ -311,6 +294,7 @@ def test_not_always_call_translate_page(
         'introduction_column_two_icon_en_gb': image.pk,
         'introduction_column_three_icon_en_gb': image.pk,
         'introduction_column_one_icon_en_gb': image.pk,
+        'introduction_call_to_action_button_text_en_gb': 'contact us',
         'contact_breadcrumb_label_en_gb': 'contact us',
         'contact_introduction_text_en_gb': 'contact',
         'contact_button_text_en_gb': 'submit',

@@ -150,7 +150,7 @@ class IndustryPage(BasePage):
         MultiFieldPanel(
             heading='Introduction',
             children=[
-               FieldRowPanel(
+                FieldRowPanel(
                     children=[
                         FieldPanel('introduction_text'),
                         FieldPanel('introduction_call_to_action_button_text'),

@@ -42,7 +42,7 @@ def translated_page(settings):
     for field_name, (language_code, _) in product(field_names, language_codes):
         localized_name = build_localized_fieldname(field_name, language_code)
         if not getattr(page, localized_name):
-            setattr(page, localized_name, localized_name + '-value')
+            setattr(page, localized_name, localized_name + '-v')
     page.save()
     return page
 
