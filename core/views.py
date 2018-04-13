@@ -1,6 +1,4 @@
-from wagtail.api.v2.endpoints import (
-    BaseAPIEndpoint, filter_page_type, page_models_from_string
-)
+from wagtail.api.v2.endpoints import filter_page_type, page_models_from_string
 from wagtail.api.v2.utils import BadRequestError
 from wagtail.wagtailadmin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.wagtailcore.models import Page
@@ -10,7 +8,7 @@ from wagtail.wagtailcore.models import Orderable
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.forms.models import model_to_dict, ModelChoiceField
-from django.shortcuts import get_object_or_404, redirect, Http404
+from django.shortcuts import get_object_or_404, Http404
 from django.template.response import TemplateResponse
 from django.utils import translation
 from django.views.generic.edit import FormView
@@ -81,14 +79,6 @@ class PageLookupByTypeAPIEndpoint(APIEndpointBase):
 
     def detail_view(self, *args, **kwargs):
         return super().detail_view(self.request, pk=None)
-
-
-class DraftRedirectView(BaseAPIEndpoint):
-    permission_classes = []
-    model = Page
-
-    def get(self, request, *args, **kwargs):
-        return redirect(self.get_object().specific.get_url(is_draft=True))
 
 
 class CopyPageView(FormView):
