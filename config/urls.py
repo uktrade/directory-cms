@@ -27,13 +27,6 @@ urlpatterns = [
         healthcheck.views.PingAPIView.as_view(),
         name='health-check-ping'
     ),
-
-    url(
-        r'^admin/pages/(?P<pk>[0-9]+)/view_draft/$',
-        login_required(core.views.DraftRedirectView.as_view({'get': 'get'})),
-        name='draft-view',
-    ),
-
     url(
         r'^admin/pages/(?P<pk>[0-9]+)/copy-to-environment/$',
         login_required(core.views.CopyPageView.as_view()),

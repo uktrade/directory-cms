@@ -6,6 +6,7 @@ import gevent
 from google.cloud import translate
 from modeltranslation.utils import build_localized_fieldname
 from wagtail.wagtailadmin.edit_handlers import ObjectList, TabbedInterface
+from wagtail.wagtailcore import hooks
 from wagtail.wagtailimages.models import Image
 
 from django.conf import settings
@@ -13,6 +14,7 @@ from django.core.files.storage import default_storage
 from django.core.files.images import get_image_dimensions
 from django.utils.translation import trans_real
 from django.utils.text import slugify, Truncator
+from django.urls import resolve, Resolver404
 
 from core import models, permissions
 
@@ -193,3 +195,19 @@ def inline_formset(items, initial=0, min=0, max=1000):
         'MAX_NUM_FORMS': str(max),
     })
     return data_dict
+
+
+def replace_hook(hook_name, original_fn):
+    hooks._hooks[hook_name].remove((original_fn, 0))
+
+    def inner(fn):
+        hooks.register('register_page_listing_buttons', fn)
+        return fn
+    return inner
+
+
+def get_button_url_name(button):
+    try:
+        return resolve(button.url).url_name
+    except Resolver404:
+        return None
