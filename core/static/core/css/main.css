@@ -13,7 +13,7 @@ body .object fieldset {
 }
 
 label{
-	width: 100%;
+	width: 100%!important;
 }
 
 body .image-chooser .chosen .preview-image {
