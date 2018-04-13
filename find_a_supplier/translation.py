@@ -9,6 +9,7 @@ class IndustryPageTranslationOptions(TranslationOptions):
     fields = (
         'hero_text',
         'introduction_text',
+        'introduction_call_to_action_button_text',
         'introduction_column_one_text',
         'introduction_column_two_text',
         'introduction_column_three_text',

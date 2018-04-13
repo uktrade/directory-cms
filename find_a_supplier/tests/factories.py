@@ -14,6 +14,9 @@ class IndustryPageFactory(wagtail_factories.PageFactory):
 
     hero_text_en_gb = factory.fuzzy.FuzzyText(length=255)
     introduction_text_en_gb = factory.fuzzy.FuzzyText(length=255)
+    introduction_call_to_action_button_text_en_gb = factory.fuzzy.FuzzyText(
+        length=50
+    )
     introduction_column_one_text_en_gb = factory.fuzzy.FuzzyText(length=255)
     introduction_column_two_text_en_gb = factory.fuzzy.FuzzyText(length=255)
     introduction_column_three_text_en_gb = factory.fuzzy.FuzzyText(length=255)
