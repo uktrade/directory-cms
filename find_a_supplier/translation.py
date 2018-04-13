@@ -1,6 +1,8 @@
 from modeltranslation.translator import TranslationOptions
 from modeltranslation.decorators import register
 
+from django.conf import settings
+
 from find_a_supplier import models
 
 
@@ -21,7 +23,7 @@ class IndustryPageTranslationOptions(TranslationOptions):
         'company_list_search_input_placeholder_text',
         'company_list_call_to_action_text',
     )
-    required_languages = []
+    required_languages = [settings.LANGUAGE_CODE]
 
 
 @register(models.IndustryPageArticleSummary)
@@ -43,7 +45,7 @@ class IndustryArticlePageTranslationOptions(TranslationOptions):
         'proposition_text',
         'call_to_action_text',
     )
-    required_languages = []
+    required_languages = [settings.LANGUAGE_CODE]
 
 
 @register(models.IndustryLandingPage)
@@ -54,7 +56,7 @@ class IndustryLandingPageTranslationOptions(TranslationOptions):
         'call_to_action_text',
         'breadcrumbs_label',
     )
-    required_languages = []
+    required_languages = [settings.LANGUAGE_CODE]
 
 
 @register(models.LandingPage)
@@ -78,7 +80,7 @@ class LandingPageTranslationOptions(TranslationOptions):
         'services_column_three_icon',
         'services_column_four_icon',
     )
-    required_languages = []
+    required_languages = [settings.LANGUAGE_CODE]
 
 
 @register(models.LandingPageArticleSummary)
@@ -97,4 +99,4 @@ class IndustryContactPageTranslationOptions(TranslationOptions):
         'success_message_text',
         'success_back_link_text',
     )
-    required_languages = []
+    required_languages = [settings.LANGUAGE_CODE]
