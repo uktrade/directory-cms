@@ -66,6 +66,15 @@ def test_clean_translated_value_slug():
     assert actual == 'this-is-great'
 
 
+def test_clean_translated_value_html_entity():
+    actual = helpers.clean_translated_value(
+        field=IndustryPage._meta.get_field('breadcrumbs_label'),
+        value='&pound;682m &#39;',
+    )
+
+    assert actual == '£682m \''
+
+
 def test_clean_translated_value_truncate():
     actual = helpers.clean_translated_value(
         field=IndustryPage._meta.get_field('breadcrumbs_label'),

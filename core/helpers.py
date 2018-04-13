@@ -1,5 +1,6 @@
 import copy
 import functools
+import html
 import os
 
 import gevent
@@ -92,6 +93,7 @@ def auto_populate_translations(page, language_codes):
         {'django': code, 'google': language_code_django_to_google(code)}
         for code in language_codes
     ]
+
     translator = functools.partial(
         gevent.Greenlet.spawn,
         translate_client.translate,
@@ -119,7 +121,7 @@ def clean_translated_value(field, value):
         value = slugify(value)
     elif field.max_length:
         value = Truncator(text=value).chars(num=field.max_length)
-    return value
+    return html.unescape(value)
 
 
 def language_code_django_to_google(code):
