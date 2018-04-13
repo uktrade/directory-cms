@@ -95,7 +95,8 @@ class IndustryPage(BasePage):
         related_name='+'
     )
     hero_text = RichTextField(blank=False)
-    introduction_text = RichTextField(blank=False)
+    introduction_text = models.CharField(max_length=400)
+    introduction_call_to_action_button_text = models.CharField(max_length=50)
     introduction_column_one_text = RichTextField(blank=False)
     introduction_column_two_text = RichTextField(blank=False)
     introduction_column_three_text = RichTextField(blank=False)
@@ -149,7 +150,12 @@ class IndustryPage(BasePage):
         MultiFieldPanel(
             heading='Introduction',
             children=[
-                FieldPanel('introduction_text', classname='full'),
+               FieldRowPanel(
+                    children=[
+                        FieldPanel('introduction_text'),
+                        FieldPanel('introduction_call_to_action_button_text'),
+                    ]
+                ),
                 FieldRowPanel(
                     classname='full field-row-panel',
                     children=[
@@ -198,7 +204,8 @@ class IndustryPage(BasePage):
     api_fields = [
         APIImageField('hero_image'),
         APIRichTextField('hero_text'),
-        APIRichTextField('introduction_text'),
+        APIField('introduction_text'),
+        APIField('introduction_call_to_action_button_text'),
         APIRichTextField('introduction_column_one_text'),
         APIRichTextField('introduction_column_two_text'),
         APIRichTextField('introduction_column_three_text'),
