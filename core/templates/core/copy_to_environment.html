@@ -10,7 +10,7 @@
                 <input type="hidden" value="{{ value}}" name="{{ name }}" id="id_{{ name }}" />
             {% endfor %}
             {% for field in form.visible_fields %}
-                {{ field.as_hidden }}
+                <input type="hidden" value="{{ field.value}}" name="{{ field.name }}" id="{{ field.id_for_label }}" />
             {% endfor %}
             <input type="hidden" name="next" value="{{ next }}" />
             <ul class="fields">

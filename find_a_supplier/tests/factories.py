@@ -28,8 +28,8 @@ class IndustryPageFactory(wagtail_factories.PageFactory):
         length=50
     )
     breadcrumbs_label_en_gb = factory.fuzzy.FuzzyText(length=50)
-    sector_value = factory.fuzzy.FuzzyChoice(
-        [i[0] for i in choices.INDUSTRIES]
+    search_filter_sector = factory.fuzzy.FuzzyChoice(
+        [[i[0]] for i in choices.INDUSTRIES]
     )
     search_description_en_gb = factory.fuzzy.FuzzyText(length=255)
     title_en_gb = factory.fuzzy.FuzzyText(length=255)

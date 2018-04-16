@@ -7,6 +7,7 @@ from wagtail.wagtailcore.models import Orderable
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
+from django.forms.fields import MultipleChoiceField
 from django.forms.models import model_to_dict, ModelChoiceField
 from django.shortcuts import get_object_or_404, Http404
 from django.template.response import TemplateResponse
@@ -15,6 +16,7 @@ from django.views.generic.edit import FormView
 
 from config.signature import SignatureCheckPermission
 from core import forms, helpers, permissions
+from core.models import ChoiceArrayField
 
 
 class APIEndpointBase(PagesAdminAPIEndpoint):
@@ -92,11 +94,12 @@ class CopyPageView(FormView):
     def get_form_kwargs(self):
         instance = self.get_object()
         initial = model_to_dict(instance)
-        for f in instance._meta.concrete_fields:
+        for f in instance._meta.fields:
             field = getattr(instance, f.name)
             if isinstance(field, Image) and field.file.name:
                 initial[f.name] = field.file.name
-
+            elif isinstance(f, ChoiceArrayField):
+                initial[f.name] = ','.join(field)
         return {
             **super().get_form_kwargs(),
             'initial': initial,
@@ -178,11 +181,14 @@ class PeloadPageView(FormView):
         kwargs['data'] = kwargs['data'].dict()
         form = self.get_form_class()()
         for name, field in form.fields.items():
-            if isinstance(field, ModelChoiceField) and name in kwargs['data']:
-                value = kwargs['data'][name]
-                if value not in ['', 'None', None]:
-                    image = helpers.get_or_create_image(value)
-                    kwargs['data'][name] = image.pk
+            if name in kwargs['data']:
+                if isinstance(field, MultipleChoiceField):
+                    kwargs['data'][name] = kwargs['data'][name].split(',')
+                elif isinstance(field, ModelChoiceField):
+                    value = kwargs['data'][name]
+                    if value not in ['', 'None', None]:
+                        image = helpers.get_or_create_image(value)
+                        kwargs['data'][name] = image.pk
 
         return kwargs
 
