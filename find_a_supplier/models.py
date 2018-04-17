@@ -94,6 +94,14 @@ class IndustryPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    mobile_hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
     summary_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -154,6 +162,7 @@ class IndustryPage(BasePage):
 
     image_panels = [
         ImageChooserPanel('hero_image'),
+        ImageChooserPanel('mobile_hero_image'),
         ImageChooserPanel('summary_image'),
     ]
     content_panels = [
@@ -221,6 +230,7 @@ class IndustryPage(BasePage):
 
     api_fields = [
         APIImageField('hero_image'),
+        APIImageField('mobile_hero_image'),
         APIImageField('summary_image'),
         APIRichTextField('hero_text'),
         APIField('introduction_text'),
@@ -257,6 +267,13 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    mobile_hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     breadcrumbs_label = models.CharField(max_length=50)
     hero_title = models.CharField(max_length=500)
     proposition_text = models.CharField(max_length=500)
@@ -268,6 +285,7 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
     api_fields = [
         APIField('hero_title'),
         APIImageField('hero_image'),
+        APIImageField('mobile_hero_image'),
         APIField('proposition_text'),
         APIField('call_to_action_text'),
         APIField('title'),
@@ -284,6 +302,7 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
 
     image_panels = [
         ImageChooserPanel('hero_image'),
+        ImageChooserPanel('mobile_hero_image'),
     ]
 
     content_panels = [
@@ -396,6 +415,13 @@ class LandingPage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    mobile_hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     breadcrumbs_label = models.CharField(max_length=50)
     hero_text = RichTextField(blank=False)
@@ -444,6 +470,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
 
     api_fields = [
         APIImageField('hero_image'),
+        APIImageField('mobile_hero_image'),
         APIField('breadcrumbs_label'),
         APIRichTextField('hero_text'),
         APIField('search_field_placeholder'),
@@ -475,6 +502,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
 
     image_panels = [
         ImageChooserPanel('hero_image'),
+        ImageChooserPanel('mobile_hero_image'),
     ]
 
     content_panels = [
