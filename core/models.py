@@ -9,12 +9,25 @@ from wagtail.wagtailcore.models import Page
 
 from django.core import signing
 from django.conf import settings
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.forms import MultipleChoiceField
 from django.shortcuts import redirect
 from django.utils import translation
 from django.utils.text import slugify
 
 from core import constants
+
+
+class ChoiceArrayField(ArrayField):
+
+    def formfield(self, **kwargs):
+        defaults = {
+            'form_class': MultipleChoiceField,
+            'choices': self.base_field.choices,
+        }
+        defaults.update(kwargs)
+        return super(ArrayField, self).formfield(**defaults)
 
 
 class BasePage(Page):

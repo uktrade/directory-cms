@@ -16,7 +16,7 @@ from core.fields import (
     APIVideoField
 )
 from core.helpers import make_translated_interface
-from core.models import BasePage, BaseApp, ExclusivePageMixin
+from core.models import BasePage, BaseApp, ExclusivePageMixin, ChoiceArrayField
 from core.panels import SearchEngineOptimisationPanel
 from find_a_supplier import fields
 
@@ -129,9 +129,18 @@ class IndustryPage(BasePage):
         related_name='+'
     )
     breadcrumbs_label = models.CharField(max_length=50)
-    sector_value = models.CharField(
-        max_length=255,
-        choices=choices.INDUSTRIES,
+    search_filter_sector = ChoiceArrayField(
+        base_field=models.CharField(
+            max_length=255,
+            choices=choices.INDUSTRIES,
+        ),
+        blank=True,
+        null=True
+    )
+    search_filter_text = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
     )
     company_list_text = RichTextField(
         blank=False,
@@ -198,7 +207,8 @@ class IndustryPage(BasePage):
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('sector_value'),
+        FieldPanel('search_filter_sector'),
+        FieldPanel('search_filter_text'),
     ]
 
     edit_handler = make_translated_interface(
@@ -224,7 +234,8 @@ class IndustryPage(BasePage):
         APIRichTextField('company_list_text'),
         APIField('company_list_call_to_action_text'),
         APIField('company_list_search_input_placeholder_text'),
-        APIField('sector_value'),
+        APIField('search_filter_sector'),
+        APIField('search_filter_text'),
         APIField('title'),
         fields.APIArticleSummariesField('article_summaries'),
         APIField('seo_title'),

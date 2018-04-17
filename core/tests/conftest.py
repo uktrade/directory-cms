@@ -36,6 +36,7 @@ def translated_page(settings):
         introduction_column_three_text_en_gb='lede column three',
         company_list_call_to_action_text_en_gb='view all',
         company_list_text_en_gb='the title',
+        search_filter_sector=['FOOD_AND_DRINK'],
     )
     field_names = page.get_required_translatable_fields()
     language_codes = settings.LANGUAGES

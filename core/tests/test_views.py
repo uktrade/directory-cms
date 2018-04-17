@@ -161,6 +161,7 @@ def test_add_page_prepopulate(
         'introduction_column_one_icon_en_gb': str(image.pk),
         'introduction_column_two_icon_en_gb': str(image.pk),
         'introduction_column_three_icon_en_gb': str(image.pk),
+        'search_filter_sector': model_as_dict['search_filter_sector'][0],
     }
 
     response = admin_client.post(url, post_data)
