@@ -13,7 +13,8 @@ class APIIndustriesListField(APIField):
             ('meta', False, None),
             ('hero_image', False, None),
             ('hero_text', False, None),
-            ('breadcrumbs_label', None, None)
+            ('breadcrumbs_label', None, None),
+            ('summary_image', None, None)
         ]
         serializer = APIQuerysetSerializer(
             name,

@@ -94,6 +94,13 @@ class IndustryPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    summary_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     hero_text = RichTextField(blank=False)
     introduction_text = models.CharField(max_length=400)
     introduction_call_to_action_button_text = models.CharField(max_length=50)
@@ -138,6 +145,7 @@ class IndustryPage(BasePage):
 
     image_panels = [
         ImageChooserPanel('hero_image'),
+        ImageChooserPanel('summary_image'),
     ]
     content_panels = [
         MultiFieldPanel(
@@ -203,6 +211,7 @@ class IndustryPage(BasePage):
 
     api_fields = [
         APIImageField('hero_image'),
+        APIImageField('summary_image'),
         APIRichTextField('hero_text'),
         APIField('introduction_text'),
         APIField('introduction_call_to_action_button_text'),
