@@ -1,21 +1,17 @@
-from modeltranslation.translator import TranslationOptions
 from modeltranslation.decorators import register
 
-from django.conf import settings
-
+from core.translation import BaseTranslationOptions
 from export_readiness import models
 
 
 @register(models.TermsAndConditionsPage)
-class TermsAndConditionsPageTranslationOptions(TranslationOptions):
+class TermsAndConditionsPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'terms_title',
         'body',
     )
-    required_languages = [settings.LANGUAGE_CODE]
 
 
 @register(models.ExportReadinessApp)
-class ExportReadinessAppTranslationOptions(TranslationOptions):
+class ExportReadinessAppTranslationOptions(BaseTranslationOptions):
     fields = []
-    required_languages = [settings.LANGUAGE_CODE]
