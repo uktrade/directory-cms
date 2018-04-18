@@ -494,7 +494,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
         APIField('seo_title'),
         fields.APIIndustriesListField(
             'industries',
-            queryset=IndustryPage.objects.all()[0:9],
+            queryset=IndustryPage.objects.all()[:3],
         ),
         fields.APIArticleSummariesField('article_summaries'),
         APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
