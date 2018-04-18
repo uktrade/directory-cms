@@ -155,6 +155,7 @@ class IndustryPage(BasePage):
     )
     company_list_search_input_placeholder_text = models.CharField(
         max_length=255,
+        blank=True,
     )
     company_list_call_to_action_text = models.CharField(
         max_length=255,
