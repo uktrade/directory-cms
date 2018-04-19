@@ -367,6 +367,14 @@ class IndustryArticlePage(BasePage):
         features=constants.RICH_TEXT_FEATURES,
     )
     call_to_action_text = models.CharField(max_length=500)
+    show_table_of_content = models.BooleanField(
+        default=False,
+        help_text=(
+            'Any H2 in the body will be listed in the table of content. '
+            'Allows users to click to go to sections of the page. Useful for '
+            'long articles.'
+        )
+    )
 
     date = models.DateField()
 
@@ -399,7 +407,11 @@ class IndustryArticlePage(BasePage):
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb')
+        FieldPanel('title_en_gb'),
+        MultiFieldPanel(
+            heading='Page structure',
+            children=[FieldPanel('show_table_of_content')]
+        )
     ]
 
     edit_handler = make_translated_interface(
@@ -419,6 +431,7 @@ class IndustryArticlePage(BasePage):
         APIRichTextField('proposition_text'),
         APIField('call_to_action_text'),
         APIField('introduction_title'),
+        APIField('show_table_of_content'),
         APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
         APIMetaField('meta'),
     ]
