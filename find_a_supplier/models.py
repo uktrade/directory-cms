@@ -309,7 +309,7 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
         APIMetaField('meta'),
         fields.APIIndustriesListField(
             'industries',
-            queryset=IndustryPage.objects.all()[0:9],
+            queryset=IndustryPage.objects.all().order_by('slug')[0:9],
         ),
         APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
     ]
@@ -550,7 +550,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
         APIField('seo_title'),
         fields.APIIndustriesListField(
             'industries',
-            queryset=IndustryPage.objects.all()[:3],
+            queryset=IndustryPage.objects.all().order_by('slug')[:3],
         ),
         fields.APIArticleSummariesField('article_summaries'),
         APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
