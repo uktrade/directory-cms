@@ -9,6 +9,7 @@ from core.fields import APIRichTextField, APIMetaField
 from core.helpers import make_translated_interface
 from core.models import BaseApp, BasePage, ExclusivePageMixin
 from core.panels import SearchEngineOptimisationPanel
+from core.constants import RICH_TEXT_FEATURES
 
 
 class ExportReadinessApp(ExclusivePageMixin, BaseApp):
@@ -21,7 +22,7 @@ class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
     view_path = 'terms-and-conditions/'
 
     terms_title = models.CharField(max_length=50)
-    body = RichTextField(blank=False)
+    body = RichTextField(blank=False, features=RICH_TEXT_FEATURES)
 
     content_panels = [
         MultiFieldPanel(

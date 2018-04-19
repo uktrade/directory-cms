@@ -32,7 +32,7 @@ class FindASupplierApp(ExclusivePageMixin, BaseApp):
 class ArticleSummary(models.Model):
     industry_name = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
-    body = RichTextField()
+    body = RichTextField(features=constants.RICH_TEXT_FEATURES)
     image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -109,12 +109,24 @@ class IndustryPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    hero_text = RichTextField(blank=False)
+    hero_text = RichTextField(
+        blank=False,
+        features=constants.RICH_TEXT_FEATURES
+    )
     introduction_text = models.CharField(max_length=400)
     introduction_call_to_action_button_text = models.CharField(max_length=50)
-    introduction_column_one_text = RichTextField(blank=False)
-    introduction_column_two_text = RichTextField(blank=False)
-    introduction_column_three_text = RichTextField(blank=False)
+    introduction_column_one_text = RichTextField(
+        blank=False,
+        features=constants.RICH_TEXT_FEATURES,
+    )
+    introduction_column_two_text = RichTextField(
+        blank=False,
+        features=constants.RICH_TEXT_FEATURES,
+    )
+    introduction_column_three_text = RichTextField(
+        blank=False,
+        features=constants.RICH_TEXT_FEATURES,
+    )
     introduction_column_one_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -152,6 +164,7 @@ class IndustryPage(BasePage):
     )
     company_list_text = RichTextField(
         blank=False,
+        features=constants.RICH_TEXT_FEATURES,
     )
     company_list_search_input_placeholder_text = models.CharField(
         max_length=255,
@@ -343,10 +356,16 @@ class IndustryArticlePage(BasePage):
 
     breadcrumbs_label = models.CharField(max_length=50)
     introduction_title = models.CharField(max_length=255)
-    body = RichTextField(blank=False)
+    body = RichTextField(
+        blank=False,
+        features=constants.RICH_TEXT_FEATURES,
+    )
     author_name = models.CharField(max_length=255)
     job_title = models.CharField(max_length=255)
-    proposition_text = RichTextField(blank=False)
+    proposition_text = RichTextField(
+        blank=False,
+        features=constants.RICH_TEXT_FEATURES,
+    )
     call_to_action_text = models.CharField(max_length=500)
 
     date = models.DateField()
@@ -425,18 +444,42 @@ class LandingPage(ExclusivePageMixin, BasePage):
     )
 
     breadcrumbs_label = models.CharField(max_length=50)
-    hero_text = RichTextField(blank=False)
+    hero_text = RichTextField(
+        blank=False,
+        features=constants.RICH_TEXT_FEATURES,
+    )
     search_field_placeholder = models.CharField(max_length=500)
     search_button_text = models.CharField(max_length=500)
-    proposition_text = RichTextField(blank=False)
+    proposition_text = RichTextField(
+        blank=False,
+        features=constants.RICH_TEXT_FEATURES,
+    )
     call_to_action_text = models.CharField(max_length=500)
-    industries_list_text = RichTextField(blank=False)
+    industries_list_text = RichTextField(
+        blank=False,
+        features=constants.RICH_TEXT_FEATURES,
+    )
     industries_list_call_to_action_text = models.CharField(max_length=500)
-    services_list_text = RichTextField(blank=False)
-    services_column_one = RichTextField(blank=False)
-    services_column_two = RichTextField(blank=False)
-    services_column_three = RichTextField(blank=False)
-    services_column_four = RichTextField(blank=False)
+    services_list_text = RichTextField(
+        blank=False,
+        features=constants.RICH_TEXT_FEATURES,
+    )
+    services_column_one = RichTextField(
+        blank=False,
+        features=constants.RICH_TEXT_FEATURES,
+    )
+    services_column_two = RichTextField(
+        blank=False,
+        features=constants.RICH_TEXT_FEATURES,
+    )
+    services_column_three = RichTextField(
+        blank=False,
+        features=constants.RICH_TEXT_FEATURES,
+    )
+    services_column_four = RichTextField(
+        blank=False,
+        features=constants.RICH_TEXT_FEATURES,
+    )
     services_column_one_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -585,9 +628,15 @@ class IndustryContactPage(ExclusivePageMixin, BasePage):
         return [self.view_path]
 
     breadcrumbs_label = models.CharField(max_length=50)
-    introduction_text = RichTextField(blank=False)
+    introduction_text = RichTextField(
+        blank=False,
+        features=constants.RICH_TEXT_FEATURES,
+    )
     submit_button_text = models.CharField(max_length=100)
-    success_message_text = RichTextField(blank=False)
+    success_message_text = RichTextField(
+        blank=False,
+        features=constants.RICH_TEXT_FEATURES,
+    )
     success_back_link_text = models.CharField(max_length=100)
 
     content_panels = [
