@@ -70,15 +70,15 @@ def test_translated_localised_urls(translated_page):
 
     assert translated_page.get_localized_urls() == [
         ('en-gb', domain + '/industries/3/slug/'),
-        ('de', domain + '/industries/3/slug_de-v/?lang=de'),
-        ('ja', domain + '/industries/3/slug_ja-v/?lang=ja'),
-        ('ru', domain + '/industries/3/slug_ru-v/?lang=ru'),
-        ('zh-hans', domain + '/industries/3/slug_zh_hans-v/?lang=zh-hans'),
-        ('fr', domain + '/industries/3/slug_fr-v/?lang=fr'),
-        ('es', domain + '/industries/3/slug_es-v/?lang=es'),
-        ('pt', domain + '/industries/3/slug_pt-v/?lang=pt'),
-        ('pt-br', domain + '/industries/3/slug_pt_br-v/?lang=pt-br'),
-        ('ar', domain + '/industries/3/slug_ar-v/?lang=ar')
+        ('de', domain + '/industries/3/slug/?lang=de'),
+        ('ja', domain + '/industries/3/slug/?lang=ja'),
+        ('ru', domain + '/industries/3/slug/?lang=ru'),
+        ('zh-hans', domain + '/industries/3/slug/?lang=zh-hans'),
+        ('fr', domain + '/industries/3/slug/?lang=fr'),
+        ('es', domain + '/industries/3/slug/?lang=es'),
+        ('pt', domain + '/industries/3/slug/?lang=pt'),
+        ('pt-br', domain + '/industries/3/slug/?lang=pt-br'),
+        ('ar', domain + '/industries/3/slug/?lang=ar')
     ]
 
 

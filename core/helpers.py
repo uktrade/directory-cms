@@ -41,7 +41,6 @@ def translate_panel(panel, language_code):
     """
 
     panel = copy.deepcopy(panel)
-
     if hasattr(panel, 'field_name'):
         panel.field_name = build_localized_fieldname(
             field_name=panel.field_name, lang=language_code
@@ -68,7 +67,6 @@ def make_translated_interface(
                 heading=name
             )
         )
-
     if settings_panels:
         panels.append(
             ObjectList(
