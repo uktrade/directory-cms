@@ -232,6 +232,7 @@ class IndustryPage(BasePage):
         FieldPanel('title_en_gb'),
         FieldPanel('search_filter_sector'),
         FieldPanel('search_filter_text'),
+        FieldPanel('slug_en_gb'),
     ]
 
     edit_handler = make_translated_interface(
@@ -338,6 +339,7 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
+        FieldPanel('slug_en_gb'),
     ]
 
     edit_handler = make_translated_interface(
@@ -408,6 +410,7 @@ class IndustryArticlePage(BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
+        FieldPanel('slug_en_gb'),
         MultiFieldPanel(
             heading='Page structure',
             children=[FieldPanel('show_table_of_content')]
@@ -621,7 +624,10 @@ class LandingPage(ExclusivePageMixin, BasePage):
         SearchEngineOptimisationPanel()
     ]
 
-    settings_panels = [FieldPanel('title_en_gb')]
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug_en_gb'),
+    ]
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
@@ -673,6 +679,7 @@ class IndustryContactPage(ExclusivePageMixin, BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
+        FieldPanel('slug_en_gb'),
     ]
 
     edit_handler = make_translated_interface(

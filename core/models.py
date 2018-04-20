@@ -113,8 +113,13 @@ class BasePage(Page):
 
     @classmethod
     def get_required_translatable_fields(cls):
-        names = cls.get_translatable_fields()
-        return [name for name in names if not cls._meta.get_field(name).blank]
+        fields = [
+            cls._meta.get_field(name) for name in cls.get_translatable_fields()
+        ]
+        return [
+            field.name for field in fields
+            if not field.blank and field.model is cls
+        ]
 
     @property
     def translated_languages(self):
