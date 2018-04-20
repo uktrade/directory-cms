@@ -309,6 +309,7 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
     hero_title = models.CharField(max_length=500)
     proposition_text = models.CharField(max_length=500)
     call_to_action_text = models.CharField(max_length=500)
+    more_industries_title = models.CharField(max_length=100)
 
     def get_url_path_parts(self, *args, **kwargs):
         return [self.view_path]
@@ -323,10 +324,11 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
         APIField('breadcrumbs_label'),
         APIField('seo_title'),
         APIField('search_description'),
+        APIField('more_industries_title'),
         APIMetaField('meta'),
         fields.APIIndustriesListField(
             'industries',
-            queryset=IndustryPage.objects.all().order_by('slug')[0:9],
+            queryset=IndustryPage.objects.all().order_by('slug'),
         ),
         APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
     ]
@@ -351,6 +353,7 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
                 ),
             ]
         ),
+        FieldPanel('more_industries_title'),
         SearchEngineOptimisationPanel(),
     ]
     settings_panels = [
