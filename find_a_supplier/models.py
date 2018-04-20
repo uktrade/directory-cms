@@ -155,12 +155,21 @@ class IndustryPage(BasePage):
             choices=choices.INDUSTRIES,
         ),
         blank=True,
-        null=True
+        null=True,
+        verbose_name='Sector filter',
+        help_text='Limit to companies within these sectors.'
     )
     search_filter_text = models.CharField(
         max_length=100,
         blank=True,
         null=True,
+        verbose_name='Profile text filter',
+        help_text='Limit to companies that contain this term in their profile.'
+    )
+    search_filter_showcase_only = models.BooleanField(
+        default=False,
+        verbose_name='Whitelisted companies filter',
+        help_text='Limit to companies that have explicitly been whitelisted.',
     )
     company_list_text = RichTextField(
         blank=False,
@@ -230,9 +239,15 @@ class IndustryPage(BasePage):
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('search_filter_sector'),
-        FieldPanel('search_filter_text'),
         FieldPanel('slug_en_gb'),
+        MultiFieldPanel(
+            heading='Company list filters',
+            children=[
+                FieldPanel('search_filter_showcase_only'),
+                FieldPanel('search_filter_sector'),
+                FieldPanel('search_filter_text'),
+            ]
+        )
     ]
 
     edit_handler = make_translated_interface(
@@ -261,6 +276,7 @@ class IndustryPage(BasePage):
         APIField('company_list_search_input_placeholder_text'),
         APIField('search_filter_sector'),
         APIField('search_filter_text'),
+        APIField('search_filter_showcase_only'),
         APIField('title'),
         fields.APIArticleSummariesField('article_summaries'),
         APIField('seo_title'),
