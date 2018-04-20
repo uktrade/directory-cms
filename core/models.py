@@ -13,8 +13,9 @@ from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.forms import MultipleChoiceField
 from django.shortcuts import redirect
+from django.template.loader import render_to_string
 from django.utils import translation
-from django.utils.text import slugify
+from django.utils.text import mark_safe, slugify
 
 from core import constants
 
@@ -125,6 +126,19 @@ class BasePage(Page):
             if all(getattr(self, builder(name)) for name in fields):
                 translated_languages.append(language_code)
         return translated_languages
+
+    def get_admin_display_title(self):
+        translated_languages = self.translated_languages
+        language_names = [
+            label for code, label, _ in settings.LANGUAGES_DETAILS
+            if code in translated_languages
+            and code != settings.LANGUAGE_CODE
+        ]
+        display_title = render_to_string('core/admin_display_title.html', {
+            'language_names': language_names,
+            'cms_page_title': super().get_admin_display_title(),
+        })
+        return mark_safe(display_title)
 
 
 class ImageHash(models.Model):
