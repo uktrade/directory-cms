@@ -6,7 +6,8 @@ from export_readiness import models
 def test_app_models():
     assert models.ExportReadinessApp.allowed_subpage_models() == [
         models.ExportReadinessApp,
-        models.TermsAndConditionsPage
+        models.TermsAndConditionsPage,
+        models.PrivacyAndCookiesPage
     ]
 
 
