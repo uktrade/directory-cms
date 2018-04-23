@@ -238,6 +238,7 @@ def test_translate_page(
         'contact_success_message_text_en_gb': 'thanks',
         'contact_success_back_link_text_en_gb': 'go back',
         'company_list_search_input_placeholder_text_en_gb': 'enter value',
+        'more_industries_title_en_gb': 'more industries',
         **cluster_data,
     }
 
@@ -303,6 +304,7 @@ def test_not_always_call_translate_page(
         'contact_success_message_text_en_gb': 'thanks',
         'contact_success_back_link_text_en_gb': 'go back',
         'company_list_search_input_placeholder_text_en_gb': 'enter value',
+        'more_industries_title_en_gb': 'more industries',
         **cluster_data
     }
 

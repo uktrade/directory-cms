@@ -26,8 +26,22 @@ DJANGO_WEBSERVER := \
 django_webserver:
 	$(DJANGO_WEBSERVER)
 
+
+DEBUG_CREATE_DB := \
+	psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = '$$DB_NAME'" | \
+	grep -q 1 || psql -U postgres -c "CREATE DATABASE $$DB_NAME"; \
+	psql -U postgres -tc "SELECT 1 FROM pg_roles WHERE rolname = '$$DB_USER'" | \
+	grep -q 1 || echo "CREATE USER $$DB_USER WITH PASSWORD '$$DB_PASSWORD'; GRANT ALL PRIVILEGES ON DATABASE \"$$DB_NAME\" to $$DB_USER; ALTER USER $$DB_USER CREATEDB" | psql -U postgres
+
+debug_db:
+	$(DEBUG_SET_ENV_VARS) && $(DEBUG_CREATE_DB)
+
+migrations:
+	$(DEBUG_SET_ENV_VARS) && ./manage.py makemigrations core export_readiness find_a_supplier
+
+
 DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose -f docker-compose.yml -f docker-compose-test.yml rm -f && docker-compose -f docker-compose.yml -f docker-compose-test.yml pull
-DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py ./docker/env.json ./docker/env.test.json ./docker/env-postgres.test.json ./docker/env-postgres.json 
+DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py ./docker/env.json ./docker/env.test.json ./docker/env-postgres.test.json ./docker/env-postgres.json
 
 docker_run:
 	$(DOCKER_COMPOSE_CREATE_ENVS) && \
@@ -74,21 +88,18 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 	export DIRECTORY_CMS_APP_URL_EXPORT_READINESS=http://exred.trade.great:8007; \
 	export DIRECTORY_CMS_APP_URL_FIND_A_SUPPLIER=http://supplier.trade.great:8005; \
 	export DIRECTORY_CMS_COPY_DESTINATION_URLS=https://dev.cms.directory.uktrade.io,https://stage.cms.directory.uktrade.io; \
-	export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_ID=$$DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_ID; \
-	export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_B64="$$DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_B64"; \
-	export DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_EMAIL=$$DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_EMAIL; \
-	export DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_ID=$$DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_ID; \
-	export DIRECTORY_CMS_GOOGLE_TRANSLATE_CERT_URL=$$DIRECTORY_CMS_GOOGLE_TRANSLATE_CERT_URL; \
+	export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_ID=debug; \
+	export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_B64="ZGVidWc="; \
+	export DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_EMAIL=debug; \
+	export DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_ID=debug; \
+	export DIRECTORY_CMS_GOOGLE_TRANSLATE_CERT_URL=debug; \
 	export DIRECTORY_CMS_GOOGLE_APPLICATION_CREDENTIALS=config/google-cloud-credentials.json; \
-	export DIRECTORY_CMS_AWS_STORAGE_BUCKET_NAME=$$DIRECTORY_CMS_AWS_STORAGE_BUCKET_NAME ;\
-	export DIRECTORY_CMS_AWS_ACCESS_KEY_ID=$$DIRECTORY_CMS_AWS_ACCESS_KEY_ID ;\
-	export DIRECTORY_CMS_AWS_SECRET_ACCESS_KEY=$$DIRECTORY_CMS_AWS_SECRET_ACCESS_KEY; \
 	export DIRECTORY_CMS_EMAIL_BACKEND_CLASS_NAME=console; \
-	export DIRECTORY_CMS_EMAIL_HOST=$$DIRECTORY_CMS_EMAIL_HOST; \
-	export DIRECTORY_CMS_EMAIL_PORT=$$DIRECTORY_CMS_EMAIL_PORT; \
-	export DIRECTORY_CMS_EMAIL_HOST_USER=$$DIRECTORY_CMS_EMAIL_HOST_USER; \
-	export DIRECTORY_CMS_EMAIL_HOST_PASSWORD=$$DIRECTORY_CMS_EMAIL_HOST_PASSWORD; \
-	export DIRECTORY_CMS_DEFAULT_FROM_EMAIL=$$DIRECTORY_CMS_DEFAULT_FROM_EMAIL
+	export DIRECTORY_CMS_EMAIL_HOST=debug; \
+	export DIRECTORY_CMS_EMAIL_PORT=debug; \
+	export DIRECTORY_CMS_EMAIL_HOST_USER=debug; \
+	export DIRECTORY_CMS_EMAIL_HOST_PASSWORD=debug; \
+	export DIRECTORY_CMS_DEFAULT_FROM_EMAIL=debug
 
 
 docker_test_env_files:
@@ -156,6 +167,9 @@ DEBUG_SET_ENV_VARS := \
 	export HEALTH_CHECK_TOKEN=debug; \
 	export SIGNATURE_SECRET=debug; \
 	export BASE_URL=cms.trade.great; \
+	export DB_NAME=directory_cms_debug; \
+	export DB_USER=debug; \
+	export DB_PASSWORD=debug; \
 	export DATABASE_URL=postgres://debug:debug@localhost:5432/directory_cms_debug; \
 	export CSRF_COOKIE_SECURE=false; \
 	export APP_URL_EXPORT_READINESS=http://exred.trade.great:8007; \
@@ -195,7 +209,7 @@ debug_manage:
 debug_shell:
 	$(DEBUG_SET_ENV_VARS) && ./manage.py shell
 
-debug: test_requirements debug_test
+debug: debug_db test_requirements debug_test
 
 heroku_deploy_dev:
 	docker build -t registry.heroku.com/directory-cms-dev/web .

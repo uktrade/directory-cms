@@ -99,6 +99,7 @@ class IndustryLandingPageFactory(wagtail_factories.PageFactory):
     search_description_en_gb = factory.fuzzy.FuzzyText(length=255)
     slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    more_industries_title_en_gb = factory.fuzzy.FuzzyText(length=100)
     parent = None
 
 

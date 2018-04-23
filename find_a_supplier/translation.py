@@ -51,6 +51,7 @@ class IndustryLandingPageTranslationOptions(BaseTranslationOptions):
         'proposition_text',
         'call_to_action_text',
         'breadcrumbs_label',
+        'more_industries_title',
     )
 
 
