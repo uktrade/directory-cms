@@ -6,6 +6,7 @@ from wagtail.wagtailimages.models import Image
 
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.utils import translation
 
 from find_a_supplier.tests.factories import IndustryPageFactory
 
@@ -69,3 +70,8 @@ def image(uploaded_file):
     )
     yield image
     default_storage.delete(image.file.name)
+
+
+@pytest.fixture(autouse=True)
+def reset_language(settings):
+    translation.activate(settings.LANGUAGE_CODE)

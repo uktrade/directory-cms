@@ -52,7 +52,7 @@ urlpatterns = [
         name='lookup-by-page-type'
     ),
     url(
-        r'^api/pages/lookup-by-slug/(?P<slug>[0-9a-zA-Z\._\-]+)/',
+        r'^api/pages/lookup-by-slug/(?P<slug>[\w-]+)/',
         api_router.wrap_view(
             core.views.PageLookupBySlugAPIEndpoint.as_view(
                 {'get': 'detail_view'}
