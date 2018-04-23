@@ -73,16 +73,16 @@ def test_meta_serializer(page, rf):
 @pytest.mark.django_db
 def test_breadcrums_serializer(page, rf):
     factories.IndustryLandingPageFactory(
-        slug_en_gb='slug-one', breadcrumbs_label_en_gb='label-one'
+        breadcrumbs_label_en_gb='label-one'
     )
     factories.IndustryPageFactory(
-        slug_en_gb='slug-two', breadcrumbs_label_en_gb='label-two'
+        breadcrumbs_label_en_gb='label-two'
     )
     factories.LandingPageFactory(
-        slug_en_gb='slug-three', breadcrumbs_label_en_gb='label-three'
+        breadcrumbs_label_en_gb='label-three'
     )
     factories.IndustryContactPageFactory(
-        slug_en_gb='slug-four', breadcrumbs_label_en_gb='label-four'
+        breadcrumbs_label_en_gb='label-four'
     )
 
     class TestSerializer(Serializer):
@@ -98,15 +98,15 @@ def test_breadcrums_serializer(page, rf):
     assert serializer.data == {
         'breadcrumbs': {
             'industrylandingpage': {
-                'slug': 'slug-one',
+                'slug': 'industries-landing-page',
                 'label': 'label-one'
             },
             'industrycontactpage': {
-                'slug': 'slug-four',
+                'slug': 'industry-contact',
                 'label': 'label-four'
             },
             'landingpage': {
-                'slug': 'slug-three',
+                'slug': 'landing-page',
                 'label': 'label-three'
             }
         }

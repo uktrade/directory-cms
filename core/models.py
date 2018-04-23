@@ -22,11 +22,8 @@ from core import constants
 
 
 class HistoricSlug(models.Model):
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     page = models.ForeignKey(Page)
-
-    class Meta:
-        unique_together = ('slug', 'page')
 
 
 class ChoiceArrayField(ArrayField):
@@ -58,14 +55,10 @@ class BasePage(Page):
     def _slug_is_available(slug, parent, page=None):
         is_currently_unique = Page._slug_is_available(slug, parent, page)
         is_historically_unique = True
+        queryset = HistoricSlug.objects.filter(slug=slug).only('page__title')
         if page:
-            queryset = (
-                HistoricSlug.objects
-                .filter(slug=slug)
-                .exclude(page=page)
-                .only('page__title')
-            )
-            is_historically_unique = queryset.count() == 0
+            queryset = queryset.exclude(page__pk=page.pk)
+        is_historically_unique = (queryset.count() == 0)
         return is_currently_unique and is_historically_unique
 
     def _clean(self, *args, **kwargs):

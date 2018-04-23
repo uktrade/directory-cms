@@ -140,10 +140,10 @@ def test_add_page_prepopulate(
             'parent_pk': 1,
         }
     )
-
     model_as_dict = model_to_dict(translated_page, exclude=[
         'go_live_at',
         'expire_at',
+        'slug_en_gb',
     ])
     model_as_dict = {key: val for key, val in model_as_dict.items() if val}
     post_data = {
