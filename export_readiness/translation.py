@@ -6,10 +6,12 @@ from export_readiness import models
 
 @register(models.TermsAndConditionsPage)
 class TermsAndConditionsPageTranslationOptions(BaseTranslationOptions):
-    fields = (
-        'terms_title',
-        'body',
-    )
+    fields = []
+
+
+@register(models.PrivacyAndCookiesPage)
+class PrivacyAndCookiesPageTranslationOptions(BaseTranslationOptions):
+    fields = []
 
 
 @register(models.ExportReadinessApp)
