@@ -8,6 +8,7 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailcore.models import Page
 
 from django.core import signing
+from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
@@ -18,6 +19,14 @@ from django.utils import translation
 from django.utils.text import mark_safe, slugify
 
 from core import constants
+
+
+class HistoricSlug(models.Model):
+    slug = models.SlugField()
+    page = models.ForeignKey(Page)
+
+    class Meta:
+        unique_together = ('slug', 'page')
 
 
 class ChoiceArrayField(ArrayField):
@@ -40,7 +49,31 @@ class BasePage(Page):
 
     def __init__(self, *args, **kwargs):
         self.signer = signing.Signer()
+        #  workaround modeltranslation patching Page.clean in an unpythonic way
+        #  goo.gl/yYD4pw
+        self.clean = self._clean
         super().__init__(*args, **kwargs)
+
+    @staticmethod
+    def _slug_is_available(slug, parent, page=None):
+        is_currently_unique = Page._slug_is_available(slug, parent, page)
+        is_historically_unique = True
+        if page:
+            queryset = (
+                HistoricSlug.objects
+                    .filter(slug=slug)
+                    .exclude(page=page)
+                    .only('page__title')
+            )
+            is_historically_unique = queryset.count() == 0
+        return is_currently_unique and is_historically_unique
+
+    def _clean(self, *args, **kwargs):
+        if not self._slug_is_available(self.slug, self.get_parent(), self):
+            field_name = build_localized_fieldname(
+                'slug', lang=settings.LANGUAGE_CODE
+            )
+            raise ValidationError({field_name: "This slug is already in use"})
 
     def get_draft_token(self):
         return self.signer.sign(self.pk)
@@ -170,6 +203,11 @@ class ExclusivePageMixin:
     @classmethod
     def can_create_at(cls, parent):
         return super().can_create_at(parent) and not cls.objects.exists()
+
+    def save(self, *args, **kwargs):
+        if not self.pk and hasattr(self, 'slug_identity'):
+            self.slug = self.slug_identity
+        super().save(*args, **kwargs)
 
 
 class BaseApp(Page):
