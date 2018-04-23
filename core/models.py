@@ -61,9 +61,9 @@ class BasePage(Page):
         if page:
             queryset = (
                 HistoricSlug.objects
-                    .filter(slug=slug)
-                    .exclude(page=page)
-                    .only('page__title')
+                .filter(slug=slug)
+                .exclude(page=page)
+                .only('page__title')
             )
             is_historically_unique = queryset.count() == 0
         return is_currently_unique and is_historically_unique

@@ -20,8 +20,6 @@ from core.models import BasePage, BaseApp, ExclusivePageMixin, ChoiceArrayField
 from core.panels import SearchEngineOptimisationPanel
 from find_a_supplier import fields
 
-from wagtail.utils.decorators import cached_classmethod
-
 
 class ImageChooserPanel(ImageChooserPanel):
     classname = ""
