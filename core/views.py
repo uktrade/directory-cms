@@ -83,6 +83,25 @@ class PageLookupByTypeAPIEndpoint(APIEndpointBase):
         return super().detail_view(self.request, pk=None)
 
 
+class PageLookupBySlugAPIEndpoint(APIEndpointBase):
+    lookup_url_kwarg = 'slug'
+    detail_only_fields = ['id']
+
+    def get_queryset(self):
+        return Page.objects.all()
+
+    def get_object(self):
+        instance = get_object_or_404(
+            self.get_queryset(), slug=self.kwargs['slug']
+        ).specific
+        instance = self.handle_serve_draft_object(instance)
+        self.handle_activate_language(instance)
+        return instance
+
+    def detail_view(self, *args, **kwargs):
+        return super().detail_view(self.request, pk=None)
+
+
 class CopyPageView(FormView):
     environment_form_class = forms.CopyToEnvironmentForm
     template_name = 'core/copy_to_environment.html'

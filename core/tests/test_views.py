@@ -442,3 +442,46 @@ def test_lookup_by_page_type_translations(
 
     assert response.status_code == 200
     assert response.json()['title'] == expected
+
+
+@pytest.mark.django_db
+def test_lookup_by_slug(translated_page, admin_client):
+    url = reverse('lookup-by-slug', kwargs={'slug': translated_page.slug})
+
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    assert response.json()['id'] == translated_page.id
+
+
+@pytest.mark.django_db
+def test_lookup_by_slug_misisng_page(admin_client):
+    url = reverse('lookup-by-slug', kwargs={'slug': 'thing'})
+
+    response = admin_client.get(url)
+
+    assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_lookup_by_slug_draft(page_with_reversion, client):
+    url = reverse('lookup-by-slug', kwargs={'slug': page_with_reversion.slug})
+
+    param = permissions.DraftTokenPermisison.TOKEN_PARAM
+
+    draft_response = client.get(url, {
+        param: page_with_reversion.get_draft_token()
+    })
+    draft_data = draft_response.json()
+    published_response = client.get(url)
+    published_data = published_response.json()
+
+    assert draft_response.status_code == 200
+    assert draft_data['title'] == 'draft-title'
+    assert draft_data['meta']['url'] == page_with_reversion.get_url(
+        is_draft=True
+    )
+
+    assert published_response.status_code == 200
+    assert published_data['title'] == 'published-title'
+    assert published_data['meta']['url'] == page_with_reversion.get_url()

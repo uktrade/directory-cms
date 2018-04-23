@@ -56,7 +56,7 @@ class BasePage(Page):
     def get_url_path_parts(self, language_code):
         slug_fieldname = build_localized_fieldname('slug', lang=language_code)
         slug = getattr(self, slug_fieldname) or self.slug_en_gb
-        return [self.view_path, str(self.pk) + '/', slug + '/']
+        return [self.view_path, slug + '/']
 
     def get_url(self, is_draft=False, language_code=settings.LANGUAGE_CODE):
         domain = dict(constants.APP_URLS)[self.view_app]

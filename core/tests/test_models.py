@@ -69,16 +69,16 @@ def test_translated_localised_urls(translated_page):
     domain = 'http://supplier.trade.great:8005'
 
     assert translated_page.get_localized_urls() == [
-        ('en-gb', domain + '/industries/3/slug/'),
-        ('de', domain + '/industries/3/slug/?lang=de'),
-        ('ja', domain + '/industries/3/slug/?lang=ja'),
-        ('ru', domain + '/industries/3/slug/?lang=ru'),
-        ('zh-hans', domain + '/industries/3/slug/?lang=zh-hans'),
-        ('fr', domain + '/industries/3/slug/?lang=fr'),
-        ('es', domain + '/industries/3/slug/?lang=es'),
-        ('pt', domain + '/industries/3/slug/?lang=pt'),
-        ('pt-br', domain + '/industries/3/slug/?lang=pt-br'),
-        ('ar', domain + '/industries/3/slug/?lang=ar')
+        ('en-gb', domain + '/industries/slug/'),
+        ('de', domain + '/industries/slug/?lang=de'),
+        ('ja', domain + '/industries/slug/?lang=ja'),
+        ('ru', domain + '/industries/slug/?lang=ru'),
+        ('zh-hans', domain + '/industries/slug/?lang=zh-hans'),
+        ('fr', domain + '/industries/slug/?lang=fr'),
+        ('es', domain + '/industries/slug/?lang=es'),
+        ('pt', domain + '/industries/slug/?lang=pt'),
+        ('pt-br', domain + '/industries/slug/?lang=pt-br'),
+        ('ar', domain + '/industries/slug/?lang=ar')
     ]
 
 
@@ -88,7 +88,7 @@ def test_translated_localised_urls_untranslated_page(page):
     page.pk = 3
 
     assert page.get_localized_urls() == [
-        ('en-gb', 'http://supplier.trade.great:8005/industries/3/slug/'),
+        ('en-gb', 'http://supplier.trade.great:8005/industries/slug/'),
     ]
 
 

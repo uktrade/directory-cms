@@ -57,11 +57,11 @@ def test_meta_serializer(page, rf):
     assert serializer.data == {
         'meta': {
             'languages': [('en-gb', 'English')],
-            'url': 'http://supplier.trade.great:8005/industries/4/test-slug/',
+            'url': 'http://supplier.trade.great:8005/industries/test-slug/',
             'localised_urls': [
                 (
                     'en-gb',
-                    'http://supplier.trade.great:8005/industries/4/test-slug/'
+                    'http://supplier.trade.great:8005/industries/test-slug/'
                 )
             ],
             'slug': 'test-slug',
