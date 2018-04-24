@@ -19,6 +19,7 @@ class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
 
     view_app = constants.EXPORT_READINESS
     view_path = 'terms-and-conditions/'
+    slug_identity = 'terms-and-conditions'
 
     terms_title = models.CharField(max_length=50)
     body = RichTextField(blank=False, features=RICH_TEXT_FEATURES)

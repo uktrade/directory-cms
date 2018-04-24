@@ -290,6 +290,7 @@ class IndustryPage(BasePage):
 class IndustryLandingPage(ExclusivePageMixin, BasePage):
     view_app = constants.FIND_A_SUPPLIER
     view_path = 'industries/'
+    slug_identity = 'industries-landing-page'
 
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -358,7 +359,6 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
     ]
 
     edit_handler = make_translated_interface(
@@ -462,6 +462,7 @@ class IndustryArticlePage(BasePage):
 class LandingPage(ExclusivePageMixin, BasePage):
     view_app = constants.FIND_A_SUPPLIER
     view_path = '/'
+    slug_identity = 'landing-page'
 
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -645,7 +646,6 @@ class LandingPage(ExclusivePageMixin, BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
     ]
 
     edit_handler = make_translated_interface(
@@ -661,6 +661,7 @@ class IndustryContactPage(ExclusivePageMixin, BasePage):
 
     view_app = constants.FIND_A_SUPPLIER
     view_path = 'industries/help/contact-us/'
+    slug_identity = 'industry-contact'
 
     def get_url_path_parts(self, *args, **kwargs):
         return [self.view_path]
@@ -698,7 +699,6 @@ class IndustryContactPage(ExclusivePageMixin, BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
     ]
 
     edit_handler = make_translated_interface(

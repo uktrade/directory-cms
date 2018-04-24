@@ -8,3 +8,10 @@ def create_image_hash(sender, instance, *args, **kwargs):
             image=instance,
             content_hash=content_hash,
         )
+
+
+def create_historic_slug(sender, instance, *args, **kwargs):
+    models.HistoricSlug.objects.get_or_create(
+        slug=instance.slug,
+        page=instance
+    )

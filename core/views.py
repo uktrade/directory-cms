@@ -92,7 +92,7 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
 
     def get_object(self):
         instance = get_object_or_404(
-            self.get_queryset(), slug=self.kwargs['slug']
+            self.get_queryset(), historicslug__slug=self.kwargs['slug']
         ).specific
         instance = self.handle_serve_draft_object(instance)
         self.handle_activate_language(instance)
