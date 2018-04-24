@@ -117,8 +117,15 @@ class IndustryPage(BasePage):
         blank=False,
         features=constants.RICH_TEXT_FEATURES
     )
-    introduction_text = models.CharField(max_length=400)
-    introduction_call_to_action_button_text = models.CharField(max_length=50)
+    introduction_text = models.CharField(
+        max_length=400,
+        verbose_name='Contact us text',
+    )
+    introduction_call_to_action_button_text = models.CharField(
+        max_length=50,
+        verbose_name='Contact us button text'
+    )
+    introduction_title = models.CharField(max_length=400)
     introduction_column_one_text = RichTextField(
         blank=False,
         features=constants.RICH_TEXT_FEATURES,
@@ -202,14 +209,20 @@ class IndustryPage(BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading='Introduction',
+            heading='Contact us',
             children=[
                 FieldRowPanel(
                     children=[
                         FieldPanel('introduction_text'),
                         FieldPanel('introduction_call_to_action_button_text'),
                     ]
-                ),
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Introduction',
+            children=[
+                FieldPanel('introduction_title'),
                 FieldRowPanel(
                     classname='full field-row-panel',
                     children=[
@@ -271,6 +284,7 @@ class IndustryPage(BasePage):
         APIRichTextField('hero_text'),
         APIField('introduction_text'),
         APIField('introduction_call_to_action_button_text'),
+        APIField('introduction_title'),
         APIRichTextField('introduction_column_one_text'),
         APIRichTextField('introduction_column_two_text'),
         APIRichTextField('introduction_column_three_text'),

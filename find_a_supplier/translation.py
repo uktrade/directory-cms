@@ -10,6 +10,7 @@ class IndustryPageTranslationOptions(BaseTranslationOptions):
         'hero_text',
         'hero_image_caption',
         'introduction_text',
+        'introduction_title',
         'introduction_call_to_action_button_text',
         'introduction_column_one_text',
         'introduction_column_two_text',
