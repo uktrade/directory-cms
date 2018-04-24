@@ -8,6 +8,7 @@ from find_a_supplier import models
 class IndustryPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'hero_text',
+        'hero_image_caption',
         'introduction_text',
         'introduction_call_to_action_button_text',
         'introduction_column_one_text',
@@ -48,6 +49,7 @@ class IndustryArticlePageTranslationOptions(BaseTranslationOptions):
 class IndustryLandingPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'hero_title',
+        'hero_image_caption',
         'proposition_text',
         'call_to_action_text',
         'breadcrumbs_label',
@@ -60,6 +62,7 @@ class LandingPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'breadcrumbs_label',
         'hero_text',
+        'hero_image_caption',
         'search_field_placeholder',
         'search_button_text',
         'proposition_text',
