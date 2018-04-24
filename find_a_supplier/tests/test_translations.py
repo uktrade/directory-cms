@@ -15,6 +15,7 @@ def test_required_fields_industry_page():
             'hero_text',
             'introduction_text',
             'introduction_call_to_action_button_text',
+            'introduction_title',
             'introduction_column_one_text',
             'introduction_column_two_text',
             'introduction_column_three_text',

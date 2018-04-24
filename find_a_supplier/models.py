@@ -101,6 +101,10 @@ class IndustryPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    hero_image_caption = models.CharField(
+        max_length=255,
+        blank=True
+    )
 
     summary_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -113,8 +117,15 @@ class IndustryPage(BasePage):
         blank=False,
         features=constants.RICH_TEXT_FEATURES
     )
-    introduction_text = models.CharField(max_length=400)
-    introduction_call_to_action_button_text = models.CharField(max_length=50)
+    introduction_text = models.CharField(
+        max_length=400,
+        verbose_name='Contact us text',
+    )
+    introduction_call_to_action_button_text = models.CharField(
+        max_length=50,
+        verbose_name='Contact us button text'
+    )
+    introduction_title = models.CharField(max_length=400)
     introduction_column_one_text = RichTextField(
         blank=False,
         features=constants.RICH_TEXT_FEATURES,
@@ -194,17 +205,24 @@ class IndustryPage(BasePage):
             children=[
                 FieldPanel('hero_text', classname='full'),
                 FieldPanel('breadcrumbs_label'),
+                FieldPanel('hero_image_caption'),
             ]
         ),
         MultiFieldPanel(
-            heading='Introduction',
+            heading='Contact us',
             children=[
                 FieldRowPanel(
                     children=[
                         FieldPanel('introduction_text'),
                         FieldPanel('introduction_call_to_action_button_text'),
                     ]
-                ),
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Introduction',
+            children=[
+                FieldPanel('introduction_title'),
                 FieldRowPanel(
                     classname='full field-row-panel',
                     children=[
@@ -262,9 +280,11 @@ class IndustryPage(BasePage):
         APIImageField('hero_image'),
         APIImageField('mobile_hero_image'),
         APIImageField('summary_image'),
+        APIField('hero_image_caption'),
         APIRichTextField('hero_text'),
         APIField('introduction_text'),
         APIField('introduction_call_to_action_button_text'),
+        APIField('introduction_title'),
         APIRichTextField('introduction_column_one_text'),
         APIRichTextField('introduction_column_two_text'),
         APIRichTextField('introduction_column_three_text'),
@@ -306,6 +326,10 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    hero_image_caption = models.CharField(
+        max_length=255,
+        blank=True
+    )
     breadcrumbs_label = models.CharField(max_length=50)
     hero_title = models.CharField(max_length=500)
     proposition_text = models.CharField(max_length=500)
@@ -319,6 +343,7 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
         APIField('hero_title'),
         APIImageField('hero_image'),
         APIImageField('mobile_hero_image'),
+        APIField('hero_image_caption'),
         APIField('proposition_text'),
         APIField('call_to_action_text'),
         APIField('title'),
@@ -342,6 +367,7 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
     content_panels = [
         FieldPanel('breadcrumbs_label'),
         FieldPanel('hero_title'),
+        FieldPanel('hero_image_caption'),
         MultiFieldPanel(
             heading='Contact us',
             children=[
@@ -478,7 +504,10 @@ class LandingPage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-
+    hero_image_caption = models.CharField(
+        max_length=255,
+        blank=True
+    )
     breadcrumbs_label = models.CharField(max_length=50)
     hero_text = RichTextField(
         blank=False,
@@ -551,6 +580,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
     api_fields = [
         APIImageField('hero_image'),
         APIImageField('mobile_hero_image'),
+        APIField('hero_image_caption'),
         APIField('breadcrumbs_label'),
         APIRichTextField('hero_text'),
         APIField('search_field_placeholder'),
@@ -591,6 +621,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
             children=[
                 FieldPanel('breadcrumbs_label'),
                 FieldPanel('hero_text'),
+                FieldPanel('hero_image_caption'),
                 FieldPanel('search_field_placeholder'),
                 FieldPanel('search_button_text'),
             ],
