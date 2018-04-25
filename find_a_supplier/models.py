@@ -30,7 +30,11 @@ class FindASupplierApp(ExclusivePageMixin, BaseApp):
 
 
 class ArticleSummary(models.Model):
-    industry_name = models.CharField(max_length=255)
+    industry_name = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text='Informs the reader of which industry the article is for.'
+    )
     title = models.CharField(max_length=255)
     body = RichTextField(features=constants.RICH_TEXT_FEATURES)
     image = models.ForeignKey(
