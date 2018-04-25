@@ -52,6 +52,7 @@ class PrivacyAndCookiesPage(ExclusivePageMixin, BasePage):
 
     view_app = constants.EXPORT_READINESS
     view_path = 'privacy-and-cookies/'
+    slug_identity = 'privacy-and-cookies'
 
     privacy_title = models.CharField(max_length=255)
     body = RichTextField(blank=False, features=RICH_TEXT_FEATURES)
@@ -70,6 +71,8 @@ class PrivacyAndCookiesPage(ExclusivePageMixin, BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
     ]
+
+    promote_panels = []
 
     api_fields = [
         APIField('seo_title'),
