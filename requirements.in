@@ -17,3 +17,5 @@ directory-healthcheck==0.4.1
 export-elements==0.8.1
 directory_constants==6.5.2
 django-admin-ip-restrictor==0.2.0
+wagtail-markdown==0.5a3
+html2text==2018.1.9

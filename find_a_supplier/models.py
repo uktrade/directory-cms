@@ -5,8 +5,9 @@ from wagtail.wagtailadmin.edit_handlers import (
 )
 from wagtail.api import APIField
 from wagtail.wagtailcore.models import Orderable
-from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtailmarkdown.edit_handlers import MarkdownPanel
+from wagtailmarkdown.fields import MarkdownField
 
 from django.db import models
 
@@ -32,7 +33,7 @@ class FindASupplierApp(ExclusivePageMixin, BaseApp):
 class ArticleSummary(models.Model):
     industry_name = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
-    body = RichTextField(features=constants.RICH_TEXT_FEATURES)
+    body = MarkdownField()
     image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -113,10 +114,7 @@ class IndustryPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    hero_text = RichTextField(
-        blank=False,
-        features=constants.RICH_TEXT_FEATURES
-    )
+    hero_text = MarkdownField()
     introduction_text = models.CharField(
         max_length=400,
         verbose_name='Contact us text',
@@ -126,18 +124,9 @@ class IndustryPage(BasePage):
         verbose_name='Contact us button text'
     )
     introduction_title = models.CharField(max_length=400)
-    introduction_column_one_text = RichTextField(
-        blank=False,
-        features=constants.RICH_TEXT_FEATURES,
-    )
-    introduction_column_two_text = RichTextField(
-        blank=False,
-        features=constants.RICH_TEXT_FEATURES,
-    )
-    introduction_column_three_text = RichTextField(
-        blank=False,
-        features=constants.RICH_TEXT_FEATURES,
-    )
+    introduction_column_one_text = MarkdownField(blank=True)
+    introduction_column_two_text = MarkdownField(blank=True)
+    introduction_column_three_text = MarkdownField(blank=True)
     introduction_column_one_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -182,10 +171,7 @@ class IndustryPage(BasePage):
         verbose_name='Whitelisted companies filter',
         help_text='Limit to companies that have explicitly been whitelisted.',
     )
-    company_list_text = RichTextField(
-        blank=False,
-        features=constants.RICH_TEXT_FEATURES,
-    )
+    company_list_text = MarkdownField(blank=True)
     company_list_search_input_placeholder_text = models.CharField(
         max_length=255,
         blank=True,
@@ -227,15 +213,15 @@ class IndustryPage(BasePage):
                     classname='full field-row-panel',
                     children=[
                         MultiFieldPanel([
-                            FieldPanel('introduction_column_one_text'),
+                            MarkdownPanel('introduction_column_one_text'),
                             ImageChooserPanel('introduction_column_one_icon'),
                         ]),
                         MultiFieldPanel([
-                            FieldPanel('introduction_column_two_text'),
+                            MarkdownPanel('introduction_column_two_text'),
                             ImageChooserPanel('introduction_column_two_icon'),
                         ]),
                         MultiFieldPanel([
-                            FieldPanel('introduction_column_three_text'),
+                            MarkdownPanel('introduction_column_three_text'),
                             ImageChooserPanel(
                                 'introduction_column_three_icon'
                             ),
@@ -247,7 +233,7 @@ class IndustryPage(BasePage):
         MultiFieldPanel(
             heading='Companies',
             children=[
-                FieldPanel('company_list_text'),
+                MarkdownPanel('company_list_text'),
                 FieldPanel('company_list_search_input_placeholder_text'),
                 FieldPanel('company_list_call_to_action_text'),
             ]
@@ -403,16 +389,10 @@ class IndustryArticlePage(BasePage):
 
     breadcrumbs_label = models.CharField(max_length=50)
     introduction_title = models.CharField(max_length=255)
-    body = RichTextField(
-        blank=False,
-        features=constants.RICH_TEXT_FEATURES,
-    )
+    body = MarkdownField(blank=True)
     author_name = models.CharField(max_length=255)
     job_title = models.CharField(max_length=255)
-    proposition_text = RichTextField(
-        blank=False,
-        features=constants.RICH_TEXT_FEATURES,
-    )
+    proposition_text = MarkdownField(blank=True)
     call_to_action_text = models.CharField(max_length=500)
     show_table_of_content = models.BooleanField(
         default=False,
@@ -430,7 +410,7 @@ class IndustryArticlePage(BasePage):
         MultiFieldPanel(
             heading='Contact us',
             children=[
-                FieldPanel('proposition_text'),
+                MarkdownPanel('proposition_text'),
                 FieldPanel('call_to_action_text'),
             ],
             classname='collapsible',
@@ -439,7 +419,7 @@ class IndustryArticlePage(BasePage):
             heading='Article',
             children=[
                 FieldPanel('introduction_title'),
-                FieldPanel('body', classname='full'),
+                MarkdownPanel('body'),
             ]
         ),
         MultiFieldPanel(
@@ -509,41 +489,19 @@ class LandingPage(ExclusivePageMixin, BasePage):
         blank=True
     )
     breadcrumbs_label = models.CharField(max_length=50)
-    hero_text = RichTextField(
-        blank=False,
-        features=constants.RICH_TEXT_FEATURES,
-    )
+    hero_text = MarkdownField(blank=False)
     search_field_placeholder = models.CharField(max_length=500)
     search_button_text = models.CharField(max_length=500)
-    proposition_text = RichTextField(
-        blank=False,
-        features=constants.RICH_TEXT_FEATURES,
-    )
+    proposition_text = MarkdownField(blank=False)
     call_to_action_text = models.CharField(max_length=500)
-    industries_list_text = RichTextField(
-        blank=False,
-        features=constants.RICH_TEXT_FEATURES,
-    )
+    industries_list_text = MarkdownField(blank=False)
     industries_list_call_to_action_text = models.CharField(max_length=500)
-    services_list_text = RichTextField(
+    services_list_text = MarkdownField(blank=False)
+    services_column_one = MarkdownField(blank=False)
+    services_column_two = MarkdownField(blank=False)
+    services_column_three = MarkdownField(blank=False)
+    services_column_four = MarkdownField(
         blank=False,
-        features=constants.RICH_TEXT_FEATURES,
-    )
-    services_column_one = RichTextField(
-        blank=False,
-        features=constants.RICH_TEXT_FEATURES,
-    )
-    services_column_two = RichTextField(
-        blank=False,
-        features=constants.RICH_TEXT_FEATURES,
-    )
-    services_column_three = RichTextField(
-        blank=False,
-        features=constants.RICH_TEXT_FEATURES,
-    )
-    services_column_four = RichTextField(
-        blank=False,
-        features=constants.RICH_TEXT_FEATURES,
     )
     services_column_one_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -620,7 +578,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
             heading='Hero',
             children=[
                 FieldPanel('breadcrumbs_label'),
-                FieldPanel('hero_text'),
+                MarkdownPanel('hero_text'),
                 FieldPanel('hero_image_caption'),
                 FieldPanel('search_field_placeholder'),
                 FieldPanel('search_button_text'),
@@ -630,7 +588,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
         MultiFieldPanel(
             heading='Contact us',
             children=[
-                FieldPanel('proposition_text'),
+                MarkdownPanel('proposition_text'),
                 FieldPanel('call_to_action_text'),
             ],
             classname='collapsible',
@@ -638,7 +596,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
         MultiFieldPanel(
             heading='Industries',
             children=[
-                FieldPanel('industries_list_text'),
+                MarkdownPanel('industries_list_text'),
                 FieldPanel('industries_list_call_to_action_text'),
             ],
             classname='collapsible',
@@ -652,19 +610,19 @@ class LandingPage(ExclusivePageMixin, BasePage):
                     children=[
                         MultiFieldPanel([
                             ImageChooserPanel('services_column_one_icon'),
-                            FieldPanel('services_column_one'),
+                            MarkdownPanel('services_column_one'),
                         ]),
                         MultiFieldPanel([
                             ImageChooserPanel('services_column_two_icon'),
-                            FieldPanel('services_column_two'),
+                            MarkdownPanel('services_column_two'),
                         ]),
                         MultiFieldPanel([
                             ImageChooserPanel('services_column_three_icon'),
-                            FieldPanel('services_column_three'),
+                            MarkdownPanel('services_column_three'),
                         ]),
                         MultiFieldPanel([
                             ImageChooserPanel('services_column_four_icon'),
-                            FieldPanel('services_column_four'),
+                            MarkdownPanel('services_column_four'),
                         ]),
                     ]
                 ),
@@ -698,15 +656,9 @@ class IndustryContactPage(ExclusivePageMixin, BasePage):
         return [self.view_path]
 
     breadcrumbs_label = models.CharField(max_length=50)
-    introduction_text = RichTextField(
-        blank=False,
-        features=constants.RICH_TEXT_FEATURES,
-    )
+    introduction_text = MarkdownField(blank=True)
     submit_button_text = models.CharField(max_length=100)
-    success_message_text = RichTextField(
-        blank=False,
-        features=constants.RICH_TEXT_FEATURES,
-    )
+    success_message_text = MarkdownField(blank=True)
     success_back_link_text = models.CharField(max_length=100)
 
     content_panels = [
@@ -714,14 +666,14 @@ class IndustryContactPage(ExclusivePageMixin, BasePage):
             heading='Contact form',
             children=[
                 FieldPanel('breadcrumbs_label'),
-                FieldPanel('introduction_text'),
+                MarkdownPanel('introduction_text'),
                 FieldPanel('submit_button_text'),
             ]
         ),
         MultiFieldPanel(
             heading='Success page',
             children=[
-                FieldPanel('success_message_text'),
+                MarkdownPanel('success_message_text'),
                 FieldPanel('success_back_link_text'),
             ]
         ),
