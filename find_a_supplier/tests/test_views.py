@@ -8,6 +8,7 @@ from find_a_supplier import models
 
 @pytest.mark.django_db
 def test_landing_page_exposes_industries(admin_client):
+    factories.IndustryPageFactory(show_on_homepage=True)
     factories.IndustryPageFactory()
     factories.LandingPageFactory()
 

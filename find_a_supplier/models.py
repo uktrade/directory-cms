@@ -179,6 +179,7 @@ class IndustryPage(BasePage):
     company_list_call_to_action_text = models.CharField(
         max_length=255,
     )
+    show_on_homepage = models.BooleanField(default=False)
 
     image_panels = [
         ImageChooserPanel('hero_image'),
@@ -251,7 +252,8 @@ class IndustryPage(BasePage):
                 FieldPanel('search_filter_sector'),
                 FieldPanel('search_filter_text'),
             ]
-        )
+        ),
+        FieldPanel('show_on_homepage'),
     ]
 
     edit_handler = make_translated_interface(
@@ -561,7 +563,11 @@ class LandingPage(ExclusivePageMixin, BasePage):
         APIField('seo_title'),
         fields.APIIndustriesListField(
             'industries',
-            queryset=IndustryPage.objects.all().order_by('slug')[:3],
+            queryset=(
+                IndustryPage.objects
+                .filter(show_on_homepage=True)
+                .order_by('slug')[:3]
+            ),
         ),
         fields.APIArticleSummariesField('article_summaries'),
         APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
