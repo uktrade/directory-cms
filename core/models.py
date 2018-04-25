@@ -202,6 +202,9 @@ class ExclusivePageMixin:
             self.slug = self.slug_identity
         super().save(*args, **kwargs)
 
+    def get_url_path_parts(self, *args, **kwargs):
+        return [self.view_path]
+
 
 class BaseApp(Page):
     view_app = None

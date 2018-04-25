@@ -336,9 +336,6 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
     call_to_action_text = models.CharField(max_length=500)
     more_industries_title = models.CharField(max_length=100)
 
-    def get_url_path_parts(self, *args, **kwargs):
-        return [self.view_path]
-
     api_fields = [
         APIField('hero_title'),
         APIImageField('hero_image'),
@@ -574,9 +571,6 @@ class LandingPage(ExclusivePageMixin, BasePage):
         related_name='+'
     )
 
-    def get_url_path_parts(self, *args, **kwargs):
-        return [self.view_path]
-
     api_fields = [
         APIImageField('hero_image'),
         APIImageField('mobile_hero_image'),
@@ -691,11 +685,8 @@ class LandingPage(ExclusivePageMixin, BasePage):
 class IndustryContactPage(ExclusivePageMixin, BasePage):
 
     view_app = constants.FIND_A_SUPPLIER
-    view_path = 'industries/help/contact-us/'
+    view_path = 'industries/contact/'
     slug_identity = 'industry-contact'
-
-    def get_url_path_parts(self, *args, **kwargs):
-        return [self.view_path]
 
     breadcrumbs_label = models.CharField(max_length=50)
     introduction_text = RichTextField(
