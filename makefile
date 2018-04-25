@@ -19,7 +19,9 @@ test:
 	$(COLLECT_STATIC) && $(FLAKE8) && $(PYTEST) && $(CODECOV)
 
 DJANGO_WEBSERVER := \
-	python manage.py generate_google_translate_cerdentials && \
+	if [ "$$FEATURE_AUTO_TRANSLATE_ENABLED" != "" ]; then \
+		python manage.py generate_google_translate_cerdentials; \
+	fi && \
 	python manage.py collectstatic --noinput && \
 	python manage.py runserver 0.0.0.0:$$PORT
 
@@ -189,7 +191,8 @@ DEBUG_SET_ENV_VARS := \
 	export EMAIL_PORT=$$DIRECTORY_CMS_EMAIL_PORT; \
 	export EMAIL_HOST_USER=$$DIRECTORY_CMS_EMAIL_HOST_USER; \
 	export EMAIL_HOST_PASSWORD=$$DIRECTORY_CMS_EMAIL_HOST_PASSWORD; \
-	export DEFAULT_FROM_EMAIL=$$DIRECTORY_CMS_DEFAULT_FROM_EMAIL
+	export DEFAULT_FROM_EMAIL=$$DIRECTORY_CMS_DEFAULT_FROM_EMAIL; \
+	export FEATURE_AUTO_TRANSLATE_ENABLED=true
 
 debug_webserver:
 	$(DEBUG_SET_ENV_VARS) && $(DJANGO_WEBSERVER)
