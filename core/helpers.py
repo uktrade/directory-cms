@@ -5,14 +5,19 @@ import os
 
 import gevent
 from google.cloud import translate
+import markdown
 from modeltranslation.utils import build_localized_fieldname
 from wagtail.wagtailadmin.edit_handlers import ObjectList, TabbedInterface
 from wagtail.wagtailcore import hooks
+from wagtail.wagtailcore.models import Page
 from wagtail.wagtailimages.models import Image
+from wagtailmarkdown.mdx import tables
+from wagtailmarkdown.utils import _sanitise_markdown_html
 
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.images import get_image_dimensions
+from django.utils.safestring import mark_safe
 from django.utils.translation import trans_real
 from django.utils.text import slugify, Truncator
 from django.urls import resolve, Resolver404
@@ -212,3 +217,39 @@ def get_button_url_name(button):
         return resolve(button.url).url_name
     except Resolver404:
         return None
+
+
+def render_markdown(text, context=None):
+    html = markdown.markdown(
+        text,
+        extensions=[
+            'extra',
+            'codehilite',
+            tables.TableExtension(),
+            LinkerExtension()
+        ],
+        extension_configs={
+            'codehilite': [
+                ('guess_lang', False),
+            ]
+        },
+        output_format='html5'
+    )
+    sanitised_html = _sanitise_markdown_html(html)
+    return mark_safe(sanitised_html)
+
+
+class LinkPattern(markdown.inlinepatterns.LinkPattern):
+    def sanitize_url(self, url):
+        if url.startswith('slug:'):
+            slug = url.split(':')[1]
+            page = Page.objects.get(historicslug__slug=slug).specific
+            url = page.url
+        return super().sanitize_url(url)
+
+
+class LinkerExtension(markdown.Extension):
+    def extendMarkdown(self, md, md_globals):
+        md.inlinePatterns['link'] = LinkPattern(
+            markdown.inlinepatterns.LINK_RE, md
+        )

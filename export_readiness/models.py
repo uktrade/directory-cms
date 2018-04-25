@@ -1,13 +1,10 @@
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.api import APIField
-from wagtail.wagtailcore.fields import RichTextField
 from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtailmarkdown.fields import MarkdownField
 
-from django.db import models
-
 from core import constants
-from core.fields import APIRichTextField, APIMetaField
+from core.fields import APIMarkdownToHTMLField, APIMetaField
 from core.models import BaseApp, BasePage, ExclusivePageMixin
 from core.panels import SearchEngineOptimisationPanel
 
@@ -41,7 +38,7 @@ class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
     api_fields = [
         APIField('seo_title'),
         APIField('search_description'),
-        APIRichTextField('body'),
+        APIMarkdownToHTMLField('body'),
         APIMetaField('meta'),
     ]
 
@@ -70,6 +67,6 @@ class PrivacyAndCookiesPage(ExclusivePageMixin, BasePage):
     api_fields = [
         APIField('seo_title'),
         APIField('search_description'),
-        APIRichTextField('body'),
+        APIMarkdownToHTMLField('body'),
         APIMetaField('meta'),
     ]

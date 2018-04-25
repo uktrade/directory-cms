@@ -4,9 +4,9 @@ from wagtail.wagtailimages.api.fields import ImageRenditionField
 from core import serializers
 
 
-class APIRichTextField(APIField):
+class APIMarkdownToHTMLField(APIField):
     def __init__(self, name):
-        serializer = serializers.APIRichTextSerializer()
+        serializer = serializers.APIMarkdownToHTMLSerializer()
         super().__init__(name=name, serializer=serializer)
 
 
