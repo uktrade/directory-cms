@@ -147,21 +147,24 @@ class IndustryPage(BasePage):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
+        verbose_name='Column one image',
     )
     introduction_column_two_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
+        verbose_name='Column two image',
     )
     introduction_column_three_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
+        verbose_name='Column three image',
     )
     breadcrumbs_label = models.CharField(max_length=50)
     search_filter_sector = ChoiceArrayField(
@@ -200,9 +203,27 @@ class IndustryPage(BasePage):
     show_on_homepage = models.BooleanField(default=False)
 
     image_panels = [
-        ImageChooserPanel('hero_image'),
-        ImageChooserPanel('mobile_hero_image'),
-        ImageChooserPanel('summary_image'),
+        MultiFieldPanel(
+            heading='Hero images',
+            children=[
+                ImageChooserPanel('hero_image'),
+                ImageChooserPanel('mobile_hero_image'),
+                ImageChooserPanel('summary_image'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Introduction',
+            children=[
+                FieldRowPanel(
+                    classname='full field-row-panel',
+                    children=[
+                        ImageChooserPanel('introduction_column_one_icon'),
+                        ImageChooserPanel('introduction_column_two_icon'),
+                        ImageChooserPanel('introduction_column_three_icon'),
+                    ]
+                )
+            ]
+        )
     ]
     content_panels = [
         MultiFieldPanel(
@@ -231,20 +252,9 @@ class IndustryPage(BasePage):
                 FieldRowPanel(
                     classname='full field-row-panel',
                     children=[
-                        MultiFieldPanel([
-                            FieldPanel('introduction_column_one_text'),
-                            ImageChooserPanel('introduction_column_one_icon'),
-                        ]),
-                        MultiFieldPanel([
-                            FieldPanel('introduction_column_two_text'),
-                            ImageChooserPanel('introduction_column_two_icon'),
-                        ]),
-                        MultiFieldPanel([
-                            FieldPanel('introduction_column_three_text'),
-                            ImageChooserPanel(
-                                'introduction_column_three_icon'
-                            ),
-                        ])
+                        FieldPanel('introduction_column_one_text'),
+                        FieldPanel('introduction_column_two_text'),
+                        FieldPanel('introduction_column_three_text'),
                     ]
                 )
             ]
