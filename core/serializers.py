@@ -1,6 +1,5 @@
 from rest_framework import fields
 from wagtail.wagtailcore.models import Page
-from wagtail.wagtailcore.rich_text import expand_db_html
 from wagtail.wagtailembeds import embeds
 from wagtail.wagtailembeds.exceptions import EmbedUnsupportedProviderException
 from django.conf import settings
@@ -21,10 +20,10 @@ class URLHyperlinkSerializer(fields.CharField):
         )
 
 
-class APIRichTextSerializer(fields.CharField):
+class APIMarkdownToHTMLSerializer(fields.CharField):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        return expand_db_html(representation)
+        return helpers.render_markdown(representation)
 
 
 class APITranslationsSerializer(fields.ListField):

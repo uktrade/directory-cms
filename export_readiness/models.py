@@ -1,14 +1,12 @@
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.api import APIField
-from wagtail.wagtailcore.fields import RichTextField
-
-from django.db import models
+from wagtailmarkdown.edit_handlers import MarkdownPanel
+from wagtailmarkdown.fields import MarkdownField
 
 from core import constants
-from core.fields import APIRichTextField, APIMetaField
+from core.fields import APIMarkdownToHTMLField, APIMetaField
 from core.models import BaseApp, BasePage, ExclusivePageMixin
 from core.panels import SearchEngineOptimisationPanel
-from core.constants import RICH_TEXT_FEATURES
 
 
 class ExportReadinessApp(ExclusivePageMixin, BaseApp):
@@ -21,15 +19,13 @@ class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
     view_path = 'terms-and-conditions/'
     slug_identity = 'terms-and-conditions'
 
-    terms_title = models.CharField(max_length=50)
-    body = RichTextField(blank=False, features=RICH_TEXT_FEATURES)
+    body = MarkdownField(blank=False)
 
     content_panels = [
         MultiFieldPanel(
             heading='Terms and conditions',
             children=[
-                FieldPanel('terms_title'),
-                FieldPanel('body'),
+                MarkdownPanel('body'),
             ]
         ),
         SearchEngineOptimisationPanel(),
@@ -42,8 +38,7 @@ class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
     api_fields = [
         APIField('seo_title'),
         APIField('search_description'),
-        APIField('terms_title'),
-        APIRichTextField('body'),
+        APIMarkdownToHTMLField('body'),
         APIMetaField('meta'),
     ]
 
@@ -54,15 +49,13 @@ class PrivacyAndCookiesPage(ExclusivePageMixin, BasePage):
     view_path = 'privacy-and-cookies/'
     slug_identity = 'privacy-and-cookies'
 
-    privacy_title = models.CharField(max_length=255)
-    body = RichTextField(blank=False, features=RICH_TEXT_FEATURES)
+    body = MarkdownField(blank=False)
 
     content_panels = [
         MultiFieldPanel(
             heading='Privacy and cookies',
             children=[
-                FieldPanel('privacy_title'),
-                FieldPanel('body'),
+                MarkdownPanel('body'),
             ]
         ),
         SearchEngineOptimisationPanel(),
@@ -77,7 +70,6 @@ class PrivacyAndCookiesPage(ExclusivePageMixin, BasePage):
     api_fields = [
         APIField('seo_title'),
         APIField('search_description'),
-        APIField('privacy_title'),
-        APIRichTextField('body'),
+        APIMarkdownToHTMLField('body'),
         APIMetaField('meta'),
     ]

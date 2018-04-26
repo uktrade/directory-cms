@@ -33,12 +33,27 @@ def test_url_hyperlink_serializer_published(page, rf):
 
 
 @pytest.mark.django_db
-def test_rich_text_serializer(page, rf):
-    serializer = serializers.APIRichTextSerializer()
+def test_markdown_to_html_serializer(page, rf):
+    page.slug_en_gb = 'the-slug'
+    page.hero_text_en_gb = (
+        '[hyperlink](slug:{slug})'.format(slug=page.slug)
+    )
+    page.save()
 
-    actual = serializer.to_representation(page)
+    class TestSerializer(Serializer):
+        hero_text_en_gb = serializers.APIMarkdownToHTMLSerializer()
 
-    assert actual
+    serializer = TestSerializer(
+        instance=page,
+        context={'request': rf.get('/')}
+    )
+
+    assert serializer.data == {
+        'hero_text_en_gb': (
+            '<p><a href="http://supplier.trade.great:8005/'
+            'industries/the-slug/">hyperlink</a></p>'
+        )
+    }
 
 
 @pytest.mark.django_db

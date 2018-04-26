@@ -6,19 +6,19 @@ from django.db import migrations
 
 
 def set_historic_slugs(apps, schema_manager):
-	Page = apps.get_model('wagtailcore', 'Page')
-	HistoricSlug = apps.get_model('core', 'HistoricSlug')
+    Page = apps.get_model('wagtailcore', 'Page')
+    HistoricSlug = apps.get_model('core', 'HistoricSlug')
 
-	for model_class in Page.__subclasses__():
-		historic_model_class = apps.get_model(
-			model_class._meta.app_label,
-			model_class._meta.model_name
-		)
-		for page in historic_model_class.objects.all():
-			HistoricSlug.objects.create(
-				page=page,
-				slug=page.slug
-			)
+    for model_class in Page.__subclasses__():
+        historic_model_class = apps.get_model(
+            model_class._meta.app_label,
+            model_class._meta.model_name
+        )
+        for page in historic_model_class.objects.all():
+            HistoricSlug.objects.create(
+                page=page,
+                slug=page.slug
+            )
 
 
 class Migration(migrations.Migration):
