@@ -34,13 +34,13 @@ class IndustryPageFactory(wagtail_factories.PageFactory):
     )
     search_description_en_gb = factory.fuzzy.FuzzyText(length=255)
     title_en_gb = factory.fuzzy.FuzzyText(length=255)
-    introduction_column_two_icon_en_gb = factory.SubFactory(
+    introduction_column_two_icon = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
-    introduction_column_three_icon_en_gb = factory.SubFactory(
+    introduction_column_three_icon = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
-    introduction_column_one_icon_en_gb = factory.SubFactory(
+    introduction_column_one_icon = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
     slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
