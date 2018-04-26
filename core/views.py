@@ -119,7 +119,7 @@ class CopyPageView(FormView):
                 initial[f.name] = field.file.name
             elif isinstance(f, ChoiceArrayField):
                 initial[f.name] = ','.join(field)
-            elif initial[f.name] is None:
+            elif f.name in initial and initial[f.name] is None:
                 del initial[f.name]
 
         return {

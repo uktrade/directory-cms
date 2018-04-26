@@ -128,9 +128,9 @@ class IndustryPage(BasePage):
         verbose_name='Contact us button text'
     )
     introduction_title = models.CharField(max_length=400)
-    introduction_column_one_text = MarkdownField(blank=True)
-    introduction_column_two_text = MarkdownField(blank=True)
-    introduction_column_three_text = MarkdownField(blank=True)
+    introduction_column_one_text = MarkdownField()
+    introduction_column_two_text = MarkdownField()
+    introduction_column_three_text = MarkdownField()
     introduction_column_one_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -175,7 +175,7 @@ class IndustryPage(BasePage):
         verbose_name='Whitelisted companies filter',
         help_text='Limit to companies that have explicitly been whitelisted.',
     )
-    company_list_text = MarkdownField(blank=True)
+    company_list_text = MarkdownField()
     company_list_search_input_placeholder_text = models.CharField(
         max_length=255,
         blank=True,

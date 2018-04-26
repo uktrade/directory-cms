@@ -7,7 +7,6 @@ from find_a_supplier import models
 @pytest.mark.django_db
 def test_required_fields_industry_page():
     options = translator.get_options_for_model(models.IndustryPage)
-
     assert options.required_languages == {
         'en-gb': [
             'title',
