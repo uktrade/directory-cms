@@ -47,6 +47,7 @@ class PrivacyAndCookiesPage(ExclusivePageMixin, BasePage):
 
     view_app = constants.EXPORT_READINESS
     view_path = 'privacy-and-cookies/'
+    slug_identity = 'privacy-and-cookies'
 
     body = MarkdownField(blank=False)
 
@@ -63,6 +64,8 @@ class PrivacyAndCookiesPage(ExclusivePageMixin, BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
     ]
+
+    promote_panels = []
 
     api_fields = [
         APIField('seo_title'),
