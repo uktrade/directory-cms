@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'taggit',
     'storages',
     'rest_framework',
+    'wagtailmarkdown',
     'find_a_supplier.apps.FindASupplierConfig',
     'export_readiness.apps.ExportReadinessConfig',
 ]

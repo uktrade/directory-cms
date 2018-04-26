@@ -6,10 +6,10 @@ from django.db import migrations
 
 
 def sync_page_translation_fields(apps, schema_editor):
-	IndustryPage = apps.get_model('find_a_supplier', 'IndustryPage')
-	for page in IndustryPage.objects.all():
-		page.search_filter_sector = [page.sector_value]
-		page.save()
+    IndustryPage = apps.get_model('find_a_supplier', 'IndustryPage')
+    for page in IndustryPage.objects.all():
+        page.search_filter_sector = [page.sector_value]
+        page.save()
 
 
 class Migration(migrations.Migration):
