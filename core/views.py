@@ -137,8 +137,9 @@ class CopyPageView(FormView):
         cluster_data = {}
         for field in instance._meta.related_objects:
             if issubclass(field.related_model, Orderable):
+                field_values = getattr(instance, field.name).all().values()
                 data = helpers.nested_form_data({
-                    field.name: helpers.inline_formset([])
+                    field.name: helpers.inline_formset(field_values)
                 })
                 cluster_data.update(data)
         return cluster_data.items()
@@ -182,8 +183,9 @@ class PeloadPageView(FormView):
         parent_page = self.get_parent()
         edit_handler_class = page_class.get_edit_handler()
         form_class = edit_handler_class.get_form_class(page_class)
+
         form = form_class(
-            initial=form.cleaned_data,
+            data=form.data,
             instance=page,
             parent_page=parent_page
         )
@@ -211,7 +213,6 @@ class PeloadPageView(FormView):
                     if value not in ['', 'None', None]:
                         image = helpers.get_or_create_image(value)
                         kwargs['data'][name] = image.pk
-
         return kwargs
 
     def form_valid(self, form):
