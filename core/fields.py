@@ -1,7 +1,8 @@
 from wagtail.api import APIField
 from wagtail.wagtailimages.api.fields import ImageRenditionField
+from wagtailmarkdown.fields import MarkdownField as OriginalMarkdownField
 
-from core import serializers
+from core import serializers, widgets
 
 
 class APIMarkdownToHTMLField(APIField):
@@ -34,3 +35,9 @@ class APIVideoField(APIField):
     def __init__(self, name):
         serializer = serializers.APIVideoSerializer()
         super().__init__(name=name, serializer=serializer)
+
+
+class MarkdownField(OriginalMarkdownField):
+    def formfield(self, **kwargs):
+        kwargs['widget'] = widgets.MarkdownTextarea
+        return super().formfield(**kwargs)
