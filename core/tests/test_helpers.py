@@ -1,7 +1,7 @@
 from unittest.mock import call, patch
 
 import pytest
-from wagtail.wagtailadmin.widgets import PageListingButton
+from wagtail.admin.widgets import PageListingButton
 
 from django.urls import reverse
 

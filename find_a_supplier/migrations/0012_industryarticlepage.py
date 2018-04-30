@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail.wagtailcore.fields
+import wagtail.core.fields
 
 
 class Migration(migrations.Migration):
@@ -19,17 +19,17 @@ class Migration(migrations.Migration):
             name='IndustryArticlePage',
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('body', wagtail.wagtailcore.fields.RichTextField()),
-                ('body_en_gb', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_de', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_ja', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_ru', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_zh_hans', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_fr', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_es', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_pt', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_pt_br', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_ar', wagtail.wagtailcore.fields.RichTextField(null=True)),
+                ('body', wagtail.core.fields.RichTextField()),
+                ('body_en_gb', wagtail.core.fields.RichTextField(null=True)),
+                ('body_de', wagtail.core.fields.RichTextField(null=True)),
+                ('body_ja', wagtail.core.fields.RichTextField(null=True)),
+                ('body_ru', wagtail.core.fields.RichTextField(null=True)),
+                ('body_zh_hans', wagtail.core.fields.RichTextField(null=True)),
+                ('body_fr', wagtail.core.fields.RichTextField(null=True)),
+                ('body_es', wagtail.core.fields.RichTextField(null=True)),
+                ('body_pt', wagtail.core.fields.RichTextField(null=True)),
+                ('body_pt_br', wagtail.core.fields.RichTextField(null=True)),
+                ('body_ar', wagtail.core.fields.RichTextField(null=True)),
                 ('author_name', models.CharField(max_length=255)),
                 ('author_name_en_gb', models.CharField(max_length=255, null=True)),
                 ('author_name_de', models.CharField(max_length=255, null=True)),

@@ -1,11 +1,11 @@
 from directory_constants.constants import choices
 from modelcluster.fields import ParentalKey
-from wagtail.wagtailadmin.edit_handlers import (
+from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList, InlinePanel
 )
 from wagtail.api import APIField
-from wagtail.wagtailcore.models import Orderable
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.core.models import Orderable
+from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmarkdown.edit_handlers import MarkdownPanel
 from core.fields import MarkdownField
 

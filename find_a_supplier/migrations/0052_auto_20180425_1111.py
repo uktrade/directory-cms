@@ -3,9 +3,9 @@
 from __future__ import unicode_literals
 
 import html2text
-from wagtail.wagtailcore.models import Orderable
-from wagtail.wagtailcore.rich_text import expand_db_html
-from wagtail.wagtailcore.fields import RichTextField
+from wagtail.core.models import Orderable
+from wagtail.core.rich_text import expand_db_html
+from wagtail.core.fields import RichTextField
 from wagtailmarkdown.fields import MarkdownField
 
 from django.db import migrations

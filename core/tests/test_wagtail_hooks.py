@@ -1,7 +1,7 @@
 from unittest.mock import Mock
 
 import pytest
-from wagtail.wagtailcore.models import Page
+from wagtail.core.models import Page
 
 from django.utils import translation
 

@@ -1,4 +1,4 @@
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 
 
 class SearchEngineOptimisationPanel(MultiFieldPanel):
@@ -9,6 +9,4 @@ class SearchEngineOptimisationPanel(MultiFieldPanel):
     ]
 
     def __init__(self, *args, **kwargs):
-        super().__init__(
-            heading=self.heading, children=self.children, *args, **kwargs
-        )
+        super().__init__(children=self.children, heading=self.heading)

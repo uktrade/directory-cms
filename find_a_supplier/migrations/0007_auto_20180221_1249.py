@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import wagtail.wagtailcore.fields
+import wagtail.core.fields
 
 
 class Migration(migrations.Migration):
@@ -16,32 +16,32 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='industrypage',
             name='case_study_ru',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='hero_text_ru',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='lede_column_one_ru',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='lede_column_three_ru',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='lede_column_two_ru',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='lede_ru',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',

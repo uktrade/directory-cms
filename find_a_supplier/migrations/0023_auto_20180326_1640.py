@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import wagtail.wagtailcore.fields
+import wagtail.core.fields
 
 
 class Migration(migrations.Migration):
@@ -72,87 +72,87 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='industrypage',
             name='company_list_text',
-            field=wagtail.wagtailcore.fields.RichTextField(default='<h2>Search for UK technology suppliers</h2>'),
+            field=wagtail.core.fields.RichTextField(default='<h2>Search for UK technology suppliers</h2>'),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='industrypage',
             name='company_list_text_ar',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='company_list_text_de',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='company_list_text_en_gb',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='company_list_text_es',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='company_list_text_fr',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='company_list_text_ja',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='company_list_text_pt',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='company_list_text_pt_br',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='company_list_text_ru',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='company_list_text_zh_hans',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AlterField(
             model_name='industryarticlepage',
             name='body',
-            field=wagtail.wagtailcore.fields.RichTextField(),
+            field=wagtail.core.fields.RichTextField(),
         ),
         migrations.AlterField(
             model_name='industrypage',
             name='hero_text',
-            field=wagtail.wagtailcore.fields.RichTextField(),
+            field=wagtail.core.fields.RichTextField(),
         ),
         migrations.AlterField(
             model_name='industrypage',
             name='introduction_column_one_text',
-            field=wagtail.wagtailcore.fields.RichTextField(),
+            field=wagtail.core.fields.RichTextField(),
         ),
         migrations.AlterField(
             model_name='industrypage',
             name='introduction_column_three_text',
-            field=wagtail.wagtailcore.fields.RichTextField(),
+            field=wagtail.core.fields.RichTextField(),
         ),
         migrations.AlterField(
             model_name='industrypage',
             name='introduction_column_two_text',
-            field=wagtail.wagtailcore.fields.RichTextField(),
+            field=wagtail.core.fields.RichTextField(),
         ),
         migrations.AlterField(
             model_name='industrypage',
             name='introduction_text',
-            field=wagtail.wagtailcore.fields.RichTextField(),
+            field=wagtail.core.fields.RichTextField(),
         ),
     ]

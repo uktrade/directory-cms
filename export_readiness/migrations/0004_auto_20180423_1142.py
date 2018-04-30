@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import core.models
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail.wagtailcore.fields
+import wagtail.core.fields
 
 
 class Migration(migrations.Migration):
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
                 ('privacy_title', models.CharField(max_length=255)),
-                ('body', wagtail.wagtailcore.fields.RichTextField()),
+                ('body', wagtail.core.fields.RichTextField()),
             ],
             options={
                 'abstract': False,
