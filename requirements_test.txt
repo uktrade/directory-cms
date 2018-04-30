@@ -78,7 +78,7 @@ termcolor==1.1.0          # via pytest-sugar
 text-unidecode==1.1       # via faker
 unidecode==0.4.21         # via wagtail
 urllib3==1.22             # via requests
-wagtail-factories==0.1.0
+wagtail-factories==1.0.0
 wagtail-markdown==0.5a3
 wagtail==2.0.1
 webencodings==0.5.1       # via html5lib

@@ -32,3 +32,7 @@ body .image-chooser .chosen {
 	clear: both;
 	width: 100%!important;
 }
+
+.cm-spell-error {
+	background: none!important;
+}
