@@ -7,7 +7,7 @@ from wagtail.api import APIField
 from wagtail.wagtailcore.models import Orderable
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtailmarkdown.edit_handlers import MarkdownPanel
-from wagtailmarkdown.fields import MarkdownField
+from core.fields import MarkdownField
 
 from django.db import models
 

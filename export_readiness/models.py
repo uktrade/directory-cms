@@ -1,10 +1,9 @@
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.api import APIField
 from wagtailmarkdown.edit_handlers import MarkdownPanel
-from wagtailmarkdown.fields import MarkdownField
 
 from core import constants
-from core.fields import APIMarkdownToHTMLField, APIMetaField
+from core.fields import APIMarkdownToHTMLField, APIMetaField, MarkdownField
 from core.models import BaseApp, BasePage, ExclusivePageMixin
 from core.panels import SearchEngineOptimisationPanel
 
