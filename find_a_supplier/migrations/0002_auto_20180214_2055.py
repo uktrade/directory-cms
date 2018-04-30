@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import wagtail.wagtailcore.fields
+import wagtail.core.fields
 
 
 class Migration(migrations.Migration):
@@ -16,47 +16,47 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='casestudypage',
             name='body_ar',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='body_de',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='body_en_gb',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='body_es',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='body_fr',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='body_ja',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='body_pt',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='body_pt_br',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='body_zh_hans',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
@@ -196,92 +196,92 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='casestudypage',
             name='key_facts_ar',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='key_facts_de',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='key_facts_en_gb',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='key_facts_es',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='key_facts_fr',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='key_facts_ja',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='key_facts_pt',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='key_facts_pt_br',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='key_facts_zh_hans',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='lede_ar',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='lede_de',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='lede_en_gb',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='lede_es',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='lede_fr',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='lede_ja',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='lede_pt',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='lede_pt_br',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
             name='lede_zh_hans',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='casestudypage',
@@ -331,47 +331,47 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='company',
             name='description_ar',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='company',
             name='description_de',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='company',
             name='description_en_gb',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='company',
             name='description_es',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='company',
             name='description_fr',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='company',
             name='description_ja',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='company',
             name='description_pt',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='company',
             name='description_pt_br',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='company',
             name='description_zh_hans',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='company',
@@ -646,52 +646,52 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='showcase',
             name='synopsis_ar',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
             name='synopsis_de',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
             name='synopsis_en_gb',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
             name='synopsis_es',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
             name='synopsis_fr',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
             name='synopsis_ja',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
             name='synopsis_pt',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
             name='synopsis_pt_br',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
             name='synopsis_zh_hans',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
             name='testimonial_ar',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
@@ -741,27 +741,27 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='showcase',
             name='testimonial_de',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
             name='testimonial_en_gb',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
             name='testimonial_es',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
             name='testimonial_fr',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
             name='testimonial_ja',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
@@ -811,17 +811,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='showcase',
             name='testimonial_pt',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
             name='testimonial_pt_br',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',
             name='testimonial_zh_hans',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='showcase',

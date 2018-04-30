@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations
-import wagtail.wagtailcore.fields
+import wagtail.core.fields
 
 
 class Migration(migrations.Migration):
@@ -16,57 +16,57 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='industrypage',
             name='contact_success_message_text',
-            field=wagtail.wagtailcore.fields.RichTextField(default=''),
+            field=wagtail.core.fields.RichTextField(default=''),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='industrypage',
             name='contact_success_message_text_ar',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='contact_success_message_text_de',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='contact_success_message_text_en_gb',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='contact_success_message_text_es',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='contact_success_message_text_fr',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='contact_success_message_text_ja',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='contact_success_message_text_pt',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='contact_success_message_text_pt_br',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='contact_success_message_text_ru',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
         migrations.AddField(
             model_name='industrypage',
             name='contact_success_message_text_zh_hans',
-            field=wagtail.wagtailcore.fields.RichTextField(null=True),
+            field=wagtail.core.fields.RichTextField(null=True),
         ),
     ]

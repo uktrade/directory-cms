@@ -6,33 +6,6 @@ from find_a_supplier.tests import factories
 
 
 @pytest.mark.django_db
-def test_url_hyperlink_serializer_draft(page, rf):
-
-    class TestSerializer(Serializer):
-        url = serializers.URLHyperlinkSerializer()
-
-    request = rf.get('/', {permissions.DraftTokenPermisison.TOKEN_PARAM: '1'})
-    serializer = TestSerializer(instance=page, context={'request': request})
-
-    assert serializer.data['url'] == page.get_url(
-        is_draft=True
-    )
-
-
-@pytest.mark.django_db
-def test_url_hyperlink_serializer_published(page, rf):
-
-    class TestSerializer(Serializer):
-        url = serializers.URLHyperlinkSerializer()
-
-    serializer = TestSerializer(
-        instance=page, context={'request': rf.get('/')}
-    )
-
-    assert serializer.data['url'] == page.get_url()
-
-
-@pytest.mark.django_db
 def test_markdown_to_html_serializer(page, rf):
     page.slug_en_gb = 'the-slug'
     page.hero_text_en_gb = (
@@ -83,6 +56,23 @@ def test_meta_serializer(page, rf):
             'pk': page.pk,
         }
     }
+
+
+@pytest.mark.django_db
+def test_meta_serializer_draft(page, rf):
+
+    class TestSerializer(Serializer):
+        meta = serializers.APIMetaSerializer()
+
+    serializer = TestSerializer(
+        instance=page,
+        context={'request': rf.get('/')}
+    )
+
+    request = rf.get('/', {permissions.DraftTokenPermisison.TOKEN_PARAM: '1'})
+    serializer = TestSerializer(instance=page, context={'request': request})
+
+    assert serializer.data['meta']['url'] == page.get_url(is_draft=True)
 
 
 @pytest.mark.django_db

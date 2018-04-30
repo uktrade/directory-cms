@@ -2,7 +2,7 @@ from itertools import product
 import pytest
 
 from modeltranslation.utils import build_localized_fieldname
-from wagtail.wagtailcore.models import Page
+from wagtail.core.models import Page
 
 from find_a_supplier.tests.factories import IndustryPageFactory
 

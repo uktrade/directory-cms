@@ -1,5 +1,5 @@
 from wagtail.api import APIField
-from wagtail.wagtailimages.api.fields import ImageRenditionField
+from wagtail.images.api.fields import ImageRenditionField
 
 from core import serializers
 

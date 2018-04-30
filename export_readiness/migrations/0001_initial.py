@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import core.models
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail.wagtailcore.fields
+import wagtail.core.fields
 
 
 class Migration(migrations.Migration):
@@ -32,17 +32,17 @@ class Migration(migrations.Migration):
                 ('terms_title_pt', models.CharField(max_length=50, null=True)),
                 ('terms_title_pt_br', models.CharField(max_length=50, null=True)),
                 ('terms_title_ar', models.CharField(max_length=50, null=True)),
-                ('body', wagtail.wagtailcore.fields.RichTextField()),
-                ('body_en_gb', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_de', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_ja', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_ru', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_zh_hans', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_fr', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_es', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_pt', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_pt_br', wagtail.wagtailcore.fields.RichTextField(null=True)),
-                ('body_ar', wagtail.wagtailcore.fields.RichTextField(null=True)),
+                ('body', wagtail.core.fields.RichTextField()),
+                ('body_en_gb', wagtail.core.fields.RichTextField(null=True)),
+                ('body_de', wagtail.core.fields.RichTextField(null=True)),
+                ('body_ja', wagtail.core.fields.RichTextField(null=True)),
+                ('body_ru', wagtail.core.fields.RichTextField(null=True)),
+                ('body_zh_hans', wagtail.core.fields.RichTextField(null=True)),
+                ('body_fr', wagtail.core.fields.RichTextField(null=True)),
+                ('body_es', wagtail.core.fields.RichTextField(null=True)),
+                ('body_pt', wagtail.core.fields.RichTextField(null=True)),
+                ('body_pt_br', wagtail.core.fields.RichTextField(null=True)),
+                ('body_ar', wagtail.core.fields.RichTextField(null=True)),
             ],
             options={
                 'abstract': False,

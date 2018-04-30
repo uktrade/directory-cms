@@ -4,8 +4,8 @@ from urllib.parse import urljoin, urlencode
 
 from modeltranslation.translator import translator
 from modeltranslation.utils import build_localized_fieldname
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
-from wagtail.wagtailcore.models import Page
+from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.core.models import Page
 
 from django.core import signing
 from django.core.exceptions import ValidationError

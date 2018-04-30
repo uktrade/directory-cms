@@ -7,10 +7,10 @@ import gevent
 from google.cloud import translate
 import markdown
 from modeltranslation.utils import build_localized_fieldname
-from wagtail.wagtailadmin.edit_handlers import ObjectList, TabbedInterface
-from wagtail.wagtailcore import hooks
-from wagtail.wagtailcore.models import Page
-from wagtail.wagtailimages.models import Image
+from wagtail.admin.edit_handlers import ObjectList, TabbedInterface
+from wagtail.core import hooks
+from wagtail.core.models import Page
+from wagtail.images.models import Image
 from wagtailmarkdown.mdx import tables
 from wagtailmarkdown.utils import _sanitise_markdown_html
 

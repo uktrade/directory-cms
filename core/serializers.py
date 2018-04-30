@@ -1,23 +1,11 @@
 from rest_framework import fields
-from wagtail.wagtailcore.models import Page
-from wagtail.wagtailembeds import embeds
-from wagtail.wagtailembeds.exceptions import EmbedUnsupportedProviderException
+from wagtail.core.models import Page
+from wagtail.embeds import embeds
+from wagtail.embeds.exceptions import EmbedUnsupportedProviderException
 from django.conf import settings
 from django.utils import translation
 
 from core import helpers, models
-
-
-class URLHyperlinkSerializer(fields.CharField):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    def get_attribute(self, instance):
-        return instance.get_url(
-            is_draft=helpers.is_draft_requested(self.context['request']),
-            language_code=translation.get_language(),
-        )
 
 
 class APIMarkdownToHTMLSerializer(fields.CharField):
@@ -26,24 +14,18 @@ class APIMarkdownToHTMLSerializer(fields.CharField):
         return helpers.render_markdown(representation)
 
 
-class APITranslationsSerializer(fields.ListField):
-    def get_attribute(self, instance):
-        return [
-            (code, label) for (code, label) in settings.LANGUAGES_LOCALIZED
-            if code in instance.translated_languages
-        ]
-
-
 class APIMetaSerializer(fields.DictField):
 
-    languages = APITranslationsSerializer()
-    url = URLHyperlinkSerializer()
-
     def get_attribute(self, instance):
-        self.url.context = self.context
         return {
-            'languages': self.languages.get_attribute(instance),
-            'url': self.url.get_attribute(instance),
+            'languages': [
+                (code, label) for (code, label) in settings.LANGUAGES_LOCALIZED
+                if code in instance.translated_languages
+            ],
+            'url': instance.get_url(
+                is_draft=helpers.is_draft_requested(self.context['request']),
+                language_code=translation.get_language(),
+            ),
             'slug': instance.slug,
             'localised_urls': instance.get_localized_urls(),
             'pk': instance.pk,

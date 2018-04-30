@@ -1,6 +1,6 @@
-from wagtail.wagtailadmin.widgets import Button
-from wagtail.wagtailcore import hooks
-from wagtail.wagtailadmin.wagtail_hooks import page_listing_buttons
+from wagtail.admin.widgets import Button
+from wagtail.core import hooks
+from wagtail.admin.wagtail_hooks import page_listing_buttons
 
 from django.conf import settings
 from django.contrib.staticfiles.templatetags.staticfiles import static

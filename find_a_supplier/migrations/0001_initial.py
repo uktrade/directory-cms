@@ -6,7 +6,7 @@ import django.contrib.postgres.fields
 from django.db import migrations, models
 import django.db.models.deletion
 import modelcluster.fields
-import wagtail.wagtailcore.fields
+import wagtail.core.fields
 
 
 class Migration(migrations.Migration):
@@ -26,9 +26,9 @@ class Migration(migrations.Migration):
                 ('footer_text', models.CharField(max_length=255)),
                 ('footer_title', models.CharField(max_length=255)),
                 ('companies_section_title', models.CharField(max_length=255)),
-                ('lede', wagtail.wagtailcore.fields.RichTextField()),
-                ('body', wagtail.wagtailcore.fields.RichTextField()),
-                ('key_facts', wagtail.wagtailcore.fields.RichTextField()),
+                ('lede', wagtail.core.fields.RichTextField()),
+                ('body', wagtail.core.fields.RichTextField()),
+                ('key_facts', wagtail.core.fields.RichTextField()),
                 ('read_more_text', models.CharField(max_length=255)),
                 ('layout_class', models.CharField(max_length=255)),
                 ('seo_description', models.CharField(max_length=255)),
@@ -46,7 +46,7 @@ class Migration(migrations.Migration):
                 ('sort_order', models.IntegerField(blank=True, editable=False, null=True)),
                 ('image_alt', models.CharField(max_length=255)),
                 ('name', models.CharField(max_length=255)),
-                ('description', wagtail.wagtailcore.fields.RichTextField()),
+                ('description', wagtail.core.fields.RichTextField()),
                 ('url', models.URLField()),
                 ('image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image')),
                 ('page', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='companies', to='find_a_supplier.CaseStudyPage')),
@@ -64,9 +64,9 @@ class Migration(migrations.Migration):
                 ('image_alt', models.CharField(max_length=255)),
                 ('image_caption', models.CharField(max_length=255)),
                 ('title', models.CharField(max_length=255)),
-                ('synopsis', wagtail.wagtailcore.fields.RichTextField()),
+                ('synopsis', wagtail.core.fields.RichTextField()),
                 ('url', models.URLField()),
-                ('testimonial', wagtail.wagtailcore.fields.RichTextField()),
+                ('testimonial', wagtail.core.fields.RichTextField()),
                 ('testimonial_name', models.CharField(max_length=255)),
                 ('testimonial_company', models.CharField(max_length=255)),
                 ('company_name', models.CharField(max_length=255)),

@@ -1,9 +1,9 @@
 from wagtail.api.v2.endpoints import filter_page_type, page_models_from_string
 from wagtail.api.v2.utils import BadRequestError
-from wagtail.wagtailadmin.api.endpoints import PagesAdminAPIEndpoint
-from wagtail.wagtailcore.models import Page
-from wagtail.wagtailimages.models import Image
-from wagtail.wagtailcore.models import Orderable
+from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
+from wagtail.core.models import Page
+from wagtail.images.models import Image
+from wagtail.core.models import Orderable
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
@@ -50,6 +50,7 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
 
     def get_object(self):
         instance = super().get_object()
+        self.check_object_permissions(self.request, instance)
         instance = self.handle_serve_draft_object(instance)
         self.handle_activate_language(instance)
         return instance
@@ -75,7 +76,9 @@ class PageLookupByTypeAPIEndpoint(APIEndpointBase):
         if not queryset.exists():
             raise Http404()
         instance = queryset.first()
+        self.check_object_permissions(self.request, instance)
         instance = self.handle_serve_draft_object(instance)
+
         self.handle_activate_language(instance)
         return instance
 
@@ -94,6 +97,7 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
         instance = get_object_or_404(
             self.get_queryset(), historicslug__slug=self.kwargs['slug']
         ).specific
+        self.check_object_permissions(self.request, instance)
         instance = self.handle_serve_draft_object(instance)
         self.handle_activate_language(instance)
         return instance
@@ -108,7 +112,7 @@ class CopyPageView(FormView):
 
     def get_form_class(self):
         page = self.get_object()
-        return page.get_edit_handler().get_form_class(page.__class__)
+        return page.get_edit_handler().get_form_class()
 
     def get_form_kwargs(self):
         instance = self.get_object()
@@ -162,7 +166,7 @@ class PeloadPageView(FormView):
     def get_form_class(self):
         content_type = self.get_content_type()
         page_class = content_type.model_class()
-        return page_class.get_edit_handler().get_form_class(page_class)
+        return page_class.get_edit_handler().get_form_class()
 
     def get_content_type(self):
         try:
@@ -181,19 +185,19 @@ class PeloadPageView(FormView):
         page_class = content_type.model_class()
         page = page_class(owner=self.request.user)
         parent_page = self.get_parent()
-        edit_handler_class = page_class.get_edit_handler()
-        form_class = edit_handler_class.get_form_class(page_class)
-
+        edit_handler = page_class.get_edit_handler()
+        form_class = edit_handler.get_form_class()
         form = form_class(
             data=form.data,
             instance=page,
             parent_page=parent_page
         )
+        edit_handler = edit_handler.bind_to_instance(instance=page, form=form)
         return {
             'content_type': content_type,
             'page_class': page_class,
             'parent_page': parent_page,
-            'edit_handler': edit_handler_class(instance=page, form=form),
+            'edit_handler': edit_handler,
             'preview_modes': page.preview_modes,
             'form': form,
             'has_unsaved_changes': True,

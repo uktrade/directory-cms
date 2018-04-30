@@ -206,7 +206,7 @@ def test_add_page_prepopulate_missing_content_type(
 
 @pytest.mark.django_db
 @patch('core.helpers.auto_populate_translations')
-@patch('wagtail.wagtailcore.models.Page.save_revision')
+@patch('wagtail.core.models.Page.save_revision')
 def test_translate_page(
     mock_save_revision, mock_auto_populate_translations, translated_page,
     admin_client, admin_user, settings, image, cluster_data

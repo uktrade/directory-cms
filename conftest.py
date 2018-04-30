@@ -1,8 +1,8 @@
 from unittest.mock import patch
 
 import pytest
-from wagtail.wagtailcore.models import Page
-from wagtail.wagtailimages.models import Image
+from wagtail.core.models import Page
+from wagtail.images.models import Image
 
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
