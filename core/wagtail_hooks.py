@@ -10,18 +10,20 @@ from django.utils.html import format_html
 from core import helpers, models
 
 
-@hooks.register('register_page_listing_buttons')
+@hooks.register('register_page_listing_more_buttons')
 def add_copy_button(page, page_perms, is_parent=False):
     if isinstance(page, models.BasePage):
         yield Button(
             'Copy upstream',
-            reverse('copy-to-environment', kwargs={'pk': page.id}),
+            reverse('copy-upstream', kwargs={'pk': page.id}),
             attrs={'title': "Copy this page to another environment"},
-            classes={
-                'button', 'button-small', 'bicolor', 'icon', 'white',
-                'icon-site'
-            },
-            priority=40
+            priority=80
+        )
+        yield Button(
+            'Update upstream',
+            reverse('update-upstream', kwargs={'pk': page.id}),
+            attrs={'title': "Update this page on another environment"},
+            priority=80
         )
 
 

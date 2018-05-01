@@ -28,9 +28,14 @@ urlpatterns = [
         name='health-check-ping'
     ),
     url(
-        r'^admin/pages/(?P<pk>[0-9]+)/copy-to-environment/$',
-        login_required(core.views.CopyPageView.as_view()),
-        name='copy-to-environment',
+        r'^admin/pages/(?P<pk>[0-9]+)/copy-upstream/$',
+        login_required(core.views.CopyUpstreamView.as_view()),
+        name='copy-upstream',
+    ),
+    url(
+        r'^admin/pages/(?P<pk>[0-9]+)/update-upstream/$',
+        login_required(core.views.UpdateUpstreamView.as_view()),
+        name='update-upstream',
     ),
     url(
         (
