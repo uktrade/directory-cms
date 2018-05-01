@@ -405,7 +405,7 @@ class IndustryArticlePage(BasePage):
     body = MarkdownField(blank=True)
     author_name = models.CharField(max_length=255)
     job_title = models.CharField(max_length=255)
-    proposition_text = MarkdownField(blank=True)
+    proposition_text = models.CharField(max_length=255)
     call_to_action_text = models.CharField(max_length=500)
     show_table_of_content = models.BooleanField(
         default=False,
