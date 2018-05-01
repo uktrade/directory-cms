@@ -4,6 +4,7 @@ import pytest
 from wagtail.core.models import Page
 
 from django.utils import translation
+from django.urls import reverse
 
 from core import wagtail_hooks
 
@@ -30,3 +31,15 @@ def test_update_default_listing_buttons_not_from_base_page(settings):
 
     assert len(buttons) == 1
     assert buttons[0].label == 'Add child page'
+
+
+@pytest.mark.django_db
+def test_add_copy_button(page_with_reversion):
+    page = page_with_reversion
+    buttons = list(wagtail_hooks.add_copy_button(page=page, page_perms=None))
+
+    assert len(buttons) == 2
+    assert buttons[0].label == 'Copy upstream'
+    assert buttons[0].url == reverse('copy-upstream', kwargs={'pk': page.id})
+    assert buttons[1].label == 'Update upstream'
+    assert buttons[1].url == reverse('update-upstream', kwargs={'pk': page.id})

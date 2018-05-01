@@ -104,24 +104,40 @@ def test_api_draft(client, page_with_reversion):
 
 
 @pytest.mark.django_db
-def test_copy_to_environment(admin_client, translated_page, settings, image):
+def test_copy_upsteam(admin_client, translated_page, settings, image):
     translated_page.hero_image = image
     translated_page.save()
 
-    url = reverse('copy-to-environment', kwargs={'pk': translated_page.pk})
+    url = reverse('copy-upstream', kwargs={'pk': translated_page.pk})
 
     response = admin_client.get(url)
 
     assert response.status_code == 200
     assert response.context['page'] == translated_page
+    assert response.context['include_slug'] is False
 
 
 @pytest.mark.django_db
-def test_copy_to_environment_anon(client, translated_page, settings, image):
+def test_update_upstream(admin_client, translated_page, settings, image):
     translated_page.hero_image = image
     translated_page.save()
 
-    url = reverse('copy-to-environment', kwargs={'pk': translated_page.pk})
+    url = reverse('update-upstream', kwargs={'pk': translated_page.pk})
+
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    assert response.context['page'] == translated_page
+    assert response.context['include_slug'] is True
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize('url_name', ('copy-upstream', 'update-upstream'))
+def test_upstream_anon(client, translated_page, settings, image, url_name):
+    translated_page.hero_image = image
+    translated_page.save()
+
+    url = reverse(url_name, kwargs={'pk': translated_page.pk})
 
     response = client.get(url)
 
@@ -129,8 +145,13 @@ def test_copy_to_environment_anon(client, translated_page, settings, image):
 
 
 @pytest.mark.django_db
+@pytest.mark.parametrize('include_slug, expected_template', (
+    (True, 'wagtailadmin/pages/edit.html'),
+    (False, 'wagtailadmin/pages/create.html'),
+))
 def test_add_page_prepopulate(
-    client, translated_page, settings, admin_client, image, cluster_data
+    client, translated_page, settings, admin_client, image, cluster_data,
+    include_slug, expected_template
 ):
     url = reverse(
         'preload-add-page',
@@ -163,11 +184,16 @@ def test_add_page_prepopulate(
         'introduction_column_three_icon': str(image.pk),
         'search_filter_sector': model_as_dict['search_filter_sector'][0],
     }
+    if include_slug:
+        post_data['slug_en_gb'] = expected_data['slug_en_gb'] = (
+            translated_page.slug_en_gb
+        )
 
     response = admin_client.post(url, post_data)
 
-    soup = BeautifulSoup(response.content, 'html.parser')
+    assert response.template_name == [expected_template]
 
+    soup = BeautifulSoup(response.content, 'html.parser')
     for name, value in expected_data.items():
         element = soup.find(id='id_' + name)
         if not element or not value:
