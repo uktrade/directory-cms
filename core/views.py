@@ -172,7 +172,7 @@ class UpdateUpstreamView(UpstreamBaseView):
 
 
 class PeloadPageView(FormView):
-    create_template_name = 'wagtailadmin/pages/create.html'
+    template_name = 'wagtailadmin/pages/create.html'
     update_template_name = 'wagtailadmin/pages/edit.html'
 
     def dispatch(self, *args, **kwargs):
@@ -259,4 +259,4 @@ class PeloadPageView(FormView):
     def get_template_names(self):
         if self.page.pk:
             return [self.update_template_name]
-        return [self.create_template_name]
+        return [self.template_name]
