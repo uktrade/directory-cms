@@ -10,7 +10,9 @@
                 <input type="hidden" value="{{ value }}" name="{{ name }}" id="id_{{ name }}" />
             {% endfor %}
             {% for field in form.visible_fields %}
-                <input type="hidden" value="{{ field.value}}" name="{{ field.name }}" id="{{ field.id_for_label }}" />
+                {% if include_slug or field.name != 'slug_en_gb' %} 
+                    <input type="hidden" value="{{ field.value }}" name="{{ field.name }}" id="{{ field.id_for_label }}" />
+                {% endif %}
             {% endfor %}
             <input type="hidden" name="next" value="{{ next }}" />
             <ul class="fields">

@@ -104,24 +104,40 @@ def test_api_draft(client, page_with_reversion):
 
 
 @pytest.mark.django_db
-def test_copy_to_environment(admin_client, translated_page, settings, image):
+def test_copy_upsteam(admin_client, translated_page, settings, image):
     translated_page.hero_image = image
     translated_page.save()
 
-    url = reverse('copy-to-environment', kwargs={'pk': translated_page.pk})
+    url = reverse('copy-upstream', kwargs={'pk': translated_page.pk})
 
     response = admin_client.get(url)
 
     assert response.status_code == 200
     assert response.context['page'] == translated_page
+    assert response.context['include_slug'] is False
 
 
 @pytest.mark.django_db
-def test_copy_to_environment_anon(client, translated_page, settings, image):
+def test_update_upstream(admin_client, translated_page, settings, image):
     translated_page.hero_image = image
     translated_page.save()
 
-    url = reverse('copy-to-environment', kwargs={'pk': translated_page.pk})
+    url = reverse('update-upstream', kwargs={'pk': translated_page.pk})
+
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    assert response.context['page'] == translated_page
+    assert response.context['include_slug'] is True
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize('url_name', ('copy-upstream', 'update-upstream'))
+def test_upstream_anon(client, translated_page, settings, image, url_name):
+    translated_page.hero_image = image
+    translated_page.save()
+
+    url = reverse(url_name, kwargs={'pk': translated_page.pk})
 
     response = client.get(url)
 

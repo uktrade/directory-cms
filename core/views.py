@@ -106,9 +106,11 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
         return super().detail_view(self.request, pk=None)
 
 
-class CopyPageView(FormView):
+class UpstreamBaseView(FormView):
     environment_form_class = forms.CopyToEnvironmentForm
-    template_name = 'core/copy_to_environment.html'
+    template_name = 'core/upstream.html'
+
+    include_slug = None
 
     def get_form_class(self):
         page = self.get_object()
@@ -156,19 +158,29 @@ class CopyPageView(FormView):
             app_label=page._meta.app_label,
             model_name=page._meta.model_name,
             cluster_data=self.get_cluster_form_data(),
+            include_slug=self.include_slug,
             **kwargs
         )
 
 
+class CopyUpstreamView(UpstreamBaseView):
+    include_slug = False
+
+
+class UpdateUpstreamView(UpstreamBaseView):
+    include_slug = True
+
+
 class PeloadPageView(FormView):
-    template_name = 'wagtailadmin/pages/create.html'
+    create_template_name = 'wagtailadmin/pages/create.html'
+    update_template_name = 'wagtailadmin/pages/edit.html'
 
-    def get_form_class(self):
-        content_type = self.get_content_type()
-        page_class = content_type.model_class()
-        return page_class.get_edit_handler().get_form_class()
+    def dispatch(self, *args, **kwargs):
+        self.page_content_type = self.get_page_content_type()
+        self.page = self.get_page()
+        return super().dispatch(*args, **kwargs)
 
-    def get_content_type(self):
+    def get_page_content_type(self):
         try:
             return ContentType.objects.get_by_natural_key(
                 self.kwargs['app_name'],
@@ -177,30 +189,48 @@ class PeloadPageView(FormView):
         except ContentType.DoesNotExist:
             raise Http404()
 
+    def get_page(self):
+        page_class = self.page_content_type.model_class()
+        try:
+            page = page_class.objects.get(
+                slug=self.request.POST.get('slug_en_gb')
+            )
+        except page_class.DoesNotExist:
+            page = page_class()
+        page.owner = self.request.user
+        return page
+
+    def get_form_class(self):
+        page_class = self.page_content_type.model_class()
+        return page_class.get_edit_handler().get_form_class()
+
     def get_parent(self):
         return get_object_or_404(Page, id=self.kwargs['parent_pk']).specific
 
     def get_context_data(self, form):
-        content_type = self.get_content_type()
-        page_class = content_type.model_class()
-        page = page_class(owner=self.request.user)
+        page_class = self.page_content_type.model_class()
         parent_page = self.get_parent()
         edit_handler = page_class.get_edit_handler()
         form_class = edit_handler.get_form_class()
         form = form_class(
             data=form.data,
-            instance=page,
+            instance=self.page,
             parent_page=parent_page
         )
-        edit_handler = edit_handler.bind_to_instance(instance=page, form=form)
+        edit_handler = edit_handler.bind_to_instance(
+            instance=self.page,
+            form=form
+        )
         return {
-            'content_type': content_type,
+            'content_type': self.page_content_type,
             'page_class': page_class,
             'parent_page': parent_page,
             'edit_handler': edit_handler,
-            'preview_modes': page.preview_modes,
+            'preview_modes': self.page.preview_modes,
             'form': form,
             'has_unsaved_changes': True,
+            'page': self.page,
+            'page_for_status': self.page,
             **super().get_context_data(form=form),
         }
 
@@ -225,3 +255,8 @@ class PeloadPageView(FormView):
             self.template_name,
             self.get_context_data(form=form),
         )
+
+    def get_template_names(self):
+        if self.page.pk:
+            return [self.update_template_name]
+        return [self.create_template_name]
