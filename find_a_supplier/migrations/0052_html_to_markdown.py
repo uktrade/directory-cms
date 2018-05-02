@@ -26,9 +26,11 @@ def html_to_markdown(apps, schema_editor):
                     field_names.append(field.name)
             for page in model_class.objects.all():
                 for field_name in field_names:
-                    html = expand_db_html(getattr(page, field_name))
-                    markdown = html2text.html2text(html).strip()
-                    setattr(page, field_name, markdown)
+                    value = getattr(page, field_name)
+                    if value:
+                        html = expand_db_html(value)
+                        markdown = html2text.html2text(html).strip()
+                        setattr(page, field_name, markdown)
                 page.save()
 
     IndustryArticlePage = apps.get_model(
