@@ -40,3 +40,30 @@ body .image-chooser .chosen {
 #tab-arabic input {
 	direction: rtl;
 }
+
+.tab-nav a.required-for-language:after {
+    border-radius: 50px;
+    box-shadow: 1px 2px 2px rgba(0,0,0,.1);
+    position: absolute;
+    right: -.5em;
+    top: -.5em;
+    z-index: 5;
+    min-width: .9em;
+    color: #fff;
+    background: #006ccc;
+    content: attr(data-count);
+    padding: 0 .3em;
+    line-height: 1.4em;
+    text-align: center;
+    font-size: .8em;
+ }
+
+.required-for-language-container>label:after {
+    content: "*";
+    color: #cd3238;
+    font-weight: 700;
+    display: inline-block;
+    margin-left: .5em;
+    line-height: 1em;
+    font-size: 13px;
+}

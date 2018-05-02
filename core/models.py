@@ -18,7 +18,7 @@ from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.text import mark_safe, slugify
 
-from core import constants
+from core import constants, forms
 
 
 class HistoricSlug(models.Model):
@@ -43,6 +43,8 @@ class BasePage(Page):
         abstract = True
 
     subpage_types = []
+
+    base_form_class = forms.WagtailAdminPageForm
 
     def __init__(self, *args, **kwargs):
         self.signer = signing.Signer()
