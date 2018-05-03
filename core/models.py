@@ -43,6 +43,7 @@ class BasePage(Page):
         abstract = True
 
     subpage_types = []
+    read_only_fields = []
 
     base_form_class = forms.WagtailAdminPageForm
 
@@ -195,6 +196,8 @@ class ImageHash(models.Model):
 
 
 class ExclusivePageMixin:
+    read_only_fields = ['slug_en_gb']
+
     @classmethod
     def can_create_at(cls, parent):
         return super().can_create_at(parent) and not cls.objects.exists()

@@ -388,6 +388,7 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
+        FieldPanel('slug_en_gb'),
     ]
 
     edit_handler = make_translated_interface(
@@ -654,6 +655,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
+        FieldPanel('slug_en_gb'),
     ]
 
     edit_handler = make_translated_interface(
@@ -698,6 +700,7 @@ class IndustryContactPage(ExclusivePageMixin, BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
+        FieldPanel('slug_en_gb'),
     ]
 
     edit_handler = make_translated_interface(
