@@ -17,6 +17,7 @@ from wagtailmarkdown.utils import _sanitise_markdown_html
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.images import get_image_dimensions
+from django.forms.models import model_to_dict
 from django.utils.safestring import mark_safe
 from django.utils.translation import trans_real
 from django.utils.text import slugify, Truncator
@@ -253,3 +254,36 @@ class LinkerExtension(markdown.Extension):
         md.inlinePatterns['link'] = LinkPattern(
             markdown.inlinepatterns.LINK_RE, md
         )
+
+
+class UpstreamModelSerilaizer:
+    IMAGE_PREFIX = '(image)'
+    CHOICE_PREFIX = '(choice)'
+
+    @classmethod
+    def serialize(cls, model_instance):
+        serialized = model_to_dict(model_instance)
+        for f in model_instance._meta.fields:
+            field = getattr(model_instance, f.name)
+            if isinstance(field, Image) and field.file.name:
+                serialized[cls.IMAGE_PREFIX + f.name] = field.file.name
+            elif isinstance(f, models.ChoiceArrayField):
+                serialized[cls.CHOICE_PREFIX + f.name] = ','.join(field)
+            elif f.name in serialized and serialized[f.name] is None:
+                del serialized[f.name]
+        return serialized
+
+    @classmethod
+    def deserialize(cls, serialized_data):
+        deserialized_data = {}
+        for name, value in serialized_data.items():
+            if value not in ['', 'None', None]:
+                value = serialized_data[name]
+                if name.startswith(cls.IMAGE_PREFIX):
+                    value = get_or_create_image(value).pk
+                    name = name.replace(cls.IMAGE_PREFIX, '')
+                elif name.startswith(cls.CHOICE_PREFIX):
+                    value = serialized_data[name].split(',')
+                    name = name.replace(cls.CHOICE_PREFIX, '')
+                deserialized_data[name] = value
+        return deserialized_data
