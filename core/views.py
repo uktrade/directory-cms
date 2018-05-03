@@ -2,13 +2,11 @@ from wagtail.api.v2.endpoints import filter_page_type, page_models_from_string
 from wagtail.api.v2.utils import BadRequestError
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.core.models import Page
-from wagtail.images.models import Image
 from wagtail.core.models import Orderable
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.forms.fields import MultipleChoiceField
-from django.forms.models import model_to_dict, ModelChoiceField
+
 from django.shortcuts import get_object_or_404, Http404
 from django.template.response import TemplateResponse
 from django.utils import translation
@@ -16,7 +14,6 @@ from django.views.generic.edit import FormView
 
 from config.signature import SignatureCheckPermission
 from core import forms, helpers, permissions
-from core.models import ChoiceArrayField
 
 
 class APIEndpointBase(PagesAdminAPIEndpoint):
@@ -116,39 +113,29 @@ class UpstreamBaseView(FormView):
         page = self.get_object()
         return page.get_edit_handler().get_form_class()
 
-    def get_form_kwargs(self):
-        instance = self.get_object()
-        initial = model_to_dict(instance)
-        for f in instance._meta.fields:
-            field = getattr(instance, f.name)
-            if isinstance(field, Image) and field.file.name:
-                initial[f.name] = field.file.name
-            elif isinstance(f, ChoiceArrayField):
-                initial[f.name] = ','.join(field)
-            elif f.name in initial and initial[f.name] is None:
-                del initial[f.name]
-
-        return {
-            **super().get_form_kwargs(),
-            'initial': initial,
-        }
-
     def get_object(self):
         if not hasattr(self, 'object'):
             self.object = Page.objects.get(id=self.kwargs['pk']).specific
         return self.object
 
-    def get_cluster_form_data(self):
+    def serialize_relations(self):
         instance = self.get_object()
         cluster_data = {}
         for field in instance._meta.related_objects:
             if issubclass(field.related_model, Orderable):
-                field_values = getattr(instance, field.name).all().values()
+                serialized = map(
+                    helpers.UpstreamModelSerilaizer.serialize,
+                    getattr(instance, field.name).all()
+                )
                 data = helpers.nested_form_data({
-                    field.name: helpers.inline_formset(field_values)
+                    field.name: helpers.inline_formset(serialized)
                 })
                 cluster_data.update(data)
         return cluster_data.items()
+
+    def serialize_object(self):
+        instance = self.get_object()
+        return helpers.UpstreamModelSerilaizer.serialize(instance).items()
 
     def get_context_data(self, **kwargs):
         page = self.get_object()
@@ -157,7 +144,8 @@ class UpstreamBaseView(FormView):
             page=page,
             app_label=page._meta.app_label,
             model_name=page._meta.model_name,
-            cluster_data=self.get_cluster_form_data(),
+            serialized_relations=self.serialize_relations(),
+            serialized_object=self.serialize_object(),
             include_slug=self.include_slug,
             **kwargs
         )
@@ -236,17 +224,8 @@ class PeloadPageView(FormView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['data'] = kwargs['data'].dict()
-        form = self.get_form_class()()
-        for name, field in form.fields.items():
-            if name in kwargs['data']:
-                if isinstance(field, MultipleChoiceField):
-                    kwargs['data'][name] = kwargs['data'][name].split(',')
-                elif isinstance(field, ModelChoiceField):
-                    value = kwargs['data'][name]
-                    if value not in ['', 'None', None]:
-                        image = helpers.get_or_create_image(value)
-                        kwargs['data'][name] = image.pk
+        data = helpers.UpstreamModelSerilaizer.deserialize(kwargs['data'])
+        kwargs['data'] = data
         return kwargs
 
     def form_valid(self, form):

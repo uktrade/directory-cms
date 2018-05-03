@@ -2,11 +2,16 @@ from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 
 
 class SearchEngineOptimisationPanel(MultiFieldPanel):
-    heading = 'Search Engine Optimisation'
-    children = [
+    default_heading = 'Search Engine Optimisation'
+    default_children = [
         FieldPanel('seo_title'),
         FieldPanel('search_description'),
     ]
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(children=self.children, heading=self.heading)
+    def __init__(
+        self, children=default_children, heading=default_heading,
+        *args, **kwargs
+    ):
+        super().__init__(
+            *args, children=children, heading=heading, **kwargs
+        )
