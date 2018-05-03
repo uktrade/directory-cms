@@ -262,7 +262,7 @@ class UpstreamModelSerilaizer:
 
     @classmethod
     def serialize(cls, model_instance):
-        serialized = model_to_dict(model_instance)
+        serialized = model_to_dict(model_instance, exclude=['pk'])
         for f in model_instance._meta.fields:
             field = getattr(model_instance, f.name)
             if isinstance(field, Image) and field.file.name:
