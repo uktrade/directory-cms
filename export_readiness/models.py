@@ -32,6 +32,7 @@ class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
+        FieldPanel('slug_en_gb'),
     ]
 
     api_fields = [
@@ -62,6 +63,7 @@ class PrivacyAndCookiesPage(ExclusivePageMixin, BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
+        FieldPanel('slug_en_gb'),
     ]
 
     promote_panels = []
