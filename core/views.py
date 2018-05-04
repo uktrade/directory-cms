@@ -14,6 +14,7 @@ from django.views.generic.edit import FormView
 
 from config.signature import SignatureCheckPermission
 from core import forms, helpers, permissions
+from core.upstream_serializers import UpstreamModelSerilaizer
 
 
 class APIEndpointBase(PagesAdminAPIEndpoint):
@@ -124,7 +125,7 @@ class UpstreamBaseView(FormView):
         for field in instance._meta.related_objects:
             if issubclass(field.related_model, Orderable):
                 serialized = map(
-                    helpers.UpstreamModelSerilaizer.serialize,
+                    UpstreamModelSerilaizer.serialize,
                     getattr(instance, field.name).all()
                 )
                 data = helpers.nested_form_data({
@@ -135,7 +136,7 @@ class UpstreamBaseView(FormView):
 
     def serialize_object(self):
         instance = self.get_object()
-        return helpers.UpstreamModelSerilaizer.serialize(instance).items()
+        return UpstreamModelSerilaizer.serialize(instance).items()
 
     def get_context_data(self, **kwargs):
         page = self.get_object()
@@ -224,7 +225,7 @@ class PeloadPageView(FormView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        data = helpers.UpstreamModelSerilaizer.deserialize(kwargs['data'])
+        data = UpstreamModelSerilaizer.deserialize(kwargs['data'])
         kwargs['data'] = data
         return kwargs
 
