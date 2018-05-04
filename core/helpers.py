@@ -10,6 +10,7 @@ from modeltranslation.utils import build_localized_fieldname
 from wagtail.admin.edit_handlers import ObjectList, TabbedInterface
 from wagtail.core import hooks
 from wagtail.core.models import Page
+from wagtail.images.models import Image
 from wagtailmarkdown.mdx import tables
 from wagtailmarkdown.utils import _sanitise_markdown_html
 
@@ -21,7 +22,7 @@ from django.utils.translation import trans_real
 from django.utils.text import slugify, Truncator
 from django.urls import resolve, Resolver404
 
-from core import models, permissions
+from core import permissions
 
 
 def translate_panel(panel, language_code):
@@ -134,16 +135,8 @@ def language_code_django_to_google(code):
 
 
 def get_or_create_image(image_path):
-    object_summary = default_storage.connection.ObjectSummary(
-        bucket_name=default_storage.bucket_name,
-        key=image_path
-    )
-    queryset = models.ImageHash.objects.filter(
-        content_hash=object_summary.e_tag[1:-1]
-    )
-    if queryset.exists():
-        image = queryset.first().image
-    else:
+    image = default_storage.get_image_by_path(image_path)
+    if not image:
         image_file = default_storage.open(image_path)
         width, height = get_image_dimensions(image_file)
         image = Image.objects.create(

@@ -122,22 +122,3 @@ def test_get_button_url_name_external_url():
     button = PageListingButton('View draft', 'http://www.example.com')
 
     assert helpers.get_button_url_name(button) is None
-
-
-@pytest.mark.django_db
-def test_upstream_model_serializer(page):
-    data = helpers.UpstreamModelSerilaizer.serialize(page)
-    assert data['(image)introduction_column_one_icon'] == (
-        page.introduction_column_one_icon.file.name
-    )
-    assert data['(choice)search_filter_sector'] == page.search_filter_sector[0]
-
-
-@pytest.mark.django_db
-def test_upstream_model_deserializer(page):
-    serialized_data = {
-        '(choice)search_filter_sector': page.search_filter_sector[0],
-    }
-    actual = helpers.UpstreamModelSerilaizer.deserialize(serialized_data)
-
-    assert actual['search_filter_sector'] == page.search_filter_sector

@@ -5,7 +5,7 @@ from wagtail.images.models import Image
 
 from django.forms.models import model_to_dict
 
-from core import helpers, models
+from core import helpers
 
 
 class AbstractFieldSerializer(abc.ABC):
@@ -26,7 +26,7 @@ class AbstractFieldSerializer(abc.ABC):
     @classmethod
     def serialize(cls, name, value):
         return cls.serialize_name(name), cls.serialize_value(value)
-    
+
     @classmethod
     def deserialize(cls, name, value):
         return cls.deserialize_name(name), cls.deserialize_value(value)
