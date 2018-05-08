@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'health_check',
     'export_elements',
     'core.apps.CoreConfig',
+    'wagtail.contrib.search_promotions',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
