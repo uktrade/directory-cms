@@ -1,7 +1,6 @@
 from unittest.mock import Mock
 
 import pytest
-from wagtail.core.models import Page
 
 from django.utils import translation
 from django.urls import reverse
@@ -20,13 +19,13 @@ def test_update_default_listing_buttons_from_base_page(page_with_reversion):
 
 
 @pytest.mark.django_db
-def test_update_default_listing_buttons_not_from_base_page(settings):
+def test_update_default_listing_buttons_not_from_base_page(
+    settings, root_page
+):
     translation.activate(settings.LANGUAGE_CODE)
 
-    page = Page.objects.get(pk=1)
-
     buttons = wagtail_hooks.update_default_listing_buttons(
-        page=page, page_perms=Mock()
+        page=root_page, page_perms=Mock()
     )
 
     assert len(buttons) == 1

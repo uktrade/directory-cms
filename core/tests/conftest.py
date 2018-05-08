@@ -1,23 +1,22 @@
 from itertools import product
-import pytest
 
+import pytest
 from modeltranslation.utils import build_localized_fieldname
-from wagtail.core.models import Page
 
 from find_a_supplier.tests.factories import IndustryPageFactory
 
 
 @pytest.fixture
-def page():
+def page(root_page):
     return IndustryPageFactory(
-        parent=Page.objects.get(pk=1),
+        parent=root_page,
     )
 
 
 @pytest.fixture
-def translated_page(settings):
+def translated_page(settings, root_page):
     page = IndustryPageFactory(
-        parent=Page.objects.get(pk=1),
+        parent=root_page,
         title_en_gb='ENGLISH',
         title_de='GERMAN',
         title_ja='JAPANESE',

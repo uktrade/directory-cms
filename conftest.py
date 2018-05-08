@@ -1,8 +1,9 @@
 from unittest.mock import patch
 
 import pytest
-from wagtail.core.models import Page
 from wagtail.images.models import Image
+from wagtail.core.models import Page
+import wagtail_factories
 
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -15,9 +16,15 @@ from find_a_supplier.tests.factories import IndustryPageFactory
 
 
 @pytest.fixture
-def untranslated_page():
+def root_page():
+    Page.objects.all().delete()
+    return wagtail_factories.PageFactory(parent=None)
+
+
+@pytest.fixture
+def untranslated_page(root_page):
     return IndustryPageFactory(
-        parent=Page.objects.get(pk=1),
+        parent=root_page,
         title_en_gb='ENGLISH',
         breadcrumbs_label_en_gb='label',
         introduction_text_en_gb='lede',

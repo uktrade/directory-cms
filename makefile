@@ -10,6 +10,7 @@ test_requirements:
 FLAKE8 := flake8 . --exclude=migrations,.venv,node_modules
 PYTEST := pytest . -v --ignore=node_modules --cov=. --cov-config=.coveragerc --capture=no $(pytest_args)
 COLLECT_STATIC := python manage.py collectstatic --noinput
+DJANGO_MIGRATE := python manage.py distributed_migrate --noinput
 SYNC_TRANSLATION_FIELDS := python manage.py sync_page_translation_fields --noinput
 
 CODECOV := \
@@ -18,7 +19,7 @@ CODECOV := \
 	fi
 
 test:
-	$(COLLECT_STATIC) && $(SYNC_TRANSLATION_FIELDS) && $(FLAKE8) && $(PYTEST) && $(CODECOV)
+	$(COLLECT_STATIC) && $(DJANGO_MIGRATE) && $(SYNC_TRANSLATION_FIELDS) && $(FLAKE8) && $(PYTEST) && $(CODECOV)
 
 DJANGO_WEBSERVER := \
 	if [ "$$FEATURE_AUTO_TRANSLATE_ENABLED" != "" ]; then \
@@ -207,10 +208,10 @@ debug_webserver:
 	$(DEBUG_SET_ENV_VARS) && $(DJANGO_WEBSERVER)
 
 debug_pytest:
-	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(COLLECT_STATIC) && $(SYNC_TRANSLATION_FIELDS) && $(PYTEST)
+	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(COLLECT_STATIC) && $(DJANGO_MIGRATE) && $(SYNC_TRANSLATION_FIELDS) && $(PYTEST)
 
 debug_test:
-	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(COLLECT_STATIC) && $(SYNC_TRANSLATION_FIELDS) && $(FLAKE8) && $(PYTEST) --cov-report=html
+	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(COLLECT_STATIC) && $(DJANGO_MIGRATE) && $(SYNC_TRANSLATION_FIELDS) && $(FLAKE8) && $(PYTEST) --cov-report=html
 
 debug_test_last_failed:
 	make debug_test pytest_args='-v --last-failed'
