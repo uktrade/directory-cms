@@ -1,5 +1,14 @@
 from storages.backends.s3boto3 import S3Boto3Storage
 
+from botocore.exceptions import EndpointConnectionError
+from wagtail.images.models import Image
+
+from django.core.files.storage import (
+    FileSystemStorage as OriginalFileSystemStorage
+)
+
+from core import models
+
 
 class ImmutableFilesS3Boto3Storage(S3Boto3Storage):
     """Prevent deletion and replacing images from the bucket, as the bucket is
@@ -31,3 +40,23 @@ class ImmutableFilesS3Boto3Storage(S3Boto3Storage):
         """
 
         pass
+
+    def get_image_by_path(self, image_path):
+        try:
+            object_summary = self.connection.ObjectSummary(
+                bucket_name=self.bucket_name,
+                key=image_path
+            )
+        except EndpointConnectionError:
+            return None
+        else:
+            queryset = models.ImageHash.objects.filter(
+                content_hash=object_summary.e_tag[1:-1]
+            )
+            if queryset.exists():
+                return queryset.first().image
+
+
+class FileSystemStorage(OriginalFileSystemStorage):
+    def get_image_by_path(self, image_path):
+        return Image.objects.filter(file=image_path).first()

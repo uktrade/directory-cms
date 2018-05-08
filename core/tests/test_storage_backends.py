@@ -1,12 +1,9 @@
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
-from core import storage_backends
+from botocore.exceptions import EndpointConnectionError
+import pytest
 
-
-def test_settings(settings):
-    assert settings.DEFAULT_FILE_STORAGE == (
-        'core.storage_backends.ImmutableFilesS3Boto3Storage'
-    )
+from core import models, storage_backends
 
 
 @patch('django.core.files.storage.Storage.delete')
@@ -30,3 +27,37 @@ def test_replace_disabled_hardcoded(settings):
     assert (
         storage_backends.ImmutableFilesS3Boto3Storage.file_overwrite is False
     )
+
+
+@pytest.mark.django_db
+def test_immutable_file_storage_get_image_by_path_exists(page):
+
+    image_hash = models.ImageHash.objects.all().first()
+
+    backend = storage_backends.ImmutableFilesS3Boto3Storage()
+    with patch.object(backend.connection, 'ObjectSummary') as mock:
+        mock.return_value = Mock(e_tag='"{}"'.format(image_hash.content_hash))
+        image_path = image_hash.image.file.url
+        image = backend.get_image_by_path(image_path)
+
+    assert image == image_hash.image
+
+
+@pytest.mark.django_db
+def test_immutable_file_storage_get_image_by_path_not_exist_in_bucket():
+    backend = storage_backends.ImmutableFilesS3Boto3Storage()
+    with patch.object(backend.connection, 'ObjectSummary') as mock:
+        mock.side_effect = EndpointConnectionError(endpoint_url='/')
+        image = backend.get_image_by_path('/thing.png')
+
+    assert image is None
+
+
+@pytest.mark.django_db
+def test_immutable_file_storage_get_image_by_path_not_exist_in_database():
+    backend = storage_backends.ImmutableFilesS3Boto3Storage()
+    with patch.object(backend.connection, 'ObjectSummary') as mock:
+        mock.return_value = Mock(e_tag='"123455"')
+        image = backend.get_image_by_path('/thing.png')
+
+    assert image is None

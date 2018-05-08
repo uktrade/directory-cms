@@ -189,9 +189,11 @@ class ImageHash(models.Model):
     )
 
     @staticmethod
-    def generate_content_hash(file):
+    def generate_content_hash(image_field_file):
         filehash = hashlib.md5()
-        filehash.update(file.read())
+        image_field_file.open()
+        filehash.update(image_field_file.read())
+        image_field_file.close()
         return filehash.hexdigest()
 
 

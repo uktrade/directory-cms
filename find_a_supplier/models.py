@@ -187,6 +187,7 @@ class IndustryPage(BasePage):
         max_length=255,
     )
     show_on_homepage = models.BooleanField(default=False)
+    show_on_industries_showcase_page = models.BooleanField(default=False)
 
     image_panels = [
         MultiFieldPanel(
@@ -268,6 +269,7 @@ class IndustryPage(BasePage):
             ]
         ),
         FieldPanel('show_on_homepage'),
+        FieldPanel('show_on_industries_showcase_page'),
     ]
 
     edit_handler = make_translated_interface(
@@ -304,6 +306,7 @@ class IndustryPage(BasePage):
         APIField('seo_title'),
         APIField('search_description'),
         APIField('breadcrumbs_label'),
+        APIField('show_on_industries_showcase_page'),
         APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
         APIMetaField('meta'),
     ]

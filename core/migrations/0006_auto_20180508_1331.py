@@ -27,10 +27,9 @@ def set_url_path(apps, schema_manager):
     )
     localized_values = {field_name: url_path for field_name in field_names}
 
-    # we avoid calling `save` on each instance on purpose to avoid
-    # wagtail-modeltranslations attempting to regenerate the url_path of
-    # descendant and ancestor pages, which would fail because some of the 
-    # descendants and ancestors have `url_path` set to None
+    # Avoid calling `save` on each instance so wagtail-modeltranslations does
+    # not regenerate the url_path of descendant and ancestor pages, which would
+    # fail because some descendants or ancestors have `url_path` set to None
     Page.objects.filter(url_path__isnull=True).update(
         url_path=url_path, **localized_values
     )

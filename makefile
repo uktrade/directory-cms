@@ -105,9 +105,12 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 	export DIRECTORY_CMS_EMAIL_HOST_PASSWORD=debug; \
 	export DIRECTORY_CMS_DEFAULT_FROM_EMAIL=debug
 
+DOCKER_SET_TEST_ENV_VARS := \
+	export DIRECTORY_CMS_DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage
 
 docker_test_env_files:
 	$(DOCKER_SET_DEBUG_ENV_VARS) && \
+	$(DOCKER_SET_TEST_ENV_VARS) && \
 	$(DOCKER_COMPOSE_CREATE_ENVS)
 
 DOCKER_REMOVE_ALL := \
@@ -131,6 +134,7 @@ docker_webserver_bash:
 
 docker_test: docker_remove_all
 	$(DOCKER_SET_DEBUG_ENV_VARS) && \
+	$(DOCKER_SET_TEST_ENV_VARS) && \
 	$(DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(DOCKER_COMPOSE_REMOVE_AND_PULL) && \
 	docker-compose -f docker-compose-test.yml build && \
@@ -196,14 +200,17 @@ DEBUG_SET_ENV_VARS := \
 	export DEFAULT_FROM_EMAIL=$$DIRECTORY_CMS_DEFAULT_FROM_EMAIL; \
 	export FEATURE_AUTO_TRANSLATE_ENABLED=true
 
+TEST_SET_ENV_VARS := \
+	export DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage
+
 debug_webserver:
 	$(DEBUG_SET_ENV_VARS) && $(DJANGO_WEBSERVER)
 
 debug_pytest:
-	$(DEBUG_SET_ENV_VARS) && $(COLLECT_STATIC) && $(SYNC_TRANSLATION_FIELDS) && $(PYTEST)
+	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(COLLECT_STATIC) && $(SYNC_TRANSLATION_FIELDS) && $(PYTEST)
 
 debug_test:
-	$(DEBUG_SET_ENV_VARS) && $(COLLECT_STATIC) && $(SYNC_TRANSLATION_FIELDS) && $(FLAKE8) && $(PYTEST) --cov-report=html
+	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(COLLECT_STATIC) && $(SYNC_TRANSLATION_FIELDS) && $(FLAKE8) && $(PYTEST) --cov-report=html
 
 debug_test_last_failed:
 	make debug_test pytest_args='-v --last-failed'
