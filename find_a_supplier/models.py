@@ -423,7 +423,8 @@ class IndustryArticlePage(BasePage):
             'long articles.'
         )
     )
-
+    back_to_home_link_text = models.CharField(max_length=100)
+    social_share_title = models.CharField(max_length=100)
     date = models.DateField()
 
     content_panels = [
@@ -449,6 +450,13 @@ class IndustryArticlePage(BasePage):
                 FieldPanel('author_name'),
                 FieldPanel('job_title'),
                 FieldPanel('date'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Footer',
+            children=[
+                FieldPanel('back_to_home_link_text'),
+                FieldPanel('social_share_title'),
             ]
         ),
         SearchEngineOptimisationPanel(),
@@ -480,7 +488,9 @@ class IndustryArticlePage(BasePage):
         APIMarkdownToHTMLField('proposition_text'),
         APIField('call_to_action_text'),
         APIField('introduction_title'),
+        APIField('back_to_home_link_text'),
         APIField('show_table_of_content'),
+        APIField('social_share_title'),
         APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
         APIMetaField('meta'),
     ]
