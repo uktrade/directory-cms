@@ -40,6 +40,8 @@ class IndustryArticlePageTranslationOptions(BaseTranslationOptions):
         'breadcrumbs_label',
         'proposition_text',
         'call_to_action_text',
+        'back_to_home_link_text',
+        'social_share_title',
     )
 
 
