@@ -150,15 +150,15 @@ def test_upstream_anon(client, translated_page, settings, image, url_name):
     (False, 'wagtailadmin/pages/create.html'),
 ))
 def test_add_page_prepopulate(
-    client, translated_page, settings, admin_client, image, cluster_data,
-    include_slug, expected_template
+    translated_page, settings, admin_client, image, cluster_data,
+    include_slug, expected_template, root_page
 ):
     url = reverse(
         'preload-add-page',
         kwargs={
             'app_name': translated_page._meta.app_label,
             'model_name': translated_page._meta.model_name,
-            'parent_pk': 1,
+            'parent_pk': root_page.pk,
         }
     )
     model_as_dict = model_to_dict(translated_page, exclude=[
@@ -209,14 +209,14 @@ def test_add_page_prepopulate(
 
 @pytest.mark.django_db
 def test_add_page_prepopulate_missing_content_type(
-    client, translated_page, settings, admin_client
+    translated_page, settings, admin_client, root_page
 ):
     url = reverse(
         'preload-add-page',
         kwargs={
             'app_name': translated_page._meta.app_label,
             'model_name': 'doesnotexist',
-            'parent_pk': 1,
+            'parent_pk': root_page.pk,
         }
     )
 
@@ -289,10 +289,8 @@ def test_translate_page(
 
 
 @pytest.mark.django_db
-def test_list_page(
-    admin_client, translated_page
-):
-    url = reverse('wagtailadmin_explore', args=(2,))
+def test_list_page(admin_client, translated_page, root_page):
+    url = reverse('wagtailadmin_explore', args=(root_page.pk,))
 
     response = admin_client.get(url)
 
@@ -348,7 +346,7 @@ def test_not_always_call_translate_page(
 
 @pytest.mark.django_db
 def test_page_listing(translated_page, admin_client):
-    url = reverse('wagtailadmin_pages:edit', args=(2,))
+    url = reverse('wagtailadmin_pages:edit', args=(translated_page.pk,))
 
     response = admin_client.get(url)
 
