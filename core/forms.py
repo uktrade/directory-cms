@@ -35,7 +35,9 @@ class WagtailAdminPageForm(WagtailAdminPageForm):
     def set_read_only(form_class):
         for field_name in form_class._meta.model.read_only_fields:
             if field_name in form_class.base_fields:
-                form_class.base_fields[field_name].disabled = True
+                field = form_class.base_fields[field_name]
+                field.disabled = True
+                field.required = False
 
     @staticmethod
     def set_required_for_language(form_class):
@@ -62,3 +64,13 @@ class WagtailAdminPageForm(WagtailAdminPageForm):
                 attrs = field.widget.attrs
                 attrs['required_for_language'] = True
                 attrs['class'] = attrs.get('class', '') + ' ' + css_classname
+
+
+class WagtailAdminPageExclusivePageForm(WagtailAdminPageForm):
+
+    def __init__(self, *args, **kwargs):
+        if 'initial' not in kwargs:
+            kwargs['initial'] = {
+                'slug_en_gb': self._meta.model.slug_identity
+            }
+        super().__init__(*args, **kwargs)

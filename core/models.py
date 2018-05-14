@@ -43,9 +43,11 @@ class BasePage(Page):
         abstract = True
 
     subpage_types = []
-    read_only_fields = []
-
     base_form_class = forms.WagtailAdminPageForm
+    content_panels = []
+    promote_panels = []
+
+    read_only_fields = []
 
     def __init__(self, *args, **kwargs):
         self.signer = signing.Signer()
@@ -199,6 +201,7 @@ class ImageHash(models.Model):
 
 class ExclusivePageMixin:
     read_only_fields = ['slug_en_gb']
+    base_form_class = forms.WagtailAdminPageExclusivePageForm
 
     @classmethod
     def can_create_at(cls, parent):

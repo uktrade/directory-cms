@@ -14,7 +14,8 @@ class APIIndustriesListField(APIField):
             ('hero_image', False, None),
             ('hero_text', False, None),
             ('breadcrumbs_label', None, None),
-            ('summary_image', None, None)
+            ('summary_image', None, None),
+            ('show_on_industries_showcase_page', None, None)
         ]
         serializer = APIQuerysetSerializer(
             name,
