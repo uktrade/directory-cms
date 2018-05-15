@@ -10,6 +10,7 @@ from wagtailmarkdown.edit_handlers import MarkdownPanel
 from core.fields import MarkdownField
 
 from django.db import models
+from django.forms import CheckboxSelectMultiple
 
 from core import constants
 from core.fields import (
@@ -691,6 +692,16 @@ class IndustryContactPage(ExclusivePageMixin, BasePage):
     submit_button_text = models.CharField(max_length=100)
     success_message_text = MarkdownField(blank=True)
     success_back_link_text = models.CharField(max_length=100)
+    industry_options = ChoiceArrayField(
+        base_field=models.CharField(
+            max_length=255,
+            choices=choices.INDUSTRIES,
+        ),
+        blank=True,
+        null=True,
+        verbose_name='Industry options',
+        help_text='Which industries should the user be able to select?',
+    )
 
     content_panels = [
         MultiFieldPanel(
@@ -715,10 +726,16 @@ class IndustryContactPage(ExclusivePageMixin, BasePage):
         FieldPanel('title_en_gb'),
         FieldPanel('slug_en_gb'),
     ]
+    industry_options_panels = [
+        FieldPanel('industry_options', widget=CheckboxSelectMultiple),
+    ]
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
         settings_panels=settings_panels,
+        other_panels=[
+            ObjectList(industry_options_panels, heading='Industry options')
+        ]
     )
 
     api_fields = [
@@ -730,5 +747,6 @@ class IndustryContactPage(ExclusivePageMixin, BasePage):
         APIMarkdownToHTMLField('success_message_text'),
         APIField('success_back_link_text'),
         APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
+        APIField('industry_options'),
         APIMetaField('meta'),
     ]
