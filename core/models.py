@@ -59,7 +59,6 @@ class BasePage(Page):
     @staticmethod
     def _slug_is_available(slug, parent, page=None):
         is_currently_unique = Page._slug_is_available(slug, parent, page)
-        is_historically_unique = True
         queryset = HistoricSlug.objects.filter(slug=slug).only('page__title')
         if page:
             queryset = queryset.exclude(page__pk=page.pk)
