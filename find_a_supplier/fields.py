@@ -5,21 +5,21 @@ from find_a_supplier import serializers
 
 
 class APIIndustriesListField(APIField):
-    def __init__(self, name, queryset):
+    def __init__(self, name, queryset, field_names=None):
+        field_names = field_names or [
+            'meta',
+            'hero_image',
+            'hero_text',
+            'breadcrumbs_label',
+            'summary_image',
+            'show_on_industries_showcase_page',
+        ]
         # see explanation of the `fields_config` syntax here:
         # https://github.com/wagtail/wagtail/blob/
         # db6d36845f3f2c5d7009a22421c2efab9968aa24/wagtail/api/v2/utils.py#L68
-        fields_config = [
-            ('meta', False, None),
-            ('hero_image', False, None),
-            ('hero_text', False, None),
-            ('breadcrumbs_label', None, None),
-            ('summary_image', None, None),
-            ('show_on_industries_showcase_page', None, None)
-        ]
         serializer = APIQuerysetSerializer(
             name,
-            fields_config=fields_config,
+            fields_config=[(name, False, None) for name in field_names],
             queryset=queryset,
         )
         super().__init__(name=name, serializer=serializer)
