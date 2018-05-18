@@ -3,6 +3,7 @@ from wagtail.images.api.fields import ImageRenditionField
 from wagtailmarkdown.fields import MarkdownField as OriginalMarkdownField
 
 from core import serializers, widgets
+from core import validators as core_validators
 
 
 class APIMarkdownToHTMLField(APIField):
@@ -38,6 +39,12 @@ class APIVideoField(APIField):
 
 
 class MarkdownField(OriginalMarkdownField):
+    def __init__(self, validators=None, *args, **kwargs):
+        validators = validators or []
+        validators.append(core_validators.slug_hyperlinks)
+        validators.append(core_validators.no_absolute_internal_hyperlinks)
+        super().__init__(validators=validators, *args, **kwargs)
+
     def formfield(self, **kwargs):
         kwargs['widget'] = widgets.MarkdownTextarea
         return super().formfield(**kwargs)

@@ -7,11 +7,9 @@ from find_a_supplier.tests import factories
 
 @pytest.mark.django_db
 def test_markdown_to_html_serializer(page, rf):
-    page.slug_en_gb = 'the-slug'
     page.hero_text_en_gb = (
-        '[hyperlink](slug:{slug})'.format(slug=page.slug)
+        '[hyperlink](slug:{slug})'.format(slug=page.slug_en_gb)
     )
-    page.save()
 
     class TestSerializer(Serializer):
         hero_text_en_gb = serializers.APIMarkdownToHTMLSerializer()

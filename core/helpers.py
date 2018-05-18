@@ -215,8 +215,8 @@ def render_markdown(text, context=None):
     html = markdown.markdown(
         text,
         extensions=[
-            'extra',
-            'codehilite',
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
             tables.TableExtension(),
             LinkerExtension()
         ],
