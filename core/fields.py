@@ -25,7 +25,7 @@ class APIMetaField(APIField):
 
 class APIBreadcrumbsField(APIField):
     def __init__(self, name, app_label):
-        serializer = serializers.APIBreadcrumsSerializer(
+        serializer = serializers.APIBreadcrumbsSerializer(
             app_label
         )
         super().__init__(name=name, serializer=serializer)

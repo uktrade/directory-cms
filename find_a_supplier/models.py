@@ -27,6 +27,8 @@ class ImageChooserPanel(ImageChooserPanel):
 
 
 class FindASupplierApp(ExclusivePageMixin, BaseApp):
+    slug_identity = 'find-a-supplier-app'
+    view_path = ''
     view_app = constants.FIND_A_SUPPLIER
 
 

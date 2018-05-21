@@ -91,7 +91,7 @@ def test_breadcrums_serializer(page, rf):
     )
 
     class TestSerializer(Serializer):
-        breadcrumbs = serializers.APIBreadcrumsSerializer(
+        breadcrumbs = serializers.APIBreadcrumbsSerializer(
             app_label='find_a_supplier'
         )
 

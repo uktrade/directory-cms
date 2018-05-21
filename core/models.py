@@ -215,7 +215,7 @@ class ExclusivePageMixin:
         return [self.view_path]
 
 
-class BaseApp(Page):
+class BaseApp(BasePage):
     view_app = None
 
     class Meta:
