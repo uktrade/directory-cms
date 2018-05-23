@@ -106,10 +106,10 @@ class GetFinancePage(ExclusivePageMixin, BasePage):
 
     breadcrumbs_label = models.CharField(max_length=50)
     banner_content = MarkdownField()
-    section1_content = MarkdownField()
-    section2_content = MarkdownField()
+    section_one_content = MarkdownField()
+    section_two_content = MarkdownField()
     video_embed = models.CharField(max_length=500)
-    section3_content = MarkdownField()
+    section_three_content = MarkdownField()
     call_to_action_text = models.CharField(max_length=255)
     call_to_action_url = models.CharField(max_length=500)
 
@@ -126,7 +126,7 @@ class GetFinancePage(ExclusivePageMixin, BasePage):
             heading='Section 1',
             children=[
                 ImageChooserPanel('ukef_logo'),
-                MarkdownPanel('section1_content'),
+                MarkdownPanel('section_one_content'),
                 FieldPanel('call_to_action_text'),
                 FieldPanel('call_to_action_url'),
             ]
@@ -134,14 +134,14 @@ class GetFinancePage(ExclusivePageMixin, BasePage):
         MultiFieldPanel(
             heading='Section 2',
             children=[
-                MarkdownPanel('section2_content'),
+                MarkdownPanel('section_two_content'),
                 FieldPanel('video_embed'),
             ]
         ),
         MultiFieldPanel(
             heading='Section 3',
             children=[
-                MarkdownPanel('section3_content'),
+                MarkdownPanel('section_three_content'),
             ]
         ),
         SearchEngineOptimisationPanel(),
@@ -156,11 +156,11 @@ class GetFinancePage(ExclusivePageMixin, BasePage):
         APIField('breadcrumbs_label'),
         APIMarkdownToHTMLField('banner_content'),
         APIImageField('banner_image'),
-        APIMarkdownToHTMLField('section1_content'),
-        APIMarkdownToHTMLField('section2_content'),
+        APIMarkdownToHTMLField('section_one_content'),
+        APIMarkdownToHTMLField('section_two_content'),
         APIImageField('ukef_logo'),
         APIField('video_embed'),
-        APIMarkdownToHTMLField('section3_content'),
+        APIMarkdownToHTMLField('section_three_content'),
         APIField('call_to_action_text'),
         APIField('call_to_action_url'),
         APIField('seo_title'),
