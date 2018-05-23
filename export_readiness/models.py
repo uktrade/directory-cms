@@ -14,8 +14,11 @@ from core.panels import SearchEngineOptimisationPanel
 
 class ExportReadinessApp(ExclusivePageMixin, BaseApp):
     slug_identity = 'export-readiness-app'
-    view_path = ''
     view_app = constants.EXPORT_READINESS
+
+    @classmethod
+    def get_required_translatable_fields(cls):
+        return []
 
 
 class TermsAndConditionsPage(ExclusivePageMixin, BasePage):

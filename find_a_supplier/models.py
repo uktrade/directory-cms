@@ -28,8 +28,11 @@ class ImageChooserPanel(ImageChooserPanel):
 
 class FindASupplierApp(ExclusivePageMixin, BaseApp):
     slug_identity = 'find-a-supplier-app'
-    view_path = ''
     view_app = constants.FIND_A_SUPPLIER
+
+    @classmethod
+    def get_required_translatable_fields(cls):
+        return []
 
 
 class ArticleSummary(models.Model):
