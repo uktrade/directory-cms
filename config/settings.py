@@ -231,6 +231,11 @@ if DEBUG:
                 'level': 'WARNING',
                 'propagate': False,
             },
+            'MARKDOWN': {
+                'handlers': ['console'],
+                'level': 'WARNING',
+                'propagate': False,
+            },
             '': {
                 'handlers': ['console'],
                 'level': 'DEBUG',
