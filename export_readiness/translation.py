@@ -14,6 +14,11 @@ class PrivacyAndCookiesPageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
+@register(models.GetFinancePage)
+class GetFinancePageTranslationOptions(BaseTranslationOptions):
+    fields = []
+
+
 @register(models.ExportReadinessApp)
 class ExportReadinessAppTranslationOptions(BaseTranslationOptions):
     fields = []

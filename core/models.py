@@ -215,7 +215,7 @@ class ExclusivePageMixin:
         return [self.view_path]
 
 
-class BaseApp(Page):
+class BaseApp(BasePage):
     view_app = None
 
     class Meta:
@@ -224,7 +224,7 @@ class BaseApp(Page):
     @classmethod
     def allowed_subpage_models(cls):
         return [
-            model for model in super().allowed_subpage_models()
+            model for model in cls.clean_parent_page_models()
             if getattr(model, 'view_app', None) == cls.view_app
         ]
 
