@@ -224,7 +224,7 @@ class BaseApp(BasePage):
     @classmethod
     def allowed_subpage_models(cls):
         return [
-            model for model in super().clean_parent_page_models()
+            model for model in cls.clean_parent_page_models()
             if getattr(model, 'view_app', None) == cls.view_app
         ]
 
