@@ -16,14 +16,3 @@ def test_slug_hyperlinks_incorret_link():
     markdown = '[the link](slug:some-slug)'
     with pytest.raises(forms.ValidationError):
         validators.slug_hyperlinks(markdown)
-
-
-def test_no_absolute_internal_hyperlinks_correct_link():
-    markdown = '[the link](http://www.google.com)'
-    assert validators.no_absolute_internal_hyperlinks(markdown) is None
-
-
-def test_no_absolute_internal_hyperlinks_incorrect_link(settings):
-    markdown = '[the link]({url})'.format(url=settings.APP_URL_FIND_A_SUPPLIER)
-    with pytest.raises(forms.ValidationError):
-        validators.no_absolute_internal_hyperlinks(markdown)
