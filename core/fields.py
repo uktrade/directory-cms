@@ -48,3 +48,4 @@ class MarkdownField(OriginalMarkdownField):
     def formfield(self, **kwargs):
         kwargs['widget'] = widgets.MarkdownTextarea
         return super().formfield(**kwargs)
+

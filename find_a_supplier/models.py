@@ -22,10 +22,6 @@ from core.panels import SearchEngineOptimisationPanel
 from find_a_supplier import fields
 
 
-class ImageChooserPanel(ImageChooserPanel):
-    classname = ""
-
-
 class FindASupplierApp(ExclusivePageMixin, BaseApp):
     view_app = constants.FIND_A_SUPPLIER
 

@@ -92,6 +92,7 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 	export DIRECTORY_CMS_CSRF_COOKIE_SECURE=false; \
 	export DIRECTORY_CMS_APP_URL_EXPORT_READINESS=http://exred.trade.great:8007; \
 	export DIRECTORY_CMS_APP_URL_FIND_A_SUPPLIER=http://supplier.trade.great:8005; \
+	export DIRECTORY_CMS_APP_URL_INVEST=http://invest.trade.great:8011; \
 	export DIRECTORY_CMS_COPY_DESTINATION_URLS=https://dev.cms.directory.uktrade.io,https://stage.cms.directory.uktrade.io; \
 	export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_ID=debug; \
 	export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_B64="ZGVidWc="; \
@@ -183,6 +184,7 @@ DEBUG_SET_ENV_VARS := \
 	export CSRF_COOKIE_SECURE=false; \
 	export APP_URL_EXPORT_READINESS=http://exred.trade.great:8007; \
 	export APP_URL_FIND_A_SUPPLIER=http://supplier.trade.great:8005; \
+	export APP_URL_INVEST=http://invest.trade.great:8011; \
 	export COPY_DESTINATION_URLS=https://directory-cms-dev.herokuapp.com,https://dev.cms.directory.uktrade.io,https://stage.cms.directory.uktrade.io,http://cms.trade.great:8010; \
 	export GOOGLE_APPLICATION_CREDENTIALS=config/google-cloud-credentials.json; \
 	export GOOGLE_TRANSLATE_PRIVATE_KEY_ID=$$DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_ID; \
