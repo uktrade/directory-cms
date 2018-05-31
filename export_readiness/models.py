@@ -8,9 +8,9 @@ from core.models import BaseApp, BasePage, ExclusivePageMixin
 from core.panels import SearchEngineOptimisationPanel
 
 
-class ExportReadinessApp(ExclusivePageMixin, BaseApp):
+class ExportReadinessApp(BaseApp):
     view_app = constants.EXPORT_READINESS
-
+    slug_identity = 'export-readiness-app'
 
 class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
 

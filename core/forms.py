@@ -77,6 +77,7 @@ class WagtailAdminPageExclusivePageForm(WagtailAdminPageForm):
 
 
 class BaseAppAdminPageForm(WagtailAdminPageExclusivePageForm):
+
     @staticmethod
     def set_required_for_language(form_class):
         pass

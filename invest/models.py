@@ -15,8 +15,9 @@ from .blocks import MarkdownAccordionItemBlock
 from .fields import APIStreamMarkdownAccordionBlockField
 
 
-class InvestApp(ExclusivePageMixin, BaseApp):
+class InvestApp(BaseApp):
     view_app = constants.INVEST
+    slug_identity = 'invest-app'
 
 
 class SectorPage(BasePage):

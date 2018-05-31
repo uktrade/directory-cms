@@ -22,8 +22,9 @@ from core.panels import SearchEngineOptimisationPanel
 from find_a_supplier import fields
 
 
-class FindASupplierApp(ExclusivePageMixin, BaseApp):
+class FindASupplierApp(BaseApp):
     view_app = constants.FIND_A_SUPPLIER
+    slug_identity = 'find-a-supplier-app'
 
 
 class ArticleSummary(models.Model):

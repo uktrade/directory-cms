@@ -215,7 +215,7 @@ class ExclusivePageMixin:
         return [self.view_path]
 
 
-class BaseApp(Page):
+class BaseApp(ExclusivePageMixin, Page):
     view_app = None
     base_form_class = forms.BaseAppAdminPageForm
 
