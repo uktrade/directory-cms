@@ -217,6 +217,7 @@ class ExclusivePageMixin:
 
 class BaseApp(Page):
     view_app = None
+    base_form_class = forms.BaseAppAdminPageForm
 
     class Meta:
         abstract = True

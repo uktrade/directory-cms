@@ -74,3 +74,9 @@ class WagtailAdminPageExclusivePageForm(WagtailAdminPageForm):
                 'slug_en_gb': self._meta.model.slug_identity
             }
         super().__init__(*args, **kwargs)
+
+
+class BaseAppAdminPageForm(WagtailAdminPageExclusivePageForm):
+    @staticmethod
+    def set_required_for_language(form_class):
+        pass
