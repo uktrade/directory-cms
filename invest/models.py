@@ -19,11 +19,11 @@ class InvestApp(ExclusivePageMixin, BaseApp):
     view_app = constants.INVEST
 
 
-class SectorPage():
+class SectorPage(BasePage):
     pass
 
 
-class SetupGuidePage():
+class SetupGuidePage(BasePage):
     pass
 
 
@@ -110,8 +110,6 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     ]
 
     def get_context(self, request):
-        # imports here, as otherwise a circular dependency can happen
-        # during the initial migration
         context = super().get_context(request)
         sector_cards = SectorPage.objects \
             .live() \
