@@ -42,6 +42,9 @@ APPEND_SLASH = True
 # Application definition
 
 INSTALLED_APPS = [
+    'wagtail_modeltranslation',
+    'wagtail_modeltranslation.makemigrations',
+    'wagtail_modeltranslation.migrate',
     'django.contrib.auth',
     'django.contrib.staticfiles',
     'django.contrib.contenttypes',
@@ -66,8 +69,6 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail.core',
     'wagtail.api.v2',
-    'wagtail_modeltranslation',
-    'wagtail_modeltranslation.makemigrations',
     'modelcluster',
     'taggit',
     'storages',
@@ -407,3 +408,6 @@ DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
 FEATURE_AUTO_TRANSLATE_ENABLED = os.getenv(
     'FEATURE_AUTO_TRANSLATE_ENABLED'
 ) == 'true'
+
+
+MODELTRANSLATION_CUSTOM_FIELDS = ('StreamField', 'RichTextField')

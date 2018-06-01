@@ -1,9 +1,13 @@
+from django.conf import settings
+from django.utils import translation
 from rest_framework import fields
+from rest_framework.serializers import ValidationError
+from wagtail.core.blocks import CharBlock, PageChooserBlock
 from wagtail.core.models import Page
 from wagtail.embeds import embeds
 from wagtail.embeds.exceptions import EmbedUnsupportedProviderException
-from django.conf import settings
-from django.utils import translation
+from wagtail.images.blocks import ImageChooserBlock
+from wagtailmarkdown.blocks import MarkdownBlock
 
 from core import helpers, models
 
@@ -82,3 +86,37 @@ class APIVideoSerializer(fields.CharField):
             return embeds.get_embed(value).html
         except EmbedUnsupportedProviderException:
             return ''
+
+
+class APIStreamFieldStructBlockSerializer(fields.ListField):
+
+    SUPPORTED_BLOCKS_CLASSES = frozenset((
+        ImageChooserBlock,
+        CharBlock,
+        MarkdownBlock,
+        PageChooserBlock
+    ))
+
+    def to_representation(self, blocks):
+        elements = []
+        for block in blocks:
+            element = {}
+            for key, value in block.value.items():
+                block_class_instance = block.block.child_blocks[key]
+                block_class = block_class_instance.__class__
+                if block_class not in self.SUPPORTED_BLOCKS_CLASSES:
+                    raise ValidationError()
+                if isinstance(block_class_instance, PageChooserBlock):
+                    page_url = value.specific.get_full_url()
+                    element[key] = page_url
+                elif isinstance(block_class_instance, ImageChooserBlock):
+                    image = value.get_rendition('original')
+                    image_url = image.url
+                    element[key] = image_url
+                elif isinstance(block_class_instance, CharBlock):
+                    element[key] = value
+                elif isinstance(block_class_instance, MarkdownBlock):
+                    element[key] = helpers.render_markdown(value)
+
+            elements.append(element)
+        return elements

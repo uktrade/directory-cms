@@ -4,7 +4,6 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
--e git+https://github.com/infoportugal/wagtail-modeltranslation.git@v0.9.0#egg=wagtail_modeltranslation
 beautifulsoup4==4.6.0     # via wagtail
 bleach==2.1.3             # via wagtail-markdown
 boto3==1.6.3
@@ -18,9 +17,9 @@ directory_constants==6.5.2
 dj-database-url==0.4.2
 django-admin-ip-restrictor==0.2.0
 django-health-check==3.0.0  # via directory-healthcheck
-django-ipware==2.0.1      # via django-admin-ip-restrictor
+django-ipware==1.1.6      # via django-admin-ip-restrictor
 django-modelcluster==4.1  # via wagtail
-django-modeltranslation==0.12.2
+django-modeltranslation==0.12.2  # via wagtail-modeltranslation
 django-pglocks==1.0.2
 django-taggit==0.22.2     # via wagtail
 django-treebeard==4.2.0   # via wagtail
@@ -50,17 +49,18 @@ protobuf==3.5.1           # via google-api-core, googleapis-common-protos
 psycopg2==2.7.3.2
 pyasn1-modules==0.2.1     # via google-auth
 pyasn1==0.4.2             # via pyasn1-modules, rsa
-python-dateutil==2.6.1    # via botocore, fake-factory
+python-dateutil==2.6.1    # via botocore
 pytz==2017.2              # via directory-constants, directory-healthcheck, django, django-modelcluster, google-api-core
 raven==5.19.0
 requests==2.18.4          # via google-api-core, wagtail
 rsa==3.4.2                # via google-auth
 s3transfer==0.1.13        # via boto3
 sigauth==2.1.2
-six==1.11.0               # via bleach, fake-factory, google-api-core, google-auth, html5lib, mohawk, protobuf, python-dateutil
+six==1.11.0               # via bleach, google-api-core, google-auth, html5lib, mohawk, protobuf, python-dateutil
 unidecode==0.4.21         # via wagtail
 urllib3==1.22             # via requests
 wagtail-markdown==0.5a3
+wagtail-modeltranslation==0.9.0
 wagtail==2.0.1
 webencodings==0.5.1       # via html5lib
 whitenoise==3.1
