@@ -32,8 +32,9 @@ djangorestframework==3.8.2  # via sigauth, wagtail
 docutils==0.14            # via botocore
 draftjs-exporter==2.0.0   # via wagtail
 export-elements==0.8.1
-factory-boy==2.8.1
-faker==0.8.11             # via factory-boy
+factory-boy==2.7.0        # via wagtail-factories
+fake-factory==0.7.4       # via factory-boy, wagtail-factories
+faker==0.8.11             # via wagtail-factories
 flake8==3.0.4
 freezegun==0.3.8
 gevent==1.2.2
@@ -65,7 +66,8 @@ pytest-cov==2.3.1
 pytest-django==3.1.2
 pytest-sugar==0.8.0
 pytest==3.0.2
-python-dateutil==2.6.1    # via botocore, faker, freezegun
+python-dateutil==2.6.1    # via botocore, fake-factory, faker, freezegun
+pytube==9.2.2
 pytz==2017.2              # via directory-constants, directory-healthcheck, django, django-modelcluster, google-api-core
 raven==5.19.0
 requests==2.18.4          # via codecov, google-api-core, requests-mock, wagtail
@@ -73,7 +75,7 @@ requests_mock==1.1.0
 rsa==3.4.2                # via google-auth
 s3transfer==0.1.13        # via boto3
 sigauth==2.1.2
-six==1.11.0               # via bleach, faker, freezegun, google-api-core, google-auth, html5lib, mohawk, protobuf, python-dateutil, requests-mock
+six==1.11.0               # via bleach, fake-factory, faker, freezegun, google-api-core, google-auth, html5lib, mohawk, protobuf, python-dateutil, requests-mock
 termcolor==1.1.0          # via pytest-sugar
 text-unidecode==1.1       # via faker
 unidecode==0.4.21         # via wagtail
@@ -81,6 +83,7 @@ urllib3==1.22             # via requests
 wagtail-factories==1.0.0
 wagtail-markdown==0.5a3
 wagtail==2.0.1
+wagtailmedia==0.2.0
 webencodings==0.5.1       # via html5lib
 whitenoise==3.1
 willow==1.1               # via wagtail

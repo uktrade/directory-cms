@@ -19,4 +19,5 @@ html2text==2018.1.9
 wagtail==2.0.1
 -e git+https://github.com/infoportugal/wagtail-modeltranslation.git@v0.9.0#egg=wagtail_modeltranslation
 wagtail-markdown==0.5a3
-wagtailmedia
+wagtailmedia==0.2.0
+pytube==9.2.2

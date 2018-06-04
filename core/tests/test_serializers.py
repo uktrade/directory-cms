@@ -1,5 +1,9 @@
 import pytest
 from rest_framework.serializers import Serializer
+from wagtailmedia.forms import get_media_form
+from wagtailmedia.models import get_media_model
+
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from core import permissions, serializers
 from find_a_supplier.tests import factories
@@ -112,5 +116,58 @@ def test_breadcrums_serializer(page, rf):
                 'slug': 'landing-page',
                 'label': 'label-three'
             }
+        }
+    }
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize('thumbnail', (
+    SimpleUploadedFile(name='thumbnail', content=b'image'), None
+))
+def test_api_view_serializer_thumbnail(rf, thumbnail):
+    Media = get_media_model()
+    MediaForm = get_media_form(Media)
+    media = Media(uploaded_by_user=None, type='video')
+
+    form = MediaForm(
+        {
+            'duration': 123,
+            'title': 'hello.mp4',
+            'tags': 'things stuff',
+            'height': 10,
+            'width': 5,
+        },
+        {
+            'file': SimpleUploadedFile(
+                name='hello.mp4', content=b'video', content_type='video/mp4',
+            ),
+            'thumbnail': thumbnail,
+        },
+        instance=media,
+        user=None
+    )
+    form.save()
+
+    class TestPage:
+        video = media
+
+    page = TestPage()
+
+    class TestSerializer(Serializer):
+        video = serializers.APIVideoSerializer()
+
+    serializer = TestSerializer(
+        instance=page,
+        context={'request': rf.get('/')}
+    )
+
+    assert serializer.data == {
+        'video': {
+            'url': page.video.file.url,
+            'thumbnail': page.video.thumbnail.url if thumbnail else None,
+            'width': 5,
+            'height': 10,
+            'duration': 123,
+            'file_extension': 'mp4'
         }
     }

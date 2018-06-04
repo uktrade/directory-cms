@@ -51,8 +51,6 @@ class ArticleSummary(models.Model):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    video = models.URLField(blank=True)
-
     video_media = models.ForeignKey(
         'wagtailmedia.Media',
         null=True,
@@ -66,7 +64,7 @@ class ArticleSummary(models.Model):
         FieldPanel('title'),
         FieldPanel('body'),
         ImageChooserPanel('image'),
-        FieldPanel('video_media', widget=AdminMediaChooser)
+        FieldPanel('video_media', widget=AdminMediaChooser),
     ]
 
     api_fields = [

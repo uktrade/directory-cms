@@ -74,7 +74,7 @@ class APIBreadcrumbsSerializer(fields.DictField):
         }
 
 
-class APIVideoSerializer(fields.CharField):
+class APIVideoSerializer(fields.DictField):
     def to_representation(self, value):
         return {
             'url': value.url,
