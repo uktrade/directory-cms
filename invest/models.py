@@ -309,6 +309,7 @@ class InfoPage(BasePage):
 # Setup guide models
 
 class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
+    view_app = constants.INVEST
     subpage_types = ['invest.SetupGuidePage']
 
     # page fields
