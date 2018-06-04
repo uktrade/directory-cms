@@ -16,9 +16,13 @@ from core.helpers import make_translated_interface
 from core.models import BaseApp, BasePage, ExclusivePageMixin
 
 
-class InvestApp(BaseApp):
+class InvestApp(ExclusivePageMixin, BaseApp):
     view_app = constants.INVEST
     slug_identity = 'invest-app'
+
+    @classmethod
+    def get_required_translatable_fields(cls):
+        return []
 
 
 # Sector models

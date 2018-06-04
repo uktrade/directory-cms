@@ -4,6 +4,11 @@ from core.translation import BaseTranslationOptions
 from find_a_supplier import models
 
 
+@register(models.FindASupplierApp)
+class FindASupplierAppTranslationOptions(BaseTranslationOptions):
+    fields = []
+
+
 @register(models.IndustryPage)
 class IndustryPageTranslationOptions(BaseTranslationOptions):
     fields = (

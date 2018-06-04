@@ -22,9 +22,17 @@ from core.panels import SearchEngineOptimisationPanel
 from find_a_supplier import fields
 
 
-class FindASupplierApp(BaseApp):
-    view_app = constants.FIND_A_SUPPLIER
+class ImageChooserPanel(ImageChooserPanel):
+    classname = ""
+
+
+class FindASupplierApp(ExclusivePageMixin, BaseApp):
     slug_identity = 'find-a-supplier-app'
+    view_app = constants.FIND_A_SUPPLIER
+
+    @classmethod
+    def get_required_translatable_fields(cls):
+        return []
 
 
 class ArticleSummary(models.Model):

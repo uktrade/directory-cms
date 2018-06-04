@@ -57,7 +57,7 @@ class APIQuerysetSerializer(fields.ListField):
         return serializer.data
 
 
-class APIBreadcrumsSerializer(fields.DictField):
+class APIBreadcrumbsSerializer(fields.DictField):
     def __init__(self, app_label, *args, **kwargs):
         self.app_label = app_label
         super().__init__(*args, **kwargs)
