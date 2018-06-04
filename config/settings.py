@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'storages',
     'rest_framework',
     'wagtailmarkdown',
+    'wagtailmedia',
     'find_a_supplier.apps.FindASupplierConfig',
     'export_readiness.apps.ExportReadinessConfig',
 ]

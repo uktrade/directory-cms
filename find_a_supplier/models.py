@@ -7,6 +7,7 @@ from wagtail.api import APIField
 from wagtail.core.models import Orderable
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmarkdown.edit_handlers import MarkdownPanel
+from wagtailmedia.widgets import AdminMediaChooser
 from core.fields import MarkdownField
 
 from django.db import models
@@ -52,12 +53,20 @@ class ArticleSummary(models.Model):
     )
     video = models.URLField(blank=True)
 
+    video_media = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
     panels = [
         FieldPanel('industry_name'),
         FieldPanel('title'),
         FieldPanel('body'),
         ImageChooserPanel('image'),
-        FieldPanel('video')
+        FieldPanel('video_media', widget=AdminMediaChooser)
     ]
 
     api_fields = [
@@ -65,7 +74,7 @@ class ArticleSummary(models.Model):
         APIField('title'),
         APIMarkdownToHTMLField('body'),
         APIImageField('image'),
-        APIVideoField('video'),
+        APIVideoField('video_media'),
     ]
 
     class Meta:
