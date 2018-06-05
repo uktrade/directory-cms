@@ -41,6 +41,30 @@ class SectorPageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
+class SectorLandingPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.SectorLandingPage
+
+    heading_en_gb = factory.fuzzy.FuzzyText(length=100)
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+
+
+class SetupGuideLandingPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.SetupGuideLandingPage
+
+    heading_en_gb = factory.fuzzy.FuzzyText(length=100)
+    sub_heading_en_gb = factory.fuzzy.FuzzyText(length=100)
+    lead_in_en_gb = factory.fuzzy.FuzzyText(length=10)
+    slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None
+
+
 class SetupGuidePageFactory(wagtail_factories.PageFactory):
 
     class Meta:

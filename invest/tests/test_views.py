@@ -42,9 +42,59 @@ def test_invest_sector_page(admin_client, root_page):
         live=True, featured=True, parent=root_page
     )
     factories.SectorPageFactory(live=True, parent=page)
+    factories.SectorPageFactory(
+        live=True,
+        parent=factories.SectorPageFactory()
+    )
 
     url = reverse('api:pages:detail', kwargs={'pk': page.pk})
 
     response = admin_client.get(url)
     assert response.status_code == 200
     assert len(response.json()['children_sectors']) == 1
+
+
+@pytest.mark.django_db
+def test_invest_sector_landing_page(admin_client, root_page):
+    page = factories.SectorLandingPageFactory(
+        live=True, parent=root_page
+    )
+    factories.SectorPageFactory(live=True, parent=page)
+
+    url = reverse('api:pages:detail', kwargs={'pk': page.pk})
+
+    response = admin_client.get(url)
+    assert response.status_code == 200
+    assert len(response.json()['children_sectors']) == 1
+
+
+@pytest.mark.django_db
+def test_invest_setup_guide_page(admin_client, root_page):
+    page = factories.SetupGuidePageFactory(
+        live=True, parent=root_page
+    )
+    factories.SetupGuidePageFactory(live=True, parent=page)
+    factories.SetupGuidePageFactory(
+        live=True,
+        parent=factories.SetupGuidePageFactory()
+    )
+
+    url = reverse('api:pages:detail', kwargs={'pk': page.pk})
+
+    response = admin_client.get(url)
+    assert response.status_code == 200
+    assert len(response.json()['children_setup_guides']) == 1
+
+
+@pytest.mark.django_db
+def test_invest_setup_guide_landing_page(admin_client, root_page):
+    page = factories.SetupGuideLandingPageFactory(
+        live=True, parent=root_page
+    )
+    factories.SetupGuidePageFactory(live=True, parent=page)
+
+    url = reverse('api:pages:detail', kwargs={'pk': page.pk})
+
+    response = admin_client.get(url)
+    assert response.status_code == 200
+    assert len(response.json()['children_setup_guides']) == 1

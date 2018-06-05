@@ -68,6 +68,7 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
     api_fields = [
         APIField('heading'),
         APIImageField('hero_image'),
+        fields.APIChildrenSectorPageListField('children_sectors'),
         APIMetaField('meta')
     ]
 
@@ -181,6 +182,7 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
         APIField('heading'),
         APIField('sub_heading'),
         APIField('lead_in'),
+        fields.APIChildrenSetupGuidePageListField('children_setup_guides'),
         APIMetaField('meta')
     ]
 
@@ -224,6 +226,7 @@ class SetupGuidePage(BasePage):
         APIField('heading'),
         APIField('sub_heading'),
         APIStreamFieldBlockField('subsections'),
+        fields.APIChildrenSetupGuidePageListField('children_setup_guides'),
         APIMetaField('meta')
     ]
 

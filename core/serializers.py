@@ -36,24 +36,29 @@ class APIMetaSerializer(fields.DictField):
         }
 
 
-class APIModelChildrenSerializer(fields.ListField):
+class APIChildrenSerializer(fields.ListField):
     def __init__(self, *args, **kwargs):
         self.fields_config = kwargs.pop('fields_config')
         super().__init__(*args, **kwargs)
+
+    def get_model(self):
+        raise NotImplemented
+
+    def get_order_by_attribute(self):
+        return ''
 
     def get_attribute(self, instance):
         return instance
 
     def to_representation(self, instance):
-        model_class = instance.__class__
         queryset = instance.get_descendants() \
-            .type(model_class) \
+            .type(self.get_model()) \
             .live() \
-            .order_by('sectorpage__heading') \
+            .order_by(self.get_order_by_attribute()) \
             .specific()
         serializer_class = self.context['view']._get_serializer_class(
             router=self.context['router'],
-            model=model_class,
+            model=self.get_model(),
             fields_config=self.fields_config,
         )
         serializer = serializer_class(

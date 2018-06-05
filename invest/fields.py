@@ -1,6 +1,8 @@
 from wagtail.api import APIField
 
-from core.serializers import APIModelChildrenSerializer, APIQuerysetSerializer
+from core.serializers import APIQuerysetSerializer
+from invest.serializers import APIChildrenSectorSerializer, \
+    APIChildrenSetupGuideSerializer
 
 
 class APIChildrenSectorPageListField(APIField):
@@ -17,7 +19,26 @@ class APIChildrenSectorPageListField(APIField):
         # see explanation of the `fields_config` syntax here:
         # https://github.com/wagtail/wagtail/blob/
         # db6d36845f3f2c5d7009a22421c2efab9968aa24/wagtail/api/v2/utils.py#L68
-        serializer = APIModelChildrenSerializer(
+        serializer = APIChildrenSectorSerializer(
+            name,
+            fields_config=[(name, False, None) for name in field_names],
+        )
+        super().__init__(name=name, serializer=serializer)
+
+
+class APIChildrenSetupGuidePageListField(APIField):
+    def __init__(self, name):
+        field_names = [
+            'meta',
+            'description',
+            'heading',
+            'sub_heading',
+            'subsections',
+        ]
+        # see explanation of the `fields_config` syntax here:
+        # https://github.com/wagtail/wagtail/blob/
+        # db6d36845f3f2c5d7009a22421c2efab9968aa24/wagtail/api/v2/utils.py#L68
+        serializer = APIChildrenSetupGuideSerializer(
             name,
             fields_config=[(name, False, None) for name in field_names],
         )
