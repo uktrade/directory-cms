@@ -1,14 +1,14 @@
 -r requirements.in
 
-pytest==3.0.2
-pytest-cov==2.3.1
-pytest-django==3.1.2
-pytest-sugar==0.8.0
-flake8==3.0.4
-pytest-catchlog==1.2.2
-requests_mock==1.1.0
-freezegun==0.3.8
-codecov==2.0.9
-factory-boy==2.8.1
-beautifulsoup4==4.6.0
-wagtail-factories==1.0.0
+pytest
+pytest-cov
+pytest-django
+pytest-sugar
+flake8
+pytest-catchlog
+requests_mock
+freezegun
+codecov
+factory-boy
+beautifulsoup4
+wagtail-factories
