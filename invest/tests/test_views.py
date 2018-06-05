@@ -34,3 +34,14 @@ def test_invest_info_page(admin_client):
 
     response = admin_client.get(url)
     assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_invest_sector_page(admin_client):
+    page = factories.SectorPageFactory(live=True, featured=True)
+    factories.SectorPageFactory(live=True, parent=page)
+
+    url = reverse('api:pages:detail', kwargs={'pk': page.pk})
+
+    response = admin_client.get(url)
+    assert response.status_code == 200

@@ -72,49 +72,6 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
     ]
 
 
-class SetupGuidePage(BasePage):
-    view_app = constants.INVEST
-    view_path = 'invest/setup-guides/'
-
-    description = models.TextField()  # appears in card on external pages
-
-    heading = models.CharField(max_length=255)
-    sub_heading = models.CharField(max_length=255)
-
-    # accordion
-    subsections = StreamField([
-        ('subsection', StructBlock([
-            ('title', CharBlock()),
-            ('content', MarkdownBlock())
-        ])),
-    ], null=True, blank=True)
-
-    content_panels = Page.content_panels + [
-        FieldPanel('description'),
-        FieldPanel('heading'),
-        FieldPanel('sub_heading'),
-        StreamFieldPanel('subsections')
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
-    ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels,
-    )
-
-    api_fields = [
-        APIField('description'),
-        APIField('heading'),
-        APIField('sub_heading'),
-        APIStreamFieldBlockField('subsections'),
-        APIMetaField('meta')
-    ]
-
-
 class SectorPage(BasePage):
     # Related sector are implemented as subpages
     view_app = constants.INVEST
@@ -185,6 +142,87 @@ class SectorPage(BasePage):
         APIField('heading'),
         APIImageField('hero_image'),
         APIStreamFieldBlockField('pullout'),
+        APIStreamFieldBlockField('subsections'),
+        fields.APIChildrenSectorPageListField('children_sectors'),
+        APIMetaField('meta')
+    ]
+
+
+# Setup guide models
+
+class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
+    view_app = constants.INVEST
+    subpage_types = ['invest.SetupGuidePage']
+    slug_identity = 'invest-setup-guide-landing-page'
+    view_path = 'invest/setup-guide-landing/'
+
+    # page fields
+    heading = models.CharField(max_length=255)
+    sub_heading = models.CharField(max_length=255)
+    lead_in = models.TextField(blank=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('heading'),
+        FieldPanel('sub_heading'),
+        FieldPanel('lead_in'),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug_en_gb'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels,
+    )
+
+    api_fields = [
+        APIField('heading'),
+        APIField('sub_heading'),
+        APIField('lead_in'),
+        APIMetaField('meta')
+    ]
+
+
+class SetupGuidePage(BasePage):
+    view_app = constants.INVEST
+    view_path = 'invest/setup-guides/'
+
+    description = models.TextField()  # appears in card on external pages
+
+    heading = models.CharField(max_length=255)
+    sub_heading = models.CharField(max_length=255)
+
+    # accordion
+    subsections = StreamField([
+        ('subsection', StructBlock([
+            ('title', CharBlock()),
+            ('content', MarkdownBlock())
+        ])),
+    ], null=True, blank=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('description'),
+        FieldPanel('heading'),
+        FieldPanel('sub_heading'),
+        StreamFieldPanel('subsections')
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug_en_gb'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels,
+    )
+
+    api_fields = [
+        APIField('description'),
+        APIField('heading'),
+        APIField('sub_heading'),
         APIStreamFieldBlockField('subsections'),
         APIMetaField('meta')
     ]
@@ -337,42 +375,5 @@ class InfoPage(BasePage):
 
     api_fields = [
         APIField('content'),
-        APIMetaField('meta')
-    ]
-
-
-# Setup guide models
-
-class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
-    view_app = constants.INVEST
-    subpage_types = ['invest.SetupGuidePage']
-    slug_identity = 'invest-setup-guide-landing-page'
-    view_path = 'invest/setup-guide-landing/'
-
-    # page fields
-    heading = models.CharField(max_length=255)
-    sub_heading = models.CharField(max_length=255)
-    lead_in = models.TextField(blank=True)
-
-    content_panels = Page.content_panels + [
-        FieldPanel('heading'),
-        FieldPanel('sub_heading'),
-        FieldPanel('lead_in'),
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
-    ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels,
-    )
-
-    api_fields = [
-        APIField('heading'),
-        APIField('sub_heading'),
-        APIField('lead_in'),
         APIMetaField('meta')
     ]
