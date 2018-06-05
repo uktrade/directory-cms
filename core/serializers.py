@@ -36,6 +36,30 @@ class APIMetaSerializer(fields.DictField):
         }
 
 
+class APIModelChildrenSerializer(fields.ListField):
+    def __init__(self, *args, **kwargs):
+        self.fields_config = kwargs.pop('fields_config')
+        self.model_class = kwargs.pop('model_class')
+
+    def get_attribute(self, instance):
+        return instance
+
+    def to_representation(self, instance):
+        queryset = instance.get_descendants()\
+            .type(self.model_class) \
+            .live() \
+            .order_by('sectorpage__heading')
+        serializer_class = self.context['view']._get_serializer_class(
+            router=self.context['router'],
+            model=self.model_class,
+            fields_config=self.fields_config,
+        )
+        serializer = serializer_class(
+            queryset, many=True, context=self.context
+        )
+        return serializer.data
+
+
 class APIQuerysetSerializer(fields.ListField):
     def __init__(self, *args, **kwargs):
         self.fields_config = kwargs.pop('fields_config')
