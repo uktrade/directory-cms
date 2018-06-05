@@ -67,15 +67,6 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
         APIMetaField('meta')
     ]
 
-    def get_context(self, request):
-        context = super().get_context(request)
-        sector_cards = self.get_descendants().type(SectorPage) \
-            .live() \
-            .order_by('sectorpage__heading')
-        context['sector_cards'] = sector_cards
-        return context
-
-
 class SectorPage(BasePage):
     # Related sector are implemented as subpages
     view_app = constants.INVEST
@@ -147,14 +138,6 @@ class SectorPage(BasePage):
         APIStreamFieldBlockField('subsections'),
         APIMetaField('meta')
     ]
-
-    def get_context(self, request):
-        context = super().get_context(request)
-        context['sector_cards'] = self.get_children().type(SectorPage) \
-            .live() \
-            .order_by('sectorpage__heading')
-        # pages will return as Page type, use .specific to get sectorPage
-        return context
 
 
 class InvestHomePage(ExclusivePageMixin, BasePage):
@@ -261,22 +244,6 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         APIMetaField('meta')
     ]
 
-    def get_context(self, request):
-        context = super().get_context(request)
-        sector_cards = SectorPage.objects \
-            .live() \
-            .filter(featured=True) \
-            .order_by('heading')
-        setup_guide_cards = SetupGuidePage.objects \
-            .live() \
-            .order_by('heading')
-        context.update(
-            sector_cards=sector_cards,
-            setup_guide_cards=setup_guide_cards,
-            sector_title="Discover UK Industries",
-        )
-        return context
-
 
 class InfoPage(BasePage):
     """
@@ -339,13 +306,6 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
         APIField('lead_in'),
         APIMetaField('meta')
     ]
-
-    def get_context(self, request):
-        context = super().get_context(request)
-        context['setup_guide_cards'] = SetupGuidePage.objects \
-            .live() \
-            .order_by("heading")
-        return context
 
 
 class SetupGuidePage(BasePage):
