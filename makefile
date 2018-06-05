@@ -235,7 +235,7 @@ upgrade_requirements:
 	pip-compile --upgrade requirements.in
 
 compile_test_requirements:
-	pip-compile compile requirements_test.in
+	pip-compile requirements_test.in
 
 upgrade_test_requirements:
 	pip-compile --upgrade requirements_test.in
