@@ -111,7 +111,7 @@ class SectorPage(BasePage):
             ('info', MarkdownBlock()),
             ('map', ImageChooserBlock())
         ])),
-    ])
+    ], null=True, blank=True)
 
     image_panels = [
         ImageChooserPanel('hero_image'),
@@ -282,7 +282,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
             ])
              ),
         ],
-        blank=True)
+        blank=True, null=True)
 
     image_panels = [
         ImageChooserPanel('hero_image'),

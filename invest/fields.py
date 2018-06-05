@@ -5,7 +5,6 @@ from core.serializers import APIModelChildrenSerializer, APIQuerysetSerializer
 
 class APIChildrenSectorPageListField(APIField):
     def __init__(self, name):
-        from .models import SectorPage
         field_names = [
             'meta',
             'featured',
@@ -21,7 +20,6 @@ class APIChildrenSectorPageListField(APIField):
         serializer = APIModelChildrenSerializer(
             name,
             fields_config=[(name, False, None) for name in field_names],
-            model_class=SectorPage,
         )
         super().__init__(name=name, serializer=serializer)
 
