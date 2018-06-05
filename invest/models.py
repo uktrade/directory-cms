@@ -32,6 +32,8 @@ class InvestApp(ExclusivePageMixin, BaseApp):
 class SectorLandingPage(ExclusivePageMixin, BasePage):
     view_app = constants.INVEST
     subpage_types = ['invest.sectorPage']
+    slug_identity = 'invest-sector-landing-page'
+    view_path = 'invest/sectors/'
 
     # page fields
     heading = models.CharField(max_length=255)
@@ -340,6 +342,8 @@ class InfoPage(BasePage):
 class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
     view_app = constants.INVEST
     subpage_types = ['invest.SetupGuidePage']
+    slug_identity = 'invest-setup-guide-landing-page'
+    view_path = 'invest/setup-guides/'
 
     # page fields
     heading = models.CharField(max_length=255)
