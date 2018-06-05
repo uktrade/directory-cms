@@ -32,7 +32,7 @@ class APISetupGuidePageListField(APIField):
             'description',
             'heading',
             'sub_heading',
-            'sections',
+            'subsections',
         ]
         # see explanation of the `fields_config` syntax here:
         # https://github.com/wagtail/wagtail/blob/

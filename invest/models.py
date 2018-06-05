@@ -33,7 +33,7 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
     view_app = constants.INVEST
     subpage_types = ['invest.sectorPage']
     slug_identity = 'invest-sector-landing-page'
-    view_path = 'invest/sectors/'
+    view_path = 'invest/sector-landing/'
 
     # page fields
     heading = models.CharField(max_length=255)
@@ -74,6 +74,7 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
 
 class SetupGuidePage(BasePage):
     view_app = constants.INVEST
+    view_path = 'invest/setup-guides/'
 
     description = models.TextField()  # appears in card on external pages
 
@@ -109,7 +110,7 @@ class SetupGuidePage(BasePage):
         APIField('description'),
         APIField('heading'),
         APIField('sub_heading'),
-        APIStreamFieldBlockField('sections'),
+        APIStreamFieldBlockField('subsections'),
         APIMetaField('meta')
     ]
 
@@ -118,6 +119,7 @@ class SectorPage(BasePage):
     # Related sector are implemented as subpages
     view_app = constants.INVEST
     subpage_types = ['invest.sectorPage']
+    view_path = 'invest/sectors/'
 
     featured = models.BooleanField(default=False)
     description = models.TextField()  # appears in card on external pages
@@ -316,6 +318,7 @@ class InfoPage(BasePage):
     and privacy policy
     """
     view_app = constants.INVEST
+    view_path = 'invest/info/'
     content = MarkdownField()
 
     content_panels = Page.content_panels + [
@@ -344,7 +347,7 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
     view_app = constants.INVEST
     subpage_types = ['invest.SetupGuidePage']
     slug_identity = 'invest-setup-guide-landing-page'
-    view_path = 'invest/setup-guides/'
+    view_path = 'invest/setup-guide-landing/'
 
     # page fields
     heading = models.CharField(max_length=255)
