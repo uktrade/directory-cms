@@ -137,7 +137,7 @@ class SectorPage(BasePage):
             ('stat', CharBlock()),
             ('stat_text', CharBlock()
              )], max_num=1, min_num=0))
-    ], blank=True)
+    ], blank=True, null=True)
 
     # accordion
     subsections = StreamField([
