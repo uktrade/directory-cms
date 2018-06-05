@@ -15,6 +15,8 @@ from core.fields import APIImageField, APIMetaField, \
 from core.helpers import make_translated_interface
 from core.models import BaseApp, BasePage, ExclusivePageMixin
 
+from . import fields
+
 
 class InvestApp(ExclusivePageMixin, BaseApp):
     view_app = constants.INVEST
@@ -66,6 +68,49 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
         APIImageField('hero_image'),
         APIMetaField('meta')
     ]
+
+
+class SetupGuidePage(BasePage):
+    view_app = constants.INVEST
+
+    description = models.TextField()  # appears in card on external pages
+
+    heading = models.CharField(max_length=255)
+    sub_heading = models.CharField(max_length=255)
+
+    # accordion
+    subsections = StreamField([
+        ('subsection', StructBlock([
+            ('title', CharBlock()),
+            ('content', MarkdownBlock())
+        ])),
+    ], null=True, blank=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('description'),
+        FieldPanel('heading'),
+        FieldPanel('sub_heading'),
+        StreamFieldPanel('subsections')
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug_en_gb'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels,
+    )
+
+    api_fields = [
+        APIField('description'),
+        APIField('heading'),
+        APIField('sub_heading'),
+        APIStreamFieldBlockField('sections'),
+        APIMetaField('meta')
+    ]
+
 
 class SectorPage(BasePage):
     # Related sector are implemented as subpages
@@ -241,6 +286,23 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         APIField('how_we_help_title'),
         APIField('how_we_help_lead_in'),
         APIStreamFieldBlockField('how_we_help'),
+        fields.APISectorPageListField(
+            'sectors',
+            queryset=(
+                SectorPage.objects.all()
+                .filter(featured=True)
+                .live()
+                .order_by('heading')
+            )
+        ),
+        fields.APISetupGuidePageListField(
+            'guides',
+            queryset=(
+                SetupGuidePage.objects.all()
+                .live()
+                .order_by('heading')
+            )
+        ),
         APIMetaField('meta')
     ]
 
@@ -304,47 +366,5 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
         APIField('heading'),
         APIField('sub_heading'),
         APIField('lead_in'),
-        APIMetaField('meta')
-    ]
-
-
-class SetupGuidePage(BasePage):
-    view_app = constants.INVEST
-
-    description = models.TextField()  # appears in card on external pages
-
-    heading = models.CharField(max_length=255)
-    sub_heading = models.CharField(max_length=255)
-
-    # accordion
-    subsections = StreamField([
-        ('subsection', StructBlock([
-            ('title', CharBlock()),
-            ('content', MarkdownBlock())
-        ])),
-    ], null=True, blank=True)
-
-    content_panels = Page.content_panels + [
-        FieldPanel('description'),
-        FieldPanel('heading'),
-        FieldPanel('sub_heading'),
-        StreamFieldPanel('subsections')
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
-    ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels,
-    )
-
-    api_fields = [
-        APIField('description'),
-        APIField('heading'),
-        APIField('sub_heading'),
-        APIStreamFieldBlockField('sections'),
         APIMetaField('meta')
     ]
