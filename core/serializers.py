@@ -44,13 +44,14 @@ class APIModelChildrenSerializer(fields.ListField):
         return instance
 
     def to_representation(self, instance):
-        queryset = instance.get_descendants()\
-            .type(instance.__class__) \
+        model_class = instance.__class__
+        queryset = instance.get_descendants() \
+            .type(model_class) \
             .live() \
             .order_by('sectorpage__heading')
         serializer_class = self.context['view']._get_serializer_class(
             router=self.context['router'],
-            model=self.model_class,
+            model=model_class,
             fields_config=self.fields_config,
         )
         serializer = serializer_class(
