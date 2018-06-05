@@ -255,7 +255,6 @@ def test_translate_page(
         'company_list_call_to_action_text_en_gb': 'view all',
         'introduction_column_two_icon': image.pk,
         'introduction_column_one_icon': image.pk,
-        'introduction_column_two_icon': image.pk,
         'introduction_column_three_icon_en_gb': image.pk,
         'search_description_en_gb': 'description',
         'contact_breadcrumb_label_en_gb': 'contact us',
