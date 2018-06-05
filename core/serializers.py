@@ -39,6 +39,7 @@ class APIMetaSerializer(fields.DictField):
 class APIModelChildrenSerializer(fields.ListField):
     def __init__(self, *args, **kwargs):
         self.fields_config = kwargs.pop('fields_config')
+        super().__init__(*args, **kwargs)
 
     def get_attribute(self, instance):
         return instance
@@ -48,7 +49,8 @@ class APIModelChildrenSerializer(fields.ListField):
         queryset = instance.get_descendants() \
             .type(model_class) \
             .live() \
-            .order_by('sectorpage__heading')
+            .order_by('sectorpage__heading') \
+            .specific()
         serializer_class = self.context['view']._get_serializer_class(
             router=self.context['router'],
             model=model_class,

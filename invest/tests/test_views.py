@@ -37,8 +37,10 @@ def test_invest_info_page(admin_client):
 
 
 @pytest.mark.django_db
-def test_invest_sector_page(admin_client):
-    page = factories.SectorPageFactory(live=True, featured=True)
+def test_invest_sector_page(admin_client, root_page):
+    page = factories.SectorPageFactory(
+        live=True, featured=True, parent=root_page
+    )
     factories.SectorPageFactory(live=True, parent=page)
 
     url = reverse('api:pages:detail', kwargs={'pk': page.pk})
