@@ -6,11 +6,11 @@ from . import factories
 
 @pytest.mark.django_db
 def test_invest_home_page(admin_client):
-    factories.InvestHomePageFactory(live=True)
+    page = factories.InvestHomePageFactory(live=True)
 
     url = reverse(
-        'lookup-by-page-type',
-        kwargs={'page_type': 'invest.InvestHomePage'}
+        'lookup-by-slug',
+        kwargs={'slug': page.slug}
     )
 
     response = admin_client.get(url)

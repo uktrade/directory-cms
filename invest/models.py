@@ -180,8 +180,9 @@ class SectorPage(BasePage):
     api_fields = [
         APIField('description'),
         APIField('featured'),
+        APIField('heading'),
         APIImageField('hero_image'),
-        APIStreamFieldBlockField('pull_out'),
+        APIStreamFieldBlockField('pullout'),
         APIStreamFieldBlockField('subsections'),
         APIMetaField('meta')
     ]
