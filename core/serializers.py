@@ -1,7 +1,5 @@
 from rest_framework import fields
 from wagtail.core.models import Page
-from wagtail.embeds import embeds
-from wagtail.embeds.exceptions import EmbedUnsupportedProviderException
 from django.conf import settings
 from django.utils import translation
 
@@ -76,9 +74,13 @@ class APIBreadcrumbsSerializer(fields.DictField):
         }
 
 
-class APIVideoSerializer(fields.CharField):
+class APIVideoSerializer(fields.DictField):
     def to_representation(self, value):
-        try:
-            return embeds.get_embed(value).html
-        except EmbedUnsupportedProviderException:
-            return ''
+        return {
+            'url': value.url,
+            'thumbnail': value.thumbnail.url if value.thumbnail else None,
+            'width': value.width,
+            'height': value.height,
+            'duration': value.duration,
+            'file_extension': value.file_extension,
+        }

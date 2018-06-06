@@ -15,7 +15,8 @@ export-elements==0.8.1
 directory_constants==6.8.0
 django-admin-ip-restrictor==0.2.0
 html2text==2018.1.9
-
 wagtail==2.0.1
 -e git+https://github.com/infoportugal/wagtail-modeltranslation.git@v0.9.0#egg=wagtail_modeltranslation
 wagtail-markdown==0.5a3
+wagtailmedia==0.2.0
+pytube==9.2.2
