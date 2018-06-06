@@ -41,11 +41,9 @@ class APIChildrenSerializer(fields.ListField):
         self.fields_config = kwargs.pop('fields_config')
         super().__init__(*args, **kwargs)
 
-    def get_model(self):
+    @staticmethod
+    def get_model():
         raise NotImplemented
-
-    def get_order_by_attribute(self):
-        return ''
 
     def get_attribute(self, instance):
         return instance
@@ -54,7 +52,6 @@ class APIChildrenSerializer(fields.ListField):
         queryset = instance.get_descendants() \
             .type(self.get_model()) \
             .live() \
-            .order_by(self.get_order_by_attribute()) \
             .specific()
         serializer_class = self.context['view']._get_serializer_class(
             router=self.context['router'],
@@ -64,7 +61,12 @@ class APIChildrenSerializer(fields.ListField):
         serializer = serializer_class(
             queryset, many=True, context=self.context
         )
-        return serializer.data
+        data = serializer.data
+        # When ordering at the database level, the lookup seems to happens on
+        # the superclass `Page` table level, so it is not aware of the fields
+        # the subclass has. We are ordering on the application level
+        sorted_data = sorted(data, key=lambda x: x['heading'], reverse=True)
+        return sorted_data
 
 
 class APIQuerysetSerializer(fields.ListField):
