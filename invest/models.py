@@ -33,7 +33,7 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
     view_app = constants.INVEST
     subpage_types = ['invest.sectorPage']
     slug_identity = 'invest-sector-landing-page'
-    view_path = 'invest/sector-landing/'
+    view_path = 'invest/industries/'
 
     # page fields
     heading = models.CharField(max_length=255)
@@ -77,7 +77,7 @@ class SectorPage(BasePage):
     # Related sector are implemented as subpages
     view_app = constants.INVEST
     subpage_types = ['invest.sectorPage']
-    view_path = 'invest/sectors/'
+    view_path = 'invest/industries/'
 
     featured = models.BooleanField(default=False)
     description = models.TextField()  # appears in card on external pages

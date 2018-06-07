@@ -37,6 +37,8 @@ class APIMetaSerializer(fields.DictField):
 
 
 class APIChildrenSerializer(fields.ListField):
+    sorting_key = ''
+
     def __init__(self, *args, **kwargs):
         self.fields_config = kwargs.pop('fields_config')
         super().__init__(*args, **kwargs)
@@ -65,7 +67,10 @@ class APIChildrenSerializer(fields.ListField):
         # When ordering at the database level, the lookup seems to happens on
         # the superclass `Page` table level, so it is not aware of the fields
         # the subclass has. We are ordering on the application level
-        sorted_data = sorted(data, key=lambda x: x['heading'], reverse=True)
+        sorted_data = sorted(
+            data,
+            key=lambda x: x[self.sorting_key], reverse=True
+        )
         return sorted_data
 
 
@@ -123,22 +128,12 @@ class APIVideoSerializer(fields.CharField):
 
 class APIStreamFieldStructBlockSerializer(fields.ListField):
 
-    SUPPORTED_BLOCKS_CLASSES = frozenset((
-        ImageChooserBlock,
-        CharBlock,
-        MarkdownBlock,
-        PageChooserBlock
-    ))
-
     def to_representation(self, blocks):
         elements = []
         for block in blocks:
             element = {}
             for key, value in block.value.items():
                 block_class_instance = block.block.child_blocks[key]
-                block_class = block_class_instance.__class__
-                if block_class not in self.SUPPORTED_BLOCKS_CLASSES:
-                    raise ValidationError()
                 if isinstance(block_class_instance, PageChooserBlock):
                     page_url = value.specific.get_full_url()
                     element[key] = page_url
@@ -150,6 +145,10 @@ class APIStreamFieldStructBlockSerializer(fields.ListField):
                     element[key] = value
                 elif isinstance(block_class_instance, MarkdownBlock):
                     element[key] = helpers.render_markdown(value)
+                else:
+                    raise ValidationError(
+                        'Block not supported for serialization'
+                    )
 
             elements.append(element)
         return elements
