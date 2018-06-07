@@ -4,8 +4,6 @@ from rest_framework import fields
 from rest_framework.serializers import ValidationError
 from wagtail.core.blocks import CharBlock, PageChooserBlock
 from wagtail.core.models import Page
-from wagtail.embeds import embeds
-from wagtail.embeds.exceptions import EmbedUnsupportedProviderException
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
@@ -118,14 +116,6 @@ class APIBreadcrumbsSerializer(fields.DictField):
         }
 
 
-class APIVideoSerializer(fields.CharField):
-    def to_representation(self, value):
-        try:
-            return embeds.get_embed(value).html
-        except EmbedUnsupportedProviderException:
-            return ''
-
-
 class APIStreamFieldStructBlockSerializer(fields.ListField):
 
     def to_representation(self, blocks):
@@ -152,3 +142,15 @@ class APIStreamFieldStructBlockSerializer(fields.ListField):
 
             elements.append(element)
         return elements
+
+
+class APIVideoSerializer(fields.DictField):
+    def to_representation(self, value):
+        return {
+            'url': value.url,
+            'thumbnail': value.thumbnail.url if value.thumbnail else None,
+            'width': value.width,
+            'height': value.height,
+            'duration': value.duration,
+            'file_extension': value.file_extension,
+        }

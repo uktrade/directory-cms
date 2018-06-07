@@ -70,6 +70,7 @@ pytest-django==3.2.1
 pytest-sugar==0.9.1
 pytest==3.6.0
 python-dateutil==2.6.1    # via botocore, fake-factory, faker, freezegun
+pytube==9.2.2
 pytz==2017.2              # via directory-constants, directory-healthcheck, django, django-modelcluster, google-api-core
 raven==5.19.0
 requests-mock==1.5.0
@@ -85,6 +86,7 @@ urllib3==1.22             # via requests
 wagtail-factories==1.0.0
 wagtail-markdown==0.5a3
 wagtail==2.0.1
+wagtailmedia==0.2.0
 webencodings==0.5.1       # via html5lib
 whitenoise==3.1
 willow==1.1               # via wagtail

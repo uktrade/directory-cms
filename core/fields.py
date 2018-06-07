@@ -41,7 +41,8 @@ class APIVideoField(APIField):
 class MarkdownField(OriginalMarkdownField):
     def __init__(self, validators=None, *args, **kwargs):
         validators = validators or []
-        validators.append(core_validators.slug_hyperlinks)
+        if core_validators.slug_hyperlinks not in validators:
+            validators.append(core_validators.slug_hyperlinks)
         super().__init__(validators=validators, *args, **kwargs)
 
     def formfield(self, **kwargs):
