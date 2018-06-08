@@ -1,0 +1,42 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/python:3.5.5
+    steps:
+      - setup_remote_docker
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - checkout
+      - run:
+          command: make docker_test
+  deploy_to_dev:
+    docker:
+      - image: circleci/python:3.5.5
+    steps:
+      - setup_remote_docker
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - checkout
+      - run:
+          command: make heroku_deploy_dev
+
+workflows:
+  version: 2
+  test_and_deploy_to_dev:
+    jobs:
+      - test
+      - deploy_to_dev:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master

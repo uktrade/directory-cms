@@ -225,8 +225,11 @@ debug_shell:
 debug: debug_db test_requirements debug_test
 
 heroku_deploy_dev:
-	docker build -t registry.heroku.com/directory-cms-dev/web .
-	docker push registry.heroku.com/directory-cms-dev/web
+	./docker/install_heroku_cli.sh
+	docker login --username=$$HEROKU_EMAIL --password=$$HEROKU_TOKEN registry.heroku.com
+	~/bin/heroku-cli/bin/heroku container:push --recursive --app directory-api-dev
+	~/bin/heroku-cli/bin/heroku container:release web celery_worker celery_beat_scheduler --app directory-api-dev
+
 
 compile_requirements:
 	pip-compile requirements.in
