@@ -42,6 +42,9 @@ APPEND_SLASH = True
 # Application definition
 
 INSTALLED_APPS = [
+    'wagtail_modeltranslation',
+    'wagtail_modeltranslation.makemigrations',
+    'wagtail_modeltranslation.migrate',
     'django.contrib.auth',
     'django.contrib.staticfiles',
     'django.contrib.contenttypes',
@@ -66,8 +69,6 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail.core',
     'wagtail.api.v2',
-    'wagtail_modeltranslation',
-    'wagtail_modeltranslation.makemigrations',
     'modelcluster',
     'taggit',
     'storages',
@@ -76,6 +77,7 @@ INSTALLED_APPS = [
     'wagtailmedia',
     'find_a_supplier.apps.FindASupplierConfig',
     'export_readiness.apps.ExportReadinessConfig',
+    'invest.apps.InvestConfig'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -355,6 +357,7 @@ BASE_URL = os.environ['BASE_URL']
 
 APP_URL_EXPORT_READINESS = os.environ['APP_URL_EXPORT_READINESS']
 APP_URL_FIND_A_SUPPLIER = os.environ['APP_URL_FIND_A_SUPPLIER']
+APP_URL_INVEST = os.environ['APP_URL_INVEST']
 COPY_DESTINATION_URLS = os.environ['COPY_DESTINATION_URLS'].split(',')
 
 
@@ -406,3 +409,6 @@ DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
 FEATURE_AUTO_TRANSLATE_ENABLED = os.getenv(
     'FEATURE_AUTO_TRANSLATE_ENABLED'
 ) == 'true'
+
+
+MODELTRANSLATION_CUSTOM_FIELDS = ('StreamField', 'RichTextField')

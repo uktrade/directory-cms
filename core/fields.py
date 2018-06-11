@@ -48,3 +48,9 @@ class MarkdownField(OriginalMarkdownField):
     def formfield(self, **kwargs):
         kwargs['widget'] = widgets.MarkdownTextarea
         return super().formfield(**kwargs)
+
+
+class APIStreamFieldBlockField(APIField):
+    def __init__(self, name):
+        serializer = serializers.APIStreamFieldStructBlockSerializer()
+        super().__init__(name=name, serializer=serializer)
