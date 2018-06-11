@@ -11,7 +11,7 @@ from wagtailmarkdown.blocks import MarkdownBlock
 
 from core import constants
 from core.fields import APIImageField, APIMetaField, \
-    APIStreamFieldBlockField, MarkdownField
+    APIStreamFieldBlockField, MarkdownField, APIMarkdownToHTMLField
 from core.helpers import make_translated_interface
 from core.models import BaseApp, BasePage, ExclusivePageMixin
 
@@ -34,6 +34,50 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
     subpage_types = ['invest.sectorPage']
     slug_identity = 'invest-sector-landing-page'
     view_path = 'invest/industries/'
+
+    # page fields
+    heading = models.CharField(max_length=255)
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    image_panels = [
+        ImageChooserPanel('hero_image'),
+    ]
+    content_panels = Page.content_panels + [
+        FieldPanel('heading'),
+    ]
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug_en_gb'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels,
+        other_panels=[
+            ObjectList(image_panels, heading='Images'),
+        ]
+    )
+
+    api_fields = [
+        APIField('heading'),
+        APIImageField('hero_image'),
+        fields.APIChildrenSectorPageListField('children_sectors'),
+        APIMetaField('meta')
+    ]
+
+
+class RegionLandingPage(ExclusivePageMixin, BasePage):
+    view_app = constants.INVEST
+    subpage_types = ['invest.sectorPage']
+    slug_identity = 'invest-uk-region-landing-page'
+    view_path = 'invest/uk-regions/'
 
     # page fields
     heading = models.CharField(max_length=255)
@@ -377,6 +421,6 @@ class InfoPage(BasePage):
     )
 
     api_fields = [
-        APIField('content'),
+        APIMarkdownToHTMLField('content'),
         APIMetaField('meta')
     ]
