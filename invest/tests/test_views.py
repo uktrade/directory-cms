@@ -69,6 +69,20 @@ def test_invest_sector_landing_page(admin_client, root_page):
 
 
 @pytest.mark.django_db
+def test_invest_region_landing_page(admin_client, root_page):
+    page = factories.RegionLandingPageFactory(
+        live=True, parent=root_page
+    )
+    factories.SectorPageFactory(live=True, parent=page)
+
+    url = reverse('api:pages:detail', kwargs={'pk': page.pk})
+
+    response = admin_client.get(url)
+    assert response.status_code == 200
+    assert len(response.json()['children_sectors']) == 1
+
+
+@pytest.mark.django_db
 def test_invest_setup_guide_page(admin_client, root_page):
     page = factories.SetupGuidePageFactory(
         live=True, parent=root_page

@@ -45,6 +45,17 @@ class SectorPageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
+class RegionLandingPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.RegionLandingPage
+
+    heading_en_gb = factory.fuzzy.FuzzyText(length=100)
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+
+
 class SectorLandingPageFactory(wagtail_factories.PageFactory):
 
     class Meta:

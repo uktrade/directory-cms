@@ -37,6 +37,13 @@ class SectorLandingPageTranslation(BaseTranslationOptions):
     )
 
 
+@register(models.RegionLandingPage)
+class RegionLandingPageTranslation(BaseTranslationOptions):
+    fields = (
+        'heading',
+    )
+
+
 @register(models.InfoPage)
 class InfoPageTranslation(BaseTranslationOptions):
     fields = (
