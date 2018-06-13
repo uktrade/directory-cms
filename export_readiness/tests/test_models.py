@@ -10,6 +10,7 @@ def test_app_models():
         exred_models.TermsAndConditionsPage,
         exred_models.PrivacyAndCookiesPage,
         exred_models.GetFinancePage,
+        exred_models.PerformanceDashboardPage
     ]
 
 
