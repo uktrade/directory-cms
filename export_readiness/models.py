@@ -1,5 +1,6 @@
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.api import APIField
+from wagtail.core.models import Page
 from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 
@@ -169,4 +170,109 @@ class GetFinancePage(ExclusivePageMixin, BasePage):
         APIField('seo_title'),
         APIField('search_description'),
         APIMetaField('meta'),
+    ]
+
+
+class PerformanceDashboardPage(BasePage):
+
+    view_app = constants.EXPORT_READINESS
+    view_path = 'performance-dashboard/'
+    subpage_types = ['export_readiness.PerformanceDashboardPage']
+
+    heading = models.CharField(max_length=255)
+    description = MarkdownField()
+    product_link = models.URLField()
+    # row 1
+    data_title_row_one = models.CharField(max_length=100)
+    data_number_row_one = models.CharField(max_length=15)
+    data_period_row_one = models.CharField(max_length=100)
+    data_description_row_one = MarkdownField()
+    # row 2
+    data_title_row_two = models.CharField(max_length=100)
+    data_number_row_two = models.CharField(max_length=15)
+    data_period_row_two = models.CharField(max_length=100)
+    data_description_row_two = MarkdownField()
+    # row 3
+    data_title_row_three = models.CharField(max_length=100)
+    data_number_row_three = models.CharField(max_length=15)
+    data_period_row_three = models.CharField(max_length=100)
+    data_description_row_three = MarkdownField()
+    # row 4
+    data_title_row_four = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+    data_number_row_four = models.CharField(
+        max_length=15,
+        blank=True,
+        null=True
+    )
+    data_period_row_four = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+    data_description_row_four = MarkdownField(blank=True,null=True)
+
+    landing_dashboard = models.BooleanField(default=False)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('heading'),
+        FieldPanel('description'),
+        FieldPanel('product_link'),
+        # row 1
+        FieldPanel('data_title_row_one'),
+        FieldPanel('data_number_row_one'),
+        FieldPanel('data_period_row_one'),
+        FieldPanel('data_description_row_one'),
+        # row 2
+        FieldPanel('data_title_row_two'),
+        FieldPanel('data_number_row_two'),
+        FieldPanel('data_period_row_two'),
+        FieldPanel('data_description_row_two'),
+        # row 3
+        FieldPanel('data_title_row_three'),
+        FieldPanel('data_number_row_three'),
+        FieldPanel('data_period_row_three'),
+        FieldPanel('data_description_row_three'),
+        # row 4
+        FieldPanel('data_title_row_four'),
+        FieldPanel('data_number_row_four'),
+        FieldPanel('data_period_row_four'),
+        FieldPanel('data_description_row_four'),
+
+        FieldPanel('landing_dashboard')
+    ]
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug_en_gb'),
+    ]
+
+    api_fields = [
+        APIField('heading'),
+        APIMarkdownToHTMLField('description'),
+        APIField('product_link'),
+        # row 1
+        APIField('data_title_row_one'),
+        APIField('data_number_row_one'),
+        APIField('data_period_row_one'),
+        APIMarkdownToHTMLField('data_description_row_one'),
+        # row 2
+        APIField('data_title_row_two'),
+        APIField('data_number_row_two'),
+        APIField('data_period_row_two'),
+        APIMarkdownToHTMLField('data_description_row_two'),
+        # row 3
+        APIField('data_title_row_three'),
+        APIField('data_number_row_three'),
+        APIField('data_period_row_three'),
+        APIMarkdownToHTMLField('data_description_row_three'),
+        # row 4
+        APIField('data_title_row_four'),
+        APIField('data_number_row_four'),
+        APIField('data_period_row_four'),
+        APIMarkdownToHTMLField('data_description_row_four'),
+
+        APIMetaField('meta')
     ]
