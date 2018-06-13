@@ -12,7 +12,7 @@ class PerformanceDashboardPageFactory(wagtail_factories.PageFactory):
 
     heading = factory.fuzzy.FuzzyText(length=10)
     description = factory.fuzzy.FuzzyText(length=10)
-    product_link = 'www.foo.bar'
+    product_link = 'http://www.foo.bar'
     # row 1
     data_title_row_one = factory.fuzzy.FuzzyText(length=10)
     data_number_row_one = factory.fuzzy.FuzzyText(length=10)
