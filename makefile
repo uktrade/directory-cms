@@ -23,7 +23,7 @@ test:
 
 DJANGO_WEBSERVER := \
 	if [ "$$FEATURE_AUTO_TRANSLATE_ENABLED" != "" ]; then \
-		python manage.py generate_google_translate_cerdentials; \
+		python manage.py generate_google_translate_credentials; \
 	fi && \
 	python manage.py collectstatic --noinput && \
 	python manage.py runserver 0.0.0.0:$$PORT
