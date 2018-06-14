@@ -14,6 +14,7 @@ from core.fields import APIImageField, APIMetaField, \
     APIStreamFieldBlockField, MarkdownField, APIMarkdownToHTMLField
 from core.helpers import make_translated_interface
 from core.models import BaseApp, BasePage, ExclusivePageMixin
+from core.panels import SearchEngineOptimisationPanel
 
 from . import fields
 
@@ -51,6 +52,8 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
     ]
     content_panels = Page.content_panels + [
         FieldPanel('heading'),
+        SearchEngineOptimisationPanel()
+
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
@@ -66,6 +69,8 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
     )
 
     api_fields = [
+        APIField('seo_title'),
+        APIField('search_description'),
         APIField('heading'),
         APIImageField('hero_image'),
         fields.APIChildrenSectorPageListField('children_sectors'),
@@ -95,6 +100,7 @@ class RegionLandingPage(ExclusivePageMixin, BasePage):
     ]
     content_panels = Page.content_panels + [
         FieldPanel('heading'),
+        SearchEngineOptimisationPanel()
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
@@ -110,6 +116,8 @@ class RegionLandingPage(ExclusivePageMixin, BasePage):
     )
 
     api_fields = [
+        APIField('seo_title'),
+        APIField('search_description'),
         APIField('heading'),
         APIImageField('hero_image'),
         fields.APIChildrenSectorPageListField('children_sectors'),
@@ -165,7 +173,8 @@ class SectorPage(BasePage):
         FieldPanel('description'),
         FieldPanel('heading'),
         StreamFieldPanel('pullout'),
-        StreamFieldPanel('subsections')
+        StreamFieldPanel('subsections'),
+        SearchEngineOptimisationPanel()
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
@@ -182,6 +191,8 @@ class SectorPage(BasePage):
     )
 
     api_fields = [
+        APIField('seo_title'),
+        APIField('search_description'),
         APIField('description'),
         APIField('featured'),
         APIField('heading'),
@@ -210,6 +221,7 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
         FieldPanel('heading'),
         FieldPanel('sub_heading'),
         FieldPanel('lead_in'),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
@@ -223,6 +235,8 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
     )
 
     api_fields = [
+        APIField('seo_title'),
+        APIField('search_description'),
         APIField('heading'),
         APIField('sub_heading'),
         APIField('lead_in'),
@@ -252,7 +266,8 @@ class SetupGuidePage(BasePage):
         FieldPanel('description'),
         FieldPanel('heading'),
         FieldPanel('sub_heading'),
-        StreamFieldPanel('subsections')
+        StreamFieldPanel('subsections'),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
@@ -266,6 +281,8 @@ class SetupGuidePage(BasePage):
     )
 
     api_fields = [
+        APIField('seo_title'),
+        APIField('search_description'),
         APIField('description'),
         APIField('heading'),
         APIField('sub_heading'),
@@ -347,7 +364,8 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         FieldPanel('how_we_help_title'),
         FieldPanel('how_we_help_lead_in'),
 
-        StreamFieldPanel('how_we_help')
+        StreamFieldPanel('how_we_help'),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
@@ -364,6 +382,8 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     )
 
     api_fields = [
+        APIField('seo_title'),
+        APIField('search_description'),
         APIField('heading'),
         APIField('sub_heading'),
         APIImageField('hero_image'),
@@ -408,11 +428,12 @@ class InfoPage(BasePage):
 
     content_panels = Page.content_panels + [
         FieldPanel('content'),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug_en_gb')
     ]
 
     edit_handler = make_translated_interface(
@@ -421,6 +442,8 @@ class InfoPage(BasePage):
     )
 
     api_fields = [
+        APIField('seo_title'),
+        APIField('search_description'),
         APIMarkdownToHTMLField('content'),
         APIMetaField('meta')
     ]
