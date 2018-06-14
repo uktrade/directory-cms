@@ -42,6 +42,7 @@ def test_meta_serializer(page, rf):
 
     assert serializer.data == {
         'meta': {
+            'draft_token': None,
             'languages': [('en-gb', 'English')],
             'url': 'http://supplier.trade.great:8005/industries/test-slug/',
             'localised_urls': [
