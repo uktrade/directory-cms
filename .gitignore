@@ -71,6 +71,9 @@ db.sqlite3
 
 .direnv/
 
+# PyTest
+.pytest_cache/
+
 # OSX
 
 *.DS_Store

@@ -42,6 +42,7 @@ def test_meta_serializer(page, rf):
 
     assert serializer.data == {
         'meta': {
+            'draft_token': None,
             'languages': [('en-gb', 'English')],
             'url': 'http://supplier.trade.great:8005/industries/test-slug/',
             'localised_urls': [
@@ -57,15 +58,52 @@ def test_meta_serializer(page, rf):
 
 
 @pytest.mark.django_db
-def test_meta_serializer_draft(page, rf):
+def test_meta_serializer_contains_draft_token(page_with_reversion, rf):
+    page_with_reversion.slug = 'test-slug'
+    page_with_reversion.pk = 4
 
     class TestSerializer(Serializer):
         meta = serializers.APIMetaSerializer()
 
     serializer = TestSerializer(
-        instance=page,
+        instance=page_with_reversion,
         context={'request': rf.get('/')}
     )
+
+    url = 'http://supplier.trade.great:8005/industries/test-slug/'
+    assert serializer.data == {
+        'meta': {
+            'draft_token': page_with_reversion.get_draft_token(),
+            'languages': [
+                ('en-gb', 'English'), ('de', 'Deutsch'), ('ja', '日本語'),
+                ('ru', 'Russian'), ('zh-hans', '简体中文'), ('fr', 'Français'),
+                ('es', 'español'), ('pt', 'Português'),
+                ('pt-br', 'Português Brasileiro'), ('ar', 'العربيّة'),
+            ],
+            'url': url,
+            'localised_urls': [
+                ('en-gb', url),
+                ('de', '{}{}'.format(url, '?lang=de')),
+                ('ja', '{}{}'.format(url, '?lang=ja')),
+                ('ru', '{}{}'.format(url, '?lang=ru')),
+                ('zh-hans', '{}{}'.format(url, '?lang=zh-hans')),
+                ('fr', '{}{}'.format(url, '?lang=fr')),
+                ('es', '{}{}'.format(url, '?lang=es')),
+                ('pt', '{}{}'.format(url, '?lang=pt')),
+                ('pt-br', '{}{}'.format(url, '?lang=pt-br')),
+                ('ar', '{}{}'.format(url, '?lang=ar'))
+            ],
+            'slug': 'test-slug',
+            'pk': page_with_reversion.pk,
+        }
+    }
+
+
+@pytest.mark.django_db
+def test_meta_serializer_draft(page, rf):
+
+    class TestSerializer(Serializer):
+        meta = serializers.APIMetaSerializer()
 
     request = rf.get('/', {permissions.DraftTokenPermisison.TOKEN_PARAM: '1'})
     serializer = TestSerializer(instance=page, context={'request': request})

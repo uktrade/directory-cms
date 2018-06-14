@@ -34,7 +34,7 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
     view_app = constants.INVEST
     subpage_types = ['invest.sectorPage']
     slug_identity = 'invest-sector-landing-page'
-    view_path = 'invest/industries/'
+    view_path = 'industries/'
 
     # page fields
     heading = models.CharField(max_length=255)
@@ -82,7 +82,7 @@ class RegionLandingPage(ExclusivePageMixin, BasePage):
     view_app = constants.INVEST
     subpage_types = ['invest.sectorPage']
     slug_identity = 'invest-uk-region-landing-page'
-    view_path = 'invest/uk-regions/'
+    view_path = 'uk-regions/'
 
     # page fields
     heading = models.CharField(max_length=255)
@@ -129,7 +129,7 @@ class SectorPage(BasePage):
     # Related sector are implemented as subpages
     view_app = constants.INVEST
     subpage_types = ['invest.sectorPage']
-    view_path = 'invest/industries/'
+    view_path = 'industries/'
 
     featured = models.BooleanField(default=False)
     description = models.TextField()  # appears in card on external pages
@@ -210,7 +210,7 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
     view_app = constants.INVEST
     subpage_types = ['invest.SetupGuidePage']
     slug_identity = 'invest-setup-guide-landing-page'
-    view_path = 'invest/setup-guide-landing/'
+    view_path = 'setup-guide-landing/'
 
     # page fields
     heading = models.CharField(max_length=255)
@@ -247,7 +247,7 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
 
 class SetupGuidePage(BasePage):
     view_app = constants.INVEST
-    view_path = 'invest/setup-guides/'
+    view_path = 'setup-guides/'
 
     description = models.TextField()  # appears in card on external pages
 
@@ -295,7 +295,7 @@ class SetupGuidePage(BasePage):
 class InvestHomePage(ExclusivePageMixin, BasePage):
     view_app = constants.INVEST
     slug_identity = 'invest-home-page'
-    view_path = 'invest/'
+    view_path = ''
 
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
@@ -423,7 +423,7 @@ class InfoPage(BasePage):
     and privacy policy
     """
     view_app = constants.INVEST
-    view_path = 'invest/info/'
+    view_path = 'info/'
     content = MarkdownField()
 
     content_panels = Page.content_panels + [

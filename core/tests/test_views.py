@@ -46,7 +46,7 @@ def test_permissions_published(rf):
     ]
 
 
-@pytest.mark.parametrize('languaue_code,expected', (
+@pytest.mark.parametrize('language_code,expected', (
     ('en-gb', 'ENGLISH'),
     ('de', 'GERMAN'),
     ('ja', 'JAPANESE'),
@@ -58,23 +58,23 @@ def test_permissions_published(rf):
     ('ar', 'ARABIC'),
 ))
 @pytest.mark.django_db
-def test_api_translations(client, translated_page, languaue_code, expected):
+def test_api_translations(client, translated_page, language_code, expected):
     url = reverse('api:pages:detail', kwargs={'pk': translated_page.pk})
-    response = client.get(url, {'lang': languaue_code})
+    response = client.get(url, {'lang': language_code})
 
     assert response.status_code == 200
     assert response.json()['title'] == expected
 
 
-@pytest.mark.parametrize('languaue_code', (
+@pytest.mark.parametrize('language_code', (
     'en-gb' 'de' 'ja', 'zh-hans', 'fr', 'es', 'pt', 'pt-br', 'ar',
 ))
 @pytest.mark.django_db
 def test_api_translations_not_populated(
-    client, untranslated_page, languaue_code
+    client, untranslated_page, language_code
 ):
     url = reverse('api:pages:detail', kwargs={'pk': untranslated_page.pk})
-    response = client.get(url, {'lang': languaue_code})
+    response = client.get(url, {'lang': language_code})
 
     assert response.status_code == 200
     assert response.json()['title'] == 'ENGLISH'
@@ -427,24 +427,24 @@ def test_translations_exposed(page, translated_page, settings, client):
     assert response.json()['meta']['languages'] == expected
 
 
-@pytest.mark.parametrize('languaue_code', (
+@pytest.mark.parametrize('language_code', (
     'en-gb' 'de' 'ja', 'zh-hans', 'fr', 'es', 'pt', 'pt-br', 'ar',
 ))
 @pytest.mark.django_db
 def test_lookup_by_page_type_translations_not_populated(
-    client, untranslated_page, languaue_code
+    client, untranslated_page, language_code
 ):
     url = reverse(
         'lookup-by-page-type',
         kwargs={'page_type': 'find_a_supplier.IndustryPage'}
     )
-    response = client.get(url, {'lang': languaue_code})
+    response = client.get(url, {'lang': language_code})
 
     assert response.status_code == 200
     assert response.json()['title'] == 'ENGLISH'
 
 
-@pytest.mark.parametrize('languaue_code,expected', (
+@pytest.mark.parametrize('language_code,expected', (
     ('en-gb', 'ENGLISH'),
     ('de', 'GERMAN'),
     ('ja', 'JAPANESE'),
@@ -457,13 +457,13 @@ def test_lookup_by_page_type_translations_not_populated(
 ))
 @pytest.mark.django_db
 def test_lookup_by_page_type_translations(
-    client, translated_page, languaue_code, expected
+    client, translated_page, language_code, expected
 ):
     url = reverse(
         'lookup-by-page-type',
         kwargs={'page_type': 'find_a_supplier.IndustryPage'}
     )
-    response = client.get(url, {'lang': languaue_code})
+    response = client.get(url, {'lang': language_code})
 
     assert response.status_code == 200
     assert response.json()['title'] == expected
