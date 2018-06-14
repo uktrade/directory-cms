@@ -29,6 +29,7 @@ class PerformanceDashboardPageFactory(wagtail_factories.PageFactory):
     data_period_row_three = factory.fuzzy.FuzzyText(length=10)
     data_description_row_three = factory.fuzzy.FuzzyText(length=10)
 
+    guidance_notes = factory.fuzzy.FuzzyText(length=200)
     landing_dashboard = False
 
     slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
