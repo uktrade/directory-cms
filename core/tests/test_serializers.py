@@ -70,6 +70,7 @@ def test_meta_serializer_contains_draft_token(page_with_reversion, rf):
         context={'request': rf.get('/')}
     )
 
+    url = 'http://supplier.trade.great:8005/industries/test-slug/'
     assert serializer.data == {
         'meta': {
             'draft_token': page_with_reversion.get_draft_token(),
@@ -79,28 +80,18 @@ def test_meta_serializer_contains_draft_token(page_with_reversion, rf):
                 ('es', 'español'), ('pt', 'Português'),
                 ('pt-br', 'Português Brasileiro'), ('ar', 'العربيّة'),
             ],
-            'url': 'http://supplier.trade.great:8005/industries/test-slug/',
+            'url': url,
             'localised_urls': [
-                ('en-gb',
-                 'http://supplier.trade.great:8005/industries/test-slug/'),
-                ('de',
-                 'http://supplier.trade.great:8005/industries/test-slug/?lang=de'),
-                ('ja',
-                 'http://supplier.trade.great:8005/industries/test-slug/?lang=ja'),
-                ('ru',
-                 'http://supplier.trade.great:8005/industries/test-slug/?lang=ru'),
-                ('zh-hans',
-                 'http://supplier.trade.great:8005/industries/test-slug/?lang=zh-hans'),
-                ('fr',
-                 'http://supplier.trade.great:8005/industries/test-slug/?lang=fr'),
-                ('es',
-                 'http://supplier.trade.great:8005/industries/test-slug/?lang=es'),
-                ('pt',
-                 'http://supplier.trade.great:8005/industries/test-slug/?lang=pt'),
-                ('pt-br',
-                 'http://supplier.trade.great:8005/industries/test-slug/?lang=pt-br'),
-                ('ar',
-                 'http://supplier.trade.great:8005/industries/test-slug/?lang=ar')
+                ('en-gb', url),
+                ('de', '{}{}'.format(url, '?lang=de')),
+                ('ja', '{}{}'.format(url, '?lang=ja')),
+                ('ru', '{}{}'.format(url, '?lang=ru')),
+                ('zh-hans', '{}{}'.format(url, '?lang=zh-hans')),
+                ('fr', '{}{}'.format(url, '?lang=fr')),
+                ('es', '{}{}'.format(url, '?lang=es')),
+                ('pt', '{}{}'.format(url, '?lang=pt')),
+                ('pt-br', '{}{}'.format(url, '?lang=pt-br')),
+                ('ar', '{}{}'.format(url, '?lang=ar'))
             ],
             'slug': 'test-slug',
             'pk': page_with_reversion.pk,
