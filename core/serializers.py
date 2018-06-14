@@ -31,6 +31,8 @@ class APIMetaSerializer(fields.DictField):
             'slug': instance.slug,
             'localised_urls': instance.get_localized_urls(),
             'pk': instance.pk,
+            'draft_token': (instance.get_draft_token()
+                            if instance.has_unpublished_changes else None)
         }
 
 

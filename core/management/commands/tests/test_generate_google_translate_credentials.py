@@ -3,7 +3,7 @@ from unittest.mock import call, patch, mock_open
 from django.core.management import call_command
 
 
-def test_generate_google_translate_cerdentials(settings):
+def test_generate_google_translate_credentials(settings):
     settings.GOOGLE_TRANSLATE_PRIVATE_KEY_ID = '1'
     settings.GOOGLE_TRANSLATE_PRIVATE_KEY = '2'
     settings.GOOGLE_TRANSLATE_CLIENT_EMAIL = '3'
@@ -13,10 +13,10 @@ def test_generate_google_translate_cerdentials(settings):
 
     mock = mock_open()
     path = (
-        'core.management.commands.generate_google_translate_cerdentials.open'
+        'core.management.commands.generate_google_translate_credentials.open'
     )
     with patch(path, mock, create=False):
-        call_command('generate_google_translate_cerdentials')
+        call_command('generate_google_translate_credentials')
 
     assert mock.call_count == 1
     assert mock.mock_calls == [

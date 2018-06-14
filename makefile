@@ -23,7 +23,7 @@ test:
 
 DJANGO_WEBSERVER := \
 	if [ "$$FEATURE_AUTO_TRANSLATE_ENABLED" != "" ]; then \
-		python manage.py generate_google_translate_cerdentials; \
+		python manage.py generate_google_translate_credentials; \
 	fi && \
 	python manage.py collectstatic --noinput && \
 	python manage.py runserver 0.0.0.0:$$PORT
@@ -208,6 +208,9 @@ TEST_SET_ENV_VARS := \
 
 debug_webserver:
 	$(DEBUG_SET_ENV_VARS) && $(DJANGO_WEBSERVER)
+
+debug_pytest_no_migrations:
+	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && pytest -vv --nomigrations --reuse-db --ignore=node_modules --capture=no $(pytest_args)
 
 debug_pytest:
 	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(COLLECT_STATIC) && $(DJANGO_MIGRATE) && $(SYNC_TRANSLATION_FIELDS) && $(PYTEST)
