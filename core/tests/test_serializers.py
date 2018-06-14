@@ -58,6 +58,57 @@ def test_meta_serializer(page, rf):
 
 
 @pytest.mark.django_db
+def test_meta_serializer_contains_draft_token(page_with_reversion, rf):
+    page_with_reversion.slug = 'test-slug'
+    page_with_reversion.pk = 4
+
+    class TestSerializer(Serializer):
+        meta = serializers.APIMetaSerializer()
+
+    serializer = TestSerializer(
+        instance=page_with_reversion,
+        context={'request': rf.get('/')}
+    )
+
+    assert serializer.data == {
+        'meta': {
+            'draft_token': page_with_reversion.get_draft_token(),
+            'languages': [
+                ('en-gb', 'English'), ('de', 'Deutsch'), ('ja', '日本語'),
+                ('ru', 'Russian'), ('zh-hans', '简体中文'), ('fr', 'Français'),
+                ('es', 'español'), ('pt', 'Português'),
+                ('pt-br', 'Português Brasileiro'), ('ar', 'العربيّة'),
+            ],
+            'url': 'http://supplier.trade.great:8005/industries/test-slug/',
+            'localised_urls': [
+                ('en-gb',
+                 'http://supplier.trade.great:8005/industries/test-slug/'),
+                ('de',
+                 'http://supplier.trade.great:8005/industries/test-slug/?lang=de'),
+                ('ja',
+                 'http://supplier.trade.great:8005/industries/test-slug/?lang=ja'),
+                ('ru',
+                 'http://supplier.trade.great:8005/industries/test-slug/?lang=ru'),
+                ('zh-hans',
+                 'http://supplier.trade.great:8005/industries/test-slug/?lang=zh-hans'),
+                ('fr',
+                 'http://supplier.trade.great:8005/industries/test-slug/?lang=fr'),
+                ('es',
+                 'http://supplier.trade.great:8005/industries/test-slug/?lang=es'),
+                ('pt',
+                 'http://supplier.trade.great:8005/industries/test-slug/?lang=pt'),
+                ('pt-br',
+                 'http://supplier.trade.great:8005/industries/test-slug/?lang=pt-br'),
+                ('ar',
+                 'http://supplier.trade.great:8005/industries/test-slug/?lang=ar')
+            ],
+            'slug': 'test-slug',
+            'pk': page_with_reversion.pk,
+        }
+    }
+
+
+@pytest.mark.django_db
 def test_meta_serializer_draft(page, rf):
 
     class TestSerializer(Serializer):
