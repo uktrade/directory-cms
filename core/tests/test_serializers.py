@@ -63,11 +63,6 @@ def test_meta_serializer_draft(page, rf):
     class TestSerializer(Serializer):
         meta = serializers.APIMetaSerializer()
 
-    serializer = TestSerializer(
-        instance=page,
-        context={'request': rf.get('/')}
-    )
-
     request = rf.get('/', {permissions.DraftTokenPermisison.TOKEN_PARAM: '1'})
     serializer = TestSerializer(instance=page, context={'request': request})
 
