@@ -215,7 +215,7 @@ class PerformanceDashboardPage(BasePage):
     )
     data_description_row_four = MarkdownField(blank=True, null=True)
 
-    guidance_notes = MarkdownField()
+    guidance_notes = MarkdownField(blank=True, null=True)
     landing_dashboard = models.BooleanField(default=False)
 
     content_panels = Page.content_panels + [
