@@ -215,6 +215,7 @@ class PerformanceDashboardPage(BasePage):
     )
     data_description_row_four = MarkdownField(blank=True, null=True)
 
+    guidance_notes = MarkdownField(blank=True, null=True)
     landing_dashboard = models.BooleanField(default=False)
 
     content_panels = Page.content_panels + [
@@ -242,6 +243,7 @@ class PerformanceDashboardPage(BasePage):
         FieldPanel('data_period_row_four'),
         FieldPanel('data_description_row_four'),
 
+        FieldPanel('guidance_notes'),
         FieldPanel('landing_dashboard')
     ]
     settings_panels = [
@@ -274,5 +276,7 @@ class PerformanceDashboardPage(BasePage):
         APIField('data_period_row_four'),
         APIMarkdownToHTMLField('data_description_row_four'),
 
+        APIMarkdownToHTMLField('guidance_notes'),
+        APIField('landing_dashboard'),
         APIMetaField('meta')
     ]
