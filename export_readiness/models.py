@@ -176,7 +176,7 @@ class GetFinancePage(ExclusivePageMixin, BasePage):
 class PerformanceDashboardPage(BasePage):
 
     view_app = constants.EXPORT_READINESS
-    view_path = 'performance-dashboard/'
+    view_path = ''
     subpage_types = ['export_readiness.PerformanceDashboardPage']
 
     heading = models.CharField(max_length=255)
@@ -279,4 +279,37 @@ class PerformanceDashboardPage(BasePage):
         APIMarkdownToHTMLField('guidance_notes'),
         APIField('landing_dashboard'),
         APIMetaField('meta')
+    ]
+
+
+class PerformanceDashboardNotesPage(ExclusivePageMixin, BasePage):
+
+    view_app = constants.EXPORT_READINESS
+    view_path = 'performance-dashboard/'
+    slug_identity = 'performance-dashboard-notes'
+
+    body = MarkdownField(blank=False)
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='Performance dashboard notes',
+            children=[
+                MarkdownPanel('body'),
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug_en_gb'),
+    ]
+
+    promote_panels = []
+
+    api_fields = [
+        APIField('seo_title'),
+        APIField('search_description'),
+        APIMarkdownToHTMLField('body'),
+        APIMetaField('meta'),
     ]

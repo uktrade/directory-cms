@@ -27,3 +27,8 @@ class ExportReadinessAppTranslationOptions(BaseTranslationOptions):
 @register(models.PerformanceDashboardPage)
 class PerformanceDashboardPageTranslationOptions(BaseTranslationOptions):
     fields = []
+
+
+@register(models.PerformanceDashboardNotesPage)
+class PerformanceDashboardNotesPageTranslationOptions(BaseTranslationOptions):
+    fields = []
