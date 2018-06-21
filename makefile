@@ -235,6 +235,12 @@ heroku_deploy_dev:
 	~/bin/heroku-cli/bin/heroku container:push web --app directory-cms-dev
 	~/bin/heroku-cli/bin/heroku container:release web --app directory-cms-dev
 
+integration_tests:
+	cd $(mktemp -d) && \
+	git clone https://github.com/uktrade/directory-tests && \
+	cd directory-tests && \
+	make docker_integration_tests
+
 compile_requirements:
 	pip-compile requirements.in
 
