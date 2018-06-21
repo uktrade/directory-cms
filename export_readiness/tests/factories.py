@@ -35,3 +35,14 @@ class PerformanceDashboardPageFactory(wagtail_factories.PageFactory):
     slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
+
+
+class PerformanceDashboardNotesPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.PerformanceDashboardNotesPage
+
+    body = factory.fuzzy.FuzzyText(length=10)
+    slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None
