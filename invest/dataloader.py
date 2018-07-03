@@ -94,8 +94,9 @@ class HomePageLoader(PageContentLoader):
                 # now modify the streamfield with the translated content
                 # this assumes that the streamfield blocks and the json blocks
                 # are in the same order
+                json_data = self.get_filtered_content(page)
                 translated_content = json.loads(
-                    self.json_data[translated_field_name]
+                    json_data[translated_field_name]
                 )
                 translated_streamfield = getattr(page, translated_field_name)
                 for block, content in zip(translated_streamfield,
