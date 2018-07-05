@@ -69,7 +69,7 @@ class APIChildrenSerializer(fields.ListField):
         # the subclass has. We are ordering on the application level
         sorted_data = sorted(
             data,
-            key=lambda x: x[self.sorting_key], reverse=False
+            key=lambda x: x[self.sorting_key]
         )
         return sorted_data
 
