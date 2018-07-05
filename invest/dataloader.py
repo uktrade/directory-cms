@@ -8,7 +8,7 @@ from invest import models
 
 
 class PageContentLoader:
-    languages_codes = ('de', 'es', 'fr', 'pt', 'ar', 'ja', 'zh_cn')
+    languages_codes = ('de', 'es', 'fr', 'pt', 'ar', 'ja', 'zh_hans')
     filename = None
     fields = None
     stream_fields = None
@@ -17,7 +17,9 @@ class PageContentLoader:
 
     def __init__(self):
         self.json_all_data = self.load_json_file(self.filename)
-        self.translated_fields = self.generate_translated_fields_names(self.fields)
+        self.translated_fields = self.generate_translated_fields_names(
+            self.fields
+        )
 
     @staticmethod
     def load_json_file(filename):
@@ -37,7 +39,8 @@ class PageContentLoader:
 
         value = getattr(page, self.filtering_field_name)
         return list(filter(
-            lambda x: x[self.filtering_field_name] == value,
+            lambda x: x[self.filtering_field_name].encode().decode(
+                'utf-8') == value,
             self.json_all_data
         ))[0]
 
@@ -46,8 +49,8 @@ class PageContentLoader:
                 itertools.product(fields, self.languages_codes))
 
     def load_fields(self, page):
+        json_data = self.get_filtered_content(page)
         for field_name in self.translated_fields:
-            json_data = self.get_filtered_content(page)
             value = json_data[field_name]
             if value:
                 value = value.encode().decode('utf-8')
@@ -77,7 +80,7 @@ class HomePageLoader(PageContentLoader):
         'sector_button_text',
     )
     stream_fields = ('subsections', 'how_we_help')
-    page = models.InvestHomePage
+    model_class = models.InvestHomePage
 
     def load_streamfields(self, page):
 
@@ -140,11 +143,124 @@ class RegionLandingPageLoader(PageContentLoader):
     )
 
 
+class SectorPageLoader(PageContentLoader):
+    filename = 'sector.json'
+    model_class = models.SectorPage
+    fields = (
+        'description',
+        'heading',
+        'pullout',
+        'subsections'
+    )
+    filtering_field_name = 'heading'
+    stream_fields = ('pullout', 'subsections')
+
+
+    def load_streamfields(self, page):
+        for field_name in self.stream_fields:
+            streamfield_in_english = getattr(page, field_name)
+            for translated_field_name in self.generate_translated_fields_names(
+                    (field_name,)
+            ):
+
+                # set the translated content to the English content first,
+                # so we have a reference to images and pages
+                setattr(page, translated_field_name, streamfield_in_english)
+
+                # now modify the streamfield with the translated content
+                # this assumes that the streamfield blocks and the json blocks
+                # are in the same order
+                json_data = self.get_filtered_content(page)
+                translated_content = json.loads(
+                    json_data[translated_field_name]
+                )
+                translated_streamfield = getattr(page, translated_field_name)
+                for block, content in zip(translated_streamfield,
+                                          translated_content):
+                    if field_name == 'subsections':
+                        block_type = content['type']
+                        content = content['value']
+                        if block_type == 'markdown':
+                            block.value['content'] = content['content']\
+                                .encode().decode('utf-8')
+                            block.value['title'] = content['title']\
+                                .encode().decode('utf-8')
+                        else:
+                            block.value['info'] = content['info'] \
+                                .encode().decode('utf-8')
+                            block.value['title'] = content['title'] \
+                                .encode().decode('utf-8')
+                    else:
+                        content = content['value']
+                        block.value['text'] = content['text'].encode() \
+                            .decode('utf-8')
+                        block.value['stat'] = content['stat'].encode() \
+                            .decode('utf-8')
+                        block.value['stat_text'] = content['stat_text'].encode() \
+                            .decode('utf-8')
+            page.save()
+
+
+class SetupGuidePageLoader(PageContentLoader):
+    filename = 'setup_guide.json'
+    model_class = models.SetupGuidePage
+    fields = (
+        'description',
+        'heading',
+        'sub_heading',
+        'subsections',
+    )
+    filtering_field_name = 'heading'
+    stream_fields = ('subsections', )
+
+    def load_streamfields(self, page):
+        field_name = 'subsections'
+        streamfield_in_english = getattr(page, field_name)
+        for translated_field_name in self.generate_translated_fields_names(
+                (field_name,)
+        ):
+
+            # set the translated content to the English content first,
+            # so we have a reference to images and pages
+            setattr(page, translated_field_name, streamfield_in_english)
+
+            # now modify the streamfield with the translated content
+            # this assumes that the streamfield blocks and the json blocks
+            # are in the same order
+            json_data = self.get_filtered_content(page)
+            translated_content = json.loads(
+                json_data[translated_field_name]
+            )
+            translated_streamfield = getattr(page, translated_field_name)
+            for block, content in zip(translated_streamfield,
+                                      translated_content):
+                content = content['value']
+                block.value['content'] = content['content'].encode()\
+                    .decode('utf-8')
+                block.value['title'] = content['title'].encode()\
+                    .decode('utf-8')
+        page.save()
+
+
+class InfoPageLoader(PageContentLoader):
+    filename = 'info.json'
+    model_class = models.InfoPage
+    fields = (
+        'content',
+    )
+    filtering_field_name = 'content'
+
+
+
+
 def load_all():
     HomePageLoader().run()
     SetupGuideLandingPageLoader().run()
     SectorLandingPageLoader().run()
     RegionLandingPageLoader().run()
+    #SectorPageLoader().run()
+    #SetupGuidePageLoader().run()
+    #InfoPageLoader().run()
 
 
 if __name__ == '__main__':
