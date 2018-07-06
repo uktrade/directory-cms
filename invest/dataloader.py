@@ -1,8 +1,8 @@
 import itertools
 import json
 import os
-
 from django.conf import settings
+from modeltranslation.utils import build_localized_fieldname
 
 from invest import models
 
@@ -37,7 +37,7 @@ class PageContentLoader:
         if len(self.json_all_data) == 1:
             return self.json_all_data[0]
 
-        value = getattr(page, self.filtering_field_name)
+        value = getattr(page, self.filtering_field_name + '_en_gb')
         return list(filter(
             lambda x: x[self.filtering_field_name].encode().decode(
                 'utf-8') == value,
@@ -45,7 +45,7 @@ class PageContentLoader:
         ))[0]
 
     def generate_translated_fields_names(self, fields):
-        return ('_'.join(language_field) for language_field in
+        return (build_localized_fieldname(field, lang) for field, lang in
                 itertools.product(fields, self.languages_codes))
 
     def load_fields(self, page):
@@ -55,10 +55,19 @@ class PageContentLoader:
             if value:
                 value = value.encode().decode('utf-8')
             setattr(page, field_name, value)
-        page.save()
+        self.save_revision_and_publish(page)
 
     def load_streamfields(self, page):
         pass
+
+    @staticmethod
+    def save_revision_and_publish(page):
+        page.save()
+
+    @staticmethod
+    def get_streamfield_content_in_english(page, field_name):
+        field_name = field_name + '_en_gb'
+        return getattr(page, field_name)
 
     def run(self):
         pages = self.model_class.objects.all()
@@ -85,7 +94,10 @@ class HomePageLoader(PageContentLoader):
     def load_streamfields(self, page):
 
         for field_name in self.stream_fields:
-            streamfield_in_english = getattr(page, field_name)
+            streamfield_in_english = self.get_streamfield_content_in_english(
+                page=page,
+                field_name=field_name
+            )
             for translated_field_name in self.generate_translated_fields_names(
                     (field_name,)
             ):
@@ -114,7 +126,7 @@ class HomePageLoader(PageContentLoader):
                         content = content['value']
                         block.value['text'] = content['text'].encode() \
                             .decode('utf-8')
-        page.save()
+            self.save_revision_and_publish(page)
 
 
 class SetupGuideLandingPageLoader(PageContentLoader):
@@ -158,7 +170,10 @@ class SectorPageLoader(PageContentLoader):
 
     def load_streamfields(self, page):
         for field_name in self.stream_fields:
-            streamfield_in_english = getattr(page, field_name)
+            streamfield_in_english = self.get_streamfield_content_in_english(
+                page=page,
+                field_name=field_name
+            )
             for translated_field_name in self.generate_translated_fields_names(
                     (field_name,)
             ):
@@ -198,7 +213,7 @@ class SectorPageLoader(PageContentLoader):
                             .decode('utf-8')
                         block.value['stat_text'] = content['stat_text'].encode() \
                             .decode('utf-8')
-            page.save()
+            self.save_revision_and_publish(page)
 
 
 class SetupGuidePageLoader(PageContentLoader):
@@ -214,8 +229,12 @@ class SetupGuidePageLoader(PageContentLoader):
     stream_fields = ('subsections', )
 
     def load_streamfields(self, page):
+        import pudb; pu.db
         field_name = 'subsections'
-        streamfield_in_english = getattr(page, field_name)
+        streamfield_in_english = self.get_streamfield_content_in_english(
+            page=page,
+            field_name=field_name
+        )
         for translated_field_name in self.generate_translated_fields_names(
                 (field_name,)
         ):
@@ -239,7 +258,7 @@ class SetupGuidePageLoader(PageContentLoader):
                     .decode('utf-8')
                 block.value['title'] = content['title'].encode()\
                     .decode('utf-8')
-        page.save()
+        self.save_revision_and_publish(page)
 
 
 class InfoPageLoader(PageContentLoader):
@@ -258,10 +277,12 @@ def load_all():
     SetupGuideLandingPageLoader().run()
     SectorLandingPageLoader().run()
     RegionLandingPageLoader().run()
-    #SectorPageLoader().run()
-    #SetupGuidePageLoader().run()
-    #InfoPageLoader().run()
+    SectorPageLoader().run()
+    SetupGuidePageLoader().run()
+    InfoPageLoader().run()
 
 
 if __name__ == '__main__':
     load_all()
+
+
