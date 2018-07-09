@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'raven.contrib.django.raven_compat',
     'django.contrib.sessions',
-    'config',
     'directory_healthcheck',
     'health_check',
     'export_elements',
@@ -81,6 +80,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+    'directory_components.middleware.MaintenanceModeMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -93,9 +93,10 @@ MIDDLEWARE_CLASSES = [
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'core.middleware.LocaleQuerystringMiddleware',
+    'directory_components.middleware.RobotsIndexControlHeaderMiddlware',
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'conf.urls'
 
 TEMPLATES = [
     {
@@ -113,7 +114,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'conf.wsgi.application'
 
 
 # # Database
@@ -406,9 +407,17 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
 
+MODELTRANSLATION_CUSTOM_FIELDS = ('StreamField', 'RichTextField')
+
+# feature flags
 FEATURE_AUTO_TRANSLATE_ENABLED = os.getenv(
     'FEATURE_AUTO_TRANSLATE_ENABLED'
 ) == 'true'
-
-
-MODELTRANSLATION_CUSTOM_FIELDS = ('StreamField', 'RichTextField')
+# used by directory-components
+FEATURE_MAINTENANCE_MODE_ENABLED = os.getenv(
+    'FEATURE_MAINTENANCE_MODE_ENABLED'
+) == 'true'
+# used by directory-components
+FEATURE_SEARCH_ENGINE_INDEXING_DISABLED = os.getenv(
+    'FEATURE_SEARCH_ENGINE_INDEXING_DISABLED'
+) == 'true'

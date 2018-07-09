@@ -12,7 +12,7 @@ from django.template.response import TemplateResponse
 from django.utils import translation
 from django.views.generic.edit import FormView
 
-from config.signature import SignatureCheckPermission
+from conf.signature import SignatureCheckPermission
 from core import forms, helpers, permissions
 from core.upstream_serializers import UpstreamModelSerilaizer
 
