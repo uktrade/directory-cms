@@ -4,19 +4,20 @@
 #
 #    pip-compile --output-file requirements_test.txt requirements_test.in
 #
--e git+https://github.com/infoportugal/wagtail-modeltranslation.git@v0.9.0#egg=wagtail_modeltranslation
 atomicwrites==1.1.5       # via pytest
 attrs==18.1.0             # via pytest
 beautifulsoup4==4.6.0
 bleach==2.1.3             # via wagtail-markdown
 boto3==1.6.3
 botocore==1.9.23          # via boto3, s3transfer
+cached-property==1.4.3    # via docker-compose
 cachetools==2.1.0         # via google-auth
 certifi==2018.4.16        # via requests
 chardet==3.0.4            # via requests
 codecov==2.0.15
 contextlib2==0.5.5        # via raven
 coverage==4.5.1           # via codecov, pytest-cov
+directory-components==2.7.2
 directory-healthcheck==0.4.2
 directory_constants==6.8.0
 dj-database-url==0.4.2
@@ -24,16 +25,21 @@ django-admin-ip-restrictor==0.2.0
 django-health-check==3.0.0  # via directory-healthcheck
 django-ipware==2.1.0      # via django-admin-ip-restrictor
 django-modelcluster==4.1  # via wagtail
-django-modeltranslation==0.12.2
+django-modeltranslation==0.12.2  # via wagtail-modeltranslation
 django-pglocks==1.0.2
 django-taggit==0.22.2     # via wagtail
 django-treebeard==4.3     # via wagtail
 django==1.11.13
 django_storages==1.6.5
 djangorestframework==3.8.2  # via sigauth, wagtail
+docker-compose==1.21.2
+docker-pycreds==0.3.0     # via docker
+docker==3.4.1             # via docker-compose
+dockerpty==0.4.1          # via docker-compose
+docopt==0.6.2             # via docker-compose
 docutils==0.14            # via botocore
 draftjs-exporter==2.0.0   # via wagtail
-export-elements==0.8.1
+export-elements==0.12.2   # via directory-components
 factory-boy==2.7.0
 fake-factory==0.7.4       # via factory-boy, wagtail-factories
 faker==0.8.15             # via wagtail-factories
@@ -51,6 +57,7 @@ html2text==2018.1.9
 html5lib==0.999999999     # via bleach, wagtail
 idna==2.6                 # via requests
 jmespath==0.9.3           # via boto3, botocore
+jsonschema==2.6.0         # via docker-compose
 markdown==2.6.11          # via wagtail-markdown
 mccabe==0.6.1             # via flake8
 mohawk==0.3.4             # via sigauth
@@ -72,21 +79,25 @@ pytest==3.6.0
 python-dateutil==2.6.1    # via botocore, fake-factory, faker, freezegun
 pytube==9.2.2
 pytz==2017.2              # via directory-constants, directory-healthcheck, django, django-modelcluster, google-api-core
+pyyaml==3.13              # via docker-compose
 raven==5.19.0
 requests-mock==1.5.0
-requests==2.18.4          # via codecov, google-api-core, requests-mock, wagtail
+requests==2.18.4          # via codecov, docker, docker-compose, google-api-core, requests-mock, wagtail
 rsa==3.4.2                # via google-auth
 s3transfer==0.1.13        # via boto3
 sigauth==2.1.2
-six==1.11.0               # via bleach, fake-factory, faker, freezegun, google-api-core, google-auth, html5lib, mohawk, more-itertools, protobuf, pytest, python-dateutil, requests-mock
+six==1.11.0               # via bleach, docker, docker-compose, docker-pycreds, dockerpty, fake-factory, faker, freezegun, google-api-core, google-auth, html5lib, mohawk, more-itertools, protobuf, pytest, python-dateutil, requests-mock, websocket-client
 termcolor==1.1.0          # via pytest-sugar
 text-unidecode==1.2       # via faker
+texttable==0.9.1          # via docker-compose
 unidecode==0.4.21         # via wagtail
 urllib3==1.22             # via requests
 wagtail-factories==1.0.0
 wagtail-markdown==0.5a3
+wagtail-modeltranslation==0.9.0
 wagtail==2.0.1
 wagtailmedia==0.2.0
 webencodings==0.5.1       # via html5lib
+websocket-client==0.48.0  # via docker, docker-compose
 whitenoise==3.1
 willow==1.1               # via wagtail
