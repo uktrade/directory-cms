@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'raven.contrib.django.raven_compat',
     'django.contrib.sessions',
-    'config',
     'directory_healthcheck',
     'health_check',
     'export_elements',
@@ -95,7 +94,7 @@ MIDDLEWARE_CLASSES = [
     'core.middleware.LocaleQuerystringMiddleware',
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'conf.urls'
 
 TEMPLATES = [
     {
@@ -113,7 +112,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'conf.wsgi.application'
 
 
 # # Database
