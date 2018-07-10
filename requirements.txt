@@ -12,11 +12,12 @@ cachetools==2.1.0         # via google-auth
 certifi==2018.4.16        # via requests
 chardet==3.0.4            # via requests
 contextlib2==0.5.5        # via raven
-directory-components==2.7.2
+directory-components==2.8.1
 directory-healthcheck==0.4.2
 directory_constants==6.8.0
 dj-database-url==0.4.2
 django-admin-ip-restrictor==0.2.0
+django-environ==0.4.5
 django-health-check==3.0.0  # via directory-healthcheck
 django-ipware==2.1.0      # via django-admin-ip-restrictor
 django-modelcluster==4.1  # via wagtail

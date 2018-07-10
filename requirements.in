@@ -1,4 +1,5 @@
 django==1.11.13
+django-environ==0.4.5
 gunicorn==19.5.0
 gevent==1.2.2
 raven==5.19.0
@@ -19,4 +20,4 @@ wagtail-modeltranslation==0.9.0
 wagtail-markdown==0.5a3
 wagtailmedia==0.2.0
 pytube==9.2.2
-directory-components==2.7.2
+directory-components==2.8.1
