@@ -3,7 +3,7 @@ from wagtail.api import APIField
 from wagtail.core.blocks import CharBlock, StructBlock, PageChooserBlock
 from wagtail.core.fields import StreamField
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, \
-    ObjectList
+    ObjectList, MultiFieldPanel
 from wagtail.core.models import Page
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -153,7 +153,12 @@ class SectorPage(BasePage):
              )], max_num=1, min_num=0))
     ], blank=True, null=True)
 
-    # accordion
+    pullout_text = MarkdownField(blank=True, null=True)
+    pullout_stat = models.CharField(max_length=255, blank=True, null=True)
+    pullout_stat_text = models.CharField(max_length=255, blank=True, null=True)
+
+
+    # subsections
     subsections = StreamField([
         ('markdown', StructBlock([
             ('title', CharBlock()),
@@ -166,14 +171,171 @@ class SectorPage(BasePage):
         ])),
     ], null=True, blank=True)
 
+    subsection_title_one = models.CharField(max_length=200)
+    subsection_content_one = MarkdownField(blank=True)
+    subsection_info_one = MarkdownField(blank=True)
+    subsection_map_one = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_two = models.CharField(max_length=200)
+    subsection_content_two = MarkdownField(blank=True)
+    subsection_info_two = MarkdownField(blank=True)
+    subsection_map_two = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_three = models.CharField(max_length=200, blank=True)
+    subsection_content_three = MarkdownField(blank=True)
+    subsection_info_three = MarkdownField(blank=True)
+    subsection_map_three = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_four = models.CharField(max_length=200, blank=True)
+    subsection_content_four = MarkdownField(blank=True)
+    subsection_info_four = MarkdownField(blank=True)
+    subsection_map_four = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_five = models.CharField(max_length=200, blank=True)
+    subsection_content_five = MarkdownField(blank=True)
+    subsection_info_five = MarkdownField(blank=True)
+    subsection_map_five = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_six = models.CharField(max_length=200, blank=True)
+    subsection_content_six = MarkdownField(blank=True)
+    subsection_info_six = MarkdownField(blank=True)
+    subsection_map_six = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_seven = models.CharField(max_length=200, blank=True)
+    subsection_content_seven = MarkdownField(blank=True)
+    subsection_info_seven = MarkdownField(blank=True)
+    subsection_map_seven = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    # subsections end
+
     image_panels = [
         ImageChooserPanel('hero_image'),
     ]
     content_panels = Page.content_panels + [
         FieldPanel('description'),
         FieldPanel('heading'),
-        StreamFieldPanel('pullout'),
-        StreamFieldPanel('subsections'),
+        MultiFieldPanel(
+            [
+                FieldPanel('pullout_text'),
+                FieldPanel('pullout_stat'),
+                FieldPanel('pullout_stat_text')
+            ],
+            heading='Pullout',
+            classname='collapsible'
+        ),
+        # subsections panels
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_one'),
+                FieldPanel('subsection_content_one'),
+                FieldPanel('subsection_info_one'),
+                ImageChooserPanel('subsection_map_one')
+            ],
+            heading='subsections one',
+            classname='collapsible'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_two'),
+                FieldPanel('subsection_content_two'),
+                FieldPanel('subsection_info_two'),
+                ImageChooserPanel('subsection_map_two')
+            ],
+            heading='subsections two',
+            classname='collapsible'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_three'),
+                FieldPanel('subsection_content_three'),
+                FieldPanel('subsection_info_three'),
+                ImageChooserPanel('subsection_map_three')
+            ],
+            heading='subsections three',
+            classname='collapsible collapsed'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_four'),
+                FieldPanel('subsection_content_four'),
+                FieldPanel('subsection_info_four'),
+                ImageChooserPanel('subsection_map_four')
+            ],
+            heading='subsections four',
+            classname='collapsible collapsed'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_five'),
+                FieldPanel('subsection_content_five'),
+                FieldPanel('subsection_info_five'),
+                ImageChooserPanel('subsection_map_five')
+            ],
+            heading='subsections five',
+            classname='collapsible collapsed'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_six'),
+                FieldPanel('subsection_content_six'),
+                FieldPanel('subsection_info_six'),
+                ImageChooserPanel('subsection_map_six')
+            ],
+            heading='subsections six',
+            classname='collapsible collapsed'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_seven'),
+                FieldPanel('subsection_content_seven'),
+                FieldPanel('subsection_info_seven'),
+                ImageChooserPanel('subsection_map_seven')
+            ],
+            heading='Subsection seven',
+            classname='collapsible collapsed'
+        ),
+
         SearchEngineOptimisationPanel()
     ]
     settings_panels = [
@@ -197,8 +359,45 @@ class SectorPage(BasePage):
         APIField('featured'),
         APIField('heading'),
         APIImageField('hero_image'),
-        APIStreamFieldBlockField('pullout'),
-        APIStreamFieldBlockField('subsections'),
+        APIField('pullout_text'),
+        APIField('pullout_stat'),
+        APIField('pullout_stat_text'),
+        # subsections
+        APIField('subsection_title_one'),
+        APIField('subsection_content_one'),
+        APIField('subsection_info_one'),
+        APIImageField('subsection_map_one'),
+
+        APIField('subsection_title_two'),
+        APIField('subsection_content_two'),
+        APIField('subsection_info_two'),
+        APIImageField('subsection_map_two'),
+
+        APIField('subsection_title_three'),
+        APIField('subsection_content_three'),
+        APIField('subsection_info_three'),
+        APIImageField('subsection_map_three'),
+
+        APIField('subsection_title_four'),
+        APIField('subsection_content_four'),
+        APIField('subsection_info_four'),
+        APIImageField('subsection_map_four'),
+
+        APIField('subsection_title_five'),
+        APIField('subsection_content_five'),
+        APIField('subsection_info_five'),
+        APIImageField('subsection_map_five'),
+
+        APIField('subsection_title_six'),
+        APIField('subsection_content_six'),
+        APIField('subsection_info_six'),
+        APIImageField('subsection_map_six'),
+
+        APIField('subsection_title_seven'),
+        APIField('subsection_content_seven'),
+        APIField('subsection_info_seven'),
+        APIImageField('subsection_map_seven'),
+
         fields.APIChildrenSectorPageListField('children_sectors'),
         APIMetaField('meta')
     ]
@@ -254,7 +453,7 @@ class SetupGuidePage(BasePage):
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
 
-    # accordion
+    # subsections
     subsections = StreamField([
         ('subsection', StructBlock([
             ('title', CharBlock()),
@@ -262,11 +461,98 @@ class SetupGuidePage(BasePage):
         ])),
     ], null=True, blank=True)
 
+    subsection_title_one = models.CharField(max_length=255)
+    subsection_content_one = MarkdownField()
+
+    subsection_title_two = models.CharField(max_length=255)
+    subsection_content_two = MarkdownField()
+
+    subsection_title_three = models.CharField(max_length=255, blank=True)
+    subsection_content_three = MarkdownField(blank=True)
+
+    subsection_title_four = models.CharField(max_length=255, blank=True)
+    subsection_content_four = MarkdownField(blank=True)
+
+    subsection_title_five = models.CharField(max_length=255, blank=True)
+    subsection_content_five = MarkdownField(blank=True)
+
+    subsection_title_six = models.CharField(max_length=255, blank=True)
+    subsection_content_six = MarkdownField(blank=True)
+
+    subsection_title_seven = models.CharField(max_length=255, blank=True)
+    subsection_content_seven = MarkdownField(blank=True)
+
     content_panels = Page.content_panels + [
         FieldPanel('description'),
         FieldPanel('heading'),
         FieldPanel('sub_heading'),
-        StreamFieldPanel('subsections'),
+        # subsections
+
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_one'),
+                FieldPanel('subsection_content_one'),
+            ],
+            heading='subsections one',
+            classname='collapsible'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_two'),
+                FieldPanel('subsection_content_two'),
+            ],
+            heading='subsections two',
+            classname='collapsible'
+        ),
+
+
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_three'),
+                FieldPanel('subsection_content_three'),
+            ],
+            heading='subsections three',
+            classname='collapsible collapsed'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_four'),
+                FieldPanel('subsection_content_four'),
+            ],
+            heading='subsections four',
+            classname='collapsible collapsed'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_five'),
+                FieldPanel('subsection_content_five'),
+            ],
+            heading='subsections five',
+            classname='collapsible collapsed'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_six'),
+                FieldPanel('subsection_content_six'),
+            ],
+            heading='subsections six',
+            classname='collapsible collapsed'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_seven'),
+                FieldPanel('subsection_content_seven'),
+            ],
+            heading='subsections seven',
+            classname='collapsible collapsed'
+        ),
+
+
         SearchEngineOptimisationPanel()
     ]
 
@@ -286,7 +572,28 @@ class SetupGuidePage(BasePage):
         APIField('description'),
         APIField('heading'),
         APIField('sub_heading'),
-        APIStreamFieldBlockField('subsections'),
+        # subsections
+        APIField('subsection_title_one'),
+        APIField('subsection_content_one'),
+
+        APIField('subsection_title_two'),
+        APIField('subsection_content_two'),
+
+        APIField('subsection_title_three'),
+        APIField('subsection_content_three'),
+
+        APIField('subsection_title_four'),
+        APIField('subsection_content_four'),
+
+        APIField('subsection_title_five'),
+        APIField('subsection_content_five'),
+
+        APIField('subsection_title_six'),
+        APIField('subsection_content_six'),
+
+        APIField('subsection_title_seven'),
+        APIField('subsection_content_seven'),
+
         fields.APIChildrenSetupGuidePageListField('children_setup_guides'),
         APIMetaField('meta')
     ]
@@ -313,6 +620,29 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
             ('content', MarkdownBlock())
         ])),
     ], null=True, blank=True)
+
+    # subsections
+    subsection_title_one = models.CharField(max_length=255)
+    subsection_content_one = MarkdownField()
+
+    subsection_title_two = models.CharField(max_length=255)
+    subsection_content_two = MarkdownField()
+
+    subsection_title_three = models.CharField(max_length=255, blank=True)
+    subsection_content_three = MarkdownField(blank=True)
+
+    subsection_title_four = models.CharField(max_length=255, blank=True)
+    subsection_content_four = MarkdownField(blank=True)
+
+    subsection_title_five = models.CharField(max_length=255, blank=True)
+    subsection_content_five = MarkdownField(blank=True)
+
+    subsection_title_six = models.CharField(max_length=255, blank=True)
+    subsection_content_six = MarkdownField(blank=True)
+
+    subsection_title_seven = models.CharField(max_length=255, blank=True)
+    subsection_content_seven = MarkdownField(blank=True)
+
 
     sector_title = models.TextField(
         default="Discover UK Industries",
@@ -355,7 +685,71 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     content_panels = Page.content_panels + [
         FieldPanel('heading'),
         FieldPanel('sub_heading'),
-        StreamFieldPanel('subsections'),
+        # subsections
+
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_one'),
+                FieldPanel('subsection_content_one'),
+            ],
+            heading='subsections one',
+            classname='collapsible'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_two'),
+                FieldPanel('subsection_content_two'),
+            ],
+            heading='subsections two',
+            classname='collapsible'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_three'),
+                FieldPanel('subsection_content_three'),
+            ],
+            heading='subsections three',
+            classname='collapsible collapsed'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_four'),
+                FieldPanel('subsection_content_four'),
+            ],
+            heading='subsections four',
+            classname='collapsible collapsed'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_five'),
+                FieldPanel('subsection_content_five'),
+            ],
+            heading='subsections five',
+            classname='collapsible collapsed'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_six'),
+                FieldPanel('subsection_content_six'),
+            ],
+            heading='subsections six',
+            classname='collapsible collapsed'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_seven'),
+                FieldPanel('subsection_content_seven'),
+            ],
+            heading='subsections seven',
+            classname='collapsible collapsed'
+        ),
+
 
         FieldPanel('sector_title'),
         FieldPanel('sector_button_text'),
@@ -387,7 +781,27 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         APIField('heading'),
         APIField('sub_heading'),
         APIImageField('hero_image'),
-        APIStreamFieldBlockField('subsections'),
+        # subsections
+        APIField('subsection_title_one'),
+        APIField('subsection_content_one'),
+
+        APIField('subsection_title_two'),
+        APIField('subsection_content_two'),
+
+        APIField('subsection_title_three'),
+        APIField('subsection_content_three'),
+
+        APIField('subsection_title_four'),
+        APIField('subsection_content_four'),
+
+        APIField('subsection_title_five'),
+        APIField('subsection_content_five'),
+
+        APIField('subsection_title_six'),
+        APIField('subsection_content_six'),
+
+        APIField('subsection_title_seven'),
+        APIField('subsection_content_seven'),
 
         APIField('sector_title'),
         APIField('sector_button_text'),
