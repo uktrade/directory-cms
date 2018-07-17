@@ -335,7 +335,6 @@ class SectorPage(BasePage):
             heading='Subsection seven',
             classname='collapsible collapsed'
         ),
-
         SearchEngineOptimisationPanel()
     ]
     settings_panels = [
