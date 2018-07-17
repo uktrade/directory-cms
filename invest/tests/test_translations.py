@@ -13,10 +13,20 @@ def test_required_fields_invest_home_page():
             'slug',
             'heading',
             'sub_heading',
+            'subsection_title_one',
+            'subsection_content_one',
+            'subsection_title_two',
+            'subsection_content_two',
             'sector_title',
             'sector_button_text',
             'setup_guide_title',
-            'how_we_help_title'
+            'how_we_help_title',
+            'how_we_help_text_one',
+            'how_we_help_text_two',
+            'how_we_help_text_three',
+            'how_we_help_text_four',
+            'how_we_help_text_five',
+            'how_we_help_text_six'
         ]
     }
 
@@ -30,6 +40,8 @@ def test_required_fields_invest_sector_page():
             'slug',
             'description',
             'heading',
+            'subsection_title_one',
+            'subsection_title_two'
         ]
     }
 
@@ -68,6 +80,10 @@ def test_required_fields_invest_setup_guide_page():
             'description',
             'heading',
             'sub_heading',
+            'subsection_title_one',
+            'subsection_content_one',
+            'subsection_title_two',
+            'subsection_content_two'
         ]
     }
 
