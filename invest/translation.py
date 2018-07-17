@@ -37,6 +37,23 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'setup_guide_lead_in',
         'how_we_help_title',
         'how_we_help_lead_in',
+        # how we help
+        'how_we_help_text_one',
+        'how_we_help_icon_one',
+
+        'how_we_help_text_two',
+        'how_we_help_icon_two',
+
+        'how_we_help_text_three',
+        'how_we_help_icon_three',
+
+        'how_we_help_text_four',
+        'how_we_help_icon_four',
+
+        'how_we_help_text_five',
+        'how_we_help_icon_five',
+
+        'how_we_help_text_six',
         'how_we_help',
         'sector_button_text'
     )
