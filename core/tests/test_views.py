@@ -10,7 +10,7 @@ from django.forms.models import model_to_dict
 from django.urls import reverse
 
 from core import helpers, permissions, views
-from config.signature import SignatureCheckPermission
+from conf.signature import SignatureCheckPermission
 
 
 @pytest.fixture

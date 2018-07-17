@@ -4,8 +4,7 @@ __pycache__/
 *$py.class
 .sass-cache/
 .venv/
-enrolment/staticfiles/
-config/staticfiles/
+staticfiles
 BrowserStackLocal
 node_modules/
 
@@ -105,5 +104,5 @@ package-lock.json
 
 # Docker
 .env
-config/media
-config/google-cloud-credentials.json
+media
+google-cloud-credentials.json
