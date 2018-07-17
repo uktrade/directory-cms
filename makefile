@@ -22,9 +22,6 @@ test:
 	$(COLLECT_STATIC) && $(DJANGO_MIGRATE) && $(SYNC_TRANSLATION_FIELDS) && $(FLAKE8) && $(PYTEST) && $(CODECOV)
 
 DJANGO_WEBSERVER := \
-	if [ "$$FEATURE_AUTO_TRANSLATE_ENABLED" != "" ]; then \
-		python manage.py generate_google_translate_credentials; \
-	fi && \
 	python manage.py collectstatic --noinput && \
 	python manage.py runserver 0.0.0.0:$$PORT
 
@@ -180,7 +177,7 @@ DEBUG_SET_ENV_VARS := \
 	export DB_NAME=directory_cms_debug; \
 	export DB_USER=debug; \
 	export DB_PASSWORD=debug; \
-	export DATABASE_URL=postgres://debug:debug@localhost:5432/directory_cms_debug; \
+	export DATABASE_URL=postgres://alex@localhost:5432/directory_cms_debug; \
 	export CSRF_COOKIE_SECURE=false; \
 	export APP_URL_EXPORT_READINESS=http://exred.trade.great:8007; \
 	export APP_URL_FIND_A_SUPPLIER=http://supplier.trade.great:8005; \
