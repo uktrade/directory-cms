@@ -921,17 +921,17 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
             'sectors',
             queryset=(
                 SectorPage.objects.all()
-                    .filter(featured=True)
-                    .live()
-                    .order_by('heading')
+                .filter(featured=True)
+                .live()
+                .order_by('heading')
             )
         ),
         fields.APISetupGuidePageListField(
             'guides',
             queryset=(
                 SetupGuidePage.objects.all()
-                    .live()
-                    .order_by('heading')
+                .live()
+                .order_by('heading')
             )
         ),
         APIMetaField('meta')
