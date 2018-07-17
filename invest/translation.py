@@ -9,6 +9,7 @@ class InvestHomePageTranslation(BaseTranslationOptions):
     fields = (
         'heading',
         'sub_heading',
+        'subsections',
         # subsections
         'subsection_title_one',
         'subsection_content_one',
@@ -37,6 +38,7 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'how_we_help_title',
         'how_we_help_lead_in',
         # how we help
+        'how_we_help',
         'how_we_help_text_one',
         'how_we_help_icon_one',
 
@@ -67,6 +69,7 @@ class SectorPageTranslation(BaseTranslationOptions):
         'pullout_stat',
         'pullout_stat_text',
         # subsections
+        'subsections',
         'subsection_title_one',
         'subsection_content_one',
         'subsection_info_one',
@@ -132,6 +135,7 @@ class SetupGuidePageTranslation(BaseTranslationOptions):
         'heading',
         'sub_heading',
         # subsections
+        'subsections',
         'subsection_title_one',
         'subsection_content_one',
 

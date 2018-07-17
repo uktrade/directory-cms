@@ -90,10 +90,6 @@ class SetupGuideLandingPageFactory(wagtail_factories.PageFactory):
     heading_en_gb = factory.fuzzy.FuzzyText(length=100)
     sub_heading_en_gb = factory.fuzzy.FuzzyText(length=100)
     lead_in_en_gb = factory.fuzzy.FuzzyText(length=10)
-    subsection_title_one_en_gb = factory.fuzzy.FuzzyText(length=10)
-    subsection_content_one_en_gb = factory.fuzzy.FuzzyText(length=10)
-    subsection_title_two_en_gb = factory.fuzzy.FuzzyText(length=10)
-    subsection_content_two_en_gb = factory.fuzzy.FuzzyText(length=10)
     slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
@@ -107,6 +103,10 @@ class SetupGuidePageFactory(wagtail_factories.PageFactory):
     description_en_gb = factory.fuzzy.FuzzyText(length=100)
     heading_en_gb = factory.fuzzy.FuzzyText(length=100)
     sub_heading_en_gb = factory.fuzzy.FuzzyText(length=100)
+    subsection_title_one_en_gb = factory.fuzzy.FuzzyText(length=10)
+    subsection_content_one_en_gb = factory.fuzzy.FuzzyText(length=10)
+    subsection_title_two_en_gb = factory.fuzzy.FuzzyText(length=10)
+    subsection_content_two_en_gb = factory.fuzzy.FuzzyText(length=10)
     slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
