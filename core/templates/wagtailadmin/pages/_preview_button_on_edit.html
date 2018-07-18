@@ -1,4 +1,4 @@
 {# hide the preview button as it assumes wagtail serves the template #}
-{% if features.FEATURE_AUTO_TRANSLATE_ENABLED %}
+{% if features.AUTO_TRANSLATE_ON %}
 	<button type="submit" name="action-translate" value="action-translate" class="button button-longrunning" data-clicked-text="Translating..."><span class="icon icon-spinner"></span><em>Translate</em></button>
 {% endif %}

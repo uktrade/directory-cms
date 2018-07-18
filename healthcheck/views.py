@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
-from config.signature import SignatureCheckPermission
+from conf.signature import SignatureCheckPermission
 
 
 class DatabaseAPIView(BaseHealthCheckAPIView):

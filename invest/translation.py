@@ -37,7 +37,24 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'setup_guide_lead_in',
         'how_we_help_title',
         'how_we_help_lead_in',
+        # how we help
         'how_we_help',
+        'how_we_help_text_one',
+        'how_we_help_icon_one',
+
+        'how_we_help_text_two',
+        'how_we_help_icon_two',
+
+        'how_we_help_text_three',
+        'how_we_help_icon_three',
+
+        'how_we_help_text_four',
+        'how_we_help_icon_four',
+
+        'how_we_help_text_five',
+        'how_we_help_icon_five',
+
+        'how_we_help_text_six',
         'sector_button_text'
     )
 
@@ -51,8 +68,8 @@ class SectorPageTranslation(BaseTranslationOptions):
         'pullout_text',
         'pullout_stat',
         'pullout_stat_text',
-        'subsections',
         # subsections
+        'subsections',
         'subsection_title_one',
         'subsection_content_one',
         'subsection_info_one',
@@ -117,8 +134,8 @@ class SetupGuidePageTranslation(BaseTranslationOptions):
         'description',
         'heading',
         'sub_heading',
-        'subsections',
         # subsections
+        'subsections',
         'subsection_title_one',
         'subsection_content_one',
 
