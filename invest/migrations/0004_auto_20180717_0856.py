@@ -66,23 +66,39 @@ def migrate_setup_guide_pages_streamfields(apps, schema_editor):
 def migrate_home_page_streamfields(apps, schema_editor):
 
     InvestHomePage = apps.get_model('invest', 'InvestHomePage')
-    page = InvestHomePage.objects.all()[0]
-    for index, subsection in enumerate(page.subsections):
-        field_name = 'subsection_title_{}_en_gb'.format(
-            NUMBER_MAPPING[index]
-        )
-        setattr(page, field_name, subsection.value['title'])
-        field_name = 'subsection_content_{}_en_gb'.format(
-            NUMBER_MAPPING[index]
-        )
-        setattr(page, field_name, subsection.value['content'])
-    page.save()
+    page = InvestHomePage.objects.first()
+    if page:
+        for index, subsection in enumerate(page.subsections):
+            field_name = 'subsection_title_{}_en_gb'.format(
+                NUMBER_MAPPING[index]
+            )
+            setattr(page, field_name, subsection.value['title'])
+            field_name = 'subsection_content_{}_en_gb'.format(
+                NUMBER_MAPPING[index]
+            )
+            setattr(page, field_name, subsection.value['content'])
+        for block in page.how_we_help:
+            page.how_we_help_text_one_en_gb = block.value['text']
+            page.how_we_help_icon_one_en_gb = block.value['icon']
+
+            page.how_we_help_text_two_en_gb = block.value['text']
+            page.how_we_help_icon_two_en_gb = block.value['icon']
+
+            page.how_we_help_text_three_en_gb = block.value['text']
+            page.how_we_help_icon_three_en_gb = block.value['icon']
+
+            page.how_we_help_text_four_en_gb = block.value['text']
+            page.how_we_help_icon_four_en_gb = block.value['icon']
+
+            page.how_we_help_text_five_en_gb = block.value['text']
+            page.how_we_help_icon_five_en_gb = block.value['icon']
+        page.save()
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invest', '0003_auto_20180716_1343'),
+        ('invest', '0003_auto_20180717_1814'),
     ]
 
     operations = [
