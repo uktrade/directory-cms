@@ -41,7 +41,9 @@ def test_required_fields_invest_sector_page():
             'description',
             'heading',
             'subsection_title_one',
-            'subsection_title_two'
+            'subsection_content_one',
+            'subsection_title_two',
+            'subsection_content_two'
         ]
     }
 
