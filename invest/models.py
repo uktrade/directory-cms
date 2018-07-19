@@ -699,7 +699,6 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    how_we_help_url_six = models.CharField(max_length=255)
     how_we_help_text_six = models.CharField(max_length=255)
 
     image_panels = [
