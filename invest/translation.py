@@ -55,7 +55,6 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'how_we_help_icon_five',
 
         'how_we_help_text_six',
-        'how_we_help_url_six',
         'sector_button_text'
     )
 

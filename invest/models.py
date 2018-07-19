@@ -345,38 +345,38 @@ class SectorPage(BasePage):
         # pullout
         APIStreamFieldBlockField('pullout'),
 
-        APIField('pullout_text'),
+        APIMarkdownToHTMLField('pullout_text'),
         APIField('pullout_stat'),
         APIField('pullout_stat_text'),
         # subsections
         APIStreamFieldBlockField('subsections'),
 
         APIField('subsection_title_one'),
-        APIField('subsection_content_one'),
+        APIMarkdownToHTMLField('subsection_content_one'),
         APIImageField('subsection_map_one'),
 
         APIField('subsection_title_two'),
-        APIField('subsection_content_two'),
+        APIMarkdownToHTMLField('subsection_content_two'),
         APIImageField('subsection_map_two'),
 
         APIField('subsection_title_three'),
-        APIField('subsection_content_three'),
+        APIMarkdownToHTMLField('subsection_content_three'),
         APIImageField('subsection_map_three'),
 
         APIField('subsection_title_four'),
-        APIField('subsection_content_four'),
+        APIMarkdownToHTMLField('subsection_content_four'),
         APIImageField('subsection_map_four'),
 
         APIField('subsection_title_five'),
-        APIField('subsection_content_five'),
+        APIMarkdownToHTMLField('subsection_content_five'),
         APIImageField('subsection_map_five'),
 
         APIField('subsection_title_six'),
-        APIField('subsection_content_six'),
+        APIMarkdownToHTMLField('subsection_content_six'),
         APIImageField('subsection_map_six'),
 
         APIField('subsection_title_seven'),
-        APIField('subsection_content_seven'),
+        APIMarkdownToHTMLField('subsection_content_seven'),
         APIImageField('subsection_map_seven'),
 
         fields.APIChildrenSectorPageListField('children_sectors'),
@@ -555,25 +555,25 @@ class SetupGuidePage(BasePage):
         APIStreamFieldBlockField('subsections'),
 
         APIField('subsection_title_one'),
-        APIField('subsection_content_one'),
+        APIMarkdownToHTMLField('subsection_content_one'),
 
         APIField('subsection_title_two'),
-        APIField('subsection_content_two'),
+        APIMarkdownToHTMLField('subsection_content_two'),
 
         APIField('subsection_title_three'),
-        APIField('subsection_content_three'),
+        APIMarkdownToHTMLField('subsection_content_three'),
 
         APIField('subsection_title_four'),
-        APIField('subsection_content_four'),
+        APIMarkdownToHTMLField('subsection_content_four'),
 
         APIField('subsection_title_five'),
-        APIField('subsection_content_five'),
+        APIMarkdownToHTMLField('subsection_content_five'),
 
         APIField('subsection_title_six'),
-        APIField('subsection_content_six'),
+        APIMarkdownToHTMLField('subsection_content_six'),
 
         APIField('subsection_title_seven'),
-        APIField('subsection_content_seven'),
+        APIMarkdownToHTMLField('subsection_content_seven'),
 
         fields.APIChildrenSetupGuidePageListField('children_setup_guides'),
         APIMetaField('meta')
@@ -821,7 +821,6 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         ),
         MultiFieldPanel(
             [
-                FieldPanel('how_we_help_url_six'),
                 FieldPanel('how_we_help_text_six'),
             ],
             heading='How we help six',
@@ -852,25 +851,25 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         # subsections
         APIStreamFieldBlockField('subsections'),
         APIField('subsection_title_one'),
-        APIField('subsection_content_one'),
+        APIMarkdownToHTMLField('subsection_content_one'),
 
         APIField('subsection_title_two'),
-        APIField('subsection_content_two'),
+        APIMarkdownToHTMLField('subsection_content_two'),
 
         APIField('subsection_title_three'),
-        APIField('subsection_content_three'),
+        APIMarkdownToHTMLField('subsection_content_three'),
 
         APIField('subsection_title_four'),
-        APIField('subsection_content_four'),
+        APIMarkdownToHTMLField('subsection_content_four'),
 
         APIField('subsection_title_five'),
-        APIField('subsection_content_five'),
+        APIMarkdownToHTMLField('subsection_content_five'),
 
         APIField('subsection_title_six'),
-        APIField('subsection_content_six'),
+        APIMarkdownToHTMLField('subsection_content_six'),
 
         APIField('subsection_title_seven'),
-        APIField('subsection_content_seven'),
+        APIMarkdownToHTMLField('subsection_content_seven'),
 
         APIField('sector_title'),
         APIField('sector_button_text'),
