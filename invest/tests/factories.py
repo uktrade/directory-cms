@@ -54,7 +54,9 @@ class SectorPageFactory(wagtail_factories.PageFactory):
     pullout_stat_en_gb = factory.fuzzy.FuzzyText(length=10)
     pullout_stat_text_en_gb = factory.fuzzy.FuzzyText(length=10)
     subsection_title_one_en_gb = factory.fuzzy.FuzzyText(length=10)
+    subsection_content_one_en_gb = factory.fuzzy.FuzzyText(length=10)
     subsection_title_two_en_gb = factory.fuzzy.FuzzyText(length=10)
+    subsection_content_two_en_gb = factory.fuzzy.FuzzyText(length=10)
     slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
