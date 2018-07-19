@@ -170,8 +170,7 @@ class SectorPage(BasePage):
     ], null=True, blank=True)
 
     subsection_title_one = models.CharField(max_length=200)
-    subsection_content_one = MarkdownField(blank=True)
-    subsection_info_one = MarkdownField(blank=True)
+    subsection_content_one = MarkdownField()
     subsection_map_one = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -181,8 +180,7 @@ class SectorPage(BasePage):
     )
 
     subsection_title_two = models.CharField(max_length=200)
-    subsection_content_two = MarkdownField(blank=True)
-    subsection_info_two = MarkdownField(blank=True)
+    subsection_content_two = MarkdownField()
     subsection_map_two = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -193,7 +191,6 @@ class SectorPage(BasePage):
 
     subsection_title_three = models.CharField(max_length=200, blank=True)
     subsection_content_three = MarkdownField(blank=True)
-    subsection_info_three = MarkdownField(blank=True)
     subsection_map_three = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -204,7 +201,6 @@ class SectorPage(BasePage):
 
     subsection_title_four = models.CharField(max_length=200, blank=True)
     subsection_content_four = MarkdownField(blank=True)
-    subsection_info_four = MarkdownField(blank=True)
     subsection_map_four = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -215,7 +211,6 @@ class SectorPage(BasePage):
 
     subsection_title_five = models.CharField(max_length=200, blank=True)
     subsection_content_five = MarkdownField(blank=True)
-    subsection_info_five = MarkdownField(blank=True)
     subsection_map_five = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -226,7 +221,6 @@ class SectorPage(BasePage):
 
     subsection_title_six = models.CharField(max_length=200, blank=True)
     subsection_content_six = MarkdownField(blank=True)
-    subsection_info_six = MarkdownField(blank=True)
     subsection_map_six = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -237,7 +231,6 @@ class SectorPage(BasePage):
 
     subsection_title_seven = models.CharField(max_length=200, blank=True)
     subsection_content_seven = MarkdownField(blank=True)
-    subsection_info_seven = MarkdownField(blank=True)
     subsection_map_seven = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -267,7 +260,6 @@ class SectorPage(BasePage):
             [
                 FieldPanel('subsection_title_one'),
                 FieldPanel('subsection_content_one'),
-                FieldPanel('subsection_info_one'),
                 ImageChooserPanel('subsection_map_one')
             ],
             heading='subsections one',
@@ -277,7 +269,6 @@ class SectorPage(BasePage):
             [
                 FieldPanel('subsection_title_two'),
                 FieldPanel('subsection_content_two'),
-                FieldPanel('subsection_info_two'),
                 ImageChooserPanel('subsection_map_two')
             ],
             heading='subsections two',
@@ -287,7 +278,6 @@ class SectorPage(BasePage):
             [
                 FieldPanel('subsection_title_three'),
                 FieldPanel('subsection_content_three'),
-                FieldPanel('subsection_info_three'),
                 ImageChooserPanel('subsection_map_three')
             ],
             heading='subsections three',
@@ -297,7 +287,6 @@ class SectorPage(BasePage):
             [
                 FieldPanel('subsection_title_four'),
                 FieldPanel('subsection_content_four'),
-                FieldPanel('subsection_info_four'),
                 ImageChooserPanel('subsection_map_four')
             ],
             heading='subsections four',
@@ -307,7 +296,6 @@ class SectorPage(BasePage):
             [
                 FieldPanel('subsection_title_five'),
                 FieldPanel('subsection_content_five'),
-                FieldPanel('subsection_info_five'),
                 ImageChooserPanel('subsection_map_five')
             ],
             heading='subsections five',
@@ -317,7 +305,6 @@ class SectorPage(BasePage):
             [
                 FieldPanel('subsection_title_six'),
                 FieldPanel('subsection_content_six'),
-                FieldPanel('subsection_info_six'),
                 ImageChooserPanel('subsection_map_six')
             ],
             heading='subsections six',
@@ -327,7 +314,6 @@ class SectorPage(BasePage):
             [
                 FieldPanel('subsection_title_seven'),
                 FieldPanel('subsection_content_seven'),
-                FieldPanel('subsection_info_seven'),
                 ImageChooserPanel('subsection_map_seven')
             ],
             heading='Subsection seven',
@@ -367,37 +353,30 @@ class SectorPage(BasePage):
 
         APIField('subsection_title_one'),
         APIField('subsection_content_one'),
-        APIField('subsection_info_one'),
         APIImageField('subsection_map_one'),
 
         APIField('subsection_title_two'),
         APIField('subsection_content_two'),
-        APIField('subsection_info_two'),
         APIImageField('subsection_map_two'),
 
         APIField('subsection_title_three'),
         APIField('subsection_content_three'),
-        APIField('subsection_info_three'),
         APIImageField('subsection_map_three'),
 
         APIField('subsection_title_four'),
         APIField('subsection_content_four'),
-        APIField('subsection_info_four'),
         APIImageField('subsection_map_four'),
 
         APIField('subsection_title_five'),
         APIField('subsection_content_five'),
-        APIField('subsection_info_five'),
         APIImageField('subsection_map_five'),
 
         APIField('subsection_title_six'),
         APIField('subsection_content_six'),
-        APIField('subsection_info_six'),
         APIImageField('subsection_map_six'),
 
         APIField('subsection_title_seven'),
         APIField('subsection_content_seven'),
-        APIField('subsection_info_seven'),
         APIImageField('subsection_map_seven'),
 
         fields.APIChildrenSectorPageListField('children_sectors'),
@@ -720,7 +699,8 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    how_we_help_text_six = models.URLField()
+    how_we_help_url_six = models.CharField(max_length=255)
+    how_we_help_text_six = models.CharField(max_length=255)
 
     image_panels = [
         ImageChooserPanel('hero_image'),
@@ -841,6 +821,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         ),
         MultiFieldPanel(
             [
+                FieldPanel('how_we_help_url_six'),
                 FieldPanel('how_we_help_text_six'),
             ],
             heading='How we help six',

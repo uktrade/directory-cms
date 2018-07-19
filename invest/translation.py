@@ -55,6 +55,7 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'how_we_help_icon_five',
 
         'how_we_help_text_six',
+        'how_we_help_url_six',
         'sector_button_text'
     )
 
@@ -72,37 +73,30 @@ class SectorPageTranslation(BaseTranslationOptions):
         'subsections',
         'subsection_title_one',
         'subsection_content_one',
-        'subsection_info_one',
         'subsection_map_one',
 
         'subsection_title_two',
         'subsection_content_two',
-        'subsection_info_two',
         'subsection_map_two',
 
         'subsection_title_three',
         'subsection_content_three',
-        'subsection_info_three',
         'subsection_map_three',
 
         'subsection_title_four',
         'subsection_content_four',
-        'subsection_info_four',
         'subsection_map_four',
 
         'subsection_title_five',
         'subsection_content_five',
-        'subsection_info_five',
         'subsection_map_five',
 
         'subsection_title_six',
         'subsection_content_six',
-        'subsection_info_six',
         'subsection_map_six',
 
         'subsection_title_seven',
         'subsection_content_seven',
-        'subsection_info_seven',
         'subsection_map_seven'
     )
 
