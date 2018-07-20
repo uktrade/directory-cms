@@ -5,6 +5,17 @@ from __future__ import unicode_literals
 from django.db import migrations
 
 
+NUMBER_MAPPING = {
+    1: 'one',
+    2: 'two',
+    3: 'three',
+    4: 'four',
+    5: 'five',
+    6: 'six',
+    7: 'seven'
+}
+
+
 def migrate_sector_pages_info_streamfields(apps, schema_editor):
 
     SectorPage = apps.get_model('invest', 'SectorPage')
