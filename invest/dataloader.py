@@ -211,9 +211,9 @@ class SectorPageLoader(PageContentLoader):
                     if block_type == 'markdown':
                         field = 'subsection_content_' \
                                 '{number}_{lang_code}'.format(
-                            number=self.number_mapping[index],
-                            lang_code=lang_code
-                        )
+                                    number=self.number_mapping[index],
+                                    lang_code=lang_code
+                                )
                         setattr(
                             page,
                             field,
@@ -222,9 +222,9 @@ class SectorPageLoader(PageContentLoader):
                     else:
                         field = 'subsection_content_' \
                                 '{number}_{lang_code}'.format(
-                            number=self.number_mapping[index],
-                            lang_code=lang_code
-                        )
+                                    number=self.number_mapping[index],
+                                    lang_code=lang_code
+                                )
                         setattr(
                             page,
                             field,
