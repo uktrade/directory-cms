@@ -209,7 +209,8 @@ class SectorPageLoader(PageContentLoader):
                         content['title'].encode().decode('utf-8')
                     )
                     if block_type == 'markdown':
-                        field = 'subsection_content_{number}_{lang_code}'.format(
+                        field = 'subsection_content_' \
+                                '{number}_{lang_code}'.format(
                             number=self.number_mapping[index],
                             lang_code=lang_code
                         )
@@ -219,7 +220,8 @@ class SectorPageLoader(PageContentLoader):
                             content['content'].encode().decode('utf-8')
                         )
                     else:
-                        field = 'subsection_content_{number}_{lang_code}'.format(
+                        field = 'subsection_content_' \
+                                '{number}_{lang_code}'.format(
                             number=self.number_mapping[index],
                             lang_code=lang_code
                         )
