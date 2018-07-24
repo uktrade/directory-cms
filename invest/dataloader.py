@@ -176,22 +176,23 @@ class SectorPageLoader(PageContentLoader):
                 lang_code=lang_code
             )
             translated_content = json.loads(json_data[streamfield_name])
-            content = translated_content[0]['value']
-            setattr(
-                page,
-                'pullout_text_{}'.format(lang_code),
-                content['text'].encode().decode('utf-8')
-            )
-            setattr(
-                page,
-                'pullout_stat_{}'.format(lang_code),
-                content['stat'].encode().decode('utf-8')
-            )
-            setattr(
-                page,
-                'pullout_stat_text_{}'.format(lang_code),
-                content['stat_text'].encode().decode('utf-8')
-            )
+            if translated_content:
+                content = translated_content[0]['value']
+                setattr(
+                    page,
+                    'pullout_text_{}'.format(lang_code),
+                    content['text'].encode().decode('utf-8')
+                )
+                setattr(
+                    page,
+                    'pullout_stat_{}'.format(lang_code),
+                    content['stat'].encode().decode('utf-8')
+                )
+                setattr(
+                    page,
+                    'pullout_stat_text_{}'.format(lang_code),
+                    content['stat_text'].encode().decode('utf-8')
+                )
 
             # subsections
             streamfield_name = 'subsections_{lang_code}'.format(
