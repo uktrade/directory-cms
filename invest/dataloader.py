@@ -47,11 +47,13 @@ class PageContentLoader:
             return self.json_all_data[0]
 
         value = getattr(page, self.filtering_field_name + '_en_gb')
-        return list(filter(
+        content = list(filter(
             lambda x: x[self.filtering_field_name].encode().decode(
                 'utf-8') == value,
             self.json_all_data
-        ))[0]
+        ))
+        if content:
+            return content[0]
 
     def generate_translated_fields_names(self, fields):
         return (build_localized_fieldname(field, lang) for field, lang in
@@ -72,11 +74,6 @@ class PageContentLoader:
     @staticmethod
     def save_revision_and_publish(page):
         page.save()
-
-    @staticmethod
-    def get_streamfield_content_in_english(page, field_name):
-        field_name = field_name + '_en_gb'
-        return getattr(page, field_name)
 
     def run(self):
         pages = self.model_class.objects.all()
@@ -170,84 +167,87 @@ class SectorPageLoader(PageContentLoader):
     def load_streamfields(self, page):
         for lang_code in self.languages_codes:
             json_data = self.get_filtered_content(page)
-
-            # pullout
-            streamfield_name = 'pullout_{lang_code}'.format(
-                lang_code=lang_code
-            )
-            translated_content = json.loads(json_data[streamfield_name])
-            if translated_content:
-                content = translated_content[0]['value']
-                setattr(
-                    page,
-                    'pullout_text_{}'.format(lang_code),
-                    content['text'].encode().decode('utf-8')
-                )
-                setattr(
-                    page,
-                    'pullout_stat_{}'.format(lang_code),
-                    content['stat'].encode().decode('utf-8')
-                )
-                setattr(
-                    page,
-                    'pullout_stat_text_{}'.format(lang_code),
-                    content['stat_text'].encode().decode('utf-8')
-                )
-
-            # subsections
-            streamfield_name = 'subsections_{lang_code}'.format(
-                lang_code=lang_code
-            )
-            translated_content = json.loads(json_data[streamfield_name])
-            for index, content in enumerate(translated_content, 1):
-                block_type = content['type']
-                content = content['value']
-                field = 'subsection_title_{number}_{lang_code}'.format(
-                    number=self.number_mapping[index],
+            if json_data:
+                # pullout
+                streamfield_name = 'pullout_{lang_code}'.format(
                     lang_code=lang_code
                 )
-                setattr(
-                    page,
-                    field,
-                    content['title'].encode().decode('utf-8')
-                )
-                if block_type == 'markdown':
-                    field = 'subsection_content_{number}_{lang_code}'.format(
-                        number=self.number_mapping[index],
-                        lang_code=lang_code
+                translated_content = json.loads(json_data[streamfield_name])
+                if translated_content:
+                    content = translated_content[0]['value']
+                    setattr(
+                        page,
+                        'pullout_text_{}'.format(lang_code),
+                        content['text'].encode().decode('utf-8')
                     )
                     setattr(
                         page,
-                        field,
-                        content['content'].encode().decode('utf-8')
-                    )
-                else:
-                    field = 'subsection_content_{number}_{lang_code}'.format(
-                        number=self.number_mapping[index],
-                        lang_code=lang_code
+                        'pullout_stat_{}'.format(lang_code),
+                        content['stat'].encode().decode('utf-8')
                     )
                     setattr(
                         page,
-                        field,
-                        content['info'].encode().decode('utf-8')
-                    )
-                    # image
-                    image = getattr(
-                        page,
-                        'subsection_map_{number}_en_gb_id'.format(
-                            number=self.number_mapping[index],
-                        )
-                    )
-                    setattr(
-                        page,
-                        'subsection_map_{number}_{lang_code}_id'.format(
-                            number=self.number_mapping[index],
-                            lang_code=lang_code
-                        ),
-                        image
+                        'pullout_stat_text_{}'.format(lang_code),
+                        content['stat_text'].encode().decode('utf-8')
                     )
 
-        self.save_revision_and_publish(page)
+                # subsections
+                streamfield_name = 'subsections_{lang_code}'.format(
+                    lang_code=lang_code
+                )
+                translated_content = json.loads(json_data[streamfield_name])
+                for index, content in enumerate(translated_content, 1):
+                    block_type = content['type']
+                    content = content['value']
+                    field = 'subsection_title_{number}_{lang_code}'.format(
+                        number=self.number_mapping[index],
+                        lang_code=lang_code
+                    )
+                    setattr(
+                        page,
+                        field,
+                        content['title'].encode().decode('utf-8')
+                    )
+                    if block_type == 'markdown':
+                        field = 'subsection_content_{number}_{lang_code}'.format(
+                            number=self.number_mapping[index],
+                            lang_code=lang_code
+                        )
+                        setattr(
+                            page,
+                            field,
+                            content['content'].encode().decode('utf-8')
+                        )
+                    else:
+                        field = 'subsection_content_{number}_{lang_code}'.format(
+                            number=self.number_mapping[index],
+                            lang_code=lang_code
+                        )
+                        setattr(
+                            page,
+                            field,
+                            content['info'].encode().decode('utf-8')
+                        )
+                        # image
+                        image = getattr(
+                            page,
+                            'subsection_map_{number}_en_gb_id'.format(
+                                number=self.number_mapping[index],
+                            )
+                        )
+                        setattr(
+                            page,
+                            'subsection_map_{number}_{lang_code}_id'.format(
+                                number=self.number_mapping[index],
+                                lang_code=lang_code
+                            ),
+                            image
+                        )
+
+            self.save_revision_and_publish(page)
+            print('{} saved'.format(page.heading))
+        else:
+            pass
 
 
 class SetupGuidePageLoader(PageContentLoader):
