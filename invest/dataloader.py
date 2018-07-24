@@ -1,8 +1,6 @@
-import itertools
 import json
 import os
 from django.conf import settings
-from modeltranslation.utils import build_localized_fieldname
 
 from invest import models
 
@@ -52,10 +50,6 @@ class PageContentLoader:
                 'utf-8') == value,
             self.json_all_data
         ))[0]
-
-    def generate_translated_fields_names(self, fields):
-        return (build_localized_fieldname(field, lang) for field, lang in
-                itertools.product(fields, self.languages_codes))
 
     def load_fields(self, page):
         json_data = self.get_filtered_content(page)
