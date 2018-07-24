@@ -247,7 +247,7 @@ class SectorPageLoader(PageContentLoader):
             self.save_revision_and_publish(page)
             print('{} saved'.format(page.heading))
         else:
-            pass
+            print('{}-{} no match'.format(page.id, page.heading))
 
 
 class SetupGuidePageLoader(PageContentLoader):
