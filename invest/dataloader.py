@@ -2,6 +2,7 @@ import itertools
 import json
 import os
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from modeltranslation.utils import build_localized_fieldname
 
 from invest import models
@@ -73,7 +74,10 @@ class PageContentLoader:
 
     @staticmethod
     def save_revision_and_publish(page):
-        page.save()
+        try:
+            page.save()
+        except ValidationError:
+            pass
 
     def run(self):
         pages = self.model_class.objects.all()
@@ -245,11 +249,7 @@ class SectorPageLoader(PageContentLoader):
                             ),
                             image
                         )
-
-            self.save_revision_and_publish(page)
-            print('{} saved'.format(page.heading))
-        else:
-            print('{}-{} no match'.format(page.id, page.heading))
+                self.save_revision_and_publish(page)
 
 
 class SetupGuidePageLoader(PageContentLoader):
