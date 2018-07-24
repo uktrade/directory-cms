@@ -9,6 +9,15 @@ from invest import models
 
 class PageContentLoader:
     languages_codes = ('de', 'es', 'fr', 'pt', 'ar', 'ja', 'zh_hans')
+    number_mapping = {
+        1: 'one',
+        2: 'two',
+        3: 'three',
+        4: 'four',
+        5: 'five',
+        6: 'six',
+        7: 'seven'
+    }
     filename = None
     fields = None
     stream_fields = None
@@ -88,45 +97,37 @@ class HomePageLoader(PageContentLoader):
         'how_we_help_lead_in',
         'sector_button_text',
     )
-    stream_fields = ('subsections', 'how_we_help')
     model_class = models.InvestHomePage
 
     def load_streamfields(self, page):
 
-        for field_name in self.stream_fields:
-            streamfield_in_english = self.get_streamfield_content_in_english(
-                page=page,
-                field_name=field_name
+        for lang_code in self.languages_codes:
+            streamfield_name = 'subsections_{lang_code}'.format(
+                lang_code=lang_code
             )
-            for translated_field_name in self.generate_translated_fields_names(
-                    (field_name,)
-            ):
-
-                # set the translated content to the English content first,
-                # so we have a reference to images and pages
-                setattr(page, translated_field_name, streamfield_in_english)
-
-                # now modify the streamfield with the translated content
-                # this assumes that the streamfield blocks and the json blocks
-                # are in the same order
-                json_data = self.get_filtered_content(page)
-                translated_content = json.loads(
-                    json_data[translated_field_name]
+            json_data = self.get_filtered_content(page)
+            translated_content = json.loads(json_data[streamfield_name])
+            for index, content in translated_content:
+                content = content['value']
+                field = 'subsection_content_{number}_{lang_code}'.format(
+                    number=self.number_mapping[index],
+                    lang_code=lang_code
                 )
-                translated_streamfield = getattr(page, translated_field_name)
-                for block, content in zip(translated_streamfield,
-                                          translated_content):
-                    if field_name == 'subsections':
-                        content = content['value']
-                        block.value['content'] = content['content'].encode()\
-                            .decode('utf-8')
-                        block.value['title'] = content['title'].encode()\
-                            .decode('utf-8')
-                    else:
-                        content = content['value']
-                        block.value['text'] = content['text'].encode() \
-                            .decode('utf-8')
-            self.save_revision_and_publish(page)
+                setattr(
+                    page,
+                    field,
+                    content['content'].encode().decode('utf-8')
+                )
+                field = 'subsection_title_{number}_{lang_code}'.format(
+                    number=self.number_mapping[index],
+                    lang_code=lang_code
+                )
+                setattr(
+                    page,
+                    field,
+                    content['title'].encode().decode('utf-8')
+                )
+        self.save_revision_and_publish(page)
 
 
 class SetupGuideLandingPageLoader(PageContentLoader):
@@ -165,55 +166,87 @@ class SectorPageLoader(PageContentLoader):
         'subsections'
     )
     filtering_field_name = 'heading'
-    stream_fields = ('pullout', 'subsections')
-
 
     def load_streamfields(self, page):
-        for field_name in self.stream_fields:
-            streamfield_in_english = self.get_streamfield_content_in_english(
-                page=page,
-                field_name=field_name
+        for lang_code in self.languages_codes:
+            json_data = self.get_filtered_content(page)
+
+            # pullout
+            streamfield_name = 'pullout_{lang_code}'.format(
+                lang_code=lang_code
             )
-            for translated_field_name in self.generate_translated_fields_names(
-                    (field_name,)
-            ):
+            translated_content = json.loads(json_data[streamfield_name])
+            content = translated_content['value']
+            setattr(
+                page,
+                'pullout_text_{}'.format(lang_code),
+                content['text'].encode().decode('utf-8')
+            )
+            setattr(
+                page,
+                'pullout_stat_{}'.format(lang_code),
+                content['stat'].encode().decode('utf-8')
+            )
+            setattr(
+                page,
+                'pullout_stat_text_{}'.format(lang_code),
+                content['stat_text'].encode().decode('utf-8')
+            )
 
-                # set the translated content to the English content first,
-                # so we have a reference to images and pages
-                setattr(page, translated_field_name, streamfield_in_english)
-
-                # now modify the streamfield with the translated content
-                # this assumes that the streamfield blocks and the json blocks
-                # are in the same order
-                json_data = self.get_filtered_content(page)
-                translated_content = json.loads(
-                    json_data[translated_field_name]
+            # subsections
+            streamfield_name = 'subsections_{lang_code}'.format(
+                lang_code=lang_code
+            )
+            translated_content = json.loads(json_data[streamfield_name])
+            for index, content in translated_content:
+                block_type = content['type']
+                content = content['value']
+                field = 'subsection_title_{number}_{lang_code}'.format(
+                    number=self.number_mapping[index],
+                    lang_code=lang_code
                 )
-                translated_streamfield = getattr(page, translated_field_name)
-                for block, content in zip(translated_streamfield,
-                                          translated_content):
-                    if field_name == 'subsections':
-                        block_type = content['type']
-                        content = content['value']
-                        if block_type == 'markdown':
-                            block.value['content'] = content['content']\
-                                .encode().decode('utf-8')
-                            block.value['title'] = content['title']\
-                                .encode().decode('utf-8')
-                        else:
-                            block.value['info'] = content['info'] \
-                                .encode().decode('utf-8')
-                            block.value['title'] = content['title'] \
-                                .encode().decode('utf-8')
-                    else:
-                        content = content['value']
-                        block.value['text'] = content['text'].encode() \
-                            .decode('utf-8')
-                        block.value['stat'] = content['stat'].encode() \
-                            .decode('utf-8')
-                        block.value['stat_text'] = content['stat_text'].encode() \
-                            .decode('utf-8')
-            self.save_revision_and_publish(page)
+                setattr(
+                    page,
+                    field,
+                    content['title'].encode().decode('utf-8')
+                )
+                if block_type == 'markdown':
+                    field = 'subsection_content_{number}_{lang_code}'.format(
+                        number=self.number_mapping[index],
+                        lang_code=lang_code
+                    )
+                    setattr(
+                        page,
+                        field,
+                        content['content'].encode().decode('utf-8')
+                    )
+                else:
+                    field = 'subsection_content_{number}_{lang_code}'.format(
+                        number=self.number_mapping[index],
+                        lang_code=lang_code
+                    )
+                    setattr(
+                        page,
+                        field,
+                        content['info'].encode().decode('utf-8')
+                    )
+                    # image
+                    image = getattr(
+                        page,
+                        'subsection_map_{number}_en_gb_id'.format(
+                            number=self.number_mapping[index],
+                        )
+                    )
+                    setattr(
+                        page,
+                        'subsection_map_{number}_{lang_code}_id'.format(
+                            number=self.number_mapping[index],
+                            lang_code=lang_code
+                        ),
+                        image
+                    )
+
+        self.save_revision_and_publish(page)
 
 
 class SetupGuidePageLoader(PageContentLoader):
@@ -226,38 +259,34 @@ class SetupGuidePageLoader(PageContentLoader):
         'subsections',
     )
     filtering_field_name = 'heading'
-    stream_fields = ('subsections', )
 
     def load_streamfields(self, page):
-        import pudb; pu.db
-        field_name = 'subsections'
-        streamfield_in_english = self.get_streamfield_content_in_english(
-            page=page,
-            field_name=field_name
-        )
-        for translated_field_name in self.generate_translated_fields_names(
-                (field_name,)
-        ):
-
-            # set the translated content to the English content first,
-            # so we have a reference to images and pages
-            setattr(page, translated_field_name, streamfield_in_english)
-
-            # now modify the streamfield with the translated content
-            # this assumes that the streamfield blocks and the json blocks
-            # are in the same order
-            json_data = self.get_filtered_content(page)
-            translated_content = json.loads(
-                json_data[translated_field_name]
+        for lang_code in self.languages_codes:
+            streamfield_name = 'subsections_{lang_code}'.format(
+                lang_code=lang_code
             )
-            translated_streamfield = getattr(page, translated_field_name)
-            for block, content in zip(translated_streamfield,
-                                      translated_content):
+            json_data = self.get_filtered_content(page)
+            translated_content = json.loads(json_data[streamfield_name])
+            for index, content in translated_content:
                 content = content['value']
-                block.value['content'] = content['content'].encode()\
-                    .decode('utf-8')
-                block.value['title'] = content['title'].encode()\
-                    .decode('utf-8')
+                field = 'subsection_content_{number}_{lang_code}'.format(
+                    number=self.number_mapping[index],
+                    lang_code=lang_code
+                )
+                setattr(
+                    page,
+                    field,
+                    content['content'].encode().decode('utf-8')
+                )
+                field = 'subsection_title_{number}_{lang_code}'.format(
+                    number=self.number_mapping[index],
+                    lang_code=lang_code
+                )
+                setattr(
+                    page,
+                    field,
+                    content['title'].encode().decode('utf-8')
+                )
         self.save_revision_and_publish(page)
 
 
@@ -268,8 +297,6 @@ class InfoPageLoader(PageContentLoader):
         'content',
     )
     filtering_field_name = 'content'
-
-
 
 
 def load_all():
@@ -284,5 +311,3 @@ def load_all():
 
 if __name__ == '__main__':
     load_all()
-
-
