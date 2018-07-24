@@ -107,7 +107,7 @@ class HomePageLoader(PageContentLoader):
             )
             json_data = self.get_filtered_content(page)
             translated_content = json.loads(json_data[streamfield_name])
-            for index, content in translated_content:
+            for index, content in enumerate(translated_content, 1):
                 content = content['value']
                 field = 'subsection_content_{number}_{lang_code}'.format(
                     number=self.number_mapping[index],
@@ -198,7 +198,7 @@ class SectorPageLoader(PageContentLoader):
                 lang_code=lang_code
             )
             translated_content = json.loads(json_data[streamfield_name])
-            for index, content in translated_content:
+            for index, content in enumerate(translated_content, 1):
                 block_type = content['type']
                 content = content['value']
                 field = 'subsection_title_{number}_{lang_code}'.format(
@@ -267,7 +267,7 @@ class SetupGuidePageLoader(PageContentLoader):
             )
             json_data = self.get_filtered_content(page)
             translated_content = json.loads(json_data[streamfield_name])
-            for index, content in translated_content:
+            for index, content in enumerate(translated_content, 1):
                 content = content['value']
                 field = 'subsection_content_{number}_{lang_code}'.format(
                     number=self.number_mapping[index],
