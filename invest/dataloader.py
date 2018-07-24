@@ -176,7 +176,7 @@ class SectorPageLoader(PageContentLoader):
                 lang_code=lang_code
             )
             translated_content = json.loads(json_data[streamfield_name])
-            content = translated_content['value']
+            content = translated_content[0]['value']
             setattr(
                 page,
                 'pullout_text_{}'.format(lang_code),
