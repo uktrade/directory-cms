@@ -1,4 +1,5 @@
 import pytest
+from directory_constants.constants import cms
 
 from django.urls import reverse
 
@@ -12,14 +13,14 @@ def test_landing_page_exposes_industries(admin_client):
     factories.IndustryPageFactory(live=False)
     factories.IndustryPageFactory(show_on_homepage=True, live=False)
     factories.IndustryPageFactory()
-    factories.LandingPageFactory()
+    landing_page = factories.LandingPageFactory()
 
     url = reverse(
-        'lookup-by-page-type',
-        kwargs={'page_type': 'find_a_supplier.LandingPage'}
+        'lookup-by-slug',
+        kwargs={'slug': landing_page.slug}
     )
 
-    response = admin_client.get(url)
+    response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
 
     assert response.status_code == 200
     assert len(response.json()['industries']) == 1
@@ -30,14 +31,14 @@ def test_landing_page_exposes_industries(admin_client):
 def test_industry_landing_page_exposes_industries(admin_client):
     industry = factories.IndustryPageFactory(live=True)
     factories.IndustryPageFactory(live=False)
-    factories.IndustryLandingPageFactory()
+    landing_page = factories.IndustryLandingPageFactory()
 
     url = reverse(
-        'lookup-by-page-type',
-        kwargs={'page_type': 'find_a_supplier.IndustryLandingPage'}
+        'lookup-by-slug',
+        kwargs={'slug': landing_page.slug}
     )
 
-    response = admin_client.get(url)
+    response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
 
     assert response.status_code == 200
     assert len(response.json()['industries']) == 1

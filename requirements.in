@@ -12,7 +12,7 @@ google-cloud-translate==1.3.0
 boto3==1.6.3
 sigauth==2.1.2
 directory-healthcheck==0.4.2
-directory_constants==6.8.0
+directory_constants==7.1.0
 django-admin-ip-restrictor==0.2.0
 html2text==2018.1.9
 wagtail==2.0.1

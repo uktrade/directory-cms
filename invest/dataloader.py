@@ -163,8 +163,6 @@ class SectorPageLoader(PageContentLoader):
     fields = (
         'description',
         'heading',
-        'pullout',
-        'subsections'
     )
     filtering_field_name = 'heading'
 
