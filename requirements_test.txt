@@ -21,10 +21,10 @@ directory-components==2.8.1
 directory-healthcheck==0.4.2
 directory_constants==7.1.0
 dj-database-url==0.4.2
-django-admin-ip-restrictor==0.2.0
+django-admin-ip-restrictor==0.2.1
 django-environ==0.4.5
 django-health-check==3.0.0  # via directory-healthcheck
-django-ipware==1.1.6      # via django-admin-ip-restrictor
+django-ipware==2.1.0      # via django-admin-ip-restrictor
 django-modelcluster==4.1  # via wagtail
 django-modeltranslation==0.12.2  # via wagtail-modeltranslation
 django-pglocks==1.0.2
