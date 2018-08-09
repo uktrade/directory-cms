@@ -67,7 +67,7 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
         instance = get_object_or_404(
             self.get_queryset(),
             historicslug__slug=self.kwargs['slug'],
-            service_name=self.request.query_params['service_name']
+            service__name=self.request.query_params['service_name']
         ).specific
         self.check_object_permissions(self.request, instance)
         instance = self.handle_serve_draft_object(instance)

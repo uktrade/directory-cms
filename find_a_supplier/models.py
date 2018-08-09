@@ -22,18 +22,6 @@ from core.panels import SearchEngineOptimisationPanel
 from find_a_supplier import fields
 
 
-class FASBasePage(BasePage):
-
-    class Meta:
-        abstract = True
-
-    service_name = models.CharField(
-        max_length=50,
-        choices=choices.CMS_APP_CHOICES,
-        default=cms.FIND_A_SUPPLIER
-    )
-
-
 class ImageChooserPanel(ImageChooserPanel):
     classname = ""
 
@@ -110,7 +98,7 @@ class LandingPageArticleSummary(Orderable, ArticleSummary):
     )
 
 
-class IndustryPage(FASBasePage):
+class IndustryPage(BasePage):
 
     view_app = cms.FIND_A_SUPPLIER
     view_path = 'industries/'
@@ -519,7 +507,7 @@ class IndustryArticlePage(BasePage):
     ]
 
 
-class LandingPage(ExclusivePageMixin, FASBasePage):
+class LandingPage(ExclusivePageMixin, BasePage):
     view_app = cms.FIND_A_SUPPLIER
     view_path = '/'
     slug_identity = 'landing-page'
@@ -703,7 +691,7 @@ class LandingPage(ExclusivePageMixin, FASBasePage):
     )
 
 
-class IndustryContactPage(ExclusivePageMixin, FASBasePage):
+class IndustryContactPage(ExclusivePageMixin, BasePage):
 
     view_app = cms.FIND_A_SUPPLIER
     view_path = 'industries/contact/'

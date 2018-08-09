@@ -18,18 +18,6 @@ from core.panels import SearchEngineOptimisationPanel
 from . import fields
 
 
-class InvestBasePage(BasePage):
-
-    class Meta:
-        abstract = True
-
-    service_name = models.CharField(
-        max_length=50,
-        choices=choices.CMS_APP_CHOICES,
-        default=cms.INVEST
-    )
-
-
 class InvestApp(ExclusivePageMixin, BaseApp):
     view_app = cms.INVEST
     slug_identity = 'invest-app'
@@ -136,7 +124,7 @@ class RegionLandingPage(ExclusivePageMixin, BasePage):
     ]
 
 
-class SectorPage(InvestBasePage):
+class SectorPage(BasePage):
     # Related sector are implemented as subpages
     view_app = cms.INVEST
     subpage_types = ['invest.sectorPage']
@@ -398,7 +386,7 @@ class SectorPage(InvestBasePage):
 
 # Setup guide models
 
-class SetupGuideLandingPage(ExclusivePageMixin, InvestBasePage):
+class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
     view_app = cms.INVEST
     subpage_types = ['invest.SetupGuidePage']
     slug_identity = 'invest-setup-guide-landing-page'
@@ -437,7 +425,7 @@ class SetupGuideLandingPage(ExclusivePageMixin, InvestBasePage):
     ]
 
 
-class SetupGuidePage(InvestBasePage):
+class SetupGuidePage(BasePage):
     view_app = cms.INVEST
     view_path = 'setup-guides/'
 
@@ -592,7 +580,7 @@ class SetupGuidePage(InvestBasePage):
     ]
 
 
-class InvestHomePage(ExclusivePageMixin, InvestBasePage):
+class InvestHomePage(ExclusivePageMixin, BasePage):
     view_app = cms.INVEST
     slug_identity = 'invest-home-page'
     view_path = ''
@@ -928,7 +916,7 @@ class InvestHomePage(ExclusivePageMixin, InvestBasePage):
     ]
 
 
-class InfoPage(InvestBasePage):
+class InfoPage(BasePage):
     """
     Markdown page - used for terms and conditions
     and privacy policy

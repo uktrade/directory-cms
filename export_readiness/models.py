@@ -13,18 +13,6 @@ from core.models import BaseApp, BasePage, ExclusivePageMixin
 from core.panels import SearchEngineOptimisationPanel
 
 
-class ExportReadinessBasePage(BasePage):
-
-    class Meta:
-        abstract = True
-
-    service_name = models.CharField(
-        max_length=50,
-        choices=choices.CMS_APP_CHOICES,
-        default=cms.EXPORT_READINESS
-    )
-
-
 class ExportReadinessApp(ExclusivePageMixin, BaseApp):
     slug_identity = 'export-readiness-app'
     view_app = cms.EXPORT_READINESS
@@ -34,7 +22,7 @@ class ExportReadinessApp(ExclusivePageMixin, BaseApp):
         return []
 
 
-class TermsAndConditionsPage(ExclusivePageMixin, ExportReadinessBasePage):
+class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
 
     view_app = cms.EXPORT_READINESS
     view_path = 'terms-and-conditions/'
@@ -65,7 +53,7 @@ class TermsAndConditionsPage(ExclusivePageMixin, ExportReadinessBasePage):
     ]
 
 
-class PrivacyAndCookiesPage(ExclusivePageMixin, ExportReadinessBasePage):
+class PrivacyAndCookiesPage(ExclusivePageMixin, BasePage):
 
     view_app = cms.EXPORT_READINESS
     view_path = 'privacy-and-cookies/'
@@ -98,7 +86,7 @@ class PrivacyAndCookiesPage(ExclusivePageMixin, ExportReadinessBasePage):
     ]
 
 
-class GetFinancePage(ExclusivePageMixin, ExportReadinessBasePage):
+class GetFinancePage(ExclusivePageMixin, BasePage):
 
     view_app = cms.EXPORT_READINESS
     view_path = 'get-finance/'
@@ -185,7 +173,7 @@ class GetFinancePage(ExclusivePageMixin, ExportReadinessBasePage):
     ]
 
 
-class PerformanceDashboardPage(ExportReadinessBasePage):
+class PerformanceDashboardPage(BasePage):
 
     view_app = cms.EXPORT_READINESS
     view_path = ''
@@ -295,7 +283,7 @@ class PerformanceDashboardPage(ExportReadinessBasePage):
 
 
 class PerformanceDashboardNotesPage(ExclusivePageMixin,
-                                    ExportReadinessBasePage):
+                                    BasePage):
 
     view_app = cms.EXPORT_READINESS
     view_path = 'performance-dashboard/'
