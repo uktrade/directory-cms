@@ -23,8 +23,10 @@ def test_base_model_check_invalid_draft_token(page):
 
 @pytest.mark.django_db
 def test_base_model_create_service_on_save(page):
-    import ipdb; ipdb.set_trace()
-    assert True
+    assert page.service_set.all().count() == 1
+    service = page.service_set.all()[0]
+    assert service.page == page
+    assert service.name == page.view_app
 
 
 @pytest.mark.django_db

@@ -7,7 +7,7 @@ from wagtail.core.models import Page
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmarkdown.blocks import MarkdownBlock
-from directory_constants.constants import choices, cms
+from directory_constants.constants import cms
 
 from core.fields import APIImageField, APIMetaField, \
     APIStreamFieldBlockField, MarkdownField, APIMarkdownToHTMLField

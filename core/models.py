@@ -69,8 +69,8 @@ class BasePage(Page):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        # we need to save the page to get an id before the many to many
-        # relationship can be used
+        # we need to save the page to get an id before
+        # the relationship following can be used
         Service.objects.get_or_create(
             name=self.view_app,
             page=self

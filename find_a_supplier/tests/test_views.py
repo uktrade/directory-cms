@@ -27,7 +27,7 @@ def test_landing_page_exposes_industries(admin_client):
 def test_industry_landing_page_exposes_industries(admin_client):
     industry = factories.IndustryPageFactory(live=True)
     factories.IndustryPageFactory(live=False)
-    landing_page = factories.IndustryLandingPageFactory(live=True   )
+    landing_page = factories.IndustryLandingPageFactory(live=True)
 
     url = reverse('api:pages:detail', kwargs={'pk': landing_page.pk})
 

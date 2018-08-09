@@ -15,11 +15,3 @@ def create_historic_slug(sender, instance, *args, **kwargs):
         slug=instance.slug,
         page=instance
     )
-
-
-def assign_service_to_page(sender, instance, created, *args, **kwargs):
-    if created:
-        models.Service.objects.get_or_create(
-            slug=instance.view_app,
-            page=instance
-        )

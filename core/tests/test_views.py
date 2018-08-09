@@ -407,7 +407,8 @@ def test_lookup_by_slug_draft(page_with_reversion, client):
     param = permissions.DraftTokenPermisison.TOKEN_PARAM
 
     draft_response = client.get(url, {
-        param: page_with_reversion.get_draft_token()
+        param: page_with_reversion.get_draft_token(),
+        'service_name': cms.FIND_A_SUPPLIER
     })
     draft_data = draft_response.json()
     published_response = client.get(url, {'service_name': cms.FIND_A_SUPPLIER})

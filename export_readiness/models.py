@@ -5,7 +5,7 @@ from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 
 from django.db import models
-from directory_constants.constants import choices, cms
+from directory_constants.constants import cms
 
 from core.fields import (
     APIMarkdownToHTMLField, APIMetaField, MarkdownField, APIImageField)
