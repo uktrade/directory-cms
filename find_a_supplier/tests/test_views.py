@@ -7,12 +7,12 @@ from find_a_supplier import models
 
 
 @pytest.mark.django_db
-def test_landing_page_exposes_industries(admin_client):
+def test_landing_page_exposes_industries(admin_client, root_page):
     industry = factories.IndustryPageFactory(live=True, show_on_homepage=True)
     factories.IndustryPageFactory(live=False)
     factories.IndustryPageFactory(show_on_homepage=True, live=False)
     factories.IndustryPageFactory()
-    landing_page = factories.LandingPageFactory(live=True)
+    landing_page = factories.LandingPageFactory(live=True, parent=root_page)
 
     url = reverse('api:pages:detail', kwargs={'pk': landing_page.pk})
 
@@ -24,10 +24,13 @@ def test_landing_page_exposes_industries(admin_client):
 
 
 @pytest.mark.django_db
-def test_industry_landing_page_exposes_industries(admin_client):
+def test_industry_landing_page_exposes_industries(admin_client, root_page):
     industry = factories.IndustryPageFactory(live=True)
     factories.IndustryPageFactory(live=False)
-    landing_page = factories.IndustryLandingPageFactory(live=True)
+    landing_page = factories.IndustryLandingPageFactory(
+        live=True,
+        parent=root_page
+    )
 
     url = reverse('api:pages:detail', kwargs={'pk': landing_page.pk})
 
