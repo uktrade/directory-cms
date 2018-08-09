@@ -2,7 +2,7 @@
 
 [![circle-ci-image]][circle-ci]
 [![codecov-image]][codecov]
-[![gemnasium-image]][gemnasium]
+[![snyk-image]][snyk]
 
 **Directory CMS - the Department for International Trade (DIT)**  
 
@@ -117,5 +117,5 @@ The steps for generating a new key file can be found [here](https://cloud.google
 [codecov-image]: https://codecov.io/gh/uktrade/directory-cms/branch/master/graph/badge.svg
 [codecov]: https://codecov.io/gh/uktrade/directory-cms
 
-[gemnasium-image]: https://gemnasium.com/badges/github.com/uktrade/directory-cms.svg
-[gemnasium]: https://gemnasium.com/github.com/uktrade/directory-cms
+[snyk-image]: https://snyk.io/test/github/uktrade/directory-cms/badge.svg
+[snyk]: https://snyk.io/test/github/uktrade/directory-cms
