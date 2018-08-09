@@ -17,3 +17,7 @@ class CoreConfig(AppConfig):
                 receiver=signals.create_historic_slug,
                 sender=model_class
             )
+            post_save.connect(
+                receiver=signals.assign_service_to_page,
+                sender=model_class
+            )

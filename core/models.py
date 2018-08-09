@@ -43,7 +43,10 @@ class Service(models.Model):
         max_length=50,
         choices=choices.CMS_APP_CHOICES
     )
-    page = models.ManyToManyField(Page)
+    page = models.ForeignKey(Page)
+
+    class Meta:
+        unique_together = ('name', 'page')
 
 
 class BasePage(Page):
@@ -65,11 +68,13 @@ class BasePage(Page):
         super().__init__(*args, **kwargs)
 
     def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # we need to save the page to get an id before the many to many
+        # relationship can be used
         Service.objects.get_or_create(
             name=self.view_app,
             page=self
         )
-        return super().save(self, *args, **kwargs)
 
     @staticmethod
     def _slug_is_available(slug, parent, page=None):
