@@ -20,7 +20,7 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
     meta_fields = []
     known_query_parameters = (
         PagesAdminAPIEndpoint.known_query_parameters.union(
-            ['lang', 'draft_token', 'app_name']
+            ['lang', 'draft_token', 'service_name']
         )
     )
 
