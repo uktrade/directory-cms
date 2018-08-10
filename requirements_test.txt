@@ -30,7 +30,7 @@ django-modeltranslation==0.12.2  # via wagtail-modeltranslation
 django-pglocks==1.0.2
 django-taggit==0.22.2     # via wagtail
 django-treebeard==4.3     # via wagtail
-django==1.11.13
+django==1.11.15
 django_storages==1.6.5
 djangorestframework==3.8.2  # via sigauth, wagtail
 docker-compose==1.21.2
