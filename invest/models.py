@@ -7,8 +7,8 @@ from wagtail.core.models import Page
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmarkdown.blocks import MarkdownBlock
+from directory_constants.constants import cms
 
-from core import constants
 from core.fields import APIImageField, APIMetaField, \
     APIStreamFieldBlockField, MarkdownField, APIMarkdownToHTMLField
 from core.helpers import make_translated_interface
@@ -19,7 +19,7 @@ from . import fields
 
 
 class InvestApp(ExclusivePageMixin, BaseApp):
-    view_app = constants.INVEST
+    view_app = cms.INVEST
     slug_identity = 'invest-app'
 
     @classmethod
@@ -30,7 +30,7 @@ class InvestApp(ExclusivePageMixin, BaseApp):
 # Sector models
 
 class SectorLandingPage(ExclusivePageMixin, BasePage):
-    view_app = constants.INVEST
+    view_app = cms.INVEST
     subpage_types = ['invest.sectorPage']
     slug_identity = 'invest-sector-landing-page'
     view_path = 'industries/'
@@ -78,7 +78,7 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
 
 
 class RegionLandingPage(ExclusivePageMixin, BasePage):
-    view_app = constants.INVEST
+    view_app = cms.INVEST
     subpage_types = ['invest.sectorPage']
     slug_identity = 'invest-uk-region-landing-page'
     view_path = 'uk-regions/'
@@ -126,7 +126,7 @@ class RegionLandingPage(ExclusivePageMixin, BasePage):
 
 class SectorPage(BasePage):
     # Related sector are implemented as subpages
-    view_app = constants.INVEST
+    view_app = cms.INVEST
     subpage_types = ['invest.sectorPage']
     view_path = 'industries/'
 
@@ -387,7 +387,7 @@ class SectorPage(BasePage):
 # Setup guide models
 
 class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
-    view_app = constants.INVEST
+    view_app = cms.INVEST
     subpage_types = ['invest.SetupGuidePage']
     slug_identity = 'invest-setup-guide-landing-page'
     view_path = 'setup-guide-landing/'
@@ -426,7 +426,7 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
 
 
 class SetupGuidePage(BasePage):
-    view_app = constants.INVEST
+    view_app = cms.INVEST
     view_path = 'setup-guides/'
 
     description = models.TextField()  # appears in card on external pages
@@ -581,7 +581,7 @@ class SetupGuidePage(BasePage):
 
 
 class InvestHomePage(ExclusivePageMixin, BasePage):
-    view_app = constants.INVEST
+    view_app = cms.INVEST
     slug_identity = 'invest-home-page'
     view_path = ''
 
@@ -921,7 +921,7 @@ class InfoPage(BasePage):
     Markdown page - used for terms and conditions
     and privacy policy
     """
-    view_app = constants.INVEST
+    view_app = cms.INVEST
     view_path = 'info/'
     content = MarkdownField()
 

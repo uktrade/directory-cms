@@ -2,6 +2,7 @@ from functools import partial, reduce
 import hashlib
 from urllib.parse import urljoin, urlencode
 
+from directory_constants.constants import choices
 from modeltranslation.translator import translator
 from modeltranslation.utils import build_localized_fieldname
 from wagtail.admin.edit_handlers import FieldPanel
@@ -37,6 +38,17 @@ class ChoiceArrayField(ArrayField):
         return super(ArrayField, self).formfield(**defaults)
 
 
+class Service(models.Model):
+    name = models.CharField(
+        max_length=50,
+        choices=choices.CMS_APP_CHOICES
+    )
+    page = models.ForeignKey(Page)
+
+    class Meta:
+        unique_together = ('name', 'page')
+
+
 class BasePage(Page):
 
     class Meta:
@@ -46,7 +58,6 @@ class BasePage(Page):
     base_form_class = forms.WagtailAdminPageForm
     content_panels = []
     promote_panels = []
-
     read_only_fields = []
 
     def __init__(self, *args, **kwargs):
@@ -55,6 +66,15 @@ class BasePage(Page):
         #  goo.gl/yYD4pw
         self.clean = self._clean
         super().__init__(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # we need to save the page to get an id before
+        # the relationship following can be used
+        Service.objects.get_or_create(
+            name=self.view_app,
+            page=self
+        )
 
     @staticmethod
     def _slug_is_available(slug, parent, page=None):

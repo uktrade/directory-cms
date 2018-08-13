@@ -5,8 +5,8 @@ from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 
 from django.db import models
+from directory_constants.constants import cms
 
-from core import constants
 from core.fields import (
     APIMarkdownToHTMLField, APIMetaField, MarkdownField, APIImageField)
 from core.models import BaseApp, BasePage, ExclusivePageMixin
@@ -15,7 +15,7 @@ from core.panels import SearchEngineOptimisationPanel
 
 class ExportReadinessApp(ExclusivePageMixin, BaseApp):
     slug_identity = 'export-readiness-app'
-    view_app = constants.EXPORT_READINESS
+    view_app = cms.EXPORT_READINESS
 
     @classmethod
     def get_required_translatable_fields(cls):
@@ -24,7 +24,7 @@ class ExportReadinessApp(ExclusivePageMixin, BaseApp):
 
 class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
 
-    view_app = constants.EXPORT_READINESS
+    view_app = cms.EXPORT_READINESS
     view_path = 'terms-and-conditions/'
     slug_identity = 'terms-and-conditions'
 
@@ -55,7 +55,7 @@ class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
 
 class PrivacyAndCookiesPage(ExclusivePageMixin, BasePage):
 
-    view_app = constants.EXPORT_READINESS
+    view_app = cms.EXPORT_READINESS
     view_path = 'privacy-and-cookies/'
     slug_identity = 'privacy-and-cookies'
 
@@ -88,7 +88,7 @@ class PrivacyAndCookiesPage(ExclusivePageMixin, BasePage):
 
 class GetFinancePage(ExclusivePageMixin, BasePage):
 
-    view_app = constants.EXPORT_READINESS
+    view_app = cms.EXPORT_READINESS
     view_path = 'get-finance/'
     slug_identity = 'get-finance'
 
@@ -175,7 +175,7 @@ class GetFinancePage(ExclusivePageMixin, BasePage):
 
 class PerformanceDashboardPage(BasePage):
 
-    view_app = constants.EXPORT_READINESS
+    view_app = cms.EXPORT_READINESS
     view_path = ''
     subpage_types = ['export_readiness.PerformanceDashboardPage']
 
@@ -282,9 +282,10 @@ class PerformanceDashboardPage(BasePage):
     ]
 
 
-class PerformanceDashboardNotesPage(ExclusivePageMixin, BasePage):
+class PerformanceDashboardNotesPage(ExclusivePageMixin,
+                                    BasePage):
 
-    view_app = constants.EXPORT_READINESS
+    view_app = cms.EXPORT_READINESS
     view_path = 'performance-dashboard/'
     slug_identity = 'performance-dashboard-notes'
 

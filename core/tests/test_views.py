@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import call, patch
 
 from bs4 import BeautifulSoup
-from directory_constants.constants import sectors
+from directory_constants.constants import sectors, cms
 from modeltranslation.utils import build_localized_fieldname
 import wagtail_factories
 
@@ -353,70 +353,6 @@ def test_page_listing(translated_page, admin_client):
 
 
 @pytest.mark.django_db
-def test_lookup_by_page_type(translated_page, admin_client):
-    url = reverse(
-        'lookup-by-page-type',
-        kwargs={'page_type': 'find_a_supplier.IndustryPage'}
-    )
-
-    response = admin_client.get(url)
-
-    assert response.status_code == 200
-    assert response.json()['id'] == translated_page.id
-
-
-@pytest.mark.django_db
-def test_lookup_by_page_type_misisng_page(admin_client):
-    url = reverse(
-        'lookup-by-page-type',
-        kwargs={'page_type': 'find_a_supplier.IndustryPage'}
-    )
-
-    response = admin_client.get(url)
-
-    assert response.status_code == 404
-
-
-@pytest.mark.django_db
-def test_lookup_by_page_type_invalid_page_name(admin_client):
-    url = reverse(
-        'lookup-by-page-type',
-        kwargs={'page_type': 'find_a_supplier.IstryPage'}
-    )
-
-    response = admin_client.get(url)
-
-    assert response.status_code == 400
-
-
-@pytest.mark.django_db
-def test_lookup_by_page_type_draft(page_with_reversion, client):
-    url = reverse(
-        'lookup-by-page-type',
-        kwargs={'page_type': 'find_a_supplier.IndustryPage'}
-    )
-
-    param = permissions.DraftTokenPermisison.TOKEN_PARAM
-
-    draft_response = client.get(url, {
-        param: page_with_reversion.get_draft_token()
-    })
-    draft_data = draft_response.json()
-    published_response = client.get(url)
-    published_data = published_response.json()
-
-    assert draft_response.status_code == 200
-    assert draft_data['title'] == 'draft-title'
-    assert draft_data['meta']['url'] == page_with_reversion.get_url(
-        is_draft=True
-    )
-
-    assert published_response.status_code == 200
-    assert published_data['title'] == 'published-title'
-    assert published_data['meta']['url'] == page_with_reversion.get_url()
-
-
-@pytest.mark.django_db
 def test_translations_exposed(page, translated_page, settings, client):
     url = reverse('api:pages:detail', kwargs={'pk': translated_page.pk})
 
@@ -427,56 +363,35 @@ def test_translations_exposed(page, translated_page, settings, client):
     assert response.json()['meta']['languages'] == expected
 
 
-@pytest.mark.parametrize('language_code', (
-    'en-gb' 'de' 'ja', 'zh-hans', 'fr', 'es', 'pt', 'pt-br', 'ar',
-))
-@pytest.mark.django_db
-def test_lookup_by_page_type_translations_not_populated(
-    client, untranslated_page, language_code
-):
-    url = reverse(
-        'lookup-by-page-type',
-        kwargs={'page_type': 'find_a_supplier.IndustryPage'}
-    )
-    response = client.get(url, {'lang': language_code})
-
-    assert response.status_code == 200
-    assert response.json()['title'] == 'ENGLISH'
-
-
-@pytest.mark.parametrize('language_code,expected', (
-    ('en-gb', 'ENGLISH'),
-    ('de', 'GERMAN'),
-    ('ja', 'JAPANESE'),
-    ('zh-hans', 'SIMPLIFIED CHINESE'),
-    ('fr', 'FRENCH'),
-    ('es', 'SPANISH'),
-    ('pt', 'PORTUGUESE'),
-    ('pt-br', 'BRAZILIAN'),
-    ('ar', 'ARABIC'),
-))
-@pytest.mark.django_db
-def test_lookup_by_page_type_translations(
-    client, translated_page, language_code, expected
-):
-    url = reverse(
-        'lookup-by-page-type',
-        kwargs={'page_type': 'find_a_supplier.IndustryPage'}
-    )
-    response = client.get(url, {'lang': language_code})
-
-    assert response.status_code == 200
-    assert response.json()['title'] == expected
-
-
 @pytest.mark.django_db
 def test_lookup_by_slug(translated_page, admin_client):
-    url = reverse('lookup-by-slug', kwargs={'slug': translated_page.slug})
+    url = reverse(
+        'lookup-by-slug',
+        kwargs={
+            'slug': translated_page.slug,
+        }
+    )
 
-    response = admin_client.get(url)
+    response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
 
     assert response.status_code == 200
     assert response.json()['id'] == translated_page.id
+
+
+@pytest.mark.django_db
+def test_lookup_by_slug_missing_required_query_param(translated_page,
+                                                     admin_client):
+    url = reverse(
+        'lookup-by-slug',
+        kwargs={
+            'slug': translated_page.slug,
+        }
+    )
+
+    response = admin_client.get(url)
+
+    assert response.status_code == 400
+    assert response.json() == {'service_name': 'This parameter is required'}
 
 
 @pytest.mark.django_db
@@ -486,7 +401,7 @@ def test_lookup_by_slug_historic(translated_page, admin_client):
     translated_page.save()
     for slug in [old_slug, new_slug]:
         url = reverse('lookup-by-slug', kwargs={'slug': slug})
-        response = admin_client.get(url)
+        response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
 
         assert response.status_code == 200
         assert response.json()['id'] == translated_page.id
@@ -496,7 +411,7 @@ def test_lookup_by_slug_historic(translated_page, admin_client):
 def test_lookup_by_slug_missing_page(admin_client):
     url = reverse('lookup-by-slug', kwargs={'slug': 'thing'})
 
-    response = admin_client.get(url)
+    response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
 
     assert response.status_code == 404
 
@@ -508,10 +423,11 @@ def test_lookup_by_slug_draft(page_with_reversion, client):
     param = permissions.DraftTokenPermisison.TOKEN_PARAM
 
     draft_response = client.get(url, {
-        param: page_with_reversion.get_draft_token()
+        param: page_with_reversion.get_draft_token(),
+        'service_name': cms.FIND_A_SUPPLIER
     })
     draft_data = draft_response.json()
-    published_response = client.get(url)
+    published_response = client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
     published_data = published_response.json()
 
     assert draft_response.status_code == 200

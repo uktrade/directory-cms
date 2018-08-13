@@ -1,4 +1,3 @@
-from directory_constants.constants import choices
 from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList, InlinePanel
@@ -10,9 +9,9 @@ from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtailmedia.widgets import AdminMediaChooser
 from core.fields import MarkdownField
 
+from directory_constants.constants import choices, cms
 from django.db import models
 
-from core import constants
 from core.fields import (
     APIBreadcrumbsField, APIMarkdownToHTMLField, APIImageField, APIMetaField,
     APIVideoField
@@ -29,7 +28,7 @@ class ImageChooserPanel(ImageChooserPanel):
 
 class FindASupplierApp(ExclusivePageMixin, BaseApp):
     slug_identity = 'find-a-supplier-app'
-    view_app = constants.FIND_A_SUPPLIER
+    view_app = cms.FIND_A_SUPPLIER
 
     @classmethod
     def get_required_translatable_fields(cls):
@@ -101,7 +100,7 @@ class LandingPageArticleSummary(Orderable, ArticleSummary):
 
 class IndustryPage(BasePage):
 
-    view_app = constants.FIND_A_SUPPLIER
+    view_app = cms.FIND_A_SUPPLIER
     view_path = 'industries/'
 
     hero_image = models.ForeignKey(
@@ -325,7 +324,7 @@ class IndustryPage(BasePage):
 
 
 class IndustryLandingPage(ExclusivePageMixin, BasePage):
-    view_app = constants.FIND_A_SUPPLIER
+    view_app = cms.FIND_A_SUPPLIER
     view_path = 'industries/'
     slug_identity = 'industries-landing-page'
 
@@ -417,7 +416,7 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
 
 class IndustryArticlePage(BasePage):
 
-    view_app = constants.FIND_A_SUPPLIER
+    view_app = cms.FIND_A_SUPPLIER
     view_path = 'industry-articles/'
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -509,7 +508,7 @@ class IndustryArticlePage(BasePage):
 
 
 class LandingPage(ExclusivePageMixin, BasePage):
-    view_app = constants.FIND_A_SUPPLIER
+    view_app = cms.FIND_A_SUPPLIER
     view_path = '/'
     slug_identity = 'landing-page'
 
@@ -694,7 +693,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
 
 class IndustryContactPage(ExclusivePageMixin, BasePage):
 
-    view_app = constants.FIND_A_SUPPLIER
+    view_app = cms.FIND_A_SUPPLIER
     view_path = 'industries/contact/'
     slug_identity = 'industry-contact'
 
