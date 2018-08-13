@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('export_readiness', '0010_performancedashboardnotespage'),
-        ('core', '0007_auto_20180809_1215')
+        ('core', '0008_auto_20180809_1215')
     ]
 
     operations = [

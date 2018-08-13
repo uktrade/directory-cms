@@ -19,7 +19,7 @@ def set_url_path(apps, schema_manager):
     # where url_path is not present on the model: https://goo.gl/CkrUvU
 
     call_command('sync_page_translation_fields', '--noinput')
-    from wagtail.core.models import Page
+    page = apps.get_model('wagtailcore', 'Page')
     url_path = '/'
     field_names = (
         build_localized_fieldname('url_path', code)

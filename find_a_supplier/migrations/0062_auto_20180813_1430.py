@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('find_a_supplier', '0061_auto_20180604_1344'),
-        ('core', '0007_auto_20180809_1215')
+        ('core', '0008_auI tto_20180809_1215')
     ]
 
     operations = [
