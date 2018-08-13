@@ -5,6 +5,10 @@ from __future__ import unicode_literals
 from django.db import migrations
 
 
+# This migration was not doing anything (because of Wagtail magic)
+# The service migrations are in the single service folders
+
+
 def add_service_to_pages(apps, schema_editor):
     Service = apps.get_model('core', 'Service')
     Page = apps.get_model('wagtailcore', 'Page')
