@@ -243,18 +243,10 @@ integration_tests:
 
 compile_requirements:
 	pip-compile requirements.in
+	pip-compile requirements_test.in
 
 upgrade_requirements:
 	pip-compile --upgrade requirements.in
-
-compile_test_requirements:
-	pip-compile requirements_test.in
-
-upgrade_test_requirements:
 	pip-compile --upgrade requirements_test.in
-
-compile_all_requirements: compile_requirements compile_test_requirements
-
-upgrade_all_requirements: upgrade_requirements upgrade_test_requirements
 
 .PHONY: build clean test_requirements docker_run docker_debug docker_webserver_bash docker_test debug_webserver debug_test debug heroku_deploy_dev heroku_deploy_demo
