@@ -379,6 +379,22 @@ def test_lookup_by_slug(translated_page, admin_client):
 
 
 @pytest.mark.django_db
+def test_lookup_by_slug_missing_required_query_param(translated_page,
+                                                     admin_client):
+    url = reverse(
+        'lookup-by-slug',
+        kwargs={
+            'slug': translated_page.slug,
+        }
+    )
+
+    response = admin_client.get(url)
+
+    assert response.status_code == 400
+    assert response.json() == {'service_name': 'This parameter is required'}
+
+
+@pytest.mark.django_db
 def test_lookup_by_slug_historic(translated_page, admin_client):
     old_slug = translated_page.slug
     new_slug = translated_page.slug = 'new-slug'

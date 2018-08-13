@@ -1,3 +1,4 @@
+from rest_framework.exceptions import ValidationError
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.core.models import Page
 from wagtail.core.models import Orderable
@@ -64,6 +65,10 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
         return Page.objects.all()
 
     def get_object(self):
+        if 'service_name' not in self.request.query_params:
+            raise ValidationError(
+                detail={'service_name': 'This parameter is required'}
+            )
         instance = get_object_or_404(
             self.get_queryset(),
             historicslug__slug=self.kwargs['slug'],
