@@ -32,7 +32,7 @@ class InvestApp(ExclusivePageMixin, BaseApp):
 class SectorLandingPage(ExclusivePageMixin, BasePage):
     view_app = cms.INVEST
     subpage_types = ['invest.sectorPage']
-    slug_identity = 'invest-sector-landing-page'
+    slug_identity = 'sector-landing-page'
     view_path = 'industries/'
 
     # page fields
@@ -80,7 +80,7 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
 class RegionLandingPage(ExclusivePageMixin, BasePage):
     view_app = cms.INVEST
     subpage_types = ['invest.sectorPage']
-    slug_identity = 'invest-uk-region-landing-page'
+    slug_identity = 'uk-region-landing-page'
     view_path = 'uk-regions/'
 
     # page fields
@@ -389,7 +389,7 @@ class SectorPage(BasePage):
 class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
     view_app = cms.INVEST
     subpage_types = ['invest.SetupGuidePage']
-    slug_identity = 'invest-setup-guide-landing-page'
+    slug_identity = 'setup-guide-landing-page'
     view_path = 'setup-guide-landing/'
 
     # page fields
@@ -582,7 +582,7 @@ class SetupGuidePage(BasePage):
 
 class InvestHomePage(ExclusivePageMixin, BasePage):
     view_app = cms.INVEST
-    slug_identity = 'invest-home-page'
+    slug_identity = 'home-page'
     view_path = ''
 
     heading = models.CharField(max_length=255)

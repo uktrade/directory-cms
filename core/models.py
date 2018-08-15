@@ -23,8 +23,11 @@ from core import constants, forms
 
 
 class HistoricSlug(models.Model):
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField()
     page = models.ForeignKey(Page)
+
+    class Meta:
+        unique_together = ('slug', 'page')
 
 
 class ChoiceArrayField(ArrayField):
@@ -77,9 +80,26 @@ class BasePage(Page):
         )
 
     @staticmethod
-    def _slug_is_available(slug, parent, page=None):
-        is_currently_unique = Page._slug_is_available(slug, parent, page)
-        queryset = HistoricSlug.objects.filter(slug=slug).only('page__title')
+    def _is_currently_unique(slug, parent_page, page):
+        """Copied from _slug_is_available in wagtail,
+        with service_name filtering"""
+        if parent_page is None:
+            # the root page's slug can be whatever it likes...
+            return True
+
+        siblings = parent_page.get_children()
+        if page:
+            siblings = siblings.not_page(page)
+        return not siblings.filter(
+            slug=slug, service__name=page.view_app
+        ).exists()
+
+    def _slug_is_available(self, slug, parent, page=None):
+        is_currently_unique = self._is_currently_unique(slug, parent, page)
+        queryset = HistoricSlug.objects.filter(
+            slug=slug,
+            page__service__name=page.view_app
+        ).only('page__title')
         if page:
             queryset = queryset.exclude(page__pk=page.pk)
         is_historically_unique = (queryset.count() == 0)
