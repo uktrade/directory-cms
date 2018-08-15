@@ -7,6 +7,23 @@ from django.core.exceptions import ValidationError
 from django.utils import translation
 
 from find_a_supplier.tests.factories import IndustryPageFactory
+from invest.tests.factories import SectorPageFactory
+
+
+@pytest.mark.django_db
+def test_slugs_are_unique_in_the_same_service():
+    IndustryPageFactory(slug_en_gb='foo')
+    with pytest.raises(ValidationError) as excinfo:
+        IndustryPageFactory(slug_en_gb='foo')
+    assert 'This slug is already in use' in str(excinfo.value)
+
+
+@pytest.mark.django_db
+def test_slugs_are_not_unique_across_services(root_page):
+    page_one = IndustryPageFactory(slug_en_gb='foo', parent=root_page)
+    page_two = SectorPageFactory(slug_en_gb='foo', parent=root_page)
+    assert page_one.slug == 'foo'
+    assert page_two.slug == 'foo'
 
 
 @pytest.mark.django_db
