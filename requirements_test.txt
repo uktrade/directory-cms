@@ -23,6 +23,7 @@ directory_constants==7.1.0
 dj-database-url==0.4.2
 django-admin-ip-restrictor==0.2.1
 django-environ==0.4.5
+django-filter==1.0.4
 django-health-check==3.0.0  # via directory-healthcheck
 django-ipware==2.1.0      # via django-admin-ip-restrictor
 django-modelcluster==4.1  # via wagtail
