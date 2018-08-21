@@ -3,6 +3,7 @@ import hashlib
 from urllib.parse import urljoin, urlencode
 
 from directory_constants.constants import choices
+from modeltranslation import settings as modeltranslation_settings
 from modeltranslation.translator import translator
 from modeltranslation.utils import build_localized_fieldname
 from wagtail.admin.edit_handlers import FieldPanel
@@ -276,5 +277,8 @@ class BaseApp(Page):
     promote_panels = []
 
     def save(self, *args, **kwargs):
-        self.slug_en_gb = slugify(self.title_en_gb)
+        import ipdb; ipdb.set_trace()
+        for slug_field in (build_localized_fieldname('slug', lang) for lang in
+                           modeltranslation_settings.AVAILABLE_LANGUAGES):
+            setattr(self, slug_field, slugify(self.title_en_gb))
         return super().save(*args, **kwargs)

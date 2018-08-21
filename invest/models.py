@@ -49,7 +49,7 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
     image_panels = [
         ImageChooserPanel('hero_image'),
     ]
-    content_panels = Page.content_panels + [
+    content_panels = [
         FieldPanel('heading'),
         SearchEngineOptimisationPanel()
 
