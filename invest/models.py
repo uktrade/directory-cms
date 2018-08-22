@@ -3,7 +3,6 @@ from wagtail.api import APIField
 from wagtail.core.blocks import CharBlock, StructBlock, PageChooserBlock
 from wagtail.core.fields import StreamField
 from wagtail.admin.edit_handlers import FieldPanel, ObjectList, MultiFieldPanel
-from wagtail.core.models import Page
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmarkdown.blocks import MarkdownBlock
