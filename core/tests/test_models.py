@@ -144,7 +144,7 @@ def test_historically_unique_slug():
     page_one.slug_en_gb = 'slug-two'
     page_one.save()
 
-    expected = {'slug': 'This slug is already in use'}
+    expected = 'This slug is already in use'
     with pytest.raises(ValidationError, match=expected):
         IndustryPageFactory.create(
             slug_en_gb='slug-one',
