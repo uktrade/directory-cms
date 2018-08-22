@@ -13,9 +13,9 @@ def add_service_to_pages(apps, schema_editor):
     Service = apps.get_model('core', 'Service')
     Page = apps.get_model('wagtailcore', 'Page')
     for page in Page.objects.all():
-        if hasattr(page, 'view_app'):
+        if hasattr(page, 'service_name_value'):
             Service.objects.get_or_create(
-                name=page.view_app,
+                name=page.service_name_value,
                 page=page
             )
 

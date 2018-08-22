@@ -427,3 +427,9 @@ FEATURE_FLAGS = {
         'FEATURE_SEARCH_ENGINE_INDEXING_DISABLED', False
     )
 }
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+}

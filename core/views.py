@@ -5,14 +5,13 @@ from wagtail.core.models import Orderable
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-
 from django.shortcuts import get_object_or_404, Http404
 from django.template.response import TemplateResponse
 from django.utils import translation
 from django.views.generic.edit import FormView
 
 from conf.signature import SignatureCheckPermission
-from core import forms, helpers, permissions
+from core import filters, forms, helpers, permissions
 from core.upstream_serializers import UpstreamModelSerilaizer
 
 
@@ -60,6 +59,7 @@ class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
 class PageLookupBySlugAPIEndpoint(APIEndpointBase):
     lookup_url_kwarg = 'slug'
     detail_only_fields = ['id']
+    filter_class = filters.ServiceNameFilter
 
     def get_queryset(self):
         return Page.objects.all()
@@ -70,9 +70,8 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
                 detail={'service_name': 'This parameter is required'}
             )
         instance = get_object_or_404(
-            self.get_queryset(),
+            self.filter_queryset(self.get_queryset()),
             historicslug__slug=self.kwargs['slug'],
-            service__name=self.request.query_params['service_name']
         ).specific
         self.check_object_permissions(self.request, instance)
         instance = self.handle_serve_draft_object(instance)
