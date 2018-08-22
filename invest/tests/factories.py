@@ -5,6 +5,14 @@ import wagtail_factories
 from invest import models
 
 
+class InvestAppFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.InvestApp
+
+    title = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+
+
 class InfoPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
