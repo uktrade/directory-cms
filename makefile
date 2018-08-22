@@ -22,9 +22,6 @@ test:
 	$(COLLECT_STATIC) && $(DJANGO_MIGRATE) && $(SYNC_TRANSLATION_FIELDS) && $(FLAKE8) && $(PYTEST) && $(CODECOV)
 
 DJANGO_WEBSERVER := \
-	if [ "$$FEATURE_AUTO_TRANSLATE_ENABLED" != "" ]; then \
-		python manage.py generate_google_translate_credentials; \
-	fi && \
 	python manage.py collectstatic --noinput && \
 	python manage.py runserver 0.0.0.0:$$PORT
 

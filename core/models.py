@@ -14,21 +14,26 @@ from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.db import IntegrityError, transaction
 from django.forms import MultipleChoiceField
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.text import mark_safe, slugify
-
 from core import constants, forms
 
 
 class HistoricSlug(models.Model):
-    slug = models.SlugField()
+    slug = models.SlugField(db_index=True)
+    service_name = models.CharField(
+        max_length=50,
+        choices=choices.CMS_APP_CHOICES,
+        null=True
+    )
     page = models.ForeignKey(Page)
 
     class Meta:
-        unique_together = ('slug', 'page')
+        unique_together = ('slug', 'service_name')
 
 
 class ChoiceArrayField(ArrayField):
@@ -42,18 +47,13 @@ class ChoiceArrayField(ArrayField):
         return super(ArrayField, self).formfield(**defaults)
 
 
-class Service(models.Model):
-    name = models.CharField(
-        max_length=50,
-        choices=choices.CMS_APP_CHOICES
-    )
-    page = models.ForeignKey(Page)
-
-    class Meta:
-        unique_together = ('name', 'page')
-
-
 class BasePage(Page):
+
+    service_name = models.CharField(
+        max_length=100,
+        choices=choices.CMS_APP_CHOICES,
+        db_index=True,
+    )
 
     class Meta:
         abstract = True
@@ -68,50 +68,36 @@ class BasePage(Page):
         self.signer = signing.Signer()
         #  workaround modeltranslation patching Page.clean in an unpythonic way
         #  goo.gl/yYD4pw
-        self.clean = self._clean
+        self.clean = lambda: None
         super().__init__(*args, **kwargs)
 
+    @transaction.atomic
     def save(self, *args, **kwargs):
+        if self._state.adding:
+            self.service_name = self.service_name_value
         super().save(*args, **kwargs)
-        # we need to save the page to get an id before
-        # the relationship following can be used
-        Service.objects.get_or_create(
-            name=self.view_app,
-            page=self
-        )
+        try:
+            HistoricSlug.objects.get_or_create(
+                slug=self.slug,
+                page=self,
+                defaults={
+                    'service_name': self.service_name,
+                }
+            )
+        except IntegrityError:
+            raise ValidationError({'slug': 'This slug is already in use'})
 
     @staticmethod
-    def _is_currently_unique(slug, parent_page, page):
-        """Copied from _slug_is_available in wagtail,
-        with service_name filtering"""
-        if parent_page is None:
-            # the root page's slug can be whatever it likes...
-            return True
-
-        siblings = parent_page.get_children()
-        if page:
-            siblings = siblings.not_page(page)
-        return not siblings.filter(
-            slug=slug, service__name=page.view_app
-        ).exists()
-
-    def _slug_is_available(self, slug, parent, page=None):
-        is_currently_unique = self._is_currently_unique(slug, parent, page)
+    def _slug_is_available(slug, parent, page=None):
+        is_currently_unique = Page._slug_is_available(slug, parent, page)
         queryset = HistoricSlug.objects.filter(
-            slug=slug,
-            page__service__name=page.view_app
-        ).only('page__title')
+            slug=slug
+        )
         if page:
             queryset = queryset.exclude(page__pk=page.pk)
+            queryset = queryset.filter(service_name=page.service_name_value)
         is_historically_unique = (queryset.count() == 0)
         return is_currently_unique and is_historically_unique
-
-    def _clean(self, *args, **kwargs):
-        if not self._slug_is_available(self.slug, self.get_parent(), self):
-            field_name = build_localized_fieldname(
-                'slug', lang=settings.LANGUAGE_CODE
-            )
-            raise ValidationError({field_name: "This slug is already in use"})
 
     def get_draft_token(self):
         return self.signer.sign(self.pk)
@@ -130,7 +116,7 @@ class BasePage(Page):
         return [self.view_path, slug + '/']
 
     def get_url(self, is_draft=False, language_code=settings.LANGUAGE_CODE):
-        domain = dict(constants.APP_URLS)[self.view_app]
+        domain = dict(constants.APP_URLS)[self.service_name_value]
         url_path_parts = self.get_url_path_parts(language_code=language_code)
         url = reduce(urljoin, [domain] + url_path_parts)
         querystring = {}
@@ -257,7 +243,7 @@ class ExclusivePageMixin:
 
 
 class BaseApp(Page):
-    view_app = None
+    service_name_value = None
     base_form_class = forms.BaseAppAdminPageForm
 
     class Meta:
@@ -265,9 +251,10 @@ class BaseApp(Page):
 
     @classmethod
     def allowed_subpage_models(cls):
+        allowed_name = cls.service_name_value
         return [
             model for model in super().allowed_subpage_models()
-            if getattr(model, 'view_app', None) == cls.view_app
+            if getattr(model, 'service_name_value', None) == allowed_name
         ]
 
     settings_panels = [

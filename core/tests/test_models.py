@@ -39,11 +39,8 @@ def test_base_model_check_invalid_draft_token(page):
 
 
 @pytest.mark.django_db
-def test_base_model_create_service_on_save(page):
-    assert page.service_set.all().count() == 1
-    service = page.service_set.all()[0]
-    assert service.page == page
-    assert service.name == page.view_app
+def test_base_model_sets_service_name_on_save(page):
+    assert page.service_name == page.service_name_value
 
 
 @pytest.mark.django_db
@@ -147,17 +144,16 @@ def test_historically_unique_slug():
     page_one.slug_en_gb = 'slug-two'
     page_one.save()
 
-    expected = {'slug_en_gb': ['This slug is already in use']}
-    with pytest.raises(ValidationError) as error:
+    expected = 'This slug is already in use'
+    with pytest.raises(ValidationError, match=expected):
         IndustryPageFactory.create(
             slug_en_gb='slug-one',
             title_en_gb='2',
             depth=2,
             path='/thing1',
         )
-        assert error.value.message_dict == expected
 
-    with pytest.raises(ValidationError) as error:
+    with pytest.raises(ValidationError, match=expected):
         IndustryPageFactory.create(
             slug_en_gb='slug-two',
             title_en_gb='3',
@@ -173,3 +169,4 @@ def test_base_app_slugs_are_created_in_all_languages(root_page):
     app = InvestAppFactory(title='foo', parent=root_page)
     assert app.slug_de == 'foo'
     assert app.slug_en_gb == 'foo'
+    

@@ -28,7 +28,7 @@ class ImageChooserPanel(ImageChooserPanel):
 
 class FindASupplierApp(ExclusivePageMixin, BaseApp):
     slug_identity = 'find-a-supplier-app'
-    view_app = cms.FIND_A_SUPPLIER
+    service_name_value = cms.FIND_A_SUPPLIER
 
     @classmethod
     def get_required_translatable_fields(cls):
@@ -100,7 +100,7 @@ class LandingPageArticleSummary(Orderable, ArticleSummary):
 
 class IndustryPage(BasePage):
 
-    view_app = cms.FIND_A_SUPPLIER
+    service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/'
 
     hero_image = models.ForeignKey(
@@ -324,7 +324,7 @@ class IndustryPage(BasePage):
 
 
 class IndustryLandingPage(ExclusivePageMixin, BasePage):
-    view_app = cms.FIND_A_SUPPLIER
+    service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/'
     slug_identity = 'industries-landing-page'
 
@@ -416,7 +416,7 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
 
 class IndustryArticlePage(BasePage):
 
-    view_app = cms.FIND_A_SUPPLIER
+    service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industry-articles/'
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -508,7 +508,7 @@ class IndustryArticlePage(BasePage):
 
 
 class LandingPage(ExclusivePageMixin, BasePage):
-    view_app = cms.FIND_A_SUPPLIER
+    service_name_value = cms.FIND_A_SUPPLIER
     view_path = '/'
     slug_identity = 'landing-page'
 
@@ -693,7 +693,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
 
 class IndustryContactPage(ExclusivePageMixin, BasePage):
 
-    view_app = cms.FIND_A_SUPPLIER
+    service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/contact/'
     slug_identity = 'industry-contact'
 

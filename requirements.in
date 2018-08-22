@@ -21,3 +21,4 @@ wagtail-markdown==0.5a3
 wagtailmedia==0.2.0
 pytube==9.2.2
 directory-components==2.8.1
+django-filter==1.0.4
