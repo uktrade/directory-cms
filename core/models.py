@@ -277,7 +277,6 @@ class BaseApp(Page):
     promote_panels = []
 
     def save(self, *args, **kwargs):
-        import ipdb; ipdb.set_trace()
         for slug_field in (build_localized_fieldname('slug', lang) for lang in
                            modeltranslation_settings.AVAILABLE_LANGUAGES):
             setattr(self, slug_field, slugify(self.title_en_gb))
