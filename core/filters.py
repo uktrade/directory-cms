@@ -9,7 +9,7 @@ from django.db.models import Q
 from core.models import BasePage
 
 
-class ServiceNameFilter(django_filters.rest_framework.FilterSet):
+class ServiceNameFilter(django_filters.FilterSet):
     service_name = django_filters.CharFilter(
         name='service_name', method='filter_service_name',
     )
@@ -28,3 +28,8 @@ class ServiceNameFilter(django_filters.rest_framework.FilterSet):
     class Meta:
         model = Page
         fields = ['service_name']
+
+
+class ServiceNameDRFFilter(django_filters.rest_framework.FilterSet,
+                           ServiceNameFilter):
+    pass

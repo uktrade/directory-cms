@@ -59,7 +59,7 @@ class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
 class PageLookupBySlugAPIEndpoint(APIEndpointBase):
     lookup_url_kwarg = 'slug'
     detail_only_fields = ['id']
-    filter_class = filters.ServiceNameFilter
+    filter_class = filters.ServiceNameDRFFilter
 
     def get_queryset(self):
         return Page.objects.all()
@@ -121,7 +121,7 @@ class UpstreamBaseView(FormView):
         return super().get_context_data(
             environment_form=self.environment_form_class(),
             page=page,
-            app_label=page._meta.app_label,
+            service_name=page._meta.app_label,
             model_name=page._meta.model_name,
             serialized_relations=self.serialize_relations(),
             serialized_object=self.serialize_object(),
@@ -141,6 +141,7 @@ class UpdateUpstreamView(UpstreamBaseView):
 class PreloadPageView(FormView):
     template_name = 'wagtailadmin/pages/create.html'
     update_template_name = 'wagtailadmin/pages/edit.html'
+    filter_class = filters.ServiceNameDRFFilter
 
     def dispatch(self, *args, **kwargs):
         self.page_content_type = self.get_page_content_type()
@@ -150,7 +151,7 @@ class PreloadPageView(FormView):
     def get_page_content_type(self):
         try:
             return ContentType.objects.get_by_natural_key(
-                self.kwargs['app_name'],
+                self.kwargs['service_name'],
                 self.kwargs['model_name'],
             )
         except ContentType.DoesNotExist:
@@ -172,7 +173,14 @@ class PreloadPageView(FormView):
         return page_class.get_edit_handler().get_form_class()
 
     def get_parent(self):
-        return get_object_or_404(Page, id=self.kwargs['parent_pk']).specific
+        filter = filters.ServiceNameFilter(
+            data={'service_name': self.kwargs['service_name']},
+            queryset=Page.objects.all()
+        )
+        return get_object_or_404(
+            filter.queryset,
+            slug=self.kwargs['parent_slug'],
+        ).specific
 
     def get_context_data(self, form):
         page_class = self.page_content_type.model_class()
@@ -182,7 +190,7 @@ class PreloadPageView(FormView):
         form = form_class(
             data=form.data,
             instance=self.page,
-            parent_page=parent_page
+            parent_slug=parent_page.slug,
         )
         edit_handler = edit_handler.bind_to_instance(
             instance=self.page,

@@ -11,6 +11,7 @@ from django.urls import reverse
 
 from core import helpers, permissions, views
 from conf.signature import SignatureCheckPermission
+from find_a_supplier.tests.factories import IndustryLandingPageFactory
 
 
 @pytest.fixture
@@ -150,18 +151,18 @@ def test_upstream_anon(client, translated_page, settings, image, url_name):
     (False, 'wagtailadmin/pages/create.html'),
 ))
 def test_add_page_prepopulate(
-    translated_page, settings, admin_client, image, cluster_data,
-    include_slug, expected_template, root_page
+    translated_fas_industry_page, settings, admin_client, image, cluster_data,
+    include_slug, expected_template, fas_industry_landing_page
 ):
     url = reverse(
         'preload-add-page',
         kwargs={
-            'app_name': translated_page._meta.app_label,
-            'model_name': translated_page._meta.model_name,
-            'parent_pk': root_page.pk,
+            'service_name': translated_fas_industry_page._meta.app_label,
+            'model_name': translated_fas_industry_page._meta.model_name,
+            'parent_slug': fas_industry_landing_page.slug,
         }
     )
-    model_as_dict = model_to_dict(translated_page, exclude=[
+    model_as_dict = model_to_dict(translated_fas_industry_page, exclude=[
         'go_live_at',
         'expire_at',
         'slug_en_gb',
@@ -186,7 +187,7 @@ def test_add_page_prepopulate(
     }
     if include_slug:
         post_data['slug_en_gb'] = expected_data['slug_en_gb'] = (
-            translated_page.slug_en_gb
+            translated_fas_industry_page.slug_en_gb
         )
 
     response = admin_client.post(url, post_data)
