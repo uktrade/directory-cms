@@ -160,7 +160,6 @@ def test_historically_unique_slug():
             depth=2,
             path='/thing2',
         )
-        assert error.value.message_dict == expected
 
 
 @pytest.mark.xfail
@@ -169,4 +168,3 @@ def test_base_app_slugs_are_created_in_all_languages(root_page):
     app = InvestAppFactory(title='foo', parent=root_page)
     assert app.slug_de == 'foo'
     assert app.slug_en_gb == 'foo'
-    
