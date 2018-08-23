@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django.utils import translation
 
 from find_a_supplier.tests.factories import IndustryPageFactory
-from invest.tests.factories import SectorPageFactory
+from invest.tests.factories import InvestAppFactory, SectorPageFactory
 
 
 @pytest.mark.django_db
@@ -160,3 +160,11 @@ def test_historically_unique_slug():
             depth=2,
             path='/thing2',
         )
+
+
+@pytest.mark.xfail
+@pytest.mark.django_db
+def test_base_app_slugs_are_created_in_all_languages(root_page):
+    app = InvestAppFactory(title='foo', parent=root_page)
+    assert app.slug_de == 'foo'
+    assert app.slug_en_gb == 'foo'
