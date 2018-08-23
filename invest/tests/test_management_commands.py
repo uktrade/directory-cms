@@ -5,7 +5,7 @@ from . import factories
 
 
 @pytest.mark.django_db
-def test_update_invest_slugs(migration, root_page):
+def test_update_invest_slugs(root_page):
     page_one = factories.InfoPageFactory(
         slug='invest-foo-bar',
         slug_en_gb='invest-foo-bar',
