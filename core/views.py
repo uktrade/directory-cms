@@ -190,7 +190,7 @@ class PreloadPageView(FormView):
         form = form_class(
             data=form.data,
             instance=self.page,
-            parent_slug=parent_page.slug,
+            parent_page=parent_page,
         )
         edit_handler = edit_handler.bind_to_instance(
             instance=self.page,

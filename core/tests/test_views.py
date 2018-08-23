@@ -210,18 +210,19 @@ def test_add_page_prepopulate(
 
 @pytest.mark.django_db
 def test_add_page_prepopulate_missing_content_type(
-    translated_page, settings, admin_client, root_page
+        translated_fas_industry_page, settings, admin_client,
+        fas_industry_landing_page
 ):
     url = reverse(
         'preload-add-page',
         kwargs={
-            'app_name': translated_page._meta.app_label,
-            'model_name': 'doesnotexist',
-            'parent_pk': root_page.pk,
+            'service_name': translated_fas_industry_page._meta.app_label,
+            'model_name': translated_fas_industry_page._meta.model_name,
+            'parent_slug': fas_industry_landing_page.slug,
         }
     )
 
-    data = model_to_dict(translated_page, exclude=[
+    data = model_to_dict(translated_fas_industry_page, exclude=[
         'go_live_at',
         'expire_at',
         'hero_image',
