@@ -9,7 +9,7 @@ from directory_constants.constants import cms
 
 from core.fields import (
     APIMarkdownToHTMLField, APIMetaField, MarkdownField, APIImageField)
-from core.models import BaseApp, BasePage, ExclusivePageMixin
+from core.models import BaseApp, BasePage, BreadcrumbMixin, ExclusivePageMixin
 from core.panels import SearchEngineOptimisationPanel
 
 
@@ -86,7 +86,7 @@ class PrivacyAndCookiesPage(ExclusivePageMixin, BasePage):
     ]
 
 
-class GetFinancePage(ExclusivePageMixin, BasePage):
+class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
 
     service_name_value = cms.EXPORT_READINESS
     view_path = 'get-finance/'
@@ -108,7 +108,6 @@ class GetFinancePage(ExclusivePageMixin, BasePage):
         related_name='+'
     )
 
-    breadcrumbs_label = models.CharField(max_length=50)
     banner_content = MarkdownField()
     section_one_content = MarkdownField()
     section_two_content = MarkdownField()

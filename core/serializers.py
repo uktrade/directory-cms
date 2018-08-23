@@ -96,25 +96,22 @@ class APIQuerysetSerializer(fields.ListField):
 
 
 class APIBreadcrumbsSerializer(fields.DictField):
-    def __init__(self, app_label, *args, **kwargs):
-        self.app_label = app_label
+    def __init__(self, service_name, *args, **kwargs):
+        self.service_name = service_name
         super().__init__(*args, **kwargs)
 
     def get_attribute(self, instance):
+        service_name = self.service_name
         queryset = (
-            Page.objects.all()
-                .filter(content_type__app_label=self.app_label)
-                .only('breadcrumbs_label', 'slug')
-                .select_related('content_tyle__model')
-                .specific()
+            models.Breadcrumb.objects
+               .select_related('content_type')
+               .filter(service_name=service_name)
         )
         return {
             item.content_type.model: {
-                'label': item.breadcrumbs_label, 'slug': item.slug,
+                'label': item.label, 'slug': item.slug,
             }
             for item in queryset
-            if isinstance(item, models.ExclusivePageMixin)
-            and isinstance(item, models.BasePage)
         }
 
 

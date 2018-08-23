@@ -93,7 +93,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'wagtail.core.middleware.SiteMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'core.middleware.LocaleQuerystringMiddleware',
@@ -426,7 +425,8 @@ FEATURE_FLAGS = {
     # used by directory-components
     'SEARCH_ENGINE_INDEXING_OFF': env.bool(
         'FEATURE_SEARCH_ENGINE_INDEXING_DISABLED', False
-    )
+    ),
+    'DEBUG_TOOLBAR_ON': env.bool('FEATURE_DEBUG_TOOLBAR_ENABLED', False)
 }
 
 REST_FRAMEWORK = {
@@ -434,3 +434,12 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
 }
+
+if FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
+    INSTALLED_APPS += ['debug_toolbar']
+
+    MIDDLEWARE_CLASSES = (
+        ['debug_toolbar.middleware.DebugToolbarMiddleware'] + 
+        MIDDLEWARE_CLASSES
+    )
+    INTERNAL_IPS = '127.0.0.1'

@@ -22,6 +22,7 @@ directory-healthcheck==0.4.2
 directory_constants==7.1.0
 dj-database-url==0.4.2
 django-admin-ip-restrictor==0.2.1
+django-debug-toolbar==1.9.1
 django-environ==0.4.5
 django-filter==1.0.4
 django-health-check==3.0.0  # via directory-healthcheck
@@ -89,6 +90,7 @@ rsa==3.4.2                # via google-auth
 s3transfer==0.1.13        # via boto3
 sigauth==2.1.2
 six==1.11.0               # via bleach, docker, docker-compose, docker-pycreds, dockerpty, fake-factory, faker, freezegun, google-api-core, google-auth, html5lib, mohawk, more-itertools, protobuf, pytest, python-dateutil, requests-mock, websocket-client
+sqlparse==0.2.4           # via django-debug-toolbar
 termcolor==1.1.0          # via pytest-sugar
 text-unidecode==1.2       # via faker
 texttable==0.9.1          # via docker-compose

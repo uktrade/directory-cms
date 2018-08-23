@@ -12,6 +12,10 @@ from wagtail.core.models import Page
 from django.core import signing
 from django.core.exceptions import ValidationError
 from django.conf import settings
+from django.contrib.contenttypes.fields import (
+    GenericForeignKey, GenericRelation
+)
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db import IntegrityError, transaction
@@ -21,6 +25,21 @@ from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.text import mark_safe, slugify
 from core import constants, forms
+
+
+class Breadcrumb(models.Model):
+    service_name = models.CharField(
+        max_length=50,
+        choices=choices.CMS_APP_CHOICES,
+        null=True,
+        db_index=True
+    )
+    label = models.CharField(max_length=50)
+    slug = models.SlugField()
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    page = GenericForeignKey('content_type', 'object_id')
 
 
 class HistoricSlug(models.Model):
@@ -48,11 +67,11 @@ class ChoiceArrayField(ArrayField):
 
 
 class BasePage(Page):
-
     service_name = models.CharField(
         max_length=100,
         choices=choices.CMS_APP_CHOICES,
         db_index=True,
+        null=True,
     )
 
     class Meta:
@@ -240,6 +259,29 @@ class ExclusivePageMixin:
 
     def get_url_path_parts(self, *args, **kwargs):
         return [self.view_path]
+
+
+class BreadcrumbMixin(models.Model):
+    """Optimization for retrieving breadcrumbs for a service. Reduces SQL
+    calls from >30 to 11 in APIBreadcrumbsSerializer compared with filtering
+    Page and calling `specific()` and then retrieving the breadcrumbs labels.
+    """
+
+    class Meta:
+        abstract = True
+
+    breadcrumbs_label = models.CharField(max_length=50)
+    breadcrumb = GenericRelation(Breadcrumb)
+
+    def save(self, *args, **kwargs):
+        self.breadcrumb.update_or_create(
+            defaults={
+                'service_name': self.service_name_value,
+                'label': self.breadcrumbs_label,
+                'slug': self.slug,
+            }
+        )
+        super().save(*args, **kwargs)
 
 
 class BaseApp(Page):
