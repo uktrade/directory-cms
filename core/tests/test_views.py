@@ -11,7 +11,6 @@ from django.urls import reverse
 
 from core import helpers, permissions, views
 from conf.signature import SignatureCheckPermission
-from find_a_supplier.tests.factories import IndustryLandingPageFactory
 
 
 @pytest.fixture
@@ -210,8 +209,8 @@ def test_add_page_prepopulate(
 
 @pytest.mark.django_db
 def test_add_page_prepopulate_missing_content_type(
-        translated_fas_industry_page, settings, admin_client,
-        fas_industry_landing_page
+    translated_fas_industry_page, settings, admin_client,
+    fas_industry_landing_page, cluster_data
 ):
     url = reverse(
         'preload-add-page',
@@ -227,7 +226,7 @@ def test_add_page_prepopulate_missing_content_type(
         'expire_at',
         'hero_image',
     ])
-    response = admin_client.post(url, data)
+    response = admin_client.post(url, {**data, **cluster_data})
 
     assert response.status_code == 404
 
