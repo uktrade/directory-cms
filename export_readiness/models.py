@@ -108,6 +108,7 @@ class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         related_name='+'
     )
 
+    breadcrumbs_label = models.CharField(max_length=50)
     banner_content = MarkdownField()
     section_one_content = MarkdownField()
     section_two_content = MarkdownField()

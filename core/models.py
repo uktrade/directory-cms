@@ -262,26 +262,28 @@ class ExclusivePageMixin:
 
 
 class BreadcrumbMixin(models.Model):
-    """Optimization for retrieving breadcrumbs for a service. Reduces SQL
-    calls from >30 to 11 in APIBreadcrumbsSerializer compared with filtering
+    """Optimization for retrieving breadcrumbs that a service will display
+    on a global navigation menu e.g., home > industry > contact us. Reduces SQL
+    calls from >12 to 1 in APIBreadcrumbsSerializer compared with filtering
     Page and calling `specific()` and then retrieving the breadcrumbs labels.
     """
 
     class Meta:
         abstract = True
 
-    breadcrumbs_label = models.CharField(max_length=50)
     breadcrumb = GenericRelation(Breadcrumb)
 
     def save(self, *args, **kwargs):
-        self.breadcrumb.update_or_create(
-            defaults={
-                'service_name': self.service_name_value,
-                'label': self.breadcrumbs_label,
-                'slug': self.slug,
-            }
-        )
         super().save(*args, **kwargs)
+        defaults = {
+            'service_name': self.service_name_value,
+            'slug': self.slug,
+        }
+        for lang in modeltranslation_settings.AVAILABLE_LANGUAGES:
+            field_name = build_localized_fieldname('breadcrumbs_label', lang)
+            value = getattr(self, field_name, '')
+            defaults[build_localized_fieldname('label', lang)] = value
+        self.breadcrumb.update_or_create(defaults=defaults)
 
 
 class BaseApp(Page):

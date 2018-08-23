@@ -3,7 +3,6 @@ from django.utils import translation
 from rest_framework import fields
 from rest_framework.serializers import ValidationError
 from wagtail.core.blocks import CharBlock, PageChooserBlock
-from wagtail.core.models import Page
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
@@ -104,8 +103,8 @@ class APIBreadcrumbsSerializer(fields.DictField):
         service_name = self.service_name
         queryset = (
             models.Breadcrumb.objects
-               .select_related('content_type')
-               .filter(service_name=service_name)
+            .select_related('content_type')
+            .filter(service_name=service_name)
         )
         return {
             item.content_type.model: {

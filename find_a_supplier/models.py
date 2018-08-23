@@ -100,7 +100,7 @@ class LandingPageArticleSummary(Orderable, ArticleSummary):
     )
 
 
-class IndustryPage(BreadcrumbMixin, BasePage):
+class IndustryPage(BasePage):
 
     service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/'
@@ -168,6 +168,7 @@ class IndustryPage(BreadcrumbMixin, BasePage):
         related_name='+',
         verbose_name='Column three image',
     )
+    breadcrumbs_label = models.CharField(max_length=50)
     search_filter_sector = ChoiceArrayField(
         base_field=models.CharField(
             max_length=255,
@@ -347,6 +348,7 @@ class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         max_length=255,
         blank=True
     )
+    breadcrumbs_label = models.CharField(max_length=50)
     hero_title = models.CharField(max_length=500)
     proposition_text = models.CharField(max_length=500)
     call_to_action_text = models.CharField(max_length=500)
@@ -414,11 +416,12 @@ class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     )
 
 
-class IndustryArticlePage(BreadcrumbMixin, BasePage):
+class IndustryArticlePage(BasePage):
 
     service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industry-articles/'
 
+    breadcrumbs_label = models.CharField(max_length=50)
     introduction_title = models.CharField(max_length=255)
     body = MarkdownField(blank=True)
     author_name = models.CharField(max_length=255)
@@ -529,6 +532,7 @@ class LandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         max_length=255,
         blank=True
     )
+    breadcrumbs_label = models.CharField(max_length=50)
     hero_text = MarkdownField(blank=False)
     search_field_placeholder = models.CharField(max_length=500)
     search_button_text = models.CharField(max_length=500)
@@ -695,6 +699,7 @@ class IndustryContactPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     view_path = 'industries/contact/'
     slug_identity = 'industry-contact'
 
+    breadcrumbs_label = models.CharField(max_length=50)
     introduction_text = MarkdownField(blank=True)
     submit_button_text = models.CharField(max_length=100)
     success_message_text = MarkdownField(blank=True)

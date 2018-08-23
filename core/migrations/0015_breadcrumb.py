@@ -19,10 +19,11 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('service_name', models.CharField(choices=[('FIND_A_SUPPLIER', 'Find a Supplier'), ('EXPORT_READINESS', 'Export Readiness'), ('INVEST', 'Invest')], db_index=True, max_length=50, null=True)),
-                ('label', models.CharField(max_length=50)),
-                ('slug', models.SlugField()),
                 ('object_id', models.PositiveIntegerField()),
                 ('content_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='contenttypes.ContentType')),
+                ('label', models.CharField(default=None, max_length=50)),
+                ('slug', models.SlugField(default=None)),
             ],
+
         ),
     ]
