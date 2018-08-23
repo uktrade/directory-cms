@@ -216,7 +216,7 @@ def test_add_page_prepopulate_missing_content_type(
         'preload-add-page',
         kwargs={
             'service_name': translated_fas_industry_page._meta.app_label,
-            'model_name': translated_fas_industry_page._meta.model_name,
+            'model_name': 'doesnotexist',
             'parent_slug': fas_industry_landing_page.slug,
         }
     )
