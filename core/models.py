@@ -242,7 +242,7 @@ class ExclusivePageMixin:
         return [self.view_path]
 
 
-class BaseApp(BasePage):
+class BaseApp(Page):
     service_name_value = None
     base_form_class = forms.BaseAppAdminPageForm
 
