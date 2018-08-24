@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.utils import translation
 from rest_framework import fields
 from rest_framework.serializers import ValidationError
 from wagtail.core.blocks import CharBlock, PageChooserBlock
@@ -26,9 +25,9 @@ class APIMetaSerializer(fields.DictField):
             ],
             'url': instance.get_url(
                 is_draft=helpers.is_draft_requested(self.context['request']),
-                language_code=translation.get_language(),
+                language_code=settings.LANGUAGE_CODE,
             ),
-            'slug': instance.slug,
+            'slug': instance.slug_en_gb,
             'localised_urls': instance.get_localized_urls(),
             'pk': instance.pk,
             'draft_token': (instance.get_draft_token()

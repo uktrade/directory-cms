@@ -1,6 +1,8 @@
 import pytest
 from rest_framework.serializers import Serializer
 
+from django.utils import translation
+
 from core import permissions, serializers
 from find_a_supplier.tests import factories
 
@@ -52,6 +54,39 @@ def test_meta_serializer(page, rf):
                 )
             ],
             'slug': 'test-slug',
+            'pk': page.pk,
+        }
+    }
+
+
+@pytest.mark.django_db
+def test_meta_serializer_slug_translation(page, rf):
+    page.slug_en_gb = 'test-slug-en'
+    page.slug_de = 'test-slug-de'
+    page.pk = 4
+
+    class TestSerializer(Serializer):
+        meta = serializers.APIMetaSerializer()
+
+    with translation.override('de'):
+        serializer = TestSerializer(
+            instance=page,
+            context={'request': rf.get('/')}
+        )
+        data = serializer.data
+
+    assert data == {
+        'meta': {
+            'draft_token': None,
+            'languages': [('en-gb', 'English')],
+            'url': 'http://supplier.trade.great:8005/industries/test-slug-en/',
+            'localised_urls': [
+                (
+                    'en-gb',
+                    'http://supplier.trade.great:8005/industries/test-slug-en/'
+                )
+            ],
+            'slug': 'test-slug-en',
             'pk': page.pk,
         }
     }
