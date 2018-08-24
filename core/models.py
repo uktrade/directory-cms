@@ -279,10 +279,13 @@ class BreadcrumbMixin(models.Model):
             'service_name': self.service_name_value,
             'slug': self.slug,
         }
-        for lang in modeltranslation_settings.AVAILABLE_LANGUAGES:
-            field_name = build_localized_fieldname('breadcrumbs_label', lang)
-            value = getattr(self, field_name, '')
-            defaults[build_localized_fieldname('label', lang)] = value
+        if 'breadcrumb_label' in self.get_translatable_fields():
+            for lang in modeltranslation_settings.AVAILABLE_LANGUAGES:
+                localizer = partial(build_localized_fieldname, lang=lang)
+                field_name = localizer('breadcrumbs_label')
+                defaults[localizer('label')] = getattr(self, field_name, '')
+        else:
+            defaults['label'] = self.breadcrumbs_label
         self.breadcrumb.update_or_create(defaults=defaults)
 
 
