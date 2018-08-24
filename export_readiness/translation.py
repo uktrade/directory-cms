@@ -32,3 +32,8 @@ class PerformanceDashboardPageTranslationOptions(BaseTranslationOptions):
 @register(models.PerformanceDashboardNotesPage)
 class PerformanceDashboardNotesPageTranslationOptions(BaseTranslationOptions):
     fields = []
+
+
+@register(models.HighPotentialOfferFormPage)
+class HighPotentialOfferFormPageTranslationOptions(BaseTranslationOptions):
+    fields = []
