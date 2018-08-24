@@ -3,6 +3,7 @@ import pytest
 from find_a_supplier.tests import factories
 
 
+@pytest.mark.skip(reason='slow')
 @pytest.mark.django_db
 def test_populate_breadcrumb(migration, settings):
     page = factories.IndustryContactPageFactory.create(
