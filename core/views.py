@@ -60,11 +60,14 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
     lookup_url_kwarg = 'slug'
     detail_only_fields = ['id']
     filter_class = filters.ServiceNameFilter
+    authentication_classes = []
 
     def get_queryset(self):
         return Page.objects.all()
 
     def get_object(self):
+        if hasattr(self, 'object'):
+            return self.object
         if 'service_name' not in self.request.query_params:
             raise ValidationError(
                 detail={'service_name': 'This parameter is required'}
@@ -76,6 +79,7 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
         self.check_object_permissions(self.request, instance)
         instance = self.handle_serve_draft_object(instance)
         self.handle_activate_language(instance)
+        self.object = instance
         return instance
 
     def detail_view(self, *args, **kwargs):

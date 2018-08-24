@@ -17,7 +17,9 @@ from core.fields import (
     APIVideoField
 )
 from core.helpers import make_translated_interface
-from core.models import BasePage, BaseApp, ExclusivePageMixin, ChoiceArrayField
+from core.models import (
+    BaseApp, BasePage, BreadcrumbMixin, ChoiceArrayField, ExclusivePageMixin
+)
 from core.panels import SearchEngineOptimisationPanel
 from find_a_supplier import fields
 
@@ -318,12 +320,12 @@ class IndustryPage(BasePage):
         APIField('search_description'),
         APIField('breadcrumbs_label'),
         APIField('show_on_industries_showcase_page'),
-        APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
+        APIBreadcrumbsField('breadcrumbs', service_name=service_name_value),
         APIMetaField('meta'),
     ]
 
 
-class IndustryLandingPage(ExclusivePageMixin, BasePage):
+class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/'
     slug_identity = 'industries-landing-page'
@@ -373,7 +375,7 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
                 .order_by('slug')
             ),
         ),
-        APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
+        APIBreadcrumbsField('breadcrumbs', service_name=service_name_value),
     ]
 
     image_panels = [
@@ -502,12 +504,12 @@ class IndustryArticlePage(BasePage):
         APIField('back_to_home_link_text'),
         APIField('show_table_of_content'),
         APIField('social_share_title'),
-        APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
+        APIBreadcrumbsField('breadcrumbs', service_name=service_name_value),
         APIMetaField('meta'),
     ]
 
 
-class LandingPage(ExclusivePageMixin, BasePage):
+class LandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     service_name_value = cms.FIND_A_SUPPLIER
     view_path = '/'
     slug_identity = 'landing-page'
@@ -608,7 +610,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
             ),
         ),
         fields.APIArticleSummariesField('article_summaries'),
-        APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
+        APIBreadcrumbsField('breadcrumbs', service_name=service_name_value),
         APIMetaField('meta'),
     ]
 
@@ -691,7 +693,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
     )
 
 
-class IndustryContactPage(ExclusivePageMixin, BasePage):
+class IndustryContactPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
 
     service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/contact/'
@@ -739,7 +741,7 @@ class IndustryContactPage(ExclusivePageMixin, BasePage):
         APIField('submit_button_text'),
         APIMarkdownToHTMLField('success_message_text'),
         APIField('success_back_link_text'),
-        APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
+        APIBreadcrumbsField('breadcrumbs', service_name=service_name_value),
         fields.APIIndustriesListField(
             'industry_options',
             queryset=(

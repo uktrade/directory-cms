@@ -66,3 +66,10 @@ urlpatterns = [
     url(r'', include(wagtail_urls)),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+if settings.FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

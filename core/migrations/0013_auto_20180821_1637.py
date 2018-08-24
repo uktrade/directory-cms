@@ -14,7 +14,7 @@ def populate_historic_slug_service_name(apps, schema_editor):
         )
         for page in historic_model.objects.all():
             page.historicslug_set.update(
-             	service_name=page.service_name
+                service_name=page.service_name
             )
 
 
@@ -28,11 +28,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-		migrations.RunPython(
+        migrations.RunPython(
            populate_historic_slug_service_name,
            reverse_code=migrations.RunPython.noop
         )
-        
     ]
 
 

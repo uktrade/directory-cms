@@ -9,7 +9,7 @@ from directory_constants.constants import cms
 
 from core.fields import (
     APIMarkdownToHTMLField, APIMetaField, MarkdownField, APIImageField)
-from core.models import BaseApp, BasePage, ExclusivePageMixin
+from core.models import BaseApp, BasePage, BreadcrumbMixin, ExclusivePageMixin
 from core.panels import SearchEngineOptimisationPanel
 
 
@@ -86,7 +86,7 @@ class PrivacyAndCookiesPage(ExclusivePageMixin, BasePage):
     ]
 
 
-class GetFinancePage(ExclusivePageMixin, BasePage):
+class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
 
     service_name_value = cms.EXPORT_READINESS
     view_path = 'get-finance/'
