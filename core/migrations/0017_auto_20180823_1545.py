@@ -5,8 +5,7 @@ from __future__ import unicode_literals
 from django.db import migrations
 
 
-apps_model_pairs = (
-    ('export_readiness', 'GetFinancePage'),
+apps_model_pairs_translated = (
     ('find_a_supplier', 'IndustryPage'),
     ('find_a_supplier', 'IndustryLandingPage'),
     ('find_a_supplier', 'IndustryArticlePage'),
@@ -14,12 +13,16 @@ apps_model_pairs = (
     ('find_a_supplier', 'IndustryContactPage'),
 )
 
+apps_model_pairs_untranslated = (
+    ('export_readiness', 'GetFinancePage'),
+)
 
-def populate_bookmarks(apps, schema_editor):
+
+def populate_translated_breadcrumbs(apps, schema_editor):
     Breadcrumb = apps.get_model('core', 'Breadcrumb')
     ContentType = apps.get_model('contenttypes', 'ContentType')
 
-    for app_name, model_name in apps_model_pairs:
+    for app_name, model_name in apps_model_pairs_translated:
         historic_model = apps.get_model(app_name, model_name)
         for page in historic_model.objects.all():
             content_type = ContentType.objects.get_for_model(page)
@@ -42,7 +45,24 @@ def populate_bookmarks(apps, schema_editor):
             )
 
 
-def delete_bookmarks(apps, schema_editor):
+def populate_untranslated_breadcrumbs(apps, schema_editor):
+    Breadcrumb = apps.get_model('core', 'Breadcrumb')
+    ContentType = apps.get_model('contenttypes', 'ContentType')
+
+    for app_name, model_name in apps_model_pairs_untranslated:
+        historic_model = apps.get_model(app_name, model_name)
+        for page in historic_model.objects.all():
+            content_type = ContentType.objects.get_for_model(page)
+            Breadcrumb.objects.create(
+                service_name=page.service_name,
+                slug=page.slug,
+                object_id=page.pk,
+                content_type=content_type,
+                label=page.breadcrumbs_label,
+            )
+
+
+def delete_breadcrumbs(apps, schema_editor):
     Breadcrumb = apps.get_model('core', 'Breadcrumb')
     Breadcrumb.objects.all().delete()
 
@@ -54,5 +74,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(populate_bookmarks, delete_bookmarks)
+        migrations.RunPython(populate_translated_breadcrumbs, delete_breadcrumbs),
+        migrations.RunPython(populate_untranslated_breadcrumbs, delete_breadcrumbs)
     ]
