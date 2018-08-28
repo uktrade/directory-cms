@@ -4,7 +4,7 @@ from rest_framework.serializers import Serializer
 from django.utils import translation
 
 from core import permissions, serializers
-from export_readiness.tests.factories import HighPotentialOfferFormPageFactory
+from invest.tests.factories import HighPotentialOfferFormPageFactory
 from find_a_supplier.tests.factories import (
     IndustryLandingPageFactory,
     IndustryPageFactory,

@@ -13,7 +13,6 @@ def test_app_models():
         models.GetFinancePage,
         models.PerformanceDashboardPage,
         models.PerformanceDashboardNotesPage,
-        models.HighPotentialOfferFormPage,
     ]
 
 
