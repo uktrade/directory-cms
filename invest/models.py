@@ -8,8 +8,13 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmarkdown.blocks import MarkdownBlock
 from directory_constants.constants import cms
 
-from core.fields import APIImageField, APIMetaField, \
-    APIStreamFieldBlockField, MarkdownField, APIMarkdownToHTMLField
+from core.fields import (
+    APIFormFieldField,
+    APIImageField, APIMetaField,
+    APIMarkdownToHTMLField,
+    APIStreamFieldBlockField,
+    MarkdownField,
+)
 from core.helpers import make_translated_interface
 from core.models import BaseApp, BasePage, ExclusivePageMixin
 from core.panels import SearchEngineOptimisationPanel
@@ -945,3 +950,85 @@ class InfoPage(BasePage):
         APIMarkdownToHTMLField('content'),
         APIMetaField('meta')
     ]
+
+
+class FormHelpTextField(models.CharField):
+
+    def __init__(self, *args, **kwargs):
+        kwargs = {
+            'max_length': 200,
+            'verbose_name': 'Help text',
+            'null': True,
+            'blank': True,
+            **kwargs,
+        }
+        super().__init__(*args, **kwargs)
+
+
+class FormLabelField(models.CharField):
+    def __init__(self, *args, **kwargs):
+        kwargs = {
+            'max_length': 200,
+            'verbose_name': 'label',
+            **kwargs,
+        }
+        super().__init__(*args, **kwargs)
+
+
+class HighPotentialOfferFormPage(ExclusivePageMixin, BasePage):
+    fields_order = [
+        'full_name',
+        'role_in_company',
+        'email_address',
+        'phone_number',
+        'company_name',
+        'website_url',
+        'country',
+        'company_size',
+        'opportunities',
+        'comment',
+        'terms_agreed',
+    ]
+
+    service_name_value = cms.INVEST
+    view_path = 'high-potential-opportunities/'
+    slug_identity = 'high-potential-opportunity-form'
+
+    comment_help_text = FormHelpTextField()
+    comment_label = FormLabelField()
+    company_name_help_text = FormHelpTextField()
+    company_name_label = FormLabelField()
+    company_size_help_text = FormHelpTextField()
+    company_size_label = FormLabelField()
+    country_help_text = FormHelpTextField()
+    country_label = FormLabelField()
+    email_address_help_text = FormHelpTextField()
+    email_address_label = FormLabelField()
+    full_name_help_text = FormHelpTextField()
+    full_name_label = FormLabelField()
+    opportunities_help_text = FormHelpTextField()
+    opportunities_label = FormLabelField()
+    phone_number_help_text = FormHelpTextField()
+    phone_number_label = FormLabelField()
+    role_in_company_help_text = FormHelpTextField()
+    role_in_company_label = FormLabelField()
+    terms_agreed_help_text = FormHelpTextField()
+    terms_agreed_label = FormLabelField()
+    website_url_help_text = FormHelpTextField()
+    website_url_label = FormLabelField()
+
+    content_panels = [
+        MultiFieldPanel(
+            heading=name.replace('_', ' '),
+            children=[
+                FieldPanel(name + '_label'),
+                FieldPanel(name + '_help_text'),
+            ]
+        ) for name in fields_order
+    ]
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug_en_gb'),
+    ]
+
+    api_fields = [APIFormFieldField(name) for name in fields_order]

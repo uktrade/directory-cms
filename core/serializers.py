@@ -151,3 +151,11 @@ class APIVideoSerializer(fields.DictField):
             'duration': value.duration,
             'file_extension': value.file_extension,
         }
+
+
+class APIFormFieldSerializer(fields.DictField):
+    def get_attribute(self, instance):
+        return {
+            'label': getattr(instance, self.source + '_label'),
+            'help_text':  getattr(instance, self.source + '_help_text'),
+        }
