@@ -9,13 +9,17 @@ from core.models import BasePage
 
 def populate_historic_slug_service_name(apps, schema_editor):
     for sub_class in BasePage.__subclasses__():
-        historic_model = apps.get_model(
-            sub_class._meta.app_label, sub_class._meta.object_name
-        )
-        for page in historic_model.objects.all():
-            page.historicslug_set.update(
-                service_name=page.service_name
+        try:
+            historic_model = apps.get_model(
+                sub_class._meta.app_label, sub_class._meta.object_name
             )
+        except LookupError:
+            pass
+        else:
+            for page in historic_model.objects.all():
+                page.historicslug_set.update(
+                    service_name=page.service_name
+                )
 
 
 class Migration(migrations.Migration):

@@ -1,4 +1,6 @@
-from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
+from wagtail.admin.edit_handlers import (
+    FieldPanel, MultiFieldPanel,
+)
 from wagtail.api import APIField
 from wagtail.core.models import Page
 from wagtailmarkdown.edit_handlers import MarkdownPanel
@@ -8,7 +10,8 @@ from django.db import models
 from directory_constants.constants import cms
 
 from core.fields import (
-    APIMarkdownToHTMLField, APIMetaField, MarkdownField, APIImageField)
+    APIMarkdownToHTMLField, APIMetaField, MarkdownField, APIImageField
+)
 from core.models import BaseApp, BasePage, BreadcrumbMixin, ExclusivePageMixin
 from core.panels import SearchEngineOptimisationPanel
 
