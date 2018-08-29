@@ -3,7 +3,7 @@ import pytest
 from find_a_supplier.tests import factories
 
 
-@pytest.mark.skip(reason='slow')
+@pytest.mark.skip('slow')
 @pytest.mark.django_db
 def test_populate_breadcrumb(migration, settings):
     page = factories.IndustryContactPageFactory.create(
@@ -24,7 +24,12 @@ def test_populate_breadcrumb(migration, settings):
 
     apps = migration.apply('core', '0017_auto_20180823_1545')
     HistoricBreadcrumb = apps.get_model('core', 'Breadcrumb')
-    breadcrumb = HistoricBreadcrumb.objects.get(object_id=page.pk)
+    HistoricContentType = apps.get_model('contenttypes', 'ContentType')
+    content_type = HistoricContentType.objects.get_for_model(page)
+
+    breadcrumb = HistoricBreadcrumb.objects.get(
+        object_id=page.pk, content_type=content_type
+    )
 
     assert breadcrumb.service_name == page.service_name
     assert breadcrumb.object_id == page.pk
