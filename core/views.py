@@ -130,6 +130,7 @@ class UpstreamBaseView(FormView):
             serialized_relations=self.serialize_relations(),
             serialized_object=self.serialize_object(),
             include_slug=self.include_slug,
+            parent_slug=page.specific.get_parent().slug,
             **kwargs
         )
 
