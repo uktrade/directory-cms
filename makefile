@@ -22,9 +22,6 @@ test:
 	$(COLLECT_STATIC) && $(DJANGO_MIGRATE) && $(SYNC_TRANSLATION_FIELDS) && $(FLAKE8) && $(PYTEST) && $(CODECOV)
 
 DJANGO_WEBSERVER := \
-	if [ "$$FEATURE_AUTO_TRANSLATE_ENABLED" != "" ]; then \
-		python manage.py generate_google_translate_credentials; \
-	fi && \
 	python manage.py collectstatic --noinput && \
 	python manage.py runserver 0.0.0.0:$$PORT
 
@@ -201,7 +198,9 @@ DEBUG_SET_ENV_VARS := \
 	export EMAIL_HOST_USER=$$DIRECTORY_CMS_EMAIL_HOST_USER; \
 	export EMAIL_HOST_PASSWORD=$$DIRECTORY_CMS_EMAIL_HOST_PASSWORD; \
 	export DEFAULT_FROM_EMAIL=$$DIRECTORY_CMS_DEFAULT_FROM_EMAIL; \
-	export FEATURE_AUTO_TRANSLATE_ENABLED=true
+	export FEATURE_AUTO_TRANSLATE_ENABLED=true; \
+	export FEATURE_DEBUG_TOOLBAR_ENABLED=true
+
 
 TEST_SET_ENV_VARS := \
 	export DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage
@@ -243,18 +242,10 @@ integration_tests:
 
 compile_requirements:
 	pip-compile requirements.in
+	pip-compile requirements_test.in
 
 upgrade_requirements:
 	pip-compile --upgrade requirements.in
-
-compile_test_requirements:
-	pip-compile requirements_test.in
-
-upgrade_test_requirements:
 	pip-compile --upgrade requirements_test.in
-
-compile_all_requirements: compile_requirements compile_test_requirements
-
-upgrade_all_requirements: upgrade_requirements upgrade_test_requirements
 
 .PHONY: build clean test_requirements docker_run docker_debug docker_webserver_bash docker_test debug_webserver debug_test debug heroku_deploy_dev heroku_deploy_demo

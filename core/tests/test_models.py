@@ -7,6 +7,23 @@ from django.core.exceptions import ValidationError
 from django.utils import translation
 
 from find_a_supplier.tests.factories import IndustryPageFactory
+from invest.tests.factories import InvestAppFactory, SectorPageFactory
+
+
+@pytest.mark.django_db
+def test_slugs_are_unique_in_the_same_service():
+    IndustryPageFactory(slug_en_gb='foo')
+    with pytest.raises(ValidationError) as excinfo:
+        IndustryPageFactory(slug_en_gb='foo')
+    assert 'This slug is already in use' in str(excinfo.value)
+
+
+@pytest.mark.django_db
+def test_slugs_are_not_unique_across_services(root_page):
+    page_one = IndustryPageFactory(slug_en_gb='foo', parent=root_page)
+    page_two = SectorPageFactory(slug_en_gb='foo', parent=root_page)
+    assert page_one.slug == 'foo'
+    assert page_two.slug == 'foo'
 
 
 @pytest.mark.django_db
@@ -19,6 +36,11 @@ def test_base_model_check_valid_draft_token(page):
 @pytest.mark.django_db
 def test_base_model_check_invalid_draft_token(page):
     assert page.is_draft_token_valid('asdf') is False
+
+
+@pytest.mark.django_db
+def test_base_model_sets_service_name_on_save(page):
+    assert page.service_name == page.service_name_value
 
 
 @pytest.mark.django_db
@@ -122,21 +144,27 @@ def test_historically_unique_slug():
     page_one.slug_en_gb = 'slug-two'
     page_one.save()
 
-    expected = {'slug_en_gb': ['This slug is already in use']}
-    with pytest.raises(ValidationError) as error:
+    expected = 'This slug is already in use'
+    with pytest.raises(ValidationError, match=expected):
         IndustryPageFactory.create(
             slug_en_gb='slug-one',
             title_en_gb='2',
             depth=2,
             path='/thing1',
         )
-        assert error.value.message_dict == expected
 
-    with pytest.raises(ValidationError) as error:
+    with pytest.raises(ValidationError, match=expected):
         IndustryPageFactory.create(
             slug_en_gb='slug-two',
             title_en_gb='3',
             depth=2,
             path='/thing2',
         )
-        assert error.value.message_dict == expected
+
+
+@pytest.mark.xfail
+@pytest.mark.django_db
+def test_base_app_slugs_are_created_in_all_languages(root_page):
+    app = InvestAppFactory(title='foo', parent=root_page)
+    assert app.slug_de == 'foo'
+    assert app.slug_en_gb == 'foo'

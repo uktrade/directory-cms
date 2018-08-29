@@ -1,4 +1,3 @@
-from directory_constants.constants import choices
 from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList, InlinePanel
@@ -10,15 +9,17 @@ from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtailmedia.widgets import AdminMediaChooser
 from core.fields import MarkdownField
 
+from directory_constants.constants import choices, cms
 from django.db import models
 
-from core import constants
 from core.fields import (
     APIBreadcrumbsField, APIMarkdownToHTMLField, APIImageField, APIMetaField,
     APIVideoField
 )
 from core.helpers import make_translated_interface
-from core.models import BasePage, BaseApp, ExclusivePageMixin, ChoiceArrayField
+from core.models import (
+    BaseApp, BasePage, BreadcrumbMixin, ChoiceArrayField, ExclusivePageMixin
+)
 from core.panels import SearchEngineOptimisationPanel
 from find_a_supplier import fields
 
@@ -29,7 +30,7 @@ class ImageChooserPanel(ImageChooserPanel):
 
 class FindASupplierApp(ExclusivePageMixin, BaseApp):
     slug_identity = 'find-a-supplier-app'
-    view_app = constants.FIND_A_SUPPLIER
+    service_name_value = cms.FIND_A_SUPPLIER
 
     @classmethod
     def get_required_translatable_fields(cls):
@@ -101,7 +102,7 @@ class LandingPageArticleSummary(Orderable, ArticleSummary):
 
 class IndustryPage(BasePage):
 
-    view_app = constants.FIND_A_SUPPLIER
+    service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/'
 
     hero_image = models.ForeignKey(
@@ -319,13 +320,13 @@ class IndustryPage(BasePage):
         APIField('search_description'),
         APIField('breadcrumbs_label'),
         APIField('show_on_industries_showcase_page'),
-        APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
+        APIBreadcrumbsField('breadcrumbs', service_name=service_name_value),
         APIMetaField('meta'),
     ]
 
 
-class IndustryLandingPage(ExclusivePageMixin, BasePage):
-    view_app = constants.FIND_A_SUPPLIER
+class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
+    service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/'
     slug_identity = 'industries-landing-page'
 
@@ -374,7 +375,7 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
                 .order_by('slug')
             ),
         ),
-        APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
+        APIBreadcrumbsField('breadcrumbs', service_name=service_name_value),
     ]
 
     image_panels = [
@@ -417,7 +418,7 @@ class IndustryLandingPage(ExclusivePageMixin, BasePage):
 
 class IndustryArticlePage(BasePage):
 
-    view_app = constants.FIND_A_SUPPLIER
+    service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industry-articles/'
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -503,13 +504,13 @@ class IndustryArticlePage(BasePage):
         APIField('back_to_home_link_text'),
         APIField('show_table_of_content'),
         APIField('social_share_title'),
-        APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
+        APIBreadcrumbsField('breadcrumbs', service_name=service_name_value),
         APIMetaField('meta'),
     ]
 
 
-class LandingPage(ExclusivePageMixin, BasePage):
-    view_app = constants.FIND_A_SUPPLIER
+class LandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
+    service_name_value = cms.FIND_A_SUPPLIER
     view_path = '/'
     slug_identity = 'landing-page'
 
@@ -609,7 +610,7 @@ class LandingPage(ExclusivePageMixin, BasePage):
             ),
         ),
         fields.APIArticleSummariesField('article_summaries'),
-        APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
+        APIBreadcrumbsField('breadcrumbs', service_name=service_name_value),
         APIMetaField('meta'),
     ]
 
@@ -692,9 +693,9 @@ class LandingPage(ExclusivePageMixin, BasePage):
     )
 
 
-class IndustryContactPage(ExclusivePageMixin, BasePage):
+class IndustryContactPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
 
-    view_app = constants.FIND_A_SUPPLIER
+    service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/contact/'
     slug_identity = 'industry-contact'
 
@@ -740,7 +741,7 @@ class IndustryContactPage(ExclusivePageMixin, BasePage):
         APIField('submit_button_text'),
         APIMarkdownToHTMLField('success_message_text'),
         APIField('success_back_link_text'),
-        APIBreadcrumbsField('breadcrumbs', app_label='find_a_supplier'),
+        APIBreadcrumbsField('breadcrumbs', service_name=service_name_value),
         fields.APIIndustriesListField(
             'industry_options',
             queryset=(

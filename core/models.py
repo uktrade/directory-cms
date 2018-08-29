@@ -2,6 +2,8 @@ from functools import partial, reduce
 import hashlib
 from urllib.parse import urljoin, urlencode
 
+from directory_constants.constants import choices
+from modeltranslation import settings as modeltranslation_settings
 from modeltranslation.translator import translator
 from modeltranslation.utils import build_localized_fieldname
 from wagtail.admin.edit_handlers import FieldPanel
@@ -10,20 +12,47 @@ from wagtail.core.models import Page
 from django.core import signing
 from django.core.exceptions import ValidationError
 from django.conf import settings
+from django.contrib.contenttypes.fields import (
+    GenericForeignKey, GenericRelation
+)
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.db import IntegrityError, transaction
 from django.forms import MultipleChoiceField
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.text import mark_safe, slugify
-
 from core import constants, forms
 
 
+class Breadcrumb(models.Model):
+    service_name = models.CharField(
+        max_length=50,
+        choices=choices.CMS_APP_CHOICES,
+        null=True,
+        db_index=True
+    )
+    label = models.CharField(max_length=50)
+    slug = models.SlugField()
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    page = GenericForeignKey('content_type', 'object_id')
+
+
 class HistoricSlug(models.Model):
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(db_index=True)
+    service_name = models.CharField(
+        max_length=50,
+        choices=choices.CMS_APP_CHOICES,
+        null=True
+    )
     page = models.ForeignKey(Page)
+
+    class Meta:
+        unique_together = ('slug', 'service_name')
 
 
 class ChoiceArrayField(ArrayField):
@@ -38,6 +67,12 @@ class ChoiceArrayField(ArrayField):
 
 
 class BasePage(Page):
+    service_name = models.CharField(
+        max_length=100,
+        choices=choices.CMS_APP_CHOICES,
+        db_index=True,
+        null=True,
+    )
 
     class Meta:
         abstract = True
@@ -46,31 +81,42 @@ class BasePage(Page):
     base_form_class = forms.WagtailAdminPageForm
     content_panels = []
     promote_panels = []
-
     read_only_fields = []
 
     def __init__(self, *args, **kwargs):
         self.signer = signing.Signer()
         #  workaround modeltranslation patching Page.clean in an unpythonic way
         #  goo.gl/yYD4pw
-        self.clean = self._clean
+        self.clean = lambda: None
         super().__init__(*args, **kwargs)
+
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        if self._state.adding:
+            self.service_name = self.service_name_value
+        super().save(*args, **kwargs)
+        try:
+            HistoricSlug.objects.get_or_create(
+                slug=self.slug,
+                page=self,
+                defaults={
+                    'service_name': self.service_name,
+                }
+            )
+        except IntegrityError:
+            raise ValidationError({'slug': 'This slug is already in use'})
 
     @staticmethod
     def _slug_is_available(slug, parent, page=None):
         is_currently_unique = Page._slug_is_available(slug, parent, page)
-        queryset = HistoricSlug.objects.filter(slug=slug).only('page__title')
+        queryset = HistoricSlug.objects.filter(
+            slug=slug
+        )
         if page:
             queryset = queryset.exclude(page__pk=page.pk)
+            queryset = queryset.filter(service_name=page.service_name_value)
         is_historically_unique = (queryset.count() == 0)
         return is_currently_unique and is_historically_unique
-
-    def _clean(self, *args, **kwargs):
-        if not self._slug_is_available(self.slug, self.get_parent(), self):
-            field_name = build_localized_fieldname(
-                'slug', lang=settings.LANGUAGE_CODE
-            )
-            raise ValidationError({field_name: "This slug is already in use"})
 
     def get_draft_token(self):
         return self.signer.sign(self.pk)
@@ -89,7 +135,7 @@ class BasePage(Page):
         return [self.view_path, slug + '/']
 
     def get_url(self, is_draft=False, language_code=settings.LANGUAGE_CODE):
-        domain = dict(constants.APP_URLS)[self.view_app]
+        domain = dict(constants.APP_URLS)[self.service_name_value]
         url_path_parts = self.get_url_path_parts(language_code=language_code)
         url = reduce(urljoin, [domain] + url_path_parts)
         querystring = {}
@@ -215,8 +261,36 @@ class ExclusivePageMixin:
         return [self.view_path]
 
 
+class BreadcrumbMixin(models.Model):
+    """Optimization for retrieving breadcrumbs that a service will display
+    on a global navigation menu e.g., home > industry > contact us. Reduces SQL
+    calls from >12 to 1 in APIBreadcrumbsSerializer compared with filtering
+    Page and calling `specific()` and then retrieving the breadcrumbs labels.
+    """
+
+    class Meta:
+        abstract = True
+
+    breadcrumb = GenericRelation(Breadcrumb)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        defaults = {
+            'service_name': self.service_name_value,
+            'slug': self.slug,
+        }
+        if 'breadcrumb_label' in self.get_translatable_fields():
+            for lang in modeltranslation_settings.AVAILABLE_LANGUAGES:
+                localizer = partial(build_localized_fieldname, lang=lang)
+                field_name = localizer('breadcrumbs_label')
+                defaults[localizer('label')] = getattr(self, field_name, '')
+        else:
+            defaults['label'] = self.breadcrumbs_label
+        self.breadcrumb.update_or_create(defaults=defaults)
+
+
 class BaseApp(Page):
-    view_app = None
+    service_name_value = None
     base_form_class = forms.BaseAppAdminPageForm
 
     class Meta:
@@ -224,9 +298,10 @@ class BaseApp(Page):
 
     @classmethod
     def allowed_subpage_models(cls):
+        allowed_name = cls.service_name_value
         return [
             model for model in super().allowed_subpage_models()
-            if getattr(model, 'view_app', None) == cls.view_app
+            if getattr(model, 'service_name_value', None) == allowed_name
         ]
 
     settings_panels = [
@@ -236,5 +311,7 @@ class BaseApp(Page):
     promote_panels = []
 
     def save(self, *args, **kwargs):
-        self.slug_en_gb = slugify(self.title_en_gb)
+        for slug_field in (build_localized_fieldname('slug', lang) for lang in
+                           modeltranslation_settings.AVAILABLE_LANGUAGES):
+            setattr(self, slug_field, slugify(self.title_en_gb))
         return super().save(*args, **kwargs)

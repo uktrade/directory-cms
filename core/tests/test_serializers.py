@@ -1,8 +1,16 @@
 import pytest
 from rest_framework.serializers import Serializer
 
+from django.utils import translation
+
 from core import permissions, serializers
-from find_a_supplier.tests import factories
+from invest.tests.factories import HighPotentialOfferFormPageFactory
+from find_a_supplier.tests.factories import (
+    IndustryLandingPageFactory,
+    IndustryPageFactory,
+    LandingPageFactory,
+    IndustryContactPageFactory,
+)
 
 
 @pytest.mark.django_db
@@ -52,6 +60,39 @@ def test_meta_serializer(page, rf):
                 )
             ],
             'slug': 'test-slug',
+            'pk': page.pk,
+        }
+    }
+
+
+@pytest.mark.django_db
+def test_meta_serializer_slug_translation(page, rf):
+    page.slug_en_gb = 'test-slug-en'
+    page.slug_de = 'test-slug-de'
+    page.pk = 4
+
+    class TestSerializer(Serializer):
+        meta = serializers.APIMetaSerializer()
+
+    with translation.override('de'):
+        serializer = TestSerializer(
+            instance=page,
+            context={'request': rf.get('/')}
+        )
+        data = serializer.data
+
+    assert data == {
+        'meta': {
+            'draft_token': None,
+            'languages': [('en-gb', 'English')],
+            'url': 'http://supplier.trade.great:8005/industries/test-slug-en/',
+            'localised_urls': [
+                (
+                    'en-gb',
+                    'http://supplier.trade.great:8005/industries/test-slug-en/'
+                )
+            ],
+            'slug': 'test-slug-en',
             'pk': page.pk,
         }
     }
@@ -113,22 +154,14 @@ def test_meta_serializer_draft(page, rf):
 
 @pytest.mark.django_db
 def test_breadcrums_serializer(page, rf):
-    factories.IndustryLandingPageFactory(
-        breadcrumbs_label_en_gb='label-one'
-    )
-    factories.IndustryPageFactory(
-        breadcrumbs_label_en_gb='label-two'
-    )
-    factories.LandingPageFactory(
-        breadcrumbs_label_en_gb='label-three'
-    )
-    factories.IndustryContactPageFactory(
-        breadcrumbs_label_en_gb='label-four'
-    )
+    IndustryLandingPageFactory(breadcrumbs_label_en_gb='label-one')
+    IndustryPageFactory(breadcrumbs_label_en_gb='label-two')
+    LandingPageFactory(breadcrumbs_label_en_gb='label-three')
+    IndustryContactPageFactory(breadcrumbs_label_en_gb='label-four')
 
     class TestSerializer(Serializer):
         breadcrumbs = serializers.APIBreadcrumbsSerializer(
-            app_label='find_a_supplier'
+            service_name='FIND_A_SUPPLIER'
         )
 
     serializer = TestSerializer(
@@ -150,5 +183,28 @@ def test_breadcrums_serializer(page, rf):
                 'slug': 'landing-page',
                 'label': 'label-three'
             }
+        }
+    }
+
+
+@pytest.mark.django_db
+def test_api_form_field_serializer(rf):
+    page = HighPotentialOfferFormPageFactory(
+        comment_help_text='comment [help text]',
+        comment_label='comment [label]',
+    )
+
+    class TestSerializer(Serializer):
+        comment = serializers.APIFormFieldSerializer('comment')
+
+    serializer = TestSerializer(
+        instance=page,
+        context={'request': rf.get('/')}
+    )
+
+    assert serializer.data == {
+        'comment': {
+            'help_text': 'comment [help text]',
+            'label': 'comment [label]',
         }
     }

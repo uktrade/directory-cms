@@ -46,3 +46,21 @@ class PerformanceDashboardNotesPageFactory(wagtail_factories.PageFactory):
     slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
+
+
+class GetFinancePageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.GetFinancePage
+
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
+    banner_content = factory.fuzzy.FuzzyText(length=10)
+    section_one_content = factory.fuzzy.FuzzyText(length=10)
+    section_two_content = factory.fuzzy.FuzzyText(length=10)
+    video_embed = factory.fuzzy.FuzzyText(length=10)
+    section_three_content = factory.fuzzy.FuzzyText(length=10)
+    call_to_action_text = factory.fuzzy.FuzzyText(length=10)
+    call_to_action_url = factory.fuzzy.FuzzyText(length=10)
+    slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None

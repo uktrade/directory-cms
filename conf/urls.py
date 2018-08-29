@@ -42,20 +42,11 @@ urlpatterns = [
             r'^admin/pages/preload/(?P<app_name>[a-zA-Z_]+)/'
             r'(?P<model_name>[a-zA-Z]+)/(?P<parent_pk>[0-9]+)/$'
         ),
-        login_required(csrf_exempt(core.views.PeloadPageView.as_view())),
+        login_required(csrf_exempt(core.views.PreloadPageView.as_view())),
         name='preload-add-page',
     ),
 
     url(r'^api/', api_router.urls),
-    url(
-        r'^api/pages/lookup-by-type/(?P<page_type>[a-zA-Z\._]+)/',
-        api_router.wrap_view(
-            core.views.PageLookupByTypeAPIEndpoint.as_view(
-                {'get': 'detail_view'}
-            )
-        ),
-        name='lookup-by-page-type'
-    ),
     url(
         r'^api/pages/lookup-by-slug/(?P<slug>[\w-]+)/',
         api_router.wrap_view(
@@ -75,3 +66,10 @@ urlpatterns = [
     url(r'', include(wagtail_urls)),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+if settings.FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

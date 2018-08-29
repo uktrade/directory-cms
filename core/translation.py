@@ -1,6 +1,9 @@
+from modeltranslation.decorators import register
 from modeltranslation.translator import TranslationOptions
 
 from django.conf import settings
+
+from core import models
 
 
 class BaseTranslationOptions(TranslationOptions):
@@ -11,3 +14,10 @@ class BaseTranslationOptions(TranslationOptions):
             if not field.blank and field.name in self.fields
         ]
         return {settings.LANGUAGE_CODE: required_field_names}
+
+
+@register(models.Breadcrumb)
+class IndustryPageTranslationOptions(BaseTranslationOptions):
+    fields = (
+        'label',
+    )

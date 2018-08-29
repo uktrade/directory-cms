@@ -25,9 +25,9 @@ class APIMetaField(APIField):
 
 
 class APIBreadcrumbsField(APIField):
-    def __init__(self, name, app_label):
+    def __init__(self, name, service_name):
         serializer = serializers.APIBreadcrumbsSerializer(
-            app_label
+            service_name
         )
         super().__init__(name=name, serializer=serializer)
 
@@ -48,3 +48,9 @@ class MarkdownField(OriginalMarkdownField):
     def formfield(self, **kwargs):
         kwargs['widget'] = widgets.MarkdownTextarea
         return super().formfield(**kwargs)
+
+
+class APIFormFieldField(APIField):
+    def __init__(self, name):
+        serializer = serializers.APIFormFieldSerializer(name)
+        super().__init__(name=name, serializer=serializer)

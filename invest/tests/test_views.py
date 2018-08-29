@@ -1,4 +1,5 @@
 import pytest
+from directory_constants.constants import cms
 from rest_framework.reverse import reverse
 
 from . import factories
@@ -17,11 +18,11 @@ def test_invest_home_page(admin_client):
         kwargs={'slug': page.slug}
     )
 
-    response = admin_client.get(url)
+    response = admin_client.get(url, {'service_name': cms.INVEST})
     assert response.status_code == 200
     meta = response.json()['meta']
     assert meta['url'] == 'http://invest.trade.great:8011'
-    assert meta['slug'] == 'invest-home-page'
+    assert meta['slug'] == 'home-page'
     assert len(response.json()['guides']) == 1
     assert len(response.json()['sectors']) == 1
 

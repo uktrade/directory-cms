@@ -1,19 +1,17 @@
-from wagtail.api.v2.endpoints import filter_page_type, page_models_from_string
-from wagtail.api.v2.utils import BadRequestError
+from rest_framework.exceptions import ValidationError
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.core.models import Page
 from wagtail.core.models import Orderable
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-
 from django.shortcuts import get_object_or_404, Http404
 from django.template.response import TemplateResponse
 from django.utils import translation
 from django.views.generic.edit import FormView
 
 from conf.signature import SignatureCheckPermission
-from core import forms, helpers, permissions
+from core import filters, forms, helpers, permissions
 from core.upstream_serializers import UpstreamModelSerilaizer
 
 
@@ -22,7 +20,7 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
     meta_fields = []
     known_query_parameters = (
         PagesAdminAPIEndpoint.known_query_parameters.union(
-            ['lang', 'draft_token']
+            ['lang', 'draft_token', 'service_name']
         )
     )
 
@@ -58,46 +56,30 @@ class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
     pass
 
 
-class PageLookupByTypeAPIEndpoint(APIEndpointBase):
-    lookup_url_kwarg = 'page_type'
-    detail_only_fields = ['id']
-
-    def get_queryset(self):
-        try:
-            models = page_models_from_string(self.kwargs['page_type'])
-        except (LookupError, ValueError):
-            raise BadRequestError("type doesn't exist")
-        return filter_page_type(models[0].objects.all(), models)
-
-    def get_object(self):
-        queryset = self.get_queryset()
-        if not queryset.exists():
-            raise Http404()
-        instance = queryset.first()
-        self.check_object_permissions(self.request, instance)
-        instance = self.handle_serve_draft_object(instance)
-
-        self.handle_activate_language(instance)
-        return instance
-
-    def detail_view(self, *args, **kwargs):
-        return super().detail_view(self.request, pk=None)
-
-
 class PageLookupBySlugAPIEndpoint(APIEndpointBase):
     lookup_url_kwarg = 'slug'
     detail_only_fields = ['id']
+    filter_class = filters.ServiceNameFilter
+    authentication_classes = []
 
     def get_queryset(self):
         return Page.objects.all()
 
     def get_object(self):
+        if hasattr(self, 'object'):
+            return self.object
+        if 'service_name' not in self.request.query_params:
+            raise ValidationError(
+                detail={'service_name': 'This parameter is required'}
+            )
         instance = get_object_or_404(
-            self.get_queryset(), historicslug__slug=self.kwargs['slug']
+            self.filter_queryset(self.get_queryset()),
+            historicslug__slug=self.kwargs['slug'],
         ).specific
         self.check_object_permissions(self.request, instance)
         instance = self.handle_serve_draft_object(instance)
         self.handle_activate_language(instance)
+        self.object = instance
         return instance
 
     def detail_view(self, *args, **kwargs):
@@ -160,7 +142,7 @@ class UpdateUpstreamView(UpstreamBaseView):
     include_slug = True
 
 
-class PeloadPageView(FormView):
+class PreloadPageView(FormView):
     template_name = 'wagtailadmin/pages/create.html'
     update_template_name = 'wagtailadmin/pages/edit.html'
 

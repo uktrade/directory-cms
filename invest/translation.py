@@ -154,3 +154,8 @@ class SetupGuideLandingPageTranslation(BaseTranslationOptions):
         'sub_heading',
         'lead_in',
     )
+
+
+@register(models.HighPotentialOfferFormPage)
+class HighPotentialOfferFormPageTranslationOptions(BaseTranslationOptions):
+    fields = []

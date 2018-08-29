@@ -4,6 +4,7 @@ from wagtail_factories import PageFactory
 from modeltranslation.utils import build_localized_fieldname
 
 
+@pytest.mark.skip(reason='slow')
 @pytest.mark.django_db
 def test_update_url_path(migration, settings):
     migration.before([('core', '0005_auto_20180423_1803')])

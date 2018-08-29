@@ -84,6 +84,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+    'core.middleware.StubSiteMiddleware',
     'directory_components.middleware.MaintenanceModeMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -93,7 +94,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'wagtail.core.middleware.SiteMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'core.middleware.LocaleQuerystringMiddleware',
@@ -358,6 +358,7 @@ HEALTH_CHECK_TOKEN = env.str('HEALTH_CHECK_TOKEN')
 
 WAGTAIL_SITE_NAME = 'directory-cms'
 WAGTAIL_PASSWORD_RESET_ENABLED = False
+
 LOGIN_URL = '/admin/login'
 BASE_URL = env.str('BASE_URL')
 
@@ -415,6 +416,7 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL', '')
 
 MODELTRANSLATION_CUSTOM_FIELDS = ('StreamField', 'RichTextField')
+MODELTRANSLATION_FALLBACK_LANGUAGES = ()
 
 # feature flags
 
@@ -425,5 +427,21 @@ FEATURE_FLAGS = {
     # used by directory-components
     'SEARCH_ENGINE_INDEXING_OFF': env.bool(
         'FEATURE_SEARCH_ENGINE_INDEXING_DISABLED', False
-    )
+    ),
+    'DEBUG_TOOLBAR_ON': env.bool('FEATURE_DEBUG_TOOLBAR_ENABLED', False)
 }
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+}
+
+if FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
+    INSTALLED_APPS += ['debug_toolbar']
+
+    MIDDLEWARE_CLASSES = (
+        ['debug_toolbar.middleware.DebugToolbarMiddleware'] +
+        MIDDLEWARE_CLASSES
+    )
+    INTERNAL_IPS = '127.0.0.1'
