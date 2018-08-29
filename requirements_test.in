@@ -13,3 +13,4 @@ codecov
 factory-boy
 beautifulsoup4
 wagtail-factories
+django-debug-toolbar

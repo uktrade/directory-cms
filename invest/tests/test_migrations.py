@@ -3,6 +3,7 @@ import pytest
 from invest.tests import factories
 
 
+@pytest.mark.skip(reason='slow')
 @pytest.mark.django_db
 def test_populate_historic_slug_service_name(migration, settings):
     page = factories.InfoPageFactory.create()

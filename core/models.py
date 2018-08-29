@@ -12,6 +12,10 @@ from wagtail.core.models import Page
 from django.core import signing
 from django.core.exceptions import ValidationError
 from django.conf import settings
+from django.contrib.contenttypes.fields import (
+    GenericForeignKey, GenericRelation
+)
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db import IntegrityError, transaction
@@ -21,6 +25,21 @@ from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.text import mark_safe, slugify
 from core import constants, forms
+
+
+class Breadcrumb(models.Model):
+    service_name = models.CharField(
+        max_length=50,
+        choices=choices.CMS_APP_CHOICES,
+        null=True,
+        db_index=True
+    )
+    label = models.CharField(max_length=50)
+    slug = models.SlugField()
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    page = GenericForeignKey('content_type', 'object_id')
 
 
 class HistoricSlug(models.Model):
@@ -48,11 +67,11 @@ class ChoiceArrayField(ArrayField):
 
 
 class BasePage(Page):
-
     service_name = models.CharField(
         max_length=100,
         choices=choices.CMS_APP_CHOICES,
         db_index=True,
+        null=True,
     )
 
     class Meta:
@@ -240,6 +259,34 @@ class ExclusivePageMixin:
 
     def get_url_path_parts(self, *args, **kwargs):
         return [self.view_path]
+
+
+class BreadcrumbMixin(models.Model):
+    """Optimization for retrieving breadcrumbs that a service will display
+    on a global navigation menu e.g., home > industry > contact us. Reduces SQL
+    calls from >12 to 1 in APIBreadcrumbsSerializer compared with filtering
+    Page and calling `specific()` and then retrieving the breadcrumbs labels.
+    """
+
+    class Meta:
+        abstract = True
+
+    breadcrumb = GenericRelation(Breadcrumb)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        defaults = {
+            'service_name': self.service_name_value,
+            'slug': self.slug,
+        }
+        if 'breadcrumb_label' in self.get_translatable_fields():
+            for lang in modeltranslation_settings.AVAILABLE_LANGUAGES:
+                localizer = partial(build_localized_fieldname, lang=lang)
+                field_name = localizer('breadcrumbs_label')
+                defaults[localizer('label')] = getattr(self, field_name, '')
+        else:
+            defaults['label'] = self.breadcrumbs_label
+        self.breadcrumb.update_or_create(defaults=defaults)
 
 
 class BaseApp(Page):
