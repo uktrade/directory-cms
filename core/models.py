@@ -92,8 +92,7 @@ class BasePage(Page):
 
     @transaction.atomic
     def save(self, *args, **kwargs):
-        if self._state.adding:
-            self.service_name = self.service_name_value
+        self.service_name = self.service_name_value
         super().save(*args, **kwargs)
         try:
             HistoricSlug.objects.get_or_create(
@@ -300,7 +299,7 @@ class BaseApp(BasePage):
     def allowed_subpage_models(cls):
         allowed_name = cls.service_name_value
         return [
-            model for model in super().allowed_subpage_models()
+            model for model in Page.allowed_subpage_models()
             if getattr(model, 'service_name_value', None) == allowed_name
         ]
 
