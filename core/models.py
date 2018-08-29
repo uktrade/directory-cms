@@ -289,7 +289,7 @@ class BreadcrumbMixin(models.Model):
         self.breadcrumb.update_or_create(defaults=defaults)
 
 
-class BaseApp(Page):
+class BaseApp(BasePage):
     service_name_value = None
     base_form_class = forms.BaseAppAdminPageForm
 
