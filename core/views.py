@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ValidationError
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.core.models import Page
@@ -59,6 +60,7 @@ class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
 class PageLookupBySlugAPIEndpoint(APIEndpointBase):
     lookup_url_kwarg = 'slug'
     detail_only_fields = ['id']
+    filter_backends = APIEndpointBase.filter_backends + [DjangoFilterBackend]
     filter_class = filters.ServiceNameFilter
     authentication_classes = []
 

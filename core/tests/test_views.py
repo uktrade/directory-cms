@@ -1,9 +1,10 @@
 import pytest
-from unittest.mock import call, patch
+from unittest.mock import ANY, call, patch
 
 from bs4 import BeautifulSoup
 from directory_constants.constants import sectors, cms
 from modeltranslation.utils import build_localized_fieldname
+from wagtail.core.models import Page
 import wagtail_factories
 
 from django.forms.models import model_to_dict
@@ -439,3 +440,19 @@ def test_lookup_by_slug_draft(page_with_reversion, client):
     assert published_response.status_code == 200
     assert published_data['title'] == 'published-title'
     assert published_data['meta']['url'] == page_with_reversion.get_url()
+
+
+@pytest.mark.django_db
+@patch('core.filters.ServiceNameFilter.filter_service_name')
+def test_lookup_by_slug_filter_called(mock_filter_service_name, admin_client):
+    mock_filter_service_name.return_value = Page.objects.all()
+    url = reverse('lookup-by-slug', kwargs={'slug': 'food-and-drink'})
+    response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
+
+    assert response.status_code == 404
+    assert mock_filter_service_name.call_count == 1
+    assert mock_filter_service_name.call_args == call(
+        ANY,
+        'service_name',
+        cms.FIND_A_SUPPLIER,
+    )

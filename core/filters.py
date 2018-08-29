@@ -10,9 +10,7 @@ from core.models import BasePage
 
 
 class ServiceNameFilter(django_filters.rest_framework.FilterSet):
-    service_name = django_filters.CharFilter(
-        name='service_name', method='filter_service_name',
-    )
+    service_name = django_filters.CharFilter(method='filter_service_name')
 
     def filter_service_name(self, queryset, name, value):
         concrete_model_names = [
