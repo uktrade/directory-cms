@@ -50,12 +50,6 @@ class MarkdownField(OriginalMarkdownField):
         return super().formfield(**kwargs)
 
 
-class APIStreamFieldBlockField(APIField):
-    def __init__(self, name):
-        serializer = serializers.APIStreamFieldStructBlockSerializer()
-        super().__init__(name=name, serializer=serializer)
-
-
 class APIFormFieldField(APIField):
     def __init__(self, name):
         serializer = serializers.APIFormFieldSerializer(name)
