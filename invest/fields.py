@@ -13,8 +13,6 @@ class APIChildrenSectorPageListField(APIField):
             'description',
             'heading',
             'hero_image',
-            'pullout',
-            'subsections',
         ]
         # see explanation of the `fields_config` syntax here:
         # https://github.com/wagtail/wagtail/blob/
@@ -33,7 +31,6 @@ class APIChildrenSetupGuidePageListField(APIField):
             'description',
             'heading',
             'sub_heading',
-            'subsections',
         ]
         # see explanation of the `fields_config` syntax here:
         # https://github.com/wagtail/wagtail/blob/
@@ -53,8 +50,6 @@ class APISectorPageListField(APIField):
             'description',
             'heading',
             'hero_image',
-            'pullout',
-            'subsections',
         ]
         # see explanation of the `fields_config` syntax here:
         # https://github.com/wagtail/wagtail/blob/
@@ -74,7 +69,6 @@ class APISetupGuidePageListField(APIField):
             'description',
             'heading',
             'sub_heading',
-            'subsections',
         ]
         # see explanation of the `fields_config` syntax here:
         # https://github.com/wagtail/wagtail/blob/
