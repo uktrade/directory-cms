@@ -1,6 +1,8 @@
 import pytest
 
+from core.models import HistoricSlug
 from export_readiness.tests import factories
+from export_readiness import models
 
 
 @pytest.mark.skip('slow')
@@ -27,3 +29,29 @@ def test_populate_breadcrumb(migration, settings):
     assert breadcrumb.service_name == page.service_name
     assert breadcrumb.object_id == page.pk
     assert breadcrumb.label == 'breadcrumb'
+
+
+@pytest.mark.skip(reason='slow')
+@pytest.mark.django_db
+def test_populate_service_name(migration, settings):
+    page = factories.GetFinancePageFactory.create()
+    models.GetFinancePage.objects.filter(pk=page.pk).update(service_name=None)
+    HistoricSlug.objects.all().delete()
+
+    page.refresh_from_db()
+
+    assert page.service_name is None
+    assert page.historicslug_set.all().count() == 0
+
+    migration.before([('export_readiness', '0014_auto_20180829_1027')])
+
+    apps = migration.apply('export_readiness', '0015_auto_20180830_0632')
+
+    page = apps.get_model(
+        'export_readiness', 'GetFinancePage'
+    ).objects.get(pk=page.pk)
+
+    assert page.service_name == 'EXPORT_READINESS'
+    assert apps.get_model('core', 'HistoricSlug').objects.filter(
+        page=page, service_name='EXPORT_READINESS'
+    ).count() == 1

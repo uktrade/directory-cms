@@ -291,6 +291,7 @@ class BreadcrumbMixin(models.Model):
 class BaseApp(BasePage):
     service_name_value = None
     base_form_class = forms.BaseAppAdminPageForm
+    view_path = ''
 
     class Meta:
         abstract = True
