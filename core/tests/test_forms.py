@@ -5,12 +5,16 @@ import pytest
 
 
 @pytest.mark.django_db
-def test_required_for_language(translated_page, settings):
+def test_required_for_language(translated_page, settings, rf):
 
     edit_handler = translated_page.get_edit_handler()
     form_class = edit_handler.get_form_class()
     form = form_class()
-    edit_handler.bind_to_instance(instance=translated_page, form=form)
+    edit_handler.bind_to_instance(
+        instance=translated_page,
+        form=form,
+        request=rf
+    )
 
     fields = translated_page.get_required_translatable_fields()
 

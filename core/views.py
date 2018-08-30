@@ -202,7 +202,8 @@ class PreloadPageView(FormView):
         )
         edit_handler = edit_handler.bind_to_instance(
             instance=self.page,
-            form=form
+            form=form,
+            request=self.request
         )
         return {
             'content_type': self.page_content_type,
