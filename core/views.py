@@ -168,7 +168,8 @@ class PreloadPageView(FormView):
         page_class = self.page_content_type.model_class()
         try:
             page = page_class.objects.get(
-                slug=self.request.POST.get('slug_en_gb')
+                slug=self.request.POST.get('slug_en_gb'),
+                service_name__iexact=self.kwargs['service_name']
             )
         except page_class.DoesNotExist:
             page = page_class()
@@ -181,7 +182,7 @@ class PreloadPageView(FormView):
 
     def get_parent(self):
         filter_instance = filters.ServiceNameFilter(
-            data={'service_name': self.kwargs['service_name']},
+            data={'service_name__iexact': self.kwargs['service_name']},
             queryset=Page.objects.all()
         )
         return get_object_or_404(
