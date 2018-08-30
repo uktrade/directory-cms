@@ -15,9 +15,9 @@ directory-healthcheck==0.4.2
 directory_constants==7.1.0
 django-admin-ip-restrictor==0.2.1
 html2text==2018.1.9
-wagtail==2.0.1
+wagtail==2.2.1
 wagtail-modeltranslation==0.9.0
-wagtail-markdown==0.5a3
+wagtail-markdown==0.5
 wagtailmedia==0.2.0
 pytube==9.2.2
 directory-components==2.8.1
