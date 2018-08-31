@@ -227,7 +227,7 @@ class PreloadPageView(FormView):
     def form_valid(self, form):
         return TemplateResponse(
             self.request,
-            self.template_name,
+            self.get_template_names(),
             self.get_context_data(form=form),
         )
 

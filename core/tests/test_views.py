@@ -193,6 +193,7 @@ def test_add_page_prepopulate(
     response = admin_client.post(url, post_data)
 
     assert response.template_name == [expected_template]
+    assert response.status_code == 200
 
     soup = BeautifulSoup(response.content, 'html.parser')
     for name, value in expected_data.items():
