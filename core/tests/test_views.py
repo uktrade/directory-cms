@@ -234,6 +234,25 @@ def test_add_page_prepopulate_missing_content_type(
 
 
 @pytest.mark.django_db
+def test_add_page_prepopulate_get(
+    translated_fas_industry_page, settings, admin_client,
+    fas_industry_landing_page, cluster_data
+):
+    url = reverse(
+        'preload-add-page',
+        kwargs={
+            'service_name': translated_fas_industry_page._meta.app_label,
+            'model_name': translated_fas_industry_page._meta.model_name,
+            'parent_slug': fas_industry_landing_page.slug,
+        }
+    )
+
+    response = admin_client.get(url)
+
+    assert response.status_code == 405
+
+
+@pytest.mark.django_db
 @patch('core.helpers.auto_populate_translations')
 @patch('wagtail.core.models.Page.save_revision')
 def test_translate_page(
