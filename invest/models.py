@@ -55,7 +55,7 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     edit_handler = make_translated_interface(
@@ -102,7 +102,7 @@ class RegionLandingPage(ExclusivePageMixin, BasePage):
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     edit_handler = make_translated_interface(
@@ -301,7 +301,7 @@ class SectorPage(BasePage):
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
         FieldPanel('featured')
     ]
 
@@ -380,7 +380,7 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     edit_handler = make_translated_interface(
@@ -504,7 +504,7 @@ class SetupGuidePage(BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     edit_handler = make_translated_interface(
@@ -772,7 +772,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     edit_handler = make_translated_interface(
@@ -872,7 +872,7 @@ class InfoPage(BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb')
+        FieldPanel('slug')
     ]
 
     edit_handler = make_translated_interface(
@@ -964,7 +964,7 @@ class HighPotentialOfferFormPage(ExclusivePageMixin, BasePage):
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     api_fields = [APIFormFieldField(name) for name in fields_order]

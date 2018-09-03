@@ -12,16 +12,16 @@ from invest.tests.factories import InvestAppFactory, SectorPageFactory
 
 @pytest.mark.django_db
 def test_slugs_are_unique_in_the_same_service():
-    IndustryPageFactory(slug_en_gb='foo')
+    IndustryPageFactory(slug='foo')
     with pytest.raises(ValidationError) as excinfo:
-        IndustryPageFactory(slug_en_gb='foo')
+        IndustryPageFactory(slug='foo')
     assert 'This slug is already in use' in str(excinfo.value)
 
 
 @pytest.mark.django_db
 def test_slugs_are_not_unique_across_services(root_page):
-    page_one = IndustryPageFactory(slug_en_gb='foo', parent=root_page)
-    page_two = SectorPageFactory(slug_en_gb='foo', parent=root_page)
+    page_one = IndustryPageFactory(slug='foo', parent=root_page)
+    page_two = SectorPageFactory(slug='foo', parent=root_page)
     assert page_one.slug == 'foo'
     assert page_two.slug == 'foo'
 
@@ -135,19 +135,19 @@ def test_get_admin_display_title_untranslated(page):
 @pytest.mark.django_db
 def test_historically_unique_slug():
     page_one = IndustryPageFactory.create(
-        slug_en_gb='slug-one',
+        slug='slug-one',
         title_en_gb='1',
         depth=2,
         path='/thing0',
     )
     page_one.save()
-    page_one.slug_en_gb = 'slug-two'
+    page_one.slug = 'slug-two'
     page_one.save()
 
     expected = 'This slug is already in use'
     with pytest.raises(ValidationError, match=expected):
         IndustryPageFactory.create(
-            slug_en_gb='slug-one',
+            slug='slug-one',
             title_en_gb='2',
             depth=2,
             path='/thing1',
@@ -155,7 +155,7 @@ def test_historically_unique_slug():
 
     with pytest.raises(ValidationError, match=expected):
         IndustryPageFactory.create(
-            slug_en_gb='slug-two',
+            slug='slug-two',
             title_en_gb='3',
             depth=2,
             path='/thing2',
@@ -167,4 +167,4 @@ def test_historically_unique_slug():
 def test_base_app_slugs_are_created_in_all_languages(root_page):
     app = InvestAppFactory(title='foo', parent=root_page)
     assert app.slug_de == 'foo'
-    assert app.slug_en_gb == 'foo'
+    assert app.slug == 'foo'

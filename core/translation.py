@@ -17,7 +17,7 @@ class BaseTranslationOptions(TranslationOptions):
 
 
 @register(models.Breadcrumb)
-class IndustryPageTranslationOptions(BaseTranslationOptions):
+class BreadcrumbTranslationOptions(BaseTranslationOptions):
     fields = (
         'label',
     )

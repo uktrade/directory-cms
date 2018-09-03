@@ -45,7 +45,7 @@ class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     api_fields = [
@@ -76,7 +76,7 @@ class PrivacyAndCookiesPage(ExclusivePageMixin, BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     promote_panels = []
@@ -156,7 +156,7 @@ class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     api_fields = [
@@ -251,7 +251,7 @@ class PerformanceDashboardPage(BasePage):
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     api_fields = [
@@ -306,7 +306,7 @@ class PerformanceDashboardNotesPage(ExclusivePageMixin,
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     promote_panels = []

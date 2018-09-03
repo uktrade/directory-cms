@@ -10,7 +10,6 @@ def test_required_fields_industry_page():
     assert options.required_languages == {
         'en-gb': [
             'title',
-            'slug',
             'hero_text',
             'introduction_text',
             'introduction_call_to_action_button_text',

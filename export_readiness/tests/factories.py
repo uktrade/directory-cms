@@ -32,7 +32,7 @@ class PerformanceDashboardPageFactory(wagtail_factories.PageFactory):
     guidance_notes = factory.fuzzy.FuzzyText(length=200)
     landing_dashboard = False
 
-    slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
 
@@ -43,7 +43,7 @@ class PerformanceDashboardNotesPageFactory(wagtail_factories.PageFactory):
         model = models.PerformanceDashboardNotesPage
 
     body = factory.fuzzy.FuzzyText(length=10)
-    slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
 
@@ -61,6 +61,6 @@ class GetFinancePageFactory(wagtail_factories.PageFactory):
     section_three_content = factory.fuzzy.FuzzyText(length=10)
     call_to_action_text = factory.fuzzy.FuzzyText(length=10)
     call_to_action_url = factory.fuzzy.FuzzyText(length=10)
-    slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None

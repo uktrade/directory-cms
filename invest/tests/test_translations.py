@@ -10,7 +10,6 @@ def test_required_fields_invest_home_page():
     assert options.required_languages == {
         'en-gb': [
             'title',
-            'slug',
             'heading',
             'sub_heading',
             'subsection_title_one',
@@ -37,7 +36,6 @@ def test_required_fields_invest_sector_page():
     assert options.required_languages == {
         'en-gb': [
             'title',
-            'slug',
             'description',
             'heading',
             'subsection_title_one',
@@ -54,7 +52,6 @@ def test_required_fields_invest_sector_landing_page():
     assert options.required_languages == {
         'en-gb': [
             'title',
-            'slug',
             'heading',
         ]
     }
@@ -66,7 +63,6 @@ def test_required_fields_invest_info_page():
     assert options.required_languages == {
         'en-gb': [
             'title',
-            'slug',
             'content',
         ]
     }
@@ -78,7 +74,6 @@ def test_required_fields_invest_setup_guide_page():
     assert options.required_languages == {
         'en-gb': [
             'title',
-            'slug',
             'description',
             'heading',
             'sub_heading',
@@ -96,7 +91,6 @@ def test_required_field_invest_setup_guide_landing_page():
     assert options.required_languages == {
         'en-gb': [
             'title',
-            'slug',
             'heading',
             'sub_heading',
         ]

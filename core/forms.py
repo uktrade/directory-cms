@@ -71,7 +71,7 @@ class WagtailAdminPageExclusivePageForm(WagtailAdminPageForm):
     def __init__(self, *args, **kwargs):
         if 'initial' not in kwargs:
             kwargs['initial'] = {
-                'slug_en_gb': self._meta.model.slug_identity
+                'slug': self._meta.model.slug_identity
             }
         super().__init__(*args, **kwargs)
 

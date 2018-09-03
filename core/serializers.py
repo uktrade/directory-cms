@@ -22,7 +22,7 @@ class APIMetaSerializer(fields.DictField):
                 is_draft=helpers.is_draft_requested(self.context['request']),
                 language_code=settings.LANGUAGE_CODE,
             ),
-            'slug': instance.slug_en_gb,
+            'slug': instance.slug,
             'localised_urls': instance.get_localized_urls(),
             'pk': instance.pk,
             'draft_token': (instance.get_draft_token()
