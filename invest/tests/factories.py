@@ -19,7 +19,7 @@ class InfoPageFactory(wagtail_factories.PageFactory):
         model = models.InfoPage
 
     content_en_gb = factory.fuzzy.FuzzyText(length=10)
-    slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
 
@@ -44,7 +44,7 @@ class InvestHomePageFactory(wagtail_factories.PageFactory):
     how_we_help_text_four_en_gb = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_five_en_gb = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_six_en_gb = 'http://test.com'
-    slug_en_gb = 'invest-home'
+    slug = 'invest-home'
     parent = None
 
 
@@ -65,7 +65,7 @@ class SectorPageFactory(wagtail_factories.PageFactory):
     subsection_content_one_en_gb = factory.fuzzy.FuzzyText(length=10)
     subsection_title_two_en_gb = factory.fuzzy.FuzzyText(length=10)
     subsection_content_two_en_gb = factory.fuzzy.FuzzyText(length=10)
-    slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
 
@@ -100,7 +100,7 @@ class SetupGuideLandingPageFactory(wagtail_factories.PageFactory):
     heading_en_gb = factory.fuzzy.FuzzyText(length=100)
     sub_heading_en_gb = factory.fuzzy.FuzzyText(length=100)
     lead_in_en_gb = factory.fuzzy.FuzzyText(length=10)
-    slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
 
@@ -117,7 +117,7 @@ class SetupGuidePageFactory(wagtail_factories.PageFactory):
     subsection_content_one_en_gb = factory.fuzzy.FuzzyText(length=10)
     subsection_title_two_en_gb = factory.fuzzy.FuzzyText(length=10)
     subsection_content_two_en_gb = factory.fuzzy.FuzzyText(length=10)
-    slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
 

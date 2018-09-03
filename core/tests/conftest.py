@@ -11,7 +11,7 @@ from find_a_supplier.tests.factories import IndustryPageFactory, \
 def page(root_page):
     return IndustryPageFactory(
         parent=root_page,
-        slug_en_gb='the-slug'
+        slug='the-slug'
     )
 
 

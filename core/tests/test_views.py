@@ -165,7 +165,7 @@ def test_add_page_prepopulate(
     model_as_dict = model_to_dict(translated_fas_industry_page, exclude=[
         'go_live_at',
         'expire_at',
-        'slug_en_gb',
+        'slug',
     ])
     model_as_dict = {key: val for key, val in model_as_dict.items() if val}
     post_data = {
@@ -186,8 +186,8 @@ def test_add_page_prepopulate(
         'search_filter_sector': model_as_dict['search_filter_sector'][0],
     }
     if include_slug:
-        post_data['slug_en_gb'] = expected_data['slug_en_gb'] = (
-            translated_fas_industry_page.slug_en_gb
+        post_data['slug'] = expected_data['slug'] = (
+            translated_fas_industry_page.slug
         )
 
     response = admin_client.post(url, post_data)
@@ -264,7 +264,7 @@ def test_translate_page(
     data = {
         'action-translate': True,
         'sector_value': sectors.AUTOMOTIVE,
-        'slug_en_gb': 'this-is-great',
+        'slug': 'this-is-great',
         'title_en_gb': 'this-is-great',
         'breadcrumbs_label_en_gb': 'Mining',
         'introduction_text_en_gb': 'introduction',
@@ -329,7 +329,7 @@ def test_not_always_call_translate_page(
 
     data = {
         'sector_value': sectors.AUTOMOTIVE,
-        'slug_en_gb': 'this-is-great',
+        'slug': 'this-is-great',
         'title_en_gb': 'this-is-great',
         'introduction_text_en_gb': 'Good',
         'introduction_title_en_gb': 'title',

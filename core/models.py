@@ -23,7 +23,7 @@ from django.forms import MultipleChoiceField
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.utils import translation
-from django.utils.text import mark_safe, slugify
+from django.utils.text import mark_safe
 from core import constants, forms
 
 
@@ -129,9 +129,7 @@ class BasePage(Page):
             return str(self.pk) == str(value)
 
     def get_url_path_parts(self, language_code):
-        slug_fieldname = build_localized_fieldname('slug', lang=language_code)
-        slug = getattr(self, slug_fieldname) or self.slug_en_gb
-        return [self.view_path, slug + '/']
+        return [self.view_path, self.slug + '/']
 
     def get_url(self, is_draft=False, language_code=settings.LANGUAGE_CODE):
         domain = dict(constants.APP_URLS)[self.service_name_value]
@@ -244,7 +242,7 @@ class ImageHash(models.Model):
 
 
 class ExclusivePageMixin:
-    read_only_fields = ['slug_en_gb']
+    read_only_fields = ['slug']
     base_form_class = forms.WagtailAdminPageExclusivePageForm
 
     @classmethod
@@ -309,9 +307,3 @@ class BaseApp(BasePage):
     ]
     content_panels = []
     promote_panels = []
-
-    def save(self, *args, **kwargs):
-        for slug_field in (build_localized_fieldname('slug', lang) for lang in
-                           modeltranslation_settings.AVAILABLE_LANGUAGES):
-            setattr(self, slug_field, slugify(self.title_en_gb))
-        return super().save(*args, **kwargs)

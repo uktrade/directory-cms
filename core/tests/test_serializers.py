@@ -16,7 +16,7 @@ from find_a_supplier.tests.factories import (
 @pytest.mark.django_db
 def test_markdown_to_html_serializer(page, rf):
     page.hero_text_en_gb = (
-        '[hyperlink](slug:{slug})'.format(slug=page.slug_en_gb)
+        '[hyperlink](slug:{slug})'.format(slug=page.slug)
     )
 
     class TestSerializer(Serializer):
@@ -67,8 +67,7 @@ def test_meta_serializer(page, rf):
 
 @pytest.mark.django_db
 def test_meta_serializer_slug_translation(page, rf):
-    page.slug_en_gb = 'test-slug-en'
-    page.slug_de = 'test-slug-de'
+    page.slug = 'test-slug-en'
     page.pk = 4
 
     class TestSerializer(Serializer):

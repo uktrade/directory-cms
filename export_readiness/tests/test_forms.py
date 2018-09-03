@@ -18,4 +18,4 @@ def test_terms_slug(model_class, rf):
         request=rf
     )
 
-    assert form.initial == {'slug_en_gb': model_class.slug_identity}
+    assert form.initial == {'slug': model_class.slug_identity}

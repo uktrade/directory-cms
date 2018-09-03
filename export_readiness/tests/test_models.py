@@ -32,7 +32,7 @@ def test_set_slug():
         path='/thing',
     )
 
-    assert instance.slug_en_gb == 'the-app'
+    assert instance.slug == models.ExportReadinessApp.slug_identity
 
 
 @pytest.mark.django_db

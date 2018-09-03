@@ -11,7 +11,7 @@
                 <input type="hidden" value="{{ value }}" name="{{ name }}" id="id_{{ name }}" />
             {% endfor %}
             {% for name, value in serialized_object %}
-                {% if include_slug or name != 'slug_en_gb' %}
+                {% if include_slug or name != 'slug' %}
                     <input type="hidden" value="{{ value }}" name="{{ name }}" id="id_{{ name }}" />
                 {% endif %}
             {% endfor %}
