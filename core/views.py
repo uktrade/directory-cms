@@ -149,6 +149,7 @@ class PreloadPageView(FormView):
     template_name = 'wagtailadmin/pages/create.html'
     update_template_name = 'wagtailadmin/pages/edit.html'
     filter_class = filters.ServiceNameDRFFilter
+    http_method_names = ['post']
 
     def dispatch(self, *args, **kwargs):
         self.page_content_type = self.get_page_content_type()
