@@ -181,12 +181,13 @@ class PreloadPageView(FormView):
         return page_class.get_edit_handler().get_form_class()
 
     def get_parent(self):
-        filter_instance = filters.ServiceNameFilter(
-            data={'service_name__iexact': self.kwargs['service_name']},
-            queryset=Page.objects.all()
+        queryset = filters.ServiceNameFilter().filter_service_name(
+            queryset=Page.objects.all(),
+            name=None,
+            value=self.kwargs['service_name'].upper(),
         )
         return get_object_or_404(
-            filter_instance.queryset,
+            queryset,
             slug=self.kwargs['parent_slug'],
         ).specific
 
