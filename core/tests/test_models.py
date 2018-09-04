@@ -5,6 +5,7 @@ from modeltranslation.utils import build_localized_fieldname
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils import translation
+from wagtail.core.models import Page
 
 from find_a_supplier.tests.factories import IndustryPageFactory
 from invest.tests.factories import InvestAppFactory, SectorPageFactory
@@ -24,6 +25,16 @@ def test_slugs_are_not_unique_across_services(root_page):
     page_two = SectorPageFactory(slug='foo', parent=root_page)
     assert page_one.slug == 'foo'
     assert page_two.slug == 'foo'
+
+
+@pytest.mark.django_db
+def test_delete_same_slug_different_services(root_page):
+    page_one = IndustryPageFactory(slug='foo', parent=root_page)
+    page_two = SectorPageFactory(slug='foo', parent=root_page)
+    assert page_one.slug == 'foo'
+    assert page_two.slug == 'foo'
+    page_one.delete()
+    assert Page.objects.filter(pk=page_one.pk).exists() is False
 
 
 @pytest.mark.django_db

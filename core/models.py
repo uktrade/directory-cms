@@ -105,6 +105,14 @@ class BasePage(Page):
         except IntegrityError:
             raise ValidationError({'slug': 'This slug is already in use'})
 
+    def delete(self, *args, **kwargs):
+        """We need to override delete to use the Page's parent one.
+
+        Using the Page one would cause the original _slug_is_available method
+        to be called and that is not considering services
+        """
+        super(Page, self).delete(*args, **kwargs)
+
     @staticmethod
     def _slug_is_available(slug, parent, page=None):
         is_currently_unique = Page._slug_is_available(slug, parent, page)
