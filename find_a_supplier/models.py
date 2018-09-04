@@ -18,7 +18,11 @@ from core.fields import (
 )
 from core.helpers import make_translated_interface
 from core.models import (
-    BaseApp, BasePage, BreadcrumbMixin, ChoiceArrayField, ExclusivePageMixin
+    BasePage,
+    BreadcrumbMixin,
+    ChoiceArrayField,
+    ExclusivePageMixin,
+    ServiceMixin,
 )
 from core.panels import SearchEngineOptimisationPanel
 from find_a_supplier import fields
@@ -28,7 +32,7 @@ class ImageChooserPanel(ImageChooserPanel):
     classname = ""
 
 
-class FindASupplierApp(ExclusivePageMixin, BaseApp):
+class FindASupplierApp(ExclusivePageMixin, ServiceMixin, BasePage):
     slug_identity = 'find-a-supplier-app'
     service_name_value = cms.FIND_A_SUPPLIER
 
