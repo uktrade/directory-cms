@@ -5,33 +5,6 @@ from __future__ import unicode_literals
 from django.db import migrations
 
 
-service_name = 'EXPORT_READINESS'
-
-model_names = [
-    'TermsAndConditionsPage',
-    'PrivacyAndCookiesPage',
-    'GetFinancePage',
-    'PerformanceDashboardPage',
-    'PerformanceDashboardNotesPage',
-]
-
-
-def populate_historic_slug_service_name(apps, schema_editor):
-    HistoricSlug = apps.get_model('core', 'HistoricSlug')
-    for model_name in model_names:
-        historic_model = apps.get_model('export_readiness', model_name)
-        for page in historic_model.objects.all():
-            page.service_name = service_name
-            page.save()
-            HistoricSlug.objects.get_or_create(
-                slug=page.slug,
-                page=page,
-                defaults={
-                    'service_name': service_name,
-                }
-            )
-
-
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -41,7 +14,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(
-           populate_historic_slug_service_name,
-           reverse_code=migrations.RunPython.noop
+            migrations.RunPython.noop,
+            reverse_code=migrations.RunPython.noop
         )
     ]

@@ -79,7 +79,7 @@ class BasePage(Page):
     @transaction.atomic
     def save(self, *args, **kwargs):
         self.service_name = self.service_name_value
-        super().save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         """We need to override delete to use the Page's parent one.
