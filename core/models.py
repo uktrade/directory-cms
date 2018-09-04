@@ -10,7 +10,6 @@ from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.models import Page
 
 from django.core import signing
-from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.contrib.contenttypes.fields import (
     GenericForeignKey, GenericRelation
@@ -18,7 +17,7 @@ from django.contrib.contenttypes.fields import (
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
-from django.db import IntegrityError, transaction
+from django.db import transaction
 from django.forms import MultipleChoiceField
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
@@ -40,19 +39,6 @@ class Breadcrumb(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     page = GenericForeignKey('content_type', 'object_id')
-
-
-class HistoricSlug(models.Model):
-    slug = models.SlugField(db_index=True)
-    service_name = models.CharField(
-        max_length=50,
-        choices=choices.CMS_APP_CHOICES,
-        null=True
-    )
-    page = models.ForeignKey(Page)
-
-    class Meta:
-        unique_together = ('slug', 'service_name')
 
 
 class ChoiceArrayField(ArrayField):
@@ -94,16 +80,6 @@ class BasePage(Page):
     def save(self, *args, **kwargs):
         self.service_name = self.service_name_value
         super().save(*args, **kwargs)
-        try:
-            HistoricSlug.objects.get_or_create(
-                slug=self.slug,
-                page=self,
-                defaults={
-                    'service_name': self.service_name,
-                }
-            )
-        except IntegrityError:
-            raise ValidationError({'slug': 'This slug is already in use'})
 
     def delete(self, *args, **kwargs):
         """We need to override delete to use the Page's parent one.
@@ -116,14 +92,14 @@ class BasePage(Page):
     @staticmethod
     def _slug_is_available(slug, parent, page=None):
         is_currently_unique = Page._slug_is_available(slug, parent, page)
-        queryset = HistoricSlug.objects.filter(
+        queryset = Page.objects.filter(
             slug=slug
         )
         if page:
             queryset = queryset.exclude(page__pk=page.pk)
             queryset = queryset.filter(service_name=page.service_name_value)
-        is_historically_unique = (queryset.count() == 0)
-        return is_currently_unique and is_historically_unique
+        is_unique_in_service = (queryset.count() == 0)
+        return is_currently_unique and is_unique_in_service
 
     def get_draft_token(self):
         return self.signer.sign(self.pk)
