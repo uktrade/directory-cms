@@ -1,6 +1,8 @@
 from directory_constants.constants import cms
 from wagtail.api import APIField
-from wagtail.admin.edit_handlers import FieldPanel, ObjectList, MultiFieldPanel, FieldRowPanel
+from wagtail.admin.edit_handlers import (
+    FieldPanel, ObjectList, MultiFieldPanel, FieldRowPanel
+)
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmedia.widgets import AdminMediaChooser
 

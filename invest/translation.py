@@ -173,4 +173,3 @@ class HighPotentialOpportunityDetailPageTranslationOptions(
 @register(models.InvestApp)
 class InvestAppTranslationOptions(BaseTranslationOptions):
     fields = []
-

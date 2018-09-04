@@ -4,7 +4,7 @@ from rest_framework.serializers import Serializer
 from django.utils import translation
 
 from core import permissions, serializers
-from invest.tests.factories import HighPotentialOfferFormPageFactory
+from invest.tests.factories import HighPotentialOpportunityFormPageFactory
 from find_a_supplier.tests.factories import (
     IndustryLandingPageFactory,
     IndustryPageFactory,
@@ -188,7 +188,7 @@ def test_breadcrums_serializer(page, rf):
 
 @pytest.mark.django_db
 def test_api_form_field_serializer(rf):
-    page = HighPotentialOfferFormPageFactory(
+    page = HighPotentialOpportunityFormPageFactory(
         comment_help_text='comment [help text]',
         comment_label='comment [label]',
     )
