@@ -115,7 +115,6 @@ def test_copy_upsteam(admin_client, translated_page, settings, image):
 
     assert response.status_code == 200
     assert response.context['page'] == translated_page
-    assert response.context['include_slug'] is False
 
 
 @pytest.mark.django_db
@@ -129,7 +128,6 @@ def test_update_upstream(admin_client, translated_page, settings, image):
 
     assert response.status_code == 200
     assert response.context['page'] == translated_page
-    assert response.context['include_slug'] is True
 
 
 @pytest.mark.django_db

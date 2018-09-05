@@ -11,9 +11,7 @@
                 <input type="hidden" value="{{ value }}" name="{{ name }}" id="id_{{ name }}" />
             {% endfor %}
             {% for name, value in serialized_object %}
-                {% if include_slug or name != 'slug' %}
-                    <input type="hidden" value="{{ value }}" name="{{ name }}" id="id_{{ name }}" />
-                {% endif %}
+                <input type="hidden" value="{{ value }}" name="{{ name }}" id="id_{{ name }}" />
             {% endfor %}
             <input type="hidden" name="next" value="{{ next }}" />
             <ul class="fields">
