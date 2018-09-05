@@ -417,19 +417,6 @@ def test_lookup_by_slug_missing_required_query_param(translated_page,
 
 
 @pytest.mark.django_db
-def test_lookup_by_slug_historic(translated_page, admin_client):
-    old_slug = translated_page.slug
-    new_slug = translated_page.slug = 'new-slug'
-    translated_page.save()
-    for slug in [old_slug, new_slug]:
-        url = reverse('lookup-by-slug', kwargs={'slug': slug})
-        response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
-
-        assert response.status_code == 200
-        assert response.json()['id'] == translated_page.id
-
-
-@pytest.mark.django_db
 def test_lookup_by_slug_missing_page(admin_client):
     url = reverse('lookup-by-slug', kwargs={'slug': 'thing'})
 

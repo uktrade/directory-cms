@@ -235,7 +235,7 @@ class LinkPattern(markdown.inlinepatterns.LinkPattern):
     def sanitize_url(self, url):
         if url.startswith('slug:'):
             slug = url.split(':')[1]
-            page = Page.objects.get(historicslug__slug=slug).specific
+            page = Page.objects.get(slug=slug).specific
             url = page.url
         return super().sanitize_url(url)
 
