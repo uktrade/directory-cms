@@ -179,9 +179,7 @@ def test_historically_unique_slug():
         )
 
 
-@pytest.mark.xfail
 @pytest.mark.django_db
 def test_base_app_slugs_are_created_in_all_languages(root_page):
     app = InvestAppFactory(title='foo', parent=root_page)
-    assert app.slug_de == 'foo'
-    assert app.slug == 'foo'
+    assert app.slug == InvestApp.slug_identity

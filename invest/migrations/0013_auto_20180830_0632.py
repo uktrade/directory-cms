@@ -15,7 +15,7 @@ model_names = [
     'SetupGuidePage',
     'InvestHomePage',
     'InfoPage',
-    'HighPotentialOpportunityFormPage',
+    'HighPotentialOfferFormPage',
 ]
 
 

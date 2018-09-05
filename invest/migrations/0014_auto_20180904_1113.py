@@ -72,7 +72,7 @@ class Migration(migrations.Migration):
             bases=('wagtailcore.page',),
         ),
         migrations.RenameModel(
-            old_name='HighPotentialOpportunityFormPage',
+            old_name='HighPotentialOfferFormPage',
             new_name='HighPotentialOpportunityFormPage',
         ),
     ]

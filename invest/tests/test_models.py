@@ -12,4 +12,5 @@ def test_invest_app_models():
         models.InvestHomePage,
         models.InfoPage,
         models.HighPotentialOpportunityFormPage,
+        models.HighPotentialOpportunityDetailPage,
     ]
