@@ -9,6 +9,7 @@ from wagtail.core.models import Page
 
 from find_a_supplier.tests.factories import IndustryPageFactory
 from invest.tests.factories import InvestAppFactory, SectorPageFactory
+from invest.models import InvestApp
 
 
 @pytest.mark.django_db
@@ -98,6 +99,11 @@ def test_translated_languages(page, language_code):
 
 
 @pytest.mark.django_db
+def test_translated_languages_no_fields():
+    assert InvestApp().translated_languages == []
+
+
+@pytest.mark.django_db
 def test_translated_localised_urls(translated_page):
     translated_page.slug = 'slug'
     translated_page.pk = 3
@@ -142,9 +148,8 @@ def test_get_admin_display_title_untranslated(page):
     page.draft_title = 'Untranslated page'
     assert page.get_admin_display_title() == 'Untranslated page\n\n'
 
-@pytest.mark.xfail
+
 @pytest.mark.django_db
 def test_base_app_slugs_are_created_in_all_languages(root_page):
     app = InvestAppFactory(title='foo', parent=root_page)
-    assert app.slug_de == 'foo'
-    assert app.slug == 'foo'
+    assert app.slug == InvestApp.slug_identity

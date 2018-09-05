@@ -187,6 +187,8 @@ class BasePage(Page):
     @property
     def translated_languages(self):
         fields = self.get_required_translatable_fields()
+        if not fields:
+            return []
         language_codes = translation.trans_real.get_languages()
         translated_languages = []
         for language_code in language_codes:
@@ -276,7 +278,7 @@ class BreadcrumbMixin(models.Model):
         self.breadcrumb.update_or_create(defaults=defaults)
 
 
-class BaseApp(BasePage):
+class ServiceMixin(models.Model):
     service_name_value = None
     base_form_class = forms.BaseAppAdminPageForm
     view_path = ''
