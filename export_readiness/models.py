@@ -12,11 +12,13 @@ from directory_constants.constants import cms
 from core.fields import (
     APIMarkdownToHTMLField, APIMetaField, MarkdownField, APIImageField
 )
-from core.models import BaseApp, BasePage, BreadcrumbMixin, ExclusivePageMixin
+from core.models import (
+    BasePage, BreadcrumbMixin, ExclusivePageMixin, ServiceMixin
+)
 from core.panels import SearchEngineOptimisationPanel
 
 
-class ExportReadinessApp(ExclusivePageMixin, BaseApp):
+class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
     slug_identity = 'export-readiness-app'
     service_name_value = cms.EXPORT_READINESS
 

@@ -11,13 +11,13 @@ from core.fields import (
     MarkdownField,
 )
 from core.helpers import make_translated_interface
-from core.models import BaseApp, BasePage, ExclusivePageMixin
+from core.models import BasePage, ExclusivePageMixin, ServiceMixin
 from core.panels import SearchEngineOptimisationPanel
 
-from . import fields
+from invest import fields
 
 
-class InvestApp(ExclusivePageMixin, BaseApp):
+class InvestApp(ExclusivePageMixin, ServiceMixin, BasePage):
     service_name_value = cms.INVEST
     slug_identity = 'invest-app'
 
