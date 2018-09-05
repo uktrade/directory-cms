@@ -209,8 +209,29 @@ class NewGetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     contact_button = models.CharField(max_length=500)
     advantages_title = models.CharField(max_length=500)
     advantages_one = MarkdownField()
+    advantages_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     advantages_two = MarkdownField()
+    advantages_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     advantages_three = MarkdownField()
+    advantages_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     evidence = MarkdownField()
     evidence_video_embed = models.CharField(max_length=500)
 
@@ -239,6 +260,13 @@ class NewGetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
             heading='Advantages',
             children=[
                 FieldPanel('advantages_title'),
+                FieldRowPanel(
+                    children=[
+                        ImageChooserPanel('advantages_one_icon'),
+                        ImageChooserPanel('advantages_two_icon'),
+                        ImageChooserPanel('advantages_three_icon'),
+                    ]
+                ),
                 FieldRowPanel(
                     children=[
                         FieldPanel('advantages_one'),
