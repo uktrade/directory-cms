@@ -10,7 +10,8 @@ def test_app_models():
         models.ExportReadinessApp,
         models.TermsAndConditionsPage,
         models.PrivacyAndCookiesPage,
-        models.GetFinancePage,
+        models.DeprecatedGetFinancePage,
+        models.NewGetFinancePage,
         models.PerformanceDashboardPage,
         models.PerformanceDashboardNotesPage,
     ]
@@ -37,5 +38,5 @@ def test_set_slug():
 
 @pytest.mark.django_db
 def test_get_finance_breadcrumbs():
-    page = factories.GetFinancePageFactory.create()
+    page = factories.DeprecatedGetFinancePageFactory.create()
     assert page.breadcrumb.first().label == page.breadcrumbs_label

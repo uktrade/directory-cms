@@ -48,10 +48,10 @@ class PerformanceDashboardNotesPageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
-class GetFinancePageFactory(wagtail_factories.PageFactory):
+class DeprecatedGetFinancePageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.GetFinancePage
+        model = models.DeprecatedGetFinancePage
 
     breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
     banner_content = factory.fuzzy.FuzzyText(length=10)

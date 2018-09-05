@@ -14,8 +14,13 @@ class PrivacyAndCookiesPageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
-@register(models.GetFinancePage)
-class GetFinancePageTranslationOptions(BaseTranslationOptions):
+@register(models.DeprecatedGetFinancePage)
+class DeprecatedGetFinancePageTranslationOptions(BaseTranslationOptions):
+    fields = []
+
+
+@register(models.NewGetFinancePage)
+class NewGetFinancePageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
