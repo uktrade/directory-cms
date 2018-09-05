@@ -3,6 +3,7 @@ import hashlib
 from urllib.parse import urljoin, urlencode
 
 from directory_constants.constants import choices
+from django.core.exceptions import ValidationError
 from modeltranslation import settings as modeltranslation_settings
 from modeltranslation.translator import translator
 from modeltranslation.utils import build_localized_fieldname
@@ -79,6 +80,12 @@ class BasePage(Page):
     @transaction.atomic
     def save(self, *args, **kwargs):
         self.service_name = self.service_name_value
+        if not self._slug_is_available(
+            slug=self.slug,
+            parent=self.get_parent(),
+            page=self
+        ):
+            raise ValidationError({'slug': 'This slug is already in use'})
         return super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
@@ -91,15 +98,14 @@ class BasePage(Page):
 
     @staticmethod
     def _slug_is_available(slug, parent, page=None):
-        is_currently_unique = Page._slug_is_available(slug, parent, page)
-        queryset = Page.objects.filter(
-            slug=slug
+        from core import filters  # circular dependencies
+        queryset = filters.ServiceNameFilter().filter_service_name(
+            queryset=Page.objects.filter(slug=slug).exclude(pk=page.pk),
+            name=None,
+            value=page.service_name,
         )
-        if page:
-            queryset = queryset.exclude(page__pk=page.pk)
-            queryset = queryset.filter(service_name=page.service_name_value)
         is_unique_in_service = (queryset.count() == 0)
-        return is_currently_unique and is_unique_in_service
+        return is_unique_in_service
 
     def get_draft_token(self):
         return self.signer.sign(self.pk)
