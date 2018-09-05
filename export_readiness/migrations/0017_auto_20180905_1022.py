@@ -9,21 +9,15 @@ def rename_deprecated_get_finance_slug(apps, schema_editor):
     DeprecatedGetFinancePage = apps.get_model(
         'export_readiness', 'DeprecatedGetFinancePage'
     )
-    HistoricSlug = apps.get_model('core', 'HistoricSlug')
 
     for page in DeprecatedGetFinancePage.objects.all():
         page.slug = 'get-finance-deprecated'
         page.save()
 
-    for historic_slug in HistoricSlug.objects.filter(slug='get-finance'):
-        historic_slug.slug = 'get-finance-deprecated'
-        historic_slug.save()
-
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0020_auto_20180830_1737'),
         ('export_readiness', '0016_auto_20180905_1020'),
     ]
 

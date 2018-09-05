@@ -150,36 +150,6 @@ def test_get_admin_display_title_untranslated(page):
 
 
 @pytest.mark.django_db
-def test_historically_unique_slug():
-    page_one = IndustryPageFactory.create(
-        slug='slug-one',
-        title_en_gb='1',
-        depth=2,
-        path='/thing0',
-    )
-    page_one.save()
-    page_one.slug = 'slug-two'
-    page_one.save()
-
-    expected = 'This slug is already in use'
-    with pytest.raises(ValidationError, match=expected):
-        IndustryPageFactory.create(
-            slug='slug-one',
-            title_en_gb='2',
-            depth=2,
-            path='/thing1',
-        )
-
-    with pytest.raises(ValidationError, match=expected):
-        IndustryPageFactory.create(
-            slug='slug-two',
-            title_en_gb='3',
-            depth=2,
-            path='/thing2',
-        )
-
-
-@pytest.mark.django_db
 def test_base_app_slugs_are_created_in_all_languages(root_page):
     app = InvestAppFactory(title='foo', parent=root_page)
     assert app.slug == InvestApp.slug_identity
