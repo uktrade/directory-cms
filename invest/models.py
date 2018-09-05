@@ -1264,8 +1264,8 @@ class HighPotentialOpportunityDetailPage(BasePage):
                     ]
                 )
             ]
-        )
-
+        ),
+        SearchEngineOptimisationPanel(),
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
@@ -1315,4 +1315,5 @@ class HighPotentialOpportunityDetailPage(BasePage):
         APIMarkdownToHTMLField('case_study_three_image'),
         APIMarkdownToHTMLField('case_study_four_text'),
         APIMarkdownToHTMLField('case_study_four_image'),
+        APIMetaField('meta'),
     ]

@@ -1,5 +1,5 @@
 from wagtail.admin.edit_handlers import (
-    FieldPanel, MultiFieldPanel,
+    FieldPanel, FieldRowPanel, MultiFieldPanel,
 )
 from wagtail.api import APIField
 from wagtail.core.models import Page
@@ -91,11 +91,11 @@ class PrivacyAndCookiesPage(ExclusivePageMixin, BasePage):
     ]
 
 
-class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
+class DeprecatedGetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
 
     service_name_value = cms.EXPORT_READINESS
     view_path = 'get-finance/'
-    slug_identity = 'get-finance'
+    slug_identity = 'get-finance-deprecated'
 
     banner_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -174,6 +174,112 @@ class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         APIField('call_to_action_url'),
         APIField('seo_title'),
         APIField('search_description'),
+        APIMetaField('meta'),
+    ]
+
+    def get_admin_display_title(self):
+        return '[deprecated] ' + super().get_admin_display_title()
+
+
+# To rename to GetFinancePage once DeprecatedGetFinancePage has been deleted
+class NewGetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
+
+    service_name_value = cms.EXPORT_READINESS
+    view_path = 'get-finance/'
+    slug_identity = 'get-finance'
+
+    breadcrumbs_label = models.CharField(max_length=50)
+    hero_text = MarkdownField()
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    ukef_logo = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    contact_proposition = MarkdownField(blank=False)
+    contact_button = models.CharField(max_length=500)
+    advantages_title = models.CharField(max_length=500)
+    advantages_one = MarkdownField()
+    advantages_two = MarkdownField()
+    advantages_three = MarkdownField()
+    evidence = MarkdownField()
+    evidence_video_embed = models.CharField(max_length=500)
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading='Banner',
+            children=[
+                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_text'),
+                ImageChooserPanel('ukef_logo'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Contact us',
+            children=[
+                FieldRowPanel(
+                    children=[
+                        FieldPanel('contact_proposition'),
+                        FieldPanel('contact_button'),
+                    ]
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Advantages',
+            children=[
+                FieldPanel('advantages_title'),
+                FieldRowPanel(
+                    children=[
+                        FieldPanel('advantages_one'),
+                        FieldPanel('advantages_two'),
+                        FieldPanel('advantages_three'),
+                    ]
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Evidence',
+            children=[
+                FieldRowPanel(
+                    children=[
+                        FieldPanel('evidence'),
+                        FieldPanel('evidence_video_embed'),
+                    ]
+                )
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    api_fields = [
+        APIField('breadcrumbs_label'),
+        APIMarkdownToHTMLField('hero_text'),
+        APIImageField('hero_image'),
+        APIImageField('ukef_logo'),
+        APIMarkdownToHTMLField('contact_proposition'),
+        APIField('contact_button'),
+        APIField('advantages_title'),
+        APIMarkdownToHTMLField('advantages_one'),
+        APIMarkdownToHTMLField('advantages_two'),
+        APIMarkdownToHTMLField('advantages_three'),
+        APIMarkdownToHTMLField('evidence'),
+        APIField('evidence_video_embed'),
         APIMetaField('meta'),
     ]
 

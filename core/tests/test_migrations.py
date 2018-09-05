@@ -1,13 +1,13 @@
 import pytest
 
 from core.models import HistoricSlug
-from export_readiness.tests.factories import GetFinancePageFactory
+from export_readiness.tests.factories import DeprecatedGetFinancePageFactory
 
 
 @pytest.mark.skip(reason='slow')
 @pytest.mark.django_db
 def test_populate_historic_slug_service_name(migration, settings):
-    page = GetFinancePageFactory.create()
+    page = DeprecatedGetFinancePageFactory.create()
 
     historic_slug = HistoricSlug.objects.get(page=page)
     historic_slug.service_name = None
