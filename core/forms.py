@@ -31,6 +31,14 @@ class WagtailAdminPageForm(WagtailAdminPageForm):
         cls.set_read_only(form_class)
         return form_class
 
+    def __init__(self, *args, **kwargs):
+        """Set slug to read only if editing an existing page."""
+        if 'instance' in kwargs:
+            field = self.base_fields['slug']
+            field.disabled = True
+            field.required = False
+        return super().__init__(*args, **kwargs)
+
     @staticmethod
     def set_read_only(form_class):
         for field_name in form_class._meta.model.read_only_fields:
