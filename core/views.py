@@ -92,8 +92,6 @@ class UpstreamBaseView(FormView):
     environment_form_class = forms.CopyToEnvironmentForm
     template_name = 'core/upstream.html'
 
-    include_slug = None
-
     def get_form_class(self):
         page = self.get_object()
         return page.get_edit_handler().get_form_class()
@@ -131,18 +129,17 @@ class UpstreamBaseView(FormView):
             model_name=page._meta.model_name,
             serialized_relations=self.serialize_relations(),
             serialized_object=self.serialize_object(),
-            include_slug=self.include_slug,
             parent_slug=page.specific.get_parent().slug,
             **kwargs
         )
 
 
 class CopyUpstreamView(UpstreamBaseView):
-    include_slug = False
+    pass
 
 
 class UpdateUpstreamView(UpstreamBaseView):
-    include_slug = True
+    pass
 
 
 class PreloadPageView(FormView):
