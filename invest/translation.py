@@ -156,11 +156,20 @@ class SetupGuideLandingPageTranslation(BaseTranslationOptions):
     )
 
 
-@register(models.HighPotentialOfferFormPage)
-class HighPotentialOfferFormPageTranslationOptions(BaseTranslationOptions):
+@register(models.HighPotentialOpportunityFormPage)
+class HighPotentialOpportunityFormPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = []
+
+
+@register(models.HighPotentialOpportunityDetailPage)
+class HighPotentialOpportunityDetailPageTranslationOptions(
+    BaseTranslationOptions
+):
     fields = []
 
 
 @register(models.InvestApp)
-class InvestAppPageTranslationOptions(BaseTranslationOptions):
+class InvestAppTranslationOptions(BaseTranslationOptions):
     fields = []

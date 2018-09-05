@@ -99,6 +99,11 @@ def test_translated_languages(page, language_code):
 
 
 @pytest.mark.django_db
+def test_translated_languages_no_fields():
+    assert InvestApp().translated_languages == []
+
+
+@pytest.mark.django_db
 def test_translated_localised_urls(translated_page):
     translated_page.slug = 'slug'
     translated_page.pk = 3

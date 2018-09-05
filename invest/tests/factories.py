@@ -122,9 +122,9 @@ class SetupGuidePageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
-class HighPotentialOfferFormPageFactory(wagtail_factories.PageFactory):
+class HighPotentialOpportunityFormPageFactory(wagtail_factories.PageFactory):
     class Meta:
-        model = models.HighPotentialOfferFormPage
+        model = models.HighPotentialOpportunityFormPage
 
     comment_help_text = factory.fuzzy.FuzzyText(length=200)
     comment_label = factory.fuzzy.FuzzyText(length=200)
