@@ -3,6 +3,7 @@ from wagtail.api import APIField
 from wagtail.admin.edit_handlers import (
     FieldPanel, ObjectList, MultiFieldPanel, FieldRowPanel
 )
+from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
@@ -53,7 +54,7 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
     image_panels = [
         ImageChooserPanel('hero_image'),
     ]
-    content_panels = [
+    content_panels = Page.content_panels + [
         FieldPanel('heading'),
         SearchEngineOptimisationPanel()
 
@@ -101,7 +102,7 @@ class RegionLandingPage(ExclusivePageMixin, BasePage):
     image_panels = [
         ImageChooserPanel('hero_image'),
     ]
-    content_panels = [
+    content_panels = Page.content_panels + [
         FieldPanel('heading'),
         SearchEngineOptimisationPanel()
     ]
@@ -226,7 +227,7 @@ class SectorPage(BasePage):
     image_panels = [
         ImageChooserPanel('hero_image'),
     ]
-    content_panels = [
+    content_panels = Page.content_panels + [
         FieldPanel('description'),
         FieldPanel('heading'),
         MultiFieldPanel(
@@ -376,7 +377,7 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
     sub_heading = models.CharField(max_length=255)
     lead_in = models.TextField(blank=True)
 
-    content_panels = [
+    content_panels = Page.content_panels + [
         FieldPanel('heading'),
         FieldPanel('sub_heading'),
         FieldPanel('lead_in'),
@@ -435,7 +436,7 @@ class SetupGuidePage(BasePage):
     subsection_title_seven = models.CharField(max_length=255, blank=True)
     subsection_content_seven = MarkdownField(blank=True)
 
-    content_panels = [
+    content_panels = Page.content_panels + [
         FieldPanel('description'),
         FieldPanel('heading'),
         FieldPanel('sub_heading'),
@@ -652,7 +653,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         ImageChooserPanel('hero_image'),
     ]
 
-    content_panels = [
+    content_panels = Page.content_panels + [
         FieldPanel('heading'),
         FieldPanel('sub_heading'),
         # subsections
@@ -870,7 +871,7 @@ class InfoPage(BasePage):
     view_path = 'info/'
     content = MarkdownField()
 
-    content_panels = [
+    content_panels = Page.content_panels + [
         FieldPanel('content'),
         SearchEngineOptimisationPanel()
     ]
@@ -958,7 +959,7 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
     website_url_help_text = FormHelpTextField()
     website_url_label = FormLabelField()
 
-    content_panels = [
+    content_panels = Page.content_panels + [
         MultiFieldPanel(
             heading=name.replace('_', ' '),
             children=[
@@ -1115,7 +1116,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
         related_name='+'
     )
 
-    content_panels = [
+    content_panels = Page.content_panels + [
         MultiFieldPanel(
             heading='Hero',
             children=[
