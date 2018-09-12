@@ -39,7 +39,7 @@ urlpatterns = [
     ),
     url(
         (
-            r'^admin/pages/preload/(?P<service_name>[a-zA-Z_]+)/'
+            r'^admin/pages/preload/(?P<service_name>[a-zA-Z_]+)/$'
             r'(?P<model_name>[a-zA-Z]+)/(?P<parent_slug>[a-zA-Z-]+)/$'
         ),
         login_required(csrf_exempt(core.views.PreloadPageView.as_view())),
