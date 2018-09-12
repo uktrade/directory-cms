@@ -118,6 +118,21 @@ def test_copy_upsteam(admin_client, translated_page, settings, image):
 
 
 @pytest.mark.django_db
+def test_copy_upsteam_csrf_exempt(
+    admin_client, translated_page, settings, image
+):
+    translated_page.hero_image = image
+    translated_page.save()
+
+    url = reverse('copy-upstream', kwargs={'pk': translated_page.pk})
+
+    response = admin_client.get(url, SERVER_NAME="csrf_exempt.com")
+
+    assert response.status_code == 200
+    assert response.context['page'] == translated_page
+
+
+@pytest.mark.django_db
 def test_update_upstream(admin_client, translated_page, settings, image):
     translated_page.hero_image = image
     translated_page.save()
