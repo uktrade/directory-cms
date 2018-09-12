@@ -1,8 +1,11 @@
 from wagtail.api import APIField
 
 from core.serializers import APIQuerysetSerializer
-from invest.serializers import APIChildrenSectorSerializer, \
-    APIChildrenSetupGuideSerializer
+from invest.serializers import (
+    APIChildrenSectorSerializer,
+    APIChildrenSetupGuideSerializer,
+    APIHighPotentialOpportunityDetailQuerysetSerializer,
+)
 
 
 class APIChildrenSectorPageListField(APIField):
@@ -77,5 +80,22 @@ class APISetupGuidePageListField(APIField):
             name,
             fields_config=[(name, False, None) for name in field_names],
             queryset=queryset,
+        )
+        super().__init__(name=name, serializer=serializer)
+
+
+class APIHighPotentialOpportunityDetailPageListField(APIField):
+    def __init__(self, name):
+        field_names = [
+            'meta',
+            'hero_image',
+            'heading',
+        ]
+        # see explanation of the `fields_config` syntax here:
+        # https://github.com/wagtail/wagtail/blob/
+        # db6d36845f3f2c5d7009a22421c2efab9968aa24/wagtail/api/v2/utils.py#L68
+        serializer = APIHighPotentialOpportunityDetailQuerysetSerializer(
+            name,
+            fields_config=[(name, False, None) for name in field_names],
         )
         super().__init__(name=name, serializer=serializer)

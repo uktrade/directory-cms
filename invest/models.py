@@ -935,6 +935,9 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
     view_path = 'high-potential-opportunities/'
     slug_identity = 'high-potential-opportunity-form'
 
+    heading = models.CharField(max_length=255)
+    sub_heading = models.CharField(max_length=255)
+
     comment_help_text = FormHelpTextField()
     comment_label = FormLabelField()
     company_name_help_text = FormHelpTextField()
@@ -958,21 +961,40 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
     website_url_help_text = FormHelpTextField()
     website_url_label = FormLabelField()
 
-    content_panels = [
-        MultiFieldPanel(
-            heading=name.replace('_', ' '),
-            children=[
-                FieldPanel(name + '_label'),
-                FieldPanel(name + '_help_text'),
-            ]
-        ) for name in fields_order
-    ]
+    content_panels = (
+        [
+            MultiFieldPanel(
+                heading='Hero',
+                children=[
+                    FieldPanel('heading'),
+                    FieldPanel('sub_heading'),
+                ]
+            ),
+        ] +
+        [
+            MultiFieldPanel(
+                heading=name.replace('_', ' '),
+                children=[
+                    FieldPanel(name + '_label'),
+                    FieldPanel(name + '_help_text'),
+                ]
+            ) for name in fields_order
+        ]
+    )
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
-    api_fields = [APIFormFieldField(name) for name in fields_order]
+    api_fields = (
+        [APIFormFieldField(name) for name in fields_order] +
+        [
+            APIField('heading'),
+            APIField('sub_heading'),
+            APIField('seo_title'),
+            APIField('search_description'),
+        ]
+    )
 
 
 class HighPotentialOpportunityDetailPage(BasePage):
@@ -1031,10 +1053,31 @@ class HighPotentialOpportunityDetailPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    competative_advantages_title = models.CharField(max_length=300)
-    competative_advantages_list_item_one = MarkdownField()
-    competative_advantages_list_item_two = MarkdownField()
-    competative_advantages_list_item_three = MarkdownField()
+    competitive_advantages_title = models.CharField(max_length=300)
+    competitive_advantages_list_item_one = MarkdownField()
+    competitive_advantages_list_item_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    competitive_advantages_list_item_two = MarkdownField()
+    competitive_advantages_list_item_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    competitive_advantages_list_item_three = MarkdownField()
+    competitive_advantages_list_item_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     testimonial = MarkdownField()
     companies_list_text = MarkdownField()
     companies_list_item_image_one = models.ForeignKey(
@@ -1102,17 +1145,30 @@ class HighPotentialOpportunityDetailPage(BasePage):
     case_study_two_text = MarkdownField(blank=True)
     case_study_two_image = models.ForeignKey(
         'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
         related_name='+'
     )
     case_study_three_text = MarkdownField(blank=True)
     case_study_three_image = models.ForeignKey(
         'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
         related_name='+'
     )
     case_study_four_text = MarkdownField(blank=True)
     case_study_four_image = models.ForeignKey(
         'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
         related_name='+'
+    )
+    other_opportunities_title = models.CharField(
+        max_length=300,
+        verbose_name='Title'
     )
 
     content_panels = [
@@ -1202,12 +1258,25 @@ class HighPotentialOpportunityDetailPage(BasePage):
         MultiFieldPanel(
             heading='Competitive advantage',
             children=[
-                FieldPanel('competative_advantages_title'),
+                FieldPanel('competitive_advantages_title'),
                 FieldRowPanel(
                     children=[
-                        FieldPanel('competative_advantages_list_item_one'),
-                        FieldPanel('competative_advantages_list_item_two'),
-                        FieldPanel('competative_advantages_list_item_three'),
+                        FieldPanel('competitive_advantages_list_item_one'),
+                        FieldPanel('competitive_advantages_list_item_two'),
+                        FieldPanel('competitive_advantages_list_item_three'),
+                    ]
+                ),
+                FieldRowPanel(
+                    children=[
+                        ImageChooserPanel(
+                            'competitive_advantages_list_item_one_icon'
+                        ),
+                        ImageChooserPanel(
+                            'competitive_advantages_list_item_two_icon'
+                        ),
+                        ImageChooserPanel(
+                            'competitive_advantages_list_item_three_icon'
+                        ),
                     ]
                 )
             ]
@@ -1265,6 +1334,12 @@ class HighPotentialOpportunityDetailPage(BasePage):
                 )
             ]
         ),
+        MultiFieldPanel(
+            heading='Other opportunities',
+            children=[
+                FieldPanel('other_opportunities_title'),
+            ]
+        ),
         SearchEngineOptimisationPanel(),
     ]
     settings_panels = [
@@ -1279,41 +1354,50 @@ class HighPotentialOpportunityDetailPage(BasePage):
         APIMarkdownToHTMLField('contact_proposition'),
         APIField('contact_button'),
         APIMarkdownToHTMLField('proposition_one'),
-        APIMarkdownToHTMLField('proposition_one_image'),
+        APIImageField('proposition_one_image'),
         APIVideoField('proposition_one_video'),
         APIField('opportunity_list_title'),
         APIMarkdownToHTMLField('opportunity_list_item_one'),
         APIMarkdownToHTMLField('opportunity_list_item_two'),
         APIMarkdownToHTMLField('opportunity_list_item_three'),
-        APIMarkdownToHTMLField('opportunity_list_image'),
+        APIImageField('opportunity_list_image'),
         APIMarkdownToHTMLField('proposition_two'),
         APIMarkdownToHTMLField('proposition_two_list_item_one'),
         APIMarkdownToHTMLField('proposition_two_list_item_two'),
         APIMarkdownToHTMLField('proposition_two_list_item_three'),
-        APIMarkdownToHTMLField('proposition_two_image'),
+        APIImageField('proposition_two_image'),
         APIVideoField('proposition_two_video'),
-        APIField('competative_advantages_title'),
-        APIMarkdownToHTMLField('competative_advantages_list_item_one'),
-        APIMarkdownToHTMLField('competative_advantages_list_item_two'),
-        APIMarkdownToHTMLField('competative_advantages_list_item_three'),
+        APIField('competitive_advantages_title'),
+        APIMarkdownToHTMLField('competitive_advantages_list_item_one'),
+        APIMarkdownToHTMLField('competitive_advantages_list_item_two'),
+        APIMarkdownToHTMLField('competitive_advantages_list_item_three'),
+        APIImageField('competitive_advantages_list_item_one_icon'),
+        APIImageField('competitive_advantages_list_item_two_icon'),
+        APIImageField('competitive_advantages_list_item_three_icon'),
         APIMarkdownToHTMLField('testimonial'),
         APIMarkdownToHTMLField('companies_list_text'),
-        APIMarkdownToHTMLField('companies_list_item_image_one'),
-        APIMarkdownToHTMLField('companies_list_item_image_two'),
-        APIMarkdownToHTMLField('companies_list_item_image_three'),
-        APIMarkdownToHTMLField('companies_list_item_image_four'),
-        APIMarkdownToHTMLField('companies_list_item_image_five'),
-        APIMarkdownToHTMLField('companies_list_item_image_six'),
-        APIMarkdownToHTMLField('companies_list_item_image_seven'),
-        APIMarkdownToHTMLField('companies_list_item_image_eight'),
+        APIImageField('companies_list_item_image_one'),
+        APIImageField('companies_list_item_image_two'),
+        APIImageField('companies_list_item_image_three'),
+        APIImageField('companies_list_item_image_four'),
+        APIImageField('companies_list_item_image_five'),
+        APIImageField('companies_list_item_image_six'),
+        APIImageField('companies_list_item_image_seven'),
+        APIImageField('companies_list_item_image_eight'),
         APIField('case_study_list_title'),
         APIMarkdownToHTMLField('case_study_one_text'),
-        APIMarkdownToHTMLField('case_study_one_image'),
+        APIImageField('case_study_one_image'),
         APIMarkdownToHTMLField('case_study_two_text'),
-        APIMarkdownToHTMLField('case_study_two_image'),
+        APIImageField('case_study_two_image'),
         APIMarkdownToHTMLField('case_study_three_text'),
-        APIMarkdownToHTMLField('case_study_three_image'),
+        APIImageField('case_study_three_image'),
         APIMarkdownToHTMLField('case_study_four_text'),
-        APIMarkdownToHTMLField('case_study_four_image'),
+        APIImageField('case_study_four_image'),
+        APIField('other_opportunities_title'),
+        fields.APIHighPotentialOpportunityDetailPageListField(
+            'other_opportunities',
+        ),
         APIMetaField('meta'),
+        APIField('seo_title'),
+        APIField('search_description'),
     ]

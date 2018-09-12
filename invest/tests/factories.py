@@ -126,6 +126,8 @@ class HighPotentialOpportunityFormPageFactory(wagtail_factories.PageFactory):
     class Meta:
         model = models.HighPotentialOpportunityFormPage
 
+    heading = factory.fuzzy.FuzzyText(length=200)
+    sub_heading = factory.fuzzy.FuzzyText(length=200)
     comment_help_text = factory.fuzzy.FuzzyText(length=200)
     comment_label = factory.fuzzy.FuzzyText(length=200)
     company_name_help_text = factory.fuzzy.FuzzyText(length=200)
@@ -148,4 +150,90 @@ class HighPotentialOpportunityFormPageFactory(wagtail_factories.PageFactory):
     terms_agreed_label = factory.fuzzy.FuzzyText(length=200)
     website_url_help_text = factory.fuzzy.FuzzyText(length=200)
     website_url_label = factory.fuzzy.FuzzyText(length=200)
+    parent = None
+
+
+class HighPotentialOpportunityDetailPageFactory(wagtail_factories.PageFactory):
+    class Meta:
+        model = models.HighPotentialOpportunityDetailPage
+
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=50)
+    heading = factory.fuzzy.FuzzyText(length=50)
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    contact_proposition = factory.fuzzy.FuzzyText(length=50)
+    contact_button = factory.fuzzy.FuzzyText(length=50)
+    proposition_one = factory.fuzzy.FuzzyText(length=50)
+    opportunity_list_title = factory.fuzzy.FuzzyText(length=50)
+    opportunity_list_item_one = factory.fuzzy.FuzzyText(length=50)
+    opportunity_list_item_two = factory.fuzzy.FuzzyText(length=50)
+    opportunity_list_item_three = factory.fuzzy.FuzzyText(length=50)
+    opportunity_list_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    proposition_two = factory.fuzzy.FuzzyText(length=50)
+    proposition_two_list_item_one = factory.fuzzy.FuzzyText(length=50)
+    proposition_two_list_item_two = factory.fuzzy.FuzzyText(length=50)
+    proposition_two_list_item_three = factory.fuzzy.FuzzyText(length=50)
+    proposition_two_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    competative_advantages_title = factory.fuzzy.FuzzyText(length=50)
+    competative_advantages_list_item_one = factory.fuzzy.FuzzyText(length=50)
+    competative_advantages_list_item_one_icon = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    competative_advantages_list_item_two = factory.fuzzy.FuzzyText(length=50)
+    competative_advantages_list_item_two_icon = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    competative_advantages_list_item_three = factory.fuzzy.FuzzyText(length=50)
+    competative_advantages_list_item_three_icon = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    testimonial = factory.fuzzy.FuzzyText(length=50)
+    companies_list_text = factory.fuzzy.FuzzyText(length=50)
+    companies_list_item_image_one = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    companies_list_item_image_two = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    companies_list_item_image_three = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    companies_list_item_image_four = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    companies_list_item_image_five = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    companies_list_item_image_six = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    companies_list_item_image_seven = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    companies_list_item_image_eight = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    case_study_list_title = factory.fuzzy.FuzzyText(length=50)
+    case_study_one_text = factory.fuzzy.FuzzyText(length=50)
+    case_study_one_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    case_study_two_text = factory.fuzzy.FuzzyText(length=50)
+    case_study_two_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    case_study_three_text = factory.fuzzy.FuzzyText(length=50)
+    case_study_three_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    case_study_four_text = factory.fuzzy.FuzzyText(length=50)
+    case_study_four_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    other_opportunities_title = factory.fuzzy.FuzzyText(length=50)
     parent = None
