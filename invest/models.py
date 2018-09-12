@@ -1033,6 +1033,9 @@ class HighPotentialOpportunityDetailPage(BasePage):
     opportunity_list_item_three = MarkdownField()
     opportunity_list_image = models.ForeignKey(
         'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
         related_name='+'
     )
     proposition_two = MarkdownField(blank=False)
@@ -1140,6 +1143,9 @@ class HighPotentialOpportunityDetailPage(BasePage):
     case_study_one_text = MarkdownField(blank=True)
     case_study_one_image = models.ForeignKey(
         'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
         related_name='+'
     )
     case_study_two_text = MarkdownField(blank=True)
