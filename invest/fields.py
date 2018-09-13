@@ -85,8 +85,8 @@ class APISetupGuidePageListField(APIField):
 
 
 class APIHighPotentialOpportunityDetailPageListField(APIField):
-    def __init__(self, name):
-        field_names = [
+    def __init__(self, name, field_names=None):
+        field_names = field_names or [
             'meta',
             'hero_image',
             'heading',
