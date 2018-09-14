@@ -991,6 +991,13 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
         [
             APIField('heading'),
             APIField('sub_heading'),
+            fields.APIHighPotentialOpportunityDetailPageListField(
+                'opportunity_list',
+                field_names=[
+                    'heading',
+                    'pdf_document_url',
+                ]
+            ),
             APIField('seo_title'),
             APIField('search_description'),
         ]
@@ -1176,6 +1183,20 @@ class HighPotentialOpportunityDetailPage(BasePage):
         max_length=300,
         verbose_name='Title'
     )
+    pdf_document_url = models.URLField(
+        help_text='The link to the PDF document.'
+    )
+    summary_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text=(
+            'Image used on the opportunity listing page for this opportunity'
+        ),
+        verbose_name='Image',
+    )
 
     content_panels = [
         MultiFieldPanel(
@@ -1346,11 +1367,18 @@ class HighPotentialOpportunityDetailPage(BasePage):
                 FieldPanel('other_opportunities_title'),
             ]
         ),
+        MultiFieldPanel(
+            heading='Summary',
+            children=[
+                ImageChooserPanel('summary_image')
+            ],
+        ),
         SearchEngineOptimisationPanel(),
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('pdf_document_url'),
     ]
 
     api_fields = [
@@ -1403,7 +1431,96 @@ class HighPotentialOpportunityDetailPage(BasePage):
         fields.APIHighPotentialOpportunityDetailPageListField(
             'other_opportunities',
         ),
+        APIField('pdf_document_url'),
+        APIImageField('summary_image'),
         APIMetaField('meta'),
         APIField('seo_title'),
         APIField('search_description'),
+    ]
+
+
+class HighPotentialOpportunityFormSuccessPage(BasePage):
+    service_name_value = cms.INVEST
+    view_path = 'high-potential-opportunities/'
+    slug_identity = 'high-potential-opportunity-submit-success'
+
+    breadcrumbs_label = models.CharField(max_length=50)
+    heading = models.CharField(
+        max_length=255,
+        verbose_name='section title'
+    )
+    sub_heading = models.CharField(
+        max_length=255,
+        verbose_name='section body',
+    )
+    next_steps_title = models.CharField(
+        max_length=255,
+        verbose_name='section title'
+    )
+    next_steps_body = models.CharField(
+        max_length=255,
+        verbose_name='section body',
+
+    )
+    documents_title = models.CharField(
+        max_length=255,
+        verbose_name='section title'
+    )
+    documents_body = models.CharField(
+        max_length=255,
+        verbose_name='section body',
+    )
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading='heading',
+            children=[
+                FieldPanel('heading'),
+                FieldPanel('sub_heading'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Next steps',
+            children=[
+                FieldPanel('next_steps_title'),
+                FieldPanel('next_steps_body'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Documents',
+            children=[
+                FieldPanel('documents_title'),
+                FieldPanel('documents_body'),
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    api_fields = [
+        APIField('breadcrumbs_label'),
+        APIField('heading'),
+        APIField('sub_heading'),
+        APIField('next_steps_title'),
+        APIField('next_steps_body'),
+        APIField('documents_title'),
+        APIField('documents_body'),
+        APIMetaField('meta'),
+        APIField('seo_title'),
+        APIField('search_description'),
+        fields.APIHighPotentialOpportunityDetailPageListField(
+            'opportunity_list',
+            field_names=[
+                'meta',
+                'summary_image',
+                'heading',
+                'proposition_one',
+                'pdf_document_url',
+            ]
+        ),
     ]
