@@ -937,7 +937,7 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
 
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
-
+    breadcrumbs_label = models.CharField(max_length=50)
     comment_help_text = FormHelpTextField()
     comment_label = FormLabelField()
     company_name_help_text = FormHelpTextField()
@@ -966,6 +966,7 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
             MultiFieldPanel(
                 heading='Hero',
                 children=[
+                    FieldPanel('breadcrumbs_label'),
                     FieldPanel('heading'),
                     FieldPanel('sub_heading'),
                 ]
@@ -979,6 +980,8 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
                     FieldPanel(name + '_help_text'),
                 ]
             ) for name in fields_order
+        ] + [
+            SearchEngineOptimisationPanel(),
         ]
     )
     settings_panels = [
@@ -998,6 +1001,7 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
                     'pdf_document_url',
                 ]
             ),
+            APIField('breadcrumbs_label'),
             APIField('seo_title'),
             APIField('search_description'),
         ]
