@@ -211,8 +211,32 @@ class BasePage(Page):
         return mark_safe(display_title)
 
 
-class ImageHash(models.Model):
+class AbstractObjectHash(models.Model):
+    class Meta:
+        abstract = True
 
+    content_hash = models.CharField(max_length=1000)
+
+    @staticmethod
+    def generate_content_hash(field_file):
+        filehash = hashlib.md5()
+        field_file.open()
+        filehash.update(field_file.read())
+        field_file.close()
+        return filehash.hexdigest()
+
+
+class DocumentHash(AbstractObjectHash):
+    document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name='+'
+    )
+
+
+class ImageHash(AbstractObjectHash):
     image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -220,17 +244,6 @@ class ImageHash(models.Model):
         on_delete=models.CASCADE,
         related_name='+'
     )
-    content_hash = models.CharField(
-        max_length=1000
-    )
-
-    @staticmethod
-    def generate_content_hash(image_field_file):
-        filehash = hashlib.md5()
-        image_field_file.open()
-        filehash.update(image_field_file.read())
-        image_field_file.close()
-        return filehash.hexdigest()
 
 
 class ExclusivePageMixin:

@@ -2,9 +2,13 @@ from itertools import product
 
 import pytest
 from modeltranslation.utils import build_localized_fieldname
+from wagtail.documents.models import Document
 
-from find_a_supplier.tests.factories import IndustryPageFactory, \
+from find_a_supplier.tests.factories import (
+    IndustryPageFactory,
     IndustryLandingPageFactory
+)
+from invest.tests.factories import HighPotentialOpportunityDetailPageFactory
 
 
 @pytest.fixture
@@ -13,6 +17,15 @@ def page(root_page):
         parent=root_page,
         slug='the-slug'
     )
+
+
+@pytest.fixture
+def high_potential_opportunity_page(page):
+    pdf_document = Document.objects.create(
+        title='document.pdf',
+        file=page.introduction_column_two_icon.file  # not really pdf
+    )
+    return HighPotentialOpportunityDetailPageFactory(pdf_document=pdf_document)
 
 
 @pytest.fixture
