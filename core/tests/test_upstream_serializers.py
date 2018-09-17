@@ -20,3 +20,27 @@ def test_upstream_model_deserializer(page):
     actual = UpstreamModelSerilaizer.deserialize(serialized_data)
 
     assert actual['search_filter_sector'] == page.search_filter_sector
+
+
+@pytest.mark.django_db
+def test_document_field_serialize(high_potential_opportunity_page):
+
+    data = UpstreamModelSerilaizer.serialize(high_potential_opportunity_page)
+
+    assert data['(document)pdf_document'] == (
+        high_potential_opportunity_page.pdf_document.file.name
+    )
+
+
+@pytest.mark.django_db
+def test_document_field_deserializer(high_potential_opportunity_page):
+    serialized_data = {
+        '(document)pdf_document': (
+            high_potential_opportunity_page.pdf_document.file.name
+        )
+    }
+    actual = UpstreamModelSerilaizer.deserialize(serialized_data)
+
+    assert actual['pdf_document'] == (
+        high_potential_opportunity_page.pdf_document.pk
+    )

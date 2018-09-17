@@ -10,6 +10,7 @@ from modeltranslation.utils import build_localized_fieldname
 from wagtail.admin.edit_handlers import ObjectList, TabbedInterface
 from wagtail.core import hooks
 from wagtail.core.models import Page
+from wagtail.documents.models import Document
 from wagtail.images.models import Image
 from wagtailmarkdown.mdx import tables
 from wagtailmarkdown.utils import _sanitise_markdown_html
@@ -132,6 +133,17 @@ def language_code_django_to_google(code):
     return {
         'zh-hans': 'zh-CN',
     }.get(code, code)
+
+
+def get_or_create_document(document_path):
+    document = default_storage.get_document_by_path(document_path)
+    if not document:
+        document_file = default_storage.open(document_path)
+        document = Document.objects.create(
+            title=os.path.basename(document_path),
+            file=document_file,
+        )
+    return document
 
 
 def get_or_create_image(image_path):

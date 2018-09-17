@@ -3,12 +3,14 @@ from wagtail.api import APIField
 from wagtail.admin.edit_handlers import (
     FieldPanel, ObjectList, MultiFieldPanel, FieldRowPanel
 )
+from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
 from django.db import models
 
 from core.fields import (
+    APIDocumentUrlField,
     APIFormFieldField,
     APIImageField, APIMetaField,
     APIMarkdownToHTMLField,
@@ -998,7 +1000,7 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
                 'opportunity_list',
                 field_names=[
                     'heading',
-                    'pdf_document_url',
+                    'pdf_document',
                 ]
             ),
             APIField('breadcrumbs_label'),
@@ -1187,8 +1189,11 @@ class HighPotentialOpportunityDetailPage(BasePage):
         max_length=300,
         verbose_name='Title'
     )
-    pdf_document_url = models.URLField(
-        help_text='The link to the PDF document.'
+    pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
     )
     summary_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -1382,7 +1387,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('pdf_document_url'),
+        DocumentChooserPanel('pdf_document'),
     ]
 
     api_fields = [
@@ -1435,7 +1440,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
         fields.APIHighPotentialOpportunityDetailPageListField(
             'other_opportunities',
         ),
-        APIField('pdf_document_url'),
+        APIDocumentUrlField('pdf_document'),
         APIImageField('summary_image'),
         APIMetaField('meta'),
         APIField('seo_title'),
@@ -1524,7 +1529,7 @@ class HighPotentialOpportunityFormSuccessPage(BasePage):
                 'summary_image',
                 'heading',
                 'proposition_one',
-                'pdf_document_url',
+                'pdf_document',
             ]
         ),
     ]

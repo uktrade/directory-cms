@@ -1,5 +1,6 @@
-from django.conf import settings
 from rest_framework import fields
+
+from django.conf import settings
 
 from core import helpers, models
 
@@ -127,3 +128,9 @@ class APIFormFieldSerializer(fields.DictField):
             'label': getattr(instance, self.source + '_label'),
             'help_text':  getattr(instance, self.source + '_help_text'),
         }
+
+
+class APIDocumentUrlSerializer(fields.CharField):
+
+    def to_representation(self, document):
+        return document.file.url

@@ -1,4 +1,5 @@
 from wagtail.api import APIField
+
 from wagtail.images.api.fields import ImageRenditionField
 from wagtailmarkdown.fields import MarkdownField as OriginalMarkdownField
 
@@ -53,4 +54,10 @@ class MarkdownField(OriginalMarkdownField):
 class APIFormFieldField(APIField):
     def __init__(self, name):
         serializer = serializers.APIFormFieldSerializer(name)
+        super().__init__(name=name, serializer=serializer)
+
+
+class APIDocumentUrlField(APIField):
+    def __init__(self, name):
+        serializer = serializers.APIDocumentUrlSerializer()
         super().__init__(name=name, serializer=serializer)

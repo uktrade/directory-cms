@@ -11,3 +11,7 @@ class CoreConfig(AppConfig):
             receiver=signals.create_image_hash,
             sender='wagtailimages.Image'
         )
+        post_save.connect(
+            receiver=signals.create_document_hash,
+            sender='wagtaildocs.Document'
+        )
