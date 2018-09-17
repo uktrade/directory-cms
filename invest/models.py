@@ -932,7 +932,7 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
     ]
 
     service_name_value = cms.INVEST
-    view_path = 'high-potential-opportunities/'
+    view_path = 'high-potential-opportunities/rail/contact/'
     slug_identity = 'high-potential-opportunity-form'
 
     heading = models.CharField(max_length=255)
@@ -1445,7 +1445,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
 
 class HighPotentialOpportunityFormSuccessPage(BasePage):
     service_name_value = cms.INVEST
-    view_path = 'high-potential-opportunities/'
+    view_path = 'high-potential-opportunities/rail/contact/'
     slug_identity = 'high-potential-opportunity-submit-success'
 
     breadcrumbs_label = models.CharField(max_length=50)
