@@ -1041,7 +1041,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
     opportunity_list_title = models.CharField(max_length=300)
     opportunity_list_item_one = MarkdownField()
     opportunity_list_item_two = MarkdownField()
-    opportunity_list_item_three = MarkdownField()
+    opportunity_list_item_three = MarkdownField(blank=True)
     opportunity_list_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
