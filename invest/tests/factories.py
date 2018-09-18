@@ -146,8 +146,6 @@ class HighPotentialOpportunityFormPageFactory(wagtail_factories.PageFactory):
     phone_number_label = factory.fuzzy.FuzzyText(length=200)
     role_in_company_help_text = factory.fuzzy.FuzzyText(length=200)
     role_in_company_label = factory.fuzzy.FuzzyText(length=200)
-    terms_agreed_help_text = factory.fuzzy.FuzzyText(length=200)
-    terms_agreed_label = factory.fuzzy.FuzzyText(length=200)
     website_url_help_text = factory.fuzzy.FuzzyText(length=200)
     website_url_label = factory.fuzzy.FuzzyText(length=200)
     parent = None
