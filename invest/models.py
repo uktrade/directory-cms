@@ -930,7 +930,6 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
         'company_size',
         'opportunities',
         'comment',
-        'terms_agreed',
     ]
 
     service_name_value = cms.INVEST
@@ -958,8 +957,6 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
     phone_number_label = FormLabelField()
     role_in_company_help_text = FormHelpTextField()
     role_in_company_label = FormLabelField()
-    terms_agreed_help_text = FormHelpTextField()
-    terms_agreed_label = FormLabelField()
     website_url_help_text = FormHelpTextField()
     website_url_label = FormLabelField()
 
