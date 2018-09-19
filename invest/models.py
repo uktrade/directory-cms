@@ -1092,6 +1092,14 @@ class HighPotentialOpportunityDetailPage(BasePage):
         related_name='+'
     )
     testimonial = MarkdownField()
+    testimonial_background = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Background image',
+    )
     companies_list_text = MarkdownField()
     companies_list_item_image_one = models.ForeignKey(
         'wagtailimages.Image',
@@ -1314,7 +1322,13 @@ class HighPotentialOpportunityDetailPage(BasePage):
                 )
             ]
         ),
-        FieldPanel('testimonial'),
+        MultiFieldPanel(
+            heading='Testimonial',
+            children=[
+                FieldPanel('testimonial'),
+                ImageChooserPanel('testimonial_background'),
+            ]
+        ),
         MultiFieldPanel(
             heading='Company list',
             children=[
@@ -1415,6 +1429,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
         APIImageField('competitive_advantages_list_item_two_icon'),
         APIImageField('competitive_advantages_list_item_three_icon'),
         APIMarkdownToHTMLField('testimonial'),
+        APIImageField('testimonial_background'),
         APIMarkdownToHTMLField('companies_list_text'),
         APIImageField('companies_list_item_image_one'),
         APIImageField('companies_list_item_image_two'),
