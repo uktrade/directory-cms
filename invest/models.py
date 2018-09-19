@@ -998,6 +998,7 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
                 field_names=[
                     'heading',
                     'pdf_document',
+                    'meta',
                 ]
             ),
             APIField('breadcrumbs_label'),
