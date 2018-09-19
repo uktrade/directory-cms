@@ -13,6 +13,7 @@ from django.views.generic.edit import FormView
 
 from conf.signature import SignatureCheckPermission
 from core import filters, forms, helpers, permissions
+from core.models import BasePage
 from core.upstream_serializers import UpstreamModelSerilaizer
 
 
@@ -83,6 +84,37 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
         self.handle_activate_language(instance)
         self.object = instance
         return instance
+
+    def detail_view(self, *args, **kwargs):
+        return super().detail_view(self.request, pk=None)
+
+
+class PageLookupByFullPathAPIEndpoint(APIEndpointBase):
+    lookup_url_kwarg = 'full_path'
+    authentication_classes = []
+
+    def get_queryset(self):
+        return Page.objects.type(BasePage).all()
+
+    def get_object(self):
+        if hasattr(self, 'object'):
+            return self.object
+        if 'full_path' not in self.request.query_params:
+            raise ValidationError(
+                detail={'full_path': 'This parameter is required'}
+            )
+
+        full_path = self.request.query_params['full_path']
+        pages = self.get_queryset()
+        page = list(filter(lambda x: x.specific.full_path == full_path, pages))
+        if page:
+            instance = page[0].specific
+            self.check_object_permissions(self.request, instance)
+            instance = self.handle_serve_draft_object(instance)
+            self.handle_activate_language(instance)
+            self.object = instance
+            return instance
+        raise Http404()
 
     def detail_view(self, *args, **kwargs):
         return super().detail_view(self.request, pk=None)
