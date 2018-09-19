@@ -132,7 +132,7 @@ class BasePage(Page):
             querystring['lang'] = language_code
         if querystring:
             url += '?' + urlencode(querystring)
-        return urlencode
+        return url
 
     @property
     def full_path(self):
