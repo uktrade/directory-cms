@@ -5,7 +5,7 @@ from export_readiness import models
 
 @pytest.mark.django_db
 @pytest.mark.parametrize('model_class', (
-    models.TermsAndConditionsPage, models.PrivacyAndCookiesPage
+    models.TermsAndConditionsPage,
 ))
 def test_terms_slug(model_class, rf):
     instance = model_class()
