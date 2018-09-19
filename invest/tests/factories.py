@@ -146,8 +146,6 @@ class HighPotentialOpportunityFormPageFactory(wagtail_factories.PageFactory):
     phone_number_label = factory.fuzzy.FuzzyText(length=200)
     role_in_company_help_text = factory.fuzzy.FuzzyText(length=200)
     role_in_company_label = factory.fuzzy.FuzzyText(length=200)
-    terms_agreed_help_text = factory.fuzzy.FuzzyText(length=200)
-    terms_agreed_label = factory.fuzzy.FuzzyText(length=200)
     website_url_help_text = factory.fuzzy.FuzzyText(length=200)
     website_url_label = factory.fuzzy.FuzzyText(length=200)
     parent = None
@@ -179,17 +177,17 @@ class HighPotentialOpportunityDetailPageFactory(wagtail_factories.PageFactory):
     proposition_two_image = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
-    competative_advantages_title = factory.fuzzy.FuzzyText(length=50)
-    competative_advantages_list_item_one = factory.fuzzy.FuzzyText(length=50)
-    competative_advantages_list_item_one_icon = factory.SubFactory(
+    competitive_advantages_title = factory.fuzzy.FuzzyText(length=50)
+    competitive_advantages_list_item_one = factory.fuzzy.FuzzyText(length=50)
+    competitive_advantages_list_item_one_icon = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
-    competative_advantages_list_item_two = factory.fuzzy.FuzzyText(length=50)
-    competative_advantages_list_item_two_icon = factory.SubFactory(
+    competitive_advantages_list_item_two = factory.fuzzy.FuzzyText(length=50)
+    competitive_advantages_list_item_two_icon = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
-    competative_advantages_list_item_three = factory.fuzzy.FuzzyText(length=50)
-    competative_advantages_list_item_three_icon = factory.SubFactory(
+    competitive_advantages_list_item_three = factory.fuzzy.FuzzyText(length=50)
+    competitive_advantages_list_item_three_icon = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
     testimonial = factory.fuzzy.FuzzyText(length=50)

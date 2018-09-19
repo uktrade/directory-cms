@@ -2,6 +2,7 @@ from storages.backends.s3boto3 import S3Boto3Storage
 
 from botocore.exceptions import EndpointConnectionError
 from wagtail.images.models import Image
+from wagtail.documents.models import Document
 
 from django.core.files.storage import (
     FileSystemStorage as OriginalFileSystemStorage
@@ -41,22 +42,34 @@ class ImmutableFilesS3Boto3Storage(S3Boto3Storage):
 
         pass
 
-    def get_image_by_path(self, image_path):
+    def get_object_by_path(self, path, model_class):
         try:
             object_summary = self.connection.ObjectSummary(
                 bucket_name=self.bucket_name,
-                key=image_path
+                key=path
             )
         except EndpointConnectionError:
             return None
         else:
-            queryset = models.ImageHash.objects.filter(
-                content_hash=object_summary.e_tag[1:-1]
-            )
+            content_hash = object_summary.e_tag[1:-1]
+            queryset = model_class.objects.filter(content_hash=content_hash)
             if queryset.exists():
-                return queryset.first().image
+                return queryset
+
+    def get_image_by_path(self, image_path):
+        queryset = self.get_object_by_path(image_path, models.ImageHash)
+        if queryset:
+            return queryset.first().image
+
+    def get_document_by_path(self, document_path):
+        queryset = self.get_object_by_path(document_path, models.DocumentHash)
+        if queryset:
+            return queryset.first().document
 
 
 class FileSystemStorage(OriginalFileSystemStorage):
     def get_image_by_path(self, image_path):
         return Image.objects.filter(file=image_path).first()
+
+    def get_document_by_path(self, document_path):
+        return Document.objects.filter(file=document_path).first()

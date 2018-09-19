@@ -191,6 +191,7 @@ def test_api_form_field_serializer(rf):
     page = HighPotentialOpportunityFormPageFactory(
         comment_help_text='comment [help text]',
         comment_label='comment [label]',
+        breadcrumbs_label='HPO form',
     )
 
     class TestSerializer(Serializer):

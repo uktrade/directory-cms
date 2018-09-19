@@ -3,12 +3,14 @@ from wagtail.api import APIField
 from wagtail.admin.edit_handlers import (
     FieldPanel, ObjectList, MultiFieldPanel, FieldRowPanel
 )
+from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
 from django.db import models
 
 from core.fields import (
+    APIDocumentUrlField,
     APIFormFieldField,
     APIImageField, APIMetaField,
     APIMarkdownToHTMLField,
@@ -928,16 +930,15 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
         'company_size',
         'opportunities',
         'comment',
-        'terms_agreed',
     ]
 
     service_name_value = cms.INVEST
-    view_path = 'high-potential-opportunities/'
+    view_path = 'high-potential-opportunities/rail/contact/'
     slug_identity = 'high-potential-opportunity-form'
 
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
-
+    breadcrumbs_label = models.CharField(max_length=50)
     comment_help_text = FormHelpTextField()
     comment_label = FormLabelField()
     company_name_help_text = FormHelpTextField()
@@ -956,8 +957,6 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
     phone_number_label = FormLabelField()
     role_in_company_help_text = FormHelpTextField()
     role_in_company_label = FormLabelField()
-    terms_agreed_help_text = FormHelpTextField()
-    terms_agreed_label = FormLabelField()
     website_url_help_text = FormHelpTextField()
     website_url_label = FormLabelField()
 
@@ -966,6 +965,7 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
             MultiFieldPanel(
                 heading='Hero',
                 children=[
+                    FieldPanel('breadcrumbs_label'),
                     FieldPanel('heading'),
                     FieldPanel('sub_heading'),
                 ]
@@ -979,6 +979,8 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
                     FieldPanel(name + '_help_text'),
                 ]
             ) for name in fields_order
+        ] + [
+            SearchEngineOptimisationPanel(),
         ]
     )
     settings_panels = [
@@ -995,9 +997,10 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
                 'opportunity_list',
                 field_names=[
                     'heading',
-                    'pdf_document_url',
+                    'pdf_document',
                 ]
             ),
+            APIField('breadcrumbs_label'),
             APIField('seo_title'),
             APIField('search_description'),
         ]
@@ -1037,7 +1040,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
     opportunity_list_title = models.CharField(max_length=300)
     opportunity_list_item_one = MarkdownField()
     opportunity_list_item_two = MarkdownField()
-    opportunity_list_item_three = MarkdownField()
+    opportunity_list_item_three = MarkdownField(blank=True)
     opportunity_list_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1183,8 +1186,11 @@ class HighPotentialOpportunityDetailPage(BasePage):
         max_length=300,
         verbose_name='Title'
     )
-    pdf_document_url = models.URLField(
-        help_text='The link to the PDF document.'
+    pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
     )
     summary_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -1378,7 +1384,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('pdf_document_url'),
+        DocumentChooserPanel('pdf_document'),
     ]
 
     api_fields = [
@@ -1431,7 +1437,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
         fields.APIHighPotentialOpportunityDetailPageListField(
             'other_opportunities',
         ),
-        APIField('pdf_document_url'),
+        APIDocumentUrlField('pdf_document'),
         APIImageField('summary_image'),
         APIMetaField('meta'),
         APIField('seo_title'),
@@ -1441,7 +1447,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
 
 class HighPotentialOpportunityFormSuccessPage(BasePage):
     service_name_value = cms.INVEST
-    view_path = 'high-potential-opportunities/'
+    view_path = 'high-potential-opportunities/rail/contact/'
     slug_identity = 'high-potential-opportunity-submit-success'
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -1520,7 +1526,7 @@ class HighPotentialOpportunityFormSuccessPage(BasePage):
                 'summary_image',
                 'heading',
                 'proposition_one',
-                'pdf_document_url',
+                'pdf_document',
             ]
         ),
     ]
