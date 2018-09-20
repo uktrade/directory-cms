@@ -462,3 +462,32 @@ def test_lookup_by_slug_filter_called(mock_filter_service_name, admin_client):
         'service_name',
         cms.FIND_A_SUPPLIER,
     )
+
+
+@pytest.mark.django_db
+def test_lookup_by_full_path(translated_page, admin_client):
+    url = reverse('lookup-by-full-path')
+    response = admin_client.get(
+        url,
+        {'full_path': translated_page.full_path}
+    )
+    assert response.status_code == 200
+    assert response.json()['id'] == translated_page.id
+
+
+@pytest.mark.django_db
+def test_lookup_by_full_path_missing_param(admin_client):
+    url = reverse('lookup-by-full-path')
+    response = admin_client.get(url)
+    assert response.status_code == 400
+    assert response.json() == {'full_path': 'This parameter is required'}
+
+
+@pytest.mark.django_db
+def test_lookup_by_full_path_not_found(admin_client):
+    url = reverse('lookup-by-full-path')
+    response = admin_client.get(
+        url,
+        {'full_path': 'foo'}
+    )
+    assert response.status_code == 404
