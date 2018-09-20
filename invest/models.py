@@ -1092,7 +1092,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    testimonial = MarkdownField()
+    testimonial = MarkdownField(blank=True)
     testimonial_background = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
