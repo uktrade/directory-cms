@@ -60,7 +60,7 @@ def test_meta_serializer(page, rf):
                 )
             ],
             'slug': 'test-slug',
-            'pk': page.pk,
+            'pk': page.pk
         }
     }
 

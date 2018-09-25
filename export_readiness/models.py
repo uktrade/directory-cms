@@ -1,6 +1,5 @@
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel,
-)
+    FieldPanel, FieldRowPanel, MultiFieldPanel)
 from wagtail.api import APIField
 from wagtail.core.models import Page
 from wagtailmarkdown.edit_handlers import MarkdownPanel
@@ -12,10 +11,13 @@ from directory_constants.constants import cms
 from core.fields import (
     APIMarkdownToHTMLField, APIMetaField, MarkdownField, APIImageField
 )
+
 from core.models import (
     BasePage, BreadcrumbMixin, ExclusivePageMixin, ServiceMixin
 )
 from core.panels import SearchEngineOptimisationPanel
+from .fields import (APIChildrenArticleListingPageListField,
+                     APIChildrenTopicLandingPageListField)
 
 
 class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -454,5 +456,219 @@ class PerformanceDashboardNotesPage(ExclusivePageMixin,
         APIField('seo_title'),
         APIField('search_description'),
         APIMarkdownToHTMLField('body'),
+        APIMetaField('meta'),
+    ]
+
+
+class TopicLandingPage(BasePage):
+    service_name_value = cms.EXPORT_READINESS
+    subpage_types = ['export_readiness.ArticleListingPage']
+    view_path = ''
+
+    landing_page_title = models.CharField(max_length=255)
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    hero_teaser = models.CharField(max_length=255, null=True, blank=True)
+
+    content_panels = [
+        FieldPanel('landing_page_title'),
+        MultiFieldPanel(
+            heading='Hero',
+            children=[
+                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_teaser')
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    api_fields = [
+        APIField('seo_title'),
+        APIField('search_description'),
+        APIField('landing_page_title'),
+        APIImageField('hero_image'),
+        APIField('hero_teaser'),
+        APIChildrenTopicLandingPageListField('article_listing'),
+        APIMetaField('meta')
+    ]
+
+
+class ArticleListingPage(BasePage):
+    service_name_value = cms.EXPORT_READINESS
+    subpage_types = ['export_readiness.ArticlePage']
+    view_path = ''
+
+    landing_page_title = models.CharField(max_length=255)
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    hero_teaser = models.CharField(max_length=255, null=True, blank=True)
+
+    list_teaser = models.CharField(max_length=255, null=True, blank=True)
+
+    @property
+    def articles_count(self):
+        return self.get_descendants().type(ArticlePage).live().count()
+
+    content_panels = [
+        FieldPanel('landing_page_title'),
+        MultiFieldPanel(
+            heading='Hero',
+            children=[
+                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_teaser')
+            ]
+        ),
+        FieldPanel('list_teaser'),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    api_fields = [
+        APIField('seo_title'),
+        APIField('search_description'),
+        APIField('landing_page_title'),
+        APIImageField('hero_image'),
+        APIField('hero_teaser'),
+        APIField('list_teaser'),
+        APIChildrenArticleListingPageListField('articles'),
+        APIField('articles_count'),
+        APIField('full_url'),
+        APIField('last_published_at'),
+        APIMetaField('meta'),
+    ]
+
+
+class ArticlePage(BasePage):
+    service_name_value = cms.EXPORT_READINESS
+    subpage_types = []
+    view_path = ''
+
+    article_title = models.CharField(max_length=255)
+
+    article_teaser = models.CharField(max_length=255)
+    article_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    article_body_text = MarkdownField()
+
+    related_article_one_url = models.CharField(
+        max_length=255,
+        help_text='Paste the article path here (eg /foo/bar/)'
+    )
+    related_article_one_title = models.CharField(
+        max_length=255,
+        help_text='Paste the title of the article here')
+    related_article_one_teaser = models.CharField(
+        max_length=255,
+        help_text='Paste the article description here (max 255 characters)'
+    )
+    related_article_two_url = models.CharField(
+        max_length=255,
+        help_text='Paste the article path here (eg /foo/bar/)'
+    )
+    related_article_two_title = models.CharField(
+        max_length=255,
+        help_text='Paste the title of the article here')
+    related_article_two_teaser = models.CharField(
+        max_length=255,
+        help_text='Paste the article description here (max 255 characters)'
+    )
+    related_article_three_url = models.CharField(
+        max_length=255,
+        help_text='Paste the article path here (eg /foo/bar/)'
+    )
+    related_article_three_title = models.CharField(
+        max_length=255,
+        help_text='Paste the title of the article here')
+    related_article_three_teaser = models.CharField(
+        max_length=255,
+        help_text='Paste the article description here (max 255 characters)'
+    )
+
+    content_panels = [
+        FieldPanel('article_title'),
+        MultiFieldPanel(
+            heading='Article content',
+            children=[
+                FieldPanel('article_teaser'),
+                ImageChooserPanel('article_image'),
+                MarkdownPanel('article_body_text')
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Related article one',
+            children=[
+                FieldPanel('related_article_one_url'),
+                FieldPanel('related_article_one_title'),
+                FieldPanel('related_article_one_teaser'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Related article two',
+            children=[
+                FieldPanel('related_article_two_url'),
+                FieldPanel('related_article_two_title'),
+                FieldPanel('related_article_two_teaser'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Related article three',
+            children=[
+                FieldPanel('related_article_three_url'),
+                FieldPanel('related_article_three_title'),
+                FieldPanel('related_article_three_teaser'),
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    api_fields = [
+        APIField('seo_title'),
+        APIField('search_description'),
+        APIField('article_title'),
+        APIField('article_teaser'),
+        APIImageField('article_image'),
+        APIMarkdownToHTMLField('article_body_text'),
+        APIField('related_article_one_url'),
+        APIField('related_article_one_title'),
+        APIField('related_article_one_teaser'),
+        APIField('related_article_two_url'),
+        APIField('related_article_two_title'),
+        APIField('related_article_two_teaser'),
+        APIField('related_article_three_url'),
+        APIField('related_article_three_title'),
+        APIField('related_article_three_teaser'),
+        APIField('full_url'),
+        APIField('last_published_at'),
         APIMetaField('meta'),
     ]

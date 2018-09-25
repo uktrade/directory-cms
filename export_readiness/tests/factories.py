@@ -1,6 +1,7 @@
 import factory
 import factory.fuzzy
 import wagtail_factories
+from django.utils import timezone
 
 from export_readiness import models
 
@@ -63,4 +64,50 @@ class DeprecatedGetFinancePageFactory(wagtail_factories.PageFactory):
     call_to_action_url = factory.fuzzy.FuzzyText(length=10)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None
+
+
+class TopicLandingPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.TopicLandingPage
+
+    landing_page_title = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None
+
+
+class ArticleListingPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.ArticleListingPage
+
+    landing_page_title = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None
+
+
+class ArticlePageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.ArticlePage
+
+    article_title = factory.fuzzy.FuzzyText(length=10)
+    article_teaser = factory.fuzzy.FuzzyText(length=10)
+    article_body_text = factory.fuzzy.FuzzyText(length=10)
+    related_article_one_url = factory.fuzzy.FuzzyText(length=10)
+    related_article_one_title = factory.fuzzy.FuzzyText(length=10)
+    related_article_one_teaser = factory.fuzzy.FuzzyText(length=10)
+    related_article_two_url = factory.fuzzy.FuzzyText(length=10)
+    related_article_two_title = factory.fuzzy.FuzzyText(length=10)
+    related_article_two_teaser = factory.fuzzy.FuzzyText(length=10)
+    related_article_three_url = factory.fuzzy.FuzzyText(length=10)
+    related_article_three_title = factory.fuzzy.FuzzyText(length=10)
+    related_article_three_teaser = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
     parent = None

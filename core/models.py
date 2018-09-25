@@ -145,6 +145,12 @@ class BasePage(Page):
         return '{path}/'.format(path='/'.join(path_components))
 
     @property
+    def full_url(self):
+        domain = dict(constants.APP_URLS)[self.service_name_value]
+        url = urljoin(domain, self.full_path)
+        return url
+
+    @property
     def url(self):
         return self.get_url()
 

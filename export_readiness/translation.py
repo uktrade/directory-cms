@@ -37,3 +37,18 @@ class PerformanceDashboardPageTranslationOptions(BaseTranslationOptions):
 @register(models.PerformanceDashboardNotesPage)
 class PerformanceDashboardNotesPageTranslationOptions(BaseTranslationOptions):
     fields = []
+
+
+@register(models.TopicLandingPage)
+class TopicLandingPageTranslationOptions(BaseTranslationOptions):
+    fields = []
+
+
+@register(models.ArticleListingPage)
+class ArticleListingPageTranslationOptions(BaseTranslationOptions):
+    fields = []
+
+
+@register(models.ArticlePage)
+class ArticlePageTranslationOptions(BaseTranslationOptions):
+    fields = []
