@@ -72,26 +72,11 @@ def test_article_listing_page_view(admin_client, root_page):
 
 
 def test_article_page_view(admin_client, root_page):
-    article_one = factories.ArticlePageFactory.create(
-        parent=root_page,
-        live=True
-    )
-    article_two = factories.ArticlePageFactory.create(
-        parent=root_page,
-        live=True
-    )
-    article_three = factories.ArticlePageFactory.create(
-        parent=root_page,
-        live=True
-    )
-    article_four = factories.ArticlePageFactory.create(
+    article = factories.ArticlePageFactory.create(
         parent=root_page,
         live=True,
-        related_article_one=article_one,
-        related_article_two=article_two,
-        related_article_three=article_three
     )
 
-    url = reverse('api:pages:detail', kwargs={'pk': article_four.pk})
+    url = reverse('api:pages:detail', kwargs={'pk': article.pk})
     response = admin_client.get(url)
     assert response.status_code == 200

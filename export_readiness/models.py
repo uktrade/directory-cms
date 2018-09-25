@@ -576,7 +576,10 @@ class ArticlePage(BasePage):
     )
     article_body_text = MarkdownField()
 
-    related_article_one_url = models.URLField()
+    related_article_one_url = models.CharField(
+        max_length=255,
+        help_text='Paste the article path here (eg /foo/bar/)'
+    )
     related_article_one_title = models.CharField(
         max_length=255,
         help_text='Paste the title of the article here')
@@ -584,7 +587,10 @@ class ArticlePage(BasePage):
         max_length=255,
         help_text='Paste the article description here (max 255 characters)'
     )
-    related_article_two_url = models.URLField()
+    related_article_two_url = models.CharField(
+        max_length=255,
+        help_text='Paste the article path here (eg /foo/bar/)'
+    )
     related_article_two_title = models.CharField(
         max_length=255,
         help_text='Paste the title of the article here')
@@ -592,7 +598,10 @@ class ArticlePage(BasePage):
         max_length=255,
         help_text='Paste the article description here (max 255 characters)'
     )
-    related_article_three_url = models.URLField()
+    related_article_three_url = models.CharField(
+        max_length=255,
+        help_text='Paste the article path here (eg /foo/bar/)'
+    )
     related_article_three_title = models.CharField(
         max_length=255,
         help_text='Paste the title of the article here')
