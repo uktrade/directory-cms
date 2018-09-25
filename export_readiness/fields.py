@@ -3,12 +3,6 @@ from wagtail.api import APIField
 from . import serializers
 
 
-class APIRelatedArticlePageField(APIField):
-    def __init__(self, name):
-        serializer = serializers.APIRelatedArticlePageSerializer()
-        super().__init__(name=name, serializer=serializer)
-
-
 class APIChildrenTopicLandingPageListField(APIField):
     def __init__(self, name):
         field_names = [

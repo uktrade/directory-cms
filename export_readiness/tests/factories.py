@@ -98,6 +98,15 @@ class ArticlePageFactory(wagtail_factories.PageFactory):
     article_title = factory.fuzzy.FuzzyText(length=10)
     article_teaser = factory.fuzzy.FuzzyText(length=10)
     article_body_text = factory.fuzzy.FuzzyText(length=10)
+    related_article_one_url = 'http://foo.com'
+    related_article_one_title = factory.fuzzy.FuzzyText(length=10)
+    related_article_one_teaser = factory.fuzzy.FuzzyText(length=10)
+    related_article_two_url = 'http://foo.com'
+    related_article_two_title = factory.fuzzy.FuzzyText(length=10)
+    related_article_two_teaser = factory.fuzzy.FuzzyText(length=10)
+    related_article_three_url = 'http://foo.com'
+    related_article_three_title = factory.fuzzy.FuzzyText(length=10)
+    related_article_three_teaser = factory.fuzzy.FuzzyText(length=10)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     last_published_at = timezone.now()

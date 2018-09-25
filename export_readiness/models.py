@@ -18,7 +18,7 @@ from core.models import (
 )
 from core.panels import SearchEngineOptimisationPanel
 from .fields import (APIChildrenArticleListingPageListField,
-    APIChildrenTopicLandingPageListField, APIRelatedArticlePageField)
+    APIChildrenTopicLandingPageListField)
 
 
 class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -577,26 +577,29 @@ class ArticlePage(BasePage):
     )
     article_body_text = MarkdownField()
 
-    related_article_one = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
+    related_article_one_url = models.URLField()
+    related_article_one_title = models.CharField(
+        max_length=255,
+        help_text='Paste the title of the article here')
+    related_article_one_teaser = models.CharField(
+        max_length=255,
+        help_text='Paste the article description here (max 255 characters)'
     )
-    related_article_two = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
+    related_article_two_url = models.URLField()
+    related_article_two_title = models.CharField(
+        max_length=255,
+        help_text='Paste the title of the article here')
+    related_article_two_teaser = models.CharField(
+        max_length=255,
+        help_text='Paste the article description here (max 255 characters)'
     )
-    related_article_three = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
+    related_article_three_url = models.URLField()
+    related_article_three_title = models.CharField(
+        max_length=255,
+        help_text='Paste the title of the article here')
+    related_article_three_teaser = models.CharField(
+        max_length=255,
+        help_text='Paste the article description here (max 255 characters)'
     )
 
     content_panels = [
@@ -610,11 +613,27 @@ class ArticlePage(BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading='Related articles',
+            heading='Related article one',
             children=[
-                PageChooserPanel('related_article_one'),
-                PageChooserPanel('related_article_two'),
-                PageChooserPanel('related_article_three')
+                FieldPanel('related_article_one_url'),
+                FieldPanel('related_article_one_title'),
+                FieldPanel('related_article_one_teaser'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Related article two',
+            children=[
+                FieldPanel('related_article_two_url'),
+                FieldPanel('related_article_two_title'),
+                FieldPanel('related_article_two_teaser'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Related article three',
+            children=[
+                FieldPanel('related_article_three_url'),
+                FieldPanel('related_article_three_title'),
+                FieldPanel('related_article_three_teaser'),
             ]
         ),
         SearchEngineOptimisationPanel(),
@@ -632,9 +651,15 @@ class ArticlePage(BasePage):
         APIField('article_teaser'),
         APIImageField('article_image'),
         APIMarkdownToHTMLField('article_body_text'),
-        APIRelatedArticlePageField('related_article_one'),
-        APIRelatedArticlePageField('related_article_two'),
-        APIRelatedArticlePageField('related_article_three'),
+        APIField('related_article_one_url'),
+        APIField('related_article_one_title'),
+        APIField('related_article_one_teaser'),
+        APIField('related_article_two_url'),
+        APIField('related_article_two_title'),
+        APIField('related_article_two_teaser'),
+        APIField('related_article_three_url'),
+        APIField('related_article_three_title'),
+        APIField('related_article_three_teaser'),
         APIField('url'),
         APIField('last_published_at'),
         APIMetaField('meta'),
