@@ -72,8 +72,16 @@ def test_article_listing_page_view(admin_client, root_page):
 
 
 def test_article_page_view(admin_client, root_page):
-    article = factories.ArticlePageFactory.create(
+    topic_landing_page = factories.TopicLandingPageFactory.create(
         parent=root_page,
+        live=True
+    )
+    article_listing_page = factories.ArticleListingPageFactory.create(
+        parent=topic_landing_page,
+        live=True
+    )
+    article = factories.ArticlePageFactory.create(
+        parent=article_listing_page,
         live=True,
     )
 

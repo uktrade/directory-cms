@@ -553,7 +553,7 @@ class ArticleListingPage(BasePage):
         APIField('list_teaser'),
         APIChildrenArticleListingPageListField('articles'),
         APIField('articles_count'),
-        APIField('url'),
+        APIField('full_url'),
         APIField('last_published_at'),
         APIMetaField('meta'),
     ]
@@ -668,7 +668,7 @@ class ArticlePage(BasePage):
         APIField('related_article_three_url'),
         APIField('related_article_three_title'),
         APIField('related_article_three_teaser'),
-        APIField('url'),
+        APIField('full_url'),
         APIField('last_published_at'),
         APIMetaField('meta'),
     ]
