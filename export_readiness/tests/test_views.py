@@ -95,4 +95,3 @@ def test_article_page_view(admin_client, root_page):
     url = reverse('api:pages:detail', kwargs={'pk': article_four.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
-    assert 'related_articles' in response.json()
