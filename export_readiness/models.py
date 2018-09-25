@@ -1,6 +1,5 @@
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel,
-    PageChooserPanel)
+    FieldPanel, FieldRowPanel, MultiFieldPanel)
 from wagtail.api import APIField
 from wagtail.core.models import Page
 from wagtailmarkdown.edit_handlers import MarkdownPanel
