@@ -17,7 +17,7 @@ from core.models import (
 )
 from core.panels import SearchEngineOptimisationPanel
 from .fields import (APIChildrenArticleListingPageListField,
-    APIChildrenTopicLandingPageListField)
+                     APIChildrenTopicLandingPageListField)
 
 
 class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
