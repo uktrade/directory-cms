@@ -60,11 +60,11 @@ class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
     ]
 
 
-class PrivacyAndCookiesPage(ExclusivePageMixin, BasePage):
+class PrivacyAndCookiesPage(BasePage):
 
     service_name_value = cms.EXPORT_READINESS
+    subpage_types = ['export_readiness.PrivacyAndCookiesPage']
     view_path = 'privacy-and-cookies/'
-    slug_identity = 'privacy-and-cookies'
 
     body = MarkdownField(blank=False)
 

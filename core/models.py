@@ -118,12 +118,12 @@ class BasePage(Page):
         else:
             return str(self.pk) == str(value)
 
-    def get_url_path_parts(self, language_code):
+    def get_url_path_parts(self):
         return [self.view_path, self.slug + '/']
 
     def get_url(self, is_draft=False, language_code=settings.LANGUAGE_CODE):
         domain = dict(constants.APP_URLS)[self.service_name_value]
-        url_path_parts = self.get_url_path_parts(language_code=language_code)
+        url_path_parts = self.get_url_path_parts()
         url = reduce(urljoin, [domain] + url_path_parts)
         querystring = {}
         if is_draft:
@@ -133,6 +133,16 @@ class BasePage(Page):
         if querystring:
             url += '?' + urlencode(querystring)
         return url
+
+    @property
+    def full_path(self):
+        """Return the full path of a page, ignoring the root_page and
+        the app page. Used by the lookup-by-url view in prototype mode
+        """
+        # starts from 2 to remove root page and app page
+        path_components = [page.slug for page in self.get_ancestors()[2:]]
+        path_components.append(self.slug)
+        return '{path}/'.format(path='/'.join(path_components))
 
     @property
     def url(self):

@@ -8,7 +8,8 @@ from django.utils import translation
 from wagtail.core.models import Page
 
 from find_a_supplier.tests.factories import IndustryPageFactory
-from invest.tests.factories import InvestAppFactory, SectorPageFactory
+from invest.tests.factories import InvestAppFactory, \
+    SectorLandingPageFactory, SectorPageFactory
 from invest.models import InvestApp
 
 
@@ -36,6 +37,16 @@ def test_delete_same_slug_different_services(root_page):
     assert page_two.slug == 'foo'
     page_one.delete()
     assert Page.objects.filter(pk=page_one.pk).exists() is False
+
+
+@pytest.mark.django_db
+def test_page_path(root_page):
+    page_one = SectorLandingPageFactory(parent=root_page)
+    page_two = SectorPageFactory(slug='foo', parent=page_one)
+    page_three = SectorPageFactory(slug='bar', parent=page_two)
+
+    assert page_three.full_path == 'foo/bar/'
+    assert page_two.full_path == 'foo/'
 
 
 @pytest.mark.django_db

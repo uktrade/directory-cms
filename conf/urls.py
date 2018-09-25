@@ -56,6 +56,15 @@ urlpatterns = [
         ),
         name='lookup-by-slug'
     ),
+    url(
+        r'^api/pages/lookup-by-full-path/$',
+        api_router.wrap_view(
+            core.views.PageLookupByFullPathAPIEndpoint.as_view(
+                {'get': 'detail_view'}
+            )
+        ),
+        name='lookup-by-full-path'
+    ),
 
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
