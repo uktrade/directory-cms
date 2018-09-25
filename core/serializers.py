@@ -27,7 +27,8 @@ class APIMetaSerializer(fields.DictField):
             'localised_urls': instance.get_localized_urls(),
             'pk': instance.pk,
             'draft_token': (instance.get_draft_token()
-                            if instance.has_unpublished_changes else None)
+                            if instance.has_unpublished_changes else None),
+            'last_published_at': instance.last_published_at
         }
 
 

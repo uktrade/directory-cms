@@ -40,3 +40,28 @@ def test_set_slug():
 def test_get_finance_breadcrumbs():
     page = factories.DeprecatedGetFinancePageFactory.create()
     assert page.breadcrumb.first().label == page.breadcrumbs_label
+
+
+@pytest.mark.django_db
+def test_article_listing_page_articles_count(root_page):
+    article_listing_page = factories.ArticleListingPageFactory.create(
+        parent=root_page
+    )
+    factories.ArticlePageFactory.create(
+        parent=article_listing_page,
+        live=True
+    )
+    factories.ArticlePageFactory.create(
+        parent=article_listing_page,
+        live=True
+    )
+    factories.ArticlePageFactory.create(
+        parent=article_listing_page,
+        live=False
+    )
+    factories.ArticlePageFactory.create(
+        live=True,
+        parent=root_page
+    )
+
+    assert article_listing_page.articles_count == 2
