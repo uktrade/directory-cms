@@ -113,7 +113,7 @@ class ArticlePageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
-class HomePageFactory(wagtail_factories.PageFactory)
+class HomePageFactory(wagtail_factories.PageFactory):
 
     class Meta:
         model = models.HomePage
