@@ -19,7 +19,8 @@ from core.models import (
 )
 from core.panels import SearchEngineOptimisationPanel
 from .fields import (APIChildrenArticleListingPageListField,
-                     APIChildrenTopicLandingPageListField)
+                     APIChildrenTopicLandingPageListField,
+                     APIArticlePageListField)
 
 
 class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -470,11 +471,9 @@ class PerformanceDashboardNotesPage(ExclusivePageMixin,
         APIMetaField('meta'),
     ]
 
-
 class TopicLandingPage(BasePage):
     service_name_value = cms.EXPORT_READINESS
     subpage_types = ['export_readiness.ArticleListingPage']
-    view_path = ''
 
     landing_page_title = models.CharField(max_length=255)
 
@@ -518,7 +517,6 @@ class TopicLandingPage(BasePage):
 class ArticleListingPage(BasePage):
     service_name_value = cms.EXPORT_READINESS
     subpage_types = ['export_readiness.ArticlePage']
-    view_path = ''
 
     landing_page_title = models.CharField(max_length=255)
 
@@ -573,7 +571,6 @@ class ArticleListingPage(BasePage):
 class ArticlePage(BasePage):
     service_name_value = cms.EXPORT_READINESS
     subpage_types = []
-    view_path = ''
 
     article_title = models.CharField(max_length=255)
 
@@ -682,4 +679,45 @@ class ArticlePage(BasePage):
         APIField('full_url'),
         APIField('last_published_at'),
         APIMetaField('meta'),
+    ]
+
+
+class HomePage(ExclusivePageMixin, BasePage):
+    service_name_value = cms.EXPORT_READINESS
+    subpage_types = [
+        'export_readiness.TopicLandingPage',
+        'export_readiness.ArticleListingPage',
+        'export_readiness.ArticlePage'
+    ]
+
+    news_title = models.CharField(max_length=255)
+    news_description = MarkdownField()
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='EU exit news',
+            children=[
+                FieldPanel('news_title'),
+                MarkdownPanel('news_description')
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    api_fields = [
+        APIField('seo_title'),
+        APIField('news_title'),
+        APIMarkdownToHTMLField('news_description'),
+        APIArticlePageListField(
+            'articles',
+            queryset=(
+                ArticlePage.objects.all().live().order_by('last_published_at')
+            )
+        ),
+        APIMetaField('meta')
     ]

@@ -64,6 +64,7 @@ class BasePage(Page):
     class Meta:
         abstract = True
 
+    view_path = ''
     subpage_types = []
     base_form_class = forms.WagtailAdminPageForm
     content_panels = []

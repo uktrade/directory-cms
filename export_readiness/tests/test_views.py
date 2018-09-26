@@ -88,3 +88,20 @@ def test_article_page_view(admin_client, root_page):
     url = reverse('api:pages:detail', kwargs={'pk': article.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
+
+
+def test_homepage(admin_client, root_page):
+
+    home_page = factories.HomePageFactory.create(
+        parent=root_page
+    )
+
+    for _ in range(5):
+        factories.ArticlePageFactory.create(
+            parent=root_page
+        )
+
+    url = reverse('api:pages:detail', kwargs={'pk': home_page.pk})
+    response = admin_client.get(url)
+    assert response.status_code == 200
+    assert 'articles' in response.json()
