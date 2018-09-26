@@ -172,7 +172,7 @@ class DeprecatedGetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         APIMarkdownToHTMLField('section_one_content'),
         APIMarkdownToHTMLField('section_two_content'),
         APIImageField('ukef_logo'),
-        APIVideoField('video_embed'),
+        APIField('video_embed'),
         APIMarkdownToHTMLField('section_three_content'),
         APIField('call_to_action_text'),
         APIField('call_to_action_url'),
@@ -323,7 +323,7 @@ class NewGetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         APIMarkdownToHTMLField('advantages_three'),
         APIImageField('advantages_three_icon'),
         APIMarkdownToHTMLField('evidence'),
-        APIField('evidence_video'),
+        APIVideoField('evidence_video'),
         APIMetaField('meta'),
     ]
 
