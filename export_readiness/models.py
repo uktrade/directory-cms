@@ -2,14 +2,16 @@ from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel)
 from wagtail.api import APIField
 from wagtail.core.models import Page
-from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtailmarkdown.edit_handlers import MarkdownPanel
+from wagtailmedia.widgets import AdminMediaChooser
 
 from django.db import models
 from directory_constants.constants import cms
 
 from core.fields import (
-    APIMarkdownToHTMLField, APIMetaField, MarkdownField, APIImageField
+    APIMarkdownToHTMLField, APIMetaField, MarkdownField, APIImageField,
+    APIVideoField
 )
 
 from core.models import (
@@ -170,7 +172,7 @@ class DeprecatedGetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         APIMarkdownToHTMLField('section_one_content'),
         APIMarkdownToHTMLField('section_two_content'),
         APIImageField('ukef_logo'),
-        APIField('video_embed'),
+        APIVideoField('video_embed'),
         APIMarkdownToHTMLField('section_three_content'),
         APIField('call_to_action_text'),
         APIField('call_to_action_url'),
@@ -235,7 +237,13 @@ class NewGetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         related_name='+'
     )
     evidence = MarkdownField()
-    evidence_video_embed = models.CharField(max_length=500)
+    evidence_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     content_panels = [
         FieldPanel('breadcrumbs_label'),
@@ -284,7 +292,10 @@ class NewGetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
                 FieldRowPanel(
                     children=[
                         FieldPanel('evidence'),
-                        FieldPanel('evidence_video_embed'),
+                        FieldPanel(
+                            'evidence_video',
+                            widget=AdminMediaChooser,
+                        ),
                     ]
                 )
             ]
@@ -312,7 +323,7 @@ class NewGetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         APIMarkdownToHTMLField('advantages_three'),
         APIImageField('advantages_three_icon'),
         APIMarkdownToHTMLField('evidence'),
-        APIField('evidence_video_embed'),
+        APIField('evidence_video'),
         APIMetaField('meta'),
     ]
 
