@@ -712,6 +712,7 @@ class HomePage(ExclusivePageMixin, BasePage):
 
     api_fields = [
         APIField('seo_title'),
+        APIField('search_description'),
         APIField('news_title'),
         APIMarkdownToHTMLField('news_description'),
         APIArticleNewsPageListField('articles'),
