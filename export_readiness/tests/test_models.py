@@ -16,7 +16,8 @@ def test_app_models():
         models.PerformanceDashboardNotesPage,
         models.TopicLandingPage,
         models.ArticleListingPage,
-        models.ArticlePage
+        models.ArticlePage,
+        models.HomePage
     ]
 
 

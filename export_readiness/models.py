@@ -20,7 +20,7 @@ from core.models import (
 from core.panels import SearchEngineOptimisationPanel
 from .fields import (APIChildrenArticleListingPageListField,
                      APIChildrenTopicLandingPageListField,
-                     APIArticlePageListField)
+                     APIArticleNewsPageListField)
 
 
 class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -471,6 +471,7 @@ class PerformanceDashboardNotesPage(ExclusivePageMixin,
         APIMetaField('meta'),
     ]
 
+
 class TopicLandingPage(BasePage):
     service_name_value = cms.EXPORT_READINESS
     subpage_types = ['export_readiness.ArticleListingPage']
@@ -713,11 +714,6 @@ class HomePage(ExclusivePageMixin, BasePage):
         APIField('seo_title'),
         APIField('news_title'),
         APIMarkdownToHTMLField('news_description'),
-        APIArticlePageListField(
-            'articles',
-            queryset=(
-                ArticlePage.objects.all().live().order_by('last_published_at')
-            )
-        ),
+        APIArticleNewsPageListField('articles'),
         APIMetaField('meta')
     ]
