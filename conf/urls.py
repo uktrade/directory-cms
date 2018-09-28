@@ -1,3 +1,4 @@
+import directory_healthcheck.views
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.api.v2.router import WagtailAPIRouter
 from wagtail.core import urls as wagtail_urls
@@ -18,14 +19,19 @@ api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
 
 urlpatterns = [
     url(
+        r'^healthcheck/sentry/$',
+        directory_healthcheck.views.SentryHealthcheckView.as_view(),
+        name='healthcheck-sentry'
+    ),
+    url(
         r'^healthcheck/database/$',
         healthcheck.views.DatabaseAPIView.as_view(),
-        name='health-check-database'
+        name='healthcheck-database'
     ),
     url(
         r'^healthcheck/ping/$',
         healthcheck.views.PingAPIView.as_view(),
-        name='health-check-ping'
+        name='healthcheck-ping'
     ),
     url(
         r'^admin/pages/(?P<pk>[0-9]+)/copy-upstream/$',

@@ -2,7 +2,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/python:3.5.5
+      - image: circleci/python:3.6.6
     steps:
       - setup_remote_docker
       - run:
@@ -16,7 +16,7 @@ jobs:
           command: make docker_test
   deploy_to_dev:
     docker:
-      - image: circleci/python:3.5.5
+      - image: circleci/python:3.6.6
     steps:
       - setup_remote_docker
       - run:
@@ -30,7 +30,7 @@ jobs:
           command: make heroku_deploy_dev
   integration_tests:
     docker:
-      - image: circleci/python:3.5.5
+      - image: circleci/python:3.6.6
     steps:
       - setup_remote_docker
       - run:
