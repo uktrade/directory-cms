@@ -685,6 +685,7 @@ class ArticlePage(BasePage):
 
 class HomePage(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
+    slug_identity = 'home'
     subpage_types = [
         'export_readiness.TopicLandingPage',
         'export_readiness.ArticleListingPage',
