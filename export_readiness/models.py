@@ -19,7 +19,8 @@ from core.models import (
 )
 from core.panels import SearchEngineOptimisationPanel
 from .fields import (APIChildrenArticleListingPageListField,
-                     APIChildrenTopicLandingPageListField)
+                     APIChildrenTopicLandingPageListField,
+                     APIArticleNewsPageListField)
 
 
 class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -474,7 +475,6 @@ class PerformanceDashboardNotesPage(ExclusivePageMixin,
 class TopicLandingPage(BasePage):
     service_name_value = cms.EXPORT_READINESS
     subpage_types = ['export_readiness.ArticleListingPage']
-    view_path = ''
 
     landing_page_title = models.CharField(max_length=255)
 
@@ -518,7 +518,6 @@ class TopicLandingPage(BasePage):
 class ArticleListingPage(BasePage):
     service_name_value = cms.EXPORT_READINESS
     subpage_types = ['export_readiness.ArticlePage']
-    view_path = ''
 
     landing_page_title = models.CharField(max_length=255)
 
@@ -531,7 +530,7 @@ class ArticleListingPage(BasePage):
     )
     hero_teaser = models.CharField(max_length=255, null=True, blank=True)
 
-    list_teaser = models.CharField(max_length=255, null=True, blank=True)
+    list_teaser = MarkdownField(null=True, blank=True)
 
     @property
     def articles_count(self):
@@ -561,10 +560,11 @@ class ArticleListingPage(BasePage):
         APIField('landing_page_title'),
         APIImageField('hero_image'),
         APIField('hero_teaser'),
-        APIField('list_teaser'),
+        APIMarkdownToHTMLField('list_teaser'),
         APIChildrenArticleListingPageListField('articles'),
         APIField('articles_count'),
         APIField('full_url'),
+        APIField('full_path'),
         APIField('last_published_at'),
         APIMetaField('meta'),
     ]
@@ -573,7 +573,6 @@ class ArticleListingPage(BasePage):
 class ArticlePage(BasePage):
     service_name_value = cms.EXPORT_READINESS
     subpage_types = []
-    view_path = ''
 
     article_title = models.CharField(max_length=255)
 
@@ -680,6 +679,45 @@ class ArticlePage(BasePage):
         APIField('related_article_three_title'),
         APIField('related_article_three_teaser'),
         APIField('full_url'),
+        APIField('full_path'),
         APIField('last_published_at'),
         APIMetaField('meta'),
+    ]
+
+
+class HomePage(ExclusivePageMixin, BasePage):
+    service_name_value = cms.EXPORT_READINESS
+    slug_identity = 'home'
+    subpage_types = [
+        'export_readiness.TopicLandingPage',
+        'export_readiness.ArticleListingPage',
+        'export_readiness.ArticlePage'
+    ]
+
+    news_title = models.CharField(max_length=255)
+    news_description = MarkdownField()
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='EU exit news',
+            children=[
+                FieldPanel('news_title'),
+                MarkdownPanel('news_description')
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    api_fields = [
+        APIField('seo_title'),
+        APIField('search_description'),
+        APIField('news_title'),
+        APIMarkdownToHTMLField('news_description'),
+        APIArticleNewsPageListField('articles'),
+        APIMetaField('meta')
     ]

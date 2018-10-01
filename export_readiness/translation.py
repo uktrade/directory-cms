@@ -52,3 +52,8 @@ class ArticleListingPageTranslationOptions(BaseTranslationOptions):
 @register(models.ArticlePage)
 class ArticlePageTranslationOptions(BaseTranslationOptions):
     fields = []
+
+
+@register(models.HomePage)
+class HomePageTranslationOptions(BaseTranslationOptions):
+    fields = []
