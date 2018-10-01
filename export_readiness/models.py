@@ -530,7 +530,7 @@ class ArticleListingPage(BasePage):
     )
     hero_teaser = models.CharField(max_length=255, null=True, blank=True)
 
-    list_teaser = models.CharField(max_length=255, null=True, blank=True)
+    list_teaser = MarkdownField(null=True, blank=True)
 
     @property
     def articles_count(self):
@@ -560,10 +560,11 @@ class ArticleListingPage(BasePage):
         APIField('landing_page_title'),
         APIImageField('hero_image'),
         APIField('hero_teaser'),
-        APIField('list_teaser'),
+        APIMarkdownToHTMLField('list_teaser'),
         APIChildrenArticleListingPageListField('articles'),
         APIField('articles_count'),
         APIField('full_url'),
+        APIField('full_path'),
         APIField('last_published_at'),
         APIMetaField('meta'),
     ]
@@ -678,6 +679,7 @@ class ArticlePage(BasePage):
         APIField('related_article_three_title'),
         APIField('related_article_three_teaser'),
         APIField('full_url'),
+        APIField('full_path'),
         APIField('last_published_at'),
         APIMetaField('meta'),
     ]

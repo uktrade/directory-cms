@@ -10,7 +10,8 @@ class APIChildrenTopicLandingPageListField(APIField):
             'hero_image',
             'articles_count',
             'last_published_at',
-            'full_url'
+            'full_url',
+            'full_path'
         ]
         # see explanation of the `fields_config` syntax here:
         # https://github.com/wagtail/wagtail/blob/
@@ -27,7 +28,8 @@ class APIChildrenArticleListingPageListField(APIField):
         field_names = [
             'article_title',
             'last_published_at',
-            'full_url'
+            'full_url',
+            'full_path'
         ]
         # see explanation of the `fields_config` syntax here:
         # https://github.com/wagtail/wagtail/blob/
@@ -45,7 +47,8 @@ class APIArticleNewsPageListField(APIField):
             'article_title',
             'article_teaser',
             'last_published_at',
-            'full_url'
+            'full_url',
+            'full_path'
         ]
         # see explanation of the `fields_config` syntax here:
         # https://github.com/wagtail/wagtail/blob/
