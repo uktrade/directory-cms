@@ -3,6 +3,8 @@ from wagtail.api import APIField
 from wagtail.images.api.fields import ImageRenditionField
 from wagtailmarkdown.fields import MarkdownField as OriginalMarkdownField
 
+from django.db import models
+
 from core import serializers, widgets
 from core import validators as core_validators
 
@@ -61,3 +63,26 @@ class APIDocumentUrlField(APIField):
     def __init__(self, name):
         serializer = serializers.APIDocumentUrlSerializer()
         super().__init__(name=name, serializer=serializer)
+
+
+class FormHelpTextField(models.CharField):
+
+    def __init__(self, *args, **kwargs):
+        kwargs = {
+            'max_length': 200,
+            'verbose_name': 'Help text',
+            'null': True,
+            'blank': True,
+            **kwargs,
+        }
+        super().__init__(*args, **kwargs)
+
+
+class FormLabelField(models.CharField):
+    def __init__(self, *args, **kwargs):
+        kwargs = {
+            'max_length': 200,
+            'verbose_name': 'label',
+            **kwargs,
+        }
+        super().__init__(*args, **kwargs)

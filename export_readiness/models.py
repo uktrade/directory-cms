@@ -12,13 +12,18 @@ from django.db import models
 from directory_constants.constants import cms
 
 from core.fields import (
-    APIMarkdownToHTMLField, APIMetaField, MarkdownField, APIImageField,
-    APIVideoField
+    APIFormFieldField,
+    APIMarkdownToHTMLField,
+    APIMetaField,
+    MarkdownField,
+    APIImageField,
+    APIVideoField,
 )
 
 from core.models import (
     BasePage, BreadcrumbMixin, ExclusivePageMixin, ServiceMixin
 )
+from core.fields import FormHelpTextField, FormLabelField
 from core.panels import SearchEngineOptimisationPanel
 from .fields import (APIChildrenArticleListingPageListField,
                      APIChildrenTopicLandingPageListField,
@@ -744,3 +749,73 @@ class HomePage(ExclusivePageMixin, BasePage):
         APIArticleNewsPageListField('articles'),
         APIMetaField('meta')
     ]
+
+
+class EUExitInternationalFormPage(ExclusivePageMixin, BasePage):
+    fields_order = [
+        'first_name',
+        'last_name',
+        'email',
+        'organisation_type',
+        'company_name',
+        'country',
+        'city',
+        'comment',
+    ]
+
+    service_name_value = cms.EXPORT_READINESS
+    view_path = 'eu-exit/'
+    slug_identity = 'eu-exit-international'
+
+    breadcrumbs_label = models.CharField(max_length=50)
+    first_name_label = FormLabelField()
+    first_name_help_text = FormHelpTextField()
+    last_name_label = FormLabelField()
+    last_name_help_text = FormHelpTextField()
+    email_label = FormLabelField()
+    email_help_text = FormHelpTextField()
+    organisation_type_label = FormLabelField()
+    organisation_type_help_text = FormHelpTextField()
+    company_name_label = FormLabelField()
+    company_name_help_text = FormHelpTextField()
+    country_label = FormLabelField()
+    country_help_text = FormHelpTextField()
+    city_label = FormLabelField()
+    city_help_text = FormHelpTextField()
+    comment_label = FormLabelField()
+    comment_help_text = FormHelpTextField()
+
+    content_panels = (
+        [
+            MultiFieldPanel(
+                heading='Hero',
+                children=[
+                    FieldPanel('breadcrumbs_label'),
+                ]
+            ),
+        ] +
+        [
+            MultiFieldPanel(
+                heading=name.replace('_', ' '),
+                children=[
+                    FieldPanel(name + '_label'),
+                    FieldPanel(name + '_help_text'),
+                ]
+            ) for name in fields_order
+        ] + [
+            SearchEngineOptimisationPanel(),
+        ]
+    )
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    api_fields = (
+        [APIFormFieldField(name) for name in fields_order] +
+        [
+            APIField('breadcrumbs_label'),
+            APIField('seo_title'),
+            APIField('search_description'),
+        ]
+    )
