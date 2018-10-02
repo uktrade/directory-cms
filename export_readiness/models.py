@@ -1,4 +1,3 @@
-from taggit.models import TaggedItemBase, Tag as TaggitTag
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel)
 from wagtail.api import APIField
