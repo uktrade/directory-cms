@@ -57,3 +57,8 @@ class ArticlePageTranslationOptions(BaseTranslationOptions):
 @register(models.HomePage)
 class HomePageTranslationOptions(BaseTranslationOptions):
     fields = []
+
+
+@register(models.EUExitInternationalFormPage)
+class EUExitInternationalFormPageTranslationOptions(BaseTranslationOptions):
+    fields = []

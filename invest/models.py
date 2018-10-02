@@ -15,6 +15,8 @@ from core.fields import (
     APIImageField, APIMetaField,
     APIMarkdownToHTMLField,
     APIVideoField,
+    FormLabelField,
+    FormHelpTextField,
     MarkdownField,
 )
 from core.helpers import make_translated_interface
@@ -895,29 +897,6 @@ class InfoPage(BasePage):
     ]
 
 
-class FormHelpTextField(models.CharField):
-
-    def __init__(self, *args, **kwargs):
-        kwargs = {
-            'max_length': 200,
-            'verbose_name': 'Help text',
-            'null': True,
-            'blank': True,
-            **kwargs,
-        }
-        super().__init__(*args, **kwargs)
-
-
-class FormLabelField(models.CharField):
-    def __init__(self, *args, **kwargs):
-        kwargs = {
-            'max_length': 200,
-            'verbose_name': 'label',
-            **kwargs,
-        }
-        super().__init__(*args, **kwargs)
-
-
 class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
     fields_order = [
         'full_name',
@@ -1021,7 +1000,10 @@ class HighPotentialOpportunityDetailPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    contact_proposition = MarkdownField(blank=False)
+    contact_proposition = MarkdownField(
+        blank=False,
+        verbose_name='Body text',
+    )
     contact_button = models.CharField(max_length=500)
     proposition_one = MarkdownField(blank=False)
     proposition_one_image = models.ForeignKey(
@@ -1067,7 +1049,10 @@ class HighPotentialOpportunityDetailPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    competitive_advantages_title = models.CharField(max_length=300)
+    competitive_advantages_title = models.CharField(
+        max_length=300,
+        verbose_name='Body text',
+    )
     competitive_advantages_list_item_one = MarkdownField()
     competitive_advantages_list_item_one_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -1298,7 +1283,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading='Competitive advantage',
+            heading='Key facts',
             children=[
                 FieldPanel('competitive_advantages_title'),
                 FieldRowPanel(
@@ -1353,7 +1338,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading='Company list',
+            heading='Case studies',
             children=[
                 FieldPanel('case_study_list_title'),
                 FieldRowPanel(
