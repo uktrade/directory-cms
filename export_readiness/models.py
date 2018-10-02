@@ -3,6 +3,8 @@ from wagtail.admin.edit_handlers import (
 from wagtail.api import APIField
 from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.search import index
+from wagtail.snippets.models import register_snippet
 from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
@@ -575,6 +577,22 @@ class ArticleListingPage(BasePage):
     ]
 
 
+@register_snippet
+class Tag(index.Indexed, models.Model):
+    name = models.CharField(max_length=100)
+
+    panels = [
+        FieldPanel('name')
+    ]
+
+    search_fields = [
+        index.SearchField('name', partial_match=True),
+    ]
+
+    def __str__(self):
+        return self.name
+
+
 class ArticlePage(BasePage):
     service_name_value = cms.EXPORT_READINESS
     subpage_types = []
@@ -625,6 +643,9 @@ class ArticlePage(BasePage):
         help_text='Paste the article description here (max 255 characters)'
     )
 
+    # settings fields
+    tags = models.ManyToManyField(Tag, blank=True)
+
     content_panels = [
         FieldPanel('article_title'),
         MultiFieldPanel(
@@ -665,6 +686,7 @@ class ArticlePage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('tags')
     ]
 
     api_fields = [
@@ -684,6 +706,7 @@ class ArticlePage(BasePage):
         APIField('related_article_three_title'),
         APIField('related_article_three_teaser'),
         APIField('full_url'),
+        APIField('tags'),
         APIField('full_path'),
         APIField('last_published_at'),
         APIMetaField('meta'),

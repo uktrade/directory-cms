@@ -80,14 +80,19 @@ def test_article_page_view(admin_client, root_page):
         parent=topic_landing_page,
         live=True
     )
+    tag = factories.TagFactory()
+    tag2 = factories.TagFactory()
     article = factories.ArticlePageFactory.create(
         parent=article_listing_page,
         live=True,
     )
+    article.tags = [tag, tag2]
+    article.save()
 
     url = reverse('api:pages:detail', kwargs={'pk': article.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
+    assert 'tags' in response.json()
 
 
 def test_homepage(admin_client, root_page):

@@ -113,6 +113,14 @@ class ArticlePageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
+class TagFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = models.Tag
+
+    name = factory.fuzzy.FuzzyText(length=10)
+
+
 class HomePageFactory(wagtail_factories.PageFactory):
 
     class Meta:
