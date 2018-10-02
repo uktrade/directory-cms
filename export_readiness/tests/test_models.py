@@ -17,7 +17,8 @@ def test_app_models():
         models.TopicLandingPage,
         models.ArticleListingPage,
         models.ArticlePage,
-        models.HomePage
+        models.HomePage,
+        models.EUExitInternationalFormPage,
     ]
 
 
