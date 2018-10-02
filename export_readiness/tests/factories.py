@@ -111,3 +111,11 @@ class ArticlePageFactory(wagtail_factories.PageFactory):
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     last_published_at = timezone.now()
     parent = None
+
+
+class TagFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = models.Tag
+
+    name = factory.fuzzy.FuzzyText(length=10)
