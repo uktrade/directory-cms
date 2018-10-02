@@ -119,3 +119,16 @@ class TagFactory(factory.django.DjangoModelFactory):
         model = models.Tag
 
     name = factory.fuzzy.FuzzyText(length=10)
+
+
+class HomePageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.HomePage
+
+    news_title = factory.fuzzy.FuzzyText(length=10)
+    news_description = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None
