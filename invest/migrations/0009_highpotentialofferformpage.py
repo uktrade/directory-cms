@@ -5,8 +5,8 @@ from __future__ import unicode_literals
 import core.models
 from django.db import migrations, models
 import django.db.models.deletion
+import core.fields
 import invest.models
-
 
 class Migration(migrations.Migration):
 
@@ -21,28 +21,28 @@ class Migration(migrations.Migration):
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
                 ('service_name', models.CharField(choices=[('FIND_A_SUPPLIER', 'Find a Supplier'), ('EXPORT_READINESS', 'Export Readiness'), ('INVEST', 'Invest')], db_index=True, max_length=100, null=True)),
-                ('comment_help_text', invest.models.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
-                ('comment_label', invest.models.FormLabelField(max_length=200, verbose_name='label')),
-                ('company_name_help_text', invest.models.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
-                ('company_name_label', invest.models.FormLabelField(max_length=200, verbose_name='label')),
-                ('company_size_help_text', invest.models.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
-                ('company_size_label', invest.models.FormLabelField(max_length=200, verbose_name='label')),
-                ('country_help_text', invest.models.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
-                ('country_label', invest.models.FormLabelField(max_length=200, verbose_name='label')),
-                ('email_address_help_text', invest.models.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
-                ('email_address_label', invest.models.FormLabelField(max_length=200, verbose_name='label')),
-                ('full_name_help_text', invest.models.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
-                ('full_name_label', invest.models.FormLabelField(max_length=200, verbose_name='label')),
-                ('opportunities_help_text', invest.models.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
-                ('opportunities_label', invest.models.FormLabelField(max_length=200, verbose_name='label')),
-                ('phone_number_help_text', invest.models.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
-                ('phone_number_label', invest.models.FormLabelField(max_length=200, verbose_name='label')),
-                ('role_in_company_help_text', invest.models.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
-                ('role_in_company_label', invest.models.FormLabelField(max_length=200, verbose_name='label')),
-                ('terms_agreed_help_text', invest.models.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
-                ('terms_agreed_label', invest.models.FormLabelField(max_length=200, verbose_name='label')),
-                ('website_url_help_text', invest.models.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
-                ('website_url_label', invest.models.FormLabelField(max_length=200, verbose_name='label')),
+                ('comment_help_text', core.fields.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
+                ('comment_label', core.fields.FormLabelField(max_length=200, verbose_name='label')),
+                ('company_name_help_text', core.fields.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
+                ('company_name_label', core.fields.FormLabelField(max_length=200, verbose_name='label')),
+                ('company_size_help_text', core.fields.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
+                ('company_size_label', core.fields.FormLabelField(max_length=200, verbose_name='label')),
+                ('country_help_text', core.fields.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
+                ('country_label', core.fields.FormLabelField(max_length=200, verbose_name='label')),
+                ('email_address_help_text', core.fields.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
+                ('email_address_label', core.fields.FormLabelField(max_length=200, verbose_name='label')),
+                ('full_name_help_text', core.fields.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
+                ('full_name_label', core.fields.FormLabelField(max_length=200, verbose_name='label')),
+                ('opportunities_help_text', core.fields.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
+                ('opportunities_label', core.fields.FormLabelField(max_length=200, verbose_name='label')),
+                ('phone_number_help_text', core.fields.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
+                ('phone_number_label', core.fields.FormLabelField(max_length=200, verbose_name='label')),
+                ('role_in_company_help_text', core.fields.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
+                ('role_in_company_label', core.fields.FormLabelField(max_length=200, verbose_name='label')),
+                ('terms_agreed_help_text', core.fields.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
+                ('terms_agreed_label', core.fields.FormLabelField(max_length=200, verbose_name='label')),
+                ('website_url_help_text', core.fields.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
+                ('website_url_label', core.fields.FormLabelField(max_length=200, verbose_name='label')),
             ],
             options={
                 'abstract': False,

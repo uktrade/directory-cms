@@ -7,8 +7,9 @@ from django.core.exceptions import ValidationError
 from modeltranslation import settings as modeltranslation_settings
 from modeltranslation.translator import translator
 from modeltranslation.utils import build_localized_fieldname
-from wagtail.admin.edit_handlers import FieldPanel
-from wagtail.core.models import Page
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
+from wagtail.api import APIField
+from wagtail.core.models import Page, PageBase
 
 from django.core import signing
 from django.conf import settings
@@ -24,7 +25,9 @@ from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.text import mark_safe
-from core import constants, forms
+
+from core import constants, fields, forms
+from core.panels import SearchEngineOptimisationPanel
 
 
 class Breadcrumb(models.Model):
@@ -329,3 +332,34 @@ class ServiceMixin(models.Model):
     ]
     content_panels = []
     promote_panels = []
+
+
+class FormPageMetaClass(PageBase):
+    """Metaclass that adds <field_name>_label and <field_name>_help_text to a
+    Page when given a list of form_field_names.
+    """
+    def __new__(mcls, name, bases, attrs):
+        form_field_names = attrs['form_field_names']
+        for field_name in form_field_names:
+            attrs[field_name + '_help_text'] = fields.FormHelpTextField()
+            attrs[field_name + '_label'] = fields.FormLabelField()
+
+        attrs['content_panels'] += [
+            MultiFieldPanel(
+                heading=name.replace('_', ' '),
+                children=[
+                    FieldPanel(name + '_label'),
+                    FieldPanel(name + '_help_text'),
+                ]
+            ) for name in form_field_names
+        ] + [SearchEngineOptimisationPanel()]
+
+        seo_api_fields = [
+            APIField('seo_title'),
+            APIField('search_description'),
+        ]
+        form_api_fields = [
+            fields.APIFormFieldField(name) for name in form_field_names
+        ]
+        attrs['api_fields'] += (form_api_fields + seo_api_fields)
+        return super().__new__(mcls, name, bases, attrs)
