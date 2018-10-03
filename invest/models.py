@@ -11,16 +11,15 @@ from django.db import models
 
 from core.fields import (
     APIDocumentUrlField,
-    APIFormFieldField,
     APIImageField, APIMetaField,
     APIMarkdownToHTMLField,
     APIVideoField,
-    FormLabelField,
-    FormHelpTextField,
     MarkdownField,
 )
 from core.helpers import make_translated_interface
-from core.models import BasePage, ExclusivePageMixin, ServiceMixin
+from core.models import (
+    BasePage, ExclusivePageMixin, ServiceMixin, FormPageMetaClass
+)
 from core.panels import SearchEngineOptimisationPanel
 
 from invest import fields
@@ -897,8 +896,11 @@ class InfoPage(BasePage):
     ]
 
 
-class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
-    fields_order = [
+class HighPotentialOpportunityFormPage(
+    ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
+):
+    # metaclass creates <fild_name>_label and <field_name>_help_text
+    form_field_names = [
         'full_name',
         'role_in_company',
         'email_address',
@@ -918,73 +920,38 @@ class HighPotentialOpportunityFormPage(ExclusivePageMixin, BasePage):
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
     breadcrumbs_label = models.CharField(max_length=50)
-    comment_help_text = FormHelpTextField()
-    comment_label = FormLabelField()
-    company_name_help_text = FormHelpTextField()
-    company_name_label = FormLabelField()
-    company_size_help_text = FormHelpTextField()
-    company_size_label = FormLabelField()
-    country_help_text = FormHelpTextField()
-    country_label = FormLabelField()
-    email_address_help_text = FormHelpTextField()
-    email_address_label = FormLabelField()
-    full_name_help_text = FormHelpTextField()
-    full_name_label = FormLabelField()
-    opportunities_help_text = FormHelpTextField()
-    opportunities_label = FormLabelField()
-    phone_number_help_text = FormHelpTextField()
-    phone_number_label = FormLabelField()
-    role_in_company_help_text = FormHelpTextField()
-    role_in_company_label = FormLabelField()
-    website_url_help_text = FormHelpTextField()
-    website_url_label = FormLabelField()
 
-    content_panels = (
-        [
-            MultiFieldPanel(
-                heading='Hero',
-                children=[
-                    FieldPanel('breadcrumbs_label'),
-                    FieldPanel('heading'),
-                    FieldPanel('sub_heading'),
-                ]
-            ),
-        ] +
-        [
-            MultiFieldPanel(
-                heading=name.replace('_', ' '),
-                children=[
-                    FieldPanel(name + '_label'),
-                    FieldPanel(name + '_help_text'),
-                ]
-            ) for name in fields_order
-        ] + [
-            SearchEngineOptimisationPanel(),
-        ]
-    )
+    # metaclass appends `form_field_names` to `content_panels`
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='Hero',
+            children=[
+                FieldPanel('breadcrumbs_label'),
+                FieldPanel('heading'),
+                FieldPanel('sub_heading'),
+            ]
+        ),
+    ]
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
-    api_fields = (
-        [APIFormFieldField(name) for name in fields_order] +
-        [
-            APIField('heading'),
-            APIField('sub_heading'),
-            fields.APIHighPotentialOpportunityDetailPageListField(
-                'opportunity_list',
-                field_names=[
-                    'heading',
-                    'pdf_document',
-                    'meta',
-                ]
-            ),
-            APIField('breadcrumbs_label'),
-            APIField('seo_title'),
-            APIField('search_description'),
-        ]
-    )
+    # metaclass appends `form_field_names` to `api_fields`
+    api_fields = [
+        APIField('heading'),
+        APIField('sub_heading'),
+        fields.APIHighPotentialOpportunityDetailPageListField(
+            'opportunity_list',
+            field_names=[
+                'heading',
+                'pdf_document',
+                'meta',
+            ]
+        ),
+        APIField('breadcrumbs_label'),
+    ]
 
 
 class HighPotentialOpportunityDetailPage(BasePage):
