@@ -773,6 +773,8 @@ class EUExitInternationalFormPage(
     slug_identity = 'eu-exit-international'
 
     breadcrumbs_label = models.CharField(max_length=50)
+    heading = models.CharField(max_length=255)
+    body_text = MarkdownField()
 
     # metaclass appends `form_field_names` to `content_panels`
     content_panels = [
@@ -780,6 +782,8 @@ class EUExitInternationalFormPage(
             heading='Hero',
             children=[
                 FieldPanel('breadcrumbs_label'),
+                FieldPanel('heading'),
+                MarkdownPanel('body_text'),
             ]
         ),
     ]
@@ -792,8 +796,8 @@ class EUExitInternationalFormPage(
     # metaclass appends `form_field_names` to `api_fields`
     api_fields = [
         APIField('breadcrumbs_label'),
-        APIField('seo_title'),
-        APIField('search_description'),
+        APIField('heading'),
+        APIMarkdownToHTMLField('body_text'),
     ]
 
 
@@ -815,6 +819,8 @@ class EUExitDomesticFormPage(
     slug_identity = 'eu-exit-domestic'
 
     breadcrumbs_label = models.CharField(max_length=50)
+    heading = models.CharField(max_length=255)
+    body_text = MarkdownField()
 
     # metaclass appends `form_field_names` to `content_panels`
     content_panels = [
@@ -822,6 +828,8 @@ class EUExitDomesticFormPage(
             heading='Hero',
             children=[
                 FieldPanel('breadcrumbs_label'),
+                FieldPanel('heading'),
+                MarkdownPanel('body_text'),
             ]
         ),
     ]
@@ -834,4 +842,6 @@ class EUExitDomesticFormPage(
     # metaclass appends `form_field_names` to `api_fields`
     api_fields = [
         APIField('breadcrumbs_label'),
+        APIField('heading'),
+        APIMarkdownToHTMLField('body_text'),
     ]
