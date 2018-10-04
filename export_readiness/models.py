@@ -13,7 +13,6 @@ from django.db import models
 from directory_constants.constants import cms
 
 from core.fields import (
-    APIFormFieldField,
     APIMarkdownToHTMLField,
     APIMetaField,
     MarkdownField,
@@ -22,9 +21,12 @@ from core.fields import (
 )
 
 from core.models import (
-    BasePage, BreadcrumbMixin, ExclusivePageMixin, ServiceMixin
+    BasePage,
+    BreadcrumbMixin,
+    ExclusivePageMixin,
+    FormPageMetaClass,
+    ServiceMixin,
 )
-from core.fields import FormHelpTextField, FormLabelField
 from core.panels import SearchEngineOptimisationPanel
 from .fields import (APIChildrenArticleListingPageListField,
                      APIChildrenTopicLandingPageListField,
@@ -758,8 +760,11 @@ class HomePage(ExclusivePageMixin, BasePage):
     ]
 
 
-class EUExitInternationalFormPage(ExclusivePageMixin, BasePage):
-    fields_order = [
+class EUExitInternationalFormPage(
+    ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
+):
+    # metaclass creates <fild_name>_label and <field_name>_help_text
+    form_field_names = [
         'first_name',
         'last_name',
         'email',
@@ -771,58 +776,69 @@ class EUExitInternationalFormPage(ExclusivePageMixin, BasePage):
     ]
 
     service_name_value = cms.EXPORT_READINESS
-    view_path = 'eu-exit/'
+    view_path = 'eu-exit/international/contact/'
     slug_identity = 'eu-exit-international'
 
     breadcrumbs_label = models.CharField(max_length=50)
-    first_name_label = FormLabelField()
-    first_name_help_text = FormHelpTextField()
-    last_name_label = FormLabelField()
-    last_name_help_text = FormHelpTextField()
-    email_label = FormLabelField()
-    email_help_text = FormHelpTextField()
-    organisation_type_label = FormLabelField()
-    organisation_type_help_text = FormHelpTextField()
-    company_name_label = FormLabelField()
-    company_name_help_text = FormHelpTextField()
-    country_label = FormLabelField()
-    country_help_text = FormHelpTextField()
-    city_label = FormLabelField()
-    city_help_text = FormHelpTextField()
-    comment_label = FormLabelField()
-    comment_help_text = FormHelpTextField()
 
-    content_panels = (
-        [
-            MultiFieldPanel(
-                heading='Hero',
-                children=[
-                    FieldPanel('breadcrumbs_label'),
-                ]
-            ),
-        ] +
-        [
-            MultiFieldPanel(
-                heading=name.replace('_', ' '),
-                children=[
-                    FieldPanel(name + '_label'),
-                    FieldPanel(name + '_help_text'),
-                ]
-            ) for name in fields_order
-        ] + [
-            SearchEngineOptimisationPanel(),
-        ]
-    )
+    # metaclass appends `form_field_names` to `content_panels`
+    content_panels = [
+        MultiFieldPanel(
+            heading='Hero',
+            children=[
+                FieldPanel('breadcrumbs_label'),
+            ]
+        ),
+    ]
+
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
-    api_fields = (
-        [APIFormFieldField(name) for name in fields_order] +
-        [
-            APIField('breadcrumbs_label'),
-            APIField('seo_title'),
-            APIField('search_description'),
-        ]
-    )
+    # metaclass appends `form_field_names` to `api_fields`
+    api_fields = [
+        APIField('breadcrumbs_label'),
+        APIField('seo_title'),
+        APIField('search_description'),
+    ]
+
+
+class EUExitDomesticFormPage(
+    ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
+):
+    # metaclass creates <fild_name>_label and <field_name>_help_text
+    form_field_names = [
+        'first_name',
+        'last_name',
+        'email',
+        'organisation_type',
+        'company_name',
+        'comment',
+    ]
+
+    service_name_value = cms.EXPORT_READINESS
+    view_path = 'eu-exit/contact/'
+    slug_identity = 'eu-exit-domestic'
+
+    breadcrumbs_label = models.CharField(max_length=50)
+
+    # metaclass appends `form_field_names` to `content_panels`
+    content_panels = [
+        MultiFieldPanel(
+            heading='Hero',
+            children=[
+                FieldPanel('breadcrumbs_label'),
+            ]
+        ),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    # metaclass appends `form_field_names` to `api_fields`
+    api_fields = [
+        APIField('breadcrumbs_label'),
+    ]
