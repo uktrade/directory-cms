@@ -8,7 +8,6 @@ from modeltranslation import settings as modeltranslation_settings
 from modeltranslation.translator import translator
 from modeltranslation.utils import build_localized_fieldname
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
-from wagtail.api import APIField
 from wagtail.core.models import Page, PageBase
 
 from django.core import signing
@@ -27,7 +26,6 @@ from django.utils import translation
 from django.utils.text import mark_safe
 
 from core import constants, fields, forms
-from core.panels import SearchEngineOptimisationPanel
 
 
 class Breadcrumb(models.Model):
@@ -344,7 +342,7 @@ class FormPageMetaClass(PageBase):
             attrs[field_name + '_help_text'] = fields.FormHelpTextField()
             attrs[field_name + '_label'] = fields.FormLabelField()
 
-        attrs['content_panels'] += [
+        form_panels = [
             MultiFieldPanel(
                 heading=name.replace('_', ' '),
                 children=[
@@ -352,14 +350,15 @@ class FormPageMetaClass(PageBase):
                     FieldPanel(name + '_help_text'),
                 ]
             ) for name in form_field_names
-        ] + [SearchEngineOptimisationPanel()]
-
-        seo_api_fields = [
-            APIField('seo_title'),
-            APIField('search_description'),
         ]
+        attrs['content_panels'] = (
+            attrs['content_panels_before_form'] +
+            form_panels +
+            attrs['content_panels_after_form']
+        )
+
         form_api_fields = [
             fields.APIFormFieldField(name) for name in form_field_names
         ]
-        attrs['api_fields'] += (form_api_fields + seo_api_fields)
+        attrs['api_fields'] += form_api_fields
         return super().__new__(mcls, name, bases, attrs)

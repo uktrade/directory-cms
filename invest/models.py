@@ -921,9 +921,7 @@ class HighPotentialOpportunityFormPage(
     sub_heading = models.CharField(max_length=255)
     breadcrumbs_label = models.CharField(max_length=50)
 
-    # metaclass appends `form_field_names` to `content_panels`
-
-    content_panels = [
+    content_panels_before_form = [
         MultiFieldPanel(
             heading='Hero',
             children=[
@@ -933,6 +931,8 @@ class HighPotentialOpportunityFormPage(
             ]
         ),
     ]
+    content_panels_after_form = [SearchEngineOptimisationPanel()]
+
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
@@ -942,6 +942,8 @@ class HighPotentialOpportunityFormPage(
     api_fields = [
         APIField('heading'),
         APIField('sub_heading'),
+        APIField('seo_title'),
+        APIField('search_description'),
         fields.APIHighPotentialOpportunityDetailPageListField(
             'opportunity_list',
             field_names=[
