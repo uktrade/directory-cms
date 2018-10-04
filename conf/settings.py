@@ -12,7 +12,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 '''
 
-import base64
 import os
 
 import dj_database_url
