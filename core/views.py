@@ -1,6 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ValidationError
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
+from wagtail.api.v2.utils import BadRequestError
 from wagtail.core.models import Page
 from wagtail.core.models import Orderable
 
@@ -15,6 +16,7 @@ from conf.signature import SignatureCheckPermission
 from core import filters, forms, helpers, permissions
 from core.models import BasePage
 from core.upstream_serializers import UpstreamModelSerilaizer
+from export_readiness import models as ex_read_models
 
 
 class APIEndpointBase(PagesAdminAPIEndpoint):
@@ -118,6 +120,22 @@ class PageLookupByFullPathAPIEndpoint(APIEndpointBase):
 
     def detail_view(self, *args, **kwargs):
         return super().detail_view(self.request, pk=None)
+
+
+class PageLookupByTagListAPIEndpoint(APIEndpointBase):
+
+    def get_queryset(self):
+        tag_slug = self.request.query_params['tag_slug']
+        return ex_read_models.ArticlePage.objects.filter(
+            tags__slug=tag_slug
+        )
+
+    def check_query_parameters(self, queryset):
+        if 'tag_slug' not in self.request.query_params:
+            raise BadRequestError('tag_slug parameter is required')
+
+    def listing_view(self, request):
+        return super().listing_view(self.request)
 
 
 class UpstreamBaseView(FormView):
