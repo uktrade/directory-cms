@@ -32,6 +32,10 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
     def get_nested_default_fields(cls, model):
         return [field.name for field in model.api_fields]
 
+    @classmethod
+    def get_listing_default_fields(cls, model):
+        return [field.name for field in model.api_fields]
+
     @property
     def permission_classes(self):
         permission_classes = [SignatureCheckPermission]
