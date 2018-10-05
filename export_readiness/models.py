@@ -783,15 +783,23 @@ class EUExitInternationalFormPage(
     slug_identity = 'eu-exit-international'
 
     breadcrumbs_label = models.CharField(max_length=50)
+    heading = models.CharField(max_length=255)
+    body_text = MarkdownField()
+    submit_button_text = models.CharField(max_length=50)
 
-    # metaclass appends `form_field_names` to `content_panels`
-    content_panels = [
+    content_panels_before_form = [
         MultiFieldPanel(
             heading='Hero',
             children=[
                 FieldPanel('breadcrumbs_label'),
+                FieldPanel('heading'),
+                MarkdownPanel('body_text'),
             ]
         ),
+    ]
+    content_panels_after_form = [
+        FieldPanel('submit_button_text'),
+        SearchEngineOptimisationPanel(),
     ]
 
     settings_panels = [
@@ -802,6 +810,9 @@ class EUExitInternationalFormPage(
     # metaclass appends `form_field_names` to `api_fields`
     api_fields = [
         APIField('breadcrumbs_label'),
+        APIField('heading'),
+        APIMarkdownToHTMLField('body_text'),
+        APIField('submit_button_text'),
         APIField('seo_title'),
         APIField('search_description'),
     ]
@@ -825,15 +836,23 @@ class EUExitDomesticFormPage(
     slug_identity = 'eu-exit-domestic'
 
     breadcrumbs_label = models.CharField(max_length=50)
+    heading = models.CharField(max_length=255)
+    body_text = MarkdownField()
+    submit_button_text = models.CharField(max_length=50)
 
-    # metaclass appends `form_field_names` to `content_panels`
-    content_panels = [
+    content_panels_before_form = [
         MultiFieldPanel(
             heading='Hero',
             children=[
                 FieldPanel('breadcrumbs_label'),
+                FieldPanel('heading'),
+                MarkdownPanel('body_text'),
             ]
         ),
+    ]
+    content_panels_after_form = [
+        FieldPanel('submit_button_text'),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
@@ -844,4 +863,68 @@ class EUExitDomesticFormPage(
     # metaclass appends `form_field_names` to `api_fields`
     api_fields = [
         APIField('breadcrumbs_label'),
+        APIField('heading'),
+        APIField('submit_button_text'),
+        APIMarkdownToHTMLField('body_text'),
+        APIField('seo_title'),
+        APIField('search_description'),
+    ]
+
+
+class EUExitFormSuccessPage(ExclusivePageMixin, BasePage):
+    service_name_value = cms.EXPORT_READINESS
+    view_path = 'eu-exit/contact/success/'
+    slug_identity = 'eu-exit-form-success'
+
+    breadcrumbs_label = models.CharField(max_length=50)
+    heading = models.CharField(
+        max_length=255,
+        verbose_name='Title'
+    )
+    body_text = models.CharField(
+        max_length=255,
+        verbose_name='Body text',
+    )
+    next_title = models.CharField(
+        max_length=255,
+        verbose_name='Title'
+    )
+    next_body_text = models.CharField(
+        max_length=255,
+        verbose_name='Body text',
+    )
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading='heading',
+            children=[
+                FieldPanel('heading'),
+                FieldPanel('body_text'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Next steps',
+            children=[
+                FieldPanel('next_title'),
+                FieldPanel('next_body_text'),
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    api_fields = [
+        APIField('breadcrumbs_label'),
+        APIField('heading'),
+        APIField('body_text'),
+        APIField('next_title'),
+        APIField('next_body_text'),
+        APIMetaField('meta'),
+        APIField('seo_title'),
+        APIField('search_description'),
     ]

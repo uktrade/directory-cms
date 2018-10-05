@@ -67,3 +67,8 @@ class EUExitInternationalFormPageTranslationOptions(BaseTranslationOptions):
 @register(models.EUExitDomesticFormPage)
 class EUExitDomesticFormPageTranslationOptions(BaseTranslationOptions):
     fields = []
+
+
+@register(models.EUExitFormSuccessPage)
+class EUExitFormSuccessPageTranslationOptions(BaseTranslationOptions):
+    fields = []
