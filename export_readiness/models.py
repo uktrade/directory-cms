@@ -1,3 +1,4 @@
+from django.utils.text import slugify
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel)
 from wagtail.api import APIField
@@ -584,6 +585,7 @@ class ArticleListingPage(BasePage):
 @register_snippet
 class Tag(index.Indexed, models.Model):
     name = models.CharField(max_length=100)
+    slug = models.CharField(max_length=255, blank=True)
 
     panels = [
         FieldPanel('name')
@@ -595,6 +597,11 @@ class Tag(index.Indexed, models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.slug = slugify(self.name)
+        return super().save(force_insert, force_update, using, update_fields)
 
 
 class ArticlePage(BasePage):

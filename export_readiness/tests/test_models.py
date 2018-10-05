@@ -71,3 +71,11 @@ def test_article_listing_page_articles_count(root_page):
     )
 
     assert article_listing_page.articles_count == 2
+
+
+@pytest.mark.django_db
+def test_tag_slug_created_on_save():
+    tag = factories.TagFactory(
+        name='Hello test'
+    )
+    assert tag.slug == 'hello-test'
