@@ -101,6 +101,7 @@ def test_homepage(admin_client, root_page):
         parent=root_page
     )
 
+    # news
     article_listing_page = factories.ArticleListingPageFactory(slug='news')
     for _ in range(5):
         factories.ArticlePageFactory.create(
@@ -110,10 +111,19 @@ def test_homepage(admin_client, root_page):
         parent=root_page
     )
 
+    # guidance
+    topic_landing_page = factories.TopicLandingPageFactory(slug='guidance')
+    for _ in range(5):
+        factories.ArticleListingPageFactory.create(
+            parent=topic_landing_page
+        )
+
     url = reverse('api:pages:detail', kwargs={'pk': home_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
     assert 'articles' in response.json()
+    assert 'guidance' in response.json()
+    assert len(response.json()['guidance']) == 5
     assert len(response.json()['articles']) == 5
 
 
@@ -128,3 +138,16 @@ def test_homepage_no_news(admin_client, root_page):
     assert response.status_code == 200
     assert 'articles' in response.json()
     assert len(response.json()['articles']) == 0
+
+
+def test_homepage_no_guidance(admin_client, root_page):
+
+    home_page = factories.HomePageFactory.create(
+        parent=root_page
+    )
+
+    url = reverse('api:pages:detail', kwargs={'pk': home_page.pk})
+    response = admin_client.get(url)
+    assert response.status_code == 200
+    assert 'guidance' in response.json()
+    assert len(response.json()['guidance']) == 0
