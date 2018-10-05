@@ -622,36 +622,57 @@ class ArticlePage(BasePage):
 
     related_article_one_url = models.CharField(
         max_length=255,
-        help_text='Paste the article path here (eg /foo/bar/)'
+        help_text='Paste the article path here (eg /foo/bar/)',
+        null=True,
+        blank=True
     )
     related_article_one_title = models.CharField(
         max_length=255,
-        help_text='Paste the title of the article here')
+        help_text='Paste the title of the article here',
+        null=True,
+        blank=True
+    )
     related_article_one_teaser = models.CharField(
         max_length=255,
-        help_text='Paste the article description here (max 255 characters)'
+        help_text='Paste the article description here (max 255 characters)',
+        null=True,
+        blank=True
     )
     related_article_two_url = models.CharField(
         max_length=255,
-        help_text='Paste the article path here (eg /foo/bar/)'
+        help_text='Paste the article path here (eg /foo/bar/)',
+        null=True,
+        blank=True
     )
     related_article_two_title = models.CharField(
         max_length=255,
-        help_text='Paste the title of the article here')
+        help_text='Paste the title of the article here',
+        null=True,
+        blank=True
+    )
     related_article_two_teaser = models.CharField(
         max_length=255,
-        help_text='Paste the article description here (max 255 characters)'
+        help_text='Paste the article description here (max 255 characters)',
+        null=True,
+        blank=True
     )
     related_article_three_url = models.CharField(
         max_length=255,
-        help_text='Paste the article path here (eg /foo/bar/)'
+        help_text='Paste the article path here (eg /foo/bar/)',
+        null=True,
+        blank=True
     )
     related_article_three_title = models.CharField(
         max_length=255,
-        help_text='Paste the title of the article here')
+        help_text='Paste the title of the article here',
+        null=True,
+        blank=True
+    )
     related_article_three_teaser = models.CharField(
         max_length=255,
-        help_text='Paste the article description here (max 255 characters)'
+        help_text='Paste the article description here (max 255 characters)',
+        null=True,
+        blank=True
     )
 
     # settings fields
