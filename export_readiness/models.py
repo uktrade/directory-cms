@@ -30,7 +30,9 @@ from core.models import (
 from core.panels import SearchEngineOptimisationPanel
 from .fields import (APIChildrenArticleListingPageListField,
                      APIChildrenTopicLandingPageListField,
-                     APIArticleNewsPageListField)
+                     APIArticleNewsPageListField,
+                     APIGuidanceArticleListingListField
+                     )
 
 
 class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -756,6 +758,7 @@ class HomePage(ExclusivePageMixin, BasePage):
         APIField('news_title'),
         APIMarkdownToHTMLField('news_description'),
         APIArticleNewsPageListField('articles'),
+        APIGuidanceArticleListingListField('guidance'),
         APIMetaField('meta')
     ]
 
