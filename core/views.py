@@ -15,6 +15,7 @@ from conf.signature import SignatureCheckPermission
 from core import filters, forms, helpers, permissions
 from core.models import BasePage
 from core.upstream_serializers import UpstreamModelSerilaizer
+from export_readiness import models as ex_read_models
 
 
 class APIEndpointBase(PagesAdminAPIEndpoint):
@@ -28,6 +29,10 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
 
     @classmethod
     def get_nested_default_fields(cls, model):
+        return [field.name for field in model.api_fields]
+
+    @classmethod
+    def get_listing_default_fields(cls, model):
         return [field.name for field in model.api_fields]
 
     @property
@@ -118,6 +123,28 @@ class PageLookupByFullPathAPIEndpoint(APIEndpointBase):
 
     def detail_view(self, *args, **kwargs):
         return super().detail_view(self.request, pk=None)
+
+
+class PageLookupByTagListAPIEndpoint(APIEndpointBase):
+
+    def get_queryset(self):
+        if 'tag_slug' not in self.request.query_params:
+            raise ValidationError(
+                detail={'tag_slug': 'This parameter is required'}
+            )
+        tag_slug = self.request.query_params['tag_slug']
+        return ex_read_models.ArticlePage.objects.filter(
+            tags__slug=tag_slug
+        )
+
+    def check_query_parameters(self, queryset):
+        """Override default method that checks if the query params
+        are db fields. We perform our own check in get_queryset which is
+        called before this method in listing_view"""
+        pass
+
+    def listing_view(self, request):
+        return super().listing_view(self.request)
 
 
 class UpstreamBaseView(FormView):

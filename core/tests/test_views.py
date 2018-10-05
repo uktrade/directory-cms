@@ -12,6 +12,7 @@ from django.urls import reverse
 
 from core import helpers, permissions, views
 from conf.signature import SignatureCheckPermission
+from export_readiness.tests import factories as ex_read_factories
 
 
 @pytest.fixture
@@ -491,3 +492,29 @@ def test_lookup_by_full_path_not_found(admin_client):
         {'full_path': 'foo'}
     )
     assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_lookup_by_tag_slug(admin_client, root_page):
+    url = reverse('lookup-by-tag-list')
+    tag = ex_read_factories.TagFactory(name='foo')
+    article1 = ex_read_factories.ArticlePageFactory(parent=root_page)
+    article1.tags = [tag]
+    article1.save()
+    article2 = ex_read_factories.ArticlePageFactory(parent=root_page)
+    article2.tags = [tag]
+    article2.save()
+    ex_read_factories.ArticlePageFactory(parent=root_page)
+    response = admin_client.get(
+        url,
+        {'tag_slug': tag.slug}
+    )
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_lookup_by_tag_slug_missing_param(admin_client):
+    url = reverse('lookup-by-tag-list')
+    response = admin_client.get(url)
+    assert response.status_code == 400
+    assert response.json() == {'tag_slug': 'This parameter is required'}

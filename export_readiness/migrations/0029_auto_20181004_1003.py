@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailcore', '0040_page_draft_title'),
-        ('export_readiness', '0026_euexitdomesticformpage'),
+        ('export_readiness', '0028_merge_20181004_1411'),
     ]
 
     operations = [
