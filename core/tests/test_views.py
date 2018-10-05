@@ -517,4 +517,4 @@ def test_lookup_by_tag_slug_missing_param(admin_client):
     url = reverse('lookup-by-tag-list')
     response = admin_client.get(url)
     assert response.status_code == 400
-    assert response.json() == {'tag_slug parameter is required'}
+    assert response.json() == {'tag_slug': 'This parameter is required'}

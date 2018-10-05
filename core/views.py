@@ -1,7 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ValidationError
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
-from wagtail.api.v2.utils import BadRequestError
 from wagtail.core.models import Page
 from wagtail.core.models import Orderable
 
@@ -129,14 +128,20 @@ class PageLookupByFullPathAPIEndpoint(APIEndpointBase):
 class PageLookupByTagListAPIEndpoint(APIEndpointBase):
 
     def get_queryset(self):
+        if 'tag_slug' not in self.request.query_params:
+            raise ValidationError(
+                detail={'tag_slug': 'This parameter is required'}
+            )
         tag_slug = self.request.query_params['tag_slug']
         return ex_read_models.ArticlePage.objects.filter(
             tags__slug=tag_slug
         )
 
     def check_query_parameters(self, queryset):
-        if 'tag_slug' not in self.request.query_params:
-            raise BadRequestError('tag_slug parameter is required')
+        """Override default method that checks if the query params
+        are db fields. We perform our own check in get_queryset which is
+        called before this method in listing_view"""
+        pass
 
     def listing_view(self, request):
         return super().listing_view(self.request)
