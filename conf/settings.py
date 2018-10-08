@@ -12,7 +12,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 '''
 
-import base64
 import os
 
 import dj_database_url
@@ -84,6 +83,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+    'core.middleware.StubSiteMiddleware',
     'directory_components.middleware.MaintenanceModeMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -357,6 +357,7 @@ HEALTH_CHECK_TOKEN = env.str('HEALTH_CHECK_TOKEN')
 
 WAGTAIL_SITE_NAME = 'directory-cms'
 WAGTAIL_PASSWORD_RESET_ENABLED = False
+
 LOGIN_URL = '/admin/login'
 BASE_URL = env.str('BASE_URL')
 
@@ -364,20 +365,6 @@ APP_URL_EXPORT_READINESS = env.str('APP_URL_EXPORT_READINESS')
 APP_URL_FIND_A_SUPPLIER = env.str('APP_URL_FIND_A_SUPPLIER')
 APP_URL_INVEST = env.str('APP_URL_INVEST')
 COPY_DESTINATION_URLS = env.list('COPY_DESTINATION_URLS')
-
-
-def base64_value(key):
-    return base64.b64decode(env.str(key)).decode()
-
-
-GOOGLE_TRANSLATE_PRIVATE_KEY_ID = env.str(
-    'GOOGLE_TRANSLATE_PRIVATE_KEY_ID', ''
-)
-GOOGLE_TRANSLATE_PRIVATE_KEY = base64_value('GOOGLE_TRANSLATE_PRIVATE_KEY_B64')
-GOOGLE_TRANSLATE_CLIENT_EMAIL = env.str('GOOGLE_TRANSLATE_CLIENT_EMAIL', '')
-GOOGLE_TRANSLATE_CLIENT_ID = env.str('GOOGLE_TRANSLATE_CLIENT_ID')
-GOOGLE_TRANSLATE_CERT_URL = env.str('GOOGLE_TRANSLATE_CERT_URL', '')
-GOOGLE_APPLICATION_CREDENTIALS = env.str('GOOGLE_APPLICATION_CREDENTIALS', '')
 
 # django-storages
 AWS_STORAGE_BUCKET_NAME = env.str('AWS_STORAGE_BUCKET_NAME', '')
@@ -413,13 +400,13 @@ EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL', '')
 
-MODELTRANSLATION_CUSTOM_FIELDS = ('StreamField', 'RichTextField')
+MODELTRANSLATION_CUSTOM_FIELDS = ('RichTextField', )
 MODELTRANSLATION_FALLBACK_LANGUAGES = ()
+WAGTAILMODELTRANSLATION_TRANSLATE_SLUGS = False
 
 # feature flags
 
 FEATURE_FLAGS = {
-    'AUTO_TRANSLATE_ON': env.bool('FEATURE_AUTO_TRANSLATE_ENABLED', False),
     # used by directory-components
     'MAINTENANCE_MODE_ON': env.bool('FEATURE_MAINTENANCE_MODE_ENABLED', False),
     # used by directory-components

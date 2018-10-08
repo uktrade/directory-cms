@@ -5,22 +5,19 @@
     {% trans "Copy" as copy_str %}
     {% include "wagtailadmin/shared/header.html" with title=copy_str subtitle=page.get_admin_display_title icon="doc-empty-inverse" %}
     <div class="nice-padding">
-        <form id="form" path="{% url 'preload-add-page' app_name=app_label model_name=model_name parent_pk=2 %}" method="POST" novalidate>
-
+        <form id="form" path="{% url 'preload-add-page' service_name=service_name model_name=model_name parent_slug=parent_slug %}" method="POST" novalidate>
 
             {% for name, value in serialized_relations %}
                 <input type="hidden" value="{{ value }}" name="{{ name }}" id="id_{{ name }}" />
             {% endfor %}
             {% for name, value in serialized_object %}
-                {% if include_slug or name != 'slug_en_gb' %}
-                    <input type="hidden" value="{{ value }}" name="{{ name }}" id="id_{{ name }}" />
-                {% endif %}
+                <input type="hidden" value="{{ value }}" name="{{ name }}" id="id_{{ name }}" />
             {% endfor %}
             <input type="hidden" name="next" value="{{ next }}" />
             <ul class="fields">
                 {% include "wagtailadmin/shared/field_as_li.html" with field=environment_form.environment %}
             </ul>
-            <input type="submit" value="{% trans 'Copy this page' %}" class="button">
+            <input type="submit" value="{{ include_slug|yesno:'Update,Copy' }} upstream" class="button">
         </form>
     </div>
     <script>

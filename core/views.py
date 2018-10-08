@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ValidationError
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.core.models import Page
@@ -12,7 +13,9 @@ from django.views.generic.edit import FormView
 
 from conf.signature import SignatureCheckPermission
 from core import filters, forms, helpers, permissions
+from core.models import BasePage
 from core.upstream_serializers import UpstreamModelSerilaizer
+from export_readiness import models as ex_read_models
 
 
 class APIEndpointBase(PagesAdminAPIEndpoint):
@@ -26,6 +29,10 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
 
     @classmethod
     def get_nested_default_fields(cls, model):
+        return [field.name for field in model.api_fields]
+
+    @classmethod
+    def get_listing_default_fields(cls, model):
         return [field.name for field in model.api_fields]
 
     @property
@@ -59,7 +66,8 @@ class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
 class PageLookupBySlugAPIEndpoint(APIEndpointBase):
     lookup_url_kwarg = 'slug'
     detail_only_fields = ['id']
-    filter_class = filters.ServiceNameFilter
+    filter_backends = APIEndpointBase.filter_backends + [DjangoFilterBackend]
+    filter_class = filters.ServiceNameDRFFilter
     authentication_classes = []
 
     def get_queryset(self):
@@ -74,7 +82,7 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
             )
         instance = get_object_or_404(
             self.filter_queryset(self.get_queryset()),
-            historicslug__slug=self.kwargs['slug'],
+            slug=self.kwargs['slug'],
         ).specific
         self.check_object_permissions(self.request, instance)
         instance = self.handle_serve_draft_object(instance)
@@ -86,11 +94,62 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
         return super().detail_view(self.request, pk=None)
 
 
+class PageLookupByFullPathAPIEndpoint(APIEndpointBase):
+    lookup_url_kwarg = 'full_path'
+    authentication_classes = []
+
+    def get_queryset(self):
+        return Page.objects.type(BasePage).all()
+
+    def get_object(self):
+        if hasattr(self, 'object'):
+            return self.object
+        if 'full_path' not in self.request.query_params:
+            raise ValidationError(
+                detail={'full_path': 'This parameter is required'}
+            )
+
+        full_path = self.request.query_params['full_path']
+        pages = self.get_queryset()
+        page = list(filter(lambda x: x.specific.full_path == full_path, pages))
+        if page:
+            instance = page[0].specific
+            self.check_object_permissions(self.request, instance)
+            instance = self.handle_serve_draft_object(instance)
+            self.handle_activate_language(instance)
+            self.object = instance
+            return instance
+        raise Http404()
+
+    def detail_view(self, *args, **kwargs):
+        return super().detail_view(self.request, pk=None)
+
+
+class PageLookupByTagListAPIEndpoint(APIEndpointBase):
+
+    def get_queryset(self):
+        if 'tag_slug' not in self.request.query_params:
+            raise ValidationError(
+                detail={'tag_slug': 'This parameter is required'}
+            )
+        tag_slug = self.request.query_params['tag_slug']
+        return ex_read_models.ArticlePage.objects.filter(
+            tags__slug=tag_slug
+        )
+
+    def check_query_parameters(self, queryset):
+        """Override default method that checks if the query params
+        are db fields. We perform our own check in get_queryset which is
+        called before this method in listing_view"""
+        pass
+
+    def listing_view(self, request):
+        return super().listing_view(self.request)
+
+
 class UpstreamBaseView(FormView):
     environment_form_class = forms.CopyToEnvironmentForm
     template_name = 'core/upstream.html'
-
-    include_slug = None
 
     def get_form_class(self):
         page = self.get_object()
@@ -125,26 +184,28 @@ class UpstreamBaseView(FormView):
         return super().get_context_data(
             environment_form=self.environment_form_class(),
             page=page,
-            app_label=page._meta.app_label,
+            service_name=page._meta.app_label,
             model_name=page._meta.model_name,
             serialized_relations=self.serialize_relations(),
             serialized_object=self.serialize_object(),
-            include_slug=self.include_slug,
+            parent_slug=page.specific.get_parent().slug,
             **kwargs
         )
 
 
 class CopyUpstreamView(UpstreamBaseView):
-    include_slug = False
+    pass
 
 
 class UpdateUpstreamView(UpstreamBaseView):
-    include_slug = True
+    pass
 
 
 class PreloadPageView(FormView):
     template_name = 'wagtailadmin/pages/create.html'
     update_template_name = 'wagtailadmin/pages/edit.html'
+    filter_class = filters.ServiceNameDRFFilter
+    http_method_names = ['post']
 
     def dispatch(self, *args, **kwargs):
         self.page_content_type = self.get_page_content_type()
@@ -154,7 +215,7 @@ class PreloadPageView(FormView):
     def get_page_content_type(self):
         try:
             return ContentType.objects.get_by_natural_key(
-                self.kwargs['app_name'],
+                self.kwargs['service_name'],
                 self.kwargs['model_name'],
             )
         except ContentType.DoesNotExist:
@@ -164,7 +225,8 @@ class PreloadPageView(FormView):
         page_class = self.page_content_type.model_class()
         try:
             page = page_class.objects.get(
-                slug=self.request.POST.get('slug_en_gb')
+                slug=self.request.POST.get('slug'),
+                service_name__iexact=self.kwargs['service_name']
             )
         except page_class.DoesNotExist:
             page = page_class()
@@ -176,7 +238,15 @@ class PreloadPageView(FormView):
         return page_class.get_edit_handler().get_form_class()
 
     def get_parent(self):
-        return get_object_or_404(Page, id=self.kwargs['parent_pk']).specific
+        queryset = filters.ServiceNameFilter().filter_service_name(
+            queryset=Page.objects.all(),
+            name=None,
+            value=self.kwargs['service_name'].upper(),
+        )
+        return get_object_or_404(
+            queryset,
+            slug=self.kwargs['parent_slug'],
+        ).specific
 
     def get_context_data(self, form):
         page_class = self.page_content_type.model_class()
@@ -186,11 +256,12 @@ class PreloadPageView(FormView):
         form = form_class(
             data=form.data,
             instance=self.page,
-            parent_page=parent_page
+            parent_page=parent_page,
         )
         edit_handler = edit_handler.bind_to_instance(
             instance=self.page,
-            form=form
+            form=form,
+            request=self.request
         )
         return {
             'content_type': self.page_content_type,
@@ -214,7 +285,7 @@ class PreloadPageView(FormView):
     def form_valid(self, form):
         return TemplateResponse(
             self.request,
-            self.template_name,
+            self.get_template_names(),
             self.get_context_data(form=form),
         )
 

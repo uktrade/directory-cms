@@ -1,6 +1,7 @@
 import abc
 from datetime import date, datetime
 
+from wagtail.documents.models import Document
 from wagtail.images.models import Image
 
 from django.forms.models import model_to_dict
@@ -42,6 +43,18 @@ class ImageFieldSerializer(AbstractFieldSerializer):
     @classmethod
     def deserialize_value(cls, value):
         return helpers.get_or_create_image(value).pk
+
+
+class DocumentFieldSerializer(AbstractFieldSerializer):
+    FIELD_NAME_PREFIX = '(document)'
+
+    @classmethod
+    def serialize_value(cls, value):
+        return value.file.name
+
+    @classmethod
+    def deserialize_value(cls, value):
+        return helpers.get_or_create_document(value).pk
 
 
 class ListFieldSerializer(AbstractFieldSerializer):
@@ -87,6 +100,7 @@ class UpstreamModelSerilaizer:
 
     field_serializers = {
         Image: ImageFieldSerializer,
+        Document: DocumentFieldSerializer,
         list: ListFieldSerializer,
         date: DateFieldSerializer,
     }

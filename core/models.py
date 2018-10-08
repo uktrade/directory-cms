@@ -3,14 +3,14 @@ import hashlib
 from urllib.parse import urljoin, urlencode
 
 from directory_constants.constants import choices
+from django.core.exceptions import ValidationError
 from modeltranslation import settings as modeltranslation_settings
 from modeltranslation.translator import translator
 from modeltranslation.utils import build_localized_fieldname
-from wagtail.admin.edit_handlers import FieldPanel
-from wagtail.core.models import Page
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
+from wagtail.core.models import Page, PageBase
 
 from django.core import signing
-from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.contrib.contenttypes.fields import (
     GenericForeignKey, GenericRelation
@@ -18,13 +18,14 @@ from django.contrib.contenttypes.fields import (
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
-from django.db import IntegrityError, transaction
+from django.db import transaction
 from django.forms import MultipleChoiceField
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.utils import translation
-from django.utils.text import mark_safe, slugify
-from core import constants, forms
+from django.utils.text import mark_safe
+
+from core import constants, fields, forms
 
 
 class Breadcrumb(models.Model):
@@ -40,19 +41,6 @@ class Breadcrumb(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     page = GenericForeignKey('content_type', 'object_id')
-
-
-class HistoricSlug(models.Model):
-    slug = models.SlugField(db_index=True)
-    service_name = models.CharField(
-        max_length=50,
-        choices=choices.CMS_APP_CHOICES,
-        null=True
-    )
-    page = models.ForeignKey(Page)
-
-    class Meta:
-        unique_together = ('slug', 'service_name')
 
 
 class ChoiceArrayField(ArrayField):
@@ -77,6 +65,7 @@ class BasePage(Page):
     class Meta:
         abstract = True
 
+    view_path = ''
     subpage_types = []
     base_form_class = forms.WagtailAdminPageForm
     content_panels = []
@@ -92,31 +81,33 @@ class BasePage(Page):
 
     @transaction.atomic
     def save(self, *args, **kwargs):
-        if self._state.adding:
-            self.service_name = self.service_name_value
-        super().save(*args, **kwargs)
-        try:
-            HistoricSlug.objects.get_or_create(
-                slug=self.slug,
-                page=self,
-                defaults={
-                    'service_name': self.service_name,
-                }
-            )
-        except IntegrityError:
+        self.service_name = self.service_name_value
+        if not self._slug_is_available(
+            slug=self.slug,
+            parent=self.get_parent(),
+            page=self
+        ):
             raise ValidationError({'slug': 'This slug is already in use'})
+        return super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        """We need to override delete to use the Page's parent one.
+
+        Using the Page one would cause the original _slug_is_available method
+        to be called and that is not considering services
+        """
+        super(Page, self).delete(*args, **kwargs)
 
     @staticmethod
     def _slug_is_available(slug, parent, page=None):
-        is_currently_unique = Page._slug_is_available(slug, parent, page)
-        queryset = HistoricSlug.objects.filter(
-            slug=slug
+        from core import filters  # circular dependencies
+        queryset = filters.ServiceNameFilter().filter_service_name(
+            queryset=Page.objects.filter(slug=slug).exclude(pk=page.pk),
+            name=None,
+            value=page.service_name,
         )
-        if page:
-            queryset = queryset.exclude(page__pk=page.pk)
-            queryset = queryset.filter(service_name=page.service_name_value)
-        is_historically_unique = (queryset.count() == 0)
-        return is_currently_unique and is_historically_unique
+        is_unique_in_service = (queryset.count() == 0)
+        return is_unique_in_service
 
     def get_draft_token(self):
         return self.signer.sign(self.pk)
@@ -129,14 +120,12 @@ class BasePage(Page):
         else:
             return str(self.pk) == str(value)
 
-    def get_url_path_parts(self, language_code):
-        slug_fieldname = build_localized_fieldname('slug', lang=language_code)
-        slug = getattr(self, slug_fieldname) or self.slug_en_gb
-        return [self.view_path, slug + '/']
+    def get_url_path_parts(self):
+        return [self.view_path, self.slug + '/']
 
     def get_url(self, is_draft=False, language_code=settings.LANGUAGE_CODE):
         domain = dict(constants.APP_URLS)[self.service_name_value]
-        url_path_parts = self.get_url_path_parts(language_code=language_code)
+        url_path_parts = self.get_url_path_parts()
         url = reduce(urljoin, [domain] + url_path_parts)
         querystring = {}
         if is_draft:
@@ -145,6 +134,22 @@ class BasePage(Page):
             querystring['lang'] = language_code
         if querystring:
             url += '?' + urlencode(querystring)
+        return url
+
+    @property
+    def full_path(self):
+        """Return the full path of a page, ignoring the root_page and
+        the app page. Used by the lookup-by-url view in prototype mode
+        """
+        # starts from 2 to remove root page and app page
+        path_components = [page.slug for page in self.get_ancestors()[2:]]
+        path_components.append(self.slug)
+        return '/{path}/'.format(path='/'.join(path_components))
+
+    @property
+    def full_url(self):
+        domain = dict(constants.APP_URLS)[self.service_name_value]
+        url = urljoin(domain, self.full_path)
         return url
 
     @property
@@ -200,6 +205,8 @@ class BasePage(Page):
     @property
     def translated_languages(self):
         fields = self.get_required_translatable_fields()
+        if not fields:
+            return []
         language_codes = translation.trans_real.get_languages()
         translated_languages = []
         for language_code in language_codes:
@@ -222,8 +229,32 @@ class BasePage(Page):
         return mark_safe(display_title)
 
 
-class ImageHash(models.Model):
+class AbstractObjectHash(models.Model):
+    class Meta:
+        abstract = True
 
+    content_hash = models.CharField(max_length=1000)
+
+    @staticmethod
+    def generate_content_hash(field_file):
+        filehash = hashlib.md5()
+        field_file.open()
+        filehash.update(field_file.read())
+        field_file.close()
+        return filehash.hexdigest()
+
+
+class DocumentHash(AbstractObjectHash):
+    document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name='+'
+    )
+
+
+class ImageHash(AbstractObjectHash):
     image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -231,21 +262,10 @@ class ImageHash(models.Model):
         on_delete=models.CASCADE,
         related_name='+'
     )
-    content_hash = models.CharField(
-        max_length=1000
-    )
-
-    @staticmethod
-    def generate_content_hash(image_field_file):
-        filehash = hashlib.md5()
-        image_field_file.open()
-        filehash.update(image_field_file.read())
-        image_field_file.close()
-        return filehash.hexdigest()
 
 
 class ExclusivePageMixin:
-    read_only_fields = ['slug_en_gb']
+    read_only_fields = ['slug']
     base_form_class = forms.WagtailAdminPageExclusivePageForm
 
     @classmethod
@@ -279,16 +299,20 @@ class BreadcrumbMixin(models.Model):
             'service_name': self.service_name_value,
             'slug': self.slug,
         }
-        for lang in modeltranslation_settings.AVAILABLE_LANGUAGES:
-            field_name = build_localized_fieldname('breadcrumbs_label', lang)
-            value = getattr(self, field_name, '')
-            defaults[build_localized_fieldname('label', lang)] = value
+        if 'breadcrumb_label' in self.get_translatable_fields():
+            for lang in modeltranslation_settings.AVAILABLE_LANGUAGES:
+                localizer = partial(build_localized_fieldname, lang=lang)
+                field_name = localizer('breadcrumbs_label')
+                defaults[localizer('label')] = getattr(self, field_name, '')
+        else:
+            defaults['label'] = self.breadcrumbs_label
         self.breadcrumb.update_or_create(defaults=defaults)
 
 
-class BaseApp(Page):
+class ServiceMixin(models.Model):
     service_name_value = None
     base_form_class = forms.BaseAppAdminPageForm
+    view_path = ''
 
     class Meta:
         abstract = True
@@ -297,7 +321,7 @@ class BaseApp(Page):
     def allowed_subpage_models(cls):
         allowed_name = cls.service_name_value
         return [
-            model for model in super().allowed_subpage_models()
+            model for model in Page.allowed_subpage_models()
             if getattr(model, 'service_name_value', None) == allowed_name
         ]
 
@@ -307,8 +331,34 @@ class BaseApp(Page):
     content_panels = []
     promote_panels = []
 
-    def save(self, *args, **kwargs):
-        for slug_field in (build_localized_fieldname('slug', lang) for lang in
-                           modeltranslation_settings.AVAILABLE_LANGUAGES):
-            setattr(self, slug_field, slugify(self.title_en_gb))
-        return super().save(*args, **kwargs)
+
+class FormPageMetaClass(PageBase):
+    """Metaclass that adds <field_name>_label and <field_name>_help_text to a
+    Page when given a list of form_field_names.
+    """
+    def __new__(mcls, name, bases, attrs):
+        form_field_names = attrs['form_field_names']
+        for field_name in form_field_names:
+            attrs[field_name + '_help_text'] = fields.FormHelpTextField()
+            attrs[field_name + '_label'] = fields.FormLabelField()
+
+        form_panels = [
+            MultiFieldPanel(
+                heading=name.replace('_', ' '),
+                children=[
+                    FieldPanel(name + '_label'),
+                    FieldPanel(name + '_help_text'),
+                ]
+            ) for name in form_field_names
+        ]
+        attrs['content_panels'] = (
+            attrs['content_panels_before_form'] +
+            form_panels +
+            attrs['content_panels_after_form']
+        )
+
+        form_api_fields = [
+            fields.APIFormFieldField(name) for name in form_field_names
+        ]
+        attrs['api_fields'] += form_api_fields
+        return super().__new__(mcls, name, bases, attrs)

@@ -43,7 +43,7 @@ class IndustryPageFactory(wagtail_factories.PageFactory):
     introduction_column_one_icon = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
-    slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
 
 
@@ -80,7 +80,7 @@ class LandingPageFactory(wagtail_factories.PageFactory):
         wagtail_factories.ImageFactory
     )
     search_description_en_gb = factory.fuzzy.FuzzyText(length=255)
-    slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
 
@@ -98,7 +98,7 @@ class IndustryLandingPageFactory(wagtail_factories.PageFactory):
     call_to_action_text_en_gb = factory.fuzzy.FuzzyText(length=255)
     breadcrumbs_label_en_gb = factory.fuzzy.FuzzyText(length=50)
     search_description_en_gb = factory.fuzzy.FuzzyText(length=255)
-    slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     more_industries_title_en_gb = factory.fuzzy.FuzzyText(length=100)
     parent = None
@@ -114,5 +114,5 @@ class IndustryContactPageFactory(wagtail_factories.PageFactory):
     submit_button_text_en_gb = factory.fuzzy.FuzzyText(length=100)
     success_message_text_en_gb = factory.fuzzy.FuzzyText(length=255)
     success_back_link_text_en_gb = factory.fuzzy.FuzzyText(length=100)
-    slug_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None

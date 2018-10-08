@@ -61,3 +61,40 @@ def test_immutable_file_storage_get_image_by_path_not_exist_in_database():
         image = backend.get_image_by_path('/thing.png')
 
     assert image is None
+
+
+@pytest.mark.django_db
+def test_immutable_file_storage_get_document_by_path_exists(
+    high_potential_opportunity_page
+):
+    document_hash = models.DocumentHash.objects.all().first()
+
+    backend = storage_backends.ImmutableFilesS3Boto3Storage()
+    with patch.object(backend.connection, 'ObjectSummary') as mock:
+        mock.return_value = Mock(
+            e_tag='"{}"'.format(document_hash.content_hash)
+        )
+        document_path = document_hash.document.file.url
+        document = backend.get_document_by_path(document_path)
+
+    assert document == document_hash.document
+
+
+@pytest.mark.django_db
+def test_immutable_file_storage_get_document_by_path_not_exist_in_bucket():
+    backend = storage_backends.ImmutableFilesS3Boto3Storage()
+    with patch.object(backend.connection, 'ObjectSummary') as mock:
+        mock.side_effect = EndpointConnectionError(endpoint_url='/')
+        document = backend.get_document_by_path('/thing.png')
+
+    assert document is None
+
+
+@pytest.mark.django_db
+def test_immutable_file_storage_get_document_by_path_not_exist_in_database():
+    backend = storage_backends.ImmutableFilesS3Boto3Storage()
+    with patch.object(backend.connection, 'ObjectSummary') as mock:
+        mock.return_value = Mock(e_tag='"123455"')
+        document = backend.get_document_by_path('/thing.png')
+
+    assert document is None

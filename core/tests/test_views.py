@@ -1,9 +1,10 @@
 import pytest
-from unittest.mock import call, patch
+from unittest.mock import ANY, call, patch
 
 from bs4 import BeautifulSoup
 from directory_constants.constants import sectors, cms
 from modeltranslation.utils import build_localized_fieldname
+from wagtail.core.models import Page
 import wagtail_factories
 
 from django.forms.models import model_to_dict
@@ -11,6 +12,7 @@ from django.urls import reverse
 
 from core import helpers, permissions, views
 from conf.signature import SignatureCheckPermission
+from export_readiness.tests import factories as ex_read_factories
 
 
 @pytest.fixture
@@ -114,7 +116,6 @@ def test_copy_upsteam(admin_client, translated_page, settings, image):
 
     assert response.status_code == 200
     assert response.context['page'] == translated_page
-    assert response.context['include_slug'] is False
 
 
 @pytest.mark.django_db
@@ -128,7 +129,6 @@ def test_update_upstream(admin_client, translated_page, settings, image):
 
     assert response.status_code == 200
     assert response.context['page'] == translated_page
-    assert response.context['include_slug'] is True
 
 
 @pytest.mark.django_db
@@ -150,21 +150,21 @@ def test_upstream_anon(client, translated_page, settings, image, url_name):
     (False, 'wagtailadmin/pages/create.html'),
 ))
 def test_add_page_prepopulate(
-    translated_page, settings, admin_client, image, cluster_data,
-    include_slug, expected_template, root_page
+    translated_fas_industry_page, settings, admin_client, image, cluster_data,
+    include_slug, expected_template, fas_industry_landing_page
 ):
     url = reverse(
         'preload-add-page',
         kwargs={
-            'app_name': translated_page._meta.app_label,
-            'model_name': translated_page._meta.model_name,
-            'parent_pk': root_page.pk,
+            'service_name': translated_fas_industry_page._meta.app_label,
+            'model_name': translated_fas_industry_page._meta.model_name,
+            'parent_slug': fas_industry_landing_page.slug,
         }
     )
-    model_as_dict = model_to_dict(translated_page, exclude=[
+    model_as_dict = model_to_dict(translated_fas_industry_page, exclude=[
         'go_live_at',
         'expire_at',
-        'slug_en_gb',
+        'slug',
     ])
     model_as_dict = {key: val for key, val in model_as_dict.items() if val}
     post_data = {
@@ -185,13 +185,14 @@ def test_add_page_prepopulate(
         'search_filter_sector': model_as_dict['search_filter_sector'][0],
     }
     if include_slug:
-        post_data['slug_en_gb'] = expected_data['slug_en_gb'] = (
-            translated_page.slug_en_gb
+        post_data['slug'] = expected_data['slug'] = (
+            translated_fas_industry_page.slug
         )
 
     response = admin_client.post(url, post_data)
 
     assert response.template_name == [expected_template]
+    assert response.status_code == 200
 
     soup = BeautifulSoup(response.content, 'html.parser')
     for name, value in expected_data.items():
@@ -209,25 +210,45 @@ def test_add_page_prepopulate(
 
 @pytest.mark.django_db
 def test_add_page_prepopulate_missing_content_type(
-    translated_page, settings, admin_client, root_page
+    translated_fas_industry_page, settings, admin_client,
+    fas_industry_landing_page, cluster_data
 ):
     url = reverse(
         'preload-add-page',
         kwargs={
-            'app_name': translated_page._meta.app_label,
+            'service_name': translated_fas_industry_page._meta.app_label,
             'model_name': 'doesnotexist',
-            'parent_pk': root_page.pk,
+            'parent_slug': fas_industry_landing_page.slug,
         }
     )
 
-    data = model_to_dict(translated_page, exclude=[
+    data = model_to_dict(translated_fas_industry_page, exclude=[
         'go_live_at',
         'expire_at',
         'hero_image',
     ])
-    response = admin_client.post(url, data)
+    response = admin_client.post(url, {**data, **cluster_data})
 
     assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_add_page_prepopulate_get(
+    translated_fas_industry_page, settings, admin_client,
+    fas_industry_landing_page, cluster_data
+):
+    url = reverse(
+        'preload-add-page',
+        kwargs={
+            'service_name': translated_fas_industry_page._meta.app_label,
+            'model_name': translated_fas_industry_page._meta.model_name,
+            'parent_slug': fas_industry_landing_page.slug,
+        }
+    )
+
+    response = admin_client.get(url)
+
+    assert response.status_code == 405
 
 
 @pytest.mark.django_db
@@ -242,7 +263,7 @@ def test_translate_page(
     data = {
         'action-translate': True,
         'sector_value': sectors.AUTOMOTIVE,
-        'slug_en_gb': 'this-is-great',
+        'slug': 'this-is-great',
         'title_en_gb': 'this-is-great',
         'breadcrumbs_label_en_gb': 'Mining',
         'introduction_text_en_gb': 'introduction',
@@ -307,7 +328,7 @@ def test_not_always_call_translate_page(
 
     data = {
         'sector_value': sectors.AUTOMOTIVE,
-        'slug_en_gb': 'this-is-great',
+        'slug': 'this-is-great',
         'title_en_gb': 'this-is-great',
         'introduction_text_en_gb': 'Good',
         'introduction_title_en_gb': 'title',
@@ -395,19 +416,6 @@ def test_lookup_by_slug_missing_required_query_param(translated_page,
 
 
 @pytest.mark.django_db
-def test_lookup_by_slug_historic(translated_page, admin_client):
-    old_slug = translated_page.slug
-    new_slug = translated_page.slug = 'new-slug'
-    translated_page.save()
-    for slug in [old_slug, new_slug]:
-        url = reverse('lookup-by-slug', kwargs={'slug': slug})
-        response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
-
-        assert response.status_code == 200
-        assert response.json()['id'] == translated_page.id
-
-
-@pytest.mark.django_db
 def test_lookup_by_slug_missing_page(admin_client):
     url = reverse('lookup-by-slug', kwargs={'slug': 'thing'})
 
@@ -439,3 +447,74 @@ def test_lookup_by_slug_draft(page_with_reversion, client):
     assert published_response.status_code == 200
     assert published_data['title'] == 'published-title'
     assert published_data['meta']['url'] == page_with_reversion.get_url()
+
+
+@pytest.mark.django_db
+@patch('core.filters.ServiceNameFilter.filter_service_name')
+def test_lookup_by_slug_filter_called(mock_filter_service_name, admin_client):
+    mock_filter_service_name.return_value = Page.objects.all()
+    url = reverse('lookup-by-slug', kwargs={'slug': 'food-and-drink'})
+    response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
+
+    assert response.status_code == 404
+    assert mock_filter_service_name.call_count == 1
+    assert mock_filter_service_name.call_args == call(
+        ANY,
+        'service_name',
+        cms.FIND_A_SUPPLIER,
+    )
+
+
+@pytest.mark.django_db
+def test_lookup_by_full_path(translated_page, admin_client):
+    url = reverse('lookup-by-full-path')
+    response = admin_client.get(
+        url,
+        {'full_path': translated_page.full_path}
+    )
+    assert response.status_code == 200
+    assert response.json()['id'] == translated_page.id
+
+
+@pytest.mark.django_db
+def test_lookup_by_full_path_missing_param(admin_client):
+    url = reverse('lookup-by-full-path')
+    response = admin_client.get(url)
+    assert response.status_code == 400
+    assert response.json() == {'full_path': 'This parameter is required'}
+
+
+@pytest.mark.django_db
+def test_lookup_by_full_path_not_found(admin_client):
+    url = reverse('lookup-by-full-path')
+    response = admin_client.get(
+        url,
+        {'full_path': 'foo'}
+    )
+    assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_lookup_by_tag_slug(admin_client, root_page):
+    url = reverse('lookup-by-tag-list')
+    tag = ex_read_factories.TagFactory(name='foo')
+    article1 = ex_read_factories.ArticlePageFactory(parent=root_page)
+    article1.tags = [tag]
+    article1.save()
+    article2 = ex_read_factories.ArticlePageFactory(parent=root_page)
+    article2.tags = [tag]
+    article2.save()
+    ex_read_factories.ArticlePageFactory(parent=root_page)
+    response = admin_client.get(
+        url,
+        {'tag_slug': tag.slug}
+    )
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_lookup_by_tag_slug_missing_param(admin_client):
+    url = reverse('lookup-by-tag-list')
+    response = admin_client.get(url)
+    assert response.status_code == 400
+    assert response.json() == {'tag_slug': 'This parameter is required'}

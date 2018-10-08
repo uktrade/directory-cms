@@ -1,23 +1,31 @@
-from django.db import models
-from wagtail.api import APIField
-from wagtail.core.blocks import CharBlock, StructBlock, PageChooserBlock
-from wagtail.core.fields import StreamField
-from wagtail.admin.edit_handlers import FieldPanel, ObjectList, MultiFieldPanel
-from wagtail.images.blocks import ImageChooserBlock
-from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtailmarkdown.blocks import MarkdownBlock
 from directory_constants.constants import cms
+from wagtail.api import APIField
+from wagtail.admin.edit_handlers import (
+    FieldPanel, ObjectList, MultiFieldPanel, FieldRowPanel
+)
+from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtailmedia.widgets import AdminMediaChooser
 
-from core.fields import APIImageField, APIMetaField, \
-    APIStreamFieldBlockField, MarkdownField, APIMarkdownToHTMLField
+from django.db import models
+
+from core.fields import (
+    APIDocumentUrlField,
+    APIImageField, APIMetaField,
+    APIMarkdownToHTMLField,
+    APIVideoField,
+    MarkdownField,
+)
 from core.helpers import make_translated_interface
-from core.models import BaseApp, BasePage, ExclusivePageMixin
+from core.models import (
+    BasePage, ExclusivePageMixin, ServiceMixin, FormPageMetaClass
+)
 from core.panels import SearchEngineOptimisationPanel
 
-from . import fields
+from invest import fields
 
 
-class InvestApp(ExclusivePageMixin, BaseApp):
+class InvestApp(ExclusivePageMixin, ServiceMixin, BasePage):
     service_name_value = cms.INVEST
     slug_identity = 'invest-app'
 
@@ -55,7 +63,7 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     edit_handler = make_translated_interface(
@@ -102,7 +110,7 @@ class RegionLandingPage(ExclusivePageMixin, BasePage):
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     edit_handler = make_translated_interface(
@@ -143,30 +151,9 @@ class SectorPage(BasePage):
         related_name='+'
     )
 
-    pullout = StreamField([
-        ('content', StructBlock([
-            ('text', MarkdownBlock()),
-            ('stat', CharBlock()),
-            ('stat_text', CharBlock()
-             )], max_num=1, min_num=0))
-    ], blank=True, null=True)
-
     pullout_text = MarkdownField(blank=True, null=True)
     pullout_stat = models.CharField(max_length=255, blank=True, null=True)
     pullout_stat_text = models.CharField(max_length=255, blank=True, null=True)
-
-    # subsections
-    subsections = StreamField([
-        ('markdown', StructBlock([
-            ('title', CharBlock()),
-            ('content', MarkdownBlock())
-        ])),
-        ('location', StructBlock([
-            ('title', CharBlock()),
-            ('info', MarkdownBlock()),
-            ('map', ImageChooserBlock())
-        ])),
-    ], null=True, blank=True)
 
     subsection_title_one = models.CharField(max_length=200)
     subsection_content_one = MarkdownField()
@@ -322,7 +309,7 @@ class SectorPage(BasePage):
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
         FieldPanel('featured')
     ]
 
@@ -342,14 +329,10 @@ class SectorPage(BasePage):
         APIField('heading'),
         APIImageField('hero_image'),
         # pullout
-        APIStreamFieldBlockField('pullout'),
-
         APIMarkdownToHTMLField('pullout_text'),
         APIField('pullout_stat'),
         APIField('pullout_stat_text'),
         # subsections
-        APIStreamFieldBlockField('subsections'),
-
         APIField('subsection_title_one'),
         APIMarkdownToHTMLField('subsection_content_one'),
         APIImageField('subsection_map_one'),
@@ -405,7 +388,7 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     edit_handler = make_translated_interface(
@@ -434,13 +417,6 @@ class SetupGuidePage(BasePage):
     sub_heading = models.CharField(max_length=255)
 
     # subsections
-    subsections = StreamField([
-        ('subsection', StructBlock([
-            ('title', CharBlock()),
-            ('content', MarkdownBlock())
-        ])),
-    ], null=True, blank=True)
-
     subsection_title_one = models.CharField(max_length=255)
     subsection_content_one = MarkdownField()
 
@@ -536,7 +512,7 @@ class SetupGuidePage(BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     edit_handler = make_translated_interface(
@@ -551,8 +527,6 @@ class SetupGuidePage(BasePage):
         APIField('heading'),
         APIField('sub_heading'),
         # subsections
-        APIStreamFieldBlockField('subsections'),
-
         APIField('subsection_title_one'),
         APIMarkdownToHTMLField('subsection_content_one'),
 
@@ -588,18 +562,11 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     sub_heading = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
-        null=True,
         blank=True,
+        null=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
-
-    subsections = StreamField([
-        ('subsection', StructBlock([
-            ('title', CharBlock()),
-            ('content', MarkdownBlock())
-        ])),
-    ], null=True, blank=True)
 
     # subsections
     subsection_title_one = models.CharField(max_length=255)
@@ -641,22 +608,6 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
 
     how_we_help_title = models.CharField(default='How we help', max_length=255)
     how_we_help_lead_in = models.TextField(blank=True, null=True)
-
-    how_we_help = StreamField(
-        [
-            ('items', StructBlock([
-                ('icon', ImageChooserBlock()),
-                ('text', CharBlock()),
-            ])
-             ),
-            ('page_link', StructBlock([
-                ('page', PageChooserBlock()),
-                ('text', CharBlock()),
-            ])
-             ),
-        ],
-        blank=True, null=True)
-
     # how we help
     how_we_help_text_one = models.CharField(max_length=255)
     how_we_help_icon_one = models.ForeignKey(
@@ -829,7 +780,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     edit_handler = make_translated_interface(
@@ -847,7 +798,6 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         APIField('sub_heading'),
         APIImageField('hero_image'),
         # subsections
-        APIStreamFieldBlockField('subsections'),
         APIField('subsection_title_one'),
         APIMarkdownToHTMLField('subsection_content_one'),
 
@@ -876,7 +826,6 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         APIField('how_we_help_title'),
         APIField('how_we_help_lead_in'),
         # how we help
-        APIStreamFieldBlockField('how_we_help'),
         APIField('how_we_help_text_one'),
         APIImageField('how_we_help_icon_one'),
 
@@ -931,7 +880,7 @@ class InfoPage(BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb')
+        FieldPanel('slug')
     ]
 
     edit_handler = make_translated_interface(
@@ -944,4 +893,610 @@ class InfoPage(BasePage):
         APIField('search_description'),
         APIMarkdownToHTMLField('content'),
         APIMetaField('meta')
+    ]
+
+
+class HighPotentialOpportunityFormPage(
+    ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
+):
+    # metaclass creates <fild_name>_label and <field_name>_help_text
+    form_field_names = [
+        'full_name',
+        'role_in_company',
+        'email_address',
+        'phone_number',
+        'company_name',
+        'website_url',
+        'country',
+        'company_size',
+        'opportunities',
+        'comment',
+    ]
+
+    service_name_value = cms.INVEST
+    view_path = 'high-potential-opportunities/rail/contact/'
+    slug_identity = 'high-potential-opportunity-form'
+
+    heading = models.CharField(max_length=255)
+    sub_heading = models.CharField(max_length=255)
+    breadcrumbs_label = models.CharField(max_length=50)
+
+    content_panels_before_form = [
+        MultiFieldPanel(
+            heading='Hero',
+            children=[
+                FieldPanel('breadcrumbs_label'),
+                FieldPanel('heading'),
+                FieldPanel('sub_heading'),
+            ]
+        ),
+    ]
+    content_panels_after_form = [SearchEngineOptimisationPanel()]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    # metaclass appends `form_field_names` to `api_fields`
+    api_fields = [
+        APIField('heading'),
+        APIField('sub_heading'),
+        APIField('seo_title'),
+        APIField('search_description'),
+        fields.APIHighPotentialOpportunityDetailPageListField(
+            'opportunity_list',
+            field_names=[
+                'heading',
+                'pdf_document',
+                'meta',
+            ]
+        ),
+        APIField('breadcrumbs_label'),
+    ]
+
+
+class HighPotentialOpportunityDetailPage(BasePage):
+    service_name_value = cms.INVEST
+    view_path = 'high-potential-opportunities/'
+
+    breadcrumbs_label = models.CharField(max_length=50)
+    heading = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    contact_proposition = MarkdownField(
+        blank=False,
+        verbose_name='Body text',
+    )
+    contact_button = models.CharField(max_length=500)
+    proposition_one = MarkdownField(blank=False)
+    proposition_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    proposition_one_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    opportunity_list_title = models.CharField(max_length=300)
+    opportunity_list_item_one = MarkdownField()
+    opportunity_list_item_two = MarkdownField()
+    opportunity_list_item_three = MarkdownField(blank=True)
+    opportunity_list_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    proposition_two = MarkdownField(blank=False)
+    proposition_two_list_item_one = MarkdownField()
+    proposition_two_list_item_two = MarkdownField()
+    proposition_two_list_item_three = MarkdownField()
+    proposition_two_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    proposition_two_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    competitive_advantages_title = models.CharField(
+        max_length=300,
+        verbose_name='Body text',
+    )
+    competitive_advantages_list_item_one = MarkdownField()
+    competitive_advantages_list_item_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    competitive_advantages_list_item_two = MarkdownField()
+    competitive_advantages_list_item_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    competitive_advantages_list_item_three = MarkdownField()
+    competitive_advantages_list_item_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    testimonial = MarkdownField(blank=True)
+    testimonial_background = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Background image',
+    )
+    companies_list_text = MarkdownField()
+    companies_list_item_image_one = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    companies_list_item_image_two = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    companies_list_item_image_three = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    companies_list_item_image_four = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    companies_list_item_image_five = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    companies_list_item_image_six = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    companies_list_item_image_seven = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    companies_list_item_image_eight = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    case_study_list_title = models.CharField(max_length=300)
+    case_study_one_text = MarkdownField(blank=True)
+    case_study_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    case_study_two_text = MarkdownField(blank=True)
+    case_study_two_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    case_study_three_text = MarkdownField(blank=True)
+    case_study_three_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    case_study_four_text = MarkdownField(blank=True)
+    case_study_four_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    other_opportunities_title = models.CharField(
+        max_length=300,
+        verbose_name='Title'
+    )
+    pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    summary_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text=(
+            'Image used on the opportunity listing page for this opportunity'
+        ),
+        verbose_name='Image',
+    )
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='Hero',
+            children=[
+                FieldPanel('breadcrumbs_label'),
+                FieldPanel('heading'),
+                ImageChooserPanel('hero_image'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Contact us',
+            children=[
+                FieldRowPanel(
+                    children=[
+                        FieldPanel('contact_proposition'),
+                        FieldPanel('contact_button'),
+                    ]
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Proposition one',
+            children=[
+                FieldRowPanel(
+                    children=[
+                        FieldPanel('proposition_one'),
+                        MultiFieldPanel(
+                            children=[
+                                ImageChooserPanel('proposition_one_image'),
+                                FieldPanel(
+                                    'proposition_one_video',
+                                    widget=AdminMediaChooser
+                                ),
+                            ]
+                        )
+                    ]
+                )
+
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Opportunity list',
+            children=[
+                FieldPanel('opportunity_list_title'),
+                FieldRowPanel(
+                    children=[
+                        MultiFieldPanel(
+                            children=[
+                                FieldPanel('opportunity_list_item_one'),
+                                FieldPanel('opportunity_list_item_two'),
+                                FieldPanel('opportunity_list_item_three'),
+                            ]
+                        ),
+                        ImageChooserPanel('opportunity_list_image'),
+                    ]
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Opportunity list',
+            children=[
+                FieldRowPanel(
+                    children=[
+                        MultiFieldPanel(
+                            children=[
+                                FieldPanel('proposition_two'),
+                                FieldPanel('proposition_two_list_item_one'),
+                                FieldPanel('proposition_two_list_item_two'),
+                                FieldPanel('proposition_two_list_item_three'),
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            children=[
+                                ImageChooserPanel('proposition_two_image'),
+                                FieldPanel(
+                                    'proposition_two_video',
+                                    widget=AdminMediaChooser
+                                ),
+                            ]
+                        )
+                    ]
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Key facts',
+            children=[
+                FieldPanel('competitive_advantages_title'),
+                FieldRowPanel(
+                    children=[
+                        FieldPanel('competitive_advantages_list_item_one'),
+                        FieldPanel('competitive_advantages_list_item_two'),
+                        FieldPanel('competitive_advantages_list_item_three'),
+                    ]
+                ),
+                FieldRowPanel(
+                    children=[
+                        ImageChooserPanel(
+                            'competitive_advantages_list_item_one_icon'
+                        ),
+                        ImageChooserPanel(
+                            'competitive_advantages_list_item_two_icon'
+                        ),
+                        ImageChooserPanel(
+                            'competitive_advantages_list_item_three_icon'
+                        ),
+                    ]
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Testimonial',
+            children=[
+                FieldPanel('testimonial'),
+                ImageChooserPanel('testimonial_background'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Company list',
+            children=[
+                FieldPanel('companies_list_text'),
+                FieldRowPanel(
+                    children=[
+                        ImageChooserPanel('companies_list_item_image_one'),
+                        ImageChooserPanel('companies_list_item_image_two'),
+                        ImageChooserPanel('companies_list_item_image_three'),
+                        ImageChooserPanel('companies_list_item_image_four'),
+                    ]
+                ),
+                FieldRowPanel(
+                    children=[
+                        ImageChooserPanel('companies_list_item_image_five'),
+                        ImageChooserPanel('companies_list_item_image_six'),
+                        ImageChooserPanel('companies_list_item_image_seven'),
+                        ImageChooserPanel('companies_list_item_image_eight'),
+                    ]
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Case studies',
+            children=[
+                FieldPanel('case_study_list_title'),
+                FieldRowPanel(
+                    children=[
+                        FieldPanel('case_study_one_text'),
+                        ImageChooserPanel('case_study_one_image'),
+                    ]
+                ),
+                FieldRowPanel(
+                    children=[
+                        FieldPanel('case_study_two_text'),
+                        ImageChooserPanel('case_study_two_image'),
+                    ]
+                ),
+                FieldRowPanel(
+                    children=[
+                        FieldPanel('case_study_three_text'),
+                        ImageChooserPanel('case_study_three_image'),
+                    ]
+                ),
+                FieldRowPanel(
+                    children=[
+                        FieldPanel('case_study_four_text'),
+                        ImageChooserPanel('case_study_four_image'),
+                    ]
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Other opportunities',
+            children=[
+                FieldPanel('other_opportunities_title'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Summary',
+            children=[
+                ImageChooserPanel('summary_image')
+            ],
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+        DocumentChooserPanel('pdf_document'),
+    ]
+
+    api_fields = [
+        APIField('breadcrumbs_label'),
+        APIField('heading'),
+        APIImageField('hero_image'),
+        APIMarkdownToHTMLField('contact_proposition'),
+        APIField('contact_button'),
+        APIMarkdownToHTMLField('proposition_one'),
+        APIImageField('proposition_one_image'),
+        APIVideoField('proposition_one_video'),
+        APIField('opportunity_list_title'),
+        APIMarkdownToHTMLField('opportunity_list_item_one'),
+        APIMarkdownToHTMLField('opportunity_list_item_two'),
+        APIMarkdownToHTMLField('opportunity_list_item_three'),
+        APIImageField('opportunity_list_image'),
+        APIMarkdownToHTMLField('proposition_two'),
+        APIMarkdownToHTMLField('proposition_two_list_item_one'),
+        APIMarkdownToHTMLField('proposition_two_list_item_two'),
+        APIMarkdownToHTMLField('proposition_two_list_item_three'),
+        APIImageField('proposition_two_image'),
+        APIVideoField('proposition_two_video'),
+        APIField('competitive_advantages_title'),
+        APIMarkdownToHTMLField('competitive_advantages_list_item_one'),
+        APIMarkdownToHTMLField('competitive_advantages_list_item_two'),
+        APIMarkdownToHTMLField('competitive_advantages_list_item_three'),
+        APIImageField('competitive_advantages_list_item_one_icon'),
+        APIImageField('competitive_advantages_list_item_two_icon'),
+        APIImageField('competitive_advantages_list_item_three_icon'),
+        APIMarkdownToHTMLField('testimonial'),
+        APIImageField('testimonial_background'),
+        APIMarkdownToHTMLField('companies_list_text'),
+        APIImageField('companies_list_item_image_one'),
+        APIImageField('companies_list_item_image_two'),
+        APIImageField('companies_list_item_image_three'),
+        APIImageField('companies_list_item_image_four'),
+        APIImageField('companies_list_item_image_five'),
+        APIImageField('companies_list_item_image_six'),
+        APIImageField('companies_list_item_image_seven'),
+        APIImageField('companies_list_item_image_eight'),
+        APIField('case_study_list_title'),
+        APIMarkdownToHTMLField('case_study_one_text'),
+        APIImageField('case_study_one_image'),
+        APIMarkdownToHTMLField('case_study_two_text'),
+        APIImageField('case_study_two_image'),
+        APIMarkdownToHTMLField('case_study_three_text'),
+        APIImageField('case_study_three_image'),
+        APIMarkdownToHTMLField('case_study_four_text'),
+        APIImageField('case_study_four_image'),
+        APIField('other_opportunities_title'),
+        fields.APIHighPotentialOpportunityDetailPageListField(
+            'other_opportunities',
+        ),
+        APIDocumentUrlField('pdf_document'),
+        APIImageField('summary_image'),
+        APIMetaField('meta'),
+        APIField('seo_title'),
+        APIField('search_description'),
+    ]
+
+
+class HighPotentialOpportunityFormSuccessPage(BasePage):
+    service_name_value = cms.INVEST
+    view_path = 'high-potential-opportunities/rail/contact/'
+    slug_identity = 'high-potential-opportunity-submit-success'
+
+    breadcrumbs_label = models.CharField(max_length=50)
+    heading = models.CharField(
+        max_length=255,
+        verbose_name='section title'
+    )
+    sub_heading = models.CharField(
+        max_length=255,
+        verbose_name='section body',
+    )
+    next_steps_title = models.CharField(
+        max_length=255,
+        verbose_name='section title'
+    )
+    next_steps_body = models.CharField(
+        max_length=255,
+        verbose_name='section body',
+
+    )
+    documents_title = models.CharField(
+        max_length=255,
+        verbose_name='section title'
+    )
+    documents_body = models.CharField(
+        max_length=255,
+        verbose_name='section body',
+    )
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading='heading',
+            children=[
+                FieldPanel('heading'),
+                FieldPanel('sub_heading'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Next steps',
+            children=[
+                FieldPanel('next_steps_title'),
+                FieldPanel('next_steps_body'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Documents',
+            children=[
+                FieldPanel('documents_title'),
+                FieldPanel('documents_body'),
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    api_fields = [
+        APIField('breadcrumbs_label'),
+        APIField('heading'),
+        APIField('sub_heading'),
+        APIField('next_steps_title'),
+        APIField('next_steps_body'),
+        APIField('documents_title'),
+        APIField('documents_body'),
+        APIMetaField('meta'),
+        APIField('seo_title'),
+        APIField('search_description'),
+        fields.APIHighPotentialOpportunityDetailPageListField(
+            'opportunity_list',
+            field_names=[
+                'meta',
+                'summary_image',
+                'heading',
+                'proposition_one',
+                'pdf_document',
+            ]
+        ),
     ]

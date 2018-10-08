@@ -9,7 +9,6 @@ class InvestHomePageTranslation(BaseTranslationOptions):
     fields = (
         'heading',
         'sub_heading',
-        'subsections',
         # subsections
         'subsection_title_one',
         'subsection_content_one',
@@ -38,7 +37,6 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'how_we_help_title',
         'how_we_help_lead_in',
         # how we help
-        'how_we_help',
         'how_we_help_text_one',
         'how_we_help_icon_one',
 
@@ -64,12 +62,10 @@ class SectorPageTranslation(BaseTranslationOptions):
     fields = (
         'description',
         'heading',
-        'pullout',
         'pullout_text',
         'pullout_stat',
         'pullout_stat_text',
         # subsections
-        'subsections',
         'subsection_title_one',
         'subsection_content_one',
         'subsection_map_one',
@@ -128,7 +124,6 @@ class SetupGuidePageTranslation(BaseTranslationOptions):
         'heading',
         'sub_heading',
         # subsections
-        'subsections',
         'subsection_title_one',
         'subsection_content_one',
 
@@ -159,3 +154,29 @@ class SetupGuideLandingPageTranslation(BaseTranslationOptions):
         'sub_heading',
         'lead_in',
     )
+
+
+@register(models.HighPotentialOpportunityFormPage)
+class HighPotentialOpportunityFormPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = []
+
+
+@register(models.HighPotentialOpportunityDetailPage)
+class HighPotentialOpportunityDetailPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = []
+
+
+@register(models.InvestApp)
+class InvestAppTranslationOptions(BaseTranslationOptions):
+    fields = []
+
+
+@register(models.HighPotentialOpportunityFormSuccessPage)
+class HighPotentialOpportunityFormSuccessPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = []

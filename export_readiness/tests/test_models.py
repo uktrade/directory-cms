@@ -1,35 +1,82 @@
 import pytest
 
-from export_readiness import models as exred_models
-from find_a_supplier import models as fas_models
+import find_a_supplier.models
+from export_readiness import models
+from export_readiness.tests import factories
 
 
 def test_app_models():
-    assert exred_models.ExportReadinessApp.allowed_subpage_models() == [
-        exred_models.ExportReadinessApp,
-        exred_models.TermsAndConditionsPage,
-        exred_models.PrivacyAndCookiesPage,
-        exred_models.GetFinancePage,
-        exred_models.PerformanceDashboardPage,
-        exred_models.PerformanceDashboardNotesPage,
+    assert models.ExportReadinessApp.allowed_subpage_models() == [
+        models.ExportReadinessApp,
+        models.TermsAndConditionsPage,
+        models.PrivacyAndCookiesPage,
+        models.DeprecatedGetFinancePage,
+        models.NewGetFinancePage,
+        models.PerformanceDashboardPage,
+        models.PerformanceDashboardNotesPage,
+        models.TopicLandingPage,
+        models.ArticleListingPage,
+        models.ArticlePage,
+        models.HomePage,
+        models.EUExitInternationalFormPage,
+        models.EUExitDomesticFormPage,
+        models.EUExitFormSuccessPage,
     ]
 
 
 @pytest.mark.parametrize('model', [
-    exred_models.ExportReadinessApp,
-    fas_models.FindASupplierApp,
-    ]
-)
+    models.ExportReadinessApp,
+    find_a_supplier.models.FindASupplierApp,
+])
 def test_app_required_translatable_fields(model):
     assert model.get_required_translatable_fields() == []
 
 
 @pytest.mark.django_db
 def test_set_slug():
-    instance = exred_models.ExportReadinessApp.objects.create(
+    instance = models.ExportReadinessApp.objects.create(
         title_en_gb='the app',
         depth=2,
         path='/thing',
     )
 
-    assert instance.slug_en_gb == 'the-app'
+    assert instance.slug == models.ExportReadinessApp.slug_identity
+
+
+@pytest.mark.django_db
+def test_get_finance_breadcrumbs():
+    page = factories.DeprecatedGetFinancePageFactory.create()
+    assert page.breadcrumb.first().label == page.breadcrumbs_label
+
+
+@pytest.mark.django_db
+def test_article_listing_page_articles_count(root_page):
+    article_listing_page = factories.ArticleListingPageFactory.create(
+        parent=root_page
+    )
+    factories.ArticlePageFactory.create(
+        parent=article_listing_page,
+        live=True
+    )
+    factories.ArticlePageFactory.create(
+        parent=article_listing_page,
+        live=True
+    )
+    factories.ArticlePageFactory.create(
+        parent=article_listing_page,
+        live=False
+    )
+    factories.ArticlePageFactory.create(
+        live=True,
+        parent=root_page
+    )
+
+    assert article_listing_page.articles_count == 2
+
+
+@pytest.mark.django_db
+def test_tag_slug_created_on_save():
+    tag = factories.TagFactory(
+        name='Hello test'
+    )
+    assert tag.slug == 'hello-test'

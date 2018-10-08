@@ -12,3 +12,12 @@ class LocaleQuerystringMiddleware(LocaleMiddleware):
         if language_code:
             translation.activate(language_code)
             request.LANGUAGE_CODE = translation.get_language()
+
+
+class StubSiteMiddleware(LocaleMiddleware):
+    """ Even though wagtail site middleware is not useful for this service,
+    wagtail expects `request.site` to be present - so we populate it with None
+    """
+
+    def process_request(self, request):
+        request.site = None

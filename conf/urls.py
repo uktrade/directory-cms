@@ -1,3 +1,4 @@
+import directory_healthcheck.views
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.api.v2.router import WagtailAPIRouter
 from wagtail.core import urls as wagtail_urls
@@ -18,14 +19,19 @@ api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
 
 urlpatterns = [
     url(
+        r'^healthcheck/sentry/$',
+        directory_healthcheck.views.SentryHealthcheckView.as_view(),
+        name='healthcheck-sentry'
+    ),
+    url(
         r'^healthcheck/database/$',
         healthcheck.views.DatabaseAPIView.as_view(),
-        name='health-check-database'
+        name='healthcheck-database'
     ),
     url(
         r'^healthcheck/ping/$',
         healthcheck.views.PingAPIView.as_view(),
-        name='health-check-ping'
+        name='healthcheck-ping'
     ),
     url(
         r'^admin/pages/(?P<pk>[0-9]+)/copy-upstream/$',
@@ -39,8 +45,8 @@ urlpatterns = [
     ),
     url(
         (
-            r'^admin/pages/preload/(?P<app_name>[a-zA-Z_]+)/'
-            r'(?P<model_name>[a-zA-Z]+)/(?P<parent_pk>[0-9]+)/$'
+            r'^admin/pages/preload/(?P<service_name>[a-zA-Z_]+)/'
+            r'(?P<model_name>[a-zA-Z]+)/(?P<parent_slug>[a-zA-Z-]+)/$'
         ),
         login_required(csrf_exempt(core.views.PreloadPageView.as_view())),
         name='preload-add-page',
@@ -55,6 +61,24 @@ urlpatterns = [
             )
         ),
         name='lookup-by-slug'
+    ),
+    url(
+        r'^api/pages/lookup-by-full-path/$',
+        api_router.wrap_view(
+            core.views.PageLookupByFullPathAPIEndpoint.as_view(
+                {'get': 'detail_view'}
+            )
+        ),
+        name='lookup-by-full-path'
+    ),
+    url(
+        r'^api/pages/lookup-by-tag/$',
+        api_router.wrap_view(
+            core.views.PageLookupByTagListAPIEndpoint.as_view(
+                {'get': 'listing_view'}
+            )
+        ),
+        name='lookup-by-tag-list'
     ),
 
     url(r'^admin/', include(wagtailadmin_urls)),

@@ -18,7 +18,11 @@ from core.fields import (
 )
 from core.helpers import make_translated_interface
 from core.models import (
-    BaseApp, BasePage, BreadcrumbMixin, ChoiceArrayField, ExclusivePageMixin
+    BasePage,
+    BreadcrumbMixin,
+    ChoiceArrayField,
+    ExclusivePageMixin,
+    ServiceMixin,
 )
 from core.panels import SearchEngineOptimisationPanel
 from find_a_supplier import fields
@@ -28,7 +32,7 @@ class ImageChooserPanel(ImageChooserPanel):
     classname = ""
 
 
-class FindASupplierApp(ExclusivePageMixin, BaseApp):
+class FindASupplierApp(ExclusivePageMixin, ServiceMixin, BasePage):
     slug_identity = 'find-a-supplier-app'
     service_name_value = cms.FIND_A_SUPPLIER
 
@@ -272,7 +276,7 @@ class IndustryPage(BasePage):
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
         MultiFieldPanel(
             heading='Company list filters',
             children=[
@@ -404,7 +408,7 @@ class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     ]
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     edit_handler = make_translated_interface(
@@ -477,7 +481,7 @@ class IndustryArticlePage(BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
         MultiFieldPanel(
             heading='Page structure',
             children=[FieldPanel('show_table_of_content')]
@@ -681,7 +685,7 @@ class LandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
 
     edit_handler = make_translated_interface(
@@ -726,7 +730,7 @@ class IndustryContactPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug_en_gb'),
+        FieldPanel('slug'),
     ]
     edit_handler = make_translated_interface(
         content_panels=content_panels,

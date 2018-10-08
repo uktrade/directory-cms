@@ -4,19 +4,6 @@ from __future__ import unicode_literals
 
 from django.db import migrations
 
-from core.models import BasePage
-
-
-def populate_historic_slug_service_name(apps, schema_editor):
-    for sub_class in BasePage.__subclasses__():
-        historic_model = apps.get_model(
-            sub_class._meta.app_label, sub_class._meta.object_name
-        )
-        for page in historic_model.objects.all():
-            page.historicslug_set.update(
-                service_name=page.service_name
-            )
-
 
 class Migration(migrations.Migration):
 
@@ -29,7 +16,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(
-           populate_historic_slug_service_name,
+            migrations.RunPython.noop,
            reverse_code=migrations.RunPython.noop
         )
     ]
