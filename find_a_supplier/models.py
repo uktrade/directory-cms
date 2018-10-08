@@ -614,7 +614,6 @@ class LandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
             ),
         ),
         fields.APIArticleSummariesField('article_summaries'),
-        APIBreadcrumbsField('breadcrumbs', service_name=service_name_value),
         APIMetaField('meta'),
     ]
 

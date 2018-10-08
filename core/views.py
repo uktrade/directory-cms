@@ -1,11 +1,16 @@
+import json
+import logging
+
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ValidationError
+from rest_framework.renderers import JSONRenderer
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.core.models import Page
 from wagtail.core.models import Orderable
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, Http404
 from django.template.response import TemplateResponse
 from django.utils import translation
@@ -13,9 +18,13 @@ from django.views.generic.edit import FormView
 
 from conf.signature import SignatureCheckPermission
 from core import filters, forms, helpers, permissions
+from core.cache import PageCache
 from core.models import BasePage
 from core.upstream_serializers import UpstreamModelSerilaizer
 from export_readiness import models as ex_read_models
+
+
+logger = logging.getLogger(__name__)
 
 
 class APIEndpointBase(PagesAdminAPIEndpoint):
@@ -37,7 +46,7 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
 
     @property
     def permission_classes(self):
-        permission_classes = [SignatureCheckPermission]
+        permission_classes = []#SignatureCheckPermission]
         if helpers.is_draft_requested(self.request):
             permission_classes.append(permissions.DraftTokenPermisison)
         return permission_classes
@@ -69,6 +78,28 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
     filter_backends = APIEndpointBase.filter_backends + [DjangoFilterBackend]
     filter_class = filters.ServiceNameDRFFilter
     authentication_classes = []
+    renderer_classes = [JSONRenderer]
+
+    def dispatch(self, *args, **kwargs):
+        path = self.request.get_full_path()
+        cached_page = PageCache.get(
+            slug=self.kwargs['slug'],
+            service_name=self.request.GET['service_name'],
+            language_code=translation.get_language()
+        )
+        if cached_page:
+            logger.info('API Cache hit', extra={'path': path})
+            response = JsonResponse(cached_page)
+        else:
+            logger.warning('API Cache miss', extra={'url': path})
+            response = super().dispatch(*args, **kwargs)
+            PageCache.set(
+                slug=self.kwargs['slug'],
+                language_code=translation.get_language(),
+                service_name=self.request.GET['service_name'],
+                contents=json.loads(response.render().content)
+            )
+        return response
 
     def get_queryset(self):
         return Page.objects.all()
