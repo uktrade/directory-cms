@@ -18,6 +18,7 @@ def test_app_models():
         models.ArticleListingPage,
         models.ArticlePage,
         models.HomePage,
+        models.InternationalLandingPage,
         models.EUExitInternationalFormPage,
         models.EUExitDomesticFormPage,
         models.EUExitFormSuccessPage,
