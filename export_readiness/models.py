@@ -784,6 +784,29 @@ class HomePage(ExclusivePageMixin, BasePage):
     ]
 
 
+class InternationalLandingPage(ExclusivePageMixin, BasePage):
+    service_name_value = cms.EXPORT_READINESS
+    slug_identity = 'international'
+    subpage_types = [
+        'export_readiness.ArticleListingPage',
+    ]
+
+    content_panels = [
+        SearchEngineOptimisationPanel()
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    api_fields = [
+        APIField('seo_title'),
+        APIField('search_description'),
+        APIMetaField('meta')
+    ]
+
+
 class EUExitInternationalFormPage(
     ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
 ):

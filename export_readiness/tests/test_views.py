@@ -151,3 +151,13 @@ def test_homepage_no_guidance(admin_client, root_page):
     assert response.status_code == 200
     assert 'guidance' in response.json()
     assert len(response.json()['guidance']) == 0
+
+
+def test_international_landing_age(admin_client, root_page):
+
+    page = factories.InternationaLandingPageFactory.create(
+        parent=root_page
+    )
+    url = reverse('api:pages:detail', kwargs={'pk': page.pk})
+    response = admin_client.get(url)
+    assert response.status_code == 200
