@@ -18,6 +18,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(
-            sync_page_translation_fields, migrations.RunPython.noop
+            sync_page_translation_fields, migrations.RunPython.noop,
+            elidable=True
         )
     ]

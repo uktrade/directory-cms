@@ -37,5 +37,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(html_to_markdown, migrations.RunPython.noop)
+        migrations.RunPython(html_to_markdown, migrations.RunPython.noop,
+                             elidable=True)
     ]

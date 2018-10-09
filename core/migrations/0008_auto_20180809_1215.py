@@ -34,6 +34,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(
             add_service_to_pages,
-            reverse_code=remove_service_from_page
+            reverse_code=remove_service_from_page,
+            elidable=True
         )
     ]

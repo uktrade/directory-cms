@@ -72,7 +72,11 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(download_video, migrations.RunPython.noop)
+        migrations.RunPython(
+            download_video,
+            migrations.RunPython.noop,
+            elidable=True
+        )
     ]
 
 

@@ -29,6 +29,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(
-            populate_service_name, reverse_code=migrations.RunPython.noop
+            populate_service_name, reverse_code=migrations.RunPython.noop,
+            elidable=True
         )
     ]

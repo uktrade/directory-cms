@@ -90,14 +90,17 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(
             migrate_sector_pages_streamfields,
-            reverse_code=migrations.RunPython.noop
+            reverse_code=migrations.RunPython.noop,
+            elidable=True
         ),
         migrations.RunPython(
             migrate_setup_guide_pages_streamfields,
-            reverse_code=migrations.RunPython.noop
+            reverse_code=migrations.RunPython.noop,
+            elidable=True
         ),
         migrations.RunPython(
             migrate_home_page_streamfields,
-            reverse_code=migrations.RunPython.noop
+            reverse_code=migrations.RunPython.noop,
+            elidable=True
         )
     ]
