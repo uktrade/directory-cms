@@ -1,13 +1,12 @@
 import abc
+from urllib.parse import urlencode
+
+from wagtail.core.signals import page_unpublished
 
 from django.core.cache import cache
-from wagtail.core.signals import page_published, page_unpublished
-from django.urls import reverse
-
-import requests
-
+from django.db.models.signals import post_save
 from django.test import Client
-from django.utils import translation
+from django.urls import reverse
 
 
 class PageCache:
@@ -15,14 +14,11 @@ class PageCache:
 
     @staticmethod
     def build_key(slug, service_name, language_code):
-        key = reverse('lookup-by-slug', kwargs={'slug': slug})
-        if language_code or service_name:
-            key += '?'
+        url = reverse('lookup-by-slug', kwargs={'slug': slug})
+        params = {'service_name': service_name}
         if language_code:
-            key += f'lang={language_code}&'
-        if service_name:
-            key += f'service_name={service_name}&'
-        return key
+            params['lang'] = language_code
+        return url + '?' + urlencode(params)
 
     @classmethod
     def set(cls, slug, service_name, contents, language_code=None):
@@ -39,18 +35,18 @@ class PageCache:
         return cls.cache.get(key)
 
     @classmethod
-    def delete(cls, instance):
+    def delete(cls, slug, service_name, language_codes):
         keys = [
             cls.build_key(
-                slug=instance.slug,
-                service_name=instance.service_name,
+                slug=slug,
+                service_name=service_name,
                 language_code=None,
             )
         ]
-        for language_code in instance.translated_languages:
+        for language_code in language_codes:
             keys.append(cls.build_key(
-                slug=instance.slug,
-                service_name=instance.service_name,
+                slug=slug,
+                service_name=service_name,
                 language_code=language_code,
             ))
         cls.cache.delete_many(keys)
@@ -62,19 +58,25 @@ class CachePopulator:
 
     @classmethod
     def populate(cls, page_cache, instance):
-        page_cache.delete(instance)
+        page_cache.delete(
+            slug=instance.slug,
+            service_name=instance.service_name,
+            language_codes=instance.translated_languages,
+        )
         url = reverse('lookup-by-slug', kwargs={'slug': instance.slug})
         for language_code in instance.translated_languages:
-            with translation.override(language_code):
-                cls.client.get(url, {'service_name': instance.service_name})
+            cls.client.get(
+                url,
+                {'service_name': instance.service_name, 'lang': language_code}
+            )
 
 
-class CacheDatabaseSubscriber(abc.ABC):
+class AbstractDatabaseCacheSubscriber(abc.ABC):
     cache_populator = CachePopulator
     page_cache = PageCache
 
     @property
-    @abc.abstractmethod 
+    @abc.abstractmethod
     def model(self):
         return
 
@@ -85,8 +87,8 @@ class CacheDatabaseSubscriber(abc.ABC):
 
     @classmethod
     def subscribe(cls):
-        page_published.connect(
-            receiver=cls.populate,
+        post_save.connect(
+            receiver=cls.populate_if_live,
             sender=cls.model,
             dispatch_uid=cls.model.__name__,
         )
@@ -96,8 +98,8 @@ class CacheDatabaseSubscriber(abc.ABC):
             dispatch_uid=cls.model.__name__,
         )
         for model in cls.subscriptions:
-            page_published.connect(
-                receiver=cls.populate_many,
+            post_save.connect(
+                receiver=cls.populate_many_if_live,
                 sender=model,
                 dispatch_uid=f'{cls.model.__name__}-{model.__name__}',
             )
@@ -108,23 +110,32 @@ class CacheDatabaseSubscriber(abc.ABC):
             )
 
     @classmethod
-    def populate(cls, sender, instance, *args, **kwargs):
-        cls.cache_populator.populate(
-            page_cache=cls.page_cache, instance=instance
-        )
+    def populate_if_live(cls, sender, instance, *args, **kwargs):
+        if instance.live:
+            cls.cache_populator.populate(
+                page_cache=cls.page_cache, instance=instance
+            )
 
     @classmethod
     def delete(cls, sender, instance, *args, **kwargs):
-        cls.cache_populator.page_cache.delete(instance)
+        cls.page_cache.delete(
+            slug=instance.slug,
+            service_name=instance.service_name,
+            language_codes=instance.translated_languages,
+        )
 
     @classmethod
-    def populate_many(cls, sender, instance, *args, **kwargs):
-        for instance in cls.model.objects.all():
-            cls.populate(
-                page_cache=cls.page_cache, instance=instance
+    def populate_many_if_live(cls, sender, instance, *args, **kwargs):
+        for related_instance in cls.model.objects.filter(live=True):
+            cls.cache_populator.populate(
+                page_cache=cls.page_cache, instance=related_instance
             )
 
     @classmethod
     def delete_many(cls, sender, instance, *args, **kwargs):
         for instance in cls.model.objects.all():
-            cls.page_cache.delete(instance)
+            cls.page_cache.delete(
+                slug=instance.slug,
+                service_name=instance.service_name,
+                language_codes=instance.translated_languages,
+            )

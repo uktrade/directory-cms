@@ -10,7 +10,6 @@ from wagtail.core.models import Orderable
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, Http404
 from django.template.response import TemplateResponse
 from django.utils import translation
@@ -46,7 +45,7 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
 
     @property
     def permission_classes(self):
-        permission_classes = []#SignatureCheckPermission]
+        permission_classes = [SignatureCheckPermission]
         if helpers.is_draft_requested(self.request):
             permission_classes.append(permissions.DraftTokenPermisison)
         return permission_classes
@@ -54,6 +53,8 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
     def handle_serve_draft_object(self, instance):
         if helpers.is_draft_requested(self.request):
             instance = instance.get_latest_nested_revision_as_page()
+        elif not instance.live:
+            raise Http404()
         return instance
 
     def handle_activate_language(self, instance):
@@ -84,21 +85,22 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
         path = self.request.get_full_path()
         cached_page = PageCache.get(
             slug=self.kwargs['slug'],
-            service_name=self.request.GET['service_name'],
+            service_name=self.request.GET.get('service_name'),
             language_code=translation.get_language()
         )
         if cached_page:
             logger.info('API Cache hit', extra={'path': path})
-            response = JsonResponse(cached_page)
+            response = helpers.CachedResponse(cached_page)
         else:
             logger.warning('API Cache miss', extra={'url': path})
             response = super().dispatch(*args, **kwargs)
-            PageCache.set(
-                slug=self.kwargs['slug'],
-                language_code=translation.get_language(),
-                service_name=self.request.GET['service_name'],
-                contents=json.loads(response.render().content)
-            )
+            if response.status_code == 200:
+                PageCache.set(
+                    slug=self.kwargs['slug'],
+                    language_code=translation.get_language(),
+                    service_name=self.request.GET['service_name'],
+                    contents=json.loads(response.render().content)
+                )
         return response
 
     def get_queryset(self):

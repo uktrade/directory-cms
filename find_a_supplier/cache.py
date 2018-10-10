@@ -1,17 +1,17 @@
-from core.cache import CacheDatabaseSubscriber
+from core.cache import AbstractDatabaseCacheSubscriber
 from core.models import Breadcrumb
 
 from find_a_supplier import models
 
 
-class IndustryPageSubscriber(CacheDatabaseSubscriber):
+class IndustryPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.IndustryPage
     subscriptions = [
         Breadcrumb,
     ]
 
 
-class IndustryLandingPageSubscriber(CacheDatabaseSubscriber):
+class IndustryLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.IndustryLandingPage
     subscriptions = [
         Breadcrumb,
@@ -19,21 +19,21 @@ class IndustryLandingPageSubscriber(CacheDatabaseSubscriber):
     ]
 
 
-class IndustryArticlePageSubscriber(CacheDatabaseSubscriber):
+class IndustryArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.IndustryArticlePage
     subscriptions = [
         Breadcrumb,
     ]
 
 
-class LandingPageSubscriber(CacheDatabaseSubscriber):
+class LandingPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.LandingPage
     subscriptions = [
         models.IndustryPage
     ]
 
 
-class IndustryContactPageSubscriber(CacheDatabaseSubscriber):
+class IndustryContactPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.IndustryContactPage
     subscriptions = [
         Breadcrumb,
