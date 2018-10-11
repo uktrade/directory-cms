@@ -6,11 +6,6 @@ from wagtail.core.models import Page
 from core import cache, models
 
 
-@pytest.fixture(autouse=True)
-def clear_djano_cache():
-    cache.cache.clear()
-
-
 @pytest.mark.parametrize('slug,service_name,language_code,expected', (
     (
         'some-slug',
