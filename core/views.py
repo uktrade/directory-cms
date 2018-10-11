@@ -82,6 +82,8 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
     renderer_classes = [JSONRenderer]
 
     def dispatch(self, *args, **kwargs):
+        if helpers.is_draft_requested(self.request):
+            return super().dispatch(*args, **kwargs)
         path = self.request.get_full_path()
         cached_page = PageCache.get(
             slug=self.kwargs['slug'],

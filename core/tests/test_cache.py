@@ -16,19 +16,19 @@ def clear_djano_cache():
         'some-slug',
         'FIND_A_SUPPLIER',
         None,
-        '/some-slug/?service_name=FIND_A_SUPPLIER&'
+        '/some-slug/?service_name=FIND_A_SUPPLIER'
     ),
     (
         'some-other-slug',
         'FIND_A_SUPPLIER',
         'en-gb',
-        '/some-other-slug/?service_name=FIND_A_SUPPLIER&lang=en-gb&'
+        '/some-other-slug/?service_name=FIND_A_SUPPLIER&lang=en-gb'
     ),
     (
         'and-another-slug',
         'EXPORT_READINESS',
         'fr',
-        '/and-another-slug/?service_name=EXPORT_READINESS&lang=fr&'
+        '/and-another-slug/?service_name=EXPORT_READINESS&lang=fr'
     ),
 ))
 def test_page_cache_build_keys(slug, service_name, language_code, expected):
