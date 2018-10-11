@@ -1,5 +1,9 @@
+import json
+import logging
+
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ValidationError
+from rest_framework.renderers import JSONRenderer
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.core.models import Page
 from wagtail.core.models import Orderable
@@ -13,9 +17,13 @@ from django.views.generic.edit import FormView
 
 from conf.signature import SignatureCheckPermission
 from core import filters, forms, helpers, permissions
+from core.cache import PageCache
 from core.models import BasePage
 from core.upstream_serializers import UpstreamModelSerilaizer
 from export_readiness import models as ex_read_models
+
+
+logger = logging.getLogger(__name__)
 
 
 class APIEndpointBase(PagesAdminAPIEndpoint):
@@ -45,6 +53,8 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
     def handle_serve_draft_object(self, instance):
         if helpers.is_draft_requested(self.request):
             instance = instance.get_latest_nested_revision_as_page()
+        elif not instance.live:
+            raise Http404()
         return instance
 
     def handle_activate_language(self, instance):
@@ -69,6 +79,31 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
     filter_backends = APIEndpointBase.filter_backends + [DjangoFilterBackend]
     filter_class = filters.ServiceNameDRFFilter
     authentication_classes = []
+    renderer_classes = [JSONRenderer]
+
+    def dispatch(self, *args, **kwargs):
+        if helpers.is_draft_requested(self.request):
+            return super().dispatch(*args, **kwargs)
+        path = self.request.get_full_path()
+        cached_page = PageCache.get(
+            slug=self.kwargs['slug'],
+            service_name=self.request.GET.get('service_name'),
+            language_code=translation.get_language()
+        )
+        if cached_page:
+            logger.info('API Cache hit', extra={'path': path})
+            response = helpers.CachedResponse(cached_page)
+        else:
+            logger.warning('API Cache miss', extra={'url': path})
+            response = super().dispatch(*args, **kwargs)
+            if response.status_code == 200:
+                PageCache.set(
+                    slug=self.kwargs['slug'],
+                    language_code=translation.get_language(),
+                    service_name=self.request.GET['service_name'],
+                    contents=json.loads(response.render().content)
+                )
+        return response
 
     def get_queryset(self):
         return Page.objects.all()

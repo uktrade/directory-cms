@@ -18,12 +18,17 @@ from wagtailmarkdown.utils import _sanitise_markdown_html
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.images import get_image_dimensions
+from django.http import JsonResponse
 from django.utils.safestring import mark_safe
 from django.utils.translation import trans_real
 from django.utils.text import slugify, Truncator
 from django.urls import resolve, Resolver404
 
 from core import permissions
+
+
+class CachedResponse(JsonResponse):
+    pass
 
 
 def translate_panel(panel, language_code):

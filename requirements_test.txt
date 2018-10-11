@@ -31,6 +31,7 @@ django-ipware==2.1.0      # via django-admin-ip-restrictor
 django-modelcluster==4.1  # via wagtail
 django-modeltranslation==0.12.2
 django-pglocks==1.0.2
+django-redis==4.7.0
 django-taggit==0.22.2     # via wagtail
 django-treebeard==4.3     # via wagtail
 django==1.11.15
@@ -85,6 +86,7 @@ pytube==9.2.2
 pytz==2017.2              # via directory-constants, directory-healthcheck, django, django-modelcluster, google-api-core, wagtail
 pyyaml==3.13              # via docker-compose
 raven==5.19.0
+redis==2.10.6             # via django-redis
 requests-mock==1.5.0
 requests==2.18.4          # via codecov, docker, docker-compose, google-api-core, requests-mock, wagtail
 rsa==3.4.2                # via google-auth

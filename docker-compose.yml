@@ -1,6 +1,9 @@
 version: '2'
 services:
 
+  redis:
+    image: redis:4.0.9
+
   postgres:
     image: postgres:9.5.2
     env_file: ./docker/.env-postgres.test
@@ -9,8 +12,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    depends_on: [postgres]
+    depends_on: [postgres, redis]
+    links: [postgres, redis]
     working_dir: /usr/src/app
+    entrypoint: dockerize -wait tcp://postgres:5432 -timeout 20s -wait tcp://redis:6379 -timeout 120s
     command: ./docker/cmd-webserver.sh
     ports: ["8001:8001"]
     env_file: ./docker/.env
