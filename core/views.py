@@ -17,7 +17,7 @@ from django.views.generic.edit import FormView
 
 from conf.signature import SignatureCheckPermission
 from core import filters, forms, helpers, permissions
-from core.cache import PageCache
+from core.cache import is_registered_for_cache, PageCache
 from core.models import BasePage
 from core.upstream_serializers import UpstreamModelSerilaizer
 from export_readiness import models as ex_read_models
@@ -82,12 +82,15 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
     renderer_classes = [JSONRenderer]
 
     def dispatch(self, *args, **kwargs):
-        if helpers.is_draft_requested(self.request):
+        if (
+            'service_name' not in self.request.GET or
+            helpers.is_draft_requested(self.request)
+        ):
             return super().dispatch(*args, **kwargs)
         path = self.request.get_full_path()
         cached_page = PageCache.get(
             slug=self.kwargs['slug'],
-            service_name=self.request.GET.get('service_name'),
+            service_name=self.request.GET['service_name'],
             language_code=translation.get_language()
         )
         if cached_page:
@@ -96,7 +99,8 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
         else:
             logger.warning('API Cache miss', extra={'url': path})
             response = super().dispatch(*args, **kwargs)
-            if response.status_code == 200:
+            model = self.get_object().__class__
+            if is_registered_for_cache(model) and response.status_code == 200:
                 PageCache.set(
                     slug=self.kwargs['slug'],
                     language_code=translation.get_language(),
