@@ -9,14 +9,12 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('core', '0008_auto_20180809_1215'),
-        ('export_readiness', '0010_performancedashboardnotespage'),
-        ('find_a_supplier', '0061_auto_20180604_1344'),
-        ('invest', '0007_auto_20180719_1414')
     ]
 
     operations = [
         migrations.RunPython(
             migrations.RunPython.noop,
-            reverse_code=migrations.RunPython.noop
+            reverse_code=migrations.RunPython.noop,
+            elidable=True
         )
     ]

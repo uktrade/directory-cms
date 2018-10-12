@@ -24,6 +24,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(
            populate_historic_slug_service_name,
-           reverse_code=migrations.RunPython.noop
+           reverse_code=migrations.RunPython.noop,
+            elidable=True
         )
     ]
