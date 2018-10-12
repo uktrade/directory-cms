@@ -5,6 +5,7 @@ from wagtail.images.models import Image
 from wagtail.core.models import Page
 import wagtail_factories
 
+from django.core.cache import cache
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import call_command
@@ -134,3 +135,8 @@ def migration(transactional_db):
 
     yield Migrator()
     call_command('migrate')
+
+
+@pytest.fixture(autouse=True)
+def clear_djano_cache():
+    cache.clear()

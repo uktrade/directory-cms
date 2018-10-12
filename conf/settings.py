@@ -128,7 +128,12 @@ DATABASES = {
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'BACKEND': 'django_redis.cache.RedisCache',
+        # separate to REDIS_CELERY_URL as needs to start with 'rediss' for SSL
+        'LOCATION': env.str('REDIS_CACHE_URL', ''),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
     }
 }
 
