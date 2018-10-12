@@ -39,6 +39,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(
             migrate_sector_pages_info_streamfields,
-            reverse_code=migrations.RunPython.noop
+            reverse_code=migrations.RunPython.noop,
+            elidable=True
         ),
     ]

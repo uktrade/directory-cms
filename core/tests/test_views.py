@@ -457,7 +457,7 @@ def test_lookup_by_slug_filter_called(mock_filter_service_name, admin_client):
     response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
 
     assert response.status_code == 404
-    assert mock_filter_service_name.call_count == 1
+    assert mock_filter_service_name.call_count == 2
     assert mock_filter_service_name.call_args == call(
         ANY,
         'service_name',

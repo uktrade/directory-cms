@@ -50,5 +50,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(add_tags, reverse_code=remove_tags)
+        migrations.RunPython(add_tags, reverse_code=remove_tags, elidable=True)
     ]
