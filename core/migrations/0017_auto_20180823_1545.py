@@ -74,6 +74,14 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(populate_translated_breadcrumbs, delete_breadcrumbs),
-        migrations.RunPython(populate_untranslated_breadcrumbs, delete_breadcrumbs)
+        migrations.RunPython(
+            populate_translated_breadcrumbs,
+            delete_breadcrumbs,
+            elidable=True
+        ),
+        migrations.RunPython(
+            populate_untranslated_breadcrumbs,
+            delete_breadcrumbs,
+            elidable=True
+        )
     ]
