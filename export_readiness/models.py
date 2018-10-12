@@ -1,6 +1,8 @@
-from django.utils.text import slugify
+from directory_constants.constants import cms
+from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel)
+    FieldPanel, FieldRowPanel, MultiFieldPanel
+)
 from wagtail.api import APIField
 from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -10,13 +12,15 @@ from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
 from django.db import models
-from directory_constants.constants import cms
+from django.forms import CheckboxSelectMultiple
+from django.utils.text import slugify
 
 from core.fields import (
     APIMarkdownToHTMLField,
     APIMetaField,
     MarkdownField,
     APIImageField,
+    APITagsField,
     APIVideoField,
 )
 
@@ -676,7 +680,7 @@ class ArticlePage(BasePage):
     )
 
     # settings fields
-    tags = models.ManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(Tag, blank=True)
 
     content_panels = [
         FieldPanel('article_title'),
@@ -718,7 +722,7 @@ class ArticlePage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('tags')
+        FieldPanel('tags', widget=CheckboxSelectMultiple),
     ]
 
     api_fields = [
@@ -738,7 +742,7 @@ class ArticlePage(BasePage):
         APIField('related_article_three_title'),
         APIField('related_article_three_teaser'),
         APIField('full_url'),
-        APIField('tags'),
+        APITagsField('tags'),
         APIField('full_path'),
         APIField('last_published_at'),
         APIMetaField('meta'),
