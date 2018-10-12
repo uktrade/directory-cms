@@ -108,7 +108,8 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 
 
 DOCKER_SET_TEST_ENV_VARS := \
-	export DIRECTORY_CMS_DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage
+	export DIRECTORY_CMS_DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage; \
+	export DIRECTORY_CMS_API_CACHE_DISABLED=false
 
 docker_test_env_files:
 	$(DOCKER_SET_DEBUG_ENV_VARS) && \
@@ -207,7 +208,8 @@ DEBUG_SET_ENV_VARS := \
 
 
 TEST_SET_ENV_VARS := \
-	export DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage
+	export DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage; \
+	export API_CACHE_DISABLED=false
 
 debug_webserver:
 	$(DEBUG_SET_ENV_VARS) && $(DJANGO_WEBSERVER)
