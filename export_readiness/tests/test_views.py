@@ -93,6 +93,8 @@ def test_article_page_view(admin_client, root_page):
     response = admin_client.get(url)
     assert response.status_code == 200
     assert 'tags' in response.json()
+    assert 'name' in response.json()['tags'][0]
+    assert 'slug' in response.json()['tags'][0]
 
 
 def test_homepage(admin_client, root_page):

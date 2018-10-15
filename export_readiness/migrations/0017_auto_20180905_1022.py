@@ -24,6 +24,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(
            rename_deprecated_get_finance_slug,
-           reverse_code=migrations.RunPython.noop
+           reverse_code=migrations.RunPython.noop,
+            elidable=True
         )
     ]

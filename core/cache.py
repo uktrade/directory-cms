@@ -139,3 +139,11 @@ class AbstractDatabaseCacheSubscriber(abc.ABC):
                 service_name=instance.service_name,
                 language_codes=instance.translated_languages,
             )
+
+
+def is_registered_for_cache(model):
+    models = [
+        subscriber.model
+        for subscriber in AbstractDatabaseCacheSubscriber.__subclasses__()
+    ]
+    return model in models

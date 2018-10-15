@@ -28,6 +28,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(set_historic_slugs, migrations.RunPython.noop)
+        migrations.RunPython(
+            set_historic_slugs,
+            migrations.RunPython.noop,
+            elidable=True
+        )
     ]
 

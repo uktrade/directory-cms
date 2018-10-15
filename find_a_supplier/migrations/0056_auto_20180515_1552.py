@@ -64,5 +64,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(set_industry_options, migrations.RunPython.noop)
+        migrations.RunPython(
+            set_industry_options,
+            migrations.RunPython.noop,
+            elidable=True
+        )
     ]

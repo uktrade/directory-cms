@@ -30,6 +30,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(
             populate_service_for_existing_pages,
-            reverse_code=migrations.RunPython.noop
+            reverse_code=migrations.RunPython.noop,
+            elidable=True
         )
     ]
