@@ -103,11 +103,13 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 	export DIRECTORY_CMS_EMAIL_HOST_USER=debug; \
 	export DIRECTORY_CMS_EMAIL_HOST_PASSWORD=debug; \
 	export DIRECTORY_CMS_DEFAULT_FROM_EMAIL=debug; \
-	export DIRECTORY_CMS_REDIS_CACHE_URL=redis://redis:6379/
+	export DIRECTORY_CMS_REDIS_CACHE_URL=redis://redis:6379/; \
+	export DIRECTORY_CMS_API_CACHE_DISABLED=true
 
 
 DOCKER_SET_TEST_ENV_VARS := \
-	export DIRECTORY_CMS_DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage
+	export DIRECTORY_CMS_DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage; \
+	export DIRECTORY_CMS_API_CACHE_DISABLED=false
 
 docker_test_env_files:
 	$(DOCKER_SET_DEBUG_ENV_VARS) && \
@@ -201,11 +203,13 @@ DEBUG_SET_ENV_VARS := \
 	export EMAIL_HOST_PASSWORD=$$DIRECTORY_CMS_EMAIL_HOST_PASSWORD; \
 	export DEFAULT_FROM_EMAIL=$$DIRECTORY_CMS_DEFAULT_FROM_EMAIL; \
 	export FEATURE_DEBUG_TOOLBAR_ENABLED=true; \
-	export REDIS_CACHE_URL=redis://127.0.0.1:6379
+	export REDIS_CACHE_URL=redis://127.0.0.1:6379; \
+	export API_CACHE_DISABLED=true
 
 
 TEST_SET_ENV_VARS := \
-	export DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage
+	export DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage; \
+	export API_CACHE_DISABLED=false
 
 debug_webserver:
 	$(DEBUG_SET_ENV_VARS) && $(DJANGO_WEBSERVER)

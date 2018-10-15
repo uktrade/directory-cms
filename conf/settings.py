@@ -126,16 +126,22 @@ DATABASES = {
     'default': dj_database_url.config()
 }
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        # separate to REDIS_CELERY_URL as needs to start with 'rediss' for SSL
-        'LOCATION': env.str('REDIS_CACHE_URL', ''),
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+if env.bool('API_CACHE_DISABLED', False):
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         }
     }
-}
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': env.str('REDIS_CACHE_URL', ''),
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            }
+        }
+    }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/

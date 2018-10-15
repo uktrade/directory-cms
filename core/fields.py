@@ -65,6 +65,12 @@ class APIDocumentUrlField(APIField):
         super().__init__(name=name, serializer=serializer)
 
 
+class APITagsField(APIField):
+    def __init__(self, name):
+        serializer = serializers.APITagsSerializer()
+        super().__init__(name=name, serializer=serializer)
+
+
 class FormHelpTextField(models.CharField):
 
     def __init__(self, *args, **kwargs):

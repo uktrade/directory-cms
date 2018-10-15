@@ -134,3 +134,12 @@ class APIDocumentUrlSerializer(fields.CharField):
 
     def to_representation(self, document):
         return document.file.url
+
+
+class APITagsSerializer(fields.CharField):
+
+    def to_representation(self, value):
+        tags = []
+        for tag in value.all():
+            tags.append({'name': tag.name, 'slug': tag.slug})
+        return tags
