@@ -15,8 +15,6 @@ import wagtailmarkdown.blocks
 
 class Migration(migrations.Migration):
 
-    replaces = [('invest', '0001_initial'), ('invest', '0002_auto_20180611_1113'), ('invest', '0003_auto_20180717_1814'), ('invest', '0004_auto_20180717_0856'), ('invest', '0005_auto_20180719_1301'), ('invest', '0006_auto_20180719_1302')]
-
     initial = True
 
     dependencies = [

@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         ('wagtaildocs', '0008_document_file_size'),
         ('wagtailmedia', '0003_copy_media_permissions_to_collections'),
         ('wagtailcore', '0040_page_draft_title'),
-        ('invest', '0013_auto_20180830_0632'),
+        ('invest', '0010_merge_20180829_0939_squashed_0013_auto_20180830_0632'),
         ('wagtailimages', '0021_image_file_hash'),
     ]
 
