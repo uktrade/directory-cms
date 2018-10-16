@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('core', '0019_merge_20180829_0939'),
-        ('find_a_supplier', '0065_auto_20180829_1027'),
+        ('find_a_supplier', '0062_auto_20180817_1630_squashed_0065_auto_20180829_1027'),
     ]
 
     operations = [
