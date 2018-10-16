@@ -11,8 +11,6 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    replaces = [('export_readiness', '0001_initial'), ('export_readiness', '0002_auto_20180410_1038'), ('export_readiness', '0003_exportreadinessapp'), ('export_readiness', '0004_auto_20180423_1142'), ('export_readiness', '0005_auto_20180426_1521'), ('export_readiness', '0006_auto_20180427_1518'), ('export_readiness', '0007_getfinancepage'), ('export_readiness', '0008_performancedashboardpage'), ('export_readiness', '0009_performancedashboardpage_guidance_notes')]
-
     initial = True
 
     dependencies = [
