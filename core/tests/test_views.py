@@ -9,10 +9,14 @@ import wagtail_factories
 
 from django.forms.models import model_to_dict
 from django.urls import reverse
+from django.utils import translation
 
 from core import helpers, permissions, views
+from core.cache import PageCache
+from core.helpers import CachedResponse
 from conf.signature import SignatureCheckPermission
 from export_readiness.tests import factories as ex_read_factories
+from invest.tests.factories import InfoPageFactory
 
 
 @pytest.fixture
@@ -518,3 +522,28 @@ def test_lookup_by_tag_slug_missing_param(admin_client):
     response = admin_client.get(url)
     assert response.status_code == 400
     assert response.json() == {'tag_slug': 'This parameter is required'}
+
+
+@pytest.mark.django_db
+def test_unregistered_page_not_cached(admin_client):
+    service_name = cms.EXPORT_READINESS
+    # given there exists a page that is unregistered for cache
+    page = InfoPageFactory.create(live=True)
+
+    # when the industry page is retrieveds
+    url = reverse('lookup-by-slug', kwargs={'slug': page.slug})
+    response_one = admin_client.get(url, {'service_name': service_name})
+
+    # then the page is not retrieved from the cache
+    assert not isinstance(response_one, CachedResponse)
+
+    # and the page has not been cached by the view
+    assert PageCache.get(
+        slug=page.slug,
+        service_name=service_name,
+        language_code=translation.get_language()
+    ) is None
+
+    # and subsequent requests are not handled by the cache
+    response_two = admin_client.get(url, {'service_name': service_name})
+    assert not isinstance(response_two, CachedResponse)
