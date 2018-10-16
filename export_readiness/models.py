@@ -15,14 +15,8 @@ from django.db import models
 from django.forms import CheckboxSelectMultiple
 from django.utils.text import slugify
 
-from core.fields import (
-    APIMarkdownToHTMLField,
-    APIMetaField,
-    MarkdownField,
-    APIImageField,
-    APITagsField,
-    APIVideoField,
-)
+from core.api_fields import APIMarkdownToHTMLField, APIImageField, \
+    APIMetaField, APIVideoField, MarkdownField, APITagsField
 
 from core.models import (
     BasePage,

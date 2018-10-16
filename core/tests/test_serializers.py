@@ -3,6 +3,7 @@ from rest_framework.serializers import Serializer
 
 from django.utils import translation
 
+import core.api_fields
 from core import permissions, serializers
 from invest.tests.factories import HighPotentialOpportunityFormPageFactory
 from find_a_supplier.tests.factories import (
@@ -20,7 +21,7 @@ def test_markdown_to_html_serializer(page, rf):
     )
 
     class TestSerializer(Serializer):
-        hero_text_en_gb = serializers.APIMarkdownToHTMLSerializer()
+        hero_text_en_gb = core.api_fields.APIMarkdownToHTMLSerializer()
 
     serializer = TestSerializer(
         instance=page,
@@ -41,7 +42,7 @@ def test_meta_serializer(page, rf):
     page.pk = 4
 
     class TestSerializer(Serializer):
-        meta = serializers.APIMetaSerializer()
+        meta = core.api_fields.APIMetaSerializer()
 
     serializer = TestSerializer(
         instance=page,
@@ -71,7 +72,7 @@ def test_meta_serializer_slug_translation(page, rf):
     page.pk = 4
 
     class TestSerializer(Serializer):
-        meta = serializers.APIMetaSerializer()
+        meta = core.api_fields.APIMetaSerializer()
 
     with translation.override('de'):
         serializer = TestSerializer(
@@ -103,7 +104,7 @@ def test_meta_serializer_contains_draft_token(page_with_reversion, rf):
     page_with_reversion.pk = 4
 
     class TestSerializer(Serializer):
-        meta = serializers.APIMetaSerializer()
+        meta = core.api_fields.APIMetaSerializer()
 
     serializer = TestSerializer(
         instance=page_with_reversion,
@@ -143,7 +144,7 @@ def test_meta_serializer_contains_draft_token(page_with_reversion, rf):
 def test_meta_serializer_draft(page, rf):
 
     class TestSerializer(Serializer):
-        meta = serializers.APIMetaSerializer()
+        meta = core.api_fields.APIMetaSerializer()
 
     request = rf.get('/', {permissions.DraftTokenPermisison.TOKEN_PARAM: '1'})
     serializer = TestSerializer(instance=page, context={'request': request})
@@ -159,7 +160,7 @@ def test_breadcrums_serializer(page, rf):
     IndustryContactPageFactory(breadcrumbs_label_en_gb='label-four')
 
     class TestSerializer(Serializer):
-        breadcrumbs = serializers.APIBreadcrumbsSerializer(
+        breadcrumbs = core.api_fields.APIBreadcrumbsSerializer(
             service_name='FIND_A_SUPPLIER'
         )
 
@@ -195,7 +196,7 @@ def test_api_form_field_serializer(rf):
     )
 
     class TestSerializer(Serializer):
-        comment = serializers.APIFormFieldSerializer('comment')
+        comment = core.api_fields.APIFormFieldSerializer('comment')
 
     serializer = TestSerializer(
         instance=page,

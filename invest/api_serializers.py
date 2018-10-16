@@ -1,6 +1,6 @@
 from rest_framework import fields
 
-from core.serializers import APIChildrenSerializer
+from core.api_fields import APIChildrenSerializer
 
 
 class APIChildrenSectorSerializer(APIChildrenSerializer):

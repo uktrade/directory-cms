@@ -1,6 +1,6 @@
 from wagtail.api import APIField
 
-from core.serializers import APIQuerysetSerializer
+from core.api_fields import APIQuerysetSerializer
 from find_a_supplier import serializers
 
 

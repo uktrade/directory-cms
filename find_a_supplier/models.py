@@ -7,15 +7,12 @@ from wagtail.core.models import Orderable
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtailmedia.widgets import AdminMediaChooser
-from core.fields import MarkdownField
 
 from directory_constants.constants import choices, cms
 from django.db import models
 
-from core.fields import (
-    APIBreadcrumbsField, APIMarkdownToHTMLField, APIImageField, APIMetaField,
-    APIVideoField
-)
+from core.api_fields import APIMarkdownToHTMLField, APIImageField, \
+    APIMetaField, APIBreadcrumbsField, APIVideoField, MarkdownField
 from core.helpers import make_translated_interface
 from core.models import (
     BasePage,

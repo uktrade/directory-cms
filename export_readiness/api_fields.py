@@ -1,6 +1,6 @@
 from wagtail.api import APIField
 
-from . import serializers
+from . import api_serializers
 
 
 class APIChildrenTopicLandingPageListField(APIField):
@@ -16,7 +16,7 @@ class APIChildrenTopicLandingPageListField(APIField):
         # see explanation of the `fields_config` syntax here:
         # https://github.com/wagtail/wagtail/blob/
         # db6d36845f3f2c5d7009a22421c2efab9968aa24/wagtail/api/v2/utils.py#L68
-        serializer = serializers.APIChildrenTopicLandingPageListSerializer(
+        serializer = api_serializers.APIChildrenTopicLandingPageListSerializer(
             name,
             fields_config=[(name, False, None) for name in field_names],
         )
@@ -34,7 +34,7 @@ class APIChildrenArticleListingPageListField(APIField):
         # see explanation of the `fields_config` syntax here:
         # https://github.com/wagtail/wagtail/blob/
         # db6d36845f3f2c5d7009a22421c2efab9968aa24/wagtail/api/v2/utils.py#L68
-        serializer = serializers.APIChildrenArticleListingPageListSerializer(
+        serializer = api_serializers.APIChildrenArticleListingPageListSerializer(  # NOQA
             name,
             fields_config=[(name, False, None) for name in field_names],
         )
@@ -53,7 +53,7 @@ class APIArticleNewsPageListField(APIField):
         # see explanation of the `fields_config` syntax here:
         # https://github.com/wagtail/wagtail/blob/
         # db6d36845f3f2c5d7009a22421c2efab9968aa24/wagtail/api/v2/utils.py#L68
-        serializer = serializers.APIChildrenArticleNewsPageListSerializer(
+        serializer = api_serializers.APIChildrenArticleNewsPageListSerializer(
             name,
             fields_config=[(name, False, None) for name in field_names],
         )
@@ -72,7 +72,7 @@ class APIGuidanceArticleListingListField(APIField):
         # see explanation of the `fields_config` syntax here:
         # https://github.com/wagtail/wagtail/blob/
         # db6d36845f3f2c5d7009a22421c2efab9968aa24/wagtail/api/v2/utils.py#L68
-        serializer = serializers.APIChildrenGuidanceArticleListingListSerializer(  # NOQA
+        serializer = api_serializers.APIChildrenGuidanceArticleListingListSerializer(  # NOQA
             name,
             fields_config=[(name, False, None) for name in field_names],
         )

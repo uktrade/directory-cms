@@ -9,13 +9,8 @@ from wagtailmedia.widgets import AdminMediaChooser
 
 from django.db import models
 
-from core.fields import (
-    APIDocumentUrlField,
-    APIImageField, APIMetaField,
-    APIMarkdownToHTMLField,
-    APIVideoField,
-    MarkdownField,
-)
+from core.api_fields import APIMarkdownToHTMLField, APIImageField, \
+    APIMetaField, APIVideoField, MarkdownField, APIDocumentUrlField
 from core.helpers import make_translated_interface
 from core.models import (
     BasePage, ExclusivePageMixin, ServiceMixin, FormPageMetaClass

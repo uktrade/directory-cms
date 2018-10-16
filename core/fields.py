@@ -1,94 +1,40 @@
-from wagtail.api import APIField
+from rest_framework import fields
 
-from wagtail.images.api.fields import ImageRenditionField
-from wagtailmarkdown.fields import MarkdownField as OriginalMarkdownField
-
-from django.db import models
-
-from core import serializers, widgets
-from core import validators as core_validators
+from conf import settings
+from core import helpers
 
 
-class APIMarkdownToHTMLField(APIField):
-    def __init__(self, name):
-        serializer = serializers.APIMarkdownToHTMLSerializer()
-        super().__init__(name=name, serializer=serializer)
+class MarkdownToHTMLField(fields.CharField):
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        return helpers.render_markdown(representation)
 
 
-class APIImageField(APIField):
-    def __init__(self, name):
-        serializer = ImageRenditionField('original')
-        super().__init__(name=name, serializer=serializer)
+class MetaDictField(fields.DictField):
 
-
-class APIMetaField(APIField):
-    def __init__(self, name):
-        serializer = serializers.APIMetaSerializer(name)
-        super().__init__(name=name, serializer=serializer)
-
-
-class APIBreadcrumbsField(APIField):
-    def __init__(self, name, service_name):
-        serializer = serializers.APIBreadcrumbsSerializer(
-            service_name
-        )
-        super().__init__(name=name, serializer=serializer)
-
-
-class APIVideoField(APIField):
-    def __init__(self, name):
-        serializer = serializers.APIVideoSerializer()
-        super().__init__(name=name, serializer=serializer)
-
-
-class MarkdownField(OriginalMarkdownField):
-    def __init__(self, validators=None, *args, **kwargs):
-        validators = validators or []
-        if core_validators.slug_hyperlinks not in validators:
-            validators.append(core_validators.slug_hyperlinks)
-        super().__init__(validators=validators, *args, **kwargs)
-
-    def formfield(self, **kwargs):
-        kwargs['widget'] = widgets.MarkdownTextarea
-        return super().formfield(**kwargs)
-
-
-class APIFormFieldField(APIField):
-    def __init__(self, name):
-        serializer = serializers.APIFormFieldSerializer(name)
-        super().__init__(name=name, serializer=serializer)
-
-
-class APIDocumentUrlField(APIField):
-    def __init__(self, name):
-        serializer = serializers.APIDocumentUrlSerializer()
-        super().__init__(name=name, serializer=serializer)
-
-
-class APITagsField(APIField):
-    def __init__(self, name):
-        serializer = serializers.APITagsSerializer()
-        super().__init__(name=name, serializer=serializer)
-
-
-class FormHelpTextField(models.CharField):
-
-    def __init__(self, *args, **kwargs):
-        kwargs = {
-            'max_length': 200,
-            'verbose_name': 'Help text',
-            'null': True,
-            'blank': True,
-            **kwargs,
+    def get_attribute(self, instance):
+        return {
+            'languages': [
+                (code, label) for (code, label) in settings.LANGUAGES_LOCALIZED
+                if code in instance.translated_languages
+            ],
+            'url': instance.get_url(
+                is_draft=helpers.is_draft_requested(self.context['request']),
+                language_code=settings.LANGUAGE_CODE,
+            ),
+            'slug': instance.slug,
+            'localised_urls': instance.get_localized_urls(),
+            'pk': instance.pk,
+            'draft_token': (instance.get_draft_token()
+                            if instance.has_unpublished_changes else None)
         }
-        super().__init__(*args, **kwargs)
 
 
-class FormLabelField(models.CharField):
-    def __init__(self, *args, **kwargs):
-        kwargs = {
-            'max_length': 200,
-            'verbose_name': 'label',
-            **kwargs,
-        }
-        super().__init__(*args, **kwargs)
+class TagsListField(fields.ListField):
+    """This assumes the ParentalM2M field on the model is called tags."""
+
+    def get_attribute(self, instance):
+        tags = []
+        for tag in instance.tags.all():
+            tags.append({'name': tag.name, 'slug': tag.slug})
+        return tags
