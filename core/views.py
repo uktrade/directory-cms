@@ -21,6 +21,7 @@ from core.cache import is_registered_for_cache, PageCache
 from core.models import BasePage
 from core.upstream_serializers import UpstreamModelSerilaizer
 from export_readiness import models as ex_read_models
+from invest.models import HighPotentialOpportunityDetailPage, SectorPage
 
 
 logger = logging.getLogger(__name__)
@@ -37,7 +38,15 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
 
     @classmethod
     def get_nested_default_fields(cls, model):
-        return [field.name for field in model.api_fields]
+        fields = [field.name for field in model.api_fields]
+        # "other_opportunites" prevents the field being serialized
+        # for `HighPotentialOpportunityDetailPage`, which results in
+        # infinite recursion.
+        if model == HighPotentialOpportunityDetailPage:
+            fields.remove('other_opportunities')
+        elif model == SectorPage:
+            fields.remove('children_sectors')
+        return fields
 
     @classmethod
     def get_listing_default_fields(cls, model):
