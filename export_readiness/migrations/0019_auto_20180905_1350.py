@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailimages', '0021_image_file_hash'),
-        ('export_readiness', '0018_getfinancepage'),
+        ('export_readiness', '0014_auto_20180829_1027_squashed_0018_getfinancepage'),
     ]
 
     operations = [

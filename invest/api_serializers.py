@@ -36,13 +36,15 @@ class APIHighPotentialOpportunityDetailQuerysetSerializer(fields.ListField):
             HighPotentialOpportunityDetailPage.objects.all()
             .live()
             .order_by('heading')
-            .exclude(slug=self.context['view'].kwargs['slug'])
+            .exclude(slug=instance.slug)
         )
         serializer_class = self.context['view']._get_serializer_class(
             router=self.context['router'],
             model=HighPotentialOpportunityDetailPage,
             fields_config=self.fields_config,
+            nested=True,
         )
+
         serializer = serializer_class(
             queryset, many=True, context=self.context
         )

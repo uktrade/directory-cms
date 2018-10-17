@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailcore', '0040_page_draft_title'),
-        ('export_readiness', '0030_auto_20181005_1449'),
+        ('export_readiness', '0020_articlelistingpage_articlepage_topiclandingpage_squashed_0030_auto_20181005_1449'),
     ]
 
     operations = [

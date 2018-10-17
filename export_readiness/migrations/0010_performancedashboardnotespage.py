@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailcore', '0040_page_draft_title'),
-        ('export_readiness', '0009_performancedashboardpage_guidance_notes'),
+        ('export_readiness', '0001_squashed_0009_performancedashboardpage_guidance_notes'),
     ]
 
     operations = [

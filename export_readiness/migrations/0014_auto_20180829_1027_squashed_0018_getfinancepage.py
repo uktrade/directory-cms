@@ -12,8 +12,6 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    replaces = [('export_readiness', '0014_auto_20180829_1027'), ('export_readiness', '0015_auto_20180830_0632'), ('export_readiness', '0016_auto_20180905_1020'), ('export_readiness', '0017_auto_20180905_1022'), ('export_readiness', '0018_getfinancepage')]
-
     dependencies = [
         ('wagtailcore', '0040_page_draft_title'),
         ('core', '0019_merge_20180829_0939'),

@@ -13,8 +13,6 @@ import wagtail.search.index
 
 class Migration(migrations.Migration):
 
-    replaces = [('export_readiness', '0020_articlelistingpage_articlepage_topiclandingpage'), ('export_readiness', '0021_auto_20180926_1459'), ('export_readiness', '0022_homepage'), ('export_readiness', '0023_auto_20181001_1202'), ('export_readiness', '0024_euexitinternationalformpage'), ('export_readiness', '0025_auto_20181002_1659'), ('export_readiness', '0026_tag_slug'), ('export_readiness', '0027_auto_20181004_1207'), ('export_readiness', '0026_euexitdomesticformpage'), ('export_readiness', '0028_merge_20181004_1411'), ('export_readiness', '0029_auto_20181004_1003'), ('export_readiness', '0030_auto_20181005_1449')]
-
     dependencies = [
         ('wagtailimages', '0021_image_file_hash'),
         ('wagtailmedia', '0003_copy_media_permissions_to_collections'),

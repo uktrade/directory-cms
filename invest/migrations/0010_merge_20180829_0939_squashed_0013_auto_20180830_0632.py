@@ -7,8 +7,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    replaces = [('invest', '0010_merge_20180829_0939'), ('invest', '0011_auto_20180829_1027'), ('invest', '0008_auto_20180725_1311'), ('invest', '0012_merge_20180829_1421'), ('invest', '0013_auto_20180830_0632')]
-
     dependencies = [
         ('invest', '0009_highpotentialofferformpage'),
         ('invest', '0009_investapp_service_name'),

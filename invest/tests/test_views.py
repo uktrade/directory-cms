@@ -1,8 +1,18 @@
 import pytest
 from directory_constants.constants import cms
 from rest_framework.reverse import reverse
+from wagtail.documents.models import Document
 
 from . import factories
+from find_a_supplier.tests.factories import IndustryPageFactory
+
+
+@pytest.fixture
+def page(root_page):
+    return IndustryPageFactory(
+        parent=root_page,
+        slug='the-slug'
+    )
 
 
 @pytest.mark.django_db
@@ -113,3 +123,35 @@ def test_invest_setup_guide_landing_page(admin_client, root_page):
     response = admin_client.get(url)
     assert response.status_code == 200
     assert len(response.json()['children_setup_guides']) == 1
+
+
+@pytest.mark.django_db
+def test_high_potential_opportunity_api(page, admin_client, root_page):
+    pdf_document = Document.objects.create(
+        title='document.pdf',
+        file=page.introduction_column_two_icon.file  # not really pdf
+    )
+
+    factories.HighPotentialOpportunityDetailPageFactory(
+        parent=root_page,
+        live=True,
+        pdf_document=pdf_document,
+    )
+    page = factories.HighPotentialOpportunityDetailPageFactory(
+        parent=root_page,
+        live=True,
+        pdf_document=pdf_document,
+        slug='some-nice-slug',
+    )
+
+    url = reverse(
+        'lookup-by-slug',
+        kwargs={'slug': page.slug}
+    )
+
+    response = admin_client.get(url, {'service_name': cms.INVEST})
+
+    assert response.status_code == 200
+    parsed = response.json()
+    assert 'other_opportunities' in parsed
+    assert 'other_opportunities' not in parsed['other_opportunities'][0]
