@@ -22,7 +22,7 @@ from core.models import (
     ServiceMixin,
 )
 from core.panels import SearchEngineOptimisationPanel
-from find_a_supplier import fields
+from find_a_supplier import api_fields
 
 
 class ImageChooserPanel(ImageChooserPanel):
@@ -316,7 +316,7 @@ class IndustryPage(BasePage):
         APIField('search_filter_text'),
         APIField('search_filter_showcase_only'),
         APIField('title'),
-        fields.APIArticleSummariesField('article_summaries'),
+        api_fields.APIArticleSummariesField('article_summaries'),
         APIField('seo_title'),
         APIField('search_description'),
         APIField('breadcrumbs_label'),
@@ -368,7 +368,7 @@ class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         APIField('search_description'),
         APIField('more_industries_title'),
         APIMetaField('meta'),
-        fields.APIIndustriesListField(
+        api_fields.APIIndustriesListField(
             'industries',
             queryset=(
                 IndustryPage.objects.all()
@@ -601,7 +601,7 @@ class LandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         APIField('title'),
         APIField('search_description'),
         APIField('seo_title'),
-        fields.APIIndustriesListField(
+        api_fields.APIIndustriesListField(
             'industries',
             queryset=(
                 IndustryPage.objects.all()
@@ -610,7 +610,7 @@ class LandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
                 .order_by('slug')[:3]
             ),
         ),
-        fields.APIArticleSummariesField('article_summaries'),
+        api_fields.APIArticleSummariesField('article_summaries'),
         APIMetaField('meta'),
     ]
 
@@ -742,7 +742,7 @@ class IndustryContactPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         APIMarkdownToHTMLField('success_message_text'),
         APIField('success_back_link_text'),
         APIBreadcrumbsField('breadcrumbs', service_name=service_name_value),
-        fields.APIIndustriesListField(
+        api_fields.APIIndustriesListField(
             'industry_options',
             queryset=(
                 IndustryPage.objects.all()

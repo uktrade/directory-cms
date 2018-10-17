@@ -25,8 +25,7 @@ from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.text import mark_safe
 
-import core.api_fields
-from core import constants, fields, forms
+from core import api_fields, constants, forms
 
 
 class Breadcrumb(models.Model):
@@ -340,8 +339,8 @@ class FormPageMetaClass(PageBase):
     def __new__(mcls, name, bases, attrs):
         form_field_names = attrs['form_field_names']
         for field_name in form_field_names:
-            attrs[field_name + '_help_text'] = core.api_fields.FormHelpTextField()
-            attrs[field_name + '_label'] = core.api_fields.FormLabelField()
+            attrs[field_name + '_help_text'] = api_fields.FormHelpTextField()
+            attrs[field_name + '_label'] = api_fields.FormLabelField()
 
         form_panels = [
             MultiFieldPanel(
@@ -359,7 +358,7 @@ class FormPageMetaClass(PageBase):
         )
 
         form_api_fields = [
-            core.api_fields.APIFormFieldField(name) for name in form_field_names
+            api_fields.APIFormFieldField(name) for name in form_field_names
         ]
         attrs['api_fields'] += form_api_fields
         return super().__new__(mcls, name, bases, attrs)

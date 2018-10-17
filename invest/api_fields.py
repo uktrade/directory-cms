@@ -1,7 +1,7 @@
 from wagtail.api import APIField
 
-from core.api_fields import APIQuerysetSerializer
-from invest.serializers import (
+from core.api_serializers import APIQuerysetSerializer
+from invest.api_serializers import (
     APIChildrenSectorSerializer,
     APIChildrenSetupGuideSerializer,
     APIHighPotentialOpportunityDetailQuerysetSerializer,

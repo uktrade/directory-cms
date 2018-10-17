@@ -17,7 +17,7 @@ from core.models import (
 )
 from core.panels import SearchEngineOptimisationPanel
 
-from invest import fields
+from invest import api_fields
 
 
 class InvestApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -74,7 +74,7 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
         APIField('search_description'),
         APIField('heading'),
         APIImageField('hero_image'),
-        fields.APIChildrenSectorPageListField('children_sectors'),
+        api_fields.APIChildrenSectorPageListField('children_sectors'),
         APIMetaField('meta')
     ]
 
@@ -121,7 +121,7 @@ class RegionLandingPage(ExclusivePageMixin, BasePage):
         APIField('search_description'),
         APIField('heading'),
         APIImageField('hero_image'),
-        fields.APIChildrenSectorPageListField('children_sectors'),
+        api_fields.APIChildrenSectorPageListField('children_sectors'),
         APIMetaField('meta')
     ]
 
@@ -356,7 +356,7 @@ class SectorPage(BasePage):
         APIMarkdownToHTMLField('subsection_content_seven'),
         APIImageField('subsection_map_seven'),
 
-        fields.APIChildrenSectorPageListField('children_sectors'),
+        api_fields.APIChildrenSectorPageListField('children_sectors'),
         APIMetaField('meta')
     ]
 
@@ -397,7 +397,7 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
         APIField('heading'),
         APIField('sub_heading'),
         APIField('lead_in'),
-        fields.APIChildrenSetupGuidePageListField('children_setup_guides'),
+        api_fields.APIChildrenSetupGuidePageListField('children_setup_guides'),
         APIMetaField('meta')
     ]
 
@@ -543,7 +543,7 @@ class SetupGuidePage(BasePage):
         APIField('subsection_title_seven'),
         APIMarkdownToHTMLField('subsection_content_seven'),
 
-        fields.APIChildrenSetupGuidePageListField('children_setup_guides'),
+        api_fields.APIChildrenSetupGuidePageListField('children_setup_guides'),
         APIMetaField('meta')
     ]
 
@@ -838,7 +838,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
 
         APIField('how_we_help_text_six'),
 
-        fields.APISectorPageListField(
+        api_fields.APISectorPageListField(
             'sectors',
             queryset=(
                 SectorPage.objects.all()
@@ -847,7 +847,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
                 .order_by('heading')
             )
         ),
-        fields.APISetupGuidePageListField(
+        api_fields.APISetupGuidePageListField(
             'guides',
             queryset=(
                 SetupGuidePage.objects.all()
@@ -939,7 +939,7 @@ class HighPotentialOpportunityFormPage(
         APIField('sub_heading'),
         APIField('seo_title'),
         APIField('search_description'),
-        fields.APIHighPotentialOpportunityDetailPageListField(
+        api_fields.APIHighPotentialOpportunityDetailPageListField(
             'opportunity_list',
             field_names=[
                 'heading',
@@ -1399,7 +1399,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
         APIMarkdownToHTMLField('case_study_four_text'),
         APIImageField('case_study_four_image'),
         APIField('other_opportunities_title'),
-        fields.APIHighPotentialOpportunityDetailPageListField(
+        api_fields.APIHighPotentialOpportunityDetailPageListField(
             'other_opportunities',
         ),
         APIDocumentUrlField('pdf_document'),
@@ -1484,7 +1484,7 @@ class HighPotentialOpportunityFormSuccessPage(BasePage):
         APIMetaField('meta'),
         APIField('seo_title'),
         APIField('search_description'),
-        fields.APIHighPotentialOpportunityDetailPageListField(
+        api_fields.APIHighPotentialOpportunityDetailPageListField(
             'opportunity_list',
             field_names=[
                 'meta',

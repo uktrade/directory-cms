@@ -16,7 +16,7 @@ from django.forms import CheckboxSelectMultiple
 from django.utils.text import slugify
 
 from core.api_fields import APIMarkdownToHTMLField, APIImageField, \
-    APIMetaField, APIVideoField, MarkdownField, APITagsField
+    APIMetaField, APIVideoField, MarkdownField
 
 from core.models import (
     BasePage,
@@ -26,11 +26,8 @@ from core.models import (
     ServiceMixin,
 )
 from core.panels import SearchEngineOptimisationPanel
-from .fields import (APIChildrenArticleListingPageListField,
-                     APIChildrenTopicLandingPageListField,
-                     APIArticleNewsPageListField,
-                     APIGuidanceArticleListingListField
-                     )
+from .api_fields import (APIChildrenArticleListingPageListField,
+                         APIChildrenTopicLandingPageListField)
 
 
 class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -719,29 +716,6 @@ class ArticlePage(BasePage):
         FieldPanel('tags', widget=CheckboxSelectMultiple),
     ]
 
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('article_title'),
-        APIField('article_teaser'),
-        APIImageField('article_image'),
-        APIMarkdownToHTMLField('article_body_text'),
-        APIField('related_article_one_url'),
-        APIField('related_article_one_title'),
-        APIField('related_article_one_teaser'),
-        APIField('related_article_two_url'),
-        APIField('related_article_two_title'),
-        APIField('related_article_two_teaser'),
-        APIField('related_article_three_url'),
-        APIField('related_article_three_title'),
-        APIField('related_article_three_teaser'),
-        APIField('full_url'),
-        APITagsField('tags'),
-        APIField('full_path'),
-        APIField('last_published_at'),
-        APIMetaField('meta'),
-    ]
-
 
 class HomePage(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
@@ -769,16 +743,6 @@ class HomePage(ExclusivePageMixin, BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-    ]
-
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('news_title'),
-        APIMarkdownToHTMLField('news_description'),
-        APIArticleNewsPageListField('articles'),
-        APIGuidanceArticleListingListField('guidance'),
-        APIMetaField('meta')
     ]
 
 

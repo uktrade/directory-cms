@@ -1,8 +1,9 @@
 # Wagtail serializers are DRF fields!
 
 from django.conf import settings
+from rest_framework import fields
 
-from core import fields, helpers, models
+from core import helpers, models
 
 
 class APIMarkdownToHTMLSerializer(fields.CharField):

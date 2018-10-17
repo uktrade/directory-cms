@@ -21,12 +21,25 @@ from core.cache import is_registered_for_cache, PageCache
 from core.models import BasePage
 from core.upstream_serializers import UpstreamModelSerilaizer
 from export_readiness import models as ex_read_models
+from export_readiness import serializers as ex_read_serializers
 
 
 logger = logging.getLogger(__name__)
 
 
+MODELS_SERIALIZERS_MAPPING = {
+    ex_read_models.ArticlePage: ex_read_serializers.ArticlePageSerializer,
+    ex_read_models.HomePage: ex_read_serializers.HomePageSerializer
+}
+
+
 class APIEndpointBase(PagesAdminAPIEndpoint):
+    """At the very deep core this is a DRF GenericViewSet, with a few wagtail
+    layers on top.
+
+    When all the models will be migrated to DRF serializers we can turn this
+    view into a DRF one, removing all the wagtail layers.
+    """
     queryset = Page.objects.all()
     meta_fields = []
     known_query_parameters = (
@@ -34,6 +47,22 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
             ['lang', 'draft_token', 'service_name']
         )
     )
+
+    @property
+    def get_model_class(self):
+        # Get model
+        if self.action == 'listing_view':
+            model = self.get_queryset().model
+        else:
+            model = type(self.get_object())
+        return model
+
+    def get_serializer_class(self):
+        model_class = self.get_model_class
+        if model_class in MODELS_SERIALIZERS_MAPPING:
+            return MODELS_SERIALIZERS_MAPPING[model_class]
+        else:
+            return super().get_serializer_class()
 
     @classmethod
     def get_nested_default_fields(cls, model):
