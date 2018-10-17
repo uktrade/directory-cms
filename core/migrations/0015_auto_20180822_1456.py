@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('core', '0014_auto_20180822_0915'),
         ('export_readiness', '0013_exportreadinessapp_service_name'),
-        ('find_a_supplier', '0064_findasupplierapp_service_name'),
+        ('find_a_supplier', '0062_auto_20180817_1630_squashed_0065_auto_20180829_1027'),
         ('invest', '0009_investapp_service_name')
     ]
 

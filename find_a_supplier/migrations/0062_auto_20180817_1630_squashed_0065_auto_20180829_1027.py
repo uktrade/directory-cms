@@ -7,8 +7,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    replaces = [('find_a_supplier', '0062_auto_20180817_1630'), ('find_a_supplier', '0063_auto_20180821_0810'), ('find_a_supplier', '0064_findasupplierapp_service_name'), ('find_a_supplier', '0065_auto_20180829_1027')]
-
     dependencies = [
         ('find_a_supplier', '0061_auto_20180604_1344'),
     ]
