@@ -26,8 +26,6 @@ from core.models import (
     ServiceMixin,
 )
 from core.panels import SearchEngineOptimisationPanel
-from .api_fields import (APIChildrenArticleListingPageListField,
-                         APIChildrenTopicLandingPageListField)
 
 
 class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -511,16 +509,6 @@ class TopicLandingPage(BasePage):
         FieldPanel('slug'),
     ]
 
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('landing_page_title'),
-        APIImageField('hero_image'),
-        APIField('hero_teaser'),
-        APIChildrenTopicLandingPageListField('article_listing'),
-        APIMetaField('meta')
-    ]
-
 
 class ArticleListingPage(BasePage):
     service_name_value = cms.EXPORT_READINESS
@@ -559,21 +547,6 @@ class ArticleListingPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-    ]
-
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('landing_page_title'),
-        APIImageField('hero_image'),
-        APIField('hero_teaser'),
-        APIMarkdownToHTMLField('list_teaser'),
-        APIChildrenArticleListingPageListField('articles'),
-        APIField('articles_count'),
-        APIField('full_url'),
-        APIField('full_path'),
-        APIField('last_published_at'),
-        APIMetaField('meta'),
     ]
 
 
@@ -760,12 +733,6 @@ class InternationalLandingPage(ExclusivePageMixin, BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-    ]
-
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIMetaField('meta')
     ]
 
 

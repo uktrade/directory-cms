@@ -7,17 +7,19 @@ from core.serializers import BasePageSerializer
 from .models import ArticleListingPage, ArticlePage, TopicLandingPage
 
 
-class NestedArticlePageSerializer(serializers.Serializer):
-    article_title = serializers.CharField(max_length=255)
-    article_teaser = serializers.CharField(max_length=255)
+class NestedArticleListingPageSerializer(serializers.Serializer):
+    landing_page_title = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    articles_count = serializers.IntegerField()
+    list_teaser = core_fields.MarkdownToHTMLField(allow_null=True)
+    hero_teaser = serializers.CharField(allow_null=True)
     last_published_at = serializers.DateTimeField()
     full_url = serializers.CharField(max_length=255)
     full_path = serializers.CharField(max_length=255)
 
-
-class NestedArticleListingPageSerializer(serializers.Serializer):
-    landing_page_title = serializers.CharField(max_length=255)
-    list_teaser = serializers.CharField(max_length=255)
+class NestedArticlePageSerializer(serializers.Serializer):
+    article_title = serializers.CharField(max_length=255)
+    article_teaser = serializers.CharField(max_length=255)
     last_published_at = serializers.DateTimeField()
     full_url = serializers.CharField(max_length=255)
     full_path = serializers.CharField(max_length=255)
@@ -105,3 +107,45 @@ class ArticlePageSerializer(BasePageSerializer):
         allow_null=True
     )
     tags = core_fields.TagsListField()
+
+
+class TopicLandingPageSerializer(BasePageSerializer):
+    landing_page_title = serializers.CharField(max_length=255)
+    hero_teaser = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    article_listing = serializers.SerializerMethodField()
+
+    def get_article_listing(self, obj):
+        queryset = obj.get_descendants().type(
+            ArticleListingPage
+        ).live().specific()
+        serializer = NestedArticleListingPageSerializer(
+            queryset,
+            many=True,
+            allow_null=True
+        )
+        return serializer.data
+
+
+class ArticleListingPageSerializer(BasePageSerializer):
+    landing_page_title = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    articles_count = serializers.IntegerField()
+    list_teaser = core_fields.MarkdownToHTMLField(allow_null=True)
+    hero_teaser = serializers.CharField(allow_null=True)
+    articles = serializers.SerializerMethodField()
+
+    def get_articles(self, obj):
+        queryset = obj.get_descendants().type(
+            ArticlePage
+        ).live().specific()
+        serializer = NestedArticlePageSerializer(
+            queryset,
+            many=True,
+            allow_null=True
+        )
+        return serializer.data
+
+
+class InternationalLandingPageSerializer(BasePageSerializer):
+    pass
