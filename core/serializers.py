@@ -54,6 +54,7 @@ class APIChildrenSerializer(fields.ListField):
             router=self.context['router'],
             model=self.get_model(),
             fields_config=self.fields_config,
+            nested=True,
         )
         serializer = serializer_class(
             queryset, many=True, context=self.context
