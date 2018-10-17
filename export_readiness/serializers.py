@@ -4,12 +4,20 @@ from wagtail.images.api import fields as wagtail_fields
 from core import fields as core_fields
 from core.serializers import BasePageSerializer
 
-from .models import ArticleListingPage, ArticlePage
+from .models import ArticleListingPage, ArticlePage, TopicLandingPage
 
 
 class NestedArticlePageSerializer(serializers.Serializer):
     article_title = serializers.CharField(max_length=255)
     article_teaser = serializers.CharField(max_length=255)
+    last_published_at = serializers.DateTimeField()
+    full_url = serializers.CharField(max_length=255)
+    full_path = serializers.CharField(max_length=255)
+
+
+class NestedArticleListingPageSerializer(serializers.Serializer):
+    landing_page_title = serializers.CharField(max_length=255)
+    list_teaser = serializers.CharField(max_length=255)
     last_published_at = serializers.DateTimeField()
     full_url = serializers.CharField(max_length=255)
     full_path = serializers.CharField(max_length=255)
@@ -24,12 +32,11 @@ class HomePageSerializer(BasePageSerializer):
     articles = serializers.SerializerMethodField()
     guidance = serializers.SerializerMethodField()
 
-    @staticmethod
-    def _get_articles_in_a_listing_page_by_slug(listing_slug):
+    def get_articles(self, obj):
         queryset = None
-        if ArticleListingPage.objects.filter(slug=listing_slug).exists():
+        if ArticleListingPage.objects.filter(slug='news').exists():
             queryset = ArticleListingPage.objects.get(
-                slug=listing_slug
+                slug='news'
             ).get_descendants().type(
                 ArticlePage
             ).live().specific()
@@ -40,15 +47,20 @@ class HomePageSerializer(BasePageSerializer):
         )
         return serializer.data
 
-    def get_articles(self, obj):
-        return self._get_articles_in_a_listing_page_by_slug(
-            listing_slug='news'
-        )
-
     def get_guidance(self, obj):
-        return self._get_articles_in_a_listing_page_by_slug(
-            listing_slug='guidance'
+        queryset = None
+        if TopicLandingPage.objects.filter(slug='guidance').exists():
+            queryset = TopicLandingPage.objects.get(
+                slug='guidance'
+            ).get_descendants().type(
+                ArticleListingPage
+            ).live().specific()
+        serializer = NestedArticleListingPageSerializer(
+            queryset,
+            many=True,
+            allow_null=True
         )
+        return serializer.data
 
 
 class ArticlePageSerializer(BasePageSerializer):
