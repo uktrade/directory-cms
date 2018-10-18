@@ -3,6 +3,8 @@ from unittest import mock
 import pytest
 from wagtail.core.models import Page
 
+from django.urls import reverse
+
 from core import cache, models
 
 
@@ -128,7 +130,7 @@ def test_subscriber_subscribe_to_publish(
         ),
         mock.call(
             dispatch_uid='Page-Breadcrumb',
-            receiver=TestSubscriber.delete_many,
+            receiver=TestSubscriber.populate_many_if_live,
             sender=models.Breadcrumb,
         )
     ]
@@ -199,20 +201,19 @@ def test_subscriber_populate_many(mock_populate, translated_page):
 
 @pytest.mark.django_db
 @mock.patch(
-    'core.cache.AbstractDatabaseCacheSubscriber.page_cache.delete'
+    'core.views.SignatureCheckPermission.has_permission',
+    mock.Mock(return_value=False)
 )
-def test_subscriber_delete_many(mock_delete, translated_page):
-    class TestSubscriber(cache.AbstractDatabaseCacheSubscriber):
-        model = translated_page.__class__
-        subscriptions = [
-            models.Breadcrumb
-        ]
-
-    TestSubscriber.delete_many(sender=None, instance=translated_page)
-
-    assert mock_delete.call_count == 1
-    assert mock_delete.call_args == mock.call(
-        slug=translated_page.slug,
-        service_name=translated_page.service_name,
-        language_codes=translated_page.translated_languages,
+def test_cache_populator_not_successful(translated_page, caplog):
+    cache.CachePopulator.populate(
+        page_cache=cache.PageCache,
+        instance=translated_page,
     )
+
+    log = caplog.records[-1]
+    assert log.levelname == 'ERROR'
+    assert log.msg == cache.PREPOPULATE_ERROR
+    assert log.url == reverse(
+        'lookup-by-slug', kwargs={'slug': translated_page.slug}
+    )
+    assert log.status_code == 403
