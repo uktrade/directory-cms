@@ -206,7 +206,7 @@ class BasePage(Page):
     def translated_languages(self):
         fields = self.get_required_translatable_fields()
         if not fields:
-            return []
+            return [settings.LANGUAGE_CODE]
         language_codes = translation.trans_real.get_languages()
         translated_languages = []
         for language_code in language_codes:
