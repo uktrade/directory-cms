@@ -17,6 +17,7 @@ class NestedArticleListingPageSerializer(serializers.Serializer):
     full_url = serializers.CharField(max_length=255)
     full_path = serializers.CharField(max_length=255)
 
+
 class NestedArticlePageSerializer(serializers.Serializer):
     article_title = serializers.CharField(max_length=255)
     article_teaser = serializers.CharField(max_length=255)
