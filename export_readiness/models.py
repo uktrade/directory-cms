@@ -533,7 +533,12 @@ class TopicLandingPage(BasePage):
 
 class ArticleListingPage(BasePage):
     service_name_value = cms.EXPORT_READINESS
-    subpage_types = ['export_readiness.ArticlePage']
+    subpage_types = [
+        'export_readiness.ArticlePage',
+        'export_readiness.EUExitInternationalFormPage',
+        'export_readiness.EUExitDomesticFormPage',
+        'export_readiness.EUExitFormSuccessPage',
+    ]
 
     landing_page_title = models.CharField(max_length=255)
 
