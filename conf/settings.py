@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'directory_healthcheck',
     'directory_components',
     'health_check',
+    'health_check.db',
     'export_elements',
     'core.apps.CoreConfig',
     'wagtail.contrib.search_promotions',

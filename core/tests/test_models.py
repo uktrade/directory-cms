@@ -110,8 +110,8 @@ def test_translated_languages(page, language_code):
 
 
 @pytest.mark.django_db
-def test_translated_languages_no_fields():
-    assert InvestApp().translated_languages == []
+def test_translated_languages_no_fields(settings):
+    assert InvestApp().translated_languages == [settings.LANGUAGE_CODE]
 
 
 @pytest.mark.django_db

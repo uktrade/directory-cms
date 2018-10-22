@@ -1,12 +1,21 @@
 import abc
 from urllib.parse import urlencode
+import logging
 
 from wagtail.core.signals import page_unpublished
+from sigauth.helpers import RequestSigner
 
+from django.conf import settings
 from django.core.cache import cache
 from django.db.models.signals import post_save
 from django.test import Client
 from django.urls import reverse
+
+
+logger = logging.getLogger(__name__)
+
+
+PREPOPULATE_ERROR = 'Unable to populate the page cache'
 
 
 class PageCache:
@@ -58,17 +67,38 @@ class CachePopulator:
 
     @classmethod
     def populate(cls, page_cache, instance):
+        request_signer = RequestSigner(
+            secret=settings.SIGNATURE_SECRET, sender_id='cache-populator'
+        )
+        url = reverse('lookup-by-slug', kwargs={'slug': instance.slug})
+
         page_cache.delete(
             slug=instance.slug,
             service_name=instance.service_name,
             language_codes=instance.translated_languages,
         )
-        url = reverse('lookup-by-slug', kwargs={'slug': instance.slug})
         for language_code in instance.translated_languages:
-            cls.client.get(
-                url,
-                {'service_name': instance.service_name, 'lang': language_code}
+            params = {
+                'service_name': instance.service_name,
+                'lang': language_code
+            }
+            signature_headers = request_signer.get_signature_headers(
+                url=url + '?' + urlencode(params),
+                body=None,
+                method='GET',
+                content_type='',
             )
+            response = cls.client.get(
+                url,
+                params,
+                HTTP_X_SIGNATURE=signature_headers[request_signer.header_name],
+                CONTENT_TYPE='',
+            )
+            if not response.status_code == 200:
+                logger.error(
+                    PREPOPULATE_ERROR,
+                    extra={'url': url, 'status_code': response.status_code},
+                )
 
 
 class AbstractDatabaseCacheSubscriber(abc.ABC):
@@ -104,7 +134,7 @@ class AbstractDatabaseCacheSubscriber(abc.ABC):
                 dispatch_uid=f'{cls.model.__name__}-{model.__name__}',
             )
             page_unpublished.connect(
-                receiver=cls.delete_many,
+                receiver=cls.populate_many_if_live,
                 sender=model,
                 dispatch_uid=f'{cls.model.__name__}-{model.__name__}',
             )
@@ -129,15 +159,6 @@ class AbstractDatabaseCacheSubscriber(abc.ABC):
         for related_instance in cls.model.objects.filter(live=True):
             cls.cache_populator.populate(
                 page_cache=cls.page_cache, instance=related_instance
-            )
-
-    @classmethod
-    def delete_many(cls, sender, instance, *args, **kwargs):
-        for instance in cls.model.objects.all():
-            cls.page_cache.delete(
-                slug=instance.slug,
-                service_name=instance.service_name,
-                language_codes=instance.translated_languages,
             )
 
 

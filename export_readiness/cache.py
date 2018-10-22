@@ -51,6 +51,7 @@ class HomePageSubscriber(AbstractDatabaseCacheSubscriber):
         models.ArticleListingPage,
         models.TopicLandingPage,
         models.ArticleListingPage,
+        models.ArticlePage,
     ]
 
 
