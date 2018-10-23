@@ -12,7 +12,7 @@ from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
 from django.db import models
-from django.forms import CheckboxSelectMultiple
+from django.forms import CheckboxSelectMultiple, Textarea
 from django.utils.text import slugify
 
 from core.fields import (
@@ -839,6 +839,7 @@ class EUExitInternationalFormPage(
     heading = models.CharField(max_length=255)
     body_text = MarkdownField()
     submit_button_text = models.CharField(max_length=50)
+    disclaimer = models.TextField(max_length=500)
 
     content_panels_before_form = [
         MultiFieldPanel(
@@ -851,6 +852,7 @@ class EUExitInternationalFormPage(
         ),
     ]
     content_panels_after_form = [
+        FieldPanel('disclaimer', widget=Textarea),
         FieldPanel('submit_button_text'),
         SearchEngineOptimisationPanel(),
     ]
@@ -866,6 +868,7 @@ class EUExitInternationalFormPage(
         APIField('heading'),
         APIMarkdownToHTMLField('body_text'),
         APIField('submit_button_text'),
+        APIField('disclaimer'),
         APIField('seo_title'),
         APIField('search_description'),
     ]
@@ -892,6 +895,7 @@ class EUExitDomesticFormPage(
     heading = models.CharField(max_length=255)
     body_text = MarkdownField()
     submit_button_text = models.CharField(max_length=50)
+    disclaimer = models.TextField(max_length=500)
 
     content_panels_before_form = [
         MultiFieldPanel(
@@ -904,6 +908,7 @@ class EUExitDomesticFormPage(
         ),
     ]
     content_panels_after_form = [
+        FieldPanel('disclaimer', widget=Textarea),
         FieldPanel('submit_button_text'),
         SearchEngineOptimisationPanel()
     ]
@@ -919,6 +924,7 @@ class EUExitDomesticFormPage(
         APIField('heading'),
         APIField('submit_button_text'),
         APIMarkdownToHTMLField('body_text'),
+        APIField('disclaimer'),
         APIField('seo_title'),
         APIField('search_description'),
     ]
