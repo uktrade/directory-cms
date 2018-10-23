@@ -3,6 +3,7 @@ import logging
 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ValidationError
+from rest_framework.generics import RetrieveAPIView
 from rest_framework.renderers import JSONRenderer
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.core.models import Page
@@ -205,26 +206,10 @@ class PageLookupByFullPathAPIEndpoint(APIEndpointBase):
         return super().detail_view(self.request, pk=None)
 
 
-class PageLookupByTagListAPIEndpoint(APIEndpointBase):
-
-    def get_queryset(self):
-        if 'tag_slug' not in self.request.query_params:
-            raise ValidationError(
-                detail={'tag_slug': 'This parameter is required'}
-            )
-        tag_slug = self.request.query_params['tag_slug']
-        return ex_read_models.ArticlePage.objects.filter(
-            tags__slug=tag_slug
-        )
-
-    def check_query_parameters(self, queryset):
-        """Override default method that checks if the query params
-        are db fields. We perform our own check in get_queryset which is
-        called before this method in listing_view"""
-        pass
-
-    def listing_view(self, request):
-        return super().listing_view(self.request)
+class PageLookupByTagListAPIEndpoint(RetrieveAPIView):
+    queryset = ex_read_models.Tag
+    serializer_class = ex_read_serializers.TagSerializer
+    lookup_field = 'slug'
 
 
 class UpstreamBaseView(FormView):

@@ -500,7 +500,6 @@ def test_lookup_by_full_path_not_found(admin_client):
 
 @pytest.mark.django_db
 def test_lookup_by_tag_slug(admin_client, root_page):
-    url = reverse('lookup-by-tag-list')
     tag = ex_read_factories.TagFactory(name='foo')
     article1 = ex_read_factories.ArticlePageFactory(parent=root_page)
     article1.tags = [tag]
@@ -509,19 +508,12 @@ def test_lookup_by_tag_slug(admin_client, root_page):
     article2.tags = [tag]
     article2.save()
     ex_read_factories.ArticlePageFactory(parent=root_page)
-    response = admin_client.get(
-        url,
-        {'tag_slug': tag.slug}
-    )
-    assert response.status_code == 200
-
-
-@pytest.mark.django_db
-def test_lookup_by_tag_slug_missing_param(admin_client):
-    url = reverse('lookup-by-tag-list')
+    url = reverse('lookup-by-tag-list', kwargs={'slug': tag.slug})
     response = admin_client.get(url)
-    assert response.status_code == 400
-    assert response.json() == {'tag_slug': 'This parameter is required'}
+    assert response.status_code == 200
+    assert response.json()['name'] == tag.name
+    assert response.json()['slug'] == tag.slug
+    assert len(response.json()['articles']) == 2
 
 
 @pytest.mark.django_db

@@ -150,3 +150,16 @@ class ArticleListingPageSerializer(BasePageSerializer):
 
 class InternationalLandingPageSerializer(BasePageSerializer):
     pass
+
+
+class TagSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    slug = serializers.CharField()
+    articles = serializers.SerializerMethodField()
+
+    def get_articles(self, object):
+        serializer = NestedArticlePageSerializer(
+            object.articlepage_set.filter(live=True),
+            many=True
+        )
+        return serializer.data
