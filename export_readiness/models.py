@@ -824,6 +824,7 @@ class EUExitInternationalFormPage(
         'country',
         'city',
         'comment',
+        'terms_agreed',
     ]
 
     service_name_value = cms.EXPORT_READINESS
@@ -877,6 +878,7 @@ class EUExitDomesticFormPage(
         'organisation_type',
         'company_name',
         'comment',
+        'terms_agreed',
     ]
 
     service_name_value = cms.EXPORT_READINESS
