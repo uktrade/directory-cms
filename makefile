@@ -149,7 +149,7 @@ docker_build:
 DEBUG_SET_ENV_VARS := \
 	export PORT=8010; \
 	export SECRET_KEY=debug; \
-	export DEBUG=true ;\
+	export DEBUG=false ;\
 	export SESSION_COOKIE_SECURE=false; \
 	export UTM_COOKIE_DOMAIN=.great; \
 	export SECURE_HSTS_SECONDS=0; \
