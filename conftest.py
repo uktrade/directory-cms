@@ -10,8 +10,10 @@ from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import call_command
 from django.utils import translation
-from django.db import connection
+from django import db
 from django.db.migrations.executor import MigrationExecutor
+import psycopg2
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 from find_a_supplier.tests.factories import IndustryPageFactory
 
@@ -118,7 +120,7 @@ def migration(transactional_db):
             """
 
             self.migrate_from = migrate_from
-            self.executor = MigrationExecutor(connection)
+            self.executor = MigrationExecutor(db.connection)
             self.executor.migrate(self.migrate_from)
             self._old_apps = self.executor.loader.project_state(
                 self.migrate_from).apps
@@ -138,5 +140,30 @@ def migration(transactional_db):
 
 
 @pytest.fixture(autouse=True)
-def clear_djano_cache():
+def clear_django_cache():
     cache.clear()
+
+
+def run_sql(sql):
+    conn = psycopg2.connect(database='postgres')
+    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+    cur = conn.cursor()
+    cur.execute(sql)
+    conn.close()
+
+
+@pytest.yield_fixture(scope='session')
+def django_db_setup():
+    """For some obscure reason this considerably speeds up test.
+    Execution time was reduced from 15 minutes to 3.5
+    """
+
+    run_sql('DROP DATABASE IF EXISTS debug_directory_cms')
+    run_sql('CREATE DATABASE debug_directory_cms')
+
+    yield
+
+    for connection in db.connections.all():
+        connection.close()
+
+    run_sql('DROP DATABASE debug_directory_cms')
