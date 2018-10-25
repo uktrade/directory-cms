@@ -31,7 +31,7 @@ class BannerComponent(BasePage):
     service_name_value = cms.COMPONENTS
     view_path = ''
 
-    banner_content = MarkdownField(blank=False)
+    banner_content = MarkdownField()
     banner_label = models.CharField(max_length=50, null=True, blank=True)
 
     content_panels = [
