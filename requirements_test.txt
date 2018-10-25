@@ -20,7 +20,7 @@ contextlib2==0.5.5        # via raven
 coverage==4.5.1           # via codecov, pytest-cov
 directory-components==2.8.1
 directory-healthcheck==0.6.0
-directory_constants==7.1.0
+directory_constants==8.1.0
 dj-database-url==0.4.2
 django-admin-ip-restrictor==0.2.1
 django-debug-toolbar==1.9.1
@@ -83,7 +83,7 @@ pytest-sugar==0.9.1
 pytest==3.6.0
 python-dateutil==2.6.1    # via botocore, fake-factory, faker, freezegun
 pytube==9.2.2
-pytz==2017.2              # via directory-constants, directory-healthcheck, django, django-modelcluster, google-api-core, wagtail
+pytz==2017.2              # via directory-healthcheck, django, django-modelcluster, google-api-core, wagtail
 pyyaml==3.13              # via docker-compose
 raven==5.19.0
 redis==2.10.6             # via django-redis
