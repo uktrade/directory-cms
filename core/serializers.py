@@ -40,7 +40,7 @@ class APIChildrenSerializer(fields.ListField):
 
     @staticmethod
     def get_model():
-        raise NotImplemented
+        raise NotImplementedError
 
     def get_attribute(self, instance):
         return instance

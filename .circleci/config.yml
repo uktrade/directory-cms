@@ -53,19 +53,29 @@ jobs:
           name: Run tests
           command: |
             . venv/bin/activate
-            make debug_pytest
+            make debug_test
+            codecov
+  flake8:
+    docker:
+      - image: circleci/python:3.6.6
+    steps:
+      - *step_checkout_repo
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Run flake8
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install flake8
+            flake8 . --exclude=migrations,venv
 
   deploy_to_dev:
     docker:
       - image: circleci/python:3.6.6
     steps:
-      - setup_remote_docker
-      - run:
-          name: Install Docker Compose
-          command: |
-            curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - setup_remote_docker:
+          docker_layer_caching: true
       - checkout
       - run:
           command: make heroku_deploy_dev
@@ -90,6 +100,7 @@ workflows:
   test_and_deploy_to_dev_and_run_integration_tests:
     jobs:
       - test
+      - flake8
       - deploy_to_dev:
           requires:
             - test

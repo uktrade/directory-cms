@@ -7,7 +7,7 @@ clean:
 test_requirements:
 	pip install -r requirements_test.txt
 
-FLAKE8 := flake8 . --exclude=migrations,.venv,node_modules
+FLAKE8 := flake8 . --exclude=migrations,.venv
 PYTEST := pytest . -v --ignore=venv --cov=. --cov-config=.coveragerc --capture=no $(pytest_args)
 COLLECT_STATIC := python manage.py collectstatic --noinput
 DJANGO_MIGRATE := python manage.py distributed_migrate --noinput
@@ -223,7 +223,7 @@ debug_pytest:
 	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(PYTEST)
 
 debug_test:
-	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(FLAKE8) && $(PYTEST) --cov-report=html
+	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(PYTEST) --cov-report=html
 
 debug_test_last_failed:
 	make debug_test pytest_args='-v --last-failed'
