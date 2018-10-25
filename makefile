@@ -209,7 +209,8 @@ DEBUG_SET_ENV_VARS := \
 
 TEST_SET_ENV_VARS := \
 	export DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage; \
-	export API_CACHE_DISABLED=false
+	export API_CACHE_DISABLED=false; \
+	export STATICFILES_STORAGE=django.contrib.staticfiles.storage.StaticFilesStorage
 
 debug_webserver:
 	$(DEBUG_SET_ENV_VARS) && $(DJANGO_WEBSERVER)
