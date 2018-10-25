@@ -1,3 +1,4 @@
+import os
 from unittest.mock import patch
 
 import pytest
@@ -10,9 +11,10 @@ from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import call_command
 from django.utils import translation
-from django.db import connection
+from django import db
 from django.db.migrations.executor import MigrationExecutor
 
+from conf import settings
 from find_a_supplier.tests.factories import IndustryPageFactory
 
 
@@ -118,7 +120,7 @@ def migration(transactional_db):
             """
 
             self.migrate_from = migrate_from
-            self.executor = MigrationExecutor(connection)
+            self.executor = MigrationExecutor(db.connection)
             self.executor.migrate(self.migrate_from)
             self._old_apps = self.executor.loader.project_state(
                 self.migrate_from).apps
@@ -138,5 +140,26 @@ def migration(transactional_db):
 
 
 @pytest.fixture(autouse=True)
-def clear_djano_cache():
+def clear_django_cache():
     cache.clear()
+
+
+@pytest.fixture(scope='session')
+def django_db_createdb():
+    """Never let Django create the test db.
+    django_db_setup will take care of it"""
+    return False
+
+
+@pytest.fixture(scope='session')
+def django_db_setup(django_db_blocker):
+    """Load db schema from template."""
+    with django_db_blocker.unblock():
+        settings.DATABASES['default']['NAME'] = 'test_directory_cms_debug'
+        os.system('PGPASSWORD=debug createdb -h localhost -U debug test_directory_cms_debug')  # NOQA
+        os.system('PGPASSWORD=debug psql -h localhost -U debug -d test_directory_cms_debug -f db_template.sql')  # NOQA
+        call_command('migrate') # if the template is old we might need to migrate  # NOQA
+        yield
+
+        for connection in db.connections.all():
+            connection.close()
