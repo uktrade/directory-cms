@@ -80,7 +80,8 @@ INSTALLED_APPS = [
     'wagtailmedia',
     'find_a_supplier.apps.FindASupplierConfig',
     'export_readiness.apps.ExportReadinessConfig',
-    'invest.apps.InvestConfig'
+    'invest.apps.InvestConfig',
+    'components.apps.ComponentsConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -376,6 +377,7 @@ BASE_URL = env.str('BASE_URL')
 APP_URL_EXPORT_READINESS = env.str('APP_URL_EXPORT_READINESS')
 APP_URL_FIND_A_SUPPLIER = env.str('APP_URL_FIND_A_SUPPLIER')
 APP_URL_INVEST = env.str('APP_URL_INVEST')
+APP_URL_COMPONENTS = ''
 COPY_DESTINATION_URLS = env.list('COPY_DESTINATION_URLS')
 
 # django-storages
