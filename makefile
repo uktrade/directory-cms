@@ -7,8 +7,8 @@ clean:
 test_requirements:
 	pip install -r requirements_test.txt
 
-FLAKE8 := flake8 . --exclude=migrations,.venv,node_modules
-PYTEST := pytest . --ignore=node_modules --cov=. --cov-config=.coveragerc --capture=no $(pytest_args)
+FLAKE8 := flake8 . --exclude=migrations,.venv
+PYTEST := pytest . -v --ignore=venv --cov=. --cov-config=.coveragerc --capture=no $(pytest_args)
 COLLECT_STATIC := python manage.py collectstatic --noinput
 DJANGO_MIGRATE := python manage.py distributed_migrate --noinput
 SYNC_TRANSLATION_FIELDS := python manage.py sync_page_translation_fields --noinput
@@ -39,7 +39,7 @@ debug_db:
 	$(DEBUG_SET_ENV_VARS) && $(DEBUG_CREATE_DB)
 
 migrations:
-	$(DEBUG_SET_ENV_VARS) && ./manage.py makemigrations core export_readiness find_a_supplier
+	$(DEBUG_SET_ENV_VARS) && ./manage.py makemigrations core export_readiness find_a_supplier invest components
 
 
 DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose -f docker-compose.yml -f docker-compose-test.yml rm -f && docker-compose -f docker-compose.yml -f docker-compose-test.yml pull
@@ -149,7 +149,7 @@ docker_build:
 DEBUG_SET_ENV_VARS := \
 	export PORT=8010; \
 	export SECRET_KEY=debug; \
-	export DEBUG=true ;\
+	export DEBUG=true;\
 	export SESSION_COOKIE_SECURE=false; \
 	export UTM_COOKIE_DOMAIN=.great; \
 	export SECURE_HSTS_SECONDS=0; \
@@ -203,13 +203,15 @@ DEBUG_SET_ENV_VARS := \
 	export EMAIL_HOST_PASSWORD=$$DIRECTORY_CMS_EMAIL_HOST_PASSWORD; \
 	export DEFAULT_FROM_EMAIL=$$DIRECTORY_CMS_DEFAULT_FROM_EMAIL; \
 	export FEATURE_DEBUG_TOOLBAR_ENABLED=true; \
-	export REDIS_CACHE_URL=redis://127.0.0.1:6379; \
+	export REDIS_CACHE_URL=redis://localhost:6379; \
 	export API_CACHE_DISABLED=true
 
 
 TEST_SET_ENV_VARS := \
 	export DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage; \
-	export API_CACHE_DISABLED=false
+	export API_CACHE_DISABLED=false; \
+	export STATICFILES_STORAGE=django.contrib.staticfiles.storage.StaticFilesStorage; \
+	export DEBUG=false
 
 debug_webserver:
 	$(DEBUG_SET_ENV_VARS) && $(DJANGO_WEBSERVER)
@@ -218,10 +220,10 @@ debug_pytest_no_migrations:
 	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && pytest -vv --nomigrations --reuse-db --ignore=node_modules --capture=no $(pytest_args)
 
 debug_pytest:
-	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(COLLECT_STATIC) && $(DJANGO_MIGRATE) && $(SYNC_TRANSLATION_FIELDS) && $(PYTEST)
+	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(PYTEST)
 
 debug_test:
-	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(COLLECT_STATIC) && $(DJANGO_MIGRATE) && $(SYNC_TRANSLATION_FIELDS) && $(FLAKE8) && $(PYTEST) --cov-report=html
+	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(PYTEST) --cov-report=html
 
 debug_test_last_failed:
 	make debug_test pytest_args='-v --last-failed'

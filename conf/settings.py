@@ -80,7 +80,8 @@ INSTALLED_APPS = [
     'wagtailmedia',
     'find_a_supplier.apps.FindASupplierConfig',
     'export_readiness.apps.ExportReadinessConfig',
-    'invest.apps.InvestConfig'
+    'invest.apps.InvestConfig',
+    'components.apps.ComponentsConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -182,7 +183,10 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_HOST = env.str('STATIC_HOST', '')
 STATIC_URL = STATIC_HOST + '/static/'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = env.str(
+    'STATICFILES_STORAGE',
+    'whitenoise.storage.CompressedManifestStaticFilesStorage'
+)
 DEFAULT_FILE_STORAGE = env.str(
     'DEFAULT_FILE_STORAGE',
     'core.storage_backends.ImmutableFilesS3Boto3Storage'
@@ -376,6 +380,7 @@ BASE_URL = env.str('BASE_URL')
 APP_URL_EXPORT_READINESS = env.str('APP_URL_EXPORT_READINESS')
 APP_URL_FIND_A_SUPPLIER = env.str('APP_URL_FIND_A_SUPPLIER')
 APP_URL_INVEST = env.str('APP_URL_INVEST')
+APP_URL_COMPONENTS = ''
 COPY_DESTINATION_URLS = env.list('COPY_DESTINATION_URLS')
 
 # django-storages

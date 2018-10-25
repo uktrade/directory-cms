@@ -129,17 +129,14 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
             helpers.is_draft_requested(self.request)
         ):
             return super().dispatch(*args, **kwargs)
-        path = self.request.get_full_path()
         cached_page = PageCache.get(
             slug=self.kwargs['slug'],
             service_name=self.request.GET['service_name'],
             language_code=translation.get_language()
         )
         if cached_page:
-            logger.info('API Cache hit', extra={'path': path})
             response = helpers.CachedResponse(cached_page)
         else:
-            logger.warning('API Cache miss', extra={'url': path})
             response = super().dispatch(*args, **kwargs)
             model = self.get_object().__class__
             if is_registered_for_cache(model) and response.status_code == 200:
