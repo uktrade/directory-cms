@@ -57,7 +57,7 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 	export DIRECTORY_CMS_POSTGRES_USER=debug; \
 	export DIRECTORY_CMS_POSTGRES_PASSWORD=debug; \
 	export DIRECTORY_CMS_POSTGRES_DB=directory_cms_debug; \
-	export DIRECTORY_CMS_DEBUG=false; \
+	export DIRECTORY_CMS_DEBUG=true; \
 	export DIRECTORY_CMS_UTM_COOKIE_DOMAIN=.great; \
 	export DIRECTORY_CMS_SECURE_HSTS_SECONDS=0; \
 	export DIRECTORY_CMS_PYTHONWARNINGS=all; \
@@ -149,7 +149,7 @@ docker_build:
 DEBUG_SET_ENV_VARS := \
 	export PORT=8010; \
 	export SECRET_KEY=debug; \
-	export DEBUG=false;\
+	export DEBUG=true;\
 	export SESSION_COOKIE_SECURE=false; \
 	export UTM_COOKIE_DOMAIN=.great; \
 	export SECURE_HSTS_SECONDS=0; \
@@ -210,7 +210,8 @@ DEBUG_SET_ENV_VARS := \
 TEST_SET_ENV_VARS := \
 	export DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage; \
 	export API_CACHE_DISABLED=false; \
-	export STATICFILES_STORAGE=django.contrib.staticfiles.storage.StaticFilesStorage
+	export STATICFILES_STORAGE=django.contrib.staticfiles.storage.StaticFilesStorage; \
+	export DEBUG=false
 
 debug_webserver:
 	$(DEBUG_SET_ENV_VARS) && $(DJANGO_WEBSERVER)
