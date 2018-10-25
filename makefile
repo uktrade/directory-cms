@@ -85,7 +85,7 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 	export DIRECTORY_CMS_HEALTH_CHECK_TOKEN=debug; \
 	export DIRECTORY_CMS_SIGNATURE_SECRET=debug; \
 	export DIRECTORY_CMS_BASE_URL=cms.trade.great; \
-	export DIRECTORY_CMS_DATABASE_URL=postgres://debug:debug@localhost:5432/directory_cms_debug; \
+	export DIRECTORY_CMS_DATABASE_URL=postgres://debug:debug@postgres:5432/directory_cms_debug; \
 	export DIRECTORY_CMS_CSRF_COOKIE_SECURE=false; \
 	export DIRECTORY_CMS_APP_URL_EXPORT_READINESS=http://exred.trade.great:8007; \
 	export DIRECTORY_CMS_APP_URL_FIND_A_SUPPLIER=http://supplier.trade.great:8005; \
@@ -203,7 +203,7 @@ DEBUG_SET_ENV_VARS := \
 	export EMAIL_HOST_PASSWORD=$$DIRECTORY_CMS_EMAIL_HOST_PASSWORD; \
 	export DEFAULT_FROM_EMAIL=$$DIRECTORY_CMS_DEFAULT_FROM_EMAIL; \
 	export FEATURE_DEBUG_TOOLBAR_ENABLED=true; \
-	export REDIS_CACHE_URL=redis://127.0.0.1:6379; \
+	export REDIS_CACHE_URL=redis://localhost:6379; \
 	export API_CACHE_DISABLED=true
 
 
@@ -218,10 +218,10 @@ debug_pytest_no_migrations:
 	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && pytest -vv --nomigrations --reuse-db --ignore=node_modules --capture=no $(pytest_args)
 
 debug_pytest:
-	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(DJANGO_MIGRATE) && $(SYNC_TRANSLATION_FIELDS) && $(PYTEST)
+	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(PYTEST)
 
 debug_test:
-	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(DJANGO_MIGRATE) && $(SYNC_TRANSLATION_FIELDS) && $(FLAKE8) && $(PYTEST) --cov-report=html
+	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(FLAKE8) && $(PYTEST) --cov-report=html
 
 debug_test_last_failed:
 	make debug_test pytest_args='-v --last-failed'

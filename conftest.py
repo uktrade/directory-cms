@@ -1,3 +1,4 @@
+import os
 from unittest.mock import patch
 
 import pytest
@@ -12,9 +13,8 @@ from django.core.management import call_command
 from django.utils import translation
 from django import db
 from django.db.migrations.executor import MigrationExecutor
-import psycopg2
-from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
+from conf import settings
 from find_a_supplier.tests.factories import IndustryPageFactory
 
 
@@ -144,26 +144,22 @@ def clear_django_cache():
     cache.clear()
 
 
-def run_sql(sql):
-    conn = psycopg2.connect(database='postgres')
-    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-    cur = conn.cursor()
-    cur.execute(sql)
-    conn.close()
+@pytest.fixture(scope='session')
+def django_db_createdb():
+    """Never let Django create the test db.
+    django_db_setup will take care of it"""
+    return False
 
 
-@pytest.yield_fixture(scope='session')
-def django_db_setup():
-    """For some obscure reason this considerably speeds up test.
-    Execution time was reduced from 15 minutes to 3.5
-    """
+@pytest.fixture(scope='session')
+def django_db_setup(django_db_blocker):
+    """Load db schema from template."""
+    with django_db_blocker.unblock():
+        settings.DATABASES['default']['NAME'] = 'test_directory_cms_debug'
+        os.system('PGPASSWORD=debug createdb -h localhost -U debug test_directory_cms_debug')  # NOQA
+        os.system('PGPASSWORD=debug psql -h localhost -U debug -d test_directory_cms_debug -f db_template.sql')  # NOQA
+        call_command('migrate') # if the template is old we might need to migrate  # NOQA
+        yield
 
-    run_sql('DROP DATABASE IF EXISTS debug_directory_cms')
-    run_sql('CREATE DATABASE debug_directory_cms')
-
-    yield
-
-    for connection in db.connections.all():
-        connection.close()
-
-    run_sql('DROP DATABASE debug_directory_cms')
+        for connection in db.connections.all():
+            connection.close()
