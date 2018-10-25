@@ -184,7 +184,7 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_HOST = env.str('STATIC_HOST', '')
 STATIC_URL = STATIC_HOST + '/static/'
 STATICFILES_STORAGE = env.str(
-    'STATICFILES_STORAGE'
+    'STATICFILES_STORAGE',
     'whitenoise.storage.CompressedManifestStaticFilesStorage'
 )
 DEFAULT_FILE_STORAGE = env.str(
