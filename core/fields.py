@@ -34,7 +34,4 @@ class TagsListField(fields.ListField):
     """This assumes the ParentalM2M field on the model is called tags."""
 
     def get_attribute(self, instance):
-        tags = []
-        for tag in instance.tags.all():
-            tags.append({'name': tag.name, 'slug': tag.slug})
-        return tags
+        return instance.tags.all().values('name', 'slug')

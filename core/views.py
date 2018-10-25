@@ -53,7 +53,6 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
         )
     )
 
-    @property
     def get_model_class(self):
         # Get model
         if self.action == 'listing_view':
