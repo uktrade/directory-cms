@@ -1,5 +1,5 @@
 --
--- PostgreSQL database dump (25/10/2018)
+-- PostgreSQL database dump
 --
 
 -- Dumped from database version 9.6.9
@@ -219,6 +219,48 @@ CREATE SEQUENCE public.auth_user_user_permissions_id_seq
 --
 
 ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNED BY public.auth_user_user_permissions.id;
+
+
+--
+-- Name: components_bannercomponent; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.components_bannercomponent (
+    page_ptr_id integer NOT NULL,
+    service_name character varying(100),
+    banner_content text NOT NULL,
+    banner_content_en_gb text,
+    banner_content_de text,
+    banner_content_ja text,
+    banner_content_ru text,
+    banner_content_zh_hans text,
+    banner_content_fr text,
+    banner_content_es text,
+    banner_content_pt text,
+    banner_content_pt_br text,
+    banner_content_ar text,
+    banner_label character varying(50),
+    banner_label_en_gb character varying(50),
+    banner_label_de character varying(50),
+    banner_label_ja character varying(50),
+    banner_label_ru character varying(50),
+    banner_label_zh_hans character varying(50),
+    banner_label_fr character varying(50),
+    banner_label_es character varying(50),
+    banner_label_pt character varying(50),
+    banner_label_pt_br character varying(50),
+    banner_label_ar character varying(50)
+);
+
+
+--
+-- Name: components_componentsapp; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.components_componentsapp (
+    page_ptr_id integer NOT NULL,
+    service_name character varying(100)
+);
 
 
 --
@@ -3899,6 +3941,12 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 194	Can add high potential opportunity form success page	66	add_highpotentialopportunityformsuccesspage
 195	Can change high potential opportunity form success page	66	change_highpotentialopportunityformsuccesspage
 196	Can delete high potential opportunity form success page	66	delete_highpotentialopportunityformsuccesspage
+197	Can add banner component	67	add_bannercomponent
+198	Can change banner component	67	change_bannercomponent
+199	Can delete banner component	67	delete_bannercomponent
+200	Can add components app	68	add_componentsapp
+201	Can change components app	68	change_componentsapp
+202	Can delete components app	68	delete_componentsapp
 \.
 
 
@@ -3923,6 +3971,22 @@ COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
 --
 
 COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: components_bannercomponent; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.components_bannercomponent (page_ptr_id, service_name, banner_content, banner_content_en_gb, banner_content_de, banner_content_ja, banner_content_ru, banner_content_zh_hans, banner_content_fr, banner_content_es, banner_content_pt, banner_content_pt_br, banner_content_ar, banner_label, banner_label_en_gb, banner_label_de, banner_label_ja, banner_label_ru, banner_label_zh_hans, banner_label_fr, banner_label_es, banner_label_pt, banner_label_pt_br, banner_label_ar) FROM stdin;
+\.
+
+
+--
+-- Data for Name: components_componentsapp; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.components_componentsapp (page_ptr_id, service_name) FROM stdin;
 \.
 
 
@@ -4021,6 +4085,8 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 64	invest	highpotentialopportunitydetailpage
 65	invest	highpotentialopportunityformpage
 66	invest	highpotentialopportunityformsuccesspage
+67	components	bannercomponent
+68	components	componentsapp
 \.
 
 
@@ -4219,6 +4285,11 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 188	db	0001_initial	2018-10-25 14:12:21.142756+01
 189	wagtailcore	0001_squashed_0016_change_page_url_path_to_text_field	2018-10-25 14:12:21.145029+01
 190	invest	0014_auto_20180904_1113_squashed_0026_auto_20181002_1534	2018-10-25 14:12:21.14733+01
+191	components	0001_initial	2018-10-25 16:26:24.242518+01
+192	core	0026_auto_20181024_1112	2018-10-25 16:26:24.259224+01
+193	export_readiness	0034_auto_20181024_1112	2018-10-25 16:26:26.225476+01
+194	find_a_supplier	0068_auto_20181024_1112	2018-10-25 16:26:27.065744+01
+195	invest	0016_auto_20181025_1226	2018-10-25 16:26:28.744096+01
 \.
 
 
@@ -4750,7 +4821,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 20, true);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 196, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 202, true);
 
 
 --
@@ -4799,14 +4870,14 @@ SELECT pg_catalog.setval('public.core_imagehash_id_seq', 1, false);
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 66, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 68, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 190, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 195, true);
 
 
 --
@@ -5099,6 +5170,22 @@ ALTER TABLE ONLY public.auth_user_user_permissions
 
 ALTER TABLE ONLY public.auth_user
     ADD CONSTRAINT auth_user_username_key UNIQUE (username);
+
+
+--
+-- Name: components_bannercomponent components_bannercomponent_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.components_bannercomponent
+    ADD CONSTRAINT components_bannercomponent_pkey PRIMARY KEY (page_ptr_id);
+
+
+--
+-- Name: components_componentsapp components_componentsapp_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.components_componentsapp
+    ADD CONSTRAINT components_componentsapp_pkey PRIMARY KEY (page_ptr_id);
 
 
 --
@@ -5826,6 +5913,34 @@ CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON public.auth_user_use
 --
 
 CREATE INDEX auth_user_username_6821ab7c_like ON public.auth_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: components_bannercomponent_service_name_44a9cdbc; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX components_bannercomponent_service_name_44a9cdbc ON public.components_bannercomponent USING btree (service_name);
+
+
+--
+-- Name: components_bannercomponent_service_name_44a9cdbc_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX components_bannercomponent_service_name_44a9cdbc_like ON public.components_bannercomponent USING btree (service_name varchar_pattern_ops);
+
+
+--
+-- Name: components_componentsapp_service_name_b5634112; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX components_componentsapp_service_name_b5634112 ON public.components_componentsapp USING btree (service_name);
+
+
+--
+-- Name: components_componentsapp_service_name_b5634112_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX components_componentsapp_service_name_b5634112_like ON public.components_componentsapp USING btree (service_name varchar_pattern_ops);
 
 
 --
@@ -8521,6 +8636,22 @@ ALTER TABLE ONLY public.auth_user_user_permissions
 
 ALTER TABLE ONLY public.auth_user_user_permissions
     ADD CONSTRAINT auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: components_bannercomponent components_bannercom_page_ptr_id_90b9c5d9_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.components_bannercomponent
+    ADD CONSTRAINT components_bannercom_page_ptr_id_90b9c5d9_fk_wagtailco FOREIGN KEY (page_ptr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: components_componentsapp components_component_page_ptr_id_c0d0228e_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.components_componentsapp
+    ADD CONSTRAINT components_component_page_ptr_id_c0d0228e_fk_wagtailco FOREIGN KEY (page_ptr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
