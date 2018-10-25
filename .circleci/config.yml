@@ -24,7 +24,7 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - restore_cache:
-          key: deps-{{ checksum "requirements_test.txt" }}
+          key: v1-deps-{{ checksum "requirements_test.txt" }}
       - run:
           name: Create virtualenv and install dependencies
           command: |
@@ -33,7 +33,7 @@ jobs:
             pip install --upgrade pip
             pip install -r requirements_test.txt
       - save_cache:
-          key: deps-{{ checksum "requirements_test.txt" }}
+          key: v1-deps-{{ checksum "requirements_test.txt" }}
           paths:
             - "venv"
       - run:
