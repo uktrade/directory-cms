@@ -1,19 +1,54 @@
 version: 2
+
+# Machines configs
+machine_python3_postgres: &machine_python3_postgres
+  docker:
+    - image: circleci/python:3.6.6
+    - image: circleci/postgres:9.5.14-alpine-ram
+      environment:
+        POSTGRES_USER: debug
+        POSTGRES_DB: directory_cms_debug
+
+
+# Individual (shared) steps.
+step_checkout_repo: &step_checkout_repo
+  checkout
+
+
 jobs:
   test:
-    docker:
-      - image: circleci/python:3.6.6
+    <<: *machine_python3_postgres
     steps:
-      - setup_remote_docker
+      - *step_checkout_repo
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - restore_cache:
+          key: tests-dependency-cache-{{ checksum "requirements_text.txt" }}
       - run:
-          name: Install Docker Compose
+          name: Create virtualenv and install dependencies
           command: |
-            curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
-      - checkout
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements_test.txt
+      - save_cache:
+          key: tests-dependency-cache-{{ checksum "requirements_text.txt" }}
+          paths:
+            - "venv"
       - run:
-          command: make docker_test
+          name: Install dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.3.0
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Run tests
+          command: |
+            . venv/bin/activate
+            make debug_pytest
+
   deploy_to_dev:
     docker:
       - image: circleci/python:3.6.6
@@ -28,6 +63,7 @@ jobs:
       - checkout
       - run:
           command: make heroku_deploy_dev
+
   integration_tests:
     docker:
       - image: circleci/python:3.6.6

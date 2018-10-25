@@ -8,7 +8,7 @@ test_requirements:
 	pip install -r requirements_test.txt
 
 FLAKE8 := flake8 . --exclude=migrations,.venv,node_modules
-PYTEST := pytest . -v --ignore=node_modules --cov=. --cov-config=.coveragerc --capture=no $(pytest_args)
+PYTEST := pytest . -v --ignore=venv --cov=. --cov-config=.coveragerc --capture=no $(pytest_args)
 COLLECT_STATIC := python manage.py collectstatic --noinput
 DJANGO_MIGRATE := python manage.py distributed_migrate --noinput
 SYNC_TRANSLATION_FIELDS := python manage.py sync_page_translation_fields --noinput
@@ -85,7 +85,7 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 	export DIRECTORY_CMS_HEALTH_CHECK_TOKEN=debug; \
 	export DIRECTORY_CMS_SIGNATURE_SECRET=debug; \
 	export DIRECTORY_CMS_BASE_URL=cms.trade.great; \
-	export DIRECTORY_CMS_DATABASE_URL=postgres://debug:debug@postgres:5432/directory_cms_debug; \
+	export DIRECTORY_CMS_DATABASE_URL=postgres://debug:debug@localhost:5432/directory_cms_debug; \
 	export DIRECTORY_CMS_CSRF_COOKIE_SECURE=false; \
 	export DIRECTORY_CMS_APP_URL_EXPORT_READINESS=http://exred.trade.great:8007; \
 	export DIRECTORY_CMS_APP_URL_FIND_A_SUPPLIER=http://supplier.trade.great:8005; \
@@ -149,7 +149,7 @@ docker_build:
 DEBUG_SET_ENV_VARS := \
 	export PORT=8010; \
 	export SECRET_KEY=debug; \
-	export DEBUG=false ;\
+	export DEBUG=false;\
 	export SESSION_COOKIE_SECURE=false; \
 	export UTM_COOKIE_DOMAIN=.great; \
 	export SECURE_HSTS_SECONDS=0; \
@@ -218,10 +218,10 @@ debug_pytest_no_migrations:
 	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && pytest -vv --nomigrations --reuse-db --ignore=node_modules --capture=no $(pytest_args)
 
 debug_pytest:
-	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(COLLECT_STATIC) && $(DJANGO_MIGRATE) && $(SYNC_TRANSLATION_FIELDS) && $(PYTEST)
+	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(DJANGO_MIGRATE) && $(SYNC_TRANSLATION_FIELDS) && $(PYTEST)
 
 debug_test:
-	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(COLLECT_STATIC) && $(DJANGO_MIGRATE) && $(SYNC_TRANSLATION_FIELDS) && $(FLAKE8) && $(PYTEST) --cov-report=html
+	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(DJANGO_MIGRATE) && $(SYNC_TRANSLATION_FIELDS) && $(FLAKE8) && $(PYTEST) --cov-report=html
 
 debug_test_last_failed:
 	make debug_test pytest_args='-v --last-failed'
