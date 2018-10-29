@@ -62,7 +62,7 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
         return model
 
     def get_serializer_class(self):
-        model_class = self.get_model_class
+        model_class = self.get_model_class()
         if model_class in MODELS_SERIALIZERS_MAPPING:
             return MODELS_SERIALIZERS_MAPPING[model_class]
         else:
