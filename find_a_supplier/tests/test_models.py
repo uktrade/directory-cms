@@ -1,6 +1,6 @@
 import pytest
 
-from core.fields import APIMetaField
+from core.api_fields import APIMetaField
 from find_a_supplier import models
 
 

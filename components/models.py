@@ -11,7 +11,7 @@ from wagtail.admin.edit_handlers import (
     FieldPanel, MultiFieldPanel
 )
 from core.helpers import make_translated_interface
-from core.fields import (
+from core.api_fields import (
     APIMarkdownToHTMLField,
     APIMetaField,
     MarkdownField,

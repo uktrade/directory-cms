@@ -15,14 +15,8 @@ from django.db import models
 from django.forms import CheckboxSelectMultiple, Textarea
 from django.utils.text import slugify
 
-from core.fields import (
-    APIMarkdownToHTMLField,
-    APIMetaField,
-    MarkdownField,
-    APIImageField,
-    APITagsField,
-    APIVideoField,
-)
+from core.api_fields import APIMarkdownToHTMLField, APIImageField, \
+    APIMetaField, APIVideoField, MarkdownField
 
 from core.models import (
     BasePage,
@@ -32,11 +26,6 @@ from core.models import (
     ServiceMixin,
 )
 from core.panels import SearchEngineOptimisationPanel
-from .fields import (APIChildrenArticleListingPageListField,
-                     APIChildrenTopicLandingPageListField,
-                     APIArticleNewsPageListField,
-                     APIGuidanceArticleListingListField
-                     )
 
 
 class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -520,16 +509,6 @@ class TopicLandingPage(BasePage):
         FieldPanel('slug'),
     ]
 
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('landing_page_title'),
-        APIImageField('hero_image'),
-        APIField('hero_teaser'),
-        APIChildrenTopicLandingPageListField('article_listing'),
-        APIMetaField('meta')
-    ]
-
 
 class ArticleListingPage(BasePage):
     service_name_value = cms.EXPORT_READINESS
@@ -573,21 +552,6 @@ class ArticleListingPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-    ]
-
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('landing_page_title'),
-        APIImageField('hero_image'),
-        APIField('hero_teaser'),
-        APIMarkdownToHTMLField('list_teaser'),
-        APIChildrenArticleListingPageListField('articles'),
-        APIField('articles_count'),
-        APIField('full_url'),
-        APIField('full_path'),
-        APIField('last_published_at'),
-        APIMetaField('meta'),
     ]
 
 
@@ -730,29 +694,6 @@ class ArticlePage(BasePage):
         FieldPanel('tags', widget=CheckboxSelectMultiple),
     ]
 
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('article_title'),
-        APIField('article_teaser'),
-        APIImageField('article_image'),
-        APIMarkdownToHTMLField('article_body_text'),
-        APIField('related_article_one_url'),
-        APIField('related_article_one_title'),
-        APIField('related_article_one_teaser'),
-        APIField('related_article_two_url'),
-        APIField('related_article_two_title'),
-        APIField('related_article_two_teaser'),
-        APIField('related_article_three_url'),
-        APIField('related_article_three_title'),
-        APIField('related_article_three_teaser'),
-        APIField('full_url'),
-        APITagsField('tags'),
-        APIField('full_path'),
-        APIField('last_published_at'),
-        APIMetaField('meta'),
-    ]
-
 
 class HomePage(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
@@ -782,16 +723,6 @@ class HomePage(ExclusivePageMixin, BasePage):
         FieldPanel('slug'),
     ]
 
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('news_title'),
-        APIMarkdownToHTMLField('news_description'),
-        APIArticleNewsPageListField('articles'),
-        APIGuidanceArticleListingListField('guidance'),
-        APIMetaField('meta')
-    ]
-
 
 class InternationalLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
@@ -807,12 +738,6 @@ class InternationalLandingPage(ExclusivePageMixin, BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-    ]
-
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIMetaField('meta')
     ]
 
 

@@ -1,95 +1,165 @@
-from core.serializers import APIChildrenSerializer
+from rest_framework import serializers
+from wagtail.images.api import fields as wagtail_fields
+
+from core import fields as core_fields
+from core.serializers import BasePageSerializer
+
+from .models import ArticleListingPage, ArticlePage, TopicLandingPage
 
 
-class APIChildrenTopicLandingPageListSerializer(APIChildrenSerializer):
-    sorting_key = 'last_published_at'
-
-    @staticmethod
-    def get_model():
-        from .models import ArticleListingPage
-        return ArticleListingPage
-
-
-class APIChildrenArticleListingPageListSerializer(APIChildrenSerializer):
-    sorting_key = 'last_published_at'
-
-    @staticmethod
-    def get_model():
-        from .models import ArticlePage
-        return ArticlePage
+class NestedArticleListingPageSerializer(serializers.Serializer):
+    landing_page_title = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    articles_count = serializers.IntegerField()
+    list_teaser = core_fields.MarkdownToHTMLField(allow_null=True)
+    hero_teaser = serializers.CharField(allow_null=True)
+    last_published_at = serializers.DateTimeField()
+    full_url = serializers.CharField(max_length=255)
+    full_path = serializers.CharField(max_length=255)
 
 
-class APIChildrenArticleNewsPageListSerializer(APIChildrenSerializer):
-    sorting_key = 'last_published_at'
+class NestedArticlePageSerializer(serializers.Serializer):
+    article_title = serializers.CharField(max_length=255)
+    article_teaser = serializers.CharField(max_length=255)
+    last_published_at = serializers.DateTimeField()
+    full_url = serializers.CharField(max_length=255)
+    full_path = serializers.CharField(max_length=255)
 
-    def to_representation(self, instance):
-        """We are using this serializer instead of APIQuerysetSerializer
-        because get() is not a lazy queryset object and if it's in the __init__
-        method of a serializer it's evaluated before the models are ready.
-        By having it here we defer its evaluation until the models are ready.
 
-        Happy days :)
-        """
-        from .models import ArticleListingPage, ArticlePage
-        if not ArticleListingPage.objects.filter(slug='news').exists():
-            return []
-        queryset = ArticleListingPage.objects.get(
-            slug='news'
-        ).get_descendants().type(
-            ArticlePage
-        ).live().specific()
-        serializer_class = self.context['view']._get_serializer_class(
-            router=self.context['router'],
-            model=ArticlePage,
-            fields_config=self.fields_config,
+class HomePageSerializer(BasePageSerializer):
+    news_title = serializers.CharField(
+        max_length=255,
+        allow_null=True,
+    )
+    news_description = core_fields.MarkdownToHTMLField()
+    articles = serializers.SerializerMethodField()
+    guidance = serializers.SerializerMethodField()
+
+    def get_articles(self, obj):
+        queryset = None
+        if ArticleListingPage.objects.filter(slug='news').exists():
+            queryset = ArticleListingPage.objects.get(
+                slug='news'
+            ).get_descendants().type(
+                ArticlePage
+            ).live().specific()
+        serializer = NestedArticlePageSerializer(
+            queryset,
+            many=True,
+            allow_null=True
         )
-        serializer = serializer_class(
-            queryset, many=True, context=self.context
+        return serializer.data
+
+    def get_guidance(self, obj):
+        queryset = None
+        if TopicLandingPage.objects.filter(slug='guidance').exists():
+            queryset = TopicLandingPage.objects.get(
+                slug='guidance'
+            ).get_descendants().type(
+                ArticleListingPage
+            ).live().specific()
+        serializer = NestedArticleListingPageSerializer(
+            queryset,
+            many=True,
+            allow_null=True
         )
-        data = serializer.data
-        # When ordering at the database level, the lookup seems to happens on
-        # the superclass `Page` table level, so it is not aware of the fields
-        # the subclass has. We are ordering on the application level
-        sorted_data = sorted(
-            data,
-            key=lambda x: x[self.sorting_key]
-        )
-        return sorted_data
+        return serializer.data
 
 
-class APIChildrenGuidanceArticleListingListSerializer(APIChildrenSerializer):
-    sorting_key = 'last_published_at'
+class ArticlePageSerializer(BasePageSerializer):
+    article_title = serializers.CharField(max_length=255)
+    article_teaser = serializers.CharField(max_length=255)
+    article_image = wagtail_fields.ImageRenditionField('original')
+    article_body_text = core_fields.MarkdownToHTMLField()
+    related_article_one_url = serializers.CharField(
+        max_length=255,
+        allow_null=True
+    )
+    related_article_one_title = serializers.CharField(
+        max_length=255,
+        allow_null=True
+    )
+    related_article_one_teaser = serializers.CharField(
+        max_length=255,
+        allow_null=True
+    )
+    related_article_two_url = serializers.CharField(
+        max_length=255,
+        allow_null=True
+    )
+    related_article_two_title = serializers.CharField(
+        max_length=255,
+        allow_null=True
+    )
+    related_article_two_teaser = serializers.CharField(
+        max_length=255,
+        allow_null=True
+    )
+    related_article_three_url = serializers.CharField(
+        max_length=255,
+        allow_null=True
+    )
+    related_article_three_title = serializers.CharField(
+        max_length=255,
+        allow_null=True
+    )
+    related_article_three_teaser = serializers.CharField(
+        max_length=255,
+        allow_null=True
+    )
+    tags = core_fields.TagsListField()
 
-    def to_representation(self, instance):
-        """We are using this serializer instead of APIQuerysetSerializer
-        because get() is not a lazy queryset object and if it's in the __init__
-        method of a serializer it's evaluated before the models are ready.
-        By having it here we defer its evaluation until the models are ready.
 
-        Happy days :)
-        """
-        from .models import TopicLandingPage, ArticleListingPage
-        if not TopicLandingPage.objects.filter(slug='guidance').exists():
-            return []
-        queryset = TopicLandingPage.objects.get(
-            slug='guidance'
-        ).get_descendants().type(
+class TopicLandingPageSerializer(BasePageSerializer):
+    landing_page_title = serializers.CharField(max_length=255)
+    hero_teaser = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    article_listing = serializers.SerializerMethodField()
+
+    def get_article_listing(self, obj):
+        queryset = obj.get_descendants().type(
             ArticleListingPage
         ).live().specific()
-        serializer_class = self.context['view']._get_serializer_class(
-            router=self.context['router'],
-            model=ArticleListingPage,
-            fields_config=self.fields_config,
+        serializer = NestedArticleListingPageSerializer(
+            queryset,
+            many=True,
+            allow_null=True
         )
-        serializer = serializer_class(
-            queryset, many=True, context=self.context
+        return serializer.data
+
+
+class ArticleListingPageSerializer(BasePageSerializer):
+    landing_page_title = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    articles_count = serializers.IntegerField()
+    list_teaser = core_fields.MarkdownToHTMLField(allow_null=True)
+    hero_teaser = serializers.CharField(allow_null=True)
+    articles = serializers.SerializerMethodField()
+
+    def get_articles(self, obj):
+        queryset = obj.get_descendants().type(
+            ArticlePage
+        ).live().specific()
+        serializer = NestedArticlePageSerializer(
+            queryset,
+            many=True,
+            allow_null=True
         )
-        data = serializer.data
-        # When ordering at the database level, the lookup seems to happens on
-        # the superclass `Page` table level, so it is not aware of the fields
-        # the subclass has. We are ordering on the application level
-        sorted_data = sorted(
-            data,
-            key=lambda x: x[self.sorting_key]
+        return serializer.data
+
+
+class InternationalLandingPageSerializer(BasePageSerializer):
+    pass
+
+
+class TagSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    slug = serializers.CharField()
+    articles = serializers.SerializerMethodField()
+
+    def get_articles(self, object):
+        serializer = NestedArticlePageSerializer(
+            object.articlepage_set.filter(live=True),
+            many=True
         )
-        return sorted_data
+        return serializer.data
