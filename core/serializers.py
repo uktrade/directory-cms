@@ -10,3 +10,4 @@ class BasePageSerializer(serializers.Serializer):
     full_url = serializers.CharField(max_length=255)
     full_path = serializers.CharField(max_length=255)
     last_published_at = serializers.DateTimeField()
+    title = serializers.CharField()
