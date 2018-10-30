@@ -69,6 +69,7 @@ def test_article_listing_page_view(admin_client, root_page):
     response = admin_client.get(url)
     assert response.status_code == 200
     assert 'articles' in response.json()
+    assert 'meta' in response.json()['articles'][0]
 
 
 def test_article_page_view(admin_client, root_page):
