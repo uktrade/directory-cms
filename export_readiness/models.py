@@ -740,6 +740,13 @@ class InternationalLandingPage(ExclusivePageMixin, BasePage):
         FieldPanel('slug'),
     ]
 
+    @property
+    def articles_count(self):
+        return sum(
+            (listing_page.specific.articles_count for listing_page in
+             self.get_descendants().type(ArticleListingPage).live())
+        )
+
 
 class EUExitInternationalFormPage(
     ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass

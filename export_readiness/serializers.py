@@ -136,7 +136,7 @@ class TopicLandingPageSerializer(BasePageSerializer):
 
 
 class InternationalLandingPageSerializer(BasePageSerializer):
-    pass
+    articles_count = serializers.IntegerField()
 
 
 class TagSerializer(serializers.Serializer):

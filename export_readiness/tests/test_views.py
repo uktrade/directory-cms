@@ -167,3 +167,4 @@ def test_international_landing_age(admin_client, root_page):
     url = reverse('api:pages:detail', kwargs={'pk': page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
+    assert 'articles_count' in response.json()
