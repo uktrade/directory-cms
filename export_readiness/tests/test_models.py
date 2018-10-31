@@ -81,3 +81,31 @@ def test_tag_slug_created_on_save():
         name='Hello test'
     )
     assert tag.slug == 'hello-test'
+
+
+@pytest.mark.django_db
+def test_international_landing_page_articles_count(root_page):
+    landing_page = factories.InternationaLandingPageFactory.create(
+        parent=root_page
+    )
+    article_listing_page = factories.ArticleListingPageFactory.create(
+        parent=landing_page,
+        live=True
+    )
+    factories.ArticlePageFactory.create(
+        parent=article_listing_page,
+        live=True
+    )
+    factories.ArticlePageFactory.create(
+        parent=article_listing_page,
+        live=True
+    )
+    article_listing_page_two = factories.ArticleListingPageFactory.create(
+        parent=landing_page,
+        live=False
+    )
+    factories.ArticlePageFactory.create(
+        live=True,
+        parent=article_listing_page_two
+    )
+    assert landing_page.articles_count == 2
