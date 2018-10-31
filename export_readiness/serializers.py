@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
 
+from conf import settings
 from core import fields as core_fields
 from core.serializers import BasePageSerializer
 
@@ -83,9 +84,10 @@ class HomePageSerializer(BasePageSerializer):
 
     def get_articles(self, obj):
         queryset = None
-        if ArticleListingPage.objects.filter(slug='news').exists():
+        slug = settings.EU_EXIT_NEWS_LISTING_PAGE_SLUG
+        if ArticleListingPage.objects.filter(slug=slug).exists():
             queryset = ArticleListingPage.objects.get(
-                slug='news'
+                slug=slug
             ).get_descendants().type(
                 ArticlePage
             ).live().specific()

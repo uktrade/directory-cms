@@ -1,5 +1,6 @@
 from rest_framework.reverse import reverse
 
+from conf import settings
 from . import factories
 
 
@@ -105,7 +106,9 @@ def test_homepage(admin_client, root_page):
     )
 
     # news
-    article_listing_page = factories.ArticleListingPageFactory(slug='news')
+    article_listing_page = factories.ArticleListingPageFactory(
+        slug=settings.EU_EXIT_NEWS_LISTING_PAGE_SLUG
+    )
     for _ in range(5):
         factories.ArticlePageFactory.create(
             parent=article_listing_page
