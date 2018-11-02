@@ -69,15 +69,6 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
         ]
     )
 
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('heading'),
-        APIImageField('hero_image'),
-        api_fields.APIChildrenSectorPageListField('children_sectors'),
-        APIMetaField('meta')
-    ]
-
 
 class RegionLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.INVEST
@@ -115,15 +106,6 @@ class RegionLandingPage(ExclusivePageMixin, BasePage):
             ObjectList(image_panels, heading='Images'),
         ]
     )
-
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('heading'),
-        APIImageField('hero_image'),
-        api_fields.APIChildrenSectorPageListField('children_sectors'),
-        APIMetaField('meta')
-    ]
 
 
 class SectorPage(BasePage):
@@ -316,50 +298,6 @@ class SectorPage(BasePage):
         ]
     )
 
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('description'),
-        APIField('featured'),
-        APIField('heading'),
-        APIImageField('hero_image'),
-        # pullout
-        APIMarkdownToHTMLField('pullout_text'),
-        APIField('pullout_stat'),
-        APIField('pullout_stat_text'),
-        # subsections
-        APIField('subsection_title_one'),
-        APIMarkdownToHTMLField('subsection_content_one'),
-        APIImageField('subsection_map_one'),
-
-        APIField('subsection_title_two'),
-        APIMarkdownToHTMLField('subsection_content_two'),
-        APIImageField('subsection_map_two'),
-
-        APIField('subsection_title_three'),
-        APIMarkdownToHTMLField('subsection_content_three'),
-        APIImageField('subsection_map_three'),
-
-        APIField('subsection_title_four'),
-        APIMarkdownToHTMLField('subsection_content_four'),
-        APIImageField('subsection_map_four'),
-
-        APIField('subsection_title_five'),
-        APIMarkdownToHTMLField('subsection_content_five'),
-        APIImageField('subsection_map_five'),
-
-        APIField('subsection_title_six'),
-        APIMarkdownToHTMLField('subsection_content_six'),
-        APIImageField('subsection_map_six'),
-
-        APIField('subsection_title_seven'),
-        APIMarkdownToHTMLField('subsection_content_seven'),
-        APIImageField('subsection_map_seven'),
-
-        api_fields.APIChildrenSectorPageListField('children_sectors'),
-        APIMetaField('meta')
-    ]
-
 
 # Setup guide models
 
@@ -390,16 +328,6 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
         content_panels=content_panels,
         settings_panels=settings_panels,
     )
-
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('heading'),
-        APIField('sub_heading'),
-        APIField('lead_in'),
-        api_fields.APIChildrenSetupGuidePageListField('children_setup_guides'),
-        APIMetaField('meta')
-    ]
 
 
 class SetupGuidePage(BasePage):
@@ -514,38 +442,6 @@ class SetupGuidePage(BasePage):
         content_panels=content_panels,
         settings_panels=settings_panels,
     )
-
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('description'),
-        APIField('heading'),
-        APIField('sub_heading'),
-        # subsections
-        APIField('subsection_title_one'),
-        APIMarkdownToHTMLField('subsection_content_one'),
-
-        APIField('subsection_title_two'),
-        APIMarkdownToHTMLField('subsection_content_two'),
-
-        APIField('subsection_title_three'),
-        APIMarkdownToHTMLField('subsection_content_three'),
-
-        APIField('subsection_title_four'),
-        APIMarkdownToHTMLField('subsection_content_four'),
-
-        APIField('subsection_title_five'),
-        APIMarkdownToHTMLField('subsection_content_five'),
-
-        APIField('subsection_title_six'),
-        APIMarkdownToHTMLField('subsection_content_six'),
-
-        APIField('subsection_title_seven'),
-        APIMarkdownToHTMLField('subsection_content_seven'),
-
-        api_fields.APIChildrenSetupGuidePageListField('children_setup_guides'),
-        APIMetaField('meta')
-    ]
 
 
 class InvestHomePage(ExclusivePageMixin, BasePage):
@@ -786,78 +682,6 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         ]
     )
 
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('heading'),
-        APIField('sub_heading'),
-        APIImageField('hero_image'),
-        # subsections
-        APIField('subsection_title_one'),
-        APIMarkdownToHTMLField('subsection_content_one'),
-
-        APIField('subsection_title_two'),
-        APIMarkdownToHTMLField('subsection_content_two'),
-
-        APIField('subsection_title_three'),
-        APIMarkdownToHTMLField('subsection_content_three'),
-
-        APIField('subsection_title_four'),
-        APIMarkdownToHTMLField('subsection_content_four'),
-
-        APIField('subsection_title_five'),
-        APIMarkdownToHTMLField('subsection_content_five'),
-
-        APIField('subsection_title_six'),
-        APIMarkdownToHTMLField('subsection_content_six'),
-
-        APIField('subsection_title_seven'),
-        APIMarkdownToHTMLField('subsection_content_seven'),
-
-        APIField('sector_title'),
-        APIField('sector_button_text'),
-        APIField('setup_guide_title'),
-        APIField('setup_guide_lead_in'),
-        APIField('how_we_help_title'),
-        APIField('how_we_help_lead_in'),
-        # how we help
-        APIField('how_we_help_text_one'),
-        APIImageField('how_we_help_icon_one'),
-
-        APIField('how_we_help_text_two'),
-        APIImageField('how_we_help_icon_two'),
-
-        APIField('how_we_help_text_three'),
-        APIImageField('how_we_help_icon_three'),
-
-        APIField('how_we_help_text_four'),
-        APIImageField('how_we_help_icon_four'),
-
-        APIField('how_we_help_text_five'),
-        APIImageField('how_we_help_icon_five'),
-
-        APIField('how_we_help_text_six'),
-
-        api_fields.APISectorPageListField(
-            'sectors',
-            queryset=(
-                SectorPage.objects.all()
-                .filter(featured=True)
-                .live()
-                .order_by('heading')
-            )
-        ),
-        api_fields.APISetupGuidePageListField(
-            'guides',
-            queryset=(
-                SetupGuidePage.objects.all()
-                .live()
-                .order_by('heading')
-            )
-        ),
-        APIMetaField('meta')
-    ]
-
 
 class InfoPage(BasePage):
     """
@@ -882,13 +706,6 @@ class InfoPage(BasePage):
         content_panels=content_panels,
         settings_panels=settings_panels,
     )
-
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIMarkdownToHTMLField('content'),
-        APIMetaField('meta')
-    ]
 
 
 class HighPotentialOpportunityFormPage(
@@ -931,23 +748,6 @@ class HighPotentialOpportunityFormPage(
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-    ]
-
-    # metaclass appends `form_field_names` to `api_fields`
-    api_fields = [
-        APIField('heading'),
-        APIField('sub_heading'),
-        APIField('seo_title'),
-        APIField('search_description'),
-        api_fields.APIHighPotentialOpportunityDetailPageListField(
-            'opportunity_list',
-            field_names=[
-                'heading',
-                'pdf_document',
-                'meta',
-            ]
-        ),
-        APIField('breadcrumbs_label'),
     ]
 
 
