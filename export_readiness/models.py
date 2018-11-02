@@ -919,3 +919,40 @@ class EUExitFormSuccessPage(ExclusivePageMixin, BasePage):
         APIField('seo_title'),
         APIField('search_description'),
     ]
+
+
+class ExportOpportunitiesGuidancePage(ExclusivePageMixin, BasePage):
+    service_name_value = cms.EXPORT_READINESS
+    view_path = 'contact/triage/export-opportunities/'
+    slug_identity = 'export-opportunities-guidance'
+    title_value = 'Contact Us - Export Opportunities Guidance'
+
+    daily_alerts_not_relavant = MarkdownField(
+        blank=False,
+        verbose_name='Guidance'
+    )
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='My daily alerts are not relevant to me',
+            children=[
+                FieldPanel('daily_alerts_not_relavant'),
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('slug'),
+    ]
+
+    api_fields = [
+        APIMarkdownToHTMLField('daily_alerts_not_relavant'),
+        APIMetaField('meta'),
+        APIField('seo_title'),
+        APIField('search_description'),
+    ]
+
+    def save(self, *args, **kwargs):
+        self.title = self.title_value
+        return super().save(*args, **kwargs)
