@@ -22,6 +22,7 @@ def test_app_models():
         models.EUExitInternationalFormPage,
         models.EUExitDomesticFormPage,
         models.EUExitFormSuccessPage,
+        models.ContactUsGuidance,
     ]
 
 

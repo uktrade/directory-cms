@@ -9,6 +9,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import RedirectView
 
 import core.views
 import healthcheck.views
@@ -18,6 +19,10 @@ api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
 
 
 urlpatterns = [
+    url(
+        r'^$',
+        RedirectView.as_view(url='/admin/')
+    ),
     url(
         r'^healthcheck/sentry/$',
         directory_healthcheck.views.SentryHealthcheckView.as_view(),

@@ -77,3 +77,8 @@ class EUExitFormSuccessPageTranslationOptions(BaseTranslationOptions):
 @register(models.InternationalLandingPage)
 class InternationalLandingPageTranslationOptions(BaseTranslationOptions):
     fields = []
+
+
+@register(models.ContactUsGuidance)
+class ContactUsGuidanceTranslationOptions(BaseTranslationOptions):
+    fields = []

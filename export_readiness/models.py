@@ -12,7 +12,7 @@ from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
 from django.db import models
-from django.forms import CheckboxSelectMultiple, Textarea
+from django.forms import CheckboxSelectMultiple, Textarea, Select
 from django.utils.text import slugify
 
 from core.api_fields import APIMarkdownToHTMLField, APIImageField, \
@@ -919,3 +919,67 @@ class EUExitFormSuccessPage(ExclusivePageMixin, BasePage):
         APIField('seo_title'),
         APIField('search_description'),
     ]
+
+
+EXPORT_OPPORTUNITIES_ALERTS_NOT_RELEVANT_SLUG = (
+    cms.EXPORT_READINESS_GUIDANCE_EXPORT_OPPORTUNITIES_ALERTS_NOT_RELEVANT_SLUG
+)
+
+
+class ContactUsGuidance(BasePage):
+
+    service_name_value = cms.EXPORT_READINESS
+
+    DAILY_ALERTS = 'guidance-daily-alerts'
+
+    topic_mapping = {
+        DAILY_ALERTS: {
+            'slug': EXPORT_OPPORTUNITIES_ALERTS_NOT_RELEVANT_SLUG,
+            'title': 'Guidance - Daily alerts are not relevant',
+            'view_path': 'contact/triage/export-opportunities/',
+        }
+    }
+
+    @property
+    def view_path(self):
+        return self.topic_mapping[self.topic]['view_path']
+
+    topic = models.TextField(
+        choices=[
+            (DAILY_ALERTS, 'Export Opportunities daily alerts'),
+        ],
+        unique=True,
+        help_text='The slug and CMS page title are interred from the topic',
+    )
+    body = MarkdownField(blank=False,)
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='Topic',
+            children=[
+                FieldPanel('topic', widget=Select),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Guidance',
+            children=[
+                FieldPanel('body'),
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = []
+
+    api_fields = [
+        APIMarkdownToHTMLField('body'),
+        APIMetaField('meta'),
+        APIField('seo_title'),
+        APIField('search_description'),
+    ]
+
+    def save(self, *args, **kwargs):
+        field_values = self.topic_mapping[self.topic]
+        self.title = field_values['title']
+        self.slug = field_values['slug']
+        return super().save(*args, **kwargs)

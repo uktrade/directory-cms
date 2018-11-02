@@ -80,36 +80,6 @@ The following environment variables must be set on your host machine:
 
 Speak to a team mate or consult heroku settings to retrieve the `DIRECTORY_CMS_AWS_STORAGE_BUCKET_NAME`.
 
-## Page auto-translations
-
-Google Translate is used to automatically translate pages. To facilitate the authentication with Google, ask a colleague to share the Google authentication key file with you, then transpose the values from the keyfile to env vars on your machine:
-
-| env var | source                      |
-| --------  | ------------------------ |
-| DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_ID | private_key_id    |
-| DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_B64* | private_key |
-| DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_EMAIL | client_email      |
-| DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_ID | client_email_id      |
-| DIRECTORY_CMS_GOOGLE_TRANSLATE_CERT_URL | client_x509_cert_url  |
-
-*`DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_B64` is derived from the value of `private_key` by base64 encoding `private_key`. This is done to avoid complications surrounding control characters and white space across different environments (Linux, Mac, Heroku).
-
-```
-export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_ID=...
-export DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_EMAIL=...
-export DIRECTORY_CMS_GOOGLE_TRANSLATE_CLIENT_ID=...
-export DIRECTORY_CMS_GOOGLE_TRANSLATE_CERT_URL=...
-export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY=$'-----BEGIN PRIVATE KEY-----...-----END PRIVATE KEY-----\n'
-export DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY_B64=`python -c "
-import os
-import base64
-value = bytes(os.environ['DIRECTORY_CMS_GOOGLE_TRANSLATE_PRIVATE_KEY'], 'utf8')
-print(base64.b64encode(value).decode())
-"`
-```
-
-The steps for generating a new key file can be found [here](https://cloud.google.com/translate/docs/reference/libraries#setting_up_authentication)
-
 
 [circle-ci-image]: https://circleci.com/gh/uktrade/directory-cms/tree/master.svg?style=svg
 [circle-ci]: https://circleci.com/gh/uktrade/directory-cms/tree/master
