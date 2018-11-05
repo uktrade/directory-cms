@@ -22,7 +22,7 @@ def test_app_models():
         models.EUExitInternationalFormPage,
         models.EUExitDomesticFormPage,
         models.EUExitFormSuccessPage,
-        models.ContactUsGuidance,
+        models.ContactUsGuidancePage,
     ]
 
 
@@ -110,3 +110,17 @@ def test_international_landing_page_articles_count(root_page):
         parent=article_listing_page_two
     )
     assert landing_page.articles_count == 2
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    'topic,values', models.ContactUsGuidancePage.topic_mapping.items()
+)
+def test_contact_us_guidance_infers_field_values(topic, values):
+    page = factories.ContactUsGuidancePageFactory.create(
+        topic=topic
+    )
+
+    assert page.slug == topic
+    assert page.title == values['title']
+    assert page.view_path == values['view_path']

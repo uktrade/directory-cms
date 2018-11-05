@@ -143,3 +143,13 @@ class InternationaLandingPageFactory(wagtail_factories.PageFactory):
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     last_published_at = timezone.now()
     parent = None
+
+
+class ContactUsGuidancePageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.ContactUsGuidancePage
+
+    last_published_at = timezone.now()
+    parent = None
+    body = factory.fuzzy.FuzzyText(length=50)
