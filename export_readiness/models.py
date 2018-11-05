@@ -921,23 +921,35 @@ class EUExitFormSuccessPage(ExclusivePageMixin, BasePage):
     ]
 
 
-EXPORT_OPPORTUNITIES_ALERTS_NOT_RELEVANT_SLUG = (
-    cms.EXPORT_READINESS_GUIDANCE_EXPORT_OPPORTUNITIES_ALERTS_NOT_RELEVANT_SLUG
-)
-
-
-class ContactUsGuidance(BasePage):
+class ContactUsGuidancePage(BasePage):
 
     service_name_value = cms.EXPORT_READINESS
 
-    DAILY_ALERTS = 'guidance-daily-alerts'
-
     topic_mapping = {
-        DAILY_ALERTS: {
-            'slug': EXPORT_OPPORTUNITIES_ALERTS_NOT_RELEVANT_SLUG,
+        cms.EXPORT_READINESS_HELP_EXOPP_ALERTS_IRRELEVANT_SLUG: {
             'title': 'Guidance - Daily alerts are not relevant',
             'view_path': 'contact/triage/export-opportunities/',
-        }
+        },
+        cms.EXPORT_READINESS_HELP_MISSING_VERIFY_EMAIL_SLUG: {
+            'title': 'Guidance - Email verification missing',
+            'view_path': 'contact/triage/great-account/',
+        },
+        cms.EXPORT_READINESS_HELP_PASSWORD_RESET_SLUG: {
+            'title': 'Guidance - Missing password reset link',
+            'view_path': 'contact/triage/great-account/',
+        },
+        cms.EXPORT_READINESS_HELP_COMPANIES_HOUSE_LOGIN_SLUG: {
+            'title': 'Guidance - Companies House login not working',
+            'view_path': 'contact/triage/great-account/',
+        },
+        cms.EXPORT_READINESS_HELP_VERIFICATION_CODE_ENTER_SLUG: {
+            'title': 'Guidance - Where to enter letter verification code',
+            'view_path': 'contact/triage/great-account/',
+        },
+        cms.EXPORT_READINESS_HELP_VERIFICATION_CODE_LETTER_SLUG: {
+            'title': 'Guidance - Verification letter not delivered',
+            'view_path': 'contact/triage/great-account/',
+        },
     }
 
     @property
@@ -945,9 +957,7 @@ class ContactUsGuidance(BasePage):
         return self.topic_mapping[self.topic]['view_path']
 
     topic = models.TextField(
-        choices=[
-            (DAILY_ALERTS, 'Export Opportunities daily alerts'),
-        ],
+        choices=[(key, val['title']) for key, val in topic_mapping.items()],
         unique=True,
         help_text='The slug and CMS page title are interred from the topic',
     )
@@ -981,5 +991,5 @@ class ContactUsGuidance(BasePage):
     def save(self, *args, **kwargs):
         field_values = self.topic_mapping[self.topic]
         self.title = field_values['title']
-        self.slug = field_values['slug']
+        self.slug = self.topic
         return super().save(*args, **kwargs)

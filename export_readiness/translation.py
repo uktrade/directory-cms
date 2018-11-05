@@ -79,6 +79,6 @@ class InternationalLandingPageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
-@register(models.ContactUsGuidance)
-class ContactUsGuidanceTranslationOptions(BaseTranslationOptions):
+@register(models.ContactUsGuidancePage)
+class ContactUsGuidancePageTranslationOptions(BaseTranslationOptions):
     fields = []
