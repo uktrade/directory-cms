@@ -8,7 +8,7 @@ class ExportReadinessConfig(AppConfig):
         from export_readiness import cache
         cache.TermsAndConditionsPageSubscriber.subscribe()
         cache.PrivacyAndCookiesPageSubscriber.subscribe()
-        cache.NewGetFinancePageSubscriber.subscribe()
+        cache.GetFinancePageSubscriber.subscribe()
         cache.PerformanceDashboardPageSubscriber.subscribe()
         cache.PerformanceDashboardNotesPageSubscriber.subscribe()
         cache.TopicLandingPageSubscriber.subscribe()
