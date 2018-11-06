@@ -10,8 +10,7 @@ def test_app_models():
         models.ExportReadinessApp,
         models.TermsAndConditionsPage,
         models.PrivacyAndCookiesPage,
-        models.DeprecatedGetFinancePage,
-        models.NewGetFinancePage,
+        models.GetFinancePage,
         models.PerformanceDashboardPage,
         models.PerformanceDashboardNotesPage,
         models.TopicLandingPage,
@@ -23,6 +22,7 @@ def test_app_models():
         models.EUExitDomesticFormPage,
         models.EUExitFormSuccessPage,
         models.ContactUsGuidancePage,
+        models.ContactSuccessPage,
     ]
 
 
@@ -43,12 +43,6 @@ def test_set_slug():
     )
 
     assert instance.slug == models.ExportReadinessApp.slug_identity
-
-
-@pytest.mark.django_db
-def test_get_finance_breadcrumbs():
-    page = factories.DeprecatedGetFinancePageFactory.create()
-    assert page.breadcrumb.first().label == page.breadcrumbs_label
 
 
 @pytest.mark.django_db
@@ -124,3 +118,10 @@ def test_contact_us_guidance_infers_field_values(topic, values):
     assert page.slug == topic
     assert page.title == values['title']
     assert page.view_path == values['view_path']
+
+
+@pytest.mark.django_db
+def test_contact_us_guidance_title():
+    page = factories.ContactSuccessPageFactory.create()
+
+    assert page.title == models.ContactSuccessPage.title_value

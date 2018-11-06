@@ -13,8 +13,8 @@ class PrivacyAndCookiesPageSubscriber(AbstractDatabaseCacheSubscriber):
     subscriptions = []
 
 
-class NewGetFinancePageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.NewGetFinancePage
+class GetFinancePageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.GetFinancePage
     subscriptions = []
 
 
