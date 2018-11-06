@@ -49,24 +49,6 @@ class PerformanceDashboardNotesPageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
-class DeprecatedGetFinancePageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.DeprecatedGetFinancePage
-
-    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
-    banner_content = factory.fuzzy.FuzzyText(length=10)
-    section_one_content = factory.fuzzy.FuzzyText(length=10)
-    section_two_content = factory.fuzzy.FuzzyText(length=10)
-    video_embed = factory.fuzzy.FuzzyText(length=10)
-    section_three_content = factory.fuzzy.FuzzyText(length=10)
-    call_to_action_text = factory.fuzzy.FuzzyText(length=10)
-    call_to_action_url = factory.fuzzy.FuzzyText(length=10)
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    parent = None
-
-
 class TopicLandingPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
@@ -153,3 +135,14 @@ class ContactUsGuidancePageFactory(wagtail_factories.PageFactory):
     last_published_at = timezone.now()
     parent = None
     body = factory.fuzzy.FuzzyText(length=50)
+
+
+class ContactSuccessPageFactory(wagtail_factories.PageFactory):
+    class Meta:
+        model = models.ContactSuccessPage
+
+    heading = factory.fuzzy.FuzzyText(length=50)
+    body_text = factory.fuzzy.FuzzyText(length=50)
+    next_title = factory.fuzzy.FuzzyText(length=50)
+    next_body_text = factory.fuzzy.FuzzyText(length=50)
+    parent = None
