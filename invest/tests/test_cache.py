@@ -16,4 +16,4 @@ def test_cache_registration():
         models.HighPotentialOpportunityDetailPage,
         models.HighPotentialOpportunityFormSuccessPage,
     ]:
-        assert not is_registered_for_cache(model)
+        assert is_registered_for_cache(model)

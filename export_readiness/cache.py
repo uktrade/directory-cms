@@ -37,12 +37,15 @@ class ArticleListingPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.ArticleListingPage
     subscriptions = [
         models.ArticlePage,
+        models.Tag,
     ]
 
 
 class ArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.ArticlePage
-    subscriptions = []
+    subscriptions = [
+        models.Tag,
+    ]
 
 
 class HomePageSubscriber(AbstractDatabaseCacheSubscriber):
