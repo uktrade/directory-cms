@@ -902,3 +902,63 @@ class ContactUsGuidancePage(BasePage):
         self.title = field_values['title']
         self.slug = self.topic
         return super().save(*args, **kwargs)
+
+
+class ContactSuccessPage(ExclusivePageMixin, BasePage):
+    view_path = 'contact/domestic/success/'
+    slug_identity = cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_SLUG
+    service_name_value = cms.EXPORT_READINESS
+    title_value = 'Contact Us - Success page'
+
+    heading = models.CharField(
+        max_length=255,
+        verbose_name='Title'
+    )
+    body_text = models.CharField(
+        max_length=255,
+        verbose_name='Body text',
+    )
+    next_title = models.CharField(
+        max_length=255,
+        verbose_name='Title'
+    )
+    next_body_text = models.CharField(
+        max_length=255,
+        verbose_name='Body text',
+    )
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='heading',
+            children=[
+                FieldPanel('heading'),
+                FieldPanel('body_text'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Next steps',
+            children=[
+                FieldPanel('next_title'),
+                FieldPanel('next_body_text'),
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('slug'),
+    ]
+
+    api_fields = [
+        APIField('heading'),
+        APIField('body_text'),
+        APIField('next_title'),
+        APIField('next_body_text'),
+        APIMetaField('meta'),
+        APIField('seo_title'),
+        APIField('search_description'),
+    ]
+
+    def save(self, *args, **kwargs):
+        self.title = self.title_value
+        return super().save(*args, **kwargs)

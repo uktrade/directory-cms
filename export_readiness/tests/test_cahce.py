@@ -24,4 +24,4 @@ def test_cache_registration():
 
 
 def test_cache_not_registred():
-   assert not is_registered_for_cache(mock.Mock)
+    assert not is_registered_for_cache(mock.Mock)
