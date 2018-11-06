@@ -41,7 +41,7 @@ class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
 
     service_name_value = cms.EXPORT_READINESS
     view_path = 'terms-and-conditions/'
-    slug_identity = 'terms-and-conditions'
+    slug_identity = cms.EXPORT_READINESS_TERMS_AND_CONDITIONS_SLUG
 
     body = MarkdownField(blank=False)
 
@@ -101,102 +101,11 @@ class PrivacyAndCookiesPage(BasePage):
     ]
 
 
-class DeprecatedGetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
+class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
 
     service_name_value = cms.EXPORT_READINESS
     view_path = 'get-finance/'
-    slug_identity = 'get-finance-deprecated'
-
-    banner_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    ukef_logo = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    breadcrumbs_label = models.CharField(max_length=50)
-    banner_content = MarkdownField()
-    section_one_content = MarkdownField()
-    section_two_content = MarkdownField()
-    video_embed = models.CharField(max_length=500)
-    section_three_content = MarkdownField()
-    call_to_action_text = models.CharField(max_length=255)
-    call_to_action_url = models.CharField(max_length=500)
-
-    content_panels = [
-        FieldPanel('breadcrumbs_label'),
-        MultiFieldPanel(
-            heading='Banner',
-            children=[
-                FieldPanel('banner_content'),
-                ImageChooserPanel('banner_image'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading='Section 1',
-            children=[
-                ImageChooserPanel('ukef_logo'),
-                MarkdownPanel('section_one_content'),
-                FieldPanel('call_to_action_text'),
-                FieldPanel('call_to_action_url'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading='Section 2',
-            children=[
-                MarkdownPanel('section_two_content'),
-                FieldPanel('video_embed'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading='Section 3',
-            children=[
-                MarkdownPanel('section_three_content'),
-            ]
-        ),
-        SearchEngineOptimisationPanel(),
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-    ]
-
-    api_fields = [
-        APIField('breadcrumbs_label'),
-        APIMarkdownToHTMLField('banner_content'),
-        APIImageField('banner_image'),
-        APIMarkdownToHTMLField('section_one_content'),
-        APIMarkdownToHTMLField('section_two_content'),
-        APIImageField('ukef_logo'),
-        APIField('video_embed'),
-        APIMarkdownToHTMLField('section_three_content'),
-        APIField('call_to_action_text'),
-        APIField('call_to_action_url'),
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIMetaField('meta'),
-    ]
-
-    def get_admin_display_title(self):
-        return '[deprecated] ' + super().get_admin_display_title()
-
-
-# To rename to GetFinancePage once DeprecatedGetFinancePage has been deleted
-class NewGetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
-
-    service_name_value = cms.EXPORT_READINESS
-    view_path = 'get-finance/'
-    slug_identity = 'get-finance'
+    slug_identity = cms.EXPORT_READINESS_GET_FINANCE_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
     hero_text = MarkdownField()
@@ -448,7 +357,7 @@ class PerformanceDashboardNotesPage(ExclusivePageMixin,
 
     service_name_value = cms.EXPORT_READINESS
     view_path = 'performance-dashboard/'
-    slug_identity = 'performance-dashboard-notes'
+    slug_identity = cms.EXPORT_READINESS_PERFORMANCE_DASHBOARD_NOTES_SLUG
 
     body = MarkdownField(blank=False)
 
@@ -697,7 +606,7 @@ class ArticlePage(BasePage):
 
 class HomePage(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
-    slug_identity = 'home'
+    slug_identity = cms.EXPORT_READINESS_HOME_SLUG
     subpage_types = [
         'export_readiness.TopicLandingPage',
         'export_readiness.ArticleListingPage',
@@ -726,7 +635,7 @@ class HomePage(ExclusivePageMixin, BasePage):
 
 class InternationalLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
-    slug_identity = 'international'
+    slug_identity = cms.EXPORT_READINESS_HOME_INTERNATIONAL_SLUG
     subpage_types = [
         'export_readiness.ArticleListingPage',
     ]
@@ -765,7 +674,7 @@ class EUExitInternationalFormPage(
 
     service_name_value = cms.EXPORT_READINESS
     view_path = 'eu-exit/international/contact/'
-    slug_identity = 'eu-exit-international'
+    slug_identity = cms.EXPORT_READINESS_EUEXIT_INTERNATIONAL_FORM_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
@@ -821,7 +730,7 @@ class EUExitDomesticFormPage(
 
     service_name_value = cms.EXPORT_READINESS
     view_path = 'eu-exit/contact/'
-    slug_identity = 'eu-exit-domestic'
+    slug_identity = cms.EXPORT_READINESS_EUEXIT_DOMESTIC_FORM_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
@@ -865,7 +774,7 @@ class EUExitDomesticFormPage(
 class EUExitFormSuccessPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
     view_path = 'eu-exit/contact/success/'
-    slug_identity = 'eu-exit-form-success'
+    slug_identity = cms.EXPORT_READINESS_EUEXIT_FORM_SUCCESS_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(
