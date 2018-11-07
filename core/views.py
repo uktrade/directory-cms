@@ -2,6 +2,7 @@ import json
 import logging
 
 from django_filters.rest_framework import DjangoFilterBackend
+
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.renderers import JSONRenderer
@@ -14,6 +15,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404, Http404
 from django.template.response import TemplateResponse
 from django.utils import translation
+from django.utils.cache import get_conditional_response, set_response_etag
 from django.views.generic.edit import FormView
 
 from conf.signature import SignatureCheckPermission
@@ -134,16 +136,28 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
             language_code=translation.get_language()
         )
         if cached_page:
-            response = helpers.CachedResponse(cached_page)
+            etag = cached_page.get('etag', None)
+            cached_response = helpers.CachedResponse(cached_page)
+            cached_response['etag'] = etag
+            response = get_conditional_response(
+                request=self.request,
+                etag=etag,
+                response=cached_response,
+            )
         else:
             response = super().dispatch(*args, **kwargs)
             model = self.get_object().__class__
             if is_registered_for_cache(model) and response.status_code == 200:
+                response.render()
+                set_response_etag(response)
                 PageCache.set(
                     slug=self.kwargs['slug'],
                     language_code=translation.get_language(),
                     service_name=self.request.GET['service_name'],
-                    contents=json.loads(response.render().content)
+                    contents={
+                        **json.loads(response.content),
+                        'etag': response.get('ETag')
+                    }
                 )
         return response
 
