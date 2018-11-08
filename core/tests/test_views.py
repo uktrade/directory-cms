@@ -517,12 +517,17 @@ def test_lookup_by_tag_slug(admin_client, root_page):
 
 
 @pytest.mark.django_db
-def test_unregistered_page_not_cached(admin_client):
-    service_name = cms.EXPORT_READINESS
+@patch('core.views.is_registered_for_cache')
+def test_unregistered_page_not_cached(
+    mock_is_registered_for_cache, admin_client
+):
+    mock_is_registered_for_cache.return_value = False
+
+    service_name = cms.INVEST
     # given there exists a page that is unregistered for cache
     page = InfoPageFactory.create(live=True)
 
-    # when the industry page is retrieveds
+    # when the industry page is retrieved
     url = reverse('lookup-by-slug', kwargs={'slug': page.slug})
     response_one = admin_client.get(url, {'service_name': service_name})
 
@@ -539,3 +544,40 @@ def test_unregistered_page_not_cached(admin_client):
     # and subsequent requests are not handled by the cache
     response_two = admin_client.get(url, {'service_name': service_name})
     assert not isinstance(response_two, CachedResponse)
+
+
+def test_cache_etags_match(admin_client):
+    service_name = cms.INVEST
+    # given there exists a page that is cached
+    page = InfoPageFactory.create(live=True)
+
+    # when the page is retrieved
+    url = reverse('lookup-by-slug', kwargs={'slug': page.slug})
+    response_one = admin_client.get(url, {'service_name': service_name})
+
+    # then exposing the same etag in subsequent responses results in 304
+    response_two = admin_client.get(
+        url,
+        {'service_name': service_name},
+        HTTP_IF_NONE_MATCH=response_one['ETag'],
+    )
+    assert response_two.status_code == 304
+    assert response_two.content == b''
+
+
+def test_cache_etags_mismatch(admin_client):
+    service_name = cms.INVEST
+    # given there exists a page that is cached
+    page = InfoPageFactory.create(live=True)
+
+    # when the page is retrieved
+    url = reverse('lookup-by-slug', kwargs={'slug': page.slug})
+    response_one = admin_client.get(url, {'service_name': service_name})
+
+    # then exposing the same etag in subsequent responses results in 304
+    response_two = admin_client.get(
+        url,
+        {'service_name': service_name},
+        HTTP_IF_NONE_MATCH=response_one['ETag'] + '123',
+    )
+    assert isinstance(response_two, CachedResponse)
