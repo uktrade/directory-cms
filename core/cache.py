@@ -27,7 +27,11 @@ class PageCache:
         params = {'service_name': service_name}
         if language_code:
             params['lang'] = language_code
-        return url + '?' + urlencode(params)
+        # using the page slug as a redis hash tag ensures the keys related to
+        # the same page in the same node, preventing delete_many from failing
+        # because the keys could be stored across different nodes
+        node_prefix = f'{{slug}}'
+        return node_prefix + url + '?' + urlencode(params)
 
     @classmethod
     def set(cls, slug, service_name, contents, language_code=None):

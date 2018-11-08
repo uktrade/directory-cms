@@ -32,7 +32,7 @@ def test_page_cache_build_keys(slug, service_name, language_code, expected):
     key = cache.PageCache.build_key(
         slug=slug, service_name=service_name, language_code=language_code
     )
-    assert key == '/api/pages/lookup-by-slug' + expected
+    assert key == f'{{slug}}/api/pages/lookup-by-slug' + expected
 
 
 def test_page_cache_get_set_delete():
