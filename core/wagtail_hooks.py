@@ -50,3 +50,12 @@ def editor_css():
         '<link rel="stylesheet" href="{}">',
         static('core/css/main.css')
     )
+
+
+@hooks.register('insert_global_admin_css')
+def global_admin_css():
+    if settings.ENVIRONMENT_CSS_THEME_FILE:
+        return format_html(
+            '<link rel="stylesheet" href="{}">',
+            static(settings.ENVIRONMENT_CSS_THEME_FILE)
+        )
