@@ -44,23 +44,6 @@ def update_default_listing_buttons(page, page_perms, is_parent=False):
     return buttons
 
 
-@hooks.register('after_edit_page')
-def translate_page(request, page):
-    if 'action-translate' not in request.POST:
-        return
-
-    page = page.get_latest_revision_as_page()
-    language_codes = [
-        code for code, name in settings.LANGUAGES
-        if code != settings.LANGUAGE_CODE
-    ]
-    helpers.auto_populate_translations(page, language_codes)
-
-    page.save_revision(user=request.user)
-
-    return redirect(reverse('wagtailadmin_pages:edit', args=(page.pk,)))
-
-
 @hooks.register('insert_editor_css')
 def editor_css():
     return format_html(
