@@ -121,7 +121,14 @@ def test_contact_us_guidance_infers_field_values(topic, values):
 
 
 @pytest.mark.django_db
-def test_contact_us_guidance_title():
-    page = factories.ContactSuccessPageFactory.create()
+@pytest.mark.parametrize(
+    'topic,values', models.ContactSuccessPage.topic_mapping.items()
+)
+def test_contact_us_success_infers_field_values(topic, values):
+    page = factories.ContactSuccessPageFactory.create(
+        topic=topic
+    )
 
-    assert page.title == models.ContactSuccessPage.title_value
+    assert page.slug == topic
+    assert page.title == values['title']
+    assert page.view_path == values['view_path']

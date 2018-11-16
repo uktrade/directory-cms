@@ -4,7 +4,6 @@ from wagtail.admin.wagtail_hooks import page_listing_buttons
 
 from django.conf import settings
 from django.contrib.staticfiles.templatetags.staticfiles import static
-from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.html import format_html
 from core import helpers, models
