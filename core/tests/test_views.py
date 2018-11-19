@@ -2,10 +2,9 @@ import pytest
 from unittest.mock import ANY, call, patch
 
 from bs4 import BeautifulSoup
-from directory_constants.constants import sectors, cms
+from directory_constants.constants import cms
 from modeltranslation.utils import build_localized_fieldname
 from wagtail.core.models import Page
-import wagtail_factories
 
 from django.forms.models import model_to_dict
 from django.urls import reverse
@@ -256,116 +255,12 @@ def test_add_page_prepopulate_get(
 
 
 @pytest.mark.django_db
-@patch('core.helpers.auto_populate_translations')
-@patch('wagtail.core.models.Page.save_revision')
-def test_translate_page(
-    mock_save_revision, mock_auto_populate_translations, translated_page,
-    admin_client, admin_user, settings, image, cluster_data
-):
-    url = reverse('wagtailadmin_pages:edit', args=(translated_page.pk,))
-
-    data = {
-        'action-translate': True,
-        'sector_value': sectors.AUTOMOTIVE,
-        'slug': 'this-is-great',
-        'title_en_gb': 'this-is-great',
-        'breadcrumbs_label_en_gb': 'Mining',
-        'introduction_text_en_gb': 'introduction',
-        'introduction_title_en_gb': 'title',
-        'introduction_column_one_text_en_gb': 'column one',
-        'introduction_column_two_text_en_gb': 'column two',
-        'introduction_column_three_text_en_gb': 'column three',
-        'hero_text_en_gb': 'hero',
-        'company_list_text_en_gb': 'companies',
-        'company_list_call_to_action_text_en_gb': 'view all',
-        'introduction_column_two_icon': image.pk,
-        'introduction_column_one_icon': image.pk,
-        'introduction_column_three_icon_en_gb': image.pk,
-        'search_description_en_gb': 'description',
-        'contact_breadcrumb_label_en_gb': 'contact us',
-        'introduction_call_to_action_button_text_en_gb': 'contact us',
-        'contact_introduction_text_en_gb': 'contact',
-        'contact_button_text_en_gb': 'submit',
-        'contact_success_message_text_en_gb': 'thanks',
-        'contact_success_back_link_text_en_gb': 'go back',
-        'company_list_search_input_placeholder_text_en_gb': 'enter value',
-        'more_industries_title_en_gb': 'more industries',
-        **cluster_data,
-    }
-
-    settings.LANGUAGES = [
-        ['de', 'German'],
-        [settings.LANGUAGE_CODE, 'default'],
-    ]
-
-    response = admin_client.post(url, data=data)
-
-    assert response.status_code == 302
-    assert response.url == reverse(
-        'wagtailadmin_pages:edit', args=(translated_page.pk,)
-    )
-    assert mock_auto_populate_translations.call_count == 1
-    assert mock_auto_populate_translations.call_args == call(
-        translated_page, ['de']
-    )
-    assert mock_save_revision.call_count == 2
-    assert mock_save_revision.call_args == call(user=admin_user)
-
-
-@pytest.mark.django_db
 def test_list_page(admin_client, translated_page, root_page):
     url = reverse('wagtailadmin_explore', args=(root_page.pk,))
 
     response = admin_client.get(url)
 
     assert response.status_code == 200
-
-
-@pytest.mark.django_db
-@patch('core.helpers.auto_populate_translations')
-def test_not_always_call_translate_page(
-     mock_auto_populate_translations, translated_page, admin_client,
-     admin_user, settings, cluster_data
-):
-    url = reverse('wagtailadmin_pages:edit', args=(translated_page.pk,))
-    image = wagtail_factories.ImageFactory()
-
-    data = {
-        'sector_value': sectors.AUTOMOTIVE,
-        'slug': 'this-is-great',
-        'title_en_gb': 'this-is-great',
-        'introduction_text_en_gb': 'Good',
-        'introduction_title_en_gb': 'title',
-        'introduction_column_three_text_en_gb': 'get this',
-        'introduction_column_two_text_en_gb': 'this good',
-        'introduction_column_one_text_en_gb': 'goodies',
-        'search_description_en_gb': 'this is good',
-        'hero_text_en_gb': 'good times',
-        'breadcrumbs_label_en_gb': 'Good',
-        'company_list_text_en_gb': 'companies',
-        'company_list_call_to_action_text_en_gb': 'view all',
-        'introduction_column_two_icon': image.pk,
-        'introduction_column_three_icon': image.pk,
-        'introduction_column_one_icon': image.pk,
-        'introduction_call_to_action_button_text_en_gb': 'contact us',
-        'contact_breadcrumb_label_en_gb': 'contact us',
-        'contact_introduction_text_en_gb': 'contact',
-        'contact_button_text_en_gb': 'submit',
-        'contact_success_message_text_en_gb': 'thanks',
-        'contact_success_back_link_text_en_gb': 'go back',
-        'company_list_search_input_placeholder_text_en_gb': 'enter value',
-        'more_industries_title_en_gb': 'more industries',
-        **cluster_data
-    }
-
-    response = admin_client.post(url, data=data)
-
-    assert response.status_code == 302
-    assert response.url == reverse(
-        'wagtailadmin_pages:edit', args=(translated_page.pk,)
-    )
-
-    assert mock_auto_populate_translations.call_count == 0
 
 
 @pytest.mark.django_db

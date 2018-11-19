@@ -868,7 +868,7 @@ class ContactUsGuidancePage(BasePage):
     topic = models.TextField(
         choices=[(key, val['title']) for key, val in topic_mapping.items()],
         unique=True,
-        help_text='The slug and CMS page title are interred from the topic',
+        help_text='The slug and CMS page title are inferred from the topic',
     )
     body = MarkdownField(blank=False,)
 
@@ -904,12 +904,50 @@ class ContactUsGuidancePage(BasePage):
         return super().save(*args, **kwargs)
 
 
-class ContactSuccessPage(ExclusivePageMixin, BasePage):
-    view_path = 'contact/domestic/success/'
-    slug_identity = cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_SLUG
-    service_name_value = cms.EXPORT_READINESS
-    title_value = 'Contact Us - Success page'
+class ContactSuccessPage(BasePage):
 
+    service_name_value = cms.EXPORT_READINESS
+
+    topic_mapping = {
+        cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_SLUG: {
+            'title': 'Contact domestic form success',
+            'view_path': 'contact/domestic/success/',
+        },
+        cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_EVENTS_SLUG: {
+            'title': 'Contact Events form success',
+            'view_path': 'contact/events/success/',
+        },
+        cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_DSO_SLUG: {
+            'title': 'Contact Defence and Security Organisation form success',
+            'view_path': 'contact/defence-and-security-organisation/success/',
+        },
+        cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_EXPORT_ADVICE_SLUG: {
+            'title': 'Contact exporting from the UK form success',
+            'view_path': 'contact/export-advice/success/',
+        },
+        cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_FEEDBACK_SLUG: {
+            'title': 'Contact feedback form success',
+            'view_path': 'contact/feedback/success/',
+        },
+        cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_FIND_COMPANIES_SLUG: {
+            'title': 'Contact find UK companies form success',
+            'view_path': 'contact/find-uk-companies/success/',
+        },
+        cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_INTERNATIONAL_SLUG: {
+            'title': 'Contact international form success',
+            'view_path': 'contact/international/success/',
+        },
+    }
+
+    @property
+    def view_path(self):
+        return self.topic_mapping[self.topic]['view_path']
+
+    topic = models.TextField(
+        choices=[(key, val['title']) for key, val in topic_mapping.items()],
+        unique=True,
+        help_text='The slug and CMS page title are inferred from the topic',
+    )
     heading = models.CharField(
         max_length=255,
         verbose_name='Title'
@@ -929,6 +967,12 @@ class ContactSuccessPage(ExclusivePageMixin, BasePage):
 
     content_panels = [
         MultiFieldPanel(
+            heading='Topic',
+            children=[
+                FieldPanel('topic', widget=Select),
+            ]
+        ),
+        MultiFieldPanel(
             heading='heading',
             children=[
                 FieldPanel('heading'),
@@ -945,9 +989,7 @@ class ContactSuccessPage(ExclusivePageMixin, BasePage):
         SearchEngineOptimisationPanel(),
     ]
 
-    settings_panels = [
-        FieldPanel('slug'),
-    ]
+    settings_panels = []
 
     api_fields = [
         APIField('heading'),
@@ -960,5 +1002,7 @@ class ContactSuccessPage(ExclusivePageMixin, BasePage):
     ]
 
     def save(self, *args, **kwargs):
-        self.title = self.title_value
+        field_values = self.topic_mapping[self.topic]
+        self.title = field_values['title']
+        self.slug = self.topic
         return super().save(*args, **kwargs)

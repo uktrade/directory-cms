@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
                 ('service_name', models.CharField(choices=[('FIND_A_SUPPLIER', 'Find a Supplier'), ('EXPORT_READINESS', 'Export Readiness'), ('INVEST', 'Invest'), ('COMPONENTS', 'Components')], db_index=True, max_length=100, null=True)),
-                ('topic', models.TextField(choices=[('alerts-not-relevant', 'Guidance - Daily alerts are not relevant'), ('no-verification-email', 'Guidance - Email verification missing'), ('password-reset', 'Guidance - Missing password reset link'), ('companies-house-login', 'Guidance - Companies House login not working'), ('verification-letter-code', 'Guidance - Where to enter letter verification code'), ('no-verification-letter', 'Guidance - Verification letter not delivered')], help_text='The slug and CMS page title are interred from the topic', unique=True)),
+                ('topic', models.TextField(choices=[('alerts-not-relevant', 'Guidance - Daily alerts are not relevant'), ('no-verification-email', 'Guidance - Email verification missing'), ('password-reset', 'Guidance - Missing password reset link'), ('companies-house-login', 'Guidance - Companies House login not working'), ('verification-letter-code', 'Guidance - Where to enter letter verification code'), ('no-verification-letter', 'Guidance - Verification letter not delivered')], help_text='The slug and CMS page title are inferred from the topic', unique=True)),
                 ('body', core.api_fields.MarkdownField(validators=[core.validators.slug_hyperlinks])),
             ],
             options={

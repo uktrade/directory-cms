@@ -105,7 +105,6 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 	export DIRECTORY_CMS_REDIS_CACHE_URL=redis://redis:6379/; \
 	export DIRECTORY_CMS_API_CACHE_DISABLED=true
 
-
 DOCKER_SET_TEST_ENV_VARS := \
 	export DIRECTORY_CMS_DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage; \
 	export DIRECTORY_CMS_API_CACHE_DISABLED=false
@@ -202,7 +201,8 @@ DEBUG_SET_ENV_VARS := \
 	export DEFAULT_FROM_EMAIL=$$DIRECTORY_CMS_DEFAULT_FROM_EMAIL; \
 	export FEATURE_DEBUG_TOOLBAR_ENABLED=true; \
 	export REDIS_CACHE_URL=redis://localhost:6379; \
-	export API_CACHE_DISABLED=true
+	export API_CACHE_DISABLED=true; \
+	export ENVIRONMENT_CSS_THEME_FILE=core/css/environment_dev_theme.css
 
 
 TEST_SET_ENV_VARS := \

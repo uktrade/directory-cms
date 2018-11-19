@@ -4,7 +4,6 @@ from wagtail.admin.wagtail_hooks import page_listing_buttons
 
 from django.conf import settings
 from django.contrib.staticfiles.templatetags.staticfiles import static
-from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.html import format_html
 from core import helpers, models
@@ -44,26 +43,18 @@ def update_default_listing_buttons(page, page_perms, is_parent=False):
     return buttons
 
 
-@hooks.register('after_edit_page')
-def translate_page(request, page):
-    if 'action-translate' not in request.POST:
-        return
-
-    page = page.get_latest_revision_as_page()
-    language_codes = [
-        code for code, name in settings.LANGUAGES
-        if code != settings.LANGUAGE_CODE
-    ]
-    helpers.auto_populate_translations(page, language_codes)
-
-    page.save_revision(user=request.user)
-
-    return redirect(reverse('wagtailadmin_pages:edit', args=(page.pk,)))
-
-
 @hooks.register('insert_editor_css')
 def editor_css():
     return format_html(
         '<link rel="stylesheet" href="{}">',
         static('core/css/main.css')
     )
+
+
+@hooks.register('insert_global_admin_css')
+def global_admin_css():
+    if settings.ENVIRONMENT_CSS_THEME_FILE:
+        return format_html(
+            '<link rel="stylesheet" href="{}">',
+            static(settings.ENVIRONMENT_CSS_THEME_FILE)
+        )
