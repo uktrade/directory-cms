@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='contactsuccesspage',
             name='topic',
-            field=models.TextField(choices=[('contact-success-form', 'Contact domestic form success'), ('contact-events-success-form', 'Contact Events form success'), ('contact-dso-success-form', 'Contact Defence and Security Organisation form success'), ('contact-export-advice-success-form', 'Contact exporting from the UK form success'), ('contact-feedback-success-form', 'Contact feedback form success'), ('contact-find-companies-success-form', 'Contact find UK companies form success'), ('contact-international-success-form', 'Contact international form success')], default='contact-success-form', help_text='The slug and CMS page title are interred from the topic', unique=True),
+            field=models.TextField(choices=[('contact-success-form', 'Contact domestic form success'), ('contact-events-success-form', 'Contact Events form success'), ('contact-dso-success-form', 'Contact Defence and Security Organisation form success'), ('contact-export-advice-success-form', 'Contact exporting from the UK form success'), ('contact-feedback-success-form', 'Contact feedback form success'), ('contact-find-companies-success-form', 'Contact find UK companies form success'), ('contact-international-success-form', 'Contact international form success')], default='contact-success-form', help_text='The slug and CMS page title are inferred from the topic', unique=True),
             preserve_default=False,
         ),
     ]

@@ -868,7 +868,7 @@ class ContactUsGuidancePage(BasePage):
     topic = models.TextField(
         choices=[(key, val['title']) for key, val in topic_mapping.items()],
         unique=True,
-        help_text='The slug and CMS page title are interred from the topic',
+        help_text='The slug and CMS page title are inferred from the topic',
     )
     body = MarkdownField(blank=False,)
 
@@ -946,7 +946,7 @@ class ContactSuccessPage(BasePage):
     topic = models.TextField(
         choices=[(key, val['title']) for key, val in topic_mapping.items()],
         unique=True,
-        help_text='The slug and CMS page title are interred from the topic',
+        help_text='The slug and CMS page title are inferred from the topic',
     )
     heading = models.CharField(
         max_length=255,
