@@ -34,7 +34,7 @@ class InvestApp(ExclusivePageMixin, ServiceMixin, BasePage):
 class SectorLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.INVEST
     subpage_types = ['invest.sectorPage']
-    slug_identity = 'sector-landing-page'
+    slug_identity = cms.INVEST_SECTOR_LANDING_PAGE_SLUG
     view_path = 'industries/'
 
     # page fields
@@ -366,7 +366,7 @@ class SectorPage(BasePage):
 class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.INVEST
     subpage_types = ['invest.SetupGuidePage']
-    slug_identity = 'setup-guide-landing-page'
+    slug_identity = cms.INVEST_GUIDE_LANDING_PAGE_SLUG
     view_path = 'setup-guide-landing/'
 
     # page fields
@@ -910,7 +910,7 @@ class HighPotentialOpportunityFormPage(
 
     service_name_value = cms.INVEST
     view_path = 'high-potential-opportunities/rail/contact/'
-    slug_identity = 'high-potential-opportunity-form'
+    slug_identity = cms.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SLUG
 
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
@@ -1413,7 +1413,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
 class HighPotentialOpportunityFormSuccessPage(BasePage):
     service_name_value = cms.INVEST
     view_path = 'high-potential-opportunities/rail/contact/'
-    slug_identity = 'high-potential-opportunity-submit-success'
+    slug_identity = cms.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SUCCESS_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(

@@ -837,27 +837,39 @@ class ContactUsGuidancePage(BasePage):
     topic_mapping = {
         cms.EXPORT_READINESS_HELP_EXOPP_ALERTS_IRRELEVANT_SLUG: {
             'title': 'Guidance - Daily alerts are not relevant',
-            'view_path': 'contact/triage/export-opportunities/',
+            'view_path': (
+                'contact/triage/export-opportunities/alerts-not-relevant/'
+            ),
+        },
+        cms.EXPORT_READINESS_HELP_EXOPP_NO_RESPONSE: {
+            'title': 'Guidance - Export Opportunity application no response',
+            'view_path': (
+                'contact/triage/export-opportunities/opportunity-no-response/'
+            ),
         },
         cms.EXPORT_READINESS_HELP_MISSING_VERIFY_EMAIL_SLUG: {
             'title': 'Guidance - Email verification missing',
-            'view_path': 'contact/triage/great-account/',
+            'view_path': 'contact/triage/great-account/no-verification-email/',
         },
         cms.EXPORT_READINESS_HELP_PASSWORD_RESET_SLUG: {
             'title': 'Guidance - Missing password reset link',
-            'view_path': 'contact/triage/great-account/',
+            'view_path': 'contact/triage/great-account/password-reset/',
         },
         cms.EXPORT_READINESS_HELP_COMPANIES_HOUSE_LOGIN_SLUG: {
             'title': 'Guidance - Companies House login not working',
-            'view_path': 'contact/triage/great-account/',
+            'view_path': 'contact/triage/great-account/companies-house-login/',
         },
         cms.EXPORT_READINESS_HELP_VERIFICATION_CODE_ENTER_SLUG: {
             'title': 'Guidance - Where to enter letter verification code',
-            'view_path': 'contact/triage/great-account/',
+            'view_path': (
+                'contact/triage/great-account/verification-letter-code/'
+            ),
         },
         cms.EXPORT_READINESS_HELP_VERIFICATION_CODE_LETTER_SLUG: {
             'title': 'Guidance - Verification letter not delivered',
-            'view_path': 'contact/triage/great-account/',
+            'view_path': (
+                'contact/triage/great-account/no-verification-letter/'
+            ),
         },
     }
 
