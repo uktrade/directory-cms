@@ -472,9 +472,12 @@ class MarketingPages(ExclusivePageMixin, BasePage):
         'export_readiness.CampaignPage',
     ]
 
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-    ]
+    title_value = 'Marketing pages'
+    settings_panels = []
+
+    def save(self, *args, **kwargs):
+        self.title = self.title_value
+        return super().save(*args, **kwargs)
 
 
 class CampaignPage(BasePage):
