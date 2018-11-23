@@ -15,6 +15,8 @@ def test_app_models():
         models.PerformanceDashboardNotesPage,
         models.TopicLandingPage,
         models.ArticleListingPage,
+        models.MarketingPages,
+        models.CampaignPage,
         models.ArticlePage,
         models.HomePage,
         models.InternationalLandingPage,
@@ -23,8 +25,6 @@ def test_app_models():
         models.EUExitFormSuccessPage,
         models.ContactUsGuidancePage,
         models.ContactSuccessPage,
-        models.MarketingPages,
-        models.CampaignPage,
     ]
 
 
