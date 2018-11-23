@@ -48,6 +48,16 @@ def test_set_slug():
 
 
 @pytest.mark.django_db
+def test_set_marketing_pages_title():
+    instance = models.MarketingPages.objects.create(
+        depth=2,
+        path='/thing',
+    )
+
+    assert instance.title_en_gb == models.MarketingPages.title_value
+
+
+@pytest.mark.django_db
 def test_article_listing_page_articles_count(root_page):
     article_listing_page = factories.ArticleListingPageFactory.create(
         parent=root_page
