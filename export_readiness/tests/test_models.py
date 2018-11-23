@@ -15,6 +15,8 @@ def test_app_models():
         models.PerformanceDashboardNotesPage,
         models.TopicLandingPage,
         models.ArticleListingPage,
+        models.MarketingPages,
+        models.CampaignPage,
         models.ArticlePage,
         models.HomePage,
         models.InternationalLandingPage,
@@ -43,6 +45,16 @@ def test_set_slug():
     )
 
     assert instance.slug == models.ExportReadinessApp.slug_identity
+
+
+@pytest.mark.django_db
+def test_set_marketing_pages_title():
+    instance = models.MarketingPages.objects.create(
+        depth=2,
+        path='/thing',
+    )
+
+    assert instance.title_en_gb == models.MarketingPages.title_value
 
 
 @pytest.mark.django_db

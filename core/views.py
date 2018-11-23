@@ -36,7 +36,8 @@ MODELS_SERIALIZERS_MAPPING = {
     ex_read_models.HomePage: ex_read_serializers.HomePageSerializer,
     ex_read_models.ArticleListingPage: ex_read_serializers.ArticleListingPageSerializer,  # NOQA
     ex_read_models.TopicLandingPage: ex_read_serializers.TopicLandingPageSerializer,  # NOQA
-    ex_read_models.InternationalLandingPage: ex_read_serializers.InternationalLandingPageSerializer  # NOQA
+    ex_read_models.InternationalLandingPage: ex_read_serializers.InternationalLandingPageSerializer,  # NOQA
+    ex_read_models.CampaignPage: ex_read_serializers.CampaignPageSerializer
 }
 
 
