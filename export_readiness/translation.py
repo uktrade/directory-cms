@@ -9,6 +9,16 @@ class TermsAndConditionsPageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
+@register(models.MarketingPages)
+class MarketingPages(BaseTranslationOptions):
+    fields = []
+
+
+@register(models.CampaignPage)
+class CampaignPage(BaseTranslationOptions):
+    fields = []
+
+
 @register(models.PrivacyAndCookiesPage)
 class PrivacyAndCookiesPageTranslationOptions(BaseTranslationOptions):
     fields = []

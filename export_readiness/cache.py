@@ -76,3 +76,8 @@ class EUExitDomesticFormPageSubscriber(AbstractDatabaseCacheSubscriber):
 class EUExitFormSuccessPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.EUExitFormSuccessPage
     subscriptions = []
+
+
+class CampaignPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.CampaignPage
+    subscriptions = []

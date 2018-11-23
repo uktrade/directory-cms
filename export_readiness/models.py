@@ -464,6 +464,299 @@ class ArticleListingPage(BasePage):
     ]
 
 
+class MarketingPages(ExclusivePageMixin, BasePage):
+    service_name_value = cms.EXPORT_READINESS
+    slug_identity = 'export-readiness-marketing-pages'
+
+    subpage_types = [
+        'export_readiness.CampaignPage',
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+    ]
+
+
+class CampaignPage(BasePage):
+    service_name_value = cms.EXPORT_READINESS
+    subpage_types = []
+    view_path = 'campaigns/'
+
+    campaign_heading = models.CharField(max_length=255)
+    campaign_hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    section_one_heading = models.CharField(max_length=255)
+    section_one_intro = MarkdownField()
+    section_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    selling_point_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    selling_point_one_heading = models.CharField(max_length=255)
+    selling_point_one_content = MarkdownField()
+
+    selling_point_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    selling_point_two_heading = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+    )
+    selling_point_two_content = MarkdownField(null=True, blank=True)
+
+    selling_point_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    selling_point_three_heading = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    selling_point_three_content = MarkdownField(null=True, blank=True)
+
+    section_one_contact_button_url = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    section_one_contact_button_text = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+
+    section_two_heading = models.CharField(max_length=255)
+    section_two_intro = MarkdownField()
+
+    section_two_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    section_two_contact_button_url = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    section_two_contact_button_text = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+
+    related_content_heading = models.CharField(max_length=255)
+    related_content_intro = MarkdownField()
+
+    # CMS-647
+    # TODO: crawl these urls and save metadata to the page
+    related_page_one_url = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    # if there is no metadata or it isn't appropriate we can override it here
+    related_page_one_heading = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    related_page_one_description = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    related_page_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    related_page_two_url = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    related_page_two_heading = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    related_page_two_description = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    related_page_two_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    related_page_three_url = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    related_page_three_heading = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    related_page_three_description = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    related_page_three_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    cta_box_message = models.CharField(max_length=255)
+    cta_box_button_url = models.CharField(max_length=255)
+    cta_box_button_text = models.CharField(max_length=255)
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='Hero section',
+            children=[
+                FieldPanel('campaign_heading'),
+                ImageChooserPanel('campaign_hero_image'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Section one',
+            children=[
+                FieldPanel('section_one_heading'),
+                MarkdownPanel('section_one_intro'),
+                ImageChooserPanel('section_one_image'),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel('selling_point_one_icon'),
+                            FieldPanel('selling_point_one_heading'),
+                            MarkdownPanel('selling_point_one_content'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel('selling_point_two_icon'),
+                            FieldPanel('selling_point_two_heading'),
+                            MarkdownPanel('selling_point_two_content'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel('selling_point_three_icon'),
+                            FieldPanel('selling_point_three_heading'),
+                            MarkdownPanel('selling_point_three_content'),
+                        ]
+                    ),
+                ]),
+                FieldRowPanel([
+                    FieldPanel('section_one_contact_button_text'),
+                    FieldPanel('section_one_contact_button_url'),
+                ])
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Section two',
+            children=[
+                FieldPanel('section_two_heading'),
+                MarkdownPanel('section_two_intro'),
+                ImageChooserPanel('section_two_image'),
+                FieldRowPanel([
+                    FieldPanel('section_two_contact_button_text'),
+                    FieldPanel('section_two_contact_button_url'),
+                ])
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Related content section',
+            children=[
+                FieldPanel('related_content_heading'),
+                MarkdownPanel('related_content_intro'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        ImageChooserPanel('related_page_one_image'),
+                        FieldPanel('related_page_one_heading'),
+                        FieldPanel(
+                            'related_page_one_description', widget=Textarea),
+                        FieldPanel('related_page_one_url'),
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('related_page_two_image'),
+                        FieldPanel('related_page_two_heading'),
+                        FieldPanel(
+                            'related_page_two_description', widget=Textarea),
+                        FieldPanel('related_page_two_url'),
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('related_page_three_image'),
+                        FieldPanel('related_page_three_heading'),
+                        FieldPanel(
+                            'related_page_three_description', widget=Textarea),
+                        FieldPanel('related_page_three_url'),
+                    ])
+                ])
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Contact box',
+            children=[
+                FieldRowPanel([
+                    FieldPanel('cta_box_message', widget=Textarea),
+                    MultiFieldPanel([
+                        FieldPanel('cta_box_button_url'),
+                        FieldPanel('cta_box_button_text'),
+                    ])
+                ])
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+
 @register_snippet
 class Tag(index.Indexed, models.Model):
     name = models.CharField(max_length=100)

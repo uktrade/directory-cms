@@ -23,6 +23,8 @@ def test_app_models():
         models.EUExitFormSuccessPage,
         models.ContactUsGuidancePage,
         models.ContactSuccessPage,
+        models.MarketingPages,
+        models.CampaignPage,
     ]
 
 
