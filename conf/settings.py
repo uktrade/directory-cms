@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 
+from directory_components.constants import IP_RETRIEVER_NAME_GOV_UK
 import dj_database_url
 import environ
 
@@ -87,7 +88,7 @@ INSTALLED_APPS = [
 MIDDLEWARE_CLASSES = [
     'core.middleware.StubSiteMiddleware',
     'directory_components.middleware.MaintenanceModeMiddleware',
-    'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware',
+    'directory_components.middleware.IPRestrictorMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -462,3 +463,7 @@ ALLOWED_ADMIN_IP_RANGES = env.list(
     'IP_RESTRICTOR_ALLOWED_ADMIN_IP_RANGES', default=[]
 )
 RESTRICTED_APP_NAMES = ['admin', '']
+REMOTE_IP_ADDRESS_RETRIEVER = env.str(
+    'IP_RESTRICTOR_REMOTE_IP_ADDRESS_RETRIEVER',
+    IP_RETRIEVER_NAME_GOV_UK
+)
