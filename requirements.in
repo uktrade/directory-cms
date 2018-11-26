@@ -13,13 +13,12 @@ boto3==1.6.3
 sigauth==4.0.1
 directory-healthcheck==0.6.0
 directory-constants==10.1.0
-django-admin-ip-restrictor==0.2.1
 html2text==2018.1.9
 wagtail==2.2.2
 wagtail-markdown==0.5
 wagtailmedia==0.2.0
 pytube==9.2.2
-directory-components==2.8.1
+directory-components==2.33.0
 django-filter==1.0.4
 django-redis==4.7.0
 # using pinned commit as it contains a useful fix that's not yet on PyPi.
