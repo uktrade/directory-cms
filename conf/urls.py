@@ -18,25 +18,35 @@ api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
 
 
+healthcheck_urls = [
+    url(
+        r'^sentry/$',
+        directory_healthcheck.views.SentryHealthcheckView.as_view(),
+        name='sentry'
+    ),
+    url(
+        r'^database/$',
+        healthcheck.views.DatabaseAPIView.as_view(),
+        name='database'
+    ),
+    url(
+        r'^ping/$',
+        healthcheck.views.PingAPIView.as_view(),
+        name='ping'
+    ),
+]
+
+
 urlpatterns = [
+    url(
+        r'^healthcheck/',
+        include(
+            healthcheck_urls, namespace='healthcheck', app_name='healthcheck'
+        )
+    ),
     url(
         r'^$',
         RedirectView.as_view(url='/admin/')
-    ),
-    url(
-        r'^healthcheck/sentry/$',
-        directory_healthcheck.views.SentryHealthcheckView.as_view(),
-        name='healthcheck-sentry'
-    ),
-    url(
-        r'^healthcheck/database/$',
-        healthcheck.views.DatabaseAPIView.as_view(),
-        name='healthcheck-database'
-    ),
-    url(
-        r'^healthcheck/ping/$',
-        healthcheck.views.PingAPIView.as_view(),
-        name='healthcheck-ping'
     ),
     url(
         r'^admin/pages/(?P<pk>[0-9]+)/copy-upstream/$',
