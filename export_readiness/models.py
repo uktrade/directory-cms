@@ -466,7 +466,7 @@ class ArticleListingPage(BasePage):
 
 class MarketingPages(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
-    slug_identity = 'export-readiness-marketing-pages'
+    slug_identity = cms.EXPORT_READINESS_MARKETING_PAGES_SLUG
 
     subpage_types = [
         'export_readiness.CampaignPage',

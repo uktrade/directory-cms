@@ -82,7 +82,7 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
 class RegionLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.INVEST
     subpage_types = ['invest.sectorPage']
-    slug_identity = 'uk-region-landing-page'
+    slug_identity = cms.INVEST_UK_REGION_LANDING_PAGE_SLUG
     view_path = 'uk-regions/'
 
     # page fields
@@ -550,7 +550,7 @@ class SetupGuidePage(BasePage):
 
 class InvestHomePage(ExclusivePageMixin, BasePage):
     service_name_value = cms.INVEST
-    slug_identity = 'home-page'
+    slug_identity = cms.INVEST_HOME_PAGE_SLUG
     view_path = ''
 
     heading = models.CharField(max_length=255)

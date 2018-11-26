@@ -1,3 +1,4 @@
+from directory_constants.constants import choices, cms
 from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList, InlinePanel
@@ -8,7 +9,6 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
-from directory_constants.constants import choices, cms
 from django.db import models
 
 from core.api_fields import APIMarkdownToHTMLField, APIImageField, \
@@ -329,7 +329,7 @@ class IndustryPage(BasePage):
 class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/'
-    slug_identity = 'industries-landing-page'
+    slug_identity = cms.FIND_A_SUPPLIER_INDUSTRY_LANDING_SLUG
 
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -513,7 +513,7 @@ class IndustryArticlePage(BasePage):
 class LandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     service_name_value = cms.FIND_A_SUPPLIER
     view_path = '/'
-    slug_identity = 'landing-page'
+    slug_identity = cms.FIND_A_SUPPLIER_LANDING_SLUG
 
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -697,7 +697,7 @@ class IndustryContactPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
 
     service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/contact/'
-    slug_identity = 'industry-contact'
+    slug_identity = cms.FIND_A_SUPPLIER_INDUSTRY_CONTACT_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
     introduction_text = MarkdownField(blank=True)
