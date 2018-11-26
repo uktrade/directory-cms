@@ -230,7 +230,83 @@ class HighPotentialOpportunityDetailPageSerializer(BasePageSerializer):
     contact_button = serializers.CharField(max_length=500)
     proposition_one = core_fields.MarkdownToHTMLField()
     proposition_one_image = wagtail_fields.ImageRenditionField('original')
+    proposition_one_video = core_fields.VideoField()
+    opportunity_list_title = serializers.CharField()
+    opportunity_list_item_one = core_fields.MarkdownToHTMLField()
+    opportunity_list_item_two = core_fields.MarkdownToHTMLField()
+    opportunity_list_item_three = core_fields.MarkdownToHTMLField()
+    opportunity_list_image = wagtail_fields.ImageRenditionField('original')
+    proposition_two = core_fields.MarkdownToHTMLField()
+    proposition_two_list_item_one = core_fields.MarkdownToHTMLField()
+    proposition_two_list_item_two = core_fields.MarkdownToHTMLField()
+    proposition_two_list_item_three = core_fields.MarkdownToHTMLField()
+    proposition_two_image = wagtail_fields.ImageRenditionField('original')
+    proposition_two_video = core_fields.VideoField()
+    competitive_advantages_title = serializers.CharField()
+    competitive_advantages_list_item_one = core_fields.MarkdownToHTMLField()
+    competitive_advantages_list_item_one_icon = \
+        wagtail_fields.ImageRenditionField('original')
+    competitive_advantages_list_item_two = core_fields.MarkdownToHTMLField()
+    competitive_advantages_list_item_two_icon = \
+        wagtail_fields.ImageRenditionField('original')
+    competitive_advantages_list_item_three = core_fields.MarkdownToHTMLField()
+    competitive_advantages_list_item_three_icon = \
+        wagtail_fields.ImageRenditionField('original')
+    testimonial = core_fields.MarkdownToHTMLField()
+    testimonial_background = wagtail_fields.ImageRenditionField()
+    companies_list_text = core_fields.MarkdownToHTMLField()
+    companies_list_item_image_one = wagtail_fields.ImageRenditionField(
+        'original'
+    )
+    companies_list_item_image_two = wagtail_fields.ImageRenditionField(
+        'original'
+    )
+    companies_list_item_image_three = wagtail_fields.ImageRenditionField(
+        'original'
+    )
+    companies_list_item_image_four = wagtail_fields.ImageRenditionField(
+        'original'
+    )
+    companies_list_item_image_five = wagtail_fields.ImageRenditionField(
+        'original'
+    )
+    companies_list_item_image_six = wagtail_fields.ImageRenditionField(
+        'original'
+    )
+    companies_list_item_image_seven = wagtail_fields.ImageRenditionField(
+        'original'
+    )
+    companies_list_item_image_eight = wagtail_fields.ImageRenditionField(
+        'original'
+    )
+    case_study_list_title = serializers.CharField()
+    case_study_one_text = core_fields.MarkdownToHTMLField()
+    case_study_one_image = wagtail_fields.ImageRenditionField('original')
+    case_study_two_text = core_fields.MarkdownToHTMLField()
+    case_study_two_image = wagtail_fields.ImageRenditionField('original')
+    case_study_three_text = core_fields.MarkdownToHTMLField()
+    case_study_three_image = wagtail_fields.ImageRenditionField('original')
+    case_study_four_text = core_fields.MarkdownToHTMLField()
+    case_study_four_image = wagtail_fields.ImageRenditionField('original')
+    other_opportunities_title = serializers.CharField()
+    pdf_document = core_fields.DocumentURLField()
+    summary_image = wagtail_fields.ImageRenditionField('original')
+    other_opportunities = serializers.SerializerMethodField()
 
+    def get_other_opportunities(self, instance):
+        queryset = (
+            HighPotentialOpportunityDetailPage.objects.all()
+                .live()
+                .order_by('heading')
+                .exclude(slug=instance.slug)
+        )
+        serializer = self.__class__(
+            queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
 
 
 class HighPotentialOpportunityFormPageSerializer(BasePageSerializer,
@@ -242,6 +318,33 @@ class HighPotentialOpportunityFormPageSerializer(BasePageSerializer,
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
     breadcrumbs_label = serializers.CharField(max_length=50)
+    opportunity_list = serializers.SerializerMethodField()
+
+    def get_opportunity_list(self, instance):
+        queryset = (
+            HighPotentialOpportunityDetailPage.objects.all()
+                .live()
+                .order_by('heading')
+                .exclude(slug=instance.slug)
+        )
+        serializer = HighPotentialOpportunityDetailPageSerializer(
+            queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
+
+class HighPotentialOpportunityFormSuccessPageSerializer(BasePageSerializer):
+    breadcrumbs_label = serializers.CharField(max_length=50)
+    heading = serializers.CharField()
+    sub_heading = serializers.CharField()
+    next_steps_title = serializers.CharField()
+    next_steps_body = serializers.CharField()
+    documents_title = serializers.CharField()
+    documents_body = serializers.CharField()
+
     opportunity_list = serializers.SerializerMethodField()
 
     def get_opportunity_list(self, instance):

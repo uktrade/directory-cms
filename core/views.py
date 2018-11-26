@@ -25,7 +25,8 @@ from core.models import BasePage
 from core.upstream_serializers import UpstreamModelSerilaizer
 from export_readiness import models as ex_read_models
 from export_readiness import serializers as ex_read_serializers
-from invest.models import HighPotentialOpportunityDetailPage, SectorPage
+from invest import models as invest_models
+from invest import serializers as invest_serializers
 
 
 logger = logging.getLogger(__name__)
@@ -37,7 +38,19 @@ MODELS_SERIALIZERS_MAPPING = {
     ex_read_models.ArticleListingPage: ex_read_serializers.ArticleListingPageSerializer,  # NOQA
     ex_read_models.TopicLandingPage: ex_read_serializers.TopicLandingPageSerializer,  # NOQA
     ex_read_models.InternationalLandingPage: ex_read_serializers.InternationalLandingPageSerializer,  # NOQA
-    ex_read_models.CampaignPage: ex_read_serializers.CampaignPageSerializer
+    ex_read_models.CampaignPage: ex_read_serializers.CampaignPageSerializer,
+    # invest
+    invest_models.SectorLandingPage: invest_serializers.SectorLandingPageGenericSerializer,  # NOQA
+    invest_models.RegionLandingPage: invest_serializers.SectorLandingPageGenericSerializer,  # NOQA
+    invest_models.SectorPage: invest_serializers.SectorPageSerializer,
+    invest_models.SetupGuideLandingPage: invest_serializers.SetupGuideLandingPageSerializer,  # NOQA
+    invest_models.SetupGuidePage: invest_serializers.SetupGuidePageSerializer,
+    invest_models.InvestHomePage: invest_serializers.InvestHomePageSerializer,
+    invest_models.InfoPage: invest_serializers.InfoPageSerializer,
+    invest_models.HighPotentialOpportunityFormPage: invest_serializers.HighPotentialOpportunityFormPageSerializer,  # NOQA
+    invest_models.HighPotentialOpportunityDetailPage: invest_serializers.HighPotentialOpportunityDetailPageSerializer,  # NOQA
+    invest_models.HighPotentialOpportunityFormSuccessPage: invest_serializers.HighPotentialOpportunityFormSuccessPageSerializer,  # NOQA
+    # find a supplier
 }
 
 

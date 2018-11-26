@@ -1151,64 +1151,6 @@ class HighPotentialOpportunityDetailPage(BasePage):
         DocumentChooserPanel('pdf_document'),
     ]
 
-    api_fields = [
-        APIField('breadcrumbs_label'),
-        APIField('heading'),
-        APIImageField('hero_image'),
-        APIMarkdownToHTMLField('contact_proposition'),
-        APIField('contact_button'),
-        APIMarkdownToHTMLField('proposition_one'),
-        APIImageField('proposition_one_image'),
-        APIVideoField('proposition_one_video'),
-        APIField('opportunity_list_title'),
-        APIMarkdownToHTMLField('opportunity_list_item_one'),
-        APIMarkdownToHTMLField('opportunity_list_item_two'),
-        APIMarkdownToHTMLField('opportunity_list_item_three'),
-        APIImageField('opportunity_list_image'),
-        APIMarkdownToHTMLField('proposition_two'),
-        APIMarkdownToHTMLField('proposition_two_list_item_one'),
-        APIMarkdownToHTMLField('proposition_two_list_item_two'),
-        APIMarkdownToHTMLField('proposition_two_list_item_three'),
-        APIImageField('proposition_two_image'),
-        APIVideoField('proposition_two_video'),
-        APIField('competitive_advantages_title'),
-        APIMarkdownToHTMLField('competitive_advantages_list_item_one'),
-        APIMarkdownToHTMLField('competitive_advantages_list_item_two'),
-        APIMarkdownToHTMLField('competitive_advantages_list_item_three'),
-        APIImageField('competitive_advantages_list_item_one_icon'),
-        APIImageField('competitive_advantages_list_item_two_icon'),
-        APIImageField('competitive_advantages_list_item_three_icon'),
-        APIMarkdownToHTMLField('testimonial'),
-        APIImageField('testimonial_background'),
-        APIMarkdownToHTMLField('companies_list_text'),
-        APIImageField('companies_list_item_image_one'),
-        APIImageField('companies_list_item_image_two'),
-        APIImageField('companies_list_item_image_three'),
-        APIImageField('companies_list_item_image_four'),
-        APIImageField('companies_list_item_image_five'),
-        APIImageField('companies_list_item_image_six'),
-        APIImageField('companies_list_item_image_seven'),
-        APIImageField('companies_list_item_image_eight'),
-        APIField('case_study_list_title'),
-        APIMarkdownToHTMLField('case_study_one_text'),
-        APIImageField('case_study_one_image'),
-        APIMarkdownToHTMLField('case_study_two_text'),
-        APIImageField('case_study_two_image'),
-        APIMarkdownToHTMLField('case_study_three_text'),
-        APIImageField('case_study_three_image'),
-        APIMarkdownToHTMLField('case_study_four_text'),
-        APIImageField('case_study_four_image'),
-        APIField('other_opportunities_title'),
-        api_fields.APIHighPotentialOpportunityDetailPageListField(
-            'other_opportunities',
-        ),
-        APIDocumentUrlField('pdf_document'),
-        APIImageField('summary_image'),
-        APIMetaField('meta'),
-        APIField('seo_title'),
-        APIField('search_description'),
-    ]
-
 
 class HighPotentialOpportunityFormSuccessPage(BasePage):
     service_name_value = cms.INVEST
@@ -1271,27 +1213,4 @@ class HighPotentialOpportunityFormSuccessPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-    ]
-
-    api_fields = [
-        APIField('breadcrumbs_label'),
-        APIField('heading'),
-        APIField('sub_heading'),
-        APIField('next_steps_title'),
-        APIField('next_steps_body'),
-        APIField('documents_title'),
-        APIField('documents_body'),
-        APIMetaField('meta'),
-        APIField('seo_title'),
-        APIField('search_description'),
-        api_fields.APIHighPotentialOpportunityDetailPageListField(
-            'opportunity_list',
-            field_names=[
-                'meta',
-                'summary_image',
-                'heading',
-                'proposition_one',
-                'pdf_document',
-            ]
-        ),
     ]
