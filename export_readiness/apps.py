@@ -19,3 +19,4 @@ class ExportReadinessConfig(AppConfig):
         cache.EUExitInternationalFormPageSubscriber.subscribe()
         cache.EUExitDomesticFormPageSubscriber.subscribe()
         cache.EUExitFormSuccessPageSubscriber.subscribe()
+        cache.CampaignPageSubscriber.subscribe()

@@ -19,6 +19,7 @@ def test_cache_registration():
         models.EUExitInternationalFormPage,
         models.EUExitDomesticFormPage,
         models.EUExitFormSuccessPage,
+        models.CampaignPage,
     ]:
         assert is_registered_for_cache(model)
 
