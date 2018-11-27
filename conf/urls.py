@@ -18,25 +18,69 @@ api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
 
 
+api_urls = [
+    url(r'^', api_router.urls),
+    url(
+        r'^pages/lookup-by-slug/(?P<slug>[\w-]+)/',
+        api_router.wrap_view(
+            core.views.PageLookupBySlugAPIEndpoint.as_view(
+                {'get': 'detail_view'}
+            )
+        ),
+        name='lookup-by-slug'
+    ),
+    url(
+        r'^pages/lookup-by-full-path/$',
+        api_router.wrap_view(
+            core.views.PageLookupByFullPathAPIEndpoint.as_view(
+                {'get': 'detail_view'}
+            )
+        ),
+        name='lookup-by-full-path'
+    ),
+    url(
+        r'^pages/lookup-by-tag/(?P<slug>[\w-]+)/$',
+        api_router.wrap_view(
+            core.views.PageLookupByTagListAPIEndpoint.as_view()
+        ),
+        name='lookup-by-tag-list'
+    ),
+]
+
+
+healthcheck_urls = [
+    url(
+        r'^healthcheck/sentry/$',
+        directory_healthcheck.views.SentryHealthcheckView.as_view(),
+        name='sentry'
+    ),
+    url(
+        r'^healthcheck/database/$',
+        healthcheck.views.DatabaseAPIView.as_view(),
+        name='database'
+    ),
+    url(
+        r'^healthcheck/ping/$',
+        healthcheck.views.PingAPIView.as_view(),
+        name='ping'
+    ),
+]
+
+
 urlpatterns = [
     url(
         r'^$',
         RedirectView.as_view(url='/admin/')
     ),
     url(
-        r'^healthcheck/sentry/$',
-        directory_healthcheck.views.SentryHealthcheckView.as_view(),
-        name='healthcheck-sentry'
+        r'^api/',
+        include(api_urls, namespace='api', app_name='api')
     ),
     url(
-        r'^healthcheck/database/$',
-        healthcheck.views.DatabaseAPIView.as_view(),
-        name='healthcheck-database'
-    ),
-    url(
-        r'^healthcheck/ping/$',
-        healthcheck.views.PingAPIView.as_view(),
-        name='healthcheck-ping'
+        r'^api/healthcheck/',
+        include(
+            healthcheck_urls, namespace='healthcheck', app_name='healthcheck'
+        )
     ),
     url(
         r'^admin/pages/(?P<pk>[0-9]+)/copy-upstream/$',
@@ -55,33 +99,6 @@ urlpatterns = [
         ),
         login_required(csrf_exempt(core.views.PreloadPageView.as_view())),
         name='preload-add-page',
-    ),
-
-    url(r'^api/', api_router.urls),
-    url(
-        r'^api/pages/lookup-by-slug/(?P<slug>[\w-]+)/',
-        api_router.wrap_view(
-            core.views.PageLookupBySlugAPIEndpoint.as_view(
-                {'get': 'detail_view'}
-            )
-        ),
-        name='lookup-by-slug'
-    ),
-    url(
-        r'^api/pages/lookup-by-full-path/$',
-        api_router.wrap_view(
-            core.views.PageLookupByFullPathAPIEndpoint.as_view(
-                {'get': 'detail_view'}
-            )
-        ),
-        name='lookup-by-full-path'
-    ),
-    url(
-        r'^api/pages/lookup-by-tag/(?P<slug>[\w-]+)/$',
-        api_router.wrap_view(
-            core.views.PageLookupByTagListAPIEndpoint.as_view()
-        ),
-        name='lookup-by-tag-list'
     ),
 
     url(r'^admin/', include(wagtailadmin_urls)),

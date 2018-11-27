@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 
 @pytest.mark.django_db
 def test_ping(client):
-    response = client.get(reverse('healthcheck-ping'))
+    response = client.get(reverse('healthcheck:ping'))
 
     assert response.status_code == status.HTTP_200_OK
 
@@ -19,7 +19,7 @@ def test_ping(client):
 @pytest.mark.django_db
 def test_database(mock_check_status, client, settings):
     response = client.get(
-        reverse('healthcheck-database'),
+        reverse('healthcheck:database'),
         {'token': settings.HEALTH_CHECK_TOKEN},
     )
 

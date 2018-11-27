@@ -14,7 +14,7 @@ def test_landing_page_exposes_industries(admin_client, root_page):
     factories.IndustryPageFactory()
     landing_page = factories.LandingPageFactory(live=True, parent=root_page)
 
-    url = reverse('api:pages:detail', kwargs={'pk': landing_page.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': landing_page.pk})
 
     response = admin_client.get(url)
 
@@ -32,7 +32,7 @@ def test_industry_landing_page_exposes_industries(admin_client, root_page):
         parent=root_page
     )
 
-    url = reverse('api:pages:detail', kwargs={'pk': landing_page.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': landing_page.pk})
 
     response = admin_client.get(url)
 
@@ -50,7 +50,7 @@ def test_industry_exposes_article_summaries(admin_client, untranslated_page):
         page=untranslated_page
     )
 
-    url = reverse('api:pages:detail', kwargs={'pk': untranslated_page.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': untranslated_page.pk})
 
     response = admin_client.get(url)
 
