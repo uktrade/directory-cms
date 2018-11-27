@@ -15,8 +15,7 @@ from django.db import models
 from django.forms import CheckboxSelectMultiple, Textarea, Select
 from django.utils.text import slugify
 
-from core.api_fields import APIMarkdownToHTMLField, APIImageField, \
-    APIMetaField, APIVideoField
+from core.api_fields import APIMarkdownToHTMLField, APIMetaField
 from core.model_fields import MarkdownField
 
 from core.models import (

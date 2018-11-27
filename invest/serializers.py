@@ -91,9 +91,9 @@ class SectorPageSerializer(BasePageSerializer):
 
     def get_children_sectors(self, instance):
         from .models import SectorPage
-        queryset = instance.get_descendants().\
-            type(SectorPage).\
-            live().\
+        queryset = instance.get_descendants(). \
+            type(SectorPage). \
+            live(). \
             specific()
         serializer = SectorPageSerializer(
             queryset,
@@ -112,10 +112,9 @@ class SectorLandingPageGenericSerializer(BasePageSerializer):
 
     def get_children_sectors(self, instance):
         from .models import SectorPage
-        queryset = instance.get_descendants().\
-            type(SectorPage).\
-            live().\
-            specific()
+        queryset = instance.get_descendants().type(
+            SectorPage
+        ).live().specific()
         serializer = SectorPageSerializer(
             queryset,
             many=True,
@@ -134,10 +133,9 @@ class SetupGuidePageSerializer(BasePageSerializer):
 
     def get_children_setup_guides(self, instance):
         from .models import SetupGuidePage
-        queryset = instance.get_descendants()\
-            .type(SetupGuidePage).\
-            live().\
-            specific()
+        queryset = instance.get_descendants().type(
+            SetupGuidePage
+        ).live().specific()
         serializer = SetupGuidePageSerializer(
             queryset,
             many=True,
@@ -163,10 +161,9 @@ class SetupGuideLandingPageSerializer(BasePageSerializer):
 
     def get_children_setup_guides(self, instance):
         from .models import SetupGuidePage
-        queryset = instance.get_descendants()\
-            .type(SetupGuidePage).\
-            live().\
-            specific()
+        queryset = instance.get_descendants().type(
+            SetupGuidePage
+        ).live().specific()
         serializer = SetupGuidePageSerializer(
             queryset,
             many=True,
@@ -319,15 +316,16 @@ class HighPotentialOpportunityDetailPageBaseSerializer(BasePageSerializer):
 
 
 class HighPotentialOpportunityDetailPageSerializer(
-    HighPotentialOpportunityDetailPageBaseSerializer):
+    HighPotentialOpportunityDetailPageBaseSerializer
+):
     other_opportunities = serializers.SerializerMethodField()
 
     def get_other_opportunities(self, instance):
         queryset = (
             HighPotentialOpportunityDetailPage.objects.all()
-                .live()
-                .order_by('heading')
-                .exclude(slug=instance.slug)
+            .live()
+            .order_by('heading')
+            .exclude(slug=instance.slug)
         )
         serializer = HighPotentialOpportunityDetailPageBaseSerializer(
             queryset,
@@ -338,9 +336,10 @@ class HighPotentialOpportunityDetailPageSerializer(
         return serializer.data
 
 
-class HighPotentialOpportunityFormPageSerializer(BasePageSerializer,
-    metaclass=FormPageSerializerMetaclass):
-
+class HighPotentialOpportunityFormPageSerializer(
+    BasePageSerializer,
+    metaclass=FormPageSerializerMetaclass
+):
     class Meta:
         model_class = HighPotentialOpportunityFormPage
 
@@ -352,9 +351,9 @@ class HighPotentialOpportunityFormPageSerializer(BasePageSerializer,
     def get_opportunity_list(self, instance):
         queryset = (
             HighPotentialOpportunityDetailPage.objects.all()
-                .live()
-                .order_by('heading')
-                .exclude(slug=instance.slug)
+            .live()
+            .order_by('heading')
+            .exclude(slug=instance.slug)
         )
         serializer = HighPotentialOpportunityDetailPageSerializer(
             queryset,
@@ -379,9 +378,9 @@ class HighPotentialOpportunityFormSuccessPageSerializer(BasePageSerializer):
     def get_opportunity_list(self, instance):
         queryset = (
             HighPotentialOpportunityDetailPage.objects.all()
-                .live()
-                .order_by('heading')
-                .exclude(slug=instance.slug)
+            .live()
+            .order_by('heading')
+            .exclude(slug=instance.slug)
         )
         serializer = HighPotentialOpportunityDetailPageSerializer(
             queryset,

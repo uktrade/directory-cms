@@ -41,7 +41,8 @@ class VideoField(fields.DictField):
     def to_representation(self, instance):
         return {
             'url': instance.url,
-            'thumbnail': instance.thumbnail.url if instance.thumbnail else None,
+            'thumbnail': instance.thumbnail.url if
+            instance.thumbnail else None,
             'width': instance.width,
             'height': instance.height,
             'duration': instance.duration,

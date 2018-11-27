@@ -93,13 +93,6 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
     @classmethod
     def get_nested_default_fields(cls, model):
         fields = [field.name for field in model.api_fields]
-        # "other_opportunites" prevents the field being serialized
-        # for `HighPotentialOpportunityDetailPage`, which results in
-        # infinite recursion.
-        if model == HighPotentialOpportunityDetailPage:
-            fields.remove('other_opportunities')
-        elif model == SectorPage:
-            fields.remove('children_sectors')
         return fields
 
     @classmethod
