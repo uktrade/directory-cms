@@ -8,6 +8,51 @@ from core.serializers import BasePageSerializer
 from .models import ArticleListingPage, ArticlePage, TopicLandingPage
 
 
+class GenericBodyOnlyPageSerializer(BasePageSerializer):
+    body = core_fields.MarkdownToHTMLField()
+
+class GetFinancePageSerializer(BasePageSerializer):
+    breadcrumbs_label = serializers.CharField()
+    hero_text = core_fields.MarkdownToHTMLField()
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    ukef_logo = wagtail_fields.ImageRenditionField('original')
+    contact_proposition = core_fields.MarkdownToHTMLField()
+    contact_button = serializers.CharField()
+    advantages_title = serializers.CharField()
+    advantages_one = core_fields.MarkdownToHTMLField()
+    advantages_one_icon = wagtail_fields.ImageRenditionField('original')
+    advantages_two = core_fields.MarkdownToHTMLField()
+    advantages_two_icon = wagtail_fields.ImageRenditionField('original')
+    advantages_three = core_fields.MarkdownToHTMLField()
+    advantages_three_icon = wagtail_fields.ImageRenditionField('original')
+    evidence = core_fields.MarkdownToHTMLField()
+    evidence_video = core_fields.VideoField()
+
+
+class PerformanceDashboardPageSerializer(BasePageSerializer):
+    heading = serializers.CharField()
+    description = core_fields.MarkdownToHTMLField()
+    product_link = serializers.URLField()
+    data_title_row_one = serializers.CharField()
+    data_number_row_one = serializers.CharField()
+    data_period_row_one = serializers.CharField()
+    data_description_row_one = core_fields.MarkdownToHTMLField()
+    data_title_row_two = serializers.CharField()
+    data_number_row_two = serializers.CharField()
+    data_period_row_two = serializers.CharField()
+    data_description_row_two = core_fields.MarkdownToHTMLField()
+    data_title_row_three = serializers.CharField()
+    data_number_row_three = serializers.CharField()
+    data_period_row_three = serializers.CharField()
+    data_description_row_three = core_fields.MarkdownToHTMLField()
+    data_title_row_four = serializers.CharField()
+    data_number_row_four = serializers.CharField()
+    data_period_row_four = serializers.CharField()
+    data_description_row_four = core_fields.MarkdownToHTMLField()
+    guidance_notes = core_fields.MarkdownToHTMLField()
+    landing_dashboards = serializers.BooleanField()
+
+
 class ArticlePageSerializer(BasePageSerializer):
     article_title = serializers.CharField(max_length=255)
     article_teaser = serializers.CharField(max_length=255)

@@ -33,6 +33,12 @@ logger = logging.getLogger(__name__)
 
 
 MODELS_SERIALIZERS_MAPPING = {
+    # export readiness
+    ex_read_models.TermsAndConditionsPage: ex_read_serializers.GenericBodyOnlyPageSerializer,  # NOQA
+    ex_read_models.PrivacyAndCookiesPage: ex_read_serializers.GenericBodyOnlyPageSerializer,  # NOQA
+    ex_read_models.GetFinancePage: ex_read_serializers.GetFinancePageSerializer,  # NOQA
+    ex_read_models.PerformanceDashboardPage: ex_read_serializers.PerformanceDashboardPageSerializer,  # NOQA
+    ex_read_models.PerformanceDashboardNotesPage: ex_read_serializers.GenericBodyOnlyPageSerializer,  # NOQA
     ex_read_models.ArticlePage: ex_read_serializers.ArticlePageSerializer,
     ex_read_models.HomePage: ex_read_serializers.HomePageSerializer,
     ex_read_models.ArticleListingPage: ex_read_serializers.ArticleListingPageSerializer,  # NOQA
