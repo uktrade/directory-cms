@@ -6,7 +6,8 @@ from core.serializers import BasePageSerializer, FormPageSerializerMetaclass
 from .models import HighPotentialOpportunityFormPage, \
     HighPotentialOpportunityDetailPage
 
-ONE_TO_SEVEN_WORDS = ('one', 'two', 'three', 'four', 'five', 'six', 'seven')
+ONE_TO_SIX_WORDS = ['one', 'two', 'three', 'four', 'five', 'six']
+ONE_TO_SEVEN_WORDS = ONE_TO_SIX_WORDS + ['seven']
 
 
 class SubsectionProxyDataWrapper:
@@ -63,19 +64,21 @@ class SubsectionSerializer(serializers.Serializer):
 
 
 class SectorPageSerializer(BasePageSerializer):
-    features = serializers.BooleanField()
+    featured = serializers.BooleanField()
     description = serializers.CharField()
     heading = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
     pullout = serializers.SerializerMethodField()
     subsections = serializers.SerializerMethodField()
-    sectors = serializers.SerializerMethodField()
+    children_sectors = serializers.SerializerMethodField()
 
     def get_pullout(self, instance):
         return PulloutSerializer(
-            text=instance.pullout_text,
-            stat=instance.pullout_stat,
-            stat_text=instance.stat_text
+            {
+                'text': instance.pullout_text,
+                'stat': instance.pullout_stat,
+                'stat_text': instance.pullout_stat_text
+            }
         ).data
 
     def get_subsections(self, instance):
@@ -86,9 +89,12 @@ class SectorPageSerializer(BasePageSerializer):
         serializer = SubsectionSerializer(data, many=True)
         return serializer.data
 
-    def get_sectors(self, instance):
+    def get_children_sectors(self, instance):
         from .models import SectorPage
-        queryset = instance.get_descendants.type(SectorPage).live().specific()
+        queryset = instance.get_descendants().\
+            type(SectorPage).\
+            live().\
+            specific()
         serializer = SectorPageSerializer(
             queryset,
             many=True,
@@ -106,7 +112,10 @@ class SectorLandingPageGenericSerializer(BasePageSerializer):
 
     def get_children_sectors(self, instance):
         from .models import SectorPage
-        queryset = instance.get_descendants.type(SectorPage).live().specific()
+        queryset = instance.get_descendants().\
+            type(SectorPage).\
+            live().\
+            specific()
         serializer = SectorPageSerializer(
             queryset,
             many=True,
@@ -121,6 +130,21 @@ class SetupGuidePageSerializer(BasePageSerializer):
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
     subsections = serializers.SerializerMethodField()
+    children_setup_guides = serializers.SerializerMethodField()
+
+    def get_children_setup_guides(self, instance):
+        from .models import SetupGuidePage
+        queryset = instance.get_descendants()\
+            .type(SetupGuidePage).\
+            live().\
+            specific()
+        serializer = SetupGuidePageSerializer(
+            queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
 
     def get_subsections(self, instance):
         data = [
@@ -139,9 +163,10 @@ class SetupGuideLandingPageSerializer(BasePageSerializer):
 
     def get_children_setup_guides(self, instance):
         from .models import SetupGuidePage
-        queryset = instance.get_descendants.type(
-            SetupGuidePage
-        ).live().specific()
+        queryset = instance.get_descendants()\
+            .type(SetupGuidePage).\
+            live().\
+            specific()
         serializer = SetupGuidePageSerializer(
             queryset,
             many=True,
@@ -180,7 +205,7 @@ class InvestHomePageSerializer(BasePageSerializer):
     def get_how_we_help(self, instance):
         data = [
             HowWeHelpProxyDataWrapper(instance=instance, suffix=num)
-            for num in ONE_TO_SEVEN_WORDS
+            for num in ONE_TO_SIX_WORDS
         ]
         serializer = HowWeHelpSerializer(data, many=True)
         return serializer.data
@@ -222,7 +247,7 @@ class InfoPageSerializer(BasePageSerializer):
     content = core_fields.MarkdownToHTMLField()
 
 
-class HighPotentialOpportunityDetailPageSerializer(BasePageSerializer):
+class HighPotentialOpportunityDetailPageBaseSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField(max_length=50)
     heading = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
@@ -253,7 +278,7 @@ class HighPotentialOpportunityDetailPageSerializer(BasePageSerializer):
     competitive_advantages_list_item_three_icon = \
         wagtail_fields.ImageRenditionField('original')
     testimonial = core_fields.MarkdownToHTMLField()
-    testimonial_background = wagtail_fields.ImageRenditionField()
+    testimonial_background = wagtail_fields.ImageRenditionField('original')
     companies_list_text = core_fields.MarkdownToHTMLField()
     companies_list_item_image_one = wagtail_fields.ImageRenditionField(
         'original'
@@ -291,6 +316,10 @@ class HighPotentialOpportunityDetailPageSerializer(BasePageSerializer):
     other_opportunities_title = serializers.CharField()
     pdf_document = core_fields.DocumentURLField()
     summary_image = wagtail_fields.ImageRenditionField('original')
+
+
+class HighPotentialOpportunityDetailPageSerializer(
+    HighPotentialOpportunityDetailPageBaseSerializer):
     other_opportunities = serializers.SerializerMethodField()
 
     def get_other_opportunities(self, instance):
@@ -300,7 +329,7 @@ class HighPotentialOpportunityDetailPageSerializer(BasePageSerializer):
                 .order_by('heading')
                 .exclude(slug=instance.slug)
         )
-        serializer = self.__class__(
+        serializer = HighPotentialOpportunityDetailPageBaseSerializer(
             queryset,
             many=True,
             allow_null=True,

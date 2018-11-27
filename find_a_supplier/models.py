@@ -12,7 +12,8 @@ from wagtailmedia.widgets import AdminMediaChooser
 from django.db import models
 
 from core.api_fields import APIMarkdownToHTMLField, APIImageField, \
-    APIMetaField, APIBreadcrumbsField, APIVideoField, MarkdownField
+    APIMetaField, APIBreadcrumbsField, APIVideoField
+from core.model_fields import MarkdownField
 from core.helpers import make_translated_interface
 from core.models import (
     BasePage,

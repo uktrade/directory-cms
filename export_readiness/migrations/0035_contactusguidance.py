@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 import core.api_fields
+import core.model_fields
 import core.validators
 from django.db import migrations, models
 import django.db.models.deletion
@@ -22,7 +23,7 @@ class Migration(migrations.Migration):
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
                 ('service_name', models.CharField(choices=[('FIND_A_SUPPLIER', 'Find a Supplier'), ('EXPORT_READINESS', 'Export Readiness'), ('INVEST', 'Invest'), ('COMPONENTS', 'Components')], db_index=True, max_length=100, null=True)),
                 ('topic', models.TextField(choices=[('export-opportunities-guidance-daily-alerts', 'Export Opportunities daily alerts')], unique=True)),
-                ('body', core.api_fields.MarkdownField(validators=[core.validators.slug_hyperlinks])),
+                ('body', core.model_fields.MarkdownField(validators=[core.validators.slug_hyperlinks])),
             ],
             options={
                 'abstract': False,

@@ -1,5 +1,4 @@
 from directory_constants.constants import cms
-from wagtail.api import APIField
 from wagtail.admin.edit_handlers import (
     FieldPanel, ObjectList, MultiFieldPanel, FieldRowPanel
 )
@@ -9,15 +8,12 @@ from wagtailmedia.widgets import AdminMediaChooser
 
 from django.db import models
 
-from core.api_fields import APIMarkdownToHTMLField, APIImageField, \
-    APIMetaField, APIVideoField, MarkdownField, APIDocumentUrlField
 from core.helpers import make_translated_interface
+from core.model_fields import MarkdownField
 from core.models import (
     BasePage, ExclusivePageMixin, ServiceMixin, FormPageMetaClass
 )
 from core.panels import SearchEngineOptimisationPanel
-
-from invest import api_fields
 
 
 class InvestApp(ExclusivePageMixin, ServiceMixin, BasePage):

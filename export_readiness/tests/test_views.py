@@ -14,6 +14,7 @@ def test_performance_dashboard(admin_client, root_page):
 
     response = admin_client.get(url)
     assert response.status_code == 200
+    assert response.json()['page_type'] == 'PerformanceDashboardPage'
 
 
 def test_performance_dashboard_notes(admin_client, root_page):

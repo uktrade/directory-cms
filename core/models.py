@@ -357,8 +357,4 @@ class FormPageMetaClass(PageBase):
             attrs['content_panels_after_form']
         )
 
-        form_api_fields = [
-            api_fields.APIFormFieldField(name) for name in form_field_names
-        ]
-        attrs['api_fields'] += form_api_fields
         return super().__new__(mcls, name, bases, attrs)

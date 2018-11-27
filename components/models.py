@@ -14,8 +14,8 @@ from core.helpers import make_translated_interface
 from core.api_fields import (
     APIMarkdownToHTMLField,
     APIMetaField,
-    MarkdownField,
 )
+from core.model_fields import MarkdownField
 
 
 class ComponentsApp(ExclusivePageMixin, ServiceMixin, BasePage):

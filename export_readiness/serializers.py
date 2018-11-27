@@ -11,6 +11,7 @@ from .models import ArticleListingPage, ArticlePage, TopicLandingPage
 class GenericBodyOnlyPageSerializer(BasePageSerializer):
     body = core_fields.MarkdownToHTMLField()
 
+
 class GetFinancePageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_text = core_fields.MarkdownToHTMLField()
@@ -50,7 +51,7 @@ class PerformanceDashboardPageSerializer(BasePageSerializer):
     data_period_row_four = serializers.CharField()
     data_description_row_four = core_fields.MarkdownToHTMLField()
     guidance_notes = core_fields.MarkdownToHTMLField()
-    landing_dashboards = serializers.BooleanField()
+    landing_dashboard = serializers.BooleanField()
 
 
 class ArticlePageSerializer(BasePageSerializer):
@@ -185,6 +186,7 @@ class InternationalLandingPageSerializer(BasePageSerializer):
 
 
 class TagSerializer(serializers.Serializer):
+    """This is not a Page model."""
     name = serializers.CharField()
     slug = serializers.CharField()
     articles = serializers.SerializerMethodField()
@@ -198,7 +200,7 @@ class TagSerializer(serializers.Serializer):
         return serializer.data
 
 
-class CampaignPageSerializer(serializers.Serializer):
+class CampaignPageSerializer(BasePageSerializer):
     campaign_heading = serializers.CharField(max_length=255)
 
     section_one_heading = serializers.CharField(max_length=255)
