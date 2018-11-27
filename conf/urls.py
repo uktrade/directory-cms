@@ -50,17 +50,17 @@ api_urls = [
 
 healthcheck_urls = [
     url(
-        r'^healthcheck/sentry/$',
+        r'^sentry/$',
         directory_healthcheck.views.SentryHealthcheckView.as_view(),
         name='sentry'
     ),
     url(
-        r'^healthcheck/database/$',
+        r'^database/$',
         healthcheck.views.DatabaseAPIView.as_view(),
         name='database'
     ),
     url(
-        r'^healthcheck/ping/$',
+        r'^ping/$',
         healthcheck.views.PingAPIView.as_view(),
         name='ping'
     ),
@@ -68,10 +68,6 @@ healthcheck_urls = [
 
 
 urlpatterns = [
-    url(
-        r'^$',
-        RedirectView.as_view(url='/admin/')
-    ),
     url(
         r'^api/',
         include(api_urls, namespace='api', app_name='api')
@@ -81,6 +77,10 @@ urlpatterns = [
         include(
             healthcheck_urls, namespace='healthcheck', app_name='healthcheck'
         )
+    ),
+    url(
+        r'^$',
+        RedirectView.as_view(url='/admin/')
     ),
     url(
         r'^admin/pages/(?P<pk>[0-9]+)/copy-upstream/$',

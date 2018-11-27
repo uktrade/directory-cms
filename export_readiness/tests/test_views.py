@@ -66,7 +66,9 @@ def test_article_listing_page_view(admin_client, root_page):
         live=True
     )
 
-    url = reverse('api:api:pages:detail', kwargs={'pk': article_listing_page.pk})
+    url = reverse(
+        'api:api:pages:detail', kwargs={'pk': article_listing_page.pk}
+    )
     response = admin_client.get(url)
     assert response.status_code == 200
     assert 'articles' in response.json()

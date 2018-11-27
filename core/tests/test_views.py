@@ -87,7 +87,9 @@ def test_api_translations_not_populated(
 
 @pytest.mark.django_db
 def test_api_draft(client, page_with_reversion):
-    url = reverse('api:api:pages:detail', kwargs={'pk': page_with_reversion.pk})
+    url = reverse(
+        'api:api:pages:detail', kwargs={'pk': page_with_reversion.pk}
+    )
     param = permissions.DraftTokenPermisison.TOKEN_PARAM
 
     draft_response = client.get(url, {
@@ -286,7 +288,7 @@ def test_translations_exposed(page, translated_page, settings, client):
 @pytest.mark.django_db
 def test_lookup_by_slug(translated_page, admin_client):
     url = reverse(
-        'api:api:lookup-by-slug',
+        'api:lookup-by-slug',
         kwargs={
             'slug': translated_page.slug,
         }
@@ -302,7 +304,7 @@ def test_lookup_by_slug(translated_page, admin_client):
 def test_lookup_by_slug_missing_required_query_param(translated_page,
                                                      admin_client):
     url = reverse(
-        'api:api:lookup-by-slug',
+        'api:lookup-by-slug',
         kwargs={
             'slug': translated_page.slug,
         }
@@ -316,7 +318,7 @@ def test_lookup_by_slug_missing_required_query_param(translated_page,
 
 @pytest.mark.django_db
 def test_lookup_by_slug_missing_page(admin_client):
-    url = reverse('api:api:lookup-by-slug', kwargs={'slug': 'thing'})
+    url = reverse('api:lookup-by-slug', kwargs={'slug': 'thing'})
 
     response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
 
@@ -326,7 +328,7 @@ def test_lookup_by_slug_missing_page(admin_client):
 @pytest.mark.django_db
 def test_lookup_by_slug_draft(page_with_reversion, client):
     url = reverse(
-        'api:api:lookup-by-slug', kwargs={'slug': page_with_reversion.slug}
+        'api:lookup-by-slug', kwargs={'slug': page_with_reversion.slug}
     )
 
     param = permissions.DraftTokenPermisison.TOKEN_PARAM
@@ -354,7 +356,7 @@ def test_lookup_by_slug_draft(page_with_reversion, client):
 @patch('core.filters.ServiceNameFilter.filter_service_name')
 def test_lookup_by_slug_filter_called(mock_filter_service_name, admin_client):
     mock_filter_service_name.return_value = Page.objects.all()
-    url = reverse('api:api:lookup-by-slug', kwargs={'slug': 'food-and-drink'})
+    url = reverse('api:lookup-by-slug', kwargs={'slug': 'food-and-drink'})
     response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
 
     assert response.status_code == 404
@@ -425,7 +427,7 @@ def test_unregistered_page_not_cached(
     page = InfoPageFactory.create(live=True)
 
     # when the industry page is retrieved
-    url = reverse('api:api:lookup-by-slug', kwargs={'slug': page.slug})
+    url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
     response_one = admin_client.get(url, {'service_name': service_name})
 
     # then the page is not retrieved from the cache
@@ -449,7 +451,7 @@ def test_cache_etags_match(admin_client):
     page = InfoPageFactory.create(live=True)
 
     # when the page is retrieved
-    url = reverse('api:api:lookup-by-slug', kwargs={'slug': page.slug})
+    url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
     response_one = admin_client.get(url, {'service_name': service_name})
 
     # then exposing the same etag in subsequent responses results in 304
@@ -468,7 +470,7 @@ def test_cache_etags_mismatch(admin_client):
     page = InfoPageFactory.create(live=True)
 
     # when the page is retrieved
-    url = reverse('api:api:lookup-by-slug', kwargs={'slug': page.slug})
+    url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
     response_one = admin_client.get(url, {'service_name': service_name})
 
     # then exposing the same etag in subsequent responses results in 304
