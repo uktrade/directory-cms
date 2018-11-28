@@ -11,7 +11,6 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailsearchpromotions', '0002_capitalizeverbose'),
         ('wagtailcore', '0040_page_draft_title'),
         ('wagtailforms', '0003_capitalizeverbose'),
         ('export_readiness', '0035_contactusguidance'),

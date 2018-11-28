@@ -11,7 +11,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailcore', '0040_page_draft_title'),
-        ('wagtailsearchpromotions', '0002_capitalizeverbose'),
         ('wagtailforms', '0003_capitalizeverbose'),
         ('export_readiness', '0036_auto_20181105_1258'),
     ]
