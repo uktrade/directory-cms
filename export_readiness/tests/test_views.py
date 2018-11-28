@@ -10,7 +10,7 @@ def test_performance_dashboard(admin_client, root_page):
         parent=root_page
     )
 
-    url = reverse('api:pages:detail', kwargs={'pk': page.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
 
     response = admin_client.get(url)
     assert response.status_code == 200
@@ -22,7 +22,7 @@ def test_performance_dashboard_notes(admin_client, root_page):
         parent=root_page
     )
 
-    url = reverse('api:pages:detail', kwargs={'pk': page.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
 
     response = admin_client.get(url)
     assert response.status_code == 200
@@ -46,7 +46,7 @@ def test_topic_landing_page_view(admin_client, root_page):
         live=True
     )
 
-    url = reverse('api:pages:detail', kwargs={'pk': topic_landing_page.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': topic_landing_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
     assert 'article_listing' in response.json()
@@ -66,7 +66,9 @@ def test_article_listing_page_view(admin_client, root_page):
         live=True
     )
 
-    url = reverse('api:pages:detail', kwargs={'pk': article_listing_page.pk})
+    url = reverse(
+        'api:api:pages:detail', kwargs={'pk': article_listing_page.pk}
+    )
     response = admin_client.get(url)
     assert response.status_code == 200
     assert 'articles' in response.json()
@@ -91,7 +93,7 @@ def test_article_page_view(admin_client, root_page):
     article.tags = [tag, tag2]
     article.save()
 
-    url = reverse('api:pages:detail', kwargs={'pk': article.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': article.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
     assert 'tags' in response.json()
@@ -124,7 +126,7 @@ def test_homepage(admin_client, root_page):
             parent=topic_landing_page
         )
 
-    url = reverse('api:pages:detail', kwargs={'pk': home_page.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': home_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
     assert 'articles' in response.json()
@@ -139,7 +141,7 @@ def test_homepage_no_news(admin_client, root_page):
         parent=root_page
     )
 
-    url = reverse('api:pages:detail', kwargs={'pk': home_page.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': home_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
     assert 'articles' in response.json()
@@ -152,7 +154,7 @@ def test_homepage_no_guidance(admin_client, root_page):
         parent=root_page
     )
 
-    url = reverse('api:pages:detail', kwargs={'pk': home_page.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': home_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
     assert 'guidance' in response.json()
@@ -164,7 +166,7 @@ def test_international_landing_age(admin_client, root_page):
     page = factories.InternationaLandingPageFactory.create(
         parent=root_page
     )
-    url = reverse('api:pages:detail', kwargs={'pk': page.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
     assert 'articles_count' in response.json()

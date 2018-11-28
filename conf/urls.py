@@ -18,6 +18,36 @@ api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
 
 
+api_urls = [
+    url(r'^', api_router.urls),
+    url(
+        r'^pages/lookup-by-slug/(?P<slug>[\w-]+)/',
+        api_router.wrap_view(
+            core.views.PageLookupBySlugAPIEndpoint.as_view(
+                {'get': 'detail_view'}
+            )
+        ),
+        name='lookup-by-slug'
+    ),
+    url(
+        r'^pages/lookup-by-full-path/$',
+        api_router.wrap_view(
+            core.views.PageLookupByFullPathAPIEndpoint.as_view(
+                {'get': 'detail_view'}
+            )
+        ),
+        name='lookup-by-full-path'
+    ),
+    url(
+        r'^pages/lookup-by-tag/(?P<slug>[\w-]+)/$',
+        api_router.wrap_view(
+            core.views.PageLookupByTagListAPIEndpoint.as_view()
+        ),
+        name='lookup-by-tag-list'
+    ),
+]
+
+
 healthcheck_urls = [
     url(
         r'^sentry/$',
@@ -39,7 +69,11 @@ healthcheck_urls = [
 
 urlpatterns = [
     url(
-        r'^healthcheck/',
+        r'^api/',
+        include(api_urls, namespace='api', app_name='api')
+    ),
+    url(
+        r'^api/healthcheck/',
         include(
             healthcheck_urls, namespace='healthcheck', app_name='healthcheck'
         )
@@ -65,33 +99,6 @@ urlpatterns = [
         ),
         login_required(csrf_exempt(core.views.PreloadPageView.as_view())),
         name='preload-add-page',
-    ),
-
-    url(r'^api/', api_router.urls),
-    url(
-        r'^api/pages/lookup-by-slug/(?P<slug>[\w-]+)/',
-        api_router.wrap_view(
-            core.views.PageLookupBySlugAPIEndpoint.as_view(
-                {'get': 'detail_view'}
-            )
-        ),
-        name='lookup-by-slug'
-    ),
-    url(
-        r'^api/pages/lookup-by-full-path/$',
-        api_router.wrap_view(
-            core.views.PageLookupByFullPathAPIEndpoint.as_view(
-                {'get': 'detail_view'}
-            )
-        ),
-        name='lookup-by-full-path'
-    ),
-    url(
-        r'^api/pages/lookup-by-tag/(?P<slug>[\w-]+)/$',
-        api_router.wrap_view(
-            core.views.PageLookupByTagListAPIEndpoint.as_view()
-        ),
-        name='lookup-by-tag-list'
     ),
 
     url(r'^admin/', include(wagtailadmin_urls)),

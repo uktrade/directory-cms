@@ -24,7 +24,7 @@ def test_invest_home_page(admin_client):
     factories.SectorPageFactory(live=True, featured=False)
 
     url = reverse(
-        'lookup-by-slug',
+        'api:lookup-by-slug',
         kwargs={'slug': page.slug}
     )
 
@@ -41,7 +41,7 @@ def test_invest_home_page(admin_client):
 def test_invest_info_page(admin_client, root_page):
     page = factories.InfoPageFactory(live=True, parent=root_page)
 
-    url = reverse('api:pages:detail', kwargs={'pk': page.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
 
     response = admin_client.get(url)
     assert response.status_code == 200
@@ -58,7 +58,7 @@ def test_invest_sector_page(admin_client, root_page):
         parent=factories.SectorPageFactory()
     )
 
-    url = reverse('api:pages:detail', kwargs={'pk': page.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
 
     response = admin_client.get(url)
     assert response.status_code == 200
@@ -72,7 +72,7 @@ def test_invest_sector_landing_page(admin_client, root_page):
     )
     factories.SectorPageFactory(live=True, parent=page)
 
-    url = reverse('api:pages:detail', kwargs={'pk': page.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
 
     response = admin_client.get(url)
     assert response.status_code == 200
@@ -86,7 +86,7 @@ def test_invest_region_landing_page(admin_client, root_page):
     )
     factories.SectorPageFactory(live=True, parent=page)
 
-    url = reverse('api:pages:detail', kwargs={'pk': page.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
 
     response = admin_client.get(url)
     assert response.status_code == 200
@@ -104,7 +104,7 @@ def test_invest_setup_guide_page(admin_client, root_page):
         parent=factories.SetupGuidePageFactory()
     )
 
-    url = reverse('api:pages:detail', kwargs={'pk': page.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
 
     response = admin_client.get(url)
     assert response.status_code == 200
@@ -118,7 +118,7 @@ def test_invest_setup_guide_landing_page(admin_client, root_page):
     )
     factories.SetupGuidePageFactory(live=True, parent=page)
 
-    url = reverse('api:pages:detail', kwargs={'pk': page.pk})
+    url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
 
     response = admin_client.get(url)
     assert response.status_code == 200
@@ -145,7 +145,7 @@ def test_high_potential_opportunity_api(page, admin_client, root_page):
     )
 
     url = reverse(
-        'lookup-by-slug',
+        'api:lookup-by-slug',
         kwargs={'slug': page.slug}
     )
 
