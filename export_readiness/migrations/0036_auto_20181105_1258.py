@@ -14,7 +14,6 @@ class Migration(migrations.Migration):
         ('wagtailsearchpromotions', '0002_capitalizeverbose'),
         ('wagtailcore', '0040_page_draft_title'),
         ('wagtailforms', '0003_capitalizeverbose'),
-        ('wagtailredirects', '0006_redirect_increase_max_length'),
         ('export_readiness', '0035_contactusguidance'),
     ]
 
