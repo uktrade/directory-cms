@@ -23,7 +23,7 @@ class PageCache:
 
     @staticmethod
     def build_key(slug, service_name, language_code):
-        url = reverse('lookup-by-slug', kwargs={'slug': slug})
+        url = reverse('api:lookup-by-slug', kwargs={'slug': slug})
         params = {'service_name': service_name}
         if language_code:
             params['lang'] = language_code
@@ -74,7 +74,7 @@ class CachePopulator:
         request_signer = RequestSigner(
             secret=settings.SIGNATURE_SECRET, sender_id='cache-populator'
         )
-        url = reverse('lookup-by-slug', kwargs={'slug': instance.slug})
+        url = reverse('api:lookup-by-slug', kwargs={'slug': instance.slug})
 
         page_cache.delete(
             slug=instance.slug,

@@ -15,7 +15,7 @@ def test_unpublished_not_cached(admin_client):
     contact_page = factories.IndustryContactPageFactory.create(live=False)
 
     # when the industry page is retrieveds
-    url = reverse('lookup-by-slug', kwargs={'slug': contact_page.slug})
+    url = reverse('api:lookup-by-slug', kwargs={'slug': contact_page.slug})
     response = admin_client.get(url, {'service_name': 'FIND_A_SUPPLIER'})
 
     # then the page is retrieved from the cache
@@ -28,7 +28,7 @@ def test_cache_retrieval(admin_client):
     contact_page = factories.IndustryContactPageFactory.create(live=True)
 
     # when the industry page is retrieveds
-    url = reverse('lookup-by-slug', kwargs={'slug': contact_page.slug})
+    url = reverse('api:lookup-by-slug', kwargs={'slug': contact_page.slug})
     response = admin_client.get(url, {'service_name': 'FIND_A_SUPPLIER'})
 
     # then the page is retrieved from the cache
@@ -49,7 +49,7 @@ def test_cache_retrieval_external_change(admin_client):
     contact_page = factories.IndustryContactPageFactory.create()
 
     # when the industry page is retrieved
-    url = reverse('lookup-by-slug', kwargs={'slug': contact_page.slug})
+    url = reverse('api:lookup-by-slug', kwargs={'slug': contact_page.slug})
     first_response = admin_client.get(url, {'service_name': service_name})
 
     # then the page is retrieved from the cache
@@ -84,7 +84,7 @@ def test_cache_unpublish(admin_client):
     contact_page = factories.IndustryContactPageFactory.create(live=True)
 
     # when the industry page is retrieved
-    url = reverse('lookup-by-slug', kwargs={'slug': contact_page.slug})
+    url = reverse('api:lookup-by-slug', kwargs={'slug': contact_page.slug})
     response = admin_client.get(url, {'service_name': 'FIND_A_SUPPLIER'})
 
     # then the page is retrieved from the cache

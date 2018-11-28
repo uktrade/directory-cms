@@ -214,6 +214,6 @@ def test_cache_populator_not_successful(translated_page, caplog):
     assert log.levelname == 'ERROR'
     assert log.msg == cache.PREPOPULATE_ERROR
     assert log.url == reverse(
-        'lookup-by-slug', kwargs={'slug': translated_page.slug}
+        'api:lookup-by-slug', kwargs={'slug': translated_page.slug}
     )
     assert log.status_code == 403
