@@ -143,6 +143,11 @@ else:
         }
     }
 
+API_CACHE_EXPIRE_SECONDS = env.int(
+    'API_CACHE_EXPIRE_SECONDS', 60 * 60 * 24 * 30  # 30 days
+)
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 

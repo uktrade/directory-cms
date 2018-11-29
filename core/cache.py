@@ -38,7 +38,7 @@ class PageCache:
         key = cls.build_key(
             slug=slug, service_name=service_name, language_code=language_code
         )
-        cls.cache.set(key, contents)
+        cls.cache.set(key, contents, timeout=settings.API_CACHE_EXPIRE_SECONDS)
 
     @classmethod
     def get(cls, slug, service_name, language_code=None):
