@@ -73,7 +73,7 @@ urlpatterns = [
         include(api_urls, namespace='api', app_name='api')
     ),
     url(
-        r'^api/healthcheck/',
+        r'^healthcheck/',
         include(
             healthcheck_urls, namespace='healthcheck', app_name='healthcheck'
         )
