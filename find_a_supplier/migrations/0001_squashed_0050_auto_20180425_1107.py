@@ -18,7 +18,6 @@ class Migration(migrations.Migration):
         ('wagtailforms', '0003_capitalizeverbose'),
         ('wagtailimages', '0019_delete_filter'),
         ('wagtailcore', '0040_page_draft_title'),
-        ('wagtailredirects', '0005_capitalizeverbose'),
     ]
 
     operations = [
