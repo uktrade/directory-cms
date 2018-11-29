@@ -1,5 +1,4 @@
 from directory_constants.constants import cms
-from wagtail.api import APIField
 from wagtail.admin.edit_handlers import (
     FieldPanel, ObjectList, MultiFieldPanel, FieldRowPanel
 )
@@ -9,15 +8,12 @@ from wagtailmedia.widgets import AdminMediaChooser
 
 from django.db import models
 
-from core.api_fields import APIMarkdownToHTMLField, APIImageField, \
-    APIMetaField, APIVideoField, MarkdownField, APIDocumentUrlField
 from core.helpers import make_translated_interface
+from core.model_fields import MarkdownField
 from core.models import (
     BasePage, ExclusivePageMixin, ServiceMixin, FormPageMetaClass
 )
 from core.panels import SearchEngineOptimisationPanel
-
-from invest import api_fields
 
 
 class InvestApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -69,15 +65,6 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
         ]
     )
 
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('heading'),
-        APIImageField('hero_image'),
-        api_fields.APIChildrenSectorPageListField('children_sectors'),
-        APIMetaField('meta')
-    ]
-
 
 class RegionLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.INVEST
@@ -115,15 +102,6 @@ class RegionLandingPage(ExclusivePageMixin, BasePage):
             ObjectList(image_panels, heading='Images'),
         ]
     )
-
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('heading'),
-        APIImageField('hero_image'),
-        api_fields.APIChildrenSectorPageListField('children_sectors'),
-        APIMetaField('meta')
-    ]
 
 
 class SectorPage(BasePage):
@@ -316,50 +294,6 @@ class SectorPage(BasePage):
         ]
     )
 
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('description'),
-        APIField('featured'),
-        APIField('heading'),
-        APIImageField('hero_image'),
-        # pullout
-        APIMarkdownToHTMLField('pullout_text'),
-        APIField('pullout_stat'),
-        APIField('pullout_stat_text'),
-        # subsections
-        APIField('subsection_title_one'),
-        APIMarkdownToHTMLField('subsection_content_one'),
-        APIImageField('subsection_map_one'),
-
-        APIField('subsection_title_two'),
-        APIMarkdownToHTMLField('subsection_content_two'),
-        APIImageField('subsection_map_two'),
-
-        APIField('subsection_title_three'),
-        APIMarkdownToHTMLField('subsection_content_three'),
-        APIImageField('subsection_map_three'),
-
-        APIField('subsection_title_four'),
-        APIMarkdownToHTMLField('subsection_content_four'),
-        APIImageField('subsection_map_four'),
-
-        APIField('subsection_title_five'),
-        APIMarkdownToHTMLField('subsection_content_five'),
-        APIImageField('subsection_map_five'),
-
-        APIField('subsection_title_six'),
-        APIMarkdownToHTMLField('subsection_content_six'),
-        APIImageField('subsection_map_six'),
-
-        APIField('subsection_title_seven'),
-        APIMarkdownToHTMLField('subsection_content_seven'),
-        APIImageField('subsection_map_seven'),
-
-        api_fields.APIChildrenSectorPageListField('children_sectors'),
-        APIMetaField('meta')
-    ]
-
 
 # Setup guide models
 
@@ -390,16 +324,6 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
         content_panels=content_panels,
         settings_panels=settings_panels,
     )
-
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('heading'),
-        APIField('sub_heading'),
-        APIField('lead_in'),
-        api_fields.APIChildrenSetupGuidePageListField('children_setup_guides'),
-        APIMetaField('meta')
-    ]
 
 
 class SetupGuidePage(BasePage):
@@ -514,38 +438,6 @@ class SetupGuidePage(BasePage):
         content_panels=content_panels,
         settings_panels=settings_panels,
     )
-
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('description'),
-        APIField('heading'),
-        APIField('sub_heading'),
-        # subsections
-        APIField('subsection_title_one'),
-        APIMarkdownToHTMLField('subsection_content_one'),
-
-        APIField('subsection_title_two'),
-        APIMarkdownToHTMLField('subsection_content_two'),
-
-        APIField('subsection_title_three'),
-        APIMarkdownToHTMLField('subsection_content_three'),
-
-        APIField('subsection_title_four'),
-        APIMarkdownToHTMLField('subsection_content_four'),
-
-        APIField('subsection_title_five'),
-        APIMarkdownToHTMLField('subsection_content_five'),
-
-        APIField('subsection_title_six'),
-        APIMarkdownToHTMLField('subsection_content_six'),
-
-        APIField('subsection_title_seven'),
-        APIMarkdownToHTMLField('subsection_content_seven'),
-
-        api_fields.APIChildrenSetupGuidePageListField('children_setup_guides'),
-        APIMetaField('meta')
-    ]
 
 
 class InvestHomePage(ExclusivePageMixin, BasePage):
@@ -786,78 +678,6 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         ]
     )
 
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('heading'),
-        APIField('sub_heading'),
-        APIImageField('hero_image'),
-        # subsections
-        APIField('subsection_title_one'),
-        APIMarkdownToHTMLField('subsection_content_one'),
-
-        APIField('subsection_title_two'),
-        APIMarkdownToHTMLField('subsection_content_two'),
-
-        APIField('subsection_title_three'),
-        APIMarkdownToHTMLField('subsection_content_three'),
-
-        APIField('subsection_title_four'),
-        APIMarkdownToHTMLField('subsection_content_four'),
-
-        APIField('subsection_title_five'),
-        APIMarkdownToHTMLField('subsection_content_five'),
-
-        APIField('subsection_title_six'),
-        APIMarkdownToHTMLField('subsection_content_six'),
-
-        APIField('subsection_title_seven'),
-        APIMarkdownToHTMLField('subsection_content_seven'),
-
-        APIField('sector_title'),
-        APIField('sector_button_text'),
-        APIField('setup_guide_title'),
-        APIField('setup_guide_lead_in'),
-        APIField('how_we_help_title'),
-        APIField('how_we_help_lead_in'),
-        # how we help
-        APIField('how_we_help_text_one'),
-        APIImageField('how_we_help_icon_one'),
-
-        APIField('how_we_help_text_two'),
-        APIImageField('how_we_help_icon_two'),
-
-        APIField('how_we_help_text_three'),
-        APIImageField('how_we_help_icon_three'),
-
-        APIField('how_we_help_text_four'),
-        APIImageField('how_we_help_icon_four'),
-
-        APIField('how_we_help_text_five'),
-        APIImageField('how_we_help_icon_five'),
-
-        APIField('how_we_help_text_six'),
-
-        api_fields.APISectorPageListField(
-            'sectors',
-            queryset=(
-                SectorPage.objects.all()
-                .filter(featured=True)
-                .live()
-                .order_by('heading')
-            )
-        ),
-        api_fields.APISetupGuidePageListField(
-            'guides',
-            queryset=(
-                SetupGuidePage.objects.all()
-                .live()
-                .order_by('heading')
-            )
-        ),
-        APIMetaField('meta')
-    ]
-
 
 class InfoPage(BasePage):
     """
@@ -882,13 +702,6 @@ class InfoPage(BasePage):
         content_panels=content_panels,
         settings_panels=settings_panels,
     )
-
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIMarkdownToHTMLField('content'),
-        APIMetaField('meta')
-    ]
 
 
 class HighPotentialOpportunityFormPage(
@@ -931,23 +744,6 @@ class HighPotentialOpportunityFormPage(
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-    ]
-
-    # metaclass appends `form_field_names` to `api_fields`
-    api_fields = [
-        APIField('heading'),
-        APIField('sub_heading'),
-        APIField('seo_title'),
-        APIField('search_description'),
-        api_fields.APIHighPotentialOpportunityDetailPageListField(
-            'opportunity_list',
-            field_names=[
-                'heading',
-                'pdf_document',
-                'meta',
-            ]
-        ),
-        APIField('breadcrumbs_label'),
     ]
 
 
@@ -1351,64 +1147,6 @@ class HighPotentialOpportunityDetailPage(BasePage):
         DocumentChooserPanel('pdf_document'),
     ]
 
-    api_fields = [
-        APIField('breadcrumbs_label'),
-        APIField('heading'),
-        APIImageField('hero_image'),
-        APIMarkdownToHTMLField('contact_proposition'),
-        APIField('contact_button'),
-        APIMarkdownToHTMLField('proposition_one'),
-        APIImageField('proposition_one_image'),
-        APIVideoField('proposition_one_video'),
-        APIField('opportunity_list_title'),
-        APIMarkdownToHTMLField('opportunity_list_item_one'),
-        APIMarkdownToHTMLField('opportunity_list_item_two'),
-        APIMarkdownToHTMLField('opportunity_list_item_three'),
-        APIImageField('opportunity_list_image'),
-        APIMarkdownToHTMLField('proposition_two'),
-        APIMarkdownToHTMLField('proposition_two_list_item_one'),
-        APIMarkdownToHTMLField('proposition_two_list_item_two'),
-        APIMarkdownToHTMLField('proposition_two_list_item_three'),
-        APIImageField('proposition_two_image'),
-        APIVideoField('proposition_two_video'),
-        APIField('competitive_advantages_title'),
-        APIMarkdownToHTMLField('competitive_advantages_list_item_one'),
-        APIMarkdownToHTMLField('competitive_advantages_list_item_two'),
-        APIMarkdownToHTMLField('competitive_advantages_list_item_three'),
-        APIImageField('competitive_advantages_list_item_one_icon'),
-        APIImageField('competitive_advantages_list_item_two_icon'),
-        APIImageField('competitive_advantages_list_item_three_icon'),
-        APIMarkdownToHTMLField('testimonial'),
-        APIImageField('testimonial_background'),
-        APIMarkdownToHTMLField('companies_list_text'),
-        APIImageField('companies_list_item_image_one'),
-        APIImageField('companies_list_item_image_two'),
-        APIImageField('companies_list_item_image_three'),
-        APIImageField('companies_list_item_image_four'),
-        APIImageField('companies_list_item_image_five'),
-        APIImageField('companies_list_item_image_six'),
-        APIImageField('companies_list_item_image_seven'),
-        APIImageField('companies_list_item_image_eight'),
-        APIField('case_study_list_title'),
-        APIMarkdownToHTMLField('case_study_one_text'),
-        APIImageField('case_study_one_image'),
-        APIMarkdownToHTMLField('case_study_two_text'),
-        APIImageField('case_study_two_image'),
-        APIMarkdownToHTMLField('case_study_three_text'),
-        APIImageField('case_study_three_image'),
-        APIMarkdownToHTMLField('case_study_four_text'),
-        APIImageField('case_study_four_image'),
-        APIField('other_opportunities_title'),
-        api_fields.APIHighPotentialOpportunityDetailPageListField(
-            'other_opportunities',
-        ),
-        APIDocumentUrlField('pdf_document'),
-        APIImageField('summary_image'),
-        APIMetaField('meta'),
-        APIField('seo_title'),
-        APIField('search_description'),
-    ]
-
 
 class HighPotentialOpportunityFormSuccessPage(BasePage):
     service_name_value = cms.INVEST
@@ -1471,27 +1209,4 @@ class HighPotentialOpportunityFormSuccessPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-    ]
-
-    api_fields = [
-        APIField('breadcrumbs_label'),
-        APIField('heading'),
-        APIField('sub_heading'),
-        APIField('next_steps_title'),
-        APIField('next_steps_body'),
-        APIField('documents_title'),
-        APIField('documents_body'),
-        APIMetaField('meta'),
-        APIField('seo_title'),
-        APIField('search_description'),
-        api_fields.APIHighPotentialOpportunityDetailPageListField(
-            'opportunity_list',
-            field_names=[
-                'meta',
-                'summary_image',
-                'heading',
-                'proposition_one',
-                'pdf_document',
-            ]
-        ),
     ]

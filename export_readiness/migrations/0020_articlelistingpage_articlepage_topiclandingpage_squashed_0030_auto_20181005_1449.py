@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 import core.api_fields
 import core.fields
+import core.model_fields
 import core.models
 import core.validators
 from django.db import migrations, models
@@ -28,7 +29,7 @@ class Migration(migrations.Migration):
                 ('service_name', models.CharField(choices=[('FIND_A_SUPPLIER', 'Find a Supplier'), ('EXPORT_READINESS', 'Export Readiness'), ('INVEST', 'Invest')], db_index=True, max_length=100, null=True)),
                 ('landing_page_title', models.CharField(max_length=255)),
                 ('hero_teaser', models.CharField(blank=True, max_length=255, null=True)),
-                ('list_teaser', core.api_fields.MarkdownField(blank=True, null=True, validators=[core.validators.slug_hyperlinks])),
+                ('list_teaser', core.model_fields.MarkdownField(blank=True, null=True, validators=[core.validators.slug_hyperlinks])),
                 ('hero_image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image')),
             ],
             options={
@@ -43,7 +44,7 @@ class Migration(migrations.Migration):
                 ('service_name', models.CharField(choices=[('FIND_A_SUPPLIER', 'Find a Supplier'), ('EXPORT_READINESS', 'Export Readiness'), ('INVEST', 'Invest')], db_index=True, max_length=100, null=True)),
                 ('article_title', models.CharField(max_length=255)),
                 ('article_teaser', models.CharField(max_length=255)),
-                ('article_body_text', core.api_fields.MarkdownField(validators=[core.validators.slug_hyperlinks])),
+                ('article_body_text', core.model_fields.MarkdownField(validators=[core.validators.slug_hyperlinks])),
                 ('related_article_one_url', models.CharField(help_text='Paste the article path here (eg /foo/bar/)', max_length=255)),
                 ('related_article_one_title', models.CharField(help_text='Paste the title of the article here', max_length=255)),
                 ('related_article_one_teaser', models.CharField(help_text='Paste the article description here (max 255 characters)', max_length=255)),
@@ -89,7 +90,7 @@ class Migration(migrations.Migration):
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
                 ('service_name', models.CharField(choices=[('FIND_A_SUPPLIER', 'Find a Supplier'), ('EXPORT_READINESS', 'Export Readiness'), ('INVEST', 'Invest')], db_index=True, max_length=100, null=True)),
                 ('news_title', models.CharField(max_length=255)),
-                ('news_description', core.api_fields.MarkdownField(validators=[core.validators.slug_hyperlinks])),
+                ('news_description', core.model_fields.MarkdownField(validators=[core.validators.slug_hyperlinks])),
             ],
             options={
                 'abstract': False,
@@ -118,7 +119,7 @@ class Migration(migrations.Migration):
                 ('city_help_text', core.api_fields.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
                 ('comment_label', core.api_fields.FormLabelField(max_length=200, verbose_name='label')),
                 ('comment_help_text', core.api_fields.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
-                ('body_text', core.api_fields.MarkdownField(default='', validators=[core.validators.slug_hyperlinks])),
+                ('body_text', core.model_fields.MarkdownField(default='', validators=[core.validators.slug_hyperlinks])),
                 ('heading', models.CharField(default='', max_length=255)),
                 ('submit_button_text', models.CharField(default='', max_length=50)),
             ],
@@ -159,7 +160,7 @@ class Migration(migrations.Migration):
                 ('company_name_label', core.api_fields.FormLabelField(max_length=200, verbose_name='label')),
                 ('comment_help_text', core.api_fields.FormHelpTextField(blank=True, max_length=200, null=True, verbose_name='Help text')),
                 ('comment_label', core.api_fields.FormLabelField(max_length=200, verbose_name='label')),
-                ('body_text', core.api_fields.MarkdownField(default='', validators=[core.validators.slug_hyperlinks])),
+                ('body_text', core.model_fields.MarkdownField(default='', validators=[core.validators.slug_hyperlinks])),
                 ('heading', models.CharField(default='', max_length=255)),
                 ('submit_button_text', models.CharField(default='', max_length=50)),
             ],

@@ -35,3 +35,22 @@ class TagsListField(fields.ListField):
 
     def get_attribute(self, instance):
         return instance.tags.all().values('name', 'slug')
+
+
+class VideoField(fields.DictField):
+    def to_representation(self, instance):
+        return {
+            'url': instance.url,
+            'thumbnail': instance.thumbnail.url if
+            instance.thumbnail else None,
+            'width': instance.width,
+            'height': instance.height,
+            'duration': instance.duration,
+            'file_extension': instance.file_extension,
+        }
+
+
+class DocumentURLField(fields.CharField):
+
+    def to_representation(self, instance):
+        return instance.file.url

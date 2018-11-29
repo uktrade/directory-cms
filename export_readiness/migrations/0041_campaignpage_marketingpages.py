@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 import core.api_fields
+import core.model_fields
 import core.models
 import core.validators
 from django.db import migrations, models
@@ -25,21 +26,21 @@ class Migration(migrations.Migration):
                 ('service_name', models.CharField(choices=[('FIND_A_SUPPLIER', 'Find a Supplier'), ('EXPORT_READINESS', 'Export Readiness'), ('INVEST', 'Invest'), ('COMPONENTS', 'Components')], db_index=True, max_length=100, null=True)),
                 ('campaign_heading', models.CharField(max_length=255)),
                 ('section_one_heading', models.CharField(max_length=255)),
-                ('section_one_intro', core.api_fields.MarkdownField(validators=[core.validators.slug_hyperlinks])),
+                ('section_one_intro', core.model_fields.MarkdownField(validators=[core.validators.slug_hyperlinks])),
                 ('selling_point_one_heading', models.CharField(max_length=255)),
-                ('selling_point_one_content', core.api_fields.MarkdownField(validators=[core.validators.slug_hyperlinks])),
+                ('selling_point_one_content', core.model_fields.MarkdownField(validators=[core.validators.slug_hyperlinks])),
                 ('selling_point_two_heading', models.CharField(blank=True, max_length=255, null=True)),
-                ('selling_point_two_content', core.api_fields.MarkdownField(blank=True, null=True, validators=[core.validators.slug_hyperlinks])),
+                ('selling_point_two_content', core.model_fields.MarkdownField(blank=True, null=True, validators=[core.validators.slug_hyperlinks])),
                 ('selling_point_three_heading', models.CharField(blank=True, max_length=255, null=True)),
-                ('selling_point_three_content', core.api_fields.MarkdownField(blank=True, null=True, validators=[core.validators.slug_hyperlinks])),
+                ('selling_point_three_content', core.model_fields.MarkdownField(blank=True, null=True, validators=[core.validators.slug_hyperlinks])),
                 ('section_one_contact_button_url', models.CharField(blank=True, max_length=255, null=True)),
                 ('section_one_contact_button_text', models.CharField(blank=True, max_length=255, null=True)),
                 ('section_two_heading', models.CharField(max_length=255)),
-                ('section_two_intro', core.api_fields.MarkdownField(validators=[core.validators.slug_hyperlinks])),
+                ('section_two_intro', core.model_fields.MarkdownField(validators=[core.validators.slug_hyperlinks])),
                 ('section_two_contact_button_url', models.CharField(blank=True, max_length=255, null=True)),
                 ('section_two_contact_button_text', models.CharField(blank=True, max_length=255, null=True)),
                 ('related_content_heading', models.CharField(max_length=255)),
-                ('related_content_intro', core.api_fields.MarkdownField(validators=[core.validators.slug_hyperlinks])),
+                ('related_content_intro', core.model_fields.MarkdownField(validators=[core.validators.slug_hyperlinks])),
                 ('related_page_one_url', models.CharField(blank=True, max_length=255, null=True)),
                 ('related_page_one_heading', models.CharField(blank=True, max_length=255, null=True)),
                 ('related_page_one_description', models.CharField(blank=True, max_length=255, null=True)),

@@ -146,3 +146,10 @@ class ContactSuccessPageFactory(wagtail_factories.PageFactory):
     next_title = factory.fuzzy.FuzzyText(length=50)
     next_body_text = factory.fuzzy.FuzzyText(length=50)
     parent = None
+
+
+class PrivacyAndCookiesPageFactory(wagtail_factories.PageFactory):
+    class Meta:
+        model = models.PrivacyAndCookiesPage
+
+    body = factory.fuzzy.FuzzyText(length=50)

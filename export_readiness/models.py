@@ -15,8 +15,8 @@ from django.db import models
 from django.forms import CheckboxSelectMultiple, Textarea, Select
 from django.utils.text import slugify
 
-from core.api_fields import APIMarkdownToHTMLField, APIImageField, \
-    APIMetaField, APIVideoField, MarkdownField
+from core.api_fields import APIMarkdownToHTMLField, APIMetaField
+from core.model_fields import MarkdownField
 
 from core.models import (
     BasePage,
@@ -60,13 +60,6 @@ class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
         FieldPanel('slug'),
     ]
 
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIMarkdownToHTMLField('body'),
-        APIMetaField('meta'),
-    ]
-
 
 class PrivacyAndCookiesPage(BasePage):
 
@@ -92,13 +85,6 @@ class PrivacyAndCookiesPage(BasePage):
     ]
 
     promote_panels = []
-
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIMarkdownToHTMLField('body'),
-        APIMetaField('meta'),
-    ]
 
 
 class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
@@ -223,25 +209,6 @@ class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         FieldPanel('slug'),
     ]
 
-    api_fields = [
-        APIField('breadcrumbs_label'),
-        APIMarkdownToHTMLField('hero_text'),
-        APIImageField('hero_image'),
-        APIImageField('ukef_logo'),
-        APIMarkdownToHTMLField('contact_proposition'),
-        APIField('contact_button'),
-        APIField('advantages_title'),
-        APIMarkdownToHTMLField('advantages_one'),
-        APIImageField('advantages_one_icon'),
-        APIMarkdownToHTMLField('advantages_two'),
-        APIImageField('advantages_two_icon'),
-        APIMarkdownToHTMLField('advantages_three'),
-        APIImageField('advantages_three_icon'),
-        APIMarkdownToHTMLField('evidence'),
-        APIVideoField('evidence_video'),
-        APIMetaField('meta'),
-    ]
-
 
 class PerformanceDashboardPage(BasePage):
 
@@ -321,36 +288,6 @@ class PerformanceDashboardPage(BasePage):
         FieldPanel('slug'),
     ]
 
-    api_fields = [
-        APIField('heading'),
-        APIMarkdownToHTMLField('description'),
-        APIField('product_link'),
-        # row 1
-        APIField('data_title_row_one'),
-        APIField('data_number_row_one'),
-        APIField('data_period_row_one'),
-        APIMarkdownToHTMLField('data_description_row_one'),
-        # row 2
-        APIField('data_title_row_two'),
-        APIField('data_number_row_two'),
-        APIField('data_period_row_two'),
-        APIMarkdownToHTMLField('data_description_row_two'),
-        # row 3
-        APIField('data_title_row_three'),
-        APIField('data_number_row_three'),
-        APIField('data_period_row_three'),
-        APIMarkdownToHTMLField('data_description_row_three'),
-        # row 4
-        APIField('data_title_row_four'),
-        APIField('data_number_row_four'),
-        APIField('data_period_row_four'),
-        APIMarkdownToHTMLField('data_description_row_four'),
-
-        APIMarkdownToHTMLField('guidance_notes'),
-        APIField('landing_dashboard'),
-        APIMetaField('meta')
-    ]
-
 
 class PerformanceDashboardNotesPage(ExclusivePageMixin,
                                     BasePage):
@@ -377,13 +314,6 @@ class PerformanceDashboardNotesPage(ExclusivePageMixin,
     ]
 
     promote_panels = []
-
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIMarkdownToHTMLField('body'),
-        APIMetaField('meta'),
-    ]
 
 
 class TopicLandingPage(BasePage):
