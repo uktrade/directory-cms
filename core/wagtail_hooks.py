@@ -58,3 +58,4 @@ def global_admin_css():
             '<link rel="stylesheet" href="{}">',
             static(settings.ENVIRONMENT_CSS_THEME_FILE)
         )
+    return ''
