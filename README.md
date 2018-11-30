@@ -20,37 +20,14 @@ We aim to follow [GDS service standards](https://www.gov.uk/service-manual/servi
 ## Requirements
 [Python 3.5](https://www.python.org/downloads/release/python-352/)
 
-### Docker
-To use Docker in your local development environment you will also need the following dependencies:
-
-[Docker >= 1.10](https://docs.docker.com/engine/installation/)
-
-[Docker Compose >= 1.8](https://docs.docker.com/compose/install/)
-
-## Running locally with Docker
-This requires all host environment variables to be set.
-
-    $ make docker_run
-
-### Run debug webserver in Docker
-
-    $ make docker_debug
-
-### Run tests in Docker
-
-    $ make docker_test
-
-### Host environment variables for docker-compose
-``.env`` files will be automatically created (with ``env_writer.py`` based on ``env.json``) by ``make docker_test``, based on host environment variables with ``DIRECTORY_CMS_`` prefix.
-
 #### Web server
 
-## Running locally without Docker
+## Running locally
 
 ### Installing
     $ git clone https://github.com/uktrade/directory-cms
     $ cd directory-cms
-    $ virtualenv .venv -p python3.5
+    $ virtualenv .venv -p python3.6
     $ source .venv/bin/activate
     $ pip install -r requirements_test.txt
 
