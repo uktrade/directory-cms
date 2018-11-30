@@ -899,7 +899,7 @@ class EUExitInternationalFormPage(
     ]
 
     service_name_value = cms.EXPORT_READINESS
-    view_path = 'eu-exit/international/contact/'
+    view_path = 'international/eu-exit-news/contact/'
     slug_identity = cms.EXPORT_READINESS_EUEXIT_INTERNATIONAL_FORM_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -955,7 +955,7 @@ class EUExitDomesticFormPage(
     ]
 
     service_name_value = cms.EXPORT_READINESS
-    view_path = 'eu-exit/contact/'
+    view_path = 'eu-exit-news/contact/'
     slug_identity = cms.EXPORT_READINESS_EUEXIT_DOMESTIC_FORM_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -999,7 +999,7 @@ class EUExitDomesticFormPage(
 
 class EUExitFormSuccessPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
-    view_path = 'eu-exit/contact/success/'
+    view_path = 'eu-exit-news/contact/success/'
     slug_identity = cms.EXPORT_READINESS_EUEXIT_FORM_SUCCESS_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
