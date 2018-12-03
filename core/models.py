@@ -228,6 +228,12 @@ class BasePage(Page):
         })
         return mark_safe(display_title)
 
+    @classmethod
+    def can_exist_under(cls, parent):
+        if not parent.specific_class:
+            return []
+        return super().can_exist_under(parent)
+
 
 class AbstractObjectHash(models.Model):
     class Meta:

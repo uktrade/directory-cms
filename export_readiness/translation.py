@@ -92,3 +92,13 @@ class ContactUsGuidancePageTranslationOptions(BaseTranslationOptions):
 @register(models.ContactSuccessPage)
 class ContactSuccessPageTranslationOptions(BaseTranslationOptions):
     fields = []
+
+
+@register(models.ContactUsGuidancePages)
+class ContactUsGuidancePagesTranslationOptions(BaseTranslationOptions):
+    fields = []
+
+
+@register(models.ContactSuccessPages)
+class ContactSuccessPagesTranslationOptions(BaseTranslationOptions):
+    fields = []

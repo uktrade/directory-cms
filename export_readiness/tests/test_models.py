@@ -23,6 +23,8 @@ def test_app_models():
         models.EUExitInternationalFormPage,
         models.EUExitDomesticFormPage,
         models.EUExitFormSuccessPage,
+        models.ContactUsGuidancePages,
+        models.ContactSuccessPages,
         models.ContactUsGuidancePage,
         models.ContactSuccessPage,
     ]
@@ -54,7 +56,7 @@ def test_set_marketing_pages_title():
         path='/thing',
     )
 
-    assert instance.title_en_gb == models.MarketingPages.title_value
+    assert instance.title_en_gb == instance.get_verbose_name()
 
 
 @pytest.mark.django_db
