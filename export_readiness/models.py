@@ -402,11 +402,10 @@ class MarketingPages(ExclusivePageMixin, BasePage):
         'export_readiness.CampaignPage',
     ]
 
-    title_value = 'Marketing pages'
     settings_panels = []
 
     def save(self, *args, **kwargs):
-        self.title = self.title_value
+        self.title = self.get_verbose_name()
         return super().save(*args, **kwargs)
 
 
@@ -1054,6 +1053,38 @@ class EUExitFormSuccessPage(ExclusivePageMixin, BasePage):
         APIField('seo_title'),
         APIField('search_description'),
     ]
+
+
+class ContactUsGuidancePages(ExclusivePageMixin, BasePage):
+    # this is just a folder. it will not be requested by the client.
+    service_name_value = cms.EXPORT_READINESS
+    slug_identity = 'contact-us-guidance-pages'
+
+    subpage_types = [
+        'export_readiness.ContactUsGuidancePage',
+    ]
+
+    settings_panels = []
+
+    def save(self, *args, **kwargs):
+        self.title = self.get_verbose_name()
+        return super().save(*args, **kwargs)
+
+
+class ContactSuccessPages(ExclusivePageMixin, BasePage):
+    # this is just a folder. it will not be requested by the client.
+    service_name_value = cms.EXPORT_READINESS
+    slug_identity = 'contact-us-success-pages'
+
+    subpage_types = [
+        'export_readiness.ContactSuccessPage',
+    ]
+
+    settings_panels = []
+
+    def save(self, *args, **kwargs):
+        self.title = self.get_verbose_name()
+        return super().save(*args, **kwargs)
 
 
 class ContactUsGuidancePage(BasePage):
