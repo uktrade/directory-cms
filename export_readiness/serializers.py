@@ -3,9 +3,10 @@ from wagtail.images.api import fields as wagtail_fields
 
 from conf import settings
 from core import fields as core_fields
-from core.serializers import BasePageSerializer
+from core.serializers import BasePageSerializer, FormPageSerializerMetaclass
 
-from .models import ArticleListingPage, ArticlePage, TopicLandingPage
+from .models import ArticleListingPage, ArticlePage, TopicLandingPage, \
+    EUExitInternationalFormPage, EUExitDomesticFormPage
 
 
 class GenericBodyOnlyPageSerializer(BasePageSerializer):
@@ -258,3 +259,48 @@ class CampaignPageSerializer(BasePageSerializer):
     cta_box_message = serializers.CharField(max_length=255)
     cta_box_button_url = serializers.CharField(max_length=255)
     cta_box_button_text = serializers.CharField(max_length=255)
+
+
+class EUExitGenericFormPageSerializer(BasePageSerializer):
+    breadcrumbs_label = serializers.CharField()
+    heading = serializers.CharField()
+    body_text = core_fields.MarkdownToHTMLField()
+    submit_button_text = serializers.CharField()
+    disclaimer = core_fields.MarkdownToHTMLField()
+
+
+class EUExitInternationalFormPageSerializer(
+    EUExitGenericFormPageSerializer,
+    metaclass=FormPageSerializerMetaclass
+):
+    class Meta:
+        model_class = EUExitInternationalFormPage
+
+
+class EUExitDomesticFormPageSerializer(
+    EUExitGenericFormPageSerializer,
+    metaclass=FormPageSerializerMetaclass
+):
+    class Meta:
+        model_class = EUExitDomesticFormPage
+
+
+class EUExitFormSuccessPageSerializer(BasePageSerializer):
+    breadcrumbs_label = serializers.CharField()
+    heading = serializers.CharField()
+    body_text = serializers.CharField()
+    next_title = serializers.CharField()
+    next_body_text = serializers.CharField()
+
+
+class ContactUsGuidancePageSerializer(BasePageSerializer):
+    topic = core_fields.MarkdownToHTMLField()
+    body = core_fields.MarkdownToHTMLField()
+
+
+class ContactSuccessPageSerializer(BasePageSerializer):
+    topic = core_fields.MarkdownToHTMLField()
+    heading = serializers.CharField()
+    body_text = serializers.CharField()
+    next_title = serializers.CharField()
+    next_body_text = serializers.CharField()

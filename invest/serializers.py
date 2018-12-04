@@ -91,10 +91,9 @@ class SectorPageSerializer(BasePageSerializer):
 
     def get_children_sectors(self, instance):
         from .models import SectorPage
-        queryset = instance.get_descendants(). \
-            type(SectorPage). \
-            live(). \
-            specific()
+        queryset = instance.get_descendants().type(
+            SectorPage
+        ).live().specific()
         serializer = SectorPageSerializer(
             queryset,
             many=True,

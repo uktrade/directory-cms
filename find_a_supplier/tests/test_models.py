@@ -1,16 +1,6 @@
 import pytest
 
-from core.api_fields import APIMetaField
 from find_a_supplier import models
-
-
-@pytest.mark.parametrize('model', (
-    models.IndustryPage, models.IndustryArticlePage, models.IndustryLandingPage
-))
-def test_url_api_field(model):
-    fields = {field.name: field for field in model.api_fields}
-
-    assert isinstance(fields['meta'], APIMetaField)
 
 
 @pytest.mark.django_db

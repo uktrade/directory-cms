@@ -3,7 +3,6 @@ from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList, InlinePanel
 )
-from wagtail.api import APIField
 from wagtail.core.models import Orderable
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmarkdown.edit_handlers import MarkdownPanel
@@ -11,8 +10,6 @@ from wagtailmedia.widgets import AdminMediaChooser
 
 from django.db import models
 
-from core.api_fields import APIMarkdownToHTMLField, APIImageField, \
-    APIMetaField, APIBreadcrumbsField, APIVideoField
 from core.model_fields import MarkdownField
 from core.helpers import make_translated_interface
 from core.models import (
@@ -23,7 +20,6 @@ from core.models import (
     ServiceMixin,
 )
 from core.panels import SearchEngineOptimisationPanel
-from find_a_supplier import api_fields
 
 
 class ImageChooserPanel(ImageChooserPanel):
@@ -68,14 +64,6 @@ class ArticleSummary(models.Model):
         FieldPanel('body'),
         ImageChooserPanel('image'),
         FieldPanel('video_media', widget=AdminMediaChooser),
-    ]
-
-    api_fields = [
-        APIField('industry_name'),
-        APIField('title'),
-        APIMarkdownToHTMLField('body'),
-        APIImageField('image'),
-        APIVideoField('video_media'),
     ]
 
     class Meta:
@@ -295,37 +283,6 @@ class IndustryPage(BasePage):
         ]
     )
 
-    api_fields = [
-        APIImageField('hero_image'),
-        APIImageField('mobile_hero_image'),
-        APIImageField('summary_image'),
-        APIField('hero_image_caption'),
-        APIMarkdownToHTMLField('hero_text'),
-        APIField('introduction_text'),
-        APIField('introduction_call_to_action_button_text'),
-        APIField('introduction_title'),
-        APIMarkdownToHTMLField('introduction_column_one_text'),
-        APIMarkdownToHTMLField('introduction_column_two_text'),
-        APIMarkdownToHTMLField('introduction_column_three_text'),
-        APIImageField('introduction_column_one_icon'),
-        APIImageField('introduction_column_two_icon'),
-        APIImageField('introduction_column_three_icon'),
-        APIMarkdownToHTMLField('company_list_text'),
-        APIField('company_list_call_to_action_text'),
-        APIField('company_list_search_input_placeholder_text'),
-        APIField('search_filter_sector'),
-        APIField('search_filter_text'),
-        APIField('search_filter_showcase_only'),
-        APIField('title'),
-        api_fields.APIArticleSummariesField('article_summaries'),
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('breadcrumbs_label'),
-        APIField('show_on_industries_showcase_page'),
-        APIBreadcrumbsField('breadcrumbs', service_name=service_name_value),
-        APIMetaField('meta'),
-    ]
-
 
 class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     service_name_value = cms.FIND_A_SUPPLIER
@@ -355,30 +312,6 @@ class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     proposition_text = models.CharField(max_length=500)
     call_to_action_text = models.CharField(max_length=500)
     more_industries_title = models.CharField(max_length=100)
-
-    api_fields = [
-        APIField('hero_title'),
-        APIImageField('hero_image'),
-        APIImageField('mobile_hero_image'),
-        APIField('hero_image_caption'),
-        APIField('proposition_text'),
-        APIField('call_to_action_text'),
-        APIField('title'),
-        APIField('breadcrumbs_label'),
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('more_industries_title'),
-        APIMetaField('meta'),
-        api_fields.APIIndustriesListField(
-            'industries',
-            queryset=(
-                IndustryPage.objects.all()
-                .live()
-                .order_by('slug')
-            ),
-        ),
-        APIBreadcrumbsField('breadcrumbs', service_name=service_name_value),
-    ]
 
     image_panels = [
         ImageChooserPanel('hero_image'),
@@ -491,25 +424,6 @@ class IndustryArticlePage(BasePage):
         settings_panels=settings_panels
     )
 
-    api_fields = [
-        APIField('breadcrumbs_label'),
-        APIField('author_name'),
-        APIField('job_title'),
-        APIField('date'),
-        APIMarkdownToHTMLField('body'),
-        APIField('title'),
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIMarkdownToHTMLField('proposition_text'),
-        APIField('call_to_action_text'),
-        APIField('introduction_title'),
-        APIField('back_to_home_link_text'),
-        APIField('show_table_of_content'),
-        APIField('social_share_title'),
-        APIBreadcrumbsField('breadcrumbs', service_name=service_name_value),
-        APIMetaField('meta'),
-    ]
-
 
 class LandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     service_name_value = cms.FIND_A_SUPPLIER
@@ -577,43 +491,6 @@ class LandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-
-    api_fields = [
-        APIImageField('hero_image'),
-        APIImageField('mobile_hero_image'),
-        APIField('hero_image_caption'),
-        APIField('breadcrumbs_label'),
-        APIMarkdownToHTMLField('hero_text'),
-        APIField('search_field_placeholder'),
-        APIField('search_button_text'),
-        APIMarkdownToHTMLField('proposition_text'),
-        APIField('call_to_action_text'),
-        APIMarkdownToHTMLField('industries_list_text'),
-        APIField('industries_list_call_to_action_text'),
-        APIMarkdownToHTMLField('services_list_text'),
-        APIMarkdownToHTMLField('services_column_one'),
-        APIMarkdownToHTMLField('services_column_two'),
-        APIMarkdownToHTMLField('services_column_three'),
-        APIMarkdownToHTMLField('services_column_four'),
-        APIImageField('services_column_one_icon'),
-        APIImageField('services_column_two_icon'),
-        APIImageField('services_column_three_icon'),
-        APIImageField('services_column_four_icon'),
-        APIField('title'),
-        APIField('search_description'),
-        APIField('seo_title'),
-        api_fields.APIIndustriesListField(
-            'industries',
-            queryset=(
-                IndustryPage.objects.all()
-                .filter(show_on_homepage=True)
-                .live()
-                .order_by('slug')[:3]
-            ),
-        ),
-        api_fields.APIArticleSummariesField('article_summaries'),
-        APIMetaField('meta'),
-    ]
 
     image_panels = [
         ImageChooserPanel('hero_image'),
@@ -733,24 +610,3 @@ class IndustryContactPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         content_panels=content_panels,
         settings_panels=settings_panels,
     )
-
-    api_fields = [
-        APIField('seo_title'),
-        APIField('search_description'),
-        APIField('breadcrumbs_label'),
-        APIMarkdownToHTMLField('introduction_text'),
-        APIField('submit_button_text'),
-        APIMarkdownToHTMLField('success_message_text'),
-        APIField('success_back_link_text'),
-        APIBreadcrumbsField('breadcrumbs', service_name=service_name_value),
-        api_fields.APIIndustriesListField(
-            'industry_options',
-            queryset=(
-                IndustryPage.objects.all()
-                .live()
-                .order_by('breadcrumbs_label')
-            ),
-            field_names=['breadcrumbs_label', 'meta']
-        ),
-        APIMetaField('meta'),
-    ]

@@ -23,8 +23,12 @@ from core import filters, forms, helpers, permissions
 from core.cache import is_registered_for_cache, PageCache
 from core.models import BasePage
 from core.upstream_serializers import UpstreamModelSerilaizer
+from components import models as components_models
+from components import serializers as components_serializers
 from export_readiness import models as ex_read_models
 from export_readiness import serializers as ex_read_serializers
+from find_a_supplier import models as fas_models
+from find_a_supplier import serializers as fas_serializers
 from invest import models as invest_models
 from invest import serializers as invest_serializers
 
@@ -45,6 +49,11 @@ MODELS_SERIALIZERS_MAPPING = {
     ex_read_models.TopicLandingPage: ex_read_serializers.TopicLandingPageSerializer,  # NOQA
     ex_read_models.InternationalLandingPage: ex_read_serializers.InternationalLandingPageSerializer,  # NOQA
     ex_read_models.CampaignPage: ex_read_serializers.CampaignPageSerializer,
+    ex_read_models.EUExitInternationalFormPage: ex_read_serializers.EUExitInternationalFormPageSerializer,  # NOQA
+    ex_read_models.EUExitDomesticFormPage: ex_read_serializers.EUExitDomesticFormPageSerializer,  # NOQA
+    ex_read_models.EUExitFormSuccessPage: ex_read_serializers.EUExitFormSuccessPageSerializer,  # NOQA
+    ex_read_models.ContactUsGuidancePage: ex_read_serializers.ContactUsGuidancePageSerializer,  # NOQA
+    ex_read_models.ContactSuccessPage: ex_read_serializers.ContactSuccessPageSerializer,  # NOQA
     # invest
     invest_models.SectorLandingPage: invest_serializers.SectorLandingPageGenericSerializer,  # NOQA
     invest_models.RegionLandingPage: invest_serializers.SectorLandingPageGenericSerializer,  # NOQA
@@ -57,6 +66,13 @@ MODELS_SERIALIZERS_MAPPING = {
     invest_models.HighPotentialOpportunityDetailPage: invest_serializers.HighPotentialOpportunityDetailPageSerializer,  # NOQA
     invest_models.HighPotentialOpportunityFormSuccessPage: invest_serializers.HighPotentialOpportunityFormSuccessPageSerializer,  # NOQA
     # find a supplier
+    fas_models.IndustryPage: fas_serializers.IndustryPageSerializer,
+    fas_models.IndustryLandingPage: fas_serializers.IndustryLandingPageSerializer,  # NOQA
+    fas_models.IndustryArticlePage: fas_serializers.IndustryArticlePageSerializer,  # NOQA
+    fas_models.LandingPage: fas_serializers.LandingPageSerializer,
+    fas_models.IndustryContactPage: fas_serializers.IndustryContactPageSerializer,  # NOQA
+    # components
+    components_models.BannerComponent: components_serializers.BannerComponentPageSerializer  # NOQA
 }
 
 
@@ -76,7 +92,6 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
     )
 
     def get_model_class(self):
-        # Get model
         if self.action == 'listing_view':
             model = self.get_queryset().model
         else:
@@ -85,19 +100,7 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
 
     def get_serializer_class(self):
         model_class = self.get_model_class()
-        if model_class in MODELS_SERIALIZERS_MAPPING:
-            return MODELS_SERIALIZERS_MAPPING[model_class]
-        else:
-            return super().get_serializer_class()
-
-    @classmethod
-    def get_nested_default_fields(cls, model):
-        fields = [field.name for field in model.api_fields]
-        return fields
-
-    @classmethod
-    def get_listing_default_fields(cls, model):
-        return [field.name for field in model.api_fields]
+        return MODELS_SERIALIZERS_MAPPING[model_class]
 
     @property
     def permission_classes(self):
