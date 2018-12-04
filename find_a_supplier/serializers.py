@@ -76,9 +76,7 @@ class IndustryLandingPageSerializer(BasePageSerializer):
     industries = serializers.SerializerMethodField()
 
     def get_industries(self, instance):
-        queryset = instance.get_descendants().type(
-            IndustryPage
-        ).live().specific()
+        queryset = IndustryPage.objects.all().live().order_by('slug')
         serializer = IndustryPageSerializer(
             queryset,
             many=True,
