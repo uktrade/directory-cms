@@ -48,4 +48,3 @@ class BannerComponent(BasePage):
         content_panels=content_panels,
         settings_panels=settings_panels,
     )
-
