@@ -3,7 +3,6 @@ from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel
 )
-from wagtail.api import APIField
 from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
@@ -15,7 +14,6 @@ from django.db import models
 from django.forms import CheckboxSelectMultiple, Textarea, Select
 from django.utils.text import slugify
 
-from core.api_fields import APIMarkdownToHTMLField, APIMetaField
 from core.model_fields import MarkdownField
 
 from core.models import (
@@ -928,17 +926,6 @@ class EUExitInternationalFormPage(
         FieldPanel('slug'),
     ]
 
-    # metaclass appends `form_field_names` to `api_fields`
-    api_fields = [
-        APIField('breadcrumbs_label'),
-        APIField('heading'),
-        APIMarkdownToHTMLField('body_text'),
-        APIField('submit_button_text'),
-        APIField('disclaimer'),
-        APIField('seo_title'),
-        APIField('search_description'),
-    ]
-
 
 class EUExitDomesticFormPage(
     ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
@@ -982,17 +969,6 @@ class EUExitDomesticFormPage(
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-    ]
-
-    # metaclass appends `form_field_names` to `api_fields`
-    api_fields = [
-        APIField('breadcrumbs_label'),
-        APIField('heading'),
-        APIField('submit_button_text'),
-        APIMarkdownToHTMLField('body_text'),
-        APIField('disclaimer'),
-        APIField('seo_title'),
-        APIField('search_description'),
     ]
 
 
@@ -1041,17 +1017,6 @@ class EUExitFormSuccessPage(ExclusivePageMixin, BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-    ]
-
-    api_fields = [
-        APIField('breadcrumbs_label'),
-        APIField('heading'),
-        APIField('body_text'),
-        APIField('next_title'),
-        APIField('next_body_text'),
-        APIMetaField('meta'),
-        APIField('seo_title'),
-        APIField('search_description'),
     ]
 
 
@@ -1159,13 +1124,6 @@ class ContactUsGuidancePage(BasePage):
 
     settings_panels = []
 
-    api_fields = [
-        APIMarkdownToHTMLField('body'),
-        APIMetaField('meta'),
-        APIField('seo_title'),
-        APIField('search_description'),
-    ]
-
     def save(self, *args, **kwargs):
         field_values = self.topic_mapping[self.topic]
         self.title = field_values['title']
@@ -1259,16 +1217,6 @@ class ContactSuccessPage(BasePage):
     ]
 
     settings_panels = []
-
-    api_fields = [
-        APIField('heading'),
-        APIField('body_text'),
-        APIField('next_title'),
-        APIField('next_body_text'),
-        APIMetaField('meta'),
-        APIField('seo_title'),
-        APIField('search_description'),
-    ]
 
     def save(self, *args, **kwargs):
         field_values = self.topic_mapping[self.topic]

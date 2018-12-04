@@ -1,7 +1,7 @@
 from rest_framework import fields
 
 from conf import settings
-from core import helpers
+from core import helpers, models
 
 
 class MarkdownToHTMLField(fields.CharField):
@@ -54,3 +54,23 @@ class DocumentURLField(fields.CharField):
 
     def to_representation(self, instance):
         return instance.file.url
+
+
+class BreadcrumbsField(fields.DictField):
+    def __init__(self, service_name, *args, **kwargs):
+        self.service_name = service_name
+        super().__init__(*args, **kwargs)
+
+    def get_attribute(self, instance):
+        service_name = self.service_name
+        queryset = (
+            models.Breadcrumb.objects
+            .select_related('content_type')
+            .filter(service_name=service_name)
+        )
+        return {
+            item.content_type.model: {
+                'label': item.label, 'slug': item.slug,
+            }
+            for item in queryset
+        }

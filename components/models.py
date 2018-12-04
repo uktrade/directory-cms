@@ -5,16 +5,11 @@ from core.models import (
     ExclusivePageMixin,
     ServiceMixin,
 )
-from wagtail.api import APIField
 from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtail.admin.edit_handlers import (
     FieldPanel, MultiFieldPanel
 )
 from core.helpers import make_translated_interface
-from core.api_fields import (
-    APIMarkdownToHTMLField,
-    APIMetaField,
-)
 from core.model_fields import MarkdownField
 
 
@@ -54,8 +49,3 @@ class BannerComponent(BasePage):
         settings_panels=settings_panels,
     )
 
-    api_fields = [
-        APIField('banner_label'),
-        APIMarkdownToHTMLField('banner_content'),
-        APIMetaField('meta'),
-    ]
