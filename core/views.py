@@ -1,10 +1,6 @@
-import json
-import logging
-
 from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import RetrieveAPIView
 from rest_framework.renderers import JSONRenderer
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.core.models import Page
@@ -15,65 +11,13 @@ from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404, Http404
 from django.template.response import TemplateResponse
 from django.utils import translation
-from django.utils.cache import get_conditional_response, set_response_etag
+from django.utils.cache import get_conditional_response
 from django.views.generic.edit import FormView
 
 from conf.signature import SignatureCheckPermission
-from core import filters, forms, helpers, permissions
-from core.cache import is_registered_for_cache, PageCache
-from core.models import BasePage
+from core import cache, filters, forms, helpers, models, permissions
 from core.upstream_serializers import UpstreamModelSerilaizer
-from components import models as components_models
-from components import serializers as components_serializers
-from export_readiness import models as ex_read_models
-from export_readiness import serializers as ex_read_serializers
-from find_a_supplier import models as fas_models
-from find_a_supplier import serializers as fas_serializers
-from invest import models as invest_models
-from invest import serializers as invest_serializers
-
-
-logger = logging.getLogger(__name__)
-
-
-MODELS_SERIALIZERS_MAPPING = {
-    # export readiness
-    ex_read_models.TermsAndConditionsPage: ex_read_serializers.GenericBodyOnlyPageSerializer,  # NOQA
-    ex_read_models.PrivacyAndCookiesPage: ex_read_serializers.GenericBodyOnlyPageSerializer,  # NOQA
-    ex_read_models.GetFinancePage: ex_read_serializers.GetFinancePageSerializer,  # NOQA
-    ex_read_models.PerformanceDashboardPage: ex_read_serializers.PerformanceDashboardPageSerializer,  # NOQA
-    ex_read_models.PerformanceDashboardNotesPage: ex_read_serializers.GenericBodyOnlyPageSerializer,  # NOQA
-    ex_read_models.ArticlePage: ex_read_serializers.ArticlePageSerializer,
-    ex_read_models.HomePage: ex_read_serializers.HomePageSerializer,
-    ex_read_models.ArticleListingPage: ex_read_serializers.ArticleListingPageSerializer,  # NOQA
-    ex_read_models.TopicLandingPage: ex_read_serializers.TopicLandingPageSerializer,  # NOQA
-    ex_read_models.InternationalLandingPage: ex_read_serializers.InternationalLandingPageSerializer,  # NOQA
-    ex_read_models.CampaignPage: ex_read_serializers.CampaignPageSerializer,
-    ex_read_models.EUExitInternationalFormPage: ex_read_serializers.EUExitInternationalFormPageSerializer,  # NOQA
-    ex_read_models.EUExitDomesticFormPage: ex_read_serializers.EUExitDomesticFormPageSerializer,  # NOQA
-    ex_read_models.EUExitFormSuccessPage: ex_read_serializers.EUExitFormSuccessPageSerializer,  # NOQA
-    ex_read_models.ContactUsGuidancePage: ex_read_serializers.ContactUsGuidancePageSerializer,  # NOQA
-    ex_read_models.ContactSuccessPage: ex_read_serializers.ContactSuccessPageSerializer,  # NOQA
-    # invest
-    invest_models.SectorLandingPage: invest_serializers.SectorLandingPageGenericSerializer,  # NOQA
-    invest_models.RegionLandingPage: invest_serializers.SectorLandingPageGenericSerializer,  # NOQA
-    invest_models.SectorPage: invest_serializers.SectorPageSerializer,
-    invest_models.SetupGuideLandingPage: invest_serializers.SetupGuideLandingPageSerializer,  # NOQA
-    invest_models.SetupGuidePage: invest_serializers.SetupGuidePageSerializer,
-    invest_models.InvestHomePage: invest_serializers.InvestHomePageSerializer,
-    invest_models.InfoPage: invest_serializers.InfoPageSerializer,
-    invest_models.HighPotentialOpportunityFormPage: invest_serializers.HighPotentialOpportunityFormPageSerializer,  # NOQA
-    invest_models.HighPotentialOpportunityDetailPage: invest_serializers.HighPotentialOpportunityDetailPageSerializer,  # NOQA
-    invest_models.HighPotentialOpportunityFormSuccessPage: invest_serializers.HighPotentialOpportunityFormSuccessPageSerializer,  # NOQA
-    # find a supplier
-    fas_models.IndustryPage: fas_serializers.IndustryPageSerializer,
-    fas_models.IndustryLandingPage: fas_serializers.IndustryLandingPageSerializer,  # NOQA
-    fas_models.IndustryArticlePage: fas_serializers.IndustryArticlePageSerializer,  # NOQA
-    fas_models.LandingPage: fas_serializers.LandingPageSerializer,
-    fas_models.IndustryContactPage: fas_serializers.IndustryContactPageSerializer,  # NOQA
-    # components
-    components_models.BannerComponent: components_serializers.BannerComponentPageSerializer  # NOQA
-}
+from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
 
 
 class APIEndpointBase(PagesAdminAPIEndpoint):
@@ -146,35 +90,26 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
             helpers.is_draft_requested(self.request)
         ):
             return super().dispatch(*args, **kwargs)
-        cached_page = PageCache.get(
+
+        cached_page = cache.PageCache.get(
             slug=self.kwargs['slug'],
             service_name=self.request.GET['service_name'],
             language_code=translation.get_language()
         )
         if cached_page:
-            etag = cached_page.get('etag', None)
             cached_response = helpers.CachedResponse(cached_page)
-            cached_response['etag'] = etag
+            cached_response['etag'] = cached_page.get('etag', None)
             response = get_conditional_response(
                 request=self.request,
-                etag=etag,
+                etag=cached_response['etag'],
                 response=cached_response,
             )
         else:
             response = super().dispatch(*args, **kwargs)
-            model = self.get_object().__class__
-            if is_registered_for_cache(model) and response.status_code == 200:
-                response.render()
-                set_response_etag(response)
-                PageCache.set(
-                    slug=self.kwargs['slug'],
-                    language_code=translation.get_language(),
-                    service_name=self.request.GET['service_name'],
-                    contents={
-                        **json.loads(response.content),
-                        'etag': response.get('ETag')
-                    }
-                )
+            if response.status_code == 200:
+                instance = self.get_object()
+                cache.CachePopulator.populate(instance=instance)
+                response['ETag'] = cache.generate_etag(instance)
         return response
 
     def get_queryset(self):
@@ -206,7 +141,7 @@ class PageLookupByFullPathAPIEndpoint(APIEndpointBase):
     authentication_classes = []
 
     def get_queryset(self):
-        return Page.objects.type(BasePage).all()
+        return Page.objects.type(models.BasePage).all()
 
     def get_object(self):
         if hasattr(self, 'object'):
@@ -230,12 +165,6 @@ class PageLookupByFullPathAPIEndpoint(APIEndpointBase):
 
     def detail_view(self, *args, **kwargs):
         return super().detail_view(self.request, pk=None)
-
-
-class PageLookupByTagListAPIEndpoint(RetrieveAPIView):
-    queryset = ex_read_models.Tag
-    serializer_class = ex_read_serializers.TagSerializer
-    lookup_field = 'slug'
 
 
 class UpstreamBaseView(FormView):

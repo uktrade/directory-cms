@@ -1,7 +1,8 @@
+import pytest
 from rest_framework.reverse import reverse
 
 from conf import settings
-from . import factories
+from export_readiness.tests import factories
 
 
 def test_performance_dashboard(admin_client, root_page):
@@ -171,3 +172,22 @@ def test_international_landing_age(admin_client, root_page):
     response = admin_client.get(url)
     assert response.status_code == 200
     assert 'articles_count' in response.json()
+
+
+@pytest.mark.django_db
+def test_lookup_by_tag_slug(admin_client, root_page):
+    tag = factories.TagFactory(name='foo')
+    article1 = factories.ArticlePageFactory(parent=root_page,)
+    article1.tags = [tag]
+    article1.save()
+    article2 = factories.ArticlePageFactory(parent=root_page)
+    article2.tags = [tag]
+    article2.save()
+    factories.ArticlePageFactory(parent=root_page)
+    url = reverse('api:lookup-by-tag-list', kwargs={'slug': tag.slug})
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    assert response.json()['name'] == tag.name
+    assert response.json()['slug'] == tag.slug
+    assert len(response.json()['articles']) == 2

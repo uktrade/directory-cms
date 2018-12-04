@@ -1,21 +1,25 @@
 import abc
+import hashlib
 from urllib.parse import urlencode
-import logging
 
-from wagtail.core.signals import page_unpublished
-from sigauth.helpers import RequestSigner
+from rest_framework.renderers import JSONRenderer
+from wagtail.core.signals import page_published, page_unpublished
 
 from django.conf import settings
 from django.core.cache import cache
 from django.db.models.signals import post_save
-from django.test import Client
 from django.urls import reverse
+from django.utils import translation
+from django.utils.http import quote_etag
+
+from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
 
 
-logger = logging.getLogger(__name__)
-
-
-PREPOPULATE_ERROR = 'Unable to populate the page cache'
+def generate_etag(instance):
+    serializer_class = MODELS_SERIALIZERS_MAPPING[instance.__class__]
+    serializer = serializer_class(instance=instance)
+    json_data = JSONRenderer().render(serializer.data)
+    return quote_etag(hashlib.md5(json_data).hexdigest())
 
 
 class PageCache:
@@ -67,47 +71,23 @@ class PageCache:
 
 class CachePopulator:
     # drafts will not be cached. This is as per design
-    client = Client()
-
     @classmethod
-    def populate(cls, page_cache, instance):
-        request_signer = RequestSigner(
-            secret=settings.SIGNATURE_SECRET, sender_id='cache-populator'
-        )
-        url = reverse('api:lookup-by-slug', kwargs={'slug': instance.slug})
-
-        page_cache.delete(
-            slug=instance.slug,
-            service_name=instance.service_name,
-            language_codes=instance.translated_languages,
-        )
+    def populate(cls, instance):
+        serializer_class = MODELS_SERIALIZERS_MAPPING[instance.__class__]
         for language_code in instance.translated_languages:
-            params = {
-                'service_name': instance.service_name,
-                'lang': language_code
-            }
-            signature_headers = request_signer.get_signature_headers(
-                url=url + '?' + urlencode(params),
-                body=None,
-                method='GET',
-                content_type='',
-            )
-            response = cls.client.get(
-                url,
-                params,
-                HTTP_X_SIGNATURE=signature_headers[request_signer.header_name],
-                CONTENT_TYPE='',
-            )
-            if not response.status_code == 200:
-                logger.error(
-                    PREPOPULATE_ERROR,
-                    extra={'url': url, 'status_code': response.status_code},
+            with translation.override(language_code):
+                serializer = serializer_class(instance=instance)
+                PageCache.set(
+                    slug=instance.slug,
+                    language_code=language_code,
+                    service_name=instance.service_name,
+                    contents={
+                        **serializer.data, 'etag': generate_etag(instance)
+                    }
                 )
 
 
 class AbstractDatabaseCacheSubscriber(abc.ABC):
-    cache_populator = CachePopulator
-    page_cache = PageCache
 
     @property
     @abc.abstractmethod
@@ -121,8 +101,8 @@ class AbstractDatabaseCacheSubscriber(abc.ABC):
 
     @classmethod
     def subscribe(cls):
-        post_save.connect(
-            receiver=cls.populate_if_live,
+        page_published.connect(
+            receiver=cls.populate,
             sender=cls.model,
             dispatch_uid=cls.model.__name__,
         )
@@ -133,42 +113,29 @@ class AbstractDatabaseCacheSubscriber(abc.ABC):
         )
         for model in cls.subscriptions:
             post_save.connect(
-                receiver=cls.populate_many_if_live,
+                receiver=cls.populate_many,
                 sender=model,
                 dispatch_uid=f'{cls.model.__name__}-{model.__name__}',
             )
             page_unpublished.connect(
-                receiver=cls.populate_many_if_live,
+                receiver=cls.populate_many,
                 sender=model,
                 dispatch_uid=f'{cls.model.__name__}-{model.__name__}',
             )
 
     @classmethod
-    def populate_if_live(cls, sender, instance, *args, **kwargs):
-        if instance.live:
-            cls.cache_populator.populate(
-                page_cache=cls.page_cache, instance=instance
-            )
+    def populate(cls, sender, instance, *args, **kwargs):
+        CachePopulator.populate(instance=instance)
 
     @classmethod
     def delete(cls, sender, instance, *args, **kwargs):
-        cls.page_cache.delete(
+        PageCache.delete(
             slug=instance.slug,
             service_name=instance.service_name,
             language_codes=instance.translated_languages,
         )
 
     @classmethod
-    def populate_many_if_live(cls, sender, instance, *args, **kwargs):
+    def populate_many(cls, sender, instance, *args, **kwargs):
         for related_instance in cls.model.objects.filter(live=True):
-            cls.cache_populator.populate(
-                page_cache=cls.page_cache, instance=related_instance
-            )
-
-
-def is_registered_for_cache(model):
-    models = [
-        subscriber.model
-        for subscriber in AbstractDatabaseCacheSubscriber.__subclasses__()
-    ]
-    return model in models
+            CachePopulator.populate(instance=related_instance)

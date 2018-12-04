@@ -13,13 +13,17 @@ class MarkdownToHTMLField(fields.CharField):
 class MetaDictField(fields.DictField):
 
     def get_attribute(self, instance):
+        if 'request' in self.context:
+            is_draft = helpers.is_draft_requested(self.context['request'])
+        else:
+            is_draft = False
         return {
             'languages': [
                 (code, label) for (code, label) in settings.LANGUAGES_LOCALIZED
                 if code in instance.translated_languages
             ],
             'url': instance.get_url(
-                is_draft=helpers.is_draft_requested(self.context['request']),
+                is_draft=is_draft,
                 language_code=settings.LANGUAGE_CODE,
             ),
             'slug': instance.slug,
@@ -34,7 +38,10 @@ class TagsListField(fields.ListField):
     """This assumes the ParentalM2M field on the model is called tags."""
 
     def get_attribute(self, instance):
-        return instance.tags.all().values('name', 'slug')
+        return [
+            {'name': item.name, 'slug': item.slug}
+            for item in instance.tags.all()
+        ]
 
 
 class VideoField(fields.DictField):

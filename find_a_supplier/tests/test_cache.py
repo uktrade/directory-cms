@@ -2,11 +2,8 @@ from django.urls import reverse
 
 import pytest
 
-from find_a_supplier import models
-from find_a_supplier.tests import factories
-
 from core.helpers import CachedResponse
-from core.cache import is_registered_for_cache
+from find_a_supplier.tests import factories
 
 
 @pytest.mark.django_db
@@ -101,14 +98,3 @@ def test_cache_unpublish(admin_client):
     # then the page is not retrieved from the cache
     assert isinstance(response, CachedResponse) is False
     assert response.status_code == 404
-
-
-def test_cache_registration():
-    for model in [
-        models.IndustryPage,
-        models.IndustryLandingPage,
-        models.IndustryArticlePage,
-        models.LandingPage,
-        models.IndustryContactPage,
-    ]:
-        assert is_registered_for_cache(model)

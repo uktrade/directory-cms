@@ -12,7 +12,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView
 
 import core.views
+import export_readiness.views
 import healthcheck.views
+
 
 api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
@@ -41,7 +43,7 @@ api_urls = [
     url(
         r'^pages/lookup-by-tag/(?P<slug>[\w-]+)/$',
         api_router.wrap_view(
-            core.views.PageLookupByTagListAPIEndpoint.as_view()
+            export_readiness.views.PageLookupByTagListAPIEndpoint.as_view()
         ),
         name='lookup-by-tag-list'
     ),
