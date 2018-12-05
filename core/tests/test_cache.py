@@ -205,6 +205,11 @@ def test_all_models_cached():
         model for model in models.BasePage.__subclasses__()
         if model not in exclude
     }
+    # for pages that do not inherit directly from BasePage
+    extra_models = {
+        export_readiness.models.SuperregionPage,
+    }
+    all_models.update(extra_models)
     cached_models = {
         item.model
         for item in cache.AbstractDatabaseCacheSubscriber.__subclasses__()

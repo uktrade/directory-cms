@@ -91,3 +91,13 @@ class ContactSuccessPageSubscriber(AbstractDatabaseCacheSubscriber):
 class ContactUsGuidancePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.ContactUsGuidancePage
     subscriptions = []
+
+
+class SuperregionPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.SuperregionPage
+    subscriptions = []
+
+
+class CountryGuidePageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.CountryGuidePage
+    subscriptions = []

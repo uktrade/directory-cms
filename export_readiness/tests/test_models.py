@@ -14,7 +14,9 @@ def test_app_models():
         models.PerformanceDashboardPage,
         models.PerformanceDashboardNotesPage,
         models.TopicLandingPage,
+        models.SuperregionPage,
         models.ArticleListingPage,
+        models.CountryGuidePage,
         models.MarketingPages,
         models.CampaignPage,
         models.ArticlePage,
@@ -82,6 +84,56 @@ def test_article_listing_page_articles_count(root_page):
     )
 
     assert article_listing_page.articles_count == 2
+
+
+@pytest.mark.django_db
+def test_country_guide_articles_count(root_page):
+    country_guide_page = factories.CountryGuidePageFactory.create(
+        parent=root_page
+    )
+    factories.ArticlePageFactory.create(
+        parent=country_guide_page,
+        live=True
+    )
+    factories.ArticlePageFactory.create(
+        parent=country_guide_page,
+        live=True
+    )
+    factories.ArticlePageFactory.create(
+        parent=country_guide_page,
+        live=False
+    )
+    factories.ArticlePageFactory.create(
+        live=True,
+        parent=root_page
+    )
+
+    assert country_guide_page.articles_count == 2
+
+
+@pytest.mark.django_db
+def test_superregion_page_articles_count(root_page):
+    superregion_page = factories.SuperregionPageFactory.create(
+        parent=root_page
+    )
+    factories.CountryGuidePageFactory.create(
+        parent=superregion_page,
+        live=True
+    )
+    factories.CountryGuidePageFactory.create(
+        parent=superregion_page,
+        live=True
+    )
+    factories.CountryGuidePageFactory.create(
+        parent=superregion_page,
+        live=False
+    )
+    factories.CountryGuidePageFactory.create(
+        live=True,
+        parent=root_page
+    )
+
+    assert superregion_page.articles_count == 2
 
 
 @pytest.mark.django_db
