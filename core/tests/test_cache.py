@@ -3,9 +3,12 @@ from unittest import mock
 import pytest
 from wagtail.core.models import Page
 
-from django.urls import reverse
-
 from core import cache, models
+
+import components.models
+import find_a_supplier.models
+import invest.models
+import export_readiness
 
 
 @pytest.mark.parametrize('slug,service_name,language_code,expected', (
@@ -82,10 +85,7 @@ def test_page_cache_get_set_delete():
 def test_cache_populator(translated_page):
     # translated_page is a IndustryPage, which is registered for caching in
     # find_a_supplier.cache
-    cache.CachePopulator.populate(
-        page_cache=cache.PageCache,
-        instance=translated_page,
-    )
+    cache.CachePopulator.populate(instance=translated_page,)
     for language_code in translated_page.translated_languages:
         assert cache.PageCache.get(
             slug=translated_page.slug,
@@ -94,10 +94,11 @@ def test_cache_populator(translated_page):
         )
 
 
+@mock.patch('wagtail.core.signals.page_published.connect')
 @mock.patch('core.cache.post_save.connect')
 @mock.patch('core.cache.page_unpublished.connect')
 def test_subscriber_subscribe_to_publish(
-    mock_page_unpublished, mock_post_save
+    mock_page_unpublished, mock_post_save, mock_page_published
 ):
 
     class TestSubscriber(cache.AbstractDatabaseCacheSubscriber):
@@ -108,20 +109,19 @@ def test_subscriber_subscribe_to_publish(
 
     TestSubscriber.subscribe()
 
-    assert mock_post_save.call_count == 2
+    assert mock_page_published.call_count == 1
+    assert mock_page_published.call_args == mock.call(
+        dispatch_uid='Page',
+        receiver=TestSubscriber.populate,
+        sender=Page,
+    )
+    assert mock_post_save.call_count == 1
     assert mock_page_unpublished.call_count == 2
-    assert mock_post_save.call_args_list == [
-        mock.call(
-            dispatch_uid='Page',
-            receiver=TestSubscriber.populate_if_live,
-            sender=Page,
-        ),
-        mock.call(
-            dispatch_uid='Page-Breadcrumb',
-            receiver=TestSubscriber.populate_many_if_live,
-            sender=models.Breadcrumb,
-        )
-    ]
+    assert mock_post_save.call_args == mock.call(
+        dispatch_uid='Page-Breadcrumb',
+        receiver=TestSubscriber.populate_many,
+        sender=models.Breadcrumb,
+    )
     assert mock_page_unpublished.call_args_list == [
         mock.call(
             dispatch_uid='Page',
@@ -130,15 +130,13 @@ def test_subscriber_subscribe_to_publish(
         ),
         mock.call(
             dispatch_uid='Page-Breadcrumb',
-            receiver=TestSubscriber.populate_many_if_live,
+            receiver=TestSubscriber.populate_many,
             sender=models.Breadcrumb,
         )
     ]
 
 
-@mock.patch(
-    'core.cache.AbstractDatabaseCacheSubscriber.cache_populator.populate'
-)
+@mock.patch('core.cache.CachePopulator.populate')
 def test_subscriber_populate(mock_populate):
     class TestSubscriber(cache.AbstractDatabaseCacheSubscriber):
         model = Page
@@ -147,18 +145,13 @@ def test_subscriber_populate(mock_populate):
         ]
 
     instance = mock.Mock()
-    TestSubscriber.populate_if_live(sender=None, instance=instance)
+    TestSubscriber.populate(sender=None, instance=instance)
 
     assert mock_populate.call_count == 1
-    assert mock_populate.call_args == mock.call(
-        page_cache=TestSubscriber.page_cache,
-        instance=instance
-    )
+    assert mock_populate.call_args == mock.call(instance=instance)
 
 
-@mock.patch(
-    'core.cache.AbstractDatabaseCacheSubscriber.page_cache.delete'
-)
+@mock.patch('core.cache.PageCache.delete')
 def test_subscriber_delete(mock_delete):
     class TestSubscriber(cache.AbstractDatabaseCacheSubscriber):
         model = Page
@@ -180,9 +173,7 @@ def test_subscriber_delete(mock_delete):
 
 
 @pytest.mark.django_db
-@mock.patch(
-    'core.cache.AbstractDatabaseCacheSubscriber.cache_populator.populate'
-)
+@mock.patch('core.cache.CachePopulator.populate')
 def test_subscriber_populate_many(mock_populate, translated_page):
     class TestSubscriber(cache.AbstractDatabaseCacheSubscriber):
         model = translated_page.__class__
@@ -190,30 +181,33 @@ def test_subscriber_populate_many(mock_populate, translated_page):
             models.Breadcrumb
         ]
 
-    TestSubscriber.populate_many_if_live(sender=None, instance=translated_page)
+    TestSubscriber.populate_many(sender=None, instance=translated_page)
 
     assert mock_populate.call_count == 1
-    assert mock_populate.call_args == mock.call(
-        page_cache=TestSubscriber.page_cache,
-        instance=translated_page
-    )
+    assert mock_populate.call_args == mock.call(instance=translated_page)
 
 
-@pytest.mark.django_db
-@mock.patch(
-    'core.views.SignatureCheckPermission.has_permission',
-    mock.Mock(return_value=False)
-)
-def test_cache_populator_not_successful(translated_page, caplog):
-    cache.CachePopulator.populate(
-        page_cache=cache.PageCache,
-        instance=translated_page,
-    )
+def test_all_models_cached():
+    exclude = {
+        # apps
+        export_readiness.models.ExportReadinessApp,
+        components.models.ComponentsApp,
+        find_a_supplier.models.FindASupplierApp,
+        invest.models.InvestApp,
+        # "folders"
+        export_readiness.models.MarketingPages,
+        export_readiness.models.ContactUsGuidancePages,
+        export_readiness.models.ContactSuccessPages,
+        # Page is added by TestSubscriber in other tests.
+        Page,
+    }
+    all_models = {
+        model for model in models.BasePage.__subclasses__()
+        if model not in exclude
+    }
+    cached_models = {
+        item.model
+        for item in cache.AbstractDatabaseCacheSubscriber.__subclasses__()
+    }
 
-    log = caplog.records[-1]
-    assert log.levelname == 'ERROR'
-    assert log.msg == cache.PREPOPULATE_ERROR
-    assert log.url == reverse(
-        'api:lookup-by-slug', kwargs={'slug': translated_page.slug}
-    )
-    assert log.status_code == 403
+    assert all_models == cached_models

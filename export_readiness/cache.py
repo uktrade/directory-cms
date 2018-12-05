@@ -81,3 +81,13 @@ class EUExitFormSuccessPageSubscriber(AbstractDatabaseCacheSubscriber):
 class CampaignPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.CampaignPage
     subscriptions = []
+
+
+class ContactSuccessPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.ContactSuccessPage
+    subscriptions = []
+
+
+class ContactUsGuidancePageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.ContactUsGuidancePage
+    subscriptions = []

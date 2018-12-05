@@ -8,13 +8,10 @@ from wagtail.core.models import Page
 
 from django.forms.models import model_to_dict
 from django.urls import reverse
-from django.utils import translation
 
 from core import helpers, permissions, views
-from core.cache import PageCache
 from core.helpers import CachedResponse
 from conf.signature import SignatureCheckPermission
-from export_readiness.tests import factories as ex_read_factories
 from invest.tests.factories import InfoPageFactory
 
 
@@ -360,7 +357,7 @@ def test_lookup_by_slug_filter_called(mock_filter_service_name, admin_client):
     response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
 
     assert response.status_code == 404
-    assert mock_filter_service_name.call_count == 2
+    assert mock_filter_service_name.call_count == 1
     assert mock_filter_service_name.call_args == call(
         ANY,
         'service_name',
@@ -395,54 +392,6 @@ def test_lookup_by_full_path_not_found(admin_client):
         {'full_path': 'foo'}
     )
     assert response.status_code == 404
-
-
-@pytest.mark.django_db
-def test_lookup_by_tag_slug(admin_client, root_page):
-    tag = ex_read_factories.TagFactory(name='foo')
-    article1 = ex_read_factories.ArticlePageFactory(parent=root_page)
-    article1.tags = [tag]
-    article1.save()
-    article2 = ex_read_factories.ArticlePageFactory(parent=root_page)
-    article2.tags = [tag]
-    article2.save()
-    ex_read_factories.ArticlePageFactory(parent=root_page)
-    url = reverse('api:lookup-by-tag-list', kwargs={'slug': tag.slug})
-    response = admin_client.get(url)
-    assert response.status_code == 200
-    assert response.json()['name'] == tag.name
-    assert response.json()['slug'] == tag.slug
-    assert len(response.json()['articles']) == 2
-
-
-@pytest.mark.django_db
-@patch('core.views.is_registered_for_cache')
-def test_unregistered_page_not_cached(
-    mock_is_registered_for_cache, admin_client
-):
-    mock_is_registered_for_cache.return_value = False
-
-    service_name = cms.INVEST
-    # given there exists a page that is unregistered for cache
-    page = InfoPageFactory.create(live=True)
-
-    # when the industry page is retrieved
-    url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
-    response_one = admin_client.get(url, {'service_name': service_name})
-
-    # then the page is not retrieved from the cache
-    assert not isinstance(response_one, CachedResponse)
-
-    # and the page has not been cached by the view
-    assert PageCache.get(
-        slug=page.slug,
-        service_name=service_name,
-        language_code=translation.get_language()
-    ) is None
-
-    # and subsequent requests are not handled by the cache
-    response_two = admin_client.get(url, {'service_name': service_name})
-    assert not isinstance(response_two, CachedResponse)
 
 
 def test_cache_etags_match(admin_client):
