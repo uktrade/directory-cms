@@ -10,7 +10,6 @@ from .models import (
     CountryGuidePage, SuperregionPage, EUExitInternationalFormPage,
     EUExitDomesticFormPage
 )
-from core.helpers import image_rendition_as_json
 
 
 class GenericBodyOnlyPageSerializer(BasePageSerializer):
@@ -66,22 +65,16 @@ class RelatedArticlePageSerializer(BasePageSerializer):
     article_title = serializers.CharField(max_length=255)
     article_teaser = serializers.CharField(max_length=255)
     article_image = wagtail_fields.ImageRenditionField('original')
-    article_image_thumbnail = serializers.SerializerMethodField()
-
-    def get_article_image_thumbnail(self, obj):
-        return image_rendition_as_json(
-                obj.article_image, 'fill-640x360|jpegquality-60|format-jpeg')
+    article_image_thumbnail = wagtail_fields.ImageRenditionField(
+            'fill-640x360|jpegquality-60|format-jpeg', source='article_image')
 
 
 class ArticlePageSerializer(BasePageSerializer):
     article_title = serializers.CharField(max_length=255)
     article_teaser = serializers.CharField(max_length=255)
     article_image = wagtail_fields.ImageRenditionField('original')
-    article_image_thumbnail = serializers.SerializerMethodField()
-
-    def get_article_image_thumbnail(self, obj):
-        return image_rendition_as_json(
-                obj.article_image, 'fill-640x360|jpegquality-60|format-jpeg')
+    article_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='article_image')
 
     article_body_text = core_fields.MarkdownToHTMLField()
 
@@ -112,6 +105,9 @@ class ArticlePageSerializer(BasePageSerializer):
 class ArticleListingPageSerializer(BasePageSerializer):
     landing_page_title = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
+
     articles_count = serializers.IntegerField()
     list_teaser = core_fields.MarkdownToHTMLField(allow_null=True)
     hero_teaser = serializers.CharField(allow_null=True)
@@ -128,12 +124,6 @@ class ArticleListingPageSerializer(BasePageSerializer):
             context=self.context
         )
         return serializer.data
-
-    hero_image_thumbnail = serializers.SerializerMethodField()
-
-    def get_hero_image_thumbnail(self, obj):
-        return image_rendition_as_json(
-            obj.hero_image, 'fill-640x360|jpegquality-60|format-jpeg')
 
 
 class CountryGuidePageSerializer(BasePageSerializer):
@@ -182,11 +172,8 @@ class CountryGuidePageSerializer(BasePageSerializer):
             page_three_serializer.data,
         ]
 
-    hero_image_thumbnail = serializers.SerializerMethodField()
-
-    def get_hero_image_thumbnail(self, obj):
-        return image_rendition_as_json(
-                obj.hero_image, 'fill-640x360|jpegquality-60|format-jpeg')
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
+            'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
 
     articles = serializers.SerializerMethodField()
 
@@ -251,11 +238,8 @@ class TopicLandingPageSerializer(BasePageSerializer):
     hero_teaser = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
 
-    hero_image_thumbnail = serializers.SerializerMethodField()
-
-    def get_hero_image_thumbnail(self, obj):
-        return image_rendition_as_json(
-            obj.hero_image, 'fill-640x360|jpegquality-60|format-jpeg')
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
 
     child_pages = serializers.SerializerMethodField()
 

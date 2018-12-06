@@ -26,17 +26,6 @@ class CachedResponse(JsonResponse):
     pass
 
 
-def image_rendition_as_json(original, rendition):
-    if not original:
-        return None
-    image = original.get_rendition(rendition)
-    return {
-        'url': image.url,
-        'width': image.width,
-        'height': image.height
-    }
-
-
 def translate_panel(panel, language_code):
     """Convert an English admin editor field ("panel") to e.g, French.
 
