@@ -80,26 +80,19 @@ class ArticlePageSerializer(BasePageSerializer):
 
     related_pages = serializers.SerializerMethodField()
 
-    def get_related_pages(self, object):
-        page_one_serializer = RelatedArticlePageSerializer(
-            object.related_page_one,
-            context=self.context
-        )
-        page_two_serializer = RelatedArticlePageSerializer(
-            object.related_page_two,
-            context=self.context
-        )
-        page_three_serializer = RelatedArticlePageSerializer(
-            object.related_page_three,
-            context=self.context
-        )
-        return [
-            page_one_serializer.data,
-            page_two_serializer.data,
-            page_three_serializer.data,
-        ]
-
     tags = core_fields.TagsListField()
+
+    def get_related_pages(self, object):
+        serializer = RelatedArticlePageSerializer(
+            [
+                object.related_page_one,
+                object.related_page_two,
+                object.related_page_three
+            ],
+            context=self.context,
+            many=True,
+        )
+        return serializer.data
 
 
 class ArticleListingPageSerializer(BasePageSerializer):
@@ -129,6 +122,9 @@ class ArticleListingPageSerializer(BasePageSerializer):
 class CountryGuidePageSerializer(BasePageSerializer):
     landing_page_title = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
+            'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
+
     articles_count = serializers.IntegerField()
 
     section_one_heading = serializers.CharField()
@@ -153,29 +149,19 @@ class CountryGuidePageSerializer(BasePageSerializer):
 
     related_pages = serializers.SerializerMethodField()
 
-    def get_related_pages(self, object):
-        page_one_serializer = RelatedArticlePageSerializer(
-            object.related_page_one,
-            context=self.context
-        )
-        page_two_serializer = RelatedArticlePageSerializer(
-            object.related_page_two,
-            context=self.context
-        )
-        page_three_serializer = RelatedArticlePageSerializer(
-            object.related_page_three,
-            context=self.context
-        )
-        return [
-            page_one_serializer.data,
-            page_two_serializer.data,
-            page_three_serializer.data,
-        ]
-
-    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
-            'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
-
     articles = serializers.SerializerMethodField()
+
+    def get_related_pages(self, object):
+        serializer = RelatedArticlePageSerializer(
+            [
+                object.related_page_one,
+                object.related_page_two,
+                object.related_page_three
+            ],
+            context=self.context,
+            many=True,
+        )
+        return serializer.data
 
     def get_articles(self, obj):
         queryset = obj.get_descendants().type(
@@ -351,28 +337,21 @@ class CampaignPageSerializer(BasePageSerializer):
 
     related_pages = serializers.SerializerMethodField()
 
-    def get_related_pages(self, object):
-        page_one_serializer = RelatedArticlePageSerializer(
-            object.related_page_one,
-            context=self.context
-        )
-        page_two_serializer = RelatedArticlePageSerializer(
-            object.related_page_two,
-            context=self.context
-        )
-        page_three_serializer = RelatedArticlePageSerializer(
-            object.related_page_three,
-            context=self.context
-        )
-        return [
-            page_one_serializer.data,
-            page_two_serializer.data,
-            page_three_serializer.data,
-        ]
-
     cta_box_message = serializers.CharField(max_length=255)
     cta_box_button_url = serializers.CharField(max_length=255)
     cta_box_button_text = serializers.CharField(max_length=255)
+
+    def get_related_pages(self, object):
+        serializer = RelatedArticlePageSerializer(
+            [
+                object.related_page_one,
+                object.related_page_two,
+                object.related_page_three
+            ],
+            context=self.context,
+            many=True,
+        )
+        return serializer.data
 
 
 class EUExitGenericFormPageSerializer(BasePageSerializer):
