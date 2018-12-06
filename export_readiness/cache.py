@@ -30,7 +30,10 @@ class PerformanceDashboardNotesPageSubscriber(AbstractDatabaseCacheSubscriber):
 
 class TopicLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.TopicLandingPage
-    subscriptions = []
+    subscriptions = [
+        models.ArticleListingPage,
+        models.SuperregionPage,
+    ]
 
 
 class ArticleListingPageSubscriber(AbstractDatabaseCacheSubscriber):
@@ -53,7 +56,6 @@ class HomePageSubscriber(AbstractDatabaseCacheSubscriber):
     subscriptions = [
         models.ArticleListingPage,
         models.TopicLandingPage,
-        models.ArticleListingPage,
         models.ArticlePage,
     ]
 
@@ -80,7 +82,9 @@ class EUExitFormSuccessPageSubscriber(AbstractDatabaseCacheSubscriber):
 
 class CampaignPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.CampaignPage
-    subscriptions = []
+    subscriptions = [
+        models.ArticlePage,
+    ]
 
 
 class ContactSuccessPageSubscriber(AbstractDatabaseCacheSubscriber):
@@ -95,9 +99,14 @@ class ContactUsGuidancePageSubscriber(AbstractDatabaseCacheSubscriber):
 
 class SuperregionPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.SuperregionPage
-    subscriptions = []
+    subscriptions = [
+        models.ArticleListingPage,
+        models.CountryGuidePage,
+    ]
 
 
 class CountryGuidePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.CountryGuidePage
-    subscriptions = []
+    subscriptions = [
+        models.ArticlePage,
+    ]
