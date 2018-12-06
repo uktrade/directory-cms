@@ -13,7 +13,7 @@ cachetools==2.1.0         # via google-auth
 certifi==2018.4.16        # via requests
 chardet==3.0.4            # via requests
 contextlib2==0.5.5        # via raven
-directory-components==3.4.0
+directory-components==3.5.0
 directory-constants==11.1.0
 directory-healthcheck==0.6.0
 dj-database-url==0.4.2

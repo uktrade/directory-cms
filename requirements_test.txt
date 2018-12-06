@@ -18,7 +18,7 @@ chardet==3.0.4            # via requests
 codecov==2.0.15
 contextlib2==0.5.5        # via raven
 coverage==4.5.1           # via codecov, pytest-cov
-directory-components==3.4.0
+directory-components==3.5.0
 directory-constants==11.1.0
 directory-healthcheck==0.6.0
 dj-database-url==0.4.2
