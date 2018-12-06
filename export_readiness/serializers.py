@@ -83,12 +83,13 @@ class ArticlePageSerializer(BasePageSerializer):
     tags = core_fields.TagsListField()
 
     def get_related_pages(self, object):
+        items = [
+            object.related_page_one,
+            object.related_page_two,
+            object.related_page_three
+        ]
         serializer = RelatedArticlePageSerializer(
-            [
-                object.related_page_one,
-                object.related_page_two,
-                object.related_page_three
-            ],
+            [item for item in items if item],
             context=self.context,
             many=True,
         )
@@ -152,12 +153,13 @@ class CountryGuidePageSerializer(BasePageSerializer):
     articles = serializers.SerializerMethodField()
 
     def get_related_pages(self, object):
+        items = [
+            object.related_page_one,
+            object.related_page_two,
+            object.related_page_three
+        ]
         serializer = RelatedArticlePageSerializer(
-            [
-                object.related_page_one,
-                object.related_page_two,
-                object.related_page_three
-            ],
+            [item for item in items if item],
             context=self.context,
             many=True,
         )
@@ -342,12 +344,13 @@ class CampaignPageSerializer(BasePageSerializer):
     cta_box_button_text = serializers.CharField(max_length=255)
 
     def get_related_pages(self, object):
+        items = [
+            object.related_page_one,
+            object.related_page_two,
+            object.related_page_three
+        ]
         serializer = RelatedArticlePageSerializer(
-            [
-                object.related_page_one,
-                object.related_page_two,
-                object.related_page_three
-            ],
+            [item for item in items if item],
             context=self.context,
             many=True,
         )

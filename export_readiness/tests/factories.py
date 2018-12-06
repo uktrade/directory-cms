@@ -103,6 +103,29 @@ class CountryGuidePageFactory(wagtail_factories.PageFactory):
     related_content_intro = factory.fuzzy.FuzzyText(length=10)
 
 
+class CampaignPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.CampaignPage
+
+    campaign_heading = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None
+    section_one_heading = factory.fuzzy.FuzzyText(length=10)
+    section_one_intro = factory.fuzzy.FuzzyText(length=10)
+    selling_point_one_heading = factory.fuzzy.FuzzyText(length=10)
+    selling_point_one_content = factory.fuzzy.FuzzyText(length=10)
+    section_two_heading = factory.fuzzy.FuzzyText(length=10)
+    section_two_intro = factory.fuzzy.FuzzyText(length=10)
+    related_content_heading = factory.fuzzy.FuzzyText(length=10)
+    related_content_intro = factory.fuzzy.FuzzyText(length=10)
+    cta_box_message = factory.fuzzy.FuzzyText(length=10)
+    cta_box_button_url = factory.fuzzy.FuzzyText(length=10)
+    cta_box_button_text = factory.fuzzy.FuzzyText(length=10)
+
+
 class ArticlePageFactory(wagtail_factories.PageFactory):
 
     class Meta:
