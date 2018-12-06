@@ -13,8 +13,8 @@ cachetools==2.1.0         # via google-auth
 certifi==2018.4.16        # via requests
 chardet==3.0.4            # via requests
 contextlib2==0.5.5        # via raven
-directory-components==2.33.0
-directory-constants==10.1.0
+directory-components==3.5.0
+directory-constants==11.1.0
 directory-healthcheck==0.6.0
 dj-database-url==0.4.2
 django-admin-ip-restrictor==1.0.0  # via directory-components
@@ -47,7 +47,7 @@ html5lib==0.999999999     # via bleach, wagtail
 idna==2.6                 # via requests
 jmespath==0.9.3           # via boto3, botocore
 markdown==2.6.11          # via wagtail-markdown
-mohawk==0.3.4             # via sigauth
+mohawk==0.3.4             # via directory-components, sigauth
 pillow==5.1.0             # via wagtail
 protobuf==3.5.2.post1     # via google-api-core, googleapis-common-protos
 psycopg2==2.7.3.2
