@@ -74,6 +74,7 @@ DEBUG_SET_ENV_VARS := \
 	export DEFAULT_FROM_EMAIL=$$DIRECTORY_CMS_DEFAULT_FROM_EMAIL; \
 	export FEATURE_DEBUG_TOOLBAR_ENABLED=true; \
 	export REDIS_CACHE_URL=redis://localhost:6379; \
+	export REDIS_CELERY_URL=redis://localhost:6379/1; \
 	export API_CACHE_DISABLED=true; \
 	export ENVIRONMENT_CSS_THEME_FILE=core/css/environment_dev_theme.css
 
@@ -106,6 +107,9 @@ debug_shell:
 	$(DEBUG_SET_ENV_VARS) && ./manage.py shell
 
 debug: debug_db test_requirements debug_test
+
+debug_celery_worker:
+	$(DEBUG_SET_ENV_VARS); celery -A conf worker -l info
 
 compile_requirements:
 	pip-compile requirements.in
