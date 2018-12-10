@@ -31,14 +31,9 @@ if settings.FEATURE_REDIS_USE_SSL:
     app.conf.broker_use_ssl = ssl_conf
     app.conf.redis_backend_use_ssl = ssl_conf
 
+
 # Load task modules from all registered Django app configs.
 app.autodiscover_tasks()
-
-
-@app.task(bind=True)
-def debug_task(self):
-    print('Request: {0!r}'.format(self.request))
-
 
 sentry_client = Client(dsn=settings.RAVEN_CONFIG['dsn'])
 

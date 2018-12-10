@@ -6,7 +6,7 @@ test_requirements:
 	pip install -r requirements_test.txt
 
 FLAKE8 := flake8 . --exclude=migrations,.venv
-PYTEST := pytest . -v --ignore=venv --cov=. --cov-config=.coveragerc --capture=no $(pytest_args)
+PYTEST := pytest . -v --ignore=venv --ignore=conf/celery.py --cov=. --cov-config=.coveragerc --capture=no $(pytest_args)
 COLLECT_STATIC := python manage.py collectstatic --noinput
 DJANGO_MIGRATE := python manage.py distributed_migrate --noinput
 SYNC_TRANSLATION_FIELDS := python manage.py sync_page_translation_fields --noinput
@@ -76,7 +76,8 @@ DEBUG_SET_ENV_VARS := \
 	export REDIS_CACHE_URL=redis://localhost:6379; \
 	export REDIS_CELERY_URL=redis://localhost:6379/1; \
 	export API_CACHE_DISABLED=true; \
-	export ENVIRONMENT_CSS_THEME_FILE=core/css/environment_dev_theme.css
+	export ENVIRONMENT_CSS_THEME_FILE=core/css/environment_dev_theme.css; \
+	export CELERY_ALWAYS_EAGER=true
 
 
 TEST_SET_ENV_VARS := \
