@@ -5,11 +5,14 @@
 #    pip-compile --output-file requirements.txt requirements.in
 #
 -e git+https://github.com/infoportugal/wagtail-modeltranslation@531a7494c24f13cf25ca5e4ec6b6621d0cf833de#egg=wagtail_modeltranslation
+amqp==2.3.2               # via kombu
 beautifulsoup4==4.6.0     # via directory-components, wagtail
+billiard==3.5.0.5         # via celery
 bleach==2.1.4             # via wagtail-markdown
 boto3==1.6.3
 botocore==1.9.23          # via boto3, s3transfer
 cachetools==2.1.0         # via google-auth
+celery[redis]==4.2.1
 certifi==2018.4.16        # via requests
 chardet==3.0.4            # via requests
 contextlib2==0.5.5        # via raven
@@ -46,6 +49,7 @@ html2text==2018.1.9
 html5lib==0.999999999     # via bleach, wagtail
 idna==2.6                 # via requests
 jmespath==0.9.3           # via boto3, botocore
+kombu==4.2.2              # via celery
 markdown==2.6.11          # via wagtail-markdown
 mohawk==0.3.4             # via directory-components, sigauth
 pillow==5.1.0             # via wagtail
@@ -55,9 +59,9 @@ pyasn1-modules==0.2.1     # via google-auth
 pyasn1==0.4.3             # via pyasn1-modules, rsa
 python-dateutil==2.6.1    # via botocore
 pytube==9.2.2
-pytz==2017.2              # via directory-healthcheck, django, django-modelcluster, google-api-core, wagtail
+pytz==2017.2              # via celery, directory-healthcheck, django, django-modelcluster, google-api-core, wagtail
 raven==5.19.0
-redis==2.10.6             # via django-redis
+redis==2.10.6             # via celery, django-redis
 requests==2.18.4          # via google-api-core, wagtail
 rsa==3.4.2                # via google-auth
 s3transfer==0.1.13        # via boto3
@@ -65,6 +69,7 @@ sigauth==4.0.1
 six==1.11.0               # via bleach, google-api-core, google-auth, html5lib, mohawk, protobuf, python-dateutil, wagtail
 unidecode==0.4.21         # via wagtail
 urllib3==1.22             # via requests
+vine==1.1.4               # via amqp
 wagtail-markdown==0.5
 wagtail==2.2.2
 wagtailmedia==0.2.0

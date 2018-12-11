@@ -5,14 +5,17 @@
 #    pip-compile --output-file requirements_test.txt requirements_test.in
 #
 -e git+https://github.com/infoportugal/wagtail-modeltranslation@531a7494c24f13cf25ca5e4ec6b6621d0cf833de#egg=wagtail_modeltranslation
+amqp==2.3.2               # via kombu
 atomicwrites==1.1.5       # via pytest
 attrs==18.1.0             # via pytest
 beautifulsoup4==4.6.0
+billiard==3.5.0.5         # via celery
 bleach==2.1.4             # via wagtail-markdown
 boto3==1.6.3
 botocore==1.9.23          # via boto3, s3transfer
 cached-property==1.4.3    # via docker-compose
 cachetools==2.1.0         # via google-auth
+celery[redis]==4.2.1
 certifi==2018.4.16        # via requests
 chardet==3.0.4            # via requests
 codecov==2.0.15
@@ -63,6 +66,7 @@ html5lib==0.999999999     # via bleach, wagtail
 idna==2.6                 # via requests
 jmespath==0.9.3           # via boto3, botocore
 jsonschema==2.6.0         # via docker-compose
+kombu==4.2.2              # via celery
 markdown==2.6.11          # via wagtail-markdown
 mccabe==0.6.1             # via flake8
 mohawk==0.3.4             # via directory-components, sigauth
@@ -83,10 +87,10 @@ pytest-sugar==0.9.1
 pytest==3.6.0
 python-dateutil==2.6.1    # via botocore, fake-factory, faker, freezegun
 pytube==9.2.2
-pytz==2017.2              # via directory-healthcheck, django, django-modelcluster, google-api-core, wagtail
+pytz==2017.2              # via celery, directory-healthcheck, django, django-modelcluster, google-api-core, wagtail
 pyyaml==3.13              # via docker-compose
 raven==5.19.0
-redis==2.10.6             # via django-redis
+redis==2.10.6             # via celery, django-redis
 requests-mock==1.5.0
 requests==2.18.4          # via codecov, docker, docker-compose, google-api-core, requests-mock, wagtail
 rsa==3.4.2                # via google-auth
@@ -99,6 +103,7 @@ text-unidecode==1.2       # via faker
 texttable==0.9.1          # via docker-compose
 unidecode==0.4.21         # via wagtail
 urllib3==1.22             # via requests
+vine==1.1.4               # via amqp
 wagtail-factories==1.0.0
 wagtail-markdown==0.5
 wagtail==2.2.2

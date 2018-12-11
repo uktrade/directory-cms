@@ -4,6 +4,7 @@ from urllib.parse import urlencode
 
 from rest_framework.renderers import JSONRenderer
 from wagtail.core.signals import page_published, page_unpublished
+from wagtail.core.models import Page
 
 from django.conf import settings
 from django.core.cache import cache
@@ -13,6 +14,7 @@ from django.utils import translation
 from django.utils.http import quote_etag
 
 from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
+from conf.celery import app
 
 
 def generate_etag(instance):
@@ -70,9 +72,20 @@ class PageCache:
 
 
 class CachePopulator:
-    # drafts will not be cached. This is as per design
+
     @classmethod
-    def populate(cls, instance):
+    def populate_async(cls, instance):
+        PageCache.delete(
+            slug=instance.slug,
+            service_name=instance.service_name,
+            language_codes=instance.translated_languages,
+        )
+        cls.populate.delay(instance.pk)
+
+    @staticmethod
+    @app.task
+    def populate(instance_pk):
+        instance = Page.objects.get(pk=instance_pk).specific
         serializer_class = MODELS_SERIALIZERS_MAPPING[instance.__class__]
         for language_code in instance.translated_languages:
             with translation.override(language_code):
@@ -125,7 +138,7 @@ class AbstractDatabaseCacheSubscriber(abc.ABC):
 
     @classmethod
     def populate(cls, sender, instance, *args, **kwargs):
-        CachePopulator.populate(instance=instance)
+        CachePopulator.populate_async(instance)
 
     @classmethod
     def delete(cls, sender, instance, *args, **kwargs):
@@ -138,4 +151,4 @@ class AbstractDatabaseCacheSubscriber(abc.ABC):
     @classmethod
     def populate_many(cls, sender, instance, *args, **kwargs):
         for related_instance in cls.model.objects.filter(live=True):
-            CachePopulator.populate(instance=related_instance)
+            CachePopulator.populate_async(related_instance)
