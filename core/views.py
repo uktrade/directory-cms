@@ -1,6 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
 
-from rest_framework.exceptions import ValidationError
 from rest_framework.renderers import JSONRenderer
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.core.models import Page
@@ -8,6 +7,8 @@ from wagtail.core.models import Orderable
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
+from django.forms import ValidationError
+from django.http.response import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, Http404
 from django.template.response import TemplateResponse
 from django.utils import translation
@@ -230,7 +231,10 @@ class PreloadPageView(FormView):
     def dispatch(self, *args, **kwargs):
         self.page_content_type = self.get_page_content_type()
         self.page = self.get_page()
-        return super().dispatch(*args, **kwargs)
+        try:
+            return super().dispatch(*args, **kwargs)
+        except ValidationError as error:
+            return HttpResponseBadRequest(error)
 
     def get_page_content_type(self):
         try:

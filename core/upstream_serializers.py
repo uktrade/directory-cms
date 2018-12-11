@@ -1,10 +1,12 @@
 import abc
 from datetime import date, datetime
 
+from wagtail.core.models import Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
 
 from django.forms.models import model_to_dict
+from django.forms import ValidationError
 
 from core import helpers
 
@@ -82,6 +84,23 @@ class DateFieldSerializer(AbstractFieldSerializer):
         return datetime.strptime(value, cls.DATE_FORMAT)
 
 
+class RelatedPageSerializer(AbstractFieldSerializer):
+    FIELD_NAME_PREFIX = '(page)'
+
+    @classmethod
+    def serialize_value(cls, value):
+        return value.slug
+
+    @classmethod
+    def deserialize_value(cls, value):
+        try:
+            return Page.objects.get(slug=value).specific
+        except Page.DoesNotExist:
+            raise ValidationError(
+                f'Related page {value} must be copied upstream first.'
+            )
+
+
 class NoOpFieldSerializer(AbstractFieldSerializer):
     FIELD_NAME_PREFIX = ''
 
@@ -103,6 +122,7 @@ class UpstreamModelSerilaizer:
         Document: DocumentFieldSerializer,
         list: ListFieldSerializer,
         date: DateFieldSerializer,
+        Page: RelatedPageSerializer,
     }
     default_field_serializer = NoOpFieldSerializer
 
