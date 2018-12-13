@@ -1,7 +1,7 @@
 from directory_constants.constants import cms
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel
+    FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel
 )
 from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -316,7 +316,10 @@ class PerformanceDashboardNotesPage(ExclusivePageMixin,
 
 class TopicLandingPage(BasePage):
     service_name_value = cms.EXPORT_READINESS
-    subpage_types = ['export_readiness.ArticleListingPage']
+    subpage_types = [
+        'export_readiness.ArticleListingPage',
+        'export_readiness.SuperregionPage',
+    ]
 
     landing_page_title = models.CharField(max_length=255)
 
@@ -345,6 +348,16 @@ class TopicLandingPage(BasePage):
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
+
+
+class SuperregionPage(TopicLandingPage):
+    subpage_types = [
+        'export_readiness.CountryGuidePage',
+    ]
+
+    @property
+    def articles_count(self):
+        return self.get_descendants().live().count()
 
 
 class ArticleListingPage(BasePage):
@@ -383,6 +396,158 @@ class ArticleListingPage(BasePage):
             ]
         ),
         FieldPanel('list_teaser'),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+
+class CountryGuidePage(BasePage):
+    service_name_value = cms.EXPORT_READINESS
+    subpage_types = [
+        'export_readiness.ArticlePage',
+    ]
+
+    landing_page_title = models.CharField(max_length=255)
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    section_one_heading = models.CharField(max_length=50)
+    section_one_content = MarkdownField()
+
+    selling_point_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    selling_point_one_heading = models.CharField(max_length=255)
+    selling_point_one_content = MarkdownField()
+
+    selling_point_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    selling_point_two_heading = models.CharField(
+        max_length=255, null=True, blank=True)
+    selling_point_two_content = MarkdownField(null=True, blank=True)
+
+    selling_point_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    selling_point_three_heading = models.CharField(
+        max_length=255, null=True, blank=True)
+    selling_point_three_content = MarkdownField(null=True, blank=True)
+
+    section_two_heading = models.CharField(max_length=255)
+    section_two_content = MarkdownField()
+
+    related_content_heading = models.CharField(max_length=255)
+    related_content_intro = MarkdownField()
+
+    related_page_one = models.ForeignKey(
+        'export_readiness.ArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_two = models.ForeignKey(
+        'export_readiness.ArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_three = models.ForeignKey(
+        'export_readiness.ArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    @property
+    def articles_count(self):
+        return self.get_descendants().type(ArticlePage).live().count()
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='Hero',
+            children=[
+                FieldPanel('landing_page_title'),
+                ImageChooserPanel('hero_image'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Section one/intro',
+            children=[
+                FieldPanel('section_one_heading'),
+                MarkdownPanel('section_one_content'),
+            ]
+        ),
+        FieldRowPanel(
+            heading='Section two/selling points',
+            children=[
+                MultiFieldPanel([
+                    ImageChooserPanel('selling_point_one_icon'),
+                    FieldPanel('selling_point_one_heading'),
+                    MarkdownPanel('selling_point_one_content'),
+                ]),
+                MultiFieldPanel([
+                    ImageChooserPanel('selling_point_two_icon'),
+                    FieldPanel('selling_point_two_heading'),
+                    MarkdownPanel('selling_point_two_content'),
+                ]),
+                MultiFieldPanel([
+                    ImageChooserPanel('selling_point_three_icon'),
+                    FieldPanel('selling_point_three_heading'),
+                    MarkdownPanel('selling_point_three_content'),
+                ]),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Section two/article section',
+            children=[
+                FieldPanel('section_two_heading'),
+                MarkdownPanel('section_two_content'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Section three/related content',
+            children=[
+                FieldPanel('related_content_heading'),
+                MarkdownPanel('related_content_intro'),
+                FieldRowPanel([
+                    PageChooserPanel(
+                        'related_page_one',
+                        'export_readiness.ArticlePage'),
+                    PageChooserPanel(
+                        'related_page_two',
+                        'export_readiness.ArticlePage'),
+                    PageChooserPanel(
+                        'related_page_three',
+                        'export_readiness.ArticlePage'),
+                ])
+            ]
+        ),
         SearchEngineOptimisationPanel(),
     ]
 
@@ -505,76 +670,26 @@ class CampaignPage(BasePage):
     related_content_heading = models.CharField(max_length=255)
     related_content_intro = MarkdownField()
 
-    # CMS-647
-    # TODO: crawl these urls and save metadata to the page
-    related_page_one_url = models.CharField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
-    # if there is no metadata or it isn't appropriate we can override it here
-    related_page_one_heading = models.CharField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
-    related_page_one_description = models.CharField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
-    related_page_one_image = models.ForeignKey(
-        'wagtailimages.Image',
+    related_page_one = models.ForeignKey(
+        'export_readiness.ArticlePage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
     )
-
-    related_page_two_url = models.CharField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
-    related_page_two_heading = models.CharField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
-    related_page_two_description = models.CharField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
-    related_page_two_image = models.ForeignKey(
-        'wagtailimages.Image',
+    related_page_two = models.ForeignKey(
+        'export_readiness.ArticlePage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
     )
-
-    related_page_three_url = models.CharField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
-    related_page_three_heading = models.CharField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
-    related_page_three_description = models.CharField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
-    related_page_three_image = models.ForeignKey(
-        'wagtailimages.Image',
+    related_page_three = models.ForeignKey(
+        'export_readiness.ArticlePage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
     )
 
     cta_box_message = models.CharField(max_length=255)
@@ -642,27 +757,15 @@ class CampaignPage(BasePage):
                 FieldPanel('related_content_heading'),
                 MarkdownPanel('related_content_intro'),
                 FieldRowPanel([
-                    MultiFieldPanel([
-                        ImageChooserPanel('related_page_one_image'),
-                        FieldPanel('related_page_one_heading'),
-                        FieldPanel(
-                            'related_page_one_description', widget=Textarea),
-                        FieldPanel('related_page_one_url'),
-                    ]),
-                    MultiFieldPanel([
-                        ImageChooserPanel('related_page_two_image'),
-                        FieldPanel('related_page_two_heading'),
-                        FieldPanel(
-                            'related_page_two_description', widget=Textarea),
-                        FieldPanel('related_page_two_url'),
-                    ]),
-                    MultiFieldPanel([
-                        ImageChooserPanel('related_page_three_image'),
-                        FieldPanel('related_page_three_heading'),
-                        FieldPanel(
-                            'related_page_three_description', widget=Textarea),
-                        FieldPanel('related_page_three_url'),
-                    ])
+                    PageChooserPanel(
+                        'related_page_one',
+                        'export_readiness.ArticlePage'),
+                    PageChooserPanel(
+                        'related_page_two',
+                        'export_readiness.ArticlePage'),
+                    PageChooserPanel(
+                        'related_page_three',
+                        'export_readiness.ArticlePage'),
                 ])
             ]
         ),
@@ -725,59 +828,26 @@ class ArticlePage(BasePage):
     )
     article_body_text = MarkdownField()
 
-    related_article_one_url = models.CharField(
-        max_length=255,
-        help_text='Paste the article path here (eg /foo/bar/)',
+    related_page_one = models.ForeignKey(
+        'export_readiness.ArticlePage',
         null=True,
-        blank=True
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
     )
-    related_article_one_title = models.CharField(
-        max_length=255,
-        help_text='Paste the title of the article here',
+    related_page_two = models.ForeignKey(
+        'export_readiness.ArticlePage',
         null=True,
-        blank=True
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
     )
-    related_article_one_teaser = models.CharField(
-        max_length=255,
-        help_text='Paste the article description here (max 255 characters)',
+    related_page_three = models.ForeignKey(
+        'export_readiness.ArticlePage',
         null=True,
-        blank=True
-    )
-    related_article_two_url = models.CharField(
-        max_length=255,
-        help_text='Paste the article path here (eg /foo/bar/)',
-        null=True,
-        blank=True
-    )
-    related_article_two_title = models.CharField(
-        max_length=255,
-        help_text='Paste the title of the article here',
-        null=True,
-        blank=True
-    )
-    related_article_two_teaser = models.CharField(
-        max_length=255,
-        help_text='Paste the article description here (max 255 characters)',
-        null=True,
-        blank=True
-    )
-    related_article_three_url = models.CharField(
-        max_length=255,
-        help_text='Paste the article path here (eg /foo/bar/)',
-        null=True,
-        blank=True
-    )
-    related_article_three_title = models.CharField(
-        max_length=255,
-        help_text='Paste the title of the article here',
-        null=True,
-        blank=True
-    )
-    related_article_three_teaser = models.CharField(
-        max_length=255,
-        help_text='Paste the article description here (max 255 characters)',
-        null=True,
-        blank=True
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
     )
 
     # settings fields
@@ -794,27 +864,19 @@ class ArticlePage(BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading='Related article one',
+            heading='Related articles',
             children=[
-                FieldPanel('related_article_one_url'),
-                FieldPanel('related_article_one_title'),
-                FieldPanel('related_article_one_teaser'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading='Related article two',
-            children=[
-                FieldPanel('related_article_two_url'),
-                FieldPanel('related_article_two_title'),
-                FieldPanel('related_article_two_teaser'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading='Related article three',
-            children=[
-                FieldPanel('related_article_three_url'),
-                FieldPanel('related_article_three_title'),
-                FieldPanel('related_article_three_teaser'),
+                FieldRowPanel([
+                    PageChooserPanel(
+                        'related_page_one',
+                        'export_readiness.ArticlePage'),
+                    PageChooserPanel(
+                        'related_page_two',
+                        'export_readiness.ArticlePage'),
+                    PageChooserPanel(
+                        'related_page_three',
+                        'export_readiness.ArticlePage'),
+                ]),
             ]
         ),
         SearchEngineOptimisationPanel(),

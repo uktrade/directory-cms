@@ -9,6 +9,11 @@ class TermsAndConditionsPageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
+@register(models.CountryGuidePage)
+class CountryGuidePage(BaseTranslationOptions):
+    fields = []
+
+
 @register(models.MarketingPages)
 class MarketingPages(BaseTranslationOptions):
     fields = []
@@ -46,6 +51,11 @@ class PerformanceDashboardNotesPageTranslationOptions(BaseTranslationOptions):
 
 @register(models.TopicLandingPage)
 class TopicLandingPageTranslationOptions(BaseTranslationOptions):
+    fields = []
+
+
+@register(models.SuperregionPage)
+class SuperregionPage(BaseTranslationOptions):
     fields = []
 
 

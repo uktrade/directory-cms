@@ -60,6 +60,17 @@ class TopicLandingPageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
+class SuperregionPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.SuperregionPage
+
+    landing_page_title = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None
+
+
 class ArticleListingPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
@@ -72,6 +83,49 @@ class ArticleListingPageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
+class CountryGuidePageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.CountryGuidePage
+
+    landing_page_title = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None
+    section_one_heading = factory.fuzzy.FuzzyText(length=10)
+    section_one_content = factory.fuzzy.FuzzyText(length=10)
+    selling_point_one_heading = factory.fuzzy.FuzzyText(length=10)
+    selling_point_one_content = factory.fuzzy.FuzzyText(length=10)
+    section_two_heading = factory.fuzzy.FuzzyText(length=10)
+    section_two_content = factory.fuzzy.FuzzyText(length=10)
+    related_content_heading = factory.fuzzy.FuzzyText(length=10)
+    related_content_intro = factory.fuzzy.FuzzyText(length=10)
+
+
+class CampaignPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.CampaignPage
+
+    campaign_heading = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None
+    section_one_heading = factory.fuzzy.FuzzyText(length=10)
+    section_one_intro = factory.fuzzy.FuzzyText(length=10)
+    selling_point_one_heading = factory.fuzzy.FuzzyText(length=10)
+    selling_point_one_content = factory.fuzzy.FuzzyText(length=10)
+    section_two_heading = factory.fuzzy.FuzzyText(length=10)
+    section_two_intro = factory.fuzzy.FuzzyText(length=10)
+    related_content_heading = factory.fuzzy.FuzzyText(length=10)
+    related_content_intro = factory.fuzzy.FuzzyText(length=10)
+    cta_box_message = factory.fuzzy.FuzzyText(length=10)
+    cta_box_button_url = factory.fuzzy.FuzzyText(length=10)
+    cta_box_button_text = factory.fuzzy.FuzzyText(length=10)
+
+
 class ArticlePageFactory(wagtail_factories.PageFactory):
 
     class Meta:
@@ -80,15 +134,6 @@ class ArticlePageFactory(wagtail_factories.PageFactory):
     article_title = factory.fuzzy.FuzzyText(length=10)
     article_teaser = factory.fuzzy.FuzzyText(length=10)
     article_body_text = factory.fuzzy.FuzzyText(length=10)
-    related_article_one_url = factory.fuzzy.FuzzyText(length=10)
-    related_article_one_title = factory.fuzzy.FuzzyText(length=10)
-    related_article_one_teaser = factory.fuzzy.FuzzyText(length=10)
-    related_article_two_url = factory.fuzzy.FuzzyText(length=10)
-    related_article_two_title = factory.fuzzy.FuzzyText(length=10)
-    related_article_two_teaser = factory.fuzzy.FuzzyText(length=10)
-    related_article_three_url = factory.fuzzy.FuzzyText(length=10)
-    related_article_three_title = factory.fuzzy.FuzzyText(length=10)
-    related_article_three_teaser = factory.fuzzy.FuzzyText(length=10)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     last_published_at = timezone.now()

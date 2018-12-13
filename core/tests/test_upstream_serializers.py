@@ -1,6 +1,22 @@
-from core.upstream_serializers import UpstreamModelSerilaizer
-
 import pytest
+from rest_framework.exceptions import ValidationError
+
+from core.upstream_serializers import UpstreamModelSerilaizer
+from export_readiness.tests.factories import (
+    ArticlePageFactory, CountryGuidePageFactory
+)
+
+
+@pytest.fixture
+def article_page():
+    return ArticlePageFactory()
+
+
+@pytest.fixture
+def country_guide_page(article_page):
+    return CountryGuidePageFactory(
+        related_page_one=article_page
+    )
 
 
 @pytest.mark.django_db
@@ -44,3 +60,33 @@ def test_document_field_deserializer(high_potential_opportunity_page):
     assert actual['pdf_document'] == (
         high_potential_opportunity_page.pdf_document.pk
     )
+
+
+@pytest.mark.django_db
+def test_related_page_field_serialize(country_guide_page):
+
+    data = UpstreamModelSerilaizer.serialize(country_guide_page)
+
+    assert data['(page)related_page_one'] == (
+        country_guide_page.related_page_one.slug
+    )
+
+
+@pytest.mark.django_db
+def test_related_page_field_deserializer(article_page):
+    serialized_data = {
+        '(page)related_page_one': article_page.slug
+    }
+    actual = UpstreamModelSerilaizer.deserialize(serialized_data)
+
+    assert actual['related_page_one'] == article_page
+
+
+@pytest.mark.django_db
+def test_related_page_field_deserializer_invalid_slug(article_page):
+    serialized_data = {
+        '(page)related_page_one': 'some-missing-slug'
+    }
+
+    with pytest.raises(ValidationError):
+        UpstreamModelSerilaizer.deserialize(serialized_data)

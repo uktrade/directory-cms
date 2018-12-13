@@ -1,7 +1,7 @@
 from unittest import mock
 
 import pytest
-from wagtail.core.models import Page
+from wagtail.core.models import Page, get_page_models
 
 from core import cache, models
 
@@ -202,7 +202,7 @@ def test_all_models_cached():
         Page,
     }
     all_models = {
-        model for model in models.BasePage.__subclasses__()
+        model for model in get_page_models()
         if model not in exclude
     }
     cached_models = {

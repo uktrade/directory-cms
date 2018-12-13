@@ -51,7 +51,7 @@ def test_topic_landing_page_view(admin_client, root_page):
     url = reverse('api:api:pages:detail', kwargs={'pk': topic_landing_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
-    assert 'article_listing' in response.json()
+    assert 'child_pages' in response.json()
 
 
 def test_article_listing_page_view(admin_client, root_page):
