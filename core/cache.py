@@ -4,6 +4,7 @@ from urllib.parse import urlencode
 
 from rest_framework.renderers import JSONRenderer
 from wagtail.core.signals import page_published, page_unpublished
+from wagtail.core.models import Page
 
 from django.conf import settings
 from django.core.cache import cache
@@ -13,13 +14,7 @@ from django.utils import translation
 from django.utils.http import quote_etag
 
 from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
-
-
-def generate_etag(instance):
-    serializer_class = MODELS_SERIALIZERS_MAPPING[instance.__class__]
-    serializer = serializer_class(instance=instance)
-    json_data = JSONRenderer().render(serializer.data)
-    return quote_etag(hashlib.md5(json_data).hexdigest())
+from conf.celery import app
 
 
 class PageCache:
@@ -68,23 +63,81 @@ class PageCache:
             ))
         cls.cache.delete_many(keys)
 
+    @classmethod
+    def transaction(cls):
+        class Transaction(cls):
+            cache = TransactionalCache()
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                self.cache.commit()
+
+        return Transaction()
+
+
+class TransactionalCache:
+    """
+    Like `django.core.cache.cache`, but it buffers writes to be written to be a
+    single transaction.
+    """
+
+    cache = cache
+
+    def __init__(self, *args, **kwargs):
+        self.transaction = {}
+        super().__init__(*args, **kwargs)
+
+    def set(self, key, contents, timeout):
+        self.transaction[key] = contents
+
+    def commit(self):
+        self.cache.set_many(
+            self.transaction, timeout=settings.API_CACHE_EXPIRE_SECONDS
+        )
+
 
 class CachePopulator:
-    # drafts will not be cached. This is as per design
+
+    @staticmethod
+    @app.task
+    def populate(instance_pk):
+        instance = Page.objects.get(pk=instance_pk).specific
+        CachePopulator.populate_sync(instance)
+
     @classmethod
-    def populate(cls, instance):
+    def populate_async(cls, instance):
+        PageCache.delete(
+            slug=instance.slug,
+            service_name=instance.service_name,
+            language_codes=instance.translated_languages,
+        )
+        cls.populate.delay(instance.pk)
+
+    @classmethod
+    def populate_sync(cls, instance):
         serializer_class = MODELS_SERIALIZERS_MAPPING[instance.__class__]
-        for language_code in instance.translated_languages:
-            with translation.override(language_code):
-                serializer = serializer_class(instance=instance)
-                PageCache.set(
-                    slug=instance.slug,
-                    language_code=language_code,
-                    service_name=instance.service_name,
-                    contents={
-                        **serializer.data, 'etag': generate_etag(instance)
-                    }
-                )
+        with PageCache.transaction() as page_cache:
+            for language_code in instance.translated_languages:
+                with translation.override(language_code):
+                    serializer = serializer_class(instance=instance)
+                    page_cache.set(
+                        slug=instance.slug,
+                        language_code=language_code,
+                        service_name=instance.service_name,
+                        contents={
+                            **serializer.data,
+                            'etag': cls.generate_etag(instance)
+                        }
+                    )
+
+    @staticmethod
+    def generate_etag(instance):
+        serializer_class = MODELS_SERIALIZERS_MAPPING[instance.__class__]
+        serializer = serializer_class(instance=instance)
+        json_data = JSONRenderer().render(serializer.data)
+        return quote_etag(hashlib.md5(json_data).hexdigest())
 
 
 class AbstractDatabaseCacheSubscriber(abc.ABC):
@@ -125,7 +178,7 @@ class AbstractDatabaseCacheSubscriber(abc.ABC):
 
     @classmethod
     def populate(cls, sender, instance, *args, **kwargs):
-        CachePopulator.populate(instance=instance)
+        CachePopulator.populate_async(instance)
 
     @classmethod
     def delete(cls, sender, instance, *args, **kwargs):
@@ -138,4 +191,4 @@ class AbstractDatabaseCacheSubscriber(abc.ABC):
     @classmethod
     def populate_many(cls, sender, instance, *args, **kwargs):
         for related_instance in cls.model.objects.filter(live=True):
-            CachePopulator.populate(instance=related_instance)
+            CachePopulator.populate_async(related_instance)

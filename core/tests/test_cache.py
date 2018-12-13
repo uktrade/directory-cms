@@ -85,7 +85,7 @@ def test_page_cache_get_set_delete():
 def test_cache_populator(translated_page):
     # translated_page is a IndustryPage, which is registered for caching in
     # find_a_supplier.cache
-    cache.CachePopulator.populate(instance=translated_page,)
+    cache.CachePopulator.populate(translated_page.pk)
     for language_code in translated_page.translated_languages:
         assert cache.PageCache.get(
             slug=translated_page.slug,
@@ -136,19 +136,19 @@ def test_subscriber_subscribe_to_publish(
     ]
 
 
-@mock.patch('core.cache.CachePopulator.populate')
-def test_subscriber_populate(mock_populate):
+@pytest.mark.django_db
+@mock.patch('core.cache.CachePopulator.populate.delay')
+def test_subscriber_populate(mock_populate, translated_page):
     class TestSubscriber(cache.AbstractDatabaseCacheSubscriber):
         model = Page
         subscriptions = [
             models.Breadcrumb
         ]
 
-    instance = mock.Mock()
-    TestSubscriber.populate(sender=None, instance=instance)
+    TestSubscriber.populate(sender=None, instance=translated_page)
 
     assert mock_populate.call_count == 1
-    assert mock_populate.call_args == mock.call(instance=instance)
+    assert mock_populate.call_args == mock.call(translated_page.pk)
 
 
 @mock.patch('core.cache.PageCache.delete')
@@ -173,7 +173,7 @@ def test_subscriber_delete(mock_delete):
 
 
 @pytest.mark.django_db
-@mock.patch('core.cache.CachePopulator.populate')
+@mock.patch('core.cache.CachePopulator.populate.delay')
 def test_subscriber_populate_many(mock_populate, translated_page):
     class TestSubscriber(cache.AbstractDatabaseCacheSubscriber):
         model = translated_page.__class__
@@ -184,7 +184,7 @@ def test_subscriber_populate_many(mock_populate, translated_page):
     TestSubscriber.populate_many(sender=None, instance=translated_page)
 
     assert mock_populate.call_count == 1
-    assert mock_populate.call_args == mock.call(instance=translated_page)
+    assert mock_populate.call_args == mock.call(translated_page.pk)
 
 
 def test_all_models_cached():
@@ -211,3 +211,41 @@ def test_all_models_cached():
     }
 
     assert all_models == cached_models
+
+
+@mock.patch('django.core.cache.cache.set')
+@mock.patch('django.core.cache.cache.set_many')
+def test_transactional_cache(mock_set_many, mock_set, settings):
+    with cache.PageCache.transaction() as page_cache:
+        page_cache.set(
+            slug='s1',
+            language_code='en-gb',
+            service_name='INVEST',
+            contents={'key': 'value-one'}
+        )
+        page_cache.set(
+            slug='s2',
+            language_code='fr',
+            service_name='INVEST',
+            contents={'key': 'value-two'}
+        )
+        page_cache.set(
+            slug='s3',
+            language_code='de',
+            service_name='INVEST',
+            contents={'key': 'value-three'}
+        )
+
+    assert mock_set.call_count == 0
+    assert mock_set_many.call_count == 1
+    assert mock_set_many.call_args == mock.call({
+        '{slug}/api/pages/lookup-by-slug/s1/?service_name=INVEST&lang=en-gb': {
+            'key': 'value-one'
+        },
+        '{slug}/api/pages/lookup-by-slug/s2/?service_name=INVEST&lang=fr': {
+            'key': 'value-two'
+        },
+        '{slug}/api/pages/lookup-by-slug/s3/?service_name=INVEST&lang=de': {
+            'key': 'value-three'}
+        }, timeout=settings.API_CACHE_EXPIRE_SECONDS
+    )
