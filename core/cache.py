@@ -7,7 +7,7 @@ from wagtail.core.signals import page_published, page_unpublished
 from wagtail.core.models import Page
 
 from django.conf import settings
-from django.core.cache import cache, DefaultCacheProxy
+from django.core.cache import cache
 from django.db.models.signals import post_save
 from django.urls import reverse
 from django.utils import translation
@@ -66,7 +66,7 @@ class PageCache:
     @classmethod
     def transaction(cls):
         class Transaction(cls):
-            cache = TransactionsactionalCache()
+            cache = TransactionalCache()
 
             def __enter__(self):
                 return self
@@ -77,11 +77,13 @@ class PageCache:
         return Transaction()
 
 
-class TransactionsactionalCache(DefaultCacheProxy):
+class TransactionalCache:
     """
     Like `django.core.cache.cache`, but it buffers writes to be written to be a
     single transaction.
     """
+
+    cache = cache
 
     def __init__(self, *args, **kwargs):
         self.transaction = {}
@@ -91,7 +93,7 @@ class TransactionsactionalCache(DefaultCacheProxy):
         self.transaction[key] = contents
 
     def commit(self):
-        self.set_many(
+        self.cache.set_many(
             self.transaction, timeout=settings.API_CACHE_EXPIRE_SECONDS
         )
 
