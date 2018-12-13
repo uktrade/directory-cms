@@ -13,7 +13,7 @@ from raven.contrib.celery import register_signal, register_logger_signal
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'conf.settings')
 
-app = Celery('forms-api')
+app = Celery('cms')
 
 # Using a string here means the worker don't have to serialize
 # the configuration object to child processes.

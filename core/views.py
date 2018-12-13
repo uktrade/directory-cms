@@ -108,8 +108,8 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
             response = super().dispatch(*args, **kwargs)
             if response.status_code == 200:
                 instance = self.get_object()
-                cache.CachePopulator.populate_async(instance=instance)
-                response['ETag'] = cache.generate_etag(instance)
+                cache.CachePopulator.populate_sync(instance=instance)
+                response['ETag'] = cache.CachePopulator.generate_etag(instance)
         return response
 
     def get_queryset(self):
