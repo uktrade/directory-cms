@@ -1,9 +1,7 @@
-from django.forms import ValidationError
+import pytest
+from rest_framework.exceptions import ValidationError
 
 from core.upstream_serializers import UpstreamModelSerilaizer
-
-import pytest
-
 from export_readiness.tests.factories import (
     ArticlePageFactory, CountryGuidePageFactory
 )
@@ -85,7 +83,7 @@ def test_related_page_field_deserializer(article_page):
 
 
 @pytest.mark.django_db
-def test_related_page_field_deserializer(article_page):
+def test_related_page_field_deserializer_invalid_slug(article_page):
     serialized_data = {
         '(page)related_page_one': 'some-missing-slug'
     }

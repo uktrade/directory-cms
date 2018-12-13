@@ -1,5 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 
+from rest_framework.exceptions import ValidationError
 from rest_framework.renderers import JSONRenderer
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.core.models import Page
@@ -7,7 +8,6 @@ from wagtail.core.models import Orderable
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.forms import ValidationError
 from django.http.response import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, Http404
 from django.template.response import TemplateResponse

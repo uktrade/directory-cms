@@ -1,12 +1,12 @@
 import abc
 from datetime import date, datetime
 
+from rest_framework.exceptions import ValidationError
 from wagtail.core.models import Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
 
 from django.forms.models import model_to_dict
-from django.forms import ValidationError
 
 from core import helpers
 
