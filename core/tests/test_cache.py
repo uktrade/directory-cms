@@ -208,6 +208,7 @@ def test_all_models_cached():
     cached_models = {
         item.model
         for item in cache.AbstractDatabaseCacheSubscriber.__subclasses__()
+        if item.model not in exclude
     }
 
     assert all_models == cached_models

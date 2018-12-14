@@ -105,4 +105,3 @@ package-lock.json
 # Docker
 .env
 media
-google-cloud-credentials.json
