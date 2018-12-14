@@ -398,19 +398,22 @@ def test_cache_etags_match(admin_client):
     service_name = cms.INVEST
     # given there exists a page that is cached
     page = InfoPageFactory.create(live=True)
-
-    # when the page is retrieved
     url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
-    response_one = admin_client.get(url, {'service_name': service_name})
+
+    # and the page is cached
+    admin_client.get(url, {'service_name': service_name})
+
+    # and the cached page is retrieved
+    response_two = admin_client.get(url, {'service_name': service_name})
 
     # then exposing the same etag in subsequent responses results in 304
-    response_two = admin_client.get(
+    response_three = admin_client.get(
         url,
         {'service_name': service_name},
-        HTTP_IF_NONE_MATCH=response_one['ETag'],
+        HTTP_IF_NONE_MATCH=response_two['ETag'],
     )
-    assert response_two.status_code == 304
-    assert response_two.content == b''
+    assert response_three.status_code == 304
+    assert response_three.content == b''
 
 
 def test_cache_etags_mismatch(admin_client):
@@ -420,12 +423,15 @@ def test_cache_etags_mismatch(admin_client):
 
     # when the page is retrieved
     url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
-    response_one = admin_client.get(url, {'service_name': service_name})
+    admin_client.get(url, {'service_name': service_name})
 
     # then exposing the same etag in subsequent responses results in 304
     response_two = admin_client.get(
         url,
         {'service_name': service_name},
-        HTTP_IF_NONE_MATCH=response_one['ETag'] + '123',
+        HTTP_IF_NONE_MATCH='something-123',
     )
+
     assert isinstance(response_two, CachedResponse)
+    assert response_two.status_code == 200
+    assert response_two.content

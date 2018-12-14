@@ -134,6 +134,8 @@ class CachePopulator:
 
     @staticmethod
     def generate_etag(instance):
+        # This method can hit the database. It's slow. Don't call it
+        # in a request-response cycle.
         serializer_class = MODELS_SERIALIZERS_MAPPING[instance.__class__]
         serializer = serializer_class(instance=instance)
         json_data = JSONRenderer().render(serializer.data)
