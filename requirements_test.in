@@ -12,5 +12,5 @@ freezegun
 codecov
 factory-boy
 beautifulsoup4
-wagtail-factories
+wagtail-factories==1.0.0
 django-debug-toolbar

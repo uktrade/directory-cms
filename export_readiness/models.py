@@ -1226,6 +1226,10 @@ class ContactSuccessPage(BasePage):
             'title': 'Contact international form success',
             'view_path': 'contact/international/success/',
         },
+        cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_SOO_SLUG: {
+            'title': 'Contact Selling Online Overseas form success',
+            'view_path': 'contact/selling-online-overseas/success/',
+        },
     }
 
     @property

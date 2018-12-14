@@ -8,17 +8,6 @@ from core import helpers
 
 
 @pytest.fixture(autouse=True)
-def mock_google_translate():
-    stub = patch('google.cloud.translate.Client.translate', side_effect=[
-        [{'input': 'this-is-greater', 'translatedText': 'das ist größer'}],
-        [{'input': 'this-is-greater', 'translatedText': 'これほど大きい'}],
-    ])
-    stub.start()
-    yield stub
-    stub.stop()
-
-
-@pytest.fixture(autouse=True)
 def mock_translated_fields():
     stub = patch(
         'find_a_supplier.models.IndustryPage.get_translatable_fields',
