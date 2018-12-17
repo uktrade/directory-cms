@@ -10,7 +10,7 @@ class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
         return forms.Media(
             css={
                 'all': (
-                    'https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css',
+                    'https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css',  # NOQA
                 )
             },
             js=(

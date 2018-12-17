@@ -5,6 +5,7 @@ import bleach
 import markdown
 
 from bleach_whitelist import markdown_tags, markdown_attrs
+from markdown.extensions.tables import TableExtension
 from modeltranslation.utils import build_localized_fieldname
 from wagtail.admin.edit_handlers import ObjectList, TabbedInterface
 from wagtail.core import hooks
@@ -186,7 +187,7 @@ def render_markdown(text, context=None):
         extensions=[
             'markdown.extensions.extra',
             'markdown.extensions.codehilite',
-            markdown.extensions.tables.TableExtension(),
+            TableExtension(),
             LinkerExtension()
         ],
         extension_configs={
