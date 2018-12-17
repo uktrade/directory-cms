@@ -33,7 +33,7 @@ django-ipware==2.1.0      # via django-admin-ip-restrictor
 django-modelcluster==4.3  # via wagtail
 django-modeltranslation==0.12.2
 django-pglocks==1.0.2
-django-redis==4.7.0
+django-redis==4.8.0
 django-taggit==0.23.0     # via wagtail
 django-treebeard==4.3     # via wagtail
 django==1.11.15
@@ -83,7 +83,7 @@ pytube==9.2.2
 pytz==2018.7              # via celery, directory-healthcheck, django, django-modelcluster, wagtail
 pyyaml==3.13              # via docker-compose
 raven==5.19.0
-redis==3.0.1              # via celery, django-redis
+redis==2.10.6             # via celery, django-redis
 requests-mock==1.5.2
 requests==2.20.0
 s3transfer==0.1.13        # via boto3
