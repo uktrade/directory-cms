@@ -1,3 +1,16 @@
+function simplemdeAttach(id) {
+        var mde = new SimpleMDE({
+            element: document.getElementById(id),
+            autofocus: false,
+        });
+        mde.render();
+
+        mde.codemirror.on("change", function(){
+            $('#' + id).val(mde.value());
+        });
+    }
+
+
 // Refresh the markdown entry field when the tab buttons are clicked.
 // This works around a problem where CodeMirror cannot determine it's height
 // if it is hidden. Tab contents are of course hidden before they are clicked.
@@ -11,18 +24,6 @@
         }
     }, 100);
 
-    function simplemdeAttach(id) {
-        var mde = new SimpleMDE({
-            element: document.getElementById(id),
-            autofocus: false,
-        });
-        mde.render();
-
-        mde.codemirror.on("change", function(){
-            $('#' + id).val(mde.value());
-        });
-    }
-
     function refreshMarkdownFields(event) {
         var id = event.target.getAttribute('href').replace('#', '');
         var tabContent = document.getElementById(id);
@@ -32,10 +33,5 @@
             codeElement.CodeMirror.refresh();
         }
     }
-
-    $(".object.markdown textarea").each(function(index, elem) {
-        simplemdeAttach(elem.id);
-    });
-
 
 })();
