@@ -1,12 +1,20 @@
-from wagtailmarkdown.widgets import (
-    MarkdownTextarea as OriginalMarkdownTextarea
-)
+from django import forms
+
+from wagtail.utils.widgets import WidgetWithScript
 
 
-class MarkdownTextarea(OriginalMarkdownTextarea):
+class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
 
     @property
     def media(self):
-        media = super().media
-        media.add_js(['core/js/refresh_codemirror.js'])
-        return media
+        return forms.Media(
+            css={
+                'all': (
+                    'https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css',
+                )
+            },
+            js=(
+                'https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js',
+                'core/js/refresh_codemirror.js'
+            )
+        )
