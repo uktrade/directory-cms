@@ -153,7 +153,7 @@ def test_homepage_no_news(admin_client, root_page):
     assert len(response.json()['articles']) == 0
 
 
-def test_homepage_no_guidance(admin_client, root_page):
+def test_homepage_no_advice(admin_client, root_page):
 
     home_page = factories.HomePageFactory.create(
         parent=root_page
@@ -162,8 +162,8 @@ def test_homepage_no_guidance(admin_client, root_page):
     url = reverse('api:api:pages:detail', kwargs={'pk': home_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
-    assert 'guidance' in response.json()
-    assert len(response.json()['guidance']) == 0
+    assert 'advice' in response.json()
+    assert len(response.json()['advice']) == 0
 
 
 def test_international_landing_age(admin_client, root_page):
