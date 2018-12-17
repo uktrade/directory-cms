@@ -19,7 +19,7 @@ wagtailmedia==0.2.0
 pytube==9.2.2
 directory-components==3.5.0
 django-filter==1.0.4
-django-redis==4.7.0
+django-redis==4.8.0
 celery[redis]
 requests==2.20.0
 # using pinned commit as it contains a useful fix that's not yet on PyPi.
