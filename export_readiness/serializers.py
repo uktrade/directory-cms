@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
+from directory_constants.constants import cms
 
 from conf import settings
 from core import fields as core_fields
@@ -185,7 +186,7 @@ class HomePageSerializer(BasePageSerializer):
     )
     news_description = core_fields.MarkdownToHTMLField()
     articles = serializers.SerializerMethodField()
-    guidance = serializers.SerializerMethodField()
+    advice = serializers.SerializerMethodField()
 
     def get_articles(self, obj):
         queryset = None
@@ -204,11 +205,13 @@ class HomePageSerializer(BasePageSerializer):
         )
         return serializer.data
 
-    def get_guidance(self, obj):
+    def get_advice(self, obj):
         queryset = None
-        if TopicLandingPage.objects.filter(slug='guidance').exists():
+        if TopicLandingPage.objects.filter(
+                slug=cms.EXPORT_READINESS_ADVICE_SLUG
+        ).exists():
             queryset = TopicLandingPage.objects.get(
-                slug='guidance'
+                slug=cms.EXPORT_READINESS_ADVICE_SLUG
             ).get_descendants().type(
                 ArticleListingPage
             ).live().specific()
