@@ -10,7 +10,6 @@ atomicwrites==1.2.1       # via pytest
 attrs==18.2.0             # via pytest
 beautifulsoup4==4.6.0
 billiard==3.5.0.5         # via celery
-bleach==2.1.4             # via wagtail-markdown
 boto3==1.6.3
 botocore==1.9.23          # via boto3, s3transfer
 cached-property==1.5.1    # via docker-compose
@@ -56,12 +55,10 @@ gevent==1.2.2
 greenlet==0.4.15          # via gevent
 gunicorn==19.5.0
 html2text==2018.1.9
-html5lib==1.0.1           # via bleach, wagtail
+html5lib==1.0.1           # via wagtail
 idna==2.7                 # via requests
 jmespath==0.9.3           # via boto3, botocore
 jsonschema==2.6.0         # via docker-compose
-kombu==4.2.1
-markdown==2.6.11          # via wagtail-markdown
 mccabe==0.6.1             # via flake8
 mohawk==0.3.4             # via directory-components, sigauth
 more-itertools==4.3.0     # via pytest
@@ -88,7 +85,7 @@ requests-mock==1.5.2
 requests==2.20.0
 s3transfer==0.1.13        # via boto3
 sigauth==4.0.1
-six==1.12.0               # via bleach, docker, docker-compose, docker-pycreds, dockerpty, fake-factory, faker, freezegun, html5lib, mohawk, more-itertools, packaging, pytest, python-dateutil, requests-mock, wagtail, websocket-client
+six==1.12.0               # via docker, docker-compose, docker-pycreds, dockerpty, fake-factory, faker, freezegun, html5lib, mohawk, more-itertools, packaging, pytest, python-dateutil, requests-mock, wagtail, websocket-client
 sqlparse==0.2.4           # via django-debug-toolbar
 termcolor==1.1.0          # via pytest-sugar
 text-unidecode==1.2       # via faker
@@ -97,8 +94,7 @@ unidecode==1.0.23         # via wagtail
 urllib3==1.24.1
 vine==1.1.4               # via amqp
 wagtail-factories==1.0.0
-wagtail-markdown==0.5
-wagtail==2.2.2
+wagtail==2.3
 wagtailmedia==0.2.0
 webencodings==0.5.1       # via html5lib
 websocket-client==0.54.0  # via docker, docker-compose

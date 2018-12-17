@@ -13,8 +13,7 @@ sigauth==4.0.1
 directory-healthcheck==0.6.0
 directory-constants==11.3.0
 html2text==2018.1.9
-wagtail==2.2.2
-wagtail-markdown==0.5
+wagtail==2.3
 wagtailmedia==0.2.0
 pytube==9.2.2
 directory-components==3.5.0
