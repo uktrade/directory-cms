@@ -126,6 +126,7 @@ class HighPotentialOpportunityFormPageFactory(wagtail_factories.PageFactory):
     class Meta:
         model = models.HighPotentialOpportunityFormPage
 
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
     heading = factory.fuzzy.FuzzyText(length=200)
     sub_heading = factory.fuzzy.FuzzyText(length=200)
     comment_help_text = factory.fuzzy.FuzzyText(length=200)
