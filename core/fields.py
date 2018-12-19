@@ -81,3 +81,11 @@ class BreadcrumbsField(fields.DictField):
             }
             for item in queryset
         }
+
+
+class FieldAttributesField(fields.DictField):
+    def get_attribute(self, instance):
+        return {
+            'label': getattr(instance, self.source + '_label'),
+            'help_text':  getattr(instance, self.source + '_help_text'),
+        }

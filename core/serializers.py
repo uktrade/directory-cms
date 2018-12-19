@@ -26,7 +26,5 @@ class FormPageSerializerMetaclass(serializers.SerializerMetaclass):
     def __new__(mcls, name, bases, attrs):
         form_field_names = attrs['Meta'].model_class.form_field_names
         for field_name in form_field_names:
-            attrs[field_name + '_help_text'] = serializers.CharField()
-            attrs[field_name + '_label'] = serializers.CharField()
-
+            attrs[field_name] = fields.FieldAttributesField()
         return super().__new__(mcls, name, bases, attrs)
