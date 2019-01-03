@@ -31,8 +31,10 @@ class PerformanceDashboardNotesPageSubscriber(AbstractDatabaseCacheSubscriber):
 class TopicLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.TopicLandingPage
     subscriptions = [
+        models.ArticlePage,
         models.ArticleListingPage,
         models.SuperregionPage,
+        models.CountryGuidePage,
     ]
 
 
