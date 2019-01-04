@@ -72,15 +72,14 @@ class RelatedArticlePageSerializer(BasePageSerializer):
 
 class ArticlePageSerializer(BasePageSerializer):
     article_title = serializers.CharField(max_length=255)
+    display_title = serializers.CharField(source='article_title')
     article_teaser = serializers.CharField(max_length=255)
     article_image = wagtail_fields.ImageRenditionField('original')
     article_image_thumbnail = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg', source='article_image')
 
     article_body_text = core_fields.MarkdownToHTMLField()
-
     related_pages = serializers.SerializerMethodField()
-
     tags = core_fields.TagsListField()
 
     def get_related_pages(self, object):
@@ -99,6 +98,7 @@ class ArticlePageSerializer(BasePageSerializer):
 
 class ArticleListingPageSerializer(BasePageSerializer):
     landing_page_title = serializers.CharField(max_length=255)
+    display_title = serializers.CharField(source='landing_page_title')
     hero_image = wagtail_fields.ImageRenditionField('original')
     hero_image_thumbnail = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
@@ -123,6 +123,7 @@ class ArticleListingPageSerializer(BasePageSerializer):
 
 class CountryGuidePageSerializer(BasePageSerializer):
     landing_page_title = serializers.CharField(max_length=255)
+    display_title = serializers.CharField(source='landing_page_title')
     hero_image = wagtail_fields.ImageRenditionField('original')
     hero_image_thumbnail = wagtail_fields.ImageRenditionField(
             'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
@@ -226,6 +227,7 @@ class HomePageSerializer(BasePageSerializer):
 
 class TopicLandingPageSerializer(BasePageSerializer):
     landing_page_title = serializers.CharField(max_length=255)
+    display_title = serializers.CharField(source='landing_page_title')
     hero_teaser = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
 
