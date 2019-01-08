@@ -17,7 +17,7 @@ chardet==3.0.4            # via requests
 contextlib2==0.5.5        # via raven
 directory-components==3.5.0
 directory-constants==11.3.0
-directory-healthcheck==0.6.0
+directory-healthcheck==1.0.0
 dj-database-url==0.4.2
 django-admin-ip-restrictor==1.0.0  # via directory-components
 django-environ==0.4.5
