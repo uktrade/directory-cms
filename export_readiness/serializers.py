@@ -16,11 +16,11 @@ from .models import (
 class PageWithRelatedPagesSerializer(BasePageSerializer):
     related_pages = serializers.SerializerMethodField()
 
-    def get_related_pages(self, object):
+    def get_related_pages(self, obj):
         items = [
-            object.related_page_one,
-            object.related_page_two,
-            object.related_page_three
+            obj.related_page_one,
+            obj.related_page_two,
+            obj.related_page_three
         ]
         serializer = RelatedArticlePageSerializer(
             [item for item in items if item],
