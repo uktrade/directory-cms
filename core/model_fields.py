@@ -1,9 +1,9 @@
-from wagtailmarkdown.fields import MarkdownField as OriginalMarkdownField
+from django.db.models import TextField
 
 from core import validators as core_validators, widgets
 
 
-class MarkdownField(OriginalMarkdownField):
+class MarkdownField(TextField):
     def __init__(self, validators=None, *args, **kwargs):
         validators = validators or []
         if core_validators.slug_hyperlinks not in validators:
@@ -11,5 +11,8 @@ class MarkdownField(OriginalMarkdownField):
         super().__init__(validators=validators, *args, **kwargs)
 
     def formfield(self, **kwargs):
-        kwargs['widget'] = widgets.MarkdownTextarea
-        return super().formfield(**kwargs)
+        defaults = {
+            'widget': widgets.MarkdownTextarea
+        }
+        defaults.update(kwargs)
+        return super(MarkdownField, self).formfield(**defaults)

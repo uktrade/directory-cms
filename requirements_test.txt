@@ -10,7 +10,8 @@ atomicwrites==1.2.1       # via pytest
 attrs==18.2.0             # via pytest
 beautifulsoup4==4.6.0
 billiard==3.5.0.5         # via celery
-bleach==2.1.4             # via wagtail-markdown
+bleach-whitelist==0.0.9
+bleach==3.0.2
 boto3==1.6.3
 botocore==1.9.23          # via boto3, s3transfer
 cached-property==1.5.1    # via docker-compose
@@ -56,12 +57,12 @@ gevent==1.2.2
 greenlet==0.4.15          # via gevent
 gunicorn==19.5.0
 html2text==2018.1.9
-html5lib==1.0.1           # via bleach, wagtail
+html5lib==1.0.1           # via wagtail
 idna==2.7                 # via requests
 jmespath==0.9.3           # via boto3, botocore
 jsonschema==2.6.0         # via docker-compose
-kombu==4.2.2              # via celery
-markdown==2.6.11          # via wagtail-markdown
+kombu==4.2.1
+markdown==2.6
 mccabe==0.6.1             # via flake8
 mohawk==0.3.4             # via directory-components, sigauth
 more-itertools==4.3.0     # via pytest
@@ -97,10 +98,9 @@ unidecode==1.0.23         # via wagtail
 urllib3==1.24.1
 vine==1.1.4               # via amqp
 wagtail-factories==1.0.0
-wagtail-markdown==0.5
-wagtail==2.2.2
+wagtail==2.3
 wagtailmedia==0.2.0
-webencodings==0.5.1       # via html5lib
+webencodings==0.5.1       # via bleach, html5lib
 websocket-client==0.54.0  # via docker, docker-compose
 whitenoise==3.1
 willow==1.1               # via wagtail
