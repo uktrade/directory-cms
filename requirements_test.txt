@@ -61,6 +61,8 @@ html5lib==1.0.1           # via wagtail
 idna==2.7                 # via requests
 jmespath==0.9.3           # via boto3, botocore
 jsonschema==2.6.0         # via docker-compose
+kombu==4.2.1
+markdown==2.6
 mccabe==0.6.1             # via flake8
 mohawk==0.3.4             # via directory-components, sigauth
 more-itertools==4.3.0     # via pytest
