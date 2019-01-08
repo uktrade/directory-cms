@@ -13,7 +13,6 @@ from django.views.generic import RedirectView
 
 import core.views
 import export_readiness.views
-import healthcheck.views
 
 
 api_router = WagtailAPIRouter('api')

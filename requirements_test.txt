@@ -29,7 +29,7 @@ django-admin-ip-restrictor==1.0.0  # via directory-components
 django-debug-toolbar==1.11
 django-environ==0.4.5
 django-filter==1.0.4
-django-health-check==3.0.0  # via directory-healthcheck
+django-health-check==3.8.0  # via directory-healthcheck
 django-ipware==2.1.0      # via django-admin-ip-restrictor
 django-modelcluster==4.3  # via wagtail
 django-modeltranslation==0.12.2
@@ -81,7 +81,7 @@ pytest-sugar==0.9.2
 pytest==4.0.2
 python-dateutil==2.6.1    # via botocore, fake-factory, faker, freezegun
 pytube==9.2.2
-pytz==2018.7              # via celery, directory-healthcheck, django, django-modelcluster, wagtail
+pytz==2018.7              # via celery, django, django-modelcluster, wagtail
 pyyaml==3.13              # via docker-compose
 raven==5.19.0
 redis==2.10.6             # via celery, django-redis

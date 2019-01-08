@@ -15,6 +15,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 
 from directory_components.constants import IP_RETRIEVER_NAME_GOV_UK
+import directory_healthcheck.backends
 import dj_database_url
 import environ
 
@@ -55,9 +56,9 @@ INSTALLED_APPS = [
     'raven.contrib.django.raven_compat',
     'django.contrib.sessions',
     'directory_healthcheck',
-    'directory_components',
-    'health_check',
     'health_check.db',
+    'health_check.cache',
+    'directory_components',
     'export_elements',
     'core.apps.CoreConfig',
     'wagtail.contrib.forms',
@@ -373,7 +374,9 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 # Healthcheck
 DIRECTORY_HEALTHCHECK_TOKEN = env.str('HEALTH_CHECK_TOKEN')
 DIRECTORY_HEALTHCHECK_BACKENDS = [
-    health_check.backends.DatabaseBackend,
+    # health_check.db.backends.DatabaseBackend and
+    # health_check.cache.CacheBackend are also registered in
+    # INSTALLED_APPS's health_check.db and health_check.cache
     directory_healthcheck.backends.SentryBackend,
 ]
 
