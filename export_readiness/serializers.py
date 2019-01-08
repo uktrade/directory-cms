@@ -13,7 +13,7 @@ from .models import (
 )
 
 
-class RelatedPagesSerializer(BasePageSerializer):
+class PageWithRelatedPagesSerializer(BasePageSerializer):
     related_pages = serializers.SerializerMethodField()
 
     def get_related_pages(self, object):
@@ -87,7 +87,7 @@ class RelatedArticlePageSerializer(BasePageSerializer):
         'fill-640x360|jpegquality-60|format-jpeg', source='article_image')
 
 
-class ArticlePageSerializer(RelatedPagesSerializer):
+class ArticlePageSerializer(PageWithRelatedPagesSerializer):
     article_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='article_title')
     article_teaser = serializers.CharField(max_length=255)
@@ -123,7 +123,7 @@ class ArticleListingPageSerializer(BasePageSerializer):
         return serializer.data
 
 
-class CountryGuidePageSerializer(RelatedPagesSerializer):
+class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
     hero_image = wagtail_fields.ImageRenditionField('original')
@@ -289,7 +289,7 @@ class TagSerializer(serializers.Serializer):
         return serializer.data
 
 
-class CampaignPageSerializer(RelatedPagesSerializer):
+class CampaignPageSerializer(PageWithRelatedPagesSerializer):
     campaign_heading = serializers.CharField(max_length=255)
 
     section_one_heading = serializers.CharField(max_length=255)
