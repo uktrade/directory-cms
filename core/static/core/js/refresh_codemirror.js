@@ -1,3 +1,16 @@
+function simplemdeAttach(id) {
+        var mde = new SimpleMDE({
+            element: document.getElementById(id),
+            autofocus: false,
+        });
+        mde.render();
+
+        mde.codemirror.on("change", function(){
+            $('#' + id).val(mde.value());
+        });
+    }
+
+
 // Refresh the markdown entry field when the tab buttons are clicked.
 // This works around a problem where CodeMirror cannot determine it's height
 // if it is hidden. Tab contents are of course hidden before they are clicked.
@@ -20,4 +33,5 @@
             codeElement.CodeMirror.refresh();
         }
     }
+
 })();

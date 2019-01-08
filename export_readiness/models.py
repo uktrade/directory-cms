@@ -7,7 +7,6 @@ from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
-from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
 from django.db import models
@@ -47,7 +46,7 @@ class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
         MultiFieldPanel(
             heading='Terms and conditions',
             children=[
-                MarkdownPanel('body'),
+                FieldPanel('body'),
             ]
         ),
         SearchEngineOptimisationPanel(),
@@ -71,7 +70,7 @@ class PrivacyAndCookiesPage(BasePage):
         MultiFieldPanel(
             heading='Privacy and cookies',
             children=[
-                MarkdownPanel('body'),
+                FieldPanel('body'),
             ]
         ),
         SearchEngineOptimisationPanel(),
@@ -300,7 +299,7 @@ class PerformanceDashboardNotesPage(ExclusivePageMixin,
         MultiFieldPanel(
             heading='Performance dashboard notes',
             children=[
-                MarkdownPanel('body'),
+                FieldPanel('body'),
             ]
         ),
         SearchEngineOptimisationPanel(),
@@ -500,7 +499,7 @@ class CountryGuidePage(BasePage):
             heading='Section one/intro',
             children=[
                 FieldPanel('section_one_heading'),
-                MarkdownPanel('section_one_content'),
+                FieldPanel('section_one_content'),
             ]
         ),
         FieldRowPanel(
@@ -509,17 +508,17 @@ class CountryGuidePage(BasePage):
                 MultiFieldPanel([
                     ImageChooserPanel('selling_point_one_icon'),
                     FieldPanel('selling_point_one_heading'),
-                    MarkdownPanel('selling_point_one_content'),
+                    FieldPanel('selling_point_one_content'),
                 ]),
                 MultiFieldPanel([
                     ImageChooserPanel('selling_point_two_icon'),
                     FieldPanel('selling_point_two_heading'),
-                    MarkdownPanel('selling_point_two_content'),
+                    FieldPanel('selling_point_two_content'),
                 ]),
                 MultiFieldPanel([
                     ImageChooserPanel('selling_point_three_icon'),
                     FieldPanel('selling_point_three_heading'),
-                    MarkdownPanel('selling_point_three_content'),
+                    FieldPanel('selling_point_three_content'),
                 ]),
             ]
         ),
@@ -527,14 +526,14 @@ class CountryGuidePage(BasePage):
             heading='Section two/article section',
             children=[
                 FieldPanel('section_two_heading'),
-                MarkdownPanel('section_two_content'),
+                FieldPanel('section_two_content'),
             ]
         ),
         MultiFieldPanel(
             heading='Section three/related content',
             children=[
                 FieldPanel('related_content_heading'),
-                MarkdownPanel('related_content_intro'),
+                FieldPanel('related_content_intro'),
                 FieldRowPanel([
                     PageChooserPanel(
                         'related_page_one',
@@ -708,28 +707,28 @@ class CampaignPage(BasePage):
             heading='Section one',
             children=[
                 FieldPanel('section_one_heading'),
-                MarkdownPanel('section_one_intro'),
+                FieldPanel('section_one_intro'),
                 ImageChooserPanel('section_one_image'),
                 FieldRowPanel([
                     MultiFieldPanel(
                         children=[
                             ImageChooserPanel('selling_point_one_icon'),
                             FieldPanel('selling_point_one_heading'),
-                            MarkdownPanel('selling_point_one_content'),
+                            FieldPanel('selling_point_one_content'),
                         ]
                     ),
                     MultiFieldPanel(
                         children=[
                             ImageChooserPanel('selling_point_two_icon'),
                             FieldPanel('selling_point_two_heading'),
-                            MarkdownPanel('selling_point_two_content'),
+                            FieldPanel('selling_point_two_content'),
                         ]
                     ),
                     MultiFieldPanel(
                         children=[
                             ImageChooserPanel('selling_point_three_icon'),
                             FieldPanel('selling_point_three_heading'),
-                            MarkdownPanel('selling_point_three_content'),
+                            FieldPanel('selling_point_three_content'),
                         ]
                     ),
                 ]),
@@ -743,7 +742,7 @@ class CampaignPage(BasePage):
             heading='Section two',
             children=[
                 FieldPanel('section_two_heading'),
-                MarkdownPanel('section_two_intro'),
+                FieldPanel('section_two_intro'),
                 ImageChooserPanel('section_two_image'),
                 FieldRowPanel([
                     FieldPanel('section_two_contact_button_text'),
@@ -755,7 +754,7 @@ class CampaignPage(BasePage):
             heading='Related content section',
             children=[
                 FieldPanel('related_content_heading'),
-                MarkdownPanel('related_content_intro'),
+                FieldPanel('related_content_intro'),
                 FieldRowPanel([
                     PageChooserPanel(
                         'related_page_one',
@@ -860,7 +859,7 @@ class ArticlePage(BasePage):
             children=[
                 FieldPanel('article_teaser'),
                 ImageChooserPanel('article_image'),
-                MarkdownPanel('article_body_text')
+                FieldPanel('article_body_text')
             ]
         ),
         MultiFieldPanel(
@@ -906,7 +905,7 @@ class HomePage(ExclusivePageMixin, BasePage):
             heading='EU exit news',
             children=[
                 FieldPanel('news_title'),
-                MarkdownPanel('news_description')
+                FieldPanel('news_description')
             ]
         ),
         SearchEngineOptimisationPanel(),
@@ -973,7 +972,7 @@ class EUExitInternationalFormPage(
             children=[
                 FieldPanel('breadcrumbs_label'),
                 FieldPanel('heading'),
-                MarkdownPanel('body_text'),
+                FieldPanel('body_text'),
             ]
         ),
     ]
@@ -1018,7 +1017,7 @@ class EUExitDomesticFormPage(
             children=[
                 FieldPanel('breadcrumbs_label'),
                 FieldPanel('heading'),
-                MarkdownPanel('body_text'),
+                FieldPanel('body_text'),
             ]
         ),
     ]
