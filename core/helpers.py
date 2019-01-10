@@ -1,15 +1,17 @@
 import copy
 import os
 
+import bleach
 import markdown
+
+from bleach_whitelist import markdown_tags, markdown_attrs
+from markdown.extensions.tables import TableExtension
 from modeltranslation.utils import build_localized_fieldname
 from wagtail.admin.edit_handlers import ObjectList, TabbedInterface
 from wagtail.core import hooks
 from wagtail.core.models import Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
-from wagtailmarkdown.mdx import tables
-from wagtailmarkdown.utils import _sanitise_markdown_html
 
 from django.conf import settings
 from django.core.files.storage import default_storage
@@ -185,7 +187,7 @@ def render_markdown(text, context=None):
         extensions=[
             'markdown.extensions.extra',
             'markdown.extensions.codehilite',
-            tables.TableExtension(),
+            TableExtension(),
             LinkerExtension()
         ],
         extension_configs={
@@ -195,7 +197,7 @@ def render_markdown(text, context=None):
         },
         output_format='html5'
     )
-    sanitised_html = _sanitise_markdown_html(html)
+    sanitised_html = bleach.clean(html, markdown_tags, markdown_attrs)
     return mark_safe(sanitised_html)
 
 

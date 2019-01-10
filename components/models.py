@@ -5,7 +5,6 @@ from core.models import (
     ExclusivePageMixin,
     ServiceMixin,
 )
-from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtail.admin.edit_handlers import (
     FieldPanel, MultiFieldPanel
 )
@@ -34,7 +33,7 @@ class BannerComponent(BasePage):
             heading='Banner component',
             children=[
                 FieldPanel('banner_label'),
-                MarkdownPanel('banner_content'),
+                FieldPanel('banner_content'),
             ]
         ),
     ]

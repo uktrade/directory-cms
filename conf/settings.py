@@ -15,6 +15,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 
 from directory_components.constants import IP_RETRIEVER_NAME_GOV_UK
+import directory_healthcheck.backends
 import dj_database_url
 import environ
 
@@ -55,9 +56,9 @@ INSTALLED_APPS = [
     'raven.contrib.django.raven_compat',
     'django.contrib.sessions',
     'directory_healthcheck',
-    'directory_components',
-    'health_check',
     'health_check.db',
+    'health_check.cache',
+    'directory_components',
     'export_elements',
     'core.apps.CoreConfig',
     'wagtail.contrib.forms',
@@ -74,7 +75,6 @@ INSTALLED_APPS = [
     'taggit',
     'storages',
     'rest_framework',
-    'wagtailmarkdown',
     'wagtailmedia',
     'find_a_supplier.apps.FindASupplierConfig',
     'export_readiness.apps.ExportReadinessConfig',
@@ -372,7 +372,13 @@ SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # Healthcheck
-HEALTH_CHECK_TOKEN = env.str('HEALTH_CHECK_TOKEN')
+DIRECTORY_HEALTHCHECK_TOKEN = env.str('HEALTH_CHECK_TOKEN')
+DIRECTORY_HEALTHCHECK_BACKENDS = [
+    # health_check.db.backends.DatabaseBackend and
+    # health_check.cache.CacheBackend are also registered in
+    # INSTALLED_APPS's health_check.db and health_check.cache
+    directory_healthcheck.backends.SentryBackend,
+]
 
 WAGTAIL_SITE_NAME = 'directory-cms'
 WAGTAIL_PASSWORD_RESET_ENABLED = False

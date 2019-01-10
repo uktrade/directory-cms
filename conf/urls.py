@@ -13,7 +13,6 @@ from django.views.generic import RedirectView
 
 import core.views
 import export_readiness.views
-import healthcheck.views
 
 
 api_router = WagtailAPIRouter('api')
@@ -52,18 +51,13 @@ api_urls = [
 
 healthcheck_urls = [
     url(
-        r'^sentry/$',
-        directory_healthcheck.views.SentryHealthcheckView.as_view(),
-        name='sentry'
-    ),
-    url(
-        r'^database/$',
-        healthcheck.views.DatabaseAPIView.as_view(),
-        name='database'
+        r'^$',
+        directory_healthcheck.views.HealthcheckView.as_view(),
+        name='healthcheck'
     ),
     url(
         r'^ping/$',
-        healthcheck.views.PingAPIView.as_view(),
+        directory_healthcheck.views.PingView.as_view(),
         name='ping'
     ),
 ]

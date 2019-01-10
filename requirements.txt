@@ -8,7 +8,8 @@
 amqp==2.3.2               # via kombu
 beautifulsoup4==4.6.0     # via directory-components, wagtail
 billiard==3.5.0.5         # via celery
-bleach==2.1.4             # via wagtail-markdown
+bleach-whitelist==0.0.9
+bleach==3.0.2
 boto3==1.6.3
 botocore==1.9.23          # via boto3, s3transfer
 celery[redis]==4.2.1
@@ -17,12 +18,12 @@ chardet==3.0.4            # via requests
 contextlib2==0.5.5        # via raven
 directory-components==3.5.0
 directory-constants==11.3.0
-directory-healthcheck==0.6.0
+directory-healthcheck==1.0.0
 dj-database-url==0.4.2
 django-admin-ip-restrictor==1.0.0  # via directory-components
 django-environ==0.4.5
 django-filter==1.0.4
-django-health-check==3.0.0  # via directory-healthcheck
+django-health-check==3.8.0  # via directory-healthcheck
 django-ipware==2.1.0      # via django-admin-ip-restrictor
 django-modelcluster==4.3  # via wagtail
 django-modeltranslation==0.12.2
@@ -40,29 +41,28 @@ gevent==1.2.2
 greenlet==0.4.15          # via gevent
 gunicorn==19.5.0
 html2text==2018.1.9
-html5lib==1.0.1           # via bleach, wagtail
+html5lib==1.0.1           # via wagtail
 idna==2.7                 # via requests
 jmespath==0.9.3           # via boto3, botocore
 kombu==4.2.1
-markdown==2.6.11          # via wagtail-markdown
+markdown==2.6
 mohawk==0.3.4             # via directory-components, sigauth
 pillow==5.3.0             # via wagtail
 psycopg2==2.7.3.2
 python-dateutil==2.6.1    # via botocore
 pytube==9.2.2
-pytz==2018.7              # via celery, directory-healthcheck, django, django-modelcluster, wagtail
+pytz==2018.7              # via celery, django, django-modelcluster, wagtail
 raven==5.19.0
 redis==2.10.6             # via celery, django-redis
-requests==2.20.0
+requests==2.21.0
 s3transfer==0.1.13        # via boto3
 sigauth==4.0.1
 six==1.12.0               # via bleach, html5lib, mohawk, python-dateutil, wagtail
 unidecode==1.0.23         # via wagtail
 urllib3==1.24.1
 vine==1.1.4               # via amqp
-wagtail-markdown==0.5
-wagtail==2.2.2
+wagtail==2.3
 wagtailmedia==0.2.0
-webencodings==0.5.1       # via html5lib
+webencodings==0.5.1       # via bleach, html5lib
 whitenoise==3.1
 willow==1.1               # via wagtail

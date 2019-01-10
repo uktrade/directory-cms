@@ -5,7 +5,6 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.models import Orderable
 from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtailmarkdown.edit_handlers import MarkdownPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
 from django.db import models
@@ -245,9 +244,9 @@ class IndustryPage(BasePage):
                 FieldRowPanel(
                     classname='full field-row-panel',
                     children=[
-                        MarkdownPanel('introduction_column_one_text'),
-                        MarkdownPanel('introduction_column_two_text'),
-                        MarkdownPanel('introduction_column_three_text'),
+                        FieldPanel('introduction_column_one_text'),
+                        FieldPanel('introduction_column_two_text'),
+                        FieldPanel('introduction_column_three_text'),
                     ]
                 )
             ]
@@ -255,7 +254,7 @@ class IndustryPage(BasePage):
         MultiFieldPanel(
             heading='Companies',
             children=[
-                MarkdownPanel('company_list_text'),
+                FieldPanel('company_list_text'),
                 FieldPanel('company_list_search_input_placeholder_text'),
                 FieldPanel('company_list_call_to_action_text'),
             ]
@@ -387,7 +386,7 @@ class IndustryArticlePage(BasePage):
         MultiFieldPanel(
             heading='Contact us',
             children=[
-                MarkdownPanel('proposition_text'),
+                FieldPanel('proposition_text'),
                 FieldPanel('call_to_action_text'),
             ],
             classname='collapsible',
@@ -396,7 +395,7 @@ class IndustryArticlePage(BasePage):
             heading='Article',
             children=[
                 FieldPanel('introduction_title'),
-                MarkdownPanel('body'),
+                FieldPanel('body'),
             ]
         ),
         MultiFieldPanel(
@@ -509,7 +508,7 @@ class LandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
             heading='Hero',
             children=[
                 FieldPanel('breadcrumbs_label'),
-                MarkdownPanel('hero_text'),
+                FieldPanel('hero_text'),
                 FieldPanel('hero_image_caption'),
                 FieldPanel('search_field_placeholder'),
                 FieldPanel('search_button_text'),
@@ -519,7 +518,7 @@ class LandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         MultiFieldPanel(
             heading='Contact us',
             children=[
-                MarkdownPanel('proposition_text'),
+                FieldPanel('proposition_text'),
                 FieldPanel('call_to_action_text'),
             ],
             classname='collapsible',
@@ -527,7 +526,7 @@ class LandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
         MultiFieldPanel(
             heading='Industries',
             children=[
-                MarkdownPanel('industries_list_text'),
+                FieldPanel('industries_list_text'),
                 FieldPanel('industries_list_call_to_action_text'),
             ],
             classname='collapsible',
@@ -541,19 +540,19 @@ class LandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
                     children=[
                         MultiFieldPanel([
                             ImageChooserPanel('services_column_one_icon'),
-                            MarkdownPanel('services_column_one'),
+                            FieldPanel('services_column_one'),
                         ]),
                         MultiFieldPanel([
                             ImageChooserPanel('services_column_two_icon'),
-                            MarkdownPanel('services_column_two'),
+                            FieldPanel('services_column_two'),
                         ]),
                         MultiFieldPanel([
                             ImageChooserPanel('services_column_three_icon'),
-                            MarkdownPanel('services_column_three'),
+                            FieldPanel('services_column_three'),
                         ]),
                         MultiFieldPanel([
                             ImageChooserPanel('services_column_four_icon'),
-                            MarkdownPanel('services_column_four'),
+                            FieldPanel('services_column_four'),
                         ]),
                     ]
                 ),
@@ -595,14 +594,14 @@ class IndustryContactPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
             heading='Contact form',
             children=[
                 FieldPanel('breadcrumbs_label'),
-                MarkdownPanel('introduction_text'),
+                FieldPanel('introduction_text'),
                 FieldPanel('submit_button_text'),
             ]
         ),
         MultiFieldPanel(
             heading='Success page',
             children=[
-                MarkdownPanel('success_message_text'),
+                FieldPanel('success_message_text'),
                 FieldPanel('success_back_link_text'),
             ]
         ),
