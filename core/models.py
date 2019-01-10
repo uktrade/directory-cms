@@ -21,9 +21,7 @@ from django.db import models
 from django.db import transaction
 from django.forms import MultipleChoiceField
 from django.shortcuts import redirect
-from django.template.loader import render_to_string
 from django.utils import translation
-from django.utils.text import mark_safe
 
 from core import constants, forms
 from core.wagtail_fields import FormHelpTextField, FormLabelField
