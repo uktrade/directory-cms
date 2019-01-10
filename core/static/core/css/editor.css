@@ -1,44 +1,44 @@
 body .object fieldset {
-	max-width: none;
+    max-width: none;
 }
 
 .field-row-panel {
-	padding-bottom: 20px;
+    padding-bottom: 20px;
 }
 
 .tab-nav li a,
 .tab-nav  li.settings a{
-	padding-left: 10px;
-	padding-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 label{
-	width: 100%!important;
+    width: 100%!important;
 }
 
 body .image-chooser .chosen .preview-image {
-	margin-left: 0;
+    margin-left: 0;
 }
 
 body .image-chooser .chosen {
-	padding-left: 0;
+    padding-left: 0;
 }
 
 .field-col.multi-field {
-	padding: 0;
+    padding: 0;
 }
 
 .field-content {
-	clear: both;
-	width: 100%!important;
+    clear: both;
+    width: 100%!important;
 }
 
 .cm-spell-error {
-	background: none!important;
+    background: none!important;
 }
 
 #tab-arabic input {
-	direction: rtl;
+    direction: rtl;
 }
 
 .tab-nav a.required-for-language:after {

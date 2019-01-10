@@ -146,18 +146,17 @@ def test_translated_localised_urls_untranslated_page(page):
 
 
 @pytest.mark.django_db
-def test_get_admin_display_title_translated(translated_page):
-    assert translated_page.get_admin_display_title() == (
-        'ENGLISH\n\n<br>\n<i>Translated to German, Japanese, Russian, '
+def test_language_names_translated(translated_page):
+    assert translated_page.language_names == (
+        'Translated to German, Japanese, Russian, '
         'Simplified Chinese, French, Spanish, Portuguese, '
-        'Portuguese (Brazilian), Arabic</i>\n\n'
+        'Portuguese (Brazilian), Arabic'
     )
 
 
 @pytest.mark.django_db
-def test_get_admin_display_title_untranslated(page):
-    page.draft_title = 'Untranslated page'
-    assert page.get_admin_display_title() == 'Untranslated page\n\n'
+def test_language_names_untranslated(page):
+    assert page.language_names == ''
 
 
 @pytest.mark.django_db
