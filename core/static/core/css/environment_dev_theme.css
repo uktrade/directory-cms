@@ -26,12 +26,10 @@
 
 #wagtail header::before {
     top: 5px;
-    
 }
 #wagtail header::after {
     top: 90px;
 }
-
 
 #wagtail .panel a,
 .listing .title h2 a:hover {
