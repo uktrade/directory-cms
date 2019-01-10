@@ -94,6 +94,9 @@ class IndustryPage(BasePage):
 
     service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/'
+    subpage_types = [
+        'find_a_supplier.IndustryArticlePage',
+    ]
 
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -288,6 +291,10 @@ class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/'
     slug_identity = cms.FIND_A_SUPPLIER_INDUSTRY_LANDING_SLUG
+    subpage_types = [
+        'find_a_supplier.IndustryContactPage',
+        'find_a_supplier.IndustryPage',
+    ]
 
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
