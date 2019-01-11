@@ -1154,6 +1154,12 @@ class ContactUsGuidancePage(BasePage):
                 'contact/triage/great-account/no-verification-letter/'
             ),
         },
+        cms.EXPORT_READINESS_HELP_ACCOUNT_COMPANY_NOT_FOUND: {
+            'title': 'Guidance - Company not found',
+            'view_path': (
+                'contact/triage/great-account/company-not-found/'
+            ),
+        },
     }
 
     @property
