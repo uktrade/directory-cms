@@ -51,19 +51,17 @@ def editor_css():
     )
 
 
-@hooks.register('insert_env_dependent_global_admin_css')
-def env_dependent_global_admin_css():
+@hooks.register('insert_global_admin_css')
+def global_admin_css():
+    env_stylesheet = ''
+
     if settings.ENVIRONMENT_CSS_THEME_FILE:
-        return format_html(
+        env_stylesheet = format_html(
             '<link rel="stylesheet" href="{}">',
             static(settings.ENVIRONMENT_CSS_THEME_FILE)
         )
-    return ''
 
-
-@hooks.register('insert_global_admin_css')
-def global_admin_css():
     return format_html(
         '<link rel="stylesheet" href="{}">',
         static('core/css/global.css')
-    )
+    ) + env_stylesheet
