@@ -46,6 +46,11 @@ api_urls = [
         ),
         name='lookup-by-tag-list'
     ),
+    url(
+        r'^pages/types/$',
+        core.views.PageTypeView.as_view(),
+        name='pages-types-list'
+    )
 ]
 
 
