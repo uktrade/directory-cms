@@ -44,12 +44,13 @@ def test_add_copy_button(page_with_reversion):
     assert buttons[1].url == reverse('update-upstream', kwargs={'pk': page.id})
 
 
-def test_global_admin_css_set(settings):
+def test_env_css_set(settings):
     settings.ENVIRONMENT_CSS_THEME_FILE = 'wagtailadmin/css/normalize.css'
     assert 'wagtailadmin/css/normalize.css' in wagtail_hooks.global_admin_css()
+    assert wagtail_hooks.global_admin_css().count('<link ') == 2
 
 
-def test_global_admin_css_unset(settings):
+def test_env_css_unset(settings):
     settings.ENVIRONMENT_CSS_THEME_FILE = None
 
-    assert wagtail_hooks.global_admin_css() == ''
+    assert wagtail_hooks.global_admin_css().count('<link ') == 1

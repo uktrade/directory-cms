@@ -47,15 +47,21 @@ def update_default_listing_buttons(page, page_perms, is_parent=False):
 def editor_css():
     return format_html(
         '<link rel="stylesheet" href="{}">',
-        static('core/css/main.css')
+        static('core/css/editor.css')
     )
 
 
 @hooks.register('insert_global_admin_css')
 def global_admin_css():
+    env_stylesheet = ''
+
     if settings.ENVIRONMENT_CSS_THEME_FILE:
-        return format_html(
+        env_stylesheet = format_html(
             '<link rel="stylesheet" href="{}">',
             static(settings.ENVIRONMENT_CSS_THEME_FILE)
         )
-    return ''
+
+    return format_html(
+        '<link rel="stylesheet" href="{}">',
+        static('core/css/global.css')
+    ) + env_stylesheet
