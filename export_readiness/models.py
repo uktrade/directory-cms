@@ -1,9 +1,9 @@
 from directory_constants.constants import cms
+from directory_constants.constants import urls
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel
 )
-from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
@@ -210,8 +210,10 @@ class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
 class PerformanceDashboardPage(BasePage):
 
     service_name_value = cms.EXPORT_READINESS
-    view_path = ''
-    subpage_types = ['export_readiness.PerformanceDashboardPage']
+    subpage_types = [
+        'export_readiness.PerformanceDashboardPage',
+        'export_readiness.PerformanceDashboardNotesPage',
+    ]
 
     heading = models.CharField(max_length=255)
     description = MarkdownField()
@@ -252,48 +254,123 @@ class PerformanceDashboardPage(BasePage):
     guidance_notes = MarkdownField(blank=True, null=True)
     landing_dashboard = models.BooleanField(default=False)
 
-    content_panels = Page.content_panels + [
-        FieldPanel('heading'),
-        FieldPanel('description'),
-        FieldPanel('product_link'),
-        # row 1
-        FieldPanel('data_title_row_one'),
-        FieldPanel('data_number_row_one'),
-        FieldPanel('data_period_row_one'),
-        FieldPanel('data_description_row_one'),
-        # row 2
-        FieldPanel('data_title_row_two'),
-        FieldPanel('data_number_row_two'),
-        FieldPanel('data_period_row_two'),
-        FieldPanel('data_description_row_two'),
-        # row 3
-        FieldPanel('data_title_row_three'),
-        FieldPanel('data_number_row_three'),
-        FieldPanel('data_period_row_three'),
-        FieldPanel('data_description_row_three'),
-        # row 4
-        FieldPanel('data_title_row_four'),
-        FieldPanel('data_number_row_four'),
-        FieldPanel('data_period_row_four'),
-        FieldPanel('data_description_row_four'),
+    service_mapping = {
+        urls.SERVICE_EXPORT_READINESS: {
+            'slug': cms.EXPORT_READINESS_PERFORMANCE_DASHBOARD_SLUG,
+            'heading': 'Great.gov.uk',
+            'view_path': '',
+            'landing_dashboard': True,
+        },
+        urls.SERVICES_SOO: {
+            'slug': cms.EXPORT_READINESS_PERFORMANCE_DASHBOARD_SOO_SLUG,
+            'heading': 'Selling Online Overseas',
+            'view_path': 'performance-dashboard/',
+            'landing_dashboard': False,
+        },
+        urls.SERVICES_EXOPPS: {
+            'slug': cms.EXPORT_READINESS_PERFORMANCE_DASHBOARD_EXOPPS_SLUG,
+            'heading': 'Export Opportunities',
+            'view_path': 'performance-dashboard/',
+            'landing_dashboard': False,
+        },
+        urls.SERVICES_FAB: {
+            'slug': (
+                cms.EXPORT_READINESS_PERFORMANCE_DASHBOARD_TRADE_PROFILE_SLUG),
+            'heading': 'Business Profiles',
+            'view_path': 'performance-dashboard/',
+            'landing_dashboard': False,
+        },
+        urls.SERVICES_INVEST: {
+            'slug': cms.EXPORT_READINESS_PERFORMANCE_DASHBOARD_INVEST_SLUG,
+            'heading': 'Invest in Great Britain',
+            'view_path': 'performance-dashboard/',
+            'landing_dashboard': False,
+        },
+    }
 
+    product_link = models.TextField(
+        choices=[
+            (key, val['heading']) for key, val in service_mapping.items()],
+        unique=True,
+        help_text=(
+            'The slug and page heading are inferred from the product link'),
+    )
+
+    def save(self, *args, **kwargs):
+        field_values = self.service_mapping[self.product_link]
+        self.title = field_values['heading'] + ' Performance Dashboard'
+        self.heading = field_values['heading']
+        self.slug = field_values['slug']
+        self.landing_dashboard = field_values['landing_dashboard']
+        self.view_path = field_values['view_path']
+        return super().save(*args, **kwargs)
+
+    def get_admin_display_title(self):
+        return self.title or self.draft_title
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='Heading and description',
+            children=[
+                FieldPanel('description'),
+                FieldPanel('product_link', widget=Select),
+            ]
+        ),
+        FieldRowPanel(
+            heading='Data columns',
+            children=[
+                MultiFieldPanel(
+                    heading='Data row 1',
+                    children=[
+                        FieldPanel('data_title_row_one'),
+                        FieldPanel('data_number_row_one'),
+                        FieldPanel('data_period_row_one'),
+                        FieldPanel('data_description_row_one'),
+                    ]
+                ),
+                MultiFieldPanel(
+                    heading='Data row 2',
+                    children=[
+                        FieldPanel('data_title_row_two'),
+                        FieldPanel('data_number_row_two'),
+                        FieldPanel('data_period_row_two'),
+                        FieldPanel('data_description_row_two'),
+                    ]
+                ),
+                MultiFieldPanel(
+                    heading='Data row 3',
+                    children=[
+                        FieldPanel('data_title_row_three'),
+                        FieldPanel('data_number_row_three'),
+                        FieldPanel('data_period_row_three'),
+                        FieldPanel('data_description_row_three'),
+                    ]
+                ),
+                MultiFieldPanel(
+                    heading='Data row 4',
+                    children=[
+                        FieldPanel('data_title_row_four'),
+                        FieldPanel('data_number_row_four'),
+                        FieldPanel('data_period_row_four'),
+                        FieldPanel('data_description_row_four'),
+                    ]
+                ),
+            ]
+        ),
         FieldPanel('guidance_notes'),
-        FieldPanel('landing_dashboard')
-    ]
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
     ]
 
 
-class PerformanceDashboardNotesPage(ExclusivePageMixin,
-                                    BasePage):
+class PerformanceDashboardNotesPage(ExclusivePageMixin, BasePage):
 
     service_name_value = cms.EXPORT_READINESS
     view_path = 'performance-dashboard/'
     slug_identity = cms.EXPORT_READINESS_PERFORMANCE_DASHBOARD_NOTES_SLUG
 
-    body = MarkdownField(blank=False)
+    body = MarkdownField(
+        help_text=(
+            'Please include an h1 in this field e.g. # Heading level 1'),
+        blank=False)
 
     content_panels = [
         MultiFieldPanel(
