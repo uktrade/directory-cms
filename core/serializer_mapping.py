@@ -1,5 +1,8 @@
+import wagtail
+
 import components.models
 import components.serializers
+import core.serializers
 import export_readiness.models
 import export_readiness.serializers
 import find_a_supplier.models
@@ -9,6 +12,8 @@ import invest.serializers
 
 
 MODELS_SERIALIZERS_MAPPING = {
+    # core page
+    wagtail.core.models.Page: core.serializers.WagtailPageSerializer,
     # export readiness
     export_readiness.models.TermsAndConditionsPage: export_readiness.serializers.GenericBodyOnlyPageSerializer,  # NOQA
     export_readiness.models.PrivacyAndCookiesPage: export_readiness.serializers.GenericBodyOnlyPageSerializer,  # NOQA
