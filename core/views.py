@@ -327,13 +327,7 @@ class PageTypeView(APIView):
 
     def get(self, request, format=None):
         data = {
-            'types':
-                list(
-                    map(
-                        lambda x: str(x.__name__),
-                        MODELS_SERIALIZERS_MAPPING.keys()
-                    )
-                )
+            'types': [item.__name__ for item in MODELS_SERIALIZERS_MAPPING]
         }
         serializer = serializers.PagesTypesSerializer(data=data)
         serializer.is_valid()
