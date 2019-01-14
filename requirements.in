@@ -11,12 +11,12 @@ django-pglocks==1.0.2
 boto3==1.6.3
 sigauth==4.0.1
 directory-healthcheck==1.0.0
-directory-constants==11.3.0
+directory-components==4.0.1
+directory-constants==12.0.0
 html2text==2018.1.9
 wagtail==2.3
 wagtailmedia==0.2.0
 pytube==9.2.2
-directory-components==3.5.0
 django-filter==1.0.4
 django-redis==4.8.0
 celery[redis]
