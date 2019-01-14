@@ -326,9 +326,17 @@ class PreloadPageView(FormView):
 class PageTypeView(APIView):
     permission_classes = [SignatureCheckPermission]
 
+    def _build_model_string(self, model_class):
+        content_type_object = ContentType.objects.get_for_model(model_class)
+        return '{app}.{model}'.format(
+            app=content_type_object.app_label,
+            model=content_type_object.model
+        )
+
     def get(self, request, format=None):
         data = {
-            'types': [item.__name__ for item in MODELS_SERIALIZERS_MAPPING]
+            'types': [self._build_model_string(item) for
+                      item in MODELS_SERIALIZERS_MAPPING]
         }
         serializer = serializers.PagesTypesSerializer(data=data)
         serializer.is_valid()
