@@ -305,9 +305,6 @@ class PerformanceDashboardPage(BasePage):
         self.view_path = field_values['view_path']
         return super().save(*args, **kwargs)
 
-    def get_admin_display_title(self):
-        return self.title or self.draft_title
-
     content_panels = [
         MultiFieldPanel(
             heading='Heading and description',
