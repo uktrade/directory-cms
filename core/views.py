@@ -324,6 +324,7 @@ class PreloadPageView(FormView):
 
 
 class PageTypeView(APIView):
+    permission_classes = [SignatureCheckPermission]
 
     def get(self, request, format=None):
         data = {
