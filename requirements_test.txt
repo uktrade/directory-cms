@@ -20,8 +20,8 @@ chardet==3.0.4            # via requests
 codecov==2.0.15
 contextlib2==0.5.5        # via raven
 coverage==4.5.2           # via codecov, pytest-cov
-directory-components==3.5.0
-directory-constants==11.5.0
+directory-components==4.0.1
+directory-constants==12.0.0
 directory-healthcheck==1.0.0
 dj-database-url==0.4.2
 django-admin-ip-restrictor==1.0.0  # via directory-components
@@ -41,7 +41,7 @@ django_storages==1.6.5
 djangorestframework==3.9.0  # via sigauth, wagtail
 docutils==0.14            # via botocore
 draftjs-exporter==2.1.5   # via wagtail
-export-elements==0.23.0   # via directory-components
+export-elements==1.0.1    # via directory-components
 factory-boy==2.7.0
 fake-factory==0.7.4       # via factory-boy, wagtail-factories
 faker==1.0.1              # via wagtail-factories
