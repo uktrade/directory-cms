@@ -28,3 +28,16 @@ class FormPageSerializerMetaclass(serializers.SerializerMetaclass):
         for field_name in form_field_names:
             attrs[field_name] = fields.FieldAttributesField()
         return super().__new__(mcls, name, bases, attrs)
+
+
+class PagesTypesSerializer(serializers.Serializer):
+
+    types = serializers.ListField(
+        child=serializers.CharField()
+    )
+
+
+class WagtailPageSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    title = serializers.CharField()
+    slug = serializers.CharField()

@@ -4,12 +4,14 @@ from directory_constants.constants import cms
 
 from conf import settings
 from export_readiness.tests import factories
+from directory_constants.constants import urls
 
 
 def test_performance_dashboard(admin_client, root_page):
     page = factories.PerformanceDashboardPageFactory(
         live=True,
-        parent=root_page
+        parent=root_page,
+        product_link=urls.SERVICE_EXPORT_READINESS
     )
 
     url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
