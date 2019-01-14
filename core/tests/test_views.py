@@ -435,3 +435,15 @@ def test_cache_etags_mismatch(admin_client):
     assert isinstance(response_two, CachedResponse)
     assert response_two.status_code == 200
     assert response_two.content
+
+
+def test_pages_types_view(admin_client):
+    url = reverse('api:pages-types-list')
+    response = admin_client.get(url)
+    assert response.status_code == 200
+    assert 'types' in response.json()
+
+
+def test_pages_view(admin_client):
+    response = admin_client.get('/api/pages/')
+    assert response.status_code == 200

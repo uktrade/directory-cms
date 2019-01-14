@@ -2,6 +2,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework.exceptions import ValidationError
 from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
 from wagtail.core.models import Page
 from wagtail.core.models import Orderable
@@ -16,7 +18,8 @@ from django.utils.cache import get_conditional_response
 from django.views.generic.edit import FormView
 
 from conf.signature import SignatureCheckPermission
-from core import cache, filters, forms, helpers, models, permissions
+from core import cache, filters, forms, helpers, models, permissions, \
+    serializers
 from core.upstream_serializers import UpstreamModelSerilaizer
 from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
 
@@ -318,3 +321,20 @@ class PreloadPageView(FormView):
         if self.page.pk:
             return [self.update_template_name]
         return [self.template_name]
+
+
+class PageTypeView(APIView):
+
+    def get(self, request, format=None):
+        data = {
+            'types':
+                list(
+                    map(
+                        lambda x: str(x.__name__),
+                        MODELS_SERIALIZERS_MAPPING.keys()
+                    )
+                )
+        }
+        serializer = serializers.PagesTypesSerializer(data=data)
+        serializer.is_valid()
+        return Response(serializer.data)

@@ -450,6 +450,9 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'conf.signature.SignatureCheckPermission',
+    )
 }
 
 if FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
