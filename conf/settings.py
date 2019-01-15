@@ -15,7 +15,6 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 
 from directory_components.constants import IP_RETRIEVER_NAME_GOV_UK
-import directory_healthcheck.backends
 import dj_database_url
 import environ
 
@@ -377,7 +376,6 @@ DIRECTORY_HEALTHCHECK_BACKENDS = [
     # health_check.db.backends.DatabaseBackend and
     # health_check.cache.CacheBackend are also registered in
     # INSTALLED_APPS's health_check.db and health_check.cache
-    directory_healthcheck.backends.SentryBackend,
 ]
 
 WAGTAIL_SITE_NAME = 'directory-cms'
