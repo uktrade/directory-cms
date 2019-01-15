@@ -5,7 +5,6 @@ import bleach
 import markdown
 
 from bleach_whitelist import markdown_tags, markdown_attrs
-from markdown.extensions.tables import TableExtension
 from modeltranslation.utils import build_localized_fieldname
 from wagtail.admin.edit_handlers import ObjectList, TabbedInterface
 from wagtail.core import hooks
@@ -182,22 +181,22 @@ def get_button_url_name(button):
 
 
 def render_markdown(text, context=None):
+    allowed_table_tags = ['table', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td']
+    allowed_tags = markdown_tags+allowed_table_tags
     html = markdown.markdown(
         text,
         extensions=[
-            'markdown.extensions.extra',
-            'markdown.extensions.codehilite',
-            TableExtension(),
+            'tables',
+            'smarty',
             LinkerExtension()
         ],
-        extension_configs={
-            'codehilite': [
-                ('guess_lang', False),
-            ]
-        },
         output_format='html5'
     )
-    sanitised_html = bleach.clean(html, markdown_tags, markdown_attrs)
+    sanitised_html = bleach.clean(
+        html,
+        tags=allowed_tags,
+        attributes=markdown_attrs,
+    )
     return mark_safe(sanitised_html)
 
 

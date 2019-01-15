@@ -5,6 +5,7 @@ from wagtail.admin.widgets import PageListingButton
 from django.urls import reverse
 
 from core import helpers
+from core.helpers import render_markdown
 
 
 @pytest.fixture(autouse=True)
@@ -48,3 +49,13 @@ def test_get_button_url_name_external_url():
     button = PageListingButton('View draft', 'http://www.example.com')
 
     assert helpers.get_button_url_name(button) is None
+
+
+def test_render_markdown_table():
+    md_table = """
+|fooo|barr|xyzz|
+|--- |--- |--- |
+|abcd|abcd|abcd|
+    """
+    html = render_markdown(md_table)
+    assert html == '<table>\n<thead>\n<tr>\n<th>fooo</th>\n<th>barr</th>\n<th>xyzz</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>abcd</td>\n<td>abcd</td>\n<td>abcd</td>\n</tr>\n</tbody>\n</table>'  # NOQA
