@@ -62,7 +62,8 @@ class PrivacyAndCookiesPage(BasePage):
 
     service_name_value = cms.EXPORT_READINESS
     subpage_types = ['export_readiness.PrivacyAndCookiesPage']
-    view_path = 'privacy-and-cookies/'
+    view_path = ''
+    slug_identity = cms.EXPORT_READINESS_PRIVACY_AND_COOKIES_SLUG
 
     body = MarkdownField(blank=False)
 
@@ -82,6 +83,23 @@ class PrivacyAndCookiesPage(BasePage):
     ]
 
     promote_panels = []
+
+
+class SitePolicyPages(ExclusivePageMixin, BasePage):
+    # a folder for T&C and privacy & cookies pages
+    service_name_value = cms.EXPORT_READINESS
+    slug_identity = cms.EXPORT_READINESS_SITE_POLICY_PAGES_SLUG
+
+    subpage_types = [
+        'export_readiness.TermsAndConditionsPage',
+        'export_readiness.PrivacyAndCookiesPage',
+    ]
+
+    settings_panels = []
+
+    def save(self, *args, **kwargs):
+        self.title = self.get_verbose_name()
+        return super().save(*args, **kwargs)
 
 
 class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):

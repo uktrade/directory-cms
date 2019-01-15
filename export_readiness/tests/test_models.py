@@ -10,6 +10,7 @@ def test_app_models():
         models.ExportReadinessApp,
         models.TermsAndConditionsPage,
         models.PrivacyAndCookiesPage,
+        models.SitePolicyPages,
         models.GetFinancePage,
         models.PerformanceDashboardPage,
         models.PerformanceDashboardNotesPage,
@@ -54,6 +55,16 @@ def test_set_slug():
 @pytest.mark.django_db
 def test_set_marketing_pages_title():
     instance = models.MarketingPages.objects.create(
+        depth=2,
+        path='/thing',
+    )
+
+    assert instance.title_en_gb == instance.get_verbose_name()
+
+
+@pytest.mark.django_db
+def test_set_site_policy_pages_title():
+    instance = models.SitePolicyPages.objects.create(
         depth=2,
         path='/thing',
     )
