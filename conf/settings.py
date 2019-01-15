@@ -15,7 +15,6 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 
 from directory_components.constants import IP_RETRIEVER_NAME_GOV_UK
-import directory_healthcheck.backends
 import dj_database_url
 import environ
 
