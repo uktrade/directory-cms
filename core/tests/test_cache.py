@@ -196,6 +196,7 @@ def test_all_models_cached():
         invest.models.InvestApp,
         # "folders"
         export_readiness.models.MarketingPages,
+        export_readiness.models.SitePolicyPages,
         export_readiness.models.ContactUsGuidancePages,
         export_readiness.models.ContactSuccessPages,
         # Page is added by TestSubscriber in other tests.

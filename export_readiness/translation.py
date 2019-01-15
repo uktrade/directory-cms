@@ -9,6 +9,11 @@ class TermsAndConditionsPageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
+@register(models.SitePolicyPages)
+class SitePolicyPagesTranslationOptions(BaseTranslationOptions):
+    fields = []
+
+
 @register(models.CountryGuidePage)
 class CountryGuidePage(BaseTranslationOptions):
     fields = []
