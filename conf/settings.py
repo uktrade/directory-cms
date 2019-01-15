@@ -377,7 +377,6 @@ DIRECTORY_HEALTHCHECK_BACKENDS = [
     # health_check.db.backends.DatabaseBackend and
     # health_check.cache.CacheBackend are also registered in
     # INSTALLED_APPS's health_check.db and health_check.cache
-    directory_healthcheck.backends.SentryBackend,
 ]
 
 WAGTAIL_SITE_NAME = 'directory-cms'
