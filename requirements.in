@@ -10,7 +10,7 @@ psycopg2==2.7.3.2
 django-pglocks==1.0.2
 boto3==1.6.3
 sigauth==4.0.1
-directory-healthcheck==1.0.0
+directory-healthcheck==1.0.1
 directory-components==4.0.1
 directory-constants==12.1.0
 html2text==2018.1.9
