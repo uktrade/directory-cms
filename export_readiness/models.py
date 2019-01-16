@@ -62,8 +62,7 @@ class PrivacyAndCookiesPage(BasePage):
 
     service_name_value = cms.EXPORT_READINESS
     subpage_types = ['export_readiness.PrivacyAndCookiesPage']
-    view_path = ''
-    slug_identity = cms.EXPORT_READINESS_PRIVACY_AND_COOKIES_SLUG
+    view_path = 'privacy-and-cookies/'
 
     body = MarkdownField(blank=False)
 
