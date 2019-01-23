@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'directory_components',
     'export_elements',
     'core.apps.CoreConfig',
+    'users.apps.UsersConfig',
     'wagtail.contrib.forms',
     'wagtail.embeds',
     'wagtail.users',
@@ -79,6 +80,7 @@ INSTALLED_APPS = [
     'export_readiness.apps.ExportReadinessConfig',
     'invest.apps.InvestConfig',
     'components.apps.ComponentsConfig',
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -389,6 +391,8 @@ DIRECTORY_HEALTHCHECK_BACKENDS = [
 
 WAGTAIL_SITE_NAME = 'directory-cms'
 WAGTAIL_PASSWORD_RESET_ENABLED = False
+WAGTAIL_USER_EDIT_FORM = 'users.forms.CustomUserEditForm'
+WAGTAIL_USER_CREATION_FORM = 'users.forms.CustomUserCreationForm'
 
 LOGIN_URL = '/admin/login'
 BASE_URL = env.str('BASE_URL')
