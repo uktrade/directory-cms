@@ -158,7 +158,7 @@ def test_tag_str():
     tag = factories.TagFactory(
         name='Hello test'
     )
-    assert tag.__str__() == tag.name
+    assert str(tag) == tag.name
 
 
 @pytest.mark.django_db
