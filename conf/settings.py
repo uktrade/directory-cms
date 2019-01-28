@@ -391,8 +391,6 @@ DIRECTORY_HEALTHCHECK_BACKENDS = [
 
 WAGTAIL_SITE_NAME = 'directory-cms'
 WAGTAIL_PASSWORD_RESET_ENABLED = False
-WAGTAIL_USER_EDIT_FORM = 'users.forms.CustomUserEditForm'
-WAGTAIL_USER_CREATION_FORM = 'users.forms.CustomUserCreationForm'
 
 LOGIN_URL = '/admin/login'
 BASE_URL = env.str('BASE_URL')
