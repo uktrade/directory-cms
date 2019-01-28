@@ -1,8 +1,7 @@
 import factory
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from wagtail.core.models import GroupPagePermission, \
-    PAGE_PERMISSION_TYPE_CHOICES
+from wagtail.core.models import GroupPagePermission
 
 from export_readiness.tests.factories import ArticleListingPageFactory
 
@@ -23,7 +22,7 @@ class GroupPagePermissionFactory(factory.django.DjangoModelFactory):
 
     group = factory.SubFactory(GroupFactory)
     page = factory.SubFactory(ArticleListingPageFactory)
-    permission_type = factory.fuzzy.FuzzyChoice(PAGE_PERMISSION_TYPE_CHOICES)
+    permission_type = 'add'
 
 
 class UserFactory(factory.django.DjangoModelFactory):
