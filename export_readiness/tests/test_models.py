@@ -26,6 +26,7 @@ def test_app_models():
         models.EUExitInternationalFormPage,
         models.EUExitDomesticFormPage,
         models.EUExitFormSuccessPage,
+        models.EUExitFormPages,
         models.ContactUsGuidancePages,
         models.ContactSuccessPages,
         models.ContactUsGuidancePage,
@@ -52,19 +53,16 @@ def test_set_slug():
     assert instance.slug == models.ExportReadinessApp.slug_identity
 
 
+@pytest.mark.parametrize('Folder', [
+    models.MarketingPages,
+    models.EUExitFormPages,
+    models.ContactUsGuidancePages,
+    models.ContactSuccessPages,
+    models.SitePolicyPages,
+])
 @pytest.mark.django_db
-def test_set_marketing_pages_title():
-    instance = models.MarketingPages.objects.create(
-        depth=2,
-        path='/thing',
-    )
-
-    assert instance.title_en_gb == instance.get_verbose_name()
-
-
-@pytest.mark.django_db
-def test_set_site_policy_pages_title():
-    instance = models.SitePolicyPages.objects.create(
+def test_folders_set_title(Folder):
+    instance = Folder.objects.create(
         depth=2,
         path='/thing',
     )
@@ -153,6 +151,14 @@ def test_tag_slug_created_on_save():
         name='Hello test'
     )
     assert tag.slug == 'hello-test'
+
+
+@pytest.mark.django_db
+def test_tag_str():
+    tag = factories.TagFactory(
+        name='Hello test'
+    )
+    assert str(tag) == tag.name
 
 
 @pytest.mark.django_db

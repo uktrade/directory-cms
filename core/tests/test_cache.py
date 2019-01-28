@@ -199,6 +199,7 @@ def test_all_models_cached():
         export_readiness.models.SitePolicyPages,
         export_readiness.models.ContactUsGuidancePages,
         export_readiness.models.ContactSuccessPages,
+        export_readiness.models.EUExitFormPages,
         # Page is added by TestSubscriber in other tests.
         Page,
     }
