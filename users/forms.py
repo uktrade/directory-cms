@@ -25,7 +25,7 @@ class EntryPointAwareUserActionForm(forms.Form):
 
               |
              \||/
-              |/ <-- User group entrypoint, show only groups
+              |/ <-- User group entrypoint, show only groups  # NOQA
               |      with that page entrypoint
 
         """
@@ -57,4 +57,3 @@ class UserEditForm(EntryPointAwareUserActionForm, wagtail_forms.UserEditForm):
 class UserCreationForm(EntryPointAwareUserActionForm,
                        wagtail_forms.UserCreationForm):
     pass
-
