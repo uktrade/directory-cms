@@ -18,7 +18,7 @@ We aim to follow [GDS service standards](https://www.gov.uk/service-manual/servi
 
 
 ## Requirements
-[Python 3.5](https://www.python.org/downloads/release/python-352/)
+[Python 3.6](https://www.python.org/downloads/release/python-368/)
 
 #### Web server
 
