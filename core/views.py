@@ -308,7 +308,8 @@ class PreloadPageView(FormView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         data = UpstreamModelSerilaizer.deserialize(
-            kwargs['data'], request=self.request)
+            kwargs['data'], request=self.request
+        )
         kwargs['data'] = data
         return kwargs
 

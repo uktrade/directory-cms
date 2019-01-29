@@ -5,6 +5,7 @@ from wagtail.core.models import Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
 
+from django.forms import ValidationError
 from django.forms.models import model_to_dict
 from django.contrib import messages
 
@@ -96,13 +97,11 @@ class RelatedPageSerializer(AbstractFieldSerializer):
         try:
             return Page.objects.get(slug=value).specific
         except Page.DoesNotExist:
-            messages.error(
-                super().request,
-                "Related page with the slug {slug} could not be "
+            raise ValidationError(
+                f"Related page with the slug {slug} could not be "
                 "found in this environment. Please create it then "
                 "add it as one of this page's related pages."
             )
-            return None
 
 
 class NoOpFieldSerializer(AbstractFieldSerializer):
@@ -170,6 +169,10 @@ class UpstreamModelSerilaizer:
         for name, value in cls.remove_empty(serialized_data).items():
             value = serialized_data[name]
             serializer = cls.get_field_serializer_by_field_name(name)
-            name, value = serializer.deserialize(name=name, value=value)
-            deserialized[name] = value
+            try:
+                name, value = serializer.deserialize(name=name, value=value)
+            except ValidationError as e:
+                messages.info(str(e), request)
+            else:
+                deserialized[name] = value
         return deserialized
