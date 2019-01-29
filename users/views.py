@@ -17,6 +17,7 @@ User = get_user_model()
 class WagtailUserActionBaseView(mixins.WagtailAdminPermissionRequiredMixin):
     hook_action = ''
     form_invalid_message = ''
+    form_valid_message = ''
 
     def dispatch(self, request, *args, **kwargs):
         hook_name = 'before_{action}_user'.format(action=self.hook_action)
@@ -42,7 +43,7 @@ class WagtailUserActionBaseView(mixins.WagtailAdminPermissionRequiredMixin):
         user = self.object
         messages.success(
             self.request,
-            _("User '{0}' created.").format(user),
+            _(self.form_valid_message).format(user),
             buttons=[messages.button(
                 reverse('wagtailusers_users:edit', args=(user.pk,)),
                 _('Edit')
@@ -64,6 +65,7 @@ class CreateUserView(
     permission_required = add_user_perm
     hook_action = 'create'
     form_invalid_message = 'The user could not be created due to errors.'
+    form_valid_message = 'User ''{0}'' created.'
 
     def form_valid(self, form):
         self.object = form.save()
@@ -81,6 +83,7 @@ class EditUserView(
     permission_required = change_user_perm
     hook_action = 'edit'
     form_invalid_message = 'The user could not be saved due to errors.'
+    form_valid_message = 'User ''{0}'' updated.'
 
     def get_form_kwargs(self):
         editing_self = self.request.user == self.object
