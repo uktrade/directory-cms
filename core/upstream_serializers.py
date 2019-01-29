@@ -96,9 +96,7 @@ class RelatedPageSerializer(AbstractFieldSerializer):
         try:
             return Page.objects.get(slug=value).specific
         except Page.DoesNotExist:
-            raise ValidationError(
-                f'Related page {value} must be copied upstream first.'
-            )
+            return None
 
 
 class NoOpFieldSerializer(AbstractFieldSerializer):

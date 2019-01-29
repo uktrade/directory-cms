@@ -88,5 +88,5 @@ def test_related_page_field_deserializer_invalid_slug(article_page):
         '(page)related_page_one': 'some-missing-slug'
     }
 
-    with pytest.raises(ValidationError):
-        UpstreamModelSerilaizer.deserialize(serialized_data)
+    serialized = UpstreamModelSerilaizer.deserialize(serialized_data)
+    assert serialized['related_page_one'] is None
