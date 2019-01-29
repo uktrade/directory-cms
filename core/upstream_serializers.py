@@ -6,6 +6,7 @@ from wagtail.documents.models import Document
 from wagtail.images.models import Image
 
 from django.forms.models import model_to_dict
+from django.contrib import messages
 
 from core import helpers
 
@@ -95,6 +96,12 @@ class RelatedPageSerializer(AbstractFieldSerializer):
         try:
             return Page.objects.get(slug=value).specific
         except Page.DoesNotExist:
+            messages.error(
+                super().request,
+                "Related page with the slug {slug} could not be "
+                "found in this environment. Please create it then "
+                "add it as one of this page's related pages."
+            )
             return None
 
 
@@ -158,7 +165,7 @@ class UpstreamModelSerilaizer:
         return serialized
 
     @classmethod
-    def deserialize(cls, serialized_data):
+    def deserialize(cls, serialized_data, request):
         deserialized = {}
         for name, value in cls.remove_empty(serialized_data).items():
             value = serialized_data[name]

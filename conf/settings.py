@@ -113,7 +113,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.template.context_processors.i18n',
                 'directory_components.context_processors.feature_flags',
-                'django.contrib.auth.context_processors.auth'
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
             ],
         },
     },
