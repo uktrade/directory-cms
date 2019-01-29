@@ -22,12 +22,6 @@ class EntryPointAwareUserActionForm(forms.Form):
     def __init__(self, user, *args, **kwargs):
         """Creating user (session user) should only see the groups
         that have the same tree entry point of their own group(s).
-
-              |
-             \||/
-              |/ <-- User group entrypoint, show only groups  # NOQA
-              |      with that page entrypoint
-
         """
         super().__init__(*args, **kwargs)
         self.fields['groups'].queryset = self.get_groups_queryset(user)
