@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'directory_components',
     'export_elements',
     'core.apps.CoreConfig',
+    'users.apps.UsersConfig',
     'wagtail.contrib.forms',
     'wagtail.embeds',
     'wagtail.users',
@@ -79,6 +80,7 @@ INSTALLED_APPS = [
     'export_readiness.apps.ExportReadinessConfig',
     'invest.apps.InvestConfig',
     'components.apps.ComponentsConfig',
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -111,6 +113,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.template.context_processors.i18n',
                 'directory_components.context_processors.feature_flags',
+                'django.contrib.auth.context_processors.auth'
             ],
         },
     },
