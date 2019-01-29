@@ -1,5 +1,4 @@
 import pytest
-from rest_framework.exceptions import ValidationError
 
 from core.upstream_serializers import UpstreamModelSerilaizer
 from export_readiness.tests.factories import (
