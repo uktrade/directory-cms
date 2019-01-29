@@ -47,7 +47,7 @@ class EntryPointAwareUserActionForm(forms.Form):
             ).distinct()
             return Group.objects.filter(
                 page_permissions__page_id=entry_points_ids
-            )
+            ).distinct('id')
 
 
 class UserEditForm(EntryPointAwareUserActionForm, wagtail_forms.UserEditForm):
