@@ -31,6 +31,7 @@ def test_app_models():
         models.ContactSuccessPages,
         models.ContactUsGuidancePage,
         models.ContactSuccessPage,
+        models.AllContactPages,
     ]
 
 
@@ -59,6 +60,7 @@ def test_set_slug():
     models.ContactUsGuidancePages,
     models.ContactSuccessPages,
     models.SitePolicyPages,
+    models.AllContactPages,
 ])
 @pytest.mark.django_db
 def test_folders_set_title(Folder):
