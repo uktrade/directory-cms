@@ -1,12 +1,13 @@
 import abc
 from datetime import date, datetime
 
-from rest_framework.exceptions import ValidationError
 from wagtail.core.models import Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
 
+from django.forms import ValidationError
 from django.forms.models import model_to_dict
+from django.contrib import messages
 
 from core import helpers
 
@@ -97,7 +98,9 @@ class RelatedPageSerializer(AbstractFieldSerializer):
             return Page.objects.get(slug=value).specific
         except Page.DoesNotExist:
             raise ValidationError(
-                f'Related page {value} must be copied upstream first.'
+                f"Related page with the slug {value} could not be "
+                "found in this environment. Please create it then "
+                "add it as one of this page's related pages."
             )
 
 
@@ -161,11 +164,15 @@ class UpstreamModelSerilaizer:
         return serialized
 
     @classmethod
-    def deserialize(cls, serialized_data):
+    def deserialize(cls, serialized_data, request):
         deserialized = {}
         for name, value in cls.remove_empty(serialized_data).items():
             value = serialized_data[name]
             serializer = cls.get_field_serializer_by_field_name(name)
-            name, value = serializer.deserialize(name=name, value=value)
-            deserialized[name] = value
+            try:
+                name, value = serializer.deserialize(name=name, value=value)
+            except ValidationError as e:
+                messages.error(request, e.message)
+            else:
+                deserialized[name] = value
         return deserialized
