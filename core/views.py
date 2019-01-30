@@ -10,7 +10,6 @@ from wagtail.core.models import Orderable
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.messages import get_messages
 from django.http.response import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, Http404
 from django.template.response import TemplateResponse

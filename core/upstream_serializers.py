@@ -98,7 +98,7 @@ class RelatedPageSerializer(AbstractFieldSerializer):
             return Page.objects.get(slug=value).specific
         except Page.DoesNotExist:
             raise ValidationError(
-                f"Related page with the slug {slug} could not be "
+                f"Related page with the slug {value} could not be "
                 "found in this environment. Please create it then "
                 "add it as one of this page's related pages."
             )
@@ -172,7 +172,7 @@ class UpstreamModelSerilaizer:
             try:
                 name, value = serializer.deserialize(name=name, value=value)
             except ValidationError as e:
-                messages.info(str(e), request)
+                messages.error(request, e.message)
             else:
                 deserialized[name] = value
         return deserialized
