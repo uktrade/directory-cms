@@ -1415,6 +1415,9 @@ class AllContactPages(ExclusivePageMixin, BasePage):
 
     settings_panels = []
 
+    class Meta:
+        verbose_name = 'Forms'
+
     def save(self, *args, **kwargs):
         self.title = self.get_verbose_name()
         return super().save(*args, **kwargs)
