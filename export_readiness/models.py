@@ -1402,7 +1402,7 @@ class ContactSuccessPage(BasePage):
         return super().save(*args, **kwargs)
 
 
-class AllContactPages(ExclusivePageMixin, BasePage):
+class AllContactPagesPage(ExclusivePageMixin, BasePage):
     # this is just a folder. it will not be requested by the client.
     service_name_value = cms.EXPORT_READINESS
     slug_identity = 'all-export-readiness-contact-pages'

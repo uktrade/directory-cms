@@ -124,6 +124,6 @@ class ContactSuccessPagesTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
-@register(models.AllContactPages)
-class AllContactPagesTranslationOptions(BaseTranslationOptions):
+@register(models.AllContactPagesPage)
+class AllContactPagesPageTranslationOptions(BaseTranslationOptions):
     fields = []
