@@ -1400,3 +1400,24 @@ class ContactSuccessPage(BasePage):
         self.title = field_values['title']
         self.slug = self.topic
         return super().save(*args, **kwargs)
+
+
+class AllContactPagesPage(ExclusivePageMixin, BasePage):
+    # this is just a folder. it will not be requested by the client.
+    service_name_value = cms.EXPORT_READINESS
+    slug_identity = 'all-export-readiness-contact-pages'
+
+    subpage_types = [
+        'export_readiness.ContactSuccessPages',
+        'export_readiness.ContactUsGuidancePages',
+        'export_readiness.EUExitFormPages',
+    ]
+
+    settings_panels = []
+
+    class Meta:
+        verbose_name = 'Forms'
+
+    def save(self, *args, **kwargs):
+        self.title = self.get_verbose_name()
+        return super().save(*args, **kwargs)
