@@ -7,6 +7,7 @@ test_requirements:
 
 FLAKE8 := flake8 . --exclude=migrations,.venv
 PYTEST := pytest . -v --ignore=venv --ignore=conf/celery.py --cov=. --cov-config=.coveragerc --capture=no $(pytest_args)
+PYTEST_FIXTURES := pytest --fixtures
 COLLECT_STATIC := python manage.py collectstatic --noinput
 DJANGO_MIGRATE := python manage.py distributed_migrate --noinput
 SYNC_TRANSLATION_FIELDS := python manage.py sync_page_translation_fields --noinput
@@ -95,6 +96,9 @@ debug_pytest_no_migrations:
 
 debug_pytest:
 	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(PYTEST)
+
+debug_pytest_fixtures:
+	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(PYTEST_FIXTURES)
 
 debug_test:
 	$(DEBUG_SET_ENV_VARS) && $(TEST_SET_ENV_VARS) && $(PYTEST) --cov-report=html
