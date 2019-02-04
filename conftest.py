@@ -2,6 +2,8 @@ import os
 from unittest.mock import patch
 
 import pytest
+from django.contrib.auth.models import Permission
+from django.test import Client
 from wagtail.images.models import Image
 from wagtail.core.models import Page
 import wagtail_factories
@@ -14,8 +16,10 @@ from django.utils import translation
 from django import db
 from django.db.migrations.executor import MigrationExecutor
 
+import export_readiness.tests.factories as exred_factories
 from conf import settings
 from find_a_supplier.tests.factories import IndustryPageFactory
+from users.tests.factories import GroupFactory, GroupPagePermissionFactory, UserFactory
 
 
 @pytest.fixture
@@ -155,3 +159,35 @@ def django_db_setup(django_db_blocker):
 
         for connection in db.connections.all():
             connection.close()
+
+
+@pytest.fixture
+def branch_moderator_factory(root_page):
+    """Returns: listing page with a child page, moderators group, user & user client"""
+    class BranchModerator(object):
+
+        @staticmethod
+        def get():
+            listing_page = exred_factories.ArticleListingPageFactory(parent=root_page)
+            article_page = exred_factories.ArticlePageFactory(parent=listing_page)
+
+            moderators = GroupFactory()
+            moderators.permissions.add(Permission.objects.get(codename='access_admin'))
+
+            GroupPagePermissionFactory(
+                page=listing_page, group=moderators, permission_type='add')
+            GroupPagePermissionFactory(
+                page=listing_page, group=moderators, permission_type='edit')
+            GroupPagePermissionFactory(
+                page=listing_page, group=moderators, permission_type='publish')
+
+            user = UserFactory(is_superuser=False, is_staff=False, groups=[moderators])
+            user_password = 'test'
+            user.set_password(user_password)
+            user.save()
+
+            client = Client()
+            client.login(username=user.username, password=user_password)
+            return listing_page, article_page, moderators, user, client
+    
+    return BranchModerator()
