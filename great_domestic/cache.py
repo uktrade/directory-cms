@@ -1,6 +1,6 @@
 from core.cache import AbstractDatabaseCacheSubscriber
 
-from export_readiness import models
+from great_domestic import models
 
 
 class TermsAndConditionsPageSubscriber(AbstractDatabaseCacheSubscriber):

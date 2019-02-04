@@ -1,11 +1,11 @@
 from django.apps import AppConfig
 
 
-class ExportReadinessConfig(AppConfig):
-    name = 'export_readiness'
+class GreatDomesticConfig(AppConfig):
+    name = 'great_domestic'
 
     def ready(self):
-        from export_readiness import cache
+        from great_domestic import cache
         cache.TermsAndConditionsPageSubscriber.subscribe()
         cache.PrivacyAndCookiesPageSubscriber.subscribe()
         cache.GetFinancePageSubscriber.subscribe()

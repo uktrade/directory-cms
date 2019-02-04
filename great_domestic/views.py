@@ -1,7 +1,7 @@
 from rest_framework.generics import RetrieveAPIView
 
 from conf.signature import SignatureCheckPermission
-from export_readiness import models, serializers
+from great_domestic import models, serializers
 
 
 class PageLookupByTagListAPIEndpoint(RetrieveAPIView):

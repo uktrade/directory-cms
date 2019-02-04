@@ -3,7 +3,7 @@ import factory.fuzzy
 import wagtail_factories
 from django.utils import timezone
 
-from export_readiness import models
+from great_domestic import models
 
 
 class PerformanceDashboardPageFactory(wagtail_factories.PageFactory):

@@ -1,7 +1,7 @@
 from modeltranslation.decorators import register
 
 from core.translation import BaseTranslationOptions
-from export_readiness import models
+from great_domestic import models
 
 
 @register(models.TermsAndConditionsPage)

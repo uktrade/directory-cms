@@ -77,7 +77,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'wagtailmedia',
     'find_a_supplier.apps.FindASupplierConfig',
-    'export_readiness.apps.ExportReadinessConfig',
+    'great_domestic.apps.GreatDomesticConfig',
     'invest.apps.InvestConfig',
     'components.apps.ComponentsConfig',
 

@@ -1,7 +1,7 @@
 import pytest
-from export_readiness.serializers import (
+from great_domestic.serializers import (
     ArticlePageSerializer, CountryGuidePageSerializer, CampaignPageSerializer)
-from export_readiness.tests.factories import (
+from great_domestic.tests.factories import (
     ArticlePageFactory, CountryGuidePageFactory, CampaignPageFactory)
 
 
