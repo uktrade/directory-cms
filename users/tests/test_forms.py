@@ -1,6 +1,9 @@
 import pytest
 from django.contrib.auth.models import Group
+from django.urls import reverse
+from rest_framework import status
 
+import export_readiness.tests.factories as exred_factories
 from .factories import UserFactory, GroupPagePermissionFactory
 from export_readiness.tests.factories import ArticleListingPageFactory
 from users.forms import UserCreationForm
@@ -39,3 +42,67 @@ def test_normal_user_with_no_group_assigned_sees_no_groups():
     user = UserFactory(is_superuser=False, is_staff=False)
     form = UserCreationForm(user=user)
     assert form.fields['groups'].queryset.count() == 0
+
+
+@pytest.mark.django_db
+def test_branch_moderators_should_see_pages_only_from_their_branch(branch_moderator_factory):
+    listing_1, article_1, _, _, client_1 = branch_moderator_factory.get()
+    listing_2, _, _, _, client_2 = branch_moderator_factory.get()
+
+    # This reproduces Wagtail's Admin call to list pages in the "Pages" menu
+    # User can only see pages that are child of requested page to which he has access to
+    resp_1 = client_1.get(f'/admin/api/v2beta/pages/?child_of={listing_1.pk}&for_explorer=1')
+    assert resp_1.status_code == status.HTTP_200_OK
+    assert resp_1.json()['meta']['total_count'] == 1
+    assert resp_1.json()['items'][0]['id'] == article_1.pk
+
+    # This reproduces situation when User navigates down the "Pages" menu
+    # User shouldn't see any child pages of an article as it doesn't have any
+    resp_2 = client_1.get(f'/admin/api/v2beta/pages/?child_of={article_1.pk}&for_explorer=1')
+    assert resp_2.status_code == status.HTTP_200_OK
+    assert resp_2.json()['meta']['total_count'] == 0
+    assert not resp_2.json()['items']
+
+    # On API level Wagtail allows users to list pages that belong to different group!
+    resp_3 = client_1.get(f'/admin/api/v2beta/pages/?child_of={listing_2.pk}&for_explorer=1')
+    assert resp_3.status_code == status.HTTP_200_OK
+    resp_4 = client_2.get(f'/admin/api/v2beta/pages/?child_of={listing_1.pk}&for_explorer=1')
+    assert resp_4.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
+def test_moderators_can_approve_revisions_only_for_pages_in_their_branch(branch_moderator_factory):
+    _, _, _, _, client_1 = branch_moderator_factory.get()
+    listing_2, _, _, user_2, client_2 = branch_moderator_factory.get()
+
+    draft_page = exred_factories.ArticlePageFactory(parent=listing_2, live=False)
+    revision = draft_page.save_revision(user=user_2, submitted_for_moderation=True)
+
+    resp_1 = client_1.post(
+        reverse('wagtailadmin_pages:approve_moderation', args=[revision.pk])
+    )
+    assert resp_1.status_code == status.HTTP_403_FORBIDDEN
+
+    # after publishing a page, user is redirected to the "/admin/" page
+    resp_2 = client_2.post(
+        reverse('wagtailadmin_pages:approve_moderation', args=[revision.pk]),
+        follow=True,
+    )
+    assert resp_2.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
+def test_branch_moderators_cannot_access_pages_from_other_branch(branch_moderator_factory):
+    listing_1, article_1, _, _, client_1 = branch_moderator_factory.get()
+    listing_2, article_2, _, _, client_2 = branch_moderator_factory.get()
+
+    # Because user_1 doesn't have rights to access page_2
+    # it's redirected to the root page to which he has access to (listing_1)
+    resp_1 = client_1.get(f'/admin/pages/{article_2.pk}/', follow=False)
+    assert resp_1.status_code == status.HTTP_302_FOUND
+    assert resp_1.url == f'/admin/pages/{listing_1.pk}/'
+
+    resp_2 = client_2.get(f'/admin/pages/{article_1.pk}/', follow=False)
+    assert resp_2.status_code == status.HTTP_302_FOUND
+    assert resp_2.url == f'/admin/pages/{listing_2.pk}/'
+
