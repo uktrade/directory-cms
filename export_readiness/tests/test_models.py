@@ -54,7 +54,7 @@ def test_set_slug():
     assert instance.slug == models.ExportReadinessApp.slug_identity
 
 
-@pytest.mark.parametrize('Folder', [
+@pytest.mark.parametrize('folder_page_class', [
     models.MarketingPages,
     models.EUExitFormPages,
     models.ContactUsGuidancePages,
@@ -63,8 +63,8 @@ def test_set_slug():
     models.AllContactPagesPage,
 ])
 @pytest.mark.django_db
-def test_folders_set_title(Folder):
-    instance = Folder.objects.create(
+def test_folders_set_title(folder_page_class):
+    instance = folder_page_class.objects.create(
         depth=2,
         path='/thing',
     )

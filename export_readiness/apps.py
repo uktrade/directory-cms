@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class ExportReadinessConfig(AppConfig):
+class GreatDomesticConfig(AppConfig):
     name = 'export_readiness'
 
     def ready(self):

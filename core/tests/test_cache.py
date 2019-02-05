@@ -9,6 +9,7 @@ import components.models
 import find_a_supplier.models
 import invest.models
 import export_readiness
+import great_international.models
 
 
 @pytest.mark.parametrize('slug,service_name,language_code,expected', (
@@ -194,6 +195,7 @@ def test_all_models_cached():
         components.models.ComponentsApp,
         find_a_supplier.models.FindASupplierApp,
         invest.models.InvestApp,
+        great_international.models.GreatInternationalApp,
         # "folders"
         export_readiness.models.MarketingPages,
         export_readiness.models.SitePolicyPages,
