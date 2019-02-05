@@ -250,3 +250,18 @@ def test_editors_can_view_drafts(branch_editor_factory):
     )
     assert resp_2.status_code == status.HTTP_302_FOUND
     assert article_1.slug in resp_2.url
+
+
+@pytest.mark.CMS_839
+@pytest.mark.django_db
+def test_editors_can_list_revisions(branch_editor_factory):
+    listing_1, article_1, _, user_1, client_1 = branch_editor_factory.get()
+
+    revision = article_1.save_revision(user=user_1, submitted_for_moderation=True)
+    revert_path = f'/admin/pages/{article_1.pk}/revisions/{revision.pk}/revert/'
+
+    resp_2 = client_1.get(
+        reverse('wagtailadmin_pages:revisions_index', args=[article_1.pk])
+    )
+    assert resp_2.status_code == status.HTTP_200_OK
+    assert revert_path in resp_2.content.decode()
