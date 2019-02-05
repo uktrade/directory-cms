@@ -201,3 +201,23 @@ def test_editors_cannot_publish_child_pages(branch_editor_factory):
         reverse('wagtailadmin_pages:approve_moderation', args=[revision.pk])
     )
     assert resp_1.status_code == status.HTTP_403_FORBIDDEN
+
+
+@pytest.mark.CMS_839
+@pytest.mark.django_db
+def test_editors_can_submit_changes_for_moderation(branch_editor_factory):
+    listing_1, article_1, _, user_1, client_1 = branch_editor_factory.get()
+    data = {
+        "article_title": "new title",
+        "article_teaser": "new teaser",
+        "article_body_text": "new body text",
+        "title_en_gb": "next title",
+        "action-submit": "Submit for moderation",  # this action triggers notification
+    }
+    resp_1 = client_1.post(
+        reverse('wagtailadmin_pages:edit', args=[article_1.pk]),
+        data=data,
+    )
+    # on success, user should be redirected on parent page listing
+    assert resp_1.status_code == status.HTTP_302_FOUND, resp_1.context['form'].errors
+    assert int(resp_1.url.split('/')[3]) == listing_1.pk  # format is /admin/pages/3/
