@@ -13,8 +13,10 @@ def test_branch_moderators_should_see_pages_only_from_their_branch(
     listing_1, article_1, _, _, client_1 = branch_moderator_factory.get()
     listing_2, _, _, _, client_2 = branch_moderator_factory.get()
 
-    # This reproduces Wagtail's Admin call to list pages in the 'Pages' menu
-    # User can only see pages that are child of requested page to which he has access to
+    # This reproduces Wagtail's Admin call to list pages in
+    # the 'Pages' menu.
+    # User can only see pages that are child of requested page to which
+    # he has access to
     resp_1 = client_1.get(
         f'/admin/api/v2beta/pages/?child_of={listing_1.pk}&for_explorer=1'
     )
@@ -31,7 +33,7 @@ def test_branch_moderators_should_see_pages_only_from_their_branch(
     assert resp_2.json()['meta']['total_count'] == 0
     assert not resp_2.json()['items']
 
-    # On API level Wagtail allows users to list pages that belong to different group!
+    # Wagtail API allows users to list pages that belong to different group!
     resp_3 = client_1.get(
         f'/admin/api/v2beta/pages/?child_of={listing_2.pk}&for_explorer=1'
     )
@@ -49,8 +51,12 @@ def test_moderators_can_approve_revisions_only_for_pages_in_their_branch(
     _, _, _, _, client_1 = branch_moderator_factory.get()
     listing_2, _, _, user_2, client_2 = branch_moderator_factory.get()
 
-    draft_page = exred_factories.ArticlePageFactory(parent=listing_2, live=False)
-    revision = draft_page.save_revision(user=user_2, submitted_for_moderation=True)
+    draft_page = exred_factories.ArticlePageFactory(
+        parent=listing_2, live=False
+    )
+    revision = draft_page.save_revision(
+        user=user_2, submitted_for_moderation=True
+    )
 
     resp_1 = client_1.post(
         reverse('wagtailadmin_pages:approve_moderation', args=[revision.pk])
@@ -98,7 +104,10 @@ def test_editors_can_create_child_pages(branch_editor_factory):
     resp_1 = client.post(
         reverse(
             'wagtailadmin_pages:add',
-            args=(article._meta.app_label, article._meta.model_name, listing.pk),
+            args=[
+                article._meta.app_label,
+                article._meta.model_name,
+                listing.pk],
         ),
         data=data,
     )
@@ -107,7 +116,7 @@ def test_editors_can_create_child_pages(branch_editor_factory):
     ), f'Something went wrong: {resp_1.context["form"].errors}'
 
     # check if new page is visible in the 'Pages' menu
-    new_article_id = int(resp_1.url.split('/')[3])  # format is '/admin/pages/6/edit/'
+    new_article_id = int(resp_1.url.split('/')[3])  # format is '/admin/pages/6/edit/'  # NOQA
     resp_2 = client.get(
         f'/admin/api/v2beta/pages/?child_of={listing.pk}&for_explorer=1'
     )
@@ -119,7 +128,9 @@ def test_editors_can_create_child_pages(branch_editor_factory):
 
 @pytest.mark.CMS_839
 @pytest.mark.django_db
-def test_editors_cant_create_child_pages_without_mandatory_data(branch_editor_factory):
+def test_editors_cant_create_child_pages_without_mandatory_data(
+        branch_editor_factory
+):
     listing, article, _, _, client = branch_editor_factory.get()
     mandatory_fields = {
         'article_title',
@@ -132,7 +143,11 @@ def test_editors_cant_create_child_pages_without_mandatory_data(branch_editor_fa
     resp = client.post(
         reverse(
             'wagtailadmin_pages:add',
-            args=(article._meta.app_label, article._meta.model_name, listing.pk),
+            args=[
+                article._meta.app_label,
+                article._meta.model_name,
+                listing.pk
+            ],
         ),
         data=data,
     )
@@ -142,7 +157,9 @@ def test_editors_cant_create_child_pages_without_mandatory_data(branch_editor_fa
 
 @pytest.mark.CMS_839
 @pytest.mark.django_db
-def test_editors_cant_create_pages_in_branch_they_dont_manage(branch_editor_factory):
+def test_editors_cant_create_pages_in_branch_they_dont_manage(
+        branch_editor_factory
+):
     _, _, _, _, client_1 = branch_editor_factory.get()
     listing_2, article_2, _, _, _ = branch_editor_factory.get()
     data = {
@@ -156,7 +173,11 @@ def test_editors_cant_create_pages_in_branch_they_dont_manage(branch_editor_fact
     resp = client_1.post(
         reverse(
             'wagtailadmin_pages:add',
-            args=(article_2._meta.app_label, article_2._meta.model_name, listing_2.pk),
+            args=[
+                article_2._meta.app_label,
+                article_2._meta.model_name,
+                listing_2.pk
+            ],
         ),
         data=data,
     )
@@ -169,7 +190,9 @@ def test_editors_cannot_publish_child_pages(branch_editor_factory):
     listing, _, _, user, client = branch_editor_factory.get()
 
     draft_page = exred_factories.ArticlePageFactory(parent=listing, live=False)
-    revision = draft_page.save_revision(user=user, submitted_for_moderation=True)
+    revision = draft_page.save_revision(
+        user=user, submitted_for_moderation=True
+    )
 
     resp = client.post(
         reverse('wagtailadmin_pages:approve_moderation', args=[revision.pk])
@@ -186,12 +209,15 @@ def test_editors_can_submit_changes_for_moderation(branch_editor_factory):
         'article_teaser': 'new teaser',
         'article_body_text': 'new body text',
         'title_en_gb': 'next title',
-        'action-submit': 'Submit for moderation',  # this action triggers notification
+        'action-submit': 'Submit for moderation',  # this action triggers notification  # NOQA
     }
-    resp = client.post(reverse('wagtailadmin_pages:edit', args=[article.pk]), data=data)
+    resp = client.post(
+        reverse('wagtailadmin_pages:edit', args=[article.pk]),
+        data=data
+    )
     # on success, user should be redirected on parent page listing
-    assert resp.status_code == status.HTTP_302_FOUND, resp.context['form'].errors
-    assert int(resp.url.split('/')[3]) == listing.pk  # format is /admin/pages/3/
+    assert resp.status_code == status.HTTP_302_FOUND, resp.context['form'].errors  # NOQA
+    assert int(resp.url.split('/')[3]) == listing.pk  # format is /admin/pages/3/  # NOQA
 
 
 @pytest.mark.CMS_839
@@ -212,10 +238,12 @@ def test_editors_can_view_drafts(branch_editor_factory):
     )
     assert resp_1.status_code == status.HTTP_302_FOUND
     assert 'has been updated' in resp_1.context['message']
-    assert int(resp_1.url.split('/')[3]) == article.pk  # format is /admin/pages/3/edit/
+    assert int(resp_1.url.split('/')[3]) == article.pk  # format is /admin/pages/3/edit/  # NOQA
 
     # Viewing draft will redirect user to the application site
-    resp_2 = client.get(reverse('wagtailadmin_pages:view_draft', args=[article.pk]))
+    resp_2 = client.get(
+        reverse('wagtailadmin_pages:view_draft', args=[article.pk])
+    )
     assert resp_2.status_code == status.HTTP_302_FOUND
     assert article.slug in resp_2.url
 
@@ -228,7 +256,9 @@ def test_editors_can_list_revisions(branch_editor_factory):
     revision = article.save_revision(user=user, submitted_for_moderation=True)
     revert_path = f'/admin/pages/{article.pk}/revisions/{revision.pk}/revert/'
 
-    resp = client.get(reverse('wagtailadmin_pages:revisions_index', args=[article.pk]))
+    resp = client.get(
+        reverse('wagtailadmin_pages:revisions_index', args=[article.pk])
+    )
     assert resp.status_code == status.HTTP_200_OK
     assert revert_path in resp.content.decode()
 
@@ -252,4 +282,5 @@ def test_editors_can_compare_changes_between_revisions(branch_editor_factory):
     content = resp.content.decode()
     assert resp.status_code == status.HTTP_200_OK
     assert new_title in content
-    assert 'There are no differences between these two revisions' not in content
+    assert 'There are no differences between these two revisions' \
+           not in content
