@@ -162,3 +162,28 @@ def test_editors_cant_create_child_pages_without_mandatory_data(branch_editor_fa
     )
     assert res.status_code == status.HTTP_200_OK
     assert not (mandatory_fields - set(res.context['form'].errors.keys()))
+
+
+@pytest.mark.CMS_839
+@pytest.mark.django_db
+def test_editors_cant_create_pages_in_branch_they_dont_manage(branch_editor_factory):
+    _, _, _, _, client_1 = branch_editor_factory.get()
+    listing_2, article_2, _, _, _ = branch_editor_factory.get()
+    data = {
+        "article_title": "test article",
+        "article_teaser": "test article",
+        "article_body_text": "test article",
+        "title_en_gb": "test article",
+        "slug": "test-article",
+    }
+
+    response = client_1.post(
+        reverse('wagtailadmin_pages:add',
+                args=(
+                    article_2._meta.app_label,
+                    article_2._meta.model_name,
+                    listing_2.pk,
+                )),
+        data=data,
+    )
+    assert response.status_code == status.HTTP_403_FORBIDDEN
