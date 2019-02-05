@@ -3,7 +3,7 @@ from rest_framework.reverse import reverse
 from directory_constants.constants import cms
 
 from conf import settings
-from great_domestic.tests import factories
+from export_readiness.tests import factories
 from directory_constants.constants import urls
 
 

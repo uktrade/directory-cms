@@ -77,7 +77,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'wagtailmedia',
     'find_a_supplier.apps.FindASupplierConfig',
-    'great_domestic.apps.GreatDomesticConfig',
+    'export_readiness.apps.GreatDomesticConfig',
+    'great_international.apps.GreatInternationalConfig',
     'invest.apps.InvestConfig',
     'components.apps.ComponentsConfig',
 
@@ -400,6 +401,7 @@ BASE_URL = env.str('BASE_URL')
 APP_URL_EXPORT_READINESS = env.str('APP_URL_EXPORT_READINESS')
 APP_URL_FIND_A_SUPPLIER = env.str('APP_URL_FIND_A_SUPPLIER')
 APP_URL_INVEST = env.str('APP_URL_INVEST')
+APP_URL_GREAT_INTERNATIONAL = env.str('APP_URL_GREAT_INTERNATIONAL')
 APP_URL_COMPONENTS = ''
 COPY_DESTINATION_URLS = env.list('COPY_DESTINATION_URLS')
 
@@ -443,6 +445,9 @@ WAGTAILMODELTRANSLATION_TRANSLATE_SLUGS = False
 
 EU_EXIT_NEWS_LISTING_PAGE_SLUG = env.str(
     'EU_EXIT_NEWS_LISTING_PAGE_SLUG', 'eu-exit-news'
+)
+INTERNATIONAL_NEWS_MARKETING_FOLDER_PAGE_SLUG = env.str(
+    'INTERNATIONAL_NEWS_MARKETING_FOLDER_PAGE_SLUG', 'news-and-events'
 )
 
 # feature flags

@@ -5,6 +5,8 @@ import components.serializers
 import core.serializers
 import export_readiness.models
 import export_readiness.serializers
+import great_international.models
+import great_international.serializers
 import find_a_supplier.models
 import find_a_supplier.serializers
 import invest.models
@@ -14,7 +16,7 @@ import invest.serializers
 MODELS_SERIALIZERS_MAPPING = {
     # core page
     wagtail.core.models.Page: core.serializers.WagtailPageSerializer,
-    # export readiness
+    # export_readiness
     export_readiness.models.TermsAndConditionsPage: export_readiness.serializers.GenericBodyOnlyPageSerializer,  # NOQA
     export_readiness.models.PrivacyAndCookiesPage: export_readiness.serializers.GenericBodyOnlyPageSerializer,  # NOQA
     export_readiness.models.GetFinancePage: export_readiness.serializers.GetFinancePageSerializer,  # NOQA
@@ -33,6 +35,9 @@ MODELS_SERIALIZERS_MAPPING = {
     export_readiness.models.ContactSuccessPage: export_readiness.serializers.ContactSuccessPageSerializer,  # NOQA
     export_readiness.models.SuperregionPage: export_readiness.serializers.SuperregionPageSerializer,  # NOQA
     export_readiness.models.CountryGuidePage: export_readiness.serializers.CountryGuidePageSerializer,  # NOQA
+    # great international
+    great_international.models.InternationalHomePage: great_international.serializers.InternationalHomePageSerializer,  # NOQA
+    great_international.models.InternationalArticlePage: great_international.serializers.ArticlePageSerializer,  # NOQA
     # invest
     invest.models.SectorLandingPage: invest.serializers.SectorLandingPageGenericSerializer,  # NOQA
     invest.models.RegionLandingPage: invest.serializers.SectorLandingPageGenericSerializer,  # NOQA

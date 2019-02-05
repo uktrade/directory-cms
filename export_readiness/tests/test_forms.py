@@ -1,6 +1,6 @@
 import pytest
 
-from great_domestic import models
+from export_readiness import models
 
 
 @pytest.mark.django_db
