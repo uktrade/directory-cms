@@ -187,3 +187,17 @@ def test_editors_cant_create_pages_in_branch_they_dont_manage(branch_editor_fact
         data=data,
     )
     assert response.status_code == status.HTTP_403_FORBIDDEN
+
+
+@pytest.mark.CMS_839
+@pytest.mark.django_db
+def test_editors_cannot_publish_child_pages(branch_editor_factory):
+    listing_1, article_1, _, user_1, client_1 = branch_editor_factory.get()
+
+    draft_page = exred_factories.ArticlePageFactory(parent=listing_1, live=False)
+    revision = draft_page.save_revision(user=user_1, submitted_for_moderation=True)
+
+    resp_1 = client_1.post(
+        reverse('wagtailadmin_pages:approve_moderation', args=[revision.pk])
+    )
+    assert resp_1.status_code == status.HTTP_403_FORBIDDEN
