@@ -265,3 +265,25 @@ def test_editors_can_list_revisions(branch_editor_factory):
     )
     assert resp_2.status_code == status.HTTP_200_OK
     assert revert_path in resp_2.content.decode()
+
+
+@pytest.mark.CMS_839
+@pytest.mark.django_db
+def test_editors_can_compare_changes_between_revisions(branch_editor_factory):
+    _, article, _, user, client = branch_editor_factory.get()
+
+    new_title = 'The title was modified'
+    article.title = new_title
+    revision = article.save_revision(user=user, submitted_for_moderation=True)
+
+    # compare current 'live' version of the page with the revision
+    resp = client.get(
+        reverse(
+            'wagtailadmin_pages:revisions_compare',
+            args=[article.pk, 'live', revision.id]
+        )
+    )
+    content = resp.content.decode()
+    assert resp.status_code == status.HTTP_200_OK
+    assert new_title in content
+    assert "There are no differences between these two revisions" not in content
