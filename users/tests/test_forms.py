@@ -106,3 +106,59 @@ def test_branch_moderators_cannot_access_pages_from_other_branch(branch_moderato
     assert resp_2.status_code == status.HTTP_302_FOUND
     assert resp_2.url == f'/admin/pages/{listing_2.pk}/'
 
+
+@pytest.mark.CMS_839
+@pytest.mark.django_db
+def test_editors_can_create_child_pages(branch_editor_factory):
+    listing_1, article_1, _, _, client_1 = branch_editor_factory.get()
+    data = {
+        "article_title": "test article",
+        "article_teaser": "test article",
+        "article_body_text": "test article",
+        "title_en_gb": "test article",
+        "slug": "test-article",
+    }
+
+    resp_1 = client_1.post(
+        reverse('wagtailadmin_pages:add',
+                args=(
+                    article_1._meta.app_label,
+                    article_1._meta.model_name,
+                    listing_1.pk,
+                )),
+        data=data,
+    )
+
+    assert resp_1.status_code == status.HTTP_302_FOUND, (
+        f"Something went wrong: {resp_1.context['form'].errors}"
+    )
+
+    new_article_id = int(resp_1.url.split('/')[3])  # format is "/admin/pages/6/edit/"
+    resp_2 = client_1.get(
+        f'/admin/api/v2beta/pages/?child_of={listing_1.pk}&for_explorer=1'
+    )
+    assert resp_2.status_code == status.HTTP_200_OK
+    assert resp_2.json()['meta']['total_count'] == 2
+    assert resp_2.json()['items'][0]['id'] == article_1.pk
+    assert resp_2.json()['items'][1]['id'] == new_article_id
+
+
+@pytest.mark.CMS_839
+@pytest.mark.django_db
+def test_editors_cant_create_child_pages_without_mandatory_data(branch_editor_factory):
+    listing_1, article_1, _, _, client_1 = branch_editor_factory.get()
+    mandatory_fields = {
+        "article_title", "article_teaser", "article_body_text", "title_en_gb", "slug"
+    }
+    data = {}
+    res = client_1.post(
+        reverse('wagtailadmin_pages:add',
+                args=(
+                    article_1._meta.app_label,
+                    article_1._meta.model_name,
+                    listing_1.pk,
+                )),
+        data=data,
+    )
+    assert res.status_code == status.HTTP_200_OK
+    assert not (mandatory_fields - set(res.context['form'].errors.keys()))
