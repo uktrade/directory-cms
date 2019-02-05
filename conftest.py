@@ -19,7 +19,11 @@ from django.db.migrations.executor import MigrationExecutor
 import export_readiness.tests.factories as exred_factories
 from conf import settings
 from find_a_supplier.tests.factories import IndustryPageFactory
-from users.tests.factories import GroupFactory, GroupPagePermissionFactory, UserFactory
+from users.tests.factories import (
+    GroupFactory,
+    GroupPagePermissionFactory,
+    UserFactory
+)
 
 
 @pytest.fixture
@@ -162,7 +166,7 @@ def django_db_setup(django_db_blocker):
 
 
 class DummyUserFactory(object):
-    """Creates a User with desired permissions for a Listing page and a Child page"""
+    """Creates a User with desired permissions for a Listing page and a Child page"""  # NOQA
 
     @staticmethod
     def get(
@@ -173,13 +177,17 @@ class DummyUserFactory(object):
         is_superuser=False,
         is_staff=False
     ):
-        """Returns: listing page with a child page, user group, user & user client"""
+        """Returns listing page with a child page, user group, user & client"""
         # ensure that only permissions supported by Wagtail are used
         available_permissions = [p for p, _, _ in PAGE_PERMISSION_TYPES]
         assert not (set(permissions) - set(available_permissions))
 
-        listing_page = exred_factories.ArticleListingPageFactory(parent=root_page)
-        article_page = exred_factories.ArticlePageFactory(parent=listing_page)
+        listing_page = exred_factories.ArticleListingPageFactory(
+            parent=root_page
+        )
+        article_page = exred_factories.ArticlePageFactory(
+            parent=listing_page
+        )
 
         group = GroupFactory()
         group.permissions.add(Permission.objects.get(codename='access_admin'))
@@ -204,9 +212,10 @@ class DummyUserFactory(object):
 def branch_moderator_factory(root_page):
     """Returns: listing page with a child page, editor group, user & user client
 
-    Moderators need: ['add', 'edit', 'publish'] permissions to perform all required
-    actions.
-    See: http://docs.wagtail.io/en/v2.0/topics/permissions.html#page-permissions
+    Moderators need: ['add', 'edit', 'publish'] permissions to perform
+    all required actions.
+    See:
+    http://docs.wagtail.io/en/v2.0/topics/permissions.html#page-permissions
     """
     class EditorFactory(object):
 
@@ -232,10 +241,11 @@ def branch_moderator_factory(root_page):
 @pytest.fixture
 def branch_editor_factory(root_page):
     """Returns: listing page with a child page, editor group, user & user client
-    
+
     Editors need: ['add', 'edit'] permissions to perform all required
     actions.
-    See: http://docs.wagtail.io/en/v2.0/topics/permissions.html#page-permissions
+    See:
+    http://docs.wagtail.io/en/v2.0/topics/permissions.html#page-permissions
     """
     class EditorFactory(object):
 
