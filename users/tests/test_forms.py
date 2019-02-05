@@ -221,3 +221,32 @@ def test_editors_can_submit_changes_for_moderation(branch_editor_factory):
     # on success, user should be redirected on parent page listing
     assert resp_1.status_code == status.HTTP_302_FOUND, resp_1.context['form'].errors
     assert int(resp_1.url.split('/')[3]) == listing_1.pk  # format is /admin/pages/3/
+
+
+@pytest.mark.CMS_839
+@pytest.mark.django_db
+def test_editors_can_view_drafts(branch_editor_factory):
+    listing_1, article_1, _, user_1, client_1 = branch_editor_factory.get()
+    data = {
+        "article_title": "new title",
+        "article_teaser": "new teaser",
+        "article_body_text": "new body text",
+        "title_en_gb": "next title",
+        # omitted "action-submit" means that pages was save as draft
+    }
+
+    # Create a draft and stay on the same admin page
+    resp_1 = client_1.post(
+        reverse('wagtailadmin_pages:edit', args=[article_1.pk]),
+        data=data,
+    )
+    assert resp_1.status_code == status.HTTP_302_FOUND
+    assert "has been updated" in resp_1.context['message']
+    assert int(resp_1.url.split('/')[3]) == article_1.pk  # format is /admin/pages/3/edit/
+
+    # Viewing draft will redirect user to the application site
+    resp_2 = client_1.get(
+        reverse('wagtailadmin_pages:view_draft', args=[article_1.pk])
+    )
+    assert resp_2.status_code == status.HTTP_302_FOUND
+    assert article_1.slug in resp_2.url
