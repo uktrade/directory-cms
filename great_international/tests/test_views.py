@@ -25,7 +25,7 @@ def test_international_homepage(admin_client, root_page):
     response = admin_client.get(url)
     assert response.status_code == 200
     assert 'articles' in response.json()
-    assert len(response.json()['articles']) == 5
+    assert len(response.json()['articles']) == 3
 
 
 def test_international_homepage_no_news(admin_client, root_page):

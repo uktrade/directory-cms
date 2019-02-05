@@ -67,7 +67,7 @@ class InternationalHomePageSerializer(BasePageSerializer):
                 slug=slug
             ).get_descendants().type(
                 InternationalArticlePage
-            ).live().specific()
+            ).live().specific()[:3]
         serializer = ArticlePageSerializer(
             queryset,
             many=True,
