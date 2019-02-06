@@ -122,7 +122,7 @@ def test_editors_can_create_child_pages(branch_editor_factory, root_page):
     # check if new page is visible in the 'Pages' menu
     new_article_id = int(resp_1.url.split('/')[3])  # format is '/admin/pages/6/edit/'  # NOQA
     resp_2 = branch.client.get(
-        f'/admin/api/v2beta/pages/?child_of=branch.{branch.listing.pk}&for_explorer=1'  # NOQA
+        f'/admin/api/v2beta/pages/?child_of={branch.listing.pk}&for_explorer=1'  # NOQA
     )
     assert resp_2.status_code == status.HTTP_200_OK
     assert resp_2.json()['meta']['total_count'] == 2
