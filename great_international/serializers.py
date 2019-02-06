@@ -5,9 +5,7 @@ from wagtail.images.api import fields as wagtail_fields
 from core import fields as core_fields
 from core.serializers import BasePageSerializer
 
-from .models import (
-    InternationalArticlePage, InternationalMarketingPages
-)
+from .models import InternationalArticlePage, InternationalMarketingPages
 
 
 class PageWithRelatedPagesSerializer(BasePageSerializer):
@@ -38,7 +36,7 @@ class RelatedArticlePageSerializer(BasePageSerializer):
         'fill-640x360|jpegquality-60|format-jpeg', source='article_image')
 
 
-class ArticlePageSerializer(PageWithRelatedPagesSerializer):
+class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
     article_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='article_title')
     article_teaser = serializers.CharField(max_length=255)
@@ -68,10 +66,54 @@ class InternationalHomePageSerializer(BasePageSerializer):
             ).get_descendants().type(
                 InternationalArticlePage
             ).live().specific()[:3]
-        serializer = ArticlePageSerializer(
+        serializer = InternationalArticlePageSerializer(
             queryset,
             many=True,
             allow_null=True,
             context=self.context
         )
         return serializer.data
+
+
+class InternationalCampaignPageSerializer(PageWithRelatedPagesSerializer):
+    campaign_heading = serializers.CharField(max_length=255)
+
+    section_one_heading = serializers.CharField(max_length=255)
+    campaign_hero_image = wagtail_fields.ImageRenditionField('original')
+
+    section_one_intro = core_fields.MarkdownToHTMLField(allow_null=True)
+
+    section_one_image = wagtail_fields.ImageRenditionField('fill-600x800')
+
+    selling_point_one_icon = wagtail_fields.ImageRenditionField('original')
+    selling_point_one_heading = serializers.CharField(max_length=255)
+    selling_point_one_content = core_fields.MarkdownToHTMLField(
+        allow_null=True)
+
+    selling_point_two_icon = wagtail_fields.ImageRenditionField('original')
+    selling_point_two_heading = serializers.CharField(max_length=255)
+    selling_point_two_content = core_fields.MarkdownToHTMLField(
+        allow_null=True)
+
+    selling_point_three_icon = wagtail_fields.ImageRenditionField('original')
+    selling_point_three_heading = serializers.CharField(max_length=255)
+    selling_point_three_content = core_fields.MarkdownToHTMLField(
+        allow_null=True)
+
+    section_one_contact_button_url = serializers.CharField(max_length=255)
+    section_one_contact_button_text = serializers.CharField(max_length=255)
+
+    section_two_heading = serializers.CharField(max_length=255)
+    section_two_intro = core_fields.MarkdownToHTMLField(allow_null=True)
+
+    section_two_image = wagtail_fields.ImageRenditionField('fill-640x360')
+
+    section_two_contact_button_url = serializers.CharField(max_length=255)
+    section_two_contact_button_text = serializers.CharField(max_length=255)
+
+    related_content_heading = serializers.CharField(max_length=255)
+    related_content_intro = core_fields.MarkdownToHTMLField(allow_null=True)
+
+    cta_box_message = serializers.CharField(max_length=255)
+    cta_box_button_url = serializers.CharField(max_length=255)
+    cta_box_button_text = serializers.CharField(max_length=255)

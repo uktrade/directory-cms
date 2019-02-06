@@ -1,11 +1,15 @@
 import pytest
-from great_international.serializers import ArticlePageSerializer
-from great_international.tests.factories import InternationalArticlePageFactory
+from great_international.serializers import (
+    InternationalArticlePageSerializer, InternationalCampaignPageSerializer
+)
+from great_international.tests.factories import (
+    InternationalArticlePageFactory, InternationalCampaignPageFactory
+)
 
 
 @pytest.mark.django_db
 @pytest.mark.parametrize('parent_page_class,serializer_class', (
-    (InternationalArticlePageFactory, ArticlePageSerializer),
+    (InternationalArticlePageFactory, InternationalArticlePageSerializer),
 ))
 def test_related_article_page_serializer_has_pages(
         parent_page_class, serializer_class, root_page, rf
@@ -40,7 +44,8 @@ def test_related_article_page_serializer_has_pages(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize('parent_page_class,serializer_class', (
-    (InternationalArticlePageFactory, ArticlePageSerializer),
+    (InternationalArticlePageFactory, InternationalArticlePageSerializer),
+    (InternationalCampaignPageFactory, InternationalCampaignPageSerializer),
 ))
 def test_related_article_page_serializer_no_pages(
     parent_page_class, serializer_class, root_page, rf
