@@ -208,7 +208,7 @@ def setup_pages_group_permission_user(
     return listing_page, article_page, group, user, client
 
 
-class BranchEditorFactory(object):
+class BranchEditorFactory:
     """Moderators need: ['add', 'edit', 'publish'] permissions"""
 
     @staticmethod
@@ -220,7 +220,7 @@ class BranchEditorFactory(object):
         )
 
 
-class BranchModeratorFactory(object):
+class BranchModeratorFactory:
     """Editors need: ['add', 'edit'] permissions"""
 
     @staticmethod
