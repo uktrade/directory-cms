@@ -1,4 +1,5 @@
 import os
+from collections import namedtuple
 from unittest.mock import patch
 
 import pytest
@@ -24,6 +25,9 @@ from users.tests.factories import (
     GroupPagePermissionFactory,
     UserFactory
 )
+
+
+Branch = namedtuple('Branch', 'listing, article, group, user, client')
 
 
 @pytest.fixture
@@ -205,7 +209,8 @@ def setup_pages_group_permission_user(
 
     client = Client()
     client.login(username=user.username, password=user_password)
-    return listing_page, article_page, group, user, client
+
+    return Branch(listing_page, article_page, group, user, client)
 
 
 class BranchEditorFactory:
