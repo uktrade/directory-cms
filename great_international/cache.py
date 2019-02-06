@@ -3,7 +3,7 @@ from core.cache import AbstractDatabaseCacheSubscriber
 from great_international import models
 
 
-class HomePageSubscriber(AbstractDatabaseCacheSubscriber):
+class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalHomePage
     subscriptions = [
         models.InternationalArticlePage,
@@ -11,13 +11,19 @@ class HomePageSubscriber(AbstractDatabaseCacheSubscriber):
     ]
 
 
-class MarketingPagesSubscriber(AbstractDatabaseCacheSubscriber):
+class InternationalMarketingPagesSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalMarketingPages
     subscriptions = [
         models.InternationalArticlePage,
+        models.InternationalCampaignPage
     ]
 
 
-class ArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
+class InternationalArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalArticlePage
+    subscriptions = []
+
+
+class InternationalCampaignPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.InternationalCampaignPage
     subscriptions = []

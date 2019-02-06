@@ -1,4 +1,5 @@
 from directory_constants.constants import cms
+from django.forms import Textarea
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel
 )
@@ -48,13 +49,13 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
 
     content_panels = [
         MultiFieldPanel(
-            heading='Tariffs',
+            heading='News and events',
             children=[
                 FieldPanel('news_title'),
             ]
         ),
         MultiFieldPanel(
-            heading='News and events',
+            heading='Tariffs',
             children=[
                 FieldPanel('tariffs_title'),
                 FieldPanel('tariffs_description'),
@@ -77,6 +78,7 @@ class InternationalMarketingPages(ExclusivePageMixin, BasePage):
 
     subpage_types = [
         'great_international.InternationalArticlePage',
+        'great_international.InternationalCampaignPage'
     ]
 
     settings_panels = []
@@ -148,6 +150,224 @@ class InternationalArticlePage(BasePage):
                         'related_page_three',
                         'great_international.InternationalArticlePage'),
                 ]),
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+
+class InternationalCampaignPage(BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+    subpage_types = []
+    view_path = 'campaigns/'
+
+    campaign_heading = models.CharField(max_length=255)
+    campaign_hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    section_one_heading = models.CharField(max_length=255)
+    section_one_intro = MarkdownField()
+    section_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    selling_point_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    selling_point_one_heading = models.CharField(max_length=255)
+    selling_point_one_content = MarkdownField()
+
+    selling_point_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    selling_point_two_heading = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+    )
+    selling_point_two_content = MarkdownField(null=True, blank=True)
+
+    selling_point_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    selling_point_three_heading = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    selling_point_three_content = MarkdownField(null=True, blank=True)
+
+    section_one_contact_button_url = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    section_one_contact_button_text = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+
+    section_two_heading = models.CharField(max_length=255)
+    section_two_intro = MarkdownField()
+
+    section_two_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    section_two_contact_button_url = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    section_two_contact_button_text = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+
+    related_content_heading = models.CharField(max_length=255)
+    related_content_intro = MarkdownField()
+
+    related_page_one = models.ForeignKey(
+        'export_readiness.ArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_two = models.ForeignKey(
+        'export_readiness.ArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_three = models.ForeignKey(
+        'export_readiness.ArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    cta_box_message = models.CharField(max_length=255)
+    cta_box_button_url = models.CharField(max_length=255)
+    cta_box_button_text = models.CharField(max_length=255)
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='Hero section',
+            children=[
+                FieldPanel('campaign_heading'),
+                ImageChooserPanel('campaign_hero_image'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Section one',
+            children=[
+                FieldPanel('section_one_heading'),
+                FieldPanel('section_one_intro'),
+                ImageChooserPanel('section_one_image'),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel('selling_point_one_icon'),
+                            FieldPanel('selling_point_one_heading'),
+                            FieldPanel('selling_point_one_content'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel('selling_point_two_icon'),
+                            FieldPanel('selling_point_two_heading'),
+                            FieldPanel('selling_point_two_content'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel('selling_point_three_icon'),
+                            FieldPanel('selling_point_three_heading'),
+                            FieldPanel('selling_point_three_content'),
+                        ]
+                    ),
+                ]),
+                FieldRowPanel([
+                    FieldPanel('section_one_contact_button_text'),
+                    FieldPanel('section_one_contact_button_url'),
+                ])
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Section two',
+            children=[
+                FieldPanel('section_two_heading'),
+                FieldPanel('section_two_intro'),
+                ImageChooserPanel('section_two_image'),
+                FieldRowPanel([
+                    FieldPanel('section_two_contact_button_text'),
+                    FieldPanel('section_two_contact_button_url'),
+                ])
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Related content section',
+            children=[
+                FieldPanel('related_content_heading'),
+                FieldPanel('related_content_intro'),
+                FieldRowPanel([
+                    PageChooserPanel(
+                        'related_page_one',
+                        'great_international.InternationalArticlePage'),
+                    PageChooserPanel(
+                        'related_page_two',
+                        'great_international.InternationalArticlePage'),
+                    PageChooserPanel(
+                        'related_page_three',
+                        'great_international.InternationalArticlePage'),
+                ])
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Contact box',
+            children=[
+                FieldRowPanel([
+                    FieldPanel('cta_box_message', widget=Textarea),
+                    MultiFieldPanel([
+                        FieldPanel('cta_box_button_url'),
+                        FieldPanel('cta_box_button_text'),
+                    ])
+                ])
             ]
         ),
         SearchEngineOptimisationPanel(),
