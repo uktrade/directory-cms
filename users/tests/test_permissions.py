@@ -8,10 +8,12 @@ import export_readiness.tests.factories as exred_factories
 @pytest.mark.CMS_837
 @pytest.mark.django_db
 def test_branch_moderators_should_see_pages_only_from_their_branch(
-    branch_moderator_factory
+    branch_moderator_factory, root_page
 ):
-    listing_1, article_1, _, _, client_1 = branch_moderator_factory.get()
-    listing_2, _, _, _, client_2 = branch_moderator_factory.get()
+    listing_1, article_1, _, _, client_1 = branch_moderator_factory.get(
+        root_page
+    )
+    listing_2, _, _, _, client_2 = branch_moderator_factory.get(root_page)
 
     # This reproduces Wagtail's Admin call to list pages in
     # the 'Pages' menu.
@@ -46,10 +48,10 @@ def test_branch_moderators_should_see_pages_only_from_their_branch(
 
 @pytest.mark.django_db
 def test_moderators_can_approve_revisions_only_for_pages_in_their_branch(
-    branch_moderator_factory
+    branch_moderator_factory, root_page
 ):
-    _, _, _, _, client_1 = branch_moderator_factory.get()
-    listing_2, _, _, user_2, client_2 = branch_moderator_factory.get()
+    _, _, _, _, client_1 = branch_moderator_factory.get(root_page)
+    listing_2, _, _, user_2, client_2 = branch_moderator_factory.get(root_page)
 
     draft_page = exred_factories.ArticlePageFactory(
         parent=listing_2, live=False
@@ -73,10 +75,14 @@ def test_moderators_can_approve_revisions_only_for_pages_in_their_branch(
 
 @pytest.mark.django_db
 def test_branch_moderators_cannot_access_pages_from_other_branch(
-    branch_moderator_factory
+    branch_moderator_factory, root_page
 ):
-    listing_1, article_1, _, _, client_1 = branch_moderator_factory.get()
-    listing_2, article_2, _, _, client_2 = branch_moderator_factory.get()
+    listing_1, article_1, _, _, client_1 = branch_moderator_factory.get(
+        root_page
+    )
+    listing_2, article_2, _, _, client_2 = branch_moderator_factory.get(
+        root_page
+    )
 
     # Because user_1 doesn't have rights to access page_2
     # it's redirected to the root page to which he has access to (listing_1)
@@ -91,8 +97,8 @@ def test_branch_moderators_cannot_access_pages_from_other_branch(
 
 @pytest.mark.CMS_839
 @pytest.mark.django_db
-def test_editors_can_create_child_pages(branch_editor_factory):
-    listing, article, _, _, client = branch_editor_factory.get()
+def test_editors_can_create_child_pages(branch_editor_factory, root_page):
+    listing, article, _, _, client = branch_editor_factory.get(root_page)
     data = {
         'article_title': 'test article',
         'article_teaser': 'test article',
@@ -129,9 +135,9 @@ def test_editors_can_create_child_pages(branch_editor_factory):
 @pytest.mark.CMS_839
 @pytest.mark.django_db
 def test_editors_cant_create_child_pages_without_mandatory_data(
-        branch_editor_factory
+        branch_editor_factory, root_page
 ):
-    listing, article, _, _, client = branch_editor_factory.get()
+    listing, article, _, _, client = branch_editor_factory.get(root_page)
     mandatory_fields = {
         'article_title',
         'article_teaser',
@@ -158,10 +164,10 @@ def test_editors_cant_create_child_pages_without_mandatory_data(
 @pytest.mark.CMS_839
 @pytest.mark.django_db
 def test_editors_cant_create_pages_in_branch_they_dont_manage(
-        branch_editor_factory
+        branch_editor_factory, root_page
 ):
-    _, _, _, _, client_1 = branch_editor_factory.get()
-    listing_2, article_2, _, _, _ = branch_editor_factory.get()
+    _, _, _, _, client_1 = branch_editor_factory.get(root_page)
+    listing_2, article_2, _, _, _ = branch_editor_factory.get(root_page)
     data = {
         'article_title': 'test article',
         'article_teaser': 'test article',
@@ -186,8 +192,8 @@ def test_editors_cant_create_pages_in_branch_they_dont_manage(
 
 @pytest.mark.CMS_839
 @pytest.mark.django_db
-def test_editors_cannot_publish_child_pages(branch_editor_factory):
-    listing, _, _, user, client = branch_editor_factory.get()
+def test_editors_cannot_publish_child_pages(branch_editor_factory, root_page):
+    listing, _, _, user, client = branch_editor_factory.get(root_page)
 
     draft_page = exred_factories.ArticlePageFactory(parent=listing, live=False)
     revision = draft_page.save_revision(
@@ -202,8 +208,10 @@ def test_editors_cannot_publish_child_pages(branch_editor_factory):
 
 @pytest.mark.CMS_839
 @pytest.mark.django_db
-def test_editors_can_submit_changes_for_moderation(branch_editor_factory):
-    listing, article, _, _, client = branch_editor_factory.get()
+def test_editors_can_submit_changes_for_moderation(
+        branch_editor_factory, root_page
+):
+    listing, article, _, _, client = branch_editor_factory.get(root_page)
     data = {
         'article_title': 'new title',
         'article_teaser': 'new teaser',
@@ -222,8 +230,8 @@ def test_editors_can_submit_changes_for_moderation(branch_editor_factory):
 
 @pytest.mark.CMS_839
 @pytest.mark.django_db
-def test_editors_can_view_drafts(branch_editor_factory):
-    _, article, _, _, client = branch_editor_factory.get()
+def test_editors_can_view_drafts(branch_editor_factory, root_page):
+    _, article, _, _, client = branch_editor_factory.get(root_page)
     data = {
         'article_title': 'new title',
         'article_teaser': 'new teaser',
@@ -250,8 +258,8 @@ def test_editors_can_view_drafts(branch_editor_factory):
 
 @pytest.mark.CMS_839
 @pytest.mark.django_db
-def test_editors_can_list_revisions(branch_editor_factory):
-    _, article, _, user, client = branch_editor_factory.get()
+def test_editors_can_list_revisions(branch_editor_factory, root_page):
+    _, article, _, user, client = branch_editor_factory.get(root_page)
 
     revision = article.save_revision(user=user, submitted_for_moderation=True)
     revert_path = f'/admin/pages/{article.pk}/revisions/{revision.pk}/revert/'
@@ -265,8 +273,10 @@ def test_editors_can_list_revisions(branch_editor_factory):
 
 @pytest.mark.CMS_839
 @pytest.mark.django_db
-def test_editors_can_compare_changes_between_revisions(branch_editor_factory):
-    _, article, _, user, client = branch_editor_factory.get()
+def test_editors_can_compare_changes_between_revisions(
+        branch_editor_factory, root_page
+):
+    _, article, _, user, client = branch_editor_factory.get(root_page)
 
     new_title = 'The title was modified'
     article.title = new_title
