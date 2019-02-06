@@ -1,9 +1,12 @@
 import os
+from collections import namedtuple
 from unittest.mock import patch
 
 import pytest
+from django.contrib.auth.models import Permission
+from django.test import Client
 from wagtail.images.models import Image
-from wagtail.core.models import Page
+from wagtail.core.models import Page, PAGE_PERMISSION_TYPES
 import wagtail_factories
 
 from django.core.cache import cache
@@ -14,8 +17,17 @@ from django.utils import translation
 from django import db
 from django.db.migrations.executor import MigrationExecutor
 
+import export_readiness.tests.factories as exred_factories
 from conf import settings
 from find_a_supplier.tests.factories import IndustryPageFactory
+from users.tests.factories import (
+    GroupFactory,
+    GroupPagePermissionFactory,
+    UserFactory
+)
+
+
+Branch = namedtuple('Branch', 'listing, article, group, user, client')
 
 
 @pytest.fixture
@@ -155,3 +167,81 @@ def django_db_setup(django_db_blocker):
 
         for connection in db.connections.all():
             connection.close()
+
+
+def setup_pages_group_permission_user(
+        root_page,
+        *,
+        permissions=[],
+        password='test',
+        is_superuser=False,
+        is_staff=False
+):
+    """Returns a listing page with a child page, user group, user & client.
+
+    For Wagtail permission model check:
+    http://docs.wagtail.io/en/v2.0/topics/permissions.html#page-permissions
+    """
+    # ensure that only permissions supported by Wagtail are used
+    available_permissions = [p for p, _, _ in PAGE_PERMISSION_TYPES]
+    assert not (set(permissions) - set(available_permissions))
+
+    listing_page = exred_factories.ArticleListingPageFactory(
+        parent=root_page
+    )
+    article_page = exred_factories.ArticlePageFactory(
+        parent=listing_page
+    )
+
+    group = GroupFactory()
+    group.permissions.add(Permission.objects.get(codename='access_admin'))
+
+    for permission in permissions:
+        GroupPagePermissionFactory(
+            page=listing_page, group=group, permission_type=permission)
+
+    user = UserFactory(
+        is_superuser=is_superuser, is_staff=is_staff, groups=[group]
+    )
+    user_password = password or 'test'
+    user.set_password(user_password)
+    user.save()
+
+    client = Client()
+    client.login(username=user.username, password=user_password)
+
+    return Branch(listing_page, article_page, group, user, client)
+
+
+class BranchEditorFactory:
+    """Moderators need: ['add', 'edit', 'publish'] permissions"""
+
+    @staticmethod
+    def get(root_page, *, permissions=['add', 'edit'], **kwargs):
+        return setup_pages_group_permission_user(
+            root_page,
+            permissions=permissions,
+            **kwargs,
+        )
+
+
+class BranchModeratorFactory:
+    """Editors need: ['add', 'edit'] permissions"""
+
+    @staticmethod
+    def get(root_page, *, permissions=['add', 'edit', 'publish'], **kwargs):
+        return setup_pages_group_permission_user(
+            root_page,
+            permissions=permissions,
+            **kwargs,
+        )
+
+
+@pytest.fixture
+def branch_editor_factory(root_page):
+    return BranchEditorFactory()
+
+
+@pytest.fixture
+def branch_moderator_factory():
+    return BranchModeratorFactory()
