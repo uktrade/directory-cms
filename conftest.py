@@ -165,104 +165,78 @@ def django_db_setup(django_db_blocker):
             connection.close()
 
 
-class DummyUserFactory(object):
-    """Creates a User with desired permissions for a Listing page and a Child page"""  # NOQA
-
-    @staticmethod
-    def get(
+def setup_pages_group_permission_user(
         root_page,
         *,
-        password=None,
         permissions=[],
+        password='test',
         is_superuser=False,
         is_staff=False
-    ):
-        """Returns listing page with a child page, user group, user & client"""
-        # ensure that only permissions supported by Wagtail are used
-        available_permissions = [p for p, _, _ in PAGE_PERMISSION_TYPES]
-        assert not (set(permissions) - set(available_permissions))
+):
+    """Returns a listing page with a child page, user group, user & client.
 
-        listing_page = exred_factories.ArticleListingPageFactory(
-            parent=root_page
-        )
-        article_page = exred_factories.ArticlePageFactory(
-            parent=listing_page
-        )
-
-        group = GroupFactory()
-        group.permissions.add(Permission.objects.get(codename='access_admin'))
-
-        for permission in permissions:
-            GroupPagePermissionFactory(
-                page=listing_page, group=group, permission_type=permission)
-
-        user = UserFactory(
-            is_superuser=is_superuser, is_staff=is_staff, groups=[group]
-        )
-        user_password = password or 'test'
-        user.set_password(user_password)
-        user.save()
-
-        client = Client()
-        client.login(username=user.username, password=user_password)
-        return listing_page, article_page, group, user, client
-
-
-@pytest.fixture
-def branch_moderator_factory(root_page):
-    """Returns: listing page with a child page, editor group, user & user client
-
-    Moderators need: ['add', 'edit', 'publish'] permissions to perform
-    all required actions.
-    See:
+    For Wagtail permission model check:
     http://docs.wagtail.io/en/v2.0/topics/permissions.html#page-permissions
     """
-    class EditorFactory(object):
+    # ensure that only permissions supported by Wagtail are used
+    available_permissions = [p for p, _, _ in PAGE_PERMISSION_TYPES]
+    assert not (set(permissions) - set(available_permissions))
 
-        @staticmethod
-        def get(
-            *,
-            password='test',
-            permissions=['add', 'edit', 'publish'],
-            is_superuser=False,
-            is_staff=False
-        ):
-            return DummyUserFactory.get(
-                root_page=root_page,
-                password=password,
-                permissions=permissions,
-                is_superuser=is_superuser,
-                is_staff=is_staff
-            )
+    listing_page = exred_factories.ArticleListingPageFactory(
+        parent=root_page
+    )
+    article_page = exred_factories.ArticlePageFactory(
+        parent=listing_page
+    )
 
-    return EditorFactory()
+    group = GroupFactory()
+    group.permissions.add(Permission.objects.get(codename='access_admin'))
+
+    for permission in permissions:
+        GroupPagePermissionFactory(
+            page=listing_page, group=group, permission_type=permission)
+
+    user = UserFactory(
+        is_superuser=is_superuser, is_staff=is_staff, groups=[group]
+    )
+    user_password = password or 'test'
+    user.set_password(user_password)
+    user.save()
+
+    client = Client()
+    client.login(username=user.username, password=user_password)
+    return listing_page, article_page, group, user, client
+
+
+class BranchEditorFactory(object):
+    """Moderators need: ['add', 'edit', 'publish'] permissions"""
+
+    @staticmethod
+    def get(root_page, *, permissions=['add', 'edit'], **kwargs):
+        return setup_pages_group_permission_user(
+            root_page,
+            permissions=permissions,
+            **kwargs,
+        )
+
+
+class BranchModeratorFactory(object):
+    """Editors need: ['add', 'edit'] permissions"""
+
+    @staticmethod
+    def get(root_page, *, permissions=['add', 'edit', 'publish'], **kwargs):
+        return setup_pages_group_permission_user(
+            root_page,
+            permissions=permissions,
+            **kwargs,
+        )
 
 
 @pytest.fixture
 def branch_editor_factory(root_page):
-    """Returns: listing page with a child page, editor group, user & user client
+    return BranchEditorFactory()
 
-    Editors need: ['add', 'edit'] permissions to perform all required
-    actions.
-    See:
-    http://docs.wagtail.io/en/v2.0/topics/permissions.html#page-permissions
-    """
-    class EditorFactory(object):
 
-        @staticmethod
-        def get(
-            *,
-            password='test',
-            permissions=['add', 'edit'],
-            is_superuser=False,
-            is_staff=False
-        ):
-            return DummyUserFactory.get(
-                root_page=root_page,
-                password=password,
-                permissions=permissions,
-                is_superuser=is_superuser,
-                is_staff=is_staff
-            )
-
-    return EditorFactory()
+@pytest.fixture
+def branch_moderator_factory():
+    return BranchModeratorFactory()
