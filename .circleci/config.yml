@@ -69,10 +69,3 @@ jobs:
             . venv/bin/activate
             pip install flake8
             flake8 . --exclude=migrations,venv
-
-workflows:
-  version: 2
-  test_and_deploy_to_dev:
-    jobs:
-      - test
-      - flake8
