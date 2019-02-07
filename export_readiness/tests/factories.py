@@ -155,6 +155,8 @@ class HomePageFactory(wagtail_factories.PageFactory):
 
     news_title = factory.fuzzy.FuzzyText(length=10)
     news_description = factory.fuzzy.FuzzyText(length=10)
+    banner_content = factory.fuzzy.FuzzyText(length=10)
+    banner_label = factory.fuzzy.FuzzyText(length=10)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     last_published_at = timezone.now()

@@ -175,6 +175,8 @@ class HomePageSerializer(BasePageSerializer):
     news_description = core_fields.MarkdownToHTMLField()
     articles = serializers.SerializerMethodField()
     advice = serializers.SerializerMethodField()
+    banner_content = core_fields.MarkdownToHTMLField(allow_null=True)
+    banner_label = serializers.CharField(max_length=50, allow_null=True)
 
     def get_articles(self, obj):
         queryset = None
