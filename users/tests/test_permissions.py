@@ -227,7 +227,9 @@ def test_editors_cannot_publish_child_pages(branch_editor_factory, root_page):
 
 @pytest.mark.CMS_839
 @pytest.mark.django_db
-def test_editors_cannot_unpublish_child_pages(branch_editor_factory, root_page):
+def test_editors_cannot_unpublish_child_pages(
+        branch_editor_factory, root_page
+):
     branch = branch_editor_factory.get(root_page)
 
     resp = branch.client.post(
@@ -244,7 +246,9 @@ def test_editors_cannot_unpublish_child_pages(branch_editor_factory, root_page):
         BranchEditorFactory,
         BranchModeratorFactory
     ])
-def test_branch_user_can_submit_changes_for_moderation(branch_factory, root_page):
+def test_branch_user_can_submit_changes_for_moderation(
+        branch_factory, root_page
+):
     branch = branch_factory.get(root_page)
     data = {
         'article_title': 'new title',
@@ -354,7 +358,9 @@ def test_editors_can_compare_changes_between_revisions(
 
 @pytest.mark.CMS_840
 @pytest.mark.django_db
-def test_moderators_can_publish_child_pages(branch_moderator_factory, root_page):
+def test_moderators_can_publish_child_pages(
+        branch_moderator_factory, root_page
+):
     branch = branch_moderator_factory.get(root_page)
 
     draft_page = exred_factories.ArticlePageFactory(
@@ -373,7 +379,9 @@ def test_moderators_can_publish_child_pages(branch_moderator_factory, root_page)
 
 @pytest.mark.CMS_840
 @pytest.mark.django_db
-def test_moderators_can_unpublish_child_pages(branch_moderator_factory, root_page):
+def test_moderators_can_unpublish_child_pages(
+        branch_moderator_factory, root_page
+):
     branch = branch_moderator_factory.get(root_page)
 
     resp = branch.client.post(
