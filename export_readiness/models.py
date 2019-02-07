@@ -985,10 +985,19 @@ class HomePage(ExclusivePageMixin, BasePage):
         'export_readiness.ArticlePage'
     ]
 
+    banner_content = MarkdownField()
+    banner_label = models.CharField(max_length=50, null=True, blank=True)
     news_title = models.CharField(max_length=255)
     news_description = MarkdownField()
 
     content_panels = [
+        MultiFieldPanel(
+            heading='EU Exit banner',
+            children=[
+                FieldPanel('banner_label'),
+                FieldPanel('banner_content'),
+            ]
+        ),
         MultiFieldPanel(
             heading='EU exit news',
             children=[
