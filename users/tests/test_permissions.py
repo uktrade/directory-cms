@@ -3,6 +3,7 @@ from django.urls import reverse
 from rest_framework import status
 
 import export_readiness.tests.factories as exred_factories
+from conftest import BranchEditorFactory, BranchModeratorFactory
 
 
 @pytest.mark.CMS_837
@@ -94,9 +95,15 @@ def test_branch_moderators_cannot_access_pages_from_other_branch(
 
 
 @pytest.mark.CMS_839
+@pytest.mark.CMS_840
 @pytest.mark.django_db
-def test_editors_can_create_child_pages(branch_editor_factory, root_page):
-    branch = branch_editor_factory.get(root_page)
+@pytest.mark.parametrize(
+    "branch_factory", [
+        BranchEditorFactory,
+        BranchModeratorFactory
+    ])
+def test_branch_user_can_create_child_pages_in_it(branch_factory, root_page):
+    branch = branch_factory.get(root_page)
     data = {
         'article_title': 'test article',
         'article_teaser': 'test article',
@@ -116,7 +123,7 @@ def test_editors_can_create_child_pages(branch_editor_factory, root_page):
         data=data,
     )
     assert (
-        resp_1.status_code == status.HTTP_302_FOUND
+            resp_1.status_code == status.HTTP_302_FOUND
     ), f'Something went wrong: {resp_1.context["form"].errors}'
 
     # check if new page is visible in the 'Pages' menu
@@ -131,11 +138,17 @@ def test_editors_can_create_child_pages(branch_editor_factory, root_page):
 
 
 @pytest.mark.CMS_839
+@pytest.mark.CMS_840
 @pytest.mark.django_db
-def test_editors_cant_create_child_pages_without_mandatory_data(
-        branch_editor_factory, root_page
+@pytest.mark.parametrize(
+    "branch_factory", [
+        BranchEditorFactory,
+        BranchModeratorFactory
+    ])
+def test_branch_user_cant_create_child_pages_without_mandatory_data(
+        branch_factory, root_page
 ):
-    branch = branch_editor_factory.get(root_page)
+    branch = branch_factory.get(root_page)
     mandatory_fields = {
         'article_title',
         'article_teaser',
@@ -160,12 +173,18 @@ def test_editors_cant_create_child_pages_without_mandatory_data(
 
 
 @pytest.mark.CMS_839
+@pytest.mark.CMS_840
 @pytest.mark.django_db
-def test_editors_cant_create_pages_in_branch_they_dont_manage(
-        branch_editor_factory, root_page
+@pytest.mark.parametrize(
+    "branch_factory", [
+        BranchEditorFactory,
+        BranchModeratorFactory
+    ])
+def test_branch_user_cant_create_pages_in_branch_they_dont_manage(
+        branch_factory, root_page
 ):
-    branch_1 = branch_editor_factory.get(root_page)
-    branch_2 = branch_editor_factory.get(root_page)
+    branch_1 = branch_factory.get(root_page)
+    branch_2 = branch_factory.get(root_page)
     data = {
         'article_title': 'test article',
         'article_teaser': 'test article',
@@ -208,10 +227,25 @@ def test_editors_cannot_publish_child_pages(branch_editor_factory, root_page):
 
 @pytest.mark.CMS_839
 @pytest.mark.django_db
-def test_editors_can_submit_changes_for_moderation(
-        branch_editor_factory, root_page
-):
+def test_editors_cannot_unpublish_child_pages(branch_editor_factory, root_page):
     branch = branch_editor_factory.get(root_page)
+
+    resp = branch.client.post(
+        reverse('wagtailadmin_pages:unpublish', args=[branch.article.pk])
+    )
+    assert resp.status_code == status.HTTP_403_FORBIDDEN
+
+
+@pytest.mark.CMS_839
+@pytest.mark.CMS_840
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "branch_factory", [
+        BranchEditorFactory,
+        BranchModeratorFactory
+    ])
+def test_branch_user_can_submit_changes_for_moderation(branch_factory, root_page):
+    branch = branch_factory.get(root_page)
     data = {
         'article_title': 'new title',
         'article_teaser': 'new teaser',
@@ -229,9 +263,15 @@ def test_editors_can_submit_changes_for_moderation(
 
 
 @pytest.mark.CMS_839
+@pytest.mark.CMS_840
 @pytest.mark.django_db
-def test_editors_can_view_drafts(branch_editor_factory, root_page):
-    branch = branch_editor_factory.get(root_page)
+@pytest.mark.parametrize(
+    "branch_factory", [
+        BranchEditorFactory,
+        BranchModeratorFactory
+    ])
+def test_branch_user_can_view_drafts(branch_factory, root_page):
+    branch = branch_factory.get(root_page)
     data = {
         'article_title': 'new title',
         'article_teaser': 'new teaser',
@@ -257,9 +297,15 @@ def test_editors_can_view_drafts(branch_editor_factory, root_page):
 
 
 @pytest.mark.CMS_839
+@pytest.mark.CMS_840
 @pytest.mark.django_db
-def test_editors_can_list_revisions(branch_editor_factory, root_page):
-    branch = branch_editor_factory.get(root_page)
+@pytest.mark.parametrize(
+    "branch_factory", [
+        BranchEditorFactory,
+        BranchModeratorFactory
+    ])
+def test_branch_users_can_list_revisions(branch_factory, root_page):
+    branch = branch_factory.get(root_page)
 
     revision = branch.article.save_revision(
         user=branch.user, submitted_for_moderation=True
@@ -274,11 +320,17 @@ def test_editors_can_list_revisions(branch_editor_factory, root_page):
 
 
 @pytest.mark.CMS_839
+@pytest.mark.CMS_840
 @pytest.mark.django_db
+@pytest.mark.parametrize(
+    "branch_factory", [
+        BranchEditorFactory,
+        BranchModeratorFactory
+    ])
 def test_editors_can_compare_changes_between_revisions(
-        branch_editor_factory, root_page
+        branch_factory, root_page
 ):
-    branch = branch_editor_factory.get(root_page)
+    branch = branch_factory.get(root_page)
 
     new_title = 'The title was modified'
     branch.article.title = new_title
@@ -298,101 +350,6 @@ def test_editors_can_compare_changes_between_revisions(
     assert new_title in content
     assert 'There are no differences between these two revisions' \
            not in content
-
-
-@pytest.mark.CMS_840
-@pytest.mark.django_db
-def test_moderators_can_create_child_pages(branch_moderator_factory, root_page):
-    branch = branch_moderator_factory.get(root_page)
-    data = {
-        'article_title': 'test article',
-        'article_teaser': 'test article',
-        'article_body_text': 'test article',
-        'title_en_gb': 'test article',
-        'slug': 'test-article',
-    }
-
-    resp_1 = branch.client.post(
-        reverse(
-            'wagtailadmin_pages:add',
-            args=[
-                branch.article._meta.app_label,
-                branch.article._meta.model_name,
-                branch.listing.pk],
-        ),
-        data=data,
-    )
-    assert (
-            resp_1.status_code == status.HTTP_302_FOUND
-    ), f'Something went wrong: {resp_1.context["form"].errors}'
-
-    # check if new page is visible in the 'Pages' menu
-    new_article_id = int(resp_1.url.split('/')[3])  # format is '/admin/pages/6/edit/'  # NOQA
-    resp_2 = branch.client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch.listing.pk}&for_explorer=1'  # NOQA
-    )
-    assert resp_2.status_code == status.HTTP_200_OK
-    assert resp_2.json()['meta']['total_count'] == 2
-    assert resp_2.json()['items'][0]['id'] == branch.article.pk
-    assert resp_2.json()['items'][1]['id'] == new_article_id
-
-
-@pytest.mark.CMS_840
-@pytest.mark.django_db
-def test_moderators_cant_create_child_pages_without_mandatory_data(
-        branch_moderator_factory, root_page
-):
-    branch = branch_moderator_factory.get(root_page)
-    mandatory_fields = {
-        'article_title',
-        'article_teaser',
-        'article_body_text',
-        'title_en_gb',
-        'slug',
-    }
-    data = {}
-    resp = branch.client.post(
-        reverse(
-            'wagtailadmin_pages:add',
-            args=[
-                branch.article._meta.app_label,
-                branch.article._meta.model_name,
-                branch.listing.pk
-            ],
-        ),
-        data=data,
-    )
-    assert resp.status_code == status.HTTP_200_OK
-    assert not (mandatory_fields - set(resp.context['form'].errors.keys()))
-
-
-@pytest.mark.CMS_840
-@pytest.mark.django_db
-def test_moderators_cant_create_pages_in_branch_they_dont_manage(
-        branch_moderator_factory, root_page
-):
-    branch_1 = branch_moderator_factory.get(root_page)
-    branch_2 = branch_moderator_factory.get(root_page)
-    data = {
-        'article_title': 'test article',
-        'article_teaser': 'test article',
-        'article_body_text': 'test article',
-        'title_en_gb': 'test article',
-        'slug': 'test-article',
-    }
-
-    resp = branch_1.client.post(
-        reverse(
-            'wagtailadmin_pages:add',
-            args=[
-                branch_2.article._meta.app_label,
-                branch_2.article._meta.model_name,
-                branch_2.listing.pk
-            ],
-        ),
-        data=data,
-    )
-    assert resp.status_code == status.HTTP_403_FORBIDDEN
 
 
 @pytest.mark.CMS_840
@@ -434,97 +391,3 @@ def test_moderators_can_unpublish_child_pages(branch_moderator_factory, root_pag
     assert article_status['status'] == 'draft'
     assert not article_status['live']
     assert article_status['has_unpublished_changes']
-
-
-@pytest.mark.CMS_840
-@pytest.mark.django_db
-def test_moderators_can_submit_changes_for_moderation(
-        branch_moderator_factory, root_page
-):
-    branch = branch_moderator_factory.get(root_page)
-    data = {
-        'article_title': 'new title',
-        'article_teaser': 'new teaser',
-        'article_body_text': 'new body text',
-        'title_en_gb': 'next title',
-        'action-submit': 'Submit for moderation',  # this action triggers notification  # NOQA
-    }
-    resp = branch.client.post(
-        reverse('wagtailadmin_pages:edit', args=[branch.article.pk]),
-        data=data
-    )
-    # on success, user should be redirected on parent page listing
-    assert resp.status_code == status.HTTP_302_FOUND, resp.context['form'].errors  # NOQA
-    assert int(resp.url.split('/')[3]) == branch.listing.pk  # format is /admin/pages/3/  # NOQA
-
-
-@pytest.mark.CMS_840
-@pytest.mark.django_db
-def test_moderators_can_view_drafts(branch_moderator_factory, root_page):
-    branch = branch_moderator_factory.get(root_page)
-    data = {
-        'article_title': 'new title',
-        'article_teaser': 'new teaser',
-        'article_body_text': 'new body text',
-        'title_en_gb': 'next title',
-        # omitted 'action-submit' means that pages was save as draft
-    }
-
-    # Create a draft and stay on the same admin page
-    resp_1 = branch.client.post(
-        reverse('wagtailadmin_pages:edit', args=[branch.article.pk]), data=data
-    )
-    assert resp_1.status_code == status.HTTP_302_FOUND
-    assert 'has been updated' in resp_1.context['message']
-    assert int(resp_1.url.split('/')[3]) == branch.article.pk  # format is /admin/pages/3/edit/  # NOQA
-
-    # Viewing draft will redirect user to the application site
-    resp_2 = branch.client.get(
-        reverse('wagtailadmin_pages:view_draft', args=[branch.article.pk])
-    )
-    assert resp_2.status_code == status.HTTP_302_FOUND
-    assert branch.article.slug in resp_2.url
-
-
-@pytest.mark.CMS_840
-@pytest.mark.django_db
-def test_moderators_can_list_revisions(branch_moderator_factory, root_page):
-    branch = branch_moderator_factory.get(root_page)
-
-    revision = branch.article.save_revision(
-        user=branch.user, submitted_for_moderation=True
-    )
-    revert_path = f'/admin/pages/{branch.article.pk}/revisions/{revision.pk}/revert/'  # NOQA
-
-    resp = branch.client.get(
-        reverse('wagtailadmin_pages:revisions_index', args=[branch.article.pk])
-    )
-    assert resp.status_code == status.HTTP_200_OK
-    assert revert_path in resp.content.decode()
-
-
-@pytest.mark.CMS_840
-@pytest.mark.django_db
-def test_moderators_can_compare_changes_between_revisions(
-        branch_moderator_factory, root_page
-):
-    branch = branch_moderator_factory.get(root_page)
-
-    new_title = 'The title was modified'
-    branch.article.title = new_title
-    revision = branch.article.save_revision(
-        user=branch.user, submitted_for_moderation=True
-    )
-
-    # compare current 'live' version of the page with the revision
-    resp = branch.client.get(
-        reverse(
-            'wagtailadmin_pages:revisions_compare',
-            args=[branch.article.pk, 'live', revision.id],
-        )
-    )
-    content = resp.content.decode()
-    assert resp.status_code == status.HTTP_200_OK
-    assert new_title in content
-    assert 'There are no differences between these two revisions' \
-           not in content
