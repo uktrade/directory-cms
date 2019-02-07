@@ -70,25 +70,9 @@ jobs:
             pip install flake8
             flake8 . --exclude=migrations,venv
 
-  deploy_to_dev:
-    docker:
-      - image: circleci/python:3.6.6
-    steps:
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - checkout
-      - run:
-          command: make heroku_deploy_dev
-
 workflows:
   version: 2
   test_and_deploy_to_dev:
     jobs:
       - test
       - flake8
-      - deploy_to_dev:
-          requires:
-            - test
-          filters:
-            branches:
-              only: master
