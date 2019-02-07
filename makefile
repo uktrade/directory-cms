@@ -125,4 +125,4 @@ upgrade_requirements:
 	pip-compile --upgrade requirements.in
 	pip-compile --upgrade requirements_test.in
 
-.PHONY: clean test_requirements debug_webserver debug_test debug heroku_deploy_dev heroku_deploy_demo
+.PHONY: clean test_requirements debug_webserver debug_test debug
