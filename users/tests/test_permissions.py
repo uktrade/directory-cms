@@ -6,43 +6,134 @@ import export_readiness.tests.factories as exred_factories
 from conftest import BranchEditorFactory, BranchModeratorFactory
 
 
+@pytest.mark.quirk
 @pytest.mark.CMS_837
 @pytest.mark.django_db
-def test_branch_moderators_should_see_pages_only_from_their_branch(
-    branch_moderator_factory, root_page
+def test_branch_editors_should_only_see_pages_from_their_branch(
+    branch_editor_moderator_factory, distinct_root_pages
 ):
-    branch_1 = branch_moderator_factory.get(root_page)
-    branch_2 = branch_moderator_factory.get(root_page)
+    root_page_1, root_page_2 = distinct_root_pages
+    branch_1 = branch_editor_moderator_factory.get(root_page_1)
+    branch_2 = branch_editor_moderator_factory.get(root_page_2)
 
-    # This reproduces Wagtail's Admin call to list pages in
-    # the 'Pages' menu.
-    # User can only see pages that are child of requested page to which
-    # he has access to
-    resp_1 = branch_1.client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_1.listing.pk}&for_explorer=1'  # NOQA
+    # This reproduces Wagtail's admin call to list pages in the 'Pages' menu.
+    # Editors should only see app pages that share common root page
+    resp_1 = branch_1.editor_client.get(
+        f'/admin/api/v2beta/pages/?child_of={root_page_1.pk}&for_explorer=1'
     )
     assert resp_1.status_code == status.HTTP_200_OK
     assert resp_1.json()['meta']['total_count'] == 1
-    assert resp_1.json()['items'][0]['id'] == branch_1.article.pk
+    assert resp_1.json()['items'][0]['id'] == branch_1.listing.pk
 
-    # This reproduces situation when User navigates down the 'Pages' menu
-    # User shouldn't see any child pages of an article as it doesn't have any
-    resp_2 = branch_1.client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_1.article.pk}&for_explorer=1'  # NOQA
+    # This reproduces Wagtail's admin call to list pages in the 'Pages' menu.
+    # Editors should only see app pages that share common root page
+    resp_2 = branch_2.editor_client.get(
+        f'/admin/api/v2beta/pages/?child_of={root_page_2.pk}&for_explorer=1'
     )
     assert resp_2.status_code == status.HTTP_200_OK
-    assert resp_2.json()['meta']['total_count'] == 0
-    assert not resp_2.json()['items']
+    assert resp_2.json()['meta']['total_count'] == 1
+    assert resp_2.json()['items'][0]['id'] == branch_2.listing.pk
 
-    # Wagtail API allows users to list pages that belong to different group!
-    resp_3 = branch_1.client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_2.listing.pk}&for_explorer=1'  # NOQA
-    )
-    assert resp_3.status_code == status.HTTP_200_OK
-    resp_4 = branch_2.client.get(
+    # This reproduces behaviour when Users explore pages using 'Pages' menu
+    # User can only see pages that belong to their listing page
+    resp_3 = branch_1.editor_client.get(
         f'/admin/api/v2beta/pages/?child_of={branch_1.listing.pk}&for_explorer=1'  # NOQA
     )
-    assert resp_4.status_code == status.HTTP_200_OK
+    assert resp_3.status_code == status.HTTP_200_OK
+    assert resp_3.json()['meta']['total_count'] == 1
+    assert resp_3.json()['items'][0]['id'] == branch_1.article.pk
+
+    # This reproduces behaviour when Users explore pages using 'Pages' menu
+    # User can only see pages that belong to their listing page
+    resp_5 = branch_2.editor_client.get(
+        f'/admin/api/v2beta/pages/?child_of={branch_2.listing.pk}&for_explorer=1'  # NOQA
+    )
+    assert resp_5.status_code == status.HTTP_200_OK
+    assert resp_5.json()['meta']['total_count'] == 1
+    assert resp_5.json()['items'][0]['id'] == branch_2.article.pk
+
+    # Unfortunately on API level Wagtail allows users to list pages that
+    # belong to different branch
+    resp_5 = branch_1.editor_client.get(
+        f'/admin/api/v2beta/pages/?child_of={branch_2.listing.pk}&for_explorer=1'  # NOQA
+    )
+    assert resp_5.status_code == status.HTTP_200_OK
+    assert resp_5.json()['meta']['total_count'] == 1
+    assert resp_5.json()['items'][0]['id'] == branch_2.article.pk
+
+    # Unfortunately on API level Wagtail allows users to list pages that
+    # belong to different branch
+    resp_6 = branch_2.editor_client.get(
+        f'/admin/api/v2beta/pages/?child_of={branch_1.listing.pk}&for_explorer=1'  # NOQA
+    )
+    assert resp_6.status_code == status.HTTP_200_OK
+    assert resp_6.json()['meta']['total_count'] == 1
+    assert resp_6.json()['items'][0]['id'] == branch_1.article.pk
+
+
+@pytest.mark.quirk
+@pytest.mark.CMS_837
+@pytest.mark.django_db
+def test_branch_moderators_should_only_see_pages_from_their_branch(
+        branch_editor_moderator_factory, distinct_root_pages
+):
+    root_page_1, root_page_2 = distinct_root_pages
+    branch_1 = branch_editor_moderator_factory.get(root_page_1)
+    branch_2 = branch_editor_moderator_factory.get(root_page_2)
+
+    # This reproduces Wagtail's admin call to list pages in the 'Pages' menu.
+    # Editors should only see app pages that share common root page
+    resp_1 = branch_1.moderator_client.get(
+        f'/admin/api/v2beta/pages/?child_of={root_page_1.pk}&for_explorer=1'
+    )
+    assert resp_1.status_code == status.HTTP_200_OK
+    assert resp_1.json()['meta']['total_count'] == 1
+    assert resp_1.json()['items'][0]['id'] == branch_1.listing.pk
+
+    # This reproduces Wagtail's admin call to list pages in the 'Pages' menu.
+    # Editors should only see app pages that share common root page
+    resp_2 = branch_2.moderator_client.get(
+        f'/admin/api/v2beta/pages/?child_of={root_page_2.pk}&for_explorer=1'
+    )
+    assert resp_2.status_code == status.HTTP_200_OK
+    assert resp_2.json()['meta']['total_count'] == 1
+    assert resp_2.json()['items'][0]['id'] == branch_2.listing.pk
+
+    # This reproduces behaviour when Users explore pages using 'Pages' menu
+    # User can only see pages that belong to their listing page
+    resp_3 = branch_1.moderator_client.get(
+        f'/admin/api/v2beta/pages/?child_of={branch_1.listing.pk}&for_explorer=1'  # NOQA
+    )
+    assert resp_3.status_code == status.HTTP_200_OK
+    assert resp_3.json()['meta']['total_count'] == 1
+    assert resp_3.json()['items'][0]['id'] == branch_1.article.pk
+
+    # This reproduces behaviour when Users explore pages using 'Pages' menu
+    # User can only see pages that belong to their listing page
+    resp_5 = branch_2.moderator_client.get(
+        f'/admin/api/v2beta/pages/?child_of={branch_2.listing.pk}&for_explorer=1'  # NOQA
+    )
+    assert resp_5.status_code == status.HTTP_200_OK
+    assert resp_5.json()['meta']['total_count'] == 1
+    assert resp_5.json()['items'][0]['id'] == branch_2.article.pk
+
+    # Unfortunately on API level Wagtail allows users to list pages that
+    # belong to different branch
+    resp_5 = branch_1.moderator_client.get(
+        f'/admin/api/v2beta/pages/?child_of={branch_2.listing.pk}&for_explorer=1'  # NOQA
+    )
+    assert resp_5.status_code == status.HTTP_200_OK
+    assert resp_5.json()['meta']['total_count'] == 1
+    assert resp_5.json()['items'][0]['id'] == branch_2.article.pk
+
+    # Unfortunately on API level Wagtail allows users to list pages that
+    # belong to different branch
+    resp_6 = branch_2.moderator_client.get(
+        f'/admin/api/v2beta/pages/?child_of={branch_1.listing.pk}&for_explorer=1'  # NOQA
+    )
+    assert resp_6.status_code == status.HTTP_200_OK
+    assert resp_6.json()['meta']['total_count'] == 1
+    assert resp_6.json()['items'][0]['id'] == branch_1.article.pk
 
 
 @pytest.mark.django_db
