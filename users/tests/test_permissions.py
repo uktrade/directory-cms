@@ -399,3 +399,107 @@ def test_moderators_can_unpublish_child_pages(
     assert article_status['status'] == 'draft'
     assert not article_status['live']
     assert article_status['has_unpublished_changes']
+
+
+@pytest.mark.quirk
+@pytest.mark.CMS_840
+@pytest.mark.django_db
+def test_moderators_can_view_revisions_from_other_branches(
+        branch_editor_moderator_factory, root_page
+):
+    """
+    Unfortunately on API level Wagtail allows Moderators to view revisions from
+    other branches.
+    """
+    branch_1 = branch_editor_moderator_factory.get(root_page)
+    branch_2 = branch_editor_moderator_factory.get(root_page)
+
+    revision_1 = branch_1.article.save_revision(
+        user=branch_1.editor, submitted_for_moderation=True
+    )
+    revision_2 = branch_2.article.save_revision(
+        user=branch_2.editor, submitted_for_moderation=True
+    )
+    revert_path_1 = f'/admin/pages/{branch_1.article.pk}/revisions/{revision_1.pk}/revert/'  # NOQA
+    revert_path_2 = f'/admin/pages/{branch_2.article.pk}/revisions/{revision_2.pk}/revert/'  # NOQA
+
+    resp_1 = branch_1.editor_client.get(
+        reverse('wagtailadmin_pages:revisions_index', args=[branch_1.article.pk])
+    )
+    assert resp_1.status_code == status.HTTP_200_OK
+    content_1 = resp_1.content.decode()
+    assert revert_path_1 in content_1
+    assert revert_path_2 not in content_1
+
+    resp_2 = branch_1.editor_client.get(
+        reverse('wagtailadmin_pages:revisions_index', args=[branch_2.article.pk])
+    )
+    assert resp_2.status_code == status.HTTP_200_OK
+    content_2 = resp_2.content.decode()
+    assert revert_path_1 not in content_2
+    assert revert_path_2 in content_2
+
+    resp_3 = branch_2.editor_client.get(
+        reverse('wagtailadmin_pages:revisions_index', args=[branch_1.article.pk])
+    )
+    assert resp_3.status_code == status.HTTP_200_OK
+    content_3 = resp_3.content.decode()
+    assert revert_path_1 in content_3
+    assert revert_path_2 not in content_3
+
+    resp_4 = branch_2.editor_client.get(
+        reverse('wagtailadmin_pages:revisions_index', args=[branch_2.article.pk])
+    )
+    assert resp_4.status_code == status.HTTP_200_OK
+    content_4 = resp_4.content.decode()
+    assert revert_path_1 not in content_4
+    assert revert_path_2 in content_4
+
+
+@pytest.mark.CMS_840
+@pytest.mark.django_db
+def test_moderators_can_reject_revision(
+        branch_editor_moderator_factory, root_page
+):
+    branch = branch_editor_moderator_factory.get(root_page)
+
+    new_title = 'The title was modified'
+    branch.article.title = new_title
+    revision = branch.article.save_revision(
+        user=branch.editor, submitted_for_moderation=True
+    )
+
+    # Reject request for moderation
+    resp_1 = branch.moderator_client.post(
+        reverse('wagtailadmin_pages:reject_moderation', args=[revision.pk])
+    )
+    assert resp_1.status_code == status.HTTP_302_FOUND
+    assert resp_1.url == '/admin/'
+
+    # Verify if rejection is visible
+    resp_2 = branch.moderator_client.get(
+        reverse('wagtailadmin_pages:revisions_index', args=[branch.article.pk])
+    )
+    assert resp_2.status_code == status.HTTP_200_OK
+    assert 'rejected for publication' in resp_2.content.decode()
+
+
+@pytest.mark.CMS_840
+@pytest.mark.django_db
+def test_moderators_cannot_reject_revision_from_other_branch(
+        branch_editor_moderator_factory, root_page
+):
+    branch_1 = branch_editor_moderator_factory.get(root_page)
+    branch_2 = branch_editor_moderator_factory.get(root_page)
+
+    new_title = 'The title was modified'
+    branch_1.article.title = new_title
+    revision = branch_1.article.save_revision(
+        user=branch_1.editor, submitted_for_moderation=True
+    )
+
+    # Reject request for moderation
+    resp = branch_2.moderator_client.post(
+        reverse('wagtailadmin_pages:reject_moderation', args=[revision.pk])
+    )
+    assert resp.status_code == status.HTTP_403_FORBIDDEN
