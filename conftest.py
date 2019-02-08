@@ -28,6 +28,16 @@ from users.tests.factories import (
 
 
 Branch = namedtuple('Branch', 'listing, article, group, user, client')
+BranchEditorAndModerator = namedtuple('BranchEditorAndModerator', [
+    'listing',
+    'article',
+    'editors',
+    'editor',
+    'editor_client',
+    'moderators',
+    'moderator',
+    'moderator_client'
+])
 
 
 @pytest.fixture
@@ -245,3 +255,98 @@ def branch_editor_factory(root_page):
 @pytest.fixture
 def branch_moderator_factory():
     return BranchModeratorFactory()
+
+
+def setup_branch_with_editor_and_moderator(
+        root_page,
+        *,
+        editor_permissions=['add', 'edit'],
+        editor_password=None,
+        editor_is_superuser=False,
+        editor_is_staff=False,
+        moderator_permissions=['add', 'edit', 'publish'],
+        moderator_password=None,
+        moderator_is_superuser=False,
+        moderator_is_staff=False
+):
+    """Returns a listing page with a child page, user group, users & clients.
+
+    For Wagtail permission model check:
+    http://docs.wagtail.io/en/v2.0/topics/permissions.html#page-permissions
+    """
+    # ensure that only permissions supported by Wagtail are used
+    available_permissions = [p for p, _, _ in PAGE_PERMISSION_TYPES]
+    assert not (set(editor_permissions) - set(available_permissions))
+    assert not (set(moderator_permissions) - set(available_permissions))
+
+    listing_page = exred_factories.ArticleListingPageFactory(
+        parent=root_page
+    )
+    article_page = exred_factories.ArticlePageFactory(
+        parent=listing_page
+    )
+
+    editors = GroupFactory()
+    editors.permissions.add(Permission.objects.get(codename='access_admin'))
+    moderators = GroupFactory()
+    moderators.permissions.add(Permission.objects.get(codename='access_admin'))
+
+    for permission in editor_permissions:
+        GroupPagePermissionFactory(
+            page=listing_page, group=editors, permission_type=permission)
+    for permission in moderator_permissions:
+        GroupPagePermissionFactory(
+            page=listing_page, group=moderators, permission_type=permission)
+
+    editor = UserFactory(
+        is_superuser=editor_is_superuser,
+        is_staff=editor_is_staff,
+        groups=[editors],
+    )
+    editor_password = editor_password or 'test'
+    editor.set_password(editor_password)
+    editor.save()
+    
+    moderator = UserFactory(
+        is_superuser=moderator_is_superuser,
+        is_staff=moderator_is_staff,
+        groups=[moderators],
+    )
+    moderator_password = moderator_password or 'test'
+    moderator.set_password(moderator_password)
+    moderator.save()
+
+    editor_client = Client()
+    editor_client.login(username=editor.username, password=editor_password)
+    moderator_client = Client()
+    moderator_client.login(
+        username=moderator.username,
+        password=moderator_password
+    )
+
+    return BranchEditorAndModerator(
+        listing_page,
+        article_page,
+        editors,
+        editor,
+        editor_client,
+        moderators,
+        moderator,
+        moderator_client
+    )
+
+
+class BranchEditorAndModeratorFactory:
+    """
+    Editors need: ['add', 'edit'] permissions
+    Moderators need: ['add', 'edit', 'publish'] permissions
+    """
+
+    @staticmethod
+    def get(root_page, **kwargs):
+        return setup_branch_with_editor_and_moderator(root_page, **kwargs)
+
+
+@pytest.fixture
+def branch_editor_moderator_factory(root_page):
+    return BranchEditorAndModeratorFactory()
