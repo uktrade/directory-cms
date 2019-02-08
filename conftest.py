@@ -47,6 +47,15 @@ def root_page():
 
 
 @pytest.fixture
+def distinct_root_pages():
+    Page.objects.all().delete()
+    return (
+        wagtail_factories.PageFactory(parent=None, title='root page 1'),
+        wagtail_factories.PageFactory(parent=None, title='root page 2'),
+    )
+
+
+@pytest.fixture
 def untranslated_page(root_page):
     return IndustryPageFactory(
         parent=root_page,
@@ -306,7 +315,7 @@ def setup_branch_with_editor_and_moderator(
     editor_password = editor_password or 'test'
     editor.set_password(editor_password)
     editor.save()
-    
+
     moderator = UserFactory(
         is_superuser=moderator_is_superuser,
         is_staff=moderator_is_staff,
