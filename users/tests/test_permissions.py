@@ -424,7 +424,8 @@ def test_moderators_can_view_revisions_from_other_branches(
     revert_path_2 = f'/admin/pages/{branch_2.article.pk}/revisions/{revision_2.pk}/revert/'  # NOQA
 
     resp_1 = branch_1.editor_client.get(
-        reverse('wagtailadmin_pages:revisions_index', args=[branch_1.article.pk])
+        reverse('wagtailadmin_pages:revisions_index',
+                args=[branch_1.article.pk])
     )
     assert resp_1.status_code == status.HTTP_200_OK
     content_1 = resp_1.content.decode()
@@ -432,7 +433,8 @@ def test_moderators_can_view_revisions_from_other_branches(
     assert revert_path_2 not in content_1
 
     resp_2 = branch_1.editor_client.get(
-        reverse('wagtailadmin_pages:revisions_index', args=[branch_2.article.pk])
+        reverse('wagtailadmin_pages:revisions_index',
+                args=[branch_2.article.pk])
     )
     assert resp_2.status_code == status.HTTP_200_OK
     content_2 = resp_2.content.decode()
@@ -440,7 +442,8 @@ def test_moderators_can_view_revisions_from_other_branches(
     assert revert_path_2 in content_2
 
     resp_3 = branch_2.editor_client.get(
-        reverse('wagtailadmin_pages:revisions_index', args=[branch_1.article.pk])
+        reverse('wagtailadmin_pages:revisions_index',
+                args=[branch_1.article.pk])
     )
     assert resp_3.status_code == status.HTTP_200_OK
     content_3 = resp_3.content.decode()
@@ -448,7 +451,8 @@ def test_moderators_can_view_revisions_from_other_branches(
     assert revert_path_2 not in content_3
 
     resp_4 = branch_2.editor_client.get(
-        reverse('wagtailadmin_pages:revisions_index', args=[branch_2.article.pk])
+        reverse('wagtailadmin_pages:revisions_index',
+                args=[branch_2.article.pk])
     )
     assert resp_4.status_code == status.HTTP_200_OK
     content_4 = resp_4.content.decode()
