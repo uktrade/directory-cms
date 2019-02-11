@@ -260,21 +260,21 @@ class InternationalCampaignPage(BasePage):
     related_content_intro = MarkdownField()
 
     related_page_one = models.ForeignKey(
-        'export_readiness.ArticlePage',
+        'great_international.InternationalArticlePage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
     )
     related_page_two = models.ForeignKey(
-        'export_readiness.ArticlePage',
+        'great_international.InternationalArticlePage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
     )
     related_page_three = models.ForeignKey(
-        'export_readiness.ArticlePage',
+        'great_international.InternationalArticlePage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
