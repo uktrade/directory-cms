@@ -27,3 +27,12 @@ class InternationalArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
 class InternationalCampaignPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalCampaignPage
     subscriptions = []
+
+
+class InternationalArticleListingPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = models.InternationalArticleListingPage
+    subscriptions = [
+        models.InternationalArticlePage
+    ]

@@ -9,6 +9,7 @@ def test_app_models():
         models.InternationalHomePage,
         models.InternationalMarketingPages,
         models.InternationalArticlePage,
+        models.InternationalArticleListingPage,
         models.InternationalCampaignPage
     ]
 

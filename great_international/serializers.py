@@ -117,3 +117,28 @@ class InternationalCampaignPageSerializer(PageWithRelatedPagesSerializer):
     cta_box_message = serializers.CharField(max_length=255)
     cta_box_button_url = serializers.CharField(max_length=255)
     cta_box_button_text = serializers.CharField(max_length=255)
+
+
+class InterntionalArticleListingPageSerializer(BasePageSerializer):
+    landing_page_title = serializers.CharField(max_length=255)
+    display_title = serializers.CharField(source='landing_page_title')
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
+
+    articles_count = serializers.IntegerField()
+    list_teaser = core_fields.MarkdownToHTMLField(allow_null=True)
+    hero_teaser = serializers.CharField(allow_null=True)
+    articles = serializers.SerializerMethodField()
+
+    def get_articles(self, obj):
+        queryset = obj.get_descendants().type(
+            InternationalArticlePage
+        ).live().specific()
+        serializer = InternationalArticlePageSerializer(
+            queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
