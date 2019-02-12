@@ -10,7 +10,7 @@ class GreatInternationalAppTranslationOptions(BaseTranslationOptions):
 
 
 @register(models.InternationalMarketingPages)
-class InternationalMarketingPages(BaseTranslationOptions):
+class InternationalMarketingPagesTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
@@ -31,4 +31,9 @@ class InternationalHomePageTranslationOptions(BaseTranslationOptions):
 
 @register(models.InternationalArticleListingPage)
 class InternationalArticleListingPage(BaseTranslationOptions):
+    fields = []
+
+
+@register(models.InternationalUKHQPages)
+class InternationalUKHQPagesTranslationOptions(BaseTranslationOptions):
     fields = []

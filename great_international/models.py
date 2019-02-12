@@ -89,6 +89,19 @@ class InternationalMarketingPages(ExclusivePageMixin, BasePage):
         return super().save(*args, **kwargs)
 
 
+class InternationalUKHQPages(ExclusivePageMixin, BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+    slug_identity = cms.GREAT_INTERNATIONAL_UK_HQ_PAGES_SLUG
+
+    subpage_types = []
+
+    settings_panels = []
+
+    def save(self, *args, **kwargs):
+        self.title = self.get_verbose_name()
+        return super().save(*args, **kwargs)
+
+
 class InternationalArticlePage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     subpage_types = []

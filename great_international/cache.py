@@ -19,6 +19,11 @@ class InternationalMarketingPagesSubscriber(AbstractDatabaseCacheSubscriber):
     ]
 
 
+class InternationalUKHQPagesSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.InternationalUKHQPages
+    subscriptions = []
+
+
 class InternationalArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalArticlePage
     subscriptions = []
