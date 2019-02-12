@@ -277,7 +277,7 @@ def test_branch_user_cant_create_pages_in_branch_they_dont_manage(
 
 @pytest.mark.CMS_841
 @pytest.mark.django_db
-def test_branch_user_can_create_pages_in_any_branch(
+def test_admins_can_create_pages_in_any_branch(
         admin_factory, distinct_root_pages
 ):
     root_page_1, root_page_2 = distinct_root_pages
@@ -724,3 +724,28 @@ def test_admins_should_be_able_to_reject_revision_from_any_branch(root_page):
     )
     assert resp_4.status_code == status.HTTP_200_OK
     assert 'rejected for publication' in resp_4.content.decode()
+
+
+@pytest.mark.CMS_841
+@pytest.mark.django_db
+def test_admins_should_have_permissions_to_add_users(
+        admin_factory, root_page
+):
+    admin = admin_factory.get(root_page)
+
+    permissions = {
+        'auth.add_group',
+        'auth.add_permission',
+        'auth.add_user',
+        'auth.change_group',
+        'auth.change_permission',
+        'auth.change_user',
+        'auth.delete_group',
+        'auth.delete_permission',
+        'auth.delete_user',
+        'wagtailusers.add_userprofile',
+        'wagtailusers.change_userprofile',
+        'wagtailusers.delete_userprofile',
+    }
+    # Admins should have all required permissions to manage users
+    assert not (permissions - admin.user.get_all_permissions())
