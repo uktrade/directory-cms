@@ -567,22 +567,22 @@ def test_admins_should_be_able_to_access_all_pages_in_any_branch(
     branch_2 = branch_editor_moderator_factory.get(branch_2_root_page)
 
     resp_1 = admin.client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_1_root_page.pk}&for_explorer=1'
+        f'/admin/api/v2beta/pages/?child_of={branch_1_root_page.pk}&for_explorer=1'  # NOQA
     )
     assert resp_1.status_code == status.HTTP_200_OK
 
     resp_2 = admin.client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_2_root_page.pk}&for_explorer=1'
+        f'/admin/api/v2beta/pages/?child_of={branch_2_root_page.pk}&for_explorer=1'  # NOQA
     )
     assert resp_2.status_code == status.HTTP_200_OK
 
     resp_3 = admin.client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_1.article.pk}&for_explorer=1'
+        f'/admin/api/v2beta/pages/?child_of={branch_1.article.pk}&for_explorer=1'  # NOQA
     )
     assert resp_3.status_code == status.HTTP_200_OK
 
     resp_4 = admin.client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_2.article.pk}&for_explorer=1'
+        f'/admin/api/v2beta/pages/?child_of={branch_2.article.pk}&for_explorer=1'  # NOQA
     )
     assert resp_4.status_code == status.HTTP_200_OK
 
