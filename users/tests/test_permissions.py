@@ -160,11 +160,13 @@ def test_moderators_can_approve_revisions_only_for_pages_in_their_branch(
 
 @pytest.mark.CMS_839
 @pytest.mark.CMS_840
+@pytest.mark.CMS_841
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     'branch_factory', [
         BranchEditorFactory,
-        BranchModeratorFactory
+        BranchModeratorFactory,
+        AdminFactory,
     ])
 def test_branch_user_can_create_child_pages_in_it(branch_factory, root_page):
     branch = branch_factory.get(root_page)
@@ -203,11 +205,13 @@ def test_branch_user_can_create_child_pages_in_it(branch_factory, root_page):
 
 @pytest.mark.CMS_839
 @pytest.mark.CMS_840
+@pytest.mark.CMS_841
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     'branch_factory', [
         BranchEditorFactory,
-        BranchModeratorFactory
+        BranchModeratorFactory,
+        AdminFactory,
     ])
 def test_branch_user_cant_create_child_pages_without_mandatory_data(
         branch_factory, root_page
@@ -242,7 +246,7 @@ def test_branch_user_cant_create_child_pages_without_mandatory_data(
 @pytest.mark.parametrize(
     'branch_factory', [
         BranchEditorFactory,
-        BranchModeratorFactory
+        BranchModeratorFactory,
     ])
 def test_branch_user_cant_create_pages_in_branch_they_dont_manage(
         branch_factory, root_page
@@ -302,11 +306,13 @@ def test_editors_cannot_unpublish_child_pages(root_page):
 
 @pytest.mark.CMS_839
 @pytest.mark.CMS_840
+@pytest.mark.CMS_841
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     'branch_factory', [
         BranchEditorFactory,
-        BranchModeratorFactory
+        BranchModeratorFactory,
+        AdminFactory,
     ])
 def test_branch_user_can_submit_changes_for_moderation(
         branch_factory, root_page
@@ -330,11 +336,13 @@ def test_branch_user_can_submit_changes_for_moderation(
 
 @pytest.mark.CMS_839
 @pytest.mark.CMS_840
+@pytest.mark.CMS_841
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     'branch_factory', [
         BranchEditorFactory,
-        BranchModeratorFactory
+        BranchModeratorFactory,
+        AdminFactory,
     ])
 def test_branch_user_can_view_drafts(branch_factory, root_page):
     branch = branch_factory.get(root_page)
@@ -364,11 +372,13 @@ def test_branch_user_can_view_drafts(branch_factory, root_page):
 
 @pytest.mark.CMS_839
 @pytest.mark.CMS_840
+@pytest.mark.CMS_841
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     'branch_factory', [
         BranchEditorFactory,
-        BranchModeratorFactory
+        BranchModeratorFactory,
+        AdminFactory,
     ])
 def test_branch_user_can_list_revisions(branch_factory, root_page):
     branch = branch_factory.get(root_page)
@@ -387,11 +397,13 @@ def test_branch_user_can_list_revisions(branch_factory, root_page):
 
 @pytest.mark.CMS_839
 @pytest.mark.CMS_840
+@pytest.mark.CMS_841
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     'branch_factory', [
         BranchEditorFactory,
-        BranchModeratorFactory
+        BranchModeratorFactory,
+        AdminFactory,
     ])
 def test_editors_can_compare_changes_between_revisions(
         branch_factory, root_page
@@ -419,16 +431,24 @@ def test_editors_can_compare_changes_between_revisions(
 
 
 @pytest.mark.CMS_840
+@pytest.mark.CMS_841
 @pytest.mark.django_db
-def test_moderators_can_publish_child_pages(root_page):
-    env = two_branches_with_users(root_page)
+@pytest.mark.parametrize(
+    "branch_factory", [
+        BranchModeratorFactory,
+        AdminFactory,
+    ])
+def test_moderators_and_admins_can_publish_child_pages(
+        branch_factory, root_page
+):
+    branch = branch_factory.get(root_page)
 
-    draft_page = ArticlePageFactory(parent=env.landing_1, live=False)
+    draft_page = ArticlePageFactory(parent=branch.listing, live=False)
     revision = draft_page.save_revision(
-        user=env.moderator_1, submitted_for_moderation=True,
+        user=branch.user, submitted_for_moderation=True,
     )
 
-    resp = env.moderator_1_client.post(
+    resp = branch.client.post(
         reverse('wagtailadmin_pages:approve_moderation', args=[revision.pk])
     )
     assert resp.status_code == status.HTTP_302_FOUND
@@ -436,18 +456,26 @@ def test_moderators_can_publish_child_pages(root_page):
 
 
 @pytest.mark.CMS_840
+@pytest.mark.CMS_841
 @pytest.mark.django_db
-def test_moderators_can_unpublish_child_pages(root_page):
-    env = two_branches_with_users(root_page)
+@pytest.mark.parametrize(
+    "branch_factory", [
+        BranchModeratorFactory,
+        AdminFactory,
+    ])
+def test_moderators_and_admins_can_unpublish_child_pages(
+        branch_factory, root_page
+):
+    branch = branch_factory.get(root_page)
 
-    resp = env.moderator_1_client.post(
-        reverse('wagtailadmin_pages:unpublish', args=[env.article_1.pk])
+    resp = branch.client.post(
+        reverse('wagtailadmin_pages:unpublish', args=[branch.article.pk])
     )
     assert resp.status_code == status.HTTP_302_FOUND
-    assert int(resp.url.split('/')[3]) == env.landing_1.pk  # format is /admin/pages/4/  # NOQA
+    assert int(resp.url.split('/')[3]) == branch.listing.pk  # format is /admin/pages/4/  # NOQA
 
-    resp_2 = env.moderator_1_client.get(
-        f'/admin/api/v2beta/pages/?child_of={env.landing_1.pk}&for_explorer=1'
+    resp_2 = branch.client.get(
+        f'/admin/api/v2beta/pages/?child_of={branch.listing.pk}&for_explorer=1'
     )
     assert resp_2.status_code == status.HTTP_200_OK
     article_status = resp_2.json()['items'][0]['meta']['status']
@@ -458,8 +486,11 @@ def test_moderators_can_unpublish_child_pages(root_page):
 
 @pytest.mark.quirk
 @pytest.mark.CMS_840
+@pytest.mark.CMS_841
 @pytest.mark.django_db
-def test_moderators_can_view_revisions_from_other_branches(root_page):
+def test_moderators_and_admins_can_view_revisions_from_other_branches(
+        root_page
+):
     """
     Unfortunately on API level Wagtail allows Moderators to view revisions from
     other branches.
@@ -475,7 +506,7 @@ def test_moderators_can_view_revisions_from_other_branches(root_page):
     revert_path_1 = f'/admin/pages/{env.article_1.pk}/revisions/{revision_1.pk}/revert/'  # NOQA
     revert_path_2 = f'/admin/pages/{env.article_2.pk}/revisions/{revision_2.pk}/revert/'  # NOQA
 
-    resp_1 = env.editor_1_client.get(
+    resp_1 = env.moderator_1_client.get(
         reverse('wagtailadmin_pages:revisions_index',
                 args=[env.article_1.pk])
     )
@@ -484,7 +515,7 @@ def test_moderators_can_view_revisions_from_other_branches(root_page):
     assert revert_path_1 in content_1
     assert revert_path_2 not in content_1
 
-    resp_2 = env.editor_1_client.get(
+    resp_2 = env.moderator_1_client.get(
         reverse('wagtailadmin_pages:revisions_index',
                 args=[env.article_2.pk])
     )
@@ -493,7 +524,7 @@ def test_moderators_can_view_revisions_from_other_branches(root_page):
     assert revert_path_1 not in content_2
     assert revert_path_2 in content_2
 
-    resp_3 = env.editor_2_client.get(
+    resp_3 = env.moderator_2_client.get(
         reverse('wagtailadmin_pages:revisions_index',
                 args=[env.article_1.pk])
     )
@@ -502,7 +533,7 @@ def test_moderators_can_view_revisions_from_other_branches(root_page):
     assert revert_path_1 in content_3
     assert revert_path_2 not in content_3
 
-    resp_4 = env.editor_2_client.get(
+    resp_4 = env.moderator_2_client.get(
         reverse('wagtailadmin_pages:revisions_index',
                 args=[env.article_2.pk])
     )
@@ -532,6 +563,32 @@ def test_moderators_can_reject_revision(root_page):
 
     # Verify if rejection is visible
     resp_2 = env.moderator_1_client.get(
+        reverse('wagtailadmin_pages:revisions_index', args=[env.article_1.pk])
+    )
+    assert resp_2.status_code == status.HTTP_200_OK
+    assert 'rejected for publication' in resp_2.content.decode()
+
+
+@pytest.mark.CMS_841
+@pytest.mark.django_db
+def test_admins_can_reject_revision(root_page):
+    env = two_branches_with_users(root_page)
+
+    new_title = 'The title was modified'
+    env.article_1.title = new_title
+    revision = env.article_1.save_revision(
+        user=env.editor_1, submitted_for_moderation=True
+    )
+
+    # Reject request for moderation
+    resp_1 = env.admin_client.post(
+        reverse('wagtailadmin_pages:reject_moderation', args=[revision.pk])
+    )
+    assert resp_1.status_code == status.HTTP_302_FOUND
+    assert resp_1.url == '/admin/'
+
+    # Verify if rejection is visible
+    resp_2 = env.admin_client.get(
         reverse('wagtailadmin_pages:revisions_index', args=[env.article_1.pk])
     )
     assert resp_2.status_code == status.HTTP_200_OK

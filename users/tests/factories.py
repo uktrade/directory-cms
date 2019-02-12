@@ -221,3 +221,15 @@ class BranchModeratorFactory:
     @staticmethod
     def get(root_page, *, permissions=['add', 'edit', 'publish'], **kwargs):
         return branch_with_user(root_page, permissions=permissions, **kwargs)
+
+
+class AdminFactory:
+    @staticmethod
+    def get(root_page, *, permissions=['add', 'edit', 'publish'], **kwargs):
+        return branch_with_user(
+            root_page,
+            permissions=permissions,
+            is_superuser=True,
+            is_staff=True,
+            **kwargs
+        )
