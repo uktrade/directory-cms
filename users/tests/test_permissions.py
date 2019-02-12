@@ -728,11 +728,11 @@ def test_admins_should_be_able_to_reject_revision_from_any_branch(root_page):
 
 @pytest.mark.CMS_841
 @pytest.mark.django_db
-def test_admins_should_have_permissions_to_add_users(
+def test_admins_should_have_permissions_to_manage_users(
         admin_factory, root_page
 ):
+    """Admins should have all required permissions to manage users."""
     admin = admin_factory.get(root_page)
-
     permissions = {
         'auth.add_group',
         'auth.add_permission',
@@ -747,5 +747,4 @@ def test_admins_should_have_permissions_to_add_users(
         'wagtailusers.change_userprofile',
         'wagtailusers.delete_userprofile',
     }
-    # Admins should have all required permissions to manage users
     assert not (permissions - admin.user.get_all_permissions())
