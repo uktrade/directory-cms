@@ -275,6 +275,38 @@ def test_branch_user_cant_create_pages_in_branch_they_dont_manage(
     assert resp.status_code == status.HTTP_403_FORBIDDEN
 
 
+@pytest.mark.CMS_841
+@pytest.mark.django_db
+def test_branch_user_can_create_pages_in_any_branch(
+        admin_factory, distinct_root_pages
+):
+    root_page_1, root_page_2 = distinct_root_pages
+    branch_1 = admin_factory.get(root_page_1)
+    branch_2 = admin_factory.get(root_page_2)
+    data = {
+        'article_title': 'test article',
+        'article_teaser': 'test article',
+        'article_body_text': 'test article',
+        'title_en_gb': 'test article',
+        'slug': 'test-article',
+    }
+
+    resp = branch_1.client.post(
+        reverse(
+            'wagtailadmin_pages:add',
+            args=[
+                branch_2.article._meta.app_label,
+                branch_2.article._meta.model_name,
+                branch_2.listing.pk
+            ],
+        ),
+        data=data,
+    )
+    assert resp.status_code == status.HTTP_302_FOUND
+    assert resp.url.startswith('/admin/pages/')  # format is /admin/pages/3/edit/  # NOQA
+    assert resp.url.endswith('/edit/')  # format is /admin/pages/3/edit/
+
+
 @pytest.mark.CMS_839
 @pytest.mark.django_db
 def test_editors_cannot_publish_child_pages(root_page):
