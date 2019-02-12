@@ -30,6 +30,7 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = cms.EXPORT_READINESS_HOME_INTERNATIONAL_SLUG
     subpage_types = [
+        'great_international.InternationalArticleListingPage',
         'great_international.InternationalArticlePage',
         'great_international.InternationalMarketingPages'
     ]
@@ -161,6 +162,48 @@ class InternationalArticlePage(BasePage):
     ]
 
 
+class InternationalArticleListingPage(BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+    subpage_types = ['great_international.InternationalArticlePage']
+
+    landing_page_title = models.CharField(max_length=255)
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    hero_teaser = models.CharField(max_length=255, null=True, blank=True)
+
+    list_teaser = MarkdownField(null=True, blank=True)
+
+    @property
+    def articles_count(self):
+        return self.get_descendants().type(
+            InternationalArticlePage
+        ).live().count()
+
+    content_panels = [
+        FieldPanel('landing_page_title'),
+        MultiFieldPanel(
+            heading='Hero',
+            children=[
+                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_teaser')
+            ]
+        ),
+        FieldPanel('list_teaser'),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+
 class InternationalCampaignPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     subpage_types = []
@@ -260,21 +303,21 @@ class InternationalCampaignPage(BasePage):
     related_content_intro = MarkdownField()
 
     related_page_one = models.ForeignKey(
-        'export_readiness.ArticlePage',
+        'great_international.InternationalArticlePage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
     )
     related_page_two = models.ForeignKey(
-        'export_readiness.ArticlePage',
+        'great_international.InternationalArticlePage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
     )
     related_page_three = models.ForeignKey(
-        'export_readiness.ArticlePage',
+        'great_international.InternationalArticlePage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,

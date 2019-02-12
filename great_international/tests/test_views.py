@@ -49,3 +49,26 @@ def test_campaign_page(admin_client, root_page):
     url = reverse('api:api:pages:detail', kwargs={'pk': campaign_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
+
+
+def test_article_listing_page_view(admin_client, root_page):
+    article_listing_page = factories.InternationalArticleListingPageFactory.create(  # NOQA
+        parent=root_page,
+        live=True
+    )
+    factories.InternationalArticlePageFactory.create(
+        parent=article_listing_page,
+        live=True
+    )
+    factories.InternationalArticlePageFactory.create(
+        parent=article_listing_page,
+        live=True
+    )
+
+    url = reverse(
+        'api:api:pages:detail', kwargs={'pk': article_listing_page.pk}
+    )
+    response = admin_client.get(url)
+    assert response.status_code == 200
+    assert 'articles' in response.json()
+    assert 'meta' in response.json()['articles'][0]

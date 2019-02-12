@@ -27,3 +27,8 @@ class InternationalCampaignPageTranslationOptions(BaseTranslationOptions):
 @register(models.InternationalHomePage)
 class InternationalHomePageTranslationOptions(BaseTranslationOptions):
     fields = []
+
+
+@register(models.InternationalArticleListingPage)
+class InternationalArticleListingPage(BaseTranslationOptions):
+    fields = []
