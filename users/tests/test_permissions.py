@@ -437,7 +437,7 @@ def test_branch_user_can_list_revisions(branch_factory, root_page):
         BranchModeratorFactory,
         AdminFactory,
     ])
-def test_editors_can_compare_changes_between_revisions(
+def test_branch_user_can_compare_changes_between_revisions(
         branch_factory, root_page
 ):
     branch = branch_factory.get(root_page)
