@@ -3,7 +3,7 @@ from django.urls import reverse
 from rest_framework import status
 
 import export_readiness.tests.factories as exred_factories
-from conftest import BranchEditorFactory, BranchModeratorFactory
+from users.tests.factories import BranchEditorFactory, BranchModeratorFactory
 
 
 @pytest.mark.quirk
