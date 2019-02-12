@@ -203,6 +203,8 @@ def test_all_models_cached():
         export_readiness.models.ContactSuccessPages,
         export_readiness.models.EUExitFormPages,
         export_readiness.models.AllContactPagesPage,
+        great_international.models.InternationalUKHQPages,
+        great_international.models.InternationalMarketingPages,
         # Page is added by TestSubscriber in other tests.
         Page,
     }
