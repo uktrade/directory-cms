@@ -5,6 +5,7 @@ from rest_framework import status
 import export_readiness.tests.factories as exred_factories
 from export_readiness.tests.factories import ArticlePageFactory
 from users.tests.factories import (
+    AdminFactory,
     BranchEditorFactory,
     BranchModeratorFactory,
     two_branches_with_users,
