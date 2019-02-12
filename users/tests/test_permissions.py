@@ -606,6 +606,7 @@ def test_moderators_and_admins_can_view_revisions_from_other_branches(
 
 
 @pytest.mark.CMS_840
+@pytest.mark.CMS_841
 @pytest.mark.django_db
 def test_moderators_can_reject_revision(root_page):
     env = two_branches_with_users(root_page)
