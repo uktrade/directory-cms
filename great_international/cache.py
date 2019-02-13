@@ -28,3 +28,11 @@ class InternationalArticleListingPageSubscriber(
     subscriptions = [
         models.InternationalArticlePage
     ]
+
+
+class InternationalTopicLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.InternationalTopicLandingPage
+    subscriptions = [
+        models.InternationalArticlePage,
+        models.InternationalArticleListingPage,
+    ]

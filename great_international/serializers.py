@@ -5,7 +5,8 @@ from wagtail.images.api import fields as wagtail_fields
 from core import fields as core_fields
 from core.serializers import BasePageSerializer
 
-from .models import InternationalArticlePage, InternationalMarketingPages
+from .models import InternationalArticlePage, InternationalMarketingPages, \
+    InternationalArticleListingPage
 
 
 class PageWithRelatedPagesSerializer(BasePageSerializer):
@@ -142,3 +143,27 @@ class InternationalArticleListingPageSerializer(BasePageSerializer):
             context=self.context
         )
         return serializer.data
+
+
+class InternationalTopicLandingPageSerializer(BasePageSerializer):
+    landing_page_title = serializers.CharField(max_length=255)
+    display_title = serializers.CharField(source='landing_page_title')
+    hero_teaser = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
+
+    child_pages = serializers.SerializerMethodField()
+
+    def get_child_pages(self, obj):
+        queryset = obj.get_descendants().type(
+            InternationalArticleListingPage
+        ).live().specific()
+        articles_serializer = InternationalArticleListingPageSerializer(
+            queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return articles_serializer.data

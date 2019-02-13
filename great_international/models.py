@@ -433,3 +433,38 @@ class InternationalCampaignPage(BasePage):
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
+
+
+class InternationalTopicLandingPage(BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+    subpage_types = [
+        'great_international.InternationalArticleListingPage',
+    ]
+
+    landing_page_title = models.CharField(max_length=255)
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    hero_teaser = models.CharField(max_length=255, null=True, blank=True)
+
+    content_panels = [
+        FieldPanel('landing_page_title'),
+        MultiFieldPanel(
+            heading='Hero',
+            children=[
+                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_teaser')
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]

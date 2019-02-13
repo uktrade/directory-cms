@@ -37,3 +37,8 @@ class InternationalArticleListingPage(BaseTranslationOptions):
 @register(models.InternationalUKHQPages)
 class InternationalUKHQPagesTranslationOptions(BaseTranslationOptions):
     fields = []
+
+
+@register(models.InternationalTopicLandingPage)
+class InternationalTopicLandingPageTranslationOptions(BaseTranslationOptions):
+    fields = []
