@@ -777,3 +777,62 @@ def test_admins_should_have_permissions_to_manage_users(root_page):
         'wagtailusers.delete_userprofile',
     }
     assert not (permissions - admin.user.get_all_permissions())
+
+
+@pytest.mark.CMS_838
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "branch_factory", [
+        BranchEditorFactory,
+        BranchModeratorFactory,
+    ])
+def test_non_admin_user_should_not_have_permissions_to_manage_user_accounts(
+        branch_factory, root_page
+):
+    """Non-admin users should not have permissions to manage user accounts"""
+    branch = branch_factory.get(root_page)
+    permissions = {
+        'auth.add_group',
+        'auth.add_permission',
+        'auth.add_user',
+        'auth.change_group',
+        'auth.change_permission',
+        'auth.change_user',
+        'auth.delete_group',
+        'auth.delete_permission',
+        'auth.delete_user',
+        'wagtailusers.add_userprofile',
+        'wagtailusers.change_userprofile',
+        'wagtailusers.delete_userprofile',
+    }
+    assert (permissions - branch.user.get_all_permissions()) == permissions
+
+
+@pytest.mark.CMS_838
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "branch_factory", [
+        BranchEditorFactory,
+        BranchModeratorFactory,
+    ])
+def test_non_admin_user_should_not_be_able_to_access_manage_users_page(
+        branch_factory, root_page
+):
+    """Non-admin users can't access '/admin/users/' page"""
+    branch = branch_factory.get(root_page)
+    resp = branch.client.get(reverse('wagtailusers_users:index'), follow=True)
+    assert resp.status_code == status.HTTP_200_OK
+    assert resp.context['url'] == '/admin/pages/'
+    content = resp.content.decode()
+    assert 'Sorry, you do not have permission to access this area.' in content
+
+
+@pytest.mark.CMS_838
+@pytest.mark.django_db
+def test_admin_user_should_be_able_to_access_manage_users_page(
+        admin_factory, root_page
+):
+    """Admins can access '/admin/users/' page"""
+    branch = admin_factory.get(root_page)
+    resp = branch.client.get(reverse('wagtailusers_users:index'))
+    assert resp.status_code == status.HTTP_200_OK
