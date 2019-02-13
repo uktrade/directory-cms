@@ -10,3 +10,4 @@ class GreatInternationalConfig(AppConfig):
         cache.InternationalArticlePageSubscriber.subscribe()
         cache.InternationalCampaignPageSubscriber.subscribe()
         cache.InternationalArticleListingPageSubscriber()
+        cache.InternationalTopicLandingPageSubscriber()

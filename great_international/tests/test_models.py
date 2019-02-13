@@ -11,7 +11,8 @@ def test_app_models():
         models.InternationalUKHQPages,
         models.InternationalArticlePage,
         models.InternationalArticleListingPage,
-        models.InternationalCampaignPage
+        models.InternationalCampaignPage,
+        models.InternationalTopicLandingPage
     ]
 
 
