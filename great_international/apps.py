@@ -7,6 +7,6 @@ class GreatInternationalConfig(AppConfig):
     def ready(self):
         from great_international import cache
         cache.InternationalHomePageSubscriber.subscribe()
-        cache.InternationalMarketingPagesSubscriber.subscribe()
         cache.InternationalArticlePageSubscriber.subscribe()
         cache.InternationalCampaignPageSubscriber.subscribe()
+        cache.InternationalArticleListingPageSubscriber()

@@ -8,6 +8,7 @@ def test_app_models():
         models.GreatInternationalApp,
         models.InternationalHomePage,
         models.InternationalMarketingPages,
+        models.InternationalUKHQPages,
         models.InternationalArticlePage,
         models.InternationalArticleListingPage,
         models.InternationalCampaignPage

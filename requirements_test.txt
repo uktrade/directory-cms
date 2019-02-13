@@ -21,7 +21,7 @@ codecov==2.0.15
 contextlib2==0.5.5        # via raven
 coverage==4.5.2           # via codecov, pytest-cov
 directory-components==4.0.1
-directory-constants==12.3.0
+directory-constants==12.4.0
 directory-healthcheck==1.0.1
 dj-database-url==0.4.2
 django-admin-ip-restrictor==1.0.0  # via directory-components
