@@ -161,7 +161,7 @@ def test_moderators_can_approve_revisions_only_for_pages_in_their_branch(
 @pytest.mark.CMS_840
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "branch_factory", [
+    'branch_factory', [
         BranchEditorFactory,
         BranchModeratorFactory
     ])
@@ -204,7 +204,7 @@ def test_branch_user_can_create_child_pages_in_it(branch_factory, root_page):
 @pytest.mark.CMS_840
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "branch_factory", [
+    'branch_factory', [
         BranchEditorFactory,
         BranchModeratorFactory
     ])
@@ -239,7 +239,7 @@ def test_branch_user_cant_create_child_pages_without_mandatory_data(
 @pytest.mark.CMS_840
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "branch_factory", [
+    'branch_factory', [
         BranchEditorFactory,
         BranchModeratorFactory
     ])
@@ -303,7 +303,7 @@ def test_editors_cannot_unpublish_child_pages(root_page):
 @pytest.mark.CMS_840
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "branch_factory", [
+    'branch_factory', [
         BranchEditorFactory,
         BranchModeratorFactory
     ])
@@ -331,7 +331,7 @@ def test_branch_user_can_submit_changes_for_moderation(
 @pytest.mark.CMS_840
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "branch_factory", [
+    'branch_factory', [
         BranchEditorFactory,
         BranchModeratorFactory
     ])
@@ -342,7 +342,7 @@ def test_branch_user_can_view_drafts(branch_factory, root_page):
         'article_teaser': 'new teaser',
         'article_body_text': 'new body text',
         'title_en_gb': 'next title',
-        # omitted 'action-submit' means that pages was save as draft
+        # omitted 'action-submit' means that pages was saved as draft
     }
 
     # Create a draft and stay on the same admin page
@@ -365,11 +365,11 @@ def test_branch_user_can_view_drafts(branch_factory, root_page):
 @pytest.mark.CMS_840
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "branch_factory", [
+    'branch_factory', [
         BranchEditorFactory,
         BranchModeratorFactory
     ])
-def test_branch_users_can_list_revisions(branch_factory, root_page):
+def test_branch_user_can_list_revisions(branch_factory, root_page):
     branch = branch_factory.get(root_page)
 
     revision = branch.article.save_revision(
@@ -388,7 +388,7 @@ def test_branch_users_can_list_revisions(branch_factory, root_page):
 @pytest.mark.CMS_840
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "branch_factory", [
+    'branch_factory', [
         BranchEditorFactory,
         BranchModeratorFactory
     ])
@@ -607,7 +607,7 @@ def test_admins_should_be_able_to_reject_revision_from_any_branch(
             args=[branch_editor.article.pk]
         )
     )
-    assert "No revision of this page exist" in resp_1.content.decode()
+    assert 'No revision of this page exist' in resp_1.content.decode()
 
     # Make a change and save revision
     new_title = 'The title was modified'
@@ -624,7 +624,7 @@ def test_admins_should_be_able_to_reject_revision_from_any_branch(
         )
     )
     assert new_title in resp_2.content.decode()
-    revert_url = f"/admin/pages/{branch_editor.article.pk}/revisions/{revision.pk}/revert/"  # NOQA
+    revert_url = f'/admin/pages/{branch_editor.article.pk}/revisions/{revision.pk}/revert/'  # NOQA
     assert revert_url in resp_2.content.decode()
 
     # Reject request for moderation
