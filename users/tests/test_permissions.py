@@ -277,12 +277,8 @@ def test_branch_user_cant_create_pages_in_branch_they_dont_manage(
 
 @pytest.mark.CMS_841
 @pytest.mark.django_db
-def test_admins_can_create_pages_in_any_branch(
-        admin_factory, distinct_root_pages
-):
-    root_page_1, root_page_2 = distinct_root_pages
-    branch_1 = admin_factory.get(root_page_1)
-    branch_2 = admin_factory.get(root_page_2)
+def test_admins_can_create_pages_in_any_branch(root_page):
+    env = two_branches_with_users(root_page)
     data = {
         'article_title': 'test article',
         'article_teaser': 'test article',
@@ -291,13 +287,13 @@ def test_admins_can_create_pages_in_any_branch(
         'slug': 'test-article',
     }
 
-    resp = branch_1.client.post(
+    resp = env.admin_client.post(
         reverse(
             'wagtailadmin_pages:add',
             args=[
-                branch_2.article._meta.app_label,
-                branch_2.article._meta.model_name,
-                branch_2.listing.pk
+                env.article_2._meta.app_label,
+                env.article_2._meta.model_name,
+                env.landing_2.pk
             ],
         ),
         data=data,
