@@ -557,32 +557,26 @@ def test_moderators_cannot_reject_revision_from_other_branch(root_page):
 
 @pytest.mark.CMS_836
 @pytest.mark.django_db
-def test_admins_should_be_able_to_access_all_pages_in_any_branch(
-        admin_factory, branch_editor_moderator_factory,
-        distinct_root_pages
-):
-    branch_1_root_page, branch_2_root_page = distinct_root_pages
-    admin = admin_factory.get(branch_1_root_page)
-    branch_1 = branch_editor_moderator_factory.get(branch_1_root_page)
-    branch_2 = branch_editor_moderator_factory.get(branch_2_root_page)
+def test_admins_should_be_able_to_access_all_pages_in_any_branch(root_page):
+    env = two_branches_with_users(root_page)
 
-    resp_1 = admin.client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_1_root_page.pk}&for_explorer=1'  # NOQA
+    resp_1 = env.admin_client.get(
+        f'/admin/api/v2beta/pages/?child_of={env.landing_1.pk}&for_explorer=1'
     )
     assert resp_1.status_code == status.HTTP_200_OK
 
-    resp_2 = admin.client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_2_root_page.pk}&for_explorer=1'  # NOQA
+    resp_2 = env.admin_client.get(
+        f'/admin/api/v2beta/pages/?child_of={env.landing_2.pk}&for_explorer=1'
     )
     assert resp_2.status_code == status.HTTP_200_OK
 
-    resp_3 = admin.client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_1.article.pk}&for_explorer=1'  # NOQA
+    resp_3 = env.admin_client.get(
+        f'/admin/api/v2beta/pages/?child_of={env.article_1.pk}&for_explorer=1'
     )
     assert resp_3.status_code == status.HTTP_200_OK
 
-    resp_4 = admin.client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_2.article.pk}&for_explorer=1'  # NOQA
+    resp_4 = env.admin_client.get(
+        f'/admin/api/v2beta/pages/?child_of={env.article_2.pk}&for_explorer=1'
     )
     assert resp_4.status_code == status.HTTP_200_OK
 
@@ -590,55 +584,52 @@ def test_admins_should_be_able_to_access_all_pages_in_any_branch(
 @pytest.mark.quirk
 @pytest.mark.CMS_836
 @pytest.mark.django_db
-def test_admins_should_be_able_to_reject_revision_from_any_branch(
-        admin_factory, branch_editor_factory, root_page
-):
+def test_admins_should_be_able_to_reject_revision_from_any_branch(root_page):
     """
     Somehow Wagtail doesn't show to the editor that revision was rejected
     and thus we have to use Admin client to check that (in last assertion)
     """
-    admin = admin_factory.get(root_page)
-    branch_editor = branch_editor_factory.get(root_page)
+    env = two_branches_with_users(root_page)
 
     # At this point there should be no revisions
-    resp_1 = branch_editor.client.get(
+    resp_1 = env.editor_1_client.get(
         reverse(
             'wagtailadmin_pages:revisions_index',
-            args=[branch_editor.article.pk]
+            args=[env.article_1.pk]
         )
     )
     assert 'No revision of this page exist' in resp_1.content.decode()
 
     # Make a change and save revision
     new_title = 'The title was modified'
-    branch_editor.article.title = new_title
-    revision = branch_editor.article.save_revision(
-        user=branch_editor.user, submitted_for_moderation=True
+    env.article_1.title = new_title
+    revision = env.article_1.save_revision(
+        user=env.editor_1, submitted_for_moderation=True
     )
 
     # Check if revision is visible
-    resp_2 = branch_editor.client.get(
+    resp_2 = env.editor_1_client.get(
         reverse(
             'wagtailadmin_pages:revisions_index',
-            args=[branch_editor.article.pk]
+            args=[env.article_1.pk]
         )
     )
     assert new_title in resp_2.content.decode()
-    revert_url = f'/admin/pages/{branch_editor.article.pk}/revisions/{revision.pk}/revert/'  # NOQA
+    revert_url = f'/admin/pages/{env.article_1.pk}/revisions/{revision.pk}/revert/'  # NOQA
     assert revert_url in resp_2.content.decode()
 
     # Reject request for moderation
-    resp_3 = admin.client.post(
+    resp_3 = env.admin_client.post(
         reverse('wagtailadmin_pages:reject_moderation', args=[revision.pk])
     )
     assert resp_3.status_code == status.HTTP_302_FOUND
     assert resp_3.url == '/admin/'
 
     # Verify if rejection is visible
-    resp_4 = admin.client.get(
+    resp_4 = env.admin_client.get(
         reverse(
             'wagtailadmin_pages:revisions_index',
-            args=[branch_editor.article.pk]
+            args=[env.article_1.pk]
         )
     )
     assert resp_4.status_code == status.HTTP_200_OK
