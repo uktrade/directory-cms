@@ -127,6 +127,9 @@ def two_branches_with_users(root_page):
     """
 
     def set_permissions(page, user_group, permissions):
+        # ensure that only permissions supported by Wagtail are used
+        available_permissions = [p for p, _, _ in PAGE_PERMISSION_TYPES]
+        assert not (set(permissions) - set(available_permissions))
         for perm in permissions:
             GroupPagePermissionFactory(
                 page=page, group=user_group, permission_type=perm)
