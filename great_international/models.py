@@ -89,6 +89,19 @@ class InternationalMarketingPages(ExclusivePageMixin, BasePage):
         return super().save(*args, **kwargs)
 
 
+class InternationalUKHQPages(ExclusivePageMixin, BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+    slug_identity = cms.GREAT_INTERNATIONAL_UK_HQ_PAGES_SLUG
+
+    subpage_types = []
+
+    settings_panels = []
+
+    def save(self, *args, **kwargs):
+        self.title = self.get_verbose_name()
+        return super().save(*args, **kwargs)
+
+
 class InternationalArticlePage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     subpage_types = []
@@ -411,6 +424,41 @@ class InternationalCampaignPage(BasePage):
                         FieldPanel('cta_box_button_text'),
                     ])
                 ])
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+
+class InternationalTopicLandingPage(BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+    subpage_types = [
+        'great_international.InternationalArticleListingPage',
+    ]
+
+    landing_page_title = models.CharField(max_length=255)
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    hero_teaser = models.CharField(max_length=255, null=True, blank=True)
+
+    content_panels = [
+        FieldPanel('landing_page_title'),
+        MultiFieldPanel(
+            heading='Hero',
+            children=[
+                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_teaser')
             ]
         ),
         SearchEngineOptimisationPanel(),
