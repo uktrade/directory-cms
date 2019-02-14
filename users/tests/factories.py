@@ -9,22 +9,34 @@ from wagtail.core.models import GroupPagePermission, PAGE_PERMISSION_TYPES
 from export_readiness.tests.factories import (
     ArticleListingPageFactory,
     ArticlePageFactory,
+    TopicLandingPageFactory,
 )
 
 User = get_user_model()
 Branch = namedtuple(
     'Branch', ['listing', 'article', 'group', 'user', 'client']
 )
-BranchEditorAndModerator = namedtuple(
-    'BranchEditorAndModerator', [
-        'listing',
-        'article',
-        'editors',
-        'editor',
-        'editor_client',
-        'moderators',
-        'moderator',
-        'moderator_client'
+TwoBranchesWithEditorModeratorAdmin = namedtuple(
+    'TwoBranchesWithEditorModeratorAdmin', [
+        'admins',
+        'admin',
+        'admin_client',
+        'landing_1',
+        'article_1',
+        'editors_1',
+        'editor_1',
+        'editor_1_client',
+        'moderators_1',
+        'moderator_1',
+        'moderator_1_client',
+        'landing_2',
+        'article_2',
+        'editors_2',
+        'editor_2',
+        'editor_2_client',
+        'moderators_2',
+        'moderator_2',
+        'moderator_2_client',
     ]
 )
 
@@ -67,7 +79,7 @@ class UserFactory(factory.django.DjangoModelFactory):
                 self.groups.add(group)
 
 
-def create_listing_with_article_and_group_with_user_and_client(
+def branch_with_user(
         root_page,
         *,
         permissions=[],
@@ -107,105 +119,105 @@ def create_listing_with_article_and_group_with_user_and_client(
     return Branch(listing_page, article_page, group, user, client)
 
 
-def create_listing_with_article_and_group_with_editor_and_moderator(
-        root_page,
-        *,
-        editor_permissions=['add', 'edit'],
-        editor_password=None,
-        editor_is_superuser=False,
-        editor_is_staff=False,
-        moderator_permissions=['add', 'edit', 'publish'],
-        moderator_password=None,
-        moderator_is_superuser=False,
-        moderator_is_staff=False
-):
-    """Returns a listing page with a child page, user group, users & clients.
-
-    For Wagtail permission model check:
-    http://docs.wagtail.io/en/v2.0/topics/permissions.html#page-permissions
+def two_branches_with_users(root_page):
     """
-    # ensure that only permissions supported by Wagtail are used
-    available_permissions = [p for p, _, _ in PAGE_PERMISSION_TYPES]
-    assert not (set(editor_permissions) - set(available_permissions))
-    assert not (set(moderator_permissions) - set(available_permissions))
+    Create 2 independent landing pages (also called branches),
+    with an article page, editor and moderator in each branch.
+    It also creates an Admin user associated with root_page.
+    """
 
-    listing_page = ArticleListingPageFactory(parent=root_page)
-    article_page = ArticlePageFactory(parent=listing_page)
+    def set_permissions(page, user_group, permissions):
+        for perm in permissions:
+            GroupPagePermissionFactory(
+                page=page, group=user_group, permission_type=perm)
 
-    editors = GroupFactory()
-    editors.permissions.add(Permission.objects.get(codename='access_admin'))
-    moderators = GroupFactory()
-    moderators.permissions.add(Permission.objects.get(codename='access_admin'))
-
-    for permission in editor_permissions:
-        GroupPagePermissionFactory(
-            page=listing_page, group=editors, permission_type=permission)
-    for permission in moderator_permissions:
-        GroupPagePermissionFactory(
-            page=listing_page, group=moderators, permission_type=permission)
-
-    editor = UserFactory(
-        is_superuser=editor_is_superuser,
-        is_staff=editor_is_staff,
-        groups=[editors],
-    )
-    editor_password = editor_password or 'test'
-    editor.set_password(editor_password)
-    editor.save()
-
-    moderator = UserFactory(
-        is_superuser=moderator_is_superuser,
-        is_staff=moderator_is_staff,
-        groups=[moderators],
-    )
-    moderator_password = moderator_password or 'test'
-    moderator.set_password(moderator_password)
-    moderator.save()
-
-    editor_client = Client()
-    editor_client.login(username=editor.username, password=editor_password)
-    moderator_client = Client()
-    moderator_client.login(
-        username=moderator.username,
-        password=moderator_password
+    landing_page_1, landing_page_2 = TopicLandingPageFactory.create_batch(
+        2, parent=root_page, live=True
     )
 
-    return BranchEditorAndModerator(
-        listing_page,
-        article_page,
-        editors,
-        editor,
-        editor_client,
-        moderators,
-        moderator,
-        moderator_client
+    article_1 = ArticlePageFactory(parent=landing_page_1)
+    article_2 = ArticlePageFactory(parent=landing_page_2)
+
+    editors_1, moderators_1, editors_2, moderators_2, admins = \
+        GroupFactory.create_batch(5)
+    for group in [editors_1, moderators_1, editors_2, moderators_2, admins]:
+        group.permissions.add(Permission.objects.get(codename='access_admin'))
+
+    set_permissions(
+        root_page,
+        admins,
+        ['add', 'edit', 'publish', 'bulk_delete', 'lock']
+    )
+    set_permissions(landing_page_1, editors_1, ['add', 'edit'])
+    set_permissions(landing_page_1, moderators_1, ['add', 'edit', 'publish'])
+    set_permissions(landing_page_2, editors_2, ['add', 'edit'])
+    set_permissions(landing_page_2, moderators_2, ['add', 'edit', 'publish'])
+
+    password = 'test'
+
+    admin = UserFactory(
+        is_superuser=True, is_staff=True, groups=[admins]
+    )
+    admin.set_password(password)
+    admin.save()
+
+    editor_1 = UserFactory(
+        is_superuser=False, is_staff=False, groups=[editors_1]
+    )
+    editor_1.set_password(password)
+    editor_1.save()
+
+    moderator_1 = UserFactory(
+        is_superuser=False, is_staff=False, groups=[moderators_1]
+    )
+    moderator_1.set_password(password)
+    moderator_1.save()
+
+    editor_2 = UserFactory(
+        is_superuser=False, is_staff=False, groups=[editors_2]
+    )
+    editor_2.set_password(password)
+    editor_2.save()
+
+    moderator_2 = UserFactory(
+        is_superuser=False, is_staff=False, groups=[moderators_2]
+    )
+    moderator_2.set_password(password)
+    moderator_2.save()
+
+    admin_client = Client()
+    admin_client.login(username=admin.username, password=password)
+
+    editor_1_client = Client()
+    editor_1_client.login(username=editor_1.username, password=password)
+
+    moderator_1_client = Client()
+    moderator_1_client.login(username=moderator_1.username, password=password)
+
+    editor_2_client = Client()
+    editor_2_client.login(username=editor_2.username, password=password)
+
+    moderator_2_client = Client()
+    moderator_2_client.login(username=moderator_2.username, password=password)
+
+    return TwoBranchesWithEditorModeratorAdmin(
+        admins, admin, admin_client,
+        landing_page_1, article_1,
+        editors_1, editor_1, editor_1_client,
+        moderators_1, moderator_1, moderator_1_client,
+        landing_page_2, article_2,
+        editors_2, editor_2, editor_2_client,
+        moderators_2, moderator_2, moderator_2_client,
     )
 
 
 class BranchEditorFactory:
     @staticmethod
     def get(root_page, *, permissions=['add', 'edit'], **kwargs):
-        return create_listing_with_article_and_group_with_user_and_client(
-            root_page,
-            permissions=permissions,
-            **kwargs,
-        )
+        return branch_with_user(root_page, permissions=permissions, **kwargs)
 
 
 class BranchModeratorFactory:
     @staticmethod
     def get(root_page, *, permissions=['add', 'edit', 'publish'], **kwargs):
-        return create_listing_with_article_and_group_with_user_and_client(
-            root_page,
-            permissions=permissions,
-            **kwargs,
-        )
-
-
-class BranchEditorAndModeratorFactory:
-    @staticmethod
-    def get(root_page, **kwargs):
-        return create_listing_with_article_and_group_with_editor_and_moderator(
-            root_page,
-            **kwargs
-        )
+        return branch_with_user(root_page, permissions=permissions, **kwargs)
