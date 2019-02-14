@@ -4,7 +4,6 @@ from unittest.mock import patch
 import pytest
 from wagtail.images.models import Image
 from wagtail.core.models import Page
-import wagtail_factories
 
 from django.core.cache import cache
 from django.core.files.storage import default_storage
@@ -25,17 +24,10 @@ from users.tests.factories import (
 
 @pytest.fixture
 def root_page():
-    Page.objects.all().delete()
-    return wagtail_factories.PageFactory(parent=None)
-
-
-@pytest.fixture
-def distinct_root_pages():
-    Page.objects.all().delete()
-    return (
-        wagtail_factories.PageFactory(parent=None, title='root page 1'),
-        wagtail_factories.PageFactory(parent=None, title='root page 2'),
-    )
+    """
+    On start Wagtail provides one page with ID=1 and it's called "Root page"
+    """
+    return Page.objects.get(pk=1)
 
 
 @pytest.fixture
