@@ -3,186 +3,158 @@ from django.urls import reverse
 from rest_framework import status
 
 import export_readiness.tests.factories as exred_factories
-from users.tests.factories import BranchEditorFactory, BranchModeratorFactory
+from export_readiness.tests.factories import ArticlePageFactory
+from users.tests.factories import (
+    BranchEditorFactory,
+    BranchModeratorFactory,
+    two_branches_with_users,
+)
+
+
+@pytest.mark.CMS_837
+@pytest.mark.django_db
+def test_branch_editors_should_only_see_pages_from_their_branch(root_page):
+    """
+    This reproduces Wagtail's admin call to list pages in the 'Pages' menu.
+    Editors should only see app pages that share common root page
+    """
+    env = two_branches_with_users(root_page)
+
+    resp_1 = env.editor_1_client.get(
+        f'/admin/api/v2beta/pages/?child_of={env.landing_1.pk}&for_explorer=1'
+    )
+    assert resp_1.status_code == status.HTTP_200_OK
+    assert resp_1.json()['meta']['total_count'] == 1
+    assert resp_1.json()['items'][0]['id'] == env.article_1.pk
+
+    resp_2 = env.editor_2_client.get(
+        f'/admin/api/v2beta/pages/?child_of={env.landing_2.pk}&for_explorer=1'
+    )
+    assert resp_2.status_code == status.HTTP_200_OK
+    assert resp_2.json()['meta']['total_count'] == 1
+    assert resp_2.json()['items'][0]['id'] == env.article_2.pk
 
 
 @pytest.mark.quirk
 @pytest.mark.CMS_837
 @pytest.mark.django_db
-def test_branch_editors_should_only_see_pages_from_their_branch(
-    branch_editor_moderator_factory, distinct_root_pages
-):
-    root_page_1, root_page_2 = distinct_root_pages
-    branch_1 = branch_editor_moderator_factory.get(root_page_1)
-    branch_2 = branch_editor_moderator_factory.get(root_page_2)
+def test_branch_editors_cannot_access_pages_not_from_their_branch(root_page):
+    """
+    This reproduces situation when an editor would try to access page that
+    doesn't belong to they branch by simply changing page ID in the URL
+    """
+    env = two_branches_with_users(root_page)
 
-    # This reproduces Wagtail's admin call to list pages in the 'Pages' menu.
-    # Editors should only see app pages that share common root page
-    resp_1 = branch_1.editor_client.get(
-        f'/admin/api/v2beta/pages/?child_of={root_page_1.pk}&for_explorer=1'
-    )
-    assert resp_1.status_code == status.HTTP_200_OK
-    assert resp_1.json()['meta']['total_count'] == 1
-    assert resp_1.json()['items'][0]['id'] == branch_1.listing.pk
+    resp_1 = env.editor_1_client.get(f'/admin/pages/{env.landing_2.pk}/edit/')
+    assert resp_1.status_code == status.HTTP_403_FORBIDDEN
 
-    # This reproduces Wagtail's admin call to list pages in the 'Pages' menu.
-    # Editors should only see app pages that share common root page
-    resp_2 = branch_2.editor_client.get(
-        f'/admin/api/v2beta/pages/?child_of={root_page_2.pk}&for_explorer=1'
-    )
-    assert resp_2.status_code == status.HTTP_200_OK
-    assert resp_2.json()['meta']['total_count'] == 1
-    assert resp_2.json()['items'][0]['id'] == branch_2.listing.pk
+    resp_2 = env.editor_2_client.get(f'/admin/pages/{env.landing_1.pk}/edit/')
+    assert resp_2.status_code == status.HTTP_403_FORBIDDEN
 
-    # This reproduces behaviour when Users explore pages using 'Pages' menu
-    # User can only see pages that belong to their listing page
-    resp_3 = branch_1.editor_client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_1.listing.pk}&for_explorer=1'  # NOQA
-    )
-    assert resp_3.status_code == status.HTTP_200_OK
-    assert resp_3.json()['meta']['total_count'] == 1
-    assert resp_3.json()['items'][0]['id'] == branch_1.article.pk
+    resp_3 = env.editor_1_client.get(f'/admin/pages/{env.landing_2.pk}/')
+    assert resp_3.status_code == status.HTTP_302_FOUND
+    assert resp_3.url == f'/admin/pages/{env.landing_1.pk}/'
 
-    # This reproduces behaviour when Users explore pages using 'Pages' menu
-    # User can only see pages that belong to their listing page
-    resp_5 = branch_2.editor_client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_2.listing.pk}&for_explorer=1'  # NOQA
-    )
-    assert resp_5.status_code == status.HTTP_200_OK
-    assert resp_5.json()['meta']['total_count'] == 1
-    assert resp_5.json()['items'][0]['id'] == branch_2.article.pk
+    resp_4 = env.editor_2_client.get(f'/admin/pages/{env.landing_1.pk}/')
+    assert resp_4.status_code == status.HTTP_302_FOUND
+    assert resp_4.url == f'/admin/pages/{env.landing_2.pk}/'
 
     # Unfortunately on API level Wagtail allows users to list pages that
     # belong to different branch
-    resp_5 = branch_1.editor_client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_2.listing.pk}&for_explorer=1'  # NOQA
-    )
-    assert resp_5.status_code == status.HTTP_200_OK
-    assert resp_5.json()['meta']['total_count'] == 1
-    assert resp_5.json()['items'][0]['id'] == branch_2.article.pk
-
-    # Unfortunately on API level Wagtail allows users to list pages that
-    # belong to different branch
-    resp_6 = branch_2.editor_client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_1.listing.pk}&for_explorer=1'  # NOQA
+    resp_6 = env.editor_1_client.get(
+        f'/admin/api/v2beta/pages/?child_of={env.landing_2.pk}&for_explorer=1'  # NOQA
     )
     assert resp_6.status_code == status.HTTP_200_OK
     assert resp_6.json()['meta']['total_count'] == 1
-    assert resp_6.json()['items'][0]['id'] == branch_1.article.pk
+    assert resp_6.json()['items'][0]['id'] == env.article_2.pk
+
+
+@pytest.mark.CMS_837
+@pytest.mark.django_db
+def test_branch_moderators_should_only_see_pages_from_their_branch(root_page):
+    """
+    This reproduces Wagtail's admin call to list pages in the 'Pages' menu.
+    Moderators should only see app pages that share common root page
+    """
+    env = two_branches_with_users(root_page)
+
+    resp_1 = env.moderator_1_client.get(
+        f'/admin/api/v2beta/pages/?child_of={env.landing_1.pk}&for_explorer=1'
+    )
+    assert resp_1.status_code == status.HTTP_200_OK
+    assert resp_1.json()['meta']['total_count'] == 1
+    assert resp_1.json()['items'][0]['id'] == env.article_1.pk
+
+    resp_2 = env.moderator_2_client.get(
+        f'/admin/api/v2beta/pages/?child_of={env.landing_2.pk}&for_explorer=1'
+    )
+    assert resp_2.status_code == status.HTTP_200_OK
+    assert resp_2.json()['meta']['total_count'] == 1
+    assert resp_2.json()['items'][0]['id'] == env.article_2.pk
 
 
 @pytest.mark.quirk
 @pytest.mark.CMS_837
 @pytest.mark.django_db
-def test_branch_moderators_should_only_see_pages_from_their_branch(
-        branch_editor_moderator_factory, distinct_root_pages
-):
-    root_page_1, root_page_2 = distinct_root_pages
-    branch_1 = branch_editor_moderator_factory.get(root_page_1)
-    branch_2 = branch_editor_moderator_factory.get(root_page_2)
+def test_moderators_cannot_access_pages_not_from_their_branch(root_page):
+    """
+    This reproduces situation when a moderator would try to access page that
+    doesn't belong to they branch by simply changing page ID in the URL
+    """
+    env = two_branches_with_users(root_page)
 
-    # This reproduces Wagtail's admin call to list pages in the 'Pages' menu.
-    # Editors should only see app pages that share common root page
-    resp_1 = branch_1.moderator_client.get(
-        f'/admin/api/v2beta/pages/?child_of={root_page_1.pk}&for_explorer=1'
+    resp_1 = env.moderator_1_client.get(
+        f'/admin/pages/{env.landing_2.pk}/edit/'
     )
-    assert resp_1.status_code == status.HTTP_200_OK
-    assert resp_1.json()['meta']['total_count'] == 1
-    assert resp_1.json()['items'][0]['id'] == branch_1.listing.pk
+    assert resp_1.status_code == status.HTTP_403_FORBIDDEN
 
-    # This reproduces Wagtail's admin call to list pages in the 'Pages' menu.
-    # Editors should only see app pages that share common root page
-    resp_2 = branch_2.moderator_client.get(
-        f'/admin/api/v2beta/pages/?child_of={root_page_2.pk}&for_explorer=1'
+    resp_2 = env.moderator_2_client.get(
+        f'/admin/pages/{env.landing_1.pk}/edit/'
     )
-    assert resp_2.status_code == status.HTTP_200_OK
-    assert resp_2.json()['meta']['total_count'] == 1
-    assert resp_2.json()['items'][0]['id'] == branch_2.listing.pk
+    assert resp_2.status_code == status.HTTP_403_FORBIDDEN
 
-    # This reproduces behaviour when Users explore pages using 'Pages' menu
-    # User can only see pages that belong to their listing page
-    resp_3 = branch_1.moderator_client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_1.listing.pk}&for_explorer=1'  # NOQA
-    )
-    assert resp_3.status_code == status.HTTP_200_OK
-    assert resp_3.json()['meta']['total_count'] == 1
-    assert resp_3.json()['items'][0]['id'] == branch_1.article.pk
+    resp_3 = env.moderator_1_client.get(f'/admin/pages/{env.landing_2.pk}/')
+    assert resp_3.status_code == status.HTTP_302_FOUND
+    assert resp_3.url == f'/admin/pages/{env.landing_1.pk}/'
 
-    # This reproduces behaviour when Users explore pages using 'Pages' menu
-    # User can only see pages that belong to their listing page
-    resp_5 = branch_2.moderator_client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_2.listing.pk}&for_explorer=1'  # NOQA
-    )
-    assert resp_5.status_code == status.HTTP_200_OK
-    assert resp_5.json()['meta']['total_count'] == 1
-    assert resp_5.json()['items'][0]['id'] == branch_2.article.pk
+    resp_4 = env.moderator_2_client.get(f'/admin/pages/{env.landing_1.pk}/')
+    assert resp_4.status_code == status.HTTP_302_FOUND
+    assert resp_4.url == f'/admin/pages/{env.landing_2.pk}/'
 
     # Unfortunately on API level Wagtail allows users to list pages that
     # belong to different branch
-    resp_5 = branch_1.moderator_client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_2.listing.pk}&for_explorer=1'  # NOQA
-    )
-    assert resp_5.status_code == status.HTTP_200_OK
-    assert resp_5.json()['meta']['total_count'] == 1
-    assert resp_5.json()['items'][0]['id'] == branch_2.article.pk
-
-    # Unfortunately on API level Wagtail allows users to list pages that
-    # belong to different branch
-    resp_6 = branch_2.moderator_client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch_1.listing.pk}&for_explorer=1'  # NOQA
+    resp_6 = env.moderator_1_client.get(
+        f'/admin/api/v2beta/pages/?child_of={env.landing_2.pk}&for_explorer=1'
     )
     assert resp_6.status_code == status.HTTP_200_OK
     assert resp_6.json()['meta']['total_count'] == 1
-    assert resp_6.json()['items'][0]['id'] == branch_1.article.pk
+    assert resp_6.json()['items'][0]['id'] == env.article_2.pk
 
 
 @pytest.mark.django_db
 def test_moderators_can_approve_revisions_only_for_pages_in_their_branch(
-    branch_moderator_factory, root_page
+    root_page
 ):
-    branch_1 = branch_moderator_factory.get(root_page)
-    branch_2 = branch_moderator_factory.get(root_page)
+    env = two_branches_with_users(root_page)
 
     draft_page = exred_factories.ArticlePageFactory(
-        parent=branch_2.listing, live=False
+        parent=env.landing_2, live=False
     )
     revision = draft_page.save_revision(
-        user=branch_2.user, submitted_for_moderation=True
+        user=env.editor_2, submitted_for_moderation=True
     )
 
-    resp_1 = branch_1.client.post(
+    resp_1 = env.moderator_1_client.post(
         reverse('wagtailadmin_pages:approve_moderation', args=[revision.pk])
     )
     assert resp_1.status_code == status.HTTP_403_FORBIDDEN
 
     # after publishing a page, user is redirected to the '/admin/' page
-    resp_2 = branch_2.client.post(
+    resp_2 = env.moderator_2_client.post(
         reverse('wagtailadmin_pages:approve_moderation', args=[revision.pk]),
         follow=True,
     )
     assert resp_2.status_code == status.HTTP_200_OK
-
-
-@pytest.mark.django_db
-def test_branch_moderators_cannot_access_pages_from_other_branch(
-    branch_moderator_factory, root_page
-):
-    branch_1 = branch_moderator_factory.get(root_page)
-    branch_2 = branch_moderator_factory.get(root_page)
-
-    # Because user_1 doesn't have rights to access page_2
-    # it's redirected to the root page to which he has access to (listing_1)
-    resp_1 = branch_1.client.get(
-        f'/admin/pages/{branch_2.article.pk}/', follow=False
-    )
-    assert resp_1.status_code == status.HTTP_302_FOUND
-    assert resp_1.url == f'/admin/pages/{branch_1.listing.pk}/'
-
-    resp_2 = branch_2.client.get(
-        f'/admin/pages/{branch_1.article.pk}/', follow=False
-    )
-    assert resp_2.status_code == status.HTTP_302_FOUND
-    assert resp_2.url == f'/admin/pages/{branch_2.listing.pk}/'
 
 
 @pytest.mark.CMS_839
@@ -300,17 +272,17 @@ def test_branch_user_cant_create_pages_in_branch_they_dont_manage(
 
 @pytest.mark.CMS_839
 @pytest.mark.django_db
-def test_editors_cannot_publish_child_pages(branch_editor_factory, root_page):
-    branch = branch_editor_factory.get(root_page)
+def test_editors_cannot_publish_child_pages(root_page):
+    env = two_branches_with_users(root_page)
 
-    draft_page = exred_factories.ArticlePageFactory(
-        parent=branch.listing, live=False
+    draft_page = ArticlePageFactory(
+        parent=env.landing_1, live=False
     )
     revision = draft_page.save_revision(
-        user=branch.user, submitted_for_moderation=True
+        user=env.editor_1, submitted_for_moderation=True
     )
 
-    resp = branch.client.post(
+    resp = env.editor_1_client.post(
         reverse('wagtailadmin_pages:approve_moderation', args=[revision.pk])
     )
     assert resp.status_code == status.HTTP_403_FORBIDDEN
@@ -318,13 +290,11 @@ def test_editors_cannot_publish_child_pages(branch_editor_factory, root_page):
 
 @pytest.mark.CMS_839
 @pytest.mark.django_db
-def test_editors_cannot_unpublish_child_pages(
-        branch_editor_factory, root_page
-):
-    branch = branch_editor_factory.get(root_page)
+def test_editors_cannot_unpublish_child_pages(root_page):
+    env = two_branches_with_users(root_page)
 
-    resp = branch.client.post(
-        reverse('wagtailadmin_pages:unpublish', args=[branch.article.pk])
+    resp = env.editor_1_client.post(
+        reverse('wagtailadmin_pages:unpublish', args=[env.article_1.pk])
     )
     assert resp.status_code == status.HTTP_403_FORBIDDEN
 
@@ -449,19 +419,15 @@ def test_editors_can_compare_changes_between_revisions(
 
 @pytest.mark.CMS_840
 @pytest.mark.django_db
-def test_moderators_can_publish_child_pages(
-        branch_moderator_factory, root_page
-):
-    branch = branch_moderator_factory.get(root_page)
+def test_moderators_can_publish_child_pages(root_page):
+    env = two_branches_with_users(root_page)
 
-    draft_page = exred_factories.ArticlePageFactory(
-        parent=branch.listing, live=False
-    )
+    draft_page = ArticlePageFactory(parent=env.landing_1, live=False)
     revision = draft_page.save_revision(
-        user=branch.user, submitted_for_moderation=True
+        user=env.moderator_1, submitted_for_moderation=True,
     )
 
-    resp = branch.client.post(
+    resp = env.moderator_1_client.post(
         reverse('wagtailadmin_pages:approve_moderation', args=[revision.pk])
     )
     assert resp.status_code == status.HTTP_302_FOUND
@@ -470,20 +436,17 @@ def test_moderators_can_publish_child_pages(
 
 @pytest.mark.CMS_840
 @pytest.mark.django_db
-def test_moderators_can_unpublish_child_pages(
-        branch_moderator_factory, root_page
-):
-    branch = branch_moderator_factory.get(root_page)
+def test_moderators_can_unpublish_child_pages(root_page):
+    env = two_branches_with_users(root_page)
 
-    resp = branch.client.post(
-        reverse('wagtailadmin_pages:unpublish', args=[branch.article.pk])
+    resp = env.moderator_1_client.post(
+        reverse('wagtailadmin_pages:unpublish', args=[env.article_1.pk])
     )
     assert resp.status_code == status.HTTP_302_FOUND
-    assert int(resp.url.split('/')[3]) == branch.listing.pk  # format is /admin/pages/4/  # NOQA
+    assert int(resp.url.split('/')[3]) == env.landing_1.pk  # format is /admin/pages/4/  # NOQA
 
-    resp_2 = branch.client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch.listing.pk}&for_explorer=1'
-        # NOQA
+    resp_2 = env.moderator_1_client.get(
+        f'/admin/api/v2beta/pages/?child_of={env.landing_1.pk}&for_explorer=1'
     )
     assert resp_2.status_code == status.HTTP_200_OK
     article_status = resp_2.json()['items'][0]['meta']['status']
@@ -495,55 +458,52 @@ def test_moderators_can_unpublish_child_pages(
 @pytest.mark.quirk
 @pytest.mark.CMS_840
 @pytest.mark.django_db
-def test_moderators_can_view_revisions_from_other_branches(
-        branch_editor_moderator_factory, root_page
-):
+def test_moderators_can_view_revisions_from_other_branches(root_page):
     """
     Unfortunately on API level Wagtail allows Moderators to view revisions from
     other branches.
     """
-    branch_1 = branch_editor_moderator_factory.get(root_page)
-    branch_2 = branch_editor_moderator_factory.get(root_page)
+    env = two_branches_with_users(root_page)
 
-    revision_1 = branch_1.article.save_revision(
-        user=branch_1.editor, submitted_for_moderation=True
+    revision_1 = env.article_1.save_revision(
+        user=env.editor_1, submitted_for_moderation=True
     )
-    revision_2 = branch_2.article.save_revision(
-        user=branch_2.editor, submitted_for_moderation=True
+    revision_2 = env.article_2.save_revision(
+        user=env.editor_2, submitted_for_moderation=True
     )
-    revert_path_1 = f'/admin/pages/{branch_1.article.pk}/revisions/{revision_1.pk}/revert/'  # NOQA
-    revert_path_2 = f'/admin/pages/{branch_2.article.pk}/revisions/{revision_2.pk}/revert/'  # NOQA
+    revert_path_1 = f'/admin/pages/{env.article_1.pk}/revisions/{revision_1.pk}/revert/'  # NOQA
+    revert_path_2 = f'/admin/pages/{env.article_2.pk}/revisions/{revision_2.pk}/revert/'  # NOQA
 
-    resp_1 = branch_1.editor_client.get(
+    resp_1 = env.editor_1_client.get(
         reverse('wagtailadmin_pages:revisions_index',
-                args=[branch_1.article.pk])
+                args=[env.article_1.pk])
     )
     assert resp_1.status_code == status.HTTP_200_OK
     content_1 = resp_1.content.decode()
     assert revert_path_1 in content_1
     assert revert_path_2 not in content_1
 
-    resp_2 = branch_1.editor_client.get(
+    resp_2 = env.editor_1_client.get(
         reverse('wagtailadmin_pages:revisions_index',
-                args=[branch_2.article.pk])
+                args=[env.article_2.pk])
     )
     assert resp_2.status_code == status.HTTP_200_OK
     content_2 = resp_2.content.decode()
     assert revert_path_1 not in content_2
     assert revert_path_2 in content_2
 
-    resp_3 = branch_2.editor_client.get(
+    resp_3 = env.editor_2_client.get(
         reverse('wagtailadmin_pages:revisions_index',
-                args=[branch_1.article.pk])
+                args=[env.article_1.pk])
     )
     assert resp_3.status_code == status.HTTP_200_OK
     content_3 = resp_3.content.decode()
     assert revert_path_1 in content_3
     assert revert_path_2 not in content_3
 
-    resp_4 = branch_2.editor_client.get(
+    resp_4 = env.editor_2_client.get(
         reverse('wagtailadmin_pages:revisions_index',
-                args=[branch_2.article.pk])
+                args=[env.article_2.pk])
     )
     assert resp_4.status_code == status.HTTP_200_OK
     content_4 = resp_4.content.decode()
@@ -553,27 +513,25 @@ def test_moderators_can_view_revisions_from_other_branches(
 
 @pytest.mark.CMS_840
 @pytest.mark.django_db
-def test_moderators_can_reject_revision(
-        branch_editor_moderator_factory, root_page
-):
-    branch = branch_editor_moderator_factory.get(root_page)
+def test_moderators_can_reject_revision(root_page):
+    env = two_branches_with_users(root_page)
 
     new_title = 'The title was modified'
-    branch.article.title = new_title
-    revision = branch.article.save_revision(
-        user=branch.editor, submitted_for_moderation=True
+    env.article_1.title = new_title
+    revision = env.article_1.save_revision(
+        user=env.editor_1, submitted_for_moderation=True
     )
 
     # Reject request for moderation
-    resp_1 = branch.moderator_client.post(
+    resp_1 = env.moderator_1_client.post(
         reverse('wagtailadmin_pages:reject_moderation', args=[revision.pk])
     )
     assert resp_1.status_code == status.HTTP_302_FOUND
     assert resp_1.url == '/admin/'
 
     # Verify if rejection is visible
-    resp_2 = branch.moderator_client.get(
-        reverse('wagtailadmin_pages:revisions_index', args=[branch.article.pk])
+    resp_2 = env.moderator_1_client.get(
+        reverse('wagtailadmin_pages:revisions_index', args=[env.article_1.pk])
     )
     assert resp_2.status_code == status.HTTP_200_OK
     assert 'rejected for publication' in resp_2.content.decode()
@@ -581,20 +539,17 @@ def test_moderators_can_reject_revision(
 
 @pytest.mark.CMS_840
 @pytest.mark.django_db
-def test_moderators_cannot_reject_revision_from_other_branch(
-        branch_editor_moderator_factory, root_page
-):
-    branch_1 = branch_editor_moderator_factory.get(root_page)
-    branch_2 = branch_editor_moderator_factory.get(root_page)
+def test_moderators_cannot_reject_revision_from_other_branch(root_page):
+    env = two_branches_with_users(root_page)
 
     new_title = 'The title was modified'
-    branch_1.article.title = new_title
-    revision = branch_1.article.save_revision(
-        user=branch_1.editor, submitted_for_moderation=True
+    env.article_1.title = new_title
+    revision = env.article_1.save_revision(
+        user=env.editor_1, submitted_for_moderation=True
     )
 
     # Reject request for moderation
-    resp = branch_2.moderator_client.post(
+    resp = env.moderator_2_client.post(
         reverse('wagtailadmin_pages:reject_moderation', args=[revision.pk])
     )
     assert resp.status_code == status.HTTP_403_FORBIDDEN
