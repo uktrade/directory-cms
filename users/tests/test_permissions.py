@@ -161,7 +161,7 @@ def test_moderators_can_approve_revisions_only_for_pages_in_their_branch(
 @pytest.mark.CMS_840
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "branch_factory", [
+    'branch_factory', [
         BranchEditorFactory,
         BranchModeratorFactory
     ])
@@ -204,7 +204,7 @@ def test_branch_user_can_create_child_pages_in_it(branch_factory, root_page):
 @pytest.mark.CMS_840
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "branch_factory", [
+    'branch_factory', [
         BranchEditorFactory,
         BranchModeratorFactory
     ])
@@ -239,7 +239,7 @@ def test_branch_user_cant_create_child_pages_without_mandatory_data(
 @pytest.mark.CMS_840
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "branch_factory", [
+    'branch_factory', [
         BranchEditorFactory,
         BranchModeratorFactory
     ])
@@ -303,7 +303,7 @@ def test_editors_cannot_unpublish_child_pages(root_page):
 @pytest.mark.CMS_840
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "branch_factory", [
+    'branch_factory', [
         BranchEditorFactory,
         BranchModeratorFactory
     ])
@@ -331,7 +331,7 @@ def test_branch_user_can_submit_changes_for_moderation(
 @pytest.mark.CMS_840
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "branch_factory", [
+    'branch_factory', [
         BranchEditorFactory,
         BranchModeratorFactory
     ])
@@ -342,7 +342,7 @@ def test_branch_user_can_view_drafts(branch_factory, root_page):
         'article_teaser': 'new teaser',
         'article_body_text': 'new body text',
         'title_en_gb': 'next title',
-        # omitted 'action-submit' means that pages was save as draft
+        # omitted 'action-submit' means that pages was saved as draft
     }
 
     # Create a draft and stay on the same admin page
@@ -365,11 +365,11 @@ def test_branch_user_can_view_drafts(branch_factory, root_page):
 @pytest.mark.CMS_840
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "branch_factory", [
+    'branch_factory', [
         BranchEditorFactory,
         BranchModeratorFactory
     ])
-def test_branch_users_can_list_revisions(branch_factory, root_page):
+def test_branch_user_can_list_revisions(branch_factory, root_page):
     branch = branch_factory.get(root_page)
 
     revision = branch.article.save_revision(
@@ -388,7 +388,7 @@ def test_branch_users_can_list_revisions(branch_factory, root_page):
 @pytest.mark.CMS_840
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "branch_factory", [
+    'branch_factory', [
         BranchEditorFactory,
         BranchModeratorFactory
     ])
@@ -553,3 +553,84 @@ def test_moderators_cannot_reject_revision_from_other_branch(root_page):
         reverse('wagtailadmin_pages:reject_moderation', args=[revision.pk])
     )
     assert resp.status_code == status.HTTP_403_FORBIDDEN
+
+
+@pytest.mark.CMS_836
+@pytest.mark.django_db
+def test_admins_should_be_able_to_access_all_pages_in_any_branch(root_page):
+    env = two_branches_with_users(root_page)
+
+    resp_1 = env.admin_client.get(
+        f'/admin/api/v2beta/pages/?child_of={env.landing_1.pk}&for_explorer=1'
+    )
+    assert resp_1.status_code == status.HTTP_200_OK
+
+    resp_2 = env.admin_client.get(
+        f'/admin/api/v2beta/pages/?child_of={env.landing_2.pk}&for_explorer=1'
+    )
+    assert resp_2.status_code == status.HTTP_200_OK
+
+    resp_3 = env.admin_client.get(
+        f'/admin/api/v2beta/pages/?child_of={env.article_1.pk}&for_explorer=1'
+    )
+    assert resp_3.status_code == status.HTTP_200_OK
+
+    resp_4 = env.admin_client.get(
+        f'/admin/api/v2beta/pages/?child_of={env.article_2.pk}&for_explorer=1'
+    )
+    assert resp_4.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.quirk
+@pytest.mark.CMS_836
+@pytest.mark.django_db
+def test_admins_should_be_able_to_reject_revision_from_any_branch(root_page):
+    """
+    Somehow Wagtail doesn't show to the editor that revision was rejected
+    and thus we have to use Admin client to check that (in last assertion)
+    """
+    env = two_branches_with_users(root_page)
+
+    # At this point there should be no revisions
+    resp_1 = env.editor_1_client.get(
+        reverse(
+            'wagtailadmin_pages:revisions_index',
+            args=[env.article_1.pk]
+        )
+    )
+    assert 'No revision of this page exist' in resp_1.content.decode()
+
+    # Make a change and save revision
+    new_title = 'The title was modified'
+    env.article_1.title = new_title
+    revision = env.article_1.save_revision(
+        user=env.editor_1, submitted_for_moderation=True
+    )
+
+    # Check if revision is visible
+    resp_2 = env.editor_1_client.get(
+        reverse(
+            'wagtailadmin_pages:revisions_index',
+            args=[env.article_1.pk]
+        )
+    )
+    assert new_title in resp_2.content.decode()
+    revert_url = f'/admin/pages/{env.article_1.pk}/revisions/{revision.pk}/revert/'  # NOQA
+    assert revert_url in resp_2.content.decode()
+
+    # Reject request for moderation
+    resp_3 = env.admin_client.post(
+        reverse('wagtailadmin_pages:reject_moderation', args=[revision.pk])
+    )
+    assert resp_3.status_code == status.HTTP_302_FOUND
+    assert resp_3.url == '/admin/'
+
+    # Verify if rejection is visible
+    resp_4 = env.admin_client.get(
+        reverse(
+            'wagtailadmin_pages:revisions_index',
+            args=[env.article_1.pk]
+        )
+    )
+    assert resp_4.status_code == status.HTTP_200_OK
+    assert 'rejected for publication' in resp_4.content.decode()
