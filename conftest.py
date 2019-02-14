@@ -15,11 +15,6 @@ from django.db.migrations.executor import MigrationExecutor
 
 from conf import settings
 from find_a_supplier.tests.factories import IndustryPageFactory
-from users.tests.factories import (
-    BranchEditorAndModeratorFactory,
-    BranchEditorFactory,
-    BranchModeratorFactory,
-)
 
 
 @pytest.fixture
@@ -161,18 +156,3 @@ def django_db_setup(django_db_blocker):
 
         for connection in db.connections.all():
             connection.close()
-
-
-@pytest.fixture
-def branch_editor_factory(root_page):
-    return BranchEditorFactory()
-
-
-@pytest.fixture
-def branch_moderator_factory():
-    return BranchModeratorFactory()
-
-
-@pytest.fixture
-def branch_editor_moderator_factory(root_page):
-    return BranchEditorAndModeratorFactory()
