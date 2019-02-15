@@ -2,7 +2,6 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
-import export_readiness.tests.factories as exred_factories
 from export_readiness.tests.factories import ArticlePageFactory
 from users.tests.factories import (
     AdminFactory,
@@ -26,14 +25,14 @@ def test_branch_editors_should_only_see_pages_from_their_branch(root_page):
     )
     assert resp_1.status_code == status.HTTP_200_OK
     assert resp_1.json()['meta']['total_count'] == 1
-    assert resp_1.json()['items'][0]['id'] == env.article_1.pk
+    assert resp_1.json()['items'][0]['id'] == env.listing_1.pk
 
     resp_2 = env.editor_2_client.get(
         f'/admin/api/v2beta/pages/?child_of={env.landing_2.pk}&for_explorer=1'
     )
     assert resp_2.status_code == status.HTTP_200_OK
     assert resp_2.json()['meta']['total_count'] == 1
-    assert resp_2.json()['items'][0]['id'] == env.article_2.pk
+    assert resp_2.json()['items'][0]['id'] == env.listing_2.pk
 
 
 @pytest.mark.quirk
@@ -46,19 +45,19 @@ def test_branch_editors_cannot_access_pages_not_from_their_branch(root_page):
     """
     env = two_branches_with_users(root_page)
 
-    resp_1 = env.editor_1_client.get(f'/admin/pages/{env.landing_2.pk}/edit/')
+    resp_1 = env.editor_1_client.get(f'/admin/pages/{env.home_2.pk}/edit/')
     assert resp_1.status_code == status.HTTP_403_FORBIDDEN
 
-    resp_2 = env.editor_2_client.get(f'/admin/pages/{env.landing_1.pk}/edit/')
+    resp_2 = env.editor_2_client.get(f'/admin/pages/{env.home_1.pk}/edit/')
     assert resp_2.status_code == status.HTTP_403_FORBIDDEN
 
-    resp_3 = env.editor_1_client.get(f'/admin/pages/{env.landing_2.pk}/')
+    resp_3 = env.editor_1_client.get(f'/admin/pages/{env.home_2.pk}/')
     assert resp_3.status_code == status.HTTP_302_FOUND
-    assert resp_3.url == f'/admin/pages/{env.landing_1.pk}/'
+    assert resp_3.url == f'/admin/pages/{env.home_1.pk}/'
 
-    resp_4 = env.editor_2_client.get(f'/admin/pages/{env.landing_1.pk}/')
+    resp_4 = env.editor_2_client.get(f'/admin/pages/{env.home_1.pk}/')
     assert resp_4.status_code == status.HTTP_302_FOUND
-    assert resp_4.url == f'/admin/pages/{env.landing_2.pk}/'
+    assert resp_4.url == f'/admin/pages/{env.home_2.pk}/'
 
     # Unfortunately on API level Wagtail allows users to list pages that
     # belong to different branch
@@ -67,7 +66,7 @@ def test_branch_editors_cannot_access_pages_not_from_their_branch(root_page):
     )
     assert resp_6.status_code == status.HTTP_200_OK
     assert resp_6.json()['meta']['total_count'] == 1
-    assert resp_6.json()['items'][0]['id'] == env.article_2.pk
+    assert resp_6.json()['items'][0]['id'] == env.listing_2.pk
 
 
 @pytest.mark.CMS_837
@@ -84,14 +83,14 @@ def test_branch_moderators_should_only_see_pages_from_their_branch(root_page):
     )
     assert resp_1.status_code == status.HTTP_200_OK
     assert resp_1.json()['meta']['total_count'] == 1
-    assert resp_1.json()['items'][0]['id'] == env.article_1.pk
+    assert resp_1.json()['items'][0]['id'] == env.listing_1.pk
 
     resp_2 = env.moderator_2_client.get(
         f'/admin/api/v2beta/pages/?child_of={env.landing_2.pk}&for_explorer=1'
     )
     assert resp_2.status_code == status.HTTP_200_OK
     assert resp_2.json()['meta']['total_count'] == 1
-    assert resp_2.json()['items'][0]['id'] == env.article_2.pk
+    assert resp_2.json()['items'][0]['id'] == env.listing_2.pk
 
 
 @pytest.mark.quirk
@@ -105,22 +104,22 @@ def test_moderators_cannot_access_pages_not_from_their_branch(root_page):
     env = two_branches_with_users(root_page)
 
     resp_1 = env.moderator_1_client.get(
-        f'/admin/pages/{env.landing_2.pk}/edit/'
+        f'/admin/pages/{env.home_2.pk}/edit/'
     )
     assert resp_1.status_code == status.HTTP_403_FORBIDDEN
 
     resp_2 = env.moderator_2_client.get(
-        f'/admin/pages/{env.landing_1.pk}/edit/'
+        f'/admin/pages/{env.home_1.pk}/edit/'
     )
     assert resp_2.status_code == status.HTTP_403_FORBIDDEN
 
-    resp_3 = env.moderator_1_client.get(f'/admin/pages/{env.landing_2.pk}/')
+    resp_3 = env.moderator_1_client.get(f'/admin/pages/{env.home_2.pk}/')
     assert resp_3.status_code == status.HTTP_302_FOUND
-    assert resp_3.url == f'/admin/pages/{env.landing_1.pk}/'
+    assert resp_3.url == f'/admin/pages/{env.home_1.pk}/'
 
-    resp_4 = env.moderator_2_client.get(f'/admin/pages/{env.landing_1.pk}/')
+    resp_4 = env.moderator_2_client.get(f'/admin/pages/{env.home_1.pk}/')
     assert resp_4.status_code == status.HTTP_302_FOUND
-    assert resp_4.url == f'/admin/pages/{env.landing_2.pk}/'
+    assert resp_4.url == f'/admin/pages/{env.home_2.pk}/'
 
     # Unfortunately on API level Wagtail allows users to list pages that
     # belong to different branch
@@ -129,7 +128,7 @@ def test_moderators_cannot_access_pages_not_from_their_branch(root_page):
     )
     assert resp_6.status_code == status.HTTP_200_OK
     assert resp_6.json()['meta']['total_count'] == 1
-    assert resp_6.json()['items'][0]['id'] == env.article_2.pk
+    assert resp_6.json()['items'][0]['id'] == env.listing_2.pk
 
 
 @pytest.mark.django_db
@@ -138,10 +137,9 @@ def test_moderators_can_approve_revisions_only_for_pages_in_their_branch(
 ):
     env = two_branches_with_users(root_page)
 
-    draft_page = exred_factories.ArticlePageFactory(
-        parent=env.landing_2, live=False
-    )
-    revision = draft_page.save_revision(
+    new_title = 'The title was modified'
+    env.article_2.title = new_title
+    revision = env.article_2.save_revision(
         user=env.editor_2, submitted_for_moderation=True
     )
 
@@ -259,6 +257,7 @@ def test_branch_user_cant_create_pages_in_branch_they_dont_manage(
         'article_body_text': 'test article',
         'title_en_gb': 'test article',
         'slug': 'test-article',
+        'action-publish': 'action-publish',
     }
 
     resp = branch_1.client.post(
@@ -279,28 +278,63 @@ def test_branch_user_cant_create_pages_in_branch_they_dont_manage(
 @pytest.mark.django_db
 def test_admins_can_create_pages_in_any_branch(root_page):
     env = two_branches_with_users(root_page)
-    data = {
+
+    # Add ExRed Article page
+    data_1 = {
         'article_title': 'test article',
         'article_teaser': 'test article',
         'article_body_text': 'test article',
         'title_en_gb': 'test article',
         'slug': 'test-article',
+        'action-publish': 'action-publish',
     }
 
-    resp = env.admin_client.post(
+    resp_1 = env.admin_client.post(
+        reverse(
+            'wagtailadmin_pages:add',
+            args=[
+                env.article_1._meta.app_label,
+                env.article_1._meta.model_name,
+                env.listing_1.pk
+            ],
+        ),
+        data=data_1,
+    )
+    assert resp_1.status_code == status.HTTP_302_FOUND
+    assert resp_1.url.startswith('/admin/pages/')  # format is /admin/pages/3/
+    
+    # Add FAS Industry Article page
+    data_2 = {
+        'article_title': 'test article',
+        'article_teaser': 'test article',
+        'article_body_text': 'test article',
+        'title_en_gb': 'test article',
+        'body': 'this is a test page',
+        'slug': 'test-article',
+        'action-publish': 'action-publish',
+        'breadcrumbs_label_en_gb': 'test breadcrumb',
+        'introduction_title_en_gb': 'test introduction',
+        'author_name_en_gb': 'dit',
+        'job_title_en_gb': 'dit',
+        'proposition_text_en_gb': 'test proposition',
+        'call_to_action_text_en_gb': 'contact us',
+        'back_to_home_link_text_en_gb': 'home',
+        'social_share_title_en_gb': 'share',
+        'date_en_gb': '2019-01-01',
+    }
+    resp_2 = env.admin_client.post(
         reverse(
             'wagtailadmin_pages:add',
             args=[
                 env.article_2._meta.app_label,
                 env.article_2._meta.model_name,
-                env.landing_2.pk
+                env.listing_2.pk
             ],
         ),
-        data=data,
+        data=data_2,
     )
-    assert resp.status_code == status.HTTP_302_FOUND
-    assert resp.url.startswith('/admin/pages/')  # format is /admin/pages/3/edit/  # NOQA
-    assert resp.url.endswith('/edit/')  # format is /admin/pages/3/edit/
+    assert resp_2.status_code == status.HTTP_302_FOUND
+    assert resp_2.url.startswith('/admin/pages/')  # format is /admin/pages/3/
 
 
 @pytest.mark.CMS_839
