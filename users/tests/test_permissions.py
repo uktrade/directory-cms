@@ -302,7 +302,7 @@ def test_admins_can_create_pages_in_any_branch(root_page):
     )
     assert resp_1.status_code == status.HTTP_302_FOUND
     assert resp_1.url.startswith('/admin/pages/')  # format is /admin/pages/3/
-    
+
     # Add FAS Industry Article page
     data_2 = {
         'article_title': 'test article',
