@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import factory
 import factory.fuzzy
 import wagtail_factories
@@ -115,4 +117,23 @@ class IndustryContactPageFactory(wagtail_factories.PageFactory):
     success_message_text_en_gb = factory.fuzzy.FuzzyText(length=255)
     success_back_link_text_en_gb = factory.fuzzy.FuzzyText(length=100)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None
+
+
+class IndustryArticlePageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.IndustryArticlePage
+
+    breadcrumbs_label_en_gb = factory.fuzzy.FuzzyText(length=50)
+    introduction_title_en_gb = factory.fuzzy.FuzzyText(length=255)
+    body_en_gb = factory.fuzzy.FuzzyText(length=100)
+    author_name_en_gb = factory.fuzzy.FuzzyText(length=100)
+    job_title_en_gb = factory.fuzzy.FuzzyText(length=100)
+    proposition_text_en_gb = factory.fuzzy.FuzzyText(length=100)
+    call_to_action_text_en_gb = factory.fuzzy.FuzzyText(length=100)
+    back_to_home_link_text_en_gb = factory.fuzzy.FuzzyText(length=100)
+    social_share_title_en_gb = factory.fuzzy.FuzzyText(length=100)
+    date_en_gb = factory.LazyFunction(datetime.now)
+    slug = factory.Sequence(lambda n: 'IndustryArticlePage-{0}'.format(n))
     parent = None
