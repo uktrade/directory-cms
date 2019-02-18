@@ -829,10 +829,8 @@ def test_non_admin_user_should_not_be_able_to_access_manage_users_page(
 
 @pytest.mark.CMS_838
 @pytest.mark.django_db
-def test_admin_user_should_be_able_to_access_manage_users_page(
-        admin_factory, root_page
-):
+def test_admin_user_should_be_able_to_access_manage_users_page(root_page):
     """Admins can access '/admin/users/' page"""
-    branch = admin_factory.get(root_page)
-    resp = branch.client.get(reverse('wagtailusers_users:index'))
+    admin = AdminFactory.get(root_page)
+    resp = admin.client.get(reverse('wagtailusers_users:index'))
     assert resp.status_code == status.HTTP_200_OK
