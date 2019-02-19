@@ -1275,6 +1275,14 @@ class ContactUsGuidancePage(BasePage):
                 'contact/triage/great-account/company-not-found/'
             ),
         },
+        cms.EXPORT_READINESS_HELP_ACCOUNT_SOLE_TRADER_ADDRESS_NOT_FOUND_SLUG: {
+            'title': 'Guidance - Sole trader address not found',
+            'view_path': (
+                'contact/triage/great-account/sole-trader-address-not-found/'
+            ),
+        },
+
+
     }
 
     @property
