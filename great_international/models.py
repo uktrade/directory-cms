@@ -15,7 +15,6 @@ from core.models import (
     ExclusivePageMixin,
     ServiceMixin,
 )
-from core.edit_handlers import UserAwareFieldPanel
 from core.panels import SearchEngineOptimisationPanel
 from export_readiness.models import Tag
 
@@ -86,7 +85,7 @@ class InternationalMarketingPages(ExclusivePageMixin, BasePage):
         'great_international.InternationalCampaignPage'
     ]
     settings_panels = [
-        UserAwareFieldPanel('tags', widget=CheckboxSelectMultiple)
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
     def save(self, *args, **kwargs):
@@ -101,9 +100,8 @@ class InternationalRegionPages(ExclusivePageMixin, BasePage):
 
     subpage_types = []
 
-    settings_panels = []
-    edit_handlers = [
-        UserAwareFieldPanel('tags', widget=CheckboxSelectMultiple)
+    settings_panels = [
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
     def save(self, *args, **kwargs):
@@ -230,7 +228,9 @@ class InternationalArticleListingPage(BasePage):
 
 class InternationalCampaignPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    subpage_types = []
+    subpage_types = [
+        'great_international.InternationalArticlePage'
+    ]
     view_path = 'campaigns/'
 
     campaign_heading = models.CharField(max_length=255)
