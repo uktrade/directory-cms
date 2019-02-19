@@ -38,7 +38,7 @@ debug_db:
 	$(DEBUG_SET_ENV_VARS) && $(DEBUG_CREATE_DB)
 
 migrations:
-	$(DEBUG_SET_ENV_VARS) && ./manage.py makemigrations core export_readiness find_a_supplier invest components
+	$(DEBUG_SET_ENV_VARS) && ./manage.py makemigrations core export_readiness find_a_supplier invest components great_international
 
 
 DEBUG_SET_ENV_VARS := \
@@ -125,4 +125,4 @@ upgrade_requirements:
 	pip-compile --upgrade requirements.in
 	pip-compile --upgrade requirements_test.in
 
-.PHONY: clean test_requirements debug_webserver debug_test debug heroku_deploy_dev heroku_deploy_demo
+.PHONY: clean test_requirements debug_webserver debug_test debug
