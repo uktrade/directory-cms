@@ -25,3 +25,23 @@ class GreatInternationalConfig(AppConfig):
             receiver=signals.tags_propagate_to_descendants,
             sender=models.InternationalArticleListingPage.tags.through
         )
+        m2m_changed.connect(
+            receiver=signals.tags_propagate_to_descendants,
+            sender=models.InternationalArticleListingPage.tags.through
+        )
+        m2m_changed.connect(
+            receiver=signals.tags_propagate_to_descendants,
+            sender=models.InternationalArticleListingPage.tags.through
+        )
+        m2m_changed.connect(
+            receiver=signals.tags_propagate_to_descendants,
+            sender=models.InternationalMarketingPages.tags.through
+        )
+        m2m_changed.connect(
+            receiver=signals.tags_propagate_to_descendants,
+            sender=models.InternationalRegionPages.tags.through
+        )
+        m2m_changed.connect(
+            receiver=signals.tags_propagate_to_descendants,
+            sender=models.InternationalTopicLandingPage.tags.through
+        )
