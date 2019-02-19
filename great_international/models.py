@@ -30,7 +30,7 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
 
 class InternationalHomePage(ExclusivePageMixin, BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    slug_identity = cms.EXPORT_READINESS_HOME_INTERNATIONAL_SLUG
+    slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
     subpage_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalArticlePage',
