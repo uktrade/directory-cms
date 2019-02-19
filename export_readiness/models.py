@@ -38,7 +38,7 @@ class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
 
     service_name_value = cms.EXPORT_READINESS
     view_path = 'terms-and-conditions/'
-    slug_identity = cms.EXPORT_READINESS_TERMS_AND_CONDITIONS_SLUG
+    slug_identity = cms.GREAT_TERMS_AND_CONDITIONS_SLUG
 
     body = MarkdownField(blank=False)
 
@@ -87,7 +87,7 @@ class PrivacyAndCookiesPage(BasePage):
 class SitePolicyPages(ExclusivePageMixin, BasePage):
     # a folder for T&C and privacy & cookies pages
     service_name_value = cms.EXPORT_READINESS
-    slug_identity = cms.EXPORT_READINESS_SITE_POLICY_PAGES_SLUG
+    slug_identity = cms.GREAT_SITE_POLICY_PAGES_SLUG
 
     subpage_types = [
         'export_readiness.TermsAndConditionsPage',
@@ -105,7 +105,7 @@ class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
 
     service_name_value = cms.EXPORT_READINESS
     view_path = 'get-finance/'
-    slug_identity = cms.EXPORT_READINESS_GET_FINANCE_SLUG
+    slug_identity = cms.GREAT_GET_FINANCE_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
     hero_text = MarkdownField()
@@ -273,32 +273,32 @@ class PerformanceDashboardPage(BasePage):
 
     service_mapping = {
         urls.SERVICE_EXPORT_READINESS: {
-            'slug': cms.EXPORT_READINESS_PERFORMANCE_DASHBOARD_SLUG,
+            'slug': cms.GREAT_PERFORMANCE_DASHBOARD_SLUG,
             'heading': 'Great.gov.uk',
             'view_path': '',
             'landing_dashboard': True,
         },
         urls.SERVICES_SOO: {
-            'slug': cms.EXPORT_READINESS_PERFORMANCE_DASHBOARD_SOO_SLUG,
+            'slug': cms.GREAT_PERFORMANCE_DASHBOARD_SOO_SLUG,
             'heading': 'Selling Online Overseas',
             'view_path': 'performance-dashboard/',
             'landing_dashboard': False,
         },
         urls.SERVICES_EXOPPS: {
-            'slug': cms.EXPORT_READINESS_PERFORMANCE_DASHBOARD_EXOPPS_SLUG,
+            'slug': cms.GREAT_PERFORMANCE_DASHBOARD_EXOPPS_SLUG,
             'heading': 'Export Opportunities',
             'view_path': 'performance-dashboard/',
             'landing_dashboard': False,
         },
         urls.SERVICES_FAB: {
             'slug': (
-                cms.EXPORT_READINESS_PERFORMANCE_DASHBOARD_TRADE_PROFILE_SLUG),
+                cms.GREAT_PERFORMANCE_DASHBOARD_TRADE_PROFILE_SLUG),
             'heading': 'Business Profiles',
             'view_path': 'performance-dashboard/',
             'landing_dashboard': False,
         },
         urls.SERVICES_INVEST: {
-            'slug': cms.EXPORT_READINESS_PERFORMANCE_DASHBOARD_INVEST_SLUG,
+            'slug': cms.GREAT_PERFORMANCE_DASHBOARD_INVEST_SLUG,
             'heading': 'Invest in Great Britain',
             'view_path': 'performance-dashboard/',
             'landing_dashboard': False,
@@ -379,7 +379,7 @@ class PerformanceDashboardNotesPage(ExclusivePageMixin, BasePage):
 
     service_name_value = cms.EXPORT_READINESS
     view_path = 'performance-dashboard/'
-    slug_identity = cms.EXPORT_READINESS_PERFORMANCE_DASHBOARD_NOTES_SLUG
+    slug_identity = cms.GREAT_PERFORMANCE_DASHBOARD_NOTES_SLUG
 
     body = MarkdownField(
         help_text=(
@@ -646,7 +646,7 @@ class CountryGuidePage(BasePage):
 
 class MarketingPages(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
-    slug_identity = cms.EXPORT_READINESS_MARKETING_PAGES_SLUG
+    slug_identity = cms.GREAT_MARKETING_PAGES_SLUG
 
     subpage_types = [
         'export_readiness.CampaignPage',
@@ -978,7 +978,7 @@ class ArticlePage(BasePage):
 
 class HomePage(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
-    slug_identity = cms.EXPORT_READINESS_HOME_SLUG
+    slug_identity = cms.GREAT_HOME_SLUG
     subpage_types = [
         'export_readiness.TopicLandingPage',
         'export_readiness.ArticleListingPage',
@@ -1016,7 +1016,7 @@ class HomePage(ExclusivePageMixin, BasePage):
 
 class InternationalLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
-    slug_identity = cms.EXPORT_READINESS_HOME_INTERNATIONAL_SLUG
+    slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
     subpage_types = [
         'export_readiness.ArticleListingPage',
     ]
@@ -1055,7 +1055,7 @@ class EUExitInternationalFormPage(
 
     service_name_value = cms.EXPORT_READINESS
     view_path = 'international/eu-exit-news/contact/'
-    slug_identity = cms.EXPORT_READINESS_EUEXIT_INTERNATIONAL_FORM_SLUG
+    slug_identity = cms.GREAT_EUEXIT_INTERNATIONAL_FORM_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
@@ -1100,7 +1100,7 @@ class EUExitDomesticFormPage(
 
     service_name_value = cms.EXPORT_READINESS
     view_path = 'eu-exit-news/contact/'
-    slug_identity = cms.EXPORT_READINESS_EUEXIT_DOMESTIC_FORM_SLUG
+    slug_identity = cms.GREAT_EUEXIT_DOMESTIC_FORM_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
@@ -1133,7 +1133,7 @@ class EUExitDomesticFormPage(
 class EUExitFormSuccessPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
     view_path = 'eu-exit-news/contact/success/'
-    slug_identity = cms.EXPORT_READINESS_EUEXIT_FORM_SUCCESS_SLUG
+    slug_identity = cms.GREAT_EUEXIT_FORM_SUCCESS_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(
@@ -1233,43 +1233,49 @@ class ContactUsGuidancePage(BasePage):
     service_name_value = cms.EXPORT_READINESS
 
     topic_mapping = {
-        cms.EXPORT_READINESS_HELP_EXOPP_ALERTS_IRRELEVANT_SLUG: {
+        cms.GREAT_HELP_EXOPP_ALERTS_IRRELEVANT_SLUG: {
             'title': 'Guidance - Daily alerts are not relevant',
             'view_path': (
                 'contact/triage/export-opportunities/alerts-not-relevant/'
             ),
         },
-        cms.EXPORT_READINESS_HELP_EXOPP_NO_RESPONSE: {
+        cms.GREAT_HELP_EXOPP_NO_RESPONSE: {
             'title': 'Guidance - Export Opportunity application no response',
             'view_path': (
                 'contact/triage/export-opportunities/opportunity-no-response/'
             ),
         },
-        cms.EXPORT_READINESS_HELP_MISSING_VERIFY_EMAIL_SLUG: {
+        cms.GREAT_HELP_MISSING_VERIFY_EMAIL_SLUG: {
             'title': 'Guidance - Email verification missing',
             'view_path': 'contact/triage/great-account/no-verification-email/',
         },
-        cms.EXPORT_READINESS_HELP_PASSWORD_RESET_SLUG: {
+        cms.GREAT_HELP_PASSWORD_RESET_SLUG: {
             'title': 'Guidance - Missing password reset link',
             'view_path': 'contact/triage/great-account/password-reset/',
         },
-        cms.EXPORT_READINESS_HELP_COMPANIES_HOUSE_LOGIN_SLUG: {
+        cms.GREAT_HELP_COMPANIES_HOUSE_LOGIN_SLUG: {
             'title': 'Guidance - Companies House login not working',
             'view_path': 'contact/triage/great-account/companies-house-login/',
         },
-        cms.EXPORT_READINESS_HELP_VERIFICATION_CODE_ENTER_SLUG: {
+        cms.GREAT_HELP_VERIFICATION_CODE_ENTER_SLUG: {
             'title': 'Guidance - Where to enter letter verification code',
             'view_path': (
                 'contact/triage/great-account/verification-letter-code/'
             ),
         },
-        cms.EXPORT_READINESS_HELP_VERIFICATION_CODE_LETTER_SLUG: {
+        cms.GREAT_HELP_VERIFICATION_CODE_LETTER_SLUG: {
             'title': 'Guidance - Verification letter not delivered',
             'view_path': (
                 'contact/triage/great-account/no-verification-letter/'
             ),
         },
-        cms.EXPORT_READINESS_HELP_ACCOUNT_COMPANY_NOT_FOUND_SLUG: {
+        cms.GREAT_HELP_VERIFICATION_CODE_MISSING_SLUG: {
+            'title': 'Guidance - Verification code not delivered',
+            'view_path': (
+                'contact/triage/great-account/verification-missing/'
+            ),
+        },
+        cms.GREAT_HELP_ACCOUNT_COMPANY_NOT_FOUND_SLUG: {
             'title': 'Guidance - Company not found',
             'view_path': (
                 'contact/triage/great-account/company-not-found/'
@@ -1318,35 +1324,35 @@ class ContactSuccessPage(BasePage):
     service_name_value = cms.EXPORT_READINESS
 
     topic_mapping = {
-        cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_SLUG: {
+        cms.GREAT_CONTACT_US_FORM_SUCCESS_SLUG: {
             'title': 'Contact domestic form success',
             'view_path': 'contact/domestic/success/',
         },
-        cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_EVENTS_SLUG: {
+        cms.GREAT_CONTACT_US_FORM_SUCCESS_EVENTS_SLUG: {
             'title': 'Contact Events form success',
             'view_path': 'contact/events/success/',
         },
-        cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_DSO_SLUG: {
+        cms.GREAT_CONTACT_US_FORM_SUCCESS_DSO_SLUG: {
             'title': 'Contact Defence and Security Organisation form success',
             'view_path': 'contact/defence-and-security-organisation/success/',
         },
-        cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_EXPORT_ADVICE_SLUG: {
+        cms.GREAT_CONTACT_US_FORM_SUCCESS_EXPORT_ADVICE_SLUG: {
             'title': 'Contact exporting from the UK form success',
             'view_path': 'contact/export-advice/success/',
         },
-        cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_FEEDBACK_SLUG: {
+        cms.GREAT_CONTACT_US_FORM_SUCCESS_FEEDBACK_SLUG: {
             'title': 'Contact feedback form success',
             'view_path': 'contact/feedback/success/',
         },
-        cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_FIND_COMPANIES_SLUG: {
+        cms.GREAT_CONTACT_US_FORM_SUCCESS_FIND_COMPANIES_SLUG: {
             'title': 'Contact find UK companies form success',
             'view_path': 'contact/find-uk-companies/success/',
         },
-        cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_INTERNATIONAL_SLUG: {
+        cms.GREAT_CONTACT_US_FORM_SUCCESS_INTERNATIONAL_SLUG: {
             'title': 'Contact international form success',
             'view_path': 'contact/international/success/',
         },
-        cms.EXPORT_READINESS_CONTACT_US_FORM_SUCCESS_SOO_SLUG: {
+        cms.GREAT_CONTACT_US_FORM_SUCCESS_SOO_SLUG: {
             'title': 'Contact Selling Online Overseas form success',
             'view_path': 'contact/selling-online-overseas/success/',
         },
