@@ -1,13 +1,12 @@
 from django.apps import AppConfig
-from django.db.models.signals import post_save
+from django.db.models.signals import m2m_changed, post_save
 
 
 class GreatInternationalConfig(AppConfig):
     name = 'great_international'
 
     def ready(self):
-        from great_international import cache
-        from great_international import signals
+        from great_international import cache, models, signals
         cache.InternationalHomePageSubscriber.subscribe()
         cache.InternationalArticlePageSubscriber.subscribe()
         cache.InternationalCampaignPageSubscriber.subscribe()
@@ -16,9 +15,13 @@ class GreatInternationalConfig(AppConfig):
         # signals
         post_save.connect(
             receiver=signals.inherit_tags_from_parent,
-            sender='great_international.InternationalArticlePage'
+            sender=models.InternationalArticlePage
         )
         post_save.connect(
             receiver=signals.inherit_tags_from_parent,
-            sender='great_international.InternationalCampaignPage'
+            sender=models.InternationalCampaignPage
+        )
+        m2m_changed.connect(
+            receiver=signals.tags_propagate_to_descendants,
+            sender=models.InternationalArticleListingPage.tags.through
         )
