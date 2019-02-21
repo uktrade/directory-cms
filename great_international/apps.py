@@ -39,7 +39,7 @@ class GreatInternationalConfig(AppConfig):
         )
         m2m_changed.connect(
             receiver=signals.tags_propagate_to_descendants,
-            sender=models.InternationalRegionPages.tags.through
+            sender=models.InternationalRegionPage.tags.through
         )
         m2m_changed.connect(
             receiver=signals.tags_propagate_to_descendants,
