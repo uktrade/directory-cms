@@ -47,6 +47,27 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
     )
 
     news_title = models.CharField(max_length=255)
+    related_page_one = models.ForeignKey(
+        'great_international.InternationalArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_two = models.ForeignKey(
+        'great_international.InternationalArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_three = models.ForeignKey(
+        'great_international.InternationalArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
 
     content_panels = [
         MultiFieldPanel(
@@ -62,6 +83,23 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
                 FieldPanel('tariffs_description'),
                 FieldPanel('tariffs_link'),
                 ImageChooserPanel('tariffs_image')
+            ]
+        ),
+        MultiFieldPanel(
+            heading='News section',
+            children=[
+                FieldPanel('news_title'),
+                FieldRowPanel([
+                    PageChooserPanel(
+                        'related_page_one',
+                        'great_international.InternationalArticlePage'),
+                    PageChooserPanel(
+                        'related_page_two',
+                        'great_international.InternationalArticlePage'),
+                    PageChooserPanel(
+                        'related_page_three',
+                        'great_international.InternationalArticlePage'),
+                ])
             ]
         ),
         SearchEngineOptimisationPanel(),

@@ -47,7 +47,7 @@ class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
     article_body_text = core_fields.MarkdownToHTMLField()
 
 
-class InternationalHomePageSerializer(BasePageSerializer):
+class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
     news_title = serializers.CharField(max_length=255)
     tariffs_title = serializers.CharField(max_length=255)
     tariffs_description = core_fields.MarkdownToHTMLField()
@@ -55,25 +55,6 @@ class InternationalHomePageSerializer(BasePageSerializer):
     tariffs_image = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg'
     )
-
-    articles = serializers.SerializerMethodField()
-
-    def get_articles(self, obj):
-        queryset = None
-        slug = cms.GREAT_INTERNATIONAL_MARKETING_PAGES_SLUG
-        if InternationalMarketingPages.objects.filter(slug=slug).exists():
-            queryset = InternationalMarketingPages.objects.get(
-                slug=slug
-            ).get_descendants().type(
-                InternationalArticlePage
-            ).live().specific()[:3]
-        serializer = InternationalArticlePageSerializer(
-            queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-        return serializer.data
 
 
 class InternationalCampaignPageSerializer(PageWithRelatedPagesSerializer):
