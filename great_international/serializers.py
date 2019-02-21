@@ -1,12 +1,10 @@
-from directory_constants.constants import cms
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
 
 from core import fields as core_fields
 from core.serializers import BasePageSerializer
 
-from .models import InternationalArticlePage, InternationalMarketingPages, \
-    InternationalArticleListingPage
+from .models import InternationalArticlePage, InternationalArticleListingPage
 
 
 class PageWithRelatedPagesSerializer(BasePageSerializer):
