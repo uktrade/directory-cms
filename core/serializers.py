@@ -9,13 +9,11 @@ class BasePageSerializer(serializers.Serializer):
     search_description = serializers.CharField()
     meta = fields.MetaDictField()
     full_url = serializers.CharField(max_length=255)
-    full_path = serializers.SerializerMethodField()
+    full_path = serializers.CharField(
+        max_length=255, source='specific.full_path')
     last_published_at = serializers.DateTimeField()
     title = serializers.CharField()
     page_type = serializers.SerializerMethodField()
-
-    def get_full_path(self, instance):
-        return instance.specific.full_path
 
     def get_page_type(self, instance):
         return instance.__class__.__name__
