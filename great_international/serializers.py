@@ -4,32 +4,10 @@ from wagtail.images.api import fields as wagtail_fields
 from core import fields as core_fields
 from core.serializers import BasePageSerializer
 
-from .models import InternationalArticlePage, InternationalArticleListingPage
-
-
-class PageWithRelatedPagesSerializer(BasePageSerializer):
-    related_pages = serializers.SerializerMethodField()
-
-    def get_related_pages(self, obj):
-        serialized = []
-        items = [
-            obj.related_page_one,
-            obj.related_page_two,
-            obj.related_page_three
-        ]
-        pages = [item for item in items if item]
-        for related_page in pages:
-            # currently only used for articles and campaigns
-            # assumes if it's not an article, it must be a campaign
-            if hasattr(related_page.specific, 'article_title'):
-                serializer = RelatedArticlePageSerializer(
-                    related_page.specific)
-            else:
-                serializer = RelatedCampaignPageSerializer(
-                    related_page.specific)
-            serialized.append(serializer.data)
-
-        return serialized
+from .models import (
+    InternationalArticlePage, InternationalCampaignPage,
+    InternationalArticleListingPage
+)
 
 
 class RelatedArticlePageSerializer(BasePageSerializer):
@@ -47,6 +25,34 @@ class RelatedCampaignPageSerializer(BasePageSerializer):
     thumbnail = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg',
         source='campaign_hero_image')
+
+
+MODEL_TO_SERIALIZER_MAPPING = {
+    InternationalArticlePage: RelatedArticlePageSerializer,
+    InternationalCampaignPage: RelatedCampaignPageSerializer,
+}
+
+
+class PageWithRelatedPagesSerializer(BasePageSerializer):
+    related_pages = serializers.SerializerMethodField()
+
+    def get_related_pages(self, obj):
+        serialized = []
+        items = [
+            obj.related_page_one,
+            obj.related_page_two,
+            obj.related_page_three
+        ]
+        for related_page in items:
+            if not related_page:
+                continue
+            # currently only used for articles and campaigns
+            serializer_class = MODEL_TO_SERIALIZER_MAPPING[
+                related_page.specific.__class__]
+            serializer = serializer_class(related_page.specific)
+            serialized.append(serializer.data)
+
+        return serialized
 
 
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
