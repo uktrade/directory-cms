@@ -407,6 +407,7 @@ class InternationalCampaignPage(BasePage):
             heading='Hero section',
             children=[
                 FieldPanel('campaign_heading'),
+                FieldPanel('campaign_teaser'),
                 ImageChooserPanel('campaign_hero_image'),
             ]
         ),
