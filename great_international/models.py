@@ -50,21 +50,21 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
 
     news_title = models.CharField(max_length=255)
     related_page_one = models.ForeignKey(
-        'great_international.InternationalArticlePage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
     )
     related_page_two = models.ForeignKey(
-        'great_international.InternationalArticlePage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
     )
     related_page_three = models.ForeignKey(
-        'great_international.InternationalArticlePage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -94,13 +94,22 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
                 FieldRowPanel([
                     PageChooserPanel(
                         'related_page_one',
-                        'great_international.InternationalArticlePage'),
+                        [
+                            'great_international.InternationalArticlePage',
+                            'great_international.InternationalCampaignPage',
+                        ]),
                     PageChooserPanel(
                         'related_page_two',
-                        'great_international.InternationalArticlePage'),
+                        [
+                            'great_international.InternationalArticlePage',
+                            'great_international.InternationalCampaignPage',
+                        ]),
                     PageChooserPanel(
                         'related_page_three',
-                        'great_international.InternationalArticlePage'),
+                        [
+                            'great_international.InternationalArticlePage',
+                            'great_international.InternationalCampaignPage',
+                        ]),
                 ])
             ]
         ),
@@ -271,6 +280,7 @@ class InternationalCampaignPage(BasePage):
     ]
     view_path = 'campaigns/'
 
+    campaign_teaser = models.CharField(max_length=255, null=True, blank=True)
     campaign_heading = models.CharField(max_length=255)
     campaign_hero_image = models.ForeignKey(
         'wagtailimages.Image',

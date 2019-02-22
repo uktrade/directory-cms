@@ -52,8 +52,8 @@ def test_page_path(root_page):
     page_two = SectorPageFactory(slug='foo', parent=page_one)
     page_three = SectorPageFactory(slug='bar', parent=page_two)
 
-    assert page_three.full_path == '/foo/bar/'
-    assert page_two.full_path == '/foo/'
+    assert page_three.full_path == '/industries/foo/bar/'
+    assert page_two.full_path == '/industries/foo/'
 
 
 @pytest.mark.django_db

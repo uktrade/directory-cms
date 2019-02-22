@@ -143,6 +143,9 @@ class BasePage(Page):
         # starts from 2 to remove root page and app page
         path_components = [page.slug for page in self.get_ancestors()[2:]]
         path_components.append(self.slug)
+        # need to also take into account the view_path if it's set
+        if self.view_path:
+            path_components.insert(0, self.view_path.replace('/', ''))
         return '/{path}/'.format(path='/'.join(path_components))
 
     @property
