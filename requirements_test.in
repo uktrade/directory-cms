@@ -13,3 +13,4 @@ factory-boy
 beautifulsoup4
 wagtail-factories==1.0.0
 django-debug-toolbar
+factory-boy

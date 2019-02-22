@@ -82,7 +82,7 @@ INSTALLED_APPS = [
     'great_international.apps.GreatInternationalConfig',
     'invest.apps.InvestConfig',
     'components.apps.ComponentsConfig',
-
+    'activitystream.apps.ActivityStreamConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -515,3 +515,7 @@ CELERY_TIMEZONE = 'UTC'
 CELERY_BROKER_POOL_LIMIT = None
 FEATURE_REDIS_USE_SSL = env.bool('FEATURE_REDIS_USE_SSL', False)
 CELERY_TASK_ALWAYS_EAGER = env.bool('CELERY_ALWAYS_EAGER', False)
+
+# Activity Stream API
+ACTIVITY_STREAM_ACCESS_KEY_ID = "123-id-key"
+ACTIVITY_STREAM_SECRET_ACCESS_KEY = "123-secret-key"
