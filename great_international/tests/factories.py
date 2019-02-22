@@ -63,6 +63,7 @@ class InternationalCampaignPageFactory(wagtail_factories.PageFactory):
     class Meta:
         model = models.InternationalCampaignPage
 
+    campaign_teaser = factory.fuzzy.FuzzyText(length=10)
     campaign_heading = factory.fuzzy.FuzzyText(length=10)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
