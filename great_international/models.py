@@ -1,5 +1,6 @@
 from directory_constants.constants import cms
-from django.forms import Textarea
+from django.forms import Textarea, CheckboxSelectMultiple
+from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel
 )
@@ -15,6 +16,7 @@ from core.models import (
     ServiceMixin,
 )
 from core.panels import SearchEngineOptimisationPanel
+from export_readiness.models import Tag
 
 
 class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -28,7 +30,7 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
 
 class InternationalHomePage(ExclusivePageMixin, BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    slug_identity = cms.EXPORT_READINESS_HOME_INTERNATIONAL_SLUG
+    slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
     subpage_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalArticlePage',
@@ -47,6 +49,27 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
     )
 
     news_title = models.CharField(max_length=255)
+    related_page_one = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_two = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_three = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
 
     content_panels = [
         MultiFieldPanel(
@@ -64,6 +87,32 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
                 ImageChooserPanel('tariffs_image')
             ]
         ),
+        MultiFieldPanel(
+            heading='News section',
+            children=[
+                FieldPanel('news_title'),
+                FieldRowPanel([
+                    PageChooserPanel(
+                        'related_page_one',
+                        [
+                            'great_international.InternationalArticlePage',
+                            'great_international.InternationalCampaignPage',
+                        ]),
+                    PageChooserPanel(
+                        'related_page_two',
+                        [
+                            'great_international.InternationalArticlePage',
+                            'great_international.InternationalCampaignPage',
+                        ]),
+                    PageChooserPanel(
+                        'related_page_three',
+                        [
+                            'great_international.InternationalArticlePage',
+                            'great_international.InternationalCampaignPage',
+                        ]),
+                ])
+            ]
+        ),
         SearchEngineOptimisationPanel(),
     ]
 
@@ -76,26 +125,31 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
 class InternationalMarketingPages(ExclusivePageMixin, BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = cms.GREAT_INTERNATIONAL_MARKETING_PAGES_SLUG
+    tags = ParentalManyToManyField(Tag, blank=True)
 
     subpage_types = [
         'great_international.InternationalArticlePage',
         'great_international.InternationalCampaignPage'
     ]
-
-    settings_panels = []
+    settings_panels = [
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
+    ]
 
     def save(self, *args, **kwargs):
         self.title = self.get_verbose_name()
         return super().save(*args, **kwargs)
 
 
-class InternationalUKHQPages(ExclusivePageMixin, BasePage):
+class InternationalRegionPages(ExclusivePageMixin, BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = cms.GREAT_INTERNATIONAL_UK_HQ_PAGES_SLUG
+    tags = ParentalManyToManyField(Tag, blank=True)
 
     subpage_types = []
 
-    settings_panels = []
+    settings_panels = [
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
+    ]
 
     def save(self, *args, **kwargs):
         self.title = self.get_verbose_name()
@@ -139,6 +193,7 @@ class InternationalArticlePage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+',
     )
+    tags = ParentalManyToManyField(Tag, blank=True)
 
     content_panels = [
         FieldPanel('article_title'),
@@ -172,6 +227,7 @@ class InternationalArticlePage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
 
@@ -180,7 +236,6 @@ class InternationalArticleListingPage(BasePage):
     subpage_types = ['great_international.InternationalArticlePage']
 
     landing_page_title = models.CharField(max_length=255)
-
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -189,8 +244,8 @@ class InternationalArticleListingPage(BasePage):
         related_name='+'
     )
     hero_teaser = models.CharField(max_length=255, null=True, blank=True)
-
     list_teaser = MarkdownField(null=True, blank=True)
+    tags = ParentalManyToManyField(Tag, blank=True)
 
     @property
     def articles_count(self):
@@ -214,14 +269,18 @@ class InternationalArticleListingPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
 
 class InternationalCampaignPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    subpage_types = []
+    subpage_types = [
+        'great_international.InternationalArticlePage'
+    ]
     view_path = 'campaigns/'
 
+    campaign_teaser = models.CharField(max_length=255, null=True, blank=True)
     campaign_heading = models.CharField(max_length=255)
     campaign_hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -341,11 +400,14 @@ class InternationalCampaignPage(BasePage):
     cta_box_button_url = models.CharField(max_length=255)
     cta_box_button_text = models.CharField(max_length=255)
 
+    tags = ParentalManyToManyField(Tag, blank=True)
+
     content_panels = [
         MultiFieldPanel(
             heading='Hero section',
             children=[
                 FieldPanel('campaign_heading'),
+                FieldPanel('campaign_teaser'),
                 ImageChooserPanel('campaign_hero_image'),
             ]
         ),
@@ -432,6 +494,7 @@ class InternationalCampaignPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
 
@@ -451,6 +514,7 @@ class InternationalTopicLandingPage(BasePage):
         related_name='+'
     )
     hero_teaser = models.CharField(max_length=255, null=True, blank=True)
+    tags = ParentalManyToManyField(Tag, blank=True)
 
     content_panels = [
         FieldPanel('landing_page_title'),
@@ -467,4 +531,5 @@ class InternationalTopicLandingPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]

@@ -31,6 +31,13 @@ def test_slugs_are_not_unique_across_services(root_page):
 
 @pytest.mark.django_db
 def test_delete_same_slug_different_services(root_page):
+    """
+    Deleting a page results in ancestor pages being re-saved.
+    Thus ancestor page (root_page) has to have title & title_en_gb.
+    """
+    root_page.title = 'ancestor page has to have a title'
+    root_page.title_en_gb = 'ancestor page has to have a title'
+    root_page.save()
     page_one = IndustryPageFactory(slug='foo', parent=root_page)
     page_two = SectorPageFactory(slug='foo', parent=root_page)
     assert page_one.slug == 'foo'
@@ -45,8 +52,8 @@ def test_page_path(root_page):
     page_two = SectorPageFactory(slug='foo', parent=page_one)
     page_three = SectorPageFactory(slug='bar', parent=page_two)
 
-    assert page_three.full_path == '/foo/bar/'
-    assert page_two.full_path == '/foo/'
+    assert page_three.full_path == '/industries/foo/bar/'
+    assert page_two.full_path == '/industries/foo/'
 
 
 @pytest.mark.django_db

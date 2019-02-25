@@ -198,10 +198,10 @@ class HomePageSerializer(BasePageSerializer):
     def get_advice(self, obj):
         queryset = None
         if TopicLandingPage.objects.filter(
-                slug=cms.EXPORT_READINESS_ADVICE_SLUG
+                slug=cms.GREAT_ADVICE_SLUG
         ).exists():
             queryset = TopicLandingPage.objects.get(
-                slug=cms.EXPORT_READINESS_ADVICE_SLUG
+                slug=cms.GREAT_ADVICE_SLUG
             ).get_descendants().type(
                 ArticleListingPage
             ).live().specific()

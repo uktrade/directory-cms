@@ -67,3 +67,10 @@ body .image-chooser .chosen {
     line-height: 1em;
     font-size: 13px;
 }
+
+button.button.action-choose.button-small.button-secondary {
+    height: auto;
+    overflow: visible;
+    white-space: normal;
+    padding: 0.2em 0.8em;
+}
