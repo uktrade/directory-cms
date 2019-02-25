@@ -10,7 +10,8 @@ def test_app_models():
         models.GreatInternationalApp,
         models.InternationalHomePage,
         models.InternationalMarketingPages,
-        models.InternationalRegionPages,
+        models.InternationalRegionPage,
+        models.InternationalRegionalFolderPage,
         models.InternationalArticlePage,
         models.InternationalArticleListingPage,
         models.InternationalCampaignPage,
@@ -126,3 +127,15 @@ def test_adding_new_tag_to_parent_propagate_to_descendants(root_page):
     assert list(
         article2.tags.values_list('pk', flat=True)
     ) == [tag1.pk, tag2.pk]
+
+
+@pytest.mark.django_db
+def test_international_folder_page_append_parent_slug():
+    region = factories.InternationalRegionPageFactory(
+        slug='canada'
+    )
+    folder_page = factories.InternationalRegionalFolderPageFactory(
+        parent=region,
+        slug='test'
+    )
+    assert folder_page.slug == 'test-canada'
