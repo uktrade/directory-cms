@@ -5,7 +5,8 @@ from core import fields as core_fields
 from core.serializers import BasePageSerializer
 
 from .models import (InternationalArticlePage, InternationalArticleListingPage,
-    InternationalRegionalFolderPage, InternationalCampaignPage)
+                     InternationalRegionalFolderPage,
+                     InternationalCampaignPage)
 
 
 class RelatedArticlePageSerializer(BasePageSerializer):
