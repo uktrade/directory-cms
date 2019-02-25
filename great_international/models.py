@@ -155,6 +155,10 @@ class InternationalRegionPage(BasePage):
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
+    def save(self, *args, **kwargs):
+        self.title = self.get_verbose_name()
+        return super().save(*args, **kwargs)
+
 
 class InternationalRegionalFolderPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
@@ -168,6 +172,7 @@ class InternationalRegionalFolderPage(BasePage):
     ]
 
     def save(self, *args, **kwargs):
+        self.title = self.get_verbose_name()
         self.slug = slugify(f'{self.slug}-{self.get_parent().slug}')
         return super().save(*args, **kwargs)
 
