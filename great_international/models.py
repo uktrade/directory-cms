@@ -74,12 +74,6 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
 
     content_panels = [
         MultiFieldPanel(
-            heading='News and events',
-            children=[
-                FieldPanel('news_title'),
-            ]
-        ),
-        MultiFieldPanel(
             heading='Tariffs',
             children=[
                 FieldPanel('tariffs_title'),
