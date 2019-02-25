@@ -4,10 +4,8 @@ from wagtail.images.api import fields as wagtail_fields
 from core import fields as core_fields
 from core.serializers import BasePageSerializer
 
-from .models import (
-    InternationalArticlePage, InternationalCampaignPage,
-    InternationalArticleListingPage
-)
+from .models import (InternationalArticlePage, InternationalArticleListingPage,
+    InternationalRegionalFolderPage, InternationalCampaignPage)
 
 
 class RelatedArticlePageSerializer(BasePageSerializer):
@@ -130,6 +128,26 @@ class InternationalArticleListingPageSerializer(BasePageSerializer):
     list_teaser = core_fields.MarkdownToHTMLField(allow_null=True)
     hero_teaser = serializers.CharField(allow_null=True)
     articles = serializers.SerializerMethodField()
+    localised_articles = serializers.SerializerMethodField()
+
+    def get_localised_articles(self, obj):
+        data = []
+        region = self.context['request'].GET.get('region')
+        if region:
+            slug = f'{obj.slug}-{region}'
+            folder = InternationalRegionalFolderPage.objects.filter(slug=slug)
+            if folder.exists():
+                queryset = folder[0].get_descendants().type(
+                    InternationalArticlePage
+                ).live().specific()
+                serializer = InternationalArticlePageSerializer(
+                    queryset,
+                    many=True,
+                    allow_null=True,
+                    context=self.context
+                )
+                data = serializer.data
+        return data
 
     def get_articles(self, obj):
         queryset = obj.get_descendants().type(

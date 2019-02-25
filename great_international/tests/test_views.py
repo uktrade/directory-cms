@@ -92,3 +92,90 @@ def test_international_topic_landing_page_view(admin_client, root_page):
     response = admin_client.get(url)
     assert response.status_code == 200
     assert 'child_pages' in response.json()
+
+
+def test_articlelistingpage_with_localised_content(admin_client, root_page):
+    article_listing_page = factories.InternationalArticleListingPageFactory.create(  # NOQA
+        parent=root_page,
+        live=True,
+        slug='setup-uk'
+    )
+    factories.InternationalArticlePageFactory.create(
+        parent=article_listing_page,
+        live=True
+    )
+    region_page = factories.InternationalRegionPageFactory(
+        parent=root_page,
+        live=True,
+        slug='germany'
+    )
+    regional_folder_page = factories.InternationalRegionalFolderPageFactory(
+        parent=region_page,
+        live=True,
+        slug='setup-uk'
+    )
+    localised_article = factories.InternationalArticlePageFactory.create(
+        parent=regional_folder_page,
+        live=True
+    )
+
+    url = reverse(
+        'api:api:pages:detail',
+        kwargs={'pk': article_listing_page.pk}
+    )
+    response = admin_client.get(url, {'region': 'germany'})
+    assert response.status_code == 200
+    assert 'localised_articles' in response.json()
+    expected_localised_article = response.json()['localised_articles'][0]['id']
+    assert expected_localised_article == localised_article.pk
+
+
+def test_articlelistingpage_without_localised_content(admin_client, root_page):
+    article_listing_page = factories.InternationalArticleListingPageFactory.create( # NOQA
+        parent=root_page,
+        live=True,
+        slug='setup-uk'
+    )
+    factories.InternationalArticlePageFactory.create(
+        parent=article_listing_page,
+        live=True
+    )
+    region_page = factories.InternationalRegionPageFactory(
+        parent=root_page,
+        live=True,
+        slug='germany'
+    )
+    regional_folder_page = factories.InternationalRegionalFolderPageFactory(
+        parent=region_page,
+        live=True,
+        slug='news'  # different branch from setup uk
+    )
+    factories.InternationalArticlePageFactory.create(
+        parent=regional_folder_page,
+        live=True
+    )
+
+    url = reverse(
+        'api:api:pages:detail',
+        kwargs={'pk': article_listing_page.pk}
+    )
+    response = admin_client.get(url, {'region': 'bar'})
+    assert response.status_code == 200
+    assert 'localised_articles' in response.json()
+    assert response.json()['localised_articles'] == []
+
+
+def test_client_not_passing_region(admin_client, root_page):
+    article_listing_page = factories.InternationalArticleListingPageFactory.create(  # NOQA
+        parent=root_page,
+        live=True
+    )
+
+    url = reverse(
+        'api:api:pages:detail',
+        kwargs={'pk': article_listing_page.pk}
+    )
+    response = admin_client.get(url)
+    assert response.status_code == 200
+    assert 'localised_articles' in response.json()
+    assert response.json()['localised_articles'] == []
