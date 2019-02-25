@@ -91,3 +91,23 @@ class InternationalTopicLandingPageFactory(wagtail_factories.PageFactory):
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
+
+
+class InternationalRegionPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.InternationalRegionPage
+
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None
+
+
+class InternationalRegionalFolderPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.InternationalRegionalFolderPage
+
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = factory.SubFactory(InternationalRegionPageFactory)

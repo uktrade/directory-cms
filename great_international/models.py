@@ -1,5 +1,6 @@
 from directory_constants.constants import cms
 from django.forms import Textarea, CheckboxSelectMultiple
+from django.utils.text import slugify
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel
@@ -140,19 +141,39 @@ class InternationalMarketingPages(ExclusivePageMixin, BasePage):
         return super().save(*args, **kwargs)
 
 
-class InternationalRegionPages(ExclusivePageMixin, BasePage):
+class InternationalRegionPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    slug_identity = cms.GREAT_INTERNATIONAL_UK_HQ_PAGES_SLUG
+    subpage_types = [
+        'great_international.InternationalRegionalFolderPage'
+    ]
+
     tags = ParentalManyToManyField(Tag, blank=True)
 
-    subpage_types = []
-
     settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
     def save(self, *args, **kwargs):
         self.title = self.get_verbose_name()
+        return super().save(*args, **kwargs)
+
+
+class InternationalRegionalFolderPage(BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+    subpage_types = [
+        'great_international.InternationalArticlePage'
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    def save(self, *args, **kwargs):
+        self.title = self.get_verbose_name()
+        self.slug = slugify(f'{self.slug}-{self.get_parent().slug}')
         return super().save(*args, **kwargs)
 
 
