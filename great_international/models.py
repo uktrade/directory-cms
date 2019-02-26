@@ -150,7 +150,6 @@ class InternationalRegionPage(BasePage):
     ]
 
     def save(self, *args, **kwargs):
-        self.title = self.get_verbose_name()
         return super().save(*args, **kwargs)
 
 

@@ -187,7 +187,7 @@ class InternationalTopicLandingPageSerializer(BasePageSerializer):
         campaigns_queryset = obj.get_descendants().type(
             InternationalCampaignPage
         ).live().specific()
-        campaigns_serializer = InternationalCampaignPageSerializer(
+        campaigns_serializer = RelatedCampaignPageSerializer(
             campaigns_queryset,
             many=True,
             allow_null=True,
