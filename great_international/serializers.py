@@ -175,13 +175,22 @@ class InternationalTopicLandingPageSerializer(BasePageSerializer):
     child_pages = serializers.SerializerMethodField()
 
     def get_child_pages(self, obj):
-        queryset = obj.get_descendants().type(
+        articles_listing_queryset = obj.get_descendants().type(
             InternationalArticleListingPage
         ).live().specific()
-        articles_serializer = InternationalArticleListingPageSerializer(
-            queryset,
+        articles_listing_serializer = InternationalArticleListingPageSerializer(
+            articles_listing_queryset,
             many=True,
             allow_null=True,
             context=self.context
         )
-        return articles_serializer.data
+        campaigns_queryset = obj.get_descendants().type(
+            InternationalCampaignPage
+        ).live().specific()
+        campaigns_serializer = InternationalCampaignPageSerializer(
+            campaigns_queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return articles_listing_serializer.data + campaigns_serializer.data
