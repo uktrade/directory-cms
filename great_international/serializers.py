@@ -178,7 +178,7 @@ class InternationalTopicLandingPageSerializer(BasePageSerializer):
         articles_listing_queryset = obj.get_descendants().type(
             InternationalArticleListingPage
         ).live().specific()
-        articles_listing_serializer = InternationalArticleListingPageSerializer(
+        articles_list_serializer = InternationalArticleListingPageSerializer(
             articles_listing_queryset,
             many=True,
             allow_null=True,
@@ -193,4 +193,4 @@ class InternationalTopicLandingPageSerializer(BasePageSerializer):
             allow_null=True,
             context=self.context
         )
-        return articles_listing_serializer.data + campaigns_serializer.data
+        return articles_list_serializer.data + campaigns_serializer.data
