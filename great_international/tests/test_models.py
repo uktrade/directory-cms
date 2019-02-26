@@ -8,6 +8,7 @@ from export_readiness.tests import factories as exread_factories
 def test_app_models():
     assert models.GreatInternationalApp.allowed_subpage_models() == [
         models.GreatInternationalApp,
+        models.InternationalSectorPage,
         models.InternationalHomePage,
         models.InternationalMarketingPages,
         models.InternationalRegionPage,

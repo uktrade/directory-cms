@@ -6,6 +6,63 @@ from django.utils import timezone
 from great_international import models
 
 
+class InternationalSectorPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.InternationalSectorPage
+
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None
+
+    heading = factory.fuzzy.FuzzyText(length=10)
+    sub_heading = factory.fuzzy.FuzzyText(length=10)
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    heading_teaser = factory.fuzzy.FuzzyText(length=10)
+
+    section_one_body = factory.fuzzy.FuzzyText(length=10)
+    section_one_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+
+    statistic_number_one = factory.fuzzy.FuzzyText(length=10)
+    statistic_heading_one = factory.fuzzy.FuzzyText(length=10)
+    statistic_smallprint_one = factory.fuzzy.FuzzyText(length=10)
+
+    statistic_number_two = factory.fuzzy.FuzzyText(length=10)
+    statistic_heading_two = factory.fuzzy.FuzzyText(length=10)
+    statistic_smallprint_two = factory.fuzzy.FuzzyText(length=10)
+
+    section_two_heading = factory.fuzzy.FuzzyText(length=10)
+    section_two_teaser = factory.fuzzy.FuzzyText(length=10)
+    section_two_heading_one = factory.fuzzy.FuzzyText(length=10)
+    section_two_body_one = factory.fuzzy.FuzzyText(length=10)
+    section_two_heading_two = factory.fuzzy.FuzzyText(length=10)
+    section_two_body_two = factory.fuzzy.FuzzyText(length=10)
+    section_two_heading_three = factory.fuzzy.FuzzyText(length=10)
+    section_two_body_three = factory.fuzzy.FuzzyText(length=10)
+
+    case_study_title = factory.fuzzy.FuzzyText(length=10)
+    case_study_description = factory.fuzzy.FuzzyText(length=10)
+    case_study_cta_text = factory.fuzzy.FuzzyText(length=10)
+    case_study_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+
+    section_three_heading = factory.fuzzy.FuzzyText(length=10)
+    section_three_teaser = factory.fuzzy.FuzzyText(length=10)
+    section_three_heading_one = factory.fuzzy.FuzzyText(length=10)
+    section_three_teaser_one = factory.fuzzy.FuzzyText(length=10)
+    section_three_heading_two = factory.fuzzy.FuzzyText(length=10)
+    section_three_teaser_two = factory.fuzzy.FuzzyText(length=10)
+
+    next_steps_heading = factory.fuzzy.FuzzyText(length=10)
+    next_steps_description = factory.fuzzy.FuzzyText(length=10)
+
+
 class InternationalHomePageFactory(wagtail_factories.PageFactory):
 
     class Meta:

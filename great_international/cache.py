@@ -3,6 +3,11 @@ from core.cache import AbstractDatabaseCacheSubscriber
 from great_international import models
 
 
+class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.InternationalSectorPage
+    subscriptions = []
+
+
 class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalHomePage
     subscriptions = [

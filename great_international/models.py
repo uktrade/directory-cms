@@ -29,6 +29,263 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
         return []
 
 
+class InternationalSectorPage(BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+    subpage_types = ['great_international.InternationalSectorPage']
+
+    heading = models.CharField(max_length=255)
+    sub_heading = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    heading_teaser = models.CharField(max_length=255)
+
+    section_one_body = models.CharField(max_length=255)
+    section_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    statistic_number_one = models.CharField(max_length=255)
+    statistic_heading_one = models.CharField(max_length=255)
+    statistic_smallprint_one = models.CharField(max_length=255)
+
+    statistic_number_two = models.CharField(max_length=255)
+    statistic_heading_two = models.CharField(max_length=255)
+    statistic_smallprint_two = models.CharField(max_length=255)
+
+    statistic_number_three = models.CharField(max_length=255, blank=True)
+    statistic_heading_three = models.CharField(max_length=255, blank=True)
+    statistic_smallprint_three = models.CharField(max_length=255, blank=True)
+
+    statistic_number_four = models.CharField(max_length=255, blank=True)
+    statistic_heading_four = models.CharField(max_length=255, blank=True)
+    statistic_smallprint_four = models.CharField(max_length=255, blank=True)
+
+    statistic_number_five = models.CharField(max_length=255, blank=True)
+    statistic_heading_five = models.CharField(max_length=255, blank=True)
+    statistic_smallprint_five = models.CharField(max_length=255, blank=True)
+
+    statistic_number_six = models.CharField(max_length=255, blank=True)
+    statistic_heading_six = models.CharField(max_length=255, blank=True)
+    statistic_smallprint_six = models.CharField(max_length=255, blank=True)
+
+    section_two_heading = models.CharField(max_length=255)
+    section_two_teaser = models.CharField(max_length=255)
+
+    section_two_icon_one = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    section_two_heading_one = models.CharField(max_length=255)
+    section_two_body_one = models.CharField(max_length=255)
+
+    section_two_icon_two = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    section_two_heading_two = models.CharField(max_length=255)
+    section_two_body_two = models.CharField(max_length=255)
+
+    section_two_icon_three = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    section_two_heading_three = models.CharField(max_length=255)
+    section_two_body_three = models.CharField(max_length=255)
+
+    case_study_title = models.CharField(max_length=255)
+    case_study_description = models.CharField(max_length=255)
+    case_study_cta_text = models.CharField(max_length=255)
+    case_study_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    section_three_heading = models.CharField(max_length=255)
+    section_three_teaser = models.CharField(max_length=255)
+
+    section_three_heading_one = models.CharField(max_length=255)
+    section_three_teaser_one = models.CharField(max_length=255)
+    section_three_body_one = MarkdownField(blank=True, null=True)
+
+    section_three_heading_two = models.CharField(max_length=255)
+    section_three_teaser_two = models.CharField(max_length=255)
+    section_three_body_two = MarkdownField(blank=True, null=True)
+
+    next_steps_heading = models.CharField(max_length=255)
+    next_steps_description = models.CharField(max_length=255)
+
+    content_panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel('heading'),
+                FieldPanel('sub_heading'),
+                ImageChooserPanel('hero_image'),
+                FieldPanel('heading_teaser')
+            ],
+            heading='Heading'
+        ),
+        MultiFieldPanel(
+            [
+                FieldRowPanel(
+                    [
+                        FieldPanel('section_one_body'),
+                        ImageChooserPanel('section_one_image')
+                    ]
+                )
+            ],
+            heading='Section One'
+        ),
+        MultiFieldPanel(
+            [
+                FieldRowPanel(
+                    [
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_number_one'),
+                                FieldPanel('statistic_heading_one'),
+                                FieldPanel('statistic_smallprint_one')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_number_two'),
+                                FieldPanel('statistic_heading_two'),
+                                FieldPanel('statistic_smallprint_two')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_number_three'),
+                                FieldPanel('statistic_heading_three'),
+                                FieldPanel('statistic_smallprint_three')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_number_four'),
+                                FieldPanel('statistic_heading_four'),
+                                FieldPanel('statistic_smallprint_four')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_number_five'),
+                                FieldPanel('statistic_heading_five'),
+                                FieldPanel('statistic_smallprint_five')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_number_six'),
+                                FieldPanel('statistic_heading_six'),
+                                FieldPanel('statistic_smallprint_six')
+                            ]
+                        ),
+                    ]
+                )
+            ],
+            heading='Statistics'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('section_two_heading'),
+                FieldPanel('section_two_teaser'),
+                FieldRowPanel(
+                    [
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel('section_two_icon_one'),
+                                FieldPanel('section_two_heading_one'),
+                                FieldPanel('section_two_body_one')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel('section_two_icon_two'),
+                                FieldPanel('section_two_heading_two'),
+                                FieldPanel('section_two_body_two')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel('section_two_icon_three'),
+                                FieldPanel('section_two_heading_three'),
+                                FieldPanel('section_two_body_three')
+                            ]
+                        )
+                    ]
+                )
+            ],
+            heading='Section Two'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('case_study_title'),
+                FieldPanel('case_study_description'),
+                FieldPanel('case_study_cta_text'),
+                ImageChooserPanel('case_study_image')
+            ],
+            heading='Case Study'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('section_three_heading'),
+                FieldPanel('section_three_teaser'),
+                FieldRowPanel(
+                    [
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('section_three_heading_one'),
+                                FieldPanel('section_three_teaser_one'),
+                                FieldPanel('section_three_body_one')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('section_three_heading_two'),
+                                FieldPanel('section_three_teaser_two'),
+                                FieldPanel('section_three_body_two')
+                            ]
+                        )
+                    ]
+                )
+            ],
+            heading='Section Three'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('next_steps_heading'),
+                FieldPanel('next_steps_description')
+            ],
+            heading='Next Steps'
+        ),
+        SearchEngineOptimisationPanel()
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug')
+    ]
+
+
 class InternationalHomePage(ExclusivePageMixin, BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG

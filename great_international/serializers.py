@@ -54,6 +54,48 @@ class PageWithRelatedPagesSerializer(BasePageSerializer):
         return serialized
 
 
+class InternationalSectorPageSerializer(BasePageSerializer):
+    heading = serializers.CharField(max_length=255)
+    sub_heading = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    heading_teaser = serializers.CharField(max_length=255)
+
+    section_one_body = serializers.CharField(max_length=255)
+    section_one_image = wagtail_fields.ImageRenditionField('original')
+
+    statistic_number_one = serializers.CharField(max_length=255)
+    statistic_heading_one = serializers.CharField(max_length=255)
+    statistic_smallprint_one = serializers.CharField(max_length=255)
+
+    statistic_number_two = serializers.CharField(max_length=255)
+    statistic_heading_two = serializers.CharField(max_length=255)
+    statistic_smallprint_two = serializers.CharField(max_length=255)
+
+    section_two_heading = serializers.CharField(max_length=255)
+    section_two_teaser = serializers.CharField(max_length=255)
+    section_two_heading_one = serializers.CharField(max_length=255)
+    section_two_body_one = serializers.CharField(max_length=255)
+    section_two_heading_two = serializers.CharField(max_length=255)
+    section_two_body_two = serializers.CharField(max_length=255)
+    section_two_heading_three = serializers.CharField(max_length=255)
+    section_two_body_three = serializers.CharField(max_length=255)
+
+    case_study_title = serializers.CharField(max_length=255)
+    case_study_description = serializers.CharField(max_length=255)
+    case_study_cta_text = serializers.CharField(max_length=255)
+    case_study_image = wagtail_fields.ImageRenditionField('original')
+
+    section_three_heading = serializers.CharField(max_length=255)
+    section_three_teaser = serializers.CharField(max_length=255)
+    section_three_heading_one = serializers.CharField(max_length=255)
+    section_three_teaser_one = serializers.CharField(max_length=255)
+    section_three_heading_two = serializers.CharField(max_length=255)
+    section_three_teaser_two = serializers.CharField(max_length=255)
+
+    next_steps_heading = serializers.CharField(max_length=255)
+    next_steps_description = serializers.CharField(max_length=255)
+
+
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
     article_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='article_title')
