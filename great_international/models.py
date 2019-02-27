@@ -150,7 +150,6 @@ class InternationalRegionPage(BasePage):
     ]
 
     def save(self, *args, **kwargs):
-        self.title = self.get_verbose_name()
         return super().save(*args, **kwargs)
 
 
@@ -517,6 +516,7 @@ class InternationalTopicLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     subpage_types = [
         'great_international.InternationalArticleListingPage',
+        'great_international.InternationalCampaignPage'
     ]
 
     landing_page_title = models.CharField(max_length=255)
