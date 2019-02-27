@@ -51,62 +51,62 @@ class InternationalSectorPage(BasePage):
         related_name='+'
     )
 
-    statistic_number_one = models.CharField(max_length=255)
-    statistic_heading_one = models.CharField(max_length=255)
-    statistic_smallprint_one = models.CharField(max_length=255)
+    statistic_1_number = models.CharField(max_length=255)
+    statistic_1_heading = models.CharField(max_length=255)
+    statistic_1_smallprint = models.CharField(max_length=255)
 
-    statistic_number_two = models.CharField(max_length=255)
-    statistic_heading_two = models.CharField(max_length=255)
-    statistic_smallprint_two = models.CharField(max_length=255)
+    statistic_2_number = models.CharField(max_length=255)
+    statistic_2_heading = models.CharField(max_length=255)
+    statistic_2_smallprint = models.CharField(max_length=255)
 
-    statistic_number_three = models.CharField(max_length=255, blank=True)
-    statistic_heading_three = models.CharField(max_length=255, blank=True)
-    statistic_smallprint_three = models.CharField(max_length=255, blank=True)
+    statistic_3_number = models.CharField(max_length=255, blank=True)
+    statistic_3_heading = models.CharField(max_length=255, blank=True)
+    statistic_3_smallprint = models.CharField(max_length=255, blank=True)
 
-    statistic_number_four = models.CharField(max_length=255, blank=True)
-    statistic_heading_four = models.CharField(max_length=255, blank=True)
-    statistic_smallprint_four = models.CharField(max_length=255, blank=True)
+    statistic_4_number = models.CharField(max_length=255, blank=True)
+    statistic_4_heading = models.CharField(max_length=255, blank=True)
+    statistic_4_smallprint = models.CharField(max_length=255, blank=True)
 
-    statistic_number_five = models.CharField(max_length=255, blank=True)
-    statistic_heading_five = models.CharField(max_length=255, blank=True)
-    statistic_smallprint_five = models.CharField(max_length=255, blank=True)
+    statistic_5_number = models.CharField(max_length=255, blank=True)
+    statistic_5_heading = models.CharField(max_length=255, blank=True)
+    statistic_5_smallprint = models.CharField(max_length=255, blank=True)
 
-    statistic_number_six = models.CharField(max_length=255, blank=True)
-    statistic_heading_six = models.CharField(max_length=255, blank=True)
-    statistic_smallprint_six = models.CharField(max_length=255, blank=True)
+    statistic_6_number = models.CharField(max_length=255, blank=True)
+    statistic_6_heading = models.CharField(max_length=255, blank=True)
+    statistic_6_smallprint = models.CharField(max_length=255, blank=True)
 
     section_two_heading = models.CharField(max_length=255)
     section_two_teaser = models.CharField(max_length=255)
 
-    section_two_icon_one = models.ForeignKey(
+    section_two_subsection_one_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    section_two_heading_one = models.CharField(max_length=255)
-    section_two_body_one = models.CharField(max_length=255)
+    section_two_subsection_one_heading = models.CharField(max_length=255)
+    section_two_subsection_one_body = models.CharField(max_length=255)
 
-    section_two_icon_two = models.ForeignKey(
+    section_two_subsection_two_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    section_two_heading_two = models.CharField(max_length=255)
-    section_two_body_two = models.CharField(max_length=255)
+    section_two_subsection_two_heading = models.CharField(max_length=255)
+    section_two_subsection_two_body = models.CharField(max_length=255)
 
-    section_two_icon_three = models.ForeignKey(
+    section_two_subsection_three_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    section_two_heading_three = models.CharField(max_length=255)
-    section_two_body_three = models.CharField(max_length=255)
+    section_two_subsection_three_heading = models.CharField(max_length=255)
+    section_two_subsection_three_body = models.CharField(max_length=255)
 
     case_study_title = models.CharField(max_length=255)
     case_study_description = models.CharField(max_length=255)
@@ -121,13 +121,13 @@ class InternationalSectorPage(BasePage):
     section_three_heading = models.CharField(max_length=255)
     section_three_teaser = models.CharField(max_length=255)
 
-    section_three_heading_one = models.CharField(max_length=255)
-    section_three_teaser_one = models.CharField(max_length=255)
-    section_three_body_one = MarkdownField(blank=True, null=True)
+    section_three_subsection_one_heading = models.CharField(max_length=255)
+    section_three_subsection_one_teaser = models.CharField(max_length=255)
+    section_three_subsection_one_body = MarkdownField(blank=True, null=True)
 
-    section_three_heading_two = models.CharField(max_length=255)
-    section_three_teaser_two = models.CharField(max_length=255)
-    section_three_body_two = MarkdownField(blank=True, null=True)
+    section_three_subsection_two_heading = models.CharField(max_length=255)
+    section_three_subsection_two_teaser = models.CharField(max_length=255)
+    section_three_subsection_two_body = MarkdownField(blank=True, null=True)
 
     next_steps_heading = models.CharField(max_length=255)
     next_steps_description = models.CharField(max_length=255)
@@ -181,44 +181,44 @@ class InternationalSectorPage(BasePage):
                     [
                         MultiFieldPanel(
                             [
-                                FieldPanel('statistic_number_one'),
-                                FieldPanel('statistic_heading_one'),
-                                FieldPanel('statistic_smallprint_one')
+                                FieldPanel('statistic_1_number'),
+                                FieldPanel('statistic_1_heading'),
+                                FieldPanel('statistic_1_smallprint')
                             ]
                         ),
                         MultiFieldPanel(
                             [
-                                FieldPanel('statistic_number_two'),
-                                FieldPanel('statistic_heading_two'),
-                                FieldPanel('statistic_smallprint_two')
+                                FieldPanel('statistic_2_number'),
+                                FieldPanel('statistic_2_heading'),
+                                FieldPanel('statistic_2_smallprint')
                             ]
                         ),
                         MultiFieldPanel(
                             [
-                                FieldPanel('statistic_number_three'),
-                                FieldPanel('statistic_heading_three'),
-                                FieldPanel('statistic_smallprint_three')
+                                FieldPanel('statistic_3_number'),
+                                FieldPanel('statistic_3_heading'),
+                                FieldPanel('statistic_3_smallprint')
                             ]
                         ),
                         MultiFieldPanel(
                             [
-                                FieldPanel('statistic_number_four'),
-                                FieldPanel('statistic_heading_four'),
-                                FieldPanel('statistic_smallprint_four')
+                                FieldPanel('statistic_4_number'),
+                                FieldPanel('statistic_4_heading'),
+                                FieldPanel('statistic_4_smallprint')
                             ]
                         ),
                         MultiFieldPanel(
                             [
-                                FieldPanel('statistic_number_five'),
-                                FieldPanel('statistic_heading_five'),
-                                FieldPanel('statistic_smallprint_five')
+                                FieldPanel('statistic_5_number'),
+                                FieldPanel('statistic_5_heading'),
+                                FieldPanel('statistic_5_smallprint')
                             ]
                         ),
                         MultiFieldPanel(
                             [
-                                FieldPanel('statistic_number_six'),
-                                FieldPanel('statistic_heading_six'),
-                                FieldPanel('statistic_smallprint_six')
+                                FieldPanel('statistic_6_number'),
+                                FieldPanel('statistic_6_heading'),
+                                FieldPanel('statistic_6_smallprint')
                             ]
                         ),
                     ]
@@ -234,23 +234,23 @@ class InternationalSectorPage(BasePage):
                     [
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel('section_two_icon_one'),
-                                FieldPanel('section_two_heading_one'),
-                                FieldPanel('section_two_body_one')
+                                ImageChooserPanel('section_two_subsection_one_icon'),
+                                FieldPanel('section_two_subsection_one_heading'),
+                                FieldPanel('section_two_subsection_one_body')
                             ]
                         ),
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel('section_two_icon_two'),
-                                FieldPanel('section_two_heading_two'),
-                                FieldPanel('section_two_body_two')
+                                ImageChooserPanel('section_two_subsection_two_icon'),
+                                FieldPanel('section_two_subsection_two_heading'),
+                                FieldPanel('section_two_subsection_two_body')
                             ]
                         ),
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel('section_two_icon_three'),
-                                FieldPanel('section_two_heading_three'),
-                                FieldPanel('section_two_body_three')
+                                ImageChooserPanel('section_two_subsection_three_icon'),
+                                FieldPanel('section_two_subsection_three_heading'),
+                                FieldPanel('section_two_subsection_three_body')
                             ]
                         )
                     ]
@@ -275,16 +275,16 @@ class InternationalSectorPage(BasePage):
                     [
                         MultiFieldPanel(
                             [
-                                FieldPanel('section_three_heading_one'),
-                                FieldPanel('section_three_teaser_one'),
-                                FieldPanel('section_three_body_one')
+                                FieldPanel('section_three_subsection_one_heading'),
+                                FieldPanel('section_three_subsection_one_teaser'),
+                                FieldPanel('section_three_subsection_one_body')
                             ]
                         ),
                         MultiFieldPanel(
                             [
-                                FieldPanel('section_three_heading_two'),
-                                FieldPanel('section_three_teaser_two'),
-                                FieldPanel('section_three_body_two')
+                                FieldPanel('section_three_subsection_two_heading'),
+                                FieldPanel('section_three_subsection_two_teaser'),
+                                FieldPanel('section_three_subsection_two_body')
                             ]
                         )
                     ]
