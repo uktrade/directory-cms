@@ -11,14 +11,6 @@ class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     ]
 
 
-class InternationalMarketingPagesSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InternationalMarketingPages
-    subscriptions = [
-        models.InternationalArticlePage,
-        models.InternationalCampaignPage
-    ]
-
-
 class InternationalArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalArticlePage
     subscriptions = []
@@ -27,3 +19,20 @@ class InternationalArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
 class InternationalCampaignPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalCampaignPage
     subscriptions = []
+
+
+class InternationalArticleListingPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = models.InternationalArticleListingPage
+    subscriptions = [
+        models.InternationalArticlePage
+    ]
+
+
+class InternationalTopicLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.InternationalTopicLandingPage
+    subscriptions = [
+        models.InternationalArticlePage,
+        models.InternationalArticleListingPage,
+    ]

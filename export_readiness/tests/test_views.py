@@ -126,7 +126,7 @@ def test_homepage(admin_client, root_page):
 
     # guidance
     topic_landing_page = factories.TopicLandingPageFactory(
-        slug=cms.EXPORT_READINESS_ADVICE_SLUG
+        slug=cms.GREAT_ADVICE_SLUG
     )
     for _ in range(5):
         factories.ArticleListingPageFactory.create(

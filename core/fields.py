@@ -20,14 +20,14 @@ class MetaDictField(fields.DictField):
         return {
             'languages': [
                 (code, label) for (code, label) in settings.LANGUAGES_LOCALIZED
-                if code in instance.translated_languages
+                if code in instance.specific.translated_languages
             ],
-            'url': instance.get_url(
+            'url': instance.specific.get_url(
                 is_draft=is_draft,
                 language_code=settings.LANGUAGE_CODE,
             ),
             'slug': instance.slug,
-            'localised_urls': instance.get_localized_urls(),
+            'localised_urls': instance.specific.get_localized_urls(),
             'pk': instance.pk,
             'draft_token': (instance.get_draft_token()
                             if instance.has_unpublished_changes else None)

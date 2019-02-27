@@ -32,6 +32,18 @@ class InternationalMarketingPagesFactory(wagtail_factories.PageFactory):
     parent = None
 
 
+class InternationalArticleListingPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.InternationalArticleListingPage
+
+    landing_page_title = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None
+
+
 class InternationalArticlePageFactory(wagtail_factories.PageFactory):
 
     class Meta:
@@ -51,6 +63,7 @@ class InternationalCampaignPageFactory(wagtail_factories.PageFactory):
     class Meta:
         model = models.InternationalCampaignPage
 
+    campaign_teaser = factory.fuzzy.FuzzyText(length=10)
     campaign_heading = factory.fuzzy.FuzzyText(length=10)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
@@ -67,3 +80,34 @@ class InternationalCampaignPageFactory(wagtail_factories.PageFactory):
     cta_box_message = factory.fuzzy.FuzzyText(length=10)
     cta_box_button_url = factory.fuzzy.FuzzyText(length=10)
     cta_box_button_text = factory.fuzzy.FuzzyText(length=10)
+
+
+class InternationalTopicLandingPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.InternationalTopicLandingPage
+
+    landing_page_title = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None
+
+
+class InternationalRegionPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.InternationalRegionPage
+
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None
+
+
+class InternationalRegionalFolderPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.InternationalRegionalFolderPage
+
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = factory.SubFactory(InternationalRegionPageFactory)
