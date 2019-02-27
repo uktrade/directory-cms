@@ -135,6 +135,7 @@ class InternationalSectorPage(BasePage):
 
     related_page_one = models.ForeignKey(
         'great_international.InternationalArticlePage',
+        'great_international.InternationalCampaignPage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -142,6 +143,7 @@ class InternationalSectorPage(BasePage):
     )
     related_page_two = models.ForeignKey(
         'great_international.InternationalArticlePage',
+        'great_international.InternationalCampaignPage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -149,6 +151,7 @@ class InternationalSectorPage(BasePage):
     )
     related_page_three = models.ForeignKey(
         'great_international.InternationalArticlePage',
+        'great_international.InternationalCampaignPage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
