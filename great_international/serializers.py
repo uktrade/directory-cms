@@ -54,7 +54,7 @@ class PageWithRelatedPagesSerializer(BasePageSerializer):
         return serialized
 
 
-class InternationalSectorPageSerializer(BasePageSerializer):
+class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')

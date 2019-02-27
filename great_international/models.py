@@ -31,7 +31,7 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
 
 class InternationalSectorPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    subpage_types = ['great_international.InternationalSectorPage']
+    subpage_types = []
 
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
@@ -131,6 +131,28 @@ class InternationalSectorPage(BasePage):
 
     next_steps_heading = models.CharField(max_length=255)
     next_steps_description = models.CharField(max_length=255)
+
+    related_page_one = models.ForeignKey(
+        'great_international.InternationalArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    related_page_two = models.ForeignKey(
+        'great_international.InternationalArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    related_page_three = models.ForeignKey(
+        'great_international.InternationalArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     content_panels = [
         MultiFieldPanel(
@@ -276,6 +298,22 @@ class InternationalSectorPage(BasePage):
                 FieldPanel('next_steps_description')
             ],
             heading='Next Steps'
+        ),
+        MultiFieldPanel(
+            heading='Related articles',
+            children=[
+                FieldRowPanel([
+                    PageChooserPanel(
+                        'related_page_one',
+                        'great_international.InternationalArticlePage'),
+                    PageChooserPanel(
+                        'related_page_two',
+                        'great_international.InternationalArticlePage'),
+                    PageChooserPanel(
+                        'related_page_three',
+                        'great_international.InternationalArticlePage')
+                ])
+            ]
         ),
         SearchEngineOptimisationPanel()
     ]
