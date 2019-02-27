@@ -61,7 +61,7 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
     heading_teaser = serializers.CharField(max_length=255)
 
     section_one_body = serializers.CharField(max_length=255)
-    section_one_image = wagtail_fields.ImageRenditionField('original')
+    section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
 
     statistic_1_number = serializers.CharField(max_length=255)
     statistic_1_heading = serializers.CharField(max_length=255)
@@ -83,6 +83,7 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
     case_study_title = serializers.CharField(max_length=255)
     case_study_description = serializers.CharField(max_length=255)
     case_study_cta_text = serializers.CharField(max_length=255)
+    case_study_cta_url = serializers.CharField(max_length=255)
     case_study_image = wagtail_fields.ImageRenditionField('original')
 
     section_three_heading = serializers.CharField(max_length=255)

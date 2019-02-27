@@ -48,6 +48,7 @@ class InternationalSectorPageFactory(wagtail_factories.PageFactory):
     case_study_title = factory.fuzzy.FuzzyText(length=10)
     case_study_description = factory.fuzzy.FuzzyText(length=10)
     case_study_cta_text = factory.fuzzy.FuzzyText(length=10)
+    case_study_cta_url = factory.fuzzy.FuzzyText(length=10)
     case_study_image = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
