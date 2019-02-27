@@ -166,8 +166,8 @@ class InternationalRegionalFolderPage(BasePage):
     ]
 
     def save(self, *args, **kwargs):
-        self.title = self.get_verbose_name()
-        self.slug = slugify(f'{self.slug}-{self.get_parent().slug}')
+        if self.pk is None:
+            self.slug = slugify(f'{self.slug}-{self.get_parent().slug}')
         return super().save(*args, **kwargs)
 
 

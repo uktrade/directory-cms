@@ -139,3 +139,18 @@ def test_international_folder_page_append_parent_slug():
         slug='test'
     )
     assert folder_page.slug == 'test-canada'
+
+
+@pytest.mark.django_db
+def test_international_folder_page_append_parent_slug_only_on_creation():
+    region = factories.InternationalRegionPageFactory(
+        slug='canada'
+    )
+    folder_page = factories.InternationalRegionalFolderPageFactory(
+        parent=region,
+        slug='test'
+    )
+    assert folder_page.slug == 'test-canada'
+
+    folder_page.save()
+    assert folder_page.slug == 'test-canada'
