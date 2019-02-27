@@ -160,27 +160,29 @@ class InternationalSectorPage(BasePage):
 
     content_panels = [
         MultiFieldPanel(
-            [
+            heading='Heading',
+            children=[
                 FieldPanel('heading'),
                 FieldPanel('sub_heading'),
                 ImageChooserPanel('hero_image'),
                 FieldPanel('heading_teaser')
-            ],
-            heading='Heading'
+            ]
+
         ),
         MultiFieldPanel(
-            [
+            heading='Section One',
+            children=[
                 FieldRowPanel(
                     [
                         FieldPanel('section_one_body'),
                         ImageChooserPanel('section_one_image')
                     ]
                 )
-            ],
-            heading='Section One'
+            ]
         ),
         MultiFieldPanel(
-            [
+            heading='Statistics',
+            children=[
                 FieldRowPanel(
                     [
                         MultiFieldPanel(
@@ -227,11 +229,11 @@ class InternationalSectorPage(BasePage):
                         ),
                     ]
                 )
-            ],
-            heading='Statistics'
+            ]
         ),
         MultiFieldPanel(
-            [
+            heading='Section Two',
+            children=[
                 FieldPanel('section_two_heading'),
                 FieldPanel('section_two_teaser'),
                 FieldRowPanel(
@@ -259,20 +261,20 @@ class InternationalSectorPage(BasePage):
                         )
                     ]
                 )
-            ],
-            heading='Section Two'
+            ]
         ),
         MultiFieldPanel(
-            [
+            heading='Case Study',
+            children=[
                 FieldPanel('case_study_title'),
                 FieldPanel('case_study_description'),
                 FieldPanel('case_study_cta_text'),
                 ImageChooserPanel('case_study_image')
-            ],
-            heading='Case Study'
+            ]
         ),
         MultiFieldPanel(
-            [
+            heading='Section Three',
+            children=[
                 FieldPanel('section_three_heading'),
                 FieldPanel('section_three_teaser'),
                 FieldRowPanel(
@@ -293,15 +295,14 @@ class InternationalSectorPage(BasePage):
                         )
                     ]
                 )
-            ],
-            heading='Section Three'
+            ]
         ),
         MultiFieldPanel(
-            [
+            heading='Next Steps',
+            children=[
                 FieldPanel('next_steps_heading'),
                 FieldPanel('next_steps_description')
-            ],
-            heading='Next Steps'
+            ]
         ),
         MultiFieldPanel(
             heading='Related articles',
