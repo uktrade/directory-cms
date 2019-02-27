@@ -1,4 +1,6 @@
-from core.cache import AbstractDatabaseCacheSubscriber
+from core.cache import (
+    AbstractDatabaseCacheSubscriber, RegionAwareCachePopulator
+)
 
 from great_international import models
 
@@ -24,6 +26,7 @@ class InternationalCampaignPageSubscriber(AbstractDatabaseCacheSubscriber):
 class InternationalArticleListingPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
+    cache_populator = RegionAwareCachePopulator
     model = models.InternationalArticleListingPage
     subscriptions = [
         models.InternationalArticlePage

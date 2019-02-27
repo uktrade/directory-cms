@@ -120,10 +120,14 @@ def test_articlelistingpage_with_localised_content(admin_client, root_page):
     )
 
     url = reverse(
-        'api:api:pages:detail',
-        kwargs={'pk': article_listing_page.pk}
+        'api:lookup-by-slug',
+        kwargs={'slug': article_listing_page.slug}
     )
-    response = admin_client.get(url, {'region': 'germany'})
+
+    response = admin_client.get(
+        url,
+        {'region': 'germany', 'service_name': cms.GREAT_INTERNATIONAL}
+    )
     assert response.status_code == 200
     assert 'localised_articles' in response.json()
     expected_localised_article = response.json()['localised_articles'][0]['id']
@@ -156,10 +160,14 @@ def test_articlelistingpage_without_localised_content(admin_client, root_page):
     )
 
     url = reverse(
-        'api:api:pages:detail',
-        kwargs={'pk': article_listing_page.pk}
+        'api:lookup-by-slug',
+        kwargs={'slug': article_listing_page.slug}
     )
-    response = admin_client.get(url, {'region': 'bar'})
+
+    response = admin_client.get(
+        url,
+        {'region': 'bar', 'service_name': cms.GREAT_INTERNATIONAL}
+    )
     assert response.status_code == 200
     assert 'localised_articles' in response.json()
     assert response.json()['localised_articles'] == []
