@@ -75,16 +75,12 @@ def test_international_topic_landing_page_view(admin_client, root_page):
         parent=root_page,
         live=True
     )
-    article_listing_page = factories.InternationalArticleListingPageFactory.create(  # NOQA
+    campaign_page = factories.InternationalCampaignPageFactory(
         parent=topic_landing_page,
         live=True
     )
-    factories.InternationalArticlePageFactory.create(
-        parent=article_listing_page,
-        live=True
-    )
-    factories.InternationalArticlePageFactory.create(
-        parent=article_listing_page,
+    article_listing_page = factories.InternationalArticleListingPageFactory.create(  # NOQA
+        parent=topic_landing_page,
         live=True
     )
 
@@ -92,6 +88,10 @@ def test_international_topic_landing_page_view(admin_client, root_page):
     response = admin_client.get(url)
     assert response.status_code == 200
     assert 'child_pages' in response.json()
+    assert sorted(
+        [page['id'] for page in response.json()['child_pages']],
+        reverse=True
+    ) == [article_listing_page.pk, campaign_page.pk]
 
 
 def test_articlelistingpage_with_localised_content(admin_client, root_page):
