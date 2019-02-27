@@ -156,7 +156,8 @@ class InternationalRegionPage(BasePage):
 class InternationalRegionalFolderPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     subpage_types = [
-        'great_international.InternationalArticlePage'
+        'great_international.InternationalArticlePage',
+        'great_international.InternationalCampaignPage'
     ]
 
     settings_panels = [
