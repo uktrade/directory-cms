@@ -296,8 +296,8 @@ class InternationalSectorPage(BasePage):
                                     'section_three_subsection_one_teaser'),
                                 HelpPanel(
                                     'For accessibility reasons, use only '
-                                    '"####[Your text here]" for subheadings in '
-                                    'this markdown field'),
+                                    '"####[Your text here]" for subheadings '
+                                    'in this markdown field'),
                                 FieldPanel(
                                     'section_three_subsection_one_body')
                             ]
@@ -310,8 +310,8 @@ class InternationalSectorPage(BasePage):
                                     'section_three_subsection_two_teaser'),
                                 HelpPanel(
                                     'For accessibility reasons, use only '
-                                    '"####[Your text here]" for subheadings in '
-                                    'this markdown field'),
+                                    '"####[Your text here]" for subheadings '
+                                    'in this markdown field'),
                                 FieldPanel(
                                     'section_three_subsection_two_body')
                             ]

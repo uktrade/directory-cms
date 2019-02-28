@@ -99,8 +99,10 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
     section_two_subsection_two_body = serializers.CharField(max_length=255)
     section_two_subsection_three_icon = wagtail_fields.ImageRenditionField(
         'original')
-    section_two_subsection_three_heading = serializers.CharField(max_length=255)
-    section_two_subsection_three_body = serializers.CharField(max_length=255)
+    section_two_subsection_three_heading = serializers.CharField(
+        max_length=255)
+    section_two_subsection_three_body = serializers.CharField(
+        max_length=255)
 
     case_study_title = serializers.CharField(max_length=255)
     case_study_description = serializers.CharField(max_length=255)
@@ -110,12 +112,18 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
 
     section_three_heading = serializers.CharField(max_length=255)
     section_three_teaser = serializers.CharField(max_length=255)
-    section_three_subsection_one_heading = serializers.CharField(max_length=255)
-    section_three_subsection_one_teaser = serializers.CharField(max_length=255)
-    section_three_subsection_one_body = serializers.CharField(max_length=255)
-    section_three_subsection_two_heading = serializers.CharField(max_length=255)
-    section_three_subsection_two_teaser = serializers.CharField(max_length=255)
-    section_three_subsection_two_body = serializers.CharField(max_length=255)
+    section_three_subsection_one_heading = serializers.CharField(
+        max_length=255)
+    section_three_subsection_one_teaser = serializers.CharField(
+        max_length=255)
+    section_three_subsection_one_body = serializers.CharField(
+        max_length=255)
+    section_three_subsection_two_heading = serializers.CharField(
+        max_length=255)
+    section_three_subsection_two_teaser = serializers.CharField(
+        max_length=255)
+    section_three_subsection_two_body = serializers.CharField(
+        max_length=255)
 
     next_steps_heading = serializers.CharField(max_length=255)
     next_steps_description = serializers.CharField(max_length=255)
