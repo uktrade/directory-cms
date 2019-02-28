@@ -26,7 +26,8 @@ def test_models_hierarchy():
         models.InternationalLocalisedFolderPage
     ]
     # regional folder page
-    assert models.InternationalLocalisedFolderPage.allowed_subpage_models() == [
+    assert models.InternationalLocalisedFolderPage.allowed_subpage_models(
+    ) == [
         models.InternationalArticlePage,
         models.InternationalCampaignPage
     ]
