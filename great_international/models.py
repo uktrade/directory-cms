@@ -366,8 +366,8 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
     subpage_types = [
         'great_international.InternationalArticleListingPage',
-        'great_international.InternationalArticlePage',
-        'great_international.InternationalMarketingPages'
+        'great_international.InternationalTopicLandingPage',
+        'great_international.InternationalRegionPage'
     ]
 
     tariffs_title = models.CharField(max_length=255)
@@ -449,28 +449,11 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
     ]
 
 
-class InternationalMarketingPages(ExclusivePageMixin, BasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
-    slug_identity = cms.GREAT_INTERNATIONAL_MARKETING_PAGES_SLUG
-    tags = ParentalManyToManyField(Tag, blank=True)
-
-    subpage_types = [
-        'great_international.InternationalArticlePage',
-        'great_international.InternationalCampaignPage'
-    ]
-    settings_panels = [
-        FieldPanel('tags', widget=CheckboxSelectMultiple)
-    ]
-
-    def save(self, *args, **kwargs):
-        self.title = self.get_verbose_name()
-        return super().save(*args, **kwargs)
-
-
 class InternationalRegionPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
-        'great_international.InternationalRegionalFolderPage'
+        'great_international.InternationalLocalisedFolderPage'
     ]
 
     tags = ParentalManyToManyField(Tag, blank=True)
@@ -485,8 +468,9 @@ class InternationalRegionPage(BasePage):
         return super().save(*args, **kwargs)
 
 
-class InternationalRegionalFolderPage(BasePage):
+class InternationalLocalisedFolderPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
+    parent_page_types = ['great_international.InternationalRegionPage']
     subpage_types = [
         'great_international.InternationalArticlePage',
         'great_international.InternationalCampaignPage'
@@ -505,6 +489,11 @@ class InternationalRegionalFolderPage(BasePage):
 
 class InternationalArticlePage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
+    parent_page_types = [
+        'great_international.InternationalArticleListingPage',
+        'great_international.InternationalCampaignPage',
+        'great_international.InternationalLocalisedFolderPage'
+    ]
     subpage_types = []
 
     article_title = models.CharField(max_length=255)
@@ -580,7 +569,14 @@ class InternationalArticlePage(BasePage):
 
 class InternationalArticleListingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    subpage_types = ['great_international.InternationalArticlePage']
+    parent_page_types = [
+        'great_international.InternationalHomePage',
+        'great_international.InternationalTopicLandingPage'
+    ]
+    subpage_types = [
+        'great_international.InternationalArticlePage',
+        'great_international.InternationalCampaignPage',
+    ]
 
     landing_page_title = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
@@ -622,6 +618,11 @@ class InternationalArticleListingPage(BasePage):
 
 class InternationalCampaignPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
+    parent_page_types = [
+        'great_international.InternationalArticleListingPage',
+        'great_international.InternationalTopicLandingPage',
+        'great_international.InternationalLocalisedFolderPage'
+    ]
     subpage_types = [
         'great_international.InternationalArticlePage'
     ]
@@ -847,6 +848,7 @@ class InternationalCampaignPage(BasePage):
 
 class InternationalTopicLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage'

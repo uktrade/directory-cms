@@ -5,7 +5,7 @@ from core import fields as core_fields
 from core.serializers import BasePageSerializer
 
 from .models import (InternationalArticlePage, InternationalArticleListingPage,
-                     InternationalRegionalFolderPage,
+                     InternationalLocalisedFolderPage,
                      InternationalCampaignPage)
 
 
@@ -195,39 +195,58 @@ class InternationalArticleListingPageSerializer(BasePageSerializer):
     articles_count = serializers.IntegerField()
     list_teaser = core_fields.MarkdownToHTMLField(allow_null=True)
     hero_teaser = serializers.CharField(allow_null=True)
-    articles = serializers.SerializerMethodField()
-    localised_articles = serializers.SerializerMethodField()
+    child_pages = serializers.SerializerMethodField()
+    localised_child_pages = serializers.SerializerMethodField()
 
-    def get_localised_articles(self, obj):
+    def get_localised_child_pages(self, obj):
         data = []
         region = self.context['request'].GET.get('region')
         if region:
             slug = f'{obj.slug}-{region}'
-            folder = InternationalRegionalFolderPage.objects.filter(slug=slug)
+            folder = InternationalLocalisedFolderPage.objects.filter(slug=slug)
             if folder.exists():
-                queryset = folder[0].get_descendants().type(
+                articles_queryset = folder[0].get_descendants().type(
                     InternationalArticlePage
                 ).live().specific()
-                serializer = InternationalArticlePageSerializer(
-                    queryset,
+                articles = RelatedArticlePageSerializer(
+                    articles_queryset,
                     many=True,
                     allow_null=True,
                     context=self.context
                 )
-                data = serializer.data
+                campaigns_queryset = folder[0].get_descendants().type(
+                    InternationalCampaignPage
+                ).live().specific()
+
+                campaigns = RelatedCampaignPageSerializer(
+                    campaigns_queryset,
+                    many=True,
+                    allow_null=True,
+                    context=self.context
+                )
+                data = articles.data + campaigns.data
         return data
 
-    def get_articles(self, obj):
-        queryset = obj.get_descendants().type(
+    def get_child_pages(self, obj):
+        articles_queryset = obj.get_descendants().type(
             InternationalArticlePage
         ).live().specific()
-        serializer = InternationalArticlePageSerializer(
-            queryset,
+        articles = RelatedArticlePageSerializer(
+            articles_queryset,
             many=True,
             allow_null=True,
             context=self.context
         )
-        return serializer.data
+        campaigns_queryset = obj.get_descendants().type(
+            InternationalCampaignPage
+        ).live().specific()
+        campaigns = RelatedCampaignPageSerializer(
+            campaigns_queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return articles.data + campaigns.data
 
 
 class InternationalTopicLandingPageSerializer(BasePageSerializer):

@@ -1,4 +1,3 @@
-from directory_constants.constants import cms
 from rest_framework.reverse import reverse
 
 from great_international.tests import factories
@@ -17,30 +16,6 @@ def test_international_homepage(admin_client, root_page):
     home_page = factories.InternationalHomePageFactory.create(
         parent=root_page
     )
-    # news
-    marketing_folder = factories.InternationalMarketingPagesFactory(
-        slug=cms.GREAT_INTERNATIONAL_MARKETING_PAGES_SLUG,
-        live=True
-    )
-    for _ in range(5):
-        factories.InternationalArticlePageFactory.create(
-            parent=marketing_folder
-        )
-    factories.InternationalArticlePageFactory.create(
-        parent=root_page
-    )
-
-    url = reverse('api:api:pages:detail', kwargs={'pk': home_page.pk})
-    response = admin_client.get(url)
-    assert response.status_code == 200
-
-
-def test_international_homepage_no_news(admin_client, root_page):
-
-    home_page = factories.InternationalHomePageFactory.create(
-        parent=root_page
-    )
-
     url = reverse('api:api:pages:detail', kwargs={'pk': home_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
@@ -61,11 +36,11 @@ def test_international_article_listing_page_view(admin_client, root_page):
         parent=root_page,
         live=True
     )
-    factories.InternationalArticlePageFactory.create(
+    article = factories.InternationalArticlePageFactory.create(
         parent=article_listing_page,
         live=True
     )
-    factories.InternationalArticlePageFactory.create(
+    campaign = factories.InternationalCampaignPageFactory.create(
         parent=article_listing_page,
         live=True
     )
@@ -75,8 +50,12 @@ def test_international_article_listing_page_view(admin_client, root_page):
     )
     response = admin_client.get(url)
     assert response.status_code == 200
-    assert 'articles' in response.json()
-    assert 'meta' in response.json()['articles'][0]
+    assert 'child_pages' in response.json()
+    assert sorted(
+        [page['id'] for page in response.json()['child_pages']],
+        reverse=True
+    ) == [campaign.pk, article.pk]
+    assert 'meta' in response.json()['child_pages'][0]
 
 
 def test_international_topic_landing_page_view(admin_client, root_page):
@@ -103,7 +82,7 @@ def test_international_topic_landing_page_view(admin_client, root_page):
     ) == [article_listing_page.pk, campaign_page.pk]
 
 
-def test_articlelistingpage_with_localised_content(admin_client, root_page):
+def test_article_listingpage_with_localised_content(admin_client, root_page):
     article_listing_page = factories.InternationalArticleListingPageFactory.create(  # NOQA
         parent=root_page,
         live=True,
@@ -118,7 +97,7 @@ def test_articlelistingpage_with_localised_content(admin_client, root_page):
         live=True,
         slug='germany'
     )
-    regional_folder_page = factories.InternationalRegionalFolderPageFactory(
+    regional_folder_page = factories.InternationalLocalisedFolderPageFactory(
         parent=region_page,
         live=True,
         slug='setup-uk'
@@ -134,12 +113,15 @@ def test_articlelistingpage_with_localised_content(admin_client, root_page):
     )
     response = admin_client.get(url, {'region': 'germany'})
     assert response.status_code == 200
-    assert 'localised_articles' in response.json()
-    expected_localised_article = response.json()['localised_articles'][0]['id']
+    assert 'localised_child_pages' in response.json()
+    expected_localised_article = response.json(
+        )['localised_child_pages'][0]['id']
     assert expected_localised_article == localised_article.pk
 
 
-def test_articlelistingpage_without_localised_content(admin_client, root_page):
+def test_article_listingpage_without_localised_content(
+        admin_client, root_page
+):
     article_listing_page = factories.InternationalArticleListingPageFactory.create( # NOQA
         parent=root_page,
         live=True,
@@ -154,7 +136,7 @@ def test_articlelistingpage_without_localised_content(admin_client, root_page):
         live=True,
         slug='germany'
     )
-    regional_folder_page = factories.InternationalRegionalFolderPageFactory(
+    regional_folder_page = factories.InternationalLocalisedFolderPageFactory(
         parent=region_page,
         live=True,
         slug='news'  # different branch from setup uk
@@ -170,8 +152,8 @@ def test_articlelistingpage_without_localised_content(admin_client, root_page):
     )
     response = admin_client.get(url, {'region': 'bar'})
     assert response.status_code == 200
-    assert 'localised_articles' in response.json()
-    assert response.json()['localised_articles'] == []
+    assert 'localised_child_pages' in response.json()
+    assert response.json()['localised_child_pages'] == []
 
 
 def test_client_not_passing_region(admin_client, root_page):
@@ -186,5 +168,5 @@ def test_client_not_passing_region(admin_client, root_page):
     )
     response = admin_client.get(url)
     assert response.status_code == 200
-    assert 'localised_articles' in response.json()
-    assert response.json()['localised_articles'] == []
+    assert 'localised_child_pages' in response.json()
+    assert response.json()['localised_child_pages'] == []
