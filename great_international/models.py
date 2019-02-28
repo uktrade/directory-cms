@@ -160,7 +160,7 @@ class InternationalArticlePage(BasePage):
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
-        'great_international.InternationalRegionalFolderPage'
+        'great_international.InternationalLocalisedFolderPage'
     ]
     subpage_types = []
 
@@ -289,7 +289,7 @@ class InternationalCampaignPage(BasePage):
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalTopicLandingPage',
-        'great_international.InternationalRegionalFolderPage'
+        'great_international.InternationalLocalisedFolderPage'
     ]
     subpage_types = [
         'great_international.InternationalArticlePage'

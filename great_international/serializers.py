@@ -151,13 +151,13 @@ class InternationalArticleListingPageSerializer(BasePageSerializer):
                     InternationalCampaignPage
                 ).live().specific()
 
-                campaings = RelatedCampaignPageSerializer(
+                campaigns = RelatedCampaignPageSerializer(
                     campaigns_queryset,
                     many=True,
                     allow_null=True,
                     context=self.context
                 )
-                data = articles.data + campaings.data
+                data = articles.data + campaigns.data
         return data
 
     def get_child_pages(self, obj):
@@ -170,16 +170,16 @@ class InternationalArticleListingPageSerializer(BasePageSerializer):
             allow_null=True,
             context=self.context
         )
-        campaings_queryset = obj.get_descendants().type(
+        campaigns_queryset = obj.get_descendants().type(
             InternationalCampaignPage
         ).live().specific()
-        campaings = RelatedCampaignPageSerializer(
-            campaings_queryset,
+        campaigns = RelatedCampaignPageSerializer(
+            campaigns_queryset,
             many=True,
             allow_null=True,
             context=self.context
         )
-        return articles.data + campaings.data
+        return articles.data + campaigns.data
 
 
 class InternationalTopicLandingPageSerializer(BasePageSerializer):
