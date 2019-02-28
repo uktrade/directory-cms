@@ -204,7 +204,6 @@ def test_all_models_cached():
         export_readiness.models.EUExitFormPages,
         export_readiness.models.AllContactPagesPage,
         great_international.models.InternationalRegionPage,
-        great_international.models.InternationalMarketingPages,
         great_international.models.InternationalRegionalFolderPage,
         # Page is added by TestSubscriber in other tests.
         Page,

@@ -319,6 +319,7 @@ class ServiceMixin(models.Model):
     service_name_value = None
     base_form_class = forms.BaseAppAdminPageForm
     view_path = ''
+    parent_page_types = ['wagtailcore.Page']
 
     class Meta:
         abstract = True
