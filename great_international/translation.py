@@ -9,11 +9,6 @@ class GreatInternationalAppTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
-@register(models.InternationalMarketingPages)
-class InternationalMarketingPagesTranslationOptions(BaseTranslationOptions):
-    fields = []
-
-
 @register(models.InternationalArticlePage)
 class InternationalArticlePageTranslationOptions(BaseTranslationOptions):
     fields = []

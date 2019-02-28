@@ -12,7 +12,7 @@ class GreatInternationalConfig(AppConfig):
         cache.InternationalCampaignPageSubscriber.subscribe()
         cache.InternationalArticleListingPageSubscriber()
         cache.InternationalTopicLandingPageSubscriber()
-        # signals
+        # tags inheritance signals
         post_save.connect(
             receiver=signals.inherit_tags_from_parent,
             sender=models.InternationalArticlePage
@@ -21,21 +21,14 @@ class GreatInternationalConfig(AppConfig):
             receiver=signals.inherit_tags_from_parent,
             sender=models.InternationalCampaignPage
         )
+        # tags propagation signals
         m2m_changed.connect(
             receiver=signals.tags_propagate_to_descendants,
-            sender=models.InternationalArticleListingPage.tags.through
+            sender=models.InternationalTopicLandingPage.tags.through
         )
         m2m_changed.connect(
             receiver=signals.tags_propagate_to_descendants,
             sender=models.InternationalArticleListingPage.tags.through
-        )
-        m2m_changed.connect(
-            receiver=signals.tags_propagate_to_descendants,
-            sender=models.InternationalArticleListingPage.tags.through
-        )
-        m2m_changed.connect(
-            receiver=signals.tags_propagate_to_descendants,
-            sender=models.InternationalMarketingPages.tags.through
         )
         m2m_changed.connect(
             receiver=signals.tags_propagate_to_descendants,
@@ -43,5 +36,5 @@ class GreatInternationalConfig(AppConfig):
         )
         m2m_changed.connect(
             receiver=signals.tags_propagate_to_descendants,
-            sender=models.InternationalTopicLandingPage.tags.through
+            sender=models.InternationalCampaignPage.tags.through
         )
