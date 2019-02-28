@@ -141,7 +141,7 @@ class InternationalArticleListingPageSerializer(BasePageSerializer):
                 articles_queryset = folder[0].get_descendants().type(
                     InternationalArticlePage
                 ).live().specific()
-                articles = InternationalArticlePageSerializer(
+                articles = RelatedArticlePageSerializer(
                     articles_queryset,
                     many=True,
                     allow_null=True,
@@ -164,7 +164,7 @@ class InternationalArticleListingPageSerializer(BasePageSerializer):
         articles_queryset = obj.get_descendants().type(
             InternationalArticlePage
         ).live().specific()
-        articles = InternationalArticlePageSerializer(
+        articles = RelatedArticlePageSerializer(
             articles_queryset,
             many=True,
             allow_null=True,
