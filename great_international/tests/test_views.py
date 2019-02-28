@@ -3,6 +3,15 @@ from rest_framework.reverse import reverse
 from great_international.tests import factories
 
 
+def test_international_sector_page(admin_client, root_page):
+    sector_page = factories.InternationalSectorPageFactory.create(
+        parent=root_page
+    )
+    url = reverse('api:api:pages:detail', kwargs={'pk': sector_page.pk})
+    response = admin_client.get(url)
+    assert response.status_code == 200
+
+
 def test_international_homepage(admin_client, root_page):
     home_page = factories.InternationalHomePageFactory.create(
         parent=root_page

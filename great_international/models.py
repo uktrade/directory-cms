@@ -3,7 +3,7 @@ from django.forms import Textarea, CheckboxSelectMultiple
 from django.utils.text import slugify
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel
+    HelpPanel, FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel
 )
 from wagtail.images.edit_handlers import ImageChooserPanel
 
@@ -27,6 +27,339 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
     @classmethod
     def get_required_translatable_fields(cls):
         return []
+
+
+class InternationalSectorPage(BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+    parent_page_types = []
+    subpage_types = []
+
+    heading = models.CharField(max_length=255)
+    sub_heading = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    heading_teaser = models.CharField(max_length=255)
+
+    section_one_body = MarkdownField(blank=True, null=True)
+    section_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    statistic_1_number = models.CharField(max_length=255)
+    statistic_1_heading = models.CharField(max_length=255)
+    statistic_1_smallprint = models.CharField(max_length=255)
+
+    statistic_2_number = models.CharField(max_length=255)
+    statistic_2_heading = models.CharField(max_length=255)
+    statistic_2_smallprint = models.CharField(max_length=255)
+
+    statistic_3_number = models.CharField(max_length=255, blank=True)
+    statistic_3_heading = models.CharField(max_length=255, blank=True)
+    statistic_3_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_4_number = models.CharField(max_length=255, blank=True)
+    statistic_4_heading = models.CharField(max_length=255, blank=True)
+    statistic_4_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_5_number = models.CharField(max_length=255, blank=True)
+    statistic_5_heading = models.CharField(max_length=255, blank=True)
+    statistic_5_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_6_number = models.CharField(max_length=255, blank=True)
+    statistic_6_heading = models.CharField(max_length=255, blank=True)
+    statistic_6_smallprint = models.CharField(max_length=255, blank=True)
+
+    section_two_heading = models.CharField(max_length=255)
+    section_two_teaser = models.CharField(max_length=255)
+
+    section_two_subsection_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    section_two_subsection_one_heading = models.CharField(max_length=255)
+    section_two_subsection_one_body = models.CharField(max_length=255)
+
+    section_two_subsection_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    section_two_subsection_two_heading = models.CharField(max_length=255)
+    section_two_subsection_two_body = models.CharField(max_length=255)
+
+    section_two_subsection_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    section_two_subsection_three_heading = models.CharField(max_length=255)
+    section_two_subsection_three_body = models.CharField(max_length=255)
+
+    case_study_title = models.CharField(max_length=255)
+    case_study_description = models.CharField(max_length=255)
+    case_study_cta_text = models.CharField(max_length=255)
+    case_study_cta_url = models.CharField(max_length=255)
+    case_study_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    section_three_heading = models.CharField(max_length=255)
+    section_three_teaser = models.CharField(max_length=255)
+
+    section_three_subsection_one_heading = models.CharField(max_length=255)
+    section_three_subsection_one_teaser = models.CharField(max_length=255)
+    section_three_subsection_one_body = MarkdownField(blank=True, null=True)
+
+    section_three_subsection_two_heading = models.CharField(max_length=255)
+    section_three_subsection_two_teaser = models.CharField(max_length=255)
+    section_three_subsection_two_body = MarkdownField(blank=True, null=True)
+
+    next_steps_heading = models.CharField(max_length=255)
+    next_steps_description = models.CharField(max_length=255)
+
+    related_page_one = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    related_page_two = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    related_page_three = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='Heading',
+            children=[
+                FieldPanel('heading'),
+                FieldPanel('sub_heading'),
+                ImageChooserPanel('hero_image'),
+                FieldPanel('heading_teaser')
+            ]
+
+        ),
+        MultiFieldPanel(
+            heading='Section One',
+            children=[
+                HelpPanel(
+                    'For accessibility reasons, use only "##[Your text here]" '
+                    'for headings in this markdown field'),
+                FieldRowPanel(
+                    [
+                        FieldPanel('section_one_body'),
+                        ImageChooserPanel('section_one_image')
+                    ]
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Statistics',
+            children=[
+                FieldRowPanel(
+                    [
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_1_number'),
+                                FieldPanel('statistic_1_heading'),
+                                FieldPanel('statistic_1_smallprint')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_2_number'),
+                                FieldPanel('statistic_2_heading'),
+                                FieldPanel('statistic_2_smallprint')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_3_number'),
+                                FieldPanel('statistic_3_heading'),
+                                FieldPanel('statistic_3_smallprint')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_4_number'),
+                                FieldPanel('statistic_4_heading'),
+                                FieldPanel('statistic_4_smallprint')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_5_number'),
+                                FieldPanel('statistic_5_heading'),
+                                FieldPanel('statistic_5_smallprint')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_6_number'),
+                                FieldPanel('statistic_6_heading'),
+                                FieldPanel('statistic_6_smallprint')
+                            ]
+                        ),
+                    ]
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Section Two',
+            children=[
+                FieldPanel('section_two_heading'),
+                FieldPanel('section_two_teaser'),
+                FieldRowPanel(
+                    [
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel(
+                                    'section_two_subsection_one_icon'),
+                                FieldPanel(
+                                    'section_two_subsection_one_heading'),
+                                FieldPanel(
+                                    'section_two_subsection_one_body')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel(
+                                    'section_two_subsection_two_icon'),
+                                FieldPanel(
+                                    'section_two_subsection_two_heading'),
+                                FieldPanel(
+                                    'section_two_subsection_two_body')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel(
+                                    'section_two_subsection_three_icon'),
+                                FieldPanel(
+                                    'section_two_subsection_three_heading'),
+                                FieldPanel(
+                                    'section_two_subsection_three_body')
+                            ]
+                        )
+                    ]
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Case Study',
+            children=[
+                FieldPanel('case_study_title'),
+                FieldPanel('case_study_description'),
+                FieldPanel('case_study_cta_text'),
+                ImageChooserPanel('case_study_image')
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Section Three',
+            children=[
+                FieldPanel('section_three_heading'),
+                FieldPanel('section_three_teaser'),
+                FieldRowPanel(
+                    [
+                        MultiFieldPanel(
+                            [
+                                FieldPanel(
+                                    'section_three_subsection_one_heading'),
+                                FieldPanel(
+                                    'section_three_subsection_one_teaser'),
+                                HelpPanel(
+                                    'For accessibility reasons, use only '
+                                    '"####[Your text here]" for subheadings '
+                                    'in this markdown field'),
+                                FieldPanel(
+                                    'section_three_subsection_one_body')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel(
+                                    'section_three_subsection_two_heading'),
+                                FieldPanel(
+                                    'section_three_subsection_two_teaser'),
+                                HelpPanel(
+                                    'For accessibility reasons, use only '
+                                    '"####[Your text here]" for subheadings '
+                                    'in this markdown field'),
+                                FieldPanel(
+                                    'section_three_subsection_two_body')
+                            ]
+                        )
+                    ]
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Next Steps',
+            children=[
+                FieldPanel('next_steps_heading'),
+                FieldPanel('next_steps_description')
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Related articles',
+            children=[
+                FieldRowPanel([
+                    PageChooserPanel(
+                        'related_page_one',
+                        [
+                            'great_international.InternationalArticlePage',
+                            'great_international.InternationalCampaignPage',
+                        ]),
+                    PageChooserPanel(
+                        'related_page_two',
+                        [
+                            'great_international.InternationalArticlePage',
+                            'great_international.InternationalCampaignPage',
+                        ]),
+                    PageChooserPanel(
+                        'related_page_three',
+                        [
+                            'great_international.InternationalArticlePage',
+                            'great_international.InternationalCampaignPage',
+                        ]),
+                ])
+            ]
+        ),
+        SearchEngineOptimisationPanel()
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug')
+    ]
 
 
 class InternationalHomePage(ExclusivePageMixin, BasePage):

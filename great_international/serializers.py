@@ -54,6 +54,81 @@ class PageWithRelatedPagesSerializer(BasePageSerializer):
         return serialized
 
 
+class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
+    heading = serializers.CharField(max_length=255)
+    sub_heading = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    heading_teaser = serializers.CharField(max_length=255)
+
+    section_one_body = serializers.CharField(max_length=255)
+    section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
+
+    statistic_1_number = serializers.CharField(max_length=255)
+    statistic_1_heading = serializers.CharField(max_length=255)
+    statistic_1_smallprint = serializers.CharField(max_length=255)
+
+    statistic_2_number = serializers.CharField(max_length=255)
+    statistic_2_heading = serializers.CharField(max_length=255)
+    statistic_2_smallprint = serializers.CharField(max_length=255)
+
+    statistic_3_number = serializers.CharField(max_length=255)
+    statistic_3_heading = serializers.CharField(max_length=255)
+    statistic_3_smallprint = serializers.CharField(max_length=255)
+
+    statistic_4_number = serializers.CharField(max_length=255)
+    statistic_4_heading = serializers.CharField(max_length=255)
+    statistic_4_smallprint = serializers.CharField(max_length=255)
+
+    statistic_5_number = serializers.CharField(max_length=255)
+    statistic_5_heading = serializers.CharField(max_length=255)
+    statistic_5_smallprint = serializers.CharField(max_length=255)
+
+    statistic_6_number = serializers.CharField(max_length=255)
+    statistic_6_heading = serializers.CharField(max_length=255)
+    statistic_6_smallprint = serializers.CharField(max_length=255)
+
+    section_two_heading = serializers.CharField(max_length=255)
+    section_two_teaser = serializers.CharField(max_length=255)
+    section_two_subsection_one_icon = wagtail_fields.ImageRenditionField(
+        'original')
+    section_two_subsection_one_heading = serializers.CharField(max_length=255)
+    section_two_subsection_one_body = serializers.CharField(max_length=255)
+    section_two_subsection_two_icon = wagtail_fields.ImageRenditionField(
+        'original')
+    section_two_subsection_two_heading = serializers.CharField(max_length=255)
+    section_two_subsection_two_body = serializers.CharField(max_length=255)
+    section_two_subsection_three_icon = wagtail_fields.ImageRenditionField(
+        'original')
+    section_two_subsection_three_heading = serializers.CharField(
+        max_length=255)
+    section_two_subsection_three_body = serializers.CharField(
+        max_length=255)
+
+    case_study_title = serializers.CharField(max_length=255)
+    case_study_description = serializers.CharField(max_length=255)
+    case_study_cta_text = serializers.CharField(max_length=255)
+    case_study_cta_url = serializers.CharField(max_length=255)
+    case_study_image = wagtail_fields.ImageRenditionField('original')
+
+    section_three_heading = serializers.CharField(max_length=255)
+    section_three_teaser = serializers.CharField(max_length=255)
+    section_three_subsection_one_heading = serializers.CharField(
+        max_length=255)
+    section_three_subsection_one_teaser = serializers.CharField(
+        max_length=255)
+    section_three_subsection_one_body = serializers.CharField(
+        max_length=255)
+    section_three_subsection_two_heading = serializers.CharField(
+        max_length=255)
+    section_three_subsection_two_teaser = serializers.CharField(
+        max_length=255)
+    section_three_subsection_two_body = serializers.CharField(
+        max_length=255)
+
+    next_steps_heading = serializers.CharField(max_length=255)
+    next_steps_description = serializers.CharField(max_length=255)
+
+
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
     article_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='article_title')
