@@ -3,7 +3,7 @@ from django.forms import Textarea, CheckboxSelectMultiple
 from django.utils.text import slugify
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel
+    HelpPanel, FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel
 )
 from wagtail.images.edit_handlers import ImageChooserPanel
 
@@ -43,7 +43,7 @@ class InternationalSectorPage(BasePage):
     )
     heading_teaser = models.CharField(max_length=255)
 
-    section_one_body = models.CharField(max_length=255)
+    section_one_body = MarkdownField(blank=True, null=True)
     section_one_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -169,6 +169,9 @@ class InternationalSectorPage(BasePage):
         MultiFieldPanel(
             heading='Section One',
             children=[
+                HelpPanel(
+                    'For accessibility reasons, use only ##Heading '
+                    'for headings in the markdown'),
                 FieldRowPanel(
                     [
                         FieldPanel('section_one_body'),
@@ -237,23 +240,32 @@ class InternationalSectorPage(BasePage):
                     [
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel('section_two_subsection_one_icon'),
-                                FieldPanel('section_two_subsection_one_heading'),
-                                FieldPanel('section_two_subsection_one_body')
+                                ImageChooserPanel(
+                                    'section_two_subsection_one_icon'),
+                                FieldPanel(
+                                    'section_two_subsection_one_heading'),
+                                FieldPanel(
+                                    'section_two_subsection_one_body')
                             ]
                         ),
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel('section_two_subsection_two_icon'),
-                                FieldPanel('section_two_subsection_two_heading'),
-                                FieldPanel('section_two_subsection_two_body')
+                                ImageChooserPanel(
+                                    'section_two_subsection_two_icon'),
+                                FieldPanel(
+                                    'section_two_subsection_two_heading'),
+                                FieldPanel(
+                                    'section_two_subsection_two_body')
                             ]
                         ),
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel('section_two_subsection_three_icon'),
-                                FieldPanel('section_two_subsection_three_heading'),
-                                FieldPanel('section_two_subsection_three_body')
+                                ImageChooserPanel(
+                                    'section_two_subsection_three_icon'),
+                                FieldPanel(
+                                    'section_two_subsection_three_heading'),
+                                FieldPanel(
+                                    'section_two_subsection_three_body')
                             ]
                         )
                     ]
@@ -274,20 +286,29 @@ class InternationalSectorPage(BasePage):
             children=[
                 FieldPanel('section_three_heading'),
                 FieldPanel('section_three_teaser'),
+                HelpPanel(
+                    'For accessibility reasons, use only ####Subheading for '
+                    'subheadings in the markdown'),
                 FieldRowPanel(
                     [
                         MultiFieldPanel(
                             [
-                                FieldPanel('section_three_subsection_one_heading'),
-                                FieldPanel('section_three_subsection_one_teaser'),
-                                FieldPanel('section_three_subsection_one_body')
+                                FieldPanel(
+                                    'section_three_subsection_one_heading'),
+                                FieldPanel(
+                                    'section_three_subsection_one_teaser'),
+                                FieldPanel(
+                                    'section_three_subsection_one_body')
                             ]
                         ),
                         MultiFieldPanel(
                             [
-                                FieldPanel('section_three_subsection_two_heading'),
-                                FieldPanel('section_three_subsection_two_teaser'),
-                                FieldPanel('section_three_subsection_two_body')
+                                FieldPanel(
+                                    'section_three_subsection_two_heading'),
+                                FieldPanel(
+                                    'section_three_subsection_two_teaser'),
+                                FieldPanel(
+                                    'section_three_subsection_two_body')
                             ]
                         )
                     ]
