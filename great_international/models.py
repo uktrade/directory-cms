@@ -31,6 +31,7 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
 
 class InternationalSectorPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
+    parent_page_types = []
     subpage_types = []
 
     heading = models.CharField(max_length=255)
