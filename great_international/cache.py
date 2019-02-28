@@ -5,7 +5,10 @@ from great_international import models
 
 class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalSectorPage
-    subscriptions = []
+    subscriptions = [
+        models.InternationalArticlePage,
+        models.InternationalCampaignPage
+    ]
 
 
 class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
