@@ -134,24 +134,21 @@ class InternationalSectorPage(BasePage):
     next_steps_description = models.CharField(max_length=255)
 
     related_page_one = models.ForeignKey(
-        'great_international.InternationalArticlePage',
-        'great_international.InternationalCampaignPage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
     related_page_two = models.ForeignKey(
-        'great_international.InternationalArticlePage',
-        'great_international.InternationalCampaignPage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
     related_page_three = models.ForeignKey(
-        'great_international.InternationalArticlePage',
-        'great_international.InternationalCampaignPage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -310,13 +307,22 @@ class InternationalSectorPage(BasePage):
                 FieldRowPanel([
                     PageChooserPanel(
                         'related_page_one',
-                        'great_international.InternationalArticlePage'),
+                        [
+                            'great_international.InternationalArticlePage',
+                            'great_international.InternationalCampaignPage',
+                        ]),
                     PageChooserPanel(
                         'related_page_two',
-                        'great_international.InternationalArticlePage'),
+                        [
+                            'great_international.InternationalArticlePage',
+                            'great_international.InternationalCampaignPage',
+                        ]),
                     PageChooserPanel(
                         'related_page_three',
-                        'great_international.InternationalArticlePage')
+                        [
+                            'great_international.InternationalArticlePage',
+                            'great_international.InternationalCampaignPage',
+                        ]),
                 ])
             ]
         ),
