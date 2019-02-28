@@ -39,7 +39,7 @@ class InternationalTopicLandingPageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
-@register(models.InternationalRegionalFolderPage)
+@register(models.InternationalLocalisedFolderPage)
 class InternationalRegionalFolderPageTranslationOptions(
     BaseTranslationOptions
 ):

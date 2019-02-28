@@ -121,7 +121,7 @@ class InternationalRegionPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
-        'great_international.InternationalRegionalFolderPage'
+        'great_international.InternationalLocalisedFolderPage'
     ]
 
     tags = ParentalManyToManyField(Tag, blank=True)
@@ -136,7 +136,7 @@ class InternationalRegionPage(BasePage):
         return super().save(*args, **kwargs)
 
 
-class InternationalRegionalFolderPage(BasePage):
+class InternationalLocalisedFolderPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.InternationalRegionPage']
     subpage_types = [
@@ -160,7 +160,7 @@ class InternationalArticlePage(BasePage):
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
-        'great_international.InternationalRegionalFolderPage'
+        'great_international.InternationalLocalisedFolderPage'
     ]
     subpage_types = []
 
@@ -289,7 +289,7 @@ class InternationalCampaignPage(BasePage):
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalTopicLandingPage',
-        'great_international.InternationalRegionalFolderPage'
+        'great_international.InternationalLocalisedFolderPage'
     ]
     subpage_types = [
         'great_international.InternationalArticlePage'
