@@ -10,7 +10,7 @@ def test_models_hierarchy():
     # app
     assert models.GreatInternationalApp.allowed_subpage_models() == [
         models.GreatInternationalApp,
-        models.InternationalHomePage,
+        models.InternationalHomePage
     ]
     assert models.GreatInternationalApp.allowed_parent_page_models() == [
         Page,
@@ -23,10 +23,10 @@ def test_models_hierarchy():
     ]
     # region page
     assert models.InternationalRegionPage.allowed_subpage_models() == [
-        models.InternationalRegionalFolderPage
+        models.InternationalLocalisedFolderPage
     ]
     # regional folder page
-    assert models.InternationalRegionalFolderPage.allowed_subpage_models() == [
+    assert models.InternationalLocalisedFolderPage.allowed_subpage_models() == [
         models.InternationalArticlePage,
         models.InternationalCampaignPage
     ]
@@ -148,7 +148,7 @@ def test_international_folder_page_append_parent_slug():
     region = factories.InternationalRegionPageFactory(
         slug='canada'
     )
-    folder_page = factories.InternationalRegionalFolderPageFactory(
+    folder_page = factories.InternationalLocalisedFolderPageFactory(
         parent=region,
         slug='test'
     )
@@ -160,7 +160,7 @@ def test_international_folder_page_append_parent_slug_only_on_creation():
     region = factories.InternationalRegionPageFactory(
         slug='canada'
     )
-    folder_page = factories.InternationalRegionalFolderPageFactory(
+    folder_page = factories.InternationalLocalisedFolderPageFactory(
         parent=region,
         slug='test'
     )

@@ -88,7 +88,7 @@ def test_article_listingpage_with_localised_content(admin_client, root_page):
         live=True,
         slug='germany'
     )
-    regional_folder_page = factories.InternationalRegionalFolderPageFactory(
+    regional_folder_page = factories.InternationalLocalisedFolderPageFactory(
         parent=region_page,
         live=True,
         slug='setup-uk'
@@ -127,7 +127,7 @@ def test_article_listingpage_without_localised_content(
         live=True,
         slug='germany'
     )
-    regional_folder_page = factories.InternationalRegionalFolderPageFactory(
+    regional_folder_page = factories.InternationalLocalisedFolderPageFactory(
         parent=region_page,
         live=True,
         slug='news'  # different branch from setup uk

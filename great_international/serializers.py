@@ -5,7 +5,7 @@ from core import fields as core_fields
 from core.serializers import BasePageSerializer
 
 from .models import (InternationalArticlePage, InternationalArticleListingPage,
-                     InternationalRegionalFolderPage,
+                     InternationalLocalisedFolderPage,
                      InternationalCampaignPage)
 
 
@@ -136,7 +136,7 @@ class InternationalArticleListingPageSerializer(BasePageSerializer):
         region = self.context['request'].GET.get('region')
         if region:
             slug = f'{obj.slug}-{region}'
-            folder = InternationalRegionalFolderPage.objects.filter(slug=slug)
+            folder = InternationalLocalisedFolderPage.objects.filter(slug=slug)
             if folder.exists():
                 articles_queryset = folder[0].get_descendants().type(
                     InternationalArticlePage

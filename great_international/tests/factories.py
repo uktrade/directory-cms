@@ -92,10 +92,10 @@ class InternationalRegionPageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
-class InternationalRegionalFolderPageFactory(wagtail_factories.PageFactory):
+class InternationalLocalisedFolderPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.InternationalRegionalFolderPage
+        model = models.InternationalLocalisedFolderPage
 
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
