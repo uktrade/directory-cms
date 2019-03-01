@@ -60,7 +60,7 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
     hero_image = wagtail_fields.ImageRenditionField('original')
     heading_teaser = serializers.CharField(max_length=255)
 
-    section_one_body = serializers.CharField(max_length=255)
+    section_one_body = core_fields.MarkdownToHTMLField()
     section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
 
     statistic_1_number = serializers.CharField(max_length=255)
@@ -116,14 +116,12 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
         max_length=255)
     section_three_subsection_one_teaser = serializers.CharField(
         max_length=255)
-    section_three_subsection_one_body = serializers.CharField(
-        max_length=255)
+    section_three_subsection_one_body = core_fields.MarkdownToHTMLField()
     section_three_subsection_two_heading = serializers.CharField(
         max_length=255)
     section_three_subsection_two_teaser = serializers.CharField(
         max_length=255)
-    section_three_subsection_two_body = serializers.CharField(
-        max_length=255)
+    section_three_subsection_two_body = core_fields.MarkdownToHTMLField()
 
     next_steps_heading = serializers.CharField(max_length=255)
     next_steps_description = serializers.CharField(max_length=255)
