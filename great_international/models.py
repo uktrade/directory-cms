@@ -112,7 +112,13 @@ class InternationalSectorPage(BasePage):
     case_study_title = models.CharField(max_length=255)
     case_study_description = models.CharField(max_length=255)
     case_study_cta_text = models.CharField(max_length=255)
-    case_study_cta_url = models.CharField(max_length=255)
+    case_study_cta_url = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     case_study_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
