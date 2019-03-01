@@ -13,46 +13,30 @@ from django.conf import settings
 from export_readiness.tests.factories import ArticlePageFactory
 from activitystream import views
 
+URL = 'http://testserver' + reverse('activity-stream')
+URL_INCORRECT_DOMAIN = 'http://incorrect' + reverse('activity-stream')
+URL_INCORRECT_PATH = 'http://testserver' + reverse('activity-stream') + \
+    'incorrect/'
+EMPTY_COLLECTION = {
+        '@context': 'https://www.w3.org/ns/activitystreams',
+        'type': 'Collection',
+        'orderedItems': [],
+    }
 
 # --- Helper Functions ---
-
 
 @pytest.fixture
 def api_client():
     return APIClient()
 
 
-def url():
-    return 'http://testserver' + reverse('activity-stream')
-
-
-def url_incorrect_domain():
-    return 'http://incorrect' + reverse('activity-stream')
-
-
-def url_incorrect_path():
-    return (
-        'http://testserver' +
-        reverse('activity-stream') +
-        'incorrect/'
-    )
-
-
 def article_attribute(activity, attribute):
     return activity['object'][attribute]
 
 
-def empty_collection():
-    return {
-        '@context': 'https://www.w3.org/ns/activitystreams',
-        'type': 'Collection',
-        'orderedItems': [],
-    }
-
-
-def _auth_sender(key_id=settings.ACTIVITY_STREAM_ACCESS_KEY_ID,
-                 secret_key=settings.ACTIVITY_STREAM_SECRET_ACCESS_KEY,
-                 url=_url, method='GET', content='', content_type=''):
+def auth_sender(key_id=settings.ACTIVITY_STREAM_ACCESS_KEY_ID,
+                secret_key=settings.ACTIVITY_STREAM_SECRET_ACCESS_KEY,
+                url=URL, method='GET', content='', content_type=''):
     credentials = {
         'id': key_id,
         'key': secret_key,
@@ -61,7 +45,7 @@ def _auth_sender(key_id=settings.ACTIVITY_STREAM_ACCESS_KEY_ID,
 
     return mohawk.Sender(
         credentials,
-        url(),
+        URL,
         method,
         content=content,
         content_type=content_type,
@@ -76,16 +60,16 @@ def test_empty_object_returned_with_authentication(api_client):
     """If the Authorization and X-Forwarded-For headers are correct, then
     the correct, and authentic, data is returned
     """
-    sender = _auth_sender()
+    sender = auth_sender()
     response = api_client.get(
-        url(),
+        URL,
         content_type='',
         HTTP_AUTHORIZATION=sender.request_header,
         HTTP_X_FORWARDED_FOR='1.2.3.4, 123.123.123.123',
     )
 
     assert response.status_code == status.HTTP_200_OK
-    assert response.json() == empty_collection()
+    assert response.json() == EMPTY_COLLECTION
 
     # sender.accept_response will raise an error if the
     # inputs are not valid
@@ -117,9 +101,9 @@ def test_empty_object_returned_with_authentication(api_client):
 @pytest.mark.django_db
 def test_authentication_fails_if_url_mismatched(api_client):
     """Creates a Hawk header with incorrect domain"""
-    sender = _auth_sender(url=url_incorrect_domain)
+    sender = auth_sender(url=URL_INCORRECT_DOMAIN)
     response = api_client.get(
-        url(),
+        URL,
         content_type='',
         HTTP_AUTHORIZATION=sender.request_header,
         HTTP_X_FORWARDED_FOR='1.2.3.4, 123.123.123.123',
@@ -128,9 +112,9 @@ def test_authentication_fails_if_url_mismatched(api_client):
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     """Creates a Hawk header with incorrect path"""
-    sender = _auth_sender(url=url_incorrect_path)
+    sender = auth_sender(url=URL_INCORRECT_PATH)
     response = api_client.get(
-        url(),
+        URL,
         content_type='',
         HTTP_AUTHORIZATION=sender.request_header,
         HTTP_X_FORWARDED_FOR='1.2.3.4, 123.123.123.123',
@@ -146,7 +130,7 @@ def test_if_61_seconds_in_past_401_returned(api_client):
     """
     past = datetime.datetime.now() - datetime.timedelta(seconds=61)
     with freeze_time(past):
-        auth = _auth_sender().request_header
+        auth = auth_sender().request_header
     response = api_client.get(
         reverse('activity-stream'),
         content_type='',
@@ -199,9 +183,9 @@ def test_lists_live_articles_in_stream_in_date_then_seq_order(api_client):
             slug='article-d',
             live=False)
 
-    sender = _auth_sender()
+    sender = auth_sender()
     response = api_client.get(
-        url(),
+        URL,
         content_type='',
         HTTP_AUTHORIZATION=sender.request_header,
         HTTP_X_FORWARDED_FOR='1.2.3.4, 123.123.123.123',
@@ -255,7 +239,7 @@ def test_pagination(api_client, django_assert_num_queries):
             )
 
     items = []
-    next_url = url()
+    next_url = URL
     num_articles = 0
 
     queries = math.ceil(500/views.MAX_PER_PAGE) + 2
@@ -263,7 +247,7 @@ def test_pagination(api_client, django_assert_num_queries):
     with django_assert_num_queries(queries):
         while next_url:
             num_articles += 1
-            sender = _auth_sender(url=lambda: next_url)
+            sender = auth_sender(url=lambda: next_url)
             response = api_client.get(
                 next_url,
                 content_type='',

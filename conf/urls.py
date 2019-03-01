@@ -104,9 +104,11 @@ urlpatterns = [
 
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
-    url(r'^activity-stream/v1/',
-        ActivityStreamViewSet.as_view({'get': 'list'}),
-        name='activity-stream'),
+    url(
+        r'^activity-stream/v1/',
+        ActivityStreamViewSet.as_view(),
+        name='activity-stream'
+    ),
 
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
