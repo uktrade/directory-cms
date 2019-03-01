@@ -22,15 +22,15 @@ def api_client():
     return APIClient()
 
 
-def _url():
+def url():
     return 'http://testserver' + reverse('activity-stream')
 
 
-def _url_incorrect_domain():
+def url_incorrect_domain():
     return 'http://incorrect' + reverse('activity-stream')
 
 
-def _url_incorrect_path():
+def url_incorrect_path():
     return (
         'http://testserver' +
         reverse('activity-stream') +
@@ -42,7 +42,7 @@ def article_attribute(activity, attribute):
     return activity['object'][attribute]
 
 
-def _empty_collection():
+def empty_collection():
     return {
         '@context': 'https://www.w3.org/ns/activitystreams',
         'type': 'Collection',
@@ -78,14 +78,14 @@ def test_empty_object_returned_with_authentication(api_client):
     """
     sender = _auth_sender()
     response = api_client.get(
-        _url(),
+        url(),
         content_type='',
         HTTP_AUTHORIZATION=sender.request_header,
         HTTP_X_FORWARDED_FOR='1.2.3.4, 123.123.123.123',
     )
 
     assert response.status_code == status.HTTP_200_OK
-    assert response.json() == _empty_collection()
+    assert response.json() == empty_collection()
 
     # sender.accept_response will raise an error if the
     # inputs are not valid
@@ -117,9 +117,9 @@ def test_empty_object_returned_with_authentication(api_client):
 @pytest.mark.django_db
 def test_authentication_fails_if_url_mismatched(api_client):
     """Creates a Hawk header with incorrect domain"""
-    sender = _auth_sender(url=_url_incorrect_domain)
+    sender = _auth_sender(url=url_incorrect_domain)
     response = api_client.get(
-        _url(),
+        url(),
         content_type='',
         HTTP_AUTHORIZATION=sender.request_header,
         HTTP_X_FORWARDED_FOR='1.2.3.4, 123.123.123.123',
@@ -128,9 +128,9 @@ def test_authentication_fails_if_url_mismatched(api_client):
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     """Creates a Hawk header with incorrect path"""
-    sender = _auth_sender(url=_url_incorrect_path)
+    sender = _auth_sender(url=url_incorrect_path)
     response = api_client.get(
-        _url(),
+        url(),
         content_type='',
         HTTP_AUTHORIZATION=sender.request_header,
         HTTP_X_FORWARDED_FOR='1.2.3.4, 123.123.123.123',
@@ -201,7 +201,7 @@ def test_lists_live_articles_in_stream_in_date_then_seq_order(api_client):
 
     sender = _auth_sender()
     response = api_client.get(
-        _url(),
+        url(),
         content_type='',
         HTTP_AUTHORIZATION=sender.request_header,
         HTTP_X_FORWARDED_FOR='1.2.3.4, 123.123.123.123',
@@ -255,7 +255,7 @@ def test_pagination(api_client, django_assert_num_queries):
             )
 
     items = []
-    next_url = _url()
+    next_url = url()
     num_articles = 0
 
     queries = math.ceil(500/views.MAX_PER_PAGE) + 2
