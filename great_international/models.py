@@ -177,8 +177,8 @@ class InternationalSectorPage(BasePage):
             heading='Section One',
             children=[
                 HelpPanel(
-                    'For accessibility reasons, use only "##[Your text here]" '
-                    'for headings in this markdown field'),
+                    'For accessibility reasons, use only "## [Your text here]"'
+                    ' for headings in this markdown field'),
                 FieldRowPanel(
                     [
                         FieldPanel('section_one_body'),
@@ -303,7 +303,7 @@ class InternationalSectorPage(BasePage):
                                     'section_three_subsection_one_teaser'),
                                 HelpPanel(
                                     'For accessibility reasons, use only '
-                                    '"####[Your text here]" for subheadings '
+                                    '"#### [Your text here]" for subheadings '
                                     'in this markdown field'),
                                 FieldPanel(
                                     'section_three_subsection_one_body')
@@ -317,7 +317,7 @@ class InternationalSectorPage(BasePage):
                                     'section_three_subsection_two_teaser'),
                                 HelpPanel(
                                     'For accessibility reasons, use only '
-                                    '"####[Your text here]" for subheadings '
+                                    '"#### [Your text here]" for subheadings '
                                     'in this markdown field'),
                                 FieldPanel(
                                     'section_three_subsection_two_body')
