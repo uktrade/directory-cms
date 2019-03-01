@@ -111,6 +111,8 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
     case_study_image = wagtail_fields.ImageRenditionField('original')
 
     def get_case_study_cta_page(self, obj):
+        if not obj.case_study_cta_page:
+            return None
         related_page = obj.case_study_cta_page
         serializer_class = MODEL_TO_SERIALIZER_MAPPING[
             related_page.specific.__class__]
