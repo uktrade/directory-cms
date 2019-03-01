@@ -285,6 +285,12 @@ class InternationalSectorPage(BasePage):
                 FieldPanel('case_study_title'),
                 FieldPanel('case_study_description'),
                 FieldPanel('case_study_cta_text'),
+                PageChooserPanel(
+                    'case_study_cta_url',
+                    [
+                        'great_international.InternationalArticlePage',
+                        'great_international.InternationalCampaignPage',
+                    ]),
                 ImageChooserPanel('case_study_image')
             ]
         ),
