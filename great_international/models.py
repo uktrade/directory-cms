@@ -42,9 +42,9 @@ class InternationalSectorPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    heading_teaser = models.CharField(max_length=255)
+    heading_teaser = models.CharField(max_length=255, blank=True)
 
-    section_one_body = MarkdownField(blank=True, null=True)
+    section_one_body = MarkdownField(null=True)
     section_one_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -109,9 +109,9 @@ class InternationalSectorPage(BasePage):
     section_two_subsection_three_heading = models.CharField(max_length=255)
     section_two_subsection_three_body = models.CharField(max_length=255)
 
-    case_study_title = models.CharField(max_length=255)
-    case_study_description = models.CharField(max_length=255)
-    case_study_cta_text = models.CharField(max_length=255)
+    case_study_title = models.CharField(max_length=255, blank=True)
+    case_study_description = models.CharField(max_length=255, blank=True)
+    case_study_cta_text = models.CharField(max_length=255, blank=True)
     case_study_cta_url = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
@@ -122,19 +122,24 @@ class InternationalSectorPage(BasePage):
     case_study_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
 
-    section_three_heading = models.CharField(max_length=255)
-    section_three_teaser = models.CharField(max_length=255)
+    section_three_heading = models.CharField(max_length=255, blank=True)
+    section_three_teaser = models.CharField(max_length=255, blank=True)
 
-    section_three_subsection_one_heading = models.CharField(max_length=255)
-    section_three_subsection_one_teaser = models.CharField(max_length=255)
+    section_three_subsection_one_heading = models.CharField(
+        max_length=255, blank=True)
+    section_three_subsection_one_teaser = models.CharField(
+        max_length=255, blank=True)
     section_three_subsection_one_body = MarkdownField(blank=True, null=True)
 
-    section_three_subsection_two_heading = models.CharField(max_length=255)
-    section_three_subsection_two_teaser = models.CharField(max_length=255)
+    section_three_subsection_two_heading = models.CharField(
+        max_length=255, blank=True)
+    section_three_subsection_two_teaser = models.CharField(
+        max_length=255, blank=True)
     section_three_subsection_two_body = MarkdownField(blank=True, null=True)
 
     next_steps_heading = models.CharField(max_length=255)
@@ -281,6 +286,7 @@ class InternationalSectorPage(BasePage):
         ),
         MultiFieldPanel(
             heading='Case Study',
+            classname='collapsible',
             children=[
                 FieldPanel('case_study_title'),
                 FieldPanel('case_study_description'),
@@ -296,6 +302,7 @@ class InternationalSectorPage(BasePage):
         ),
         MultiFieldPanel(
             heading='Section Three',
+            classname='collapsible',
             children=[
                 FieldPanel('section_three_heading'),
                 FieldPanel('section_three_teaser'),
