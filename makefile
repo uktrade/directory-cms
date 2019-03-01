@@ -38,7 +38,7 @@ debug_db:
 	$(DEBUG_SET_ENV_VARS) && $(DEBUG_CREATE_DB)
 
 migrations:
-	$(DEBUG_SET_ENV_VARS) && ./manage.py makemigrations core export_readiness find_a_supplier invest components
+	$(DEBUG_SET_ENV_VARS) && ./manage.py makemigrations core export_readiness find_a_supplier invest components great_international
 
 
 DEBUG_SET_ENV_VARS := \
@@ -63,7 +63,7 @@ DEBUG_SET_ENV_VARS := \
 	export APP_URL_EXPORT_READINESS=http://exred.trade.great:8007; \
 	export APP_URL_FIND_A_SUPPLIER=http://supplier.trade.great:8005; \
 	export APP_URL_INVEST=http://invest.trade.great:8011; \
-	export APP_URL_GREAT_INTERNATIONAL=http://international.trade.great:8012; \
+	export APP_URL_GREAT_INTERNATIONAL=http://international.trade.great:8012/international/; \
 	export COPY_DESTINATION_URLS=https://directory-cms-dev.herokuapp.com,https://dev.cms.directory.uktrade.io,https://stage.cms.directory.uktrade.io,http://cms.trade.great:8010; \
 	export AWS_STORAGE_BUCKET_NAME=$$DIRECTORY_CMS_AWS_STORAGE_BUCKET_NAME; \
 	export AWS_ACCESS_KEY_ID=$$DIRECTORY_CMS_AWS_ACCESS_KEY_ID; \
@@ -128,4 +128,4 @@ upgrade_requirements:
 	pip-compile --upgrade requirements.in
 	pip-compile --upgrade requirements_test.in
 
-.PHONY: clean test_requirements debug_webserver debug_test debug heroku_deploy_dev heroku_deploy_demo
+.PHONY: clean test_requirements debug_webserver debug_test debug
