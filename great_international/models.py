@@ -34,6 +34,8 @@ class InternationalSectorPage(BasePage):
     parent_page_types = []
     subpage_types = []
 
+    tags = ParentalManyToManyField(Tag, blank=True)
+
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
@@ -436,7 +438,8 @@ class InternationalSectorPage(BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug')
+        FieldPanel('slug'),
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
 
