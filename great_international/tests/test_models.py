@@ -34,7 +34,8 @@ def test_models_hierarchy():
     # topic landing
     assert models.InternationalTopicLandingPage.allowed_subpage_models() == [
         models.InternationalArticleListingPage,
-        models.InternationalCampaignPage
+        models.InternationalCampaignPage,
+        models.InternationalSectorPage
     ]
     # article listing
     assert models.InternationalArticleListingPage.allowed_subpage_models() == [
