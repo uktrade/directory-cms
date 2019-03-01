@@ -34,6 +34,8 @@ class InternationalSectorPage(BasePage):
     parent_page_types = ['great_international.InternationalTopicLandingPage']
     subpage_types = []
 
+    tags = ParentalManyToManyField(Tag, blank=True)
+
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
@@ -42,14 +44,18 @@ class InternationalSectorPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    heading_teaser = models.CharField(max_length=255)
+    heading_teaser = models.CharField(max_length=255, blank=True)
 
-    section_one_body = MarkdownField(blank=True, null=True)
+    section_one_body = MarkdownField(
+        null=True,
+        verbose_name='Bullets markdown'
+    )
     section_one_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
+        verbose_name='Bullets image'
     )
 
     statistic_1_number = models.CharField(max_length=255)
@@ -76,60 +82,126 @@ class InternationalSectorPage(BasePage):
     statistic_6_heading = models.CharField(max_length=255, blank=True)
     statistic_6_smallprint = models.CharField(max_length=255, blank=True)
 
-    section_two_heading = models.CharField(max_length=255)
-    section_two_teaser = models.CharField(max_length=255)
+    section_two_heading = models.CharField(
+        max_length=255,
+        verbose_name='Highlights heading'
+    )
+    section_two_teaser = models.CharField(
+        max_length=255,
+        verbose_name='Highlights teaser'
+    )
 
     section_two_subsection_one_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
+        verbose_name='Highlight 1 icon'
     )
-    section_two_subsection_one_heading = models.CharField(max_length=255)
-    section_two_subsection_one_body = models.CharField(max_length=255)
+    section_two_subsection_one_heading = models.CharField(
+        max_length=255,
+        verbose_name='Highlight 1 heading'
+    )
+    section_two_subsection_one_body = models.CharField(
+        max_length=255,
+        verbose_name='Highlight 1 body'
+    )
 
     section_two_subsection_two_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
+        verbose_name='Highlight 2 icon'
     )
-    section_two_subsection_two_heading = models.CharField(max_length=255)
-    section_two_subsection_two_body = models.CharField(max_length=255)
+    section_two_subsection_two_heading = models.CharField(
+        max_length=255,
+        verbose_name='Highlight 2 heading'
+    )
+    section_two_subsection_two_body = models.CharField(
+        max_length=255,
+        verbose_name='Highlight 2 body'
+    )
 
     section_two_subsection_three_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Highlight 3 icon'
+    )
+    section_two_subsection_three_heading = models.CharField(
+        max_length=255,
+        verbose_name='Highlight 3 heading'
+    )
+    section_two_subsection_three_body = models.CharField(
+        max_length=255,
+        verbose_name='Highlight 3 body'
+    )
+
+    case_study_title = models.CharField(max_length=255, blank=True)
+    case_study_description = models.CharField(max_length=255, blank=True)
+    case_study_cta_text = models.CharField(max_length=255, blank=True)
+    case_study_cta_page = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
         related_name='+'
     )
-    section_two_subsection_three_heading = models.CharField(max_length=255)
-    section_two_subsection_three_body = models.CharField(max_length=255)
-
-    case_study_title = models.CharField(max_length=255)
-    case_study_description = models.CharField(max_length=255)
-    case_study_cta_text = models.CharField(max_length=255)
-    case_study_cta_url = models.CharField(max_length=255)
     case_study_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
 
-    section_three_heading = models.CharField(max_length=255)
-    section_three_teaser = models.CharField(max_length=255)
+    section_three_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Fact sheets heading'
+    )
+    section_three_teaser = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Fact sheets teaser'
+    )
 
-    section_three_subsection_one_heading = models.CharField(max_length=255)
-    section_three_subsection_one_teaser = models.CharField(max_length=255)
-    section_three_subsection_one_body = MarkdownField(blank=True, null=True)
+    section_three_subsection_one_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Fact sheet 1 heading'
+    )
+    section_three_subsection_one_teaser = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Fact sheet 1 teaser'
+    )
+    section_three_subsection_one_body = MarkdownField(
+        blank=True,
+        null=True,
+        verbose_name='Fact sheet 1 body'
+    )
 
-    section_three_subsection_two_heading = models.CharField(max_length=255)
-    section_three_subsection_two_teaser = models.CharField(max_length=255)
-    section_three_subsection_two_body = MarkdownField(blank=True, null=True)
+    section_three_subsection_two_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Fact sheet 2 heading'
+    )
+    section_three_subsection_two_teaser = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Fact sheet 2 teaser'
+    )
+    section_three_subsection_two_body = MarkdownField(
+        blank=True,
+        null=True,
+        verbose_name='Fact sheet 2 body'
+    )
 
     next_steps_heading = models.CharField(max_length=255)
     next_steps_description = models.CharField(max_length=255)
@@ -168,11 +240,11 @@ class InternationalSectorPage(BasePage):
 
         ),
         MultiFieldPanel(
-            heading='Section One',
+            heading='Bullets',
             children=[
                 HelpPanel(
-                    'For accessibility reasons, use only "##[Your text here]" '
-                    'for headings in this markdown field'),
+                    'For accessibility reasons, use only "## [Your text here]"'
+                    ' for headings in this markdown field'),
                 FieldRowPanel(
                     [
                         FieldPanel('section_one_body'),
@@ -233,7 +305,7 @@ class InternationalSectorPage(BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading='Section Two',
+            heading='Highlights',
             children=[
                 FieldPanel('section_two_heading'),
                 FieldPanel('section_two_teaser'),
@@ -275,16 +347,23 @@ class InternationalSectorPage(BasePage):
         ),
         MultiFieldPanel(
             heading='Case Study',
+            classname='collapsible',
             children=[
                 FieldPanel('case_study_title'),
                 FieldPanel('case_study_description'),
                 FieldPanel('case_study_cta_text'),
-                FieldPanel('case_study_cta_url'),
+                PageChooserPanel(
+                    'case_study_cta_page',
+                    [
+                        'great_international.InternationalArticlePage',
+                        'great_international.InternationalCampaignPage',
+                    ]),
                 ImageChooserPanel('case_study_image')
             ]
         ),
         MultiFieldPanel(
-            heading='Section Three',
+            heading='Fact Sheets',
+            classname='collapsible collapsed',
             children=[
                 FieldPanel('section_three_heading'),
                 FieldPanel('section_three_teaser'),
@@ -298,7 +377,7 @@ class InternationalSectorPage(BasePage):
                                     'section_three_subsection_one_teaser'),
                                 HelpPanel(
                                     'For accessibility reasons, use only '
-                                    '"####[Your text here]" for subheadings '
+                                    '"#### [Your text here]" for subheadings '
                                     'in this markdown field'),
                                 FieldPanel(
                                     'section_three_subsection_one_body')
@@ -312,7 +391,7 @@ class InternationalSectorPage(BasePage):
                                     'section_three_subsection_two_teaser'),
                                 HelpPanel(
                                     'For accessibility reasons, use only '
-                                    '"####[Your text here]" for subheadings '
+                                    '"#### [Your text here]" for subheadings '
                                     'in this markdown field'),
                                 FieldPanel(
                                     'section_three_subsection_two_body')
@@ -359,7 +438,8 @@ class InternationalSectorPage(BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
-        FieldPanel('slug')
+        FieldPanel('slug'),
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
 
