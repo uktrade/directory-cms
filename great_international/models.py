@@ -31,7 +31,7 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
 
 class InternationalSectorPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    parent_page_types = []
+    parent_page_types = ['great_international.InternationalTopicLandingPage']
     subpage_types = []
 
     heading = models.CharField(max_length=255)
@@ -279,6 +279,7 @@ class InternationalSectorPage(BasePage):
                 FieldPanel('case_study_title'),
                 FieldPanel('case_study_description'),
                 FieldPanel('case_study_cta_text'),
+                FieldPanel('case_study_cta_url'),
                 ImageChooserPanel('case_study_image')
             ]
         ),
@@ -852,7 +853,8 @@ class InternationalTopicLandingPage(BasePage):
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.InternationalArticleListingPage',
-        'great_international.InternationalCampaignPage'
+        'great_international.InternationalCampaignPage',
+        'great_international.InternationalSectorPage',
     ]
 
     landing_page_title = models.CharField(max_length=255)
