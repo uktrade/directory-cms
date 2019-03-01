@@ -43,5 +43,5 @@ class InternationalTopicLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
     subscriptions = [
         models.InternationalArticlePage,
         models.InternationalArticleListingPage,
-        models.InternationalSectorPage
+        models.InternationalSectorPage,
     ]

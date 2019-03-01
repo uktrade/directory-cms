@@ -934,7 +934,7 @@ class InternationalTopicLandingPage(BasePage):
     subpage_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
-        'great_international.InternationalSectorPage'
+        'great_international.InternationalSectorPage',
     ]
 
     landing_page_title = models.CharField(max_length=255)

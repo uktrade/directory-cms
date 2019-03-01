@@ -4,7 +4,7 @@
 [![codecov-image]][codecov]
 [![snyk-image]][snyk]
 
-**Directory CMS - the Department for International Trade (DIT)**  
+**Directory CMS - the Department for International Trade (DIT)**
 
 ---
 
@@ -20,8 +20,6 @@ We aim to follow [GDS service standards](https://www.gov.uk/service-manual/servi
 ## Requirements
 [Python 3.6](https://www.python.org/downloads/release/python-368/)
 
-#### Web server
-
 ## Running locally
 
 ### Installing
@@ -35,9 +33,18 @@ We aim to follow [GDS service standards](https://www.gov.uk/service-manual/servi
     $ source .venv/bin/activate
     $ make debug_webserver
 
-### Running the tests
+### New /etc/hosts file entry
+
+     Add 127.0.0.1 cms.trade.great
+
+## Running the tests
 
     $ make debug_test
+
+### Create a new template_sql file
+
+    To speed up tests a SQL template file is provided. If the file becomes old run the following command on an up-to-date db instance
+    $ pg_dump -O -f db_template.sql directory_cms_debug
 
 ## Session
 
