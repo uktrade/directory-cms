@@ -145,7 +145,7 @@ class InternationalSectorPage(BasePage):
     case_study_title = models.CharField(max_length=255, blank=True)
     case_study_description = models.CharField(max_length=255, blank=True)
     case_study_cta_text = models.CharField(max_length=255, blank=True)
-    case_study_cta_url = models.ForeignKey(
+    case_study_cta_page = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
         blank=True,
@@ -353,7 +353,7 @@ class InternationalSectorPage(BasePage):
                 FieldPanel('case_study_description'),
                 FieldPanel('case_study_cta_text'),
                 PageChooserPanel(
-                    'case_study_cta_url',
+                    'case_study_cta_page',
                     [
                         'great_international.InternationalArticlePage',
                         'great_international.InternationalCampaignPage',

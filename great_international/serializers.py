@@ -107,8 +107,15 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
     case_study_title = serializers.CharField(max_length=255)
     case_study_description = serializers.CharField(max_length=255)
     case_study_cta_text = serializers.CharField(max_length=255)
-    case_study_cta_url = serializers.CharField(max_length=255)
+    case_study_cta_page = serializers.SerializerMethodField()
     case_study_image = wagtail_fields.ImageRenditionField('original')
+
+    def get_case_study_cta_page(self, obj):
+        related_page = obj.case_study_cta_page
+        serializer_class = MODEL_TO_SERIALIZER_MAPPING[
+            related_page.specific.__class__]
+        serializer = serializer_class(related_page.specific)
+        return serializer.data
 
     section_three_heading = serializers.CharField(max_length=255)
     section_three_teaser = serializers.CharField(max_length=255)
