@@ -227,7 +227,7 @@ def test_all_models_cached():
 
 @mock.patch('django.core.cache.cache.set')
 @mock.patch('django.core.cache.cache.set_many')
-def test_transactional_cache(mock_set_many, mock_set, settings):
+def test_transactional_cache_set(mock_set_many, mock_set, settings):
     with cache.PageCache.transaction() as page_cache:
         page_cache.set(
             slug='s1',
@@ -258,3 +258,29 @@ def test_transactional_cache(mock_set_many, mock_set, settings):
             'key': 'value-three', 'etag': '"92b996db2b999fb74640d7d88aa5124c"'}
         }, timeout=settings.API_CACHE_EXPIRE_SECONDS
     )
+
+
+@mock.patch('django.core.cache.cache.delete')
+@mock.patch('django.core.cache.cache.delete_many')
+def test_transactional_cache_delete(mock_delete_many, mock_delete):
+    with cache.PageCache.transaction() as page_cache:
+        page_cache.delete(
+            slug='s1',
+            params={'lang': 'en-gb', 'service_name': 'INVEST'},
+        )
+        page_cache.delete(
+            slug='s2',
+            params={'lang': 'fr', 'service_name': 'INVEST'},
+        )
+        page_cache.delete(
+            slug='s3',
+            params={'lang': 'de', 'service_name': 'INVEST'},
+        )
+
+    assert mock_delete.call_count == 0
+    assert mock_delete_many.call_count == 1
+    assert mock_delete_many.call_args == mock.call([
+        '{slug}/api/pages/lookup-by-slug/s1/?lang=en-gb&service_name=INVEST',
+        '{slug}/api/pages/lookup-by-slug/s2/?lang=fr&service_name=INVEST',
+        '{slug}/api/pages/lookup-by-slug/s3/?lang=de&service_name=INVEST',
+    ])
