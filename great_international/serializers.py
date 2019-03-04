@@ -211,9 +211,8 @@ class InternationalArticleListingPageSerializer(BasePageSerializer):
 
     def get_localised_child_pages(self, obj):
         data = []
-        region = self.context['request'].GET.get('region')
-        if region:
-            slug = f'{obj.slug}-{region}'
+        if 'region' in self.context:
+            slug = f'{obj.slug}-{self.context["region"]}'
             folder = InternationalLocalisedFolderPage.objects.filter(slug=slug)
             if folder.exists():
                 articles_queryset = folder[0].get_descendants().type(

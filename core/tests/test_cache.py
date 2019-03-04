@@ -10,6 +10,9 @@ import find_a_supplier.models
 import invest.models
 import export_readiness
 import great_international.models
+from great_international.tests.factories import (
+    InternationalArticleListingPageFactory
+)
 
 
 @pytest.mark.parametrize('slug,service_name,language_code,expected', (
@@ -23,18 +26,19 @@ import great_international.models
         'some-other-slug',
         'FIND_A_SUPPLIER',
         'en-gb',
-        '/some-other-slug/?service_name=FIND_A_SUPPLIER&lang=en-gb'
+        '/some-other-slug/?lang=en-gb&service_name=FIND_A_SUPPLIER'
     ),
     (
         'and-another-slug',
         'EXPORT_READINESS',
         'fr',
-        '/and-another-slug/?service_name=EXPORT_READINESS&lang=fr'
+        '/and-another-slug/?lang=fr&service_name=EXPORT_READINESS'
     ),
 ))
 def test_page_cache_build_keys(slug, service_name, language_code, expected):
     key = cache.PageCache.build_key(
-        slug=slug, service_name=service_name, language_code=language_code
+        slug=slug,
+        params={'service_name': service_name, 'lang': language_code}
     )
     assert key == f'{{slug}}/api/pages/lookup-by-slug' + expected
 
@@ -47,38 +51,36 @@ def test_page_cache_get_set_delete():
     # given the cache contains no content
     assert cache.PageCache.get(
         slug=slug,
-        service_name=service_name,
-        language_code=language_code
+        params={
+            'service_name': service_name,
+            'lang': language_code,
+        }
     ) is None
 
-    contents = expected = {'field': 'value'}
+    data = expected = {'field': 'value'}
     # when the page is populated
     cache.PageCache.set(
         slug=slug,
-        service_name=service_name,
-        contents=contents,
-        language_code=language_code
+        params={'service_name': service_name, 'lang': language_code},
+        data=data,
     )
 
     # then the content is present
     assert cache.PageCache.get(
         slug=slug,
-        service_name=service_name,
-        language_code=language_code
+        params={'service_name': service_name, 'lang': language_code}
     ) == expected
 
     # when the existing content is deleted
     cache.PageCache.delete(
         slug=slug,
-        service_name=service_name,
-        language_codes=[language_code]
+        params={'service_name': service_name, 'lang': language_code}
     )
 
     # then the content is removed from the cache
     assert cache.PageCache.get(
         slug=slug,
-        service_name=service_name,
-        language_code=language_code
+        params={'service_name': service_name, 'lang': language_code}
     ) is None
 
 
@@ -90,9 +92,45 @@ def test_cache_populator(translated_page):
     for language_code in translated_page.translated_languages:
         assert cache.PageCache.get(
             slug=translated_page.slug,
-            service_name=translated_page.service_name,
-            language_code=language_code
+            params={
+                'service_name': translated_page.service_name,
+                'lang': language_code,
+            }
         )
+
+
+@pytest.mark.django_db
+def test_region_aware_cache_populator():
+    page = InternationalArticleListingPageFactory()
+
+    cache.RegionAwareCachePopulator.populate(page.pk)
+    for language_code in page.translated_languages:
+        for region in cache.RegionAwareCachePopulator.regions:
+            assert cache.PageCache.get(
+                slug=page.slug,
+                params={
+                    'service_name': page.service_name,
+                    'lang': language_code,
+                    'region': region,
+                }
+            )
+
+
+@pytest.mark.django_db
+def test_region_aware_cache_populator_async():
+    page = InternationalArticleListingPageFactory()
+
+    cache.RegionAwareCachePopulator.populate_async(page)
+    for language_code in page.translated_languages:
+        for region in cache.RegionAwareCachePopulator.regions:
+            assert cache.PageCache.get(
+                slug=page.slug,
+                params={
+                    'service_name': page.service_name,
+                    'lang': language_code,
+                    'region': region,
+                }
+            )
 
 
 @mock.patch('wagtail.core.signals.page_published.connect')
@@ -168,8 +206,10 @@ def test_subscriber_delete(mock_delete):
     assert mock_delete.call_count == 1
     assert mock_delete.call_args == mock.call(
         slug='some-slug',
-        service_name='thing',
-        language_codes=['en-gb'],
+        params={
+            'lang': 'en-gb',
+            'service_name': 'thing',
+        }
     )
 
 
@@ -223,37 +263,60 @@ def test_all_models_cached():
 
 @mock.patch('django.core.cache.cache.set')
 @mock.patch('django.core.cache.cache.set_many')
-def test_transactional_cache(mock_set_many, mock_set, settings):
+def test_transactional_cache_set(mock_set_many, mock_set, settings):
     with cache.PageCache.transaction() as page_cache:
         page_cache.set(
             slug='s1',
-            language_code='en-gb',
-            service_name='INVEST',
-            contents={'key': 'value-one'}
+            params={'lang': 'en-gb', 'service_name': 'INVEST'},
+            data={'key': 'value-one'},
         )
         page_cache.set(
             slug='s2',
-            language_code='fr',
-            service_name='INVEST',
-            contents={'key': 'value-two'}
+            params={'lang': 'fr', 'service_name': 'INVEST'},
+            data={'key': 'value-two'},
         )
         page_cache.set(
             slug='s3',
-            language_code='de',
-            service_name='INVEST',
-            contents={'key': 'value-three'}
+            params={'lang': 'de', 'service_name': 'INVEST'},
+            data={'key': 'value-three'},
         )
 
     assert mock_set.call_count == 0
     assert mock_set_many.call_count == 1
     assert mock_set_many.call_args == mock.call({
-        '{slug}/api/pages/lookup-by-slug/s1/?service_name=INVEST&lang=en-gb': {
-            'key': 'value-one'
+        '{slug}/api/pages/lookup-by-slug/s1/?lang=en-gb&service_name=INVEST': {
+            'key': 'value-one', 'etag': '"67216138eb3d94858a5014cfcd83688f"'
         },
-        '{slug}/api/pages/lookup-by-slug/s2/?service_name=INVEST&lang=fr': {
-            'key': 'value-two'
+        '{slug}/api/pages/lookup-by-slug/s2/?lang=fr&service_name=INVEST': {
+            'key': 'value-two', 'etag': '"4bb0f72aae58a2f70bc87ee99161a585"'
         },
-        '{slug}/api/pages/lookup-by-slug/s3/?service_name=INVEST&lang=de': {
-            'key': 'value-three'}
+        '{slug}/api/pages/lookup-by-slug/s3/?lang=de&service_name=INVEST': {
+            'key': 'value-three', 'etag': '"92b996db2b999fb74640d7d88aa5124c"'}
         }, timeout=settings.API_CACHE_EXPIRE_SECONDS
     )
+
+
+@mock.patch('django.core.cache.cache.delete')
+@mock.patch('django.core.cache.cache.delete_many')
+def test_transactional_cache_delete(mock_delete_many, mock_delete):
+    with cache.PageCache.transaction() as page_cache:
+        page_cache.delete(
+            slug='s1',
+            params={'lang': 'en-gb', 'service_name': 'INVEST'},
+        )
+        page_cache.delete(
+            slug='s2',
+            params={'lang': 'fr', 'service_name': 'INVEST'},
+        )
+        page_cache.delete(
+            slug='s3',
+            params={'lang': 'de', 'service_name': 'INVEST'},
+        )
+
+    assert mock_delete.call_count == 0
+    assert mock_delete_many.call_count == 1
+    assert mock_delete_many.call_args == mock.call([
+        '{slug}/api/pages/lookup-by-slug/s1/?lang=en-gb&service_name=INVEST',
+        '{slug}/api/pages/lookup-by-slug/s2/?lang=fr&service_name=INVEST',
+        '{slug}/api/pages/lookup-by-slug/s3/?lang=de&service_name=INVEST',
+    ])
