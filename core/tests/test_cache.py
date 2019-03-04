@@ -116,6 +116,23 @@ def test_region_aware_cache_populator():
             )
 
 
+@pytest.mark.django_db
+def test_region_aware_cache_populator_async():
+    page = InternationalArticleListingPageFactory()
+
+    cache.RegionAwareCachePopulator.populate_async(page)
+    for language_code in page.translated_languages:
+        for region in cache.RegionAwareCachePopulator.regions:
+            assert cache.PageCache.get(
+                slug=page.slug,
+                params={
+                    'service_name': page.service_name,
+                    'lang': language_code,
+                    'region': region,
+                }
+            )
+
+
 @mock.patch('wagtail.core.signals.page_published.connect')
 @mock.patch('core.cache.post_save.connect')
 @mock.patch('core.cache.page_unpublished.connect')

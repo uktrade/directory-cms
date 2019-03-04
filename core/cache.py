@@ -74,21 +74,21 @@ class TransactionalCache:
     cache = cache
 
     def __init__(self, *args, **kwargs):
-        self.transactions_set = {}
-        self.transactions_delete = []
+        self.transaction_set = {}
+        self.transaction_delete = []
         super().__init__(*args, **kwargs)
 
     def set(self, key, data, timeout):
-        self.transactions_set[key] = data
+        self.transaction_set[key] = data
 
     def delete(self, key):
-        self.transactions_delete.append(key)
+        self.transaction_delete.append(key)
 
     def commit(self):
+        self.cache.delete_many(self.transaction_delete)
         self.cache.set_many(
-            self.transactions_set, timeout=settings.API_CACHE_EXPIRE_SECONDS
+            self.transaction_set, timeout=settings.API_CACHE_EXPIRE_SECONDS
         )
-        self.cache.delete_many(self.transactions_delete)
 
 
 class CachePopulator:
@@ -193,7 +193,7 @@ class RegionAwareCachePopulator(CachePopulator):
     regions = ['eu', 'not-eu']
 
     @staticmethod
-    @app.task
+    @app.task(name='region-aware-populate')
     def populate(instance_pk):
         instance = Page.objects.get(pk=instance_pk).specific
         RegionAwareCachePopulator.populate_sync(instance)
