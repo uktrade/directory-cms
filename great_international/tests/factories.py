@@ -27,6 +27,8 @@ class InternationalSectorPageFactory(wagtail_factories.PageFactory):
     section_one_image = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
+    section_one_image_caption = factory.fuzzy.FuzzyText(length=10)
+    section_one_image_caption_company = factory.fuzzy.FuzzyText(length=10)
 
     statistic_1_number = factory.fuzzy.FuzzyText(length=10)
     statistic_1_heading = factory.fuzzy.FuzzyText(length=10)
@@ -73,7 +75,6 @@ class InternationalSectorPageFactory(wagtail_factories.PageFactory):
     case_study_title = factory.fuzzy.FuzzyText(length=10)
     case_study_description = factory.fuzzy.FuzzyText(length=10)
     case_study_cta_text = factory.fuzzy.FuzzyText(length=10)
-    case_study_cta_url = factory.fuzzy.FuzzyText(length=10)
     case_study_image = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
@@ -86,9 +87,6 @@ class InternationalSectorPageFactory(wagtail_factories.PageFactory):
     section_three_subsection_two_heading = factory.fuzzy.FuzzyText(length=10)
     section_three_subsection_two_teaser = factory.fuzzy.FuzzyText(length=10)
     section_three_subsection_two_body = factory.fuzzy.FuzzyText(length=10)
-
-    next_steps_heading = factory.fuzzy.FuzzyText(length=10)
-    next_steps_description = factory.fuzzy.FuzzyText(length=10)
 
 
 class InternationalHomePageFactory(wagtail_factories.PageFactory):

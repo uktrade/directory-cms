@@ -1,3 +1,5 @@
+from directory_constants.constants import cms
+
 from rest_framework.reverse import reverse
 
 from great_international.tests import factories
@@ -108,10 +110,14 @@ def test_article_listingpage_with_localised_content(admin_client, root_page):
     )
 
     url = reverse(
-        'api:api:pages:detail',
-        kwargs={'pk': article_listing_page.pk}
+        'api:lookup-by-slug',
+        kwargs={'slug': article_listing_page.slug}
     )
-    response = admin_client.get(url, {'region': 'germany'})
+
+    response = admin_client.get(
+        url,
+        {'region': 'germany', 'service_name': cms.GREAT_INTERNATIONAL}
+    )
     assert response.status_code == 200
     assert 'localised_child_pages' in response.json()
     expected_localised_article = response.json(
@@ -147,10 +153,14 @@ def test_article_listingpage_without_localised_content(
     )
 
     url = reverse(
-        'api:api:pages:detail',
-        kwargs={'pk': article_listing_page.pk}
+        'api:lookup-by-slug',
+        kwargs={'slug': article_listing_page.slug}
     )
-    response = admin_client.get(url, {'region': 'bar'})
+
+    response = admin_client.get(
+        url,
+        {'region': 'bar', 'service_name': cms.GREAT_INTERNATIONAL}
+    )
     assert response.status_code == 200
     assert 'localised_child_pages' in response.json()
     assert response.json()['localised_child_pages'] == []

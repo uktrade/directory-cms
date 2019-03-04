@@ -16,6 +16,10 @@ class GreatInternationalConfig(AppConfig):
         # tags inheritance signals
         post_save.connect(
             receiver=signals.inherit_tags_from_parent,
+            sender=models.InternationalSectorPage
+        )
+        post_save.connect(
+            receiver=signals.inherit_tags_from_parent,
             sender=models.InternationalArticlePage
         )
         post_save.connect(
