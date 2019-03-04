@@ -5,11 +5,18 @@ from core.cache import (
 from great_international import models
 
 
+class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.InternationalSectorPage
+    subscriptions = [
+        models.InternationalArticlePage,
+        models.InternationalCampaignPage
+    ]
+
+
 class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalHomePage
     subscriptions = [
         models.InternationalArticlePage,
-        models.InternationalMarketingPages
     ]
 
 
@@ -29,7 +36,8 @@ class InternationalArticleListingPageSubscriber(
     cache_populator = RegionAwareCachePopulator
     model = models.InternationalArticleListingPage
     subscriptions = [
-        models.InternationalArticlePage
+        models.InternationalArticlePage,
+        models.InternationalCampaignPage
     ]
 
 
@@ -38,4 +46,5 @@ class InternationalTopicLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
     subscriptions = [
         models.InternationalArticlePage,
         models.InternationalArticleListingPage,
+        models.InternationalSectorPage,
     ]

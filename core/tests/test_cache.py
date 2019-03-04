@@ -23,13 +23,13 @@ import great_international.models
         'some-other-slug',
         'FIND_A_SUPPLIER',
         'en-gb',
-        '/some-other-slug/?service_name=FIND_A_SUPPLIER&lang=en-gb'
+        '/some-other-slug/?lang=en-gb&service_name=FIND_A_SUPPLIER'
     ),
     (
         'and-another-slug',
         'EXPORT_READINESS',
         'fr',
-        '/and-another-slug/?service_name=EXPORT_READINESS&lang=fr'
+        '/and-another-slug/?lang=fr&service_name=EXPORT_READINESS'
     ),
 ))
 def test_page_cache_build_keys(slug, service_name, language_code, expected):
@@ -207,8 +207,7 @@ def test_all_models_cached():
         export_readiness.models.EUExitFormPages,
         export_readiness.models.AllContactPagesPage,
         great_international.models.InternationalRegionPage,
-        great_international.models.InternationalMarketingPages,
-        great_international.models.InternationalRegionalFolderPage,
+        great_international.models.InternationalLocalisedFolderPage,
         # Page is added by TestSubscriber in other tests.
         Page,
     }
