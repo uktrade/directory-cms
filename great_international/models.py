@@ -44,7 +44,7 @@ class InternationalSectorPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    heading_teaser = models.CharField(max_length=255, blank=True)
+    heading_teaser = models.TextField(blank=True)
 
     section_one_body = MarkdownField(
         null=True,
@@ -57,14 +57,22 @@ class InternationalSectorPage(BasePage):
         related_name='+',
         verbose_name='Bullets image'
     )
+    section_one_image_caption = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Bullets image caption')
+    section_one_image_caption_company = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Bullets image caption — company name')
 
     statistic_1_number = models.CharField(max_length=255)
     statistic_1_heading = models.CharField(max_length=255)
-    statistic_1_smallprint = models.CharField(max_length=255)
+    statistic_1_smallprint = models.CharField(max_length=255, blank=True)
 
     statistic_2_number = models.CharField(max_length=255)
     statistic_2_heading = models.CharField(max_length=255)
-    statistic_2_smallprint = models.CharField(max_length=255)
+    statistic_2_smallprint = models.CharField(max_length=255, blank=True)
 
     statistic_3_number = models.CharField(max_length=255, blank=True)
     statistic_3_heading = models.CharField(max_length=255, blank=True)
@@ -86,8 +94,7 @@ class InternationalSectorPage(BasePage):
         max_length=255,
         verbose_name='Highlights heading'
     )
-    section_two_teaser = models.CharField(
-        max_length=255,
+    section_two_teaser = models.TextField(
         verbose_name='Highlights teaser'
     )
 
@@ -103,8 +110,7 @@ class InternationalSectorPage(BasePage):
         max_length=255,
         verbose_name='Highlight 1 heading'
     )
-    section_two_subsection_one_body = models.CharField(
-        max_length=255,
+    section_two_subsection_one_body = models.TextField(
         verbose_name='Highlight 1 body'
     )
 
@@ -120,8 +126,7 @@ class InternationalSectorPage(BasePage):
         max_length=255,
         verbose_name='Highlight 2 heading'
     )
-    section_two_subsection_two_body = models.CharField(
-        max_length=255,
+    section_two_subsection_two_body = models.TextField(
         verbose_name='Highlight 2 body'
     )
 
@@ -137,14 +142,13 @@ class InternationalSectorPage(BasePage):
         max_length=255,
         verbose_name='Highlight 3 heading'
     )
-    section_two_subsection_three_body = models.CharField(
-        max_length=255,
+    section_two_subsection_three_body = models.TextField(
         verbose_name='Highlight 3 body'
     )
 
     case_study_title = models.CharField(max_length=255, blank=True)
     case_study_description = models.CharField(max_length=255, blank=True)
-    case_study_cta_text = models.CharField(max_length=255, blank=True)
+    case_study_cta_text = models.TextField(blank=True)
     case_study_cta_page = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
@@ -165,8 +169,7 @@ class InternationalSectorPage(BasePage):
         blank=True,
         verbose_name='Fact sheets heading'
     )
-    section_three_teaser = models.CharField(
-        max_length=255,
+    section_three_teaser = models.TextField(
         blank=True,
         verbose_name='Fact sheets teaser'
     )
@@ -176,8 +179,7 @@ class InternationalSectorPage(BasePage):
         blank=True,
         verbose_name='Fact sheet 1 heading'
     )
-    section_three_subsection_one_teaser = models.CharField(
-        max_length=255,
+    section_three_subsection_one_teaser = models.TextField(
         blank=True,
         verbose_name='Fact sheet 1 teaser'
     )
@@ -192,8 +194,7 @@ class InternationalSectorPage(BasePage):
         blank=True,
         verbose_name='Fact sheet 2 heading'
     )
-    section_three_subsection_two_teaser = models.CharField(
-        max_length=255,
+    section_three_subsection_two_teaser = models.TextField(
         blank=True,
         verbose_name='Fact sheet 2 teaser'
     )
@@ -202,9 +203,6 @@ class InternationalSectorPage(BasePage):
         null=True,
         verbose_name='Fact sheet 2 body'
     )
-
-    next_steps_heading = models.CharField(max_length=255)
-    next_steps_description = models.CharField(max_length=255)
 
     related_page_one = models.ForeignKey(
         'wagtailcore.Page',
@@ -248,7 +246,13 @@ class InternationalSectorPage(BasePage):
                 FieldRowPanel(
                     [
                         FieldPanel('section_one_body'),
-                        ImageChooserPanel('section_one_image')
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel('section_one_image'),
+                                FieldPanel('section_one_image_caption'),
+                                FieldPanel('section_one_image_caption_company')
+                            ]
+                        )
                     ]
                 )
             ]
@@ -399,13 +403,6 @@ class InternationalSectorPage(BasePage):
                         )
                     ]
                 )
-            ]
-        ),
-        MultiFieldPanel(
-            heading='Next Steps',
-            children=[
-                FieldPanel('next_steps_heading'),
-                FieldPanel('next_steps_description')
             ]
         ),
         MultiFieldPanel(
