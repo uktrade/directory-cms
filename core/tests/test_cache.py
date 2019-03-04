@@ -10,6 +10,9 @@ import find_a_supplier.models
 import invest.models
 import export_readiness
 import great_international.models
+from great_international.tests.factories import (
+    InternationalArticleListingPageFactory
+)
 
 
 @pytest.mark.parametrize('slug,service_name,language_code,expected', (
@@ -94,6 +97,23 @@ def test_cache_populator(translated_page):
                 'lang': language_code,
             }
         )
+
+
+@pytest.mark.django_db
+def test_region_aware_cache_populator():
+    page = InternationalArticleListingPageFactory()
+
+    cache.RegionAwareCachePopulator.populate(page.pk)
+    for language_code in page.translated_languages:
+        for region in cache.RegionAwareCachePopulator.regions:
+            assert cache.PageCache.get(
+                slug=page.slug,
+                params={
+                    'service_name': page.service_name,
+                    'lang': language_code,
+                    'region': region,
+                }
+            )
 
 
 @mock.patch('wagtail.core.signals.page_published.connect')

@@ -136,12 +136,12 @@ class AbstractDatabaseCacheSubscriber(abc.ABC):
     @property
     @abc.abstractmethod
     def model(self):
-        return
+        return  # pragma: no cover
 
     @property
     @abc.abstractmethod
     def subscriptions(self):
-        return []
+        return []  # pragma: no cover
 
     @classmethod
     def subscribe(cls):
