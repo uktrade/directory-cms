@@ -9,18 +9,16 @@ from export_readiness.tests import factories as exread_factories
 def test_models_hierarchy():
     # app
     assert models.GreatInternationalApp.allowed_subpage_models() == [
-        models.GreatInternationalApp,
+        models.InternationalArticleListingPage,
+        models.InternationalTopicLandingPage,
+        models.InternationalRegionPage,
         models.InternationalHomePage
     ]
     assert models.GreatInternationalApp.allowed_parent_page_models() == [
         Page,
     ]
     # homepage
-    assert models.InternationalHomePage.allowed_subpage_models() == [
-        models.InternationalArticleListingPage,
-        models.InternationalTopicLandingPage,
-        models.InternationalRegionPage
-    ]
+    assert models.InternationalHomePage.allowed_subpage_models() == []
     # region page
     assert models.InternationalRegionPage.allowed_subpage_models() == [
         models.InternationalLocalisedFolderPage
