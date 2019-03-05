@@ -28,6 +28,13 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
     def get_required_translatable_fields(cls):
         return []
 
+    @classmethod
+    def allowed_subpage_models(cls):
+        return [InternationalArticleListingPage,
+                InternationalTopicLandingPage,
+                InternationalRegionPage,
+                InternationalHomePage]
+
 
 class InternationalSectorPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
@@ -443,11 +450,7 @@ class InternationalSectorPage(BasePage):
 class InternationalHomePage(ExclusivePageMixin, BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
-    subpage_types = [
-        'great_international.InternationalArticleListingPage',
-        'great_international.InternationalTopicLandingPage',
-        'great_international.InternationalRegionPage'
-    ]
+    subpage_types = []
 
     tariffs_title = models.CharField(max_length=255)
     tariffs_description = MarkdownField()
@@ -530,7 +533,7 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
 
 class InternationalRegionPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    parent_page_types = ['great_international.InternationalHomePage']
+    parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = [
         'great_international.InternationalLocalisedFolderPage'
     ]
@@ -649,7 +652,7 @@ class InternationalArticlePage(BasePage):
 class InternationalArticleListingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = [
-        'great_international.InternationalHomePage',
+        'great_international.GreatInternationalApp',
         'great_international.InternationalTopicLandingPage'
     ]
     subpage_types = [
@@ -927,7 +930,7 @@ class InternationalCampaignPage(BasePage):
 
 class InternationalTopicLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    parent_page_types = ['great_international.InternationalHomePage']
+    parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
