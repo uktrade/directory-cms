@@ -13,7 +13,7 @@ from activitystream.serializers import ArticlePageSerializer
 MAX_PER_PAGE = 25
 
 
-class ActivityStreamViewSet(ListAPIView):
+class ActivityStreamView(ListAPIView):
     """List-only view set for the activity stream"""
 
     authentication_classes = (ActivityStreamAuthentication,)

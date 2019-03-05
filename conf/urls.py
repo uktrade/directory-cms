@@ -13,7 +13,7 @@ from django.views.generic import RedirectView
 
 import core.views
 import export_readiness.views
-from activitystream.views import ActivityStreamViewSet
+from activitystream.views import ActivityStreamView
 
 api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
@@ -106,7 +106,7 @@ urlpatterns = [
     url(r'^documents/', include(wagtaildocs_urls)),
     url(
         r'^activity-stream/v1/',
-        ActivityStreamViewSet.as_view(),
+        ActivityStreamView.as_view(),
         name='activity-stream'
     ),
 
