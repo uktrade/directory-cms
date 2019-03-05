@@ -83,6 +83,7 @@ INSTALLED_APPS = [
     'invest.apps.InvestConfig',
     'components.apps.ComponentsConfig',
     'activitystream.apps.ActivityStreamConfig',
+    'django_filters'
 ]
 
 MIDDLEWARE_CLASSES = [

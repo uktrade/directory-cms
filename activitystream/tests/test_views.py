@@ -1,5 +1,4 @@
 import datetime
-import math
 from os import environ
 
 import mohawk
@@ -11,12 +10,11 @@ from rest_framework.test import APIClient
 from django.conf import settings
 
 from export_readiness.tests.factories import ArticlePageFactory
-from activitystream import views
 
 URL = 'http://testserver' + reverse('activity-stream')
 URL_INCORRECT_DOMAIN = 'http://incorrect' + reverse('activity-stream')
-URL_INCORRECT_PATH = 'http://testserver' + reverse('activity-stream') + \
-    'incorrect/'
+URL_INCORRECT_PATH = 'http://testserver' + \
+    reverse('activity-stream') + 'incorrect/'
 EMPTY_COLLECTION = {
         '@context': 'https://www.w3.org/ns/activitystreams',
         'type': 'Collection',
@@ -24,6 +22,7 @@ EMPTY_COLLECTION = {
     }
 
 # --- Helper Functions ---
+
 
 @pytest.fixture
 def api_client():
@@ -45,7 +44,7 @@ def auth_sender(key_id=settings.ACTIVITY_STREAM_ACCESS_KEY_ID,
 
     return mohawk.Sender(
         credentials,
-        URL,
+        url,
         method,
         content=content,
         content_type=content_type,
@@ -147,7 +146,7 @@ def test_if_61_seconds_in_past_401_returned(api_client):
 
 
 @pytest.mark.django_db
-def test_lists_live_articles_in_stream_in_date_then_seq_order(api_client):
+def test_lists_live_articles_in_stream(api_client):
 
     # Create the articles
     with freeze_time('2012-01-14 12:00:02'):
@@ -196,21 +195,21 @@ def test_lists_live_articles_in_stream_in_date_then_seq_order(api_client):
 
     assert len(items) == 3
 
-    assert items[0]['published'] == '2012-01-14T12:00:01+00:00'
     assert article_attribute(items[0], 'name') == 'Article C'
     assert article_attribute(items[0], 'id') == id_prefix + str(article_c.id)
     assert article_attribute(items[0], 'summary') == 'Descriptive text'
     assert article_attribute(items[0], 'content') == 'Body text'
     assert article_attribute(items[0], 'url') == \
         environ["APP_URL_EXPORT_READINESS"] + '/article-c/'
+    assert items[0]['published'] == '2012-01-14T12:00:01+00:00'
 
     assert article_attribute(items[1], 'name') == 'Article A'
-    assert items[1]['published'] == '2012-01-14T12:00:02+00:00'
     assert article_attribute(items[1], 'id') == id_prefix + str(article_a.id)
+    assert items[1]['published'] == '2012-01-14T12:00:02+00:00'
 
     assert article_attribute(items[2], 'name') == 'Article B'
-    assert items[2]['published'] == '2012-01-14T12:00:02+00:00'
     assert article_attribute(items[2], 'id') == id_prefix + str(article_b.id)
+    assert items[2]['published'] == '2012-01-14T12:00:02+00:00'
 
 
 @pytest.mark.django_db
@@ -218,8 +217,9 @@ def test_pagination(api_client, django_assert_num_queries):
     """The requests are paginated, ending on a article without a next key
     """
 
+    """ create 50 articles. Second set should appear in feed first. """
     with freeze_time('2012-01-14 12:00:02'):
-        for i in range(0, 250):
+        for i in range(0, 25):
             ArticlePageFactory(
                 article_title='article_' + str(i),
                 article_teaser='Descriptive text',
@@ -229,7 +229,7 @@ def test_pagination(api_client, django_assert_num_queries):
             )
 
     with freeze_time('2012-01-14 12:00:01'):
-        for i in range(250, 501):
+        for i in range(25, 50):
             ArticlePageFactory(
                 article_title='article_' + str(i),
                 article_teaser='Descriptive text',
@@ -240,14 +240,16 @@ def test_pagination(api_client, django_assert_num_queries):
 
     items = []
     next_url = URL
-    num_articles = 0
+    num_pages = 0
 
-    queries = math.ceil(500/views.MAX_PER_PAGE) + 2
-
-    with django_assert_num_queries(queries):
+    """ One query to pull items 0 -> 24,
+        Two queries to pull items 25 -> 49 due to filter being used,
+        No queries on final blank page
+    """
+    with django_assert_num_queries(3):
         while next_url:
-            num_articles += 1
-            sender = auth_sender(url=lambda: next_url)
+            num_pages += 1
+            sender = auth_sender(url=next_url)
             response = api_client.get(
                 next_url,
                 content_type='',
@@ -260,7 +262,7 @@ def test_pagination(api_client, django_assert_num_queries):
                 response_json['next'] if 'next' in response_json else \
                 None
 
-    assert num_articles == queries
-    assert len(items) == 501
-    assert len(set([item['id'] for item in items])) == 501
-    assert article_attribute(items[500], 'name') == 'article_249'
+    assert num_pages == 3
+    assert len(items) == 50
+    assert len(set([item['id'] for item in items])) == 50  # All unique
+    assert article_attribute(items[49], 'name') == 'article_24'
