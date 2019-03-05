@@ -3,6 +3,7 @@ import hashlib
 from urllib.parse import urlencode
 
 from rest_framework.renderers import JSONRenderer
+from w3lib.url import canonicalize_url
 from wagtail.core.signals import page_published, page_unpublished
 from wagtail.core.models import Page
 
@@ -21,47 +22,34 @@ class PageCache:
     cache = cache
 
     @staticmethod
-    def build_key(slug, service_name, language_code):
+    def build_key(slug, params):
         url = reverse('api:lookup-by-slug', kwargs={'slug': slug})
-        params = {'service_name': service_name}
-        if language_code:
-            params['lang'] = language_code
+        params = {key: value for key, value in params.items() if value}
         # using the page slug as a redis hash tag ensures the keys related to
         # the same page in the same node, preventing delete_many from failing
         # because the keys could be stored across different nodes
-        node_prefix = f'{{slug}}'
-        return node_prefix + url + '?' + urlencode(params)
+        return f'{{slug}}' + canonicalize_url(url + '?' + urlencode(params))
 
     @classmethod
-    def set(cls, slug, service_name, contents, language_code=None):
-        key = cls.build_key(
-            slug=slug, service_name=service_name, language_code=language_code
-        )
-        cls.cache.set(key, contents, timeout=settings.API_CACHE_EXPIRE_SECONDS)
+    def set(cls, slug, params, data):
+        data['etag'] = cls.generate_etag(data)
+        key = cls.build_key(slug=slug, params=params)
+        cls.cache.set(key, data, timeout=settings.API_CACHE_EXPIRE_SECONDS)
 
     @classmethod
-    def get(cls, slug, service_name, language_code=None):
-        key = cls.build_key(
-            slug=slug, service_name=service_name, language_code=language_code
-        )
+    def get(cls, slug, params):
+        key = cls.build_key(slug=slug, params=params)
         return cls.cache.get(key)
 
     @classmethod
-    def delete(cls, slug, service_name, language_codes):
-        keys = [
-            cls.build_key(
-                slug=slug,
-                service_name=service_name,
-                language_code=None,
-            )
-        ]
-        for language_code in language_codes:
-            keys.append(cls.build_key(
-                slug=slug,
-                service_name=service_name,
-                language_code=language_code,
-            ))
-        cls.cache.delete_many(keys)
+    def delete(cls, slug, params):
+        key = cls.build_key(slug=slug, params=params)
+        cls.cache.delete(key)
+
+    @staticmethod
+    def generate_etag(data):
+        json_data = JSONRenderer().render(data)
+        return quote_etag(hashlib.md5(json_data).hexdigest())
 
     @classmethod
     def transaction(cls):
@@ -79,22 +67,27 @@ class PageCache:
 
 class TransactionalCache:
     """
-    Like `django.core.cache.cache`, but it buffers writes to be written to be a
-    single transaction.
+    Like `django.core.cache.cache`, but it buffers operations to be
+    committed in a single transaction.
     """
 
     cache = cache
 
     def __init__(self, *args, **kwargs):
-        self.transaction = {}
+        self.transaction_set = {}
+        self.transaction_delete = []
         super().__init__(*args, **kwargs)
 
-    def set(self, key, contents, timeout):
-        self.transaction[key] = contents
+    def set(self, key, data, timeout):
+        self.transaction_set[key] = data
+
+    def delete(self, key):
+        self.transaction_delete.append(key)
 
     def commit(self):
+        self.cache.delete_many(self.transaction_delete)
         self.cache.set_many(
-            self.transaction, timeout=settings.API_CACHE_EXPIRE_SECONDS
+            self.transaction_set, timeout=settings.API_CACHE_EXPIRE_SECONDS
         )
 
 
@@ -108,11 +101,15 @@ class CachePopulator:
 
     @classmethod
     def populate_async(cls, instance):
-        PageCache.delete(
-            slug=instance.slug,
-            service_name=instance.service_name,
-            language_codes=instance.translated_languages,
-        )
+        with PageCache.transaction() as page_cache:
+            for language_code in instance.translated_languages:
+                page_cache.delete(
+                    slug=instance.slug,
+                    params={
+                        'service_name': instance.service_name,
+                        'lang': language_code
+                    }
+                )
         cls.populate.delay(instance.pk)
 
     @classmethod
@@ -124,35 +121,27 @@ class CachePopulator:
                     serializer = serializer_class(instance=instance)
                     page_cache.set(
                         slug=instance.slug,
-                        language_code=language_code,
-                        service_name=instance.service_name,
-                        contents={
-                            **serializer.data,
-                            'etag': cls.generate_etag(instance)
-                        }
+                        params={
+                            'lang': language_code,
+                            'service_name': instance.service_name,
+                        },
+                        data=serializer.data,
                     )
-
-    @staticmethod
-    def generate_etag(instance):
-        # This method can hit the database. It's slow. Don't call it
-        # in a request-response cycle.
-        serializer_class = MODELS_SERIALIZERS_MAPPING[instance.__class__]
-        serializer = serializer_class(instance=instance)
-        json_data = JSONRenderer().render(serializer.data)
-        return quote_etag(hashlib.md5(json_data).hexdigest())
 
 
 class AbstractDatabaseCacheSubscriber(abc.ABC):
 
+    cache_populator = CachePopulator
+
     @property
     @abc.abstractmethod
     def model(self):
-        return
+        return  # pragma: no cover
 
     @property
     @abc.abstractmethod
     def subscriptions(self):
-        return []
+        return []  # pragma: no cover
 
     @classmethod
     def subscribe(cls):
@@ -180,17 +169,67 @@ class AbstractDatabaseCacheSubscriber(abc.ABC):
 
     @classmethod
     def populate(cls, sender, instance, *args, **kwargs):
-        CachePopulator.populate_async(instance)
+        cls.cache_populator.populate_async(instance)
 
     @classmethod
     def delete(cls, sender, instance, *args, **kwargs):
-        PageCache.delete(
-            slug=instance.slug,
-            service_name=instance.service_name,
-            language_codes=instance.translated_languages,
-        )
+        with PageCache.transaction() as page_cache:
+            for lang in instance.translated_languages:
+                page_cache.delete(
+                    slug=instance.slug,
+                    params={
+                        'lang': lang,
+                        'service_name': instance.service_name,
+                    }
+                )
 
     @classmethod
     def populate_many(cls, sender, instance, *args, **kwargs):
         for related_instance in cls.model.objects.filter(live=True):
-            CachePopulator.populate_async(related_instance)
+            cls.cache_populator.populate_async(related_instance)
+
+
+class RegionAwareCachePopulator(CachePopulator):
+    regions = ['eu', 'not-eu']
+
+    @staticmethod
+    @app.task(name='region-aware-populate')
+    def populate(instance_pk):
+        instance = Page.objects.get(pk=instance_pk).specific
+        RegionAwareCachePopulator.populate_sync(instance)
+
+    @classmethod
+    def populate_async(cls, instance):
+        with PageCache.transaction() as page_cache:
+            for language_code in instance.translated_languages:
+                for region in cls.regions:
+                    page_cache.delete(
+                        slug=instance.slug,
+                        params={
+                            'service_name': instance.service_name,
+                            'lang': language_code,
+                            'region': region,
+                        }
+                    )
+        cls.populate.delay(instance.pk)
+
+    @classmethod
+    def populate_sync(cls, instance):
+        serializer_class = MODELS_SERIALIZERS_MAPPING[instance.__class__]
+        with PageCache.transaction() as page_cache:
+            for language_code in instance.translated_languages:
+                with translation.override(language_code):
+                    for region in cls.regions:
+                        serializer = serializer_class(
+                            instance=instance,
+                            context={'region': region}
+                        )
+                        page_cache.set(
+                            slug=instance.slug,
+                            params={
+                                'lang': language_code,
+                                'service_name': instance.service_name,
+                                'region': region,
+                            },
+                            data=serializer.data,
+                        )

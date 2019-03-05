@@ -50,6 +50,13 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
         model_class = self.get_model_class()
         return MODELS_SERIALIZERS_MAPPING[model_class]
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        region = self.request.GET.get('region')
+        if region:
+            context['region'] = region
+        return context
+
     @property
     def permission_classes(self):
         permission_classes = [SignatureCheckPermission]
@@ -94,11 +101,13 @@ class PageLookupBySlugAPIEndpoint(APIEndpointBase):
             helpers.is_draft_requested(self.request)
         ):
             return super().dispatch(*args, **kwargs)
-
         cached_page = cache.PageCache.get(
             slug=self.kwargs['slug'],
-            service_name=self.request.GET['service_name'],
-            language_code=translation.get_language()
+            params={
+                'service_name': self.request.GET['service_name'],
+                'lang': translation.get_language(),
+                'region': self.request.GET.get('region'),
+            }
         )
         if cached_page:
             cached_response = helpers.CachedResponse(cached_page)
