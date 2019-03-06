@@ -44,7 +44,7 @@ class InternationalSectorPage(BasePage):
     tags = ParentalManyToManyField(Tag, blank=True)
 
     heading = models.CharField(max_length=255)
-    sub_heading = models.CharField(max_length=255)
+    sub_heading = models.CharField(max_length=255, blank=True)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
