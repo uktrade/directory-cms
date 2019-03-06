@@ -1,21 +1,48 @@
 import pytest
+from wagtail.core.models import Page
 
 from great_international import models
 from . import factories
 from export_readiness.tests import factories as exread_factories
 
 
-def test_app_models():
+def test_models_hierarchy():
+    # app
     assert models.GreatInternationalApp.allowed_subpage_models() == [
-        models.GreatInternationalApp,
-        models.InternationalHomePage,
-        models.InternationalMarketingPages,
+        models.InternationalArticleListingPage,
+        models.InternationalTopicLandingPage,
         models.InternationalRegionPage,
-        models.InternationalRegionalFolderPage,
+        models.InternationalHomePage
+    ]
+    assert models.GreatInternationalApp.allowed_parent_page_models() == [
+        Page,
+    ]
+    # homepage
+    assert models.InternationalHomePage.allowed_subpage_models() == []
+    # region page
+    assert models.InternationalRegionPage.allowed_subpage_models() == [
+        models.InternationalLocalisedFolderPage
+    ]
+    # regional folder page
+    assert models.InternationalLocalisedFolderPage.allowed_subpage_models(
+    ) == [
         models.InternationalArticlePage,
+        models.InternationalCampaignPage
+    ]
+    # topic landing
+    assert models.InternationalTopicLandingPage.allowed_subpage_models() == [
         models.InternationalArticleListingPage,
         models.InternationalCampaignPage,
-        models.InternationalTopicLandingPage
+        models.InternationalSectorPage,
+    ]
+    # article listing
+    assert models.InternationalArticleListingPage.allowed_subpage_models() == [
+        models.InternationalArticlePage,
+        models.InternationalCampaignPage
+    ]
+    # campaign
+    assert models.InternationalCampaignPage.allowed_subpage_models() == [
+        models.InternationalArticlePage,
     ]
 
 
@@ -35,19 +62,6 @@ def test_set_slug():
     )
 
     assert instance.slug == models.GreatInternationalApp.slug_identity
-
-
-@pytest.mark.parametrize('folder_page_class', [
-    models.InternationalMarketingPages,
-])
-@pytest.mark.django_db
-def test_folders_set_title(folder_page_class):
-    instance = folder_page_class.objects.create(
-        depth=2,
-        path='/thing',
-    )
-
-    assert instance.title_en_gb == instance.get_verbose_name()
 
 
 @pytest.mark.django_db
@@ -77,7 +91,7 @@ def test_campaign_inherit_tags_from_parent(root_page):
     tag1 = exread_factories.TagFactory(name='foo')
     tag2 = exread_factories.TagFactory(name='bar')
     tag3 = exread_factories.TagFactory(name='xyz')
-    marketing_page = factories.InternationalMarketingPagesFactory(
+    marketing_page = factories.InternationalArticleListingPageFactory(
         parent=root_page
     )
     marketing_page.tags = [tag1, tag2]
@@ -134,8 +148,23 @@ def test_international_folder_page_append_parent_slug():
     region = factories.InternationalRegionPageFactory(
         slug='canada'
     )
-    folder_page = factories.InternationalRegionalFolderPageFactory(
+    folder_page = factories.InternationalLocalisedFolderPageFactory(
         parent=region,
         slug='test'
     )
+    assert folder_page.slug == 'test-canada'
+
+
+@pytest.mark.django_db
+def test_international_folder_page_append_parent_slug_only_on_creation():
+    region = factories.InternationalRegionPageFactory(
+        slug='canada'
+    )
+    folder_page = factories.InternationalLocalisedFolderPageFactory(
+        parent=region,
+        slug='test'
+    )
+    assert folder_page.slug == 'test-canada'
+
+    folder_page.save()
     assert folder_page.slug == 'test-canada'

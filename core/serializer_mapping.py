@@ -36,6 +36,7 @@ MODELS_SERIALIZERS_MAPPING = {
     export_readiness.models.SuperregionPage: export_readiness.serializers.SuperregionPageSerializer,  # NOQA
     export_readiness.models.CountryGuidePage: export_readiness.serializers.CountryGuidePageSerializer,  # NOQA
     # great international
+    great_international.models.InternationalSectorPage: great_international.serializers.InternationalSectorPageSerializer,  # NOQA
     great_international.models.InternationalHomePage: great_international.serializers.InternationalHomePageSerializer,  # NOQA
     great_international.models.InternationalArticlePage: great_international.serializers.InternationalArticlePageSerializer,  # NOQA
     great_international.models.InternationalCampaignPage: great_international.serializers.InternationalCampaignPageSerializer,  # NOQA

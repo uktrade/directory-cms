@@ -5,7 +5,7 @@ from core import fields as core_fields
 from core.serializers import BasePageSerializer
 
 from .models import (InternationalArticlePage, InternationalArticleListingPage,
-                     InternationalRegionalFolderPage,
+                     InternationalLocalisedFolderPage,
                      InternationalCampaignPage)
 
 
@@ -52,6 +52,84 @@ class PageWithRelatedPagesSerializer(BasePageSerializer):
             serialized.append(serializer.data)
 
         return serialized
+
+
+class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
+    heading = serializers.CharField(max_length=255)
+    sub_heading = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    heading_teaser = serializers.CharField()
+
+    section_one_body = core_fields.MarkdownToHTMLField()
+    section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    section_one_image_caption = serializers.CharField(max_length=255)
+    section_one_image_caption_company = serializers.CharField(max_length=255)
+
+    statistic_1_number = serializers.CharField(max_length=255)
+    statistic_1_heading = serializers.CharField(max_length=255)
+    statistic_1_smallprint = serializers.CharField(max_length=255)
+
+    statistic_2_number = serializers.CharField(max_length=255)
+    statistic_2_heading = serializers.CharField(max_length=255)
+    statistic_2_smallprint = serializers.CharField(max_length=255)
+
+    statistic_3_number = serializers.CharField(max_length=255)
+    statistic_3_heading = serializers.CharField(max_length=255)
+    statistic_3_smallprint = serializers.CharField(max_length=255)
+
+    statistic_4_number = serializers.CharField(max_length=255)
+    statistic_4_heading = serializers.CharField(max_length=255)
+    statistic_4_smallprint = serializers.CharField(max_length=255)
+
+    statistic_5_number = serializers.CharField(max_length=255)
+    statistic_5_heading = serializers.CharField(max_length=255)
+    statistic_5_smallprint = serializers.CharField(max_length=255)
+
+    statistic_6_number = serializers.CharField(max_length=255)
+    statistic_6_heading = serializers.CharField(max_length=255)
+    statistic_6_smallprint = serializers.CharField(max_length=255)
+
+    section_two_heading = serializers.CharField(max_length=255)
+    section_two_teaser = serializers.CharField()
+    section_two_subsection_one_icon = wagtail_fields.ImageRenditionField(
+        'original')
+    section_two_subsection_one_heading = serializers.CharField(max_length=255)
+    section_two_subsection_one_body = serializers.CharField()
+    section_two_subsection_two_icon = wagtail_fields.ImageRenditionField(
+        'original')
+    section_two_subsection_two_heading = serializers.CharField(max_length=255)
+    section_two_subsection_two_body = serializers.CharField()
+    section_two_subsection_three_icon = wagtail_fields.ImageRenditionField(
+        'original')
+    section_two_subsection_three_heading = serializers.CharField(
+        max_length=255)
+    section_two_subsection_three_body = serializers.CharField()
+
+    case_study_title = serializers.CharField(max_length=255)
+    case_study_description = serializers.CharField(max_length=255)
+    case_study_cta_text = serializers.CharField(max_length=255)
+    case_study_cta_page = serializers.SerializerMethodField()
+    case_study_image = wagtail_fields.ImageRenditionField('original')
+
+    def get_case_study_cta_page(self, obj):
+        if not obj.case_study_cta_page:
+            return None
+        related_page = obj.case_study_cta_page
+        serializer_class = MODEL_TO_SERIALIZER_MAPPING[
+            related_page.specific.__class__]
+        serializer = serializer_class(related_page.specific)
+        return serializer.data
+
+    section_three_heading = serializers.CharField(max_length=255)
+    section_three_teaser = serializers.CharField()
+    section_three_subsection_one_heading = serializers.CharField(
+        max_length=255)
+    section_three_subsection_one_teaser = serializers.CharField()
+    section_three_subsection_one_body = core_fields.MarkdownToHTMLField()
+    section_three_subsection_two_heading = serializers.CharField(
+        max_length=255)
+    section_three_subsection_two_teaser = serializers.CharField()
+    section_three_subsection_two_body = core_fields.MarkdownToHTMLField()
 
 
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
@@ -128,39 +206,57 @@ class InternationalArticleListingPageSerializer(BasePageSerializer):
     articles_count = serializers.IntegerField()
     list_teaser = core_fields.MarkdownToHTMLField(allow_null=True)
     hero_teaser = serializers.CharField(allow_null=True)
-    articles = serializers.SerializerMethodField()
-    localised_articles = serializers.SerializerMethodField()
+    child_pages = serializers.SerializerMethodField()
+    localised_child_pages = serializers.SerializerMethodField()
 
-    def get_localised_articles(self, obj):
+    def get_localised_child_pages(self, obj):
         data = []
-        region = self.context['request'].GET.get('region')
-        if region:
-            slug = f'{obj.slug}-{region}'
-            folder = InternationalRegionalFolderPage.objects.filter(slug=slug)
+        if 'region' in self.context:
+            slug = f'{obj.slug}-{self.context["region"]}'
+            folder = InternationalLocalisedFolderPage.objects.filter(slug=slug)
             if folder.exists():
-                queryset = folder[0].get_descendants().type(
+                articles_queryset = folder[0].get_descendants().type(
                     InternationalArticlePage
                 ).live().specific()
-                serializer = InternationalArticlePageSerializer(
-                    queryset,
+                articles = RelatedArticlePageSerializer(
+                    articles_queryset,
                     many=True,
                     allow_null=True,
                     context=self.context
                 )
-                data = serializer.data
+                campaigns_queryset = folder[0].get_descendants().type(
+                    InternationalCampaignPage
+                ).live().specific()
+
+                campaigns = RelatedCampaignPageSerializer(
+                    campaigns_queryset,
+                    many=True,
+                    allow_null=True,
+                    context=self.context
+                )
+                data = articles.data + campaigns.data
         return data
 
-    def get_articles(self, obj):
-        queryset = obj.get_descendants().type(
+    def get_child_pages(self, obj):
+        articles_queryset = obj.get_descendants().type(
             InternationalArticlePage
         ).live().specific()
-        serializer = InternationalArticlePageSerializer(
-            queryset,
+        articles = RelatedArticlePageSerializer(
+            articles_queryset,
             many=True,
             allow_null=True,
             context=self.context
         )
-        return serializer.data
+        campaigns_queryset = obj.get_descendants().type(
+            InternationalCampaignPage
+        ).live().specific()
+        campaigns = RelatedCampaignPageSerializer(
+            campaigns_queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return articles.data + campaigns.data
 
 
 class InternationalTopicLandingPageSerializer(BasePageSerializer):
