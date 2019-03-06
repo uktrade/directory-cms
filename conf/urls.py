@@ -13,7 +13,7 @@ from django.views.generic import RedirectView
 
 import core.views
 import export_readiness.views
-
+from activitystream.views import ActivityStreamView
 
 api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
@@ -104,6 +104,11 @@ urlpatterns = [
 
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
+    url(
+        r'^activity-stream/v1/',
+        ActivityStreamView.as_view(),
+        name='activity-stream'
+    ),
 
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in

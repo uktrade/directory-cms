@@ -79,7 +79,10 @@ DEBUG_SET_ENV_VARS := \
 	export REDIS_CELERY_URL=redis://localhost:6379/1; \
 	export API_CACHE_DISABLED=true; \
 	export ENVIRONMENT_CSS_THEME_FILE=core/css/environment_dev_theme.css; \
-	export CELERY_ALWAYS_EAGER=true
+	export CELERY_ALWAYS_EAGER=true; \
+	export ACTIVITY_STREAM_ACCESS_KEY_ID=123-id-key; \
+	export ACTIVITY_STREAM_SECRET_ACCESS_KEY=123-secret-key
+
 
 
 TEST_SET_ENV_VARS := \
