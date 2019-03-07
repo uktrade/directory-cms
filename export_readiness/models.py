@@ -905,7 +905,7 @@ class ArticlePage(BasePage):
 
     article_title = models.CharField(max_length=255)
 
-    article_teaser = models.CharField(max_length=255)
+    article_teaser = models.CharField(max_length=255, blank=True, null=True)
     article_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
