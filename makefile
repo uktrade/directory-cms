@@ -88,6 +88,12 @@ TEST_SET_ENV_VARS := \
 	export STATICFILES_STORAGE=django.contrib.staticfiles.storage.StaticFilesStorage; \
 	export DEBUG=false
 
+debug_migrate:
+	$(DEBUG_SET_ENV_VARS) && ./manage.py migrate
+
+debug_createsuperuser:
+	$(DEBUG_SET_ENV_VARS) && ./manage.py createsuperuser
+
 debug_webserver:
 	$(DEBUG_SET_ENV_VARS) && $(DJANGO_WEBSERVER)
 
