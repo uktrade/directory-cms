@@ -17,15 +17,24 @@ class SectionThreeSubsectionProxyDataWrapper:
 
     @property
     def heading(self):
-        return getattr(self.instance, f'section_three_subsection_{self.position_number}_heading')
+        return getattr(
+            self.instance,
+            f'section_three_subsection_{self.position_number}_heading'
+        )
 
     @property
     def teaser(self):
-        return getattr(self.instance, f'section_three_subsection_{self.position_number}_teaser')
+        return getattr(
+            self.instance,
+            f'section_three_subsection_{self.position_number}_teaser'
+        )
 
     @property
     def body(self):
-        return getattr(self.instance, f'section_three_subsection_{self.position_number}_body')
+        return getattr(
+            self.instance,
+            f'section_three_subsection_{self.position_number}_body'
+        )
 
 
 
@@ -37,15 +46,24 @@ class SectionTwoSubsectionProxyDataWrapper:
 
     @property
     def icon(self):
-        return getattr(self.instance, f'section_two_subsection_{self.position_number}_icon')
+        return getattr(
+            self.instance,
+            f'section_two_subsection_{self.position_number}_icon'
+        )
 
     @property
     def heading(self):
-        return getattr(self.instance, f'section_two_subsection_{self.position_number}_heading')
+        return getattr(
+            self.instance,
+            f'section_two_subsection_{self.position_number}_heading'
+        )
 
     @property
     def body(self):
-        return getattr(self.instance, f'section_two_subsection_{self.position_number}_body')
+        return getattr(
+            self.instance,
+            f'section_two_subsection_{self.position_number}_body'
+        )
 
 
 class StatisticProxyDataWrapper:
@@ -56,15 +74,24 @@ class StatisticProxyDataWrapper:
 
     @property
     def number(self):
-        return getattr(self.instance, f'statistic_{self.position_number}_number')
+        return getattr(
+            self.instance,
+            f'statistic_{self.position_number}_number'
+        )
 
     @property
     def heading(self):
-        return getattr(self.instance, f'statistic_{self.position_number}_heading')
+        return getattr(
+            self.instance,
+            f'statistic_{self.position_number}_heading'
+        )
 
     @property
     def smallprint(self):
-        return getattr(self.instance, f'statistic_{self.position_number}_smallprint')
+        return getattr(
+            self.instance,
+            f'statistic_{self.position_number}_smallprint'
+        )
 
 
 class SectionThreeSubsectionSerializer(serializers.Serializer):
@@ -181,7 +208,10 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
 
     def get_section_two_subsections(self, instance):
         data = [
-            SectionTwoSubsectionProxyDataWrapper(instance=instance, position_number=num)
+            SectionTwoSubsectionProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
             for num in ['one', 'two', 'three']
         ]
         serializer = SectionTwoSubsectionSerializer(data, many=True)
@@ -222,7 +252,10 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
 
     def get_section_three_subsections(self, instance):
         data = [
-            SectionThreeSubsectionProxyDataWrapper(instance=instance, position_number=num)
+            SectionThreeSubsectionProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
             for num in ['one', 'two']
         ]
         serializer = SectionThreeSubsectionSerializer(data, many=True)
