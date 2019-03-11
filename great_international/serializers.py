@@ -37,7 +37,6 @@ class SectionThreeSubsectionProxyDataWrapper:
         )
 
 
-
 class SectionTwoSubsectionProxyDataWrapper:
 
     def __init__(self, instance, position_number):
