@@ -9,7 +9,7 @@ from great_international.tests.factories import (
 )
 
 
-@pytest.mark.djano_db
+@pytest.mark.django_db
 def test_sector_page_has_section_three_subsections(root_page, rf):
     article = InternationalSectorPageFactory(
         parent=root_page,
