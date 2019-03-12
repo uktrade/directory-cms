@@ -10,6 +10,63 @@ from great_international.tests.factories import (
 
 
 @pytest.mark.django_db
+def test_sector_page_has_section_three_subsections(root_page, rf):
+    article = InternationalSectorPageFactory(
+        parent=root_page,
+        slug='article-slug'
+    )
+
+    serializer = InternationalSectorPageSerializer(
+        instance=article,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['section_three_subsections']) == 2
+    for section in serializer.data['section_three_subsections']:
+        assert 'heading' in section
+        assert 'teaser' in section
+        assert 'body' in section
+
+
+@pytest.mark.django_db
+def test_sector_page_has_section_two_subsections(root_page, rf):
+    article = InternationalSectorPageFactory(
+        parent=root_page,
+        slug='article-slug'
+    )
+
+    serializer = InternationalSectorPageSerializer(
+        instance=article,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['section_two_subsections']) == 3
+    for section in serializer.data['section_two_subsections']:
+        assert 'icon' in section
+        assert 'heading' in section
+        assert 'body' in section
+
+
+@pytest.mark.django_db
+def test_sector_page_has_statistics(root_page, rf):
+    article = InternationalSectorPageFactory(
+        parent=root_page,
+        slug='article-slug'
+    )
+
+    serializer = InternationalSectorPageSerializer(
+        instance=article,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['statistics']) == 6
+    for statistic in serializer.data['statistics']:
+        assert 'number' in statistic
+        assert 'heading' in statistic
+        assert 'smallprint' in statistic
+
+
+@pytest.mark.django_db
 def test_sector_page_related_pages_serializer_has_pages(root_page, rf):
     related_page_one = InternationalArticlePageFactory(
         parent=root_page,

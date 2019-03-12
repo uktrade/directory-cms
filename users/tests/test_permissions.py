@@ -217,7 +217,6 @@ def test_branch_user_cant_create_child_pages_without_mandatory_data(
     branch = branch_factory.get(root_page)
     mandatory_fields = {
         'article_title',
-        'article_teaser',
         'article_body_text',
         'title_en_gb',
         'slug',

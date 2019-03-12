@@ -35,11 +35,11 @@ We aim to follow [GDS service standards](https://www.gov.uk/service-manual/servi
 
 ### New /etc/hosts file entry
 
+UI clients on local expect the CMS to be reachable at the address http://cms.trade.great.
+
      Add 127.0.0.1 cms.trade.great
 
-If you encounter an error along the lines of... "HTTPConnectionPool(host='cms.trade.great', port=8010): Max retries exceeded with url: /api/pages/lookup-by-slug/home/?fields=%2A&service_name=EXPORT_READINESS (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10f103908>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known',))""
-
-You need to update your hosts file (located at etc/hosts) with an additional line `127.0.0.1 cms.trade.great`. You can test this works by attempting to visit cms.trade.great:8010/admin in your browser
+You can test this works by attempting to visit http://cms.trade.great:8010/admin in your browser.
 
 ## Running the tests
 
@@ -47,7 +47,7 @@ You need to update your hosts file (located at etc/hosts) with an additional lin
 
 ### Create a new template_sql file
 
-    To speed up tests a SQL template file is provided. If the file becomes old run the following command on an up-to-date db instance
+    To speed up tests a SQL template file is provided. If the file becomes obsolete run the following command on an up-to-date db instance
     $ pg_dump -O -f db_template.sql directory_cms_debug
 
 ## Session
