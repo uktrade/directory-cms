@@ -640,97 +640,97 @@ class CountryGuidePage(BasePage):
         related_name='+',
         verbose_name='Accordion hero'
     )
-    accordion_1_stats_1_number = models.CharField(
+    accordion_1_statistic_1_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 number'
     )
-    accordion_1_stats_1_heading = models.CharField(
+    accordion_1_statistic_1_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 heading'
     )
-    accordion_1_stats_1_smallprint = models.CharField(
+    accordion_1_statistic_1_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 smallprint'
     )
 
-    accordion_1_stats_2_number = models.CharField(
+    accordion_1_statistic_2_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 number'
     )
-    accordion_1_stats_2_heading = models.CharField(
+    accordion_1_statistic_2_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 heading'
     )
-    accordion_1_stats_2_smallprint = models.CharField(
+    accordion_1_statistic_2_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 smallprint'
     )
 
-    accordion_1_stats_3_number = models.CharField(
+    accordion_1_statistic_3_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 number'
     )
-    accordion_1_stats_3_heading = models.CharField(
+    accordion_1_statistic_3_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 heading'
     )
-    accordion_1_stats_3_smallprint = models.CharField(
+    accordion_1_statistic_3_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 smallprint'
     )
 
-    accordion_1_stats_4_number = models.CharField(
+    accordion_1_statistic_4_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 number'
     )
-    accordion_1_stats_4_heading = models.CharField(
+    accordion_1_statistic_4_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 heading'
     )
-    accordion_1_stats_4_smallprint = models.CharField(
+    accordion_1_statistic_4_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 smallprint'
     )
 
-    accordion_1_stats_5_number = models.CharField(
+    accordion_1_statistic_5_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 number'
     )
-    accordion_1_stats_5_heading = models.CharField(
+    accordion_1_statistic_5_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 heading'
     )
-    accordion_1_stats_5_smallprint = models.CharField(
+    accordion_1_statistic_5_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 smallprint'
     )
 
-    accordion_1_stats_6_number = models.CharField(
+    accordion_1_statistic_6_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 number'
     )
-    accordion_1_stats_6_heading = models.CharField(
+    accordion_1_statistic_6_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 heading'
     )
-    accordion_1_stats_6_smallprint = models.CharField(
+    accordion_1_statistic_6_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 smallprint'
@@ -815,97 +815,97 @@ class CountryGuidePage(BasePage):
         related_name='+',
         verbose_name='Accordion hero'
     )
-    accordion_2_stats_1_number = models.CharField(
+    accordion_2_statistic_1_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 number'
     )
-    accordion_2_stats_1_heading = models.CharField(
+    accordion_2_statistic_1_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 heading'
     )
-    accordion_2_stats_1_smallprint = models.CharField(
+    accordion_2_statistic_1_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 smallprint'
     )
 
-    accordion_2_stats_2_number = models.CharField(
+    accordion_2_statistic_2_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 number'
     )
-    accordion_2_stats_2_heading = models.CharField(
+    accordion_2_statistic_2_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 heading'
     )
-    accordion_2_stats_2_smallprint = models.CharField(
+    accordion_2_statistic_2_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 smallprint'
     )
 
-    accordion_2_stats_3_number = models.CharField(
+    accordion_2_statistic_3_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 number'
     )
-    accordion_2_stats_3_heading = models.CharField(
+    accordion_2_statistic_3_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 heading'
     )
-    accordion_2_stats_3_smallprint = models.CharField(
+    accordion_2_statistic_3_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 smallprint'
     )
 
-    accordion_2_stats_4_number = models.CharField(
+    accordion_2_statistic_4_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 number'
     )
-    accordion_2_stats_4_heading = models.CharField(
+    accordion_2_statistic_4_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 heading'
     )
-    accordion_2_stats_4_smallprint = models.CharField(
+    accordion_2_statistic_4_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 smallprint'
     )
 
-    accordion_2_stats_5_number = models.CharField(
+    accordion_2_statistic_5_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 number'
     )
-    accordion_2_stats_5_heading = models.CharField(
+    accordion_2_statistic_5_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 heading'
     )
-    accordion_2_stats_5_smallprint = models.CharField(
+    accordion_2_statistic_5_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 smallprint'
     )
 
-    accordion_2_stats_6_number = models.CharField(
+    accordion_2_statistic_6_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 number'
     )
-    accordion_2_stats_6_heading = models.CharField(
+    accordion_2_statistic_6_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 heading'
     )
-    accordion_2_stats_6_smallprint = models.CharField(
+    accordion_2_statistic_6_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 smallprint'
@@ -990,97 +990,97 @@ class CountryGuidePage(BasePage):
         related_name='+',
         verbose_name='Accordion hero'
     )
-    accordion_3_stats_1_number = models.CharField(
+    accordion_3_statistic_1_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 number'
     )
-    accordion_3_stats_1_heading = models.CharField(
+    accordion_3_statistic_1_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 heading'
     )
-    accordion_3_stats_1_smallprint = models.CharField(
+    accordion_3_statistic_1_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 smallprint'
     )
 
-    accordion_3_stats_2_number = models.CharField(
+    accordion_3_statistic_2_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 number'
     )
-    accordion_3_stats_2_heading = models.CharField(
+    accordion_3_statistic_2_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 heading'
     )
-    accordion_3_stats_2_smallprint = models.CharField(
+    accordion_3_statistic_2_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 smallprint'
     )
 
-    accordion_3_stats_3_number = models.CharField(
+    accordion_3_statistic_3_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 number'
     )
-    accordion_3_stats_3_heading = models.CharField(
+    accordion_3_statistic_3_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 heading'
     )
-    accordion_3_stats_3_smallprint = models.CharField(
+    accordion_3_statistic_3_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 smallprint'
     )
 
-    accordion_3_stats_4_number = models.CharField(
+    accordion_3_statistic_4_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 number'
     )
-    accordion_3_stats_4_heading = models.CharField(
+    accordion_3_statistic_4_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 heading'
     )
-    accordion_3_stats_4_smallprint = models.CharField(
+    accordion_3_statistic_4_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 smallprint'
     )
 
-    accordion_3_stats_5_number = models.CharField(
+    accordion_3_statistic_5_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 number'
     )
-    accordion_3_stats_5_heading = models.CharField(
+    accordion_3_statistic_5_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 heading'
     )
-    accordion_3_stats_5_smallprint = models.CharField(
+    accordion_3_statistic_5_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 smallprint'
     )
 
-    accordion_3_stats_6_number = models.CharField(
+    accordion_3_statistic_6_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 number'
     )
-    accordion_3_stats_6_heading = models.CharField(
+    accordion_3_statistic_6_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 heading'
     )
-    accordion_3_stats_6_smallprint = models.CharField(
+    accordion_3_statistic_6_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 smallprint'
@@ -1165,97 +1165,97 @@ class CountryGuidePage(BasePage):
         related_name='+',
         verbose_name='Accordion hero'
     )
-    accordion_4_stats_1_number = models.CharField(
+    accordion_4_statistic_1_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 number'
     )
-    accordion_4_stats_1_heading = models.CharField(
+    accordion_4_statistic_1_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 heading'
     )
-    accordion_4_stats_1_smallprint = models.CharField(
+    accordion_4_statistic_1_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 smallprint'
     )
 
-    accordion_4_stats_2_number = models.CharField(
+    accordion_4_statistic_2_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 number'
     )
-    accordion_4_stats_2_heading = models.CharField(
+    accordion_4_statistic_2_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 heading'
     )
-    accordion_4_stats_2_smallprint = models.CharField(
+    accordion_4_statistic_2_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 smallprint'
     )
 
-    accordion_4_stats_3_number = models.CharField(
+    accordion_4_statistic_3_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 number'
     )
-    accordion_4_stats_3_heading = models.CharField(
+    accordion_4_statistic_3_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 heading'
     )
-    accordion_4_stats_3_smallprint = models.CharField(
+    accordion_4_statistic_3_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 smallprint'
     )
 
-    accordion_4_stats_4_number = models.CharField(
+    accordion_4_statistic_4_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 number'
     )
-    accordion_4_stats_4_heading = models.CharField(
+    accordion_4_statistic_4_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 heading'
     )
-    accordion_4_stats_4_smallprint = models.CharField(
+    accordion_4_statistic_4_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 smallprint'
     )
 
-    accordion_4_stats_5_number = models.CharField(
+    accordion_4_statistic_5_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 number'
     )
-    accordion_4_stats_5_heading = models.CharField(
+    accordion_4_statistic_5_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 heading'
     )
-    accordion_4_stats_5_smallprint = models.CharField(
+    accordion_4_statistic_5_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 smallprint'
     )
 
-    accordion_4_stats_6_number = models.CharField(
+    accordion_4_statistic_6_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 number'
     )
-    accordion_4_stats_6_heading = models.CharField(
+    accordion_4_statistic_6_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 heading'
     )
-    accordion_4_stats_6_smallprint = models.CharField(
+    accordion_4_statistic_6_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 smallprint'
@@ -1340,97 +1340,97 @@ class CountryGuidePage(BasePage):
         related_name='+',
         verbose_name='Accordion hero'
     )
-    accordion_5_stats_1_number = models.CharField(
+    accordion_5_statistic_1_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 number'
     )
-    accordion_5_stats_1_heading = models.CharField(
+    accordion_5_statistic_1_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 heading'
     )
-    accordion_5_stats_1_smallprint = models.CharField(
+    accordion_5_statistic_1_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 smallprint'
     )
 
-    accordion_5_stats_2_number = models.CharField(
+    accordion_5_statistic_2_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 number'
     )
-    accordion_5_stats_2_heading = models.CharField(
+    accordion_5_statistic_2_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 heading'
     )
-    accordion_5_stats_2_smallprint = models.CharField(
+    accordion_5_statistic_2_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 smallprint'
     )
 
-    accordion_5_stats_3_number = models.CharField(
+    accordion_5_statistic_3_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 number'
     )
-    accordion_5_stats_3_heading = models.CharField(
+    accordion_5_statistic_3_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 heading'
     )
-    accordion_5_stats_3_smallprint = models.CharField(
+    accordion_5_statistic_3_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 smallprint'
     )
 
-    accordion_5_stats_4_number = models.CharField(
+    accordion_5_statistic_4_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 number'
     )
-    accordion_5_stats_4_heading = models.CharField(
+    accordion_5_statistic_4_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 heading'
     )
-    accordion_5_stats_4_smallprint = models.CharField(
+    accordion_5_statistic_4_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 smallprint'
     )
 
-    accordion_5_stats_5_number = models.CharField(
+    accordion_5_statistic_5_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 number'
     )
-    accordion_5_stats_5_heading = models.CharField(
+    accordion_5_statistic_5_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 heading'
     )
-    accordion_5_stats_5_smallprint = models.CharField(
+    accordion_5_statistic_5_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 smallprint'
     )
 
-    accordion_5_stats_6_number = models.CharField(
+    accordion_5_statistic_6_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 number'
     )
-    accordion_5_stats_6_heading = models.CharField(
+    accordion_5_statistic_6_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 heading'
     )
-    accordion_5_stats_6_smallprint = models.CharField(
+    accordion_5_statistic_6_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 smallprint'
@@ -1515,97 +1515,97 @@ class CountryGuidePage(BasePage):
         related_name='+',
         verbose_name='Accordion hero'
     )
-    accordion_6_stats_1_number = models.CharField(
+    accordion_6_statistic_1_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 number'
     )
-    accordion_6_stats_1_heading = models.CharField(
+    accordion_6_statistic_1_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 heading'
     )
-    accordion_6_stats_1_smallprint = models.CharField(
+    accordion_6_statistic_1_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 1 smallprint'
     )
 
-    accordion_6_stats_2_number = models.CharField(
+    accordion_6_statistic_2_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 number'
     )
-    accordion_6_stats_2_heading = models.CharField(
+    accordion_6_statistic_2_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 heading'
     )
-    accordion_6_stats_2_smallprint = models.CharField(
+    accordion_6_statistic_2_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 2 smallprint'
     )
 
-    accordion_6_stats_3_number = models.CharField(
+    accordion_6_statistic_3_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 number'
     )
-    accordion_6_stats_3_heading = models.CharField(
+    accordion_6_statistic_3_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 heading'
     )
-    accordion_6_stats_3_smallprint = models.CharField(
+    accordion_6_statistic_3_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 3 smallprint'
     )
 
-    accordion_6_stats_4_number = models.CharField(
+    accordion_6_statistic_4_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 number'
     )
-    accordion_6_stats_4_heading = models.CharField(
+    accordion_6_statistic_4_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 heading'
     )
-    accordion_6_stats_4_smallprint = models.CharField(
+    accordion_6_statistic_4_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 4 smallprint'
     )
 
-    accordion_6_stats_5_number = models.CharField(
+    accordion_6_statistic_5_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 number'
     )
-    accordion_6_stats_5_heading = models.CharField(
+    accordion_6_statistic_5_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 heading'
     )
-    accordion_6_stats_5_smallprint = models.CharField(
+    accordion_6_statistic_5_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 5 smallprint'
     )
 
-    accordion_6_stats_6_number = models.CharField(
+    accordion_6_statistic_6_number = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 number'
     )
-    accordion_6_stats_6_heading = models.CharField(
+    accordion_6_statistic_6_heading = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 heading'
     )
-    accordion_6_stats_6_smallprint = models.CharField(
+    accordion_6_statistic_6_smallprint = models.CharField(
         max_length=255,
         blank=True,
         verbose_name='Stat 6 smallprint'
@@ -1757,45 +1757,45 @@ class CountryGuidePage(BasePage):
                 FieldRowPanel([
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_1_stats_1_number'),
-                            FieldPanel('accordion_1_stats_1_heading'),
-                            FieldPanel('accordion_1_stats_1_smallprint')
+                            FieldPanel('accordion_1_statistic_1_number'),
+                            FieldPanel('accordion_1_statistic_1_heading'),
+                            FieldPanel('accordion_1_statistic_1_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_1_stats_2_number'),
-                            FieldPanel('accordion_1_stats_2_heading'),
-                            FieldPanel('accordion_1_stats_2_smallprint')
+                            FieldPanel('accordion_1_statistic_2_number'),
+                            FieldPanel('accordion_1_statistic_2_heading'),
+                            FieldPanel('accordion_1_statistic_2_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_1_stats_3_number'),
-                            FieldPanel('accordion_1_stats_3_heading'),
-                            FieldPanel('accordion_1_stats_3_smallprint')
+                            FieldPanel('accordion_1_statistic_3_number'),
+                            FieldPanel('accordion_1_statistic_3_heading'),
+                            FieldPanel('accordion_1_statistic_3_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_1_stats_4_number'),
-                            FieldPanel('accordion_1_stats_4_heading'),
-                            FieldPanel('accordion_1_stats_4_smallprint'),
+                            FieldPanel('accordion_1_statistic_4_number'),
+                            FieldPanel('accordion_1_statistic_4_heading'),
+                            FieldPanel('accordion_1_statistic_4_smallprint'),
                         ]
                     ),
                     MultiFieldPanel(
                         [
 
-                            FieldPanel('accordion_1_stats_5_number'),
-                            FieldPanel('accordion_1_stats_5_heading'),
-                            FieldPanel('accordion_1_stats_5_smallprint')
+                            FieldPanel('accordion_1_statistic_5_number'),
+                            FieldPanel('accordion_1_statistic_5_heading'),
+                            FieldPanel('accordion_1_statistic_5_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_1_stats_6_number'),
-                            FieldPanel('accordion_1_stats_6_heading'),
-                            FieldPanel('accordion_1_stats_6_smallprint')
+                            FieldPanel('accordion_1_statistic_6_number'),
+                            FieldPanel('accordion_1_statistic_6_heading'),
+                            FieldPanel('accordion_1_statistic_6_smallprint')
                         ]
                     )
                 ])
@@ -1835,45 +1835,45 @@ class CountryGuidePage(BasePage):
                 FieldRowPanel([
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_2_stats_1_number'),
-                            FieldPanel('accordion_2_stats_1_heading'),
-                            FieldPanel('accordion_2_stats_1_smallprint')
+                            FieldPanel('accordion_2_statistic_1_number'),
+                            FieldPanel('accordion_2_statistic_1_heading'),
+                            FieldPanel('accordion_2_statistic_1_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_2_stats_2_number'),
-                            FieldPanel('accordion_2_stats_2_heading'),
-                            FieldPanel('accordion_2_stats_2_smallprint')
+                            FieldPanel('accordion_2_statistic_2_number'),
+                            FieldPanel('accordion_2_statistic_2_heading'),
+                            FieldPanel('accordion_2_statistic_2_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_2_stats_3_number'),
-                            FieldPanel('accordion_2_stats_3_heading'),
-                            FieldPanel('accordion_2_stats_3_smallprint')
+                            FieldPanel('accordion_2_statistic_3_number'),
+                            FieldPanel('accordion_2_statistic_3_heading'),
+                            FieldPanel('accordion_2_statistic_3_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_2_stats_4_number'),
-                            FieldPanel('accordion_2_stats_4_heading'),
-                            FieldPanel('accordion_2_stats_4_smallprint'),
+                            FieldPanel('accordion_2_statistic_4_number'),
+                            FieldPanel('accordion_2_statistic_4_heading'),
+                            FieldPanel('accordion_2_statistic_4_smallprint'),
                         ]
                     ),
                     MultiFieldPanel(
                         [
 
-                            FieldPanel('accordion_2_stats_5_number'),
-                            FieldPanel('accordion_2_stats_5_heading'),
-                            FieldPanel('accordion_2_stats_5_smallprint')
+                            FieldPanel('accordion_2_statistic_5_number'),
+                            FieldPanel('accordion_2_statistic_5_heading'),
+                            FieldPanel('accordion_2_statistic_5_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_2_stats_6_number'),
-                            FieldPanel('accordion_2_stats_6_heading'),
-                            FieldPanel('accordion_2_stats_6_smallprint')
+                            FieldPanel('accordion_2_statistic_6_number'),
+                            FieldPanel('accordion_2_statistic_6_heading'),
+                            FieldPanel('accordion_2_statistic_6_smallprint')
                         ]
                     )
                 ])
@@ -1913,45 +1913,45 @@ class CountryGuidePage(BasePage):
                 FieldRowPanel([
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_3_stats_1_number'),
-                            FieldPanel('accordion_3_stats_1_heading'),
-                            FieldPanel('accordion_3_stats_1_smallprint')
+                            FieldPanel('accordion_3_statistic_1_number'),
+                            FieldPanel('accordion_3_statistic_1_heading'),
+                            FieldPanel('accordion_3_statistic_1_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_3_stats_2_number'),
-                            FieldPanel('accordion_3_stats_2_heading'),
-                            FieldPanel('accordion_3_stats_2_smallprint')
+                            FieldPanel('accordion_3_statistic_2_number'),
+                            FieldPanel('accordion_3_statistic_2_heading'),
+                            FieldPanel('accordion_3_statistic_2_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_3_stats_3_number'),
-                            FieldPanel('accordion_3_stats_3_heading'),
-                            FieldPanel('accordion_3_stats_3_smallprint')
+                            FieldPanel('accordion_3_statistic_3_number'),
+                            FieldPanel('accordion_3_statistic_3_heading'),
+                            FieldPanel('accordion_3_statistic_3_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_3_stats_4_number'),
-                            FieldPanel('accordion_3_stats_4_heading'),
-                            FieldPanel('accordion_3_stats_4_smallprint'),
+                            FieldPanel('accordion_3_statistic_4_number'),
+                            FieldPanel('accordion_3_statistic_4_heading'),
+                            FieldPanel('accordion_3_statistic_4_smallprint'),
                         ]
                     ),
                     MultiFieldPanel(
                         [
 
-                            FieldPanel('accordion_3_stats_5_number'),
-                            FieldPanel('accordion_3_stats_5_heading'),
-                            FieldPanel('accordion_3_stats_5_smallprint')
+                            FieldPanel('accordion_3_statistic_5_number'),
+                            FieldPanel('accordion_3_statistic_5_heading'),
+                            FieldPanel('accordion_3_statistic_5_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_3_stats_6_number'),
-                            FieldPanel('accordion_3_stats_6_heading'),
-                            FieldPanel('accordion_3_stats_6_smallprint')
+                            FieldPanel('accordion_3_statistic_6_number'),
+                            FieldPanel('accordion_3_statistic_6_heading'),
+                            FieldPanel('accordion_3_statistic_6_smallprint')
                         ]
                     )
                 ])
@@ -1991,45 +1991,45 @@ class CountryGuidePage(BasePage):
                 FieldRowPanel([
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_4_stats_1_number'),
-                            FieldPanel('accordion_4_stats_1_heading'),
-                            FieldPanel('accordion_4_stats_1_smallprint')
+                            FieldPanel('accordion_4_statistic_1_number'),
+                            FieldPanel('accordion_4_statistic_1_heading'),
+                            FieldPanel('accordion_4_statistic_1_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_4_stats_2_number'),
-                            FieldPanel('accordion_4_stats_2_heading'),
-                            FieldPanel('accordion_4_stats_2_smallprint')
+                            FieldPanel('accordion_4_statistic_2_number'),
+                            FieldPanel('accordion_4_statistic_2_heading'),
+                            FieldPanel('accordion_4_statistic_2_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_4_stats_3_number'),
-                            FieldPanel('accordion_4_stats_3_heading'),
-                            FieldPanel('accordion_4_stats_3_smallprint')
+                            FieldPanel('accordion_4_statistic_3_number'),
+                            FieldPanel('accordion_4_statistic_3_heading'),
+                            FieldPanel('accordion_4_statistic_3_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_4_stats_4_number'),
-                            FieldPanel('accordion_4_stats_4_heading'),
-                            FieldPanel('accordion_4_stats_4_smallprint'),
+                            FieldPanel('accordion_4_statistic_4_number'),
+                            FieldPanel('accordion_4_statistic_4_heading'),
+                            FieldPanel('accordion_4_statistic_4_smallprint'),
                         ]
                     ),
                     MultiFieldPanel(
                         [
 
-                            FieldPanel('accordion_4_stats_5_number'),
-                            FieldPanel('accordion_4_stats_5_heading'),
-                            FieldPanel('accordion_4_stats_5_smallprint')
+                            FieldPanel('accordion_4_statistic_5_number'),
+                            FieldPanel('accordion_4_statistic_5_heading'),
+                            FieldPanel('accordion_4_statistic_5_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_4_stats_6_number'),
-                            FieldPanel('accordion_4_stats_6_heading'),
-                            FieldPanel('accordion_4_stats_6_smallprint')
+                            FieldPanel('accordion_4_statistic_6_number'),
+                            FieldPanel('accordion_4_statistic_6_heading'),
+                            FieldPanel('accordion_4_statistic_6_smallprint')
                         ]
                     )
                 ])
@@ -2069,45 +2069,45 @@ class CountryGuidePage(BasePage):
                 FieldRowPanel([
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_5_stats_1_number'),
-                            FieldPanel('accordion_5_stats_1_heading'),
-                            FieldPanel('accordion_5_stats_1_smallprint')
+                            FieldPanel('accordion_5_statistic_1_number'),
+                            FieldPanel('accordion_5_statistic_1_heading'),
+                            FieldPanel('accordion_5_statistic_1_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_5_stats_2_number'),
-                            FieldPanel('accordion_5_stats_2_heading'),
-                            FieldPanel('accordion_5_stats_2_smallprint')
+                            FieldPanel('accordion_5_statistic_2_number'),
+                            FieldPanel('accordion_5_statistic_2_heading'),
+                            FieldPanel('accordion_5_statistic_2_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_5_stats_3_number'),
-                            FieldPanel('accordion_5_stats_3_heading'),
-                            FieldPanel('accordion_5_stats_3_smallprint')
+                            FieldPanel('accordion_5_statistic_3_number'),
+                            FieldPanel('accordion_5_statistic_3_heading'),
+                            FieldPanel('accordion_5_statistic_3_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_5_stats_4_number'),
-                            FieldPanel('accordion_5_stats_4_heading'),
-                            FieldPanel('accordion_5_stats_4_smallprint'),
+                            FieldPanel('accordion_5_statistic_4_number'),
+                            FieldPanel('accordion_5_statistic_4_heading'),
+                            FieldPanel('accordion_5_statistic_4_smallprint'),
                         ]
                     ),
                     MultiFieldPanel(
                         [
 
-                            FieldPanel('accordion_5_stats_5_number'),
-                            FieldPanel('accordion_5_stats_5_heading'),
-                            FieldPanel('accordion_5_stats_5_smallprint')
+                            FieldPanel('accordion_5_statistic_5_number'),
+                            FieldPanel('accordion_5_statistic_5_heading'),
+                            FieldPanel('accordion_5_statistic_5_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_5_stats_6_number'),
-                            FieldPanel('accordion_5_stats_6_heading'),
-                            FieldPanel('accordion_5_stats_6_smallprint')
+                            FieldPanel('accordion_5_statistic_6_number'),
+                            FieldPanel('accordion_5_statistic_6_heading'),
+                            FieldPanel('accordion_5_statistic_6_smallprint')
                         ]
                     )
                 ])
@@ -2147,45 +2147,45 @@ class CountryGuidePage(BasePage):
                 FieldRowPanel([
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_6_stats_1_number'),
-                            FieldPanel('accordion_6_stats_1_heading'),
-                            FieldPanel('accordion_6_stats_1_smallprint')
+                            FieldPanel('accordion_6_statistic_1_number'),
+                            FieldPanel('accordion_6_statistic_1_heading'),
+                            FieldPanel('accordion_6_statistic_1_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_6_stats_2_number'),
-                            FieldPanel('accordion_6_stats_2_heading'),
-                            FieldPanel('accordion_6_stats_2_smallprint')
+                            FieldPanel('accordion_6_statistic_2_number'),
+                            FieldPanel('accordion_6_statistic_2_heading'),
+                            FieldPanel('accordion_6_statistic_2_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_6_stats_3_number'),
-                            FieldPanel('accordion_6_stats_3_heading'),
-                            FieldPanel('accordion_6_stats_3_smallprint')
+                            FieldPanel('accordion_6_statistic_3_number'),
+                            FieldPanel('accordion_6_statistic_3_heading'),
+                            FieldPanel('accordion_6_statistic_3_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_6_stats_4_number'),
-                            FieldPanel('accordion_6_stats_4_heading'),
-                            FieldPanel('accordion_6_stats_4_smallprint'),
+                            FieldPanel('accordion_6_statistic_4_number'),
+                            FieldPanel('accordion_6_statistic_4_heading'),
+                            FieldPanel('accordion_6_statistic_4_smallprint'),
                         ]
                     ),
                     MultiFieldPanel(
                         [
 
-                            FieldPanel('accordion_6_stats_5_number'),
-                            FieldPanel('accordion_6_stats_5_heading'),
-                            FieldPanel('accordion_6_stats_5_smallprint')
+                            FieldPanel('accordion_6_statistic_5_number'),
+                            FieldPanel('accordion_6_statistic_5_heading'),
+                            FieldPanel('accordion_6_statistic_5_smallprint')
                         ]
                     ),
                     MultiFieldPanel(
                         [
-                            FieldPanel('accordion_6_stats_6_number'),
-                            FieldPanel('accordion_6_stats_6_heading'),
-                            FieldPanel('accordion_6_stats_6_smallprint')
+                            FieldPanel('accordion_6_statistic_6_number'),
+                            FieldPanel('accordion_6_statistic_6_heading'),
+                            FieldPanel('accordion_6_statistic_6_smallprint')
                         ]
                     )
                 ])
