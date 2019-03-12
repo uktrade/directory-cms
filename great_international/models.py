@@ -973,7 +973,9 @@ class InternationalCuratedTopicLandingPage(BasePage):
     subpage_types = [
         'great_international.InternationalArticlePage',
     ]
-    
+
+    display_title = models.CharField(max_length=255, blank=True, null=True)
+
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -981,6 +983,7 @@ class InternationalCuratedTopicLandingPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+
     teaser = models.CharField(max_length=255)
 
     feature_section_heading = models.CharField(max_length=255)
@@ -1036,7 +1039,7 @@ class InternationalCuratedTopicLandingPage(BasePage):
     tags = ParentalManyToManyField(Tag, blank=True)
 
     content_panels = [
-        FieldPanel('title'),
+        FieldPanel('display_title'),
         ImageChooserPanel('hero_image'),
         FieldPanel('teaser'),
         SearchEngineOptimisationPanel(),
@@ -1079,6 +1082,7 @@ class InternationalCuratedTopicLandingPage(BasePage):
     ]
 
     settings_panels = [
+        FieldPanel('title'),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
