@@ -9,6 +9,108 @@ from .models import (InternationalArticlePage, InternationalArticleListingPage,
                      InternationalCampaignPage)
 
 
+class SectionThreeSubsectionProxyDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def heading(self):
+        return getattr(
+            self.instance,
+            f'section_three_subsection_{self.position_number}_heading'
+        )
+
+    @property
+    def teaser(self):
+        return getattr(
+            self.instance,
+            f'section_three_subsection_{self.position_number}_teaser'
+        )
+
+    @property
+    def body(self):
+        return getattr(
+            self.instance,
+            f'section_three_subsection_{self.position_number}_body'
+        )
+
+
+class SectionTwoSubsectionProxyDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def icon(self):
+        return getattr(
+            self.instance,
+            f'section_two_subsection_{self.position_number}_icon'
+        )
+
+    @property
+    def heading(self):
+        return getattr(
+            self.instance,
+            f'section_two_subsection_{self.position_number}_heading'
+        )
+
+    @property
+    def body(self):
+        return getattr(
+            self.instance,
+            f'section_two_subsection_{self.position_number}_body'
+        )
+
+
+class StatisticProxyDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def number(self):
+        return getattr(
+            self.instance,
+            f'statistic_{self.position_number}_number'
+        )
+
+    @property
+    def heading(self):
+        return getattr(
+            self.instance,
+            f'statistic_{self.position_number}_heading'
+        )
+
+    @property
+    def smallprint(self):
+        return getattr(
+            self.instance,
+            f'statistic_{self.position_number}_smallprint'
+        )
+
+
+class SectionThreeSubsectionSerializer(serializers.Serializer):
+    heading = serializers.CharField(max_length=255)
+    teaser = serializers.CharField()
+    body = core_fields.MarkdownToHTMLField()
+
+
+class SectionTwoSubsectionSerializer(serializers.Serializer):
+    icon = wagtail_fields.ImageRenditionField('original')
+    heading = serializers.CharField(max_length=255)
+    body = serializers.CharField()
+
+
+class StatisticSerializer(serializers.Serializer):
+    number = serializers.CharField(max_length=255)
+    heading = serializers.CharField(max_length=255)
+    smallprint = serializers.CharField(max_length=255)
+
+
 class RelatedArticlePageSerializer(BasePageSerializer):
     title = serializers.CharField(max_length=255, source='article_title')
     teaser = serializers.CharField(max_length=255, source='article_teaser')
@@ -65,6 +167,16 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
     section_one_image_caption = serializers.CharField(max_length=255)
     section_one_image_caption_company = serializers.CharField(max_length=255)
 
+    statistics = serializers.SerializerMethodField()
+
+    def get_statistics(self, instance):
+        data = [
+            StatisticProxyDataWrapper(instance=instance, position_number=num)
+            for num in ['1', '2', '3', '4', '5', '6']
+        ]
+        serializer = StatisticSerializer(data, many=True)
+        return serializer.data
+
     statistic_1_number = serializers.CharField(max_length=255)
     statistic_1_heading = serializers.CharField(max_length=255)
     statistic_1_smallprint = serializers.CharField(max_length=255)
@@ -91,6 +203,19 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
 
     section_two_heading = serializers.CharField(max_length=255)
     section_two_teaser = serializers.CharField()
+    section_two_subsections = serializers.SerializerMethodField()
+
+    def get_section_two_subsections(self, instance):
+        data = [
+            SectionTwoSubsectionProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['one', 'two', 'three']
+        ]
+        serializer = SectionTwoSubsectionSerializer(data, many=True)
+        return serializer.data
+
     section_two_subsection_one_icon = wagtail_fields.ImageRenditionField(
         'original')
     section_two_subsection_one_heading = serializers.CharField(max_length=255)
@@ -122,6 +247,19 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
 
     section_three_heading = serializers.CharField(max_length=255)
     section_three_teaser = serializers.CharField()
+    section_three_subsections = serializers.SerializerMethodField()
+
+    def get_section_three_subsections(self, instance):
+        data = [
+            SectionThreeSubsectionProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['one', 'two']
+        ]
+        serializer = SectionThreeSubsectionSerializer(data, many=True)
+        return serializer.data
+
     section_three_subsection_one_heading = serializers.CharField(
         max_length=255)
     section_three_subsection_one_teaser = serializers.CharField()
