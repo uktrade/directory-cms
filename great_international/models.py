@@ -530,7 +530,6 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
         FieldPanel('slug'),
     ]
 
-
 class InternationalRegionPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.GreatInternationalApp']
@@ -963,6 +962,123 @@ class InternationalTopicLandingPage(BasePage):
 
     settings_panels = [
         FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
+    ]
+
+
+class InternationalCuratedTopicLandingPage(BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+    parent_page_types = ['great_international.GreatInternationalApp']
+    subpage_types = [
+        'great_international.InternationalArticlePage',
+    ]
+    
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    teaser = models.CharField(max_length=255)
+
+    feature_section_heading = models.CharField(max_length=255)
+
+    feature_one_heading = models.CharField(max_length=255)
+
+    feature_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    feature_one_content = MarkdownField()
+
+    feature_two_heading = models.CharField(max_length=255)
+
+    feature_two_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    feature_two_content = MarkdownField()
+
+    featured_page_one = models.ForeignKey(
+        'great_international.InternationalArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    featured_page_two = models.ForeignKey(
+        'great_international.InternationalArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    featured_page_three = models.ForeignKey(
+        'great_international.InternationalArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    tags = ParentalManyToManyField(Tag, blank=True)
+
+    content_panels = [
+        FieldPanel('title'),
+        ImageChooserPanel('hero_image'),
+        FieldPanel('teaser'),
+        SearchEngineOptimisationPanel(),
+        MultiFieldPanel(
+            heading='Featured content section',
+            children=[
+                FieldPanel('feature_section_heading'),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel('feature_one_image'),
+                            FieldPanel('feature_one_heading'),
+                            FieldPanel('feature_one_content'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel('feature_two_image'),
+                            FieldPanel('feature_two_heading'),
+                            FieldPanel('feature_two_content'),
+                        ]
+                    ),
+                ]),
+                FieldRowPanel([
+                    PageChooserPanel(
+                        'featured_page_one',
+                        'great_international.InternationalArticlePage'
+                    ),
+                    PageChooserPanel(
+                        'featured_page_two',
+                        'great_international.InternationalArticlePage'
+                    ),
+                    PageChooserPanel(
+                        'featured_page_three',
+                        'great_international.InternationalArticlePage'
+                    ),
+                ])
+            ]
+        ),
+    ]
+
+    settings_panels = [
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
