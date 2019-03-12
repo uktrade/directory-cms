@@ -9,27 +9,69 @@ from great_international.serializers import StatisticProxyDataWrapper, \
     StatisticSerializer
 
 from .models import (
-    ArticleListingPage, ArticlePage, TopicLandingPage,
+    ArticleListingPage, ArticlePage, TopicLandingPage, CampaignPage,
     CountryGuidePage, SuperregionPage, EUExitInternationalFormPage,
     EUExitDomesticFormPage
 )
+
+
+class RelatedArticlePageSerializer(BasePageSerializer):
+    """Separate serializer for related article pages so we don't end up with
+    infinite nesting of related pages inside an article page"""
+
+    article_title = serializers.CharField(max_length=255)
+    article_teaser = serializers.CharField(max_length=255)
+    article_image = wagtail_fields.ImageRenditionField('original')
+    article_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='article_image')
+
+
+class RelatedCampaignPageSerializer(BasePageSerializer):
+    title = serializers.CharField(
+        max_length=255, source='campaign_heading')
+    teaser = serializers.CharField(
+        max_length=255, source='campaign_teaser')
+    thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg',
+        source='campaign_hero_image')
+
+
+class RelatedArticleListingPageSerializer(BasePageSerializer):
+    title = serializers.CharField(source='landing_page_title')
+    thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg',
+        source='hero_image')
+    teaser = serializers.CharField(
+        max_length=255, source='list_teaser')
+
+
+MODEL_TO_SERIALIZER_MAPPING = {
+    ArticlePage: RelatedArticlePageSerializer,
+    CampaignPage: RelatedCampaignPageSerializer,
+    ArticleListingPage: RelatedArticleListingPageSerializer
+}
 
 
 class PageWithRelatedPagesSerializer(BasePageSerializer):
     related_pages = serializers.SerializerMethodField()
 
     def get_related_pages(self, obj):
+        serialized = []
         items = [
             obj.related_page_one,
             obj.related_page_two,
             obj.related_page_three
         ]
-        serializer = RelatedArticlePageSerializer(
-            [item for item in items if item],
-            context=self.context,
-            many=True,
-        )
-        return serializer.data
+        for related_page in items:
+            if not related_page:
+                continue
+            # currently only used for articles and campaigns
+            serializer_class = MODEL_TO_SERIALIZER_MAPPING[
+                related_page.specific.__class__]
+            serializer = serializer_class(related_page.specific)
+            serialized.append(serializer.data)
+
+        return serialized
 
 
 class GenericBodyOnlyPageSerializer(BasePageSerializer):
@@ -76,17 +118,6 @@ class PerformanceDashboardPageSerializer(BasePageSerializer):
     data_description_row_four = core_fields.MarkdownToHTMLField()
     guidance_notes = core_fields.MarkdownToHTMLField()
     landing_dashboard = serializers.BooleanField()
-
-
-class RelatedArticlePageSerializer(BasePageSerializer):
-    """Separate serializer for related article pages so we don't end up with
-    infinite nesting of related pages inside an article page"""
-
-    article_title = serializers.CharField(max_length=255)
-    article_teaser = serializers.CharField(max_length=255)
-    article_image = wagtail_fields.ImageRenditionField('original')
-    article_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg', source='article_image')
 
 
 class ArticlePageSerializer(PageWithRelatedPagesSerializer):
@@ -209,6 +240,13 @@ class AccordionProxyDataWrapper:
         )
 
     @property
+    def hero_image(self):
+        return getattr(
+            self.instance,
+            f'accordion_{self.position_number}_hero_image'
+        )
+
+    @property
     def subsections(self):
         return [
             AccordionSubsectionProxyDataWrapper(
@@ -247,6 +285,7 @@ class AccordionSerializer(serializers.Serializer):
     icon = wagtail_fields.ImageRenditionField('original')
     title = serializers.CharField()
     teaser = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('original')
     subsections = AccordionSubsectionSerializer(many=True)
     statistics = StatisticSubsectionSerializer(many=True)
 
