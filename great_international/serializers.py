@@ -292,6 +292,44 @@ class InternationalTopicLandingPageSerializer(BasePageSerializer):
         return articles_list_serializer.data + campaigns_serializer.data
 
 
+class FeatureSerializer(serializers.Serializer):
+    heading = serializers.CharField()
+    content = core_fields.MarkdownToHTMLField()
+    image = wagtail_fields.ImageRenditionField('original')
+    image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='image')
+    url = serializers.CharField()
+
+
+class FeatureProxyDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    def get_positional_field_value(self, attribute_name_pattern):
+        return getattr(
+            self.instance,
+            attribute_name_pattern.format(self.position_number)
+        )
+
+    @property
+    def heading(self):
+        return self.get_positional_field_value('feature_{}_heading')
+
+    @property
+    def content(self):
+        return self.get_positional_field_value('feature_{}_content')
+
+    @property
+    def image(self):
+        return self.get_positional_field_value('feature_{}_image')
+
+    @property
+    def url(self):
+        return self.get_positional_field_value('feature_{}_url')
+
+
 class InternationalCuratedTopicLandingPageSerializer(BasePageSerializer):
     display_title = serializers.CharField()
 
@@ -303,42 +341,24 @@ class InternationalCuratedTopicLandingPageSerializer(BasePageSerializer):
 
     feature_section_heading = serializers.CharField()
 
-    feature_one_heading = serializers.CharField()
-    feature_one_image = wagtail_fields.ImageRenditionField('original')
-    feature_one_content = core_fields.MarkdownToHTMLField()
-    feature_one_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg',
-        source='feature_one_image',
-    )
+    features_large = serializers.SerializerMethodField()
 
-    feature_two_heading = serializers.CharField()
-    feature_two_image = wagtail_fields.ImageRenditionField('original')
-    feature_two_content = core_fields.MarkdownToHTMLField()
-    feature_two_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg',
-        source='feature_two_image',
-    )
+    features_small = serializers.SerializerMethodField()
 
-    feature_three_heading = serializers.CharField()
-    feature_three_image = wagtail_fields.ImageRenditionField('original')
-    feature_three_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg',
-        source='feature_three_image',
-    )
-    feature_three_url = serializers.CharField()
+    def get_features(self, instance, *positions):
+        data = [
+            FeatureProxyDataWrapper(
+                instance=instance,
+                position_number=num,
 
-    feature_four_heading = serializers.CharField()
-    feature_four_image = wagtail_fields.ImageRenditionField('original')
-    feature_four_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg',
-        source='feature_four_image',
-    )
-    feature_four_url = serializers.CharField()
+            )
+            for num in positions
+        ]
+        serializer = FeatureSerializer(data, many=True)
+        return serializer.data
 
-    feature_five_heading = serializers.CharField()
-    feature_five_image = wagtail_fields.ImageRenditionField('original')
-    feature_five_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg',
-        source='feature_five_image',
-    )
-    feature_five_url = serializers.CharField()
+    def get_features_large(self, instance):
+        return self.get_features(instance, 'one', 'two')
+
+    def get_features_small(self, instance):
+        return self.get_features(instance, 'three', 'four', 'five')
