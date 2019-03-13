@@ -968,6 +968,7 @@ class InternationalTopicLandingPage(BasePage):
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
+
 class InternationalCuratedTopicLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.GreatInternationalApp']
