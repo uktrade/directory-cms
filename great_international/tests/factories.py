@@ -1,6 +1,5 @@
 import factory
 import factory.fuzzy
-import random
 import string
 import wagtail_factories
 from django.utils import timezone
@@ -168,11 +167,11 @@ class InternationalTopicLandingPageFactory(wagtail_factories.PageFactory):
 
 
 class fuzzyURL(factory.fuzzy.BaseFuzzyAttribute):
-    def __init__(self, protocol='https', tld='co.uk', name_length=15, **kwargs):
+    def __init__(self, protocol='https', tld='co.uk', name_length=15):
+        super().__init__()
         self.protocol = protocol
         self.tld = tld
         self.name_length = name_length
-        super().__init__(**kwargs)
 
     def fuzz(self):
         chars = [
@@ -182,7 +181,9 @@ class fuzzyURL(factory.fuzzy.BaseFuzzyAttribute):
         return self.protocol + '://' + ''.join(chars) + '.' + self.tld
 
 
-class InternationalCuratedTopicLandingPageFactory(wagtail_factories.PageFactory):
+class InternationalCuratedTopicLandingPageFactory(
+    wagtail_factories.PageFactory
+):
 
     class Meta:
         model = models.InternationalCuratedTopicLandingPage
