@@ -32,6 +32,7 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
     def allowed_subpage_models(cls):
         return [InternationalArticleListingPage,
                 InternationalTopicLandingPage,
+                InternationalCuratedTopicLandingPage,
                 InternationalRegionPage,
                 InternationalHomePage]
 
@@ -530,6 +531,7 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
         FieldPanel('slug'),
     ]
 
+
 class InternationalRegionPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.GreatInternationalApp']
@@ -966,7 +968,6 @@ class InternationalTopicLandingPage(BasePage):
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
-
 class InternationalCuratedTopicLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.GreatInternationalApp']
@@ -988,53 +989,60 @@ class InternationalCuratedTopicLandingPage(BasePage):
 
     feature_section_heading = models.CharField(max_length=255)
 
-    feature_one_heading = models.CharField(max_length=255)
-
+    feature_one_heading = models.CharField(max_length=100)
     feature_one_image = models.ForeignKey(
         'wagtailimages.Image',
+        verbose_name="image",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    feature_one_content = MarkdownField(verbose_name="content")
 
-    feature_one_content = MarkdownField()
-
-    feature_two_heading = models.CharField(max_length=255)
-
+    feature_two_heading = models.CharField(max_length=100)
     feature_two_image = models.ForeignKey(
         'wagtailimages.Image',
+        verbose_name="image",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    feature_two_content = MarkdownField(verbose_name="content")
 
-    feature_two_content = MarkdownField()
-
-    featured_page_one = models.ForeignKey(
-        'great_international.InternationalArticlePage',
+    feature_three_heading = models.CharField(max_length=100)
+    feature_three_image = models.ForeignKey(
+        'wagtailimages.Image',
+        verbose_name="image",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+',
+        related_name='+'
     )
+    feature_three_url = models.URLField(verbose_name="URL")
 
-    featured_page_two = models.ForeignKey(
-        'great_international.InternationalArticlePage',
+    feature_four_heading = models.CharField(max_length=100)
+    feature_four_image = models.ForeignKey(
+        'wagtailimages.Image',
+        verbose_name="image",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+',
+        related_name='+'
     )
+    feature_four_url = models.URLField(verbose_name="URL")
 
-    featured_page_three = models.ForeignKey(
-        'great_international.InternationalArticlePage',
+    feature_five_heading = models.CharField(max_length=100)
+    feature_five_image = models.ForeignKey(
+        'wagtailimages.Image',
+        verbose_name="image",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+',
+        related_name='+'
     )
+    feature_five_url = models.URLField(verbose_name="URL")
 
     tags = ParentalManyToManyField(Tag, blank=True)
 
@@ -1042,47 +1050,46 @@ class InternationalCuratedTopicLandingPage(BasePage):
         FieldPanel('display_title'),
         ImageChooserPanel('hero_image'),
         FieldPanel('teaser'),
-        SearchEngineOptimisationPanel(),
         MultiFieldPanel(
-            heading='Featured content section',
+            heading="featured content section",
             children=[
                 FieldPanel('feature_section_heading'),
                 FieldRowPanel([
-                    MultiFieldPanel(
-                        children=[
-                            ImageChooserPanel('feature_one_image'),
-                            FieldPanel('feature_one_heading'),
-                            FieldPanel('feature_one_content'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        children=[
-                            ImageChooserPanel('feature_two_image'),
-                            FieldPanel('feature_two_heading'),
-                            FieldPanel('feature_two_content'),
-                        ]
-                    ),
+                    MultiFieldPanel([
+                        FieldPanel('feature_one_heading'),
+                        ImageChooserPanel('feature_one_image'),
+                        FieldPanel('feature_one_content'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('feature_two_heading'),
+                        ImageChooserPanel('feature_two_image'),
+                        FieldPanel('feature_two_content'),
+                    ]),
                 ]),
                 FieldRowPanel([
-                    PageChooserPanel(
-                        'featured_page_one',
-                        'great_international.InternationalArticlePage'
-                    ),
-                    PageChooserPanel(
-                        'featured_page_two',
-                        'great_international.InternationalArticlePage'
-                    ),
-                    PageChooserPanel(
-                        'featured_page_three',
-                        'great_international.InternationalArticlePage'
-                    ),
-                ])
+                    MultiFieldPanel([
+                        FieldPanel('feature_three_heading'),
+                        ImageChooserPanel('feature_three_image'),
+                        FieldPanel('feature_three_url'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('feature_four_heading'),
+                        ImageChooserPanel('feature_four_image'),
+                        FieldPanel('feature_four_url'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('feature_five_heading'),
+                        ImageChooserPanel('feature_five_image'),
+                        FieldPanel('feature_five_url'),
+                    ]),
+                ]),
             ]
-        ),
+        )
     ]
 
     settings_panels = [
-        FieldPanel('title'),
+        FieldPanel('title_en_gb'),
+        SearchEngineOptimisationPanel(),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
