@@ -1,11 +1,13 @@
 import pytest
 from great_international.serializers import (
     InternationalSectorPageSerializer, InternationalArticlePageSerializer,
-    InternationalCampaignPageSerializer, InternationalHomePageSerializer
+    InternationalCampaignPageSerializer, InternationalHomePageSerializer,
+    InternationalCuratedTopicLandingPageSerializer,
 )
 from great_international.tests.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
-    InternationalCampaignPageFactory, InternationalHomePageFactory
+    InternationalCampaignPageFactory, InternationalHomePageFactory,
+    InternationalCuratedTopicLandingPageFactory,
 )
 
 
@@ -135,3 +137,27 @@ def test_related_article_page_serializer_no_pages(
     )
 
     assert len(serializer.data['related_pages']) == 0
+
+@pytest.mark.django_db
+def test_curated_topic_landing_page_has_features(root_page, rf):
+    page = InternationalCuratedTopicLandingPageFactory(
+        parent=root_page,
+        slug='page-slug'
+    )
+
+    serializer = InternationalCuratedTopicLandingPageSerializer(
+        instance=page,
+        context={'request': rf.get('/')}
+    )
+    
+    assert len(serializer.data['features_large']) == 2
+    for item in serializer.data['features_large']:
+        assert 'heading' in item
+        assert 'image' in item
+        assert 'content' in item
+    
+    assert len(serializer.data['features_small']) == 3
+    for item in serializer.data['features_small']:
+        assert 'heading' in item
+        assert 'image' in item
+        assert 'url' in item
