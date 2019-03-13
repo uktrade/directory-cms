@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from wagtail.core.models import Page
 from wagtail.images.api import fields as wagtail_fields
 
 from core import fields as core_fields
@@ -290,3 +291,45 @@ class InternationalTopicLandingPageSerializer(BasePageSerializer):
             context=self.context
         )
         return articles_list_serializer.data + campaigns_serializer.data
+
+
+class InternationalCuratedTopicLandingPageSerializer(BasePageSerializer):
+    display_title = serializers.CharField()
+
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
+
+    teaser = serializers.CharField()
+
+    feature_section_heading = serializers.CharField()
+
+    feature_one_heading = serializers.CharField()
+    feature_one_image = wagtail_fields.ImageRenditionField('original')
+    feature_one_content = core_fields.MarkdownToHTMLField()
+    feature_one_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='feature_one_image')
+
+    feature_two_heading = serializers.CharField()
+    feature_two_image = wagtail_fields.ImageRenditionField('original')
+    feature_two_content = core_fields.MarkdownToHTMLField()
+    feature_two_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='feature_two_image')
+
+    feature_three_heading = serializers.CharField()
+    feature_three_image = wagtail_fields.ImageRenditionField('original')
+    feature_three_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='feature_three_image')
+    feature_three_url = serializers.CharField()
+
+    feature_four_heading = serializers.CharField()
+    feature_four_image = wagtail_fields.ImageRenditionField('original')
+    feature_four_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='feature_four_image')
+    feature_four_url = serializers.CharField()
+
+    feature_five_heading = serializers.CharField()
+    feature_five_image = wagtail_fields.ImageRenditionField('original')
+    feature_five_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='feature_five_image')
+    feature_five_url = serializers.CharField()
