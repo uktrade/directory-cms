@@ -1647,9 +1647,6 @@ class CountryGuidePage(BasePage):
         MultiFieldPanel(
             heading='Bullets',
             children=[
-                HelpPanel(
-                    'For accessibility reasons, use only "## [Your text here]"'
-                    ' for headings in this markdown field'),
                 FieldRowPanel(
                     [
                         FieldPanel('section_one_body'),

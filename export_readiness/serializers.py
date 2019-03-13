@@ -29,8 +29,6 @@ class RelatedArticlePageSerializer(BasePageSerializer):
 class RelatedCampaignPageSerializer(BasePageSerializer):
     title = serializers.CharField(
         max_length=255, source='campaign_heading')
-    teaser = serializers.CharField(
-        max_length=255, source='campaign_teaser')
     thumbnail = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg',
         source='campaign_hero_image')
