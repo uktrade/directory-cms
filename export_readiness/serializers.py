@@ -210,6 +210,27 @@ class AccordionSubsectionProxyDataWrapper:
         )
 
 
+class AccordionCTAProxyDataWrapper:
+    def __init__(self, instance, accordion, position_number):
+        self.accordion = accordion
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def link(self):
+        return getattr(
+            self.instance,
+            f'{self.accordion}_cta_{self.position_number}_link'
+        )
+
+    @property
+    def title(self):
+        return getattr(
+            self.instance,
+            f'{self.accordion}_cta_{self.position_number}_title'
+        )
+
+
 class AccordionProxyDataWrapper:
 
     def __init__(self, instance, position_number):
@@ -266,6 +287,40 @@ class AccordionProxyDataWrapper:
             for num in ('1', '2', '3', '4', '5', '6')
         ]
 
+    @property
+    def case_study(self):
+        return {
+            'image': f'accordion_{self.position_number}_case_study_hero_image',
+            'button_text': f'accordion_{self.position_number}_case_study_button_text',  # NOQA
+            'button_link': f'accordion_{self.position_number}_case_study_button_link',  # NOQA
+            'title': f'accordion_{self.position_number}_case_study_title',
+            'description': f'accordion_{self.position_number}_case_study_description',  # NOQA
+        }
+
+    @property
+    def ctas(self):
+        return [
+            AccordionCTAProxyDataWrapper(
+                instance=self.instance,
+                accordion=f'accordion_{self.position_number}',
+                position_number=num
+            )
+            for num in ('1', '2', '3')
+        ]
+
+
+class AccordionCTASerializer(serializers.Serializer):
+    link = serializers.CharField()
+    title = serializers.CharField()
+
+
+class AccordionCaseStudySerializer(serializers.Serializer):
+    image = wagtail_fields.ImageRenditionField('original')
+    button_text = serializers.CharField()
+    button_link = serializers.CharField()
+    title = serializers.CharField()
+    description = serializers.CharField()
+
 
 class AccordionSubsectionSerializer(serializers.Serializer):
     icon = wagtail_fields.ImageRenditionField('original')
@@ -283,15 +338,15 @@ class AccordionSerializer(serializers.Serializer):
     icon = wagtail_fields.ImageRenditionField('original')
     title = serializers.CharField()
     teaser = serializers.CharField()
-    hero_image = wagtail_fields.ImageRenditionField('original')
+    case_study = AccordionCaseStudySerializer()
     subsections = AccordionSubsectionSerializer(many=True)
     statistics = StatisticSubsectionSerializer(many=True)
+    ctas = AccordionCTASerializer(many=True)
 
 
 class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
-    hero_image = wagtail_fields.ImageRenditionField('original')
     heading_teaser = serializers.CharField()
 
     section_one_body = core_fields.MarkdownToHTMLField()
@@ -305,6 +360,22 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
 
     statistics = serializers.SerializerMethodField()
     accordions = serializers.SerializerMethodField()
+
+    fact_sheet_title = serializers.CharField(max_length=255)
+    fact_sheet_teaser = serializers.CharField(max_length=255)
+    fact_sheet_column_1_title = serializers.CharField(max_length=255)
+    fact_sheet_column_1_body = core_fields.MarkdownToHTMLField(allow_null=True)
+    fact_sheet_column_2_title = serializers.CharField(max_length=255)
+    fact_sheet_column_2_body = core_fields.MarkdownToHTMLField(allow_null=True)
+
+    help_title = serializers.CharField(max_length=255)
+    help_teaser = serializers.CharField(max_length=255)
+    help_cta_1_link = serializers.CharField(max_length=255)
+    help_cta_1_title = serializers.CharField(max_length=255)
+    help_cta_2_link = serializers.CharField(max_length=255)
+    help_cta_2_title = serializers.CharField(max_length=255)
+    help_cta_3_link = serializers.CharField(max_length=255)
+    help_cta_3_title = serializers.CharField(max_length=255)
 
     def get_statistics(self, instance):
         data = [
