@@ -260,7 +260,7 @@ class AccordionProxyDataWrapper:
         return [
             AccordionStatisticProxyDataWrapper(
                 instance=self.instance,
-                accordion= f'accordion_{self.position_number}',
+                accordion=f'accordion_{self.position_number}',
                 position_number=num
             )
             for num in ('1', '2', '3', '4', '5', '6')

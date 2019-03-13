@@ -2,8 +2,7 @@ from directory_constants.constants import cms
 from directory_constants.constants import urls
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel,
-    HelpPanel)
+    FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel)
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
@@ -735,7 +734,7 @@ class CountryGuidePage(BasePage):
         blank=True,
         verbose_name='Stat 6 smallprint'
     )
-    
+
     # accordion 2
     accordion_2_icon = models.ForeignKey(
         'wagtailimages.Image',
