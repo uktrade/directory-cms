@@ -307,27 +307,28 @@ class FeatureProxyDataWrapper:
         self.position_number = position_number
         self.instance = instance
 
-    def get_positional_field_value(self, attribute_name_pattern):
+    def get_field_value(self, attribute_name_pattern):
         return getattr(
             self.instance,
-            attribute_name_pattern.format(self.position_number)
+            attribute_name_pattern.format(self.position_number),
+            None
         )
 
     @property
     def heading(self):
-        return self.get_positional_field_value('feature_{}_heading')
+        return self.get_field_value('feature_{}_heading')
 
     @property
     def content(self):
-        return self.get_positional_field_value('feature_{}_content')
+        return self.get_field_value('feature_{}_content')
 
     @property
     def image(self):
-        return self.get_positional_field_value('feature_{}_image')
+        return self.get_field_value('feature_{}_image')
 
     @property
     def url(self):
-        return self.get_positional_field_value('feature_{}_url')
+        return self.get_field_value('feature_{}_url')
 
 
 class InternationalCuratedTopicLandingPageSerializer(BasePageSerializer):
