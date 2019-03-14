@@ -21,7 +21,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import trans_real
 from django.urls import resolve, Resolver404
 
-from core import permissions, constants
+from core import permissions
 
 
 class CachedResponse(JsonResponse):
