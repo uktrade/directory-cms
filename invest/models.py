@@ -447,6 +447,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
 
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
+    hero_call_to_action_text = models.CharField(max_length=255, blank=True)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
@@ -454,6 +455,8 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+
+
 
     # subsections
     subsection_title_one = models.CharField(max_length=255)
@@ -558,6 +561,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     content_panels = [
         FieldPanel('heading'),
         FieldPanel('sub_heading'),
+        FieldPanel('hero_call_to_action_text'),
         # subsections
         MultiFieldPanel(
             [

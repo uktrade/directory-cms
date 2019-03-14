@@ -9,6 +9,7 @@ class InvestHomePageTranslation(BaseTranslationOptions):
     fields = (
         'heading',
         'sub_heading',
+        'hero_call_to_action_text',
         # subsections
         'subsection_title_one',
         'subsection_content_one',
