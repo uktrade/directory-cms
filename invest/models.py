@@ -468,6 +468,17 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     )
     benefits_section_img_caption = models.CharField(max_length=255, blank=True)
 
+    eu_exit_section_title = models.CharField(max_length=255)
+    eu_exit_section_content = MarkdownField(blank=True)
+    eu_exit_section_call_to_action_text = models.CharField(max_length=255, blank=True)
+    eu_exit_section_img = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    eu_exit_section_img_caption = models.CharField(max_length=255, blank=True)
 
     # subsections
     subsection_title_one = models.CharField(max_length=255)
@@ -591,6 +602,19 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
             heading='Benefits section',
             classname='collapsible'
         ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('eu_exit_section_title'),
+                FieldPanel('eu_exit_section_content'),
+                FieldPanel('eu_exit_section_call_to_action_text'),
+                ImageChooserPanel('eu_exit_section_img'),
+                FieldPanel('eu_exit_section_img_caption'),
+            ],
+            heading='EU Exit section',
+            classname='collapsible'
+        ),
+
         # subsections
         MultiFieldPanel(
             [
