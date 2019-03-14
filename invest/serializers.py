@@ -183,6 +183,7 @@ class HowWeHelpSerializer(serializers.Serializer):
 class InvestHomePageSerializer(BasePageSerializer):
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
+    hero_call_to_action_text = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
     subsections = serializers.SerializerMethodField()
     sector_title = serializers.CharField(max_length=255)
