@@ -10,8 +10,7 @@ from great_international.serializers import StatisticProxyDataWrapper, \
 
 from .models import (
     ArticleListingPage, ArticlePage, TopicLandingPage, CampaignPage,
-    CountryGuidePage, SuperregionPage, EUExitInternationalFormPage,
-    EUExitDomesticFormPage
+    SuperregionPage, EUExitInternationalFormPage, EUExitDomesticFormPage
 )
 
 
