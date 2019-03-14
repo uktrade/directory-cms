@@ -1,7 +1,6 @@
 from unittest.mock import patch
 
 import pytest
-from directory_constants.constants import cms
 from wagtail.admin.widgets import PageListingButton
 from django.urls import reverse
 
