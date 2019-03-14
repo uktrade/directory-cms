@@ -10,11 +10,19 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'heading',
         'sub_heading',
         'hero_call_to_action_text',
+
         'benefits_section_title',
         'benefits_section_intro',
         'benefits_section_content',
         'benefits_section_img',
         'benefits_section_img_caption',
+
+        'eu_exit_section_title',
+        'eu_exit_section_content',
+        'eu_exit_section_call_to_action_text',
+        'eu_exit_section_img',
+        'eu_exit_section_img_caption',
+
         # subsections
         'subsection_title_one',
         'subsection_content_one',
