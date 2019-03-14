@@ -10,8 +10,7 @@ from great_international.serializers import StatisticProxyDataWrapper, \
 
 from .models import (
     ArticleListingPage, ArticlePage, TopicLandingPage, CampaignPage,
-    CountryGuidePage, SuperregionPage, EUExitInternationalFormPage,
-    EUExitDomesticFormPage
+    SuperregionPage, EUExitInternationalFormPage, EUExitDomesticFormPage
 )
 
 
@@ -210,6 +209,27 @@ class AccordionSubsectionProxyDataWrapper:
         )
 
 
+class AccordionCTAProxyDataWrapper:
+    def __init__(self, instance, accordion, position_number):
+        self.accordion = accordion
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def link(self):
+        return getattr(
+            self.instance,
+            f'{self.accordion}_cta_{self.position_number}_link'
+        )
+
+    @property
+    def title(self):
+        return getattr(
+            self.instance,
+            f'{self.accordion}_cta_{self.position_number}_title'
+        )
+
+
 class AccordionProxyDataWrapper:
 
     def __init__(self, instance, position_number):
@@ -238,13 +258,6 @@ class AccordionProxyDataWrapper:
         )
 
     @property
-    def hero_image(self):
-        return getattr(
-            self.instance,
-            f'accordion_{self.position_number}_hero_image'
-        )
-
-    @property
     def subsections(self):
         return [
             AccordionSubsectionProxyDataWrapper(
@@ -266,6 +279,89 @@ class AccordionProxyDataWrapper:
             for num in ('1', '2', '3', '4', '5', '6')
         ]
 
+    def case_study_field_value(self, field_name):
+        return getattr(
+            self.instance,
+            field_name
+        )
+
+    @property
+    def case_study(self):
+        image = self.case_study_field_value(
+            f'accordion_{self.position_number}_case_study_hero_image'
+        )
+        button_text = self.case_study_field_value(
+            f'accordion_{self.position_number}_case_study_button_text'
+        )
+        button_link = self.case_study_field_value(
+            f'accordion_{self.position_number}_case_study_button_link'
+        )
+        title = self.case_study_field_value(
+            f'accordion_{self.position_number}_case_study_title'
+        )
+        description = self.case_study_field_value(
+            f'accordion_{self.position_number}_case_study_description'
+        )
+        return {
+            'image': image,
+            'button_text': button_text,
+            'button_link': button_link,
+            'title': title,
+            'description': description,
+        }
+
+    @property
+    def ctas(self):
+        return [
+            AccordionCTAProxyDataWrapper(
+                instance=self.instance,
+                accordion=f'accordion_{self.position_number}',
+                position_number=num
+            )
+            for num in ('1', '2', '3')
+        ]
+
+
+class FactSheetColumnProxyDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def title(self):
+        return getattr(
+            self.instance,
+            f'fact_sheet_column_{self.position_number}_title'
+        )
+
+    @property
+    def teaser(self):
+        return getattr(
+            self.instance,
+            f'fact_sheet_column_{self.position_number}_teaser'
+        )
+
+    @property
+    def body(self):
+        return getattr(
+            self.instance,
+            f'fact_sheet_column_{self.position_number}_body'
+        )
+
+
+class AccordionCTASerializer(serializers.Serializer):
+    link = serializers.CharField()
+    title = serializers.CharField()
+
+
+class AccordionCaseStudySerializer(serializers.Serializer):
+    image = wagtail_fields.ImageRenditionField('original')
+    button_text = serializers.CharField()
+    button_link = serializers.CharField()
+    title = serializers.CharField()
+    description = serializers.CharField()
+
 
 class AccordionSubsectionSerializer(serializers.Serializer):
     icon = wagtail_fields.ImageRenditionField('original')
@@ -283,16 +379,30 @@ class AccordionSerializer(serializers.Serializer):
     icon = wagtail_fields.ImageRenditionField('original')
     title = serializers.CharField()
     teaser = serializers.CharField()
-    hero_image = wagtail_fields.ImageRenditionField('original')
+    case_study = AccordionCaseStudySerializer()
     subsections = AccordionSubsectionSerializer(many=True)
     statistics = StatisticSubsectionSerializer(many=True)
+    ctas = AccordionCTASerializer(many=True)
+
+
+class FactSheetColumnSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=255)
+    teaser = serializers.CharField(max_length=255)
+    body = core_fields.MarkdownToHTMLField(allow_null=True)
+
+
+class FactSheetSerializer(serializers.Serializer):
+    fact_sheet_title = serializers.CharField(max_length=255)
+    fact_sheet_teaser = serializers.CharField(max_length=255)
+    columns = FactSheetColumnSerializer(many=True)
 
 
 class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
+    hero_image = wagtail_fields.ImageRenditionField('original')
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
-    hero_image = wagtail_fields.ImageRenditionField('original')
     heading_teaser = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('original')
 
     section_one_body = core_fields.MarkdownToHTMLField()
     section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
@@ -305,6 +415,22 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
 
     statistics = serializers.SerializerMethodField()
     accordions = serializers.SerializerMethodField()
+    fact_sheet = serializers.SerializerMethodField()
+
+    help_market_guide_cta_title = serializers.CharField(max_length=255)
+    help_market_guide_cta_link = serializers.CharField(max_length=255)
+
+    def get_fact_sheet(self, instance):
+        data = {
+            'fact_sheet_title': instance.fact_sheet_title,
+            'fact_sheet_teaser': instance.fact_sheet_teaser,
+            'columns': [
+                FactSheetColumnProxyDataWrapper(
+                    instance=instance, position_number=num)
+                for num in ['1', '2']
+            ]
+        }
+        return FactSheetSerializer(data).data
 
     def get_statistics(self, instance):
         data = [
@@ -404,9 +530,12 @@ class TopicLandingPageSerializer(BasePageSerializer):
 
 
 class SuperregionPageSerializer(TopicLandingPageSerializer):
-    articles_count = serializers.IntegerField()
+    pass
+    """
+    Superregions are unused but will be used in the future
 
-    def get_child_pages(self, obj):
+    articles_count = serializers.IntegerField()
+        def get_child_pages(self, obj):
         queryset = obj.get_descendants().type(
             ArticleListingPage
         ).live().specific()
@@ -426,6 +555,7 @@ class SuperregionPageSerializer(TopicLandingPageSerializer):
             context=self.context
         )
         return articles_serializer.data + countryguides_serializer.data
+    """
 
 
 class InternationalLandingPageSerializer(BasePageSerializer):
