@@ -193,9 +193,6 @@ class CountryGuidePageFactory(wagtail_factories.PageFactory):
 
     heading = factory.fuzzy.FuzzyText(length=10)
     sub_heading = factory.fuzzy.FuzzyText(length=10)
-    hero_image = factory.SubFactory(
-        wagtail_factories.ImageFactory
-    )
     heading_teaser = factory.fuzzy.FuzzyText(length=10)
 
     section_one_body = factory.fuzzy.FuzzyText(length=10)

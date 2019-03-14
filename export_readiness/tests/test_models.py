@@ -98,31 +98,6 @@ def test_article_listing_page_articles_count(root_page):
 
 
 @pytest.mark.django_db
-def test_superregion_page_articles_count(root_page):
-    superregion_page = factories.SuperregionPageFactory.create(
-        parent=root_page
-    )
-    factories.CountryGuidePageFactory.create(
-        parent=superregion_page,
-        live=True
-    )
-    factories.CountryGuidePageFactory.create(
-        parent=superregion_page,
-        live=True
-    )
-    factories.CountryGuidePageFactory.create(
-        parent=superregion_page,
-        live=False
-    )
-    factories.CountryGuidePageFactory.create(
-        live=True,
-        parent=root_page
-    )
-
-    assert superregion_page.articles_count == 2
-
-
-@pytest.mark.django_db
 def test_tag_slug_created_on_save():
     tag = factories.TagFactory(
         name='Hello test'

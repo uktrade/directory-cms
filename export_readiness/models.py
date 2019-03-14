@@ -1941,10 +1941,18 @@ class CountryGuidePage(BasePage):
         max_length=255,
         blank=True,
     )
+    fact_sheet_column_1_teaser = models.CharField(
+        max_length=255,
+        blank=True,
+    )
     fact_sheet_column_1_body = MarkdownField(
         blank=True
     )
     fact_sheet_column_2_title = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    fact_sheet_column_2_teaser = models.CharField(
         max_length=255,
         blank=True,
     )
@@ -2734,10 +2742,12 @@ class CountryGuidePage(BasePage):
                 FieldPanel('fact_sheet_teaser'),
                 FieldRowPanel([
                     FieldPanel('fact_sheet_column_1_title'),
+                    FieldPanel('fact_sheet_column_1_teaser'),
                     FieldPanel('fact_sheet_column_1_body')
                 ]),
                 FieldRowPanel([
                     FieldPanel('fact_sheet_column_2_title'),
+                    FieldPanel('fact_sheet_column_2_teaser'),
                     FieldPanel('fact_sheet_column_2_body')
                 ]),
             ]

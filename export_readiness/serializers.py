@@ -344,6 +344,24 @@ class AccordionSerializer(serializers.Serializer):
     ctas = AccordionCTASerializer(many=True)
 
 
+class FactSheetColumnSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=255)
+    teaser = serializers.CharField(max_length=255)
+    body = core_fields.MarkdownToHTMLField(allow_null=True)
+
+
+class FactSheetSerializer(serializers.Serializer):
+    fact_sheet_title = serializers.CharField(max_length=255)
+    fact_sheet_teaser = serializers.CharField(max_length=255)
+    column_1 = FactSheetColumnSerializer()
+    column_2 = FactSheetColumnSerializer()
+
+
+    fact_sheet_column_2_title = serializers.CharField(max_length=255)
+    fact_sheet_column_2_teaser = serializers.CharField(max_length=255)
+    fact_sheet_column_2_body = core_fields.MarkdownToHTMLField(allow_null=True)
+
+
 class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
@@ -360,13 +378,7 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
 
     statistics = serializers.SerializerMethodField()
     accordions = serializers.SerializerMethodField()
-
-    fact_sheet_title = serializers.CharField(max_length=255)
-    fact_sheet_teaser = serializers.CharField(max_length=255)
-    fact_sheet_column_1_title = serializers.CharField(max_length=255)
-    fact_sheet_column_1_body = core_fields.MarkdownToHTMLField(allow_null=True)
-    fact_sheet_column_2_title = serializers.CharField(max_length=255)
-    fact_sheet_column_2_body = core_fields.MarkdownToHTMLField(allow_null=True)
+    fact_sheet = serializers.SerializerMethodField()
 
     help_title = serializers.CharField(max_length=255)
     help_teaser = serializers.CharField(max_length=255)
@@ -376,6 +388,23 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
     help_cta_2_title = serializers.CharField(max_length=255)
     help_cta_3_link = serializers.CharField(max_length=255)
     help_cta_3_title = serializers.CharField(max_length=255)
+
+    def get_fact_sheet(self, instance):
+        data = {
+            'fact_sheet_title': instance.fact_sheet_title,
+            'fact_sheet_teaser': instance.fact_sheet_teaser,
+            'column_1': {
+                'title': instance.fact_sheet_column_1_title,
+                'teaser': instance.fact_sheet_column_1_teaser,
+                'body': instance.fact_sheet_column_1_body,
+            },
+            'column_2': {
+                'title': instance.fact_sheet_column_2_title,
+                'teaser': instance.fact_sheet_column_2_teaser,
+                'body': instance.fact_sheet_column_2_body,
+            }
+        }
+        return FactSheetSerializer(data).data
 
     def get_statistics(self, instance):
         data = [
