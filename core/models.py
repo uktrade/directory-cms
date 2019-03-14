@@ -24,6 +24,7 @@ from django.shortcuts import redirect
 from django.utils import translation
 
 from core import constants, forms
+from core.helpers import get_page_full_url
 from core.wagtail_fields import FormHelpTextField, FormLabelField
 
 
@@ -151,8 +152,7 @@ class BasePage(Page):
     @property
     def full_url(self):
         domain = dict(constants.APP_URLS)[self.service_name_value]
-        url = urljoin(domain, self.full_path)
-        return url
+        return get_page_full_url(domain, self.full_path)
 
     @property
     def url(self):
