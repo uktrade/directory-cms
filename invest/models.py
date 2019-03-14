@@ -576,6 +576,10 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     )
     how_we_help_text_six = models.CharField(max_length=255)
 
+    contact_section_title = models.CharField(max_length=255)
+    contact_section_content = models.TextField(max_length=255, blank=True)
+    contact_section_call_to_action_text = models.CharField(max_length=255)
+
     image_panels = [
         ImageChooserPanel('hero_image'),
     ]
@@ -741,6 +745,16 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
                 FieldPanel('how_we_help_text_six'),
             ],
             heading='How we help six',
+            classname='collapsible'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('contact_section_title'),
+                FieldPanel('contact_section_content'),
+                FieldPanel('contact_section_call_to_action_text'),
+            ],
+            heading='Contact Section',
             classname='collapsible'
         ),
         SearchEngineOptimisationPanel()

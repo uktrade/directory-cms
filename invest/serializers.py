@@ -205,6 +205,9 @@ class InvestHomePageSerializer(BasePageSerializer):
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_lead_in = serializers.CharField(max_length=255)
     how_we_help = serializers.SerializerMethodField()
+    contact_section_title = serializers.CharField(max_length=255)
+    contact_section_content = serializers.CharField(max_length=255)
+    contact_section_call_to_action_text = serializers.CharField(max_length=255)
     sectors = serializers.SerializerMethodField()
     guides = serializers.SerializerMethodField()
 
