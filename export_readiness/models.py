@@ -1961,43 +1961,15 @@ class CountryGuidePage(BasePage):
     )
 
     # need help
-    help_title = models.CharField(
+    help_market_guide_cta_title = models.CharField(
         max_length=255,
         blank=True,
+        verbose_name='Help CTA market guide title'
     )
-    help_teaser = models.CharField(
+    help_market_guide_cta_link = models.CharField(
         max_length=255,
         blank=True,
-    )
-    help_cta_1_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Help CTA link 1'
-    )
-    help_cta_1_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Help CTA title 1'
-    )
-    help_cta_2_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Help CTA link 2'
-    )
-    help_cta_2_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Help CTA title 2'
-    )
-    help_cta_3_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Help CTA link 3'
-    )
-    help_cta_3_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Help CTA title 3'
+        verbose_name='Help CTA market guide link'
     )
 
     # related pages
@@ -2756,20 +2728,8 @@ class CountryGuidePage(BasePage):
             heading='Need help',
             classname='collapsible collapsed',
             children=[
-                FieldPanel('help_title'),
-                FieldPanel('help_teaser'),
-                FieldRowPanel([
-                    FieldPanel('help_cta_1_link'),
-                    FieldPanel('help_cta_1_title')
-                ]),
-                FieldRowPanel([
-                    FieldPanel('help_cta_2_link'),
-                    FieldPanel('help_cta_2_title')
-                ]),
-                FieldRowPanel([
-                    FieldPanel('help_cta_3_link'),
-                    FieldPanel('help_cta_3_title')
-                ]),
+                FieldPanel('help_market_guide_cta_link'),
+                FieldPanel('help_market_guide_cta_title')
             ]
         ),
         MultiFieldPanel(

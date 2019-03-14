@@ -323,6 +323,34 @@ class AccordionProxyDataWrapper:
         ]
 
 
+class FactSheetColumnProxyDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def title(self):
+        return getattr(
+            self.instance,
+            f'fact_sheet_column_{self.position_number}_title'
+        )
+
+    @property
+    def teaser(self):
+        return getattr(
+            self.instance,
+            f'fact_sheet_column_{self.position_number}_teaser'
+        )
+
+    @property
+    def body(self):
+        return getattr(
+            self.instance,
+            f'fact_sheet_column_{self.position_number}_body'
+        )
+
+
 class AccordionCTASerializer(serializers.Serializer):
     link = serializers.CharField()
     title = serializers.CharField()
@@ -367,11 +395,11 @@ class FactSheetColumnSerializer(serializers.Serializer):
 class FactSheetSerializer(serializers.Serializer):
     fact_sheet_title = serializers.CharField(max_length=255)
     fact_sheet_teaser = serializers.CharField(max_length=255)
-    column_1 = FactSheetColumnSerializer()
-    column_2 = FactSheetColumnSerializer()
+    columns = FactSheetColumnSerializer(many=True)
 
 
 class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
+    hero_image = wagtail_fields.ImageRenditionField('original')
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
     heading_teaser = serializers.CharField()
@@ -390,29 +418,18 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
     accordions = serializers.SerializerMethodField()
     fact_sheet = serializers.SerializerMethodField()
 
-    help_title = serializers.CharField(max_length=255)
-    help_teaser = serializers.CharField(max_length=255)
-    help_cta_1_link = serializers.CharField(max_length=255)
-    help_cta_1_title = serializers.CharField(max_length=255)
-    help_cta_2_link = serializers.CharField(max_length=255)
-    help_cta_2_title = serializers.CharField(max_length=255)
-    help_cta_3_link = serializers.CharField(max_length=255)
-    help_cta_3_title = serializers.CharField(max_length=255)
+    help_market_guide_cta_title = serializers.CharField(max_length=255)
+    help_market_guide_cta_link = serializers.CharField(max_length=255)
 
     def get_fact_sheet(self, instance):
         data = {
             'fact_sheet_title': instance.fact_sheet_title,
             'fact_sheet_teaser': instance.fact_sheet_teaser,
-            'column_1': {
-                'title': instance.fact_sheet_column_1_title,
-                'teaser': instance.fact_sheet_column_1_teaser,
-                'body': instance.fact_sheet_column_1_body,
-            },
-            'column_2': {
-                'title': instance.fact_sheet_column_2_title,
-                'teaser': instance.fact_sheet_column_2_teaser,
-                'body': instance.fact_sheet_column_2_body,
-            }
+            'columns': [
+                FactSheetColumnProxyDataWrapper(
+                    instance=instance, position_number=num)
+                for num in ['1', '2']
+            ]
         }
         return FactSheetSerializer(data).data
 
