@@ -259,13 +259,6 @@ class AccordionProxyDataWrapper:
         )
 
     @property
-    def hero_image(self):
-        return getattr(
-            self.instance,
-            f'accordion_{self.position_number}_hero_image'
-        )
-
-    @property
     def subsections(self):
         return [
             AccordionSubsectionProxyDataWrapper(
@@ -287,14 +280,35 @@ class AccordionProxyDataWrapper:
             for num in ('1', '2', '3', '4', '5', '6')
         ]
 
+    def case_study_field_value(self, field_name):
+        return getattr(
+            self.instance,
+            field_name
+        )
+
     @property
     def case_study(self):
+        image = self.case_study_field_value(
+            f'accordion_{self.position_number}_case_study_hero_image'
+        )
+        button_text = self.case_study_field_value(
+            f'accordion_{self.position_number}_case_study_button_text'
+        )
+        button_link = self.case_study_field_value(
+            f'accordion_{self.position_number}_case_study_button_link'
+        )
+        title = self.case_study_field_value(
+            f'accordion_{self.position_number}_case_study_title'
+        )
+        description = self.case_study_field_value(
+            f'accordion_{self.position_number}_case_study_description'
+        )
         return {
-            'image': f'accordion_{self.position_number}_case_study_hero_image',
-            'button_text': f'accordion_{self.position_number}_case_study_button_text',  # NOQA
-            'button_link': f'accordion_{self.position_number}_case_study_button_link',  # NOQA
-            'title': f'accordion_{self.position_number}_case_study_title',
-            'description': f'accordion_{self.position_number}_case_study_description',  # NOQA
+            'image': image,
+            'button_text': button_text,
+            'button_link': button_link,
+            'title': title,
+            'description': description,
         }
 
     @property
@@ -357,15 +371,11 @@ class FactSheetSerializer(serializers.Serializer):
     column_2 = FactSheetColumnSerializer()
 
 
-    fact_sheet_column_2_title = serializers.CharField(max_length=255)
-    fact_sheet_column_2_teaser = serializers.CharField(max_length=255)
-    fact_sheet_column_2_body = core_fields.MarkdownToHTMLField(allow_null=True)
-
-
 class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
     heading_teaser = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('original')
 
     section_one_body = core_fields.MarkdownToHTMLField()
     section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')

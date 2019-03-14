@@ -194,6 +194,9 @@ class CountryGuidePageFactory(wagtail_factories.PageFactory):
     heading = factory.fuzzy.FuzzyText(length=10)
     sub_heading = factory.fuzzy.FuzzyText(length=10)
     heading_teaser = factory.fuzzy.FuzzyText(length=10)
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
 
     section_one_body = factory.fuzzy.FuzzyText(length=10)
     section_one_image = factory.SubFactory(
@@ -247,9 +250,16 @@ class CountryGuidePageFactory(wagtail_factories.PageFactory):
     accordion_1_subsection_2_heading = factory.fuzzy.FuzzyText(length=10)
     accordion_1_subsection_2_body = factory.fuzzy.FuzzyText(length=10)
 
-    accordion_1_hero_image = factory.SubFactory(
+    accordion_1_case_study_hero_image = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
+    accordion_1_case_study_button_text = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_case_study_button_link = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_case_study_title = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_case_study_description = factory.fuzzy.FuzzyText(length=10)
+
+    accordion_1_cta_1_link = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_cta_1_title = factory.fuzzy.FuzzyText(length=10)
 
     accordion_1_statistic_1_number = factory.fuzzy.FuzzyText(length=10)
     accordion_1_statistic_1_heading = factory.fuzzy.FuzzyText(length=10)
@@ -274,6 +284,20 @@ class CountryGuidePageFactory(wagtail_factories.PageFactory):
     accordion_1_statistic_6_number = factory.fuzzy.FuzzyText(length=10)
     accordion_1_statistic_6_heading = factory.fuzzy.FuzzyText(length=10)
     accordion_1_statistic_6_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    fact_sheet_title = factory.fuzzy.FuzzyText(length=10)
+    fact_sheet_teaser = factory.fuzzy.FuzzyText(length=10)
+    fact_sheet_column_1_title = factory.fuzzy.FuzzyText(length=10)
+    fact_sheet_column_1_teaser = factory.fuzzy.FuzzyText(length=10)
+    fact_sheet_column_1_body = factory.fuzzy.FuzzyText(length=10)
+    fact_sheet_column_2_title = factory.fuzzy.FuzzyText(length=10)
+    fact_sheet_column_2_teaser = factory.fuzzy.FuzzyText(length=10)
+    fact_sheet_column_2_body = factory.fuzzy.FuzzyText(length=10)
+
+    help_title = factory.fuzzy.FuzzyText(length=10)
+    help_teaser = factory.fuzzy.FuzzyText(length=10)
+    help_cta_1_link = factory.fuzzy.FuzzyText(length=10)
+    help_cta_1_title = factory.fuzzy.FuzzyText(length=10)
 
     related_page_one = factory.SubFactory(ArticlePageFactory)
     related_page_two = factory.SubFactory(CampaignPageFactory)
