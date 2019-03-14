@@ -456,6 +456,17 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         related_name='+'
     )
 
+    benefits_section_title = models.CharField(max_length=255)
+    benefits_section_intro = models.TextField(max_length=255, blank=True)
+    benefits_section_content = MarkdownField(blank=True)
+    benefits_section_img = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    benefits_section_img_caption = models.CharField(max_length=255, blank=True)
 
 
     # subsections
@@ -559,9 +570,27 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     ]
 
     content_panels = [
-        FieldPanel('heading'),
-        FieldPanel('sub_heading'),
-        FieldPanel('hero_call_to_action_text'),
+        MultiFieldPanel(
+            [
+                FieldPanel('heading'),
+                FieldPanel('sub_heading'),
+                FieldPanel('hero_call_to_action_text'),
+            ],
+            heading='subsections one',
+            classname='collapsible'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('benefits_section_title'),
+                FieldPanel('benefits_section_intro'),
+                FieldPanel('benefits_section_content'),
+                ImageChooserPanel('benefits_section_img'),
+                FieldPanel('benefits_section_img_caption'),
+            ],
+            heading='Benefits section',
+            classname='collapsible'
+        ),
         # subsections
         MultiFieldPanel(
             [
