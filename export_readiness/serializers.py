@@ -531,9 +531,12 @@ class TopicLandingPageSerializer(BasePageSerializer):
 
 
 class SuperregionPageSerializer(TopicLandingPageSerializer):
-    articles_count = serializers.IntegerField()
+    pass
+    """
+    Superregions are unused but will be used in the future
 
-    def get_child_pages(self, obj):
+    articles_count = serializers.IntegerField()
+        def get_child_pages(self, obj):
         queryset = obj.get_descendants().type(
             ArticleListingPage
         ).live().specific()
@@ -553,6 +556,7 @@ class SuperregionPageSerializer(TopicLandingPageSerializer):
             context=self.context
         )
         return articles_serializer.data + countryguides_serializer.data
+    """
 
 
 class InternationalLandingPageSerializer(BasePageSerializer):
