@@ -294,10 +294,8 @@ class CountryGuidePageFactory(wagtail_factories.PageFactory):
     fact_sheet_column_2_teaser = factory.fuzzy.FuzzyText(length=10)
     fact_sheet_column_2_body = factory.fuzzy.FuzzyText(length=10)
 
-    help_title = factory.fuzzy.FuzzyText(length=10)
-    help_teaser = factory.fuzzy.FuzzyText(length=10)
-    help_cta_1_link = factory.fuzzy.FuzzyText(length=10)
-    help_cta_1_title = factory.fuzzy.FuzzyText(length=10)
+    help_market_guide_cta_link = factory.fuzzy.FuzzyText(length=10)
+    help_market_guide_cta_title = factory.fuzzy.FuzzyText(length=10)
 
     related_page_one = factory.SubFactory(ArticlePageFactory)
     related_page_two = factory.SubFactory(CampaignPageFactory)
