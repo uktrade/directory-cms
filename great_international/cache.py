@@ -48,3 +48,12 @@ class InternationalTopicLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
         models.InternationalArticleListingPage,
         models.InternationalSectorPage,
     ]
+
+
+class InternationalCuratedTopicLandingPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = models.InternationalCuratedTopicLandingPage
+    subscriptions = [
+        models.InternationalArticlePage,
+    ]
