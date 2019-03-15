@@ -214,6 +214,7 @@ class InvestHomePageSerializer(BasePageSerializer):
     contact_section_content = serializers.CharField(max_length=255)
     contact_section_call_to_action_text = serializers.CharField(max_length=255)
     sectors = serializers.SerializerMethodField()
+    high_potential_opportunities = serializers.SerializerMethodField()
     guides = serializers.SerializerMethodField()
 
     def get_how_we_help(self, instance):
@@ -245,6 +246,19 @@ class InvestHomePageSerializer(BasePageSerializer):
         )
         return serializer.data
 
+    def get_high_potential_opportunities(self, instance):
+        from .models import HighPotentialOpportunityDetailPage
+        queryset = HighPotentialOpportunityDetailPage.objects.all().filter(
+            featured=True
+        ).live().order_by('heading')
+        serializer = HighPotentialOpportunityDetailPageSerializer(
+            queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
     def get_guides(self, instance):
         from .models import SetupGuidePage
         queryset = SetupGuidePage.objects.all().live().order_by('heading')
@@ -265,6 +279,8 @@ class HighPotentialOpportunityDetailPageBaseSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField(max_length=50)
     heading = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
+    description = serializers.CharField(max_length=255)
+    featured = serializers.BooleanField()
     contact_proposition = core_fields.MarkdownToHTMLField()
     contact_button = serializers.CharField(max_length=500)
     proposition_one = core_fields.MarkdownToHTMLField()
