@@ -1177,6 +1177,11 @@ class InternationalGuideLandingPage(BasePage):
             heading="Attractive features",
             children=[
                 FieldPanel('section_one_content'),
+                HelpPanel(
+                    'For accessibility reasons, use only '
+                    '"#### [Your text here]" for subheadings '
+                    'in this markdown field'
+                ),
                 FieldPanel('section_one_image'),
                 FieldPanel('section_one_image_caption'),
             ]
