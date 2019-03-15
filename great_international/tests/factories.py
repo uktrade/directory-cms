@@ -234,7 +234,7 @@ class InternationalGuideLandingPageFactory(wagtail_factories.PageFactory):
     section_two_heading = factory.fuzzy.FuzzyText(length=10)
     section_two_teaser = factory.fuzzy.FuzzyText(length=10)
     section_two_button_text = factory.fuzzy.FuzzyText(length=10)
-    section_two_button_url = fuzzyURL()
+    section_two_button_url = factory.fuzzy.FuzzyText(length=10)
     section_two_image = factory.SubFactory(wagtail_factories.ImageFactory)
     guides_section_heading = factory.fuzzy.FuzzyText(length=10)
 

@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                 ('section_two_heading', models.CharField(max_length=100, verbose_name='heading')),
                 ('section_two_teaser', models.TextField(verbose_name='teaser')),
                 ('section_two_button_text', models.CharField(max_length=100, verbose_name='button text')),
-                ('section_two_button_url', models.URLField(verbose_name='button URL')),
+                ('section_two_button_url', models.CharField(max_length=255, verbose_name='button URL')),
                 ('guides_section_heading', models.CharField(max_length=100, verbose_name='section heading')),
                 ('hero_image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image')),
                 ('section_one_image', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image', verbose_name='image')),

@@ -1148,7 +1148,10 @@ class InternationalGuideLandingPage(BasePage):
         verbose_name="button text",
         max_length=100
     )
-    section_two_button_url = models.CharField(verbose_name="button URL")
+    section_two_button_url = models.CharField(
+        verbose_name="button URL",
+        max_length=255
+    )
     section_two_image = models.ForeignKey(
         'wagtailimages.Image',
         verbose_name="image",
