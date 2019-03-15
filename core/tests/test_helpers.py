@@ -5,7 +5,7 @@ from wagtail.admin.widgets import PageListingButton
 from django.urls import reverse
 
 from core import helpers
-from core.helpers import render_markdown
+from core.helpers import render_markdown, get_page_full_url
 
 
 @pytest.fixture(autouse=True)
@@ -59,3 +59,30 @@ def test_render_markdown_table():
     """
     html = render_markdown(md_table)
     assert html == '<table>\n<thead>\n<tr>\n<th>fooo</th>\n<th>barr</th>\n<th>xyzz</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>abcd</td>\n<td>abcd</td>\n<td>abcd</td>\n</tr>\n</tbody>\n</table>'  # NOQA
+
+
+@pytest.mark.parametrize('domain,full_path,expected_url', [
+    (
+        'http://test.com/foo/',
+        'bar/',
+        'http://test.com/foo/bar/'
+    ),
+    (
+        'http://test.com/foo',
+        'bar/',
+        'http://test.com/foo/bar/'
+    ),
+    (
+        'http://test.com/foo/',
+        '/bar/',
+        'http://test.com/foo/bar/'
+    ),
+    (
+        'http://test.com/foo',
+        'bar/',
+        'http://test.com/foo/bar/'
+    )
+])
+def test_get_page_full_url(domain, full_path, expected_url):
+    url = get_page_full_url(domain, full_path)
+    assert url == expected_url
