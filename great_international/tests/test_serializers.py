@@ -3,11 +3,13 @@ from great_international.serializers import (
     InternationalSectorPageSerializer, InternationalArticlePageSerializer,
     InternationalCampaignPageSerializer, InternationalHomePageSerializer,
     InternationalCuratedTopicLandingPageSerializer,
+    InternationalGuideLandingPageSerializer,
 )
 from great_international.tests.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
     InternationalCuratedTopicLandingPageFactory,
+    InternationalGuideLandingPageFactory,
 )
 
 
@@ -219,3 +221,41 @@ def test_curated_topic_landing_page_has_features(root_page, rf):
         assert 'heading' in item
         assert 'image' in item
         assert 'url' in item
+
+
+@pytest.mark.django_db
+def test_guide_landing_page_serializer_guide_list(root_page, rf):
+    """
+    The serializer for InternationalGuideLandingPage should include a list
+    of decendants of type InternationalArticlePage only
+    """
+    page = InternationalGuideLandingPageFactory(
+        parent=root_page,
+    )
+
+    sub_page_one = InternationalArticlePageFactory(
+        parent=guide_landing_page,
+        slug='one'
+    )
+
+    sub_page_two = InternationalArticlePageFactory(
+        parent=guide_landing_page,
+        slug='one'
+    )
+
+    # This page in not an InternationalArticlePage, so should not be included
+    sub_page_three = InternationalSectorPageFactory(
+        parent=guide_landing_page,
+        slug='three'
+    )
+
+    serializer = InternationalGuideLandingPageSerializer(
+        instance=page,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['guides']) == 2
+    for item in serializer.data['guides']:
+        assert 'title' in item
+        assert 'teaser' in item
+        assert 'thumbnail' in item
