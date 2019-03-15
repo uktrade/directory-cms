@@ -656,8 +656,7 @@ class InternationalArticleListingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = [
         'great_international.GreatInternationalApp',
-        'great_international.InternationalTopicLandingPage',
-        'great_international.InternationalCuratedTopicLandingPage',
+        'great_international.InternationalTopicLandingPage'
     ]
     subpage_types = [
         'great_international.InternationalArticlePage',
@@ -707,8 +706,7 @@ class InternationalCampaignPage(BasePage):
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalTopicLandingPage',
-        'great_international.InternationalLocalisedFolderPage',
-        'great_international.InternationalCuratedTopicLandingPage',
+        'great_international.InternationalLocalisedFolderPage'
     ]
     subpage_types = [
         'great_international.InternationalArticlePage'
@@ -978,9 +976,7 @@ class InternationalCuratedTopicLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = [
-        'great_international.InternationalArticleListingPage',
         'great_international.InternationalArticlePage',
-        'great_international.InternationalCampaignPage',
         'great_international.InternationalGuideLandingPage',
     ]
 
