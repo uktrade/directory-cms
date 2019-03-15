@@ -98,48 +98,23 @@ def test_article_listing_page_articles_count(root_page):
 
 
 @pytest.mark.django_db
-def test_country_guide_articles_count(root_page):
-    country_guide_page = factories.CountryGuidePageFactory.create(
-        parent=root_page
-    )
-    factories.ArticlePageFactory.create(
-        parent=country_guide_page,
-        live=True
-    )
-    factories.ArticlePageFactory.create(
-        parent=country_guide_page,
-        live=True
-    )
-    factories.ArticlePageFactory.create(
-        parent=country_guide_page,
-        live=False
-    )
-    factories.ArticlePageFactory.create(
-        live=True,
-        parent=root_page
-    )
-
-    assert country_guide_page.articles_count == 2
-
-
-@pytest.mark.django_db
 def test_superregion_page_articles_count(root_page):
     superregion_page = factories.SuperregionPageFactory.create(
         parent=root_page
     )
-    factories.CountryGuidePageFactory.create(
+    factories.ArticlePageFactory.create(
         parent=superregion_page,
         live=True
     )
-    factories.CountryGuidePageFactory.create(
+    factories.ArticlePageFactory.create(
         parent=superregion_page,
         live=True
     )
-    factories.CountryGuidePageFactory.create(
+    factories.ArticlePageFactory.create(
         parent=superregion_page,
         live=False
     )
-    factories.CountryGuidePageFactory.create(
+    factories.ArticlePageFactory.create(
         live=True,
         parent=root_page
     )

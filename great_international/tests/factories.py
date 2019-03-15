@@ -1,5 +1,6 @@
 import factory
 import factory.fuzzy
+import string
 import wagtail_factories
 from django.utils import timezone
 
@@ -163,6 +164,56 @@ class InternationalTopicLandingPageFactory(wagtail_factories.PageFactory):
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
+
+
+class fuzzyURL(factory.fuzzy.BaseFuzzyAttribute):
+    def __init__(self, protocol='https', tld='co.uk', name_length=15):
+        super().__init__()
+        self.protocol = protocol
+        self.tld = tld
+        self.name_length = name_length
+
+    def fuzz(self):
+        chars = [
+            factory.fuzzy._random.choice(string.ascii_lowercase)
+            for _i in range(self.name_length)
+        ]
+        return self.protocol + '://' + ''.join(chars) + '.' + self.tld
+
+
+class InternationalCuratedTopicLandingPageFactory(
+    wagtail_factories.PageFactory
+):
+
+    class Meta:
+        model = models.InternationalCuratedTopicLandingPage
+
+    display_title = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.fuzzy.FuzzyText(length=10)
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    teaser = factory.fuzzy.FuzzyText(length=10)
+    feature_section_heading = factory.fuzzy.FuzzyText(length=10)
+    parent = None
+    # Large features
+    feature_one_heading = factory.fuzzy.FuzzyText(length=10)
+    feature_one_image = factory.SubFactory(wagtail_factories.ImageFactory)
+    feature_one_content = factory.fuzzy.FuzzyText(length=10)
+    feature_two_heading = factory.fuzzy.FuzzyText(length=10)
+    feature_two_image = factory.SubFactory(wagtail_factories.ImageFactory)
+    feature_two_content = factory.fuzzy.FuzzyText(length=10)
+    # Small features
+    feature_three_heading = factory.fuzzy.FuzzyText(length=10)
+    feature_three_image = factory.SubFactory(wagtail_factories.ImageFactory)
+    feature_three_url = fuzzyURL()
+    feature_four_heading = factory.fuzzy.FuzzyText(length=10)
+    feature_four_image = factory.SubFactory(wagtail_factories.ImageFactory)
+    feature_four_url = fuzzyURL()
+    feature_five_heading = factory.fuzzy.FuzzyText(length=10)
+    feature_five_image = factory.SubFactory(wagtail_factories.ImageFactory)
+    feature_five_url = fuzzyURL()
 
 
 class InternationalRegionPageFactory(wagtail_factories.PageFactory):

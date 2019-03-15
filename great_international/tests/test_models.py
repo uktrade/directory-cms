@@ -11,6 +11,7 @@ def test_models_hierarchy():
     assert models.GreatInternationalApp.allowed_subpage_models() == [
         models.InternationalArticleListingPage,
         models.InternationalTopicLandingPage,
+        models.InternationalCuratedTopicLandingPage,
         models.InternationalRegionPage,
         models.InternationalHomePage
     ]

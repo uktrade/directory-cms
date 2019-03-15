@@ -196,3 +196,21 @@ def test_lookup_by_tag_slug(admin_client, root_page):
     assert response.json()['name'] == tag.name
     assert response.json()['slug'] == tag.slug
     assert len(response.json()['articles']) == 2
+
+
+@pytest.mark.django_db
+def test_country_page_view(admin_client, root_page):
+    page = factories.CountryGuidePageFactory(
+        parent=root_page,
+        live=True
+    )
+    url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
+    response = admin_client.get(url)
+    assert response.status_code == 200
+    assert 'accordions' in response.json()
+    assert 'statistics' in response.json()
+    assert 'fact_sheet' in response.json()
+    assert 'subsections' in response.json()['accordions'][0]
+    assert 'statistics' in response.json()['accordions'][0]
+    assert 'case_study' in response.json()['accordions'][0]
+    assert 'ctas' in response.json()['accordions'][0]

@@ -1,12 +1,71 @@
 import pytest
 from great_international.serializers import (
     InternationalSectorPageSerializer, InternationalArticlePageSerializer,
-    InternationalCampaignPageSerializer, InternationalHomePageSerializer
+    InternationalCampaignPageSerializer, InternationalHomePageSerializer,
+    InternationalCuratedTopicLandingPageSerializer,
 )
 from great_international.tests.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
-    InternationalCampaignPageFactory, InternationalHomePageFactory
+    InternationalCampaignPageFactory, InternationalHomePageFactory,
+    InternationalCuratedTopicLandingPageFactory,
 )
+
+
+@pytest.mark.django_db
+def test_sector_page_has_section_three_subsections(root_page, rf):
+    article = InternationalSectorPageFactory(
+        parent=root_page,
+        slug='article-slug'
+    )
+
+    serializer = InternationalSectorPageSerializer(
+        instance=article,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['section_three_subsections']) == 2
+    for section in serializer.data['section_three_subsections']:
+        assert 'heading' in section
+        assert 'teaser' in section
+        assert 'body' in section
+
+
+@pytest.mark.django_db
+def test_sector_page_has_section_two_subsections(root_page, rf):
+    article = InternationalSectorPageFactory(
+        parent=root_page,
+        slug='article-slug'
+    )
+
+    serializer = InternationalSectorPageSerializer(
+        instance=article,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['section_two_subsections']) == 3
+    for section in serializer.data['section_two_subsections']:
+        assert 'icon' in section
+        assert 'heading' in section
+        assert 'body' in section
+
+
+@pytest.mark.django_db
+def test_sector_page_has_statistics(root_page, rf):
+    article = InternationalSectorPageFactory(
+        parent=root_page,
+        slug='article-slug'
+    )
+
+    serializer = InternationalSectorPageSerializer(
+        instance=article,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['statistics']) == 6
+    for statistic in serializer.data['statistics']:
+        assert 'number' in statistic
+        assert 'heading' in statistic
+        assert 'smallprint' in statistic
 
 
 @pytest.mark.django_db
@@ -135,3 +194,28 @@ def test_related_article_page_serializer_no_pages(
     )
 
     assert len(serializer.data['related_pages']) == 0
+
+
+@pytest.mark.django_db
+def test_curated_topic_landing_page_has_features(root_page, rf):
+    page = InternationalCuratedTopicLandingPageFactory(
+        parent=root_page,
+        slug='page-slug'
+    )
+
+    serializer = InternationalCuratedTopicLandingPageSerializer(
+        instance=page,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['features_large']) == 2
+    for item in serializer.data['features_large']:
+        assert 'heading' in item
+        assert 'image' in item
+        assert 'content' in item
+
+    assert len(serializer.data['features_small']) == 3
+    for item in serializer.data['features_small']:
+        assert 'heading' in item
+        assert 'image' in item
+        assert 'url' in item
