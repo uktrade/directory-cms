@@ -536,6 +536,6 @@ class InternationalGuideLandingPageSerializer(BasePageSerializer):
             .type(InternationalArticlePage)
             .live()
             .specific()
-        )
+        )[:9]
         serializer = RelatedArticlePageSerializer(article_list, many=True)
         return serializer.data
