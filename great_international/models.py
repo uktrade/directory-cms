@@ -1178,7 +1178,7 @@ class InternationalGuideLandingPage(BasePage):
                     '"#### [Your text here]" for subheadings '
                     'in this markdown field'
                 ),
-                FieldPanel('section_one_image'),
+                ImageChooserPanel('section_one_image'),
                 FieldPanel('section_one_image_caption'),
             ]
         ),
@@ -1189,7 +1189,7 @@ class InternationalGuideLandingPage(BasePage):
                 FieldPanel('section_two_teaser'),
                 FieldPanel('section_two_button_text'),
                 FieldPanel('section_two_button_url'),
-                FieldPanel('section_two_image'),
+                ImageChooserPanel('section_two_image'),
             ]
         ),
         MultiFieldPanel(
