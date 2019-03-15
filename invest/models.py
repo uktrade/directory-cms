@@ -855,6 +855,10 @@ class HighPotentialOpportunityDetailPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+
+    featured = models.BooleanField(default=True)
+    description = models.TextField(blank=True)  # appears in card on external pages
+
     contact_proposition = MarkdownField(
         blank=False,
         verbose_name='Body text',
@@ -1062,6 +1066,14 @@ class HighPotentialOpportunityDetailPage(BasePage):
                 ImageChooserPanel('hero_image'),
             ]
         ),
+
+        MultiFieldPanel(
+            heading='Featured Description',
+            children=[
+                FieldPanel('description')
+            ]
+        ),
+
         MultiFieldPanel(
             heading='Contact us',
             children=[
@@ -1239,6 +1251,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('featured'),
         DocumentChooserPanel('pdf_document'),
     ]
 
