@@ -224,30 +224,22 @@ def test_curated_topic_landing_page_has_features(root_page, rf):
 
 
 @pytest.mark.django_db
-def test_guide_landing_page_serializer_guide_list(root_page, rf):
+def test_guide_landing_page_serializer_guide_list(root_page, image, rf):
     """
     The serializer for InternationalGuideLandingPage should include a list
     of decendants of type InternationalArticlePage only
     """
     page = InternationalGuideLandingPageFactory(
         parent=root_page,
+        slug='page-slug',
+        section_one_image=image,
+        section_two_image=image,
     )
 
-    sub_page_one = InternationalArticlePageFactory(
-        parent=guide_landing_page,
-        slug='one'
-    )
-
-    sub_page_two = InternationalArticlePageFactory(
-        parent=guide_landing_page,
-        slug='one'
-    )
-
+    InternationalArticlePageFactory(parent=page, slug='one')
+    InternationalArticlePageFactory(parent=page, slug='two')
     # This page in not an InternationalArticlePage, so should not be included
-    sub_page_three = InternationalSectorPageFactory(
-        parent=guide_landing_page,
-        slug='three'
-    )
+    InternationalSectorPageFactory(parent=page, slug='three')
 
     serializer = InternationalGuideLandingPageSerializer(
         instance=page,
