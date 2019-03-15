@@ -501,3 +501,41 @@ class InternationalCuratedTopicLandingPageSerializer(BasePageSerializer):
 
     def get_features_small(self, instance):
         return self.get_features(instance, 'three', 'four', 'five')
+
+
+class InternationalGuideLandingPageSerializer(BasePageSerializer):
+
+    display_title = serializers.CharField()
+
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
+
+    teaser = serializers.CharField()
+
+    section_one_content = core_fields.MarkdownToHTMLField()
+    section_one_image = wagtail_fields.ImageRenditionField('original')
+    section_one_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='section_one_image')
+    section_one_image_caption = serializers.CharField()
+
+    section_two_heading = serializers.CharField()
+    section_two_teaser = serializers.CharField()
+    section_two_button_text = serializers.CharField()
+    section_two_button_url = serializers.CharField()
+    section_two_image = wagtail_fields.ImageRenditionField('original')
+    section_two_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='section_two_image')
+
+    guides_section_heading = serializers.CharField()
+    guides = serializers.SerializerMethodField()
+
+    def get_guides(self, obj):
+        article_list = (
+            obj.get_descendants()
+            .type(InternationalArticlePage)
+            .live()
+            .specific()
+        )
+        serializer = RelatedArticlePageSerializer(article_list, many=True)
+        return serializer.data
