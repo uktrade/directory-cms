@@ -1961,11 +1961,6 @@ class CountryGuidePage(BasePage):
     )
 
     # need help
-    help_market_guide_cta_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Help CTA market guide title'
-    )
     help_market_guide_cta_link = models.CharField(
         max_length=255,
         blank=True,
@@ -2708,7 +2703,7 @@ class CountryGuidePage(BasePage):
         ),
         MultiFieldPanel(
             heading='Fact sheet',
-            classname='collapsible collapsed',
+            classname='collapsible',
             children=[
                 FieldPanel('fact_sheet_title'),
                 FieldPanel('fact_sheet_teaser'),
@@ -2726,10 +2721,9 @@ class CountryGuidePage(BasePage):
         ),
         MultiFieldPanel(
             heading='Need help',
-            classname='collapsible collapsed',
+            classname='collapsible',
             children=[
-                FieldPanel('help_market_guide_cta_link'),
-                FieldPanel('help_market_guide_cta_title')
+                FieldPanel('help_market_guide_cta_link')
             ]
         ),
         MultiFieldPanel(

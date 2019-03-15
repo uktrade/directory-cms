@@ -417,7 +417,6 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
     accordions = serializers.SerializerMethodField()
     fact_sheet = serializers.SerializerMethodField()
 
-    help_market_guide_cta_title = serializers.CharField(max_length=255)
     help_market_guide_cta_link = serializers.CharField(max_length=255)
 
     def get_fact_sheet(self, instance):
