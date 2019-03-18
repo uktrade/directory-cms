@@ -337,7 +337,10 @@ class InternationalCampaignPageSerializer(PageWithRelatedPagesSerializer):
     cta_box_button_text = serializers.CharField(max_length=255)
 
 
-class InternationalArticleListingPageSerializer(BasePageSerializer):
+class InternationalArticleListingPageSerializer(
+    BasePageSerializer,
+    ChildPagesSerializerHelper
+):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
     hero_image = wagtail_fields.ImageRenditionField('original')
