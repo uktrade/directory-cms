@@ -844,6 +844,7 @@ class HighPotentialOpportunityFormPage(
 
 class HighPotentialOpportunityDetailPage(BasePage):
     service_name_value = cms.INVEST
+    subpage_types = ['invest.HighPotentialOpportunityDetailPage']
     view_path = 'high-potential-opportunities/'
 
     breadcrumbs_label = models.CharField(max_length=50)

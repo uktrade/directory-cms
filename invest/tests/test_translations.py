@@ -12,6 +12,8 @@ def test_required_fields_invest_home_page():
             'title',
             'heading',
             'sub_heading',
+            'benefits_section_title',
+            'eu_exit_section_title',
             'subsection_title_one',
             'subsection_content_one',
             'subsection_title_two',
@@ -19,13 +21,16 @@ def test_required_fields_invest_home_page():
             'sector_title',
             'sector_button_text',
             'setup_guide_title',
+            'setup_guide_call_to_action_text',
             'how_we_help_title',
             'how_we_help_text_one',
             'how_we_help_text_two',
             'how_we_help_text_three',
             'how_we_help_text_four',
             'how_we_help_text_five',
-            'how_we_help_text_six'
+            'how_we_help_text_six',
+            'contact_section_title',
+            'contact_section_call_to_action_text'
         ]
     }
 

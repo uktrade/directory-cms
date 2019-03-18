@@ -189,7 +189,7 @@ class InvestHomePageSerializer(BasePageSerializer):
     benefits_section_intro = serializers.CharField(max_length=255)
     benefits_section_content = core_fields.MarkdownToHTMLField()
     benefits_section_img = wagtail_fields.ImageRenditionField('original')
-    eu_exit_section_img_caption = serializers.CharField(max_length=255)
+    benefits_section_img_caption = serializers.CharField(max_length=255)
     eu_exit_section_title = serializers.CharField(max_length=255)
     eu_exit_section_content = core_fields.MarkdownToHTMLField()
     eu_exit_section_call_to_action_text = serializers.CharField(max_length=255)
@@ -244,6 +244,7 @@ class InvestHomePageSerializer(BasePageSerializer):
             allow_null=True,
             context=self.context
         )
+        print("sectors: ", SectorPage.objects.all())
         return serializer.data
 
     def get_high_potential_opportunities(self, instance):
@@ -257,6 +258,7 @@ class InvestHomePageSerializer(BasePageSerializer):
             allow_null=True,
             context=self.context
         )
+        print("HPOs: ", HighPotentialOpportunityDetailPage.objects.all())
         return serializer.data
 
     def get_guides(self, instance):
