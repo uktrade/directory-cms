@@ -575,7 +575,9 @@ class InternationalArticlePage(BasePage):
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
-        'great_international.InternationalLocalisedFolderPage'
+        'great_international.InternationalLocalisedFolderPage',
+        'great_international.InternationalCuratedTopicLandingPage',
+        'great_international.InternationalGuideLandingPage',
     ]
     subpage_types = []
 
@@ -935,6 +937,7 @@ class InternationalTopicLandingPage(BasePage):
     subpage_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
+        'great_international.InternationalGuideLandingPage',
         'great_international.InternationalSectorPage',
     ]
 
@@ -974,6 +977,7 @@ class InternationalCuratedTopicLandingPage(BasePage):
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = [
         'great_international.InternationalArticlePage',
+        'great_international.InternationalGuideLandingPage',
     ]
 
     display_title = models.CharField(max_length=255, blank=True, null=True)
@@ -1084,6 +1088,114 @@ class InternationalCuratedTopicLandingPage(BasePage):
                         FieldPanel('feature_five_url'),
                     ]),
                 ]),
+            ]
+        )
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        SearchEngineOptimisationPanel(),
+        FieldPanel('slug'),
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
+    ]
+
+
+class InternationalGuideLandingPage(BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+    parent_page_types = [
+        'great_international.InternationalCuratedTopicLandingPage',
+        'great_international.InternationalTopicLandingPage',
+    ]
+    subpage_types = [
+        'great_international.InternationalArticlePage',
+    ]
+
+    display_title = models.CharField(max_length=255)
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    teaser = models.CharField(max_length=255)
+
+    section_one_content = MarkdownField(verbose_name="content")
+    section_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        verbose_name="image",
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    section_one_image_caption = models.CharField(
+        verbose_name="image caption",
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+
+    section_two_heading = models.CharField(
+        verbose_name="heading",
+        max_length=100
+    )
+    section_two_teaser = models.TextField(verbose_name="teaser")
+    section_two_button_text = models.CharField(
+        verbose_name="button text",
+        max_length=100
+    )
+    section_two_button_url = models.CharField(
+        verbose_name="button URL",
+        max_length=255
+    )
+    section_two_image = models.ForeignKey(
+        'wagtailimages.Image',
+        verbose_name="image",
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    guides_section_heading = models.CharField(
+        verbose_name="section heading",
+        max_length=100,
+    )
+
+    tags = ParentalManyToManyField(Tag, blank=True)
+
+    content_panels = [
+        FieldPanel('display_title'),
+        ImageChooserPanel('hero_image'),
+        FieldPanel('teaser'),
+        MultiFieldPanel(
+            heading="Attractive features",
+            children=[
+                FieldPanel('section_one_content'),
+                HelpPanel(
+                    'For accessibility reasons, use only '
+                    '"#### [Your text here]" for subheadings '
+                    'in this markdown field'
+                ),
+                ImageChooserPanel('section_one_image'),
+                FieldPanel('section_one_image_caption'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Feature banner",
+            children=[
+                FieldPanel('section_two_heading'),
+                FieldPanel('section_two_teaser'),
+                FieldPanel('section_two_button_text'),
+                FieldPanel('section_two_button_url'),
+                ImageChooserPanel('section_two_image'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Guides section",
+            children=[
+                FieldPanel('guides_section_heading'),
             ]
         )
     ]
