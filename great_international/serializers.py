@@ -422,7 +422,12 @@ class InternationalTopicLandingPageSerializer(
             InternationalGuideLandingPage,
             InternationalGuideLandingPageSerializer
         )
-        return articles + campaigns + guides
+        sectors = self.get_child_pages_data_for(
+            obj,
+            InternationalSectorPage,
+            InternationalSectorPageSerializer
+        )
+        return articles + campaigns + guides + sectors
 
 
 class FeatureSerializer(serializers.Serializer):
