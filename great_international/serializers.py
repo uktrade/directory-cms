@@ -390,7 +390,7 @@ class InternationalArticleListingPageSerializer(
         campaigns = self.get_child_pages_data_for(
             obj,
             InternationalCampaignPage,
-            RelatedCampaignPageSerializer
+            InternationalCampaignPageSerializer
         )
         return articles + campaigns
 
