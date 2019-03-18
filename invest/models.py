@@ -469,7 +469,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     )
     benefits_section_img_caption = models.CharField(max_length=255, blank=True)
 
-    eu_exit_section_title = models.CharField(max_length=255)
+    eu_exit_section_title = models.CharField(max_length=255, blank=True)
     eu_exit_section_content = MarkdownField(blank=True)
     eu_exit_section_call_to_action_text = models.CharField(max_length=255, blank=True)
     eu_exit_section_img = models.ForeignKey(
