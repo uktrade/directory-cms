@@ -523,7 +523,12 @@ class TopicLandingPageSerializer(
             SuperregionPage,
             SuperregionPageSerializer
         )
-        return articles + superregions
+        country_guides = self.get_child_pages_data_for(
+            obj,
+            CountryGuidePage,
+            CountryGuidePageSerializer
+        )
+        return articles + superregions + country_guides
 
 
 class SuperregionPageSerializer(TopicLandingPageSerializer):
