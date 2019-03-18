@@ -445,6 +445,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     slug_identity = cms.INVEST_HOME_PAGE_SLUG
     view_path = ''
 
+    breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
     hero_call_to_action_text = models.CharField(max_length=255, blank=True)
@@ -587,6 +588,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     content_panels = [
         MultiFieldPanel(
             [
+                FieldPanel('breadcrumbs_label'),
                 FieldPanel('heading'),
                 FieldPanel('sub_heading'),
                 FieldPanel('hero_call_to_action_text'),
