@@ -403,6 +403,8 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
     sub_heading = serializers.CharField(max_length=255)
     heading_teaser = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('original')
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
 
     section_one_body = core_fields.MarkdownToHTMLField()
     section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
