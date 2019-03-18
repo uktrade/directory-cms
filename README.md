@@ -28,6 +28,9 @@ We aim to follow [GDS service standards](https://www.gov.uk/service-manual/servi
     $ virtualenv .venv -p python3.6
     $ source .venv/bin/activate
     $ pip install -r requirements_test.txt
+    $ make debug_db
+    $ make debug_migrate
+    $ make debug_createsuperuser
 
 ### Running the webserver
     $ source .venv/bin/activate

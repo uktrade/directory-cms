@@ -216,6 +216,31 @@ class InternationalCuratedTopicLandingPageFactory(
     feature_five_url = fuzzyURL()
 
 
+class InternationalGuideLandingPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.InternationalGuideLandingPage
+
+    display_title = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.fuzzy.FuzzyText(length=10)
+    hero_image = factory.SubFactory(wagtail_factories.ImageFactory)
+    teaser = factory.fuzzy.FuzzyText(length=10)
+
+    section_one_content = factory.fuzzy.FuzzyText(length=10)
+    section_one_image = factory.SubFactory(wagtail_factories.ImageFactory)
+    section_one_image_caption = factory.fuzzy.FuzzyText(length=10)
+
+    section_two_heading = factory.fuzzy.FuzzyText(length=10)
+    section_two_teaser = factory.fuzzy.FuzzyText(length=10)
+    section_two_button_text = factory.fuzzy.FuzzyText(length=10)
+    section_two_button_url = factory.fuzzy.FuzzyText(length=10)
+    section_two_image = factory.SubFactory(wagtail_factories.ImageFactory)
+    guides_section_heading = factory.fuzzy.FuzzyText(length=10)
+
+    parent = None
+
+
 class InternationalRegionPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
