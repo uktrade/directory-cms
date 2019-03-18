@@ -7,6 +7,7 @@ from . import models
 @register(models.InvestHomePage)
 class InvestHomePageTranslation(BaseTranslationOptions):
     fields = (
+        'breadcrumbs_label',
         'heading',
         'sub_heading',
         'hero_call_to_action_text',
