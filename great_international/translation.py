@@ -44,6 +44,20 @@ class InternationalTopicLandingPageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
+@register(models.InternationalCuratedTopicLandingPage)
+class InternationalCuratedTopicLandingPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = []
+
+
+@register(models.InternationalGuideLandingPage)
+class InternationalGuideLandingPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = []
+
+
 @register(models.InternationalLocalisedFolderPage)
 class InternationalRegionalFolderPageTranslationOptions(
     BaseTranslationOptions

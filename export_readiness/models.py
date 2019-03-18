@@ -2,8 +2,7 @@ from directory_constants.constants import cms
 from directory_constants.constants import urls
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel
-)
+    FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel)
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
@@ -234,7 +233,6 @@ class PerformanceDashboardPage(BasePage):
 
     heading = models.CharField(max_length=255)
     description = MarkdownField()
-    product_link = models.URLField()
     # row 1
     data_title_row_one = models.CharField(max_length=100)
     data_number_row_one = models.CharField(max_length=15)
@@ -304,7 +302,6 @@ class PerformanceDashboardPage(BasePage):
             'landing_dashboard': False,
         },
     }
-
     product_link = models.TextField(
         choices=[
             (key, val['heading']) for key, val in service_mapping.items()],
@@ -409,6 +406,7 @@ class TopicLandingPage(BasePage):
     subpage_types = [
         'export_readiness.ArticleListingPage',
         'export_readiness.SuperregionPage',
+        'export_readiness.CountryGuidePage'
     ]
 
     landing_page_title = models.CharField(max_length=255)
@@ -493,145 +491,2266 @@ class ArticleListingPage(BasePage):
 
 
 class CountryGuidePage(BasePage):
+    """Make a cup of tea, this model is BIG!"""
+
     service_name_value = cms.EXPORT_READINESS
     subpage_types = [
+        'export_readiness.ArticleListingPage',
         'export_readiness.ArticlePage',
+        'export_readiness.CampaignPage'
     ]
 
-    landing_page_title = models.CharField(max_length=255)
-
+    heading = models.CharField(max_length=255)
+    sub_heading = models.CharField(max_length=255, blank=True)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
-        blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    heading_teaser = models.TextField(blank=True)
 
-    section_one_heading = models.CharField(max_length=50)
-    section_one_content = MarkdownField()
-
-    selling_point_one_icon = models.ForeignKey(
+    section_one_body = MarkdownField(
+        null=True,
+        verbose_name='Bullets markdown'
+    )
+    section_one_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
-        blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
+        verbose_name='Bullets image'
     )
-    selling_point_one_heading = models.CharField(max_length=255)
-    selling_point_one_content = MarkdownField()
+    section_one_image_caption = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Bullets image caption')
+    section_one_image_caption_company = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Bullets image caption — company name')
 
-    selling_point_two_icon = models.ForeignKey(
+    statistic_1_number = models.CharField(max_length=255)
+    statistic_1_heading = models.CharField(max_length=255)
+    statistic_1_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_2_number = models.CharField(max_length=255)
+    statistic_2_heading = models.CharField(max_length=255)
+    statistic_2_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_3_number = models.CharField(max_length=255, blank=True)
+    statistic_3_heading = models.CharField(max_length=255, blank=True)
+    statistic_3_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_4_number = models.CharField(max_length=255, blank=True)
+    statistic_4_heading = models.CharField(max_length=255, blank=True)
+    statistic_4_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_5_number = models.CharField(max_length=255, blank=True)
+    statistic_5_heading = models.CharField(max_length=255, blank=True)
+    statistic_5_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_6_number = models.CharField(max_length=255, blank=True)
+    statistic_6_heading = models.CharField(max_length=255, blank=True)
+    statistic_6_smallprint = models.CharField(max_length=255, blank=True)
+
+    section_two_heading = models.CharField(
+        max_length=255,
+        verbose_name='Highlights heading'
+    )
+    section_two_teaser = models.TextField(
+        verbose_name='Highlights teaser'
+    )
+
+    # accordion 1
+    accordion_1_icon = models.ForeignKey(
         'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    selling_point_two_heading = models.CharField(
-        max_length=255, null=True, blank=True)
-    selling_point_two_content = MarkdownField(null=True, blank=True)
-
-    selling_point_three_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    selling_point_three_heading = models.CharField(
-        max_length=255, null=True, blank=True)
-    selling_point_three_content = MarkdownField(null=True, blank=True)
-
-    section_two_heading = models.CharField(max_length=255)
-    section_two_content = MarkdownField()
-
-    related_content_heading = models.CharField(max_length=255)
-    related_content_intro = MarkdownField()
-
-    related_page_one = models.ForeignKey(
-        'export_readiness.ArticlePage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
+        verbose_name='Accordion Icon'
+    )
+    accordion_1_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Accordion title'
+    )
+    accordion_1_teaser = models.TextField(
+        blank=True,
+        verbose_name='Accordion teaser'
+    )
+    accordion_1_subsection_1_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 1 icon'
+    )
+    accordion_1_subsection_1_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 1 heading'
+    )
+    accordion_1_subsection_1_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 1 body'
+    )
+
+    accordion_1_subsection_2_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 2 icon'
+    )
+    accordion_1_subsection_2_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 2 heading'
+    )
+    accordion_1_subsection_2_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 2 body'
+    )
+
+    accordion_1_subsection_3_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 2 icon'
+    )
+    accordion_1_subsection_3_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 2 heading'
+    )
+    accordion_1_subsection_3_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 2 body'
+    )
+    accordion_1_case_study_hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Case study hero'
+    )
+    accordion_1_case_study_button_text = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study button text'
+    )
+    accordion_1_case_study_button_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study button link'
+    )
+    accordion_1_case_study_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study title'
+    )
+    accordion_1_case_study_description = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study description'
+    )
+
+    accordion_1_cta_1_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 1'
+    )
+    accordion_1_cta_1_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 1'
+    )
+    accordion_1_cta_2_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 2'
+    )
+    accordion_1_cta_2_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 2'
+    )
+    accordion_1_cta_3_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 3'
+    )
+    accordion_1_cta_3_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 3'
+    )
+
+    accordion_1_statistic_1_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 number'
+    )
+    accordion_1_statistic_1_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 heading'
+    )
+    accordion_1_statistic_1_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 smallprint'
+    )
+
+    accordion_1_statistic_2_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 number'
+    )
+    accordion_1_statistic_2_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 heading'
+    )
+    accordion_1_statistic_2_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 smallprint'
+    )
+
+    accordion_1_statistic_3_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 number'
+    )
+    accordion_1_statistic_3_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 heading'
+    )
+    accordion_1_statistic_3_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 smallprint'
+    )
+
+    accordion_1_statistic_4_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 number'
+    )
+    accordion_1_statistic_4_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 heading'
+    )
+    accordion_1_statistic_4_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 smallprint'
+    )
+
+    accordion_1_statistic_5_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 number'
+    )
+    accordion_1_statistic_5_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 heading'
+    )
+    accordion_1_statistic_5_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 smallprint'
+    )
+
+    accordion_1_statistic_6_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 number'
+    )
+    accordion_1_statistic_6_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 heading'
+    )
+    accordion_1_statistic_6_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 smallprint'
+    )
+
+    # accordion 2
+    accordion_2_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Accordion Icon'
+    )
+    accordion_2_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Accordion title'
+    )
+    accordion_2_teaser = models.TextField(
+        blank=True,
+        verbose_name='Accordion teaser'
+    )
+    accordion_2_subsection_1_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 1 icon'
+    )
+    accordion_2_subsection_1_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 1 heading'
+    )
+    accordion_2_subsection_1_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 1 body'
+    )
+    accordion_2_subsection_2_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 2 icon'
+    )
+    accordion_2_subsection_2_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 2 heading'
+    )
+    accordion_2_subsection_2_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 2 body'
+    )
+    accordion_2_subsection_3_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 2 icon'
+    )
+    accordion_2_subsection_3_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 2 heading'
+    )
+    accordion_2_subsection_3_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 2 body'
+    )
+
+    accordion_2_case_study_hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Case study hero'
+    )
+    accordion_2_case_study_button_text = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study button text'
+    )
+    accordion_2_case_study_button_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study button link'
+    )
+    accordion_2_case_study_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study title'
+    )
+    accordion_2_case_study_description = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study description'
+    )
+
+    accordion_2_cta_1_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 1'
+    )
+    accordion_2_cta_1_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 1'
+    )
+    accordion_2_cta_2_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 2'
+    )
+    accordion_2_cta_2_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 2'
+    )
+    accordion_2_cta_3_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 3'
+    )
+    accordion_2_cta_3_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 3'
+    )
+
+    accordion_2_statistic_1_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 number'
+    )
+    accordion_2_statistic_1_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 heading'
+    )
+    accordion_2_statistic_1_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 smallprint'
+    )
+
+    accordion_2_statistic_2_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 number'
+    )
+    accordion_2_statistic_2_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 heading'
+    )
+    accordion_2_statistic_2_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 smallprint'
+    )
+
+    accordion_2_statistic_3_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 number'
+    )
+    accordion_2_statistic_3_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 heading'
+    )
+    accordion_2_statistic_3_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 smallprint'
+    )
+
+    accordion_2_statistic_4_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 number'
+    )
+    accordion_2_statistic_4_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 heading'
+    )
+    accordion_2_statistic_4_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 smallprint'
+    )
+
+    accordion_2_statistic_5_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 number'
+    )
+    accordion_2_statistic_5_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 heading'
+    )
+    accordion_2_statistic_5_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 smallprint'
+    )
+
+    accordion_2_statistic_6_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 number'
+    )
+    accordion_2_statistic_6_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 heading'
+    )
+    accordion_2_statistic_6_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 smallprint'
+    )
+
+    # accordion 3
+    accordion_3_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Accordion Icon'
+    )
+    accordion_3_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Accordion title'
+    )
+    accordion_3_teaser = models.TextField(
+        blank=True,
+        verbose_name='Accordion teaser'
+    )
+    accordion_3_subsection_1_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 1 icon'
+    )
+    accordion_3_subsection_1_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 1 heading'
+    )
+    accordion_3_subsection_1_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 1 body'
+    )
+
+    accordion_3_subsection_2_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 2 icon'
+    )
+    accordion_3_subsection_2_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 2 heading'
+    )
+    accordion_3_subsection_2_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 2 body'
+    )
+
+    accordion_3_subsection_3_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 2 icon'
+    )
+    accordion_3_subsection_3_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 2 heading'
+    )
+    accordion_3_subsection_3_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 2 body'
+    )
+
+    accordion_3_case_study_hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Case study hero'
+    )
+    accordion_3_case_study_button_text = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study button text'
+    )
+    accordion_3_case_study_button_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study button link'
+    )
+    accordion_3_case_study_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study title'
+    )
+    accordion_3_case_study_description = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study description'
+    )
+
+    accordion_3_cta_1_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 1'
+    )
+    accordion_3_cta_1_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 1'
+    )
+    accordion_3_cta_2_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 2'
+    )
+    accordion_3_cta_2_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 2'
+    )
+    accordion_3_cta_3_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 3'
+    )
+    accordion_3_cta_3_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 3'
+    )
+
+    accordion_3_statistic_1_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 number'
+    )
+    accordion_3_statistic_1_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 heading'
+    )
+    accordion_3_statistic_1_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 smallprint'
+    )
+
+    accordion_3_statistic_2_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 number'
+    )
+    accordion_3_statistic_2_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 heading'
+    )
+    accordion_3_statistic_2_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 smallprint'
+    )
+
+    accordion_3_statistic_3_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 number'
+    )
+    accordion_3_statistic_3_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 heading'
+    )
+    accordion_3_statistic_3_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 smallprint'
+    )
+
+    accordion_3_statistic_4_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 number'
+    )
+    accordion_3_statistic_4_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 heading'
+    )
+    accordion_3_statistic_4_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 smallprint'
+    )
+
+    accordion_3_statistic_5_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 number'
+    )
+    accordion_3_statistic_5_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 heading'
+    )
+    accordion_3_statistic_5_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 smallprint'
+    )
+
+    accordion_3_statistic_6_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 number'
+    )
+    accordion_3_statistic_6_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 heading'
+    )
+    accordion_3_statistic_6_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 smallprint'
+    )
+
+    # accordion 4
+    accordion_4_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Accordion Icon'
+    )
+    accordion_4_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Accordion title'
+    )
+    accordion_4_teaser = models.TextField(
+        blank=True,
+        verbose_name='Accordion teaser'
+    )
+    accordion_4_subsection_1_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 1 icon'
+    )
+    accordion_4_subsection_1_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 1 heading'
+    )
+    accordion_4_subsection_1_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 1 body'
+    )
+
+    accordion_4_subsection_2_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 2 icon'
+    )
+    accordion_4_subsection_2_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 2 heading'
+    )
+    accordion_4_subsection_2_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 2 body'
+    )
+
+    accordion_4_subsection_3_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 2 icon'
+    )
+    accordion_4_subsection_3_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 2 heading'
+    )
+    accordion_4_subsection_3_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 2 body'
+    )
+
+    accordion_4_case_study_hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Case study hero'
+    )
+    accordion_4_case_study_button_text = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study button text'
+    )
+    accordion_4_case_study_button_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study button link'
+    )
+    accordion_4_case_study_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study title'
+    )
+    accordion_4_case_study_description = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study description'
+    )
+
+    accordion_4_cta_1_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 1'
+    )
+    accordion_4_cta_1_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 1'
+    )
+    accordion_4_cta_2_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 2'
+    )
+    accordion_4_cta_2_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 2'
+    )
+    accordion_4_cta_3_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 3'
+    )
+    accordion_4_cta_3_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 3'
+    )
+
+    accordion_4_statistic_1_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 number'
+    )
+    accordion_4_statistic_1_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 heading'
+    )
+    accordion_4_statistic_1_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 smallprint'
+    )
+
+    accordion_4_statistic_2_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 number'
+    )
+    accordion_4_statistic_2_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 heading'
+    )
+    accordion_4_statistic_2_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 smallprint'
+    )
+
+    accordion_4_statistic_3_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 number'
+    )
+    accordion_4_statistic_3_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 heading'
+    )
+    accordion_4_statistic_3_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 smallprint'
+    )
+
+    accordion_4_statistic_4_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 number'
+    )
+    accordion_4_statistic_4_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 heading'
+    )
+    accordion_4_statistic_4_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 smallprint'
+    )
+
+    accordion_4_statistic_5_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 number'
+    )
+    accordion_4_statistic_5_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 heading'
+    )
+    accordion_4_statistic_5_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 smallprint'
+    )
+
+    accordion_4_statistic_6_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 number'
+    )
+    accordion_4_statistic_6_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 heading'
+    )
+    accordion_4_statistic_6_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 smallprint'
+    )
+
+    # accordion 5
+    accordion_5_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Accordion Icon'
+    )
+    accordion_5_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Accordion title'
+    )
+    accordion_5_teaser = models.TextField(
+        blank=True,
+        verbose_name='Accordion teaser'
+    )
+    accordion_5_subsection_1_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 1 icon'
+    )
+    accordion_5_subsection_1_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 1 heading'
+    )
+    accordion_5_subsection_1_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 1 body'
+    )
+
+    accordion_5_subsection_2_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 2 icon'
+    )
+    accordion_5_subsection_2_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 2 heading'
+    )
+    accordion_5_subsection_2_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 2 body'
+    )
+
+    accordion_5_subsection_3_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 2 icon'
+    )
+    accordion_5_subsection_3_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 2 heading'
+    )
+    accordion_5_subsection_3_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 2 body'
+    )
+
+    accordion_5_case_study_hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Case study hero'
+    )
+    accordion_5_case_study_button_text = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study button text'
+    )
+    accordion_5_case_study_button_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study button link'
+    )
+    accordion_5_case_study_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study title'
+    )
+    accordion_5_case_study_description = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study description'
+    )
+
+    accordion_5_cta_1_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 1'
+    )
+    accordion_5_cta_1_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 1'
+    )
+    accordion_5_cta_2_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 2'
+    )
+    accordion_5_cta_2_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 2'
+    )
+    accordion_5_cta_3_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 3'
+    )
+    accordion_5_cta_3_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 3'
+    )
+
+    accordion_5_statistic_1_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 number'
+    )
+    accordion_5_statistic_1_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 heading'
+    )
+    accordion_5_statistic_1_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 smallprint'
+    )
+
+    accordion_5_statistic_2_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 number'
+    )
+    accordion_5_statistic_2_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 heading'
+    )
+    accordion_5_statistic_2_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 smallprint'
+    )
+
+    accordion_5_statistic_3_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 number'
+    )
+    accordion_5_statistic_3_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 heading'
+    )
+    accordion_5_statistic_3_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 smallprint'
+    )
+
+    accordion_5_statistic_4_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 number'
+    )
+    accordion_5_statistic_4_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 heading'
+    )
+    accordion_5_statistic_4_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 smallprint'
+    )
+
+    accordion_5_statistic_5_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 number'
+    )
+    accordion_5_statistic_5_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 heading'
+    )
+    accordion_5_statistic_5_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 smallprint'
+    )
+
+    accordion_5_statistic_6_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 number'
+    )
+    accordion_5_statistic_6_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 heading'
+    )
+    accordion_5_statistic_6_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 smallprint'
+    )
+
+    # accordion 6
+    accordion_6_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Accordion Icon'
+    )
+    accordion_6_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Accordion title'
+    )
+    accordion_6_teaser = models.TextField(
+        blank=True,
+        verbose_name='Accordion teaser'
+    )
+    accordion_6_subsection_1_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 1 icon'
+    )
+    accordion_6_subsection_1_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 1 heading'
+    )
+    accordion_6_subsection_1_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 1 body'
+    )
+
+    accordion_6_subsection_2_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 2 icon'
+    )
+    accordion_6_subsection_2_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 2 heading'
+    )
+    accordion_6_subsection_2_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 2 body'
+    )
+
+    accordion_6_subsection_3_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Subsection 2 icon'
+    )
+    accordion_6_subsection_3_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Subsection 2 heading'
+    )
+    accordion_6_subsection_3_body = models.TextField(
+        blank=True,
+        verbose_name='Subsection 2 body'
+    )
+
+    accordion_6_case_study_hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Case study hero'
+    )
+    accordion_6_case_study_button_text = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study button text'
+    )
+    accordion_6_case_study_button_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study button link'
+    )
+    accordion_6_case_study_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study title'
+    )
+    accordion_6_case_study_description = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Case study description'
+    )
+
+    accordion_6_cta_1_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 1'
+    )
+    accordion_6_cta_1_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 1'
+    )
+    accordion_6_cta_2_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 2'
+    )
+    accordion_6_cta_2_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 2'
+    )
+    accordion_6_cta_3_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link 3'
+    )
+    accordion_6_cta_3_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title 3'
+    )
+
+    accordion_6_statistic_1_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 number'
+    )
+    accordion_6_statistic_1_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 heading'
+    )
+    accordion_6_statistic_1_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 1 smallprint'
+    )
+
+    accordion_6_statistic_2_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 number'
+    )
+    accordion_6_statistic_2_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 heading'
+    )
+    accordion_6_statistic_2_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 2 smallprint'
+    )
+
+    accordion_6_statistic_3_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 number'
+    )
+    accordion_6_statistic_3_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 heading'
+    )
+    accordion_6_statistic_3_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 3 smallprint'
+    )
+
+    accordion_6_statistic_4_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 number'
+    )
+    accordion_6_statistic_4_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 4 heading'
+    )
+    accordion_6_statistic_4_smallprint = models.CharField(
+        max_length=255,
+
+        blank=True,
+        verbose_name='Stat 4 smallprint'
+    )
+
+    accordion_6_statistic_5_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 number'
+    )
+    accordion_6_statistic_5_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 heading'
+    )
+    accordion_6_statistic_5_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 5 smallprint'
+    )
+
+    accordion_6_statistic_6_number = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 number'
+    )
+    accordion_6_statistic_6_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 heading'
+    )
+    accordion_6_statistic_6_smallprint = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Stat 6 smallprint'
+    )
+
+    # fact sheet
+    fact_sheet_title = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    fact_sheet_teaser = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    fact_sheet_column_1_title = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    fact_sheet_column_1_teaser = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    fact_sheet_column_1_body = MarkdownField(
+        blank=True
+    )
+    fact_sheet_column_2_title = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    fact_sheet_column_2_teaser = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    fact_sheet_column_2_body = MarkdownField(
+        blank=True
+    )
+
+    # need help
+    help_market_guide_cta_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Help CTA market guide link'
+    )
+
+    # related pages
+    related_page_one = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
     )
     related_page_two = models.ForeignKey(
-        'export_readiness.ArticlePage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+',
+        related_name='+'
     )
     related_page_three = models.ForeignKey(
-        'export_readiness.ArticlePage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+',
+        related_name='+'
     )
-
-    @property
-    def articles_count(self):
-        return self.get_descendants().type(ArticlePage).live().count()
 
     content_panels = [
         MultiFieldPanel(
-            heading='Hero',
+            heading='Heading',
             children=[
-                FieldPanel('landing_page_title'),
+                FieldPanel('heading'),
+                FieldPanel('sub_heading'),
                 ImageChooserPanel('hero_image'),
+                FieldPanel('heading_teaser')
+            ]
+
+        ),
+        MultiFieldPanel(
+            heading='Bullets',
+            children=[
+                FieldRowPanel(
+                    [
+                        FieldPanel('section_one_body'),
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel('section_one_image'),
+                                FieldPanel('section_one_image_caption'),
+                                FieldPanel('section_one_image_caption_company')
+                            ]
+                        )
+                    ]
+                )
             ]
         ),
         MultiFieldPanel(
-            heading='Section one/intro',
+            heading='Statistics',
+            classname='collapsible',
             children=[
-                FieldPanel('section_one_heading'),
-                FieldPanel('section_one_content'),
-            ]
-        ),
-        FieldRowPanel(
-            heading='Section two/selling points',
-            children=[
-                MultiFieldPanel([
-                    ImageChooserPanel('selling_point_one_icon'),
-                    FieldPanel('selling_point_one_heading'),
-                    FieldPanel('selling_point_one_content'),
-                ]),
-                MultiFieldPanel([
-                    ImageChooserPanel('selling_point_two_icon'),
-                    FieldPanel('selling_point_two_heading'),
-                    FieldPanel('selling_point_two_content'),
-                ]),
-                MultiFieldPanel([
-                    ImageChooserPanel('selling_point_three_icon'),
-                    FieldPanel('selling_point_three_heading'),
-                    FieldPanel('selling_point_three_content'),
-                ]),
+                FieldRowPanel(
+                    [
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_1_number'),
+                                FieldPanel('statistic_1_heading'),
+                                FieldPanel('statistic_1_smallprint')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_2_number'),
+                                FieldPanel('statistic_2_heading'),
+                                FieldPanel('statistic_2_smallprint')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_3_number'),
+                                FieldPanel('statistic_3_heading'),
+                                FieldPanel('statistic_3_smallprint')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_4_number'),
+                                FieldPanel('statistic_4_heading'),
+                                FieldPanel('statistic_4_smallprint')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_5_number'),
+                                FieldPanel('statistic_5_heading'),
+                                FieldPanel('statistic_5_smallprint')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_6_number'),
+                                FieldPanel('statistic_6_heading'),
+                                FieldPanel('statistic_6_smallprint')
+                            ]
+                        ),
+                    ]
+                )
             ]
         ),
         MultiFieldPanel(
-            heading='Section two/article section',
+            heading='Highlights',
             children=[
                 FieldPanel('section_two_heading'),
-                FieldPanel('section_two_content'),
+                FieldPanel('section_two_teaser')
             ]
         ),
         MultiFieldPanel(
-            heading='Section three/related content',
+            heading='Accordion one',
+            classname='collapsible collapsed',
             children=[
-                FieldPanel('related_content_heading'),
-                FieldPanel('related_content_intro'),
+                ImageChooserPanel('accordion_1_icon'),
+                FieldPanel('accordion_1_title'),
+                FieldPanel('accordion_1_teaser'),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_1_subsection_1_icon'),
+                            FieldPanel('accordion_1_subsection_1_heading'),
+                            FieldPanel('accordion_1_subsection_1_body'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_1_subsection_2_icon'),
+                            FieldPanel('accordion_1_subsection_2_heading'),
+                            FieldPanel('accordion_1_subsection_2_body'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_1_subsection_3_icon'),
+                            FieldPanel('accordion_1_subsection_3_heading'),
+                            FieldPanel('accordion_1_subsection_3_body'),
+                        ]
+                    )
+                ]),
+                MultiFieldPanel([
+                    ImageChooserPanel('accordion_1_case_study_hero_image'),
+                    FieldPanel('accordion_1_case_study_button_text'),
+                    FieldPanel('accordion_1_case_study_button_link'),
+                    FieldPanel('accordion_1_case_study_title'),
+                    FieldPanel('accordion_1_case_study_description')
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_1_cta_1_link'),
+                            FieldPanel('accordion_1_cta_1_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_1_cta_2_link'),
+                            FieldPanel('accordion_1_cta_2_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_1_cta_3_link'),
+                            FieldPanel('accordion_1_cta_3_title'),
+                        ]
+                    )
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_1_statistic_1_number'),
+                            FieldPanel('accordion_1_statistic_1_heading'),
+                            FieldPanel('accordion_1_statistic_1_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_1_statistic_2_number'),
+                            FieldPanel('accordion_1_statistic_2_heading'),
+                            FieldPanel('accordion_1_statistic_2_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_1_statistic_3_number'),
+                            FieldPanel('accordion_1_statistic_3_heading'),
+                            FieldPanel('accordion_1_statistic_3_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_1_statistic_4_number'),
+                            FieldPanel('accordion_1_statistic_4_heading'),
+                            FieldPanel('accordion_1_statistic_4_smallprint'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+
+                            FieldPanel('accordion_1_statistic_5_number'),
+                            FieldPanel('accordion_1_statistic_5_heading'),
+                            FieldPanel('accordion_1_statistic_5_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_1_statistic_6_number'),
+                            FieldPanel('accordion_1_statistic_6_heading'),
+                            FieldPanel('accordion_1_statistic_6_smallprint')
+                        ]
+                    )
+                ])
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Accordion two',
+            classname='collapsible collapsed',
+            children=[
+                ImageChooserPanel('accordion_2_icon'),
+                FieldPanel('accordion_2_title'),
+                FieldPanel('accordion_2_teaser'),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_2_subsection_1_icon'),
+                            FieldPanel('accordion_2_subsection_1_heading'),
+                            FieldPanel('accordion_2_subsection_1_body'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_2_subsection_2_icon'),
+                            FieldPanel('accordion_2_subsection_2_heading'),
+                            FieldPanel('accordion_2_subsection_2_body'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_2_subsection_3_icon'),
+                            FieldPanel('accordion_2_subsection_3_heading'),
+                            FieldPanel('accordion_2_subsection_3_body'),
+                        ]
+                    )
+                ]),
+                MultiFieldPanel([
+                    ImageChooserPanel('accordion_2_case_study_hero_image'),
+                    FieldPanel('accordion_2_case_study_button_text'),
+                    FieldPanel('accordion_2_case_study_button_link'),
+                    FieldPanel('accordion_2_case_study_title'),
+                    FieldPanel('accordion_2_case_study_description')
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_2_cta_1_link'),
+                            FieldPanel('accordion_2_cta_1_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_2_cta_2_link'),
+                            FieldPanel('accordion_2_cta_2_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_2_cta_3_link'),
+                            FieldPanel('accordion_2_cta_3_title'),
+                        ]
+                    )
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_2_statistic_1_number'),
+                            FieldPanel('accordion_2_statistic_1_heading'),
+                            FieldPanel('accordion_2_statistic_1_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_2_statistic_2_number'),
+                            FieldPanel('accordion_2_statistic_2_heading'),
+                            FieldPanel('accordion_2_statistic_2_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_2_statistic_3_number'),
+                            FieldPanel('accordion_2_statistic_3_heading'),
+                            FieldPanel('accordion_2_statistic_3_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_2_statistic_4_number'),
+                            FieldPanel('accordion_2_statistic_4_heading'),
+                            FieldPanel('accordion_2_statistic_4_smallprint'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+
+                            FieldPanel('accordion_2_statistic_5_number'),
+                            FieldPanel('accordion_2_statistic_5_heading'),
+                            FieldPanel('accordion_2_statistic_5_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_2_statistic_6_number'),
+                            FieldPanel('accordion_2_statistic_6_heading'),
+                            FieldPanel('accordion_2_statistic_6_smallprint')
+                        ]
+                    )
+                ])
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Accordion three',
+            classname='collapsible collapsed',
+            children=[
+                ImageChooserPanel('accordion_3_icon'),
+                FieldPanel('accordion_3_title'),
+                FieldPanel('accordion_3_teaser'),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_3_subsection_1_icon'),
+                            FieldPanel('accordion_3_subsection_1_heading'),
+                            FieldPanel('accordion_3_subsection_1_body'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_3_subsection_2_icon'),
+                            FieldPanel('accordion_3_subsection_2_heading'),
+                            FieldPanel('accordion_3_subsection_2_body'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_3_subsection_3_icon'),
+                            FieldPanel('accordion_3_subsection_3_heading'),
+                            FieldPanel('accordion_3_subsection_3_body'),
+                        ]
+                    )
+                ]),
+                MultiFieldPanel([
+                    ImageChooserPanel('accordion_3_case_study_hero_image'),
+                    FieldPanel('accordion_3_case_study_button_text'),
+                    FieldPanel('accordion_3_case_study_button_link'),
+                    FieldPanel('accordion_3_case_study_title'),
+                    FieldPanel('accordion_3_case_study_description')
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_3_cta_1_link'),
+                            FieldPanel('accordion_3_cta_1_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_3_cta_2_link'),
+                            FieldPanel('accordion_3_cta_2_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_3_cta_3_link'),
+                            FieldPanel('accordion_3_cta_3_title'),
+                        ]
+                    )
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_3_statistic_1_number'),
+                            FieldPanel('accordion_3_statistic_1_heading'),
+                            FieldPanel('accordion_3_statistic_1_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_3_statistic_2_number'),
+                            FieldPanel('accordion_3_statistic_2_heading'),
+                            FieldPanel('accordion_3_statistic_2_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_3_statistic_3_number'),
+                            FieldPanel('accordion_3_statistic_3_heading'),
+                            FieldPanel('accordion_3_statistic_3_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_3_statistic_4_number'),
+                            FieldPanel('accordion_3_statistic_4_heading'),
+                            FieldPanel('accordion_3_statistic_4_smallprint'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+
+                            FieldPanel('accordion_3_statistic_5_number'),
+                            FieldPanel('accordion_3_statistic_5_heading'),
+                            FieldPanel('accordion_3_statistic_5_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_3_statistic_6_number'),
+                            FieldPanel('accordion_3_statistic_6_heading'),
+                            FieldPanel('accordion_3_statistic_6_smallprint')
+                        ]
+                    )
+                ])
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Accordion four',
+            classname='collapsible collapsed',
+            children=[
+                ImageChooserPanel('accordion_4_icon'),
+                FieldPanel('accordion_4_title'),
+                FieldPanel('accordion_4_teaser'),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_4_subsection_1_icon'),
+                            FieldPanel('accordion_4_subsection_1_heading'),
+                            FieldPanel('accordion_4_subsection_1_body'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_4_subsection_2_icon'),
+                            FieldPanel('accordion_4_subsection_2_heading'),
+                            FieldPanel('accordion_4_subsection_2_body'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_4_subsection_3_icon'),
+                            FieldPanel('accordion_4_subsection_3_heading'),
+                            FieldPanel('accordion_4_subsection_3_body'),
+                        ]
+                    )
+                ]),
+                MultiFieldPanel([
+                    ImageChooserPanel('accordion_4_case_study_hero_image'),
+                    FieldPanel('accordion_4_case_study_button_text'),
+                    FieldPanel('accordion_4_case_study_button_link'),
+                    FieldPanel('accordion_4_case_study_title'),
+                    FieldPanel('accordion_4_case_study_description')
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_4_cta_1_link'),
+                            FieldPanel('accordion_4_cta_1_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_4_cta_2_link'),
+                            FieldPanel('accordion_4_cta_2_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_4_cta_3_link'),
+                            FieldPanel('accordion_4_cta_3_title'),
+                        ]
+                    )
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_4_statistic_1_number'),
+                            FieldPanel('accordion_4_statistic_1_heading'),
+                            FieldPanel('accordion_4_statistic_1_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_4_statistic_2_number'),
+                            FieldPanel('accordion_4_statistic_2_heading'),
+                            FieldPanel('accordion_4_statistic_2_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_4_statistic_3_number'),
+                            FieldPanel('accordion_4_statistic_3_heading'),
+                            FieldPanel('accordion_4_statistic_3_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_4_statistic_4_number'),
+                            FieldPanel('accordion_4_statistic_4_heading'),
+                            FieldPanel('accordion_4_statistic_4_smallprint'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+
+                            FieldPanel('accordion_4_statistic_5_number'),
+                            FieldPanel('accordion_4_statistic_5_heading'),
+                            FieldPanel('accordion_4_statistic_5_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_4_statistic_6_number'),
+                            FieldPanel('accordion_4_statistic_6_heading'),
+                            FieldPanel('accordion_4_statistic_6_smallprint')
+                        ]
+                    )
+                ])
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Accordion five',
+            classname='collapsible collapsed',
+            children=[
+                ImageChooserPanel('accordion_5_icon'),
+                FieldPanel('accordion_5_title'),
+                FieldPanel('accordion_5_teaser'),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_5_subsection_1_icon'),
+                            FieldPanel('accordion_5_subsection_1_heading'),
+                            FieldPanel('accordion_5_subsection_1_body'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_5_subsection_2_icon'),
+                            FieldPanel('accordion_5_subsection_2_heading'),
+                            FieldPanel('accordion_5_subsection_2_body'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_5_subsection_3_icon'),
+                            FieldPanel('accordion_5_subsection_3_heading'),
+                            FieldPanel('accordion_5_subsection_3_body'),
+                        ]
+                    )
+                ]),
+                MultiFieldPanel([
+                    ImageChooserPanel('accordion_4_case_study_hero_image'),
+                    FieldPanel('accordion_5_case_study_button_text'),
+                    FieldPanel('accordion_5_case_study_button_link'),
+                    FieldPanel('accordion_5_case_study_title'),
+                    FieldPanel('accordion_5_case_study_description')
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_5_cta_1_link'),
+                            FieldPanel('accordion_5_cta_1_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_5_cta_2_link'),
+                            FieldPanel('accordion_5_cta_2_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_5_cta_3_link'),
+                            FieldPanel('accordion_5_cta_3_title'),
+                        ]
+                    )
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_5_statistic_1_number'),
+                            FieldPanel('accordion_5_statistic_1_heading'),
+                            FieldPanel('accordion_5_statistic_1_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_5_statistic_2_number'),
+                            FieldPanel('accordion_5_statistic_2_heading'),
+                            FieldPanel('accordion_5_statistic_2_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_5_statistic_3_number'),
+                            FieldPanel('accordion_5_statistic_3_heading'),
+                            FieldPanel('accordion_5_statistic_3_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_5_statistic_4_number'),
+                            FieldPanel('accordion_5_statistic_4_heading'),
+                            FieldPanel('accordion_5_statistic_4_smallprint'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+
+                            FieldPanel('accordion_5_statistic_5_number'),
+                            FieldPanel('accordion_5_statistic_5_heading'),
+                            FieldPanel('accordion_5_statistic_5_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_5_statistic_6_number'),
+                            FieldPanel('accordion_5_statistic_6_heading'),
+                            FieldPanel('accordion_5_statistic_6_smallprint')
+                        ]
+                    )
+                ])
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Accordion six',
+            classname='collapsible collapsed',
+            children=[
+                ImageChooserPanel('accordion_6_icon'),
+                FieldPanel('accordion_6_title'),
+                FieldPanel('accordion_6_teaser'),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_6_subsection_1_icon'),
+                            FieldPanel('accordion_6_subsection_1_heading'),
+                            FieldPanel('accordion_6_subsection_1_body'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_6_subsection_2_icon'),
+                            FieldPanel('accordion_6_subsection_2_heading'),
+                            FieldPanel('accordion_6_subsection_2_body'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            ImageChooserPanel('accordion_6_subsection_3_icon'),
+                            FieldPanel('accordion_6_subsection_3_heading'),
+                            FieldPanel('accordion_6_subsection_3_body'),
+                        ]
+                    )
+                ]),
+                MultiFieldPanel([
+                    ImageChooserPanel('accordion_6_case_study_hero_image'),
+                    FieldPanel('accordion_6_case_study_button_text'),
+                    FieldPanel('accordion_6_case_study_button_link'),
+                    FieldPanel('accordion_6_case_study_title'),
+                    FieldPanel('accordion_6_case_study_description')
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_6_cta_1_link'),
+                            FieldPanel('accordion_6_cta_1_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_6_cta_2_link'),
+                            FieldPanel('accordion_6_cta_2_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_6_cta_3_link'),
+                            FieldPanel('accordion_6_cta_3_title'),
+                        ]
+                    )
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_6_statistic_1_number'),
+                            FieldPanel('accordion_6_statistic_1_heading'),
+                            FieldPanel('accordion_6_statistic_1_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_6_statistic_2_number'),
+                            FieldPanel('accordion_6_statistic_2_heading'),
+                            FieldPanel('accordion_6_statistic_2_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_6_statistic_3_number'),
+                            FieldPanel('accordion_6_statistic_3_heading'),
+                            FieldPanel('accordion_6_statistic_3_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_6_statistic_4_number'),
+                            FieldPanel('accordion_6_statistic_4_heading'),
+                            FieldPanel('accordion_6_statistic_4_smallprint'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+
+                            FieldPanel('accordion_6_statistic_5_number'),
+                            FieldPanel('accordion_6_statistic_5_heading'),
+                            FieldPanel('accordion_6_statistic_5_smallprint')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_6_statistic_6_number'),
+                            FieldPanel('accordion_6_statistic_6_heading'),
+                            FieldPanel('accordion_6_statistic_6_smallprint')
+                        ]
+                    )
+                ])
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Fact sheet',
+            classname='collapsible',
+            children=[
+                FieldPanel('fact_sheet_title'),
+                FieldPanel('fact_sheet_teaser'),
+                FieldRowPanel([
+                    FieldPanel('fact_sheet_column_1_title'),
+                    FieldPanel('fact_sheet_column_1_teaser'),
+                    FieldPanel('fact_sheet_column_1_body')
+                ]),
+                FieldRowPanel([
+                    FieldPanel('fact_sheet_column_2_title'),
+                    FieldPanel('fact_sheet_column_2_teaser'),
+                    FieldPanel('fact_sheet_column_2_body')
+                ]),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Need help',
+            classname='collapsible',
+            children=[
+                FieldPanel('help_market_guide_cta_link')
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Related articles',
+            children=[
                 FieldRowPanel([
                     PageChooserPanel(
                         'related_page_one',
-                        'export_readiness.ArticlePage'),
+                        [
+                            'export_readiness.ArticlePage',
+                            'export_readiness.CampaignPage',
+                            'export_readiness.ArticleListingPage'
+                        ]),
                     PageChooserPanel(
                         'related_page_two',
-                        'export_readiness.ArticlePage'),
+                        [
+                            'export_readiness.ArticlePage',
+                            'export_readiness.CampaignPage',
+                            'export_readiness.ArticleListingPage'
+                        ]),
                     PageChooserPanel(
                         'related_page_three',
-                        'export_readiness.ArticlePage'),
+                        [
+                            'export_readiness.ArticlePage',
+                            'export_readiness.CampaignPage',
+                            'export_readiness.ArticleListingPage'
+                        ]),
                 ])
             ]
         ),
@@ -905,7 +3024,7 @@ class ArticlePage(BasePage):
 
     article_title = models.CharField(max_length=255)
 
-    article_teaser = models.CharField(max_length=255)
+    article_teaser = models.CharField(max_length=255, blank=True, null=True)
     article_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,

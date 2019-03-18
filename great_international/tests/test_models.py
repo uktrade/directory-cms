@@ -11,6 +11,7 @@ def test_models_hierarchy():
     assert models.GreatInternationalApp.allowed_subpage_models() == [
         models.InternationalArticleListingPage,
         models.InternationalTopicLandingPage,
+        models.InternationalCuratedTopicLandingPage,
         models.InternationalRegionPage,
         models.InternationalHomePage
     ]
@@ -33,7 +34,18 @@ def test_models_hierarchy():
     assert models.InternationalTopicLandingPage.allowed_subpage_models() == [
         models.InternationalArticleListingPage,
         models.InternationalCampaignPage,
+        models.InternationalGuideLandingPage,
         models.InternationalSectorPage,
+    ]
+    # curated topic landing
+    assert models.InternationalCuratedTopicLandingPage \
+        .allowed_subpage_models() == [
+            models.InternationalArticlePage,
+            models.InternationalGuideLandingPage,
+        ]
+    # guide landing
+    assert models.InternationalGuideLandingPage.allowed_subpage_models() == [
+        models.InternationalArticlePage,
     ]
     # article listing
     assert models.InternationalArticleListingPage.allowed_subpage_models() == [

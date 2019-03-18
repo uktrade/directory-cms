@@ -28,6 +28,9 @@ We aim to follow [GDS service standards](https://www.gov.uk/service-manual/servi
     $ virtualenv .venv -p python3.6
     $ source .venv/bin/activate
     $ pip install -r requirements_test.txt
+    $ make debug_db
+    $ make debug_migrate
+    $ make debug_createsuperuser
 
 ### Running the webserver
     $ source .venv/bin/activate
@@ -35,7 +38,11 @@ We aim to follow [GDS service standards](https://www.gov.uk/service-manual/servi
 
 ### New /etc/hosts file entry
 
+UI clients on local expect the CMS to be reachable at the address http://cms.trade.great.
+
      Add 127.0.0.1 cms.trade.great
+
+You can test this works by attempting to visit http://cms.trade.great:8010/admin in your browser.
 
 ## Running the tests
 
@@ -43,7 +50,7 @@ We aim to follow [GDS service standards](https://www.gov.uk/service-manual/servi
 
 ### Create a new template_sql file
 
-    To speed up tests a SQL template file is provided. If the file becomes old run the following command on an up-to-date db instance
+    To speed up tests a SQL template file is provided. If the file becomes obsolete run the following command on an up-to-date db instance
     $ pg_dump -O -f db_template.sql directory_cms_debug
 
 ## Session

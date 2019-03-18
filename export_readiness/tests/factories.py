@@ -83,26 +83,6 @@ class ArticleListingPageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
-class CountryGuidePageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.CountryGuidePage
-
-    landing_page_title = factory.fuzzy.FuzzyText(length=10)
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    last_published_at = timezone.now()
-    parent = None
-    section_one_heading = factory.fuzzy.FuzzyText(length=10)
-    section_one_content = factory.fuzzy.FuzzyText(length=10)
-    selling_point_one_heading = factory.fuzzy.FuzzyText(length=10)
-    selling_point_one_content = factory.fuzzy.FuzzyText(length=10)
-    section_two_heading = factory.fuzzy.FuzzyText(length=10)
-    section_two_content = factory.fuzzy.FuzzyText(length=10)
-    related_content_heading = factory.fuzzy.FuzzyText(length=10)
-    related_content_intro = factory.fuzzy.FuzzyText(length=10)
-
-
 class CampaignPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
@@ -200,3 +180,122 @@ class PrivacyAndCookiesPageFactory(wagtail_factories.PageFactory):
         model = models.PrivacyAndCookiesPage
 
     body = factory.fuzzy.FuzzyText(length=50)
+
+
+class CountryGuidePageFactory(wagtail_factories.PageFactory):
+    class Meta:
+        model = models.CountryGuidePage
+
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None
+
+    heading = factory.fuzzy.FuzzyText(length=10)
+    sub_heading = factory.fuzzy.FuzzyText(length=10)
+    heading_teaser = factory.fuzzy.FuzzyText(length=10)
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+
+    section_one_body = factory.fuzzy.FuzzyText(length=10)
+    section_one_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    section_one_image_caption = factory.fuzzy.FuzzyText(length=10)
+    section_one_image_caption_company = factory.fuzzy.FuzzyText(length=10)
+
+    statistic_1_number = factory.fuzzy.FuzzyText(length=10)
+    statistic_1_heading = factory.fuzzy.FuzzyText(length=10)
+    statistic_1_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    statistic_2_number = factory.fuzzy.FuzzyText(length=10)
+    statistic_2_heading = factory.fuzzy.FuzzyText(length=10)
+    statistic_2_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    statistic_3_number = factory.fuzzy.FuzzyText(length=10)
+    statistic_3_heading = factory.fuzzy.FuzzyText(length=10)
+    statistic_3_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    statistic_4_number = factory.fuzzy.FuzzyText(length=10)
+    statistic_4_heading = factory.fuzzy.FuzzyText(length=10)
+    statistic_4_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    statistic_5_number = factory.fuzzy.FuzzyText(length=10)
+    statistic_5_heading = factory.fuzzy.FuzzyText(length=10)
+    statistic_5_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    statistic_6_number = factory.fuzzy.FuzzyText(length=10)
+    statistic_6_heading = factory.fuzzy.FuzzyText(length=10)
+    statistic_6_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    section_two_heading = factory.fuzzy.FuzzyText(length=10)
+    section_two_teaser = factory.fuzzy.FuzzyText(length=10)
+
+    accordion_1_icon = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    accordion_1_title = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_teaser = factory.fuzzy.FuzzyText(length=10)
+
+    accordion_1_subsection_1_icon = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    accordion_1_subsection_1_heading = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_subsection_1_body = factory.fuzzy.FuzzyText(length=10)
+
+    accordion_1_subsection_2_icon = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    accordion_1_subsection_2_heading = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_subsection_2_body = factory.fuzzy.FuzzyText(length=10)
+
+    accordion_1_case_study_hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    accordion_1_case_study_button_text = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_case_study_button_link = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_case_study_title = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_case_study_description = factory.fuzzy.FuzzyText(length=10)
+
+    accordion_1_cta_1_link = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_cta_1_title = factory.fuzzy.FuzzyText(length=10)
+
+    accordion_1_statistic_1_number = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_statistic_1_heading = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_statistic_1_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    accordion_1_statistic_2_number = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_statistic_2_heading = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_statistic_2_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    accordion_1_statistic_3_number = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_statistic_3_heading = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_statistic_3_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    accordion_1_statistic_4_number = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_statistic_4_heading = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_statistic_4_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    accordion_1_statistic_5_number = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_statistic_5_heading = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_statistic_5_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    accordion_1_statistic_6_number = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_statistic_6_heading = factory.fuzzy.FuzzyText(length=10)
+    accordion_1_statistic_6_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    fact_sheet_title = factory.fuzzy.FuzzyText(length=10)
+    fact_sheet_teaser = factory.fuzzy.FuzzyText(length=10)
+    fact_sheet_column_1_title = factory.fuzzy.FuzzyText(length=10)
+    fact_sheet_column_1_teaser = factory.fuzzy.FuzzyText(length=10)
+    fact_sheet_column_1_body = factory.fuzzy.FuzzyText(length=10)
+    fact_sheet_column_2_title = factory.fuzzy.FuzzyText(length=10)
+    fact_sheet_column_2_teaser = factory.fuzzy.FuzzyText(length=10)
+    fact_sheet_column_2_body = factory.fuzzy.FuzzyText(length=10)
+
+    help_market_guide_cta_link = factory.fuzzy.FuzzyText(length=10)
+
+    related_page_one = factory.SubFactory(ArticlePageFactory)
+    related_page_two = factory.SubFactory(CampaignPageFactory)
+    related_page_three = factory.SubFactory(ArticleListingPageFactory)
