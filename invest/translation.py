@@ -48,6 +48,8 @@ class InvestHomePageTranslation(BaseTranslationOptions):
 
         'sector_title',
         'sector_intro',
+        'hpo_title',
+        'hpo_intro',
         'setup_guide_title',
         'setup_guide_content',
         'setup_guide_img',

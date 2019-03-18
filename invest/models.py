@@ -512,6 +512,10 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         max_length=255)
 
     sector_intro = models.TextField(max_length=255, blank=True)
+
+    hpo_title = models.CharField(max_length=255)
+    hpo_intro = models.TextField(max_length=255, blank=True)
+
     setup_guide_title = models.CharField(
         default='Set up an overseas business in the UK',
         max_length=255)
@@ -693,6 +697,14 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
                 FieldPanel('sector_button_text'),
             ],
             heading='Industries section'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('hpo_title'),
+                FieldPanel('hpo_intro')
+            ],
+            heading='High Potential Opportunities'
         ),
 
         MultiFieldPanel([
