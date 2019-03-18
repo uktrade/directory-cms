@@ -161,6 +161,8 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
     heading_teaser = serializers.CharField()
 
     section_one_body = core_fields.MarkdownToHTMLField()
