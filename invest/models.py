@@ -591,7 +591,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
                 FieldPanel('sub_heading'),
                 FieldPanel('hero_call_to_action_text'),
             ],
-            heading='subsections one',
+            heading='Hero',
             classname='collapsible'
         ),
 
