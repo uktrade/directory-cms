@@ -2,7 +2,8 @@ import pytest
 from directory_constants.constants import cms
 from rest_framework.reverse import reverse
 from wagtail.documents.models import Document
-
+from django.core.files.base import ContentFile
+from django.utils.six import b
 from . import factories
 from find_a_supplier.tests.factories import IndustryPageFactory
 
@@ -23,6 +24,13 @@ def test_invest_home_page(admin_client):
     factories.SectorPageFactory(live=True, featured=True)
     factories.SectorPageFactory(live=True, featured=False)
 
+    fake_file = ContentFile(b("A boring example document"))
+    fake_file.name = 'test.pdf'
+    pdf = Document.objects.create(title="Test document", file=fake_file)
+
+    factories.HighPotentialOpportunityDetailPageFactory(live=True, pdf_document=pdf, featured=True)
+    factories.HighPotentialOpportunityDetailPageFactory(live=True, pdf_document=pdf, featured=False)
+
     url = reverse(
         'api:lookup-by-slug',
         kwargs={'slug': page.slug}
@@ -35,6 +43,7 @@ def test_invest_home_page(admin_client):
     assert meta['slug'] == 'home-page'
     assert len(response.json()['guides']) == 1
     assert len(response.json()['sectors']) == 1
+    assert len(response.json()['high_potential_opportunities']) == 1
 
 
 @pytest.mark.django_db

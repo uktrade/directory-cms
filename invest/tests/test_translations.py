@@ -12,6 +12,8 @@ def test_required_fields_invest_home_page():
             'title',
             'heading',
             'sub_heading',
+            'benefits_section_title',
+            'eu_exit_section_title',
             'subsection_title_one',
             'subsection_content_one',
             'subsection_title_two',
@@ -26,7 +28,9 @@ def test_required_fields_invest_home_page():
             'how_we_help_text_three',
             'how_we_help_text_four',
             'how_we_help_text_five',
-            'how_we_help_text_six'
+            'how_we_help_text_six',
+            'contact_section_title',
+            'contact_section_call_to_action_text'
         ]
     }
 
