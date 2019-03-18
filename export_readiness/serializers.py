@@ -4,13 +4,16 @@ from directory_constants.constants import cms
 
 from conf import settings
 from core import fields as core_fields
-from core.serializers import BasePageSerializer, FormPageSerializerMetaclass
+from core.serializers import (
+    BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper
+)
 from great_international.serializers import StatisticProxyDataWrapper, \
     StatisticSerializer
 
 from .models import (
     ArticleListingPage, ArticlePage, TopicLandingPage, CampaignPage,
-    SuperregionPage, EUExitInternationalFormPage, EUExitDomesticFormPage
+    SuperregionPage, EUExitInternationalFormPage, EUExitDomesticFormPage,
+    CountryGuidePage
 )
 
 
@@ -128,7 +131,10 @@ class ArticlePageSerializer(PageWithRelatedPagesSerializer):
     tags = core_fields.TagsListField()
 
 
-class ArticleListingPageSerializer(BasePageSerializer):
+class ArticleListingPageSerializer(
+    BasePageSerializer,
+    ChildPagesSerializerHelper
+):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
     hero_image = wagtail_fields.ImageRenditionField('original')
@@ -141,16 +147,11 @@ class ArticleListingPageSerializer(BasePageSerializer):
     articles = serializers.SerializerMethodField()
 
     def get_articles(self, obj):
-        queryset = obj.get_descendants().type(
-            ArticlePage
-        ).live().specific()
-        serializer = ArticlePageSerializer(
-            queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
+        return self.get_child_pages_data_for(
+            obj,
+            ArticlePage,
+            ArticlePageSerializer
         )
-        return serializer.data
 
 
 class AccordionStatisticProxyDataWrapper:
@@ -497,7 +498,10 @@ class HomePageSerializer(BasePageSerializer):
         return serializer.data
 
 
-class TopicLandingPageSerializer(BasePageSerializer):
+class TopicLandingPageSerializer(
+    BasePageSerializer,
+    ChildPagesSerializerHelper
+):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
     hero_teaser = serializers.CharField(max_length=255)
@@ -509,25 +513,17 @@ class TopicLandingPageSerializer(BasePageSerializer):
     child_pages = serializers.SerializerMethodField()
 
     def get_child_pages(self, obj):
-        queryset = obj.get_descendants().type(
-            ArticleListingPage
-        ).live().specific()
-        articles_serializer = ArticleListingPageSerializer(
-            queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
+        articles = self.get_child_pages_data_for(
+            obj,
+            ArticleListingPage,
+            ArticleListingPageSerializer
         )
-        queryset = obj.get_descendants().type(
-            SuperregionPage
-        ).live().specific()
-        superregions_serializer = SuperregionPageSerializer(
-            queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
+        superregions = self.get_child_pages_data_for(
+            obj,
+            SuperregionPage,
+            SuperregionPageSerializer
         )
-        return articles_serializer.data + superregions_serializer.data
+        return articles + superregions
 
 
 class SuperregionPageSerializer(TopicLandingPageSerializer):
@@ -537,25 +533,17 @@ class SuperregionPageSerializer(TopicLandingPageSerializer):
 
     articles_count = serializers.IntegerField()
         def get_child_pages(self, obj):
-        queryset = obj.get_descendants().type(
-            ArticleListingPage
-        ).live().specific()
-        articles_serializer = ArticleListingPageSerializer(
-            queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
+        articles = self.get_child_pages_data_for(
+            obj,
+            ArticleListingPage,
+            ArticleListingPageSerializer
         )
-        queryset = obj.get_descendants().type(
-            CountryGuidePage
-        ).live().specific()
-        countryguides_serializer = CountryGuidePageSerializer(
-            queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
+        country_guides = self.get_child_pages_data_for(
+            obj,
+            CountryGuidePage,
+            CountryGuidePageSerializer
         )
-        return articles_serializer.data + countryguides_serializer.data
+        return articles + country_guides
     """
 
 

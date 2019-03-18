@@ -42,3 +42,17 @@ class WagtailPageSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     title = serializers.CharField()
     slug = serializers.CharField()
+
+
+class ChildPagesSerializerHelper(serializers.Serializer):
+    def get_child_pages_data_for(self, obj, page_type, serializer):
+        queryset = obj.get_descendants().type(
+            page_type
+        ).live().specific()
+        serializer = serializer(
+            queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data

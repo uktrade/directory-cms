@@ -2,11 +2,12 @@ from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
 
 from core import fields as core_fields
-from core.serializers import BasePageSerializer
+from core.serializers import BasePageSerializer, ChildPagesSerializerHelper
 
 from .models import (InternationalArticlePage, InternationalArticleListingPage,
                      InternationalLocalisedFolderPage,
-                     InternationalCampaignPage)
+                     InternationalCampaignPage, InternationalGuideLandingPage,
+                     InternationalSectorPage)
 
 
 class SectionThreeSubsectionProxyDataWrapper:
@@ -376,28 +377,23 @@ class InternationalArticleListingPageSerializer(BasePageSerializer):
         return data
 
     def get_child_pages(self, obj):
-        articles_queryset = obj.get_descendants().type(
-            InternationalArticlePage
-        ).live().specific()
-        articles = RelatedArticlePageSerializer(
-            articles_queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
+        articles = self.get_child_pages_data_for(
+            obj,
+            InternationalArticleListingPage,
+            InternationalArticleListingPageSerializer
         )
-        campaigns_queryset = obj.get_descendants().type(
-            InternationalCampaignPage
-        ).live().specific()
-        campaigns = RelatedCampaignPageSerializer(
-            campaigns_queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
+        campaigns = self.get_child_pages_data_for(
+            obj,
+            InternationalCampaignPage,
+            RelatedCampaignPageSerializer
         )
-        return articles.data + campaigns.data
+        return articles + campaigns
 
 
-class InternationalTopicLandingPageSerializer(BasePageSerializer):
+class InternationalTopicLandingPageSerializer(
+    BasePageSerializer,
+    ChildPagesSerializerHelper
+):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
     hero_teaser = serializers.CharField(max_length=255)
@@ -409,25 +405,22 @@ class InternationalTopicLandingPageSerializer(BasePageSerializer):
     child_pages = serializers.SerializerMethodField()
 
     def get_child_pages(self, obj):
-        articles_listing_queryset = obj.get_descendants().type(
-            InternationalArticleListingPage
-        ).live().specific()
-        articles_list_serializer = InternationalArticleListingPageSerializer(
-            articles_listing_queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
+        articles = self.get_child_pages_data_for(
+            obj,
+            InternationalArticleListingPage,
+            InternationalArticleListingPageSerializer
         )
-        campaigns_queryset = obj.get_descendants().type(
-            InternationalCampaignPage
-        ).live().specific()
-        campaigns_serializer = RelatedCampaignPageSerializer(
-            campaigns_queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
+        campaigns = self.get_child_pages_data_for(
+            obj,
+            InternationalCampaignPage,
+            RelatedCampaignPageSerializer
         )
-        return articles_list_serializer.data + campaigns_serializer.data
+        guides = self.get_child_pages_data_for(
+            obj,
+            InternationalGuideLandingPage,
+            InternationalGuideLandingPageSerializer
+        )
+        return articles + campaigns + guides
 
 
 class FeatureSerializer(serializers.Serializer):
