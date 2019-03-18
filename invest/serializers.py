@@ -193,6 +193,7 @@ class InvestHomePageSerializer(BasePageSerializer):
     eu_exit_section_img_caption = serializers.CharField(max_length=255)
     subsections = serializers.SerializerMethodField()
     sector_title = serializers.CharField(max_length=255)
+    sector_intro = serializers.CharField(max_length=255)
     sector_button_text = serializers.CharField(max_length=255)
     setup_guide_title = serializers.CharField(max_length=255)
     setup_guide_content = core_fields.MarkdownToHTMLField()

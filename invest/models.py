@@ -511,6 +511,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         default="See more industries",
         max_length=255)
 
+    sector_intro = models.TextField(max_length=255, blank=True)
     setup_guide_title = models.CharField(
         default='Set up an overseas business in the UK',
         max_length=255)
@@ -685,8 +686,14 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
             classname='collapsible collapsed'
         ),
 
-        FieldPanel('sector_title'),
-        FieldPanel('sector_button_text'),
+        MultiFieldPanel(
+            [
+                FieldPanel('sector_title'),
+                FieldPanel('sector_intro'),
+                FieldPanel('sector_button_text'),
+            ],
+            heading='Industries section'
+        ),
 
         MultiFieldPanel([
             FieldPanel('setup_guide_title'),
