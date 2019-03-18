@@ -33,6 +33,10 @@ class InvestHomePageTranslation(BaseTranslationOptions):
 
         'sector_title',
         'setup_guide_title',
+        'setup_guide_content',
+        'setup_guide_img',
+        'setup_guide_img_caption',
+        'setup_guide_call_to_action_text',
         'setup_guide_lead_in',
         'how_we_help_title',
         'how_we_help_lead_in',

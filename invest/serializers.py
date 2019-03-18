@@ -188,6 +188,10 @@ class InvestHomePageSerializer(BasePageSerializer):
     sector_title = serializers.CharField(max_length=255)
     sector_button_text = serializers.CharField(max_length=255)
     setup_guide_title = serializers.CharField(max_length=255)
+    setup_guide_content = core_fields.MarkdownToHTMLField()
+    setup_guide_img = wagtail_fields.ImageRenditionField('original')
+    setup_guide_img_caption = serializers.CharField(max_length=255)
+    setup_guide_call_to_action_text = serializers.CharField(max_length=255)
     setup_guide_lead_in = serializers.CharField(
         max_length=255,
         allow_null=True
