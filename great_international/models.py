@@ -463,6 +463,7 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    tariffs_call_to_action_text = models.CharField(max_length=255)
 
     news_title = models.CharField(max_length=255)
     related_page_one = models.ForeignKey(
@@ -494,7 +495,8 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
                 FieldPanel('tariffs_title'),
                 FieldPanel('tariffs_description'),
                 FieldPanel('tariffs_link'),
-                ImageChooserPanel('tariffs_image')
+                ImageChooserPanel('tariffs_image'),
+                FieldPanel('tariffs_call_to_action_text')
             ]
         ),
         MultiFieldPanel(
