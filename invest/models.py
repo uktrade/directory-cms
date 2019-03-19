@@ -468,12 +468,29 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         related_name='+',
         verbose_name="Benefits section image"
     )
-    benefits_section_img_caption = models.CharField(max_length=255, blank=True, verbose_name="Benefits section image caption")
+    benefits_section_img_caption = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Benefits section image caption"
+    )
 
-    eu_exit_section_title = models.CharField(max_length=255, blank=True, verbose_name="EU exit section title")
-    eu_exit_section_content = MarkdownField(blank=True, verbose_name="EU exit section content")
-    eu_exit_section_call_to_action_text = models.CharField(max_length=255,
-                                                           blank=True, verbose_name="EU exit section button text")
+    eu_exit_section_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="EU exit section title"
+    )
+
+    eu_exit_section_content = MarkdownField(
+        blank=True,
+        verbose_name="EU exit section content"
+    )
+
+    eu_exit_section_call_to_action_text = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="EU exit section button text"
+    )
+
     eu_exit_section_img = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
@@ -482,8 +499,11 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         related_name='+',
         verbose_name="EU exit section image"
     )
-    eu_exit_section_img_caption = models.CharField(max_length=255, blank=True,
-                                                   verbose_name="EU Exit section image caption")
+    eu_exit_section_img_caption = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="EU Exit section image caption"
+    )
 
     # subsections
     subsection_title_one = models.CharField(max_length=255, blank=True)
@@ -517,8 +537,15 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
 
     sector_intro = models.TextField(max_length=255, blank=True)
 
-    hpo_title = models.CharField(max_length=255, verbose_name="High potential opportunity section title")
-    hpo_intro = models.TextField(max_length=255, blank=True, verbose_name="High potential opportunity section intro")
+    hpo_title = models.CharField(
+        max_length=255,
+        verbose_name="High potential opportunity section title"
+    )
+    hpo_intro = models.TextField(
+        max_length=255,
+        blank=True,
+        verbose_name="High potential opportunity section intro"
+    )
 
     setup_guide_title = models.CharField(
         default='Set up an overseas business in the UK',
@@ -538,7 +565,11 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         verbose_name="Setup guide image"
     )
 
-    setup_guide_img_caption = models.CharField(max_length=255, blank=True, verbose_name="Setup guide image caption")
+    setup_guide_img_caption = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Setup guide image caption"
+    )
 
     setup_guide_call_to_action_text = models.CharField(max_length=255)
 
