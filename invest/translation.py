@@ -76,7 +76,6 @@ class InvestHomePageTranslation(BaseTranslationOptions):
 
         'how_we_help_text_six',
         'sector_button_text',
-        
         'contact_section_title',
         'contact_section_content',
         'contact_section_call_to_action_text'
