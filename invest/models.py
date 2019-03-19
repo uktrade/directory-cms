@@ -493,6 +493,19 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         blank=True,
         null=True)
 
+    setup_guide_content = MarkdownField(blank=True)
+    setup_guide_img = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    setup_guide_img_caption = models.CharField(max_length=255, blank=True)
+
+    setup_guide_call_to_action_text = models.CharField(max_length=255)
+
     how_we_help_title = models.CharField(default='How we help', max_length=255)
     how_we_help_lead_in = models.TextField(blank=True, null=True)
     # how we help
@@ -611,7 +624,18 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
 
         FieldPanel('sector_title'),
         FieldPanel('sector_button_text'),
-        FieldPanel('setup_guide_title'),
+
+        MultiFieldPanel([
+            FieldPanel('setup_guide_title'),
+            FieldPanel('setup_guide_content'),
+            ImageChooserPanel('setup_guide_img'),
+            FieldPanel('setup_guide_img_caption'),
+            FieldPanel('setup_guide_call_to_action_text')
+            ],
+            heading='Set up guide section',
+            classname='collapsible'
+        ),
+
         FieldPanel('setup_guide_lead_in'),
         FieldPanel('how_we_help_title'),
         FieldPanel('how_we_help_lead_in'),

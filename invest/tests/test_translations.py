@@ -19,6 +19,7 @@ def test_required_fields_invest_home_page():
             'sector_title',
             'sector_button_text',
             'setup_guide_title',
+            'setup_guide_call_to_action_text',
             'how_we_help_title',
             'how_we_help_text_one',
             'how_we_help_text_two',

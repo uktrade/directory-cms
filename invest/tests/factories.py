@@ -38,6 +38,7 @@ class InvestHomePageFactory(wagtail_factories.PageFactory):
     subsection_content_one_en_gb = factory.fuzzy.FuzzyText(length=10)
     subsection_title_two_en_gb = factory.fuzzy.FuzzyText(length=10)
     subsection_content_two_en_gb = factory.fuzzy.FuzzyText(length=10)
+    setup_guide_call_to_action_text = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_one_en_gb = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_two_en_gb = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_three_en_gb = factory.fuzzy.FuzzyText(length=10)
