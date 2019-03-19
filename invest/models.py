@@ -465,28 +465,32 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
+        verbose_name="Benefits section image"
     )
-    benefits_section_img_caption = models.CharField(max_length=255, blank=True)
+    benefits_section_img_caption = models.CharField(max_length=255, blank=True, verbose_name="Benefits section image caption")
 
-    eu_exit_section_title = models.CharField(max_length=255, blank=True)
-    eu_exit_section_content = MarkdownField(blank=True)
-    eu_exit_section_call_to_action_text = models.CharField(max_length=255, blank=True)
+    eu_exit_section_title = models.CharField(max_length=255, blank=True, verbose_name="EU exit section title")
+    eu_exit_section_content = MarkdownField(blank=True, verbose_name="EU exit section content")
+    eu_exit_section_call_to_action_text = models.CharField(max_length=255,
+                                                           blank=True, verbose_name="EU exit section button text")
     eu_exit_section_img = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
+        verbose_name="EU exit section image"
     )
-    eu_exit_section_img_caption = models.CharField(max_length=255, blank=True)
+    eu_exit_section_img_caption = models.CharField(max_length=255, blank=True,
+                                                   verbose_name="EU Exit section image caption")
 
     # subsections
-    subsection_title_one = models.CharField(max_length=255)
-    subsection_content_one = MarkdownField()
+    subsection_title_one = models.CharField(max_length=255, blank=True)
+    subsection_content_one = MarkdownField(blank=True)
 
-    subsection_title_two = models.CharField(max_length=255)
-    subsection_content_two = MarkdownField()
+    subsection_title_two = models.CharField(max_length=255, blank=True)
+    subsection_content_two = MarkdownField(blank=True)
 
     subsection_title_three = models.CharField(max_length=255, blank=True)
     subsection_content_three = MarkdownField(blank=True)
@@ -513,8 +517,8 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
 
     sector_intro = models.TextField(max_length=255, blank=True)
 
-    hpo_title = models.CharField(max_length=255)
-    hpo_intro = models.TextField(max_length=255, blank=True)
+    hpo_title = models.CharField(max_length=255, verbose_name="High potential opportunity section title")
+    hpo_intro = models.TextField(max_length=255, blank=True, verbose_name="High potential opportunity section intro")
 
     setup_guide_title = models.CharField(
         default='Set up an overseas business in the UK',
@@ -530,10 +534,11 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
+        verbose_name="Setup guide image"
     )
 
-    setup_guide_img_caption = models.CharField(max_length=255, blank=True)
+    setup_guide_img_caption = models.CharField(max_length=255, blank=True, verbose_name="Setup guide image caption")
 
     setup_guide_call_to_action_text = models.CharField(max_length=255)
 
@@ -580,7 +585,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    how_we_help_text_six = models.CharField(max_length=255)
+    how_we_help_text_six = models.CharField(max_length=255, blank=True)
 
     contact_section_title = models.CharField(max_length=255)
     contact_section_content = models.TextField(max_length=255, blank=True)
