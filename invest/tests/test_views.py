@@ -28,8 +28,17 @@ def test_invest_home_page(admin_client):
     fake_file.name = 'test.pdf'
     pdf = Document.objects.create(title="Test document", file=fake_file)
 
-    factories.HighPotentialOpportunityDetailPageFactory(live=True, pdf_document=pdf, featured=True)
-    factories.HighPotentialOpportunityDetailPageFactory(live=True, pdf_document=pdf, featured=False)
+    factories.HighPotentialOpportunityDetailPageFactory(
+        live=True,
+        pdf_document=pdf,
+        featured=True
+    )
+
+    factories.HighPotentialOpportunityDetailPageFactory(
+        live=True,
+        pdf_document=pdf,
+        featured=False
+    )
 
     url = reverse(
         'api:lookup-by-slug',
