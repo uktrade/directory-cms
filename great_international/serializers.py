@@ -291,6 +291,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
     tariffs_image = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg'
     )
+    tariffs_call_to_action_text = serializers.CharField(max_length=255)
 
 
 class InternationalCampaignPageSerializer(PageWithRelatedPagesSerializer):
