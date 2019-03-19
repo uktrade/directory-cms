@@ -2,9 +2,13 @@ from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
 
 from core import fields as core_fields
-from core.serializers import BasePageSerializer, FormPageSerializerMetaclass
-from .models import HighPotentialOpportunityFormPage, \
-    HighPotentialOpportunityDetailPage
+from core.serializers import (
+    BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper
+)
+from .models import (
+    HighPotentialOpportunityFormPage, HighPotentialOpportunityDetailPage,
+    SectorPage, SetupGuidePage
+)
 
 ONE_TO_SIX_WORDS = ['one', 'two', 'three', 'four', 'five', 'six']
 ONE_TO_SEVEN_WORDS = ONE_TO_SIX_WORDS + ['seven']
@@ -63,7 +67,7 @@ class SubsectionSerializer(serializers.Serializer):
     )
 
 
-class SectorPageSerializer(BasePageSerializer):
+class SectorPageSerializer(BasePageSerializer, ChildPagesSerializerHelper):
     featured = serializers.BooleanField()
     description = serializers.CharField()
     heading = serializers.CharField(max_length=255)
@@ -90,37 +94,27 @@ class SectorPageSerializer(BasePageSerializer):
         return serializer.data
 
     def get_children_sectors(self, instance):
-        from .models import SectorPage
-        queryset = instance.get_descendants().type(
-            SectorPage
-        ).live().specific()
-        serializer = SectorPageSerializer(
-            queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
+        return self.get_child_pages_data_for(
+            instance,
+            SectorPage,
+            SectorPageSerializer
         )
-        return serializer.data
 
 
-class SectorLandingPageGenericSerializer(BasePageSerializer):
+class SectorLandingPageGenericSerializer(
+    BasePageSerializer, ChildPagesSerializerHelper
+):
     """This can be used for SectorLandingPage and RegionalLandingPage"""
     heading = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
     children_sectors = serializers.SerializerMethodField()
 
     def get_children_sectors(self, instance):
-        from .models import SectorPage
-        queryset = instance.get_descendants().type(
-            SectorPage
-        ).live().specific()
-        serializer = SectorPageSerializer(
-            queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
+        return self.get_child_pages_data_for(
+            instance,
+            SectorPage,
+            SectorPageSerializer
         )
-        return serializer.data
 
 
 class SetupGuidePageSerializer(BasePageSerializer):
@@ -131,7 +125,6 @@ class SetupGuidePageSerializer(BasePageSerializer):
     children_setup_guides = serializers.SerializerMethodField()
 
     def get_children_setup_guides(self, instance):
-        from .models import SetupGuidePage
         queryset = instance.get_descendants().type(
             SetupGuidePage
         ).live().specific()
@@ -152,7 +145,9 @@ class SetupGuidePageSerializer(BasePageSerializer):
         return serializer.data
 
 
-class SetupGuideLandingPageSerializer(BasePageSerializer):
+class SetupGuideLandingPageSerializer(
+    BasePageSerializer, ChildPagesSerializerHelper
+):
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
     lead_in = serializers.CharField(allow_null=True, allow_blank=True)
@@ -215,7 +210,6 @@ class InvestHomePageSerializer(BasePageSerializer):
         return serializer.data
 
     def get_sectors(self, instance):
-        from .models import SectorPage
         queryset = SectorPage.objects.all().filter(
             featured=True
         ).live().order_by('heading')
@@ -228,7 +222,6 @@ class InvestHomePageSerializer(BasePageSerializer):
         return serializer.data
 
     def get_guides(self, instance):
-        from .models import SetupGuidePage
         queryset = SetupGuidePage.objects.all().live().order_by('heading')
         serializer = SetupGuidePageSerializer(
             queryset,
