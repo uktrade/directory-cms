@@ -453,6 +453,25 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
     subpage_types = []
 
+    invest_trade_section_title_left = models.CharField(max_length=255)
+    invest_trade_section_content_left = MarkdownField(blank=True)
+    invest_trade_section_image_left = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    invest_trade_section_title_right = models.CharField(max_length=255)
+    invest_trade_section_content_right = MarkdownField(blank=True)
+    invest_trade_section_image_right = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
     tariffs_title = models.CharField(max_length=255)
     tariffs_description = MarkdownField()
     tariffs_link = models.URLField()
@@ -492,6 +511,18 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
         MultiFieldPanel(
             heading='Tariffs',
             children=[
+                FieldPanel('invest_trade_section_title_left'),
+                FieldPanel('invest_trade_section_content_left'),
+                ImageChooserPanel('invest_trade_section_image_left'),
+                FieldPanel('invest_trade_section_title_right'),
+                FieldPanel('invest_trade_section_content_right'),
+                ImageChooserPanel('invest_trade_section_image_right')
+            ]
+        ),
+
+        MultiFieldPanel(
+            heading='Invest and Trade Cards',
+            children=[
                 FieldPanel('tariffs_title'),
                 FieldPanel('tariffs_description'),
                 FieldPanel('tariffs_link'),
@@ -499,6 +530,7 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
                 FieldPanel('tariffs_call_to_action_text')
             ]
         ),
+
         MultiFieldPanel(
             heading='News section',
             children=[
