@@ -359,26 +359,17 @@ class InternationalArticleListingPageSerializer(
             slug = f'{obj.slug}-{self.context["region"]}'
             folder = InternationalLocalisedFolderPage.objects.filter(slug=slug)
             if folder.exists():
-                articles_queryset = folder[0].get_descendants().type(
-                    InternationalArticlePage
-                ).live().specific()
-                articles = RelatedArticlePageSerializer(
-                    articles_queryset,
-                    many=True,
-                    allow_null=True,
-                    context=self.context
+                articles = self.get_child_pages_data_for(
+                    folder[0],
+                    InternationalArticlePage,
+                    RelatedArticlePageSerializer
                 )
-                campaigns_queryset = folder[0].get_descendants().type(
-                    InternationalCampaignPage
-                ).live().specific()
-
-                campaigns = RelatedCampaignPageSerializer(
-                    campaigns_queryset,
-                    many=True,
-                    allow_null=True,
-                    context=self.context
+                campaigns = self.get_child_pages_data_for(
+                    folder[0],
+                    InternationalCampaignPage,
+                    InternationalCampaignPageSerializer
                 )
-                data = articles.data + campaigns.data
+                data = articles + campaigns
         return data
 
     def get_child_pages(self, obj):
