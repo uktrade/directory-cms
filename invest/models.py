@@ -915,7 +915,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
     )
 
     featured = models.BooleanField(default=True)
-    description = models.TextField(blank=True)  # appears in card on external pages
+    description = models.TextField(blank=True)
 
     contact_proposition = MarkdownField(
         blank=False,
