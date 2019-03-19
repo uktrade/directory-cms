@@ -532,10 +532,9 @@ class InternationalGuideLandingPageSerializer(BasePageSerializer):
 
     def get_guides(self, obj):
         article_list = (
-            obj.get_descendants()
-            .type(InternationalArticlePage)
+            InternationalArticlePage.objects
+            .descendant_of(obj)
             .live()
-            .specific()
         )[:9]
         serializer = RelatedArticlePageSerializer(article_list, many=True)
         return serializer.data
