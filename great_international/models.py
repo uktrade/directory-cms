@@ -656,8 +656,7 @@ class InternationalArticleListingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = [
         'great_international.GreatInternationalApp',
-        'great_international.InternationalTopicLandingPage',
-        'great_international.InternationalGuideLandingPage',
+        'great_international.InternationalTopicLandingPage'
     ]
     subpage_types = [
         'great_international.InternationalArticlePage',
@@ -1108,7 +1107,7 @@ class InternationalGuideLandingPage(BasePage):
         'great_international.InternationalTopicLandingPage',
     ]
     subpage_types = [
-        'great_international.InternationalArticleListingPage',
+        'great_international.InternationalArticlePage',
     ]
 
     display_title = models.CharField(max_length=255)

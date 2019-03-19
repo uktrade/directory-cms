@@ -45,7 +45,7 @@ def test_models_hierarchy():
         ]
     # guide landing
     assert models.InternationalGuideLandingPage.allowed_subpage_models() == [
-        models.InternationalArticleListingPage,
+        models.InternationalArticlePage,
     ]
     # article listing
     assert models.InternationalArticleListingPage.allowed_subpage_models() == [
