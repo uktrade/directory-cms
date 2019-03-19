@@ -10,16 +10,13 @@ def test_required_fields_invest_home_page():
     assert options.required_languages == {
         'en-gb': [
             'title',
+            'breadcrumbs_label',
             'heading',
             'sub_heading',
             'benefits_section_title',
-            'eu_exit_section_title',
-            'subsection_title_one',
-            'subsection_content_one',
-            'subsection_title_two',
-            'subsection_content_two',
             'sector_title',
             'sector_button_text',
+            'hpo_title',
             'setup_guide_title',
             'setup_guide_call_to_action_text',
             'how_we_help_title',
@@ -28,7 +25,6 @@ def test_required_fields_invest_home_page():
             'how_we_help_text_three',
             'how_we_help_text_four',
             'how_we_help_text_five',
-            'how_we_help_text_six',
             'contact_section_title',
             'contact_section_call_to_action_text'
         ]
