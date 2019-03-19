@@ -420,6 +420,8 @@ class TopicLandingPage(BasePage):
     )
     hero_teaser = models.CharField(max_length=255, null=True, blank=True)
 
+    teaser = models.TextField(blank=True)
+
     content_panels = [
         FieldPanel('landing_page_title'),
         MultiFieldPanel(

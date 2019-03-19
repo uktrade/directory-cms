@@ -510,6 +510,8 @@ class TopicLandingPageSerializer(
     hero_image_thumbnail = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
 
+    teaser = serializers.CharField()
+
     child_pages = serializers.SerializerMethodField()
 
     def get_child_pages(self, obj):
