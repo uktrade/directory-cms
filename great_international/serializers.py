@@ -535,6 +535,7 @@ class InternationalGuideLandingPageSerializer(BasePageSerializer):
             InternationalArticlePage.objects
             .descendant_of(obj)
             .live()
+            .order_by('-first_published_at')
         )[:9]
         serializer = RelatedArticlePageSerializer(article_list, many=True)
         return serializer.data
