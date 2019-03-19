@@ -54,9 +54,9 @@ def test_invest_home_page(admin_client):
     assert meta['slug'] == 'home-page'
     assert len(response.json()['guides']) == 1
     assert len(response.json()['sectors']) == 1
-    assert len(response.json()['high_potential_opportunities']) == 1
-    print((response.json()))
-    assert response.json()['high_potential_opportunities'][0]['title'] == "Featured"
+    high_potential_ops = response.json()['high_potential_opportunities']
+    assert len(high_potential_ops) == 1
+    assert high_potential_ops[0]['title'] == "Featured"
 
 
 @pytest.mark.django_db
