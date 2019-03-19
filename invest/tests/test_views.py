@@ -24,17 +24,19 @@ def test_invest_home_page(admin_client):
     factories.SectorPageFactory(live=True, featured=True)
     factories.SectorPageFactory(live=True, featured=False)
 
-    fake_file = ContentFile(b("A boring example document"))
+    fake_file = ContentFile(b('A boring example document'))
     fake_file.name = 'test.pdf'
     pdf = Document.objects.create(title="Test document", file=fake_file)
 
     factories.HighPotentialOpportunityDetailPageFactory(
+        title="Featured",
         live=True,
         pdf_document=pdf,
         featured=True
     )
 
     factories.HighPotentialOpportunityDetailPageFactory(
+        title="Not Featured",
         live=True,
         pdf_document=pdf,
         featured=False
@@ -53,6 +55,8 @@ def test_invest_home_page(admin_client):
     assert len(response.json()['guides']) == 1
     assert len(response.json()['sectors']) == 1
     assert len(response.json()['high_potential_opportunities']) == 1
+    print((response.json()))
+    assert response.json()['high_potential_opportunities'][0]['title'] == "Featured"
 
 
 @pytest.mark.django_db
