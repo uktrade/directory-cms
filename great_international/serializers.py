@@ -384,13 +384,13 @@ class InternationalArticleListingPageSerializer(
     def get_child_pages(self, obj):
         articles = self.get_child_pages_data_for(
             obj,
-            InternationalArticleListingPage,
-            InternationalArticleListingPageSerializer
+            InternationalArticlePage,
+            RelatedArticlePageSerializer
         )
         campaigns = self.get_child_pages_data_for(
             obj,
             InternationalCampaignPage,
-            InternationalCampaignPageSerializer
+            RelatedCampaignPageSerializer
         )
         return articles + campaigns
 
