@@ -125,7 +125,6 @@ class SetupGuidePageSerializer(BasePageSerializer):
     children_setup_guides = serializers.SerializerMethodField()
 
     def get_children_setup_guides(self, instance):
-        from .models import SetupGuidePage
         queryset = instance.get_descendants().type(
             SetupGuidePage
         ).live().specific()
@@ -211,7 +210,6 @@ class InvestHomePageSerializer(BasePageSerializer):
         return serializer.data
 
     def get_sectors(self, instance):
-        from .models import SectorPage
         queryset = SectorPage.objects.all().filter(
             featured=True
         ).live().order_by('heading')
@@ -224,7 +222,6 @@ class InvestHomePageSerializer(BasePageSerializer):
         return serializer.data
 
     def get_guides(self, instance):
-        from .models import SetupGuidePage
         queryset = SetupGuidePage.objects.all().live().order_by('heading')
         serializer = SetupGuidePageSerializer(
             queryset,
