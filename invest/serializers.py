@@ -248,7 +248,6 @@ class InvestHomePageSerializer(BasePageSerializer):
             allow_null=True,
             context=self.context
         )
-        print("sectors: ", SectorPage.objects.all())
         return serializer.data
 
     def get_high_potential_opportunities(self, instance):
@@ -262,7 +261,6 @@ class InvestHomePageSerializer(BasePageSerializer):
             allow_null=True,
             context=self.context
         )
-        print("HPOs: ", HighPotentialOpportunityDetailPage.objects.all())
         return serializer.data
 
     def get_guides(self, instance):
