@@ -29,22 +29,25 @@ class InvestHomePageFactory(wagtail_factories.PageFactory):
     class Meta:
         model = models.InvestHomePage
 
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
     heading_en_gb = factory.fuzzy.FuzzyText(length=100)
     sub_heading = factory.fuzzy.FuzzyText(length=100)
     hero_image = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
-    subsection_title_one_en_gb = factory.fuzzy.FuzzyText(length=10)
-    subsection_content_one_en_gb = factory.fuzzy.FuzzyText(length=10)
-    subsection_title_two_en_gb = factory.fuzzy.FuzzyText(length=10)
-    subsection_content_two_en_gb = factory.fuzzy.FuzzyText(length=10)
+    benefits_section_title = factory.fuzzy.FuzzyText(length=10)
+    sector_title = factory.fuzzy.FuzzyText(length=10)
+    sector_button_text = factory.fuzzy.FuzzyText(length=10)
+    hpo_title = factory.fuzzy.FuzzyText(length=10)
+    setup_guide_title = factory.fuzzy.FuzzyText(length=10)
     setup_guide_call_to_action_text = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_one_en_gb = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_two_en_gb = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_three_en_gb = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_four_en_gb = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_five_en_gb = factory.fuzzy.FuzzyText(length=10)
-    how_we_help_text_six_en_gb = 'http://test.com'
+    contact_section_title = factory.fuzzy.FuzzyText(length=10)
+    contact_section_call_to_action_text = factory.fuzzy.FuzzyText(length=10)
     slug = 'invest-home'
     parent = None
 
@@ -154,6 +157,7 @@ class HighPotentialOpportunityFormPageFactory(wagtail_factories.PageFactory):
 
 
 class HighPotentialOpportunityDetailPageFactory(wagtail_factories.PageFactory):
+
     class Meta:
         model = models.HighPotentialOpportunityDetailPage
 
@@ -236,4 +240,5 @@ class HighPotentialOpportunityDetailPageFactory(wagtail_factories.PageFactory):
         wagtail_factories.ImageFactory
     )
     other_opportunities_title = factory.fuzzy.FuzzyText(length=50)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None

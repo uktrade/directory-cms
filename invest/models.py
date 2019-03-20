@@ -445,8 +445,10 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     slug_identity = cms.INVEST_HOME_PAGE_SLUG
     view_path = ''
 
+    breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
+    hero_call_to_action_text = models.CharField(max_length=255, blank=True)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
@@ -455,12 +457,60 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         related_name='+'
     )
 
-    # subsections
-    subsection_title_one = models.CharField(max_length=255)
-    subsection_content_one = MarkdownField()
+    benefits_section_title = models.CharField(max_length=255)
+    benefits_section_intro = models.TextField(max_length=255, blank=True)
+    benefits_section_content = MarkdownField(blank=True)
+    benefits_section_img = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name="Benefits section image"
+    )
+    benefits_section_img_caption = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Benefits section image caption"
+    )
 
-    subsection_title_two = models.CharField(max_length=255)
-    subsection_content_two = MarkdownField()
+    eu_exit_section_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="EU exit section title"
+    )
+
+    eu_exit_section_content = MarkdownField(
+        blank=True,
+        verbose_name="EU exit section content"
+    )
+
+    eu_exit_section_call_to_action_text = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="EU exit section button text"
+    )
+
+    eu_exit_section_img = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name="EU exit section image"
+    )
+    eu_exit_section_img_caption = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="EU Exit section image caption"
+    )
+
+    # subsections
+    subsection_title_one = models.CharField(max_length=255, blank=True)
+    subsection_content_one = MarkdownField(blank=True)
+
+    subsection_title_two = models.CharField(max_length=255, blank=True)
+    subsection_content_two = MarkdownField(blank=True)
 
     subsection_title_three = models.CharField(max_length=255, blank=True)
     subsection_content_three = MarkdownField(blank=True)
@@ -485,6 +535,18 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         default="See more industries",
         max_length=255)
 
+    sector_intro = models.TextField(max_length=255, blank=True)
+
+    hpo_title = models.CharField(
+        max_length=255,
+        verbose_name="High potential opportunity section title"
+    )
+    hpo_intro = models.TextField(
+        max_length=255,
+        blank=True,
+        verbose_name="High potential opportunity section intro"
+    )
+
     setup_guide_title = models.CharField(
         default='Set up an overseas business in the UK',
         max_length=255)
@@ -499,10 +561,15 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
+        verbose_name="Setup guide image"
     )
 
-    setup_guide_img_caption = models.CharField(max_length=255, blank=True)
+    setup_guide_img_caption = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Setup guide image caption"
+    )
 
     setup_guide_call_to_action_text = models.CharField(max_length=255)
 
@@ -549,15 +616,52 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    how_we_help_text_six = models.CharField(max_length=255)
+    how_we_help_text_six = models.CharField(max_length=255, blank=True)
+
+    contact_section_title = models.CharField(max_length=255)
+    contact_section_content = models.TextField(max_length=255, blank=True)
+    contact_section_call_to_action_text = models.CharField(max_length=255)
 
     image_panels = [
         ImageChooserPanel('hero_image'),
     ]
 
     content_panels = [
-        FieldPanel('heading'),
-        FieldPanel('sub_heading'),
+        MultiFieldPanel(
+            [
+                FieldPanel('breadcrumbs_label'),
+                FieldPanel('heading'),
+                FieldPanel('sub_heading'),
+                FieldPanel('hero_call_to_action_text'),
+            ],
+            heading='Hero',
+            classname='collapsible'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('benefits_section_title'),
+                FieldPanel('benefits_section_intro'),
+                FieldPanel('benefits_section_content'),
+                ImageChooserPanel('benefits_section_img'),
+                FieldPanel('benefits_section_img_caption'),
+            ],
+            heading='Benefits section',
+            classname='collapsible'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('eu_exit_section_title'),
+                FieldPanel('eu_exit_section_content'),
+                FieldPanel('eu_exit_section_call_to_action_text'),
+                ImageChooserPanel('eu_exit_section_img'),
+                FieldPanel('eu_exit_section_img_caption'),
+            ],
+            heading='EU Exit section',
+            classname='collapsible'
+        ),
+
         # subsections
         MultiFieldPanel(
             [
@@ -622,8 +726,22 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
             classname='collapsible collapsed'
         ),
 
-        FieldPanel('sector_title'),
-        FieldPanel('sector_button_text'),
+        MultiFieldPanel(
+            [
+                FieldPanel('sector_title'),
+                FieldPanel('sector_intro'),
+                FieldPanel('sector_button_text'),
+            ],
+            heading='Industries section'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('hpo_title'),
+                FieldPanel('hpo_intro')
+            ],
+            heading='High Potential Opportunities'
+        ),
 
         MultiFieldPanel([
             FieldPanel('setup_guide_title'),
@@ -684,6 +802,16 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
                 FieldPanel('how_we_help_text_six'),
             ],
             heading='How we help six',
+            classname='collapsible'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('contact_section_title'),
+                FieldPanel('contact_section_content'),
+                FieldPanel('contact_section_call_to_action_text'),
+            ],
+            heading='Contact Section',
             classname='collapsible'
         ),
         SearchEngineOptimisationPanel()
@@ -773,6 +901,7 @@ class HighPotentialOpportunityFormPage(
 
 class HighPotentialOpportunityDetailPage(BasePage):
     service_name_value = cms.INVEST
+    subpage_types = ['invest.HighPotentialOpportunityDetailPage']
     view_path = 'high-potential-opportunities/'
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -784,6 +913,10 @@ class HighPotentialOpportunityDetailPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+
+    featured = models.BooleanField(default=True)
+    description = models.TextField(blank=True)
+
     contact_proposition = MarkdownField(
         blank=False,
         verbose_name='Body text',
@@ -991,6 +1124,14 @@ class HighPotentialOpportunityDetailPage(BasePage):
                 ImageChooserPanel('hero_image'),
             ]
         ),
+
+        MultiFieldPanel(
+            heading='Featured Description',
+            children=[
+                FieldPanel('description')
+            ]
+        ),
+
         MultiFieldPanel(
             heading='Contact us',
             children=[
@@ -1168,6 +1309,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('featured'),
         DocumentChooserPanel('pdf_document'),
     ]
 

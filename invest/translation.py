@@ -7,8 +7,23 @@ from . import models
 @register(models.InvestHomePage)
 class InvestHomePageTranslation(BaseTranslationOptions):
     fields = (
+        'breadcrumbs_label',
         'heading',
         'sub_heading',
+        'hero_call_to_action_text',
+
+        'benefits_section_title',
+        'benefits_section_intro',
+        'benefits_section_content',
+        'benefits_section_img',
+        'benefits_section_img_caption',
+
+        'eu_exit_section_title',
+        'eu_exit_section_content',
+        'eu_exit_section_call_to_action_text',
+        'eu_exit_section_img',
+        'eu_exit_section_img_caption',
+
         # subsections
         'subsection_title_one',
         'subsection_content_one',
@@ -32,6 +47,9 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'subsection_content_seven',
 
         'sector_title',
+        'sector_intro',
+        'hpo_title',
+        'hpo_intro',
         'setup_guide_title',
         'setup_guide_content',
         'setup_guide_img',
@@ -57,7 +75,10 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'how_we_help_icon_five',
 
         'how_we_help_text_six',
-        'sector_button_text'
+        'sector_button_text',
+        'contact_section_title',
+        'contact_section_content',
+        'contact_section_call_to_action_text'
     )
 
 
