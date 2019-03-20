@@ -431,6 +431,7 @@ class TopicLandingPage(BasePage):
                 FieldPanel('hero_teaser')
             ]
         ),
+        FieldPanel('teaser'),
         SearchEngineOptimisationPanel(),
     ]
 
