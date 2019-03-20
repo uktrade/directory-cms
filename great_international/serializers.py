@@ -284,7 +284,22 @@ class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
 
 
 class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
+    invest_title = serializers.CharField(max_length=255)
+    invest_url = serializers.URLField()
+    invest_content = core_fields.MarkdownToHTMLField()
+    invest_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg'
+    )
+
+    trade_title = serializers.CharField(max_length=255)
+    trade_url = serializers.URLField()
+    trade_content = core_fields.MarkdownToHTMLField()
+    trade_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg'
+    )
+
     news_title = serializers.CharField(max_length=255)
+
     tariffs_title = serializers.CharField(max_length=255)
     tariffs_description = core_fields.MarkdownToHTMLField()
     tariffs_link = serializers.URLField()
@@ -292,16 +307,6 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
         'fill-640x360|jpegquality-60|format-jpeg'
     )
     tariffs_call_to_action_text = serializers.CharField(max_length=255)
-    invest_trade_section_title_left = serializers.CharField(max_length=255)
-    invest_trade_section_content_left = core_fields.MarkdownToHTMLField()
-    invest_trade_section_image_left = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg'
-    )
-    invest_trade_section_title_right = serializers.CharField(max_length=255)
-    invest_trade_section_content_right = core_fields.MarkdownToHTMLField()
-    invest_trade_section_image_right = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg'
-    )
 
 
 class InternationalCampaignPageSerializer(PageWithRelatedPagesSerializer):
