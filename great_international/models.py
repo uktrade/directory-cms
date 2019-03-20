@@ -456,23 +456,26 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
     subpage_types = []
 
-    invest_trade_section_title_left = models.CharField(max_length=255)
-    invest_trade_section_content_left = MarkdownField(blank=True)
-    invest_trade_section_image_left = models.ForeignKey(
+    invest_title = models.CharField(max_length=255)
+    invest_url = models.URLField(default="https://invest.great.gov.uk")
+    invest_content = MarkdownField(blank=True)
+    invest_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
     )
-    invest_trade_section_title_right = models.CharField(max_length=255)
-    invest_trade_section_content_right = MarkdownField(blank=True)
-    invest_trade_section_image_right = models.ForeignKey(
+
+    trade_title = models.CharField(max_length=255)
+    trade_url = models.URLField(default="https://trade.great.gov.uk")
+    trade_content = MarkdownField(blank=True)
+    trade_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
     )
 
     tariffs_title = models.CharField(max_length=255)
@@ -512,19 +515,33 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
 
     content_panels = [
         MultiFieldPanel(
-            heading='Tariffs',
+            heading="Featured Cards",
             children=[
-                FieldPanel('invest_trade_section_title_left'),
-                FieldPanel('invest_trade_section_content_left'),
-                ImageChooserPanel('invest_trade_section_image_left'),
-                FieldPanel('invest_trade_section_title_right'),
-                FieldPanel('invest_trade_section_content_right'),
-                ImageChooserPanel('invest_trade_section_image_right')
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        heading="Invest Card",
+                        children=[
+                            FieldPanel('invest_title'),
+                            FieldPanel('invest_url'),
+                            FieldPanel('invest_content'),
+                            ImageChooserPanel('invest_image')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        heading="Trade Card",
+                        children=[
+                            FieldPanel('trade_title'),
+                            FieldPanel('trade_url'),
+                            FieldPanel('trade_content'),
+                            ImageChooserPanel('trade_image')
+                        ]
+                    ),
+                ]),
             ]
         ),
 
         MultiFieldPanel(
-            heading='Invest and Trade Cards',
+            heading='Tariffs',
             children=[
                 FieldPanel('tariffs_title'),
                 FieldPanel('tariffs_description'),
