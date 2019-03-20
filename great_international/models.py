@@ -44,7 +44,7 @@ class InternationalSectorPage(BasePage):
 
     tags = ParentalManyToManyField(Tag, blank=True)
 
-    heading = models.CharField(max_length=255)
+    heading = models.CharField(max_length=255, verbose_name='Sector name')
     sub_heading = models.CharField(max_length=255, blank=True)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -52,27 +52,27 @@ class InternationalSectorPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    heading_teaser = models.TextField(blank=True)
+    heading_teaser = models.TextField(blank=True, verbose_name='Introduction')
 
     section_one_body = MarkdownField(
         null=True,
-        verbose_name='Bullets markdown'
+        verbose_name='3 unique selling points markdown'
     )
     section_one_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Bullets image'
+        verbose_name='Image for unique selling points'
     )
     section_one_image_caption = models.CharField(
         max_length=255,
         blank=True,
-        verbose_name='Bullets image caption')
+        verbose_name='Image caption')
     section_one_image_caption_company = models.CharField(
         max_length=255,
         blank=True,
-        verbose_name='Bullets image caption — company name')
+        verbose_name='Image caption attribution')
 
     statistic_1_number = models.CharField(max_length=255)
     statistic_1_heading = models.CharField(max_length=255)
@@ -100,10 +100,10 @@ class InternationalSectorPage(BasePage):
 
     section_two_heading = models.CharField(
         max_length=255,
-        verbose_name='Highlights heading'
+        verbose_name='Spotlight'
     )
     section_two_teaser = models.TextField(
-        verbose_name='Highlights teaser'
+        verbose_name='Spotlight summary'
     )
 
     section_two_subsection_one_icon = models.ForeignKey(
@@ -112,14 +112,14 @@ class InternationalSectorPage(BasePage):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Highlight 1 icon'
+        verbose_name='Spotlight 1 icon'
     )
     section_two_subsection_one_heading = models.CharField(
         max_length=255,
-        verbose_name='Highlight 1 heading'
+        verbose_name='Spotlight 1 heading'
     )
     section_two_subsection_one_body = models.TextField(
-        verbose_name='Highlight 1 body'
+        verbose_name='Spotlight 1 body'
     )
 
     section_two_subsection_two_icon = models.ForeignKey(
@@ -128,14 +128,14 @@ class InternationalSectorPage(BasePage):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Highlight 2 icon'
+        verbose_name='Spotlight 2 icon'
     )
     section_two_subsection_two_heading = models.CharField(
         max_length=255,
-        verbose_name='Highlight 2 heading'
+        verbose_name='Spotlight 2 heading'
     )
     section_two_subsection_two_body = models.TextField(
-        verbose_name='Highlight 2 body'
+        verbose_name='Spotlight 2 body'
     )
 
     section_two_subsection_three_icon = models.ForeignKey(
@@ -144,25 +144,29 @@ class InternationalSectorPage(BasePage):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Highlight 3 icon'
+        verbose_name='Spotlight 3 icon'
     )
     section_two_subsection_three_heading = models.CharField(
         max_length=255,
-        verbose_name='Highlight 3 heading'
+        verbose_name='Spotlight 3 heading'
     )
     section_two_subsection_three_body = models.TextField(
-        verbose_name='Highlight 3 body'
+        verbose_name='Spotlight 3 body'
     )
 
     case_study_title = models.CharField(max_length=255, blank=True)
     case_study_description = models.CharField(max_length=255, blank=True)
-    case_study_cta_text = models.TextField(blank=True)
+    case_study_cta_text = models.TextField(
+        blank=True,
+        verbose_name='Case study link text'
+    )
     case_study_cta_page = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
+        verbose_name='Case study link URL'
     )
     case_study_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -246,11 +250,10 @@ class InternationalSectorPage(BasePage):
 
         ),
         MultiFieldPanel(
-            heading='Bullets',
+            heading='Unique selling points',
             children=[
                 HelpPanel(
-                    'For accessibility reasons, use only "## [Your text here]"'
-                    ' for headings in this markdown field'),
+                    'Use H2 (##) markdown for the three subheadings'),
                 FieldRowPanel(
                     [
                         FieldPanel('section_one_body'),
@@ -317,7 +320,7 @@ class InternationalSectorPage(BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading='Highlights',
+            heading='Spotlight',
             children=[
                 FieldPanel('section_two_heading'),
                 FieldPanel('section_two_teaser'),
