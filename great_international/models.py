@@ -453,6 +453,20 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
     subpage_types = []
 
+    hero_title = models.CharField(max_length=255)
+    hero_cta_text = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
     invest_title = models.CharField(max_length=255)
     invest_content = MarkdownField(blank=True)
     invest_image = models.ForeignKey(
@@ -509,6 +523,14 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
     )
 
     content_panels = [
+        MultiFieldPanel(
+            heading="Hero Section",
+            children=[
+                FieldPanel("hero_title"),
+                FieldPanel("hero_cta_text"),
+                ImageChooserPanel("hero_image")
+            ]
+        ),
         MultiFieldPanel(
             heading="Featured Cards",
             children=[
