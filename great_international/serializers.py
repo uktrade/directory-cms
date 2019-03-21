@@ -285,14 +285,12 @@ class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
 
 class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
     invest_title = serializers.CharField(max_length=255)
-    invest_url = serializers.URLField()
     invest_content = core_fields.MarkdownToHTMLField()
     invest_image = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg'
     )
 
     trade_title = serializers.CharField(max_length=255)
-    trade_url = serializers.URLField()
     trade_content = core_fields.MarkdownToHTMLField()
     trade_image = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg'

@@ -457,7 +457,6 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
     subpage_types = []
 
     invest_title = models.CharField(max_length=255)
-    invest_url = models.URLField(default="https://invest.great.gov.uk")
     invest_content = MarkdownField(blank=True)
     invest_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -468,7 +467,6 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
     )
 
     trade_title = models.CharField(max_length=255)
-    trade_url = models.URLField(default="https://trade.great.gov.uk")
     trade_content = MarkdownField(blank=True)
     trade_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -522,7 +520,6 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
                         heading="Invest Card",
                         children=[
                             FieldPanel('invest_title'),
-                            FieldPanel('invest_url'),
                             FieldPanel('invest_content'),
                             ImageChooserPanel('invest_image')
                         ]
@@ -531,7 +528,6 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
                         heading="Trade Card",
                         children=[
                             FieldPanel('trade_title'),
-                            FieldPanel('trade_url'),
                             FieldPanel('trade_content'),
                             ImageChooserPanel('trade_image')
                         ]
