@@ -31,6 +31,8 @@ We aim to follow [GDS service standards](https://www.gov.uk/service-manual/servi
     $ make debug_db
     $ make debug_migrate
     $ make debug_createsuperuser
+    
+Also make sure to set up the required environment variables for [Image storage](#image-storage).
 
 ### Running the webserver
     $ source .venv/bin/activate
