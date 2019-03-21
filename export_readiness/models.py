@@ -2,7 +2,7 @@ from directory_constants.constants import cms
 from directory_constants.constants import urls
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel)
+    FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel, HelpPanel)
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
@@ -22,6 +22,11 @@ from core.models import (
     ServiceMixin,
 )
 from core.panels import SearchEngineOptimisationPanel
+
+
+ACCORDION_FIELDS_HELP_TEXT = 'To be displayed this industry needs at least:' \
+                             'title, teaser, 2 bullet points and ' \
+                             '3 calls to action.'
 
 
 class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -2104,6 +2109,7 @@ class CountryGuidePage(BasePage):
             heading='Industry one',
             classname='collapsible collapsed',
             children=[
+                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
                 ImageChooserPanel('accordion_1_icon'),
                 FieldPanel('accordion_1_title'),
                 FieldPanel('accordion_1_teaser'),
@@ -2208,6 +2214,7 @@ class CountryGuidePage(BasePage):
             heading='Industry two',
             classname='collapsible collapsed',
             children=[
+                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
                 ImageChooserPanel('accordion_2_icon'),
                 FieldPanel('accordion_2_title'),
                 FieldPanel('accordion_2_teaser'),
@@ -2312,6 +2319,7 @@ class CountryGuidePage(BasePage):
             heading='Industry three',
             classname='collapsible collapsed',
             children=[
+                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
                 ImageChooserPanel('accordion_3_icon'),
                 FieldPanel('accordion_3_title'),
                 FieldPanel('accordion_3_teaser'),
@@ -2416,6 +2424,7 @@ class CountryGuidePage(BasePage):
             heading='Industry four',
             classname='collapsible collapsed',
             children=[
+                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
                 ImageChooserPanel('accordion_4_icon'),
                 FieldPanel('accordion_4_title'),
                 FieldPanel('accordion_4_teaser'),
@@ -2520,6 +2529,7 @@ class CountryGuidePage(BasePage):
             heading='Industry five',
             classname='collapsible collapsed',
             children=[
+                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
                 ImageChooserPanel('accordion_5_icon'),
                 FieldPanel('accordion_5_title'),
                 FieldPanel('accordion_5_teaser'),
@@ -2624,6 +2634,7 @@ class CountryGuidePage(BasePage):
             heading='Industry six',
             classname='collapsible collapsed',
             children=[
+                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
                 ImageChooserPanel('accordion_6_icon'),
                 FieldPanel('accordion_6_title'),
                 FieldPanel('accordion_6_teaser'),
