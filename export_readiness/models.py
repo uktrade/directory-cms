@@ -2,7 +2,7 @@ from directory_constants.constants import cms
 from directory_constants.constants import urls
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel)
+    FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel, HelpPanel)
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
@@ -22,6 +22,11 @@ from core.models import (
     ServiceMixin,
 )
 from core.panels import SearchEngineOptimisationPanel
+
+
+ACCORDION_FIELDS_HELP_TEXT = 'To be displayed this industry needs at least:' \
+                             'title, teaser, 2 bullet points and ' \
+                             '3 calls to action.'
 
 
 class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -503,7 +508,11 @@ class CountryGuidePage(BasePage):
         'export_readiness.CampaignPage'
     ]
 
-    heading = models.CharField(max_length=255)
+    heading = models.CharField(
+        max_length=255,
+        verbose_name='Country name',
+        help_text='Only enter the country name'
+    )
     sub_heading = models.CharField(max_length=255, blank=True)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -511,18 +520,22 @@ class CountryGuidePage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    heading_teaser = models.TextField(blank=True)
+    heading_teaser = models.TextField(
+        blank=True,
+        verbose_name='Introduction'
+    )
 
     section_one_body = MarkdownField(
         null=True,
-        verbose_name='Bullets markdown'
+        verbose_name='3 unique selling points markdown',
+        help_text='Use H3 (###) markdown for the 3 subheadings'
     )
     section_one_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Bullets image'
+        verbose_name='Image for unique selling points'
     )
     section_one_image_caption = models.CharField(
         max_length=255,
@@ -559,10 +572,10 @@ class CountryGuidePage(BasePage):
 
     section_two_heading = models.CharField(
         max_length=255,
-        verbose_name='Highlights heading'
+        verbose_name='High potential industries for UK businesses'
     )
     section_two_teaser = models.TextField(
-        verbose_name='Highlights teaser'
+        verbose_name='Summary of the industry opportunities'
     )
 
     # accordion 1
@@ -572,16 +585,16 @@ class CountryGuidePage(BasePage):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Accordion Icon'
+        verbose_name='Industry Icon'
     )
     accordion_1_title = models.CharField(
         max_length=255,
         blank=True,
-        verbose_name='Accordion title'
+        verbose_name='Industry title'
     )
     accordion_1_teaser = models.TextField(
         blank=True,
-        verbose_name='Accordion teaser'
+        verbose_name='Industry teaser'
     )
     accordion_1_subsection_1_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -799,16 +812,16 @@ class CountryGuidePage(BasePage):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Accordion Icon'
+        verbose_name='Industry Icon'
     )
     accordion_2_title = models.CharField(
         max_length=255,
         blank=True,
-        verbose_name='Accordion title'
+        verbose_name='Industry title'
     )
     accordion_2_teaser = models.TextField(
         blank=True,
-        verbose_name='Accordion teaser'
+        verbose_name='Industry teaser'
     )
     accordion_2_subsection_1_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -1025,16 +1038,16 @@ class CountryGuidePage(BasePage):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Accordion Icon'
+        verbose_name='Industry Icon'
     )
     accordion_3_title = models.CharField(
         max_length=255,
         blank=True,
-        verbose_name='Accordion title'
+        verbose_name='Industry title'
     )
     accordion_3_teaser = models.TextField(
         blank=True,
-        verbose_name='Accordion teaser'
+        verbose_name='Industry teaser'
     )
     accordion_3_subsection_1_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -1253,16 +1266,16 @@ class CountryGuidePage(BasePage):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Accordion Icon'
+        verbose_name='Industry Icon'
     )
     accordion_4_title = models.CharField(
         max_length=255,
         blank=True,
-        verbose_name='Accordion title'
+        verbose_name='Industry title'
     )
     accordion_4_teaser = models.TextField(
         blank=True,
-        verbose_name='Accordion teaser'
+        verbose_name='Industry teaser'
     )
     accordion_4_subsection_1_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -1481,16 +1494,16 @@ class CountryGuidePage(BasePage):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Accordion Icon'
+        verbose_name='Industry Icon'
     )
     accordion_5_title = models.CharField(
         max_length=255,
         blank=True,
-        verbose_name='Accordion title'
+        verbose_name='Industry title'
     )
     accordion_5_teaser = models.TextField(
         blank=True,
-        verbose_name='Accordion teaser'
+        verbose_name='Industry teaser'
     )
     accordion_5_subsection_1_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -1709,16 +1722,16 @@ class CountryGuidePage(BasePage):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Accordion Icon'
+        verbose_name='Industry Icon'
     )
     accordion_6_title = models.CharField(
         max_length=255,
         blank=True,
-        verbose_name='Accordion title'
+        verbose_name='Industry title'
     )
     accordion_6_teaser = models.TextField(
         blank=True,
-        verbose_name='Accordion teaser'
+        verbose_name='Industry teaser'
     )
     accordion_6_subsection_1_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -1935,39 +1948,51 @@ class CountryGuidePage(BasePage):
     fact_sheet_title = models.CharField(
         max_length=255,
         blank=True,
+        verbose_name="Title for 'Doing business in' section"
     )
     fact_sheet_teaser = models.CharField(
         max_length=255,
         blank=True,
+        verbose_name="Summary for 'Doing business in' section"
     )
     fact_sheet_column_1_title = models.CharField(
         max_length=255,
         blank=True,
+        verbose_name="Title for 'Tax and customs'"
     )
     fact_sheet_column_1_teaser = models.CharField(
         max_length=255,
         blank=True,
+        verbose_name="Summary for 'Tax and customs'"
     )
     fact_sheet_column_1_body = MarkdownField(
-        blank=True
+        blank=True,
+        verbose_name="Detailed text for 'Tax and customs'",
+        help_text='Use H4 (####) for each sub category heading. '
+                  'Maximum five sub categories. Aim for 50 words each.'
     )
     fact_sheet_column_2_title = models.CharField(
         max_length=255,
         blank=True,
+        verbose_name="Title for 'Protecting your business'"
     )
     fact_sheet_column_2_teaser = models.CharField(
         max_length=255,
         blank=True,
+        verbose_name="Summary for 'Protecting your business'"
     )
     fact_sheet_column_2_body = MarkdownField(
-        blank=True
+        blank=True,
+        verbose_name="Detailed text for 'Protecting your business'",
+        help_text='Use H4 (####) for each sub category heading. '
+                  'Maximum five sub categories. Aim for 50 words each.'
     )
 
     # need help
     help_market_guide_cta_link = models.CharField(
         max_length=255,
         blank=True,
-        verbose_name='Help CTA market guide link'
+        verbose_name='GOV.UK country guide URL'
     )
 
     # related pages
@@ -2005,7 +2030,7 @@ class CountryGuidePage(BasePage):
 
         ),
         MultiFieldPanel(
-            heading='Bullets',
+            heading='Unique selling points of the market for UK exporters',
             children=[
                 FieldRowPanel(
                     [
@@ -2081,9 +2106,10 @@ class CountryGuidePage(BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading='Accordion one',
+            heading='Industry one',
             classname='collapsible collapsed',
             children=[
+                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
                 ImageChooserPanel('accordion_1_icon'),
                 FieldPanel('accordion_1_title'),
                 FieldPanel('accordion_1_teaser'),
@@ -2185,9 +2211,10 @@ class CountryGuidePage(BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading='Accordion two',
+            heading='Industry two',
             classname='collapsible collapsed',
             children=[
+                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
                 ImageChooserPanel('accordion_2_icon'),
                 FieldPanel('accordion_2_title'),
                 FieldPanel('accordion_2_teaser'),
@@ -2289,9 +2316,10 @@ class CountryGuidePage(BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading='Accordion three',
+            heading='Industry three',
             classname='collapsible collapsed',
             children=[
+                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
                 ImageChooserPanel('accordion_3_icon'),
                 FieldPanel('accordion_3_title'),
                 FieldPanel('accordion_3_teaser'),
@@ -2393,9 +2421,10 @@ class CountryGuidePage(BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading='Accordion four',
+            heading='Industry four',
             classname='collapsible collapsed',
             children=[
+                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
                 ImageChooserPanel('accordion_4_icon'),
                 FieldPanel('accordion_4_title'),
                 FieldPanel('accordion_4_teaser'),
@@ -2497,9 +2526,10 @@ class CountryGuidePage(BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading='Accordion five',
+            heading='Industry five',
             classname='collapsible collapsed',
             children=[
+                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
                 ImageChooserPanel('accordion_5_icon'),
                 FieldPanel('accordion_5_title'),
                 FieldPanel('accordion_5_teaser'),
@@ -2601,9 +2631,10 @@ class CountryGuidePage(BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading='Accordion six',
+            heading='Industry six',
             classname='collapsible collapsed',
             children=[
+                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
                 ImageChooserPanel('accordion_6_icon'),
                 FieldPanel('accordion_6_title'),
                 FieldPanel('accordion_6_teaser'),
@@ -2730,7 +2761,7 @@ class CountryGuidePage(BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading='Related articles',
+            heading='News and events',
             children=[
                 FieldRowPanel([
                     PageChooserPanel(

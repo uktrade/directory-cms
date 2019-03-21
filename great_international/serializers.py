@@ -427,9 +427,8 @@ class InternationalTopicLandingPageSerializer(
 class FeatureSerializer(serializers.Serializer):
     heading = serializers.CharField()
     content = core_fields.MarkdownToHTMLField()
-    image = wagtail_fields.ImageRenditionField('original')
-    image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg', source='image')
+    image = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg')
     url = serializers.CharField()
 
 
@@ -508,18 +507,16 @@ class InternationalGuideLandingPageSerializer(BasePageSerializer):
     teaser = serializers.CharField()
 
     section_one_content = core_fields.MarkdownToHTMLField()
-    section_one_image = wagtail_fields.ImageRenditionField('original')
-    section_one_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg', source='section_one_image')
+    section_one_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg')
     section_one_image_caption = serializers.CharField()
 
     section_two_heading = serializers.CharField()
     section_two_teaser = serializers.CharField()
     section_two_button_text = serializers.CharField()
     section_two_button_url = serializers.CharField()
-    section_two_image = wagtail_fields.ImageRenditionField('original')
-    section_two_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg', source='section_two_image')
+    section_two_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg')
 
     guides_section_heading = serializers.CharField()
     guides = serializers.SerializerMethodField()
