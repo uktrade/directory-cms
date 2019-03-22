@@ -38,17 +38,16 @@ function _replaceSelection(cm, active, startEnd, url) {
     }, 1);
 }
 
-const windowPrompt = window.prompt;
+var windowPrompt = window.prompt;
+window.prompt = windowPromptOverride;
 
-const OVERRIDE_TEXT = 'windowPromptOverride';
+function windowPromptOverride(value) {
+    var isOverride = value instanceof SimpleMDE;
 
-const windowPromptOverride = (callback, text) => {
-    const shouldOverride = text === OVERRIDE_TEXT;
-
-    if (shouldOverride) {
-        callback();
+    if (isOverride) {
+        openLinkChooser(value);
     } else {
-        return windowPrompt(text);
+        return windowPrompt(value);
     }
 }
 
@@ -90,16 +89,16 @@ function simplemdeAttach(id) {
         autofocus: false,
     });
     mde.options.promptTexts = {
-        link: OVERRIDE_TEXT,
+        // We pass the editor instance as the prompt text for links in order to:
+        // - Override window.prompt in the appropriate scenarios.
+        // - Have access to the editor instance in our custom link chooser.
+        link: mde,
     };
     mde.render();
 
     mde.codemirror.on('change', function() {
         $('#' + id).val(mde.value());
     });
-
-    // TODO Make sure this is compatible with multiple instances of SimpleMDE on the page.
-    window.prompt = windowPromptOverride.bind(null, openLinkChooser.bind(null, mde));
 }
 
 // Refresh the markdown entry field when the tab buttons are clicked.
