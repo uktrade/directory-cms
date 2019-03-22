@@ -20,6 +20,7 @@ class MarkdownTextarea(WidgetWithScript, forms.widgets.Textarea):
             },
             js=(
                 'https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js',
-                'core/js/refresh_codemirror.js'
+                'core/js/refresh_codemirror.js',
+                'wagtailadmin/js/page-chooser-modal.js',
             )
         )
