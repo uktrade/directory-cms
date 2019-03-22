@@ -457,6 +457,7 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
     subpage_types = []
 
     hero_title = models.CharField(max_length=255)
+    hero_subtitle = models.CharField(max_length=255, blank=True)
     hero_cta_text = models.CharField(
         max_length=255,
         null=True,
@@ -532,7 +533,8 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
         MultiFieldPanel(
             heading="Hero Section",
             children=[
-                FieldPanel("hero_title"),
+                FieldPanel('hero_title'),
+                FieldPanel('hero_subtitle'),
                 FieldPanel("hero_cta_text"),
                 ImageChooserPanel("hero_image")
             ]
@@ -542,7 +544,7 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
             children=[
                 FieldRowPanel([
                     MultiFieldPanel(
-                        heading="Invest Card",
+                        heading='Invest Card',
                         children=[
                             FieldPanel('invest_title'),
                             FieldPanel('invest_content'),
@@ -550,7 +552,7 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
                         ]
                     ),
                     MultiFieldPanel(
-                        heading="Trade Card",
+                        heading='Trade Card',
                         children=[
                             FieldPanel('trade_title'),
                             FieldPanel('trade_content'),
