@@ -314,6 +314,8 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
         'fill-640x360|jpegquality-60|format-jpeg'
     )
     tariffs_call_to_action_text = serializers.CharField(max_length=255)
+    study_in_uk_cta_text = serializers.CharField(max_length=255)
+    visit_uk_cta_text = serializers.CharField(max_length=255)
 
 
 class InternationalCampaignPageSerializer(PageWithRelatedPagesSerializer):

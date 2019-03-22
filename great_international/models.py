@@ -525,6 +525,9 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
         related_name='+',
     )
 
+    study_in_uk_cta_text = models.CharField(max_length=255)
+    visit_uk_cta_text = models.CharField(max_length=255)
+
     content_panels = [
         MultiFieldPanel(
             heading="Hero Section",
@@ -595,6 +598,27 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
                 ])
             ]
         ),
+
+        MultiFieldPanel(
+            heading='Featured CTA\'s',
+            children=[
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        heading="Study in the UK",
+                        children=[
+                            FieldPanel('study_in_uk_cta_text')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        heading="Visit the UK",
+                        children=[
+                            FieldPanel('visit_uk_cta_text')
+                        ]
+                    ),
+                ]),
+            ]
+        ),
+
         SearchEngineOptimisationPanel(),
     ]
 
