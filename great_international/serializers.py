@@ -114,6 +114,7 @@ class StatisticSerializer(serializers.Serializer):
 
 class RelatedArticlePageSerializer(BasePageSerializer):
     title = serializers.CharField(max_length=255, source='article_title')
+    subheading = serializers.CharField(max_length=255, source='article_subheading')
     teaser = serializers.CharField(max_length=255, source='article_teaser')
     thumbnail = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg', source='article_image')
@@ -122,6 +123,9 @@ class RelatedArticlePageSerializer(BasePageSerializer):
 class RelatedCampaignPageSerializer(BasePageSerializer):
     title = serializers.CharField(
         max_length=255, source='campaign_heading')
+    subheading = serializers.CharField(
+        max_length=255, source='campaign_subheading'
+    )
     teaser = serializers.CharField(
         max_length=255, source='campaign_teaser')
     thumbnail = wagtail_fields.ImageRenditionField(
@@ -275,6 +279,7 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
 
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
     article_title = serializers.CharField(max_length=255)
+    article_subheading = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='article_title')
     article_teaser = serializers.CharField(max_length=255)
     article_image = wagtail_fields.ImageRenditionField('original')
@@ -313,6 +318,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
 
 class InternationalCampaignPageSerializer(PageWithRelatedPagesSerializer):
     campaign_heading = serializers.CharField(max_length=255)
+    campaign_subheading = serializers.CharField(max_length=255)
 
     section_one_heading = serializers.CharField(max_length=255)
     campaign_hero_image = wagtail_fields.ImageRenditionField('original')

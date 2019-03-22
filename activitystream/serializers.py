@@ -17,6 +17,7 @@ class ArticlePageSerializer(serializers.Serializer):
                 'type': ['Document', 'dit:cms:Article'],
                 'id': 'dit:cms:Article:' + str(obj.id),
                 'name': obj.article_title,
+                'subheading': obj.article_subheading,
                 'summary': obj.article_teaser,
                 'content': obj.article_body_text,
                 'url':
