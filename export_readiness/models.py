@@ -24,9 +24,9 @@ from core.models import (
 from core.panels import SearchEngineOptimisationPanel
 
 
-ACCORDION_FIELDS_HELP_TEXT = 'To be displayed this industry needs at least:' \
-                             'title, teaser, 2 bullet points and ' \
-                             '3 calls to action.'
+ACCORDION_FIELDS_HELP_TEXT = 'To be displayed, this industry needs at least:' \
+                             ' a title, a teaser, 2 bullet points, and ' \
+                             '2 calls to action (CTAs).'
 
 
 class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -2109,7 +2109,10 @@ class CountryGuidePage(BasePage):
             heading='Industry one',
             classname='collapsible collapsed',
             children=[
-                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
+                HelpPanel(
+                    content=ACCORDION_FIELDS_HELP_TEXT,
+                    classname='help-panel-font-large'
+                ),
                 ImageChooserPanel('accordion_1_icon'),
                 FieldPanel('accordion_1_title'),
                 FieldPanel('accordion_1_teaser'),
@@ -2142,26 +2145,6 @@ class CountryGuidePage(BasePage):
                     FieldPanel('accordion_1_case_study_button_link'),
                     FieldPanel('accordion_1_case_study_title'),
                     FieldPanel('accordion_1_case_study_description')
-                ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_1_cta_1_link'),
-                            FieldPanel('accordion_1_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_1_cta_2_link'),
-                            FieldPanel('accordion_1_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_1_cta_3_link'),
-                            FieldPanel('accordion_1_cta_3_title'),
-                        ]
-                    )
                 ]),
                 FieldRowPanel([
                     MultiFieldPanel(
@@ -2207,6 +2190,26 @@ class CountryGuidePage(BasePage):
                             FieldPanel('accordion_1_statistic_6_smallprint')
                         ]
                     )
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_1_cta_1_link'),
+                            FieldPanel('accordion_1_cta_1_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_1_cta_2_link'),
+                            FieldPanel('accordion_1_cta_2_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_1_cta_3_link'),
+                            FieldPanel('accordion_1_cta_3_title'),
+                        ]
+                    )
                 ])
             ]
         ),
@@ -2214,7 +2217,10 @@ class CountryGuidePage(BasePage):
             heading='Industry two',
             classname='collapsible collapsed',
             children=[
-                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
+                HelpPanel(
+                    content=ACCORDION_FIELDS_HELP_TEXT,
+                    classname='help-panel-font-large'
+                ),
                 ImageChooserPanel('accordion_2_icon'),
                 FieldPanel('accordion_2_title'),
                 FieldPanel('accordion_2_teaser'),
@@ -2247,26 +2253,6 @@ class CountryGuidePage(BasePage):
                     FieldPanel('accordion_2_case_study_button_link'),
                     FieldPanel('accordion_2_case_study_title'),
                     FieldPanel('accordion_2_case_study_description')
-                ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_2_cta_1_link'),
-                            FieldPanel('accordion_2_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_2_cta_2_link'),
-                            FieldPanel('accordion_2_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_2_cta_3_link'),
-                            FieldPanel('accordion_2_cta_3_title'),
-                        ]
-                    )
                 ]),
                 FieldRowPanel([
                     MultiFieldPanel(
@@ -2312,6 +2298,26 @@ class CountryGuidePage(BasePage):
                             FieldPanel('accordion_2_statistic_6_smallprint')
                         ]
                     )
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_2_cta_1_link'),
+                            FieldPanel('accordion_2_cta_1_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_2_cta_2_link'),
+                            FieldPanel('accordion_2_cta_2_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_2_cta_3_link'),
+                            FieldPanel('accordion_2_cta_3_title'),
+                        ]
+                    )
                 ])
             ]
         ),
@@ -2319,7 +2325,10 @@ class CountryGuidePage(BasePage):
             heading='Industry three',
             classname='collapsible collapsed',
             children=[
-                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
+                HelpPanel(
+                    content=ACCORDION_FIELDS_HELP_TEXT,
+                    classname='help-panel-font-large'
+                ),
                 ImageChooserPanel('accordion_3_icon'),
                 FieldPanel('accordion_3_title'),
                 FieldPanel('accordion_3_teaser'),
@@ -2352,26 +2361,6 @@ class CountryGuidePage(BasePage):
                     FieldPanel('accordion_3_case_study_button_link'),
                     FieldPanel('accordion_3_case_study_title'),
                     FieldPanel('accordion_3_case_study_description')
-                ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_3_cta_1_link'),
-                            FieldPanel('accordion_3_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_3_cta_2_link'),
-                            FieldPanel('accordion_3_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_3_cta_3_link'),
-                            FieldPanel('accordion_3_cta_3_title'),
-                        ]
-                    )
                 ]),
                 FieldRowPanel([
                     MultiFieldPanel(
@@ -2417,6 +2406,26 @@ class CountryGuidePage(BasePage):
                             FieldPanel('accordion_3_statistic_6_smallprint')
                         ]
                     )
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_3_cta_1_link'),
+                            FieldPanel('accordion_3_cta_1_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_3_cta_2_link'),
+                            FieldPanel('accordion_3_cta_2_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_3_cta_3_link'),
+                            FieldPanel('accordion_3_cta_3_title'),
+                        ]
+                    )
                 ])
             ]
         ),
@@ -2424,7 +2433,10 @@ class CountryGuidePage(BasePage):
             heading='Industry four',
             classname='collapsible collapsed',
             children=[
-                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
+                HelpPanel(
+                    content=ACCORDION_FIELDS_HELP_TEXT,
+                    classname='help-panel-font-large'
+                ),
                 ImageChooserPanel('accordion_4_icon'),
                 FieldPanel('accordion_4_title'),
                 FieldPanel('accordion_4_teaser'),
@@ -2457,26 +2469,6 @@ class CountryGuidePage(BasePage):
                     FieldPanel('accordion_4_case_study_button_link'),
                     FieldPanel('accordion_4_case_study_title'),
                     FieldPanel('accordion_4_case_study_description')
-                ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_4_cta_1_link'),
-                            FieldPanel('accordion_4_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_4_cta_2_link'),
-                            FieldPanel('accordion_4_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_4_cta_3_link'),
-                            FieldPanel('accordion_4_cta_3_title'),
-                        ]
-                    )
                 ]),
                 FieldRowPanel([
                     MultiFieldPanel(
@@ -2522,6 +2514,26 @@ class CountryGuidePage(BasePage):
                             FieldPanel('accordion_4_statistic_6_smallprint')
                         ]
                     )
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_4_cta_1_link'),
+                            FieldPanel('accordion_4_cta_1_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_4_cta_2_link'),
+                            FieldPanel('accordion_4_cta_2_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_4_cta_3_link'),
+                            FieldPanel('accordion_4_cta_3_title'),
+                        ]
+                    )
                 ])
             ]
         ),
@@ -2529,7 +2541,10 @@ class CountryGuidePage(BasePage):
             heading='Industry five',
             classname='collapsible collapsed',
             children=[
-                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
+                HelpPanel(
+                    content=ACCORDION_FIELDS_HELP_TEXT,
+                    classname='help-panel-font-large'
+                ),
                 ImageChooserPanel('accordion_5_icon'),
                 FieldPanel('accordion_5_title'),
                 FieldPanel('accordion_5_teaser'),
@@ -2562,26 +2577,6 @@ class CountryGuidePage(BasePage):
                     FieldPanel('accordion_5_case_study_button_link'),
                     FieldPanel('accordion_5_case_study_title'),
                     FieldPanel('accordion_5_case_study_description')
-                ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_5_cta_1_link'),
-                            FieldPanel('accordion_5_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_5_cta_2_link'),
-                            FieldPanel('accordion_5_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_5_cta_3_link'),
-                            FieldPanel('accordion_5_cta_3_title'),
-                        ]
-                    )
                 ]),
                 FieldRowPanel([
                     MultiFieldPanel(
@@ -2627,6 +2622,26 @@ class CountryGuidePage(BasePage):
                             FieldPanel('accordion_5_statistic_6_smallprint')
                         ]
                     )
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_5_cta_1_link'),
+                            FieldPanel('accordion_5_cta_1_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_5_cta_2_link'),
+                            FieldPanel('accordion_5_cta_2_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_5_cta_3_link'),
+                            FieldPanel('accordion_5_cta_3_title'),
+                        ]
+                    )
                 ])
             ]
         ),
@@ -2634,7 +2649,10 @@ class CountryGuidePage(BasePage):
             heading='Industry six',
             classname='collapsible collapsed',
             children=[
-                HelpPanel(ACCORDION_FIELDS_HELP_TEXT),
+                HelpPanel(
+                    content=ACCORDION_FIELDS_HELP_TEXT,
+                    classname='help-panel-font-large'
+                ),
                 ImageChooserPanel('accordion_6_icon'),
                 FieldPanel('accordion_6_title'),
                 FieldPanel('accordion_6_teaser'),
@@ -2667,26 +2685,6 @@ class CountryGuidePage(BasePage):
                     FieldPanel('accordion_6_case_study_button_link'),
                     FieldPanel('accordion_6_case_study_title'),
                     FieldPanel('accordion_6_case_study_description')
-                ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_6_cta_1_link'),
-                            FieldPanel('accordion_6_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_6_cta_2_link'),
-                            FieldPanel('accordion_6_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_6_cta_3_link'),
-                            FieldPanel('accordion_6_cta_3_title'),
-                        ]
-                    )
                 ]),
                 FieldRowPanel([
                     MultiFieldPanel(
@@ -2730,6 +2728,26 @@ class CountryGuidePage(BasePage):
                             FieldPanel('accordion_6_statistic_6_number'),
                             FieldPanel('accordion_6_statistic_6_heading'),
                             FieldPanel('accordion_6_statistic_6_smallprint')
+                        ]
+                    )
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_6_cta_1_link'),
+                            FieldPanel('accordion_6_cta_1_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_6_cta_2_link'),
+                            FieldPanel('accordion_6_cta_2_title'),
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        [
+                            FieldPanel('accordion_6_cta_3_link'),
+                            FieldPanel('accordion_6_cta_3_title'),
                         ]
                     )
                 ])
