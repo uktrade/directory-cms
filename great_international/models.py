@@ -680,7 +680,12 @@ class InternationalArticlePage(BasePage):
     subpage_types = []
 
     article_title = models.CharField(max_length=255)
-    article_subheading = models.CharField(max_length=255, blank=True)
+    article_subheading = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="This is a subheading that displays "
+                  "when the article is featured on another page"
+    )
     article_teaser = models.CharField(max_length=255)
     article_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -812,7 +817,12 @@ class InternationalCampaignPage(BasePage):
     ]
     view_path = 'campaigns/'
 
-    campaign_subheading = models.CharField(max_length=255, blank=True)
+    campaign_subheading = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="This is a subheading that displays "
+                  "when the article is featured on another page"
+    )
     campaign_teaser = models.CharField(max_length=255, null=True, blank=True)
     campaign_heading = models.CharField(max_length=255)
     campaign_hero_image = models.ForeignKey(
