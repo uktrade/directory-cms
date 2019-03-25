@@ -18,7 +18,7 @@ We aim to follow [GDS service standards](https://www.gov.uk/service-manual/servi
 
 
 ## Requirements
-[Python 3.6](https://www.python.org/downloads/release/python-368/)
+[Python 3.6](https://www.python.org/downloads/release/python-368/), [Postgres 9.5](https://www.postgresql.org/)
 
 ## Running locally
 
@@ -28,6 +28,7 @@ We aim to follow [GDS service standards](https://www.gov.uk/service-manual/servi
     $ virtualenv .venv -p python3.6
     $ source .venv/bin/activate
     $ pip install -r requirements_test.txt
+    # Start postgres now before proceeding.
     $ make debug_db
     $ make debug_migrate
     $ make debug_createsuperuser
