@@ -1,5 +1,7 @@
-// Extracted from simplemde source:
-// https://github.com/sparksuite/simplemde-markdown-editor/blob/6abda7ab68cc20f4aca870eb243747951b90ab04/src/js/simplemde.js#L791-L822
+/**
+ * Extracted from simplemde source:
+ * https://github.com/sparksuite/simplemde-markdown-editor/blob/6abda7ab68cc20f4aca870eb243747951b90ab04/src/js/simplemde.js#L791-L822
+ */
 function _replaceSelection(cm, active, startEnd, url) {
     if (
         /editor-preview-active/.test(cm.getWrapperElement().lastChild.className)
@@ -34,27 +36,34 @@ function _replaceSelection(cm, active, startEnd, url) {
     cm.setSelection(startPoint, endPoint);
 }
 
+function onLinkChosen(mde, data) {
+    var cm = mde.codemirror;
+
+    if (data.prefer_this_title_as_link_text) {
+        // Override the whole selection with link text + URL from the chooser.
+        cm.replaceSelection('[' + data.title + '](' + data.url + ')');
+    } else {
+        var isPageLink = !!data.slug;
+        var url = isPageLink ? 'slug:' + data.slug : data.url;
+        _replaceSelection(cm, mde.getState().link, ['[', '](#url#)'], url);
+    }
+}
+
 function openLinkChooser(mde) {
+    var cm = mde.codemirror;
+
     var workflow = window.ModalWorkflow({
         url: window.chooserUrls.pageChooser,
         urlParams: {
             page_type: 'wagtailcore.page',
             allow_external_link: true,
             allow_email_link: true,
-            // TODO Could be nice to implement this.
-            link_text: '',
+            link_text: cm.getSelection(),
         },
         onload: window.PAGE_CHOOSER_MODAL_ONLOAD_HANDLERS,
         responses: {
             pageChosen: function(data) {
-                var isPageLink = !!data.id;
-                var href = isPageLink ? 'slug:' + data.slug : data.url;
-                _replaceSelection(
-                    mde.codemirror,
-                    mde.getState().link,
-                    ['[', '](#url#)'],
-                    href,
-                );
+                onLinkChosen(mde, data);
                 workflow.close();
             },
         },

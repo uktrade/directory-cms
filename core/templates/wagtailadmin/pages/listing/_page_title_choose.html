@@ -1,9 +1,8 @@
 {% load l10n %}
 
 {% comment %}
-The title field for a page in the page listing, when in 'choose' mode.
-
-Expects a variable 'page', the page instance.
+Override Wagtail’s https://github.com/wagtail/wagtail/blob/3134ffa119c15097c8b3c2a0422dd89f7c23304a/wagtail/admin/templates/wagtailadmin/pages/listing/_page_title_choose.html,
+only to add a single `data-slug` attribute so it can be used by the page chooser UI.
 {% endcomment %}
 
 <h2>
