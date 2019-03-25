@@ -114,7 +114,10 @@ class StatisticSerializer(serializers.Serializer):
 
 class RelatedArticlePageSerializer(BasePageSerializer):
     title = serializers.CharField(max_length=255, source='article_title')
-    subheading = serializers.CharField(max_length=255, source='article_subheading')
+    subheading = serializers.CharField(
+        max_length=255,
+        source='article_subheading'
+    )
     teaser = serializers.CharField(max_length=255, source='article_teaser')
     thumbnail = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg', source='article_image')
