@@ -19,7 +19,6 @@ class ArticlePageSerializer(serializers.Serializer):
                 'name': obj.article_title,
                 'summary': obj.article_teaser,
                 'content': obj.article_body_text,
-                'url':
-                f'{environ["APP_URL_EXPORT_READINESS"]}/{obj.slug}/'
+                'url': obj.get_url()
             },
         }
