@@ -32,27 +32,10 @@ function _replaceSelection(cm, active, startEnd, url) {
         }
     }
     cm.setSelection(startPoint, endPoint);
-    // Not entirely sure why this is necessary! Prevents a stacktrace from jQuery when putting focus back into the editor.
-    setTimeout(() => {
-        cm.focus();
-    }, 1);
-}
-
-var windowPrompt = window.prompt;
-window.prompt = windowPromptOverride;
-
-function windowPromptOverride(value) {
-    var isOverride = value instanceof SimpleMDE;
-
-    if (isOverride) {
-        openLinkChooser(value);
-    } else {
-        return windowPrompt(value);
-    }
 }
 
 function openLinkChooser(mde) {
-    const workflow = window.ModalWorkflow({
+    var workflow = window.ModalWorkflow({
         url: window.chooserUrls.pageChooser,
         urlParams: {
             page_type: 'wagtailcore.page',
@@ -63,9 +46,9 @@ function openLinkChooser(mde) {
         },
         onload: window.PAGE_CHOOSER_MODAL_ONLOAD_HANDLERS,
         responses: {
-            pageChosen: (data) => {
-                const isPage = !!data.id;
-                const href = isPage ? `slug:${data.slug}` : data.url;
+            pageChosen: function(data) {
+                var isPageLink = !!data.id;
+                var href = isPageLink ? 'slug:' + data.slug : data.url;
                 _replaceSelection(
                     mde.codemirror,
                     mde.getState().link,
@@ -75,11 +58,28 @@ function openLinkChooser(mde) {
                 workflow.close();
             },
         },
-        // TODO Add basic error handling.
-        onError: () => {
-            window.alert('Error');
+        onError: function() {
+            window.alert('Uh-oh, the link chooser failed to open. Please refresh the page and try again.');
         },
     });
+}
+
+// Override window.prompt to integrate with SimpleMDE.
+// This is the only way to integrate with SimpleMDE’s link picker
+// without actually rewriting SimpleMDE itself.
+var windowPrompt = window.prompt;
+window.prompt = windowPromptOverride;
+
+function windowPromptOverride(value) {
+    // Only override if window.prompt is called with a SimpleMDE instance.
+    var isOverride = value instanceof SimpleMDE;
+
+    if (isOverride) {
+        openLinkChooser(value);
+        return;
+    } else {
+        return windowPrompt(value);
+    }
 }
 
 function simplemdeAttach(id) {
