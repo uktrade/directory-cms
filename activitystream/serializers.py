@@ -1,5 +1,3 @@
-from os import environ
-
 from rest_framework import serializers
 
 
