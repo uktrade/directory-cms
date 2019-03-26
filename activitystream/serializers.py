@@ -14,7 +14,7 @@ class ArticlePageSerializer(serializers.Serializer):
             'type': 'Update',
             'published': obj.last_published_at.isoformat('T'),
             'object': {
-                'type': ['Document', 'dit:cms:Article'],
+                'type': 'Article',
                 'id': 'dit:cms:Article:' + str(obj.id),
                 'name': obj.article_title,
                 'summary': obj.article_teaser,
