@@ -456,6 +456,41 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
     subpage_types = []
 
+    hero_title = models.CharField(max_length=255)
+    hero_subtitle = models.CharField(max_length=255, blank=True)
+    hero_cta_text = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    invest_title = models.CharField(max_length=255)
+    invest_content = MarkdownField(blank=True)
+    invest_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    trade_title = models.CharField(max_length=255)
+    trade_content = MarkdownField(blank=True)
+    trade_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
     tariffs_title = models.CharField(max_length=255)
     tariffs_description = MarkdownField()
     tariffs_link = models.URLField()
@@ -466,6 +501,7 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    tariffs_call_to_action_text = models.CharField(max_length=255)
 
     news_title = models.CharField(max_length=255)
     related_page_one = models.ForeignKey(
@@ -490,16 +526,54 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
         related_name='+',
     )
 
+    study_in_uk_cta_text = models.CharField(max_length=255)
+    visit_uk_cta_text = models.CharField(max_length=255)
+
     content_panels = [
+        MultiFieldPanel(
+            heading="Hero Section",
+            children=[
+                FieldPanel('hero_title'),
+                FieldPanel('hero_subtitle'),
+                FieldPanel("hero_cta_text"),
+                ImageChooserPanel("hero_image")
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Featured Cards",
+            children=[
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        heading='Invest Card',
+                        children=[
+                            FieldPanel('invest_title'),
+                            FieldPanel('invest_content'),
+                            ImageChooserPanel('invest_image')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        heading='Trade Card',
+                        children=[
+                            FieldPanel('trade_title'),
+                            FieldPanel('trade_content'),
+                            ImageChooserPanel('trade_image')
+                        ]
+                    ),
+                ]),
+            ]
+        ),
+
         MultiFieldPanel(
             heading='Tariffs',
             children=[
                 FieldPanel('tariffs_title'),
                 FieldPanel('tariffs_description'),
                 FieldPanel('tariffs_link'),
-                ImageChooserPanel('tariffs_image')
+                ImageChooserPanel('tariffs_image'),
+                FieldPanel('tariffs_call_to_action_text')
             ]
         ),
+
         MultiFieldPanel(
             heading='News section',
             children=[
@@ -526,6 +600,27 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
                 ])
             ]
         ),
+
+        MultiFieldPanel(
+            heading='Featured CTA\'s',
+            children=[
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        heading="Study in the UK",
+                        children=[
+                            FieldPanel('study_in_uk_cta_text')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        heading="Visit the UK",
+                        children=[
+                            FieldPanel('visit_uk_cta_text')
+                        ]
+                    ),
+                ]),
+            ]
+        ),
+
         SearchEngineOptimisationPanel(),
     ]
 
@@ -585,7 +680,12 @@ class InternationalArticlePage(BasePage):
     subpage_types = []
 
     article_title = models.CharField(max_length=255)
-
+    article_subheading = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="This is a subheading that displays "
+                  "when the article is featured on another page"
+    )
     article_teaser = models.CharField(max_length=255)
     article_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -625,6 +725,7 @@ class InternationalArticlePage(BasePage):
             heading='Article content',
             children=[
                 FieldPanel('article_teaser'),
+                FieldPanel('article_subheading'),
                 ImageChooserPanel('article_image'),
                 FieldPanel('article_body_text')
             ]
@@ -716,6 +817,12 @@ class InternationalCampaignPage(BasePage):
     ]
     view_path = 'campaigns/'
 
+    campaign_subheading = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="This is a subheading that displays "
+                  "when the article is featured on another page"
+    )
     campaign_teaser = models.CharField(max_length=255, null=True, blank=True)
     campaign_heading = models.CharField(max_length=255)
     campaign_hero_image = models.ForeignKey(
@@ -843,6 +950,7 @@ class InternationalCampaignPage(BasePage):
             heading='Hero section',
             children=[
                 FieldPanel('campaign_heading'),
+                FieldPanel('campaign_subheading'),
                 FieldPanel('campaign_teaser'),
                 ImageChooserPanel('campaign_hero_image'),
             ]

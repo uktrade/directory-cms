@@ -114,6 +114,10 @@ class StatisticSerializer(serializers.Serializer):
 
 class RelatedArticlePageSerializer(BasePageSerializer):
     title = serializers.CharField(max_length=255, source='article_title')
+    subheading = serializers.CharField(
+        max_length=255,
+        source='article_subheading'
+    )
     teaser = serializers.CharField(max_length=255, source='article_teaser')
     thumbnail = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg', source='article_image')
@@ -122,6 +126,9 @@ class RelatedArticlePageSerializer(BasePageSerializer):
 class RelatedCampaignPageSerializer(BasePageSerializer):
     title = serializers.CharField(
         max_length=255, source='campaign_heading')
+    subheading = serializers.CharField(
+        max_length=255, source='campaign_subheading'
+    )
     teaser = serializers.CharField(
         max_length=255, source='campaign_teaser')
     thumbnail = wagtail_fields.ImageRenditionField(
@@ -275,6 +282,7 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
 
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
     article_title = serializers.CharField(max_length=255)
+    article_subheading = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='article_title')
     article_teaser = serializers.CharField(max_length=255)
     article_image = wagtail_fields.ImageRenditionField('original')
@@ -284,17 +292,39 @@ class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
 
 
 class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
+    hero_title = serializers.CharField(max_length=255)
+    hero_subtitle = serializers.CharField(max_length=255)
+    hero_cta_text = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+
+    invest_title = serializers.CharField(max_length=255)
+    invest_content = core_fields.MarkdownToHTMLField()
+    invest_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg'
+    )
+
+    trade_title = serializers.CharField(max_length=255)
+    trade_content = core_fields.MarkdownToHTMLField()
+    trade_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg'
+    )
+
     news_title = serializers.CharField(max_length=255)
+
     tariffs_title = serializers.CharField(max_length=255)
     tariffs_description = core_fields.MarkdownToHTMLField()
     tariffs_link = serializers.URLField()
     tariffs_image = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg'
     )
+    tariffs_call_to_action_text = serializers.CharField(max_length=255)
+    study_in_uk_cta_text = serializers.CharField(max_length=255)
+    visit_uk_cta_text = serializers.CharField(max_length=255)
 
 
 class InternationalCampaignPageSerializer(PageWithRelatedPagesSerializer):
     campaign_heading = serializers.CharField(max_length=255)
+    campaign_subheading = serializers.CharField(max_length=255)
 
     section_one_heading = serializers.CharField(max_length=255)
     campaign_hero_image = wagtail_fields.ImageRenditionField('original')
