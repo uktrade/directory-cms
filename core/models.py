@@ -1,6 +1,6 @@
-from functools import partial, reduce
+from functools import partial
 import hashlib
-from urllib.parse import urljoin, urlencode
+from urllib.parse import urlencode
 
 from directory_constants.constants import choices
 from django.core.exceptions import ValidationError
