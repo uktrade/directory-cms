@@ -93,6 +93,9 @@ class IndustryPage(BasePage):
 
     service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/'
+    parent_page_types = [
+        'find_a_supplier.IndustryLandingPage',
+    ]
     subpage_types = [
         'find_a_supplier.IndustryArticlePage',
     ]
@@ -290,6 +293,9 @@ class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/'
     slug_identity = cms.FIND_A_SUPPLIER_INDUSTRY_LANDING_SLUG
+    parent_page_types = [
+        'find_a_supplier.LandingPage',
+    ]
     subpage_types = [
         'find_a_supplier.IndustryContactPage',
         'find_a_supplier.IndustryPage',
