@@ -223,3 +223,11 @@ class InternationalRegionalFolderPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = []
+
+
+@register(models.InternationalCapitalInvestLandingPage)
+class InternationalCapitalInvestLandingPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = []\
+
