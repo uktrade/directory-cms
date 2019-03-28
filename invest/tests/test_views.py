@@ -50,7 +50,7 @@ def test_invest_home_page(admin_client):
     response = admin_client.get(url, {'service_name': cms.INVEST})
     assert response.status_code == 200
     meta = response.json()['meta']
-    assert meta['url'] == 'http://invest.trade.great:8011'
+    assert meta['url'] == 'http://invest.trade.great:8011/home-page/'
     assert meta['slug'] == 'home-page'
     assert len(response.json()['guides']) == 1
     assert len(response.json()['sectors']) == 1
