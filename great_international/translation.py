@@ -263,3 +263,11 @@ class InternationalEUExitFormSuccessPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = []
+
+
+@register(models.InternationalCapitalInvestLandingPage)
+class InternationalCapitalInvestLandingPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = []\
+
