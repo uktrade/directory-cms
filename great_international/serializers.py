@@ -2,11 +2,12 @@ from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
 
 from core import fields as core_fields
-from core.serializers import BasePageSerializer
+from core.serializers import BasePageSerializer, ChildPagesSerializerHelper
 
 from .models import (InternationalArticlePage, InternationalArticleListingPage,
                      InternationalLocalisedFolderPage,
-                     InternationalCampaignPage)
+                     InternationalCampaignPage, InternationalGuideLandingPage,
+                     InternationalSectorPage)
 
 
 class SectionThreeSubsectionProxyDataWrapper:
@@ -113,6 +114,10 @@ class StatisticSerializer(serializers.Serializer):
 
 class RelatedArticlePageSerializer(BasePageSerializer):
     title = serializers.CharField(max_length=255, source='article_title')
+    subheading = serializers.CharField(
+        max_length=255,
+        source='article_subheading'
+    )
     teaser = serializers.CharField(max_length=255, source='article_teaser')
     thumbnail = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg', source='article_image')
@@ -121,6 +126,9 @@ class RelatedArticlePageSerializer(BasePageSerializer):
 class RelatedCampaignPageSerializer(BasePageSerializer):
     title = serializers.CharField(
         max_length=255, source='campaign_heading')
+    subheading = serializers.CharField(
+        max_length=255, source='campaign_subheading'
+    )
     teaser = serializers.CharField(
         max_length=255, source='campaign_teaser')
     thumbnail = wagtail_fields.ImageRenditionField(
@@ -160,6 +168,8 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
     heading_teaser = serializers.CharField()
 
     section_one_body = core_fields.MarkdownToHTMLField()
@@ -272,6 +282,7 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
 
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
     article_title = serializers.CharField(max_length=255)
+    article_subheading = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='article_title')
     article_teaser = serializers.CharField(max_length=255)
     article_image = wagtail_fields.ImageRenditionField('original')
@@ -281,17 +292,39 @@ class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
 
 
 class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
+    hero_title = serializers.CharField(max_length=255)
+    hero_subtitle = serializers.CharField(max_length=255)
+    hero_cta_text = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+
+    invest_title = serializers.CharField(max_length=255)
+    invest_content = core_fields.MarkdownToHTMLField()
+    invest_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg'
+    )
+
+    trade_title = serializers.CharField(max_length=255)
+    trade_content = core_fields.MarkdownToHTMLField()
+    trade_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg'
+    )
+
     news_title = serializers.CharField(max_length=255)
+
     tariffs_title = serializers.CharField(max_length=255)
     tariffs_description = core_fields.MarkdownToHTMLField()
     tariffs_link = serializers.URLField()
     tariffs_image = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg'
     )
+    tariffs_call_to_action_text = serializers.CharField(max_length=255)
+    study_in_uk_cta_text = serializers.CharField(max_length=255)
+    visit_uk_cta_text = serializers.CharField(max_length=255)
 
 
 class InternationalCampaignPageSerializer(PageWithRelatedPagesSerializer):
     campaign_heading = serializers.CharField(max_length=255)
+    campaign_subheading = serializers.CharField(max_length=255)
 
     section_one_heading = serializers.CharField(max_length=255)
     campaign_hero_image = wagtail_fields.ImageRenditionField('original')
@@ -334,7 +367,10 @@ class InternationalCampaignPageSerializer(PageWithRelatedPagesSerializer):
     cta_box_button_text = serializers.CharField(max_length=255)
 
 
-class InternationalArticleListingPageSerializer(BasePageSerializer):
+class InternationalArticleListingPageSerializer(
+    BasePageSerializer,
+    ChildPagesSerializerHelper
+):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
     hero_image = wagtail_fields.ImageRenditionField('original')
@@ -353,51 +389,37 @@ class InternationalArticleListingPageSerializer(BasePageSerializer):
             slug = f'{obj.slug}-{self.context["region"]}'
             folder = InternationalLocalisedFolderPage.objects.filter(slug=slug)
             if folder.exists():
-                articles_queryset = folder[0].get_descendants().type(
-                    InternationalArticlePage
-                ).live().specific()
-                articles = RelatedArticlePageSerializer(
-                    articles_queryset,
-                    many=True,
-                    allow_null=True,
-                    context=self.context
+                articles = self.get_child_pages_data_for(
+                    folder[0],
+                    InternationalArticlePage,
+                    RelatedArticlePageSerializer
                 )
-                campaigns_queryset = folder[0].get_descendants().type(
-                    InternationalCampaignPage
-                ).live().specific()
-
-                campaigns = RelatedCampaignPageSerializer(
-                    campaigns_queryset,
-                    many=True,
-                    allow_null=True,
-                    context=self.context
+                campaigns = self.get_child_pages_data_for(
+                    folder[0],
+                    InternationalCampaignPage,
+                    InternationalCampaignPageSerializer
                 )
-                data = articles.data + campaigns.data
+                data = articles + campaigns
         return data
 
     def get_child_pages(self, obj):
-        articles_queryset = obj.get_descendants().type(
-            InternationalArticlePage
-        ).live().specific()
-        articles = RelatedArticlePageSerializer(
-            articles_queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
+        articles = self.get_child_pages_data_for(
+            obj,
+            InternationalArticlePage,
+            RelatedArticlePageSerializer
         )
-        campaigns_queryset = obj.get_descendants().type(
-            InternationalCampaignPage
-        ).live().specific()
-        campaigns = RelatedCampaignPageSerializer(
-            campaigns_queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
+        campaigns = self.get_child_pages_data_for(
+            obj,
+            InternationalCampaignPage,
+            RelatedCampaignPageSerializer
         )
-        return articles.data + campaigns.data
+        return articles + campaigns
 
 
-class InternationalTopicLandingPageSerializer(BasePageSerializer):
+class InternationalTopicLandingPageSerializer(
+    BasePageSerializer,
+    ChildPagesSerializerHelper
+):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
     hero_teaser = serializers.CharField(max_length=255)
@@ -409,33 +431,34 @@ class InternationalTopicLandingPageSerializer(BasePageSerializer):
     child_pages = serializers.SerializerMethodField()
 
     def get_child_pages(self, obj):
-        articles_listing_queryset = obj.get_descendants().type(
-            InternationalArticleListingPage
-        ).live().specific()
-        articles_list_serializer = InternationalArticleListingPageSerializer(
-            articles_listing_queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
+        articles = self.get_child_pages_data_for(
+            obj,
+            InternationalArticleListingPage,
+            InternationalArticleListingPageSerializer
         )
-        campaigns_queryset = obj.get_descendants().type(
-            InternationalCampaignPage
-        ).live().specific()
-        campaigns_serializer = RelatedCampaignPageSerializer(
-            campaigns_queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
+        campaigns = self.get_child_pages_data_for(
+            obj,
+            InternationalCampaignPage,
+            RelatedCampaignPageSerializer
         )
-        return articles_list_serializer.data + campaigns_serializer.data
+        guides = self.get_child_pages_data_for(
+            obj,
+            InternationalGuideLandingPage,
+            InternationalGuideLandingPageSerializer
+        )
+        sectors = self.get_child_pages_data_for(
+            obj,
+            InternationalSectorPage,
+            InternationalSectorPageSerializer
+        )
+        return articles + campaigns + guides + sectors
 
 
 class FeatureSerializer(serializers.Serializer):
     heading = serializers.CharField()
     content = core_fields.MarkdownToHTMLField()
-    image = wagtail_fields.ImageRenditionField('original')
-    image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg', source='image')
+    image = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg')
     url = serializers.CharField()
 
 
@@ -514,28 +537,26 @@ class InternationalGuideLandingPageSerializer(BasePageSerializer):
     teaser = serializers.CharField()
 
     section_one_content = core_fields.MarkdownToHTMLField()
-    section_one_image = wagtail_fields.ImageRenditionField('original')
-    section_one_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg', source='section_one_image')
+    section_one_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg')
     section_one_image_caption = serializers.CharField()
 
     section_two_heading = serializers.CharField()
     section_two_teaser = serializers.CharField()
     section_two_button_text = serializers.CharField()
     section_two_button_url = serializers.CharField()
-    section_two_image = wagtail_fields.ImageRenditionField('original')
-    section_two_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg', source='section_two_image')
+    section_two_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg')
 
     guides_section_heading = serializers.CharField()
     guides = serializers.SerializerMethodField()
 
     def get_guides(self, obj):
         article_list = (
-            obj.get_descendants()
-            .type(InternationalArticlePage)
+            InternationalArticlePage.objects
+            .descendant_of(obj)
             .live()
-            .specific()
+            .order_by('-first_published_at')
         )[:9]
         serializer = RelatedArticlePageSerializer(article_list, many=True)
         return serializer.data

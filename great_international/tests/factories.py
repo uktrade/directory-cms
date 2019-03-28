@@ -95,6 +95,12 @@ class InternationalHomePageFactory(wagtail_factories.PageFactory):
     class Meta:
         model = models.InternationalHomePage
 
+    hero_title = factory.fuzzy.FuzzyText(length=10)
+    invest_title = factory.fuzzy.FuzzyText(length=10)
+    trade_title = factory.fuzzy.FuzzyText(length=10)
+    tariffs_call_to_action_text = factory.fuzzy.FuzzyText(length=10)
+    study_in_uk_cta_text = factory.fuzzy.FuzzyText(length=10)
+    visit_uk_cta_text = factory.fuzzy.FuzzyText(length=10)
     news_title = factory.fuzzy.FuzzyText(length=10)
     tariffs_title = factory.fuzzy.FuzzyText(length=10)
     tariffs_link = 'http://foo.com'

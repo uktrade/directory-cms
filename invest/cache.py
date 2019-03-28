@@ -45,6 +45,7 @@ class InvestHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     subscriptions = [
         models.SectorPage,
         models.SetupGuidePage,
+        models.HighPotentialOpportunityDetailPage
     ]
 
 
