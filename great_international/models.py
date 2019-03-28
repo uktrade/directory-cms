@@ -46,10 +46,7 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
             InternationalHomePage,
             InternationalEUExitFormPage,
             InternationalEUExitFormSuccessPage,
-            InternationalCapitalInvestLandingPage,
-            CapitalInvestSectorListingPage,
-            CapitalInvestRegionListingPage,
-            CapitalInvestOpportunityListingPage]
+            InternationalCapitalInvestLandingPage]
 
 
 class InternationalSectorPage(BasePage):
@@ -2776,3 +2773,255 @@ class CapitalInvestOpportunityPage(BasePage):
         content_panels=content_panels,
         settings_panels=settings_panels
     )
+
+
+class InternationalCapitalInvestLandingPage(BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+
+    parent_page_types = ['great_international.GreatInternationalApp']
+
+    hero_title = models.CharField(max_length=255, blank=True)
+    hero_subheading = models.CharField(max_length=255, blank=True)
+    hero_subtitle = models.CharField(max_length=255, blank=True)
+    hero_cta_text = models.CharField(max_length=255)
+
+    reason_to_invest_section_title = models.CharField(max_length=255)
+    reason_to_invest_section_intro = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    reason_to_invest_section_content = MarkdownField(blank=True)
+    reason_to_invest_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+', blank=True
+    )
+    reason_to_invest_section_image_caption = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    region_ops_section_title = models.CharField(max_length=255)
+    region_ops_section_intro = models.CharField(max_length=255, blank=True)
+
+    region_card_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+', blank=True
+    )
+    region_card_one_title = models.CharField(max_length=255)
+    region_card_one_description = models.TextField(max_length=255, blank=True)
+    region_card_one_cta_text = models.CharField(max_length=255)
+
+    region_card_two_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+', blank=True
+    )
+    region_card_two_title = models.CharField(max_length=255)
+    region_card_two_description = models.TextField(max_length=255, blank=True)
+    region_card_two_cta_text = models.CharField(max_length=255)
+
+    region_card_three_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+', blank=True
+    )
+    region_card_three_title = models.CharField(max_length=255)
+    region_card_three_description = models.TextField(max_length=255, blank=True)
+    region_card_three_cta_text = models.CharField(max_length=255)
+
+    region_card_four_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+', blank=True
+    )
+    region_card_four_title = models.CharField(max_length=255)
+    region_card_four_description = models.TextField(max_length=255, blank=True)
+    region_card_four_cta_text = models.CharField(max_length=255)
+
+    region_card_five_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+', blank=True
+    )
+    region_card_five_title = models.CharField(max_length=255)
+    region_card_five_description = models.TextField(max_length=255, blank=True)
+    region_card_five_cta_text = models.CharField(max_length=255)
+
+    region_card_six_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+', blank=True
+    )
+    region_card_six_title = models.CharField(max_length=255)
+    region_card_six_description = models.TextField(max_length=255, blank=True)
+    region_card_six_cta_text = models.CharField(max_length=255)
+
+    energy_sector_title = models.CharField(max_length=255)
+    energy_sector_content = MarkdownField(blank=True)
+    energy_sector_cta_text = models.CharField(max_length=255)
+
+    how_we_help_title = models.CharField(max_length=255)
+    how_we_help_intro = models.TextField(max_length=255, blank=True)
+
+    how_we_help_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    how_we_help_one_text = models.CharField(max_length=255)
+
+    how_we_help_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+', blank=True
+    )
+    how_we_help_two_text = models.CharField(max_length=255)
+
+    how_we_help_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+', blank=True
+    )
+    how_we_help_three_text = models.CharField(max_length=255)
+
+    how_we_help_four_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+', blank=True
+    )
+    how_we_help_four_text = models.CharField(max_length=255)
+
+    contact_section_title = models.CharField(max_length=255)
+    contact_section_text = models.CharField(max_length=255, blank=True)
+    contact_section_cta_text = models.CharField(max_length=255)
+
+    tags = ParentalManyToManyField(Tag, blank=True)
+    content_panels = [
+        MultiFieldPanel(
+            heading="Hero",
+            children=[
+                FieldPanel('hero_title'),
+                FieldPanel('hero_subtitle'),
+                FieldPanel('hero_subheading'),
+                FieldPanel('hero_cta_text')
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Reason to invest in the UK section",
+            children=[
+                FieldPanel('reason_to_invest_section_title'),
+                FieldPanel('reason_to_invest_section_intro'),
+                FieldPanel('reason_to_invest_section_content'),
+                FieldPanel('reason_to_invest_section_image_caption'),
+                ImageChooserPanel('reason_to_invest_section_image')
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Investment Opportunities by regions",
+            children=[
+                FieldPanel('region_ops_section_title'),
+                FieldPanel('region_ops_section_intro'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        ImageChooserPanel('region_card_one_image'),
+                        FieldPanel('region_card_one_title'),
+                        FieldPanel('region_card_one_description'),
+                        FieldPanel('region_card_one_cta_text'),
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('region_card_two_image'),
+                        FieldPanel('region_card_two_title'),
+                        FieldPanel('region_card_two_description'),
+                        FieldPanel('region_card_two_cta_text'),
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('region_card_three_image'),
+                        FieldPanel('region_card_three_title'),
+                        FieldPanel('region_card_three_description'),
+                        FieldPanel('region_card_three_cta_text'),
+                    ]),
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        ImageChooserPanel('region_card_four_image'),
+                        FieldPanel('region_card_four_title'),
+                        FieldPanel('region_card_four_description'),
+                        FieldPanel('region_card_four_cta_text'),
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('region_card_five_image'),
+                        FieldPanel('region_card_five_title'),
+                        FieldPanel('region_card_five_description'),
+                        FieldPanel('region_card_five_cta_text'),
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('region_card_six_image'),
+                        FieldPanel('region_card_six_title'),
+                        FieldPanel('region_card_six_description'),
+                        FieldPanel('region_card_six_cta_text'),
+                    ]),
+                ]),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Energy Sector",
+            children=[
+                FieldPanel('energy_sector_title'),
+                FieldPanel('energy_sector_content'),
+                FieldPanel('energy_sector_cta_text')
+            ]
+        ),
+        MultiFieldPanel(
+            heading="How we help section",
+            children=[
+                FieldRowPanel([
+                    FieldPanel('how_we_help_title'),
+                    FieldPanel('how_we_help_intro'),
+                    MultiFieldPanel([
+                        ImageChooserPanel('how_we_help_one_icon'),
+                        FieldPanel('how_we_help_one_text'),
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('how_we_help_two_icon'),
+                        FieldPanel('how_we_help_two_text'),
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('how_we_help_three_icon'),
+                        FieldPanel('how_we_help_three_text'),
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('how_we_help_four_icon'),
+                        FieldPanel('how_we_help_four_text'),
+                    ]),
+                ]),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Contact Section",
+            children=[
+                FieldPanel('contact_section_title'),
+                FieldPanel('contact_section_text'),
+                FieldPanel('contact_section_cta_text')
+            ]
+        ),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
+    ]

@@ -994,3 +994,73 @@ class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
     buy_cta_text = serializers.CharField(max_length=255)
     buy_cta_link = serializers.CharField(max_length=255)
 
+
+
+class InternationalCapitalInvestLandingPage(PageWithRelatedPagesSerializer):
+
+    hero_title = serializers.CharField(max_length=255)
+    hero_subheading = serializers.CharField(max_length=255)
+    hero_subtitle = serializers.CharField(max_length=255)
+    hero_cta_text = serializers.CharField(max_length=255)
+
+    reason_to_invest_section_title = serializers.CharField(max_length=255)
+    reason_to_invest_section_intro = serializers.CharField(max_length=255)
+    reason_to_invest_section_content = core_fields.MarkdownToHTMLField()
+    reason_to_invest_section_image = wagtail_fields.ImageRenditionField('original')
+    reason_to_invest_section_image_caption = serializers.CharField(
+        max_length=255
+    )
+
+    region_ops_section_title = serializers.CharField(max_length=255)
+    region_ops_section_intro = serializers.CharField(max_length=255)
+
+    region_card_one_image = wagtail_fields.ImageRenditionField('original')
+    region_card_one_title = serializers.CharField(max_length=255)
+    region_card_one_description = serializers.CharField(max_length=255)
+    region_card_one_cta_text = serializers.CharField(max_length=255)
+
+    region_card_two_image = wagtail_fields.ImageRenditionField('original')
+    region_card_two_title = serializers.CharField(max_length=255)
+    region_card_two_description = serializers.CharField(max_length=255)
+    region_card_two_cta_text = serializers.CharField(max_length=255)
+
+    region_card_three_image = wagtail_fields.ImageRenditionField('original')
+    region_card_three_title = serializers.CharField(max_length=255)
+    region_card_three_description = serializers.CharField(max_length=255)
+    region_card_three_cta_text = serializers.CharField(max_length=255)
+
+    region_card_four_image = wagtail_fields.ImageRenditionField('original')
+    region_card_four_title = serializers.CharField(max_length=255)
+    region_card_four_description = serializers.CharField(max_length=255)
+    region_card_four_cta_text = serializers.CharField(max_length=255)
+
+    region_card_five_image = wagtail_fields.ImageRenditionField('original')
+    region_card_five_title = serializers.CharField(max_length=255)
+    region_card_five_description = serializers.CharField(max_length=255)
+    region_card_five_cta_text = serializers.CharField(max_length=255)
+
+    region_card_six_image = wagtail_fields.ImageRenditionField('original')
+    region_card_six_title = serializers.CharField(max_length=255)
+    region_card_six_description = serializers.CharField(max_length=255)
+    region_card_six_cta_text = serializers.CharField(max_length=255)
+
+    energy_sector_title = serializers.CharField(max_length=255)
+    energy_sector_content = core_fields.MarkdownToHTMLField()
+    energy_sector_cta_text = serializers.CharField(max_length=255)
+
+    how_we_help_title = serializers.CharField(max_length=255)
+    how_we_help_intro = serializers.CharField(max_length=255)
+    how_we_help_one_icon = wagtail_fields.ImageRenditionField('original')
+    how_we_help_one_text = serializers.CharField(max_length=255)
+    how_we_help_two_icon = wagtail_fields.ImageRenditionField('original')
+    how_we_help_two_text = serializers.CharField(max_length=255)
+    how_we_help_three_icon = wagtail_fields.ImageRenditionField('original')
+    how_we_help_three_text = serializers.CharField(max_length=255)
+    how_we_help_four_icon = wagtail_fields.ImageRenditionField('original')
+    how_we_help_four_text = serializers.CharField(max_length=255)
+
+    contact_section_title = serializers.CharField(max_length=255)
+    contact_section_text = serializers.CharField(max_length=255)
+    contact_section_cta_text = serializers.CharField(max_length=255)
+
+

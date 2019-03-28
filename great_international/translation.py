@@ -513,3 +513,11 @@ class CapitalInvestOpportunityPageTranslationOptions(
         'buy_cta_text',
         'buy_cta_link',
     )
+
+
+@register(models.InternationalCapitalInvestLandingPage)
+class InternationalCapitalInvestLandingPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = []\
+
