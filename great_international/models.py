@@ -1738,8 +1738,15 @@ class InternationalCapitalInvestLandingPage(BasePage):
         blank=True
     )
 
-    region_ops_section_title = models.CharField(max_length=255)
-    region_ops_section_intro = models.CharField(max_length=255, blank=True)
+    region_ops_section_title = models.CharField(
+        max_length=255,
+        verbose_name="Region opportunities section title"
+    )
+    region_ops_section_intro = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Region opportunities section intro"
+    )
 
     region_card_one_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -1924,9 +1931,9 @@ class InternationalCapitalInvestLandingPage(BasePage):
         MultiFieldPanel(
             heading="How we help section",
             children=[
+                FieldPanel('how_we_help_title'),
+                FieldPanel('how_we_help_intro'),
                 FieldRowPanel([
-                    FieldPanel('how_we_help_title'),
-                    FieldPanel('how_we_help_intro'),
                     MultiFieldPanel([
                         ImageChooserPanel('how_we_help_one_icon'),
                         FieldPanel('how_we_help_one_text'),
@@ -1935,6 +1942,8 @@ class InternationalCapitalInvestLandingPage(BasePage):
                         ImageChooserPanel('how_we_help_two_icon'),
                         FieldPanel('how_we_help_two_text'),
                     ]),
+                ]),
+                FieldRowPanel([
                     MultiFieldPanel([
                         ImageChooserPanel('how_we_help_three_icon'),
                         FieldPanel('how_we_help_three_text'),
