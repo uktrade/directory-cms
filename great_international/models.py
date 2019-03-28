@@ -1380,6 +1380,12 @@ class InternationalCapitalInvestLandingPage(BasePage):
     parent_page_types = ['great_international.GreatInternationalApp']
 
     hero_title = models.CharField(max_length=255, blank=True)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+', blank=True
+    )
     hero_subheading = models.CharField(max_length=255, blank=True)
     hero_subtitle = models.CharField(max_length=255, blank=True)
     hero_cta_text = models.CharField(max_length=255)
@@ -1521,6 +1527,7 @@ class InternationalCapitalInvestLandingPage(BasePage):
             heading="Hero",
             children=[
                 FieldPanel('hero_title'),
+                ImageChooserPanel('hero_image'),
                 FieldPanel('hero_subtitle'),
                 FieldPanel('hero_subheading'),
                 FieldPanel('hero_cta_text')

@@ -567,6 +567,7 @@ class InternationalGuideLandingPageSerializer(BasePageSerializer):
 class InternationalCapitalInvestLandingPage(PageWithRelatedPagesSerializer):
 
     hero_title = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
     hero_subheading = serializers.CharField(max_length=255)
     hero_subtitle = serializers.CharField(max_length=255)
     hero_cta_text = serializers.CharField(max_length=255)
