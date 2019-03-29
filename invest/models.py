@@ -915,7 +915,11 @@ class HighPotentialOpportunityDetailPage(BasePage):
     )
 
     featured = models.BooleanField(default=True)
-    description = models.TextField(blank=True)
+    description = models.TextField(
+        blank=True,
+        help_text="This is the description shown when the HPO "
+                  "is featured on another page i.e. the Invest Home Page"
+    )
 
     contact_proposition = MarkdownField(
         blank=False,
