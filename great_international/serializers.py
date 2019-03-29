@@ -649,7 +649,7 @@ class InternationalEUExitFormSuccessPageSerializer(BasePageSerializer):
     next_body_text = serializers.CharField()
 
 
-class InternationalCapitalInvestLandingPage(PageWithRelatedPagesSerializer):
+class InternationalCapitalInvestLandingPage(BasePageSerializer):
 
     hero_title = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
@@ -672,35 +672,44 @@ class InternationalCapitalInvestLandingPage(PageWithRelatedPagesSerializer):
     region_card_one_title = serializers.CharField(max_length=255)
     region_card_one_description = serializers.CharField(max_length=255)
     region_card_one_cta_text = serializers.CharField(max_length=255)
+    region_card_one_pdf_document = core_fields.DocumentURLField()
 
     region_card_two_image = wagtail_fields.ImageRenditionField('original')
     region_card_two_title = serializers.CharField(max_length=255)
     region_card_two_description = serializers.CharField(max_length=255)
     region_card_two_cta_text = serializers.CharField(max_length=255)
+    region_card_two_pdf_document = core_fields.DocumentURLField()
 
     region_card_three_image = wagtail_fields.ImageRenditionField('original')
     region_card_three_title = serializers.CharField(max_length=255)
     region_card_three_description = serializers.CharField(max_length=255)
     region_card_three_cta_text = serializers.CharField(max_length=255)
+    region_card_three_pdf_document = core_fields.DocumentURLField()
 
     region_card_four_image = wagtail_fields.ImageRenditionField('original')
     region_card_four_title = serializers.CharField(max_length=255)
     region_card_four_description = serializers.CharField(max_length=255)
     region_card_four_cta_text = serializers.CharField(max_length=255)
+    region_card_four_pdf_document = core_fields.DocumentURLField()
 
     region_card_five_image = wagtail_fields.ImageRenditionField('original')
     region_card_five_title = serializers.CharField(max_length=255)
     region_card_five_description = serializers.CharField(max_length=255)
     region_card_five_cta_text = serializers.CharField(max_length=255)
+    region_card_five_pdf_document = core_fields.DocumentURLField()
 
     region_card_six_image = wagtail_fields.ImageRenditionField('original')
     region_card_six_title = serializers.CharField(max_length=255)
     region_card_six_description = serializers.CharField(max_length=255)
     region_card_six_cta_text = serializers.CharField(max_length=255)
+    region_card_six_pdf_document = core_fields.DocumentURLField()
 
     energy_sector_title = serializers.CharField(max_length=255)
     energy_sector_content = core_fields.MarkdownToHTMLField()
+    energy_sector_image = wagtail_fields.ImageRenditionField('original')
+    energy_sector_image_caption = serializers.CharField(max_length=255)
     energy_sector_cta_text = serializers.CharField(max_length=255)
+    energy_sector_pdf_document = core_fields.DocumentURLField()
 
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_intro = serializers.CharField(max_length=255)
