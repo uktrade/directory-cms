@@ -1,3 +1,6 @@
+from wagtail.documents.models import Document
+from wagtail.documents.edit_handlers import DocumentChooserPanel
+
 from directory_constants.constants import cms
 from django.forms import Textarea, CheckboxSelectMultiple
 from django.utils.text import slugify
@@ -1426,6 +1429,13 @@ class InternationalCapitalInvestLandingPage(BasePage):
     region_card_one_title = models.CharField(max_length=255)
     region_card_one_description = models.TextField(max_length=255, blank=True)
     region_card_one_cta_text = models.CharField(max_length=255)
+    region_card_one_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     region_card_two_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -1436,6 +1446,13 @@ class InternationalCapitalInvestLandingPage(BasePage):
     region_card_two_title = models.CharField(max_length=255)
     region_card_two_description = models.TextField(max_length=255, blank=True)
     region_card_two_cta_text = models.CharField(max_length=255)
+    region_card_two_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     region_card_three_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -1446,6 +1463,13 @@ class InternationalCapitalInvestLandingPage(BasePage):
     region_card_three_title = models.CharField(max_length=255)
     region_card_three_description = models.TextField(max_length=255, blank=True)
     region_card_three_cta_text = models.CharField(max_length=255)
+    region_card_three_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     region_card_four_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -1456,6 +1480,13 @@ class InternationalCapitalInvestLandingPage(BasePage):
     region_card_four_title = models.CharField(max_length=255)
     region_card_four_description = models.TextField(max_length=255, blank=True)
     region_card_four_cta_text = models.CharField(max_length=255)
+    region_card_four_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     region_card_five_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -1466,6 +1497,13 @@ class InternationalCapitalInvestLandingPage(BasePage):
     region_card_five_title = models.CharField(max_length=255)
     region_card_five_description = models.TextField(max_length=255, blank=True)
     region_card_five_cta_text = models.CharField(max_length=255)
+    region_card_five_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     region_card_six_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -1476,10 +1514,31 @@ class InternationalCapitalInvestLandingPage(BasePage):
     region_card_six_title = models.CharField(max_length=255)
     region_card_six_description = models.TextField(max_length=255, blank=True)
     region_card_six_cta_text = models.CharField(max_length=255)
+    region_card_six_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     energy_sector_title = models.CharField(max_length=255)
     energy_sector_content = MarkdownField(blank=True)
+    energy_sector_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+', blank=True
+    )
+    energy_sector_image_caption = models.CharField(max_length=255, blank=True)
     energy_sector_cta_text = models.CharField(max_length=255)
+    energy_sector_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     how_we_help_title = models.CharField(max_length=255)
     how_we_help_intro = models.TextField(max_length=255, blank=True)
@@ -1526,8 +1585,8 @@ class InternationalCapitalInvestLandingPage(BasePage):
         MultiFieldPanel(
             heading="Hero",
             children=[
-                FieldPanel('hero_title'),
                 ImageChooserPanel('hero_image'),
+                FieldPanel('hero_title'),
                 FieldPanel('hero_subtitle'),
                 FieldPanel('hero_subheading'),
                 FieldPanel('hero_cta_text')
@@ -1554,18 +1613,21 @@ class InternationalCapitalInvestLandingPage(BasePage):
                         FieldPanel('region_card_one_title'),
                         FieldPanel('region_card_one_description'),
                         FieldPanel('region_card_one_cta_text'),
+                        DocumentChooserPanel('region_card_one_pdf_document'),
                     ]),
                     MultiFieldPanel([
                         ImageChooserPanel('region_card_two_image'),
                         FieldPanel('region_card_two_title'),
                         FieldPanel('region_card_two_description'),
                         FieldPanel('region_card_two_cta_text'),
+                        DocumentChooserPanel('region_card_two_pdf_document'),
                     ]),
                     MultiFieldPanel([
                         ImageChooserPanel('region_card_three_image'),
                         FieldPanel('region_card_three_title'),
                         FieldPanel('region_card_three_description'),
                         FieldPanel('region_card_three_cta_text'),
+                        DocumentChooserPanel('region_card_three_pdf_document'),
                     ]),
                 ]),
                 FieldRowPanel([
@@ -1574,18 +1636,21 @@ class InternationalCapitalInvestLandingPage(BasePage):
                         FieldPanel('region_card_four_title'),
                         FieldPanel('region_card_four_description'),
                         FieldPanel('region_card_four_cta_text'),
+                        DocumentChooserPanel('region_card_four_pdf_document'),
                     ]),
                     MultiFieldPanel([
                         ImageChooserPanel('region_card_five_image'),
                         FieldPanel('region_card_five_title'),
                         FieldPanel('region_card_five_description'),
                         FieldPanel('region_card_five_cta_text'),
+                        DocumentChooserPanel('region_card_five_pdf_document'),
                     ]),
                     MultiFieldPanel([
                         ImageChooserPanel('region_card_six_image'),
                         FieldPanel('region_card_six_title'),
                         FieldPanel('region_card_six_description'),
                         FieldPanel('region_card_six_cta_text'),
+                        DocumentChooserPanel('region_card_six_pdf_document'),
                     ]),
                 ]),
             ]
@@ -1595,7 +1660,10 @@ class InternationalCapitalInvestLandingPage(BasePage):
             children=[
                 FieldPanel('energy_sector_title'),
                 FieldPanel('energy_sector_content'),
-                FieldPanel('energy_sector_cta_text')
+                ImageChooserPanel('energy_sector_image'),
+                FieldPanel('energy_sector_image_caption'),
+                FieldPanel('energy_sector_cta_text'),
+                DocumentChooserPanel('energy_sector_pdf_document'),
             ]
         ),
         MultiFieldPanel(
