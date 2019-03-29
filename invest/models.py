@@ -13,6 +13,7 @@ from core.model_fields import MarkdownField
 from core.models import (
     BasePage, ExclusivePageMixin, ServiceMixin, FormPageMetaClass
 )
+from core.mixins import ServiceHomepageMixin
 from core.panels import SearchEngineOptimisationPanel
 
 
@@ -440,7 +441,7 @@ class SetupGuidePage(BasePage):
     )
 
 
-class InvestHomePage(ExclusivePageMixin, BasePage):
+class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
     service_name_value = cms.INVEST
     slug_identity = cms.INVEST_HOME_PAGE_SLUG
     view_path = '/'
