@@ -10,6 +10,7 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.images.edit_handlers import ImageChooserPanel
 
+from core.helpers import make_translated_interface
 from django.db import models
 
 from core.helpers import make_translated_interface
@@ -2045,3 +2046,8 @@ class InternationalCapitalInvestLandingPage(BasePage):
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
