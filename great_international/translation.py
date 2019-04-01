@@ -122,28 +122,32 @@ class InternationalCampaignPageTranslationOptions(BaseTranslationOptions):
 @register(models.InternationalHomePage)
 class InternationalHomePageTranslationOptions(BaseTranslationOptions):
     fields = (
-       'hero_title',
-       'hero_subtitle',
-       'hero_cta_text',
-       'hero_cta_link',
-       'hero_image',
-       'invest_title',
-       'invest_content',
-       'invest_image',
-       'trade_title',
-       'trade_content',
-       'trade_image',
-       'tariffs_title',
-       'tariffs_description',
-       'tariffs_link',
-       'tariffs_image',
-       'tariffs_call_to_action_text',
-       'news_title',
-       'study_in_uk_cta_text',
-       'visit_uk_cta_text',
-       'related_page_one',
-       'related_page_two',
-       'related_page_three',
+        'hero_title',
+        'hero_subtitle',
+        'hero_cta_text',
+        'hero_image',
+       
+
+        'invest_title',
+        'invest_content',
+        'invest_image',
+
+        'trade_title',
+        'trade_content',
+        'trade_image',
+
+        'news_title',
+
+        'tariffs_title',
+        'tariffs_description',
+        'tariffs_link',
+        'tariffs_image',
+        'tariffs_call_to_action_text',
+        'study_in_uk_cta_text',
+        'visit_uk_cta_text',
+        'related_page_one',
+        'related_page_two',
+        'related_page_three',
     )
 
 
@@ -229,5 +233,78 @@ class InternationalRegionalFolderPageTranslationOptions(
 class InternationalCapitalInvestLandingPageTranslationOptions(
     BaseTranslationOptions
 ):
-    fields = []\
+    fields = (
+        'hero_title',
+        'hero_image',
+        'hero_subheading',
+        'hero_subtitle',
+        'hero_cta_text',
+
+        'reason_to_invest_section_title',
+        'reason_to_invest_section_intro',
+        'reason_to_invest_section_content',
+        'reason_to_invest_section_image',
+        'reason_to_invest_section_image_caption',
+
+        'region_ops_section_title',
+        'region_ops_section_intro',
+
+        'region_card_one_image',
+        'region_card_one_title',
+        'region_card_one_description',
+        'region_card_one_cta_text',
+        'region_card_one_pdf_document',
+
+        'region_card_two_image',
+        'region_card_two_title',
+        'region_card_two_description',
+        'region_card_two_cta_text',
+        'region_card_two_pdf_document',
+
+        'region_card_three_image',
+        'region_card_three_title',
+        'region_card_three_description',
+        'region_card_three_cta_text',
+        'region_card_three_pdf_document',
+
+        'region_card_four_image',
+        'region_card_four_title',
+        'region_card_four_description',
+        'region_card_four_cta_text',
+        'region_card_four_pdf_document',
+
+        'region_card_five_image',
+        'region_card_five_title',
+        'region_card_five_description',
+        'region_card_five_cta_text',
+        'region_card_five_pdf_document',
+
+        'region_card_six_image',
+        'region_card_six_title',
+        'region_card_six_description',
+        'region_card_six_cta_text',
+        'region_card_six_pdf_document',
+
+        'energy_sector_title',
+        'energy_sector_content',
+        'energy_sector_image',
+        'energy_sector_image_caption',
+        'energy_sector_cta_text',
+        'energy_sector_pdf_document',
+
+        'how_we_help_title',
+        'how_we_help_intro',
+        'how_we_help_one_icon',
+        'how_we_help_one_text',
+        'how_we_help_two_icon',
+        'how_we_help_two_text',
+        'how_we_help_three_icon',
+        'how_we_help_three_text',
+        'how_we_help_four_icon',
+        'how_we_help_four_text',
+
+        'contact_section_title',
+        'contact_section_text',
+        'contact_section_cta_text',
+    )
 
