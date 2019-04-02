@@ -214,3 +214,30 @@ def test_country_page_view(admin_client, root_page):
     assert 'statistics' in response.json()['accordions'][0]
     assert 'case_study' in response.json()['accordions'][0]
     assert 'ctas' in response.json()['accordions'][0]
+
+
+@pytest.mark.django_db
+def test_topic_landing_page_view_country_guides_alph_order(
+        admin_client,
+        root_page):
+    topic_landing_page = factories.TopicLandingPageFactory.create(
+        parent=root_page,
+        live=True
+    )
+    country_guide_page1 = factories.CountryGuidePageFactory.create(
+        parent=topic_landing_page,
+        live=True,
+        heading='acme'
+    )
+    country_guide_page2 = factories.CountryGuidePageFactory.create(
+        parent=topic_landing_page,
+        live=True,
+        heading='foo'
+    )
+
+    url = reverse('api:api:pages:detail', kwargs={'pk': topic_landing_page.pk})
+    response = admin_client.get(url)
+    assert response.status_code == 200
+    assert [page['id'] for page in response.json()['child_pages']] == [
+        country_guide_page1.pk, country_guide_page2.pk
+    ]

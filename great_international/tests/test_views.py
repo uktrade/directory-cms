@@ -84,6 +84,29 @@ def test_international_topic_landing_page_view(admin_client, root_page):
     ) == [article_listing_page.pk, campaign_page.pk]
 
 
+def test_international_topic_landing_page_view_sectors_alphabetical_order(
+        admin_client, root_page):
+    landing_page = factories.InternationalTopicLandingPageFactory.create(
+        parent=root_page
+    )
+    sector_page1 = factories.InternationalSectorPageFactory.create(
+        parent=landing_page,
+        live=True,
+        heading='acme'
+    )
+    sector_page2 = factories.InternationalSectorPageFactory.create(
+        parent=landing_page,
+        live=True,
+        heading='foo'
+    )
+    url = reverse('api:api:pages:detail', kwargs={'pk': landing_page.pk})
+    response = admin_client.get(url)
+    assert response.status_code == 200
+    assert [page['id'] for page in response.json()['child_pages']] == [
+        sector_page1.pk, sector_page2.pk
+    ]
+
+
 def test_article_listingpage_with_localised_content(admin_client, root_page):
     article_listing_page = factories.InternationalArticleListingPageFactory.create(  # NOQA
         parent=root_page,
