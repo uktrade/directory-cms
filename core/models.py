@@ -1,6 +1,6 @@
-from functools import partial, reduce
+from functools import partial
 import hashlib
-from urllib.parse import urljoin, urlencode
+from urllib.parse import urlencode
 
 from directory_constants.constants import choices
 from django.core.exceptions import ValidationError
@@ -124,9 +124,7 @@ class BasePage(Page):
         return [self.view_path, self.slug + '/']
 
     def get_url(self, is_draft=False, language_code=settings.LANGUAGE_CODE):
-        domain = dict(constants.APP_URLS)[self.service_name_value]
-        url_path_parts = self.get_url_path_parts()
-        url = reduce(urljoin, [domain] + url_path_parts)
+        url = self.full_url
         querystring = {}
         if is_draft:
             querystring['draft_token'] = self.get_draft_token()
