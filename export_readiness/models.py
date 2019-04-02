@@ -502,6 +502,9 @@ class ArticleListingPage(BasePage):
 class CountryGuidePage(BasePage):
     """Make a cup of tea, this model is BIG!"""
 
+    class Meta:
+        ordering = ['-heading']
+
     service_name_value = cms.EXPORT_READINESS
     subpage_types = [
         'export_readiness.ArticleListingPage',

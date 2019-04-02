@@ -39,6 +39,10 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
 
 
 class InternationalSectorPage(BasePage):
+
+    class Meta:
+        ordering = ['-heading']
+
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.InternationalTopicLandingPage']
     subpage_types = []
