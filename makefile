@@ -64,7 +64,6 @@ DEBUG_SET_ENV_VARS := \
 	export APP_URL_FIND_A_SUPPLIER=http://supplier.trade.great:8005; \
 	export APP_URL_INVEST=http://invest.trade.great:8011; \
 	export APP_URL_GREAT_INTERNATIONAL=http://international.trade.great:8012/international/; \
-	export DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage; \
 	export COPY_DESTINATION_URLS=https://directory-cms-dev.herokuapp.com,https://dev.cms.directory.uktrade.io,https://stage.cms.directory.uktrade.io,http://cms.trade.great:8010; \
 	export EMAIL_BACKEND_CLASS_NAME=console; \
 	export FEATURE_DEBUG_TOOLBAR_ENABLED=true; \
