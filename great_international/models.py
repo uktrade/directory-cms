@@ -16,7 +16,6 @@ from core.models import (
     ExclusivePageMixin,
     ServiceMixin,
 )
-from core.mixins import ServiceHomepageMixin
 from core.panels import SearchEngineOptimisationPanel
 from export_readiness.models import Tag
 
@@ -456,9 +455,7 @@ class InternationalSectorPage(BasePage):
     ]
 
 
-class InternationalHomePage(
-    ExclusivePageMixin, ServiceHomepageMixin, BasePage
-):
+class InternationalHomePage(ExclusivePageMixin, BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
     subpage_types = []
