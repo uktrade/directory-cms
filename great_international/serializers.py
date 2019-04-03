@@ -451,6 +451,7 @@ class InternationalTopicLandingPageSerializer(
             InternationalSectorPage,
             InternationalSectorPageSerializer
         )
+        sectors = sorted(sectors, key=lambda x: x['heading'])
         return articles + campaigns + guides + sectors
 
 
