@@ -530,6 +530,8 @@ class TopicLandingPageSerializer(
             CountryGuidePage,
             CountryGuidePageSerializer
         )
+        country_guides = sorted(country_guides, key=lambda x: x['heading'])
+
         return articles + superregions + country_guides
 
 
