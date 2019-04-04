@@ -159,7 +159,7 @@ class InternationalSectorPage(BasePage):
     )
 
     case_study_title = models.CharField(max_length=255, blank=True)
-    case_study_description = models.CharField(max_length=255, blank=True)
+    case_study_description = models.CharField(max_length=500, blank=True)
     case_study_cta_text = models.TextField(
         blank=True,
         verbose_name='Case study link text'
