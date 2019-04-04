@@ -245,7 +245,6 @@ def test_all_models_cached():
         export_readiness.models.AllContactPagesPage,
         great_international.models.InternationalRegionPage,
         great_international.models.InternationalLocalisedFolderPage,
-        great_international.models.InternationalCuratedTopicLandingPage,
         # Page is added by TestSubscriber in other tests.
         Page,
     }
@@ -321,3 +320,14 @@ def test_transactional_cache_delete(mock_delete_many, mock_delete):
         '{slug}/api/pages/lookup-by-slug/s2/?lang=fr&service_name=INVEST',
         '{slug}/api/pages/lookup-by-slug/s3/?lang=de&service_name=INVEST',
     ])
+
+
+def test_initialising_cache_class_raises_error():
+
+    class DummyCacheSubscriber(cache.AbstractDatabaseCacheSubscriber):
+        model = None
+        subscriptions = []
+
+    with pytest.raises(SystemError) as excinfo:
+        DummyCacheSubscriber()
+    assert 'This class cannot be instantiated.' in str(excinfo.value)

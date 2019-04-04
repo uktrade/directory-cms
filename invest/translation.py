@@ -18,6 +18,11 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'benefits_section_img',
         'benefits_section_img_caption',
 
+        'capital_invest_section_title',
+        'capital_invest_section_content',
+        'capital_invest_section_cta_text',
+        'capital_invest_section_background_image',
+
         'eu_exit_section_title',
         'eu_exit_section_content',
         'eu_exit_section_call_to_action_text',
