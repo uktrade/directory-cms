@@ -3511,36 +3511,36 @@ class ContactSuccessPage(BasePage):
     topic_mapping = {
         cms.GREAT_CONTACT_US_FORM_SUCCESS_SLUG: {
             'title': 'Contact domestic form success',
-            'full_path_override': 'contact/domestic/success/',
+            'full_path_override': '/contact/domestic/success/',
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_EVENTS_SLUG: {
             'title': 'Contact Events form success',
-            'full_path_override': 'contact/events/success/',
+            'full_path_override': '/contact/events/success/',
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_DSO_SLUG: {
             'title': 'Contact Defence and Security Organisation form success',
             'full_path_override': (
-                'contact/defence-and-security-organisation/success/'),
+                '/contact/defence-and-security-organisation/success/'),
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_EXPORT_ADVICE_SLUG: {
             'title': 'Contact exporting from the UK form success',
-            'full_path_override': 'contact/export-advice/success/',
+            'full_path_override': '/contact/export-advice/success/',
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_FEEDBACK_SLUG: {
             'title': 'Contact feedback form success',
-            'full_path_override': 'contact/feedback/success/',
+            'full_path_override': '/contact/feedback/success/',
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_FIND_COMPANIES_SLUG: {
             'title': 'Contact find UK companies form success',
-            'full_path_override': 'contact/find-uk-companies/success/',
+            'full_path_override': '/contact/find-uk-companies/success/',
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_INTERNATIONAL_SLUG: {
             'title': 'Contact international form success',
-            'full_path_override': 'contact/international/success/',
+            'full_path_override': '/contact/international/success/',
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_SOO_SLUG: {
             'title': 'Contact Selling Online Overseas form success',
-            'full_path_override': 'contact/selling-online-overseas/success/',
+            'full_path_override': '/contact/selling-online-overseas/success/',
         },
     }
 
