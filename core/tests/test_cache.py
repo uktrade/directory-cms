@@ -328,5 +328,6 @@ def test_initialising_cache_class_raises_error():
         model = None
         subscriptions = []
 
-    with pytest.raises(SystemError) as e:
+    with pytest.raises(SystemError) as excinfo:
         DummyCacheSubscriber()
+    assert 'This class cannot be instantiated.' in str(excinfo.value)
