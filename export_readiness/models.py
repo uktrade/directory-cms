@@ -21,6 +21,7 @@ from core.models import (
     FormPageMetaClass,
     ServiceMixin,
 )
+from core.mixins import ServiceHomepageMixin
 from core.panels import SearchEngineOptimisationPanel
 
 
@@ -3153,7 +3154,7 @@ class ArticlePage(BasePage):
     ]
 
 
-class HomePage(ExclusivePageMixin, BasePage):
+class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
     slug_identity = cms.GREAT_HOME_SLUG
     subpage_types = [
