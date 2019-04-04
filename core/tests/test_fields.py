@@ -6,34 +6,34 @@ from core import fields
 from core import permissions
 from find_a_supplier.serializers import IndustryPageSerializer
 from find_a_supplier.tests.factories import (
-    IndustryLandingPageFactory,
-    IndustryPageFactory,
-    LandingPageFactory,
-    IndustryContactPageFactory,
+    IndustryLandingPageFactory, IndustryPageFactory,
+    LandingPageFactory, IndustryContactPageFactory,
 )
 
 
 @pytest.mark.django_db
-def test_meta_field(page, rf):
-    page.slug = 'test-slug'
-    page.pk = 4
+def test_meta_field(rf, root_page):
+    fas_industry_page = IndustryPageFactory(
+        parent=root_page,
+        slug='test-slug',
+    )
 
     serializer = IndustryPageSerializer(
-        instance=page,
+        instance=fas_industry_page,
         context={'request': rf.get('/')}
     )
     assert serializer.data['meta'] == {
         'draft_token': None,
         'languages': [('en-gb', 'English')],
-        'url': 'http://supplier.trade.great:8005/industries/test-slug/',
+        'url': 'http://supplier.trade.great:8005/test-slug/',
         'localised_urls': [
             (
                 'en-gb',
-                'http://supplier.trade.great:8005/industries/test-slug/'
+                'http://supplier.trade.great:8005/test-slug/'
             )
         ],
         'slug': 'test-slug',
-        'pk': page.pk
+        'pk': fas_industry_page.pk
     }
 
 
@@ -52,11 +52,11 @@ def test_meta_field_slug_translation(page, rf):
     assert data == {
         'draft_token': None,
         'languages': [('en-gb', 'English')],
-        'url': 'http://supplier.trade.great:8005/industries/test-slug-en/',
+        'url': 'http://supplier.trade.great:8005/test-slug-en/',
         'localised_urls': [
             (
                 'en-gb',
-                'http://supplier.trade.great:8005/industries/test-slug-en/'
+                'http://supplier.trade.great:8005/test-slug-en/'
             )
         ],
         'slug': 'test-slug-en',
@@ -74,7 +74,7 @@ def test_meta_field_contains_draft_token(page_with_reversion, rf):
         context={'request': rf.get('/')}
     )
 
-    url = 'http://supplier.trade.great:8005/industries/test-slug/'
+    url = 'http://supplier.trade.great:8005/test-slug/'
     assert serializer.data['meta'] == {
         'draft_token': page_with_reversion.get_draft_token(),
         'languages': [
@@ -129,7 +129,7 @@ def test_markdown_to_html_field(page, rf):
     assert serializer.data == {
         'hero_text_en_gb': (
             '<p><a href="http://supplier.trade.great:8005/'
-            'industries/the-slug/">hyperlink</a></p>'
+            'the-slug/">hyperlink</a></p>'
         )
     }
 

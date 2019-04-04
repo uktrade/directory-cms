@@ -187,16 +187,16 @@ def test_translated_localised_urls(translated_page):
     domain = 'http://supplier.trade.great:8005'
 
     assert translated_page.get_localized_urls() == [
-        ('en-gb', domain + '/industries/slug/'),
-        ('de', domain + '/industries/slug/?lang=de'),
-        ('ja', domain + '/industries/slug/?lang=ja'),
-        ('ru', domain + '/industries/slug/?lang=ru'),
-        ('zh-hans', domain + '/industries/slug/?lang=zh-hans'),
-        ('fr', domain + '/industries/slug/?lang=fr'),
-        ('es', domain + '/industries/slug/?lang=es'),
-        ('pt', domain + '/industries/slug/?lang=pt'),
-        ('pt-br', domain + '/industries/slug/?lang=pt-br'),
-        ('ar', domain + '/industries/slug/?lang=ar')
+        ('en-gb', domain + '/slug/'),
+        ('de', domain + '/slug/?lang=de'),
+        ('ja', domain + '/slug/?lang=ja'),
+        ('ru', domain + '/slug/?lang=ru'),
+        ('zh-hans', domain + '/slug/?lang=zh-hans'),
+        ('fr', domain + '/slug/?lang=fr'),
+        ('es', domain + '/slug/?lang=es'),
+        ('pt', domain + '/slug/?lang=pt'),
+        ('pt-br', domain + '/slug/?lang=pt-br'),
+        ('ar', domain + '/slug/?lang=ar')
     ]
 
 

@@ -177,7 +177,7 @@ def test_contact_us_guidance_infers_field_values(topic, values):
 
     assert page.slug == topic
     assert page.title == values['title']
-    assert page.view_path == values['view_path']
+    assert page.full_path == values['full_path_override']
 
 
 @pytest.mark.django_db
@@ -191,7 +191,7 @@ def test_contact_us_success_infers_field_values(topic, values):
 
     assert page.slug == topic
     assert page.title == values['title']
-    assert page.view_path == values['view_path']
+    assert page.full_path == values['full_path_override']
 
 
 @pytest.mark.django_db
@@ -205,6 +205,6 @@ def test_performance_dashboard_infers_field_values(product_link, values):
 
     assert page.slug == values['slug']
     assert page.title == values['heading'] + ' Performance Dashboard'
-    assert page.view_path == values['view_path']
+    assert page.full_path == values['full_path_override']
     assert page.landing_dashboard == values['landing_dashboard']
     assert page.heading == values['heading']
