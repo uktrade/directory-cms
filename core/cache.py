@@ -133,6 +133,9 @@ class AbstractDatabaseCacheSubscriber(abc.ABC):
 
     cache_populator = CachePopulator
 
+    def __init__(self):
+        raise SystemError('This class cannot be instantiated.')
+
     @property
     @abc.abstractmethod
     def model(self):
