@@ -320,3 +320,13 @@ def test_transactional_cache_delete(mock_delete_many, mock_delete):
         '{slug}/api/pages/lookup-by-slug/s2/?lang=fr&service_name=INVEST',
         '{slug}/api/pages/lookup-by-slug/s3/?lang=de&service_name=INVEST',
     ])
+
+
+def test_initialising_cache_class_raises_error():
+
+    class DummyCacheSubscriber(cache.AbstractDatabaseCacheSubscriber):
+        model = None
+        subscriptions = []
+
+    with pytest.raises(SystemError) as e:
+        DummyCacheSubscriber()
