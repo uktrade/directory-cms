@@ -7,9 +7,22 @@ from django.core.exceptions import ValidationError
 from django.utils import translation
 from wagtail.core.models import Page
 
-from find_a_supplier.tests.factories import IndustryPageFactory
-from invest.tests.factories import InvestAppFactory, \
-    SectorLandingPageFactory, SectorPageFactory
+from find_a_supplier.tests.factories import (
+    FindASupplierAppFactory, IndustryPageFactory, IndustryLandingPageFactory,
+    IndustryArticlePageFactory,
+)
+from invest.tests.factories import (
+    InvestAppFactory, SectorLandingPageFactory, SectorPageFactory,
+)
+from export_readiness.tests.factories import (
+    ExportReadinessAppFactory, TopicLandingPageFactory,
+    ArticleListingPageFactory, ArticlePageFactory,
+    PrivacyAndCookiesPageFactory, SitePolicyPagesFactory,
+)
+from great_international.tests.factories import (
+    GreatInternationalAppFactory, InternationalTopicLandingPageFactory,
+    InternationalArticleListingPageFactory, InternationalArticlePageFactory,
+)
 from invest.models import InvestApp
 
 
@@ -47,13 +60,58 @@ def test_delete_same_slug_different_services(root_page):
 
 
 @pytest.mark.django_db
-def test_page_path(root_page):
-    page_one = SectorLandingPageFactory(parent=root_page)
-    page_two = SectorPageFactory(slug='foo', parent=page_one)
-    page_three = SectorPageFactory(slug='bar', parent=page_two)
+def test_page_paths(root_page):
+    invest_app = InvestAppFactory(parent=root_page)
+    invest_page_one = SectorLandingPageFactory(parent=invest_app)
+    invest_page_two = SectorPageFactory(slug='foo', parent=invest_page_one)
+    invest_page_three = SectorPageFactory(slug='bar', parent=invest_page_two)
 
-    assert page_three.full_path == '/industries/foo/bar/'
-    assert page_two.full_path == '/industries/foo/'
+    assert invest_page_two.full_path == '/industries/foo/'
+    assert invest_page_three.full_path == '/industries/foo/bar/'
+
+    fas_app = FindASupplierAppFactory(parent=root_page)
+    fas_industry_landing_page = IndustryLandingPageFactory(parent=fas_app)
+    fas_industry_one = IndustryPageFactory(
+        slug='foo', parent=fas_industry_landing_page)
+    fas_industry_two = IndustryPageFactory(
+        slug='bar', parent=fas_industry_landing_page)
+    fas_industry_article = IndustryArticlePageFactory(
+        slug='article', parent=fas_industry_two)
+
+    assert fas_industry_one.full_path == '/industries/foo/'
+    assert fas_industry_two.full_path == '/industries/bar/'
+    assert fas_industry_article.full_path == '/industry-articles/article/'
+
+    domestic_app = ExportReadinessAppFactory(parent=root_page)
+    domestic_page_one = TopicLandingPageFactory(
+        parent=domestic_app, slug='topic')
+    domestic_page_two = ArticleListingPageFactory(
+        parent=domestic_page_one, slug='list')
+    domestic_page_three = ArticlePageFactory(
+        parent=domestic_page_two, slug='article')
+
+    assert domestic_page_two.full_path == '/topic/list/'
+    assert domestic_page_three.full_path == '/topic/list/article/'
+
+    domestice_site_policy = SitePolicyPagesFactory(parent=domestic_app)
+    domestic_cookies_one = PrivacyAndCookiesPageFactory(
+        slug='privacy', parent=domestice_site_policy)
+    domestic_cookies_two = PrivacyAndCookiesPageFactory(
+        slug='cookies', parent=domestic_cookies_one)
+
+    assert domestic_cookies_one.full_path == '/privacy/'
+    assert domestic_cookies_two.full_path == '/privacy/cookies/'
+
+    international_app = GreatInternationalAppFactory(parent=root_page)
+    international_page_one = InternationalTopicLandingPageFactory(
+        parent=international_app, slug='topic')
+    international_page_two = InternationalArticleListingPageFactory(
+        parent=international_page_one, slug='list')
+    international_page_three = InternationalArticlePageFactory(
+        parent=international_page_two, slug='article')
+
+    assert international_page_two.full_path == '/topic/list/'
+    assert international_page_three.full_path == '/topic/list/article/'
 
 
 @pytest.mark.django_db
