@@ -47,6 +47,7 @@ class InternationalTopicLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
         models.InternationalArticlePage,
         models.InternationalArticleListingPage,
         models.InternationalSectorPage,
+        models.InternationalCampaignPage
     ]
 
 
