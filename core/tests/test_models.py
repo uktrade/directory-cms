@@ -206,7 +206,7 @@ def test_translated_localised_urls_untranslated_page(page):
     page.pk = 3
 
     assert page.get_localized_urls() == [
-        ('en-gb', 'http://supplier.trade.great:8005/industries/slug/'),
+        ('en-gb', 'http://supplier.trade.great:8005/slug/'),
     ]
 
 
