@@ -15,7 +15,7 @@ def test_required_fields_invest_home_page():
             'sub_heading',
             'benefits_section_title',
             'capital_invest_section_title',
-            'capital_invest_section_content',
+            'capital_invest_section_cta_text',
             'capital_invest_section_background_image',
             'sector_title',
             'sector_button_text',
