@@ -16,7 +16,6 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'benefits_section_intro',
         'benefits_section_content',
         'benefits_section_img',
-        'benefits_section_img_caption',
 
         'capital_invest_section_title',
         'capital_invest_section_content',
@@ -27,7 +26,6 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'eu_exit_section_content',
         'eu_exit_section_call_to_action_text',
         'eu_exit_section_img',
-        'eu_exit_section_img_caption',
 
         # subsections
         'subsection_title_one',
@@ -58,7 +56,6 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'setup_guide_title',
         'setup_guide_content',
         'setup_guide_img',
-        'setup_guide_img_caption',
         'setup_guide_call_to_action_text',
         'setup_guide_lead_in',
         'how_we_help_title',

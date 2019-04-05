@@ -468,11 +468,6 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         related_name='+',
         verbose_name="Benefits section image"
     )
-    benefits_section_img_caption = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name="Benefits section image caption"
-    )
 
     capital_invest_section_title = models.CharField(
         max_length=255
@@ -514,11 +509,6 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+',
         verbose_name="EU exit section image"
-    )
-    eu_exit_section_img_caption = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name="EU Exit section image caption"
     )
 
     # subsections
@@ -579,12 +569,6 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+',
         verbose_name="Setup guide image"
-    )
-
-    setup_guide_img_caption = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name="Setup guide image caption"
     )
 
     setup_guide_call_to_action_text = models.CharField(max_length=255)
@@ -660,7 +644,6 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
                 FieldPanel('benefits_section_intro'),
                 FieldPanel('benefits_section_content'),
                 ImageChooserPanel('benefits_section_img'),
-                FieldPanel('benefits_section_img_caption'),
             ],
             heading='Benefits section',
             classname='collapsible'
@@ -683,7 +666,6 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
                 FieldPanel('eu_exit_section_content'),
                 FieldPanel('eu_exit_section_call_to_action_text'),
                 ImageChooserPanel('eu_exit_section_img'),
-                FieldPanel('eu_exit_section_img_caption'),
             ],
             heading='EU Exit section',
             classname='collapsible'
@@ -774,7 +756,6 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
             FieldPanel('setup_guide_title'),
             FieldPanel('setup_guide_content'),
             ImageChooserPanel('setup_guide_img'),
-            FieldPanel('setup_guide_img_caption'),
             FieldPanel('setup_guide_call_to_action_text')
             ],
             heading='Set up guide section',
