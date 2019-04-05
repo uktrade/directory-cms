@@ -14,7 +14,6 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 
-from directory_components.constants import IP_RETRIEVER_NAME_GOV_UK
 import dj_database_url
 import environ
 
@@ -59,7 +58,6 @@ INSTALLED_APPS = [
     'health_check.db',
     'health_check.cache',
     'directory_components',
-    'export_elements',
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
     'wagtail.contrib.forms',
@@ -335,41 +333,6 @@ USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_HSTS_SECONDS = env.int('SECURE_HSTS_SECONDS', 16070400)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-
-# HEADER/FOOTER URLS
-GREAT_EXPORT_HOME = env.str('GREAT_EXPORT_HOME', '')
-GREAT_HOME = env.str('GREAT_HOME', '')
-CUSTOM_PAGE = env.str('CUSTOM_PAGE', '')
-
-# EXPORTING PERSONAS
-EXPORTING_NEW = env.str('EXPORTING_NEW', '')
-EXPORTING_REGULAR = env.str('EXPORTING_REGULAR', '')
-EXPORTING_OCCASIONAL = env.str('EXPORTING_OCCASIONAL', '')
-
-# GUIDANCE/ARTICLE SECTIONS
-GUIDANCE_MARKET_RESEARCH = env.str('GUIDANCE_MARKET_RESEARCH', '')
-GUIDANCE_CUSTOMER_INSIGHT = env.str('GUIDANCE_CUSTOMER_INSIGHT', '')
-GUIDANCE_FINANCE = env.str('GUIDANCE_FINANCE', '')
-GUIDANCE_BUSINESS_PLANNING = env.str('GUIDANCE_BUSINESS_PLANNING', '')
-GUIDANCE_GETTING_PAID = env.str('GUIDANCE_GETTING_PAID', '')
-GUIDANCE_OPERATIONS_AND_COMPLIANCE = env.str(
-    'GUIDANCE_OPERATIONS_AND_COMPLIANCE', ''
-)
-
-# SERVICES
-SERVICES_EXOPPS = env.str('SERVICES_EXOPPS', '')
-SERVICES_EXOPPS_ACTUAL = env.str('SERVICES_EXOPPS_ACTUAL', '')
-SERVICES_FAB = env.str('SERVICES_FAB', '')
-SERVICES_GET_FINANCE = env.str('SERVICES_GET_FINANCE', '')
-SERVICES_SOO = env.str('SERVICES_SOO', '')
-SERVICES_EVENTS = env.str('SERVICES_EVENTS', '')
-
-# FOOTER LINKS
-INFO_ABOUT = env.str('INFO_ABOUT', '')
-INFO_CONTACT_US_DIRECTORY = env.str('INFO_CONTACT_US_DIRECTORY', '')
-INFO_PRIVACY_AND_COOKIES = env.str('INFO_PRIVACY_AND_COOKIES', '')
-INFO_TERMS_AND_CONDITIONS = env.str('INFO_TERMS_AND_CONDITIONS', '')
-INFO_DIT = env.str('INFO_DIT', '')
 
 # Sentry
 RAVEN_CONFIG = {

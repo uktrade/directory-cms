@@ -275,7 +275,7 @@ class PerformanceDashboardPage(BasePage):
     landing_dashboard = models.BooleanField(default=False)
 
     service_mapping = {
-        urls.SERVICE_EXPORT_READINESS: {
+        urls.SERVICES_GREAT_DOMESTIC: {
             'slug': cms.GREAT_PERFORMANCE_DASHBOARD_SLUG,
             'heading': 'Great.gov.uk',
             'view_path': '',

@@ -75,13 +75,19 @@ DEBUG_SET_ENV_VARS := \
 	export ACTIVITY_STREAM_ACCESS_KEY_ID=123-id-key; \
 	export ACTIVITY_STREAM_SECRET_ACCESS_KEY=123-secret-key
 
-
-
 TEST_SET_ENV_VARS := \
 	export DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage; \
 	export API_CACHE_DISABLED=false; \
 	export STATICFILES_STORAGE=django.contrib.staticfiles.storage.StaticFilesStorage; \
-	export DEBUG=false
+	export DEBUG=false; \
+	export AWS_STORAGE_BUCKET_NAME=debug; \
+	export AWS_ACCESS_KEY_ID=debug; \
+	export AWS_SECRET_ACCESS_KEY=debug; \
+	export EMAIL_HOST=debug; \
+	export EMAIL_PORT=debug; \
+	export EMAIL_HOST_USER=debug; \
+	export EMAIL_HOST_PASSWORD=debug; \
+	export DEFAULT_FROM_EMAIL=debug
 
 debug_migrate:
 	$(DEBUG_SET_ENV_VARS) && ./manage.py migrate
