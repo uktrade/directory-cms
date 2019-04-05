@@ -481,12 +481,10 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         blank=True
     )
     capital_invest_section_cta_text = models.CharField(
-        max_length=255,
-        blank=True
+        max_length=255
     )
     capital_invest_section_background_image = models.ForeignKey(
         'wagtailimages.Image',
-        blank=True,
         null=True,
         on_delete=models.SET_NULL,
         related_name='+'
