@@ -474,6 +474,24 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         verbose_name="Benefits section image caption"
     )
 
+    capital_invest_section_title = models.CharField(
+        max_length=255
+    )
+    capital_invest_section_content = MarkdownField(
+        blank=True
+    )
+    capital_invest_section_cta_text = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    capital_invest_section_background_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
     eu_exit_section_title = models.CharField(
         max_length=255,
         blank=True,
@@ -647,6 +665,17 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
                 FieldPanel('benefits_section_img_caption'),
             ],
             heading='Benefits section',
+            classname='collapsible'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('capital_invest_section_title'),
+                FieldPanel('capital_invest_section_content'),
+                FieldPanel('capital_invest_section_cta_text'),
+                ImageChooserPanel('capital_invest_section_background_image'),
+            ],
+            heading='Capital Investment section',
             classname='collapsible'
         ),
 
@@ -915,7 +944,11 @@ class HighPotentialOpportunityDetailPage(BasePage):
     )
 
     featured = models.BooleanField(default=True)
-    description = models.TextField(blank=True)
+    description = models.TextField(
+        blank=True,
+        help_text="This is the description shown when the HPO "
+                  "is featured on another page i.e. the Invest Home Page"
+    )
 
     contact_proposition = MarkdownField(
         blank=False,
