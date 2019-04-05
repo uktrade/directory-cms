@@ -9,7 +9,6 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 
 from django.db import models
 
-from core.helpers import make_translated_interface
 from core.model_fields import MarkdownField
 
 from core.models import (
@@ -455,11 +454,6 @@ class InternationalSectorPage(BasePage):
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
-
 
 class InternationalHomePage(ExclusivePageMixin, BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
@@ -639,11 +633,6 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
         FieldPanel('slug'),
     ]
 
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
-
 
 class InternationalRegionPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
@@ -770,11 +759,6 @@ class InternationalArticlePage(BasePage):
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
-
 
 class InternationalArticleListingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
@@ -823,11 +807,6 @@ class InternationalArticleListingPage(BasePage):
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
 
 
 class InternationalCampaignPage(BasePage):
@@ -1066,11 +1045,6 @@ class InternationalCampaignPage(BasePage):
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
-
 
 class InternationalTopicLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
@@ -1111,11 +1085,6 @@ class InternationalTopicLandingPage(BasePage):
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
 
 
 class InternationalCuratedTopicLandingPage(BasePage):
@@ -1245,11 +1214,6 @@ class InternationalCuratedTopicLandingPage(BasePage):
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
-
 
 class InternationalGuideLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
@@ -1357,8 +1321,3 @@ class InternationalGuideLandingPage(BasePage):
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
