@@ -6,6 +6,22 @@ from django.utils import timezone
 from export_readiness import models
 
 
+class ExportReadinessAppFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.ExportReadinessApp
+
+    title = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+
+
+class SitePolicyPagesFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.SitePolicyPages
+
+    title = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+
+
 class PerformanceDashboardPageFactory(wagtail_factories.PageFactory):
 
     class Meta:

@@ -1,6 +1,6 @@
-from functools import partial, reduce
+from functools import partial
 import hashlib
-from urllib.parse import urljoin, urlencode
+from urllib.parse import urlencode
 
 from directory_constants.constants import choices
 from django.core.exceptions import ValidationError
@@ -65,7 +65,16 @@ class BasePage(Page):
     class Meta:
         abstract = True
 
+    # URL fixes for legacy pages:
+    # overrides the url path before the page slug is appended
     view_path = ''
+    # overrides the entire url path including any custom slug the page has
+    full_path_override = ''
+    # if True when generating the url this page's slug will be ignored
+    folder_page = False
+    # overrides page.slug when generating the url
+    slug_override = ''
+
     subpage_types = []
     base_form_class = forms.WagtailAdminPageForm
     content_panels = []
@@ -124,9 +133,7 @@ class BasePage(Page):
         return [self.view_path, self.slug + '/']
 
     def get_url(self, is_draft=False, language_code=settings.LANGUAGE_CODE):
-        domain = dict(constants.APP_URLS)[self.service_name_value]
-        url_path_parts = self.get_url_path_parts()
-        url = reduce(urljoin, [domain] + url_path_parts)
+        url = self.full_url
         querystring = {}
         if is_draft:
             querystring['draft_token'] = self.get_draft_token()
@@ -141,12 +148,24 @@ class BasePage(Page):
         """Return the full path of a page, ignoring the root_page and
         the app page. Used by the lookup-by-url view in prototype mode
         """
-        # starts from 2 to remove root page and app page
-        path_components = [page.slug for page in self.get_ancestors()[2:]]
-        path_components.append(self.slug)
+        if self.full_path_override:
+            return self.full_path_override
+
+        path_components = []
+
+        if not self.view_path:
+            # starts from 2 to remove root page and app page
+            path_components = [
+                page.specific.slug_override or page.specific.slug
+                for page in self.get_ancestors()[2:]
+                if not page.specific.folder_page]
+
         # need to also take into account the view_path if it's set
-        if self.view_path:
+        else:
             path_components.insert(0, self.view_path.replace('/', ''))
+
+        path_components.append(self.slug_override or self.slug)
+
         return '/{path}/'.format(path='/'.join(path_components))
 
     @property

@@ -13,6 +13,7 @@ from core.model_fields import MarkdownField
 from core.models import (
     BasePage, ExclusivePageMixin, ServiceMixin, FormPageMetaClass
 )
+from core.mixins import ServiceHomepageMixin
 from core.panels import SearchEngineOptimisationPanel
 
 
@@ -31,7 +32,7 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.INVEST
     subpage_types = ['invest.sectorPage']
     slug_identity = cms.INVEST_SECTOR_LANDING_PAGE_SLUG
-    view_path = 'industries/'
+    slug_override = 'industries'
 
     # page fields
     heading = models.CharField(max_length=255)
@@ -70,7 +71,7 @@ class RegionLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.INVEST
     subpage_types = ['invest.sectorPage']
     slug_identity = cms.INVEST_UK_REGION_LANDING_PAGE_SLUG
-    view_path = 'uk-regions/'
+    slug_override = 'uk-regions'
 
     # page fields
     heading = models.CharField(max_length=255)
@@ -107,8 +108,7 @@ class RegionLandingPage(ExclusivePageMixin, BasePage):
 class SectorPage(BasePage):
     # Related sector are implemented as subpages
     service_name_value = cms.INVEST
-    subpage_types = ['invest.sectorPage']
-    view_path = 'industries/'
+    subpage_types = ['invest.SectorPage']
 
     featured = models.BooleanField(default=False)
     description = models.TextField()  # appears in card on external pages
@@ -440,7 +440,7 @@ class SetupGuidePage(BasePage):
     )
 
 
-class InvestHomePage(ExclusivePageMixin, BasePage):
+class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
     service_name_value = cms.INVEST
     slug_identity = cms.INVEST_HOME_PAGE_SLUG
     view_path = ''
