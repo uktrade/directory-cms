@@ -586,6 +586,8 @@ class IndustryContactPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/contact/'
     slug_identity = cms.FIND_A_SUPPLIER_INDUSTRY_CONTACT_SLUG
+    # override the slug when generating the url
+    slug_override = ''
 
     breadcrumbs_label = models.CharField(max_length=50)
     introduction_text = MarkdownField(blank=True)
