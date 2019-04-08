@@ -651,23 +651,23 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
 
         MultiFieldPanel(
             [
-                FieldPanel('capital_invest_section_title'),
-                FieldPanel('capital_invest_section_content'),
-                FieldPanel('capital_invest_section_cta_text'),
-                ImageChooserPanel('capital_invest_section_background_image'),
-            ],
-            heading='Capital Investment section',
-            classname='collapsible'
-        ),
-
-        MultiFieldPanel(
-            [
                 FieldPanel('eu_exit_section_title'),
                 FieldPanel('eu_exit_section_content'),
                 FieldPanel('eu_exit_section_call_to_action_text'),
                 ImageChooserPanel('eu_exit_section_img'),
             ],
             heading='EU Exit section',
+            classname='collapsible'
+        ),
+
+        MultiFieldPanel(
+            [
+                FieldPanel('capital_invest_section_title'),
+                FieldPanel('capital_invest_section_content'),
+                FieldPanel('capital_invest_section_cta_text'),
+                ImageChooserPanel('capital_invest_section_background_image'),
+            ],
+            heading='Capital Investment section',
             classname='collapsible'
         ),
 
