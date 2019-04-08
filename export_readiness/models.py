@@ -3468,7 +3468,7 @@ class ContactUsGuidancePage(BasePage):
         },
         cms.GREAT_HELP_EXPORTING_TO_UK_SLUG: {
             'title': 'Guidance - Exporting to the UK',
-            'view_path': (
+            'full_path_override': (
                 'contact/triage/international/exporting-to-the-uk/'
             )
         }
@@ -3550,14 +3550,14 @@ class ContactSuccessPage(BasePage):
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_BEIS_SLUG: {
             'title': 'Contact BEIS form success',
-            'view_path': (
+            'full_path_override': (
                 'contact/department-for-business-energy-'
                 'and-industrial-strategy/success/'
             )
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_DEFRA_SLUG: {
             'title': 'Contact DEFRA form success',
-            'view_path': (
+            'full_path_override': (
                 'contact/department-for-environment-food-and-rural-affairs/'
                 'success/'
             )
