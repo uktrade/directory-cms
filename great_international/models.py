@@ -1925,8 +1925,8 @@ class InternationalCapitalInvestLandingPage(BasePage):
             children=[
                 ImageChooserPanel('hero_image'),
                 FieldPanel('hero_title'),
-                FieldPanel('hero_subtitle'),
                 FieldPanel('hero_subheading'),
+                FieldPanel('hero_subtitle'),
                 FieldPanel('hero_cta_text')
             ]
         ),
