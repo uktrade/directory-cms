@@ -1383,14 +1383,19 @@ class InternationalCapitalInvestLandingPage(BasePage):
 
     parent_page_types = ['great_international.GreatInternationalApp']
 
-    hero_title = models.CharField(max_length=255, blank=True)
+    hero_title = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         on_delete=models.SET_NULL,
         related_name='+', blank=True
     )
-    hero_subheading = models.CharField(max_length=255, blank=True)
+    hero_subheading = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Please use if you'd like to "
+                  "add to the title on a second line"
+    )
     hero_subtitle = models.CharField(max_length=255, blank=True)
     hero_cta_text = models.CharField(max_length=255)
 
