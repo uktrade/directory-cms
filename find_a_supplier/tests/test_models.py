@@ -15,6 +15,7 @@ def test_industries_page_published_url_field():
 def test_app_models():
     assert models.FindASupplierApp.allowed_subpage_models() == [
         models.FindASupplierApp,
+        models.IndustryPage,
         models.IndustryLandingPage,
         models.IndustryArticlePage,
         models.LandingPage,

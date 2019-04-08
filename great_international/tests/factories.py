@@ -7,14 +7,6 @@ from django.utils import timezone
 from great_international import models
 
 
-class GreatInternationalAppFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.GreatInternationalApp
-
-    title = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-
-
 class InternationalSectorPageFactory(wagtail_factories.PageFactory):
 
     class Meta:

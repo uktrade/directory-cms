@@ -21,13 +21,12 @@ from core.models import (
     FormPageMetaClass,
     ServiceMixin,
 )
-from core.mixins import ServiceHomepageMixin
 from core.panels import SearchEngineOptimisationPanel
 
 
-ACCORDION_FIELDS_HELP_TEXT = (
-    'To be displayed, this industry needs at least: a title, a teaser, '
-    '2 bullet points, and 2 calls to action (CTAs).')
+ACCORDION_FIELDS_HELP_TEXT = 'To be displayed, this industry needs at least:' \
+                             ' a title, a teaser, 2 bullet points, and ' \
+                             '2 calls to action (CTAs).'
 
 
 class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -42,6 +41,7 @@ class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
 class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
 
     service_name_value = cms.EXPORT_READINESS
+    view_path = 'terms-and-conditions/'
     slug_identity = cms.GREAT_TERMS_AND_CONDITIONS_SLUG
 
     body = MarkdownField(blank=False)
@@ -66,6 +66,7 @@ class PrivacyAndCookiesPage(BasePage):
 
     service_name_value = cms.EXPORT_READINESS
     subpage_types = ['export_readiness.PrivacyAndCookiesPage']
+    view_path = 'privacy-and-cookies/'
 
     body = MarkdownField(blank=False)
 
@@ -91,7 +92,6 @@ class SitePolicyPages(ExclusivePageMixin, BasePage):
     # a folder for T&C and privacy & cookies pages
     service_name_value = cms.EXPORT_READINESS
     slug_identity = cms.GREAT_SITE_POLICY_PAGES_SLUG
-    folder_page = True
 
     subpage_types = [
         'export_readiness.TermsAndConditionsPage',
@@ -108,6 +108,7 @@ class SitePolicyPages(ExclusivePageMixin, BasePage):
 class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
 
     service_name_value = cms.EXPORT_READINESS
+    view_path = 'get-finance/'
     slug_identity = cms.GREAT_GET_FINANCE_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -276,35 +277,33 @@ class PerformanceDashboardPage(BasePage):
     service_mapping = {
         urls.SERVICE_EXPORT_READINESS: {
             'slug': cms.GREAT_PERFORMANCE_DASHBOARD_SLUG,
-            'full_path_override': '/performance-dashboard/',
             'heading': 'Great.gov.uk',
+            'view_path': '',
             'landing_dashboard': True,
         },
         urls.SERVICES_SOO: {
             'slug': cms.GREAT_PERFORMANCE_DASHBOARD_SOO_SLUG,
-            'full_path_override': (
-                '/performance-dashboard/selling-online-overseas/'),
             'heading': 'Selling Online Overseas',
+            'view_path': 'performance-dashboard/',
             'landing_dashboard': False,
         },
         urls.SERVICES_EXOPPS: {
             'slug': cms.GREAT_PERFORMANCE_DASHBOARD_EXOPPS_SLUG,
-            'full_path_override': (
-                '/performance-dashboard/export-opportunities/'),
             'heading': 'Export Opportunities',
+            'view_path': 'performance-dashboard/',
             'landing_dashboard': False,
         },
         urls.SERVICES_FAB: {
             'slug': (
                 cms.GREAT_PERFORMANCE_DASHBOARD_TRADE_PROFILE_SLUG),
-            'full_path_override': '/performance-dashboard/trade-profiles/',
             'heading': 'Business Profiles',
+            'view_path': 'performance-dashboard/',
             'landing_dashboard': False,
         },
         urls.SERVICES_INVEST: {
             'slug': cms.GREAT_PERFORMANCE_DASHBOARD_INVEST_SLUG,
-            'full_path_override': '/performance-dashboard/invest/',
             'heading': 'Invest in Great Britain',
+            'view_path': 'performance-dashboard/',
             'landing_dashboard': False,
         },
     }
@@ -316,16 +315,13 @@ class PerformanceDashboardPage(BasePage):
             'The slug and page heading are inferred from the product link'),
     )
 
-    @property
-    def full_path_override(self):
-        return self.service_mapping[self.product_link]['full_path_override']
-
     def save(self, *args, **kwargs):
         field_values = self.service_mapping[self.product_link]
         self.title = field_values['heading'] + ' Performance Dashboard'
         self.heading = field_values['heading']
         self.slug = field_values['slug']
         self.landing_dashboard = field_values['landing_dashboard']
+        self.view_path = field_values['view_path']
         return super().save(*args, **kwargs)
 
     content_panels = [
@@ -384,8 +380,8 @@ class PerformanceDashboardPage(BasePage):
 class PerformanceDashboardNotesPage(ExclusivePageMixin, BasePage):
 
     service_name_value = cms.EXPORT_READINESS
+    view_path = 'performance-dashboard/'
     slug_identity = cms.GREAT_PERFORMANCE_DASHBOARD_NOTES_SLUG
-    slug_override = 'guidance-notes'
 
     body = MarkdownField(
         help_text=(
@@ -2825,7 +2821,6 @@ class CountryGuidePage(BasePage):
 class MarketingPages(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
     slug_identity = cms.GREAT_MARKETING_PAGES_SLUG
-    slug_override = 'campaigns'
 
     subpage_types = [
         'export_readiness.CampaignPage',
@@ -2841,6 +2836,7 @@ class MarketingPages(ExclusivePageMixin, BasePage):
 class CampaignPage(BasePage):
     service_name_value = cms.EXPORT_READINESS
     subpage_types = []
+    view_path = 'campaigns/'
 
     campaign_heading = models.CharField(max_length=255)
     campaign_hero_image = models.ForeignKey(
@@ -3154,7 +3150,7 @@ class ArticlePage(BasePage):
     ]
 
 
-class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
+class HomePage(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
     slug_identity = cms.GREAT_HOME_SLUG
     subpage_types = [
@@ -3195,7 +3191,6 @@ class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
 class InternationalLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
-    # slug_override = 'international'
     subpage_types = [
         'export_readiness.ArticleListingPage',
     ]
@@ -3233,7 +3228,7 @@ class EUExitInternationalFormPage(
     ]
 
     service_name_value = cms.EXPORT_READINESS
-    full_path_override = '/international/eu-exit-news/contact/'
+    view_path = 'international/eu-exit-news/contact/'
     slug_identity = cms.GREAT_EUEXIT_INTERNATIONAL_FORM_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -3278,7 +3273,7 @@ class EUExitDomesticFormPage(
     ]
 
     service_name_value = cms.EXPORT_READINESS
-    full_path_override = '/eu-exit-news/contact/'
+    view_path = 'eu-exit-news/contact/'
     slug_identity = cms.GREAT_EUEXIT_DOMESTIC_FORM_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -3311,7 +3306,7 @@ class EUExitDomesticFormPage(
 
 class EUExitFormSuccessPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
-    full_path_override = '/eu-exit-news/contact/success/'
+    view_path = 'eu-exit-news/contact/success/'
     slug_identity = cms.GREAT_EUEXIT_FORM_SUCCESS_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -3361,7 +3356,6 @@ class EUExitFormPages(ExclusivePageMixin, BasePage):
     # this is just a folder. it will not be requested by the client.
     service_name_value = cms.EXPORT_READINESS
     slug_identity = 'eu-exit-form-pages'
-    folder_page = True
 
     subpage_types = [
         'export_readiness.EUExitInternationalFormPage',
@@ -3380,7 +3374,6 @@ class ContactUsGuidancePages(ExclusivePageMixin, BasePage):
     # this is just a folder. it will not be requested by the client.
     service_name_value = cms.EXPORT_READINESS
     slug_identity = 'contact-us-guidance-pages'
-    folder_page = True
 
     subpage_types = [
         'export_readiness.ContactUsGuidancePage',
@@ -3397,7 +3390,6 @@ class ContactSuccessPages(ExclusivePageMixin, BasePage):
     # this is just a folder. it will not be requested by the client.
     service_name_value = cms.EXPORT_READINESS
     slug_identity = 'contact-us-success-pages'
-    folder_page = True
 
     subpage_types = [
         'export_readiness.ContactSuccessPage',
@@ -3417,60 +3409,57 @@ class ContactUsGuidancePage(BasePage):
     topic_mapping = {
         cms.GREAT_HELP_EXOPP_ALERTS_IRRELEVANT_SLUG: {
             'title': 'Guidance - Daily alerts are not relevant',
-            'full_path_override': (
-                '/contact/triage/export-opportunities/alerts-not-relevant/'
+            'view_path': (
+                'contact/triage/export-opportunities/alerts-not-relevant/'
             ),
         },
         cms.GREAT_HELP_EXOPP_NO_RESPONSE: {
             'title': 'Guidance - Export Opportunity application no response',
-            'full_path_override': (
-                '/contact/triage/export-opportunities/opportunity-no-response/'
+            'view_path': (
+                'contact/triage/export-opportunities/opportunity-no-response/'
             ),
         },
         cms.GREAT_HELP_MISSING_VERIFY_EMAIL_SLUG: {
             'title': 'Guidance - Email verification missing',
-            'full_path_override': (
-                '/contact/triage/great-account/no-verification-email/'),
+            'view_path': 'contact/triage/great-account/no-verification-email/',
         },
         cms.GREAT_HELP_PASSWORD_RESET_SLUG: {
             'title': 'Guidance - Missing password reset link',
-            'full_path_override': (
-                '/contact/triage/great-account/password-reset/'),
+            'view_path': 'contact/triage/great-account/password-reset/',
         },
         cms.GREAT_HELP_COMPANIES_HOUSE_LOGIN_SLUG: {
             'title': 'Guidance - Companies House login not working',
-            'full_path_override': (
-                '/contact/triage/great-account/companies-house-login/'),
+            'view_path': 'contact/triage/great-account/companies-house-login/',
         },
         cms.GREAT_HELP_VERIFICATION_CODE_ENTER_SLUG: {
             'title': 'Guidance - Where to enter letter verification code',
-            'full_path_override': (
-                '/contact/triage/great-account/verification-letter-code/'
+            'view_path': (
+                'contact/triage/great-account/verification-letter-code/'
             ),
         },
         cms.GREAT_HELP_VERIFICATION_CODE_LETTER_SLUG: {
             'title': 'Guidance - Verification letter not delivered',
-            'full_path_override': (
-                '/contact/triage/great-account/no-verification-letter/'
+            'view_path': (
+                'contact/triage/great-account/no-verification-letter/'
             ),
         },
         cms.GREAT_HELP_VERIFICATION_CODE_MISSING_SLUG: {
             'title': 'Guidance - Verification code not delivered',
-            'full_path_override': (
-                '/contact/triage/great-account/verification-missing/'
+            'view_path': (
+                'contact/triage/great-account/verification-missing/'
             ),
         },
         cms.GREAT_HELP_ACCOUNT_COMPANY_NOT_FOUND_SLUG: {
             'title': 'Guidance - Company not found',
-            'full_path_override': (
-                '/contact/triage/great-account/company-not-found/'
+            'view_path': (
+                'contact/triage/great-account/company-not-found/'
             ),
         },
     }
 
     @property
-    def full_path_override(self):
-        return self.topic_mapping[self.topic]['full_path_override']
+    def view_path(self):
+        return self.topic_mapping[self.topic]['view_path']
 
     topic = models.TextField(
         choices=[(key, val['title']) for key, val in topic_mapping.items()],
@@ -3511,42 +3500,41 @@ class ContactSuccessPage(BasePage):
     topic_mapping = {
         cms.GREAT_CONTACT_US_FORM_SUCCESS_SLUG: {
             'title': 'Contact domestic form success',
-            'full_path_override': '/contact/domestic/success/',
+            'view_path': 'contact/domestic/success/',
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_EVENTS_SLUG: {
             'title': 'Contact Events form success',
-            'full_path_override': '/contact/events/success/',
+            'view_path': 'contact/events/success/',
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_DSO_SLUG: {
             'title': 'Contact Defence and Security Organisation form success',
-            'full_path_override': (
-                '/contact/defence-and-security-organisation/success/'),
+            'view_path': 'contact/defence-and-security-organisation/success/',
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_EXPORT_ADVICE_SLUG: {
             'title': 'Contact exporting from the UK form success',
-            'full_path_override': '/contact/export-advice/success/',
+            'view_path': 'contact/export-advice/success/',
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_FEEDBACK_SLUG: {
             'title': 'Contact feedback form success',
-            'full_path_override': '/contact/feedback/success/',
+            'view_path': 'contact/feedback/success/',
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_FIND_COMPANIES_SLUG: {
             'title': 'Contact find UK companies form success',
-            'full_path_override': '/contact/find-uk-companies/success/',
+            'view_path': 'contact/find-uk-companies/success/',
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_INTERNATIONAL_SLUG: {
             'title': 'Contact international form success',
-            'full_path_override': '/contact/international/success/',
+            'view_path': 'contact/international/success/',
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_SOO_SLUG: {
             'title': 'Contact Selling Online Overseas form success',
-            'full_path_override': '/contact/selling-online-overseas/success/',
+            'view_path': 'contact/selling-online-overseas/success/',
         },
     }
 
     @property
-    def full_path_override(self):
-        return self.topic_mapping[self.topic]['full_path_override']
+    def view_path(self):
+        return self.topic_mapping[self.topic]['view_path']
 
     topic = models.TextField(
         choices=[(key, val['title']) for key, val in topic_mapping.items()],
@@ -3607,7 +3595,6 @@ class AllContactPagesPage(ExclusivePageMixin, BasePage):
     # this is just a folder. it will not be requested by the client.
     service_name_value = cms.EXPORT_READINESS
     slug_identity = 'all-export-readiness-contact-pages'
-    folder_page = True
 
     subpage_types = [
         'export_readiness.ContactSuccessPages',

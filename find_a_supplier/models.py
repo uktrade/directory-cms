@@ -18,7 +18,6 @@ from core.models import (
     ExclusivePageMixin,
     ServiceMixin,
 )
-from core.mixins import ServiceHomepageMixin
 from core.panels import SearchEngineOptimisationPanel
 
 
@@ -93,9 +92,7 @@ class LandingPageArticleSummary(Orderable, ArticleSummary):
 class IndustryPage(BasePage):
 
     service_name_value = cms.FIND_A_SUPPLIER
-    parent_page_types = [
-        'find_a_supplier.IndustryLandingPage',
-    ]
+    view_path = 'industries/'
     subpage_types = [
         'find_a_supplier.IndustryArticlePage',
     ]
@@ -291,8 +288,8 @@ class IndustryPage(BasePage):
 
 class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     service_name_value = cms.FIND_A_SUPPLIER
+    view_path = 'industries/'
     slug_identity = cms.FIND_A_SUPPLIER_INDUSTRY_LANDING_SLUG
-    slug_override = 'industries'
     subpage_types = [
         'find_a_supplier.IndustryContactPage',
         'find_a_supplier.IndustryPage',
@@ -434,10 +431,9 @@ class IndustryArticlePage(BasePage):
     )
 
 
-class LandingPage(
-    ExclusivePageMixin, ServiceHomepageMixin, BreadcrumbMixin, BasePage
-):
+class LandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     service_name_value = cms.FIND_A_SUPPLIER
+    view_path = '/'
     slug_identity = cms.FIND_A_SUPPLIER_LANDING_SLUG
 
     hero_image = models.ForeignKey(
