@@ -274,7 +274,7 @@ class PerformanceDashboardPage(BasePage):
     landing_dashboard = models.BooleanField(default=False)
 
     service_mapping = {
-        urls.SERVICE_EXPORT_READINESS: {
+        urls.SERVICES_GREAT_DOMESTIC: {
             'slug': cms.GREAT_PERFORMANCE_DASHBOARD_SLUG,
             'full_path_override': '/performance-dashboard/',
             'heading': 'Great.gov.uk',
@@ -3466,6 +3466,12 @@ class ContactUsGuidancePage(BasePage):
                 '/contact/triage/great-account/company-not-found/'
             ),
         },
+        cms.GREAT_HELP_EXPORTING_TO_UK_SLUG: {
+            'title': 'Guidance - Exporting to the UK',
+            'view_path': (
+                'contact/triage/international/exporting-to-the-uk/'
+            )
+        }
     }
 
     @property
@@ -3541,6 +3547,20 @@ class ContactSuccessPage(BasePage):
         cms.GREAT_CONTACT_US_FORM_SUCCESS_SOO_SLUG: {
             'title': 'Contact Selling Online Overseas form success',
             'full_path_override': '/contact/selling-online-overseas/success/',
+        },
+        cms.GREAT_CONTACT_US_FORM_SUCCESS_BEIS_SLUG: {
+            'title': 'Contact BEIS form success',
+            'view_path': (
+                'contact/department-for-business-energy-'
+                'and-industrial-strategy/success/'
+            )
+        },
+        cms.GREAT_CONTACT_US_FORM_SUCCESS_DEFRA_SLUG: {
+            'title': 'Contact DEFRA form success',
+            'view_path': (
+                'contact/department-for-environment-food-and-rural-affairs/'
+                'success/'
+            )
         },
     }
 
