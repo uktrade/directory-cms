@@ -702,9 +702,13 @@ class InternationalArticlePage(BasePage):
         max_length=255,
         blank=True,
         help_text="This is a subheading that displays "
-                  "when the article is featured on another page"
+                  "below the main title on the article page"
     )
-    article_teaser = models.CharField(max_length=255)
+    article_teaser = models.CharField(
+        max_length=255,
+        help_text="This is a subheading that displays when the article "
+                  "is featured on another page"
+    )
     article_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -742,8 +746,8 @@ class InternationalArticlePage(BasePage):
         MultiFieldPanel(
             heading='Article content',
             children=[
-                FieldPanel('article_teaser'),
                 FieldPanel('article_subheading'),
+                FieldPanel('article_teaser'),
                 ImageChooserPanel('article_image'),
                 FieldPanel('article_body_text')
             ]
