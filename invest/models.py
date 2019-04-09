@@ -449,6 +449,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
     hero_call_to_action_text = models.CharField(max_length=255, blank=True)
+    hero_call_to_action_url = models.URLField(max_length=255, blank=True)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
@@ -478,6 +479,9 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     capital_invest_section_cta_text = models.CharField(
         max_length=255
     )
+    capital_invest_section_cta_url = models.URLField(
+        max_length=255
+    )
     capital_invest_section_background_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -500,6 +504,12 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         max_length=255,
         blank=True,
         verbose_name="EU exit section button text"
+    )
+
+    eu_exit_section_call_to_action_url = models.URLField(
+        max_length=255,
+        blank=True,
+        verbose_name="EU exit section button url"
     )
 
     eu_exit_section_img = models.ForeignKey(
@@ -541,6 +551,9 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         default="See more industries",
         max_length=255)
 
+    sector_button_url = models.URLField(
+        max_length=255)
+
     sector_intro = models.TextField(max_length=255, blank=True)
 
     hpo_title = models.CharField(
@@ -572,6 +585,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     )
 
     setup_guide_call_to_action_text = models.CharField(max_length=255)
+    setup_guide_call_to_action_url = models.URLField(max_length=255)
 
     how_we_help_title = models.CharField(default='How we help', max_length=255)
     how_we_help_lead_in = models.TextField(blank=True, null=True)
@@ -621,6 +635,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     contact_section_title = models.CharField(max_length=255)
     contact_section_content = models.TextField(max_length=255, blank=True)
     contact_section_call_to_action_text = models.CharField(max_length=255)
+    contact_section_call_to_action_url = models.URLField(max_length=255)
 
     image_panels = [
         ImageChooserPanel('hero_image'),
@@ -633,6 +648,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
                 FieldPanel('heading'),
                 FieldPanel('sub_heading'),
                 FieldPanel('hero_call_to_action_text'),
+                FieldPanel('hero_call_to_action_url'),
             ],
             heading='Hero',
             classname='collapsible'
@@ -654,6 +670,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
                 FieldPanel('eu_exit_section_title'),
                 FieldPanel('eu_exit_section_content'),
                 FieldPanel('eu_exit_section_call_to_action_text'),
+                FieldPanel('eu_exit_section_call_to_action_url'),
                 ImageChooserPanel('eu_exit_section_img'),
             ],
             heading='EU Exit section',
@@ -665,6 +682,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
                 FieldPanel('capital_invest_section_title'),
                 FieldPanel('capital_invest_section_content'),
                 FieldPanel('capital_invest_section_cta_text'),
+                FieldPanel('capital_invest_section_cta_url'),
                 ImageChooserPanel('capital_invest_section_background_image'),
             ],
             heading='Capital Investment section',
@@ -740,6 +758,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
                 FieldPanel('sector_title'),
                 FieldPanel('sector_intro'),
                 FieldPanel('sector_button_text'),
+                FieldPanel('sector_button_url'),
             ],
             heading='Industries section'
         ),
@@ -756,7 +775,8 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
             FieldPanel('setup_guide_title'),
             FieldPanel('setup_guide_content'),
             ImageChooserPanel('setup_guide_img'),
-            FieldPanel('setup_guide_call_to_action_text')
+            FieldPanel('setup_guide_call_to_action_text'),
+            FieldPanel('setup_guide_call_to_action_url'),
             ],
             heading='Set up guide section',
             classname='collapsible'
@@ -818,6 +838,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
                 FieldPanel('contact_section_title'),
                 FieldPanel('contact_section_content'),
                 FieldPanel('contact_section_call_to_action_text'),
+                FieldPanel('contact_section_call_to_action_url'),
             ],
             heading='Contact Section',
             classname='collapsible'

@@ -11,6 +11,7 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'heading',
         'sub_heading',
         'hero_call_to_action_text',
+        'hero_call_to_action_url',
 
         'benefits_section_title',
         'benefits_section_intro',
@@ -20,11 +21,13 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'capital_invest_section_title',
         'capital_invest_section_content',
         'capital_invest_section_cta_text',
+        'capital_invest_section_cta_url',
         'capital_invest_section_background_image',
 
         'eu_exit_section_title',
         'eu_exit_section_content',
         'eu_exit_section_call_to_action_text',
+        'eu_exit_section_call_to_action_url',
         'eu_exit_section_img',
 
         # subsections
@@ -57,6 +60,7 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'setup_guide_content',
         'setup_guide_img',
         'setup_guide_call_to_action_text',
+        'setup_guide_call_to_action_url',
         'setup_guide_lead_in',
         'how_we_help_title',
         'how_we_help_lead_in',
@@ -78,9 +82,11 @@ class InvestHomePageTranslation(BaseTranslationOptions):
 
         'how_we_help_text_six',
         'sector_button_text',
+        'sector_button_url',
         'contact_section_title',
         'contact_section_content',
-        'contact_section_call_to_action_text'
+        'contact_section_call_to_action_text',
+        'contact_section_call_to_action_url'
     )
 
 
