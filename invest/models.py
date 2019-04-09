@@ -845,8 +845,8 @@ class HighPotentialOpportunityFormPage(
     ]
 
     service_name_value = cms.INVEST
-    view_path = 'high-potential-opportunities/rail/contact/'
     slug_identity = cms.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SLUG
+    full_path_override = 'high-potential-opportunities/rail/contact/'
 
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
