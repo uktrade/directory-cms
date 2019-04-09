@@ -449,7 +449,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
     hero_call_to_action_text = models.CharField(max_length=255, blank=True)
-    hero_call_to_action_url = models.URLField(max_length=255, blank=True)
+    hero_call_to_action_url = models.CharField(max_length=255, blank=True)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
@@ -479,7 +479,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     capital_invest_section_cta_text = models.CharField(
         max_length=255
     )
-    capital_invest_section_cta_url = models.URLField(
+    capital_invest_section_cta_url = models.CharField(
         max_length=255
     )
     capital_invest_section_background_image = models.ForeignKey(
@@ -506,7 +506,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         verbose_name="EU exit section button text"
     )
 
-    eu_exit_section_call_to_action_url = models.URLField(
+    eu_exit_section_call_to_action_url = models.CharField(
         max_length=255,
         blank=True,
         verbose_name="EU exit section button url"
@@ -551,7 +551,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
         default="See more industries",
         max_length=255)
 
-    sector_button_url = models.URLField(
+    sector_button_url = models.CharField(
         max_length=255)
 
     sector_intro = models.TextField(max_length=255, blank=True)
@@ -585,7 +585,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     )
 
     setup_guide_call_to_action_text = models.CharField(max_length=255)
-    setup_guide_call_to_action_url = models.URLField(max_length=255)
+    setup_guide_call_to_action_url = models.CharField(max_length=255)
 
     how_we_help_title = models.CharField(default='How we help', max_length=255)
     how_we_help_lead_in = models.TextField(blank=True, null=True)
@@ -635,7 +635,7 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
     contact_section_title = models.CharField(max_length=255)
     contact_section_content = models.TextField(max_length=255, blank=True)
     contact_section_call_to_action_text = models.CharField(max_length=255)
-    contact_section_call_to_action_url = models.URLField(max_length=255)
+    contact_section_call_to_action_url = models.CharField(max_length=255)
 
     image_panels = [
         ImageChooserPanel('hero_image'),
@@ -643,84 +643,92 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
 
     content_panels = [
         MultiFieldPanel(
-            [
+            heading='Hero',
+            classname='collapsible',
+            children=[
                 FieldPanel('breadcrumbs_label'),
                 FieldPanel('heading'),
                 FieldPanel('sub_heading'),
                 FieldPanel('hero_call_to_action_text'),
                 FieldPanel('hero_call_to_action_url'),
             ],
-            heading='Hero',
-            classname='collapsible'
+
         ),
 
         MultiFieldPanel(
-            [
+            heading='Benefits section',
+            classname='collapsible',
+            children=[
                 FieldPanel('benefits_section_title'),
                 FieldPanel('benefits_section_intro'),
                 FieldPanel('benefits_section_content'),
                 ImageChooserPanel('benefits_section_img'),
             ],
-            heading='Benefits section',
-            classname='collapsible'
         ),
 
         MultiFieldPanel(
-            [
+            heading='EU Exit section',
+            classname='collapsible',
+            children=[
                 FieldPanel('eu_exit_section_title'),
                 FieldPanel('eu_exit_section_content'),
                 FieldPanel('eu_exit_section_call_to_action_text'),
                 FieldPanel('eu_exit_section_call_to_action_url'),
                 ImageChooserPanel('eu_exit_section_img'),
             ],
-            heading='EU Exit section',
-            classname='collapsible'
+
         ),
 
         MultiFieldPanel(
-            [
+            heading='Capital Investment section',
+            classname='collapsible',
+            children=[
                 FieldPanel('capital_invest_section_title'),
                 FieldPanel('capital_invest_section_content'),
                 FieldPanel('capital_invest_section_cta_text'),
                 FieldPanel('capital_invest_section_cta_url'),
                 ImageChooserPanel('capital_invest_section_background_image'),
             ],
-            heading='Capital Investment section',
-            classname='collapsible'
+
         ),
 
         MultiFieldPanel(
-            [
+            heading='Industries section',
+            children=[
                 FieldPanel('sector_title'),
                 FieldPanel('sector_intro'),
                 FieldPanel('sector_button_text'),
                 FieldPanel('sector_button_url'),
             ],
-            heading='Industries section'
+
         ),
 
         MultiFieldPanel(
-            [
+            heading='High Potential Opportunities',
+            children=[
                 FieldPanel('hpo_title'),
                 FieldPanel('hpo_intro')
             ],
-            heading='High Potential Opportunities'
+
         ),
 
-        MultiFieldPanel([
-            FieldPanel('setup_guide_title'),
-            FieldPanel('setup_guide_content'),
-            ImageChooserPanel('setup_guide_img'),
-            FieldPanel('setup_guide_call_to_action_text'),
-            FieldPanel('setup_guide_call_to_action_url'),
-            ],
+        MultiFieldPanel(
             heading='Set up guide section',
-            classname='collapsible'
+            classname='collapsible',
+            children=[
+                FieldPanel('setup_guide_title'),
+                FieldPanel('setup_guide_content'),
+                ImageChooserPanel('setup_guide_img'),
+                FieldPanel('setup_guide_call_to_action_text'),
+                FieldPanel('setup_guide_call_to_action_url'),
+            ],
         ),
 
 
         MultiFieldPanel(
-            [
+            heading='How we help section',
+            classname='collapsible',
+            children=[
                 FieldPanel('how_we_help_title'),
                 FieldPanel('how_we_help_lead_in'),
                 FieldRowPanel(
@@ -764,19 +772,18 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
 
                 ),
             ],
-            heading='How we help section',
-            classname='collapsible'
         ),
 
         MultiFieldPanel(
-            [
+            heading='Contact Section',
+            classname='collapsible',
+            children=[
                 FieldPanel('contact_section_title'),
                 FieldPanel('contact_section_content'),
                 FieldPanel('contact_section_call_to_action_text'),
                 FieldPanel('contact_section_call_to_action_url'),
             ],
-            heading='Contact Section',
-            classname='collapsible'
+
         ),
         SearchEngineOptimisationPanel()
     ]
