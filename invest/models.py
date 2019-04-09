@@ -689,70 +689,6 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
             classname='collapsible'
         ),
 
-        # subsections
-        MultiFieldPanel(
-            [
-                FieldPanel('subsection_title_one'),
-                FieldPanel('subsection_content_one'),
-            ],
-            heading='subsections one',
-            classname='collapsible'
-        ),
-
-        MultiFieldPanel(
-            [
-                FieldPanel('subsection_title_two'),
-                FieldPanel('subsection_content_two'),
-            ],
-            heading='subsections two',
-            classname='collapsible'
-        ),
-
-        MultiFieldPanel(
-            [
-                FieldPanel('subsection_title_three'),
-                FieldPanel('subsection_content_three'),
-            ],
-            heading='subsections three',
-            classname='collapsible collapsed'
-        ),
-
-        MultiFieldPanel(
-            [
-                FieldPanel('subsection_title_four'),
-                FieldPanel('subsection_content_four'),
-            ],
-            heading='subsections four',
-            classname='collapsible collapsed'
-        ),
-
-        MultiFieldPanel(
-            [
-                FieldPanel('subsection_title_five'),
-                FieldPanel('subsection_content_five'),
-            ],
-            heading='subsections five',
-            classname='collapsible collapsed'
-        ),
-
-        MultiFieldPanel(
-            [
-                FieldPanel('subsection_title_six'),
-                FieldPanel('subsection_content_six'),
-            ],
-            heading='subsections six',
-            classname='collapsible collapsed'
-        ),
-
-        MultiFieldPanel(
-            [
-                FieldPanel('subsection_title_seven'),
-                FieldPanel('subsection_content_seven'),
-            ],
-            heading='subsections seven',
-            classname='collapsible collapsed'
-        ),
-
         MultiFieldPanel(
             [
                 FieldPanel('sector_title'),
@@ -782,54 +718,53 @@ class InvestHomePage(ExclusivePageMixin, BasePage):
             classname='collapsible'
         ),
 
-        FieldPanel('setup_guide_lead_in'),
-        FieldPanel('how_we_help_title'),
-        FieldPanel('how_we_help_lead_in'),
+
         MultiFieldPanel(
             [
-                FieldPanel('how_we_help_text_one'),
-                ImageChooserPanel('how_we_help_icon_one')
+                FieldPanel('how_we_help_title'),
+                FieldPanel('how_we_help_lead_in'),
+                FieldRowPanel(
+                    [
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('how_we_help_text_one'),
+                                ImageChooserPanel('how_we_help_icon_one')
+                            ],
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('how_we_help_text_two'),
+                                ImageChooserPanel('how_we_help_icon_two')
+                            ],
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('how_we_help_text_three'),
+                                ImageChooserPanel('how_we_help_icon_three')
+                            ],
+                        ),
+                    ],
+
+                ),
+                FieldRowPanel(
+                    [
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('how_we_help_text_four'),
+                                ImageChooserPanel('how_we_help_icon_four')
+                            ],
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('how_we_help_text_five'),
+                                ImageChooserPanel('how_we_help_icon_five')
+                            ],
+                        )
+                    ],
+
+                ),
             ],
-            heading='How we help one',
-            classname='collapsible'
-        ),
-        MultiFieldPanel(
-            [
-                FieldPanel('how_we_help_text_two'),
-                ImageChooserPanel('how_we_help_icon_two')
-            ],
-            heading='How we help two',
-            classname='collapsible'
-        ),
-        MultiFieldPanel(
-            [
-                FieldPanel('how_we_help_text_three'),
-                ImageChooserPanel('how_we_help_icon_three')
-            ],
-            heading='How we help three',
-            classname='collapsible'
-        ),
-        MultiFieldPanel(
-            [
-                FieldPanel('how_we_help_text_four'),
-                ImageChooserPanel('how_we_help_icon_four')
-            ],
-            heading='How we help four',
-            classname='collapsible'
-        ),
-        MultiFieldPanel(
-            [
-                FieldPanel('how_we_help_text_five'),
-                ImageChooserPanel('how_we_help_icon_five')
-            ],
-            heading='How we help five',
-            classname='collapsible'
-        ),
-        MultiFieldPanel(
-            [
-                FieldPanel('how_we_help_text_six'),
-            ],
-            heading='How we help six',
+            heading='How we help section',
             classname='collapsible'
         ),
 
