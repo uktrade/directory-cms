@@ -11,7 +11,7 @@ def test_performance_dashboard(admin_client, root_page):
     page = factories.PerformanceDashboardPageFactory(
         live=True,
         parent=root_page,
-        product_link=urls.SERVICE_EXPORT_READINESS
+        product_link=urls.SERVICES_GREAT_DOMESTIC
     )
 
     url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
