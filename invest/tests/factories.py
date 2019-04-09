@@ -38,14 +38,17 @@ class InvestHomePageFactory(wagtail_factories.PageFactory):
     benefits_section_title = factory.fuzzy.FuzzyText(length=10)
     capital_invest_section_title = factory.fuzzy.FuzzyText(length=10)
     capital_invest_section_cta_text = factory.fuzzy.FuzzyText(length=10)
+    capital_invest_section_cta_url = factory.fuzzy.FuzzyText(length=10)
     capital_invest_section_background_image = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
     sector_title = factory.fuzzy.FuzzyText(length=10)
     sector_button_text = factory.fuzzy.FuzzyText(length=10)
+    sector_button_url = factory.fuzzy.FuzzyText(length=10)
     hpo_title = factory.fuzzy.FuzzyText(length=10)
     setup_guide_title = factory.fuzzy.FuzzyText(length=10)
     setup_guide_call_to_action_text = factory.fuzzy.FuzzyText(length=10)
+    setup_guide_call_to_action_url = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_one_en_gb = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_two_en_gb = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_three_en_gb = factory.fuzzy.FuzzyText(length=10)
@@ -53,6 +56,7 @@ class InvestHomePageFactory(wagtail_factories.PageFactory):
     how_we_help_text_five_en_gb = factory.fuzzy.FuzzyText(length=10)
     contact_section_title = factory.fuzzy.FuzzyText(length=10)
     contact_section_call_to_action_text = factory.fuzzy.FuzzyText(length=10)
+    contact_section_call_to_action_url = factory.fuzzy.FuzzyText(length=10)
     slug = 'invest-home'
     parent = None
 

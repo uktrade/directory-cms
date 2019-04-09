@@ -16,12 +16,15 @@ def test_required_fields_invest_home_page():
             'benefits_section_title',
             'capital_invest_section_title',
             'capital_invest_section_cta_text',
+            'capital_invest_section_cta_url',
             'capital_invest_section_background_image',
             'sector_title',
             'sector_button_text',
+            'sector_button_url',
             'hpo_title',
             'setup_guide_title',
             'setup_guide_call_to_action_text',
+            'setup_guide_call_to_action_url',
             'how_we_help_title',
             'how_we_help_text_one',
             'how_we_help_text_two',
@@ -29,7 +32,8 @@ def test_required_fields_invest_home_page():
             'how_we_help_text_four',
             'how_we_help_text_five',
             'contact_section_title',
-            'contact_section_call_to_action_text'
+            'contact_section_call_to_action_text',
+            'contact_section_call_to_action_url'
         ]
     }
 
