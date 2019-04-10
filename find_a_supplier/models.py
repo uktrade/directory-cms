@@ -18,6 +18,7 @@ from core.models import (
     ExclusivePageMixin,
     ServiceMixin,
 )
+from core.mixins import ServiceHomepageMixin
 from core.panels import SearchEngineOptimisationPanel
 
 
@@ -92,7 +93,9 @@ class LandingPageArticleSummary(Orderable, ArticleSummary):
 class IndustryPage(BasePage):
 
     service_name_value = cms.FIND_A_SUPPLIER
-    view_path = 'industries/'
+    parent_page_types = [
+        'find_a_supplier.IndustryLandingPage',
+    ]
     subpage_types = [
         'find_a_supplier.IndustryArticlePage',
     ]
@@ -288,8 +291,8 @@ class IndustryPage(BasePage):
 
 class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     service_name_value = cms.FIND_A_SUPPLIER
-    view_path = 'industries/'
     slug_identity = cms.FIND_A_SUPPLIER_INDUSTRY_LANDING_SLUG
+    slug_override = 'industries'
     subpage_types = [
         'find_a_supplier.IndustryContactPage',
         'find_a_supplier.IndustryPage',
@@ -431,9 +434,10 @@ class IndustryArticlePage(BasePage):
     )
 
 
-class LandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
+class LandingPage(
+    ExclusivePageMixin, ServiceHomepageMixin, BreadcrumbMixin, BasePage
+):
     service_name_value = cms.FIND_A_SUPPLIER
-    view_path = '/'
     slug_identity = cms.FIND_A_SUPPLIER_LANDING_SLUG
 
     hero_image = models.ForeignKey(
@@ -582,6 +586,8 @@ class IndustryContactPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/contact/'
     slug_identity = cms.FIND_A_SUPPLIER_INDUSTRY_CONTACT_SLUG
+    # override the slug when generating the url
+    slug_override = ''
 
     breadcrumbs_label = models.CharField(max_length=50)
     introduction_text = MarkdownField(blank=True)

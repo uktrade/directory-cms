@@ -6,7 +6,7 @@ test_requirements:
 	pip install -r requirements_test.txt
 
 FLAKE8 := flake8 . --exclude=migrations,.venv
-PYTEST := pytest . -v --ignore=venv --ignore=conf/celery.py --cov=. --cov-config=.coveragerc --capture=no $(pytest_args)
+PYTEST := pytest . -v --last-failed --ignore=venv --ignore=conf/celery.py --cov=. --cov-config=.coveragerc --capture=no $(pytest_args)
 PYTEST_FIXTURES := pytest --fixtures
 COLLECT_STATIC := python manage.py collectstatic --noinput
 DJANGO_MIGRATE := python manage.py distributed_migrate --noinput
@@ -65,15 +65,7 @@ DEBUG_SET_ENV_VARS := \
 	export APP_URL_INVEST=http://invest.trade.great:8011; \
 	export APP_URL_GREAT_INTERNATIONAL=http://international.trade.great:8012/international/; \
 	export COPY_DESTINATION_URLS=https://directory-cms-dev.herokuapp.com,https://dev.cms.directory.uktrade.io,https://stage.cms.directory.uktrade.io,http://cms.trade.great:8010; \
-	export AWS_STORAGE_BUCKET_NAME=$$DIRECTORY_CMS_AWS_STORAGE_BUCKET_NAME; \
-	export AWS_ACCESS_KEY_ID=$$DIRECTORY_CMS_AWS_ACCESS_KEY_ID; \
-	export AWS_SECRET_ACCESS_KEY=$$DIRECTORY_CMS_AWS_SECRET_ACCESS_KEY; \
 	export EMAIL_BACKEND_CLASS_NAME=console; \
-	export EMAIL_HOST=$$DIRECTORY_CMS_EMAIL_HOST; \
-	export EMAIL_PORT=$$DIRECTORY_CMS_EMAIL_PORT; \
-	export EMAIL_HOST_USER=$$DIRECTORY_CMS_EMAIL_HOST_USER; \
-	export EMAIL_HOST_PASSWORD=$$DIRECTORY_CMS_EMAIL_HOST_PASSWORD; \
-	export DEFAULT_FROM_EMAIL=$$DIRECTORY_CMS_DEFAULT_FROM_EMAIL; \
 	export FEATURE_DEBUG_TOOLBAR_ENABLED=true; \
 	export REDIS_CACHE_URL=redis://localhost:6379; \
 	export REDIS_CELERY_URL=redis://localhost:6379/1; \
@@ -83,13 +75,19 @@ DEBUG_SET_ENV_VARS := \
 	export ACTIVITY_STREAM_ACCESS_KEY_ID=123-id-key; \
 	export ACTIVITY_STREAM_SECRET_ACCESS_KEY=123-secret-key
 
-
-
 TEST_SET_ENV_VARS := \
 	export DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage; \
 	export API_CACHE_DISABLED=false; \
 	export STATICFILES_STORAGE=django.contrib.staticfiles.storage.StaticFilesStorage; \
-	export DEBUG=false
+	export DEBUG=false; \
+	export AWS_STORAGE_BUCKET_NAME=debug; \
+	export AWS_ACCESS_KEY_ID=debug; \
+	export AWS_SECRET_ACCESS_KEY=debug; \
+	export EMAIL_HOST=debug; \
+	export EMAIL_PORT=debug; \
+	export EMAIL_HOST_USER=debug; \
+	export EMAIL_HOST_PASSWORD=debug; \
+	export DEFAULT_FROM_EMAIL=debug
 
 debug_migrate:
 	$(DEBUG_SET_ENV_VARS) && ./manage.py migrate

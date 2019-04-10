@@ -9,6 +9,14 @@ from directory_constants.constants import choices
 from find_a_supplier import models
 
 
+class FindASupplierAppFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.FindASupplierApp
+
+    title = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+
+
 class IndustryPageFactory(wagtail_factories.PageFactory):
 
     class Meta:

@@ -14,12 +14,12 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 
-from directory_components.constants import IP_RETRIEVER_NAME_GOV_UK
 import dj_database_url
 import environ
 
 
 env = environ.Env()
+env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -58,7 +58,6 @@ INSTALLED_APPS = [
     'health_check.db',
     'health_check.cache',
     'directory_components',
-    'export_elements',
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
     'wagtail.contrib.forms',
@@ -89,7 +88,7 @@ INSTALLED_APPS = [
 MIDDLEWARE_CLASSES = [
     'core.middleware.StubSiteMiddleware',
     'directory_components.middleware.MaintenanceModeMiddleware',
-    'directory_components.middleware.IPRestrictorMiddleware',
+    'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -100,7 +99,6 @@ MIDDLEWARE_CLASSES = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'core.middleware.LocaleQuerystringMiddleware',
-    'directory_components.middleware.RobotsIndexControlHeaderMiddlware',
 ]
 
 ROOT_URLCONF = 'conf.urls'
@@ -336,41 +334,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_HSTS_SECONDS = env.int('SECURE_HSTS_SECONDS', 16070400)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
-# HEADER/FOOTER URLS
-GREAT_EXPORT_HOME = env.str('GREAT_EXPORT_HOME', '')
-GREAT_HOME = env.str('GREAT_HOME', '')
-CUSTOM_PAGE = env.str('CUSTOM_PAGE', '')
-
-# EXPORTING PERSONAS
-EXPORTING_NEW = env.str('EXPORTING_NEW', '')
-EXPORTING_REGULAR = env.str('EXPORTING_REGULAR', '')
-EXPORTING_OCCASIONAL = env.str('EXPORTING_OCCASIONAL', '')
-
-# GUIDANCE/ARTICLE SECTIONS
-GUIDANCE_MARKET_RESEARCH = env.str('GUIDANCE_MARKET_RESEARCH', '')
-GUIDANCE_CUSTOMER_INSIGHT = env.str('GUIDANCE_CUSTOMER_INSIGHT', '')
-GUIDANCE_FINANCE = env.str('GUIDANCE_FINANCE', '')
-GUIDANCE_BUSINESS_PLANNING = env.str('GUIDANCE_BUSINESS_PLANNING', '')
-GUIDANCE_GETTING_PAID = env.str('GUIDANCE_GETTING_PAID', '')
-GUIDANCE_OPERATIONS_AND_COMPLIANCE = env.str(
-    'GUIDANCE_OPERATIONS_AND_COMPLIANCE', ''
-)
-
-# SERVICES
-SERVICES_EXOPPS = env.str('SERVICES_EXOPPS', '')
-SERVICES_EXOPPS_ACTUAL = env.str('SERVICES_EXOPPS_ACTUAL', '')
-SERVICES_FAB = env.str('SERVICES_FAB', '')
-SERVICES_GET_FINANCE = env.str('SERVICES_GET_FINANCE', '')
-SERVICES_SOO = env.str('SERVICES_SOO', '')
-SERVICES_EVENTS = env.str('SERVICES_EVENTS', '')
-
-# FOOTER LINKS
-INFO_ABOUT = env.str('INFO_ABOUT', '')
-INFO_CONTACT_US_DIRECTORY = env.str('INFO_CONTACT_US_DIRECTORY', '')
-INFO_PRIVACY_AND_COOKIES = env.str('INFO_PRIVACY_AND_COOKIES', '')
-INFO_TERMS_AND_CONDITIONS = env.str('INFO_TERMS_AND_CONDITIONS', '')
-INFO_DIT = env.str('INFO_DIT', '')
-
 # Sentry
 RAVEN_CONFIG = {
     'dsn': env.str('SENTRY_DSN', ''),
@@ -419,13 +382,6 @@ WS_S3_URL_PROTOCOL = env.str('AWS_S3_URL_PROTOCOL', 'https:')
 AWS_ACCESS_KEY_ID = env.str('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env.str('AWS_SECRET_ACCESS_KEY')
 AWS_S3_HOST = 's3-us-west-1.amazonaws.com'
-
-
-# Admin restrictor
-RESTRICT_ADMIN = env.bool('RESTRICT_ADMIN', False)
-ALLOWED_ADMIN_IPS = env.list('ALLOWED_ADMIN_IPS', default=[])
-ALLOWED_ADMIN_IP_RANGES = env.list('ALLOWED_ADMIN_IP_RANGES', default=[])
-RESTRICTED_APP_NAMES = ['admin', 'wagtailadmin']
 
 # Email
 EMAIL_BACKED_CLASSES = {
@@ -481,28 +437,13 @@ if FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
 
 ENVIRONMENT_CSS_THEME_FILE = env.str('ENVIRONMENT_CSS_THEME_FILE', '')
 
-# ip-restrictor
+# Admin restrictor
 RESTRICT_ADMIN = env.bool('IP_RESTRICTOR_RESTRICT_IPS', False)
 ALLOWED_ADMIN_IPS = env.list('IP_RESTRICTOR_ALLOWED_ADMIN_IPS', default=[])
 ALLOWED_ADMIN_IP_RANGES = env.list(
     'IP_RESTRICTOR_ALLOWED_ADMIN_IP_RANGES', default=[]
 )
-RESTRICTED_APP_NAMES = env.list(
-    'IP_RESTRICTOR_RESTRICTED_APP_NAMES', default=['admin']
-)
-IP_RESTRICTOR_SKIP_CHECK_ENABLED = env.bool(
-    'IP_RESTRICTOR_SKIP_CHECK_ENABLED', False
-)
-IP_RESTRICTOR_SKIP_CHECK_SENDER_ID = env.str(
-     'IP_RESTRICTOR_SKIP_CHECK_SENDER_ID', ''
- )
-IP_RESTRICTOR_SKIP_CHECK_SECRET = env.str(
-    'IP_RESTRICTOR_SKIP_CHECK_SECRET', ''
-)
-IP_RESTRICTOR_REMOTE_IP_ADDRESS_RETRIEVER = env.str(
-    'IP_RESTRICTOR_REMOTE_IP_ADDRESS_RETRIEVER',
-    IP_RETRIEVER_NAME_GOV_UK
-)
+RESTRICTED_APP_NAMES = ['admin', 'wagtailadmin']
 
 # Celery
 # separate to REDIS_CACHE_URL as needs to start with 'redis' and SSL conf
