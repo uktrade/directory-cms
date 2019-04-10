@@ -208,6 +208,9 @@ DEFAULT_FILE_STORAGE = env.str(
     'core.storage_backends.ImmutableFilesS3Boto3Storage'
 )
 
+# For image renditions
+WAGTAILIMAGES_JPEG_QUALITY = 80
+
 # Logging for development
 if DEBUG:
     LOGGING = {
