@@ -463,6 +463,7 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
         null=True,
         blank=True
     )
+    hero_cta_link = models.CharField(max_length=255, blank=True)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -536,6 +537,7 @@ class InternationalHomePage(ExclusivePageMixin, BasePage):
                 FieldPanel('hero_title'),
                 FieldPanel('hero_subtitle'),
                 FieldPanel("hero_cta_text"),
+                FieldPanel("hero_cta_link"),
                 ImageChooserPanel("hero_image")
             ]
         ),
