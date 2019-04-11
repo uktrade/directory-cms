@@ -125,6 +125,7 @@ class InternationalHomePageTranslationOptions(BaseTranslationOptions):
        'hero_title',
        'hero_subtitle',
        'hero_cta_text',
+       'hero_cta_link',
        'hero_image',
        'invest_title',
        'invest_content',
