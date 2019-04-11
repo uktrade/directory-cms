@@ -4007,7 +4007,507 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     pdf_document_id integer,
     testimonial_background_id integer,
     description text NOT NULL,
-    featured boolean NOT NULL
+    featured boolean NOT NULL,
+    breadcrumbs_label_ar character varying(50),
+    breadcrumbs_label_de character varying(50),
+    breadcrumbs_label_en_gb character varying(50),
+    breadcrumbs_label_es character varying(50),
+    breadcrumbs_label_fr character varying(50),
+    breadcrumbs_label_ja character varying(50),
+    breadcrumbs_label_pt character varying(50),
+    breadcrumbs_label_pt_br character varying(50),
+    breadcrumbs_label_ru character varying(50),
+    breadcrumbs_label_zh_hans character varying(50),
+    case_study_four_image_ar_id integer,
+    case_study_four_image_de_id integer,
+    case_study_four_image_en_gb_id integer,
+    case_study_four_image_es_id integer,
+    case_study_four_image_fr_id integer,
+    case_study_four_image_ja_id integer,
+    case_study_four_image_pt_id integer,
+    case_study_four_image_pt_br_id integer,
+    case_study_four_image_ru_id integer,
+    case_study_four_image_zh_hans_id integer,
+    case_study_four_text_ar text,
+    case_study_four_text_de text,
+    case_study_four_text_en_gb text,
+    case_study_four_text_es text,
+    case_study_four_text_fr text,
+    case_study_four_text_ja text,
+    case_study_four_text_pt text,
+    case_study_four_text_pt_br text,
+    case_study_four_text_ru text,
+    case_study_four_text_zh_hans text,
+    case_study_list_title_ar character varying(300),
+    case_study_list_title_de character varying(300),
+    case_study_list_title_en_gb character varying(300),
+    case_study_list_title_es character varying(300),
+    case_study_list_title_fr character varying(300),
+    case_study_list_title_ja character varying(300),
+    case_study_list_title_pt character varying(300),
+    case_study_list_title_pt_br character varying(300),
+    case_study_list_title_ru character varying(300),
+    case_study_list_title_zh_hans character varying(300),
+    case_study_one_image_ar_id integer,
+    case_study_one_image_de_id integer,
+    case_study_one_image_en_gb_id integer,
+    case_study_one_image_es_id integer,
+    case_study_one_image_fr_id integer,
+    case_study_one_image_ja_id integer,
+    case_study_one_image_pt_id integer,
+    case_study_one_image_pt_br_id integer,
+    case_study_one_image_ru_id integer,
+    case_study_one_image_zh_hans_id integer,
+    case_study_one_text_ar text,
+    case_study_one_text_de text,
+    case_study_one_text_en_gb text,
+    case_study_one_text_es text,
+    case_study_one_text_fr text,
+    case_study_one_text_ja text,
+    case_study_one_text_pt text,
+    case_study_one_text_pt_br text,
+    case_study_one_text_ru text,
+    case_study_one_text_zh_hans text,
+    case_study_three_image_ar_id integer,
+    case_study_three_image_de_id integer,
+    case_study_three_image_en_gb_id integer,
+    case_study_three_image_es_id integer,
+    case_study_three_image_fr_id integer,
+    case_study_three_image_ja_id integer,
+    case_study_three_image_pt_id integer,
+    case_study_three_image_pt_br_id integer,
+    case_study_three_image_ru_id integer,
+    case_study_three_image_zh_hans_id integer,
+    case_study_three_text_ar text,
+    case_study_three_text_de text,
+    case_study_three_text_en_gb text,
+    case_study_three_text_es text,
+    case_study_three_text_fr text,
+    case_study_three_text_ja text,
+    case_study_three_text_pt text,
+    case_study_three_text_pt_br text,
+    case_study_three_text_ru text,
+    case_study_three_text_zh_hans text,
+    case_study_two_image_ar_id integer,
+    case_study_two_image_de_id integer,
+    case_study_two_image_en_gb_id integer,
+    case_study_two_image_es_id integer,
+    case_study_two_image_fr_id integer,
+    case_study_two_image_ja_id integer,
+    case_study_two_image_pt_id integer,
+    case_study_two_image_pt_br_id integer,
+    case_study_two_image_ru_id integer,
+    case_study_two_image_zh_hans_id integer,
+    case_study_two_text_ar text,
+    case_study_two_text_de text,
+    case_study_two_text_en_gb text,
+    case_study_two_text_es text,
+    case_study_two_text_fr text,
+    case_study_two_text_ja text,
+    case_study_two_text_pt text,
+    case_study_two_text_pt_br text,
+    case_study_two_text_ru text,
+    case_study_two_text_zh_hans text,
+    companies_list_item_image_eight_ar_id integer,
+    companies_list_item_image_eight_de_id integer,
+    companies_list_item_image_eight_en_gb_id integer,
+    companies_list_item_image_eight_es_id integer,
+    companies_list_item_image_eight_fr_id integer,
+    companies_list_item_image_eight_ja_id integer,
+    companies_list_item_image_eight_pt_id integer,
+    companies_list_item_image_eight_pt_br_id integer,
+    companies_list_item_image_eight_ru_id integer,
+    companies_list_item_image_eight_zh_hans_id integer,
+    companies_list_item_image_five_ar_id integer,
+    companies_list_item_image_five_de_id integer,
+    companies_list_item_image_five_en_gb_id integer,
+    companies_list_item_image_five_es_id integer,
+    companies_list_item_image_five_fr_id integer,
+    companies_list_item_image_five_ja_id integer,
+    companies_list_item_image_five_pt_id integer,
+    companies_list_item_image_five_pt_br_id integer,
+    companies_list_item_image_five_ru_id integer,
+    companies_list_item_image_five_zh_hans_id integer,
+    companies_list_item_image_four_ar_id integer,
+    companies_list_item_image_four_de_id integer,
+    companies_list_item_image_four_en_gb_id integer,
+    companies_list_item_image_four_es_id integer,
+    companies_list_item_image_four_fr_id integer,
+    companies_list_item_image_four_ja_id integer,
+    companies_list_item_image_four_pt_id integer,
+    companies_list_item_image_four_pt_br_id integer,
+    companies_list_item_image_four_ru_id integer,
+    companies_list_item_image_four_zh_hans_id integer,
+    companies_list_item_image_one_ar_id integer,
+    companies_list_item_image_one_de_id integer,
+    companies_list_item_image_one_en_gb_id integer,
+    companies_list_item_image_one_es_id integer,
+    companies_list_item_image_one_fr_id integer,
+    companies_list_item_image_one_ja_id integer,
+    companies_list_item_image_one_pt_id integer,
+    companies_list_item_image_one_pt_br_id integer,
+    companies_list_item_image_one_ru_id integer,
+    companies_list_item_image_one_zh_hans_id integer,
+    companies_list_item_image_seven_ar_id integer,
+    companies_list_item_image_seven_de_id integer,
+    companies_list_item_image_seven_en_gb_id integer,
+    companies_list_item_image_seven_es_id integer,
+    companies_list_item_image_seven_fr_id integer,
+    companies_list_item_image_seven_ja_id integer,
+    companies_list_item_image_seven_pt_id integer,
+    companies_list_item_image_seven_pt_br_id integer,
+    companies_list_item_image_seven_ru_id integer,
+    companies_list_item_image_seven_zh_hans_id integer,
+    companies_list_item_image_six_ar_id integer,
+    companies_list_item_image_six_de_id integer,
+    companies_list_item_image_six_en_gb_id integer,
+    companies_list_item_image_six_es_id integer,
+    companies_list_item_image_six_fr_id integer,
+    companies_list_item_image_six_ja_id integer,
+    companies_list_item_image_six_pt_id integer,
+    companies_list_item_image_six_pt_br_id integer,
+    companies_list_item_image_six_ru_id integer,
+    companies_list_item_image_six_zh_hans_id integer,
+    companies_list_item_image_three_ar_id integer,
+    companies_list_item_image_three_de_id integer,
+    companies_list_item_image_three_en_gb_id integer,
+    companies_list_item_image_three_es_id integer,
+    companies_list_item_image_three_fr_id integer,
+    companies_list_item_image_three_ja_id integer,
+    companies_list_item_image_three_pt_id integer,
+    companies_list_item_image_three_pt_br_id integer,
+    companies_list_item_image_three_ru_id integer,
+    companies_list_item_image_three_zh_hans_id integer,
+    companies_list_item_image_two_ar_id integer,
+    companies_list_item_image_two_de_id integer,
+    companies_list_item_image_two_en_gb_id integer,
+    companies_list_item_image_two_es_id integer,
+    companies_list_item_image_two_fr_id integer,
+    companies_list_item_image_two_ja_id integer,
+    companies_list_item_image_two_pt_id integer,
+    companies_list_item_image_two_pt_br_id integer,
+    companies_list_item_image_two_ru_id integer,
+    companies_list_item_image_two_zh_hans_id integer,
+    companies_list_text_ar text,
+    companies_list_text_de text,
+    companies_list_text_en_gb text,
+    companies_list_text_es text,
+    companies_list_text_fr text,
+    companies_list_text_ja text,
+    companies_list_text_pt text,
+    companies_list_text_pt_br text,
+    companies_list_text_ru text,
+    companies_list_text_zh_hans text,
+    competitive_advantages_list_item_one_ar text,
+    competitive_advantages_list_item_one_de text,
+    competitive_advantages_list_item_one_en_gb text,
+    competitive_advantages_list_item_one_es text,
+    competitive_advantages_list_item_one_fr text,
+    competitive_advantages_list_item_one_icon_ar_id integer,
+    competitive_advantages_list_item_one_icon_de_id integer,
+    competitive_advantages_list_item_one_icon_en_gb_id integer,
+    competitive_advantages_list_item_one_icon_es_id integer,
+    competitive_advantages_list_item_one_icon_fr_id integer,
+    competitive_advantages_list_item_one_icon_ja_id integer,
+    competitive_advantages_list_item_one_icon_pt_id integer,
+    competitive_advantages_list_item_one_icon_pt_br_id integer,
+    competitive_advantages_list_item_one_icon_ru_id integer,
+    competitive_advantages_list_item_one_icon_zh_hans_id integer,
+    competitive_advantages_list_item_one_ja text,
+    competitive_advantages_list_item_one_pt text,
+    competitive_advantages_list_item_one_pt_br text,
+    competitive_advantages_list_item_one_ru text,
+    competitive_advantages_list_item_one_zh_hans text,
+    competitive_advantages_list_item_three_ar text,
+    competitive_advantages_list_item_three_de text,
+    competitive_advantages_list_item_three_en_gb text,
+    competitive_advantages_list_item_three_es text,
+    competitive_advantages_list_item_three_fr text,
+    competitive_advantages_list_item_three_icon_ar_id integer,
+    competitive_advantages_list_item_three_icon_de_id integer,
+    competitive_advantages_list_item_three_icon_en_gb_id integer,
+    competitive_advantages_list_item_three_icon_es_id integer,
+    competitive_advantages_list_item_three_icon_fr_id integer,
+    competitive_advantages_list_item_three_icon_ja_id integer,
+    competitive_advantages_list_item_three_icon_pt_id integer,
+    competitive_advantages_list_item_three_icon_pt_br_id integer,
+    competitive_advantages_list_item_three_icon_ru_id integer,
+    competitive_advantages_list_item_three_icon_zh_hans_id integer,
+    competitive_advantages_list_item_three_ja text,
+    competitive_advantages_list_item_three_pt text,
+    competitive_advantages_list_item_three_pt_br text,
+    competitive_advantages_list_item_three_ru text,
+    competitive_advantages_list_item_three_zh_hans text,
+    competitive_advantages_list_item_two_ar text,
+    competitive_advantages_list_item_two_de text,
+    competitive_advantages_list_item_two_en_gb text,
+    competitive_advantages_list_item_two_es text,
+    competitive_advantages_list_item_two_fr text,
+    competitive_advantages_list_item_two_icon_ar_id integer,
+    competitive_advantages_list_item_two_icon_de_id integer,
+    competitive_advantages_list_item_two_icon_en_gb_id integer,
+    competitive_advantages_list_item_two_icon_es_id integer,
+    competitive_advantages_list_item_two_icon_fr_id integer,
+    competitive_advantages_list_item_two_icon_ja_id integer,
+    competitive_advantages_list_item_two_icon_pt_id integer,
+    competitive_advantages_list_item_two_icon_pt_br_id integer,
+    competitive_advantages_list_item_two_icon_ru_id integer,
+    competitive_advantages_list_item_two_icon_zh_hans_id integer,
+    competitive_advantages_list_item_two_ja text,
+    competitive_advantages_list_item_two_pt text,
+    competitive_advantages_list_item_two_pt_br text,
+    competitive_advantages_list_item_two_ru text,
+    competitive_advantages_list_item_two_zh_hans text,
+    competitive_advantages_title_ar character varying(300),
+    competitive_advantages_title_de character varying(300),
+    competitive_advantages_title_en_gb character varying(300),
+    competitive_advantages_title_es character varying(300),
+    competitive_advantages_title_fr character varying(300),
+    competitive_advantages_title_ja character varying(300),
+    competitive_advantages_title_pt character varying(300),
+    competitive_advantages_title_pt_br character varying(300),
+    competitive_advantages_title_ru character varying(300),
+    competitive_advantages_title_zh_hans character varying(300),
+    contact_button_ar character varying(500),
+    contact_button_de character varying(500),
+    contact_button_en_gb character varying(500),
+    contact_button_es character varying(500),
+    contact_button_fr character varying(500),
+    contact_button_ja character varying(500),
+    contact_button_pt character varying(500),
+    contact_button_pt_br character varying(500),
+    contact_button_ru character varying(500),
+    contact_button_zh_hans character varying(500),
+    contact_proposition_ar text,
+    contact_proposition_de text,
+    contact_proposition_en_gb text,
+    contact_proposition_es text,
+    contact_proposition_fr text,
+    contact_proposition_ja text,
+    contact_proposition_pt text,
+    contact_proposition_pt_br text,
+    contact_proposition_ru text,
+    contact_proposition_zh_hans text,
+    description_ar text,
+    description_de text,
+    description_en_gb text,
+    description_es text,
+    description_fr text,
+    description_ja text,
+    description_pt text,
+    description_pt_br text,
+    description_ru text,
+    description_zh_hans text,
+    featured_ar boolean NOT NULL,
+    featured_de boolean NOT NULL,
+    featured_en_gb boolean NOT NULL,
+    featured_es boolean NOT NULL,
+    featured_fr boolean NOT NULL,
+    featured_ja boolean NOT NULL,
+    featured_pt boolean NOT NULL,
+    featured_pt_br boolean NOT NULL,
+    featured_ru boolean NOT NULL,
+    featured_zh_hans boolean NOT NULL,
+    heading_ar character varying(255),
+    heading_de character varying(255),
+    heading_en_gb character varying(255),
+    heading_es character varying(255),
+    heading_fr character varying(255),
+    heading_ja character varying(255),
+    heading_pt character varying(255),
+    heading_pt_br character varying(255),
+    heading_ru character varying(255),
+    heading_zh_hans character varying(255),
+    hero_image_ar_id integer,
+    hero_image_de_id integer,
+    hero_image_en_gb_id integer,
+    hero_image_es_id integer,
+    hero_image_fr_id integer,
+    hero_image_ja_id integer,
+    hero_image_pt_id integer,
+    hero_image_pt_br_id integer,
+    hero_image_ru_id integer,
+    hero_image_zh_hans_id integer,
+    opportunity_list_image_ar_id integer,
+    opportunity_list_image_de_id integer,
+    opportunity_list_image_en_gb_id integer,
+    opportunity_list_image_es_id integer,
+    opportunity_list_image_fr_id integer,
+    opportunity_list_image_ja_id integer,
+    opportunity_list_image_pt_id integer,
+    opportunity_list_image_pt_br_id integer,
+    opportunity_list_image_ru_id integer,
+    opportunity_list_image_zh_hans_id integer,
+    opportunity_list_item_one_ar text,
+    opportunity_list_item_one_de text,
+    opportunity_list_item_one_en_gb text,
+    opportunity_list_item_one_es text,
+    opportunity_list_item_one_fr text,
+    opportunity_list_item_one_ja text,
+    opportunity_list_item_one_pt text,
+    opportunity_list_item_one_pt_br text,
+    opportunity_list_item_one_ru text,
+    opportunity_list_item_one_zh_hans text,
+    opportunity_list_item_three_ar text,
+    opportunity_list_item_three_de text,
+    opportunity_list_item_three_en_gb text,
+    opportunity_list_item_three_es text,
+    opportunity_list_item_three_fr text,
+    opportunity_list_item_three_ja text,
+    opportunity_list_item_three_pt text,
+    opportunity_list_item_three_pt_br text,
+    opportunity_list_item_three_ru text,
+    opportunity_list_item_three_zh_hans text,
+    opportunity_list_item_two_ar text,
+    opportunity_list_item_two_de text,
+    opportunity_list_item_two_en_gb text,
+    opportunity_list_item_two_es text,
+    opportunity_list_item_two_fr text,
+    opportunity_list_item_two_ja text,
+    opportunity_list_item_two_pt text,
+    opportunity_list_item_two_pt_br text,
+    opportunity_list_item_two_ru text,
+    opportunity_list_item_two_zh_hans text,
+    opportunity_list_title_ar character varying(300),
+    opportunity_list_title_de character varying(300),
+    opportunity_list_title_en_gb character varying(300),
+    opportunity_list_title_es character varying(300),
+    opportunity_list_title_fr character varying(300),
+    opportunity_list_title_ja character varying(300),
+    opportunity_list_title_pt character varying(300),
+    opportunity_list_title_pt_br character varying(300),
+    opportunity_list_title_ru character varying(300),
+    opportunity_list_title_zh_hans character varying(300),
+    other_opportunities_title_ar character varying(300),
+    other_opportunities_title_de character varying(300),
+    other_opportunities_title_en_gb character varying(300),
+    other_opportunities_title_es character varying(300),
+    other_opportunities_title_fr character varying(300),
+    other_opportunities_title_ja character varying(300),
+    other_opportunities_title_pt character varying(300),
+    other_opportunities_title_pt_br character varying(300),
+    other_opportunities_title_ru character varying(300),
+    other_opportunities_title_zh_hans character varying(300),
+    proposition_one_ar text,
+    proposition_one_de text,
+    proposition_one_en_gb text,
+    proposition_one_es text,
+    proposition_one_fr text,
+    proposition_one_image_ar_id integer,
+    proposition_one_image_de_id integer,
+    proposition_one_image_en_gb_id integer,
+    proposition_one_image_es_id integer,
+    proposition_one_image_fr_id integer,
+    proposition_one_image_ja_id integer,
+    proposition_one_image_pt_id integer,
+    proposition_one_image_pt_br_id integer,
+    proposition_one_image_ru_id integer,
+    proposition_one_image_zh_hans_id integer,
+    proposition_one_ja text,
+    proposition_one_pt text,
+    proposition_one_pt_br text,
+    proposition_one_ru text,
+    proposition_one_video_ar_id integer,
+    proposition_one_video_de_id integer,
+    proposition_one_video_en_gb_id integer,
+    proposition_one_video_es_id integer,
+    proposition_one_video_fr_id integer,
+    proposition_one_video_ja_id integer,
+    proposition_one_video_pt_id integer,
+    proposition_one_video_pt_br_id integer,
+    proposition_one_video_ru_id integer,
+    proposition_one_video_zh_hans_id integer,
+    proposition_one_zh_hans text,
+    proposition_two_ar text,
+    proposition_two_de text,
+    proposition_two_en_gb text,
+    proposition_two_es text,
+    proposition_two_fr text,
+    proposition_two_image_ar_id integer,
+    proposition_two_image_de_id integer,
+    proposition_two_image_en_gb_id integer,
+    proposition_two_image_es_id integer,
+    proposition_two_image_fr_id integer,
+    proposition_two_image_ja_id integer,
+    proposition_two_image_pt_id integer,
+    proposition_two_image_pt_br_id integer,
+    proposition_two_image_ru_id integer,
+    proposition_two_image_zh_hans_id integer,
+    proposition_two_ja text,
+    proposition_two_list_item_one_ar text,
+    proposition_two_list_item_one_de text,
+    proposition_two_list_item_one_en_gb text,
+    proposition_two_list_item_one_es text,
+    proposition_two_list_item_one_fr text,
+    proposition_two_list_item_one_ja text,
+    proposition_two_list_item_one_pt text,
+    proposition_two_list_item_one_pt_br text,
+    proposition_two_list_item_one_ru text,
+    proposition_two_list_item_one_zh_hans text,
+    proposition_two_list_item_three_ar text,
+    proposition_two_list_item_three_de text,
+    proposition_two_list_item_three_en_gb text,
+    proposition_two_list_item_three_es text,
+    proposition_two_list_item_three_fr text,
+    proposition_two_list_item_three_ja text,
+    proposition_two_list_item_three_pt text,
+    proposition_two_list_item_three_pt_br text,
+    proposition_two_list_item_three_ru text,
+    proposition_two_list_item_three_zh_hans text,
+    proposition_two_list_item_two_ar text,
+    proposition_two_list_item_two_de text,
+    proposition_two_list_item_two_en_gb text,
+    proposition_two_list_item_two_es text,
+    proposition_two_list_item_two_fr text,
+    proposition_two_list_item_two_ja text,
+    proposition_two_list_item_two_pt text,
+    proposition_two_list_item_two_pt_br text,
+    proposition_two_list_item_two_ru text,
+    proposition_two_list_item_two_zh_hans text,
+    proposition_two_pt text,
+    proposition_two_pt_br text,
+    proposition_two_ru text,
+    proposition_two_video_ar_id integer,
+    proposition_two_video_de_id integer,
+    proposition_two_video_en_gb_id integer,
+    proposition_two_video_es_id integer,
+    proposition_two_video_fr_id integer,
+    proposition_two_video_ja_id integer,
+    proposition_two_video_pt_id integer,
+    proposition_two_video_pt_br_id integer,
+    proposition_two_video_ru_id integer,
+    proposition_two_video_zh_hans_id integer,
+    proposition_two_zh_hans text,
+    summary_image_ar_id integer,
+    summary_image_de_id integer,
+    summary_image_en_gb_id integer,
+    summary_image_es_id integer,
+    summary_image_fr_id integer,
+    summary_image_ja_id integer,
+    summary_image_pt_id integer,
+    summary_image_pt_br_id integer,
+    summary_image_ru_id integer,
+    summary_image_zh_hans_id integer,
+    testimonial_ar text,
+    testimonial_background_ar_id integer,
+    testimonial_background_de_id integer,
+    testimonial_background_en_gb_id integer,
+    testimonial_background_es_id integer,
+    testimonial_background_fr_id integer,
+    testimonial_background_ja_id integer,
+    testimonial_background_pt_id integer,
+    testimonial_background_pt_br_id integer,
+    testimonial_background_ru_id integer,
+    testimonial_background_zh_hans_id integer,
+    testimonial_de text,
+    testimonial_en_gb text,
+    testimonial_es text,
+    testimonial_fr text,
+    testimonial_ja text,
+    testimonial_pt text,
+    testimonial_pt_br text,
+    testimonial_ru text,
+    testimonial_zh_hans text
 );
 
 
@@ -7197,6 +7697,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 256	export_readiness	0031_internationallandingpage_squashed_0050_auto_20190219_1633	2019-04-11 15:30:46.231452+01
 257	great_international	0001_squashed_0015_auto_20190306_1521	2019-04-11 15:30:46.23466+01
 258	invest	0014_auto_20180904_1113_squashed_0026_auto_20181002_1534	2019-04-11 15:30:46.23799+01
+259	invest	0022_auto_20190411_1449	2019-04-11 15:54:34.100863+01
 \.
 
 
@@ -7652,7 +8153,7 @@ COPY public.health_check_db_testmodel (id, title) FROM stdin;
 -- Data for Name: invest_highpotentialopportunitydetailpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.invest_highpotentialopportunitydetailpage (page_ptr_id, service_name, breadcrumbs_label, heading, contact_proposition, contact_button, proposition_one, opportunity_list_title, opportunity_list_item_one, opportunity_list_item_two, opportunity_list_item_three, proposition_two, proposition_two_list_item_one, proposition_two_list_item_two, proposition_two_list_item_three, competitive_advantages_title, competitive_advantages_list_item_one, competitive_advantages_list_item_two, competitive_advantages_list_item_three, testimonial, companies_list_text, case_study_list_title, case_study_one_text, case_study_two_text, case_study_three_text, case_study_four_text, case_study_four_image_id, case_study_one_image_id, case_study_three_image_id, case_study_two_image_id, companies_list_item_image_eight_id, companies_list_item_image_five_id, companies_list_item_image_four_id, companies_list_item_image_one_id, companies_list_item_image_seven_id, companies_list_item_image_six_id, companies_list_item_image_three_id, companies_list_item_image_two_id, hero_image_id, opportunity_list_image_id, proposition_one_image_id, proposition_one_video_id, proposition_two_image_id, proposition_two_video_id, competitive_advantages_list_item_one_icon_id, competitive_advantages_list_item_three_icon_id, competitive_advantages_list_item_two_icon_id, other_opportunities_title, summary_image_id, pdf_document_id, testimonial_background_id, description, featured) FROM stdin;
+COPY public.invest_highpotentialopportunitydetailpage (page_ptr_id, service_name, breadcrumbs_label, heading, contact_proposition, contact_button, proposition_one, opportunity_list_title, opportunity_list_item_one, opportunity_list_item_two, opportunity_list_item_three, proposition_two, proposition_two_list_item_one, proposition_two_list_item_two, proposition_two_list_item_three, competitive_advantages_title, competitive_advantages_list_item_one, competitive_advantages_list_item_two, competitive_advantages_list_item_three, testimonial, companies_list_text, case_study_list_title, case_study_one_text, case_study_two_text, case_study_three_text, case_study_four_text, case_study_four_image_id, case_study_one_image_id, case_study_three_image_id, case_study_two_image_id, companies_list_item_image_eight_id, companies_list_item_image_five_id, companies_list_item_image_four_id, companies_list_item_image_one_id, companies_list_item_image_seven_id, companies_list_item_image_six_id, companies_list_item_image_three_id, companies_list_item_image_two_id, hero_image_id, opportunity_list_image_id, proposition_one_image_id, proposition_one_video_id, proposition_two_image_id, proposition_two_video_id, competitive_advantages_list_item_one_icon_id, competitive_advantages_list_item_three_icon_id, competitive_advantages_list_item_two_icon_id, other_opportunities_title, summary_image_id, pdf_document_id, testimonial_background_id, description, featured, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_pt_br, breadcrumbs_label_ru, breadcrumbs_label_zh_hans, case_study_four_image_ar_id, case_study_four_image_de_id, case_study_four_image_en_gb_id, case_study_four_image_es_id, case_study_four_image_fr_id, case_study_four_image_ja_id, case_study_four_image_pt_id, case_study_four_image_pt_br_id, case_study_four_image_ru_id, case_study_four_image_zh_hans_id, case_study_four_text_ar, case_study_four_text_de, case_study_four_text_en_gb, case_study_four_text_es, case_study_four_text_fr, case_study_four_text_ja, case_study_four_text_pt, case_study_four_text_pt_br, case_study_four_text_ru, case_study_four_text_zh_hans, case_study_list_title_ar, case_study_list_title_de, case_study_list_title_en_gb, case_study_list_title_es, case_study_list_title_fr, case_study_list_title_ja, case_study_list_title_pt, case_study_list_title_pt_br, case_study_list_title_ru, case_study_list_title_zh_hans, case_study_one_image_ar_id, case_study_one_image_de_id, case_study_one_image_en_gb_id, case_study_one_image_es_id, case_study_one_image_fr_id, case_study_one_image_ja_id, case_study_one_image_pt_id, case_study_one_image_pt_br_id, case_study_one_image_ru_id, case_study_one_image_zh_hans_id, case_study_one_text_ar, case_study_one_text_de, case_study_one_text_en_gb, case_study_one_text_es, case_study_one_text_fr, case_study_one_text_ja, case_study_one_text_pt, case_study_one_text_pt_br, case_study_one_text_ru, case_study_one_text_zh_hans, case_study_three_image_ar_id, case_study_three_image_de_id, case_study_three_image_en_gb_id, case_study_three_image_es_id, case_study_three_image_fr_id, case_study_three_image_ja_id, case_study_three_image_pt_id, case_study_three_image_pt_br_id, case_study_three_image_ru_id, case_study_three_image_zh_hans_id, case_study_three_text_ar, case_study_three_text_de, case_study_three_text_en_gb, case_study_three_text_es, case_study_three_text_fr, case_study_three_text_ja, case_study_three_text_pt, case_study_three_text_pt_br, case_study_three_text_ru, case_study_three_text_zh_hans, case_study_two_image_ar_id, case_study_two_image_de_id, case_study_two_image_en_gb_id, case_study_two_image_es_id, case_study_two_image_fr_id, case_study_two_image_ja_id, case_study_two_image_pt_id, case_study_two_image_pt_br_id, case_study_two_image_ru_id, case_study_two_image_zh_hans_id, case_study_two_text_ar, case_study_two_text_de, case_study_two_text_en_gb, case_study_two_text_es, case_study_two_text_fr, case_study_two_text_ja, case_study_two_text_pt, case_study_two_text_pt_br, case_study_two_text_ru, case_study_two_text_zh_hans, companies_list_item_image_eight_ar_id, companies_list_item_image_eight_de_id, companies_list_item_image_eight_en_gb_id, companies_list_item_image_eight_es_id, companies_list_item_image_eight_fr_id, companies_list_item_image_eight_ja_id, companies_list_item_image_eight_pt_id, companies_list_item_image_eight_pt_br_id, companies_list_item_image_eight_ru_id, companies_list_item_image_eight_zh_hans_id, companies_list_item_image_five_ar_id, companies_list_item_image_five_de_id, companies_list_item_image_five_en_gb_id, companies_list_item_image_five_es_id, companies_list_item_image_five_fr_id, companies_list_item_image_five_ja_id, companies_list_item_image_five_pt_id, companies_list_item_image_five_pt_br_id, companies_list_item_image_five_ru_id, companies_list_item_image_five_zh_hans_id, companies_list_item_image_four_ar_id, companies_list_item_image_four_de_id, companies_list_item_image_four_en_gb_id, companies_list_item_image_four_es_id, companies_list_item_image_four_fr_id, companies_list_item_image_four_ja_id, companies_list_item_image_four_pt_id, companies_list_item_image_four_pt_br_id, companies_list_item_image_four_ru_id, companies_list_item_image_four_zh_hans_id, companies_list_item_image_one_ar_id, companies_list_item_image_one_de_id, companies_list_item_image_one_en_gb_id, companies_list_item_image_one_es_id, companies_list_item_image_one_fr_id, companies_list_item_image_one_ja_id, companies_list_item_image_one_pt_id, companies_list_item_image_one_pt_br_id, companies_list_item_image_one_ru_id, companies_list_item_image_one_zh_hans_id, companies_list_item_image_seven_ar_id, companies_list_item_image_seven_de_id, companies_list_item_image_seven_en_gb_id, companies_list_item_image_seven_es_id, companies_list_item_image_seven_fr_id, companies_list_item_image_seven_ja_id, companies_list_item_image_seven_pt_id, companies_list_item_image_seven_pt_br_id, companies_list_item_image_seven_ru_id, companies_list_item_image_seven_zh_hans_id, companies_list_item_image_six_ar_id, companies_list_item_image_six_de_id, companies_list_item_image_six_en_gb_id, companies_list_item_image_six_es_id, companies_list_item_image_six_fr_id, companies_list_item_image_six_ja_id, companies_list_item_image_six_pt_id, companies_list_item_image_six_pt_br_id, companies_list_item_image_six_ru_id, companies_list_item_image_six_zh_hans_id, companies_list_item_image_three_ar_id, companies_list_item_image_three_de_id, companies_list_item_image_three_en_gb_id, companies_list_item_image_three_es_id, companies_list_item_image_three_fr_id, companies_list_item_image_three_ja_id, companies_list_item_image_three_pt_id, companies_list_item_image_three_pt_br_id, companies_list_item_image_three_ru_id, companies_list_item_image_three_zh_hans_id, companies_list_item_image_two_ar_id, companies_list_item_image_two_de_id, companies_list_item_image_two_en_gb_id, companies_list_item_image_two_es_id, companies_list_item_image_two_fr_id, companies_list_item_image_two_ja_id, companies_list_item_image_two_pt_id, companies_list_item_image_two_pt_br_id, companies_list_item_image_two_ru_id, companies_list_item_image_two_zh_hans_id, companies_list_text_ar, companies_list_text_de, companies_list_text_en_gb, companies_list_text_es, companies_list_text_fr, companies_list_text_ja, companies_list_text_pt, companies_list_text_pt_br, companies_list_text_ru, companies_list_text_zh_hans, competitive_advantages_list_item_one_ar, competitive_advantages_list_item_one_de, competitive_advantages_list_item_one_en_gb, competitive_advantages_list_item_one_es, competitive_advantages_list_item_one_fr, competitive_advantages_list_item_one_icon_ar_id, competitive_advantages_list_item_one_icon_de_id, competitive_advantages_list_item_one_icon_en_gb_id, competitive_advantages_list_item_one_icon_es_id, competitive_advantages_list_item_one_icon_fr_id, competitive_advantages_list_item_one_icon_ja_id, competitive_advantages_list_item_one_icon_pt_id, competitive_advantages_list_item_one_icon_pt_br_id, competitive_advantages_list_item_one_icon_ru_id, competitive_advantages_list_item_one_icon_zh_hans_id, competitive_advantages_list_item_one_ja, competitive_advantages_list_item_one_pt, competitive_advantages_list_item_one_pt_br, competitive_advantages_list_item_one_ru, competitive_advantages_list_item_one_zh_hans, competitive_advantages_list_item_three_ar, competitive_advantages_list_item_three_de, competitive_advantages_list_item_three_en_gb, competitive_advantages_list_item_three_es, competitive_advantages_list_item_three_fr, competitive_advantages_list_item_three_icon_ar_id, competitive_advantages_list_item_three_icon_de_id, competitive_advantages_list_item_three_icon_en_gb_id, competitive_advantages_list_item_three_icon_es_id, competitive_advantages_list_item_three_icon_fr_id, competitive_advantages_list_item_three_icon_ja_id, competitive_advantages_list_item_three_icon_pt_id, competitive_advantages_list_item_three_icon_pt_br_id, competitive_advantages_list_item_three_icon_ru_id, competitive_advantages_list_item_three_icon_zh_hans_id, competitive_advantages_list_item_three_ja, competitive_advantages_list_item_three_pt, competitive_advantages_list_item_three_pt_br, competitive_advantages_list_item_three_ru, competitive_advantages_list_item_three_zh_hans, competitive_advantages_list_item_two_ar, competitive_advantages_list_item_two_de, competitive_advantages_list_item_two_en_gb, competitive_advantages_list_item_two_es, competitive_advantages_list_item_two_fr, competitive_advantages_list_item_two_icon_ar_id, competitive_advantages_list_item_two_icon_de_id, competitive_advantages_list_item_two_icon_en_gb_id, competitive_advantages_list_item_two_icon_es_id, competitive_advantages_list_item_two_icon_fr_id, competitive_advantages_list_item_two_icon_ja_id, competitive_advantages_list_item_two_icon_pt_id, competitive_advantages_list_item_two_icon_pt_br_id, competitive_advantages_list_item_two_icon_ru_id, competitive_advantages_list_item_two_icon_zh_hans_id, competitive_advantages_list_item_two_ja, competitive_advantages_list_item_two_pt, competitive_advantages_list_item_two_pt_br, competitive_advantages_list_item_two_ru, competitive_advantages_list_item_two_zh_hans, competitive_advantages_title_ar, competitive_advantages_title_de, competitive_advantages_title_en_gb, competitive_advantages_title_es, competitive_advantages_title_fr, competitive_advantages_title_ja, competitive_advantages_title_pt, competitive_advantages_title_pt_br, competitive_advantages_title_ru, competitive_advantages_title_zh_hans, contact_button_ar, contact_button_de, contact_button_en_gb, contact_button_es, contact_button_fr, contact_button_ja, contact_button_pt, contact_button_pt_br, contact_button_ru, contact_button_zh_hans, contact_proposition_ar, contact_proposition_de, contact_proposition_en_gb, contact_proposition_es, contact_proposition_fr, contact_proposition_ja, contact_proposition_pt, contact_proposition_pt_br, contact_proposition_ru, contact_proposition_zh_hans, description_ar, description_de, description_en_gb, description_es, description_fr, description_ja, description_pt, description_pt_br, description_ru, description_zh_hans, featured_ar, featured_de, featured_en_gb, featured_es, featured_fr, featured_ja, featured_pt, featured_pt_br, featured_ru, featured_zh_hans, heading_ar, heading_de, heading_en_gb, heading_es, heading_fr, heading_ja, heading_pt, heading_pt_br, heading_ru, heading_zh_hans, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_pt_br_id, hero_image_ru_id, hero_image_zh_hans_id, opportunity_list_image_ar_id, opportunity_list_image_de_id, opportunity_list_image_en_gb_id, opportunity_list_image_es_id, opportunity_list_image_fr_id, opportunity_list_image_ja_id, opportunity_list_image_pt_id, opportunity_list_image_pt_br_id, opportunity_list_image_ru_id, opportunity_list_image_zh_hans_id, opportunity_list_item_one_ar, opportunity_list_item_one_de, opportunity_list_item_one_en_gb, opportunity_list_item_one_es, opportunity_list_item_one_fr, opportunity_list_item_one_ja, opportunity_list_item_one_pt, opportunity_list_item_one_pt_br, opportunity_list_item_one_ru, opportunity_list_item_one_zh_hans, opportunity_list_item_three_ar, opportunity_list_item_three_de, opportunity_list_item_three_en_gb, opportunity_list_item_three_es, opportunity_list_item_three_fr, opportunity_list_item_three_ja, opportunity_list_item_three_pt, opportunity_list_item_three_pt_br, opportunity_list_item_three_ru, opportunity_list_item_three_zh_hans, opportunity_list_item_two_ar, opportunity_list_item_two_de, opportunity_list_item_two_en_gb, opportunity_list_item_two_es, opportunity_list_item_two_fr, opportunity_list_item_two_ja, opportunity_list_item_two_pt, opportunity_list_item_two_pt_br, opportunity_list_item_two_ru, opportunity_list_item_two_zh_hans, opportunity_list_title_ar, opportunity_list_title_de, opportunity_list_title_en_gb, opportunity_list_title_es, opportunity_list_title_fr, opportunity_list_title_ja, opportunity_list_title_pt, opportunity_list_title_pt_br, opportunity_list_title_ru, opportunity_list_title_zh_hans, other_opportunities_title_ar, other_opportunities_title_de, other_opportunities_title_en_gb, other_opportunities_title_es, other_opportunities_title_fr, other_opportunities_title_ja, other_opportunities_title_pt, other_opportunities_title_pt_br, other_opportunities_title_ru, other_opportunities_title_zh_hans, proposition_one_ar, proposition_one_de, proposition_one_en_gb, proposition_one_es, proposition_one_fr, proposition_one_image_ar_id, proposition_one_image_de_id, proposition_one_image_en_gb_id, proposition_one_image_es_id, proposition_one_image_fr_id, proposition_one_image_ja_id, proposition_one_image_pt_id, proposition_one_image_pt_br_id, proposition_one_image_ru_id, proposition_one_image_zh_hans_id, proposition_one_ja, proposition_one_pt, proposition_one_pt_br, proposition_one_ru, proposition_one_video_ar_id, proposition_one_video_de_id, proposition_one_video_en_gb_id, proposition_one_video_es_id, proposition_one_video_fr_id, proposition_one_video_ja_id, proposition_one_video_pt_id, proposition_one_video_pt_br_id, proposition_one_video_ru_id, proposition_one_video_zh_hans_id, proposition_one_zh_hans, proposition_two_ar, proposition_two_de, proposition_two_en_gb, proposition_two_es, proposition_two_fr, proposition_two_image_ar_id, proposition_two_image_de_id, proposition_two_image_en_gb_id, proposition_two_image_es_id, proposition_two_image_fr_id, proposition_two_image_ja_id, proposition_two_image_pt_id, proposition_two_image_pt_br_id, proposition_two_image_ru_id, proposition_two_image_zh_hans_id, proposition_two_ja, proposition_two_list_item_one_ar, proposition_two_list_item_one_de, proposition_two_list_item_one_en_gb, proposition_two_list_item_one_es, proposition_two_list_item_one_fr, proposition_two_list_item_one_ja, proposition_two_list_item_one_pt, proposition_two_list_item_one_pt_br, proposition_two_list_item_one_ru, proposition_two_list_item_one_zh_hans, proposition_two_list_item_three_ar, proposition_two_list_item_three_de, proposition_two_list_item_three_en_gb, proposition_two_list_item_three_es, proposition_two_list_item_three_fr, proposition_two_list_item_three_ja, proposition_two_list_item_three_pt, proposition_two_list_item_three_pt_br, proposition_two_list_item_three_ru, proposition_two_list_item_three_zh_hans, proposition_two_list_item_two_ar, proposition_two_list_item_two_de, proposition_two_list_item_two_en_gb, proposition_two_list_item_two_es, proposition_two_list_item_two_fr, proposition_two_list_item_two_ja, proposition_two_list_item_two_pt, proposition_two_list_item_two_pt_br, proposition_two_list_item_two_ru, proposition_two_list_item_two_zh_hans, proposition_two_pt, proposition_two_pt_br, proposition_two_ru, proposition_two_video_ar_id, proposition_two_video_de_id, proposition_two_video_en_gb_id, proposition_two_video_es_id, proposition_two_video_fr_id, proposition_two_video_ja_id, proposition_two_video_pt_id, proposition_two_video_pt_br_id, proposition_two_video_ru_id, proposition_two_video_zh_hans_id, proposition_two_zh_hans, summary_image_ar_id, summary_image_de_id, summary_image_en_gb_id, summary_image_es_id, summary_image_fr_id, summary_image_ja_id, summary_image_pt_id, summary_image_pt_br_id, summary_image_ru_id, summary_image_zh_hans_id, testimonial_ar, testimonial_background_ar_id, testimonial_background_de_id, testimonial_background_en_gb_id, testimonial_background_es_id, testimonial_background_fr_id, testimonial_background_ja_id, testimonial_background_pt_id, testimonial_background_pt_br_id, testimonial_background_ru_id, testimonial_background_zh_hans_id, testimonial_de, testimonial_en_gb, testimonial_es, testimonial_fr, testimonial_ja, testimonial_pt, testimonial_pt_br, testimonial_ru, testimonial_zh_hans) FROM stdin;
 \.
 
 
@@ -8008,7 +8509,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 87, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 258, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 259, true);
 
 
 --
@@ -14349,10 +14850,115 @@ CREATE INDEX invest_highpotentialoppo_service_name_8c856d1c_like ON public.inves
 
 
 --
+-- Name: invest_highpotentialopport_case_study_four_image_ar_i_d039e16f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_four_image_ar_i_d039e16f ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_four_image_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_four_image_de_i_6c8d1898; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_four_image_de_i_6c8d1898 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_four_image_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_four_image_en_g_fdea28cc; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_four_image_en_g_fdea28cc ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_four_image_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_four_image_es_i_a235eeb8; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_four_image_es_i_a235eeb8 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_four_image_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_four_image_fr_i_320c9ad1; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_four_image_fr_i_320c9ad1 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_four_image_fr_id);
+
+
+--
 -- Name: invest_highpotentialopport_case_study_four_image_id_7d6ba663; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_case_study_four_image_id_7d6ba663 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_four_image_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_four_image_ja_i_35db6dca; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_four_image_ja_i_35db6dca ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_four_image_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_four_image_pt_b_b0c6dfdb; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_four_image_pt_b_b0c6dfdb ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_four_image_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_four_image_pt_i_b57f68d1; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_four_image_pt_i_b57f68d1 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_four_image_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_four_image_ru_i_b3fda3b4; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_four_image_ru_i_b3fda3b4 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_four_image_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_four_image_zh_h_cdbc91e3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_four_image_zh_h_cdbc91e3 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_four_image_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_one_image_ar_id_3615bdf7; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_one_image_ar_id_3615bdf7 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_one_image_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_one_image_de_id_eadf7d29; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_one_image_de_id_eadf7d29 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_one_image_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_one_image_en_gb_e79a5bfb; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_one_image_en_gb_e79a5bfb ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_one_image_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_one_image_es_id_11098e79; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_one_image_es_id_11098e79 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_one_image_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_one_image_fr_id_b8627e0e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_one_image_fr_id_b8627e0e ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_one_image_fr_id);
 
 
 --
@@ -14363,10 +14969,150 @@ CREATE INDEX invest_highpotentialopport_case_study_one_image_id_ba757ba9 ON publ
 
 
 --
+-- Name: invest_highpotentialopport_case_study_one_image_ja_id_2dc6ca68; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_one_image_ja_id_2dc6ca68 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_one_image_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_one_image_pt_br_34e92817; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_one_image_pt_br_34e92817 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_one_image_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_one_image_pt_id_1765ef73; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_one_image_pt_id_1765ef73 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_one_image_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_one_image_ru_id_0efb330f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_one_image_ru_id_0efb330f ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_one_image_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_one_image_zh_ha_39c5e28c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_one_image_zh_ha_39c5e28c ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_one_image_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_three_image_ar__6e5dbb8b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_three_image_ar__6e5dbb8b ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_three_image_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_three_image_de__f8d7c7d9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_three_image_de__f8d7c7d9 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_three_image_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_three_image_en__eaac3bf5; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_three_image_en__eaac3bf5 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_three_image_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_three_image_es__87bdc483; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_three_image_es__87bdc483 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_three_image_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_three_image_fr__f0b4f832; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_three_image_fr__f0b4f832 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_three_image_fr_id);
+
+
+--
 -- Name: invest_highpotentialopport_case_study_three_image_id_034f8a93; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_case_study_three_image_id_034f8a93 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_three_image_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_three_image_ja__88888e10; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_three_image_ja__88888e10 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_three_image_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_three_image_pt__98ab1a6c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_three_image_pt__98ab1a6c ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_three_image_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_three_image_pt__ea81a176; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_three_image_pt__ea81a176 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_three_image_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_three_image_ru__fc95e69b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_three_image_ru__fc95e69b ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_three_image_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_three_image_zh__f1c26cf8; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_three_image_zh__f1c26cf8 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_three_image_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_two_image_ar_id_f31bae28; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_two_image_ar_id_f31bae28 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_two_image_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_two_image_de_id_8365cf2e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_two_image_de_id_8365cf2e ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_two_image_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_two_image_en_gb_be7ab918; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_two_image_en_gb_be7ab918 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_two_image_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_two_image_es_id_dbcae6c2; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_two_image_es_id_dbcae6c2 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_two_image_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_two_image_fr_id_a7443ecc; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_two_image_fr_id_a7443ecc ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_two_image_fr_id);
 
 
 --
@@ -14377,6 +15123,104 @@ CREATE INDEX invest_highpotentialopport_case_study_two_image_id_7765394b ON publ
 
 
 --
+-- Name: invest_highpotentialopport_case_study_two_image_ja_id_3ae0c712; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_two_image_ja_id_3ae0c712 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_two_image_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_two_image_pt_br_3b90bac9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_two_image_pt_br_3b90bac9 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_two_image_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_two_image_pt_id_95396154; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_two_image_pt_id_95396154 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_two_image_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_two_image_ru_id_1413d098; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_two_image_ru_id_1413d098 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_two_image_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_case_study_two_image_zh_ha_cffd7135; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_case_study_two_image_zh_ha_cffd7135 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_two_image_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__005cd673; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__005cd673 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_six_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__03188ba9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__03188ba9 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_six_fr_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__0615da74; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__0615da74 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_five_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__06588a44; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__06588a44 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_five_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__13831781; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__13831781 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_five_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__1b111ed3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__1b111ed3 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_eight_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__1ea750f9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__1ea750f9 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_six_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__1f3cb5d9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__1f3cb5d9 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_four_fr_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__22db3d6c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__22db3d6c ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_eight_pt_br_id);
+
+
+--
 -- Name: invest_highpotentialopport_companies_list_item_image__24ac23e1; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -14384,10 +15228,150 @@ CREATE INDEX invest_highpotentialopport_companies_list_item_image__24ac23e1 ON p
 
 
 --
+-- Name: invest_highpotentialopport_companies_list_item_image__2527d669; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__2527d669 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_four_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__2736877b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__2736877b ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_one_fr_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__2eb93357; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__2eb93357 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_four_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__32c0a918; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__32c0a918 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_one_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__3a6335b6; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__3a6335b6 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_seven_fr_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__3b566bd4; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__3b566bd4 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_one_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__3c85a46c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__3c85a46c ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_seven_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__47e86639; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__47e86639 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_eight_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__4c8ef91b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__4c8ef91b ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_two_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__4cbc431c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__4cbc431c ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_two_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__564ef0fd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__564ef0fd ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_five_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__57dd1361; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__57dd1361 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_eight_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__582151e8; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__582151e8 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_eight_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__5a003504; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__5a003504 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_four_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__5d82adc4; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__5d82adc4 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_three_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__5f2e59ba; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__5f2e59ba ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_eight_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__5fd55670; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__5fd55670 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_two_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__606eb429; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__606eb429 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_six_es_id);
+
+
+--
 -- Name: invest_highpotentialopport_companies_list_item_image__607e453f; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_companies_list_item_image__607e453f ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_five_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__63f109d4; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__63f109d4 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_one_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__652f6a73; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__652f6a73 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_one_pt_br_id);
 
 
 --
@@ -14405,10 +15389,234 @@ CREATE INDEX invest_highpotentialopport_companies_list_item_image__69535e2d ON p
 
 
 --
+-- Name: invest_highpotentialopport_companies_list_item_image__6b8c075d; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__6b8c075d ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_seven_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__6ba2ec3f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__6ba2ec3f ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_three_zh_hans_id);
+
+
+--
 -- Name: invest_highpotentialopport_companies_list_item_image__6c22af18; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_companies_list_item_image__6c22af18 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_three_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__6de4d7af; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__6de4d7af ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_three_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__73e44df9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__73e44df9 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_four_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__781f861f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__781f861f ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_eight_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__7a0488ea; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__7a0488ea ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_three_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__7a810bec; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__7a810bec ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_four_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__7b22cade; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__7b22cade ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_six_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__7dfc5086; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__7dfc5086 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_six_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__7f36fc62; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__7f36fc62 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_eight_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__843deefd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__843deefd ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_five_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__84c44069; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__84c44069 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_seven_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__8c1906a1; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__8c1906a1 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_three_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__8e9f32c5; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__8e9f32c5 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_six_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__8eb89f9a; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__8eb89f9a ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_eight_fr_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__937c8a16; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__937c8a16 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_three_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__93e29426; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__93e29426 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_five_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__942b9799; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__942b9799 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_seven_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__9432ab61; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__9432ab61 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_four_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__95574cde; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__95574cde ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_six_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__963d5e95; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__963d5e95 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_six_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__99d5ea71; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__99d5ea71 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_two_fr_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__9ba14e5d; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__9ba14e5d ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_one_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__9bbd9294; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__9bbd9294 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_five_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__a1ec6e4f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__a1ec6e4f ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_two_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__aec89717; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__aec89717 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_one_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__b0abf40c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__b0abf40c ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_seven_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__b1d5d004; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__b1d5d004 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_three_fr_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__ba2e4801; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__ba2e4801 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_two_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__c08f9ddf; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__c08f9ddf ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_five_fr_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__c1c5c3d7; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__c1c5c3d7 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_five_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__c352b555; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__c352b555 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_four_pt_br_id);
 
 
 --
@@ -14419,10 +15627,108 @@ CREATE INDEX invest_highpotentialopport_companies_list_item_image__c4205164 ON p
 
 
 --
+-- Name: invest_highpotentialopport_companies_list_item_image__c99061ec; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__c99061ec ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_one_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__c9a8c81a; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__c9a8c81a ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_two_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__cb737d94; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__cb737d94 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_one_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__cd499f99; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__cd499f99 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_seven_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__cee4ed55; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__cee4ed55 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_three_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__d0a25bdf; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__d0a25bdf ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_two_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__d24f18fc; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__d24f18fc ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_three_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__d5f7085c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__d5f7085c ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_three_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__da963152; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__da963152 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_seven_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__dae81be9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__dae81be9 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_two_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__dbbd5d03; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__dbbd5d03 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_four_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__dc1d413e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__dc1d413e ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_five_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__e29a82d2; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__e29a82d2 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_seven_ar_id);
+
+
+--
 -- Name: invest_highpotentialopport_companies_list_item_image__e511f30b; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_companies_list_item_image__e511f30b ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_two_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__e7bdadb9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__e7bdadb9 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_one_ar_id);
 
 
 --
@@ -14433,10 +15739,157 @@ CREATE INDEX invest_highpotentialopport_companies_list_item_image__f59bbf99 ON p
 
 
 --
+-- Name: invest_highpotentialopport_companies_list_item_image__f89fb0ce; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__f89fb0ce ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_seven_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__f966848f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__f966848f ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_two_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__fc7ff49f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__fc7ff49f ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_four_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__ff01cc54; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__ff01cc54 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_eight_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_companies_list_item_image__ff72b793; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_companies_list_item_image__ff72b793 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_six_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_0dbfeaa2; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_0dbfeaa2 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_two_icon_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_0efce36f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_0efce36f ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_one_icon_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_21a2c8d7; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_21a2c8d7 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_one_icon_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_2c6b1d75; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_2c6b1d75 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_three_icon_fr_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_30492386; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_30492386 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_three_icon_es_id);
+
+
+--
 -- Name: invest_highpotentialopport_competitive_advantages_lis_33a2dcf6; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_33a2dcf6 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_one_icon_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_36aee8de; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_36aee8de ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_one_icon_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_40d6c9af; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_40d6c9af ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_three_icon_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_4fe4a95d; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_4fe4a95d ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_two_icon_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_51b584c9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_51b584c9 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_one_icon_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_538ad8fe; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_538ad8fe ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_two_icon_fr_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_53d697db; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_53d697db ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_two_icon_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_71e9b8ce; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_71e9b8ce ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_one_icon_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_74c960ff; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_74c960ff ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_two_icon_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_7811fc8c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_7811fc8c ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_one_icon_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_7e3568fe; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_7e3568fe ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_three_icon_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_841529ec; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_841529ec ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_three_icon_pt_br_id);
 
 
 --
@@ -14447,10 +15900,143 @@ CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_89da55bd ON p
 
 
 --
+-- Name: invest_highpotentialopport_competitive_advantages_lis_90092a2c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_90092a2c ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_two_icon_ar_id);
+
+
+--
 -- Name: invest_highpotentialopport_competitive_advantages_lis_9555f962; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_9555f962 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_three_icon_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_98570f46; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_98570f46 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_two_icon_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_9874c8b6; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_9874c8b6 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_three_icon_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_a9dc3bb9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_a9dc3bb9 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_one_icon_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_c335ac03; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_c335ac03 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_one_icon_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_d01f612d; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_d01f612d ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_three_icon_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_d41b8b94; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_d41b8b94 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_two_icon_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_da967f8b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_da967f8b ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_two_icon_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_df368cd3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_df368cd3 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_two_icon_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_f20ed168; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_f20ed168 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_one_icon_fr_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_f29f52a0; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_f29f52a0 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_three_icon_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_f61b1221; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_f61b1221 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_three_icon_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_f6568867; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_f6568867 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_one_icon_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_competitive_advantages_lis_f744fc9c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_f744fc9c ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_three_icon_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_hero_image_ar_id_e9eaca13; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_hero_image_ar_id_e9eaca13 ON public.invest_highpotentialopportunitydetailpage USING btree (hero_image_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_hero_image_de_id_cdd62082; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_hero_image_de_id_cdd62082 ON public.invest_highpotentialopportunitydetailpage USING btree (hero_image_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_hero_image_en_gb_id_906ed067; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_hero_image_en_gb_id_906ed067 ON public.invest_highpotentialopportunitydetailpage USING btree (hero_image_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_hero_image_es_id_4b6da933; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_hero_image_es_id_4b6da933 ON public.invest_highpotentialopportunitydetailpage USING btree (hero_image_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_hero_image_fr_id_0084837f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_hero_image_fr_id_0084837f ON public.invest_highpotentialopportunitydetailpage USING btree (hero_image_fr_id);
 
 
 --
@@ -14461,10 +16047,115 @@ CREATE INDEX invest_highpotentialopport_hero_image_id_39933ff3 ON public.invest_
 
 
 --
+-- Name: invest_highpotentialopport_hero_image_ja_id_f89a9b4a; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_hero_image_ja_id_f89a9b4a ON public.invest_highpotentialopportunitydetailpage USING btree (hero_image_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_hero_image_pt_br_id_e1e40d6e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_hero_image_pt_br_id_e1e40d6e ON public.invest_highpotentialopportunitydetailpage USING btree (hero_image_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_hero_image_pt_id_51007d85; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_hero_image_pt_id_51007d85 ON public.invest_highpotentialopportunitydetailpage USING btree (hero_image_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_hero_image_ru_id_140509ba; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_hero_image_ru_id_140509ba ON public.invest_highpotentialopportunitydetailpage USING btree (hero_image_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_hero_image_zh_hans_id_d52ca22b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_hero_image_zh_hans_id_d52ca22b ON public.invest_highpotentialopportunitydetailpage USING btree (hero_image_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_opportunity_list_image_ar__c63ca7c6; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_opportunity_list_image_ar__c63ca7c6 ON public.invest_highpotentialopportunitydetailpage USING btree (opportunity_list_image_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_opportunity_list_image_de__cfeebd8e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_opportunity_list_image_de__cfeebd8e ON public.invest_highpotentialopportunitydetailpage USING btree (opportunity_list_image_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_opportunity_list_image_en__3d286994; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_opportunity_list_image_en__3d286994 ON public.invest_highpotentialopportunitydetailpage USING btree (opportunity_list_image_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_opportunity_list_image_es__63946cce; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_opportunity_list_image_es__63946cce ON public.invest_highpotentialopportunitydetailpage USING btree (opportunity_list_image_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_opportunity_list_image_fr__d6f79ebc; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_opportunity_list_image_fr__d6f79ebc ON public.invest_highpotentialopportunitydetailpage USING btree (opportunity_list_image_fr_id);
+
+
+--
 -- Name: invest_highpotentialopport_opportunity_list_image_id_39bfbdee; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_opportunity_list_image_id_39bfbdee ON public.invest_highpotentialopportunitydetailpage USING btree (opportunity_list_image_id);
+
+
+--
+-- Name: invest_highpotentialopport_opportunity_list_image_ja__f8e73cb5; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_opportunity_list_image_ja__f8e73cb5 ON public.invest_highpotentialopportunitydetailpage USING btree (opportunity_list_image_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_opportunity_list_image_pt__6c3086d9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_opportunity_list_image_pt__6c3086d9 ON public.invest_highpotentialopportunitydetailpage USING btree (opportunity_list_image_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_opportunity_list_image_pt__9b2d4414; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_opportunity_list_image_pt__9b2d4414 ON public.invest_highpotentialopportunitydetailpage USING btree (opportunity_list_image_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_opportunity_list_image_ru__b1000b00; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_opportunity_list_image_ru__b1000b00 ON public.invest_highpotentialopportunitydetailpage USING btree (opportunity_list_image_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_opportunity_list_image_zh__59455d63; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_opportunity_list_image_zh__59455d63 ON public.invest_highpotentialopportunitydetailpage USING btree (opportunity_list_image_zh_hans_id);
 
 
 --
@@ -14475,10 +16166,115 @@ CREATE INDEX invest_highpotentialopport_pdf_document_id_7452b06c ON public.inves
 
 
 --
+-- Name: invest_highpotentialopport_proposition_one_image_ar_i_9e0319e3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_image_ar_i_9e0319e3 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_image_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_image_de_i_226dd96d; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_image_de_i_226dd96d ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_image_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_image_en_g_553a4afe; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_image_en_g_553a4afe ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_image_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_image_es_i_f151deb5; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_image_es_i_f151deb5 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_image_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_image_fr_i_9dbbe502; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_image_fr_i_9dbbe502 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_image_fr_id);
+
+
+--
 -- Name: invest_highpotentialopport_proposition_one_image_id_3cb62d0e; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_proposition_one_image_id_3cb62d0e ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_image_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_image_ja_i_2cd1be5b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_image_ja_i_2cd1be5b ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_image_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_image_pt_b_6813d18c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_image_pt_b_6813d18c ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_image_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_image_pt_i_7c2d515e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_image_pt_i_7c2d515e ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_image_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_image_ru_i_47c472b1; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_image_ru_i_47c472b1 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_image_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_image_zh_h_6fa10ca7; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_image_zh_h_6fa10ca7 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_image_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_video_ar_i_01f0708e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_video_ar_i_01f0708e ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_video_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_video_de_i_a55cdde4; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_video_de_i_a55cdde4 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_video_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_video_en_g_48c1ca4f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_video_en_g_48c1ca4f ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_video_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_video_es_i_5d0cd8f9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_video_es_i_5d0cd8f9 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_video_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_video_fr_i_e9259229; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_video_fr_i_e9259229 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_video_fr_id);
 
 
 --
@@ -14489,10 +16285,150 @@ CREATE INDEX invest_highpotentialopport_proposition_one_video_id_ee82eb9b ON pub
 
 
 --
+-- Name: invest_highpotentialopport_proposition_one_video_ja_i_55b11348; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_video_ja_i_55b11348 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_video_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_video_pt_b_ce8e8454; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_video_pt_b_ce8e8454 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_video_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_video_pt_i_5c934044; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_video_pt_i_5c934044 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_video_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_video_ru_i_6b7aa1e5; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_video_ru_i_6b7aa1e5 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_video_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_one_video_zh_h_329dbe60; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_one_video_zh_h_329dbe60 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_video_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_image_ar_i_ea30613e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_image_ar_i_ea30613e ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_image_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_image_de_i_9f2a91c3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_image_de_i_9f2a91c3 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_image_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_image_en_g_e82f4f8f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_image_en_g_e82f4f8f ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_image_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_image_es_i_d4c939fc; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_image_es_i_d4c939fc ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_image_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_image_fr_i_0cace5b3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_image_fr_i_0cace5b3 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_image_fr_id);
+
+
+--
 -- Name: invest_highpotentialopport_proposition_two_image_id_16381e09; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_proposition_two_image_id_16381e09 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_image_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_image_ja_i_85fe3796; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_image_ja_i_85fe3796 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_image_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_image_pt_b_18a94aa9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_image_pt_b_18a94aa9 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_image_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_image_pt_i_44846e1d; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_image_pt_i_44846e1d ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_image_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_image_ru_i_f5802195; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_image_ru_i_f5802195 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_image_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_image_zh_h_80894bee; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_image_zh_h_80894bee ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_image_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_video_ar_i_8a2171b1; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_video_ar_i_8a2171b1 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_video_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_video_de_i_9a6d0c57; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_video_de_i_9a6d0c57 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_video_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_video_en_g_e41745de; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_video_en_g_e41745de ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_video_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_video_es_i_5ab2ed7e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_video_es_i_5ab2ed7e ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_video_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_video_fr_i_6a2941a3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_video_fr_i_6a2941a3 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_video_fr_id);
 
 
 --
@@ -14503,10 +16439,80 @@ CREATE INDEX invest_highpotentialopport_proposition_two_video_id_81ed7649 ON pub
 
 
 --
+-- Name: invest_highpotentialopport_proposition_two_video_ja_i_0bdf31fd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_video_ja_i_0bdf31fd ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_video_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_video_pt_b_85a6c70c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_video_pt_b_85a6c70c ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_video_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_video_pt_i_f7ab4c50; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_video_pt_i_f7ab4c50 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_video_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_video_ru_i_6281f41b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_video_ru_i_6281f41b ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_video_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_proposition_two_video_zh_h_d65f95cb; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_proposition_two_video_zh_h_d65f95cb ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_video_zh_hans_id);
+
+
+--
 -- Name: invest_highpotentialopport_service_name_8c856d1c; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_service_name_8c856d1c ON public.invest_highpotentialopportunityformsuccesspage USING btree (service_name);
+
+
+--
+-- Name: invest_highpotentialopport_summary_image_ar_id_123a2501; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_summary_image_ar_id_123a2501 ON public.invest_highpotentialopportunitydetailpage USING btree (summary_image_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_summary_image_de_id_70c8ddd9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_summary_image_de_id_70c8ddd9 ON public.invest_highpotentialopportunitydetailpage USING btree (summary_image_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_summary_image_en_gb_id_cfe52624; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_summary_image_en_gb_id_cfe52624 ON public.invest_highpotentialopportunitydetailpage USING btree (summary_image_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_summary_image_es_id_fa217f27; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_summary_image_es_id_fa217f27 ON public.invest_highpotentialopportunitydetailpage USING btree (summary_image_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_summary_image_fr_id_6c38c439; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_summary_image_fr_id_6c38c439 ON public.invest_highpotentialopportunitydetailpage USING btree (summary_image_fr_id);
 
 
 --
@@ -14517,10 +16523,115 @@ CREATE INDEX invest_highpotentialopport_summary_image_id_2687e608 ON public.inve
 
 
 --
+-- Name: invest_highpotentialopport_summary_image_ja_id_35f75f42; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_summary_image_ja_id_35f75f42 ON public.invest_highpotentialopportunitydetailpage USING btree (summary_image_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_summary_image_pt_br_id_d6b5dbd5; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_summary_image_pt_br_id_d6b5dbd5 ON public.invest_highpotentialopportunitydetailpage USING btree (summary_image_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_summary_image_pt_id_88426c0d; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_summary_image_pt_id_88426c0d ON public.invest_highpotentialopportunitydetailpage USING btree (summary_image_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_summary_image_ru_id_8a836a43; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_summary_image_ru_id_8a836a43 ON public.invest_highpotentialopportunitydetailpage USING btree (summary_image_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_summary_image_zh_hans_id_b0e31f01; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_summary_image_zh_hans_id_b0e31f01 ON public.invest_highpotentialopportunitydetailpage USING btree (summary_image_zh_hans_id);
+
+
+--
+-- Name: invest_highpotentialopport_testimonial_background_ar__5f8a9dbb; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_testimonial_background_ar__5f8a9dbb ON public.invest_highpotentialopportunitydetailpage USING btree (testimonial_background_ar_id);
+
+
+--
+-- Name: invest_highpotentialopport_testimonial_background_de__e39e2e0a; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_testimonial_background_de__e39e2e0a ON public.invest_highpotentialopportunitydetailpage USING btree (testimonial_background_de_id);
+
+
+--
+-- Name: invest_highpotentialopport_testimonial_background_en__6790eb95; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_testimonial_background_en__6790eb95 ON public.invest_highpotentialopportunitydetailpage USING btree (testimonial_background_en_gb_id);
+
+
+--
+-- Name: invest_highpotentialopport_testimonial_background_es__95028831; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_testimonial_background_es__95028831 ON public.invest_highpotentialopportunitydetailpage USING btree (testimonial_background_es_id);
+
+
+--
+-- Name: invest_highpotentialopport_testimonial_background_fr__31f8db0c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_testimonial_background_fr__31f8db0c ON public.invest_highpotentialopportunitydetailpage USING btree (testimonial_background_fr_id);
+
+
+--
 -- Name: invest_highpotentialopport_testimonial_background_id_438c0bf6; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_testimonial_background_id_438c0bf6 ON public.invest_highpotentialopportunitydetailpage USING btree (testimonial_background_id);
+
+
+--
+-- Name: invest_highpotentialopport_testimonial_background_ja__bcacb436; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_testimonial_background_ja__bcacb436 ON public.invest_highpotentialopportunitydetailpage USING btree (testimonial_background_ja_id);
+
+
+--
+-- Name: invest_highpotentialopport_testimonial_background_pt__2736ceb9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_testimonial_background_pt__2736ceb9 ON public.invest_highpotentialopportunitydetailpage USING btree (testimonial_background_pt_br_id);
+
+
+--
+-- Name: invest_highpotentialopport_testimonial_background_pt__bbd70775; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_testimonial_background_pt__bbd70775 ON public.invest_highpotentialopportunitydetailpage USING btree (testimonial_background_pt_id);
+
+
+--
+-- Name: invest_highpotentialopport_testimonial_background_ru__be696a19; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_testimonial_background_ru__be696a19 ON public.invest_highpotentialopportunitydetailpage USING btree (testimonial_background_ru_id);
+
+
+--
+-- Name: invest_highpotentialopport_testimonial_background_zh__ee1443c0; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_highpotentialopport_testimonial_background_zh__ee1443c0 ON public.invest_highpotentialopportunitydetailpage USING btree (testimonial_background_zh_hans_id);
 
 
 --
@@ -21504,11 +23615,155 @@ ALTER TABLE ONLY public.great_international_internationalhomepage
 
 
 --
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_four_imag_320c9ad1_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_four_imag_320c9ad1_fk_wagtailim FOREIGN KEY (case_study_four_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_four_imag_35db6dca_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_four_imag_35db6dca_fk_wagtailim FOREIGN KEY (case_study_four_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_four_imag_6c8d1898_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_four_imag_6c8d1898_fk_wagtailim FOREIGN KEY (case_study_four_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_four_imag_7d6ba663_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_case_study_four_imag_7d6ba663_fk_wagtailim FOREIGN KEY (case_study_four_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_four_imag_a235eeb8_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_four_imag_a235eeb8_fk_wagtailim FOREIGN KEY (case_study_four_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_four_imag_b0c6dfdb_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_four_imag_b0c6dfdb_fk_wagtailim FOREIGN KEY (case_study_four_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_four_imag_b3fda3b4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_four_imag_b3fda3b4_fk_wagtailim FOREIGN KEY (case_study_four_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_four_imag_b57f68d1_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_four_imag_b57f68d1_fk_wagtailim FOREIGN KEY (case_study_four_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_four_imag_cdbc91e3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_four_imag_cdbc91e3_fk_wagtailim FOREIGN KEY (case_study_four_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_four_imag_d039e16f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_four_imag_d039e16f_fk_wagtailim FOREIGN KEY (case_study_four_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_four_imag_fdea28cc_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_four_imag_fdea28cc_fk_wagtailim FOREIGN KEY (case_study_four_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_one_image_0efb330f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_one_image_0efb330f_fk_wagtailim FOREIGN KEY (case_study_one_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_one_image_11098e79_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_one_image_11098e79_fk_wagtailim FOREIGN KEY (case_study_one_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_one_image_1765ef73_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_one_image_1765ef73_fk_wagtailim FOREIGN KEY (case_study_one_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_one_image_2dc6ca68_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_one_image_2dc6ca68_fk_wagtailim FOREIGN KEY (case_study_one_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_one_image_34e92817_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_one_image_34e92817_fk_wagtailim FOREIGN KEY (case_study_one_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_one_image_3615bdf7_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_one_image_3615bdf7_fk_wagtailim FOREIGN KEY (case_study_one_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_one_image_39c5e28c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_one_image_39c5e28c_fk_wagtailim FOREIGN KEY (case_study_one_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_one_image_b8627e0e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_one_image_b8627e0e_fk_wagtailim FOREIGN KEY (case_study_one_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -21520,11 +23775,131 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_one_image_e79a5bfb_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_one_image_e79a5bfb_fk_wagtailim FOREIGN KEY (case_study_one_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_one_image_eadf7d29_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_one_image_eadf7d29_fk_wagtailim FOREIGN KEY (case_study_one_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_three_ima_034f8a93_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_case_study_three_ima_034f8a93_fk_wagtailim FOREIGN KEY (case_study_three_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_three_ima_6e5dbb8b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_three_ima_6e5dbb8b_fk_wagtailim FOREIGN KEY (case_study_three_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_three_ima_87bdc483_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_three_ima_87bdc483_fk_wagtailim FOREIGN KEY (case_study_three_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_three_ima_88888e10_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_three_ima_88888e10_fk_wagtailim FOREIGN KEY (case_study_three_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_three_ima_98ab1a6c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_three_ima_98ab1a6c_fk_wagtailim FOREIGN KEY (case_study_three_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_three_ima_ea81a176_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_three_ima_ea81a176_fk_wagtailim FOREIGN KEY (case_study_three_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_three_ima_eaac3bf5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_three_ima_eaac3bf5_fk_wagtailim FOREIGN KEY (case_study_three_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_three_ima_f0b4f832_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_three_ima_f0b4f832_fk_wagtailim FOREIGN KEY (case_study_three_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_three_ima_f1c26cf8_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_three_ima_f1c26cf8_fk_wagtailim FOREIGN KEY (case_study_three_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_three_ima_f8d7c7d9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_three_ima_f8d7c7d9_fk_wagtailim FOREIGN KEY (case_study_three_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_three_ima_fc95e69b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_three_ima_fc95e69b_fk_wagtailim FOREIGN KEY (case_study_three_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_two_image_1413d098_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_two_image_1413d098_fk_wagtailim FOREIGN KEY (case_study_two_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_two_image_3ae0c712_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_two_image_3ae0c712_fk_wagtailim FOREIGN KEY (case_study_two_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_two_image_3b90bac9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_two_image_3b90bac9_fk_wagtailim FOREIGN KEY (case_study_two_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -21536,6 +23911,134 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_two_image_8365cf2e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_two_image_8365cf2e_fk_wagtailim FOREIGN KEY (case_study_two_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_two_image_95396154_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_two_image_95396154_fk_wagtailim FOREIGN KEY (case_study_two_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_two_image_a7443ecc_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_two_image_a7443ecc_fk_wagtailim FOREIGN KEY (case_study_two_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_two_image_be7ab918_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_two_image_be7ab918_fk_wagtailim FOREIGN KEY (case_study_two_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_two_image_cffd7135_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_two_image_cffd7135_fk_wagtailim FOREIGN KEY (case_study_two_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_two_image_dbcae6c2_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_two_image_dbcae6c2_fk_wagtailim FOREIGN KEY (case_study_two_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_two_image_f31bae28_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_case_study_two_image_f31bae28_fk_wagtailim FOREIGN KEY (case_study_two_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__005cd673_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__005cd673_fk_wagtailim FOREIGN KEY (companies_list_item_image_six_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__03188ba9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__03188ba9_fk_wagtailim FOREIGN KEY (companies_list_item_image_six_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__0615da74_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__0615da74_fk_wagtailim FOREIGN KEY (companies_list_item_image_five_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__06588a44_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__06588a44_fk_wagtailim FOREIGN KEY (companies_list_item_image_five_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__13831781_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__13831781_fk_wagtailim FOREIGN KEY (companies_list_item_image_five_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__1b111ed3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__1b111ed3_fk_wagtailim FOREIGN KEY (companies_list_item_image_eight_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__1ea750f9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__1ea750f9_fk_wagtailim FOREIGN KEY (companies_list_item_image_six_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__1f3cb5d9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__1f3cb5d9_fk_wagtailim FOREIGN KEY (companies_list_item_image_four_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__22db3d6c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__22db3d6c_fk_wagtailim FOREIGN KEY (companies_list_item_image_eight_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__24ac23e1_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -21544,11 +24047,171 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__2527d669_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__2527d669_fk_wagtailim FOREIGN KEY (companies_list_item_image_four_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__2736877b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__2736877b_fk_wagtailim FOREIGN KEY (companies_list_item_image_one_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__2eb93357_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__2eb93357_fk_wagtailim FOREIGN KEY (companies_list_item_image_four_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__32c0a918_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__32c0a918_fk_wagtailim FOREIGN KEY (companies_list_item_image_one_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__3a6335b6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__3a6335b6_fk_wagtailim FOREIGN KEY (companies_list_item_image_seven_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__3b566bd4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__3b566bd4_fk_wagtailim FOREIGN KEY (companies_list_item_image_one_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__3c85a46c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__3c85a46c_fk_wagtailim FOREIGN KEY (companies_list_item_image_seven_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__47e86639_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__47e86639_fk_wagtailim FOREIGN KEY (companies_list_item_image_eight_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__4c8ef91b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__4c8ef91b_fk_wagtailim FOREIGN KEY (companies_list_item_image_two_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__4cbc431c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__4cbc431c_fk_wagtailim FOREIGN KEY (companies_list_item_image_two_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__564ef0fd_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__564ef0fd_fk_wagtailim FOREIGN KEY (companies_list_item_image_five_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__57dd1361_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__57dd1361_fk_wagtailim FOREIGN KEY (companies_list_item_image_eight_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__582151e8_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__582151e8_fk_wagtailim FOREIGN KEY (companies_list_item_image_eight_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__5a003504_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__5a003504_fk_wagtailim FOREIGN KEY (companies_list_item_image_four_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__5d82adc4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__5d82adc4_fk_wagtailim FOREIGN KEY (companies_list_item_image_three_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__5f2e59ba_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__5f2e59ba_fk_wagtailim FOREIGN KEY (companies_list_item_image_eight_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__5fd55670_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__5fd55670_fk_wagtailim FOREIGN KEY (companies_list_item_image_two_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__606eb429_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__606eb429_fk_wagtailim FOREIGN KEY (companies_list_item_image_six_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__607e453f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_companies_list_item__607e453f_fk_wagtailim FOREIGN KEY (companies_list_item_image_five_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__63f109d4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__63f109d4_fk_wagtailim FOREIGN KEY (companies_list_item_image_one_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__652f6a73_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__652f6a73_fk_wagtailim FOREIGN KEY (companies_list_item_image_one_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -21568,11 +24231,267 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__6b8c075d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__6b8c075d_fk_wagtailim FOREIGN KEY (companies_list_item_image_seven_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__6ba2ec3f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__6ba2ec3f_fk_wagtailim FOREIGN KEY (companies_list_item_image_three_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__6c22af18_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_companies_list_item__6c22af18_fk_wagtailim FOREIGN KEY (companies_list_item_image_three_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__6de4d7af_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__6de4d7af_fk_wagtailim FOREIGN KEY (companies_list_item_image_three_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__73e44df9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__73e44df9_fk_wagtailim FOREIGN KEY (companies_list_item_image_four_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__781f861f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__781f861f_fk_wagtailim FOREIGN KEY (companies_list_item_image_eight_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__7a0488ea_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__7a0488ea_fk_wagtailim FOREIGN KEY (companies_list_item_image_three_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__7a810bec_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__7a810bec_fk_wagtailim FOREIGN KEY (companies_list_item_image_four_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__7b22cade_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__7b22cade_fk_wagtailim FOREIGN KEY (companies_list_item_image_six_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__7dfc5086_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__7dfc5086_fk_wagtailim FOREIGN KEY (companies_list_item_image_six_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__7f36fc62_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__7f36fc62_fk_wagtailim FOREIGN KEY (companies_list_item_image_eight_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__843deefd_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__843deefd_fk_wagtailim FOREIGN KEY (companies_list_item_image_five_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__84c44069_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__84c44069_fk_wagtailim FOREIGN KEY (companies_list_item_image_seven_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__8c1906a1_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__8c1906a1_fk_wagtailim FOREIGN KEY (companies_list_item_image_three_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__8e9f32c5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__8e9f32c5_fk_wagtailim FOREIGN KEY (companies_list_item_image_six_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__8eb89f9a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__8eb89f9a_fk_wagtailim FOREIGN KEY (companies_list_item_image_eight_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__937c8a16_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__937c8a16_fk_wagtailim FOREIGN KEY (companies_list_item_image_three_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__93e29426_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__93e29426_fk_wagtailim FOREIGN KEY (companies_list_item_image_five_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__942b9799_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__942b9799_fk_wagtailim FOREIGN KEY (companies_list_item_image_seven_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__9432ab61_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__9432ab61_fk_wagtailim FOREIGN KEY (companies_list_item_image_four_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__95574cde_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__95574cde_fk_wagtailim FOREIGN KEY (companies_list_item_image_six_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__963d5e95_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__963d5e95_fk_wagtailim FOREIGN KEY (companies_list_item_image_six_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__99d5ea71_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__99d5ea71_fk_wagtailim FOREIGN KEY (companies_list_item_image_two_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__9ba14e5d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__9ba14e5d_fk_wagtailim FOREIGN KEY (companies_list_item_image_one_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__9bbd9294_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__9bbd9294_fk_wagtailim FOREIGN KEY (companies_list_item_image_five_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__a1ec6e4f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__a1ec6e4f_fk_wagtailim FOREIGN KEY (companies_list_item_image_two_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__aec89717_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__aec89717_fk_wagtailim FOREIGN KEY (companies_list_item_image_one_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__b0abf40c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__b0abf40c_fk_wagtailim FOREIGN KEY (companies_list_item_image_seven_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__b1d5d004_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__b1d5d004_fk_wagtailim FOREIGN KEY (companies_list_item_image_three_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__ba2e4801_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__ba2e4801_fk_wagtailim FOREIGN KEY (companies_list_item_image_two_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__c08f9ddf_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__c08f9ddf_fk_wagtailim FOREIGN KEY (companies_list_item_image_five_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__c1c5c3d7_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__c1c5c3d7_fk_wagtailim FOREIGN KEY (companies_list_item_image_five_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__c352b555_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__c352b555_fk_wagtailim FOREIGN KEY (companies_list_item_image_four_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -21584,11 +24503,123 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__c99061ec_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__c99061ec_fk_wagtailim FOREIGN KEY (companies_list_item_image_one_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__c9a8c81a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__c9a8c81a_fk_wagtailim FOREIGN KEY (companies_list_item_image_two_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__cb737d94_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__cb737d94_fk_wagtailim FOREIGN KEY (companies_list_item_image_one_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__cd499f99_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__cd499f99_fk_wagtailim FOREIGN KEY (companies_list_item_image_seven_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__cee4ed55_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__cee4ed55_fk_wagtailim FOREIGN KEY (companies_list_item_image_three_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__d0a25bdf_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__d0a25bdf_fk_wagtailim FOREIGN KEY (companies_list_item_image_two_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__d24f18fc_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__d24f18fc_fk_wagtailim FOREIGN KEY (companies_list_item_image_three_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__d5f7085c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__d5f7085c_fk_wagtailim FOREIGN KEY (companies_list_item_image_three_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__da963152_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__da963152_fk_wagtailim FOREIGN KEY (companies_list_item_image_seven_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__dae81be9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__dae81be9_fk_wagtailim FOREIGN KEY (companies_list_item_image_two_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__dbbd5d03_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__dbbd5d03_fk_wagtailim FOREIGN KEY (companies_list_item_image_four_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__dc1d413e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__dc1d413e_fk_wagtailim FOREIGN KEY (companies_list_item_image_five_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__e29a82d2_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__e29a82d2_fk_wagtailim FOREIGN KEY (companies_list_item_image_seven_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__e511f30b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_companies_list_item__e511f30b_fk_wagtailim FOREIGN KEY (companies_list_item_image_two_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__e7bdadb9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__e7bdadb9_fk_wagtailim FOREIGN KEY (companies_list_item_image_one_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -21600,11 +24631,179 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__f89fb0ce_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__f89fb0ce_fk_wagtailim FOREIGN KEY (companies_list_item_image_seven_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__f966848f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__f966848f_fk_wagtailim FOREIGN KEY (companies_list_item_image_two_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__fc7ff49f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__fc7ff49f_fk_wagtailim FOREIGN KEY (companies_list_item_image_four_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__ff01cc54_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__ff01cc54_fk_wagtailim FOREIGN KEY (companies_list_item_image_eight_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__ff72b793_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_companies_list_item__ff72b793_fk_wagtailim FOREIGN KEY (companies_list_item_image_six_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_0dbfeaa2_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_0dbfeaa2_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_two_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_0efce36f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_0efce36f_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_one_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_21a2c8d7_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_21a2c8d7_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_one_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_2c6b1d75_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_2c6b1d75_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_three_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_30492386_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_30492386_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_three_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_33a2dcf6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_competitive_advantag_33a2dcf6_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_one_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_36aee8de_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_36aee8de_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_one_icon_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_40d6c9af_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_40d6c9af_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_three_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_4fe4a95d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_4fe4a95d_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_two_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_51b584c9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_51b584c9_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_one_icon_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_538ad8fe_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_538ad8fe_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_two_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_53d697db_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_53d697db_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_two_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_71e9b8ce_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_71e9b8ce_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_one_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_74c960ff_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_74c960ff_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_two_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_7811fc8c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_7811fc8c_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_one_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_7e3568fe_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_7e3568fe_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_three_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_841529ec_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_841529ec_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_three_icon_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -21616,11 +24815,163 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_90092a2c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_90092a2c_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_two_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_9555f962_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_competitive_advantag_9555f962_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_three_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_98570f46_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_98570f46_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_two_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_9874c8b6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_9874c8b6_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_three_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_a9dc3bb9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_a9dc3bb9_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_one_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_c335ac03_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_c335ac03_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_one_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_d01f612d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_d01f612d_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_three_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_d41b8b94_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_d41b8b94_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_two_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_da967f8b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_da967f8b_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_two_icon_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_df368cd3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_df368cd3_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_two_icon_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_f20ed168_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_f20ed168_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_one_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_f29f52a0_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_f29f52a0_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_three_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_f61b1221_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_f61b1221_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_three_icon_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_f6568867_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_f6568867_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_one_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_f744fc9c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_competitive_advantag_f744fc9c_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_three_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_hero_image_ar_id_e9eaca13_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_hero_image_ar_id_e9eaca13_fk_wagtailim FOREIGN KEY (hero_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_hero_image_de_id_cdd62082_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_hero_image_de_id_cdd62082_fk_wagtailim FOREIGN KEY (hero_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_hero_image_en_gb_id_906ed067_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_hero_image_en_gb_id_906ed067_fk_wagtailim FOREIGN KEY (hero_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_hero_image_es_id_4b6da933_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_hero_image_es_id_4b6da933_fk_wagtailim FOREIGN KEY (hero_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_hero_image_fr_id_0084837f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_hero_image_fr_id_0084837f_fk_wagtailim FOREIGN KEY (hero_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -21632,11 +24983,131 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_hero_image_ja_id_f89a9b4a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_hero_image_ja_id_f89a9b4a_fk_wagtailim FOREIGN KEY (hero_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_hero_image_pt_br_id_e1e40d6e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_hero_image_pt_br_id_e1e40d6e_fk_wagtailim FOREIGN KEY (hero_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_hero_image_pt_id_51007d85_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_hero_image_pt_id_51007d85_fk_wagtailim FOREIGN KEY (hero_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_hero_image_ru_id_140509ba_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_hero_image_ru_id_140509ba_fk_wagtailim FOREIGN KEY (hero_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_hero_image_zh_hans_i_d52ca22b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_hero_image_zh_hans_i_d52ca22b_fk_wagtailim FOREIGN KEY (hero_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_opportunity_list_ima_39bfbdee_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_opportunity_list_ima_39bfbdee_fk_wagtailim FOREIGN KEY (opportunity_list_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_opportunity_list_ima_3d286994_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_opportunity_list_ima_3d286994_fk_wagtailim FOREIGN KEY (opportunity_list_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_opportunity_list_ima_59455d63_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_opportunity_list_ima_59455d63_fk_wagtailim FOREIGN KEY (opportunity_list_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_opportunity_list_ima_63946cce_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_opportunity_list_ima_63946cce_fk_wagtailim FOREIGN KEY (opportunity_list_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_opportunity_list_ima_6c3086d9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_opportunity_list_ima_6c3086d9_fk_wagtailim FOREIGN KEY (opportunity_list_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_opportunity_list_ima_9b2d4414_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_opportunity_list_ima_9b2d4414_fk_wagtailim FOREIGN KEY (opportunity_list_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_opportunity_list_ima_b1000b00_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_opportunity_list_ima_b1000b00_fk_wagtailim FOREIGN KEY (opportunity_list_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_opportunity_list_ima_c63ca7c6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_opportunity_list_ima_c63ca7c6_fk_wagtailim FOREIGN KEY (opportunity_list_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_opportunity_list_ima_cfeebd8e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_opportunity_list_ima_cfeebd8e_fk_wagtailim FOREIGN KEY (opportunity_list_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_opportunity_list_ima_d6f79ebc_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_opportunity_list_ima_d6f79ebc_fk_wagtailim FOREIGN KEY (opportunity_list_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_opportunity_list_ima_f8e73cb5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_opportunity_list_ima_f8e73cb5_fk_wagtailim FOREIGN KEY (opportunity_list_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -21672,11 +25143,171 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_imag_226dd96d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_imag_226dd96d_fk_wagtailim FOREIGN KEY (proposition_one_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_imag_2cd1be5b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_imag_2cd1be5b_fk_wagtailim FOREIGN KEY (proposition_one_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_imag_3cb62d0e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_proposition_one_imag_3cb62d0e_fk_wagtailim FOREIGN KEY (proposition_one_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_imag_47c472b1_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_imag_47c472b1_fk_wagtailim FOREIGN KEY (proposition_one_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_imag_553a4afe_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_imag_553a4afe_fk_wagtailim FOREIGN KEY (proposition_one_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_imag_6813d18c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_imag_6813d18c_fk_wagtailim FOREIGN KEY (proposition_one_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_imag_6fa10ca7_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_imag_6fa10ca7_fk_wagtailim FOREIGN KEY (proposition_one_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_imag_7c2d515e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_imag_7c2d515e_fk_wagtailim FOREIGN KEY (proposition_one_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_imag_9dbbe502_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_imag_9dbbe502_fk_wagtailim FOREIGN KEY (proposition_one_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_imag_9e0319e3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_imag_9e0319e3_fk_wagtailim FOREIGN KEY (proposition_one_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_imag_f151deb5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_imag_f151deb5_fk_wagtailim FOREIGN KEY (proposition_one_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_vide_01f0708e_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_vide_01f0708e_fk_wagtailme FOREIGN KEY (proposition_one_video_ar_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_vide_329dbe60_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_vide_329dbe60_fk_wagtailme FOREIGN KEY (proposition_one_video_zh_hans_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_vide_48c1ca4f_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_vide_48c1ca4f_fk_wagtailme FOREIGN KEY (proposition_one_video_en_gb_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_vide_55b11348_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_vide_55b11348_fk_wagtailme FOREIGN KEY (proposition_one_video_ja_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_vide_5c934044_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_vide_5c934044_fk_wagtailme FOREIGN KEY (proposition_one_video_pt_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_vide_5d0cd8f9_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_vide_5d0cd8f9_fk_wagtailme FOREIGN KEY (proposition_one_video_es_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_vide_6b7aa1e5_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_vide_6b7aa1e5_fk_wagtailme FOREIGN KEY (proposition_one_video_ru_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_vide_a55cdde4_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_vide_a55cdde4_fk_wagtailme FOREIGN KEY (proposition_one_video_de_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_vide_ce8e8454_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_vide_ce8e8454_fk_wagtailme FOREIGN KEY (proposition_one_video_pt_br_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_vide_e9259229_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_one_vide_e9259229_fk_wagtailme FOREIGN KEY (proposition_one_video_fr_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -21688,11 +25319,123 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_imag_0cace5b3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_imag_0cace5b3_fk_wagtailim FOREIGN KEY (proposition_two_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_imag_16381e09_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_proposition_two_imag_16381e09_fk_wagtailim FOREIGN KEY (proposition_two_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_imag_18a94aa9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_imag_18a94aa9_fk_wagtailim FOREIGN KEY (proposition_two_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_imag_44846e1d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_imag_44846e1d_fk_wagtailim FOREIGN KEY (proposition_two_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_imag_80894bee_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_imag_80894bee_fk_wagtailim FOREIGN KEY (proposition_two_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_imag_85fe3796_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_imag_85fe3796_fk_wagtailim FOREIGN KEY (proposition_two_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_imag_9f2a91c3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_imag_9f2a91c3_fk_wagtailim FOREIGN KEY (proposition_two_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_imag_d4c939fc_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_imag_d4c939fc_fk_wagtailim FOREIGN KEY (proposition_two_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_imag_e82f4f8f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_imag_e82f4f8f_fk_wagtailim FOREIGN KEY (proposition_two_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_imag_ea30613e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_imag_ea30613e_fk_wagtailim FOREIGN KEY (proposition_two_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_imag_f5802195_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_imag_f5802195_fk_wagtailim FOREIGN KEY (proposition_two_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_vide_0bdf31fd_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_vide_0bdf31fd_fk_wagtailme FOREIGN KEY (proposition_two_video_ja_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_vide_5ab2ed7e_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_vide_5ab2ed7e_fk_wagtailme FOREIGN KEY (proposition_two_video_es_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_vide_6281f41b_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_vide_6281f41b_fk_wagtailme FOREIGN KEY (proposition_two_video_ru_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_vide_6a2941a3_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_vide_6a2941a3_fk_wagtailme FOREIGN KEY (proposition_two_video_fr_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -21704,6 +25447,94 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_vide_85a6c70c_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_vide_85a6c70c_fk_wagtailme FOREIGN KEY (proposition_two_video_pt_br_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_vide_8a2171b1_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_vide_8a2171b1_fk_wagtailme FOREIGN KEY (proposition_two_video_ar_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_vide_9a6d0c57_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_vide_9a6d0c57_fk_wagtailme FOREIGN KEY (proposition_two_video_de_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_vide_d65f95cb_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_vide_d65f95cb_fk_wagtailme FOREIGN KEY (proposition_two_video_zh_hans_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_vide_e41745de_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_vide_e41745de_fk_wagtailme FOREIGN KEY (proposition_two_video_en_gb_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_vide_f7ab4c50_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_proposition_two_vide_f7ab4c50_fk_wagtailme FOREIGN KEY (proposition_two_video_pt_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_summary_image_ar_id_123a2501_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_summary_image_ar_id_123a2501_fk_wagtailim FOREIGN KEY (summary_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_summary_image_de_id_70c8ddd9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_summary_image_de_id_70c8ddd9_fk_wagtailim FOREIGN KEY (summary_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_summary_image_en_gb__cfe52624_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_summary_image_en_gb__cfe52624_fk_wagtailim FOREIGN KEY (summary_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_summary_image_es_id_fa217f27_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_summary_image_es_id_fa217f27_fk_wagtailim FOREIGN KEY (summary_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_summary_image_fr_id_6c38c439_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_summary_image_fr_id_6c38c439_fk_wagtailim FOREIGN KEY (summary_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_summary_image_id_2687e608_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -21712,11 +25543,131 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_summary_image_ja_id_35f75f42_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_summary_image_ja_id_35f75f42_fk_wagtailim FOREIGN KEY (summary_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_summary_image_pt_br__d6b5dbd5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_summary_image_pt_br__d6b5dbd5_fk_wagtailim FOREIGN KEY (summary_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_summary_image_pt_id_88426c0d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_summary_image_pt_id_88426c0d_fk_wagtailim FOREIGN KEY (summary_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_summary_image_ru_id_8a836a43_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_summary_image_ru_id_8a836a43_fk_wagtailim FOREIGN KEY (summary_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_summary_image_zh_han_b0e31f01_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_summary_image_zh_han_b0e31f01_fk_wagtailim FOREIGN KEY (summary_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_testimonial_backgrou_2736ceb9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_testimonial_backgrou_2736ceb9_fk_wagtailim FOREIGN KEY (testimonial_background_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_testimonial_backgrou_31f8db0c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_testimonial_backgrou_31f8db0c_fk_wagtailim FOREIGN KEY (testimonial_background_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_testimonial_backgrou_438c0bf6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_testimonial_backgrou_438c0bf6_fk_wagtailim FOREIGN KEY (testimonial_background_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_testimonial_backgrou_5f8a9dbb_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_testimonial_backgrou_5f8a9dbb_fk_wagtailim FOREIGN KEY (testimonial_background_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_testimonial_backgrou_6790eb95_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_testimonial_backgrou_6790eb95_fk_wagtailim FOREIGN KEY (testimonial_background_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_testimonial_backgrou_95028831_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_testimonial_backgrou_95028831_fk_wagtailim FOREIGN KEY (testimonial_background_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_testimonial_backgrou_bbd70775_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_testimonial_backgrou_bbd70775_fk_wagtailim FOREIGN KEY (testimonial_background_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_testimonial_backgrou_bcacb436_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_testimonial_backgrou_bcacb436_fk_wagtailim FOREIGN KEY (testimonial_background_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_testimonial_backgrou_be696a19_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_testimonial_backgrou_be696a19_fk_wagtailim FOREIGN KEY (testimonial_background_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_testimonial_backgrou_e39e2e0a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_testimonial_backgrou_e39e2e0a_fk_wagtailim FOREIGN KEY (testimonial_background_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_highpotentialopportunitydetailpage invest_highpotential_testimonial_backgrou_ee1443c0_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
+    ADD CONSTRAINT invest_highpotential_testimonial_backgrou_ee1443c0_fk_wagtailim FOREIGN KEY (testimonial_background_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
