@@ -53,12 +53,12 @@ Pages and images can be copied "upstream" from one environment to another. To fa
 
 The entries must be added on your `conf/.env` file:
 ```
-DIRECTORY_CMS_AWS_STORAGE_BUCKET_NAME
-DIRECTORY_CMS_AWS_ACCESS_KEY_ID
-DIRECTORY_CMS_AWS_SECRET_ACCESS_KEY
+AWS_STORAGE_BUCKET_NAME
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
 ```
 
-Speak to a team mate or consult heroku settings to retrieve the `DIRECTORY_CMS_AWS_STORAGE_BUCKET_NAME`.
+Speak to a team mate or consult dev vault to retrieve the `AWS_STORAGE_BUCKET_NAME`.
 
 #### /etc/hosts file entry
 
