@@ -428,7 +428,7 @@ class TopicLandingPage(BasePage):
         related_name='+'
     )
     hero_teaser = models.CharField(max_length=255, null=True, blank=True)
-
+    banner_text = MarkdownField(blank=True)
     teaser = models.TextField(blank=True)
 
     content_panels = [
@@ -440,6 +440,9 @@ class TopicLandingPage(BasePage):
                 FieldPanel('hero_teaser')
             ]
         ),
+        FieldPanel('banner_text',
+                   help_text='Use this field to change the text displayed in '
+                             'the banner, if the page has one.'),
         FieldPanel('teaser'),
         SearchEngineOptimisationPanel(),
     ]
