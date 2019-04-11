@@ -206,8 +206,8 @@ class SectorPage(BasePage):
         ImageChooserPanel('hero_image'),
     ]
     content_panels = [
-        FieldPanel('description'),
         FieldPanel('heading'),
+        FieldPanel('description'),
         MultiFieldPanel(
             [
                 FieldPanel('pullout_text'),
