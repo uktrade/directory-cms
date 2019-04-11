@@ -111,7 +111,11 @@ class SectorPage(BasePage):
     subpage_types = ['invest.SectorPage']
 
     featured = models.BooleanField(default=False)
-    description = models.TextField()  # appears in card on external pages
+    description = models.TextField(
+        help_text="This is the description shown when the "
+                  "sector is featured on another page i.e. "
+                  "the Invest Home Page"
+    )  # appears in card on external pages
 
     # page fields
     heading = models.CharField(max_length=255)
@@ -203,8 +207,8 @@ class SectorPage(BasePage):
         ImageChooserPanel('hero_image'),
     ]
     content_panels = [
-        FieldPanel('description'),
         FieldPanel('heading'),
+        FieldPanel('description'),
         MultiFieldPanel(
             [
                 FieldPanel('pullout_text'),

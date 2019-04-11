@@ -295,6 +295,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
     hero_title = serializers.CharField(max_length=255)
     hero_subtitle = serializers.CharField(max_length=255)
     hero_cta_text = serializers.CharField(max_length=255)
+    hero_cta_link = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
 
     invest_title = serializers.CharField(max_length=255)
