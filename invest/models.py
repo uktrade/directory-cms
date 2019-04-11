@@ -112,9 +112,10 @@ class SectorPage(BasePage):
 
     featured = models.BooleanField(default=False)
     description = models.TextField(
-        help_text="This is the description shown when the sector "
-                  "is featured on another page i.e. the Invest Home Page"
-        )  # appears in card on external pages
+        help_text="This is the description shown when the "
+                  "sector is featured on another page i.e. "
+                  "the Invest Home Page"
+    )  # appears in card on external pages
 
     # page fields
     heading = models.CharField(max_length=255)
