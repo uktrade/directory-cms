@@ -47,7 +47,9 @@ def update_default_listing_buttons(page, page_perms, is_parent=False):
             buttons.append(PageListingButton(
                 'Delete',
                 reverse('wagtailadmin_pages:delete', args=[page.id]),
-                attrs={'title': "Delete '%s'" % page.get_admin_display_title()},
+                attrs={
+                    'title': "Delete '%s'" % page.get_admin_display_title()
+                },
             ))
     return buttons
 
