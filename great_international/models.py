@@ -32,12 +32,14 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
 
     @classmethod
     def allowed_subpage_models(cls):
-        return [InternationalArticleListingPage,
-                InternationalTopicLandingPage,
-                InternationalCuratedTopicLandingPage,
-                InternationalGuideLandingPage,
-                InternationalRegionPage,
-                InternationalHomePage]
+        return [
+            InternationalArticleListingPage,
+            InternationalTopicLandingPage,
+            InternationalCuratedTopicLandingPage,
+            InternationalGuideLandingPage,
+            InternationalRegionPage,
+            InternationalHomePage,
+        ]
 
 
 class InternationalSectorPage(BasePage):
