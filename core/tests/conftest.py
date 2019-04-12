@@ -23,7 +23,7 @@ def page(root_page):
 @pytest.fixture
 def page_without_specific_type(root_page):
     page = Page(title="No specific type", slug='no-specific-type')
-    root_page.add_child(page)
+    root_page.add_child(instance=page)
     return page
 
 
