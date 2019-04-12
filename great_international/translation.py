@@ -312,3 +312,11 @@ class InternationalCapitalInvestLandingPageTranslationOptions(
         'contact_section_cta_text',
     )
 
+
+@register(models.CapitalInvestRegionOpportunityPage)
+class CapitalInvestRegionOpportunityPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'hero_title',
+    )

@@ -41,7 +41,8 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
                 InternationalCuratedTopicLandingPage,
                 InternationalRegionPage,
                 InternationalHomePage,
-                InternationalCapitalInvestLandingPage]
+                InternationalCapitalInvestLandingPage,
+                CapitalInvestRegionOpportunityPage]
 
 
 class InternationalSectorPage(BasePage):
@@ -1719,3 +1720,16 @@ class InternationalCapitalInvestLandingPage(BasePage):
         content_panels=content_panels,
         settings_panels=settings_panels
     )
+
+
+class CapitalInvestRegionOpportunityPage(BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+
+    parent_page_types = [
+        'great_international.InternationalCapitalInvestLandingPage']
+
+    hero_title = models.CharField(max_length=255, blank=True)
+
+    content_panels = [
+        FieldPanel('hero_title')
+    ]
