@@ -2,6 +2,7 @@ from itertools import product
 
 import pytest
 from modeltranslation.utils import build_localized_fieldname
+from wagtail.core.models import Page
 from wagtail.documents.models import Document
 
 from find_a_supplier.tests.factories import (
@@ -17,6 +18,13 @@ def page(root_page):
         parent=root_page,
         slug='the-slug'
     )
+
+
+@pytest.fixture
+def page_without_specific_type(root_page):
+    page = Page(title="No specific type", slug='no-specific-type')
+    root_page.add_child(page)
+    return page
 
 
 @pytest.fixture
