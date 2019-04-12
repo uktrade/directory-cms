@@ -200,7 +200,7 @@ class HighPotentialOpportunityFormPageTranslationOptions(
 class HighPotentialOpportunityDetailPageTranslationOptions(
     BaseTranslationOptions
 ):
-    fields =  fields = (
+    fields = (
         'breadcrumbs_label',
         'heading',
         'hero_image',
