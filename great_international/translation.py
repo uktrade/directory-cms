@@ -275,7 +275,6 @@ class InternationalCapitalInvestLandingPageTranslationOptions(
         'hero_subheading',
         'hero_subtitle',
         'hero_cta_text',
-        'hero_cta_link',
 
         'reason_to_invest_section_title',
         'reason_to_invest_section_intro',
