@@ -1088,7 +1088,6 @@ class InternationalTopicLandingPage(BasePage):
     subpage_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
-        'great_international.InternationalGuideLandingPage',
         'great_international.InternationalSectorPage',
     ]
 
