@@ -727,3 +727,7 @@ class InternationalCapitalInvestLandingPage(BasePageSerializer):
     contact_section_cta_text = serializers.CharField(max_length=255)
 
 
+class CapitalInvestRegionOpportunityPage(BasePageSerializer):
+
+    hero_title = serializers.CharField(max_length=255)
+
