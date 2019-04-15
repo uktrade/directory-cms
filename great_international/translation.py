@@ -351,4 +351,64 @@ class CapitalInvestRegionOpportunityPageTranslationOptions(
 ):
     fields = (
         'hero_title',
+        'breadcrumbs_label',
+        'hero_image',
+
+        'region_summary_section_image',
+        'region_summary_section_intro',
+        'region_summary_section_content',
+
+        'investment_opps_title',
+        'investment_opps_intro',
+
+        'economics_data_title',
+        'economics_stats_number_1',
+        'economics_stats_heading_1',
+        'economics_stats_smallprint_1',
+
+        'economics_stats_number_2',
+        'economics_stats_heading_2',
+        'economics_stats_smallprint_2',
+
+        'economics_stats_number_3',
+        'economics_stats_heading_3',
+        'economics_stats_smallprint_3',
+
+        'economics_stats_number_4',
+        'economics_stats_heading_4',
+        'economics_stats_smallprint_4',
+
+        'location_data_title',
+        'location_stats_number_1',
+        'location_stats_heading_1',
+        'location_stats_smallprint_1',
+
+        'location_stats_number_2',
+        'location_stats_heading_2',
+        'location_stats_smallprint_2',
+
+        'location_stats_number_3',
+        'location_stats_heading_3',
+        'location_stats_smallprint_3',
+
+        'location_stats_number_4',
+        'location_stats_heading_4',
+        'location_stats_smallprint_4',
+
+        'section_title',
+        'section_image',
+        'section_content',
+
+        'case_study_image',
+        'case_study_title',
+        'case_study_text',
+        'case_study_cta_text',
+        'case_study_cta_link',
+
+        'next_steps_title',
+        'next_steps_intro',
+        'invest_cta_text',
+        'invest_cta_link',
+        'buy_cta_text',
+        'buy_cta_link',
     )
