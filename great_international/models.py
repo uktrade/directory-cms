@@ -1728,12 +1728,266 @@ class CapitalInvestRegionOpportunityPage(BasePage):
     parent_page_types = [
         'great_international.InternationalCapitalInvestLandingPage']
 
+    breadcrumbs_label = models.CharField(max_length=255, blank=True)
     hero_title = models.CharField(max_length=255, blank=True)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    region_summary_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    region_summary_section_intro = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    region_summary_section_content = MarkdownField(
+        max_length=255,
+        blank=True
+    )
+
+    investment_opps_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Investment opportunities title"
+    )
+    investment_opps_intro = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Investment opportunities intro"
+    )
+
+    economics_data_title = models.CharField(max_length=255, blank=True)
+    economics_stats_number_1 = models.CharField(max_length=255, blank=True)
+    economics_stats_heading_1 = models.CharField(max_length=255, blank=True)
+    economics_stats_smallprint_1 = models.CharField(max_length=255, blank=True)
+
+    economics_stats_number_2 = models.CharField(max_length=255, blank=True)
+    economics_stats_heading_2 = models.CharField(max_length=255, blank=True)
+    economics_stats_smallprint_2 = models.CharField(max_length=255, blank=True)
+
+    economics_stats_number_3 = models.CharField(max_length=255, blank=True)
+    economics_stats_heading_3 = models.CharField(max_length=255, blank=True)
+    economics_stats_smallprint_3 = models.CharField(max_length=255, blank=True)
+
+    economics_stats_number_4 = models.CharField(max_length=255, blank=True)
+    economics_stats_heading_4 = models.CharField(max_length=255, blank=True)
+    economics_stats_smallprint_4 = models.CharField(max_length=255, blank=True)
+
+    location_data_title = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stats_number_1 = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stats_heading_1 = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stats_smallprint_1 = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    location_stats_number_2 = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stats_heading_2 = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stats_smallprint_2 = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    location_stats_number_3 = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stats_heading_3 = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stats_smallprint_3 = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    location_stats_number_4 = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stats_heading_4 = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stats_smallprint_4 = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    section_title = models.CharField(max_length=255, blank=True)
+    section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    section_content = MarkdownField(
+        blank=True,
+        max_length=255
+    )
+
+    case_study_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    case_study_title = models.CharField(max_length=255, blank=True)
+    case_study_text = models.CharField(max_length=255, blank=True)
+    case_study_cta_text = models.CharField(max_length=255, blank=True)
+    case_study_cta_link = models.CharField(max_length=255, blank=True)
+
+    next_steps_title = models.CharField(max_length=255, blank=True)
+    next_steps_intro = models.CharField(max_length=255, blank=True)
+
+    invest_cta_text = models.CharField(max_length=255, blank=True)
+    invest_cta_link = models.CharField(max_length=255, blank=True)
+
+    buy_cta_text = models.CharField(max_length=255, blank=True)
+    buy_cta_link = models.CharField(max_length=255, blank=True)
 
     tags = ParentalManyToManyField(Tag, blank=True)
 
     content_panels = [
-        FieldPanel('hero_title')
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading="Hero",
+            children=[
+                FieldPanel('hero_title'),
+                ImageChooserPanel('hero_image'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Region summary",
+            children=[
+                ImageChooserPanel('region_summary_section_image'),
+                FieldPanel('region_summary_section_intro'),
+                FieldPanel('region_summary_section_content'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Investment opportunities",
+            children=[
+                FieldPanel('investment_opps_title'),
+                FieldPanel('investment_opps_intro'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Economics Statistics",
+            children=[
+                FieldPanel('economics_data_title'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('economics_stats_number_1'),
+                        FieldPanel('economics_stats_heading_1'),
+                        FieldPanel('economics_stats_smallprint_1'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('economics_stats_number_2'),
+                        FieldPanel('economics_stats_heading_2'),
+                        FieldPanel('economics_stats_smallprint_2'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('economics_stats_number_3'),
+                        FieldPanel('economics_stats_heading_3'),
+                        FieldPanel('economics_stats_smallprint_3'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('economics_stats_number_4'),
+                        FieldPanel('economics_stats_heading_4'),
+                        FieldPanel('economics_stats_smallprint_4'),
+                    ]),
+                ]),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Location Statistics",
+            children=[
+                FieldPanel('location_data_title'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('location_stats_number_1'),
+                        FieldPanel('location_stats_heading_1'),
+                        FieldPanel('location_stats_smallprint_1'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('location_stats_number_2'),
+                        FieldPanel('location_stats_heading_2'),
+                        FieldPanel('location_stats_smallprint_2'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('location_stats_number_3'),
+                        FieldPanel('location_stats_heading_3'),
+                        FieldPanel('location_stats_smallprint_3'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('location_stats_number_4'),
+                        FieldPanel('location_stats_heading_4'),
+                        FieldPanel('location_stats_smallprint_4'),
+                    ]),
+                ]),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Extra optional section",
+            children=[
+                ImageChooserPanel('section_image'),
+                FieldPanel('section_title'),
+                FieldPanel('section_content'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Case study",
+            children=[
+                ImageChooserPanel('case_study_image'),
+                FieldPanel('case_study_title'),
+                FieldPanel('case_study_cta_text'),
+                FieldPanel('case_study_cta_link'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Next steps",
+            children=[
+                FieldPanel('next_steps_title'),
+                FieldPanel('next_steps_intro'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('invest_cta_text'),
+                        FieldPanel('invest_cta_link'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('buy_cta_text'),
+                        FieldPanel('buy_cta_link'),
+                    ]),
+                ]),
+            ],
+        ),
     ]
 
     settings_panels = [

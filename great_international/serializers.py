@@ -645,4 +645,67 @@ class InternationalCapitalInvestLandingPage(BasePageSerializer):
 class CapitalInvestRegionOpportunityPage(BasePageSerializer):
 
     hero_title = serializers.CharField(max_length=255)
+    breadcrumbs_label = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+
+    region_summary_section_image = wagtail_fields.ImageRenditionField(
+        'original')
+    region_summary_section_intro = serializers.CharField(max_length=255)
+    region_summary_section_content = core_fields.MarkdownToHTMLField(
+        max_length=255
+    )
+
+    investment_opps_title = serializers.CharField(max_length=255)
+    investment_opps_intro = serializers.CharField(max_length=255)
+
+    economics_data_title = serializers.CharField(max_length=255)
+    economics_stats_number_1 = serializers.CharField(max_length=255)
+    economics_stats_heading_1 = serializers.CharField(max_length=255)
+    economics_stats_smallprint_1 = serializers.CharField(max_length=255)
+
+    economics_stats_number_2 = serializers.CharField(max_length=255)
+    economics_stats_heading_2 = serializers.CharField(max_length=255)
+    economics_stats_smallprint_2 = serializers.CharField(max_length=255)
+
+    economics_stats_number_3 = serializers.CharField(max_length=255)
+    economics_stats_heading_3 = serializers.CharField(max_length=255)
+    economics_stats_smallprint_3 = serializers.CharField(max_length=255)
+
+    economics_stats_number_4 = serializers.CharField(max_length=255)
+    economics_stats_heading_4 = serializers.CharField(max_length=255)
+    economics_stats_smallprint_4 = serializers.CharField(max_length=255)
+
+    location_data_title = serializers.CharField(max_length=255)
+    location_stats_number_1 = serializers.CharField(max_length=255)
+    location_stats_heading_1 = serializers.CharField(max_length=255)
+    location_stats_smallprint_1 = serializers.CharField(max_length=255)
+
+    location_stats_number_2 = serializers.CharField(max_length=255)
+    location_stats_heading_2 = serializers.CharField(max_length=255)
+    location_stats_smallprint_2 = serializers.CharField(max_length=255)
+
+    location_stats_number_3 = serializers.CharField(max_length=255)
+    location_stats_heading_3 = serializers.CharField(max_length=255)
+    location_stats_smallprint_3 = serializers.CharField(max_length=255)
+
+    location_stats_number_4 = serializers.CharField(max_length=255)
+    location_stats_heading_4 = serializers.CharField(max_length=255)
+    location_stats_smallprint_4 = serializers.CharField(max_length=255)
+
+    section_title = serializers.CharField(max_length=255)
+    section_image = wagtail_fields.ImageRenditionField('original')
+    section_content = core_fields.MarkdownToHTMLField(max_length=255)
+
+    case_study_image = wagtail_fields.ImageRenditionField('original')
+    case_study_title = serializers.CharField(max_length=255)
+    case_study_text = serializers.CharField(max_length=255)
+    case_study_cta_text = serializers.CharField(max_length=255)
+    case_study_cta_link = serializers.CharField(max_length=255)
+
+    next_steps_title = serializers.CharField(max_length=255)
+    next_steps_intro = serializers.CharField(max_length=255)
+    invest_cta_text = serializers.CharField(max_length=255)
+    invest_cta_link = serializers.CharField(max_length=255)
+    buy_cta_text = serializers.CharField(max_length=255)
+    buy_cta_link = serializers.CharField(max_length=255)
 
