@@ -43,7 +43,8 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
                 InternationalHomePage,
                 InternationalCapitalInvestLandingPage,
                 CapitalInvestRegionOpportunityPage,
-                CapitalInvestSectorOpportunityPage]
+                CapitalInvestSectorOpportunityPage,
+                CapitalInvestOpportunityPage]
 
 
 class InternationalSectorPage(BasePage):
@@ -2067,6 +2068,177 @@ class CapitalInvestSectorOpportunityPage(BasePage):
             ],
         ),
         FieldPanel('investment_opportunities_title'),
+        MultiFieldPanel(
+            heading="Next steps",
+            children=[
+                FieldPanel('next_steps_title'),
+                FieldPanel('next_steps_intro'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('invest_cta_text'),
+                        FieldPanel('invest_cta_link'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('buy_cta_text'),
+                        FieldPanel('buy_cta_link'),
+                    ]),
+                ]),
+            ],
+        ),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
+
+
+class CapitalInvestOpportunityPage(BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+
+    parent_page_types = [
+        'great_international.InternationalCapitalInvestLandingPage']
+
+    breadcrumbs_label = models.CharField(max_length=255, blank=True)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    hero_title = models.CharField(max_length=255, blank=True)
+
+    opportunity_summary_intro = models.CharField(max_length=255, blank=True)
+    opportunity_summary_content = MarkdownField(blank=True)
+    opportunity_summary_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    location = models.CharField(max_length=255, blank=True)
+    project_promoter = models.CharField(max_length=255, blank=True)
+    scale = models.CharField(max_length=255, blank=True)
+    programme = models.CharField(max_length=255, blank=True)
+    investment_type = models.CharField(max_length=255, blank=True)
+    planning_status = models.CharField(max_length=255, blank=True)
+
+    project_background_title = models.CharField(max_length=255, blank=True)
+    project_background_intro = models.CharField(max_length=255, blank=True)
+    project_description_title = models.CharField(max_length=255, blank=True)
+    project_description_content = MarkdownField(blank=True)
+    project_promoter_title = models.CharField(max_length=255, blank=True)
+    project_promoter_content = MarkdownField(blank=True)
+    project_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    case_study_title = models.CharField(max_length=255, blank=True)
+    case_study_text = models.CharField(max_length=255, blank=True)
+    case_study_cta_text = models.CharField(max_length=255, blank=True)
+    case_study_cta_link = models.CharField(max_length=255, blank=True)
+    case_study_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    similar_projects_title = models.CharField(max_length=255, blank=True)
+    similar_projects_cta_text = models.CharField(max_length=255, blank=True)
+    similar_projects_cta_link = models.CharField(max_length=255, blank=True)
+
+    next_steps_title = models.CharField(max_length=255, blank=True)
+    next_steps_intro = models.CharField(max_length=255, blank=True)
+
+    invest_cta_text = models.CharField(max_length=255, blank=True)
+    invest_cta_link = models.CharField(max_length=255, blank=True)
+    buy_cta_text = models.CharField(max_length=255, blank=True)
+    buy_cta_link = models.CharField(max_length=255, blank=True)
+
+    tags = ParentalManyToManyField(Tag, blank=True)
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading="Hero",
+            children=[
+                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_title'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Opportunity summary",
+            children=[
+                FieldPanel('opportunity_summary_intro'),
+                FieldPanel('opportunity_summary_content'),
+                ImageChooserPanel('opportunity_summary_image'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Opportunity Details",
+            children=[
+                FieldRowPanel([
+                    FieldPanel('location'),
+                    FieldPanel('project_promoter'),
+                    FieldPanel('scale'),
+                ]),
+                FieldRowPanel([
+                    FieldPanel('programme'),
+                    FieldPanel('investment_type'),
+                    FieldPanel('planning_status'),
+                ]),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Project Details",
+            children=[
+                FieldPanel('project_background_title'),
+                FieldPanel('project_background_intro'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('project_description_title'),
+                        FieldPanel('project_description_content'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('project_promoter_title'),
+                        FieldPanel('project_promoter_content'),
+                    ]),
+                ]),
+                ImageChooserPanel('project_image')
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Case study",
+            children=[
+                ImageChooserPanel('case_study_image'),
+                FieldPanel('case_study_title'),
+                FieldPanel('case_study_cta_text'),
+                FieldPanel('case_study_cta_link'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Similar projects",
+            children=[
+                FieldPanel('similar_projects_title'),
+                FieldPanel('similar_projects_cta_text'),
+                FieldPanel('similar_projects_cta_link'),
+            ],
+        ),
         MultiFieldPanel(
             heading="Next steps",
             children=[

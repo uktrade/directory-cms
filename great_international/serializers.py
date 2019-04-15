@@ -733,3 +733,56 @@ class CapitalInvestSectorOpportunityPageSerializer(BasePageSerializer):
     buy_cta_text = serializers.CharField(max_length=255)
     buy_cta_link = serializers.CharField(max_length=255)
 
+
+class CapitalInvestOpportunityPageSerializer(BasePageSerializer):
+
+    breadcrumbs_label = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField(
+        'original')
+    hero_title = serializers.CharField(max_length=255)
+
+    opportunity_summary_intro = serializers.CharField(max_length=255)
+    opportunity_summary_content = core_fields.MarkdownToHTMLField(
+        max_length=255
+    )
+    opportunity_summary_image = wagtail_fields.ImageRenditionField(
+        'original')
+
+    location = serializers.CharField(max_length=255)
+    project_promoter = serializers.CharField(max_length=255)
+    scale = serializers.CharField(max_length=255)
+    programme = serializers.CharField(max_length=255)
+    investment_type = serializers.CharField(max_length=255)
+    planning_status = serializers.CharField(max_length=255)
+
+    project_background_title = serializers.CharField(max_length=255)
+    project_background_intro = serializers.CharField(max_length=255)
+    project_description_title = serializers.CharField(max_length=255)
+    project_description_content = core_fields.MarkdownToHTMLField(
+        max_length=255
+    )
+    project_promoter_title = serializers.CharField(max_length=255)
+    project_promoter_content = core_fields.MarkdownToHTMLField(
+        max_length=255
+    )
+    project_image = wagtail_fields.ImageRenditionField(
+        'original')
+
+    case_study_image = wagtail_fields.ImageRenditionField('original')
+    case_study_title = serializers.CharField(max_length=255)
+    case_study_text = serializers.CharField(max_length=255)
+    case_study_cta_text = serializers.CharField(max_length=255)
+    case_study_cta_link = serializers.CharField(max_length=255)
+
+    similar_projects_title = serializers.CharField(max_length=255)
+    similar_projects_cta_text = serializers.CharField(max_length=255)
+    similar_projects_cta_link = serializers.CharField(max_length=255)
+
+    next_steps_title = serializers.CharField(max_length=255)
+    next_steps_intro = serializers.CharField(max_length=255)
+
+    invest_cta_text = serializers.CharField(max_length=255)
+    invest_cta_link = serializers.CharField(max_length=255)
+    buy_cta_text = serializers.CharField(max_length=255)
+    buy_cta_link = serializers.CharField(max_length=255)
+
