@@ -46,10 +46,7 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
             InternationalHomePage,
             InternationalEUExitFormPage,
             InternationalEUExitFormSuccessPage,
-            InternationalCapitalInvestLandingPage,
-            CapitalInvestRegionOpportunityPage,
-            CapitalInvestSectorOpportunityPage,
-            CapitalInvestOpportunityPage]
+            InternationalCapitalInvestLandingPage]
 
 
 class InternationalSectorPage(BasePage):
@@ -1721,6 +1718,12 @@ class InternationalEUExitFormSuccessPage(ExclusivePageMixin, BasePage):
 class InternationalCapitalInvestLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
 
+    @classmethod
+    def allowed_subpage_models(cls):
+        return [
+            CapitalInvestRegionOpportunityPage
+        ]
+
     parent_page_types = ['great_international.GreatInternationalApp']
 
     hero_title = models.CharField(max_length=255)
@@ -2064,6 +2067,12 @@ class InternationalCapitalInvestLandingPage(BasePage):
 class CapitalInvestRegionOpportunityPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
 
+    @classmethod
+    def allowed_subpage_models(cls):
+        return [
+            CapitalInvestSectorOpportunityPage
+        ]
+
     parent_page_types = [
         'great_international.InternationalCapitalInvestLandingPage']
 
@@ -2339,8 +2348,14 @@ class CapitalInvestRegionOpportunityPage(BasePage):
 class CapitalInvestSectorOpportunityPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
 
+    @classmethod
+    def allowed_subpage_models(cls):
+        return [
+            CapitalInvestOpportunityPage
+        ]
+
     parent_page_types = [
-        'great_international.InternationalCapitalInvestLandingPage']
+        'great_international.CapitalInvestRegionOpportunityPage']
 
     breadcrumbs_label = models.CharField(max_length=255, blank=True)
     hero_image = models.ForeignKey(
@@ -2435,7 +2450,7 @@ class CapitalInvestOpportunityPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
 
     parent_page_types = [
-        'great_international.InternationalCapitalInvestLandingPage']
+        'great_international.CapitalInvestSectorOpportunityPage']
 
     breadcrumbs_label = models.CharField(max_length=255, blank=True)
     hero_image = models.ForeignKey(
