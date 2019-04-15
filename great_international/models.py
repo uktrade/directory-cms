@@ -1730,6 +1730,19 @@ class CapitalInvestRegionOpportunityPage(BasePage):
 
     hero_title = models.CharField(max_length=255, blank=True)
 
+    tags = ParentalManyToManyField(Tag, blank=True)
+
     content_panels = [
         FieldPanel('hero_title')
     ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
