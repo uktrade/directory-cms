@@ -380,3 +380,30 @@ class CapitalInvestRegionOpportunityPageTranslationOptions(
         'buy_cta_text',
         'buy_cta_link',
     )
+
+
+@register(models.CapitalInvestSectorOpportunityPage)
+class CapitalInvestSectorOpportunityPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'hero_image',
+        'hero_title',
+        'featured_description',
+
+        'sector_summary_intro',
+        'sector_summary_content',
+        'sector_summary_image',
+
+        'investment_opportunities_title',
+
+        'next_steps_title',
+        'next_steps_intro',
+
+        'invest_cta_text',
+        'invest_cta_link',
+        'buy_cta_text',
+        'buy_cta_link',
+
+    )

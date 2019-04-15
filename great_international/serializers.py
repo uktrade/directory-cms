@@ -564,7 +564,7 @@ class InternationalGuideLandingPageSerializer(BasePageSerializer):
         return serializer.data
 
 
-class InternationalCapitalInvestLandingPage(BasePageSerializer):
+class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
 
     hero_title = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
@@ -642,7 +642,7 @@ class InternationalCapitalInvestLandingPage(BasePageSerializer):
     contact_section_cta_text = serializers.CharField(max_length=255)
 
 
-class CapitalInvestRegionOpportunityPage(BasePageSerializer):
+class CapitalInvestRegionOpportunityPageSerializer(BasePageSerializer):
 
     hero_title = serializers.CharField(max_length=255)
     breadcrumbs_label = serializers.CharField(max_length=255)
@@ -704,6 +704,30 @@ class CapitalInvestRegionOpportunityPage(BasePageSerializer):
 
     next_steps_title = serializers.CharField(max_length=255)
     next_steps_intro = serializers.CharField(max_length=255)
+    invest_cta_text = serializers.CharField(max_length=255)
+    invest_cta_link = serializers.CharField(max_length=255)
+    buy_cta_text = serializers.CharField(max_length=255)
+    buy_cta_link = serializers.CharField(max_length=255)
+
+
+class CapitalInvestSectorOpportunityPageSerializer(BasePageSerializer):
+
+    breadcrumbs_label = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField(
+        'original')
+    hero_title = serializers.CharField(max_length=255)
+    featured_description = serializers.CharField(max_length=255)
+
+    sector_summary_intro = serializers.CharField(max_length=255)
+    sector_summary_content = core_fields.MarkdownToHTMLField(max_length=255)
+    sector_summary_image = wagtail_fields.ImageRenditionField(
+        'original')
+
+    investment_opportunities_title = serializers.CharField(max_length=255)
+
+    next_steps_title = serializers.CharField(max_length=255)
+    next_steps_intro = serializers.CharField(max_length=255)
+
     invest_cta_text = serializers.CharField(max_length=255)
     invest_cta_link = serializers.CharField(max_length=255)
     buy_cta_text = serializers.CharField(max_length=255)

@@ -42,7 +42,8 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
                 InternationalRegionPage,
                 InternationalHomePage,
                 InternationalCapitalInvestLandingPage,
-                CapitalInvestRegionOpportunityPage]
+                CapitalInvestRegionOpportunityPage,
+                CapitalInvestSectorOpportunityPage]
 
 
 class InternationalSectorPage(BasePage):
@@ -1971,6 +1972,101 @@ class CapitalInvestRegionOpportunityPage(BasePage):
                 FieldPanel('case_study_cta_link'),
             ],
         ),
+        MultiFieldPanel(
+            heading="Next steps",
+            children=[
+                FieldPanel('next_steps_title'),
+                FieldPanel('next_steps_intro'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('invest_cta_text'),
+                        FieldPanel('invest_cta_link'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('buy_cta_text'),
+                        FieldPanel('buy_cta_link'),
+                    ]),
+                ]),
+            ],
+        ),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
+
+
+class CapitalInvestSectorOpportunityPage(BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+
+    parent_page_types = [
+        'great_international.InternationalCapitalInvestLandingPage']
+
+    breadcrumbs_label = models.CharField(max_length=255, blank=True)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    hero_title = models.CharField(max_length=255, blank=True)
+    featured_description = models.TextField(
+        max_length=255,
+        blank=True,
+        help_text="This description is used when this page is featured "
+                  "on another page, i.e. the Capital Invest Region "
+                  "Opportunities page"
+    )
+
+    sector_summary_intro = models.CharField(max_length=255, blank=True)
+    sector_summary_content = MarkdownField(blank=True)
+    sector_summary_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    investment_opportunities_title = models.CharField(max_length=255, blank=True)
+
+    next_steps_title = models.CharField(max_length=255, blank=True)
+    next_steps_intro = models.CharField(max_length=255, blank=True)
+
+    invest_cta_text = models.CharField(max_length=255, blank=True)
+    invest_cta_link = models.CharField(max_length=255, blank=True)
+    buy_cta_text = models.CharField(max_length=255, blank=True)
+    buy_cta_link = models.CharField(max_length=255, blank=True)
+
+    tags = ParentalManyToManyField(Tag, blank=True)
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading="Hero",
+            children=[
+                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_title'),
+            ],
+        ),
+        FieldPanel('featured_description'),
+        MultiFieldPanel(
+            heading="Sector summary",
+            children=[
+                FieldPanel('sector_summary_intro'),
+                FieldPanel('sector_summary_content'),
+                ImageChooserPanel('sector_summary_image'),
+            ],
+        ),
+        FieldPanel('investment_opportunities_title'),
         MultiFieldPanel(
             heading="Next steps",
             children=[
