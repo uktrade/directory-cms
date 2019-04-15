@@ -439,3 +439,52 @@ class CapitalInvestSectorOpportunityPageTranslationOptions(
         'buy_cta_link',
 
     )
+
+
+@register(models.CapitalInvestOpportunityPage)
+class CapitalInvestOpportunityPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'hero_image',
+        'hero_title',
+
+        'opportunity_summary_intro',
+        'opportunity_summary_content',
+        'opportunity_summary_image',
+
+        'location',
+        'project_promoter',
+        'scale',
+        'programme',
+        'investment_type',
+        'planning_status',
+
+        'project_background_title',
+        'project_background_intro',
+        'project_description_title',
+        'project_description_content',
+        'project_promoter_title',
+        'project_promoter_content',
+        'project_image',
+
+        'case_study_image',
+        'case_study_title',
+        'case_study_text',
+        'case_study_cta_text',
+        'case_study_cta_link',
+
+        'similar_projects_title',
+        'similar_projects_cta_text',
+        'similar_projects_cta_link',
+
+
+        'next_steps_title',
+        'next_steps_intro',
+
+        'invest_cta_text',
+        'invest_cta_link',
+        'buy_cta_text',
+        'buy_cta_link',
+    )
