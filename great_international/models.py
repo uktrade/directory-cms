@@ -2088,10 +2088,7 @@ class CapitalInvestRegionOpportunityPage(BasePage):
         max_length=255,
         blank=True
     )
-    region_summary_section_content = MarkdownField(
-        max_length=255,
-        blank=True
-    )
+    region_summary_section_content = MarkdownField(blank=True)
 
     investment_opps_title = models.CharField(
         max_length=255,
@@ -2185,10 +2182,7 @@ class CapitalInvestRegionOpportunityPage(BasePage):
         related_name='+',
         blank=True
     )
-    section_content = MarkdownField(
-        blank=True,
-        max_length=255
-    )
+    section_content = MarkdownField(blank=True)
 
     case_study_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -2306,6 +2300,7 @@ class CapitalInvestRegionOpportunityPage(BasePage):
             children=[
                 ImageChooserPanel('case_study_image'),
                 FieldPanel('case_study_title'),
+                FieldPanel('case_study_text'),
                 FieldPanel('case_study_cta_text'),
                 FieldPanel('case_study_cta_link'),
             ],
