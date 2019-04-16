@@ -94,6 +94,62 @@ class StatisticProxyDataWrapper:
         )
 
 
+class EconomicsStatisticProxyDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def number(self):
+        return getattr(
+            self.instance,
+            f'economics_stat_{self.position_number}_number'
+        )
+
+    @property
+    def heading(self):
+        return getattr(
+            self.instance,
+            f'economics_stat_{self.position_number}_heading'
+        )
+
+    @property
+    def smallprint(self):
+        return getattr(
+            self.instance,
+            f'economics_stat_{self.position_number}_smallprint'
+        )
+
+
+class LocationStatisticProxyDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def number(self):
+        return getattr(
+            self.instance,
+            f'location_stat_{self.position_number}_number'
+        )
+
+    @property
+    def heading(self):
+        return getattr(
+            self.instance,
+            f'location_stat_{self.position_number}_heading'
+        )
+
+    @property
+    def smallprint(self):
+        return getattr(
+            self.instance,
+            f'location_stat_{self.position_number}_smallprint'
+        )
+
+
 class SectionThreeSubsectionSerializer(serializers.Serializer):
     heading = serializers.CharField(max_length=255)
     teaser = serializers.CharField()
@@ -107,6 +163,18 @@ class SectionTwoSubsectionSerializer(serializers.Serializer):
 
 
 class StatisticSerializer(serializers.Serializer):
+    number = serializers.CharField(max_length=255)
+    heading = serializers.CharField(max_length=255)
+    smallprint = serializers.CharField(max_length=255)
+
+
+class EconomicStatSerializer(serializers.Serializer):
+    number = serializers.CharField(max_length=255)
+    heading = serializers.CharField(max_length=255)
+    smallprint = serializers.CharField(max_length=255)
+
+
+class LocationStatSerializer(serializers.Serializer):
     number = serializers.CharField(max_length=255)
     heading = serializers.CharField(max_length=255)
     smallprint = serializers.CharField(max_length=255)
@@ -658,39 +726,65 @@ class CapitalInvestRegionOpportunityPageSerializer(BasePageSerializer):
     investment_opps_title = serializers.CharField(max_length=255)
     investment_opps_intro = serializers.CharField(max_length=255)
 
+    economics_stats = serializers.SerializerMethodField()
+
+    def get_economics_stats(self, instance):
+        data = [
+            EconomicsStatisticProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['1', '2', '3', '4']
+        ]
+        serializer = EconomicStatSerializer(data, many=True)
+        return serializer.data
+
     economics_data_title = serializers.CharField(max_length=255)
-    economics_stats_number_1 = serializers.CharField(max_length=255)
-    economics_stats_heading_1 = serializers.CharField(max_length=255)
-    economics_stats_smallprint_1 = serializers.CharField(max_length=255)
+    economics_stat_1_number = serializers.CharField(max_length=255)
+    economics_stat_1_heading = serializers.CharField(max_length=255)
+    economics_stat_1_smallprint = serializers.CharField(max_length=255)
 
-    economics_stats_number_2 = serializers.CharField(max_length=255)
-    economics_stats_heading_2 = serializers.CharField(max_length=255)
-    economics_stats_smallprint_2 = serializers.CharField(max_length=255)
+    economics_stat_2_number = serializers.CharField(max_length=255)
+    economics_stat_2_heading = serializers.CharField(max_length=255)
+    economics_stat_2_smallprint = serializers.CharField(max_length=255)
 
-    economics_stats_number_3 = serializers.CharField(max_length=255)
-    economics_stats_heading_3 = serializers.CharField(max_length=255)
-    economics_stats_smallprint_3 = serializers.CharField(max_length=255)
+    economics_stat_3_number = serializers.CharField(max_length=255)
+    economics_stat_3_heading = serializers.CharField(max_length=255)
+    economics_stat_3_smallprint = serializers.CharField(max_length=255)
 
-    economics_stats_number_4 = serializers.CharField(max_length=255)
-    economics_stats_heading_4 = serializers.CharField(max_length=255)
-    economics_stats_smallprint_4 = serializers.CharField(max_length=255)
+    economics_stat_4_number = serializers.CharField(max_length=255)
+    economics_stat_4_heading = serializers.CharField(max_length=255)
+    economics_stat_4_smallprint = serializers.CharField(max_length=255)
+
+    location_stats = serializers.SerializerMethodField()
+
+    def get_location_stats(self, instance):
+        data = [
+            LocationStatisticProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['1', '2', '3', '4']
+        ]
+        serializer = LocationStatSerializer(data, many=True)
+        return serializer.data
 
     location_data_title = serializers.CharField(max_length=255)
-    location_stats_number_1 = serializers.CharField(max_length=255)
-    location_stats_heading_1 = serializers.CharField(max_length=255)
-    location_stats_smallprint_1 = serializers.CharField(max_length=255)
+    location_stat_1_number = serializers.CharField(max_length=255)
+    location_stat_1_heading = serializers.CharField(max_length=255)
+    location_stat_1_smallprint = serializers.CharField(max_length=255)
 
-    location_stats_number_2 = serializers.CharField(max_length=255)
-    location_stats_heading_2 = serializers.CharField(max_length=255)
-    location_stats_smallprint_2 = serializers.CharField(max_length=255)
+    location_stat_2_number = serializers.CharField(max_length=255)
+    location_stat_2_heading = serializers.CharField(max_length=255)
+    location_stat_2_smallprint = serializers.CharField(max_length=255)
 
-    location_stats_number_3 = serializers.CharField(max_length=255)
-    location_stats_heading_3 = serializers.CharField(max_length=255)
-    location_stats_smallprint_3 = serializers.CharField(max_length=255)
+    location_stat_3_number = serializers.CharField(max_length=255)
+    location_stat_3_heading = serializers.CharField(max_length=255)
+    location_stat_3_smallprint = serializers.CharField(max_length=255)
 
-    location_stats_number_4 = serializers.CharField(max_length=255)
-    location_stats_heading_4 = serializers.CharField(max_length=255)
-    location_stats_smallprint_4 = serializers.CharField(max_length=255)
+    location_stat_4_number = serializers.CharField(max_length=255)
+    location_stat_4_heading = serializers.CharField(max_length=255)
+    location_stat_4_smallprint = serializers.CharField(max_length=255)
 
     section_title = serializers.CharField(max_length=255)
     section_image = wagtail_fields.ImageRenditionField('original')
@@ -710,7 +804,8 @@ class CapitalInvestRegionOpportunityPageSerializer(BasePageSerializer):
     buy_cta_link = serializers.CharField(max_length=255)
 
 
-class CapitalInvestSectorOpportunityPageSerializer(BasePageSerializer):
+class CapitalInvestSectorOpportunityPageSerializer(
+        PageWithRelatedPagesSerializer):
 
     breadcrumbs_label = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField(
