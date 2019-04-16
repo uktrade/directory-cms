@@ -2110,74 +2110,74 @@ class CapitalInvestRegionOpportunityPage(BasePage):
     )
 
     economics_data_title = models.CharField(max_length=255, blank=True)
-    economics_stats_number_1 = models.CharField(max_length=255, blank=True)
-    economics_stats_heading_1 = models.CharField(max_length=255, blank=True)
-    economics_stats_smallprint_1 = models.CharField(max_length=255, blank=True)
+    economics_stat_1_number = models.CharField(max_length=255, blank=True)
+    economics_stat_1_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_1_smallprint = models.CharField(max_length=255, blank=True)
 
-    economics_stats_number_2 = models.CharField(max_length=255, blank=True)
-    economics_stats_heading_2 = models.CharField(max_length=255, blank=True)
-    economics_stats_smallprint_2 = models.CharField(max_length=255, blank=True)
+    economics_stat_2_number = models.CharField(max_length=255, blank=True)
+    economics_stat_2_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_2_smallprint = models.CharField(max_length=255, blank=True)
 
-    economics_stats_number_3 = models.CharField(max_length=255, blank=True)
-    economics_stats_heading_3 = models.CharField(max_length=255, blank=True)
-    economics_stats_smallprint_3 = models.CharField(max_length=255, blank=True)
+    economics_stat_3_number = models.CharField(max_length=255, blank=True)
+    economics_stat_3_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_3_smallprint = models.CharField(max_length=255, blank=True)
 
-    economics_stats_number_4 = models.CharField(max_length=255, blank=True)
-    economics_stats_heading_4 = models.CharField(max_length=255, blank=True)
-    economics_stats_smallprint_4 = models.CharField(max_length=255, blank=True)
+    economics_stat_4_number = models.CharField(max_length=255, blank=True)
+    economics_stat_4_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_4_smallprint = models.CharField(max_length=255, blank=True)
 
     location_data_title = models.CharField(
         max_length=255,
         blank=True
     )
-    location_stats_number_1 = models.CharField(
+    location_stat_1_number = models.CharField(
         max_length=255,
         blank=True
     )
-    location_stats_heading_1 = models.CharField(
+    location_stat_1_heading = models.CharField(
         max_length=255,
         blank=True
     )
-    location_stats_smallprint_1 = models.CharField(
-        max_length=255,
-        blank=True
-    )
-
-    location_stats_number_2 = models.CharField(
-        max_length=255,
-        blank=True
-    )
-    location_stats_heading_2 = models.CharField(
-        max_length=255,
-        blank=True
-    )
-    location_stats_smallprint_2 = models.CharField(
+    location_stat_1_smallprint = models.CharField(
         max_length=255,
         blank=True
     )
 
-    location_stats_number_3 = models.CharField(
+    location_stat_2_number = models.CharField(
         max_length=255,
         blank=True
     )
-    location_stats_heading_3 = models.CharField(
+    location_stat_2_heading = models.CharField(
         max_length=255,
         blank=True
     )
-    location_stats_smallprint_3 = models.CharField(
+    location_stat_2_smallprint = models.CharField(
         max_length=255,
         blank=True
     )
 
-    location_stats_number_4 = models.CharField(
+    location_stat_3_number = models.CharField(
         max_length=255,
         blank=True
     )
-    location_stats_heading_4 = models.CharField(
+    location_stat_3_heading = models.CharField(
         max_length=255,
         blank=True
     )
-    location_stats_smallprint_4 = models.CharField(
+    location_stat_3_smallprint = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    location_stat_4_number = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_4_heading = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_4_smallprint = models.CharField(
         max_length=255,
         blank=True
     )
@@ -2245,24 +2245,24 @@ class CapitalInvestRegionOpportunityPage(BasePage):
                 FieldPanel('economics_data_title'),
                 FieldRowPanel([
                     MultiFieldPanel([
-                        FieldPanel('economics_stats_number_1'),
-                        FieldPanel('economics_stats_heading_1'),
-                        FieldPanel('economics_stats_smallprint_1'),
+                        FieldPanel('economics_stat_1_number'),
+                        FieldPanel('economics_stat_1_heading'),
+                        FieldPanel('economics_stat_1_smallprint'),
                     ]),
                     MultiFieldPanel([
-                        FieldPanel('economics_stats_number_2'),
-                        FieldPanel('economics_stats_heading_2'),
-                        FieldPanel('economics_stats_smallprint_2'),
+                        FieldPanel('economics_stat_2_number'),
+                        FieldPanel('economics_stat_2_heading'),
+                        FieldPanel('economics_stat_2_smallprint'),
                     ]),
                     MultiFieldPanel([
-                        FieldPanel('economics_stats_number_3'),
-                        FieldPanel('economics_stats_heading_3'),
-                        FieldPanel('economics_stats_smallprint_3'),
+                        FieldPanel('economics_stat_3_number'),
+                        FieldPanel('economics_stat_3_heading'),
+                        FieldPanel('economics_stat_3_smallprint'),
                     ]),
                     MultiFieldPanel([
-                        FieldPanel('economics_stats_number_4'),
-                        FieldPanel('economics_stats_heading_4'),
-                        FieldPanel('economics_stats_smallprint_4'),
+                        FieldPanel('economics_stat_4_number'),
+                        FieldPanel('economics_stat_4_heading'),
+                        FieldPanel('economics_stat_4_smallprint'),
                     ]),
                 ]),
             ],
@@ -2273,24 +2273,24 @@ class CapitalInvestRegionOpportunityPage(BasePage):
                 FieldPanel('location_data_title'),
                 FieldRowPanel([
                     MultiFieldPanel([
-                        FieldPanel('location_stats_number_1'),
-                        FieldPanel('location_stats_heading_1'),
-                        FieldPanel('location_stats_smallprint_1'),
+                        FieldPanel('location_stat_1_number'),
+                        FieldPanel('location_stat_1_heading'),
+                        FieldPanel('location_stat_1_smallprint'),
                     ]),
                     MultiFieldPanel([
-                        FieldPanel('location_stats_number_2'),
-                        FieldPanel('location_stats_heading_2'),
-                        FieldPanel('location_stats_smallprint_2'),
+                        FieldPanel('location_stat_2_number'),
+                        FieldPanel('location_stat_2_heading'),
+                        FieldPanel('location_stat_2_smallprint'),
                     ]),
                     MultiFieldPanel([
-                        FieldPanel('location_stats_number_3'),
-                        FieldPanel('location_stats_heading_3'),
-                        FieldPanel('location_stats_smallprint_3'),
+                        FieldPanel('location_stat_3_number'),
+                        FieldPanel('location_stat_3_heading'),
+                        FieldPanel('location_stat_3_smallprint'),
                     ]),
                     MultiFieldPanel([
-                        FieldPanel('location_stats_number_4'),
-                        FieldPanel('location_stats_heading_4'),
-                        FieldPanel('location_stats_smallprint_4'),
+                        FieldPanel('location_stat_4_number'),
+                        FieldPanel('location_stat_4_heading'),
+                        FieldPanel('location_stat_4_smallprint'),
                     ]),
                 ]),
             ],
@@ -2385,6 +2385,48 @@ class CapitalInvestSectorOpportunityPage(BasePage):
     )
 
     investment_opportunities_title = models.CharField(max_length=255)
+    related_page_1 = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_2 = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_3 = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_4 = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_5 = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_6 = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
 
     next_steps_title = models.CharField(max_length=255)
     next_steps_intro = models.CharField(max_length=255, blank=True)
@@ -2414,7 +2456,54 @@ class CapitalInvestSectorOpportunityPage(BasePage):
                 ImageChooserPanel('sector_summary_image'),
             ],
         ),
-        FieldPanel('investment_opportunities_title'),
+        MultiFieldPanel(
+            heading="Investment opportunities",
+            children=[
+                FieldPanel('investment_opportunities_title'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        PageChooserPanel(
+                            'related_page_1',
+                            [
+                                'great_international.'
+                                'CapitalInvestOpportunityPage'
+                            ]),
+                        PageChooserPanel(
+                            'related_page_2',
+                            [
+                                'great_international.'
+                                'CapitalInvestOpportunityPage'
+                            ]),
+                        PageChooserPanel(
+                            'related_page_3',
+                            [
+                                'great_international.'
+                                'CapitalInvestOpportunityPage'
+                            ]),
+                    ]),
+                    MultiFieldPanel([
+                        PageChooserPanel(
+                            'related_page_4',
+                            [
+                                'great_international.'
+                                'CapitalInvestOpportunityPage'
+                            ]),
+                        PageChooserPanel(
+                            'related_page_5',
+                            [
+                                'great_international.'
+                                'CapitalInvestOpportunityPage'
+                            ]),
+                        PageChooserPanel(
+                            'related_page_6',
+                            [
+                                'great_international.'
+                                'CapitalInvestOpportunityPage'
+                            ]),
+                    ]),
+                ]),
+            ],
+        ),
         MultiFieldPanel(
             heading="Next steps",
             children=[
