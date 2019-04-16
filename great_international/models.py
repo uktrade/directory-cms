@@ -1721,7 +1721,9 @@ class InternationalCapitalInvestLandingPage(BasePage):
     @classmethod
     def allowed_subpage_models(cls):
         return [
-            CapitalInvestRegionOpportunityPage
+            CapitalInvestRegionOpportunityPage,
+            CapitalInvestSectorOpportunityPage,
+            CapitalInvestOpportunityPage
         ]
 
     parent_page_types = ['great_international.GreatInternationalApp']
@@ -2070,11 +2072,13 @@ class CapitalInvestRegionOpportunityPage(BasePage):
     @classmethod
     def allowed_subpage_models(cls):
         return [
-            CapitalInvestSectorOpportunityPage
+            CapitalInvestSectorOpportunityPage,
+            CapitalInvestOpportunityPage
         ]
 
     parent_page_types = [
-        'great_international.InternationalCapitalInvestLandingPage']
+        'great_international.InternationalCapitalInvestLandingPage',
+        'great_international.CapitalInvestSectorOpportunityPage']
 
     breadcrumbs_label = models.CharField(max_length=255, blank=True)
     hero_title = models.CharField(max_length=255, blank=True)
@@ -2351,11 +2355,13 @@ class CapitalInvestSectorOpportunityPage(BasePage):
     @classmethod
     def allowed_subpage_models(cls):
         return [
-            CapitalInvestOpportunityPage
+            CapitalInvestOpportunityPage,
+            CapitalInvestRegionOpportunityPage,
         ]
 
     parent_page_types = [
-        'great_international.CapitalInvestRegionOpportunityPage']
+        'great_international.CapitalInvestRegionOpportunityPage',
+        'great_international.InternationalCapitalInvestLandingPage']
 
     breadcrumbs_label = models.CharField(max_length=255, blank=True)
     hero_image = models.ForeignKey(
@@ -2450,7 +2456,8 @@ class CapitalInvestOpportunityPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
 
     parent_page_types = [
-        'great_international.CapitalInvestSectorOpportunityPage']
+        'great_international.CapitalInvestSectorOpportunityPage',
+        'great_international.CapitalInvestRegionOpportunityPage']
 
     breadcrumbs_label = models.CharField(max_length=255, blank=True)
     hero_image = models.ForeignKey(
