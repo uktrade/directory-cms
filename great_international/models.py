@@ -1735,8 +1735,7 @@ class CapitalInvestRegionOpportunityPage(BasePage):
     @classmethod
     def allowed_subpage_models(cls):
         return [
-            CapitalInvestSectorOpportunityPage,
-            CapitalInvestOpportunityPage
+            CapitalInvestSectorOpportunityPage
         ]
 
     parent_page_types = [
@@ -2014,8 +2013,7 @@ class CapitalInvestSectorOpportunityPage(BasePage):
     @classmethod
     def allowed_subpage_models(cls):
         return [
-            CapitalInvestOpportunityPage,
-            CapitalInvestRegionOpportunityPage,
+            CapitalInvestRegionOpportunityPage
         ]
 
     parent_page_types = [
@@ -2115,8 +2113,7 @@ class CapitalInvestOpportunityPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
 
     parent_page_types = [
-        'great_international.CapitalInvestSectorOpportunityPage',
-        'great_international.CapitalInvestRegionOpportunityPage']
+        'great_international.InternationalCapitalInvestLandingPage']
 
     breadcrumbs_label = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
