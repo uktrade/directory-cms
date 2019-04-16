@@ -1743,8 +1743,8 @@ class CapitalInvestRegionOpportunityPage(BasePage):
         'great_international.InternationalCapitalInvestLandingPage',
         'great_international.CapitalInvestSectorOpportunityPage']
 
-    breadcrumbs_label = models.CharField(max_length=255, blank=True)
-    hero_title = models.CharField(max_length=255, blank=True)
+    breadcrumbs_label = models.CharField(max_length=255)
+    hero_title = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1760,15 +1760,11 @@ class CapitalInvestRegionOpportunityPage(BasePage):
         related_name='+',
         blank=True
     )
-    region_summary_section_intro = models.CharField(
-        max_length=255,
-        blank=True
-    )
+    region_summary_section_intro = models.TextField(max_length=255)
     region_summary_section_content = MarkdownField(blank=True)
 
     investment_opps_title = models.CharField(
         max_length=255,
-        blank=True,
         verbose_name="Investment opportunities title"
     )
     investment_opps_intro = models.CharField(
@@ -1867,18 +1863,18 @@ class CapitalInvestRegionOpportunityPage(BasePage):
         related_name='+',
         blank=True
     )
-    case_study_title = models.CharField(max_length=255, blank=True)
-    case_study_text = models.CharField(max_length=255, blank=True)
-    case_study_cta_text = models.CharField(max_length=255, blank=True)
+    case_study_title = models.CharField(max_length=255)
+    case_study_text = models.TextField(max_length=255, blank=True)
+    case_study_cta_text = models.CharField(max_length=255)
     case_study_cta_link = models.CharField(max_length=255, blank=True)
 
-    next_steps_title = models.CharField(max_length=255, blank=True)
-    next_steps_intro = models.CharField(max_length=255, blank=True)
+    next_steps_title = models.CharField(max_length=255)
+    next_steps_intro = models.TextField(max_length=255, blank=True)
 
-    invest_cta_text = models.CharField(max_length=255, blank=True)
+    invest_cta_text = models.CharField(max_length=255)
     invest_cta_link = models.CharField(max_length=255, blank=True)
 
-    buy_cta_text = models.CharField(max_length=255, blank=True)
+    buy_cta_text = models.CharField(max_length=255)
     buy_cta_link = models.CharField(max_length=255, blank=True)
 
     tags = ParentalManyToManyField(Tag, blank=True)
@@ -2026,7 +2022,7 @@ class CapitalInvestSectorOpportunityPage(BasePage):
         'great_international.CapitalInvestRegionOpportunityPage',
         'great_international.InternationalCapitalInvestLandingPage']
 
-    breadcrumbs_label = models.CharField(max_length=255, blank=True)
+    breadcrumbs_label = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -2034,7 +2030,7 @@ class CapitalInvestSectorOpportunityPage(BasePage):
         related_name='+',
         blank=True
     )
-    hero_title = models.CharField(max_length=255, blank=True)
+    hero_title = models.CharField(max_length=255)
     featured_description = models.TextField(
         max_length=255,
         blank=True,
@@ -2043,7 +2039,7 @@ class CapitalInvestSectorOpportunityPage(BasePage):
                   "Opportunities page"
     )
 
-    sector_summary_intro = models.CharField(max_length=255, blank=True)
+    sector_summary_intro = models.TextField(max_length=255, blank=True)
     sector_summary_content = MarkdownField(blank=True)
     sector_summary_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -2053,14 +2049,14 @@ class CapitalInvestSectorOpportunityPage(BasePage):
         blank=True
     )
 
-    investment_opportunities_title = models.CharField(max_length=255, blank=True)
+    investment_opportunities_title = models.CharField(max_length=255)
 
-    next_steps_title = models.CharField(max_length=255, blank=True)
+    next_steps_title = models.CharField(max_length=255)
     next_steps_intro = models.CharField(max_length=255, blank=True)
 
-    invest_cta_text = models.CharField(max_length=255, blank=True)
+    invest_cta_text = models.CharField(max_length=255)
     invest_cta_link = models.CharField(max_length=255, blank=True)
-    buy_cta_text = models.CharField(max_length=255, blank=True)
+    buy_cta_text = models.CharField(max_length=255)
     buy_cta_link = models.CharField(max_length=255, blank=True)
 
     tags = ParentalManyToManyField(Tag, blank=True)
@@ -2122,7 +2118,7 @@ class CapitalInvestOpportunityPage(BasePage):
         'great_international.CapitalInvestSectorOpportunityPage',
         'great_international.CapitalInvestRegionOpportunityPage']
 
-    breadcrumbs_label = models.CharField(max_length=255, blank=True)
+    breadcrumbs_label = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -2130,9 +2126,9 @@ class CapitalInvestOpportunityPage(BasePage):
         related_name='+',
         blank=True
     )
-    hero_title = models.CharField(max_length=255, blank=True)
+    hero_title = models.CharField(max_length=255)
 
-    opportunity_summary_intro = models.CharField(max_length=255, blank=True)
+    opportunity_summary_intro = models.TextField(max_length=255)
     opportunity_summary_content = MarkdownField(blank=True)
     opportunity_summary_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -2142,15 +2138,15 @@ class CapitalInvestOpportunityPage(BasePage):
         blank=True
     )
 
-    location = models.CharField(max_length=255, blank=True)
-    project_promoter = models.CharField(max_length=255, blank=True)
-    scale = models.CharField(max_length=255, blank=True)
-    programme = models.CharField(max_length=255, blank=True)
-    investment_type = models.CharField(max_length=255, blank=True)
-    planning_status = models.CharField(max_length=255, blank=True)
+    location = models.CharField(max_length=255)
+    project_promoter = models.CharField(max_length=255)
+    scale = models.CharField(max_length=255)
+    programme = models.CharField(max_length=255)
+    investment_type = models.CharField(max_length=255)
+    planning_status = models.CharField(max_length=255)
 
     project_background_title = models.CharField(max_length=255, blank=True)
-    project_background_intro = models.CharField(max_length=255, blank=True)
+    project_background_intro = models.TextField(max_length=255, blank=True)
     project_description_title = models.CharField(max_length=255, blank=True)
     project_description_content = MarkdownField(blank=True)
     project_promoter_title = models.CharField(max_length=255, blank=True)
@@ -2163,9 +2159,9 @@ class CapitalInvestOpportunityPage(BasePage):
         blank=True
     )
 
-    case_study_title = models.CharField(max_length=255, blank=True)
+    case_study_title = models.CharField(max_length=255)
     case_study_text = models.CharField(max_length=255, blank=True)
-    case_study_cta_text = models.CharField(max_length=255, blank=True)
+    case_study_cta_text = models.CharField(max_length=255)
     case_study_cta_link = models.CharField(max_length=255, blank=True)
     case_study_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -2175,16 +2171,16 @@ class CapitalInvestOpportunityPage(BasePage):
         blank=True
     )
 
-    similar_projects_title = models.CharField(max_length=255, blank=True)
-    similar_projects_cta_text = models.CharField(max_length=255, blank=True)
+    similar_projects_title = models.CharField(max_length=255)
+    similar_projects_cta_text = models.CharField(max_length=255)
     similar_projects_cta_link = models.CharField(max_length=255, blank=True)
 
-    next_steps_title = models.CharField(max_length=255, blank=True)
+    next_steps_title = models.CharField(max_length=255)
     next_steps_intro = models.CharField(max_length=255, blank=True)
 
-    invest_cta_text = models.CharField(max_length=255, blank=True)
+    invest_cta_text = models.CharField(max_length=255)
     invest_cta_link = models.CharField(max_length=255, blank=True)
-    buy_cta_text = models.CharField(max_length=255, blank=True)
+    buy_cta_text = models.CharField(max_length=255)
     buy_cta_link = models.CharField(max_length=255, blank=True)
 
     tags = ParentalManyToManyField(Tag, blank=True)
