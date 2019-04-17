@@ -120,17 +120,17 @@ class DetailViewEndpointBase(APIEndpointBase):
         """
         self.get_object_id()
 
-    def get(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):
         # Exit early if there are any issues
         self.check_parameter_validity()
 
         if helpers.is_draft_requested(request):
-            return super().get(request, *args, **kwargs)
+            return super().dispatch(request, *args, **kwargs)
 
         # Return a cached response if one is available
         cached_data = cache.PageCache.get(
             page_id=self.get_object_id(),
-            lang=request.GET.get('lang') or translation.get_language(),
+            lang=translation.get_language(),
             region=request.GET.get('region'),
         )
         if cached_data:
@@ -143,7 +143,7 @@ class DetailViewEndpointBase(APIEndpointBase):
             )
 
         # No cached response available
-        response = super().get(request, *args, **kwargs)
+        response = super().dispatch(request, *args, **kwargs)
         if not settings.API_CACHE_DISABLED and response.status_code == 200:
             # Reuse the already-fetched object to populate the cache
             cache.CachePopulator.populate_async(self.get_object())
