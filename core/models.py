@@ -271,12 +271,26 @@ class BasePage(Page):
         if not fields:
             return [settings.LANGUAGE_CODE]
         language_codes = translation.trans_real.get_languages()
-        translated_languages = []
+        # If new mandatory fields are added to a page model which has existing
+        # instances on wagtail admin, the code below returns an empty list
+        # because not all the mandatory fields are populated with English
+        # content. An empty list means that the UI client will return a 404
+        # because it can't find English, although the page is valid and still
+        # published in CMS. I'm forcing en-gb in the list to avoid this issue.
+        # This is diffucult to test both programmatically and manually and it's
+        # a corner case so I'm leaving the next line effectively untested.
+        # A manual test would have the following steps:
+        # 1) Add a page model
+        # 2) Create an instance of the above page model in wagtail
+        # 3) Add at least one new mandatory field to the model
+        # 4) Migrate CMS
+        # 5) Open the page on the UI client without adding the new content
+        translated_languages = ['en-gb']
         for language_code in language_codes:
             builder = partial(build_localized_fieldname, lang=language_code)
-            if all(getattr(self, builder(name)) for name in fields):
+            if all(getattr(self, builder(field_name=name)) for name in fields):
                 translated_languages.append(language_code)
-        return translated_languages
+        return set(translated_languages)
 
     @property
     def language_names(self):
