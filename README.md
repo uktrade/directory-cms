@@ -26,7 +26,9 @@
 
 ### Requirements
 [Python 3.6](https://www.python.org/downloads/release/python-368/)
+
 [Postgres 9.5](https://www.postgresql.org/)
+
 [Redis](https://redis.io/)
 
 
@@ -114,6 +116,7 @@ Note on `subscriptions`: the page is serialized when saved to the cache as a JSO
 
 ## Related projects:
 https://github.com/uktrade?q=directory
+
 https://github.com/uktrade?q=great
 
 [code-climate-image]: https://codeclimate.com/github/uktrade/directory-cms/badges/issue_count.svg
