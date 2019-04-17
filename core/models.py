@@ -95,6 +95,14 @@ class BasePage(Page):
         db_index=True,
         null=True,
     )
+    uses_tree_based_routing = models.BooleanField(
+        default=False,
+        verbose_name="tree-based routing enabled",
+        help_text=(
+            "Allow this page's URL to be determined by its slug, and "
+            "the slugs of its ancestors in the page tree."
+        ),
+    )
 
     class Meta:
         abstract = True
