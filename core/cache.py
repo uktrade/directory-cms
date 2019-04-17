@@ -26,11 +26,17 @@ class PageCache:
             item for item in variation_kwargs.items()
             if item[1]
         )
-        # improve reliability of delete_many() by creating a redis hashtag,
-        # from `page_id` - ensure keys related to the same page are stored
+        # create a 'dict-like' string representation of the above
+        variation_str = '{' + ','.join(
+            '%s:%s' % (key, val) for key, val in variation_kwargs_sorted
+        ) + '}'
+        # improve reliability of delete_many() by creating a redis hashtag
+        # from `page_id`. This ensures keys related to the same page are stored
         # in the same node in a clustered environment
         hashtag_val = f'serialized-page-{page_id}'
-        return '{{%s}}%s' % (hashtag_val, variation_kwargs_sorted)
+        key = '{{%s}}%s' % (hashtag_val, variation_str)
+        print(key)
+        return key
 
     @classmethod
     def set(cls, page_id, data, **variation_kwargs):
