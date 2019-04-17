@@ -16,7 +16,7 @@ from .models import (
     InternationalGuideLandingPage,
     InternationalSectorPage,
     InternationalEUExitFormPage,
-    CapitalInvestSectorOpportunityPage)
+    CapitalInvestSectorPage)
 
 
 class SectionThreeSubsectionProxyDataWrapper:
@@ -795,8 +795,7 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
     contact_section_cta_text = serializers.CharField(max_length=255)
 
 
-class CapitalInvestRegionOpportunityPageSerializer(BasePageSerializer,
-                                                   ChildPagesSerializerHelper):
+class CapitalInvestRegionPageSerializer(PageWithRelatedPagesSerializer):
 
     hero_title = serializers.CharField(max_length=255)
     breadcrumbs_label = serializers.CharField(max_length=255)
@@ -811,17 +810,6 @@ class CapitalInvestRegionOpportunityPageSerializer(BasePageSerializer,
 
     investment_opps_title = serializers.CharField(max_length=255)
     investment_opps_intro = serializers.CharField(max_length=255)
-    sector_opportunities = serializers.SerializerMethodField()
-
-    def get_sector_opportunities(self, instance):
-        queryset = CapitalInvestSectorOpportunityPage.objects.all()
-        serializer = CapitalInvestSectorOpportunityPageSerializer(
-            queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-        return serializer.data
 
     economics_stats = serializers.SerializerMethodField()
 
@@ -901,7 +889,7 @@ class CapitalInvestRegionOpportunityPageSerializer(BasePageSerializer,
     buy_cta_link = serializers.CharField(max_length=255)
 
 
-class CapitalInvestSectorOpportunityPageSerializer(
+class CapitalInvestSectorPageSerializer(
         PageWithRelatedPagesSerializer):
 
     breadcrumbs_label = serializers.CharField(max_length=255)
