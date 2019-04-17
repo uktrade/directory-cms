@@ -31,6 +31,15 @@ api_urls = [
         name='lookup-by-slug'
     ),
     url(
+        r'^pages/lookup-by-path/(?P<site_id>[0-9]+)/(?P<path>[\w\-/]*)$',
+        api_router.wrap_view(
+            core.views.PageLookupByPathAPIEndpoint.as_view(
+                {'get': 'detail_view'}
+            )
+        ),
+        name='lookup-by-path'
+    ),
+    url(
         r'^pages/lookup-by-full-path/$',
         api_router.wrap_view(
             core.views.PageLookupByFullPathAPIEndpoint.as_view(
