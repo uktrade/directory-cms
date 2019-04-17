@@ -34,9 +34,7 @@ class PageCache:
         # from `page_id`. This ensures keys related to the same page are stored
         # in the same node in a clustered environment
         hashtag_val = f'serialized-page-{page_id}'
-        key = '{{%s}}%s' % (hashtag_val, variation_str)
-        print(key)
-        return key
+        return '{{%s}}%s' % (hashtag_val, variation_str)
 
     @classmethod
     def set(cls, page_id, data, **variation_kwargs):
