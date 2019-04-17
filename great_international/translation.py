@@ -313,8 +313,13 @@ class InternationalCapitalInvestLandingPageTranslationOptions(
     )
 
 
-@register(models.CapitalInvestRegionOpportunityPage)
-class CapitalInvestRegionOpportunityPageTranslationOptions(
+@register(models.CapitalInvestRegionListingPage)
+class CapitalInvestRegionListingPageTranslationOptions(BaseTranslationOptions):
+    fields = []
+
+
+@register(models.CapitalInvestRegionPage)
+class CapitalInvestRegionPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = (
@@ -328,6 +333,9 @@ class CapitalInvestRegionOpportunityPageTranslationOptions(
 
         'investment_opps_title',
         'investment_opps_intro',
+        'related_page_1',
+        'related_page_2',
+        'related_page_3',
 
         'economics_data_title',
         'economics_stat_1_number',
@@ -382,8 +390,13 @@ class CapitalInvestRegionOpportunityPageTranslationOptions(
     )
 
 
-@register(models.CapitalInvestSectorOpportunityPage)
-class CapitalInvestSectorOpportunityPageTranslationOptions(
+@register(models.CapitalInvestSectorListingPage)
+class CapitalInvestSectorListingPageTranslationOptions(BaseTranslationOptions):
+    fields = []
+
+
+@register(models.CapitalInvestSectorPage)
+class CapitalInvestSectorPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = (
@@ -413,6 +426,12 @@ class CapitalInvestSectorOpportunityPageTranslationOptions(
         'buy_cta_link',
 
     )
+
+
+@register(models.CapitalInvestOpportunityListingPage)
+class CapitalInvestOpportunityListingPageTranslationOptions(
+        BaseTranslationOptions):
+    fields = []
 
 
 @register(models.CapitalInvestOpportunityPage)
