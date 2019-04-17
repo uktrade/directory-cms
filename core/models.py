@@ -8,6 +8,7 @@ from modeltranslation import settings as modeltranslation_settings
 from modeltranslation.translator import translator
 from modeltranslation.utils import build_localized_fieldname
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
+from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core.models import Page, PageBase
 
 from django.core import signing
@@ -54,12 +55,53 @@ class ChoiceArrayField(ArrayField):
         return super(ArrayField, self).formfield(**defaults)
 
 
+@register_setting
+class RoutingSettings(BaseSetting):
+    root_path_prefix = models.CharField(
+        blank=True,
+        max_length=100,
+        help_text=(
+            "When determining URLs for a page in this site, the page's "
+            "'url_path' is prepended with this value to create a URL that "
+            "will be recognised by the relevant front-end app."
+        ),
+    )
+    include_port_in_urls = models.BooleanField(
+        default=True,
+        verbose_name="include port in page URLs",
+        help_text=(
+            "This allows us to add dummy port values to Wagtail Site "
+            "objects, to get around the unique hostname/port "
+            "restrictions. If unchecked, the port won't be included "
+            "in page URLs, and so becomes inconsequential."
+        ),
+    )
+
+    panels = [
+        MultiFieldPanel(
+            heading="Routing configuration",
+            children=[
+                FieldPanel('root_path_prefix'),
+                FieldPanel('include_port_in_urls'),
+            ],
+        )
+    ]
+
+
 class BasePage(Page):
     service_name = models.CharField(
         max_length=100,
         choices=choices.CMS_APP_CHOICES,
         db_index=True,
         null=True,
+    )
+    uses_tree_based_routing = models.BooleanField(
+        default=False,
+        verbose_name="tree-based routing enabled",
+        help_text=(
+            "Allow this page's URL to be determined by its slug, and "
+            "the slugs of its ancestors in the page tree."
+        ),
     )
 
     class Meta:

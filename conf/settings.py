@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
     'wagtail.contrib.forms',
+    'wagtail.contrib.settings',
     'wagtail.embeds',
     'wagtail.users',
     'wagtail.snippets',
