@@ -78,10 +78,14 @@ def test_meta_field_contains_draft_token(page_with_reversion, rf):
     assert serializer.data['meta'] == {
         'draft_token': page_with_reversion.get_draft_token(),
         'languages': [
-            ('en-gb', 'English'), ('de', 'Deutsch'), ('ja', '日本語'),
-            ('ru', 'Russian'), ('zh-hans', '简体中文'), ('fr', 'Français'),
-            ('es', 'español'), ('pt', 'Português'),
-            ('pt-br', 'Português Brasileiro'), ('ar', 'العربيّة'),
+            ('en-gb', 'English'),
+            ('de', 'Deutsch'),
+            ('ja', '日本語'),
+            ('zh-hans', '简体中文'),
+            ('fr', 'Français'),
+            ('es', 'español'),
+            ('pt', 'Português'),
+            ('ar', 'العربيّة'),
         ],
         'url': url,
         'localised_urls': [

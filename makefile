@@ -132,7 +132,7 @@ upgrade_requirements:
 	pip-compile --upgrade requirements.in
 	pip-compile --upgrade requirements_test.in
 
-update_db_template:
+update_db_template: debug_migrate
 	pg_dump -O -f db_template.sql directory_cms_debug
 
 .PHONY: clean test_requirements debug_webserver debug_test debug
