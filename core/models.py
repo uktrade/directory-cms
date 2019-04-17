@@ -290,7 +290,8 @@ class BasePage(Page):
             builder = partial(build_localized_fieldname, lang=language_code)
             if all(getattr(self, builder(field_name=name)) for name in fields):
                 translated_languages.append(language_code)
-        return set(translated_languages)
+                # cast to a set to remove double en-gb if any
+        return list(set(translated_languages))
 
     @property
     def language_names(self):
