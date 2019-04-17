@@ -32,11 +32,14 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
 
     @classmethod
     def allowed_subpage_models(cls):
-        return [InternationalArticleListingPage,
-                InternationalTopicLandingPage,
-                InternationalCuratedTopicLandingPage,
-                InternationalRegionPage,
-                InternationalHomePage]
+        return [
+            InternationalArticleListingPage,
+            InternationalTopicLandingPage,
+            InternationalCuratedTopicLandingPage,
+            InternationalGuideLandingPage,
+            InternationalRegionPage,
+            InternationalHomePage,
+        ]
 
 
 class InternationalSectorPage(BasePage):
@@ -1087,7 +1090,6 @@ class InternationalTopicLandingPage(BasePage):
     subpage_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
-        'great_international.InternationalGuideLandingPage',
         'great_international.InternationalSectorPage',
     ]
 
@@ -1130,10 +1132,7 @@ class InternationalTopicLandingPage(BasePage):
 class InternationalCuratedTopicLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.GreatInternationalApp']
-    subpage_types = [
-        'great_international.InternationalArticlePage',
-        'great_international.InternationalGuideLandingPage',
-    ]
+    subpage_types = []
 
     display_title = models.CharField(max_length=255, blank=True, null=True)
 
@@ -1262,13 +1261,8 @@ class InternationalCuratedTopicLandingPage(BasePage):
 
 class InternationalGuideLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    parent_page_types = [
-        'great_international.InternationalCuratedTopicLandingPage',
-        'great_international.InternationalTopicLandingPage',
-    ]
-    subpage_types = [
-        'great_international.InternationalArticlePage',
-    ]
+    parent_page_types = ['great_international.GreatInternationalApp']
+    subpage_types = ['great_international.InternationalArticlePage']
 
     display_title = models.CharField(max_length=255)
 

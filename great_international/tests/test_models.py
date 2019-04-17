@@ -12,6 +12,7 @@ def test_models_hierarchy():
         models.InternationalArticleListingPage,
         models.InternationalTopicLandingPage,
         models.InternationalCuratedTopicLandingPage,
+        models.InternationalGuideLandingPage,
         models.InternationalRegionPage,
         models.InternationalHomePage
     ]
@@ -34,15 +35,11 @@ def test_models_hierarchy():
     assert models.InternationalTopicLandingPage.allowed_subpage_models() == [
         models.InternationalArticleListingPage,
         models.InternationalCampaignPage,
-        models.InternationalGuideLandingPage,
         models.InternationalSectorPage,
     ]
     # curated topic landing
     assert models.InternationalCuratedTopicLandingPage \
-        .allowed_subpage_models() == [
-            models.InternationalArticlePage,
-            models.InternationalGuideLandingPage,
-        ]
+        .allowed_subpage_models() == []
     # guide landing
     assert models.InternationalGuideLandingPage.allowed_subpage_models() == [
         models.InternationalArticlePage,
