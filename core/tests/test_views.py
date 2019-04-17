@@ -10,6 +10,7 @@ from django.forms.models import model_to_dict
 from django.urls import reverse
 
 from core import helpers, permissions, views
+from core.cache import PageIDCache
 from core.helpers import CachedResponse
 from conf.signature import SignatureCheckPermission
 from invest.tests.factories import InfoPageFactory
@@ -290,7 +291,6 @@ def test_lookup_by_slug(translated_page, admin_client):
             'slug': translated_page.slug,
         }
     )
-
     response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
 
     assert response.status_code == 200
@@ -312,6 +312,22 @@ def test_lookup_by_slug_missing_required_query_param(translated_page,
     assert response.status_code == 400
     assert response.json() == {'service_name': 'This parameter is required'}
 
+
+@pytest.mark.django_db
+def test_lookup_by_slug_invalid_service_name(translated_page, admin_client):
+    url = reverse(
+        'api:lookup-by-slug',
+        kwargs={
+            'slug': translated_page.slug,
+        }
+    )
+
+    response = admin_client.get(url, {'service_name': cms.GREAT_DOMESTIC})
+
+    assert response.status_code == 400
+    assert response.json() == {
+        'service_name': f"The value '{cms.GREAT_DOMESTIC}' is not valid"
+    }
 
 @pytest.mark.django_db
 def test_lookup_by_slug_missing_page(admin_client):
@@ -350,22 +366,6 @@ def test_lookup_by_slug_draft(page_with_reversion, client):
 
 
 @pytest.mark.django_db
-@patch('core.filters.ServiceNameFilter.filter_service_name')
-def test_lookup_by_slug_filter_called(mock_filter_service_name, admin_client):
-    mock_filter_service_name.return_value = Page.objects.all()
-    url = reverse('api:lookup-by-slug', kwargs={'slug': 'food-and-drink'})
-    response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
-
-    assert response.status_code == 404
-    assert mock_filter_service_name.call_count == 1
-    assert mock_filter_service_name.call_args == call(
-        ANY,
-        'service_name',
-        cms.FIND_A_SUPPLIER,
-    )
-
-
-@pytest.mark.django_db
 def test_lookup_by_full_path(translated_page, admin_client):
     url = reverse('api:lookup-by-full-path')
     response = admin_client.get(
@@ -394,10 +394,10 @@ def test_lookup_by_full_path_not_found(admin_client):
     assert response.status_code == 404
 
 
-def test_cache_etags_match(admin_client):
+def test_cache_etags_match(invest_root_page, admin_client):
     service_name = cms.INVEST
     # given there exists a page that is cached
-    page = InfoPageFactory.create(live=True)
+    page = InfoPageFactory.create(parent=invest_root_page, live=True)
     url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
 
     # and the page is cached
@@ -416,10 +416,10 @@ def test_cache_etags_match(admin_client):
     assert response_three.content == b''
 
 
-def test_cache_etags_mismatch(admin_client):
+def test_cache_etags_mismatch(invest_root_page, admin_client):
     service_name = cms.INVEST
     # given there exists a page that is cached
-    page = InfoPageFactory.create(live=True)
+    page = InfoPageFactory.create(parent=invest_root_page, live=True)
 
     # when the page is retrieved
     url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})

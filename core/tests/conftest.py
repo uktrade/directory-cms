@@ -6,16 +6,30 @@ from wagtail.core.models import Page
 from wagtail.documents.models import Document
 
 from find_a_supplier.tests.factories import (
+    FindASupplierAppFactory,
     IndustryPageFactory,
     IndustryLandingPageFactory
 )
-from invest.tests.factories import HighPotentialOpportunityDetailPageFactory
+from invest.tests.factories import (
+    HighPotentialOpportunityDetailPageFactory,
+    InvestAppFactory
+)
 
 
 @pytest.fixture
-def page(root_page):
+def fas_root_page(root_page):
+    return FindASupplierAppFactory(parent=root_page)
+
+
+@pytest.fixture
+def invest_root_page(root_page):
+    return InvestAppFactory(parent=root_page)
+
+
+@pytest.fixture
+def page(fas_root_page):
     return IndustryPageFactory(
-        parent=root_page,
+        parent=fas_root_page,
         slug='the-slug'
     )
 
@@ -28,18 +42,21 @@ def page_without_specific_type(root_page):
 
 
 @pytest.fixture
-def high_potential_opportunity_page(page):
+def high_potential_opportunity_page(page, invest_root_page):
     pdf_document = Document.objects.create(
         title='document.pdf',
         file=page.introduction_column_two_icon.file  # not really pdf
     )
-    return HighPotentialOpportunityDetailPageFactory(pdf_document=pdf_document)
+    return HighPotentialOpportunityDetailPageFactory(
+        parent=invest_root_page,
+        pdf_document=pdf_document,
+    )
 
 
 @pytest.fixture
-def translated_page(settings, root_page):
+def translated_page(settings, fas_root_page):
     page = IndustryPageFactory(
-        parent=root_page,
+        parent=fas_root_page,
         title_en_gb='ENGLISH',
         title_de='GERMAN',
         title_ja='JAPANESE',
@@ -71,8 +88,8 @@ def translated_page(settings, root_page):
 
 
 @pytest.fixture
-def fas_industry_landing_page(root_page):
-    return IndustryLandingPageFactory(parent=root_page)
+def fas_industry_landing_page(fas_root_page):
+    return IndustryLandingPageFactory(parent=fas_root_page)
 
 
 @pytest.fixture

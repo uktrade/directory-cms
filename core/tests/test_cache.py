@@ -15,72 +15,69 @@ from great_international.tests.factories import (
 )
 
 
-@pytest.mark.parametrize('slug,service_name,language_code,expected', (
+@pytest.mark.parametrize('page_id,language_code,region,expected', (
     (
-        'some-slug',
-        'FIND_A_SUPPLIER',
+        1,
         None,
-        '/some-slug/?service_name=FIND_A_SUPPLIER'
+        None,
+        '{'+'{'+'serialized-page-1'+'}'+'}'+'{'+'}'
     ),
     (
-        'some-other-slug',
-        'FIND_A_SUPPLIER',
+        2,
         'en-gb',
-        '/some-other-slug/?lang=en-gb&service_name=FIND_A_SUPPLIER'
+        None,
+        '{'+'{'+'serialized-page-2'+'}'+'}{'+'lang:en-gb'+'}'
     ),
     (
-        'and-another-slug',
-        'EXPORT_READINESS',
-        'fr',
-        '/and-another-slug/?lang=fr&service_name=EXPORT_READINESS'
+        3,
+        'en-gb',
+        'eu',
+        '{'+'{'+'serialized-page-3'+'}''}{'+'lang:en-gb,region:eu'+'}'
     ),
 ))
-def test_page_cache_build_keys(slug, service_name, language_code, expected):
+def test_page_cache_build_keys(page_id, language_code, region, expected):
     key = cache.PageCache.build_key(
-        slug=slug,
-        params={'service_name': service_name, 'lang': language_code}
+        page_id=page_id,
+        lang=language_code,
+        region=region,
     )
-    assert key == f'{{slug}}/api/pages/lookup-by-slug' + expected
+    assert key == expected
 
 
 def test_page_cache_get_set_delete():
-    slug = 'some-slug'
-    service_name = 'FIND_A_SUPPLIER'
+    page_id = 1
     language_code = 'en-gb'
 
     # given the cache contains no content
     assert cache.PageCache.get(
-        slug=slug,
-        params={
-            'service_name': service_name,
-            'lang': language_code,
-        }
+        page_id=page_id,
+        lang=language_code,
     ) is None
 
     data = expected = {'field': 'value'}
     # when the page is populated
     cache.PageCache.set(
-        slug=slug,
-        params={'service_name': service_name, 'lang': language_code},
+        page_id=page_id,
+        lang=language_code,
         data=data,
     )
 
     # then the content is present
     assert cache.PageCache.get(
-        slug=slug,
-        params={'service_name': service_name, 'lang': language_code}
+        page_id=page_id,
+        lang=language_code,
     ) == expected
 
     # when the existing content is deleted
     cache.PageCache.delete(
-        slug=slug,
-        params={'service_name': service_name, 'lang': language_code}
+        page_id=page_id,
+        lang=language_code,
     )
 
     # then the content is removed from the cache
     assert cache.PageCache.get(
-        slug=slug,
-        params={'service_name': service_name, 'lang': language_code}
+        page_id=page_id,
+        lang=language_code,
     ) is None
 
 
@@ -91,11 +88,8 @@ def test_cache_populator(translated_page):
     cache.CachePopulator.populate(translated_page.pk)
     for language_code in translated_page.translated_languages:
         assert cache.PageCache.get(
-            slug=translated_page.slug,
-            params={
-                'service_name': translated_page.service_name,
-                'lang': language_code,
-            }
+            page_id=translated_page.id,
+            lang=language_code,
         )
 
 
@@ -107,12 +101,9 @@ def test_region_aware_cache_populator():
     for language_code in page.translated_languages:
         for region in cache.RegionAwareCachePopulator.regions:
             assert cache.PageCache.get(
-                slug=page.slug,
-                params={
-                    'service_name': page.service_name,
-                    'lang': language_code,
-                    'region': region,
-                }
+                page_id=page.id,
+                lang=language_code,
+                region=region,
             )
 
 
@@ -124,12 +115,9 @@ def test_region_aware_cache_populator_async():
     for language_code in page.translated_languages:
         for region in cache.RegionAwareCachePopulator.regions:
             assert cache.PageCache.get(
-                slug=page.slug,
-                params={
-                    'service_name': page.service_name,
-                    'lang': language_code,
-                    'region': region,
-                }
+                page_id=page.id,
+                lang=language_code,
+                region=region,
             )
 
 
@@ -199,17 +187,14 @@ def test_subscriber_delete(mock_delete):
         ]
 
     instance = mock.Mock(
-        slug='some-slug', service_name='thing', translated_languages=['en-gb']
+        id=1, slug='some-slug', service_name='thing', translated_languages=['en-gb']
     )
     TestSubscriber.delete(sender=None, instance=instance)
 
     assert mock_delete.call_count == 1
     assert mock_delete.call_args == mock.call(
-        slug='some-slug',
-        params={
-            'lang': 'en-gb',
-            'service_name': 'thing',
-        }
+        page_id=1,
+        lang='en-gb',
     )
 
 
@@ -266,33 +251,40 @@ def test_all_models_cached():
 def test_transactional_cache_set(mock_set_many, mock_set, settings):
     with cache.PageCache.transaction() as page_cache:
         page_cache.set(
-            slug='s1',
-            params={'lang': 'en-gb', 'service_name': 'INVEST'},
+            page_id=1,
+            lang='en-gb',
             data={'key': 'value-one'},
         )
         page_cache.set(
-            slug='s2',
-            params={'lang': 'fr', 'service_name': 'INVEST'},
+            page_id=2,
+            lang='fr',
             data={'key': 'value-two'},
         )
         page_cache.set(
-            slug='s3',
-            params={'lang': 'de', 'service_name': 'INVEST'},
+            page_id=3,
+            lang='de',
             data={'key': 'value-three'},
         )
 
     assert mock_set.call_count == 0
     assert mock_set_many.call_count == 1
-    assert mock_set_many.call_args == mock.call({
-        '{slug}/api/pages/lookup-by-slug/s1/?lang=en-gb&service_name=INVEST': {
-            'key': 'value-one', 'etag': '"67216138eb3d94858a5014cfcd83688f"'
+    print(mock_set_many.call_args)
+    assert mock_set_many.call_args == mock.call(
+        {
+            '{'+'{'+'serialized-page-1'+'}'+'}{'+'lang:en-gb'+'}': {
+                'key': 'value-one',
+                'etag': '"67216138eb3d94858a5014cfcd83688f"',
+            },
+            '{'+'{'+'serialized-page-2'+'}'+'}{'+'lang:fr'+'}': {
+                'key': 'value-two',
+                'etag': '"4bb0f72aae58a2f70bc87ee99161a585"',
+            },
+            '{'+'{'+'serialized-page-3'+'}'+'}{'+'lang:de'+'}': {
+                'key': 'value-three',
+                'etag': '"92b996db2b999fb74640d7d88aa5124c"',
+            },
         },
-        '{slug}/api/pages/lookup-by-slug/s2/?lang=fr&service_name=INVEST': {
-            'key': 'value-two', 'etag': '"4bb0f72aae58a2f70bc87ee99161a585"'
-        },
-        '{slug}/api/pages/lookup-by-slug/s3/?lang=de&service_name=INVEST': {
-            'key': 'value-three', 'etag': '"92b996db2b999fb74640d7d88aa5124c"'}
-        }, timeout=settings.API_CACHE_EXPIRE_SECONDS
+        timeout=settings.API_CACHE_EXPIRE_SECONDS
     )
 
 
@@ -301,24 +293,24 @@ def test_transactional_cache_set(mock_set_many, mock_set, settings):
 def test_transactional_cache_delete(mock_delete_many, mock_delete):
     with cache.PageCache.transaction() as page_cache:
         page_cache.delete(
-            slug='s1',
-            params={'lang': 'en-gb', 'service_name': 'INVEST'},
+            page_id=1,
+            lang='en-gb',
         )
         page_cache.delete(
-            slug='s2',
-            params={'lang': 'fr', 'service_name': 'INVEST'},
+            page_id=2,
+            lang='fr',
         )
         page_cache.delete(
-            slug='s3',
-            params={'lang': 'de', 'service_name': 'INVEST'},
+            page_id=3,
+            lang='de',
         )
 
     assert mock_delete.call_count == 0
     assert mock_delete_many.call_count == 1
     assert mock_delete_many.call_args == mock.call([
-        '{slug}/api/pages/lookup-by-slug/s1/?lang=en-gb&service_name=INVEST',
-        '{slug}/api/pages/lookup-by-slug/s2/?lang=fr&service_name=INVEST',
-        '{slug}/api/pages/lookup-by-slug/s3/?lang=de&service_name=INVEST',
+        '{'+'{'+'serialized-page-1'+'}'+"}{"+'lang:en-gb'+'}',
+        '{'+'{'+'serialized-page-2'+'}'+"}{"+'lang:fr'+'}',
+        '{'+'{'+'serialized-page-3'+'}'+'}{'+'lang:de'+'}',
     ])
 
 
