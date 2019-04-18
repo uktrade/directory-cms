@@ -114,9 +114,9 @@ class DetailViewEndpointBase(APIEndpointBase):
 
     def check_parameter_validity(self):
         """
-        Called by `get()` early in the response cycle to give
-        the endpoint an opportunity to raise exceptions due to the
-        parameters values supplied.
+        Called by `detail_view()` early in the response cycle to give
+        the endpoint an opportunity to raise exceptions due to invalid
+        parameters values being supplied.
         """
         self.get_object_id()
 
@@ -124,7 +124,7 @@ class DetailViewEndpointBase(APIEndpointBase):
         if hasattr(self, 'object'):
             return self.object
 
-        # find a page by it's id
+        # find a page by its id
         instance = get_object_or_404(
             self.filter_queryset(self.get_queryset()),
             id=self.get_object_id(),
