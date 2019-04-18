@@ -61,7 +61,7 @@ def test_page_cache_build_keys(page_id, language_code, region, expected_start):
         'lang': 'en-gb',
     },
 ))
-def test_page_cache_build_key_variation_kwarg_order(test_kwargs):
+def test_page_cache_build_key_ignored_variation_kwarg_order(test_kwargs):
     original_kwargs = {
         'lang': 'en-gb',
         'region': 'eu',
