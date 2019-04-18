@@ -251,8 +251,8 @@ def test_get_tree_based_url(root_page):
         include_port_in_urls=False,
     )
 
-    assert domestic_page_two.get_tree_based_url() == 'domestic/c/topic/list/'
-    assert domestic_page_three.get_tree_based_url() == 'domestic/c/topic/list/article/'
+    assert domestic_page_two.get_tree_based_url() == '/domestic/c/topic/list/'
+    assert domestic_page_three.get_tree_based_url() == '/domestic/c/topic/list/article/'
 
     # Test include_site_url
     assert domestic_page_two.get_tree_based_url(include_site_url=True) == 'http://domestic.trade.great/domestic/c/topic/list/'

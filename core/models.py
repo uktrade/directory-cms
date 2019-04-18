@@ -198,7 +198,7 @@ class BasePage(Page):
             routing_settings = RoutingSettings.objects.create(site=site)
 
         # prefix path with prefix from routing settings
-        prefix = routing_settings.root_path_prefix.strip('/')
+        prefix = routing_settings.root_path_prefix.rstrip('/')
         if prefix:
             page_path = prefix + '/' + page_path
 
