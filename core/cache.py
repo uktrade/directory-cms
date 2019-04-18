@@ -258,8 +258,8 @@ class PageIDCache:
     by_slug_map_key = 'by-url_path'
 
     @staticmethod
-    def build_slug_lookup_key(service_name_root_path, slug):
-        return f'{service_name_root_path}:{slug}'
+    def build_slug_lookup_key(service_name, slug):
+        return f'{service_name}:{slug}'
 
     @staticmethod
     def get_service_name(url_path, content_type_id):
@@ -322,9 +322,9 @@ class PageIDCache:
         return cls.populate(populate_if_cold=True)[map_key]
 
     @classmethod
-    def get_for_slug(cls, service_name_root_path, slug):
-        lookup_key = cls.build_slug_lookup_key(service_name_root_path, slug)
-        return cls.get_mapping(cls.by_slug_map_key).get(lookup_key)
+    def get_for_slug(cls, slug, service_name):
+        key = cls.build_slug_lookup_key(service_name, slug)
+        return cls.get_mapping(cls.by_slug_map_key).get(key)
 
     @classmethod
     def get_for_path(cls, path):
