@@ -2,7 +2,7 @@ import pytest
 
 from wagtail.core.models import Site
 
-from core import cache
+from core.cache import PageIDCache
 from export_readiness.tests.factories import (
     ExportReadinessAppFactory, TopicLandingPageFactory,
     ArticleListingPageFactory, ArticlePageFactory,
@@ -10,7 +10,7 @@ from export_readiness.tests.factories import (
 
 
 @pytest.mark.django_db
-def test_page_id_cache_population(root_page, django_assert_num_queries):
+def test_page_id_cache_population_and_value_getting(root_page, django_assert_num_queries):
     domestic_root_page = ExportReadinessAppFactory(parent=root_page)
     topic_page = TopicLandingPageFactory(
         parent=domestic_root_page, slug='topic')
@@ -35,7 +35,7 @@ def test_page_id_cache_population(root_page, django_assert_num_queries):
     # With the two potential queries above out of the way,
     # population should only use as single datatbase query
     with django_assert_num_queries(1):
-        result = cache.PageIDCache.populate()
+        result = PageIDCache.populate()
 
     # Check result looks as expected
     assert result == {
@@ -53,29 +53,48 @@ def test_page_id_cache_population(root_page, django_assert_num_queries):
         },
     }
 
+    # Check get_for_path()
+    result_1 = PageIDCache.get_for_path('/', site.id)
+    assert result_1 == domestic_root_page.id
+    result_2 = PageIDCache.get_for_path('/topic/list/article/', site.id)
+    assert result_2 == article_page.id
+
+    # Check invalid get_for_path()
+    assert PageIDCache.get_for_path('123', 99) is None
+
+    # Check get_for_slug()
+    result_1 = PageIDCache.get_for_slug('topic', 'EXPORT_READINESS')
+    assert result_1 = topic_page.id
+    result_2 = PageIDCache.get_for_slug('article', 'EXPORT_READINESS')
+    assert result_2 == article_page.id
+
+    # Check invalid get_for_slug()
+    assert PageIDCache.get_for_slug('abc', 'IMPORT_NOT_READINESS') is None
+
+
 @pytest.mark.django_db
 def test_page_id_cache_get_populate_delete():
 
     # the cache should be empty
-    assert cache.PageIDCache.get() is None
+    assert PageIDCache.get() is None
 
     # when the page is populated
-    result = cache.PageIDCache.populate()
+    result = PageIDCache.populate()
 
     # then get returns something useful
-    assert cache.PageIDCache.get() == result
+    assert PageIDCache.get() == result
 
     # when the cache is cleared
-    cache.PageIDCache.clear()
+    PageIDCache.clear()
 
     # then the cache is empty again
-    assert cache.PageIDCache.get() is None
+    assert PageIDCache.get() is None
 
     # but we can use populate_if_cold to trigger population
-    new_result = cache.PageIDCache.get(populate_if_cold=True)
+    new_result = PageIDCache.get(populate_if_cold=True)
 
     # and the result should look very much like what we had before
     assert new_result == result
 
     # let's clear it again
-    cache.PageIDCache.clear()
+    PageIDCache.clear()
