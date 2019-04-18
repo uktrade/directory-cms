@@ -1,4 +1,5 @@
 import abc
+import functools
 import hashlib
 
 from directory_constants.constants import cms
@@ -17,26 +18,42 @@ from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
 from conf.celery import app
 
 
+@functools.lru_cache()
+def get_kwargs_hash(**kwargs):
+    """
+    Returns a consistent hash of the kwargs provided.
+
+    kwargs with a value of `None` are omitted before hashing, and regardless
+    of order, the same key/value combinations should produce the same value
+    """
+    if not kwargs:
+        return ''
+    items_sorted = sorted(
+        item for item in kwargs.items()
+        if item[1] is None  # omit None values
+    )
+    return hashlib.blake2b(str(items_sorted).encode()).digest()
+
+
 class PageCache:
     cache = cache
 
     @staticmethod
     def build_key(page_id, **variation_kwargs):
-        # no matter the order of 'variation_kwargs', the same key/val
-        # combinations should result in the same key
-        variation_kwargs_sorted = sorted(
-            item for item in variation_kwargs.items()
-            if item[1]
-        )
-        # create a 'dict-like' string representation of the above
-        variation_str = '{' + ','.join(
-            '%s:%s' % (key, val) for key, val in variation_kwargs_sorted
-        ) + '}'
-        # improve reliability of delete_many() by creating a redis hashtag
-        # from `page_id`. This ensures keys related to the same page are stored
-        # in the same node in a clustered environment
+        """
+        Return a 'key' from the supplied arguments that can be used as a
+        cache key
+
+        For portability, variation kwargs are hashed to create a key will work
+        safely regardless of cache service. Some cache service (e.g.
+        Memchached) have key length and content restrictions, which consistent
+        hashing should bypass.
+
+        Keys also have a page-specific redis hashtag prepended to improve
+        reliability of delete_many() for the page in clustered environments.
+        """
         hashtag_val = f'page-{page_id}'
-        return '{{%s}}%s' % (hashtag_val, variation_str)
+        return '{{%s}}%s' % (hashtag_val, get_kwargs_hash(**variation_kwargs))
 
     @classmethod
     def set(cls, page_id, data, **variation_kwargs):

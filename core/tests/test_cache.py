@@ -1,6 +1,6 @@
+import pytest
 from unittest import mock
 
-import pytest
 from wagtail.core.models import Page, get_page_models
 
 from core import cache, models
@@ -15,33 +15,64 @@ from great_international.tests.factories import (
 )
 
 
-@pytest.mark.parametrize('page_id,language_code,region,expected', (
+@pytest.mark.parametrize('page_id,language_code,region,expected_start', (
     (
         1,
         None,
         None,
-        '{'+'{'+'page-1'+'}'+'}'+'{'+'}'
+        '{'+'{'+'page-1'+'}'+'}'
     ),
     (
         2,
         'en-gb',
         None,
-        '{'+'{'+'page-2'+'}'+'}{'+'lang:en-gb'+'}'
+        '{'+'{'+'page-2'+'}'+'}'
     ),
     (
         3,
         'en-gb',
         'eu',
-        '{'+'{'+'page-3'+'}''}{'+'lang:en-gb,region:eu'+'}'
+        '{'+'{'+'page-3'+'}'+'}'
     ),
 ))
-def test_page_cache_build_keys(page_id, language_code, region, expected):
+def test_page_cache_build_keys(page_id, language_code, region, expected_start):
     key = cache.PageCache.build_key(
         page_id=page_id,
         lang=language_code,
         region=region,
     )
-    assert key == expected
+    assert key.startswith(expected_start)
+
+
+@pytest.mark.parametrize('test_kwargs', (
+    # reversed
+    {
+        'another_thing': 'ABC',
+        'something_else': '123',
+        'lang': 'en-gb',
+        'region': 'eu',
+
+    },
+    # randomised
+    {
+        'something_else': '123',
+        'another_thing': 'ABC',
+        'region': 'eu',
+        'lang': 'en-gb',
+    },
+))
+def test_page_cache_build_key_variation_kwarg_order(test_kwargs):
+    original_kwargs = {
+        'lang': 'en-gb',
+        'region': 'eu',
+        'something_else': '123',
+        'another_thing': 'ABC',
+    }
+    original_key = cache.PageCache.build_key(1, **original_kwargs)
+
+    test_key = cache.PageCache.build_key(1, **test_kwargs)
+
+    assert original_key == test_key
 
 
 def test_page_cache_get_set_delete():
@@ -252,34 +283,30 @@ def test_transactional_cache_set(mock_set_many, mock_set, settings):
     with cache.PageCache.transaction() as page_cache:
         page_cache.set(
             page_id=1,
-            lang='en-gb',
             data={'key': 'value-one'},
         )
         page_cache.set(
             page_id=2,
-            lang='fr',
             data={'key': 'value-two'},
         )
         page_cache.set(
             page_id=3,
-            lang='de',
             data={'key': 'value-three'},
         )
 
     assert mock_set.call_count == 0
     assert mock_set_many.call_count == 1
-    print(mock_set_many.call_args)
     assert mock_set_many.call_args == mock.call(
         {
-            '{'+'{'+'page-1'+'}'+'}{'+'lang:en-gb'+'}': {
+            '{'+'{'+'page-1'+'}'+'}': {
                 'key': 'value-one',
                 'etag': '"67216138eb3d94858a5014cfcd83688f"',
             },
-            '{'+'{'+'page-2'+'}'+'}{'+'lang:fr'+'}': {
+            '{'+'{'+'page-2'+'}'+'}': {
                 'key': 'value-two',
                 'etag': '"4bb0f72aae58a2f70bc87ee99161a585"',
             },
-            '{'+'{'+'page-3'+'}'+'}{'+'lang:de'+'}': {
+            '{'+'{'+'page-3'+'}'+'}': {
                 'key': 'value-three',
                 'etag': '"92b996db2b999fb74640d7d88aa5124c"',
             },
@@ -292,25 +319,16 @@ def test_transactional_cache_set(mock_set_many, mock_set, settings):
 @mock.patch('django.core.cache.cache.delete_many')
 def test_transactional_cache_delete(mock_delete_many, mock_delete):
     with cache.PageCache.transaction() as page_cache:
-        page_cache.delete(
-            page_id=1,
-            lang='en-gb',
-        )
-        page_cache.delete(
-            page_id=2,
-            lang='fr',
-        )
-        page_cache.delete(
-            page_id=3,
-            lang='de',
-        )
+        page_cache.delete(page_id=1)
+        page_cache.delete(page_id=2)
+        page_cache.delete(page_id=3)
 
     assert mock_delete.call_count == 0
     assert mock_delete_many.call_count == 1
     assert mock_delete_many.call_args == mock.call([
-        '{'+'{'+'page-1'+'}'+"}{"+'lang:en-gb'+'}',
-        '{'+'{'+'page-2'+'}'+"}{"+'lang:fr'+'}',
-        '{'+'{'+'page-3'+'}'+'}{'+'lang:de'+'}',
+        '{'+'{'+'page-1'+'}'+'}',
+        '{'+'{'+'page-2'+'}'+'}',
+        '{'+'{'+'page-3'+'}'+'}',
     ])
 
 
