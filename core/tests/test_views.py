@@ -1,10 +1,8 @@
 import pytest
-from unittest.mock import ANY, call, patch
 
 from bs4 import BeautifulSoup
 from directory_constants.constants import cms
 from modeltranslation.utils import build_localized_fieldname
-from wagtail.core.models import Page
 
 from django.forms.models import model_to_dict
 from django.urls import reverse
@@ -377,10 +375,15 @@ def test_lookup_by_full_path_not_found(admin_client):
     assert response.status_code == 404
 
 
-def test_cache_etags_match(admin_client):
+def test_cache_etags_match(admin_client, root_page):
     service_name = cms.INVEST
+    # NOTE: Pages with a depth of 1 are filtered out in
+    # wagtail.api.v2.endpoints.PagesAdminAPIEndpoint.get_queryset()
+    # root_page must be specified as a parent if you don't want
+    # 404 responses from an API endpoint
+
     # given there exists a page that is cached
-    page = InfoPageFactory.create(live=True)
+    page = InfoPageFactory.create(live=True, parent=root_page)
     url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
 
     # and the page is cached
