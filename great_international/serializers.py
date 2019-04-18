@@ -1,3 +1,4 @@
+import ipdb as ipdb
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
 
@@ -16,7 +17,8 @@ from .models import (
     InternationalGuideLandingPage,
     InternationalSectorPage,
     InternationalEUExitFormPage,
-    CapitalInvestSectorPage)
+    CapitalInvestSectorPage, CapitalInvestRegionPage,
+    CapitalInvestOpportunityPage)
 
 
 class SectionThreeSubsectionProxyDataWrapper:
@@ -235,13 +237,37 @@ class RelatedCampaignPageSerializer(BasePageSerializer):
         source='campaign_hero_image')
 
 
+class RelatedCapitalInvestSectorPageSerializer(BasePageSerializer):
+    title = serializers.CharField(
+        max_length=255, source='hero_title')
+    teaser = serializers.CharField(
+        max_length=255, source='featured_description')
+    thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg',
+        source='hero_image')
+
+
+class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
+    title = serializers.CharField(
+        max_length=255, source='hero_title')
+    teaser = serializers.CharField(
+        max_length=255, source='location')
+    thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360|jpegquality-60|format-jpeg',
+        source='hero_image')
+
+
 MODEL_TO_SERIALIZER_MAPPING = {
-    InternationalArticlePage: RelatedArticlePageSerializer,
-    InternationalCampaignPage: RelatedCampaignPageSerializer,
-}
+        InternationalArticlePage: RelatedArticlePageSerializer,
+        InternationalCampaignPage: RelatedCampaignPageSerializer,
+        CapitalInvestSectorPage: RelatedCapitalInvestSectorPageSerializer,
+        CapitalInvestOpportunityPage
+        : RelatedCapitalInvestOpportunityPageSerializer
+    }
 
 
 class PageWithRelatedPagesSerializer(BasePageSerializer):
+
     related_pages = serializers.SerializerMethodField()
 
     def get_related_pages(self, obj):
@@ -259,7 +285,6 @@ class PageWithRelatedPagesSerializer(BasePageSerializer):
                 related_page.specific.__class__]
             serializer = serializer_class(related_page.specific)
             serialized.append(serializer.data)
-
         return serialized
 
 
@@ -684,11 +709,11 @@ class InternationalGuideLandingPageSerializer(BasePageSerializer):
 
     def get_guides(self, obj):
         article_list = (
-            InternationalArticlePage.objects
-            .descendant_of(obj)
-            .live()
-            .order_by('-first_published_at')
-        )[:9]
+                           InternationalArticlePage.objects
+                               .descendant_of(obj)
+                               .live()
+                               .order_by('-first_published_at')
+                       )[:9]
         serializer = RelatedArticlePageSerializer(article_list, many=True)
         return serializer.data
 
@@ -795,7 +820,7 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
     contact_section_cta_text = serializers.CharField(max_length=255)
 
 
-class CapitalInvestRegionPageSerializer(PageWithRelatedPagesSerializer):
+class CapitalInvestRegionPageSerializer(BasePageSerializer):
 
     hero_title = serializers.CharField(max_length=255)
     breadcrumbs_label = serializers.CharField(max_length=255)
@@ -879,6 +904,7 @@ class CapitalInvestRegionPageSerializer(PageWithRelatedPagesSerializer):
     case_study_title = serializers.CharField(max_length=255)
     case_study_text = serializers.CharField(max_length=255)
     case_study_cta_text = serializers.CharField(max_length=255)
+
     case_study_cta_link = serializers.CharField(max_length=255)
 
     next_steps_title = serializers.CharField(max_length=255)
@@ -887,6 +913,25 @@ class CapitalInvestRegionPageSerializer(PageWithRelatedPagesSerializer):
     invest_cta_link = serializers.CharField(max_length=255)
     buy_cta_text = serializers.CharField(max_length=255)
     buy_cta_link = serializers.CharField(max_length=255)
+
+    related_pages = serializers.SerializerMethodField()
+
+    def get_related_pages(self, obj):
+        serialized = []
+        items = [
+            obj.related_page_one,
+            obj.related_page_two,
+            obj.related_page_three
+        ]
+        for related_page in items:
+            if not related_page:
+                continue
+            # currently only used for articles and campaigns
+            serializer_class = MODEL_TO_SERIALIZER_MAPPING[
+                related_page.specific.__class__]
+            serializer = serializer_class(related_page.specific)
+            serialized.append(serializer.data)
+        return serialized
 
 
 class CapitalInvestSectorPageSerializer(
@@ -914,7 +959,7 @@ class CapitalInvestSectorPageSerializer(
     buy_cta_link = serializers.CharField(max_length=255)
 
 
-class CapitalInvestOpportunityPageSerializer(BasePageSerializer):
+class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
 
     breadcrumbs_label = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField(

@@ -365,9 +365,9 @@ class CapitalInvestRegionPageTranslationOptions(
 
         'investment_opps_title',
         'investment_opps_intro',
-        'related_page_1',
-        'related_page_2',
-        'related_page_3',
+        'related_page_one',
+        'related_page_two',
+        'related_page_three',
 
         'economics_data_title',
         'economics_stat_1_number',
@@ -442,12 +442,9 @@ class CapitalInvestSectorPageTranslationOptions(
         'sector_summary_image',
 
         'investment_opportunities_title',
-        'related_page_1',
-        'related_page_2',
-        'related_page_3',
-        'related_page_4',
-        'related_page_5',
-        'related_page_6',
+        'related_page_one',
+        'related_page_two',
+        'related_page_three',
 
         'next_steps_title',
         'next_steps_intro',
@@ -501,6 +498,9 @@ class CapitalInvestOpportunityPageTranslationOptions(
         'case_study_cta_link',
 
         'similar_projects_title',
+        'related_page_one',
+        'related_page_two',
+        'related_page_three',
         'similar_projects_cta_text',
         'similar_projects_cta_link',
 
