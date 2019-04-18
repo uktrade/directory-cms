@@ -35,7 +35,7 @@ class PageCache:
         # improve reliability of delete_many() by creating a redis hashtag
         # from `page_id`. This ensures keys related to the same page are stored
         # in the same node in a clustered environment
-        hashtag_val = f'serialized-page-{page_id}'
+        hashtag_val = f'page-{page_id}'
         return '{{%s}}%s' % (hashtag_val, variation_str)
 
     @classmethod
