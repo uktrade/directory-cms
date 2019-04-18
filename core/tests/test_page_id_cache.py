@@ -10,7 +10,7 @@ from export_readiness.tests.factories import (
 
 
 @pytest.mark.django_db
-def test_page_id_cache_population_and_value_getting(root_page, django_assert_num_queries):
+def test_population_and_value_getting(root_page, django_assert_num_queries):
     domestic_root_page = ExportReadinessAppFactory(parent=root_page)
     topic_page = TopicLandingPageFactory(
         parent=domestic_root_page, slug='topic')
@@ -64,7 +64,7 @@ def test_page_id_cache_population_and_value_getting(root_page, django_assert_num
 
     # Check get_for_slug()
     result_1 = PageIDCache.get_for_slug('topic', 'EXPORT_READINESS')
-    assert result_1 = topic_page.id
+    assert result_1 == topic_page.id
     result_2 = PageIDCache.get_for_slug('article', 'EXPORT_READINESS')
     assert result_2 == article_page.id
 
@@ -73,7 +73,7 @@ def test_page_id_cache_population_and_value_getting(root_page, django_assert_num
 
 
 @pytest.mark.django_db
-def test_page_id_cache_get_populate_delete():
+def test_get_populate_and_delete():
 
     # the cache should be empty
     assert PageIDCache.get() is None
