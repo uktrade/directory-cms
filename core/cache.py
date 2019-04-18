@@ -8,7 +8,6 @@ from wagtail.core.signals import page_published, page_unpublished
 from wagtail.core.models import Page, Site
 
 from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
 from django.core.cache import cache
 from django.db.models.signals import post_delete, post_save
 from django.utils import translation
@@ -249,11 +248,11 @@ ROOT_PATHS_TO_SERVICE_NAMES = {
 
 class PageIDCache:
     """
-    Helps to efficiently map page slugs and url_path values to their
+    Helps to efficiently map page slugs and path values to their
     respective page ids. Automatic repopulation on page data change
     means the cache is almost always hot. But, population itself is
-    really quite efficient, due to only needing two values from the
-    Page table to create lookup values.
+    really quite efficient, due to only needing 'vanilla' Page
+    objects with a small subset of fields
     """
     cache = cache
     cache_key = 'page-ids'
@@ -269,22 +268,18 @@ class PageIDCache:
         return f'{site_id}:{path}'
 
     @staticmethod
-    def get_service_name(url_path, content_type_id):
+    def get_service_name_for_page(page):
         try:
             # This works for all pages in practice, because pages always
             # live below an 'app' root page, and so always have a predictable
             # segment at the start of their url_path
-            root_path = url_path.split('/')[1]
+            root_path = page.url_path.split('/')[1]
             return ROOT_PATHS_TO_SERVICE_NAMES[root_path]
         except KeyError:
             # In tests, pages are often added as direct children of the root
-            # page node, so the above strategy will not work there. Instead,
-            # we fetch the model for the page from its content type, and get
-            # the value from there
-            ct = ContentType.objects.get_for_id(content_type_id)
-            # The below handles cases where the model has been removed or
-            # doesn't have a 'service_name_value' attribute
-            return getattr(ct.model_class(), 'service_name_value', 'UNKNOWN')
+            # page node, so the above won't work. Instead, we fetch the model
+            # for the page from its content type, and get the value from there
+            return getattr(page.specific_class, 'service_name_value', None)
 
     @classmethod
     def get_population_queryset(cls):
@@ -311,10 +306,10 @@ class PageIDCache:
 
             # Slug lookup keys must include the service name,
             # as well as the slug, which we need to work out
-            service_name = cls.get_service_name(
-                page.url_path, page.content_type_id)
-            key = cls.build_slug_lookup_key(service_name, page.slug)
-            ids_by_slug[key] = page.id
+            service_name = cls.get_service_name_for_page(page)
+            if service_name:
+                key = cls.build_slug_lookup_key(service_name, page.slug)
+                ids_by_slug[key] = page.id
 
         page_ids = {
             cls.by_path_map_key: ids_by_path,
