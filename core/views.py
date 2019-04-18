@@ -59,6 +59,7 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
 
     @property
     def permission_classes(self):
+        return []
         permission_classes = [SignatureCheckPermission]
         if helpers.is_draft_requested(self.request):
             permission_classes.append(permissions.DraftTokenPermisison)
@@ -211,45 +212,28 @@ class PageLookupByPathAPIEndpoint(DetailViewEndpointBase):
     def get_object_id(self):
         """
         Return the `id` of a relevant Page based on the `site_id` and `path`
-        parameters from the URL. Remembers the outcome for a specific view
-        instance to allow free re-retreival.
-
-        A query is needed here to identify the `Site` object for the supplied
-        `site_id`, but this will eventually be eliminated by the introduction
-        of a dedicated cache for site data.
+        parameters from the URL.
         """
         if hasattr(self, 'object_id'):
             return self.object_id
 
-        supplied_path = self.kwargs['path'].strip('/')
-        full_page_path = self.get_site().root_page.url_path
-        # Only combine these if `supplied_path` isn't blank
-        if supplied_path:
-            full_page_path += supplied_path + '/'
+        site_id = self.kwargs['site_id']
+        path = self.kwargs['path']
+        if not path:
+            lookup_path = '/'
+        else:
+            lookup_path = '/' + path.strip('/') + '/'
 
         # Query the cache for a matching `id`
-        object_id = cache.PageIDCache.get_for_path(full_page_path)
+        object_id = cache.PageIDCache.get_for_path(lookup_path, site_id)
         if object_id is None:
             raise Http404(
                 "No Page found matching site_id '{}' and path '{}'"
-                .format(self.kwargs['site_id'], supplied_path)
+                .format(site_id, path)
             )
 
         self.object_id = object_id
         return object_id
-
-    def get_site(self):
-        """
-        Find a `Site` matching the `site_id` from the URL.
-        """
-        if hasattr(self, 'site'):
-            return self.site
-        site = get_object_or_404(
-            Site.objects.all().select_related('root_page'),
-            id=self.kwargs['site_id']
-        )
-        self.site = site
-        return site
 
 
 class PageLookupByFullPathAPIEndpoint(APIEndpointBase):

@@ -5,7 +5,7 @@ from urllib.parse import urlencode
 from directory_constants.constants import cms
 from rest_framework.renderers import JSONRenderer
 from wagtail.core.signals import page_published, page_unpublished
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Site
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
@@ -265,6 +265,10 @@ class PageIDCache:
         return f'{service_name}:{slug}'
 
     @staticmethod
+    def build_path_lookup_key(site_id, path):
+        return f'{site_id}:{path}'
+
+    @staticmethod
     def get_service_name(url_path, content_type_id):
         try:
             # This works for all pages in practice, because pages always
@@ -284,22 +288,33 @@ class PageIDCache:
 
     @classmethod
     def get_population_queryset(cls):
-        return Page.objects.values('id', 'slug', 'url_path', 'content_type_id')
+        return Page.objects.only('id', 'slug', 'url_path', 'content_type_id')
 
     @classmethod
     def populate(cls, *args, **kwargs):
         ids_by_path = {}
         ids_by_slug = {}
 
+        # This value should be cached by Wagtail
+        site_root_paths = Site.get_site_root_paths()
+
         for page in cls.get_population_queryset():
-            # url_path lookup keys are simple
-            ids_by_path[page['url_path']] = page['id']
-            # slug lookup keys must include the service name,
+            # Path lookup keys must include the site id and
+            # url_path, minus the site root path, which
+            # Page.get_url_parts() can give us.
+            # setting private attr below to prevent repeat cache lookups
+            page._wagtail_cached_site_root_paths = site_root_paths
+            url_parts = page.get_url_parts()
+            if url_parts:
+                key = cls.build_path_lookup_key(url_parts[0], url_parts[2])
+                ids_by_path[key] = page.id
+
+            # Slug lookup keys must include the service name,
             # as well as the slug, which we need to work out
             service_name = cls.get_service_name(
-                page['url_path'], page['content_type_id'])
-            key = cls.build_slug_lookup_key(service_name, page['slug'])
-            ids_by_slug[key] = page['id']
+                page.url_path, page.content_type_id)
+            key = cls.build_slug_lookup_key(service_name, page.slug)
+            ids_by_slug[key] = page.id
 
         page_ids = {
             cls.by_path_map_key: ids_by_path,
@@ -330,8 +345,9 @@ class PageIDCache:
         return cls.get_mapping(cls.by_slug_map_key).get(key)
 
     @classmethod
-    def get_for_path(cls, path):
-        return cls.get_mapping(cls.by_path_map_key).get(path)
+    def get_for_path(cls, path, site_id):
+        key = cls.build_path_lookup_key(site_id, path)
+        return cls.get_mapping(cls.by_path_map_key).get(key)
 
     @classmethod
     def subscribe_to_signals(cls):
