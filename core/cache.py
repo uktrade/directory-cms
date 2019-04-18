@@ -256,8 +256,8 @@ class PageIDCache:
     """
     cache = cache
     cache_key = 'page-ids'
-    by_path_map_key = 'by-slug'
-    by_slug_map_key = 'by-url_path'
+    by_path_map_key = 'by-path'
+    by_slug_map_key = 'by-slug'
 
     @staticmethod
     def build_slug_lookup_key(service_name, slug):
