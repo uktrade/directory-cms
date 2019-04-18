@@ -1776,21 +1776,21 @@ class CapitalInvestRegionPage(BasePage):
         blank=True,
         verbose_name="Investment opportunities intro"
     )
-    related_page_1 = models.ForeignKey(
+    related_page_one = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    related_page_2 = models.ForeignKey(
+    related_page_two = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    related_page_3 = models.ForeignKey(
+    related_page_three = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
         blank=True,
@@ -1927,26 +1927,24 @@ class CapitalInvestRegionPage(BasePage):
                 FieldPanel('investment_opps_title'),
                 FieldPanel('investment_opps_intro'),
                 FieldRowPanel([
-                    MultiFieldPanel([
-                        PageChooserPanel(
-                            'related_page_1',
-                            [
-                                'great_international.'
-                                'CapitalInvestSectorPage'
-                            ]),
-                        PageChooserPanel(
-                            'related_page_2',
-                            [
-                                'great_international.'
-                                'CapitalInvestSectorPage'
-                            ]),
-                        PageChooserPanel(
-                            'related_page_3',
-                            [
-                                'great_international.'
-                                'CapitalInvestSectorPage'
-                            ]),
-                    ])
+                    PageChooserPanel(
+                        'related_page_one',
+                        [
+                            'great_international.'
+                            'CapitalInvestSectorPage'
+                        ]),
+                    PageChooserPanel(
+                        'related_page_two',
+                        [
+                            'great_international.'
+                            'CapitalInvestSectorPage'
+                        ]),
+                    PageChooserPanel(
+                        'related_page_three',
+                        [
+                            'great_international.'
+                            'CapitalInvestSectorPage'
+                        ]),
                 ])
             ]
         ),
@@ -2092,7 +2090,7 @@ class CapitalInvestSectorPage(BasePage):
         blank=True,
         help_text="This description is used when this page is featured "
                   "on another page, i.e. the Capital Invest Region "
-                  "Opportunities page"
+                  "page"
     )
 
     sector_summary_intro = models.TextField(max_length=255, blank=True)
@@ -2106,47 +2104,26 @@ class CapitalInvestSectorPage(BasePage):
     )
 
     investment_opportunities_title = models.CharField(max_length=255)
-    related_page_1 = models.ForeignKey(
+    related_page_one = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+',
+        related_name='+'
     )
-    related_page_2 = models.ForeignKey(
+    related_page_two = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+',
+        related_name='+'
     )
-    related_page_3 = models.ForeignKey(
+    related_page_three = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    related_page_4 = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    related_page_5 = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    related_page_6 = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
+        related_name='+'
     )
 
     next_steps_title = models.CharField(max_length=255)
@@ -2182,46 +2159,24 @@ class CapitalInvestSectorPage(BasePage):
             children=[
                 FieldPanel('investment_opportunities_title'),
                 FieldRowPanel([
-                    MultiFieldPanel([
-                        PageChooserPanel(
-                            'related_page_1',
-                            [
-                                'great_international.'
-                                'CapitalInvestOpportunityPage'
-                            ]),
-                        PageChooserPanel(
-                            'related_page_2',
-                            [
-                                'great_international.'
-                                'CapitalInvestOpportunityPage'
-                            ]),
-                        PageChooserPanel(
-                            'related_page_3',
-                            [
-                                'great_international.'
-                                'CapitalInvestOpportunityPage'
-                            ]),
-                    ]),
-                    MultiFieldPanel([
-                        PageChooserPanel(
-                            'related_page_4',
-                            [
-                                'great_international.'
-                                'CapitalInvestOpportunityPage'
-                            ]),
-                        PageChooserPanel(
-                            'related_page_5',
-                            [
-                                'great_international.'
-                                'CapitalInvestOpportunityPage'
-                            ]),
-                        PageChooserPanel(
-                            'related_page_6',
-                            [
-                                'great_international.'
-                                'CapitalInvestOpportunityPage'
-                            ]),
-                    ]),
+                    PageChooserPanel(
+                        'related_page_one',
+                        [
+                            'great_international.'
+                            'CapitalInvestOpportunityPage'
+                        ]),
+                    PageChooserPanel(
+                        'related_page_two',
+                        [
+                            'great_international.'
+                            'CapitalInvestOpportunityPage'
+                        ]),
+                    PageChooserPanel(
+                        'related_page_three',
+                        [
+                            'great_international.'
+                            'CapitalInvestOpportunityPage'
+                        ]),
                 ]),
             ],
         ),
@@ -2256,8 +2211,8 @@ class CapitalInvestSectorPage(BasePage):
     )
 
 
-class CapitalInvestOpportunityListingPage(ExclusivePageMixin,
-                                     ServiceMixin, BasePage):
+class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
+                                          BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = 'opportunity'
 
@@ -2272,7 +2227,6 @@ class CapitalInvestOpportunityListingPage(ExclusivePageMixin,
     @classmethod
     def allowed_subpage_models(cls):
         return [CapitalInvestOpportunityPage]
-
 
 
 class CapitalInvestOpportunityPage(BasePage):
@@ -2334,6 +2288,27 @@ class CapitalInvestOpportunityPage(BasePage):
     )
 
     similar_projects_title = models.CharField(max_length=255)
+    related_page_one = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    related_page_two = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    related_page_three = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     similar_projects_cta_text = models.CharField(max_length=255)
     similar_projects_cta_link = models.CharField(max_length=255, blank=True)
 
@@ -2410,6 +2385,26 @@ class CapitalInvestOpportunityPage(BasePage):
             heading="Similar projects",
             children=[
                 FieldPanel('similar_projects_title'),
+                FieldRowPanel([
+                    PageChooserPanel(
+                        'related_page_one',
+                        [
+                            'great_international.'
+                            'CapitalInvestOpportunityPage'
+                        ]),
+                    PageChooserPanel(
+                        'related_page_two',
+                        [
+                            'great_international.'
+                            'CapitalInvestOpportunityPage'
+                        ]),
+                    PageChooserPanel(
+                        'related_page_three',
+                        [
+                            'great_international.'
+                            'CapitalInvestOpportunityPage'
+                        ]),
+                ]),
                 FieldPanel('similar_projects_cta_text'),
                 FieldPanel('similar_projects_cta_link'),
             ],
