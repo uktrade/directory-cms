@@ -20,10 +20,9 @@ def test_unpublished_not_cached(admin_client):
 
 
 @pytest.mark.django_db
-def test_cache_retrieval(fas_root_page, admin_client):
+def test_cache_retrieval(admin_client):
     # given there exists an industry page
-    contact_page = factories.IndustryContactPageFactory.create(
-        parent=fas_root_page, live=True)
+    contact_page = factories.IndustryContactPageFactory.create(live=True)
 
     # when the industry page is retrieveds
     url = reverse('api:lookup-by-slug', kwargs={'slug': contact_page.slug})
@@ -34,21 +33,17 @@ def test_cache_retrieval(fas_root_page, admin_client):
 
 
 @pytest.mark.django_db
-def test_cache_retrieval_external_change(fas_root_page, admin_client):
+def test_cache_retrieval_external_change(admin_client):
     service_name = 'FIND_A_SUPPLIER'
     # given there is an unpublished industry page
-    factories.IndustryPageFactory.create(
-        parent=fas_root_page, live=False)
+    factories.IndustryPageFactory.create(live=False)
     # and a live industry page
     industry_page = factories.IndustryPageFactory.create(
-        parent=fas_root_page,
         introduction_text_en_gb='first value'
     )
 
     # and an external page that the page is subscribed to is created
-    contact_page = factories.IndustryContactPageFactory.create(
-        parent=fas_root_page,
-    )
+    contact_page = factories.IndustryContactPageFactory.create()
 
     # when the industry page is retrieved
     url = reverse('api:lookup-by-slug', kwargs={'slug': contact_page.slug})
@@ -81,11 +76,9 @@ def test_cache_retrieval_external_change(fas_root_page, admin_client):
 
 
 @pytest.mark.django_db
-def test_cache_unpublish(fas_root_page, admin_client):
+def test_cache_unpublish(admin_client):
     # given there exists an industry page
-    contact_page = factories.IndustryContactPageFactory.create(
-        parent=fas_root_page, live=True
-    )
+    contact_page = factories.IndustryContactPageFactory.create(live=True)
 
     # when the industry page is retrieved
     url = reverse('api:lookup-by-slug', kwargs={'slug': contact_page.slug})
