@@ -56,7 +56,6 @@ def test_permissions_published(rf):
     ('fr', 'FRENCH'),
     ('es', 'SPANISH'),
     ('pt', 'PORTUGUESE'),
-    ('pt-br', 'BRAZILIAN'),
     ('ar', 'ARABIC'),
 ))
 @pytest.mark.django_db
@@ -69,7 +68,7 @@ def test_api_translations(client, translated_page, language_code, expected):
 
 
 @pytest.mark.parametrize('language_code', (
-    'en-gb' 'de' 'ja', 'zh-hans', 'fr', 'es', 'pt', 'pt-br', 'ar',
+    'en-gb' 'de' 'ja', 'zh-hans', 'fr', 'es', 'pt', 'ar',
 ))
 @pytest.mark.django_db
 def test_api_translations_not_populated(

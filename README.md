@@ -26,7 +26,9 @@
 
 ### Requirements
 [Python 3.6](https://www.python.org/downloads/release/python-368/)
+
 [Postgres 9.5](https://www.postgresql.org/)
+
 [Redis](https://redis.io/)
 
 
@@ -80,7 +82,7 @@ You can test this works by attempting to visit http://cms.trade.great:8010/admin
 ### Create a new template_sql file
 
     To speed up tests a SQL template file is provided. If the file becomes obsolete run the following command on an up-to-date db instance
-    $ pg_dump -O -f db_template.sql directory_cms_debug
+    $ make update_db_template
 
 ## Session
 
@@ -114,6 +116,7 @@ Note on `subscriptions`: the page is serialized when saved to the cache as a JSO
 
 ## Related projects:
 https://github.com/uktrade?q=directory
+
 https://github.com/uktrade?q=great
 
 [code-climate-image]: https://codeclimate.com/github/uktrade/directory-cms/badges/issue_count.svg
