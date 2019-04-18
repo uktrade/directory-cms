@@ -175,23 +175,12 @@ class DetailViewEndpointBase(APIEndpointBase):
 
 class PageLookupBySlugAPIEndpoint(DetailViewEndpointBase):
 
-    SERVICE_NAME_ROOT_PATHS = {
-        cms_constants.EXPORT_READINESS: 'export-readiness-app',
-        cms_constants.GREAT_INTERNATIONAL: 'great-international-app',
-        cms_constants.FIND_A_SUPPLIER: 'find-a-supplier-app',
-        cms_constants.INVEST: 'invest-app',
-        cms_constants.COMPONENTS: 'components-app',
-    }
-
     def check_parameter_validity(self):
-        # Ensure service_name was provided and is valid
-        service_name = self.request.GET.get('service_name', '')
-        if service_name not in self.SERVICE_NAME_ROOT_PATHS.keys():
-            if not service_name:
-                msg = "This parameter is required"
-            else:
-                msg = f"The value '{service_name}' is not valid"
-            raise ValidationError(detail={'service_name': msg})
+        # Check 'service_name' was provided
+        if service_name not in self.request.GET:
+            raise ValidationError(detail={
+                'service_name':  "This parameter is required"
+            })
         super().check_parameter_validity()
 
     def get_object_id(self):
@@ -205,8 +194,7 @@ class PageLookupBySlugAPIEndpoint(DetailViewEndpointBase):
         slug = self.kwargs['slug']
         service_name = self.request.GET['service_name']
         page_id = cache.PageIDCache.get_for_slug(
-            service_name_root_path=self.SERVICE_NAME_ROOT_PATHS[service_name],
-            slug=slug
+            slug=slug, service_name=service_name
         )
         if page_id is None:
             raise Http404(
