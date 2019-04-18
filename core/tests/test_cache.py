@@ -15,7 +15,7 @@ from great_international.tests.factories import (
 )
 
 
-@pytest.mark.parametrize('page_id,language_code,region,expected_start', (
+@pytest.mark.parametrize('page_id,language_code,region,expected', (
     (
         1,
         None,
@@ -26,22 +26,22 @@ from great_international.tests.factories import (
         2,
         'en-gb',
         None,
-        '{'+'{'+'page-2'+'}'+'}'
+        '{'+'{'+'page-2'+'}'+'}lang=en-gb'
     ),
     (
         3,
         'en-gb',
         'eu',
-        '{'+'{'+'page-3'+'}'+'}'
+        '{'+'{'+'page-3'+'}'+'}lang=en-gb&region=eu'
     ),
 ))
-def test_page_cache_build_keys(page_id, language_code, region, expected_start):
+def test_page_cache_build_keys(page_id, language_code, region, expected):
     key = cache.PageCache.build_key(
         page_id=page_id,
         lang=language_code,
         region=region,
     )
-    assert key.startswith(expected_start)
+    assert key == expected
 
 
 @pytest.mark.parametrize('test_kwargs', (
