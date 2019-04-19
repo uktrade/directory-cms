@@ -40,15 +40,6 @@ api_urls = [
         name='lookup-by-path'
     ),
     url(
-        r'^pages/lookup-by-full-path/$',
-        api_router.wrap_view(
-            core.views.PageLookupByFullPathAPIEndpoint.as_view(
-                {'get': 'detail_view'}
-            )
-        ),
-        name='lookup-by-full-path'
-    ),
-    url(
         r'^pages/lookup-by-tag/(?P<slug>[\w-]+)/$',
         api_router.wrap_view(
             export_readiness.views.PageLookupByTagListAPIEndpoint.as_view()
