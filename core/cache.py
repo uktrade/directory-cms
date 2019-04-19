@@ -248,11 +248,17 @@ ROOT_PATHS_TO_SERVICE_NAMES = {
 
 class PageIDCache:
     """
-    Helps to efficiently map page slugs and path values to their
-    respective page ids. Automatic repopulation on page data change
-    means the cache is almost always hot. But, population itself is
-    really quite efficient, due to only needing 'vanilla' Page
-    objects with a small subset of fields
+    Helps to efficiently map page slugs and path values to their respective
+    page ids.
+
+    Population happens on request. Invalidation happens automatically when
+    page or site data changes, but those actions do not trigger
+    repopulation.
+
+    Population is efficient, due to only needing to query the database for
+    vanilla `Page` objects with a small subset of fields. Site data almost
+    always comes from a cache, and content type data (if needed) is typically
+    cached also.
     """
     cache = cache
     cache_key = 'page-ids'
@@ -346,5 +352,7 @@ class PageIDCache:
 
     @classmethod
     def subscribe_to_signals(cls):
-        post_save.connect(receiver=cls.populate, sender=Page)
-        post_delete.connect(receiver=cls.populate, sender=Page)
+        post_save.connect(receiver=cls.clear, sender=Page)
+        post_delete.connect(receiver=cls.clear, sender=Page)
+        post_save.connect(receiver=cls.clear, sender=Site)
+        post_delete.connect(receiver=cls.clear, sender=Site)
