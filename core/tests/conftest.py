@@ -2,7 +2,7 @@ from itertools import product
 
 import pytest
 from modeltranslation.utils import build_localized_fieldname
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Site
 from wagtail.documents.models import Document
 
 from find_a_supplier.tests.factories import (
@@ -67,6 +67,17 @@ def translated_page(settings, root_page):
             setattr(page, localized_name, localized_name + '-v')
     page.save()
     return page
+
+
+@pytest.fixture
+def translated_page_site(translated_page):
+    # create a site with translated_page as the root
+    return Site.objects.create(
+        site_name='Test',
+        hostname='example.com',
+        port=8097,
+        root_page=translated_page,
+    )
 
 
 @pytest.fixture

@@ -42,6 +42,17 @@ def untranslated_page(root_page):
     )
 
 
+@pytest.fixture
+def untranslated_page_site(untranslated_page):
+    # create a site with untranslated_page as the root
+    return Site.objects.create(
+        site_name='Test',
+        hostname='example.com',
+        port=8096,
+        root_page=untranslated_page,
+    )
+
+
 @pytest.fixture(autouse=True)
 def mock_signature_check():
     stub = patch('conf.signature.SignatureCheckPermission.has_permission')
