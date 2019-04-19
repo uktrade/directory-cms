@@ -59,7 +59,6 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
 
     @property
     def permission_classes(self):
-        return []
         permission_classes = [SignatureCheckPermission]
         if helpers.is_draft_requested(self.request):
             permission_classes.append(permissions.DraftTokenPermisison)
