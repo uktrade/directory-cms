@@ -33,10 +33,10 @@ class PageCache:
             item for item in variation_kwargs.items()
             if item[1]
         )
+
         # improve reliability of delete_many() by creating a redis hashtag
         # from `page_id`. This ensures keys related to the same page are stored
         # in the same node in a clustered environment
-
         hashtag_val = f'page-{page_id}'
         return '{{%s}}%s' % (hashtag_val, urlencode(variation_kwargs_sorted))
 
