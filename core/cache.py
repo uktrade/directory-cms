@@ -299,18 +299,18 @@ class PageIDCache:
         site_root_paths = Site.get_site_root_paths()
 
         for page in cls.get_population_queryset():
-            # Path lookup keys must include the site id and
-            # url_path, minus the site root path, which
-            # Page.get_url_parts() can give us.
-            # setting private attr below to prevent repeat cache lookups
+            # Path lookup keys must include the site id and url_path, minus
+            # the site root path, which Page.get_url_parts() can give us
+
+            # setting this prevents repeat cache lookups
             page._wagtail_cached_site_root_paths = site_root_paths
             url_parts = page.get_url_parts()
             if url_parts:
                 key = cls.build_path_lookup_key(url_parts[0], url_parts[2])
                 ids_by_path[key] = page.id
 
-            # Slug lookup keys must include the service name,
-            # as well as the slug, which we need to work out
+            # Slug lookup keys must include the service name, as well as the
+            # slug, which we need to work out
             service_name = cls.get_service_name_for_page(page)
             if service_name:
                 key = cls.build_slug_lookup_key(service_name, page.slug)
