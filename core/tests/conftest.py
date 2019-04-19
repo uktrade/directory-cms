@@ -70,8 +70,7 @@ def translated_page(settings, root_page):
 
 
 @pytest.fixture
-def translated_page_site(translated_page):
-    # create a site with translated_page as the root
+def site_with_translated_page_as_root(translated_page):
     return Site.objects.create(
         site_name='Test',
         hostname='example.com',
@@ -130,3 +129,13 @@ def page_with_reversion(admin_user, translated_page):
         submitted_for_moderation=False,
     )
     return translated_page
+
+
+@pytest.fixture
+def site_with_revised_page_as_root(page_with_reversion):
+    return Site.objects.create(
+        site_name='Test',
+        hostname='example.com',
+        port=8098,
+        root_page=page_with_reversion,
+    )

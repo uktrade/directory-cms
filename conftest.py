@@ -43,7 +43,7 @@ def untranslated_page(root_page):
 
 
 @pytest.fixture
-def untranslated_page_site(untranslated_page):
+def site_with_untranslated_page_as_root(untranslated_page):
     # create a site with untranslated_page as the root
     return Site.objects.create(
         site_name='Test',
