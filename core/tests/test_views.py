@@ -11,7 +11,9 @@ from django.urls import reverse
 from core import helpers, permissions, views
 from core.helpers import CachedResponse
 from conf.signature import SignatureCheckPermission
-from find_a_supplier.tests.factories import FindASupplierAppFactory, IndustryLandingPageFactory
+from find_a_supplier.tests.factories import (
+    FindASupplierAppFactory, IndustryLandingPageFactory
+)
 from invest.tests.factories import InfoPageFactory
 
 
@@ -46,6 +48,7 @@ def test_permissions_published(rf):
     assert view.permission_classes == [
         SignatureCheckPermission,
     ]
+
 
 @pytest.mark.parametrize('language_code,expected_title', (
     ('en-gb', 'ENGLISH'),

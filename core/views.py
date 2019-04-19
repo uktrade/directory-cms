@@ -1,12 +1,11 @@
 from django_filters.rest_framework import DjangoFilterBackend
 
-from directory_constants.constants import cms as cms_constants
 from rest_framework.exceptions import ValidationError
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
-from wagtail.core.models import Orderable, Page, Site
+from wagtail.core.models import Orderable, Page
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
@@ -18,8 +17,7 @@ from django.utils.cache import get_conditional_response
 from django.views.generic.edit import FormView
 
 from conf.signature import SignatureCheckPermission
-from core import cache, filters, forms, helpers, models, permissions, \
-    serializers
+from core import cache, filters, forms, helpers, permissions, serializers
 from core.upstream_serializers import UpstreamModelSerilaizer
 from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
 

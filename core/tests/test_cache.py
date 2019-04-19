@@ -218,7 +218,8 @@ def test_subscriber_delete(mock_delete):
         ]
 
     instance = mock.Mock(
-        id=1, slug='some-slug', service_name='thing', translated_languages=['en-gb']
+        id=1, slug='some-slug', service_name='thing',
+        translated_languages=['en-gb']
     )
     TestSubscriber.delete(sender=None, instance=instance)
 

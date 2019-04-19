@@ -224,7 +224,6 @@ class RegionAwareCachePopulator(CachePopulator):
                             region=region,
                         )
 
-
     @classmethod
     def delete(cls, instance):
         with PageCache.transaction() as page_cache:
