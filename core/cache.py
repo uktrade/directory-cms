@@ -255,7 +255,7 @@ class PageIDCache:
     page or site data changes, but those actions do not trigger
     repopulation.
 
-    Population is efficient, due to only needing to query the database for
+    Population is efficient due to only needing to query the database for
     vanilla `Page` objects with a small subset of fields. Site data almost
     always comes from a cache, and content type data (if needed) is typically
     cached also.

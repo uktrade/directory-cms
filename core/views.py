@@ -198,7 +198,7 @@ class PageLookupBySlugAPIEndpoint(DetailViewEndpointBase):
         )
         if page_id is None:
             raise Http404(
-                "No Page found matching service_name '{}' and "
+                "No page could be found matching service_name '{}' and "
                 "slug '{}'".format(service_name, slug)
             )
 
@@ -227,7 +227,7 @@ class PageLookupByPathAPIEndpoint(DetailViewEndpointBase):
         object_id = cache.PageIDCache.get_for_path(lookup_path, site_id)
         if object_id is None:
             raise Http404(
-                "No Page found matching site_id '{}' and path '{}'"
+                "No page could be found matching site_id '{}' and path '{}'"
                 .format(site_id, path)
             )
 
