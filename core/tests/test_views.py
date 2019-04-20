@@ -453,11 +453,11 @@ def test_lookup_by_slug_missing_page(admin_client):
     assert response.json() == {'message': expected_msg}
 
 
-def test_cache_etags_match(admin_client):
+def test_cache_etags_match(admin_client, root_page):
     service_name = cms.INVEST
 
     # given there exists a page that is cached
-    page = InfoPageFactory.create(live=True)
+    page = InfoPageFactory.create(parent=root_page, live=True)
     url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
     admin_client.get(url, {'service_name': service_name})
 
@@ -474,10 +474,10 @@ def test_cache_etags_match(admin_client):
     assert response_three.content == b''
 
 
-def test_cache_etags_mismatch(admin_client):
+def test_cache_etags_mismatch(admin_client, root_page):
     service_name = cms.INVEST
     # given there exists a page that is cached
-    page = InfoPageFactory.create(live=True)
+    page = InfoPageFactory.create(parent=root_page, live=True)
 
     # when the page is retrieved
     url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
