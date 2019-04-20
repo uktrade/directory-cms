@@ -191,17 +191,17 @@ class PageLookupBySlugAPIEndpoint(DetailViewEndpointBase):
 
         slug = self.kwargs['slug']
         service_name = self.request.GET['service_name']
-        page_id = cache.PageIDCache.get_for_slug(
+        object_id = cache.PageIDCache.get_for_slug(
             slug=slug, service_name=service_name
         )
-        if page_id is None:
+        if object_id is None:
             raise Http404(
                 "No page could be found matching service_name '{}' and "
                 "slug '{}'".format(service_name, slug)
             )
 
-        self.page_id = page_id
-        return page_id
+        self.object_id = object_id
+        return object_id
 
 
 class PageLookupByPathAPIEndpoint(DetailViewEndpointBase):
