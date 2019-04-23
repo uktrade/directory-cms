@@ -43,7 +43,6 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
 
 
 class InternationalSectorPage(BasePage):
-
     class Meta:
         ordering = ['-heading']
 
@@ -740,37 +739,56 @@ class InternationalHomePage(
                 FieldPanel('section_two_heading'),
                 FieldPanel('section_two_teaser'),
                 FieldRowPanel([
-                    ImageChooserPanel('section_two_subsection_one_icon'),
-                    FieldPanel('section_two_subsection_one_heading'),
-                    FieldPanel('section_two_subsection_one_body')
-                ]),
-                FieldRowPanel([
-                    ImageChooserPanel('section_two_subsection_two_icon'),
-                    FieldPanel('section_two_subsection_two_heading'),
-                    FieldPanel('section_two_subsection_two_body')
-                ]),
-                FieldRowPanel([
-                    ImageChooserPanel('section_two_subsection_three_icon'),
-                    FieldPanel('section_two_subsection_three_heading'),
-                    FieldPanel('section_two_subsection_three_body')
-                ]),
-                FieldRowPanel([
-                    ImageChooserPanel('section_two_subsection_four_icon'),
-                    FieldPanel('section_two_subsection_four_heading'),
-                    FieldPanel('section_two_subsection_four_body')
-                ]),
-                FieldRowPanel([
-                    ImageChooserPanel('section_two_subsection_five_icon'),
-                    FieldPanel('section_two_subsection_five_heading'),
-                    FieldPanel('section_two_subsection_five_body')
-                ]),
-                FieldRowPanel([
-                    ImageChooserPanel('section_two_subsection_six_icon'),
-                    FieldPanel('section_two_subsection_six_heading'),
-                    FieldPanel('section_two_subsection_six_body')
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_one_icon'
+                            ),
+                            FieldPanel('section_two_subsection_one_heading'),
+                            FieldPanel('section_two_subsection_one_body')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_two_icon'
+                            ),
+                            FieldPanel('section_two_subsection_two_heading'),
+                            FieldPanel('section_two_subsection_two_body')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_three_icon'
+                            ),
+                            FieldPanel('section_two_subsection_three_heading'),
+                            FieldPanel('section_two_subsection_three_body')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_four_icon'
+                            ),
+                            FieldPanel('section_two_subsection_four_heading'),
+                            FieldPanel('section_two_subsection_four_body')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_five_icon'
+                            ),
+                            FieldPanel('section_two_subsection_five_heading'),
+                            FieldPanel('section_two_subsection_five_body')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_six_icon'),
+                            FieldPanel('section_two_subsection_six_heading'
+                                       ),
+                            FieldPanel('section_two_subsection_six_body')
+                        ])
                 ])
-            ]
-        ),
+            ]),
 
         MultiFieldPanel(
             heading='Tariffs',
@@ -789,18 +807,22 @@ class InternationalHomePage(
                 FieldPanel('featured_links_title'),
                 FieldPanel('featured_links_summary'),
                 FieldRowPanel([
-                    FieldPanel('featured_link_one_heading'),
-                    ImageChooserPanel('featured_link_one_image')
-                ]),
-                FieldRowPanel([
-                    FieldPanel('featured_link_two_heading'),
-                    ImageChooserPanel('featured_link_two_image')
-                ]),
-                FieldRowPanel([
-                    FieldPanel('featured_link_three_heading'),
-                    ImageChooserPanel('featured_link_three_image')
-                ])
-            ]
+                    MultiFieldPanel(
+                        children=[
+                            FieldPanel('featured_link_one_heading'),
+                            ImageChooserPanel('featured_link_one_image')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            FieldPanel('featured_link_two_heading'),
+                            ImageChooserPanel('featured_link_two_image')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            FieldPanel('featured_link_three_heading'),
+                            ImageChooserPanel('featured_link_three_image')
+                        ])
+                ])]
         ),
 
         MultiFieldPanel(
