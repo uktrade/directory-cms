@@ -22,28 +22,33 @@ class PageCache:
     cache = cache
 
     @staticmethod
-    def build_key(slug, params):
-        url = reverse('api:lookup-by-slug', kwargs={'slug': slug})
-        params = {key: value for key, value in params.items() if value}
-        # using the page slug as a redis hash tag ensures the keys related to
-        # the same page in the same node, preventing delete_many from failing
-        # because the keys could be stored across different nodes
-        return f'{{slug}}' + canonicalize_url(url + '?' + urlencode(params))
+    def build_key(page_id, **variation_kwargs):
+        # improve reliability of delete_many() by creating a redis hashtag,
+        # from `page_id` - ensure keys related to the same page are stored
+        # in the same node in a clustered environment
+        key = f'serialised-page[{page_id}]'
+
+        if variation_kwargs:
+            # no matter the order of 'variation_kwargs', the same key/val
+            # combinations should result in the same key
+            key += '?' + urlencode(sorted(variation_kwargs.items()))
+
+        return key
 
     @classmethod
-    def set(cls, slug, params, data):
+    def set(cls, page_id, data, **variation_kwargs):
         data['etag'] = cls.generate_etag(data)
-        key = cls.build_key(slug=slug, params=params)
+        key = cls.build_key(page_id=page_id, **variation_kwargs)
         cls.cache.set(key, data, timeout=settings.API_CACHE_EXPIRE_SECONDS)
 
     @classmethod
-    def get(cls, slug, params):
-        key = cls.build_key(slug=slug, params=params)
+    def get(cls, page_id, **variation_kwargs):
+        key = cls.build_key(page_id=page_id, **variation_kwargs)
         return cls.cache.get(key)
 
     @classmethod
-    def delete(cls, slug, params):
-        key = cls.build_key(slug=slug, params=params)
+    def delete(cls, page_id, **variation_kwargs):
+        key = cls.build_key(page_id=page_id, **variation_kwargs)
         cls.cache.delete(key)
 
     @staticmethod
@@ -101,15 +106,7 @@ class CachePopulator:
 
     @classmethod
     def populate_async(cls, instance):
-        with PageCache.transaction() as page_cache:
-            for language_code in instance.translated_languages:
-                page_cache.delete(
-                    slug=instance.slug,
-                    params={
-                        'service_name': instance.service_name,
-                        'lang': language_code
-                    }
-                )
+        cls.delete(instance)
         cls.populate.delay(instance.pk)
 
     @classmethod
@@ -120,13 +117,19 @@ class CachePopulator:
                 with translation.override(language_code):
                     serializer = serializer_class(instance=instance)
                     page_cache.set(
-                        slug=instance.slug,
-                        params={
-                            'lang': language_code,
-                            'service_name': instance.service_name,
-                        },
+                        page_id=instance.id,
+                        lang=language_code,
                         data=serializer.data,
                     )
+
+    @classmethod
+    def delete(cls, instance):
+        with PageCache.transaction() as page_cache:
+            for language_code in instance.translated_languages:
+                page_cache.delete(
+                    page_id=instance.id,
+                    lang=language_code,
+                )
 
 
 class AbstractDatabaseCacheSubscriber(abc.ABC):
@@ -176,15 +179,7 @@ class AbstractDatabaseCacheSubscriber(abc.ABC):
 
     @classmethod
     def delete(cls, sender, instance, *args, **kwargs):
-        with PageCache.transaction() as page_cache:
-            for lang in instance.translated_languages:
-                page_cache.delete(
-                    slug=instance.slug,
-                    params={
-                        'lang': lang,
-                        'service_name': instance.service_name,
-                    }
-                )
+        cls.cache_populator.delete(instance)
 
     @classmethod
     def populate_many(cls, sender, instance, *args, **kwargs):
@@ -203,17 +198,7 @@ class RegionAwareCachePopulator(CachePopulator):
 
     @classmethod
     def populate_async(cls, instance):
-        with PageCache.transaction() as page_cache:
-            for language_code in instance.translated_languages:
-                for region in cls.regions:
-                    page_cache.delete(
-                        slug=instance.slug,
-                        params={
-                            'service_name': instance.service_name,
-                            'lang': language_code,
-                            'region': region,
-                        }
-                    )
+        cls.delete(instance)
         cls.populate.delay(instance.pk)
 
     @classmethod
@@ -228,12 +213,9 @@ class RegionAwareCachePopulator(CachePopulator):
                             context={'region': region}
                         )
                         page_cache.set(
-                            slug=instance.slug,
-                            params={
-                                'lang': language_code,
-                                'service_name': instance.service_name,
-                                'region': region,
-                            },
+                            page_id=instance.id,
+                            lang=language_code,
+                            region=region,
                             data=serializer.data,
                         )
 

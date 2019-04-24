@@ -10,7 +10,7 @@ from wagtail.core.models import Orderable, Page
 from directory_constants.constants import cms as cms_constants
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.http.response import HttpResponseBadRequest
+from django.http.response import HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, Http404
 from django.template.response import TemplateResponse
 from django.utils import translation
@@ -101,45 +101,48 @@ class DetailViewEndpointBase(APIEndpointBase):
 
     def check_parameter_validity(self):
         """
-        Called by `get()` early in the response cycle to give
+        Called by `dispatch()` early in the response cycle to give
         the endpoint an opportunity to raise exceptions due to the
         parameters values supplied.
         """
         self.get_object_id()
 
-    def get(self, request, *args, **kwargs):
-        raise Exception  # FIXME: IS THIS METHOD NEEDED?
-        # Exit early if there are any issues
-        self.check_parameter_validity()
-        if helpers.is_draft_requested(request):
-            return super().get(request, *args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            # Exit early if there are any issues
+            self.check_parameter_validity()
+            if helpers.is_draft_requested(request):
+                return super().dispatch(request, *args, **kwargs)
 
-        # Return a cached response if one is available
-        cached_data = cache.PageCache.get(
-            page_id=self.get_object_id(),
-            lang=request.GET.get('lang') or translation.get_language(),
-            region=request.GET.get('region'),
-        )
-
-        if cached_data:
-            cached_response = helpers.CachedResponse(cached_data)
-            cached_response['etag'] = cached_data.get('etag', None)
-            return get_conditional_response(
-                request=request,
-                etag=cached_response['etag'],
-                response=cached_response,
+            # Return a cached response if one is available
+            cached_data = cache.PageCache.get(
+                page_id=self.get_object_id(),
+                lang=request.GET.get('lang') or translation.get_language(),
+                region=request.GET.get('region'),
             )
 
-        # No cached response available
-        response = super().get(request, *args, **kwargs)
-        if not settings.API_CACHE_DISABLED and response.status_code == 200:
-            # Reuse the already-fetched object to populate the cache
-            cache.CachePopulator.populate_async(self.get_object())
+            if cached_data:
+                cached_response = helpers.CachedResponse(cached_data)
+                cached_response['etag'] = cached_data.get('etag', None)
+                return get_conditional_response(
+                    request=request,
+                    etag=cached_response['etag'],
+                    response=cached_response,
+                )
 
-        # No etag is set for this response because creating one is expensive.
-        # If API caching is enabled, one will be added to the cached version
-        # created above.
-        return response
+            # No cached response available
+            response = super().dispatch(request, *args, **kwargs)
+            if not settings.API_CACHE_DISABLED and response.status_code == 200:
+                # Reuse the already-fetched object to populate the cache
+                cache.CachePopulator.populate_async(self.get_object())
+
+            # No etag is set for this response because creating one is expensive.
+            # If API caching is enabled, one will be added to the cached version
+            # created above.
+            return response
+
+        except ValidationError as error:
+            return JsonResponse(error.detail, status=400, safe=False)
 
     def get_object(self):
         if hasattr(self, 'object'):
@@ -160,11 +163,8 @@ class DetailViewEndpointBase(APIEndpointBase):
         self.object = instance
         return instance
 
+    # FIXME: WHY DOES THIS EXIST?
     def detail_view(self, request, **kwargs):
-        # Exit early if there are any issues
-        self.check_parameter_validity()
-
-        # FIXME: WHY DOES THIS EXIST?
         return super().detail_view(request, pk=None)
 
 
