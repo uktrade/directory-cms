@@ -21,6 +21,10 @@ def test_international_homepage(admin_client, root_page):
     url = reverse('api:api:pages:detail', kwargs={'pk': home_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
+    subsections = response.json()['section_two_subsections']
+    assert list(subsections[0].keys()) == ['icon', 'heading', 'body']
+    featured_links = response.json()['featured_links'][0]
+    assert list(featured_links.keys()) == ['image', 'heading']
 
 
 def test_international_campaign_page(admin_client, root_page):
