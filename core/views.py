@@ -5,9 +5,9 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
-from wagtail.core.models import Page
-from wagtail.core.models import Orderable
+from wagtail.core.models import Orderable, Page
 
+from directory_constants.constants import cms as cms_constants
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.http.response import HttpResponseBadRequest
@@ -35,7 +35,7 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
     meta_fields = []
     known_query_parameters = (
         PagesAdminAPIEndpoint.known_query_parameters.union(
-            ['lang', 'draft_token', 'service_name', 'region']
+            ['lang', 'draft_token', 'service_name', 'region', 'url']
         )
     )
 
@@ -75,6 +75,128 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
         if translation.get_language() not in instance.translated_languages:
             translation.activate(settings.LANGUAGE_CODE)
 
+
+class DetailViewEndpointBase(APIEndpointBase):
+    detail_only_fields = ['id']
+    authentication_classes = []
+    filter_backends = APIEndpointBase.filter_backends + [DjangoFilterBackend]
+    renderer_classes = [JSONRenderer]
+
+    def get_object_id(self):
+        """
+        Returns the `id` of the requested page. The value is used to
+        query `PageCache` for cached response, and by get_object() to
+        query the database for a `Page` object. Each subclass must
+        override this method to work out the correct `id` value from
+        the arguments it receives.
+        While this is a slightly roundabout way of identifying pages,
+        caches make lookups very cheap, allowing us to identify bad
+        parameter combinations early on, at very little cost. Using ids
+        for cache lookups also allows `PageCache` to remain simpler and
+        more generic, making it useful in more places.
+        Raises Http404 when the supplied arguments cannot be matched
+        to a page id.
+        """
+        raise NotImplementedError  # pragma: no cover
+
+    def check_parameter_validity(self):
+        """
+        Called by `get()` early in the response cycle to give
+        the endpoint an opportunity to raise exceptions due to the
+        parameters values supplied.
+        """
+        self.get_object_id()
+
+    def get(self, request, *args, **kwargs):
+        # Exit early if there are any issues
+        self.check_parameter_validity()
+
+        if helpers.is_draft_requested(request):
+            return super().get(request, *args, **kwargs)
+
+        # Return a cached response if one is available
+        cached_data = cache.PageCache.get(
+            page_id=self.get_object_id(),
+            lang=request.GET.get('lang') or translation.get_language(),
+            region=request.GET.get('region'),
+        )
+
+        if cached_data:
+            cached_response = helpers.CachedResponse(cached_data)
+            cached_response['etag'] = cached_data.get('etag', None)
+            return get_conditional_response(
+                request=request,
+                etag=cached_response['etag'],
+                response=cached_response,
+            )
+
+        # No cached response available
+        response = super().get(request, *args, **kwargs)
+        if not settings.API_CACHE_DISABLED and response.status_code == 200:
+            # Reuse the already-fetched object to populate the cache
+            cache.CachePopulator.populate_async(self.get_object())
+
+        # No etag is set for this response because creating one is expensive.
+        # If API caching is enabled, one will be added to the cached version
+        # created above.
+        return response
+
+    def get_object(self):
+        if hasattr(self, 'object'):
+            return self.object
+
+        # Find page by its ID
+        instance = get_object_or_404(
+            self.filter_queryset(self.get_queryset()),
+            id=self.kwargs['slug'],
+        ).specific
+
+        # Check perms or load draft if requested
+        self.check_object_permissions(self.request, instance)
+        instance = self.handle_serve_draft_object(instance)
+        self.handle_activate_language(instance)
+
+        # Remember result if requested again
+        self.object = instance
+        return instance
+
+    def detail_view(self, request, **kwargs):
+        return super().detail_view(request, pk=None)
+
+
+class PageLookupByPathAPIEndpoint(DetailViewEndpointBase):
+    def get_object_id(self):
+        if hasattr(self, 'object_id'):
+            return self.object_id
+
+        supplied_path = self.kwargs['path'].strip('/')
+        full_page_path = self.get_site().root_page.url_path
+        # Only combine these if `supplied_path` isn't blank
+        if supplied_path:
+            full_page_path += supplied_path + '/'
+
+        # Query the cache for a matching `id`
+        object_id = cache.PageIDCache.get_for_path(full_page_path)
+        if object_id is None:
+            raise Http404(
+                "No Page found matching site_id '{}' and path '{}'"
+                .format(self.kwargs['site_id'], supplied_path)
+            )
+
+        self.object_id = object_id
+        return object_id
+
+    def get_site(self):
+        """
+        Find a `Site` matching the `site_id` from the URL.
+        """
+        if hasattr(self, 'site'):
+            return self.site
+        self.site = cache.SiteCache.get_for_id(self.kwargs['site_id'])
+        return self.site
+
+
+class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
     def get_object(self):
         instance = super().get_object()
         self.check_object_permissions(self.request, instance)
@@ -83,71 +205,44 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
         return instance
 
 
-class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
-    pass
+class PageLookupBySlugAPIEndpoint(DetailViewEndpointBase):
 
+    SERVICE_NAME_ROOT_PATHS = {
+        cms_constants.EXPORT_READINESS: 'export-readiness-app',
+        cms_constants.GREAT_INTERNATIONAL: 'great-international-app',
+        cms_constants.FIND_A_SUPPLIER: 'find-a-supplier-app',
+        cms_constants.INVEST: 'invest-app',
+        cms_constants.COMPONENTS: 'components-app',
+    }
 
-class PageLookupBySlugAPIEndpoint(APIEndpointBase):
-    lookup_url_kwarg = 'slug'
-    detail_only_fields = ['id']
-    filter_backends = APIEndpointBase.filter_backends + [DjangoFilterBackend]
-    filter_class = filters.ServiceNameDRFFilter
-    authentication_classes = []
-    renderer_classes = [JSONRenderer]
-
-    def dispatch(self, *args, **kwargs):
-        if (
-            'service_name' not in self.request.GET or
-            helpers.is_draft_requested(self.request)
-        ):
-            return super().dispatch(*args, **kwargs)
-        cached_page = cache.PageCache.get(
-            slug=self.kwargs['slug'],
-            params={
-                'service_name': self.request.GET['service_name'],
-                'lang': translation.get_language(),
-                'region': self.request.GET.get('region'),
-            }
-        )
-        if cached_page:
-            cached_response = helpers.CachedResponse(cached_page)
-            cached_response['etag'] = cached_page.get('etag', None)
-            response = get_conditional_response(
-                request=self.request,
-                etag=cached_response['etag'],
-                response=cached_response,
-            )
-        else:
-            response = super().dispatch(*args, **kwargs)
-            if response.status_code == 200:
-                # No etag is set in this response. this is because creating an
-                # etag is expensive. It will be present on the next retrieved
-                # from the cache though.
-                cache.CachePopulator.populate_async(self.get_object())
-        return response
-
-    def get_queryset(self):
-        return Page.objects.all()
-
-    def get_object(self):
-        if hasattr(self, 'object'):
-            return self.object
-        if 'service_name' not in self.request.query_params:
+    def check_parameter_validity(self):
+        # Ensure service_name was provided and is valid
+        if 'service_name' not in self.request.GET:
             raise ValidationError(
                 detail={'service_name': 'This parameter is required'}
             )
-        instance = get_object_or_404(
-            self.filter_queryset(self.get_queryset()),
-            slug=self.kwargs['slug'],
-        ).specific
-        self.check_object_permissions(self.request, instance)
-        instance = self.handle_serve_draft_object(instance)
-        self.handle_activate_language(instance)
-        self.object = instance
-        return instance
+        if 'service_name' not in self.SERVICE_NAME_ROOT_PATHS.keys():
+            raise ValidationError(
+                detail={'service_name': 'This value is invalid'}
+            )
+        super().check_parameter_validity()
 
-    def detail_view(self, *args, **kwargs):
-        return super().detail_view(self.request, pk=None)
+    def get_object_id(self):
+        if hasattr(self, 'object_id'):
+            return self.object_id
+
+        slug = self.kwargs['slug']
+        service_name = self.request.GET['service_name']
+        page_id = cache.PageIDCache.get_for_slug(
+            self.SERVICE_NAME_ROOT_PATHS[service_name], slug)
+        if page_id is None:
+            raise Http404(
+                "No Page found matching service_name '{}' and "
+                "slug '{}'".format(service_name, slug)
+            )
+
+        self.page_id = page_id
+        return page_id
 
 
 class PageLookupByFullPathAPIEndpoint(APIEndpointBase):
