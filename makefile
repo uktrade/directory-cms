@@ -6,7 +6,7 @@ test_requirements:
 	pip install -r requirements_test.txt
 
 FLAKE8 := flake8 . --exclude=migrations,.venv
-PYTEST := pytest . -v --last-failed --ignore=venv --ignore=conf/celery.py --cov=. --cov-config=.coveragerc --capture=no $(pytest_args)
+PYTEST := pytest . -v -x --ignore=venv --ignore=conf/celery.py --cov=. --cov-config=.coveragerc --capture=no $(pytest_args)
 PYTEST_FIXTURES := pytest --fixtures
 COLLECT_STATIC := python manage.py collectstatic --noinput
 DJANGO_MIGRATE := python manage.py distributed_migrate --noinput
@@ -131,5 +131,8 @@ compile_requirements:
 upgrade_requirements:
 	pip-compile --upgrade requirements.in
 	pip-compile --upgrade requirements_test.in
+
+update_db_template: debug_migrate
+	pg_dump -O -f db_template.sql directory_cms_debug
 
 .PHONY: clean test_requirements debug_webserver debug_test debug

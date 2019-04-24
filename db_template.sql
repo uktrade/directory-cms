@@ -232,24 +232,21 @@ CREATE TABLE public.components_bannercomponent (
     banner_content_en_gb text,
     banner_content_de text,
     banner_content_ja text,
-    banner_content_ru text,
     banner_content_zh_hans text,
     banner_content_fr text,
     banner_content_es text,
     banner_content_pt text,
-    banner_content_pt_br text,
     banner_content_ar text,
     banner_label character varying(50),
     banner_label_en_gb character varying(50),
     banner_label_de character varying(50),
     banner_label_ja character varying(50),
-    banner_label_ru character varying(50),
     banner_label_zh_hans character varying(50),
     banner_label_fr character varying(50),
     banner_label_es character varying(50),
     banner_label_pt character varying(50),
-    banner_label_pt_br character varying(50),
-    banner_label_ar character varying(50)
+    banner_label_ar character varying(50),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -259,7 +256,8 @@ CREATE TABLE public.components_bannercomponent (
 
 CREATE TABLE public.components_componentsapp (
     page_ptr_id integer NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -281,8 +279,6 @@ CREATE TABLE public.core_breadcrumb (
     label_fr character varying(50),
     label_ja character varying(50),
     label_pt character varying(50),
-    label_pt_br character varying(50),
-    label_ru character varying(50),
     label_zh_hans character varying(50),
     CONSTRAINT core_breadcrumb_object_id_check CHECK ((object_id >= 0))
 );
@@ -368,6 +364,37 @@ ALTER SEQUENCE public.core_imagehash_id_seq OWNED BY public.core_imagehash.id;
 
 
 --
+-- Name: core_routingsettings; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.core_routingsettings (
+    id integer NOT NULL,
+    root_path_prefix character varying(100) NOT NULL,
+    include_port_in_urls boolean NOT NULL,
+    site_id integer NOT NULL
+);
+
+
+--
+-- Name: core_routingsettings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.core_routingsettings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: core_routingsettings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.core_routingsettings_id_seq OWNED BY public.core_routingsettings.id;
+
+
+--
 -- Name: django_content_type; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -445,7 +472,8 @@ CREATE TABLE public.django_session (
 
 CREATE TABLE public.export_readiness_allcontactpagespage (
     page_ptr_id integer NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -459,7 +487,8 @@ CREATE TABLE public.export_readiness_articlelistingpage (
     landing_page_title character varying(255) NOT NULL,
     hero_teaser character varying(255),
     list_teaser text,
-    hero_image_id integer
+    hero_image_id integer,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -476,7 +505,8 @@ CREATE TABLE public.export_readiness_articlepage (
     article_image_id integer,
     related_page_one_id integer,
     related_page_three_id integer,
-    related_page_two_id integer
+    related_page_two_id integer,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -545,7 +575,8 @@ CREATE TABLE public.export_readiness_campaignpage (
     selling_point_two_icon_id integer,
     related_page_one_id integer,
     related_page_three_id integer,
-    related_page_two_id integer
+    related_page_two_id integer,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -560,7 +591,8 @@ CREATE TABLE public.export_readiness_contactsuccesspage (
     body_text character varying(255) NOT NULL,
     next_title character varying(255) NOT NULL,
     next_body_text character varying(255) NOT NULL,
-    topic text NOT NULL
+    topic text NOT NULL,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -570,7 +602,8 @@ CREATE TABLE public.export_readiness_contactsuccesspage (
 
 CREATE TABLE public.export_readiness_contactsuccesspages (
     page_ptr_id integer NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -582,7 +615,8 @@ CREATE TABLE public.export_readiness_contactusguidancepage (
     page_ptr_id integer NOT NULL,
     service_name character varying(100),
     topic text NOT NULL,
-    body text NOT NULL
+    body text NOT NULL,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -592,7 +626,8 @@ CREATE TABLE public.export_readiness_contactusguidancepage (
 
 CREATE TABLE public.export_readiness_contactusguidancepages (
     page_ptr_id integer NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -888,7 +923,8 @@ CREATE TABLE public.export_readiness_countryguidepage (
     fact_sheet_column_2_title character varying(255) NOT NULL,
     fact_sheet_teaser character varying(255) NOT NULL,
     fact_sheet_title character varying(255) NOT NULL,
-    help_market_guide_cta_link character varying(255) NOT NULL
+    help_market_guide_cta_link character varying(255) NOT NULL,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -915,7 +951,8 @@ CREATE TABLE public.export_readiness_euexitdomesticformpage (
     body_text text NOT NULL,
     heading character varying(255) NOT NULL,
     submit_button_text character varying(50) NOT NULL,
-    disclaimer text NOT NULL
+    disclaimer text NOT NULL,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -925,7 +962,8 @@ CREATE TABLE public.export_readiness_euexitdomesticformpage (
 
 CREATE TABLE public.export_readiness_euexitformpages (
     page_ptr_id integer NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -940,7 +978,8 @@ CREATE TABLE public.export_readiness_euexitformsuccesspage (
     heading character varying(255) NOT NULL,
     body_text character varying(255) NOT NULL,
     next_title character varying(255) NOT NULL,
-    next_body_text character varying(255) NOT NULL
+    next_body_text character varying(255) NOT NULL,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -971,7 +1010,8 @@ CREATE TABLE public.export_readiness_euexitinternationalformpage (
     body_text text NOT NULL,
     heading character varying(255) NOT NULL,
     submit_button_text character varying(50) NOT NULL,
-    disclaimer text NOT NULL
+    disclaimer text NOT NULL,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -981,7 +1021,8 @@ CREATE TABLE public.export_readiness_euexitinternationalformpage (
 
 CREATE TABLE public.export_readiness_exportreadinessapp (
     page_ptr_id integer NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1006,7 +1047,8 @@ CREATE TABLE public.export_readiness_getfinancepage (
     advantages_one_icon_id integer,
     advantages_three_icon_id integer,
     advantages_two_icon_id integer,
-    evidence_video_id integer
+    evidence_video_id integer,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1020,7 +1062,8 @@ CREATE TABLE public.export_readiness_homepage (
     news_title character varying(255) NOT NULL,
     news_description text NOT NULL,
     banner_content text NOT NULL,
-    banner_label character varying(50)
+    banner_label character varying(50),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1030,7 +1073,8 @@ CREATE TABLE public.export_readiness_homepage (
 
 CREATE TABLE public.export_readiness_internationallandingpage (
     page_ptr_id integer NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1040,7 +1084,8 @@ CREATE TABLE public.export_readiness_internationallandingpage (
 
 CREATE TABLE public.export_readiness_marketingpages (
     page_ptr_id integer NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1051,7 +1096,8 @@ CREATE TABLE public.export_readiness_marketingpages (
 CREATE TABLE public.export_readiness_performancedashboardnotespage (
     page_ptr_id integer NOT NULL,
     body text NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1082,7 +1128,8 @@ CREATE TABLE public.export_readiness_performancedashboardpage (
     data_description_row_four text,
     landing_dashboard boolean NOT NULL,
     guidance_notes text,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1093,7 +1140,8 @@ CREATE TABLE public.export_readiness_performancedashboardpage (
 CREATE TABLE public.export_readiness_privacyandcookiespage (
     page_ptr_id integer NOT NULL,
     body text NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1103,7 +1151,8 @@ CREATE TABLE public.export_readiness_privacyandcookiespage (
 
 CREATE TABLE public.export_readiness_sitepolicypages (
     page_ptr_id integer NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1153,7 +1202,8 @@ ALTER SEQUENCE public.export_readiness_tag_id_seq OWNED BY public.export_readine
 CREATE TABLE public.export_readiness_termsandconditionspage (
     page_ptr_id integer NOT NULL,
     body text NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1168,7 +1218,8 @@ CREATE TABLE public.export_readiness_topiclandingpage (
     hero_teaser character varying(255),
     hero_image_id integer,
     teaser text NOT NULL,
-    banner_text text NOT NULL
+    banner_text text NOT NULL,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1178,7 +1229,8 @@ CREATE TABLE public.export_readiness_topiclandingpage (
 
 CREATE TABLE public.find_a_supplier_findasupplierapp (
     page_ptr_id integer NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1192,45 +1244,37 @@ CREATE TABLE public.find_a_supplier_industryarticlepage (
     body_en_gb text,
     body_de text,
     body_ja text,
-    body_ru text,
     body_zh_hans text,
     body_fr text,
     body_es text,
     body_pt text,
-    body_pt_br text,
     body_ar text,
     author_name character varying(255) NOT NULL,
     author_name_en_gb character varying(255),
     author_name_de character varying(255),
     author_name_ja character varying(255),
-    author_name_ru character varying(255),
     author_name_zh_hans character varying(255),
     author_name_fr character varying(255),
     author_name_es character varying(255),
     author_name_pt character varying(255),
-    author_name_pt_br character varying(255),
     author_name_ar character varying(255),
     job_title character varying(255) NOT NULL,
     job_title_en_gb character varying(255),
     job_title_de character varying(255),
     job_title_ja character varying(255),
-    job_title_ru character varying(255),
     job_title_zh_hans character varying(255),
     job_title_fr character varying(255),
     job_title_es character varying(255),
     job_title_pt character varying(255),
-    job_title_pt_br character varying(255),
     job_title_ar character varying(255),
     date date NOT NULL,
     date_en_gb date,
     date_de date,
     date_ja date,
-    date_ru date,
     date_zh_hans date,
     date_fr date,
     date_es date,
     date_pt date,
-    date_pt_br date,
     date_ar date,
     introduction_title character varying(255) NOT NULL,
     introduction_title_ar character varying(255),
@@ -1240,8 +1284,6 @@ CREATE TABLE public.find_a_supplier_industryarticlepage (
     introduction_title_fr character varying(255),
     introduction_title_ja character varying(255),
     introduction_title_pt character varying(255),
-    introduction_title_pt_br character varying(255),
-    introduction_title_ru character varying(255),
     introduction_title_zh_hans character varying(255),
     breadcrumbs_label character varying(50) NOT NULL,
     breadcrumbs_label_ar character varying(50),
@@ -1251,8 +1293,6 @@ CREATE TABLE public.find_a_supplier_industryarticlepage (
     breadcrumbs_label_fr character varying(50),
     breadcrumbs_label_ja character varying(50),
     breadcrumbs_label_pt character varying(50),
-    breadcrumbs_label_pt_br character varying(50),
-    breadcrumbs_label_ru character varying(50),
     breadcrumbs_label_zh_hans character varying(50),
     call_to_action_text character varying(500) NOT NULL,
     call_to_action_text_ar character varying(500),
@@ -1262,8 +1302,6 @@ CREATE TABLE public.find_a_supplier_industryarticlepage (
     call_to_action_text_fr character varying(500),
     call_to_action_text_ja character varying(500),
     call_to_action_text_pt character varying(500),
-    call_to_action_text_pt_br character varying(500),
-    call_to_action_text_ru character varying(500),
     call_to_action_text_zh_hans character varying(500),
     proposition_text character varying(255) NOT NULL,
     proposition_text_ar character varying(255),
@@ -1273,8 +1311,6 @@ CREATE TABLE public.find_a_supplier_industryarticlepage (
     proposition_text_fr character varying(255),
     proposition_text_ja character varying(255),
     proposition_text_pt character varying(255),
-    proposition_text_pt_br character varying(255),
-    proposition_text_ru character varying(255),
     proposition_text_zh_hans character varying(255),
     show_table_of_content boolean NOT NULL,
     back_to_home_link_text character varying(100) NOT NULL,
@@ -1285,8 +1321,6 @@ CREATE TABLE public.find_a_supplier_industryarticlepage (
     back_to_home_link_text_fr character varying(100),
     back_to_home_link_text_ja character varying(100),
     back_to_home_link_text_pt character varying(100),
-    back_to_home_link_text_pt_br character varying(100),
-    back_to_home_link_text_ru character varying(100),
     back_to_home_link_text_zh_hans character varying(100),
     social_share_title character varying(100) NOT NULL,
     social_share_title_ar character varying(100),
@@ -1296,10 +1330,9 @@ CREATE TABLE public.find_a_supplier_industryarticlepage (
     social_share_title_fr character varying(100),
     social_share_title_ja character varying(100),
     social_share_title_pt character varying(100),
-    social_share_title_pt_br character varying(100),
-    social_share_title_ru character varying(100),
     social_share_title_zh_hans character varying(100),
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1313,45 +1346,37 @@ CREATE TABLE public.find_a_supplier_industrycontactpage (
     introduction_text_en_gb text,
     introduction_text_de text,
     introduction_text_ja text,
-    introduction_text_ru text,
     introduction_text_zh_hans text,
     introduction_text_fr text,
     introduction_text_es text,
     introduction_text_pt text,
-    introduction_text_pt_br text,
     introduction_text_ar text,
     submit_button_text character varying(100) NOT NULL,
     submit_button_text_en_gb character varying(100),
     submit_button_text_de character varying(100),
     submit_button_text_ja character varying(100),
-    submit_button_text_ru character varying(100),
     submit_button_text_zh_hans character varying(100),
     submit_button_text_fr character varying(100),
     submit_button_text_es character varying(100),
     submit_button_text_pt character varying(100),
-    submit_button_text_pt_br character varying(100),
     submit_button_text_ar character varying(100),
     success_message_text text NOT NULL,
     success_message_text_en_gb text,
     success_message_text_de text,
     success_message_text_ja text,
-    success_message_text_ru text,
     success_message_text_zh_hans text,
     success_message_text_fr text,
     success_message_text_es text,
     success_message_text_pt text,
-    success_message_text_pt_br text,
     success_message_text_ar text,
     success_back_link_text character varying(100) NOT NULL,
     success_back_link_text_en_gb character varying(100),
     success_back_link_text_de character varying(100),
     success_back_link_text_ja character varying(100),
-    success_back_link_text_ru character varying(100),
     success_back_link_text_zh_hans character varying(100),
     success_back_link_text_fr character varying(100),
     success_back_link_text_es character varying(100),
     success_back_link_text_pt character varying(100),
-    success_back_link_text_pt_br character varying(100),
     success_back_link_text_ar character varying(100),
     breadcrumbs_label character varying(50) NOT NULL,
     breadcrumbs_label_ar character varying(50),
@@ -1361,10 +1386,9 @@ CREATE TABLE public.find_a_supplier_industrycontactpage (
     breadcrumbs_label_fr character varying(50),
     breadcrumbs_label_ja character varying(50),
     breadcrumbs_label_pt character varying(50),
-    breadcrumbs_label_pt_br character varying(50),
-    breadcrumbs_label_ru character varying(50),
     breadcrumbs_label_zh_hans character varying(50),
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1378,34 +1402,28 @@ CREATE TABLE public.find_a_supplier_industrylandingpage (
     proposition_text_en_gb character varying(500),
     proposition_text_de character varying(500),
     proposition_text_ja character varying(500),
-    proposition_text_ru character varying(500),
     proposition_text_zh_hans character varying(500),
     proposition_text_fr character varying(500),
     proposition_text_es character varying(500),
     proposition_text_pt character varying(500),
-    proposition_text_pt_br character varying(500),
     proposition_text_ar character varying(500),
     call_to_action_text character varying(500) NOT NULL,
     call_to_action_text_en_gb character varying(500),
     call_to_action_text_de character varying(500),
     call_to_action_text_ja character varying(500),
-    call_to_action_text_ru character varying(500),
     call_to_action_text_zh_hans character varying(500),
     call_to_action_text_fr character varying(500),
     call_to_action_text_es character varying(500),
     call_to_action_text_pt character varying(500),
-    call_to_action_text_pt_br character varying(500),
     call_to_action_text_ar character varying(500),
     breadcrumbs_label character varying(50) NOT NULL,
     breadcrumbs_label_en_gb character varying(50),
     breadcrumbs_label_de character varying(50),
     breadcrumbs_label_ja character varying(50),
-    breadcrumbs_label_ru character varying(50),
     breadcrumbs_label_zh_hans character varying(50),
     breadcrumbs_label_fr character varying(50),
     breadcrumbs_label_es character varying(50),
     breadcrumbs_label_pt character varying(50),
-    breadcrumbs_label_pt_br character varying(50),
     breadcrumbs_label_ar character varying(50),
     hero_image_id integer,
     hero_title character varying(500) NOT NULL,
@@ -1416,8 +1434,6 @@ CREATE TABLE public.find_a_supplier_industrylandingpage (
     hero_title_fr character varying(500),
     hero_title_ja character varying(500),
     hero_title_pt character varying(500),
-    hero_title_pt_br character varying(500),
-    hero_title_ru character varying(500),
     hero_title_zh_hans character varying(500),
     mobile_hero_image_id integer,
     more_industries_title character varying(100) NOT NULL,
@@ -1428,8 +1444,6 @@ CREATE TABLE public.find_a_supplier_industrylandingpage (
     more_industries_title_fr character varying(100),
     more_industries_title_ja character varying(100),
     more_industries_title_pt character varying(100),
-    more_industries_title_pt_br character varying(100),
-    more_industries_title_ru character varying(100),
     more_industries_title_zh_hans character varying(100),
     hero_image_caption character varying(255) NOT NULL,
     hero_image_caption_ar character varying(255),
@@ -1439,10 +1453,9 @@ CREATE TABLE public.find_a_supplier_industrylandingpage (
     hero_image_caption_fr character varying(255),
     hero_image_caption_ja character varying(255),
     hero_image_caption_pt character varying(255),
-    hero_image_caption_pt_br character varying(255),
-    hero_image_caption_ru character varying(255),
     hero_image_caption_zh_hans character varying(255),
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1460,7 +1473,6 @@ CREATE TABLE public.find_a_supplier_industrypage (
     hero_text_fr text,
     hero_text_es text,
     hero_text_pt text,
-    hero_text_pt_br text,
     hero_text_ar text,
     introduction_text character varying(400) NOT NULL,
     introduction_text_en_gb character varying(400),
@@ -1470,7 +1482,6 @@ CREATE TABLE public.find_a_supplier_industrypage (
     introduction_text_fr character varying(400),
     introduction_text_es character varying(400),
     introduction_text_pt character varying(400),
-    introduction_text_pt_br character varying(400),
     introduction_text_ar character varying(400),
     introduction_column_one_text text NOT NULL,
     introduction_column_one_text_en_gb text,
@@ -1480,7 +1491,6 @@ CREATE TABLE public.find_a_supplier_industrypage (
     introduction_column_one_text_fr text,
     introduction_column_one_text_es text,
     introduction_column_one_text_pt text,
-    introduction_column_one_text_pt_br text,
     introduction_column_one_text_ar text,
     introduction_column_two_text text NOT NULL,
     introduction_column_two_text_en_gb text,
@@ -1490,7 +1500,6 @@ CREATE TABLE public.find_a_supplier_industrypage (
     introduction_column_two_text_fr text,
     introduction_column_two_text_es text,
     introduction_column_two_text_pt text,
-    introduction_column_two_text_pt_br text,
     introduction_column_two_text_ar text,
     introduction_column_three_text text NOT NULL,
     introduction_column_three_text_en_gb text,
@@ -1500,14 +1509,8 @@ CREATE TABLE public.find_a_supplier_industrypage (
     introduction_column_three_text_fr text,
     introduction_column_three_text_es text,
     introduction_column_three_text_pt text,
-    introduction_column_three_text_pt_br text,
     introduction_column_three_text_ar text,
     hero_image_id integer,
-    hero_text_ru text,
-    introduction_column_one_text_ru text,
-    introduction_column_three_text_ru text,
-    introduction_column_two_text_ru text,
-    introduction_text_ru character varying(400),
     introduction_column_one_icon_id integer,
     introduction_column_three_icon_id integer,
     introduction_column_two_icon_id integer,
@@ -1519,8 +1522,6 @@ CREATE TABLE public.find_a_supplier_industrypage (
     company_list_call_to_action_text_fr character varying(255),
     company_list_call_to_action_text_ja character varying(255),
     company_list_call_to_action_text_pt character varying(255),
-    company_list_call_to_action_text_pt_br character varying(255),
-    company_list_call_to_action_text_ru character varying(255),
     company_list_call_to_action_text_zh_hans character varying(255),
     company_list_text text NOT NULL,
     company_list_text_ar text,
@@ -1530,8 +1531,6 @@ CREATE TABLE public.find_a_supplier_industrypage (
     company_list_text_fr text,
     company_list_text_ja text,
     company_list_text_pt text,
-    company_list_text_pt_br text,
-    company_list_text_ru text,
     company_list_text_zh_hans text,
     company_list_search_input_placeholder_text character varying(255) NOT NULL,
     company_list_search_input_placeholder_text_ar character varying(255),
@@ -1541,8 +1540,6 @@ CREATE TABLE public.find_a_supplier_industrypage (
     company_list_search_input_placeholder_text_fr character varying(255),
     company_list_search_input_placeholder_text_ja character varying(255),
     company_list_search_input_placeholder_text_pt character varying(255),
-    company_list_search_input_placeholder_text_pt_br character varying(255),
-    company_list_search_input_placeholder_text_ru character varying(255),
     company_list_search_input_placeholder_text_zh_hans character varying(255),
     breadcrumbs_label character varying(50) NOT NULL,
     breadcrumbs_label_ar character varying(50),
@@ -1552,8 +1549,6 @@ CREATE TABLE public.find_a_supplier_industrypage (
     breadcrumbs_label_fr character varying(50),
     breadcrumbs_label_ja character varying(50),
     breadcrumbs_label_pt character varying(50),
-    breadcrumbs_label_pt_br character varying(50),
-    breadcrumbs_label_ru character varying(50),
     breadcrumbs_label_zh_hans character varying(50),
     introduction_call_to_action_button_text character varying(50) NOT NULL,
     introduction_call_to_action_button_text_ar character varying(50),
@@ -1563,8 +1558,6 @@ CREATE TABLE public.find_a_supplier_industrypage (
     introduction_call_to_action_button_text_fr character varying(50),
     introduction_call_to_action_button_text_ja character varying(50),
     introduction_call_to_action_button_text_pt character varying(50),
-    introduction_call_to_action_button_text_pt_br character varying(50),
-    introduction_call_to_action_button_text_ru character varying(50),
     introduction_call_to_action_button_text_zh_hans character varying(50),
     summary_image_id integer,
     search_filter_sector character varying(255)[],
@@ -1579,8 +1572,6 @@ CREATE TABLE public.find_a_supplier_industrypage (
     hero_image_caption_fr character varying(255),
     hero_image_caption_ja character varying(255),
     hero_image_caption_pt character varying(255),
-    hero_image_caption_pt_br character varying(255),
-    hero_image_caption_ru character varying(255),
     hero_image_caption_zh_hans character varying(255),
     introduction_title character varying(400) NOT NULL,
     introduction_title_ar character varying(400),
@@ -1590,12 +1581,11 @@ CREATE TABLE public.find_a_supplier_industrypage (
     introduction_title_fr character varying(400),
     introduction_title_ja character varying(400),
     introduction_title_pt character varying(400),
-    introduction_title_pt_br character varying(400),
-    introduction_title_ru character varying(400),
     introduction_title_zh_hans character varying(400),
     show_on_homepage boolean NOT NULL,
     show_on_industries_showcase_page boolean NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1618,8 +1608,6 @@ CREATE TABLE public.find_a_supplier_industrypagearticlesummary (
     page_fr_id integer,
     page_ja_id integer,
     page_pt_id integer,
-    page_pt_br_id integer,
-    page_ru_id integer,
     page_zh_hans_id integer,
     video_media_id integer
 );
@@ -1654,133 +1642,109 @@ CREATE TABLE public.find_a_supplier_landingpage (
     hero_text_en_gb text,
     hero_text_de text,
     hero_text_ja text,
-    hero_text_ru text,
     hero_text_zh_hans text,
     hero_text_fr text,
     hero_text_es text,
     hero_text_pt text,
-    hero_text_pt_br text,
     hero_text_ar text,
     search_field_placeholder character varying(500) NOT NULL,
     search_field_placeholder_en_gb character varying(500),
     search_field_placeholder_de character varying(500),
     search_field_placeholder_ja character varying(500),
-    search_field_placeholder_ru character varying(500),
     search_field_placeholder_zh_hans character varying(500),
     search_field_placeholder_fr character varying(500),
     search_field_placeholder_es character varying(500),
     search_field_placeholder_pt character varying(500),
-    search_field_placeholder_pt_br character varying(500),
     search_field_placeholder_ar character varying(500),
     search_button_text character varying(500) NOT NULL,
     search_button_text_en_gb character varying(500),
     search_button_text_de character varying(500),
     search_button_text_ja character varying(500),
-    search_button_text_ru character varying(500),
     search_button_text_zh_hans character varying(500),
     search_button_text_fr character varying(500),
     search_button_text_es character varying(500),
     search_button_text_pt character varying(500),
-    search_button_text_pt_br character varying(500),
     search_button_text_ar character varying(500),
     proposition_text text NOT NULL,
     proposition_text_en_gb text,
     proposition_text_de text,
     proposition_text_ja text,
-    proposition_text_ru text,
     proposition_text_zh_hans text,
     proposition_text_fr text,
     proposition_text_es text,
     proposition_text_pt text,
-    proposition_text_pt_br text,
     proposition_text_ar text,
     call_to_action_text character varying(500) NOT NULL,
     call_to_action_text_en_gb character varying(500),
     call_to_action_text_de character varying(500),
     call_to_action_text_ja character varying(500),
-    call_to_action_text_ru character varying(500),
     call_to_action_text_zh_hans character varying(500),
     call_to_action_text_fr character varying(500),
     call_to_action_text_es character varying(500),
     call_to_action_text_pt character varying(500),
-    call_to_action_text_pt_br character varying(500),
     call_to_action_text_ar character varying(500),
     industries_list_text text NOT NULL,
     industries_list_text_en_gb text,
     industries_list_text_de text,
     industries_list_text_ja text,
-    industries_list_text_ru text,
     industries_list_text_zh_hans text,
     industries_list_text_fr text,
     industries_list_text_es text,
     industries_list_text_pt text,
-    industries_list_text_pt_br text,
     industries_list_text_ar text,
     industries_list_call_to_action_text character varying(500) NOT NULL,
     industries_list_call_to_action_text_en_gb character varying(500),
     industries_list_call_to_action_text_de character varying(500),
     industries_list_call_to_action_text_ja character varying(500),
-    industries_list_call_to_action_text_ru character varying(500),
     industries_list_call_to_action_text_zh_hans character varying(500),
     industries_list_call_to_action_text_fr character varying(500),
     industries_list_call_to_action_text_es character varying(500),
     industries_list_call_to_action_text_pt character varying(500),
-    industries_list_call_to_action_text_pt_br character varying(500),
     industries_list_call_to_action_text_ar character varying(500),
     services_list_text text NOT NULL,
     services_list_text_en_gb text,
     services_list_text_de text,
     services_list_text_ja text,
-    services_list_text_ru text,
     services_list_text_zh_hans text,
     services_list_text_fr text,
     services_list_text_es text,
     services_list_text_pt text,
-    services_list_text_pt_br text,
     services_list_text_ar text,
     services_column_one text NOT NULL,
     services_column_one_en_gb text,
     services_column_one_de text,
     services_column_one_ja text,
-    services_column_one_ru text,
     services_column_one_zh_hans text,
     services_column_one_fr text,
     services_column_one_es text,
     services_column_one_pt text,
-    services_column_one_pt_br text,
     services_column_one_ar text,
     services_column_two text NOT NULL,
     services_column_two_en_gb text,
     services_column_two_de text,
     services_column_two_ja text,
-    services_column_two_ru text,
     services_column_two_zh_hans text,
     services_column_two_fr text,
     services_column_two_es text,
     services_column_two_pt text,
-    services_column_two_pt_br text,
     services_column_two_ar text,
     services_column_three text NOT NULL,
     services_column_three_en_gb text,
     services_column_three_de text,
     services_column_three_ja text,
-    services_column_three_ru text,
     services_column_three_zh_hans text,
     services_column_three_fr text,
     services_column_three_es text,
     services_column_three_pt text,
-    services_column_three_pt_br text,
     services_column_three_ar text,
     services_column_four text NOT NULL,
     services_column_four_en_gb text,
     services_column_four_de text,
     services_column_four_ja text,
-    services_column_four_ru text,
     services_column_four_zh_hans text,
     services_column_four_fr text,
     services_column_four_es text,
     services_column_four_pt text,
-    services_column_four_pt_br text,
     services_column_four_ar text,
     hero_image_id integer,
     services_column_four_icon_id integer,
@@ -1791,8 +1755,6 @@ CREATE TABLE public.find_a_supplier_landingpage (
     services_column_four_icon_fr_id integer,
     services_column_four_icon_ja_id integer,
     services_column_four_icon_pt_id integer,
-    services_column_four_icon_pt_br_id integer,
-    services_column_four_icon_ru_id integer,
     services_column_four_icon_zh_hans_id integer,
     services_column_one_icon_id integer,
     services_column_one_icon_ar_id integer,
@@ -1802,8 +1764,6 @@ CREATE TABLE public.find_a_supplier_landingpage (
     services_column_one_icon_fr_id integer,
     services_column_one_icon_ja_id integer,
     services_column_one_icon_pt_id integer,
-    services_column_one_icon_pt_br_id integer,
-    services_column_one_icon_ru_id integer,
     services_column_one_icon_zh_hans_id integer,
     services_column_three_icon_id integer,
     services_column_three_icon_ar_id integer,
@@ -1813,8 +1773,6 @@ CREATE TABLE public.find_a_supplier_landingpage (
     services_column_three_icon_fr_id integer,
     services_column_three_icon_ja_id integer,
     services_column_three_icon_pt_id integer,
-    services_column_three_icon_pt_br_id integer,
-    services_column_three_icon_ru_id integer,
     services_column_three_icon_zh_hans_id integer,
     services_column_two_icon_id integer,
     services_column_two_icon_ar_id integer,
@@ -1824,8 +1782,6 @@ CREATE TABLE public.find_a_supplier_landingpage (
     services_column_two_icon_fr_id integer,
     services_column_two_icon_ja_id integer,
     services_column_two_icon_pt_id integer,
-    services_column_two_icon_pt_br_id integer,
-    services_column_two_icon_ru_id integer,
     services_column_two_icon_zh_hans_id integer,
     breadcrumbs_label character varying(50) NOT NULL,
     breadcrumbs_label_ar character varying(50),
@@ -1835,8 +1791,6 @@ CREATE TABLE public.find_a_supplier_landingpage (
     breadcrumbs_label_fr character varying(50),
     breadcrumbs_label_ja character varying(50),
     breadcrumbs_label_pt character varying(50),
-    breadcrumbs_label_pt_br character varying(50),
-    breadcrumbs_label_ru character varying(50),
     breadcrumbs_label_zh_hans character varying(50),
     mobile_hero_image_id integer,
     hero_image_caption character varying(255) NOT NULL,
@@ -1847,10 +1801,9 @@ CREATE TABLE public.find_a_supplier_landingpage (
     hero_image_caption_fr character varying(255),
     hero_image_caption_ja character varying(255),
     hero_image_caption_pt character varying(255),
-    hero_image_caption_pt_br character varying(255),
-    hero_image_caption_ru character varying(255),
     hero_image_caption_zh_hans character varying(255),
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1873,8 +1826,6 @@ CREATE TABLE public.find_a_supplier_landingpagearticlesummary (
     page_fr_id integer,
     page_ja_id integer,
     page_pt_id integer,
-    page_pt_br_id integer,
-    page_ru_id integer,
     page_zh_hans_id integer,
     video_media_id integer
 );
@@ -1905,7 +1856,8 @@ ALTER SEQUENCE public.find_a_supplier_landingpagearticlesummary_id_seq OWNED BY 
 
 CREATE TABLE public.great_international_greatinternationalapp (
     page_ptr_id integer NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -1927,8 +1879,6 @@ CREATE TABLE public.great_international_internationalarticlelistingpage (
     hero_image_fr_id integer,
     hero_image_ja_id integer,
     hero_image_pt_id integer,
-    hero_image_pt_br_id integer,
-    hero_image_ru_id integer,
     hero_image_zh_hans_id integer,
     hero_teaser_ar character varying(255),
     hero_teaser_de character varying(255),
@@ -1937,8 +1887,6 @@ CREATE TABLE public.great_international_internationalarticlelistingpage (
     hero_teaser_fr character varying(255),
     hero_teaser_ja character varying(255),
     hero_teaser_pt character varying(255),
-    hero_teaser_pt_br character varying(255),
-    hero_teaser_ru character varying(255),
     hero_teaser_zh_hans character varying(255),
     landing_page_title_ar character varying(255),
     landing_page_title_de character varying(255),
@@ -1947,8 +1895,6 @@ CREATE TABLE public.great_international_internationalarticlelistingpage (
     landing_page_title_fr character varying(255),
     landing_page_title_ja character varying(255),
     landing_page_title_pt character varying(255),
-    landing_page_title_pt_br character varying(255),
-    landing_page_title_ru character varying(255),
     landing_page_title_zh_hans character varying(255),
     list_teaser_ar text,
     list_teaser_de text,
@@ -1957,9 +1903,8 @@ CREATE TABLE public.great_international_internationalarticlelistingpage (
     list_teaser_fr text,
     list_teaser_ja text,
     list_teaser_pt text,
-    list_teaser_pt_br text,
-    list_teaser_ru text,
-    list_teaser_zh_hans text
+    list_teaser_zh_hans text,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -2015,8 +1960,6 @@ CREATE TABLE public.great_international_internationalarticlepage (
     article_body_text_fr text,
     article_body_text_ja text,
     article_body_text_pt text,
-    article_body_text_pt_br text,
-    article_body_text_ru text,
     article_body_text_zh_hans text,
     article_image_ar_id integer,
     article_image_de_id integer,
@@ -2025,8 +1968,6 @@ CREATE TABLE public.great_international_internationalarticlepage (
     article_image_fr_id integer,
     article_image_ja_id integer,
     article_image_pt_id integer,
-    article_image_pt_br_id integer,
-    article_image_ru_id integer,
     article_image_zh_hans_id integer,
     article_subheading_ar character varying(255),
     article_subheading_de character varying(255),
@@ -2035,8 +1976,6 @@ CREATE TABLE public.great_international_internationalarticlepage (
     article_subheading_fr character varying(255),
     article_subheading_ja character varying(255),
     article_subheading_pt character varying(255),
-    article_subheading_pt_br character varying(255),
-    article_subheading_ru character varying(255),
     article_subheading_zh_hans character varying(255),
     article_teaser_ar character varying(255),
     article_teaser_de character varying(255),
@@ -2045,8 +1984,6 @@ CREATE TABLE public.great_international_internationalarticlepage (
     article_teaser_fr character varying(255),
     article_teaser_ja character varying(255),
     article_teaser_pt character varying(255),
-    article_teaser_pt_br character varying(255),
-    article_teaser_ru character varying(255),
     article_teaser_zh_hans character varying(255),
     article_title_ar character varying(255),
     article_title_de character varying(255),
@@ -2055,8 +1992,6 @@ CREATE TABLE public.great_international_internationalarticlepage (
     article_title_fr character varying(255),
     article_title_ja character varying(255),
     article_title_pt character varying(255),
-    article_title_pt_br character varying(255),
-    article_title_ru character varying(255),
     article_title_zh_hans character varying(255),
     related_page_one_ar_id integer,
     related_page_one_de_id integer,
@@ -2065,8 +2000,6 @@ CREATE TABLE public.great_international_internationalarticlepage (
     related_page_one_fr_id integer,
     related_page_one_ja_id integer,
     related_page_one_pt_id integer,
-    related_page_one_pt_br_id integer,
-    related_page_one_ru_id integer,
     related_page_one_zh_hans_id integer,
     related_page_three_ar_id integer,
     related_page_three_de_id integer,
@@ -2075,8 +2008,6 @@ CREATE TABLE public.great_international_internationalarticlepage (
     related_page_three_fr_id integer,
     related_page_three_ja_id integer,
     related_page_three_pt_id integer,
-    related_page_three_pt_br_id integer,
-    related_page_three_ru_id integer,
     related_page_three_zh_hans_id integer,
     related_page_two_ar_id integer,
     related_page_two_de_id integer,
@@ -2085,9 +2016,8 @@ CREATE TABLE public.great_international_internationalarticlepage (
     related_page_two_fr_id integer,
     related_page_two_ja_id integer,
     related_page_two_pt_id integer,
-    related_page_two_pt_br_id integer,
-    related_page_two_ru_id integer,
-    related_page_two_zh_hans_id integer
+    related_page_two_zh_hans_id integer,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -2166,8 +2096,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     campaign_heading_fr character varying(255),
     campaign_heading_ja character varying(255),
     campaign_heading_pt character varying(255),
-    campaign_heading_pt_br character varying(255),
-    campaign_heading_ru character varying(255),
     campaign_heading_zh_hans character varying(255),
     campaign_hero_image_ar_id integer,
     campaign_hero_image_de_id integer,
@@ -2176,8 +2104,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     campaign_hero_image_fr_id integer,
     campaign_hero_image_ja_id integer,
     campaign_hero_image_pt_id integer,
-    campaign_hero_image_pt_br_id integer,
-    campaign_hero_image_ru_id integer,
     campaign_hero_image_zh_hans_id integer,
     campaign_subheading_ar character varying(255),
     campaign_subheading_de character varying(255),
@@ -2186,8 +2112,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     campaign_subheading_fr character varying(255),
     campaign_subheading_ja character varying(255),
     campaign_subheading_pt character varying(255),
-    campaign_subheading_pt_br character varying(255),
-    campaign_subheading_ru character varying(255),
     campaign_subheading_zh_hans character varying(255),
     campaign_teaser_ar character varying(255),
     campaign_teaser_de character varying(255),
@@ -2196,8 +2120,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     campaign_teaser_fr character varying(255),
     campaign_teaser_ja character varying(255),
     campaign_teaser_pt character varying(255),
-    campaign_teaser_pt_br character varying(255),
-    campaign_teaser_ru character varying(255),
     campaign_teaser_zh_hans character varying(255),
     cta_box_button_text_ar character varying(255),
     cta_box_button_text_de character varying(255),
@@ -2206,8 +2128,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     cta_box_button_text_fr character varying(255),
     cta_box_button_text_ja character varying(255),
     cta_box_button_text_pt character varying(255),
-    cta_box_button_text_pt_br character varying(255),
-    cta_box_button_text_ru character varying(255),
     cta_box_button_text_zh_hans character varying(255),
     cta_box_button_url_ar character varying(255),
     cta_box_button_url_de character varying(255),
@@ -2216,8 +2136,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     cta_box_button_url_fr character varying(255),
     cta_box_button_url_ja character varying(255),
     cta_box_button_url_pt character varying(255),
-    cta_box_button_url_pt_br character varying(255),
-    cta_box_button_url_ru character varying(255),
     cta_box_button_url_zh_hans character varying(255),
     cta_box_message_ar character varying(255),
     cta_box_message_de character varying(255),
@@ -2226,8 +2144,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     cta_box_message_fr character varying(255),
     cta_box_message_ja character varying(255),
     cta_box_message_pt character varying(255),
-    cta_box_message_pt_br character varying(255),
-    cta_box_message_ru character varying(255),
     cta_box_message_zh_hans character varying(255),
     related_content_heading_ar character varying(255),
     related_content_heading_de character varying(255),
@@ -2236,8 +2152,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     related_content_heading_fr character varying(255),
     related_content_heading_ja character varying(255),
     related_content_heading_pt character varying(255),
-    related_content_heading_pt_br character varying(255),
-    related_content_heading_ru character varying(255),
     related_content_heading_zh_hans character varying(255),
     related_content_intro_ar text,
     related_content_intro_de text,
@@ -2246,8 +2160,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     related_content_intro_fr text,
     related_content_intro_ja text,
     related_content_intro_pt text,
-    related_content_intro_pt_br text,
-    related_content_intro_ru text,
     related_content_intro_zh_hans text,
     related_page_one_ar_id integer,
     related_page_one_de_id integer,
@@ -2256,8 +2168,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     related_page_one_fr_id integer,
     related_page_one_ja_id integer,
     related_page_one_pt_id integer,
-    related_page_one_pt_br_id integer,
-    related_page_one_ru_id integer,
     related_page_one_zh_hans_id integer,
     related_page_three_ar_id integer,
     related_page_three_de_id integer,
@@ -2266,8 +2176,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     related_page_three_fr_id integer,
     related_page_three_ja_id integer,
     related_page_three_pt_id integer,
-    related_page_three_pt_br_id integer,
-    related_page_three_ru_id integer,
     related_page_three_zh_hans_id integer,
     related_page_two_ar_id integer,
     related_page_two_de_id integer,
@@ -2276,8 +2184,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     related_page_two_fr_id integer,
     related_page_two_ja_id integer,
     related_page_two_pt_id integer,
-    related_page_two_pt_br_id integer,
-    related_page_two_ru_id integer,
     related_page_two_zh_hans_id integer,
     section_one_contact_button_text_ar character varying(255),
     section_one_contact_button_text_de character varying(255),
@@ -2286,8 +2192,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     section_one_contact_button_text_fr character varying(255),
     section_one_contact_button_text_ja character varying(255),
     section_one_contact_button_text_pt character varying(255),
-    section_one_contact_button_text_pt_br character varying(255),
-    section_one_contact_button_text_ru character varying(255),
     section_one_contact_button_text_zh_hans character varying(255),
     section_one_contact_button_url_ar character varying(255),
     section_one_contact_button_url_de character varying(255),
@@ -2296,8 +2200,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     section_one_contact_button_url_fr character varying(255),
     section_one_contact_button_url_ja character varying(255),
     section_one_contact_button_url_pt character varying(255),
-    section_one_contact_button_url_pt_br character varying(255),
-    section_one_contact_button_url_ru character varying(255),
     section_one_contact_button_url_zh_hans character varying(255),
     section_one_heading_ar character varying(255),
     section_one_heading_de character varying(255),
@@ -2306,8 +2208,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     section_one_heading_fr character varying(255),
     section_one_heading_ja character varying(255),
     section_one_heading_pt character varying(255),
-    section_one_heading_pt_br character varying(255),
-    section_one_heading_ru character varying(255),
     section_one_heading_zh_hans character varying(255),
     section_one_image_ar_id integer,
     section_one_image_de_id integer,
@@ -2316,8 +2216,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     section_one_image_fr_id integer,
     section_one_image_ja_id integer,
     section_one_image_pt_id integer,
-    section_one_image_pt_br_id integer,
-    section_one_image_ru_id integer,
     section_one_image_zh_hans_id integer,
     section_one_intro_ar text,
     section_one_intro_de text,
@@ -2326,8 +2224,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     section_one_intro_fr text,
     section_one_intro_ja text,
     section_one_intro_pt text,
-    section_one_intro_pt_br text,
-    section_one_intro_ru text,
     section_one_intro_zh_hans text,
     section_two_contact_button_text_ar character varying(255),
     section_two_contact_button_text_de character varying(255),
@@ -2336,8 +2232,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     section_two_contact_button_text_fr character varying(255),
     section_two_contact_button_text_ja character varying(255),
     section_two_contact_button_text_pt character varying(255),
-    section_two_contact_button_text_pt_br character varying(255),
-    section_two_contact_button_text_ru character varying(255),
     section_two_contact_button_text_zh_hans character varying(255),
     section_two_contact_button_url_ar character varying(255),
     section_two_contact_button_url_de character varying(255),
@@ -2346,8 +2240,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     section_two_contact_button_url_fr character varying(255),
     section_two_contact_button_url_ja character varying(255),
     section_two_contact_button_url_pt character varying(255),
-    section_two_contact_button_url_pt_br character varying(255),
-    section_two_contact_button_url_ru character varying(255),
     section_two_contact_button_url_zh_hans character varying(255),
     section_two_heading_ar character varying(255),
     section_two_heading_de character varying(255),
@@ -2356,8 +2248,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     section_two_heading_fr character varying(255),
     section_two_heading_ja character varying(255),
     section_two_heading_pt character varying(255),
-    section_two_heading_pt_br character varying(255),
-    section_two_heading_ru character varying(255),
     section_two_heading_zh_hans character varying(255),
     section_two_image_ar_id integer,
     section_two_image_de_id integer,
@@ -2366,8 +2256,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     section_two_image_fr_id integer,
     section_two_image_ja_id integer,
     section_two_image_pt_id integer,
-    section_two_image_pt_br_id integer,
-    section_two_image_ru_id integer,
     section_two_image_zh_hans_id integer,
     section_two_intro_ar text,
     section_two_intro_de text,
@@ -2376,8 +2264,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     section_two_intro_fr text,
     section_two_intro_ja text,
     section_two_intro_pt text,
-    section_two_intro_pt_br text,
-    section_two_intro_ru text,
     section_two_intro_zh_hans text,
     selling_point_one_content_ar text,
     selling_point_one_content_de text,
@@ -2386,8 +2272,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     selling_point_one_content_fr text,
     selling_point_one_content_ja text,
     selling_point_one_content_pt text,
-    selling_point_one_content_pt_br text,
-    selling_point_one_content_ru text,
     selling_point_one_content_zh_hans text,
     selling_point_one_heading_ar character varying(255),
     selling_point_one_heading_de character varying(255),
@@ -2396,8 +2280,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     selling_point_one_heading_fr character varying(255),
     selling_point_one_heading_ja character varying(255),
     selling_point_one_heading_pt character varying(255),
-    selling_point_one_heading_pt_br character varying(255),
-    selling_point_one_heading_ru character varying(255),
     selling_point_one_heading_zh_hans character varying(255),
     selling_point_one_icon_ar_id integer,
     selling_point_one_icon_de_id integer,
@@ -2406,8 +2288,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     selling_point_one_icon_fr_id integer,
     selling_point_one_icon_ja_id integer,
     selling_point_one_icon_pt_id integer,
-    selling_point_one_icon_pt_br_id integer,
-    selling_point_one_icon_ru_id integer,
     selling_point_one_icon_zh_hans_id integer,
     selling_point_three_content_ar text,
     selling_point_three_content_de text,
@@ -2416,8 +2296,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     selling_point_three_content_fr text,
     selling_point_three_content_ja text,
     selling_point_three_content_pt text,
-    selling_point_three_content_pt_br text,
-    selling_point_three_content_ru text,
     selling_point_three_content_zh_hans text,
     selling_point_three_heading_ar character varying(255),
     selling_point_three_heading_de character varying(255),
@@ -2426,8 +2304,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     selling_point_three_heading_fr character varying(255),
     selling_point_three_heading_ja character varying(255),
     selling_point_three_heading_pt character varying(255),
-    selling_point_three_heading_pt_br character varying(255),
-    selling_point_three_heading_ru character varying(255),
     selling_point_three_heading_zh_hans character varying(255),
     selling_point_three_icon_ar_id integer,
     selling_point_three_icon_de_id integer,
@@ -2436,8 +2312,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     selling_point_three_icon_fr_id integer,
     selling_point_three_icon_ja_id integer,
     selling_point_three_icon_pt_id integer,
-    selling_point_three_icon_pt_br_id integer,
-    selling_point_three_icon_ru_id integer,
     selling_point_three_icon_zh_hans_id integer,
     selling_point_two_content_ar text,
     selling_point_two_content_de text,
@@ -2446,8 +2320,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     selling_point_two_content_fr text,
     selling_point_two_content_ja text,
     selling_point_two_content_pt text,
-    selling_point_two_content_pt_br text,
-    selling_point_two_content_ru text,
     selling_point_two_content_zh_hans text,
     selling_point_two_heading_ar character varying(255),
     selling_point_two_heading_de character varying(255),
@@ -2456,8 +2328,6 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     selling_point_two_heading_fr character varying(255),
     selling_point_two_heading_ja character varying(255),
     selling_point_two_heading_pt character varying(255),
-    selling_point_two_heading_pt_br character varying(255),
-    selling_point_two_heading_ru character varying(255),
     selling_point_two_heading_zh_hans character varying(255),
     selling_point_two_icon_ar_id integer,
     selling_point_two_icon_de_id integer,
@@ -2466,9 +2336,8 @@ CREATE TABLE public.great_international_internationalcampaignpage (
     selling_point_two_icon_fr_id integer,
     selling_point_two_icon_ja_id integer,
     selling_point_two_icon_pt_id integer,
-    selling_point_two_icon_pt_br_id integer,
-    selling_point_two_icon_ru_id integer,
-    selling_point_two_icon_zh_hans_id integer
+    selling_point_two_icon_zh_hans_id integer,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -2535,8 +2404,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     display_title_fr character varying(255),
     display_title_ja character varying(255),
     display_title_pt character varying(255),
-    display_title_pt_br character varying(255),
-    display_title_ru character varying(255),
     display_title_zh_hans character varying(255),
     feature_five_heading_ar character varying(100),
     feature_five_heading_de character varying(100),
@@ -2545,8 +2412,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     feature_five_heading_fr character varying(100),
     feature_five_heading_ja character varying(100),
     feature_five_heading_pt character varying(100),
-    feature_five_heading_pt_br character varying(100),
-    feature_five_heading_ru character varying(100),
     feature_five_heading_zh_hans character varying(100),
     feature_five_image_ar_id integer,
     feature_five_image_de_id integer,
@@ -2555,8 +2420,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     feature_five_image_fr_id integer,
     feature_five_image_ja_id integer,
     feature_five_image_pt_id integer,
-    feature_five_image_pt_br_id integer,
-    feature_five_image_ru_id integer,
     feature_five_image_zh_hans_id integer,
     feature_five_url_ar character varying(200),
     feature_five_url_de character varying(200),
@@ -2565,8 +2428,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     feature_five_url_fr character varying(200),
     feature_five_url_ja character varying(200),
     feature_five_url_pt character varying(200),
-    feature_five_url_pt_br character varying(200),
-    feature_five_url_ru character varying(200),
     feature_five_url_zh_hans character varying(200),
     feature_four_heading_ar character varying(100),
     feature_four_heading_de character varying(100),
@@ -2575,8 +2436,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     feature_four_heading_fr character varying(100),
     feature_four_heading_ja character varying(100),
     feature_four_heading_pt character varying(100),
-    feature_four_heading_pt_br character varying(100),
-    feature_four_heading_ru character varying(100),
     feature_four_heading_zh_hans character varying(100),
     feature_four_image_ar_id integer,
     feature_four_image_de_id integer,
@@ -2585,8 +2444,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     feature_four_image_fr_id integer,
     feature_four_image_ja_id integer,
     feature_four_image_pt_id integer,
-    feature_four_image_pt_br_id integer,
-    feature_four_image_ru_id integer,
     feature_four_image_zh_hans_id integer,
     feature_four_url_ar character varying(200),
     feature_four_url_de character varying(200),
@@ -2595,8 +2452,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     feature_four_url_fr character varying(200),
     feature_four_url_ja character varying(200),
     feature_four_url_pt character varying(200),
-    feature_four_url_pt_br character varying(200),
-    feature_four_url_ru character varying(200),
     feature_four_url_zh_hans character varying(200),
     feature_one_content_ar text,
     feature_one_content_de text,
@@ -2605,8 +2460,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     feature_one_content_fr text,
     feature_one_content_ja text,
     feature_one_content_pt text,
-    feature_one_content_pt_br text,
-    feature_one_content_ru text,
     feature_one_content_zh_hans text,
     feature_one_heading_ar character varying(100),
     feature_one_heading_de character varying(100),
@@ -2615,8 +2468,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     feature_one_heading_fr character varying(100),
     feature_one_heading_ja character varying(100),
     feature_one_heading_pt character varying(100),
-    feature_one_heading_pt_br character varying(100),
-    feature_one_heading_ru character varying(100),
     feature_one_heading_zh_hans character varying(100),
     feature_one_image_ar_id integer,
     feature_one_image_de_id integer,
@@ -2625,8 +2476,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     feature_one_image_fr_id integer,
     feature_one_image_ja_id integer,
     feature_one_image_pt_id integer,
-    feature_one_image_pt_br_id integer,
-    feature_one_image_ru_id integer,
     feature_one_image_zh_hans_id integer,
     feature_section_heading_ar character varying(255),
     feature_section_heading_de character varying(255),
@@ -2635,8 +2484,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     feature_section_heading_fr character varying(255),
     feature_section_heading_ja character varying(255),
     feature_section_heading_pt character varying(255),
-    feature_section_heading_pt_br character varying(255),
-    feature_section_heading_ru character varying(255),
     feature_section_heading_zh_hans character varying(255),
     feature_three_heading_ar character varying(100),
     feature_three_heading_de character varying(100),
@@ -2645,8 +2492,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     feature_three_heading_fr character varying(100),
     feature_three_heading_ja character varying(100),
     feature_three_heading_pt character varying(100),
-    feature_three_heading_pt_br character varying(100),
-    feature_three_heading_ru character varying(100),
     feature_three_heading_zh_hans character varying(100),
     feature_three_image_ar_id integer,
     feature_three_image_de_id integer,
@@ -2655,8 +2500,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     feature_three_image_fr_id integer,
     feature_three_image_ja_id integer,
     feature_three_image_pt_id integer,
-    feature_three_image_pt_br_id integer,
-    feature_three_image_ru_id integer,
     feature_three_image_zh_hans_id integer,
     feature_three_url_ar character varying(200),
     feature_three_url_de character varying(200),
@@ -2665,8 +2508,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     feature_three_url_fr character varying(200),
     feature_three_url_ja character varying(200),
     feature_three_url_pt character varying(200),
-    feature_three_url_pt_br character varying(200),
-    feature_three_url_ru character varying(200),
     feature_three_url_zh_hans character varying(200),
     feature_two_content_ar text,
     feature_two_content_de text,
@@ -2675,8 +2516,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     feature_two_content_fr text,
     feature_two_content_ja text,
     feature_two_content_pt text,
-    feature_two_content_pt_br text,
-    feature_two_content_ru text,
     feature_two_content_zh_hans text,
     feature_two_heading_ar character varying(100),
     feature_two_heading_de character varying(100),
@@ -2685,8 +2524,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     feature_two_heading_fr character varying(100),
     feature_two_heading_ja character varying(100),
     feature_two_heading_pt character varying(100),
-    feature_two_heading_pt_br character varying(100),
-    feature_two_heading_ru character varying(100),
     feature_two_heading_zh_hans character varying(100),
     feature_two_image_ar_id integer,
     feature_two_image_de_id integer,
@@ -2695,8 +2532,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     feature_two_image_fr_id integer,
     feature_two_image_ja_id integer,
     feature_two_image_pt_id integer,
-    feature_two_image_pt_br_id integer,
-    feature_two_image_ru_id integer,
     feature_two_image_zh_hans_id integer,
     hero_image_ar_id integer,
     hero_image_de_id integer,
@@ -2705,8 +2540,6 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     hero_image_fr_id integer,
     hero_image_ja_id integer,
     hero_image_pt_id integer,
-    hero_image_pt_br_id integer,
-    hero_image_ru_id integer,
     hero_image_zh_hans_id integer,
     teaser_ar character varying(255),
     teaser_de character varying(255),
@@ -2715,9 +2548,8 @@ CREATE TABLE public.great_international_internationalcuratedtopiclandingpage (
     teaser_fr character varying(255),
     teaser_ja character varying(255),
     teaser_pt character varying(255),
-    teaser_pt_br character varying(255),
-    teaser_ru character varying(255),
-    teaser_zh_hans character varying(255)
+    teaser_zh_hans character varying(255),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -2777,8 +2609,6 @@ CREATE TABLE public.great_international_internationalguidelandingpage (
     display_title_fr character varying(255),
     display_title_ja character varying(255),
     display_title_pt character varying(255),
-    display_title_pt_br character varying(255),
-    display_title_ru character varying(255),
     display_title_zh_hans character varying(255),
     guides_section_heading_ar character varying(100),
     guides_section_heading_de character varying(100),
@@ -2787,8 +2617,6 @@ CREATE TABLE public.great_international_internationalguidelandingpage (
     guides_section_heading_fr character varying(100),
     guides_section_heading_ja character varying(100),
     guides_section_heading_pt character varying(100),
-    guides_section_heading_pt_br character varying(100),
-    guides_section_heading_ru character varying(100),
     guides_section_heading_zh_hans character varying(100),
     hero_image_ar_id integer,
     hero_image_de_id integer,
@@ -2797,8 +2625,6 @@ CREATE TABLE public.great_international_internationalguidelandingpage (
     hero_image_fr_id integer,
     hero_image_ja_id integer,
     hero_image_pt_id integer,
-    hero_image_pt_br_id integer,
-    hero_image_ru_id integer,
     hero_image_zh_hans_id integer,
     section_one_content_ar text,
     section_one_content_de text,
@@ -2807,8 +2633,6 @@ CREATE TABLE public.great_international_internationalguidelandingpage (
     section_one_content_fr text,
     section_one_content_ja text,
     section_one_content_pt text,
-    section_one_content_pt_br text,
-    section_one_content_ru text,
     section_one_content_zh_hans text,
     section_one_image_ar_id integer,
     section_one_image_caption_ar character varying(100),
@@ -2818,8 +2642,6 @@ CREATE TABLE public.great_international_internationalguidelandingpage (
     section_one_image_caption_fr character varying(100),
     section_one_image_caption_ja character varying(100),
     section_one_image_caption_pt character varying(100),
-    section_one_image_caption_pt_br character varying(100),
-    section_one_image_caption_ru character varying(100),
     section_one_image_caption_zh_hans character varying(100),
     section_one_image_de_id integer,
     section_one_image_en_gb_id integer,
@@ -2827,8 +2649,6 @@ CREATE TABLE public.great_international_internationalguidelandingpage (
     section_one_image_fr_id integer,
     section_one_image_ja_id integer,
     section_one_image_pt_id integer,
-    section_one_image_pt_br_id integer,
-    section_one_image_ru_id integer,
     section_one_image_zh_hans_id integer,
     section_two_button_text_ar character varying(100),
     section_two_button_text_de character varying(100),
@@ -2837,8 +2657,6 @@ CREATE TABLE public.great_international_internationalguidelandingpage (
     section_two_button_text_fr character varying(100),
     section_two_button_text_ja character varying(100),
     section_two_button_text_pt character varying(100),
-    section_two_button_text_pt_br character varying(100),
-    section_two_button_text_ru character varying(100),
     section_two_button_text_zh_hans character varying(100),
     section_two_button_url_ar character varying(255),
     section_two_button_url_de character varying(255),
@@ -2847,8 +2665,6 @@ CREATE TABLE public.great_international_internationalguidelandingpage (
     section_two_button_url_fr character varying(255),
     section_two_button_url_ja character varying(255),
     section_two_button_url_pt character varying(255),
-    section_two_button_url_pt_br character varying(255),
-    section_two_button_url_ru character varying(255),
     section_two_button_url_zh_hans character varying(255),
     section_two_heading_ar character varying(100),
     section_two_heading_de character varying(100),
@@ -2857,8 +2673,6 @@ CREATE TABLE public.great_international_internationalguidelandingpage (
     section_two_heading_fr character varying(100),
     section_two_heading_ja character varying(100),
     section_two_heading_pt character varying(100),
-    section_two_heading_pt_br character varying(100),
-    section_two_heading_ru character varying(100),
     section_two_heading_zh_hans character varying(100),
     section_two_image_ar_id integer,
     section_two_image_de_id integer,
@@ -2867,8 +2681,6 @@ CREATE TABLE public.great_international_internationalguidelandingpage (
     section_two_image_fr_id integer,
     section_two_image_ja_id integer,
     section_two_image_pt_id integer,
-    section_two_image_pt_br_id integer,
-    section_two_image_ru_id integer,
     section_two_image_zh_hans_id integer,
     section_two_teaser_ar text,
     section_two_teaser_de text,
@@ -2877,8 +2689,6 @@ CREATE TABLE public.great_international_internationalguidelandingpage (
     section_two_teaser_fr text,
     section_two_teaser_ja text,
     section_two_teaser_pt text,
-    section_two_teaser_pt_br text,
-    section_two_teaser_ru text,
     section_two_teaser_zh_hans text,
     teaser_ar character varying(255),
     teaser_de character varying(255),
@@ -2887,9 +2697,8 @@ CREATE TABLE public.great_international_internationalguidelandingpage (
     teaser_fr character varying(255),
     teaser_ja character varying(255),
     teaser_pt character varying(255),
-    teaser_pt_br character varying(255),
-    teaser_ru character varying(255),
-    teaser_zh_hans character varying(255)
+    teaser_zh_hans character varying(255),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -2958,8 +2767,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     hero_cta_text_fr character varying(255),
     hero_cta_text_ja character varying(255),
     hero_cta_text_pt character varying(255),
-    hero_cta_text_pt_br character varying(255),
-    hero_cta_text_ru character varying(255),
     hero_cta_text_zh_hans character varying(255),
     hero_image_ar_id integer,
     hero_image_de_id integer,
@@ -2968,8 +2775,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     hero_image_fr_id integer,
     hero_image_ja_id integer,
     hero_image_pt_id integer,
-    hero_image_pt_br_id integer,
-    hero_image_ru_id integer,
     hero_image_zh_hans_id integer,
     hero_subtitle_ar character varying(255),
     hero_subtitle_de character varying(255),
@@ -2978,8 +2783,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     hero_subtitle_fr character varying(255),
     hero_subtitle_ja character varying(255),
     hero_subtitle_pt character varying(255),
-    hero_subtitle_pt_br character varying(255),
-    hero_subtitle_ru character varying(255),
     hero_subtitle_zh_hans character varying(255),
     hero_title_ar character varying(255),
     hero_title_de character varying(255),
@@ -2988,8 +2791,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     hero_title_fr character varying(255),
     hero_title_ja character varying(255),
     hero_title_pt character varying(255),
-    hero_title_pt_br character varying(255),
-    hero_title_ru character varying(255),
     hero_title_zh_hans character varying(255),
     invest_content_ar text,
     invest_content_de text,
@@ -2998,8 +2799,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     invest_content_fr text,
     invest_content_ja text,
     invest_content_pt text,
-    invest_content_pt_br text,
-    invest_content_ru text,
     invest_content_zh_hans text,
     invest_image_ar_id integer,
     invest_image_de_id integer,
@@ -3008,8 +2807,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     invest_image_fr_id integer,
     invest_image_ja_id integer,
     invest_image_pt_id integer,
-    invest_image_pt_br_id integer,
-    invest_image_ru_id integer,
     invest_image_zh_hans_id integer,
     invest_title_ar character varying(255),
     invest_title_de character varying(255),
@@ -3018,8 +2815,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     invest_title_fr character varying(255),
     invest_title_ja character varying(255),
     invest_title_pt character varying(255),
-    invest_title_pt_br character varying(255),
-    invest_title_ru character varying(255),
     invest_title_zh_hans character varying(255),
     news_title_ar character varying(255),
     news_title_de character varying(255),
@@ -3028,8 +2823,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     news_title_fr character varying(255),
     news_title_ja character varying(255),
     news_title_pt character varying(255),
-    news_title_pt_br character varying(255),
-    news_title_ru character varying(255),
     news_title_zh_hans character varying(255),
     related_page_one_ar_id integer,
     related_page_one_de_id integer,
@@ -3038,8 +2831,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     related_page_one_fr_id integer,
     related_page_one_ja_id integer,
     related_page_one_pt_id integer,
-    related_page_one_pt_br_id integer,
-    related_page_one_ru_id integer,
     related_page_one_zh_hans_id integer,
     related_page_three_ar_id integer,
     related_page_three_de_id integer,
@@ -3048,8 +2839,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     related_page_three_fr_id integer,
     related_page_three_ja_id integer,
     related_page_three_pt_id integer,
-    related_page_three_pt_br_id integer,
-    related_page_three_ru_id integer,
     related_page_three_zh_hans_id integer,
     related_page_two_ar_id integer,
     related_page_two_de_id integer,
@@ -3058,8 +2847,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     related_page_two_fr_id integer,
     related_page_two_ja_id integer,
     related_page_two_pt_id integer,
-    related_page_two_pt_br_id integer,
-    related_page_two_ru_id integer,
     related_page_two_zh_hans_id integer,
     study_in_uk_cta_text_ar character varying(255),
     study_in_uk_cta_text_de character varying(255),
@@ -3068,8 +2855,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     study_in_uk_cta_text_fr character varying(255),
     study_in_uk_cta_text_ja character varying(255),
     study_in_uk_cta_text_pt character varying(255),
-    study_in_uk_cta_text_pt_br character varying(255),
-    study_in_uk_cta_text_ru character varying(255),
     study_in_uk_cta_text_zh_hans character varying(255),
     tariffs_call_to_action_text_ar character varying(255),
     tariffs_call_to_action_text_de character varying(255),
@@ -3078,8 +2863,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     tariffs_call_to_action_text_fr character varying(255),
     tariffs_call_to_action_text_ja character varying(255),
     tariffs_call_to_action_text_pt character varying(255),
-    tariffs_call_to_action_text_pt_br character varying(255),
-    tariffs_call_to_action_text_ru character varying(255),
     tariffs_call_to_action_text_zh_hans character varying(255),
     tariffs_description_ar text,
     tariffs_description_de text,
@@ -3088,8 +2871,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     tariffs_description_fr text,
     tariffs_description_ja text,
     tariffs_description_pt text,
-    tariffs_description_pt_br text,
-    tariffs_description_ru text,
     tariffs_description_zh_hans text,
     tariffs_image_ar_id integer,
     tariffs_image_de_id integer,
@@ -3098,8 +2879,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     tariffs_image_fr_id integer,
     tariffs_image_ja_id integer,
     tariffs_image_pt_id integer,
-    tariffs_image_pt_br_id integer,
-    tariffs_image_ru_id integer,
     tariffs_image_zh_hans_id integer,
     tariffs_link_ar character varying(200),
     tariffs_link_de character varying(200),
@@ -3108,8 +2887,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     tariffs_link_fr character varying(200),
     tariffs_link_ja character varying(200),
     tariffs_link_pt character varying(200),
-    tariffs_link_pt_br character varying(200),
-    tariffs_link_ru character varying(200),
     tariffs_link_zh_hans character varying(200),
     tariffs_title_ar character varying(255),
     tariffs_title_de character varying(255),
@@ -3118,8 +2895,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     tariffs_title_fr character varying(255),
     tariffs_title_ja character varying(255),
     tariffs_title_pt character varying(255),
-    tariffs_title_pt_br character varying(255),
-    tariffs_title_ru character varying(255),
     tariffs_title_zh_hans character varying(255),
     trade_content_ar text,
     trade_content_de text,
@@ -3128,8 +2903,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     trade_content_fr text,
     trade_content_ja text,
     trade_content_pt text,
-    trade_content_pt_br text,
-    trade_content_ru text,
     trade_content_zh_hans text,
     trade_image_ar_id integer,
     trade_image_de_id integer,
@@ -3138,8 +2911,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     trade_image_fr_id integer,
     trade_image_ja_id integer,
     trade_image_pt_id integer,
-    trade_image_pt_br_id integer,
-    trade_image_ru_id integer,
     trade_image_zh_hans_id integer,
     trade_title_ar character varying(255),
     trade_title_de character varying(255),
@@ -3148,8 +2919,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     trade_title_fr character varying(255),
     trade_title_ja character varying(255),
     trade_title_pt character varying(255),
-    trade_title_pt_br character varying(255),
-    trade_title_ru character varying(255),
     trade_title_zh_hans character varying(255),
     visit_uk_cta_text_ar character varying(255),
     visit_uk_cta_text_de character varying(255),
@@ -3158,8 +2927,6 @@ CREATE TABLE public.great_international_internationalhomepage (
     visit_uk_cta_text_fr character varying(255),
     visit_uk_cta_text_ja character varying(255),
     visit_uk_cta_text_pt character varying(255),
-    visit_uk_cta_text_pt_br character varying(255),
-    visit_uk_cta_text_ru character varying(255),
     visit_uk_cta_text_zh_hans character varying(255),
     hero_cta_link character varying(255) NOT NULL,
     hero_cta_link_ar character varying(255),
@@ -3169,9 +2936,260 @@ CREATE TABLE public.great_international_internationalhomepage (
     hero_cta_link_fr character varying(255),
     hero_cta_link_ja character varying(255),
     hero_cta_link_pt character varying(255),
-    hero_cta_link_pt_br character varying(255),
-    hero_cta_link_ru character varying(255),
-    hero_cta_link_zh_hans character varying(255)
+    hero_cta_link_zh_hans character varying(255),
+    uses_tree_based_routing boolean NOT NULL,
+    featured_link_one_heading text NOT NULL,
+    featured_link_one_heading_ar text,
+    featured_link_one_heading_de text,
+    featured_link_one_heading_en_gb text,
+    featured_link_one_heading_es text,
+    featured_link_one_heading_fr text,
+    featured_link_one_heading_ja text,
+    featured_link_one_heading_pt text,
+    featured_link_one_heading_zh_hans text,
+    featured_link_one_image_id integer,
+    featured_link_one_image_ar_id integer,
+    featured_link_one_image_de_id integer,
+    featured_link_one_image_en_gb_id integer,
+    featured_link_one_image_es_id integer,
+    featured_link_one_image_fr_id integer,
+    featured_link_one_image_ja_id integer,
+    featured_link_one_image_pt_id integer,
+    featured_link_one_image_zh_hans_id integer,
+    featured_link_three_heading text NOT NULL,
+    featured_link_three_heading_ar text,
+    featured_link_three_heading_de text,
+    featured_link_three_heading_en_gb text,
+    featured_link_three_heading_es text,
+    featured_link_three_heading_fr text,
+    featured_link_three_heading_ja text,
+    featured_link_three_heading_pt text,
+    featured_link_three_heading_zh_hans text,
+    featured_link_three_image_id integer,
+    featured_link_three_image_ar_id integer,
+    featured_link_three_image_de_id integer,
+    featured_link_three_image_en_gb_id integer,
+    featured_link_three_image_es_id integer,
+    featured_link_three_image_fr_id integer,
+    featured_link_three_image_ja_id integer,
+    featured_link_three_image_pt_id integer,
+    featured_link_three_image_zh_hans_id integer,
+    featured_link_two_heading text NOT NULL,
+    featured_link_two_heading_ar text,
+    featured_link_two_heading_de text,
+    featured_link_two_heading_en_gb text,
+    featured_link_two_heading_es text,
+    featured_link_two_heading_fr text,
+    featured_link_two_heading_ja text,
+    featured_link_two_heading_pt text,
+    featured_link_two_heading_zh_hans text,
+    featured_link_two_image_id integer,
+    featured_link_two_image_ar_id integer,
+    featured_link_two_image_de_id integer,
+    featured_link_two_image_en_gb_id integer,
+    featured_link_two_image_es_id integer,
+    featured_link_two_image_fr_id integer,
+    featured_link_two_image_ja_id integer,
+    featured_link_two_image_pt_id integer,
+    featured_link_two_image_zh_hans_id integer,
+    featured_links_summary text NOT NULL,
+    featured_links_summary_ar text,
+    featured_links_summary_de text,
+    featured_links_summary_en_gb text,
+    featured_links_summary_es text,
+    featured_links_summary_fr text,
+    featured_links_summary_ja text,
+    featured_links_summary_pt text,
+    featured_links_summary_zh_hans text,
+    featured_links_title character varying(255) NOT NULL,
+    featured_links_title_ar character varying(255),
+    featured_links_title_de character varying(255),
+    featured_links_title_en_gb character varying(255),
+    featured_links_title_es character varying(255),
+    featured_links_title_fr character varying(255),
+    featured_links_title_ja character varying(255),
+    featured_links_title_pt character varying(255),
+    featured_links_title_zh_hans character varying(255),
+    section_two_heading character varying(255) NOT NULL,
+    section_two_heading_ar character varying(255),
+    section_two_heading_de character varying(255),
+    section_two_heading_en_gb character varying(255),
+    section_two_heading_es character varying(255),
+    section_two_heading_fr character varying(255),
+    section_two_heading_ja character varying(255),
+    section_two_heading_pt character varying(255),
+    section_two_heading_zh_hans character varying(255),
+    section_two_subsection_five_body text NOT NULL,
+    section_two_subsection_five_body_ar text,
+    section_two_subsection_five_body_de text,
+    section_two_subsection_five_body_en_gb text,
+    section_two_subsection_five_body_es text,
+    section_two_subsection_five_body_fr text,
+    section_two_subsection_five_body_ja text,
+    section_two_subsection_five_body_pt text,
+    section_two_subsection_five_body_zh_hans text,
+    section_two_subsection_five_heading character varying(255) NOT NULL,
+    section_two_subsection_five_heading_ar character varying(255),
+    section_two_subsection_five_heading_de character varying(255),
+    section_two_subsection_five_heading_en_gb character varying(255),
+    section_two_subsection_five_heading_es character varying(255),
+    section_two_subsection_five_heading_fr character varying(255),
+    section_two_subsection_five_heading_ja character varying(255),
+    section_two_subsection_five_heading_pt character varying(255),
+    section_two_subsection_five_heading_zh_hans character varying(255),
+    section_two_subsection_five_icon_id integer,
+    section_two_subsection_five_icon_ar_id integer,
+    section_two_subsection_five_icon_de_id integer,
+    section_two_subsection_five_icon_en_gb_id integer,
+    section_two_subsection_five_icon_es_id integer,
+    section_two_subsection_five_icon_fr_id integer,
+    section_two_subsection_five_icon_ja_id integer,
+    section_two_subsection_five_icon_pt_id integer,
+    section_two_subsection_five_icon_zh_hans_id integer,
+    section_two_subsection_four_body text NOT NULL,
+    section_two_subsection_four_body_ar text,
+    section_two_subsection_four_body_de text,
+    section_two_subsection_four_body_en_gb text,
+    section_two_subsection_four_body_es text,
+    section_two_subsection_four_body_fr text,
+    section_two_subsection_four_body_ja text,
+    section_two_subsection_four_body_pt text,
+    section_two_subsection_four_body_zh_hans text,
+    section_two_subsection_four_heading character varying(255) NOT NULL,
+    section_two_subsection_four_heading_ar character varying(255),
+    section_two_subsection_four_heading_de character varying(255),
+    section_two_subsection_four_heading_en_gb character varying(255),
+    section_two_subsection_four_heading_es character varying(255),
+    section_two_subsection_four_heading_fr character varying(255),
+    section_two_subsection_four_heading_ja character varying(255),
+    section_two_subsection_four_heading_pt character varying(255),
+    section_two_subsection_four_heading_zh_hans character varying(255),
+    section_two_subsection_four_icon_id integer,
+    section_two_subsection_four_icon_ar_id integer,
+    section_two_subsection_four_icon_de_id integer,
+    section_two_subsection_four_icon_en_gb_id integer,
+    section_two_subsection_four_icon_es_id integer,
+    section_two_subsection_four_icon_fr_id integer,
+    section_two_subsection_four_icon_ja_id integer,
+    section_two_subsection_four_icon_pt_id integer,
+    section_two_subsection_four_icon_zh_hans_id integer,
+    section_two_subsection_one_body text NOT NULL,
+    section_two_subsection_one_body_ar text,
+    section_two_subsection_one_body_de text,
+    section_two_subsection_one_body_en_gb text,
+    section_two_subsection_one_body_es text,
+    section_two_subsection_one_body_fr text,
+    section_two_subsection_one_body_ja text,
+    section_two_subsection_one_body_pt text,
+    section_two_subsection_one_body_zh_hans text,
+    section_two_subsection_one_heading character varying(255) NOT NULL,
+    section_two_subsection_one_heading_ar character varying(255),
+    section_two_subsection_one_heading_de character varying(255),
+    section_two_subsection_one_heading_en_gb character varying(255),
+    section_two_subsection_one_heading_es character varying(255),
+    section_two_subsection_one_heading_fr character varying(255),
+    section_two_subsection_one_heading_ja character varying(255),
+    section_two_subsection_one_heading_pt character varying(255),
+    section_two_subsection_one_heading_zh_hans character varying(255),
+    section_two_subsection_one_icon_id integer,
+    section_two_subsection_one_icon_ar_id integer,
+    section_two_subsection_one_icon_de_id integer,
+    section_two_subsection_one_icon_en_gb_id integer,
+    section_two_subsection_one_icon_es_id integer,
+    section_two_subsection_one_icon_fr_id integer,
+    section_two_subsection_one_icon_ja_id integer,
+    section_two_subsection_one_icon_pt_id integer,
+    section_two_subsection_one_icon_zh_hans_id integer,
+    section_two_subsection_six_body text NOT NULL,
+    section_two_subsection_six_body_ar text,
+    section_two_subsection_six_body_de text,
+    section_two_subsection_six_body_en_gb text,
+    section_two_subsection_six_body_es text,
+    section_two_subsection_six_body_fr text,
+    section_two_subsection_six_body_ja text,
+    section_two_subsection_six_body_pt text,
+    section_two_subsection_six_body_zh_hans text,
+    section_two_subsection_six_heading character varying(255) NOT NULL,
+    section_two_subsection_six_heading_ar character varying(255),
+    section_two_subsection_six_heading_de character varying(255),
+    section_two_subsection_six_heading_en_gb character varying(255),
+    section_two_subsection_six_heading_es character varying(255),
+    section_two_subsection_six_heading_fr character varying(255),
+    section_two_subsection_six_heading_ja character varying(255),
+    section_two_subsection_six_heading_pt character varying(255),
+    section_two_subsection_six_heading_zh_hans character varying(255),
+    section_two_subsection_six_icon_id integer,
+    section_two_subsection_six_icon_ar_id integer,
+    section_two_subsection_six_icon_de_id integer,
+    section_two_subsection_six_icon_en_gb_id integer,
+    section_two_subsection_six_icon_es_id integer,
+    section_two_subsection_six_icon_fr_id integer,
+    section_two_subsection_six_icon_ja_id integer,
+    section_two_subsection_six_icon_pt_id integer,
+    section_two_subsection_six_icon_zh_hans_id integer,
+    section_two_subsection_three_body text NOT NULL,
+    section_two_subsection_three_body_ar text,
+    section_two_subsection_three_body_de text,
+    section_two_subsection_three_body_en_gb text,
+    section_two_subsection_three_body_es text,
+    section_two_subsection_three_body_fr text,
+    section_two_subsection_three_body_ja text,
+    section_two_subsection_three_body_pt text,
+    section_two_subsection_three_body_zh_hans text,
+    section_two_subsection_three_heading character varying(255) NOT NULL,
+    section_two_subsection_three_heading_ar character varying(255),
+    section_two_subsection_three_heading_de character varying(255),
+    section_two_subsection_three_heading_en_gb character varying(255),
+    section_two_subsection_three_heading_es character varying(255),
+    section_two_subsection_three_heading_fr character varying(255),
+    section_two_subsection_three_heading_ja character varying(255),
+    section_two_subsection_three_heading_pt character varying(255),
+    section_two_subsection_three_heading_zh_hans character varying(255),
+    section_two_subsection_three_icon_id integer,
+    section_two_subsection_three_icon_ar_id integer,
+    section_two_subsection_three_icon_de_id integer,
+    section_two_subsection_three_icon_en_gb_id integer,
+    section_two_subsection_three_icon_es_id integer,
+    section_two_subsection_three_icon_fr_id integer,
+    section_two_subsection_three_icon_ja_id integer,
+    section_two_subsection_three_icon_pt_id integer,
+    section_two_subsection_three_icon_zh_hans_id integer,
+    section_two_subsection_two_body text NOT NULL,
+    section_two_subsection_two_body_ar text,
+    section_two_subsection_two_body_de text,
+    section_two_subsection_two_body_en_gb text,
+    section_two_subsection_two_body_es text,
+    section_two_subsection_two_body_fr text,
+    section_two_subsection_two_body_ja text,
+    section_two_subsection_two_body_pt text,
+    section_two_subsection_two_body_zh_hans text,
+    section_two_subsection_two_heading character varying(255) NOT NULL,
+    section_two_subsection_two_heading_ar character varying(255),
+    section_two_subsection_two_heading_de character varying(255),
+    section_two_subsection_two_heading_en_gb character varying(255),
+    section_two_subsection_two_heading_es character varying(255),
+    section_two_subsection_two_heading_fr character varying(255),
+    section_two_subsection_two_heading_ja character varying(255),
+    section_two_subsection_two_heading_pt character varying(255),
+    section_two_subsection_two_heading_zh_hans character varying(255),
+    section_two_subsection_two_icon_id integer,
+    section_two_subsection_two_icon_ar_id integer,
+    section_two_subsection_two_icon_de_id integer,
+    section_two_subsection_two_icon_en_gb_id integer,
+    section_two_subsection_two_icon_es_id integer,
+    section_two_subsection_two_icon_fr_id integer,
+    section_two_subsection_two_icon_ja_id integer,
+    section_two_subsection_two_icon_pt_id integer,
+    section_two_subsection_two_icon_zh_hans_id integer,
+    section_two_teaser text NOT NULL,
+    section_two_teaser_ar text,
+    section_two_teaser_de text,
+    section_two_teaser_en_gb text,
+    section_two_teaser_es text,
+    section_two_teaser_fr text,
+    section_two_teaser_ja text,
+    section_two_teaser_pt text,
+    section_two_teaser_zh_hans text
 );
 
 
@@ -3181,7 +3199,8 @@ CREATE TABLE public.great_international_internationalhomepage (
 
 CREATE TABLE public.great_international_internationallocalisedfolderpage (
     page_ptr_id integer NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -3191,7 +3210,8 @@ CREATE TABLE public.great_international_internationallocalisedfolderpage (
 
 CREATE TABLE public.great_international_internationalregionpage (
     page_ptr_id integer NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -3292,8 +3312,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     case_study_cta_page_fr_id integer,
     case_study_cta_page_ja_id integer,
     case_study_cta_page_pt_id integer,
-    case_study_cta_page_pt_br_id integer,
-    case_study_cta_page_ru_id integer,
     case_study_cta_page_zh_hans_id integer,
     case_study_cta_text_ar text,
     case_study_cta_text_de text,
@@ -3302,8 +3320,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     case_study_cta_text_fr text,
     case_study_cta_text_ja text,
     case_study_cta_text_pt text,
-    case_study_cta_text_pt_br text,
-    case_study_cta_text_ru text,
     case_study_cta_text_zh_hans text,
     case_study_description_ar text,
     case_study_description_de text,
@@ -3312,8 +3328,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     case_study_description_fr text,
     case_study_description_ja text,
     case_study_description_pt text,
-    case_study_description_pt_br text,
-    case_study_description_ru text,
     case_study_description_zh_hans text,
     case_study_image_ar_id integer,
     case_study_image_de_id integer,
@@ -3322,8 +3336,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     case_study_image_fr_id integer,
     case_study_image_ja_id integer,
     case_study_image_pt_id integer,
-    case_study_image_pt_br_id integer,
-    case_study_image_ru_id integer,
     case_study_image_zh_hans_id integer,
     case_study_title_ar character varying(255),
     case_study_title_de character varying(255),
@@ -3332,8 +3344,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     case_study_title_fr character varying(255),
     case_study_title_ja character varying(255),
     case_study_title_pt character varying(255),
-    case_study_title_pt_br character varying(255),
-    case_study_title_ru character varying(255),
     case_study_title_zh_hans character varying(255),
     heading_ar character varying(255),
     heading_de character varying(255),
@@ -3342,8 +3352,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     heading_fr character varying(255),
     heading_ja character varying(255),
     heading_pt character varying(255),
-    heading_pt_br character varying(255),
-    heading_ru character varying(255),
     heading_teaser_ar text,
     heading_teaser_de text,
     heading_teaser_en_gb text,
@@ -3351,8 +3359,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     heading_teaser_fr text,
     heading_teaser_ja text,
     heading_teaser_pt text,
-    heading_teaser_pt_br text,
-    heading_teaser_ru text,
     heading_teaser_zh_hans text,
     heading_zh_hans character varying(255),
     hero_image_ar_id integer,
@@ -3362,8 +3368,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     hero_image_fr_id integer,
     hero_image_ja_id integer,
     hero_image_pt_id integer,
-    hero_image_pt_br_id integer,
-    hero_image_ru_id integer,
     hero_image_zh_hans_id integer,
     related_page_one_ar_id integer,
     related_page_one_de_id integer,
@@ -3372,8 +3376,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     related_page_one_fr_id integer,
     related_page_one_ja_id integer,
     related_page_one_pt_id integer,
-    related_page_one_pt_br_id integer,
-    related_page_one_ru_id integer,
     related_page_one_zh_hans_id integer,
     related_page_three_ar_id integer,
     related_page_three_de_id integer,
@@ -3382,8 +3384,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     related_page_three_fr_id integer,
     related_page_three_ja_id integer,
     related_page_three_pt_id integer,
-    related_page_three_pt_br_id integer,
-    related_page_three_ru_id integer,
     related_page_three_zh_hans_id integer,
     related_page_two_ar_id integer,
     related_page_two_de_id integer,
@@ -3392,8 +3392,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     related_page_two_fr_id integer,
     related_page_two_ja_id integer,
     related_page_two_pt_id integer,
-    related_page_two_pt_br_id integer,
-    related_page_two_ru_id integer,
     related_page_two_zh_hans_id integer,
     section_one_body_ar text,
     section_one_body_de text,
@@ -3402,8 +3400,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_one_body_fr text,
     section_one_body_ja text,
     section_one_body_pt text,
-    section_one_body_pt_br text,
-    section_one_body_ru text,
     section_one_body_zh_hans text,
     section_one_image_ar_id integer,
     section_one_image_caption_ar character varying(255),
@@ -3414,8 +3410,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_one_image_caption_company_fr character varying(255),
     section_one_image_caption_company_ja character varying(255),
     section_one_image_caption_company_pt character varying(255),
-    section_one_image_caption_company_pt_br character varying(255),
-    section_one_image_caption_company_ru character varying(255),
     section_one_image_caption_company_zh_hans character varying(255),
     section_one_image_caption_de character varying(255),
     section_one_image_caption_en_gb character varying(255),
@@ -3423,8 +3417,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_one_image_caption_fr character varying(255),
     section_one_image_caption_ja character varying(255),
     section_one_image_caption_pt character varying(255),
-    section_one_image_caption_pt_br character varying(255),
-    section_one_image_caption_ru character varying(255),
     section_one_image_caption_zh_hans character varying(255),
     section_one_image_de_id integer,
     section_one_image_en_gb_id integer,
@@ -3432,8 +3424,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_one_image_fr_id integer,
     section_one_image_ja_id integer,
     section_one_image_pt_id integer,
-    section_one_image_pt_br_id integer,
-    section_one_image_ru_id integer,
     section_one_image_zh_hans_id integer,
     section_three_heading_ar character varying(255),
     section_three_heading_de character varying(255),
@@ -3442,8 +3432,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_three_heading_fr character varying(255),
     section_three_heading_ja character varying(255),
     section_three_heading_pt character varying(255),
-    section_three_heading_pt_br character varying(255),
-    section_three_heading_ru character varying(255),
     section_three_heading_zh_hans character varying(255),
     section_three_subsection_one_body_ar text,
     section_three_subsection_one_body_de text,
@@ -3452,8 +3440,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_three_subsection_one_body_fr text,
     section_three_subsection_one_body_ja text,
     section_three_subsection_one_body_pt text,
-    section_three_subsection_one_body_pt_br text,
-    section_three_subsection_one_body_ru text,
     section_three_subsection_one_body_zh_hans text,
     section_three_subsection_one_heading_ar character varying(255),
     section_three_subsection_one_heading_de character varying(255),
@@ -3462,8 +3448,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_three_subsection_one_heading_fr character varying(255),
     section_three_subsection_one_heading_ja character varying(255),
     section_three_subsection_one_heading_pt character varying(255),
-    section_three_subsection_one_heading_pt_br character varying(255),
-    section_three_subsection_one_heading_ru character varying(255),
     section_three_subsection_one_heading_zh_hans character varying(255),
     section_three_subsection_one_teaser_ar text,
     section_three_subsection_one_teaser_de text,
@@ -3472,8 +3456,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_three_subsection_one_teaser_fr text,
     section_three_subsection_one_teaser_ja text,
     section_three_subsection_one_teaser_pt text,
-    section_three_subsection_one_teaser_pt_br text,
-    section_three_subsection_one_teaser_ru text,
     section_three_subsection_one_teaser_zh_hans text,
     section_three_subsection_two_body_ar text,
     section_three_subsection_two_body_de text,
@@ -3482,8 +3464,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_three_subsection_two_body_fr text,
     section_three_subsection_two_body_ja text,
     section_three_subsection_two_body_pt text,
-    section_three_subsection_two_body_pt_br text,
-    section_three_subsection_two_body_ru text,
     section_three_subsection_two_body_zh_hans text,
     section_three_subsection_two_heading_ar character varying(255),
     section_three_subsection_two_heading_de character varying(255),
@@ -3492,8 +3472,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_three_subsection_two_heading_fr character varying(255),
     section_three_subsection_two_heading_ja character varying(255),
     section_three_subsection_two_heading_pt character varying(255),
-    section_three_subsection_two_heading_pt_br character varying(255),
-    section_three_subsection_two_heading_ru character varying(255),
     section_three_subsection_two_heading_zh_hans character varying(255),
     section_three_subsection_two_teaser_ar text,
     section_three_subsection_two_teaser_de text,
@@ -3502,8 +3480,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_three_subsection_two_teaser_fr text,
     section_three_subsection_two_teaser_ja text,
     section_three_subsection_two_teaser_pt text,
-    section_three_subsection_two_teaser_pt_br text,
-    section_three_subsection_two_teaser_ru text,
     section_three_subsection_two_teaser_zh_hans text,
     section_three_teaser_ar text,
     section_three_teaser_de text,
@@ -3512,8 +3488,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_three_teaser_fr text,
     section_three_teaser_ja text,
     section_three_teaser_pt text,
-    section_three_teaser_pt_br text,
-    section_three_teaser_ru text,
     section_three_teaser_zh_hans text,
     section_two_heading_ar character varying(255),
     section_two_heading_de character varying(255),
@@ -3522,8 +3496,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_two_heading_fr character varying(255),
     section_two_heading_ja character varying(255),
     section_two_heading_pt character varying(255),
-    section_two_heading_pt_br character varying(255),
-    section_two_heading_ru character varying(255),
     section_two_heading_zh_hans character varying(255),
     section_two_subsection_one_body_ar text,
     section_two_subsection_one_body_de text,
@@ -3532,8 +3504,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_two_subsection_one_body_fr text,
     section_two_subsection_one_body_ja text,
     section_two_subsection_one_body_pt text,
-    section_two_subsection_one_body_pt_br text,
-    section_two_subsection_one_body_ru text,
     section_two_subsection_one_body_zh_hans text,
     section_two_subsection_one_heading_ar character varying(255),
     section_two_subsection_one_heading_de character varying(255),
@@ -3542,8 +3512,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_two_subsection_one_heading_fr character varying(255),
     section_two_subsection_one_heading_ja character varying(255),
     section_two_subsection_one_heading_pt character varying(255),
-    section_two_subsection_one_heading_pt_br character varying(255),
-    section_two_subsection_one_heading_ru character varying(255),
     section_two_subsection_one_heading_zh_hans character varying(255),
     section_two_subsection_one_icon_ar_id integer,
     section_two_subsection_one_icon_de_id integer,
@@ -3552,8 +3520,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_two_subsection_one_icon_fr_id integer,
     section_two_subsection_one_icon_ja_id integer,
     section_two_subsection_one_icon_pt_id integer,
-    section_two_subsection_one_icon_pt_br_id integer,
-    section_two_subsection_one_icon_ru_id integer,
     section_two_subsection_one_icon_zh_hans_id integer,
     section_two_subsection_three_body_ar text,
     section_two_subsection_three_body_de text,
@@ -3562,8 +3528,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_two_subsection_three_body_fr text,
     section_two_subsection_three_body_ja text,
     section_two_subsection_three_body_pt text,
-    section_two_subsection_three_body_pt_br text,
-    section_two_subsection_three_body_ru text,
     section_two_subsection_three_body_zh_hans text,
     section_two_subsection_three_heading_ar character varying(255),
     section_two_subsection_three_heading_de character varying(255),
@@ -3572,8 +3536,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_two_subsection_three_heading_fr character varying(255),
     section_two_subsection_three_heading_ja character varying(255),
     section_two_subsection_three_heading_pt character varying(255),
-    section_two_subsection_three_heading_pt_br character varying(255),
-    section_two_subsection_three_heading_ru character varying(255),
     section_two_subsection_three_heading_zh_hans character varying(255),
     section_two_subsection_three_icon_ar_id integer,
     section_two_subsection_three_icon_de_id integer,
@@ -3582,8 +3544,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_two_subsection_three_icon_fr_id integer,
     section_two_subsection_three_icon_ja_id integer,
     section_two_subsection_three_icon_pt_id integer,
-    section_two_subsection_three_icon_pt_br_id integer,
-    section_two_subsection_three_icon_ru_id integer,
     section_two_subsection_three_icon_zh_hans_id integer,
     section_two_subsection_two_body_ar text,
     section_two_subsection_two_body_de text,
@@ -3592,8 +3552,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_two_subsection_two_body_fr text,
     section_two_subsection_two_body_ja text,
     section_two_subsection_two_body_pt text,
-    section_two_subsection_two_body_pt_br text,
-    section_two_subsection_two_body_ru text,
     section_two_subsection_two_body_zh_hans text,
     section_two_subsection_two_heading_ar character varying(255),
     section_two_subsection_two_heading_de character varying(255),
@@ -3602,8 +3560,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_two_subsection_two_heading_fr character varying(255),
     section_two_subsection_two_heading_ja character varying(255),
     section_two_subsection_two_heading_pt character varying(255),
-    section_two_subsection_two_heading_pt_br character varying(255),
-    section_two_subsection_two_heading_ru character varying(255),
     section_two_subsection_two_heading_zh_hans character varying(255),
     section_two_subsection_two_icon_ar_id integer,
     section_two_subsection_two_icon_de_id integer,
@@ -3612,8 +3568,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_two_subsection_two_icon_fr_id integer,
     section_two_subsection_two_icon_ja_id integer,
     section_two_subsection_two_icon_pt_id integer,
-    section_two_subsection_two_icon_pt_br_id integer,
-    section_two_subsection_two_icon_ru_id integer,
     section_two_subsection_two_icon_zh_hans_id integer,
     section_two_teaser_ar text,
     section_two_teaser_de text,
@@ -3622,8 +3576,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     section_two_teaser_fr text,
     section_two_teaser_ja text,
     section_two_teaser_pt text,
-    section_two_teaser_pt_br text,
-    section_two_teaser_ru text,
     section_two_teaser_zh_hans text,
     statistic_1_heading_ar character varying(255),
     statistic_1_heading_de character varying(255),
@@ -3632,8 +3584,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_1_heading_fr character varying(255),
     statistic_1_heading_ja character varying(255),
     statistic_1_heading_pt character varying(255),
-    statistic_1_heading_pt_br character varying(255),
-    statistic_1_heading_ru character varying(255),
     statistic_1_heading_zh_hans character varying(255),
     statistic_1_number_ar character varying(255),
     statistic_1_number_de character varying(255),
@@ -3642,8 +3592,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_1_number_fr character varying(255),
     statistic_1_number_ja character varying(255),
     statistic_1_number_pt character varying(255),
-    statistic_1_number_pt_br character varying(255),
-    statistic_1_number_ru character varying(255),
     statistic_1_number_zh_hans character varying(255),
     statistic_1_smallprint_ar character varying(255),
     statistic_1_smallprint_de character varying(255),
@@ -3652,8 +3600,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_1_smallprint_fr character varying(255),
     statistic_1_smallprint_ja character varying(255),
     statistic_1_smallprint_pt character varying(255),
-    statistic_1_smallprint_pt_br character varying(255),
-    statistic_1_smallprint_ru character varying(255),
     statistic_1_smallprint_zh_hans character varying(255),
     statistic_2_heading_ar character varying(255),
     statistic_2_heading_de character varying(255),
@@ -3662,8 +3608,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_2_heading_fr character varying(255),
     statistic_2_heading_ja character varying(255),
     statistic_2_heading_pt character varying(255),
-    statistic_2_heading_pt_br character varying(255),
-    statistic_2_heading_ru character varying(255),
     statistic_2_heading_zh_hans character varying(255),
     statistic_2_number_ar character varying(255),
     statistic_2_number_de character varying(255),
@@ -3672,8 +3616,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_2_number_fr character varying(255),
     statistic_2_number_ja character varying(255),
     statistic_2_number_pt character varying(255),
-    statistic_2_number_pt_br character varying(255),
-    statistic_2_number_ru character varying(255),
     statistic_2_number_zh_hans character varying(255),
     statistic_2_smallprint_ar character varying(255),
     statistic_2_smallprint_de character varying(255),
@@ -3682,8 +3624,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_2_smallprint_fr character varying(255),
     statistic_2_smallprint_ja character varying(255),
     statistic_2_smallprint_pt character varying(255),
-    statistic_2_smallprint_pt_br character varying(255),
-    statistic_2_smallprint_ru character varying(255),
     statistic_2_smallprint_zh_hans character varying(255),
     statistic_3_heading_ar character varying(255),
     statistic_3_heading_de character varying(255),
@@ -3692,8 +3632,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_3_heading_fr character varying(255),
     statistic_3_heading_ja character varying(255),
     statistic_3_heading_pt character varying(255),
-    statistic_3_heading_pt_br character varying(255),
-    statistic_3_heading_ru character varying(255),
     statistic_3_heading_zh_hans character varying(255),
     statistic_3_number_ar character varying(255),
     statistic_3_number_de character varying(255),
@@ -3702,8 +3640,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_3_number_fr character varying(255),
     statistic_3_number_ja character varying(255),
     statistic_3_number_pt character varying(255),
-    statistic_3_number_pt_br character varying(255),
-    statistic_3_number_ru character varying(255),
     statistic_3_number_zh_hans character varying(255),
     statistic_3_smallprint_ar character varying(255),
     statistic_3_smallprint_de character varying(255),
@@ -3712,8 +3648,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_3_smallprint_fr character varying(255),
     statistic_3_smallprint_ja character varying(255),
     statistic_3_smallprint_pt character varying(255),
-    statistic_3_smallprint_pt_br character varying(255),
-    statistic_3_smallprint_ru character varying(255),
     statistic_3_smallprint_zh_hans character varying(255),
     statistic_4_heading_ar character varying(255),
     statistic_4_heading_de character varying(255),
@@ -3722,8 +3656,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_4_heading_fr character varying(255),
     statistic_4_heading_ja character varying(255),
     statistic_4_heading_pt character varying(255),
-    statistic_4_heading_pt_br character varying(255),
-    statistic_4_heading_ru character varying(255),
     statistic_4_heading_zh_hans character varying(255),
     statistic_4_number_ar character varying(255),
     statistic_4_number_de character varying(255),
@@ -3732,8 +3664,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_4_number_fr character varying(255),
     statistic_4_number_ja character varying(255),
     statistic_4_number_pt character varying(255),
-    statistic_4_number_pt_br character varying(255),
-    statistic_4_number_ru character varying(255),
     statistic_4_number_zh_hans character varying(255),
     statistic_4_smallprint_ar character varying(255),
     statistic_4_smallprint_de character varying(255),
@@ -3742,8 +3672,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_4_smallprint_fr character varying(255),
     statistic_4_smallprint_ja character varying(255),
     statistic_4_smallprint_pt character varying(255),
-    statistic_4_smallprint_pt_br character varying(255),
-    statistic_4_smallprint_ru character varying(255),
     statistic_4_smallprint_zh_hans character varying(255),
     statistic_5_heading_ar character varying(255),
     statistic_5_heading_de character varying(255),
@@ -3752,8 +3680,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_5_heading_fr character varying(255),
     statistic_5_heading_ja character varying(255),
     statistic_5_heading_pt character varying(255),
-    statistic_5_heading_pt_br character varying(255),
-    statistic_5_heading_ru character varying(255),
     statistic_5_heading_zh_hans character varying(255),
     statistic_5_number_ar character varying(255),
     statistic_5_number_de character varying(255),
@@ -3762,8 +3688,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_5_number_fr character varying(255),
     statistic_5_number_ja character varying(255),
     statistic_5_number_pt character varying(255),
-    statistic_5_number_pt_br character varying(255),
-    statistic_5_number_ru character varying(255),
     statistic_5_number_zh_hans character varying(255),
     statistic_5_smallprint_ar character varying(255),
     statistic_5_smallprint_de character varying(255),
@@ -3772,8 +3696,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_5_smallprint_fr character varying(255),
     statistic_5_smallprint_ja character varying(255),
     statistic_5_smallprint_pt character varying(255),
-    statistic_5_smallprint_pt_br character varying(255),
-    statistic_5_smallprint_ru character varying(255),
     statistic_5_smallprint_zh_hans character varying(255),
     statistic_6_heading_ar character varying(255),
     statistic_6_heading_de character varying(255),
@@ -3782,8 +3704,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_6_heading_fr character varying(255),
     statistic_6_heading_ja character varying(255),
     statistic_6_heading_pt character varying(255),
-    statistic_6_heading_pt_br character varying(255),
-    statistic_6_heading_ru character varying(255),
     statistic_6_heading_zh_hans character varying(255),
     statistic_6_number_ar character varying(255),
     statistic_6_number_de character varying(255),
@@ -3792,8 +3712,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_6_number_fr character varying(255),
     statistic_6_number_ja character varying(255),
     statistic_6_number_pt character varying(255),
-    statistic_6_number_pt_br character varying(255),
-    statistic_6_number_ru character varying(255),
     statistic_6_number_zh_hans character varying(255),
     statistic_6_smallprint_ar character varying(255),
     statistic_6_smallprint_de character varying(255),
@@ -3802,8 +3720,6 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_6_smallprint_fr character varying(255),
     statistic_6_smallprint_ja character varying(255),
     statistic_6_smallprint_pt character varying(255),
-    statistic_6_smallprint_pt_br character varying(255),
-    statistic_6_smallprint_ru character varying(255),
     statistic_6_smallprint_zh_hans character varying(255),
     sub_heading_ar character varying(255),
     sub_heading_de character varying(255),
@@ -3812,9 +3728,8 @@ CREATE TABLE public.great_international_internationalsectorpage (
     sub_heading_fr character varying(255),
     sub_heading_ja character varying(255),
     sub_heading_pt character varying(255),
-    sub_heading_pt_br character varying(255),
-    sub_heading_ru character varying(255),
-    sub_heading_zh_hans character varying(255)
+    sub_heading_zh_hans character varying(255),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -3865,8 +3780,6 @@ CREATE TABLE public.great_international_internationaltopiclandingpage (
     hero_image_fr_id integer,
     hero_image_ja_id integer,
     hero_image_pt_id integer,
-    hero_image_pt_br_id integer,
-    hero_image_ru_id integer,
     hero_image_zh_hans_id integer,
     hero_teaser_ar character varying(255),
     hero_teaser_de character varying(255),
@@ -3875,8 +3788,6 @@ CREATE TABLE public.great_international_internationaltopiclandingpage (
     hero_teaser_fr character varying(255),
     hero_teaser_ja character varying(255),
     hero_teaser_pt character varying(255),
-    hero_teaser_pt_br character varying(255),
-    hero_teaser_ru character varying(255),
     hero_teaser_zh_hans character varying(255),
     landing_page_title_ar character varying(255),
     landing_page_title_de character varying(255),
@@ -3885,9 +3796,8 @@ CREATE TABLE public.great_international_internationaltopiclandingpage (
     landing_page_title_fr character varying(255),
     landing_page_title_ja character varying(255),
     landing_page_title_pt character varying(255),
-    landing_page_title_pt_br character varying(255),
-    landing_page_title_ru character varying(255),
-    landing_page_title_zh_hans character varying(255)
+    landing_page_title_zh_hans character varying(255),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -4015,8 +3925,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     breadcrumbs_label_fr character varying(50),
     breadcrumbs_label_ja character varying(50),
     breadcrumbs_label_pt character varying(50),
-    breadcrumbs_label_pt_br character varying(50),
-    breadcrumbs_label_ru character varying(50),
     breadcrumbs_label_zh_hans character varying(50),
     case_study_four_image_ar_id integer,
     case_study_four_image_de_id integer,
@@ -4025,8 +3933,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     case_study_four_image_fr_id integer,
     case_study_four_image_ja_id integer,
     case_study_four_image_pt_id integer,
-    case_study_four_image_pt_br_id integer,
-    case_study_four_image_ru_id integer,
     case_study_four_image_zh_hans_id integer,
     case_study_four_text_ar text,
     case_study_four_text_de text,
@@ -4035,8 +3941,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     case_study_four_text_fr text,
     case_study_four_text_ja text,
     case_study_four_text_pt text,
-    case_study_four_text_pt_br text,
-    case_study_four_text_ru text,
     case_study_four_text_zh_hans text,
     case_study_list_title_ar character varying(300),
     case_study_list_title_de character varying(300),
@@ -4045,8 +3949,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     case_study_list_title_fr character varying(300),
     case_study_list_title_ja character varying(300),
     case_study_list_title_pt character varying(300),
-    case_study_list_title_pt_br character varying(300),
-    case_study_list_title_ru character varying(300),
     case_study_list_title_zh_hans character varying(300),
     case_study_one_image_ar_id integer,
     case_study_one_image_de_id integer,
@@ -4055,8 +3957,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     case_study_one_image_fr_id integer,
     case_study_one_image_ja_id integer,
     case_study_one_image_pt_id integer,
-    case_study_one_image_pt_br_id integer,
-    case_study_one_image_ru_id integer,
     case_study_one_image_zh_hans_id integer,
     case_study_one_text_ar text,
     case_study_one_text_de text,
@@ -4065,8 +3965,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     case_study_one_text_fr text,
     case_study_one_text_ja text,
     case_study_one_text_pt text,
-    case_study_one_text_pt_br text,
-    case_study_one_text_ru text,
     case_study_one_text_zh_hans text,
     case_study_three_image_ar_id integer,
     case_study_three_image_de_id integer,
@@ -4075,8 +3973,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     case_study_three_image_fr_id integer,
     case_study_three_image_ja_id integer,
     case_study_three_image_pt_id integer,
-    case_study_three_image_pt_br_id integer,
-    case_study_three_image_ru_id integer,
     case_study_three_image_zh_hans_id integer,
     case_study_three_text_ar text,
     case_study_three_text_de text,
@@ -4085,8 +3981,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     case_study_three_text_fr text,
     case_study_three_text_ja text,
     case_study_three_text_pt text,
-    case_study_three_text_pt_br text,
-    case_study_three_text_ru text,
     case_study_three_text_zh_hans text,
     case_study_two_image_ar_id integer,
     case_study_two_image_de_id integer,
@@ -4095,8 +3989,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     case_study_two_image_fr_id integer,
     case_study_two_image_ja_id integer,
     case_study_two_image_pt_id integer,
-    case_study_two_image_pt_br_id integer,
-    case_study_two_image_ru_id integer,
     case_study_two_image_zh_hans_id integer,
     case_study_two_text_ar text,
     case_study_two_text_de text,
@@ -4105,8 +3997,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     case_study_two_text_fr text,
     case_study_two_text_ja text,
     case_study_two_text_pt text,
-    case_study_two_text_pt_br text,
-    case_study_two_text_ru text,
     case_study_two_text_zh_hans text,
     companies_list_item_image_eight_ar_id integer,
     companies_list_item_image_eight_de_id integer,
@@ -4115,8 +4005,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     companies_list_item_image_eight_fr_id integer,
     companies_list_item_image_eight_ja_id integer,
     companies_list_item_image_eight_pt_id integer,
-    companies_list_item_image_eight_pt_br_id integer,
-    companies_list_item_image_eight_ru_id integer,
     companies_list_item_image_eight_zh_hans_id integer,
     companies_list_item_image_five_ar_id integer,
     companies_list_item_image_five_de_id integer,
@@ -4125,8 +4013,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     companies_list_item_image_five_fr_id integer,
     companies_list_item_image_five_ja_id integer,
     companies_list_item_image_five_pt_id integer,
-    companies_list_item_image_five_pt_br_id integer,
-    companies_list_item_image_five_ru_id integer,
     companies_list_item_image_five_zh_hans_id integer,
     companies_list_item_image_four_ar_id integer,
     companies_list_item_image_four_de_id integer,
@@ -4135,8 +4021,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     companies_list_item_image_four_fr_id integer,
     companies_list_item_image_four_ja_id integer,
     companies_list_item_image_four_pt_id integer,
-    companies_list_item_image_four_pt_br_id integer,
-    companies_list_item_image_four_ru_id integer,
     companies_list_item_image_four_zh_hans_id integer,
     companies_list_item_image_one_ar_id integer,
     companies_list_item_image_one_de_id integer,
@@ -4145,8 +4029,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     companies_list_item_image_one_fr_id integer,
     companies_list_item_image_one_ja_id integer,
     companies_list_item_image_one_pt_id integer,
-    companies_list_item_image_one_pt_br_id integer,
-    companies_list_item_image_one_ru_id integer,
     companies_list_item_image_one_zh_hans_id integer,
     companies_list_item_image_seven_ar_id integer,
     companies_list_item_image_seven_de_id integer,
@@ -4155,8 +4037,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     companies_list_item_image_seven_fr_id integer,
     companies_list_item_image_seven_ja_id integer,
     companies_list_item_image_seven_pt_id integer,
-    companies_list_item_image_seven_pt_br_id integer,
-    companies_list_item_image_seven_ru_id integer,
     companies_list_item_image_seven_zh_hans_id integer,
     companies_list_item_image_six_ar_id integer,
     companies_list_item_image_six_de_id integer,
@@ -4165,8 +4045,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     companies_list_item_image_six_fr_id integer,
     companies_list_item_image_six_ja_id integer,
     companies_list_item_image_six_pt_id integer,
-    companies_list_item_image_six_pt_br_id integer,
-    companies_list_item_image_six_ru_id integer,
     companies_list_item_image_six_zh_hans_id integer,
     companies_list_item_image_three_ar_id integer,
     companies_list_item_image_three_de_id integer,
@@ -4175,8 +4053,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     companies_list_item_image_three_fr_id integer,
     companies_list_item_image_three_ja_id integer,
     companies_list_item_image_three_pt_id integer,
-    companies_list_item_image_three_pt_br_id integer,
-    companies_list_item_image_three_ru_id integer,
     companies_list_item_image_three_zh_hans_id integer,
     companies_list_item_image_two_ar_id integer,
     companies_list_item_image_two_de_id integer,
@@ -4185,8 +4061,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     companies_list_item_image_two_fr_id integer,
     companies_list_item_image_two_ja_id integer,
     companies_list_item_image_two_pt_id integer,
-    companies_list_item_image_two_pt_br_id integer,
-    companies_list_item_image_two_ru_id integer,
     companies_list_item_image_two_zh_hans_id integer,
     companies_list_text_ar text,
     companies_list_text_de text,
@@ -4195,8 +4069,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     companies_list_text_fr text,
     companies_list_text_ja text,
     companies_list_text_pt text,
-    companies_list_text_pt_br text,
-    companies_list_text_ru text,
     companies_list_text_zh_hans text,
     competitive_advantages_list_item_one_ar text,
     competitive_advantages_list_item_one_de text,
@@ -4210,13 +4082,9 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     competitive_advantages_list_item_one_icon_fr_id integer,
     competitive_advantages_list_item_one_icon_ja_id integer,
     competitive_advantages_list_item_one_icon_pt_id integer,
-    competitive_advantages_list_item_one_icon_pt_br_id integer,
-    competitive_advantages_list_item_one_icon_ru_id integer,
     competitive_advantages_list_item_one_icon_zh_hans_id integer,
     competitive_advantages_list_item_one_ja text,
     competitive_advantages_list_item_one_pt text,
-    competitive_advantages_list_item_one_pt_br text,
-    competitive_advantages_list_item_one_ru text,
     competitive_advantages_list_item_one_zh_hans text,
     competitive_advantages_list_item_three_ar text,
     competitive_advantages_list_item_three_de text,
@@ -4230,13 +4098,9 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     competitive_advantages_list_item_three_icon_fr_id integer,
     competitive_advantages_list_item_three_icon_ja_id integer,
     competitive_advantages_list_item_three_icon_pt_id integer,
-    competitive_advantages_list_item_three_icon_pt_br_id integer,
-    competitive_advantages_list_item_three_icon_ru_id integer,
     competitive_advantages_list_item_three_icon_zh_hans_id integer,
     competitive_advantages_list_item_three_ja text,
     competitive_advantages_list_item_three_pt text,
-    competitive_advantages_list_item_three_pt_br text,
-    competitive_advantages_list_item_three_ru text,
     competitive_advantages_list_item_three_zh_hans text,
     competitive_advantages_list_item_two_ar text,
     competitive_advantages_list_item_two_de text,
@@ -4250,13 +4114,9 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     competitive_advantages_list_item_two_icon_fr_id integer,
     competitive_advantages_list_item_two_icon_ja_id integer,
     competitive_advantages_list_item_two_icon_pt_id integer,
-    competitive_advantages_list_item_two_icon_pt_br_id integer,
-    competitive_advantages_list_item_two_icon_ru_id integer,
     competitive_advantages_list_item_two_icon_zh_hans_id integer,
     competitive_advantages_list_item_two_ja text,
     competitive_advantages_list_item_two_pt text,
-    competitive_advantages_list_item_two_pt_br text,
-    competitive_advantages_list_item_two_ru text,
     competitive_advantages_list_item_two_zh_hans text,
     competitive_advantages_title_ar character varying(300),
     competitive_advantages_title_de character varying(300),
@@ -4265,8 +4125,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     competitive_advantages_title_fr character varying(300),
     competitive_advantages_title_ja character varying(300),
     competitive_advantages_title_pt character varying(300),
-    competitive_advantages_title_pt_br character varying(300),
-    competitive_advantages_title_ru character varying(300),
     competitive_advantages_title_zh_hans character varying(300),
     contact_button_ar character varying(500),
     contact_button_de character varying(500),
@@ -4275,8 +4133,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     contact_button_fr character varying(500),
     contact_button_ja character varying(500),
     contact_button_pt character varying(500),
-    contact_button_pt_br character varying(500),
-    contact_button_ru character varying(500),
     contact_button_zh_hans character varying(500),
     contact_proposition_ar text,
     contact_proposition_de text,
@@ -4285,8 +4141,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     contact_proposition_fr text,
     contact_proposition_ja text,
     contact_proposition_pt text,
-    contact_proposition_pt_br text,
-    contact_proposition_ru text,
     contact_proposition_zh_hans text,
     description_ar text,
     description_de text,
@@ -4295,8 +4149,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     description_fr text,
     description_ja text,
     description_pt text,
-    description_pt_br text,
-    description_ru text,
     description_zh_hans text,
     featured_ar boolean NOT NULL,
     featured_de boolean NOT NULL,
@@ -4305,8 +4157,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     featured_fr boolean NOT NULL,
     featured_ja boolean NOT NULL,
     featured_pt boolean NOT NULL,
-    featured_pt_br boolean NOT NULL,
-    featured_ru boolean NOT NULL,
     featured_zh_hans boolean NOT NULL,
     heading_ar character varying(255),
     heading_de character varying(255),
@@ -4315,8 +4165,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     heading_fr character varying(255),
     heading_ja character varying(255),
     heading_pt character varying(255),
-    heading_pt_br character varying(255),
-    heading_ru character varying(255),
     heading_zh_hans character varying(255),
     hero_image_ar_id integer,
     hero_image_de_id integer,
@@ -4325,8 +4173,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     hero_image_fr_id integer,
     hero_image_ja_id integer,
     hero_image_pt_id integer,
-    hero_image_pt_br_id integer,
-    hero_image_ru_id integer,
     hero_image_zh_hans_id integer,
     opportunity_list_image_ar_id integer,
     opportunity_list_image_de_id integer,
@@ -4335,8 +4181,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     opportunity_list_image_fr_id integer,
     opportunity_list_image_ja_id integer,
     opportunity_list_image_pt_id integer,
-    opportunity_list_image_pt_br_id integer,
-    opportunity_list_image_ru_id integer,
     opportunity_list_image_zh_hans_id integer,
     opportunity_list_item_one_ar text,
     opportunity_list_item_one_de text,
@@ -4345,8 +4189,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     opportunity_list_item_one_fr text,
     opportunity_list_item_one_ja text,
     opportunity_list_item_one_pt text,
-    opportunity_list_item_one_pt_br text,
-    opportunity_list_item_one_ru text,
     opportunity_list_item_one_zh_hans text,
     opportunity_list_item_three_ar text,
     opportunity_list_item_three_de text,
@@ -4355,8 +4197,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     opportunity_list_item_three_fr text,
     opportunity_list_item_three_ja text,
     opportunity_list_item_three_pt text,
-    opportunity_list_item_three_pt_br text,
-    opportunity_list_item_three_ru text,
     opportunity_list_item_three_zh_hans text,
     opportunity_list_item_two_ar text,
     opportunity_list_item_two_de text,
@@ -4365,8 +4205,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     opportunity_list_item_two_fr text,
     opportunity_list_item_two_ja text,
     opportunity_list_item_two_pt text,
-    opportunity_list_item_two_pt_br text,
-    opportunity_list_item_two_ru text,
     opportunity_list_item_two_zh_hans text,
     opportunity_list_title_ar character varying(300),
     opportunity_list_title_de character varying(300),
@@ -4375,8 +4213,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     opportunity_list_title_fr character varying(300),
     opportunity_list_title_ja character varying(300),
     opportunity_list_title_pt character varying(300),
-    opportunity_list_title_pt_br character varying(300),
-    opportunity_list_title_ru character varying(300),
     opportunity_list_title_zh_hans character varying(300),
     other_opportunities_title_ar character varying(300),
     other_opportunities_title_de character varying(300),
@@ -4385,8 +4221,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     other_opportunities_title_fr character varying(300),
     other_opportunities_title_ja character varying(300),
     other_opportunities_title_pt character varying(300),
-    other_opportunities_title_pt_br character varying(300),
-    other_opportunities_title_ru character varying(300),
     other_opportunities_title_zh_hans character varying(300),
     proposition_one_ar text,
     proposition_one_de text,
@@ -4400,13 +4234,9 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     proposition_one_image_fr_id integer,
     proposition_one_image_ja_id integer,
     proposition_one_image_pt_id integer,
-    proposition_one_image_pt_br_id integer,
-    proposition_one_image_ru_id integer,
     proposition_one_image_zh_hans_id integer,
     proposition_one_ja text,
     proposition_one_pt text,
-    proposition_one_pt_br text,
-    proposition_one_ru text,
     proposition_one_video_ar_id integer,
     proposition_one_video_de_id integer,
     proposition_one_video_en_gb_id integer,
@@ -4414,8 +4244,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     proposition_one_video_fr_id integer,
     proposition_one_video_ja_id integer,
     proposition_one_video_pt_id integer,
-    proposition_one_video_pt_br_id integer,
-    proposition_one_video_ru_id integer,
     proposition_one_video_zh_hans_id integer,
     proposition_one_zh_hans text,
     proposition_two_ar text,
@@ -4430,8 +4258,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     proposition_two_image_fr_id integer,
     proposition_two_image_ja_id integer,
     proposition_two_image_pt_id integer,
-    proposition_two_image_pt_br_id integer,
-    proposition_two_image_ru_id integer,
     proposition_two_image_zh_hans_id integer,
     proposition_two_ja text,
     proposition_two_list_item_one_ar text,
@@ -4441,8 +4267,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     proposition_two_list_item_one_fr text,
     proposition_two_list_item_one_ja text,
     proposition_two_list_item_one_pt text,
-    proposition_two_list_item_one_pt_br text,
-    proposition_two_list_item_one_ru text,
     proposition_two_list_item_one_zh_hans text,
     proposition_two_list_item_three_ar text,
     proposition_two_list_item_three_de text,
@@ -4451,8 +4275,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     proposition_two_list_item_three_fr text,
     proposition_two_list_item_three_ja text,
     proposition_two_list_item_three_pt text,
-    proposition_two_list_item_three_pt_br text,
-    proposition_two_list_item_three_ru text,
     proposition_two_list_item_three_zh_hans text,
     proposition_two_list_item_two_ar text,
     proposition_two_list_item_two_de text,
@@ -4461,12 +4283,8 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     proposition_two_list_item_two_fr text,
     proposition_two_list_item_two_ja text,
     proposition_two_list_item_two_pt text,
-    proposition_two_list_item_two_pt_br text,
-    proposition_two_list_item_two_ru text,
     proposition_two_list_item_two_zh_hans text,
     proposition_two_pt text,
-    proposition_two_pt_br text,
-    proposition_two_ru text,
     proposition_two_video_ar_id integer,
     proposition_two_video_de_id integer,
     proposition_two_video_en_gb_id integer,
@@ -4474,8 +4292,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     proposition_two_video_fr_id integer,
     proposition_two_video_ja_id integer,
     proposition_two_video_pt_id integer,
-    proposition_two_video_pt_br_id integer,
-    proposition_two_video_ru_id integer,
     proposition_two_video_zh_hans_id integer,
     proposition_two_zh_hans text,
     summary_image_ar_id integer,
@@ -4485,8 +4301,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     summary_image_fr_id integer,
     summary_image_ja_id integer,
     summary_image_pt_id integer,
-    summary_image_pt_br_id integer,
-    summary_image_ru_id integer,
     summary_image_zh_hans_id integer,
     testimonial_ar text,
     testimonial_background_ar_id integer,
@@ -4496,8 +4310,6 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     testimonial_background_fr_id integer,
     testimonial_background_ja_id integer,
     testimonial_background_pt_id integer,
-    testimonial_background_pt_br_id integer,
-    testimonial_background_ru_id integer,
     testimonial_background_zh_hans_id integer,
     testimonial_de text,
     testimonial_en_gb text,
@@ -4505,9 +4317,8 @@ CREATE TABLE public.invest_highpotentialopportunitydetailpage (
     testimonial_fr text,
     testimonial_ja text,
     testimonial_pt text,
-    testimonial_pt_br text,
-    testimonial_ru text,
-    testimonial_zh_hans text
+    testimonial_zh_hans text,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -4540,7 +4351,8 @@ CREATE TABLE public.invest_highpotentialopportunityformpage (
     website_url_label character varying(200) NOT NULL,
     heading character varying(255) NOT NULL,
     sub_heading character varying(255) NOT NULL,
-    breadcrumbs_label character varying(50) NOT NULL
+    breadcrumbs_label character varying(50) NOT NULL,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -4557,7 +4369,8 @@ CREATE TABLE public.invest_highpotentialopportunityformsuccesspage (
     next_steps_title character varying(255) NOT NULL,
     next_steps_body character varying(255) NOT NULL,
     documents_title character varying(255) NOT NULL,
-    documents_body character varying(255) NOT NULL
+    documents_body character varying(255) NOT NULL,
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -4571,14 +4384,13 @@ CREATE TABLE public.invest_infopage (
     content_en_gb text,
     content_de text,
     content_ja text,
-    content_ru text,
     content_zh_hans text,
     content_fr text,
     content_es text,
     content_pt text,
-    content_pt_br text,
     content_ar text,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -4588,7 +4400,8 @@ CREATE TABLE public.invest_infopage (
 
 CREATE TABLE public.invest_investapp (
     page_ptr_id integer NOT NULL,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -4602,89 +4415,73 @@ CREATE TABLE public.invest_investhomepage (
     heading_en_gb character varying(255),
     heading_de character varying(255),
     heading_ja character varying(255),
-    heading_ru character varying(255),
     heading_zh_hans character varying(255),
     heading_fr character varying(255),
     heading_es character varying(255),
     heading_pt character varying(255),
-    heading_pt_br character varying(255),
     heading_ar character varying(255),
     sub_heading character varying(255) NOT NULL,
     sub_heading_en_gb character varying(255),
     sub_heading_de character varying(255),
     sub_heading_ja character varying(255),
-    sub_heading_ru character varying(255),
     sub_heading_zh_hans character varying(255),
     sub_heading_fr character varying(255),
     sub_heading_es character varying(255),
     sub_heading_pt character varying(255),
-    sub_heading_pt_br character varying(255),
     sub_heading_ar character varying(255),
     sector_title text NOT NULL,
     sector_title_en_gb text,
     sector_title_de text,
     sector_title_ja text,
-    sector_title_ru text,
     sector_title_zh_hans text,
     sector_title_fr text,
     sector_title_es text,
     sector_title_pt text,
-    sector_title_pt_br text,
     sector_title_ar text,
     sector_button_text text NOT NULL,
     sector_button_text_en_gb text,
     sector_button_text_de text,
     sector_button_text_ja text,
-    sector_button_text_ru text,
     sector_button_text_zh_hans text,
     sector_button_text_fr text,
     sector_button_text_es text,
     sector_button_text_pt text,
-    sector_button_text_pt_br text,
     sector_button_text_ar text,
     setup_guide_title character varying(255) NOT NULL,
     setup_guide_title_en_gb character varying(255),
     setup_guide_title_de character varying(255),
     setup_guide_title_ja character varying(255),
-    setup_guide_title_ru character varying(255),
     setup_guide_title_zh_hans character varying(255),
     setup_guide_title_fr character varying(255),
     setup_guide_title_es character varying(255),
     setup_guide_title_pt character varying(255),
-    setup_guide_title_pt_br character varying(255),
     setup_guide_title_ar character varying(255),
     setup_guide_lead_in text,
     setup_guide_lead_in_en_gb text,
     setup_guide_lead_in_de text,
     setup_guide_lead_in_ja text,
-    setup_guide_lead_in_ru text,
     setup_guide_lead_in_zh_hans text,
     setup_guide_lead_in_fr text,
     setup_guide_lead_in_es text,
     setup_guide_lead_in_pt text,
-    setup_guide_lead_in_pt_br text,
     setup_guide_lead_in_ar text,
     how_we_help_title character varying(255) NOT NULL,
     how_we_help_title_en_gb character varying(255),
     how_we_help_title_de character varying(255),
     how_we_help_title_ja character varying(255),
-    how_we_help_title_ru character varying(255),
     how_we_help_title_zh_hans character varying(255),
     how_we_help_title_fr character varying(255),
     how_we_help_title_es character varying(255),
     how_we_help_title_pt character varying(255),
-    how_we_help_title_pt_br character varying(255),
     how_we_help_title_ar character varying(255),
     how_we_help_lead_in text,
     how_we_help_lead_in_en_gb text,
     how_we_help_lead_in_de text,
     how_we_help_lead_in_ja text,
-    how_we_help_lead_in_ru text,
     how_we_help_lead_in_zh_hans text,
     how_we_help_lead_in_fr text,
     how_we_help_lead_in_es text,
     how_we_help_lead_in_pt text,
-    how_we_help_lead_in_pt_br text,
     how_we_help_lead_in_ar text,
     hero_image_id integer,
     how_we_help_icon_five_id integer,
@@ -4695,8 +4492,6 @@ CREATE TABLE public.invest_investhomepage (
     how_we_help_icon_five_fr_id integer,
     how_we_help_icon_five_ja_id integer,
     how_we_help_icon_five_pt_id integer,
-    how_we_help_icon_five_pt_br_id integer,
-    how_we_help_icon_five_ru_id integer,
     how_we_help_icon_five_zh_hans_id integer,
     how_we_help_icon_four_id integer,
     how_we_help_icon_four_ar_id integer,
@@ -4706,8 +4501,6 @@ CREATE TABLE public.invest_investhomepage (
     how_we_help_icon_four_fr_id integer,
     how_we_help_icon_four_ja_id integer,
     how_we_help_icon_four_pt_id integer,
-    how_we_help_icon_four_pt_br_id integer,
-    how_we_help_icon_four_ru_id integer,
     how_we_help_icon_four_zh_hans_id integer,
     how_we_help_icon_one_id integer,
     how_we_help_icon_one_ar_id integer,
@@ -4717,8 +4510,6 @@ CREATE TABLE public.invest_investhomepage (
     how_we_help_icon_one_fr_id integer,
     how_we_help_icon_one_ja_id integer,
     how_we_help_icon_one_pt_id integer,
-    how_we_help_icon_one_pt_br_id integer,
-    how_we_help_icon_one_ru_id integer,
     how_we_help_icon_one_zh_hans_id integer,
     how_we_help_icon_three_id integer,
     how_we_help_icon_three_ar_id integer,
@@ -4728,8 +4519,6 @@ CREATE TABLE public.invest_investhomepage (
     how_we_help_icon_three_fr_id integer,
     how_we_help_icon_three_ja_id integer,
     how_we_help_icon_three_pt_id integer,
-    how_we_help_icon_three_pt_br_id integer,
-    how_we_help_icon_three_ru_id integer,
     how_we_help_icon_three_zh_hans_id integer,
     how_we_help_icon_two_id integer,
     how_we_help_icon_two_ar_id integer,
@@ -4739,8 +4528,6 @@ CREATE TABLE public.invest_investhomepage (
     how_we_help_icon_two_fr_id integer,
     how_we_help_icon_two_ja_id integer,
     how_we_help_icon_two_pt_id integer,
-    how_we_help_icon_two_pt_br_id integer,
-    how_we_help_icon_two_ru_id integer,
     how_we_help_icon_two_zh_hans_id integer,
     how_we_help_text_five character varying(255) NOT NULL,
     how_we_help_text_five_ar character varying(255),
@@ -4750,8 +4537,6 @@ CREATE TABLE public.invest_investhomepage (
     how_we_help_text_five_fr character varying(255),
     how_we_help_text_five_ja character varying(255),
     how_we_help_text_five_pt character varying(255),
-    how_we_help_text_five_pt_br character varying(255),
-    how_we_help_text_five_ru character varying(255),
     how_we_help_text_five_zh_hans character varying(255),
     how_we_help_text_four character varying(255) NOT NULL,
     how_we_help_text_four_ar character varying(255),
@@ -4761,8 +4546,6 @@ CREATE TABLE public.invest_investhomepage (
     how_we_help_text_four_fr character varying(255),
     how_we_help_text_four_ja character varying(255),
     how_we_help_text_four_pt character varying(255),
-    how_we_help_text_four_pt_br character varying(255),
-    how_we_help_text_four_ru character varying(255),
     how_we_help_text_four_zh_hans character varying(255),
     how_we_help_text_one character varying(255) NOT NULL,
     how_we_help_text_one_ar character varying(255),
@@ -4772,8 +4555,6 @@ CREATE TABLE public.invest_investhomepage (
     how_we_help_text_one_fr character varying(255),
     how_we_help_text_one_ja character varying(255),
     how_we_help_text_one_pt character varying(255),
-    how_we_help_text_one_pt_br character varying(255),
-    how_we_help_text_one_ru character varying(255),
     how_we_help_text_one_zh_hans character varying(255),
     how_we_help_text_six character varying(255) NOT NULL,
     how_we_help_text_six_ar character varying(255),
@@ -4783,8 +4564,6 @@ CREATE TABLE public.invest_investhomepage (
     how_we_help_text_six_fr character varying(255),
     how_we_help_text_six_ja character varying(255),
     how_we_help_text_six_pt character varying(255),
-    how_we_help_text_six_pt_br character varying(255),
-    how_we_help_text_six_ru character varying(255),
     how_we_help_text_six_zh_hans character varying(255),
     how_we_help_text_three character varying(255) NOT NULL,
     how_we_help_text_three_ar character varying(255),
@@ -4794,8 +4573,6 @@ CREATE TABLE public.invest_investhomepage (
     how_we_help_text_three_fr character varying(255),
     how_we_help_text_three_ja character varying(255),
     how_we_help_text_three_pt character varying(255),
-    how_we_help_text_three_pt_br character varying(255),
-    how_we_help_text_three_ru character varying(255),
     how_we_help_text_three_zh_hans character varying(255),
     how_we_help_text_two character varying(255) NOT NULL,
     how_we_help_text_two_ar character varying(255),
@@ -4805,8 +4582,6 @@ CREATE TABLE public.invest_investhomepage (
     how_we_help_text_two_fr character varying(255),
     how_we_help_text_two_ja character varying(255),
     how_we_help_text_two_pt character varying(255),
-    how_we_help_text_two_pt_br character varying(255),
-    how_we_help_text_two_ru character varying(255),
     how_we_help_text_two_zh_hans character varying(255),
     subsection_content_five text NOT NULL,
     subsection_content_five_ar text,
@@ -4816,8 +4591,6 @@ CREATE TABLE public.invest_investhomepage (
     subsection_content_five_fr text,
     subsection_content_five_ja text,
     subsection_content_five_pt text,
-    subsection_content_five_pt_br text,
-    subsection_content_five_ru text,
     subsection_content_five_zh_hans text,
     subsection_content_four text NOT NULL,
     subsection_content_four_ar text,
@@ -4827,8 +4600,6 @@ CREATE TABLE public.invest_investhomepage (
     subsection_content_four_fr text,
     subsection_content_four_ja text,
     subsection_content_four_pt text,
-    subsection_content_four_pt_br text,
-    subsection_content_four_ru text,
     subsection_content_four_zh_hans text,
     subsection_content_one text NOT NULL,
     subsection_content_one_ar text,
@@ -4838,8 +4609,6 @@ CREATE TABLE public.invest_investhomepage (
     subsection_content_one_fr text,
     subsection_content_one_ja text,
     subsection_content_one_pt text,
-    subsection_content_one_pt_br text,
-    subsection_content_one_ru text,
     subsection_content_one_zh_hans text,
     subsection_content_seven text NOT NULL,
     subsection_content_seven_ar text,
@@ -4849,8 +4618,6 @@ CREATE TABLE public.invest_investhomepage (
     subsection_content_seven_fr text,
     subsection_content_seven_ja text,
     subsection_content_seven_pt text,
-    subsection_content_seven_pt_br text,
-    subsection_content_seven_ru text,
     subsection_content_seven_zh_hans text,
     subsection_content_six text NOT NULL,
     subsection_content_six_ar text,
@@ -4860,8 +4627,6 @@ CREATE TABLE public.invest_investhomepage (
     subsection_content_six_fr text,
     subsection_content_six_ja text,
     subsection_content_six_pt text,
-    subsection_content_six_pt_br text,
-    subsection_content_six_ru text,
     subsection_content_six_zh_hans text,
     subsection_content_three text NOT NULL,
     subsection_content_three_ar text,
@@ -4871,8 +4636,6 @@ CREATE TABLE public.invest_investhomepage (
     subsection_content_three_fr text,
     subsection_content_three_ja text,
     subsection_content_three_pt text,
-    subsection_content_three_pt_br text,
-    subsection_content_three_ru text,
     subsection_content_three_zh_hans text,
     subsection_content_two text NOT NULL,
     subsection_content_two_ar text,
@@ -4882,8 +4645,6 @@ CREATE TABLE public.invest_investhomepage (
     subsection_content_two_fr text,
     subsection_content_two_ja text,
     subsection_content_two_pt text,
-    subsection_content_two_pt_br text,
-    subsection_content_two_ru text,
     subsection_content_two_zh_hans text,
     subsection_title_five character varying(255) NOT NULL,
     subsection_title_five_ar character varying(255),
@@ -4893,8 +4654,6 @@ CREATE TABLE public.invest_investhomepage (
     subsection_title_five_fr character varying(255),
     subsection_title_five_ja character varying(255),
     subsection_title_five_pt character varying(255),
-    subsection_title_five_pt_br character varying(255),
-    subsection_title_five_ru character varying(255),
     subsection_title_five_zh_hans character varying(255),
     subsection_title_four character varying(255) NOT NULL,
     subsection_title_four_ar character varying(255),
@@ -4904,8 +4663,6 @@ CREATE TABLE public.invest_investhomepage (
     subsection_title_four_fr character varying(255),
     subsection_title_four_ja character varying(255),
     subsection_title_four_pt character varying(255),
-    subsection_title_four_pt_br character varying(255),
-    subsection_title_four_ru character varying(255),
     subsection_title_four_zh_hans character varying(255),
     subsection_title_one character varying(255) NOT NULL,
     subsection_title_one_ar character varying(255),
@@ -4915,8 +4672,6 @@ CREATE TABLE public.invest_investhomepage (
     subsection_title_one_fr character varying(255),
     subsection_title_one_ja character varying(255),
     subsection_title_one_pt character varying(255),
-    subsection_title_one_pt_br character varying(255),
-    subsection_title_one_ru character varying(255),
     subsection_title_one_zh_hans character varying(255),
     subsection_title_seven character varying(255) NOT NULL,
     subsection_title_seven_ar character varying(255),
@@ -4926,8 +4681,6 @@ CREATE TABLE public.invest_investhomepage (
     subsection_title_seven_fr character varying(255),
     subsection_title_seven_ja character varying(255),
     subsection_title_seven_pt character varying(255),
-    subsection_title_seven_pt_br character varying(255),
-    subsection_title_seven_ru character varying(255),
     subsection_title_seven_zh_hans character varying(255),
     subsection_title_six character varying(255) NOT NULL,
     subsection_title_six_ar character varying(255),
@@ -4937,8 +4690,6 @@ CREATE TABLE public.invest_investhomepage (
     subsection_title_six_fr character varying(255),
     subsection_title_six_ja character varying(255),
     subsection_title_six_pt character varying(255),
-    subsection_title_six_pt_br character varying(255),
-    subsection_title_six_ru character varying(255),
     subsection_title_six_zh_hans character varying(255),
     subsection_title_three character varying(255) NOT NULL,
     subsection_title_three_ar character varying(255),
@@ -4948,8 +4699,6 @@ CREATE TABLE public.invest_investhomepage (
     subsection_title_three_fr character varying(255),
     subsection_title_three_ja character varying(255),
     subsection_title_three_pt character varying(255),
-    subsection_title_three_pt_br character varying(255),
-    subsection_title_three_ru character varying(255),
     subsection_title_three_zh_hans character varying(255),
     subsection_title_two character varying(255) NOT NULL,
     subsection_title_two_ar character varying(255),
@@ -4959,8 +4708,6 @@ CREATE TABLE public.invest_investhomepage (
     subsection_title_two_fr character varying(255),
     subsection_title_two_ja character varying(255),
     subsection_title_two_pt character varying(255),
-    subsection_title_two_pt_br character varying(255),
-    subsection_title_two_ru character varying(255),
     subsection_title_two_zh_hans character varying(255),
     service_name character varying(100),
     setup_guide_call_to_action_text character varying(255) NOT NULL,
@@ -4971,8 +4718,6 @@ CREATE TABLE public.invest_investhomepage (
     setup_guide_call_to_action_text_fr character varying(255),
     setup_guide_call_to_action_text_ja character varying(255),
     setup_guide_call_to_action_text_pt character varying(255),
-    setup_guide_call_to_action_text_pt_br character varying(255),
-    setup_guide_call_to_action_text_ru character varying(255),
     setup_guide_call_to_action_text_zh_hans character varying(255),
     setup_guide_content text NOT NULL,
     setup_guide_content_ar text,
@@ -4982,8 +4727,6 @@ CREATE TABLE public.invest_investhomepage (
     setup_guide_content_fr text,
     setup_guide_content_ja text,
     setup_guide_content_pt text,
-    setup_guide_content_pt_br text,
-    setup_guide_content_ru text,
     setup_guide_content_zh_hans text,
     setup_guide_img_id integer,
     setup_guide_img_ar_id integer,
@@ -4993,8 +4736,6 @@ CREATE TABLE public.invest_investhomepage (
     setup_guide_img_fr_id integer,
     setup_guide_img_ja_id integer,
     setup_guide_img_pt_id integer,
-    setup_guide_img_pt_br_id integer,
-    setup_guide_img_ru_id integer,
     setup_guide_img_zh_hans_id integer,
     benefits_section_content text NOT NULL,
     benefits_section_content_ar text,
@@ -5004,8 +4745,6 @@ CREATE TABLE public.invest_investhomepage (
     benefits_section_content_fr text,
     benefits_section_content_ja text,
     benefits_section_content_pt text,
-    benefits_section_content_pt_br text,
-    benefits_section_content_ru text,
     benefits_section_content_zh_hans text,
     benefits_section_img_id integer,
     benefits_section_img_ar_id integer,
@@ -5015,8 +4754,6 @@ CREATE TABLE public.invest_investhomepage (
     benefits_section_img_fr_id integer,
     benefits_section_img_ja_id integer,
     benefits_section_img_pt_id integer,
-    benefits_section_img_pt_br_id integer,
-    benefits_section_img_ru_id integer,
     benefits_section_img_zh_hans_id integer,
     benefits_section_intro text NOT NULL,
     benefits_section_intro_ar text,
@@ -5026,8 +4763,6 @@ CREATE TABLE public.invest_investhomepage (
     benefits_section_intro_fr text,
     benefits_section_intro_ja text,
     benefits_section_intro_pt text,
-    benefits_section_intro_pt_br text,
-    benefits_section_intro_ru text,
     benefits_section_intro_zh_hans text,
     benefits_section_title character varying(255) NOT NULL,
     benefits_section_title_ar character varying(255),
@@ -5037,8 +4772,6 @@ CREATE TABLE public.invest_investhomepage (
     benefits_section_title_fr character varying(255),
     benefits_section_title_ja character varying(255),
     benefits_section_title_pt character varying(255),
-    benefits_section_title_pt_br character varying(255),
-    benefits_section_title_ru character varying(255),
     benefits_section_title_zh_hans character varying(255),
     breadcrumbs_label character varying(50) NOT NULL,
     breadcrumbs_label_ar character varying(50),
@@ -5048,8 +4781,6 @@ CREATE TABLE public.invest_investhomepage (
     breadcrumbs_label_fr character varying(50),
     breadcrumbs_label_ja character varying(50),
     breadcrumbs_label_pt character varying(50),
-    breadcrumbs_label_pt_br character varying(50),
-    breadcrumbs_label_ru character varying(50),
     breadcrumbs_label_zh_hans character varying(50),
     contact_section_call_to_action_text character varying(255) NOT NULL,
     contact_section_call_to_action_text_ar character varying(255),
@@ -5059,8 +4790,6 @@ CREATE TABLE public.invest_investhomepage (
     contact_section_call_to_action_text_fr character varying(255),
     contact_section_call_to_action_text_ja character varying(255),
     contact_section_call_to_action_text_pt character varying(255),
-    contact_section_call_to_action_text_pt_br character varying(255),
-    contact_section_call_to_action_text_ru character varying(255),
     contact_section_call_to_action_text_zh_hans character varying(255),
     contact_section_content text NOT NULL,
     contact_section_content_ar text,
@@ -5070,8 +4799,6 @@ CREATE TABLE public.invest_investhomepage (
     contact_section_content_fr text,
     contact_section_content_ja text,
     contact_section_content_pt text,
-    contact_section_content_pt_br text,
-    contact_section_content_ru text,
     contact_section_content_zh_hans text,
     contact_section_title character varying(255) NOT NULL,
     contact_section_title_ar character varying(255),
@@ -5081,8 +4808,6 @@ CREATE TABLE public.invest_investhomepage (
     contact_section_title_fr character varying(255),
     contact_section_title_ja character varying(255),
     contact_section_title_pt character varying(255),
-    contact_section_title_pt_br character varying(255),
-    contact_section_title_ru character varying(255),
     contact_section_title_zh_hans character varying(255),
     eu_exit_section_call_to_action_text character varying(255) NOT NULL,
     eu_exit_section_call_to_action_text_ar character varying(255),
@@ -5092,8 +4817,6 @@ CREATE TABLE public.invest_investhomepage (
     eu_exit_section_call_to_action_text_fr character varying(255),
     eu_exit_section_call_to_action_text_ja character varying(255),
     eu_exit_section_call_to_action_text_pt character varying(255),
-    eu_exit_section_call_to_action_text_pt_br character varying(255),
-    eu_exit_section_call_to_action_text_ru character varying(255),
     eu_exit_section_call_to_action_text_zh_hans character varying(255),
     eu_exit_section_content text NOT NULL,
     eu_exit_section_content_ar text,
@@ -5103,8 +4826,6 @@ CREATE TABLE public.invest_investhomepage (
     eu_exit_section_content_fr text,
     eu_exit_section_content_ja text,
     eu_exit_section_content_pt text,
-    eu_exit_section_content_pt_br text,
-    eu_exit_section_content_ru text,
     eu_exit_section_content_zh_hans text,
     eu_exit_section_img_id integer,
     eu_exit_section_img_ar_id integer,
@@ -5114,8 +4835,6 @@ CREATE TABLE public.invest_investhomepage (
     eu_exit_section_img_fr_id integer,
     eu_exit_section_img_ja_id integer,
     eu_exit_section_img_pt_id integer,
-    eu_exit_section_img_pt_br_id integer,
-    eu_exit_section_img_ru_id integer,
     eu_exit_section_img_zh_hans_id integer,
     eu_exit_section_title character varying(255) NOT NULL,
     eu_exit_section_title_ar character varying(255),
@@ -5125,8 +4844,6 @@ CREATE TABLE public.invest_investhomepage (
     eu_exit_section_title_fr character varying(255),
     eu_exit_section_title_ja character varying(255),
     eu_exit_section_title_pt character varying(255),
-    eu_exit_section_title_pt_br character varying(255),
-    eu_exit_section_title_ru character varying(255),
     eu_exit_section_title_zh_hans character varying(255),
     hero_call_to_action_text character varying(255) NOT NULL,
     hero_call_to_action_text_ar character varying(255),
@@ -5136,8 +4853,6 @@ CREATE TABLE public.invest_investhomepage (
     hero_call_to_action_text_fr character varying(255),
     hero_call_to_action_text_ja character varying(255),
     hero_call_to_action_text_pt character varying(255),
-    hero_call_to_action_text_pt_br character varying(255),
-    hero_call_to_action_text_ru character varying(255),
     hero_call_to_action_text_zh_hans character varying(255),
     hpo_intro text NOT NULL,
     hpo_intro_ar text,
@@ -5147,8 +4862,6 @@ CREATE TABLE public.invest_investhomepage (
     hpo_intro_fr text,
     hpo_intro_ja text,
     hpo_intro_pt text,
-    hpo_intro_pt_br text,
-    hpo_intro_ru text,
     hpo_intro_zh_hans text,
     hpo_title character varying(255) NOT NULL,
     hpo_title_ar character varying(255),
@@ -5158,8 +4871,6 @@ CREATE TABLE public.invest_investhomepage (
     hpo_title_fr character varying(255),
     hpo_title_ja character varying(255),
     hpo_title_pt character varying(255),
-    hpo_title_pt_br character varying(255),
-    hpo_title_ru character varying(255),
     hpo_title_zh_hans character varying(255),
     sector_intro text NOT NULL,
     sector_intro_ar text,
@@ -5169,8 +4880,6 @@ CREATE TABLE public.invest_investhomepage (
     sector_intro_fr text,
     sector_intro_ja text,
     sector_intro_pt text,
-    sector_intro_pt_br text,
-    sector_intro_ru text,
     sector_intro_zh_hans text,
     capital_invest_section_background_image_id integer,
     capital_invest_section_background_image_ar_id integer,
@@ -5180,8 +4889,6 @@ CREATE TABLE public.invest_investhomepage (
     capital_invest_section_background_image_fr_id integer,
     capital_invest_section_background_image_ja_id integer,
     capital_invest_section_background_image_pt_id integer,
-    capital_invest_section_background_image_pt_br_id integer,
-    capital_invest_section_background_image_ru_id integer,
     capital_invest_section_background_image_zh_hans_id integer,
     capital_invest_section_content text NOT NULL,
     capital_invest_section_content_ar text,
@@ -5191,8 +4898,6 @@ CREATE TABLE public.invest_investhomepage (
     capital_invest_section_content_fr text,
     capital_invest_section_content_ja text,
     capital_invest_section_content_pt text,
-    capital_invest_section_content_pt_br text,
-    capital_invest_section_content_ru text,
     capital_invest_section_content_zh_hans text,
     capital_invest_section_cta_text character varying(255) NOT NULL,
     capital_invest_section_cta_text_ar character varying(255),
@@ -5202,8 +4907,6 @@ CREATE TABLE public.invest_investhomepage (
     capital_invest_section_cta_text_fr character varying(255),
     capital_invest_section_cta_text_ja character varying(255),
     capital_invest_section_cta_text_pt character varying(255),
-    capital_invest_section_cta_text_pt_br character varying(255),
-    capital_invest_section_cta_text_ru character varying(255),
     capital_invest_section_cta_text_zh_hans character varying(255),
     capital_invest_section_title character varying(255) NOT NULL,
     capital_invest_section_title_ar character varying(255),
@@ -5213,8 +4916,6 @@ CREATE TABLE public.invest_investhomepage (
     capital_invest_section_title_fr character varying(255),
     capital_invest_section_title_ja character varying(255),
     capital_invest_section_title_pt character varying(255),
-    capital_invest_section_title_pt_br character varying(255),
-    capital_invest_section_title_ru character varying(255),
     capital_invest_section_title_zh_hans character varying(255),
     capital_invest_section_cta_url character varying(255) NOT NULL,
     capital_invest_section_cta_url_ar character varying(255),
@@ -5224,8 +4925,6 @@ CREATE TABLE public.invest_investhomepage (
     capital_invest_section_cta_url_fr character varying(255),
     capital_invest_section_cta_url_ja character varying(255),
     capital_invest_section_cta_url_pt character varying(255),
-    capital_invest_section_cta_url_pt_br character varying(255),
-    capital_invest_section_cta_url_ru character varying(255),
     capital_invest_section_cta_url_zh_hans character varying(255),
     contact_section_call_to_action_url character varying(255) NOT NULL,
     contact_section_call_to_action_url_ar character varying(255),
@@ -5235,8 +4934,6 @@ CREATE TABLE public.invest_investhomepage (
     contact_section_call_to_action_url_fr character varying(255),
     contact_section_call_to_action_url_ja character varying(255),
     contact_section_call_to_action_url_pt character varying(255),
-    contact_section_call_to_action_url_pt_br character varying(255),
-    contact_section_call_to_action_url_ru character varying(255),
     contact_section_call_to_action_url_zh_hans character varying(255),
     eu_exit_section_call_to_action_url character varying(255) NOT NULL,
     eu_exit_section_call_to_action_url_ar character varying(255),
@@ -5246,8 +4943,6 @@ CREATE TABLE public.invest_investhomepage (
     eu_exit_section_call_to_action_url_fr character varying(255),
     eu_exit_section_call_to_action_url_ja character varying(255),
     eu_exit_section_call_to_action_url_pt character varying(255),
-    eu_exit_section_call_to_action_url_pt_br character varying(255),
-    eu_exit_section_call_to_action_url_ru character varying(255),
     eu_exit_section_call_to_action_url_zh_hans character varying(255),
     hero_call_to_action_url character varying(255) NOT NULL,
     hero_call_to_action_url_ar character varying(255),
@@ -5257,8 +4952,6 @@ CREATE TABLE public.invest_investhomepage (
     hero_call_to_action_url_fr character varying(255),
     hero_call_to_action_url_ja character varying(255),
     hero_call_to_action_url_pt character varying(255),
-    hero_call_to_action_url_pt_br character varying(255),
-    hero_call_to_action_url_ru character varying(255),
     hero_call_to_action_url_zh_hans character varying(255),
     sector_button_url character varying(255) NOT NULL,
     sector_button_url_ar character varying(255),
@@ -5268,8 +4961,6 @@ CREATE TABLE public.invest_investhomepage (
     sector_button_url_fr character varying(255),
     sector_button_url_ja character varying(255),
     sector_button_url_pt character varying(255),
-    sector_button_url_pt_br character varying(255),
-    sector_button_url_ru character varying(255),
     sector_button_url_zh_hans character varying(255),
     setup_guide_call_to_action_url character varying(255) NOT NULL,
     setup_guide_call_to_action_url_ar character varying(255),
@@ -5279,9 +4970,8 @@ CREATE TABLE public.invest_investhomepage (
     setup_guide_call_to_action_url_fr character varying(255),
     setup_guide_call_to_action_url_ja character varying(255),
     setup_guide_call_to_action_url_pt character varying(255),
-    setup_guide_call_to_action_url_pt_br character varying(255),
-    setup_guide_call_to_action_url_ru character varying(255),
-    setup_guide_call_to_action_url_zh_hans character varying(255)
+    setup_guide_call_to_action_url_zh_hans character varying(255),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -5295,15 +4985,14 @@ CREATE TABLE public.invest_regionlandingpage (
     heading_en_gb character varying(255),
     heading_de character varying(255),
     heading_ja character varying(255),
-    heading_ru character varying(255),
     heading_zh_hans character varying(255),
     heading_fr character varying(255),
     heading_es character varying(255),
     heading_pt character varying(255),
-    heading_pt_br character varying(255),
     heading_ar character varying(255),
     hero_image_id integer,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -5317,15 +5006,14 @@ CREATE TABLE public.invest_sectorlandingpage (
     heading_en_gb character varying(255),
     heading_de character varying(255),
     heading_ja character varying(255),
-    heading_ru character varying(255),
     heading_zh_hans character varying(255),
     heading_fr character varying(255),
     heading_es character varying(255),
     heading_pt character varying(255),
-    heading_pt_br character varying(255),
     heading_ar character varying(255),
     hero_image_id integer,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -5340,23 +5028,19 @@ CREATE TABLE public.invest_sectorpage (
     description_en_gb text,
     description_de text,
     description_ja text,
-    description_ru text,
     description_zh_hans text,
     description_fr text,
     description_es text,
     description_pt text,
-    description_pt_br text,
     description_ar text,
     heading character varying(255) NOT NULL,
     heading_en_gb character varying(255),
     heading_de character varying(255),
     heading_ja character varying(255),
-    heading_ru character varying(255),
     heading_zh_hans character varying(255),
     heading_fr character varying(255),
     heading_es character varying(255),
     heading_pt character varying(255),
-    heading_pt_br character varying(255),
     heading_ar character varying(255),
     hero_image_id integer,
     pullout_stat character varying(255),
@@ -5367,8 +5051,6 @@ CREATE TABLE public.invest_sectorpage (
     pullout_stat_fr character varying(255),
     pullout_stat_ja character varying(255),
     pullout_stat_pt character varying(255),
-    pullout_stat_pt_br character varying(255),
-    pullout_stat_ru character varying(255),
     pullout_stat_text character varying(255),
     pullout_stat_text_ar character varying(255),
     pullout_stat_text_de character varying(255),
@@ -5377,8 +5059,6 @@ CREATE TABLE public.invest_sectorpage (
     pullout_stat_text_fr character varying(255),
     pullout_stat_text_ja character varying(255),
     pullout_stat_text_pt character varying(255),
-    pullout_stat_text_pt_br character varying(255),
-    pullout_stat_text_ru character varying(255),
     pullout_stat_text_zh_hans character varying(255),
     pullout_stat_zh_hans character varying(255),
     pullout_text text,
@@ -5389,8 +5069,6 @@ CREATE TABLE public.invest_sectorpage (
     pullout_text_fr text,
     pullout_text_ja text,
     pullout_text_pt text,
-    pullout_text_pt_br text,
-    pullout_text_ru text,
     pullout_text_zh_hans text,
     subsection_content_five text NOT NULL,
     subsection_content_five_ar text,
@@ -5400,8 +5078,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_content_five_fr text,
     subsection_content_five_ja text,
     subsection_content_five_pt text,
-    subsection_content_five_pt_br text,
-    subsection_content_five_ru text,
     subsection_content_five_zh_hans text,
     subsection_content_four text NOT NULL,
     subsection_content_four_ar text,
@@ -5411,8 +5087,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_content_four_fr text,
     subsection_content_four_ja text,
     subsection_content_four_pt text,
-    subsection_content_four_pt_br text,
-    subsection_content_four_ru text,
     subsection_content_four_zh_hans text,
     subsection_content_one text NOT NULL,
     subsection_content_one_ar text,
@@ -5422,8 +5096,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_content_one_fr text,
     subsection_content_one_ja text,
     subsection_content_one_pt text,
-    subsection_content_one_pt_br text,
-    subsection_content_one_ru text,
     subsection_content_one_zh_hans text,
     subsection_content_seven text NOT NULL,
     subsection_content_seven_ar text,
@@ -5433,8 +5105,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_content_seven_fr text,
     subsection_content_seven_ja text,
     subsection_content_seven_pt text,
-    subsection_content_seven_pt_br text,
-    subsection_content_seven_ru text,
     subsection_content_seven_zh_hans text,
     subsection_content_six text NOT NULL,
     subsection_content_six_ar text,
@@ -5444,8 +5114,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_content_six_fr text,
     subsection_content_six_ja text,
     subsection_content_six_pt text,
-    subsection_content_six_pt_br text,
-    subsection_content_six_ru text,
     subsection_content_six_zh_hans text,
     subsection_content_three text NOT NULL,
     subsection_content_three_ar text,
@@ -5455,8 +5123,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_content_three_fr text,
     subsection_content_three_ja text,
     subsection_content_three_pt text,
-    subsection_content_three_pt_br text,
-    subsection_content_three_ru text,
     subsection_content_three_zh_hans text,
     subsection_content_two text NOT NULL,
     subsection_content_two_ar text,
@@ -5466,8 +5132,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_content_two_fr text,
     subsection_content_two_ja text,
     subsection_content_two_pt text,
-    subsection_content_two_pt_br text,
-    subsection_content_two_ru text,
     subsection_content_two_zh_hans text,
     subsection_map_five_id integer,
     subsection_map_five_ar_id integer,
@@ -5477,8 +5141,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_map_five_fr_id integer,
     subsection_map_five_ja_id integer,
     subsection_map_five_pt_id integer,
-    subsection_map_five_pt_br_id integer,
-    subsection_map_five_ru_id integer,
     subsection_map_five_zh_hans_id integer,
     subsection_map_four_id integer,
     subsection_map_four_ar_id integer,
@@ -5488,8 +5150,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_map_four_fr_id integer,
     subsection_map_four_ja_id integer,
     subsection_map_four_pt_id integer,
-    subsection_map_four_pt_br_id integer,
-    subsection_map_four_ru_id integer,
     subsection_map_four_zh_hans_id integer,
     subsection_map_one_id integer,
     subsection_map_one_ar_id integer,
@@ -5499,8 +5159,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_map_one_fr_id integer,
     subsection_map_one_ja_id integer,
     subsection_map_one_pt_id integer,
-    subsection_map_one_pt_br_id integer,
-    subsection_map_one_ru_id integer,
     subsection_map_one_zh_hans_id integer,
     subsection_map_seven_id integer,
     subsection_map_seven_ar_id integer,
@@ -5510,8 +5168,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_map_seven_fr_id integer,
     subsection_map_seven_ja_id integer,
     subsection_map_seven_pt_id integer,
-    subsection_map_seven_pt_br_id integer,
-    subsection_map_seven_ru_id integer,
     subsection_map_seven_zh_hans_id integer,
     subsection_map_six_id integer,
     subsection_map_six_ar_id integer,
@@ -5521,8 +5177,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_map_six_fr_id integer,
     subsection_map_six_ja_id integer,
     subsection_map_six_pt_id integer,
-    subsection_map_six_pt_br_id integer,
-    subsection_map_six_ru_id integer,
     subsection_map_six_zh_hans_id integer,
     subsection_map_three_id integer,
     subsection_map_three_ar_id integer,
@@ -5532,8 +5186,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_map_three_fr_id integer,
     subsection_map_three_ja_id integer,
     subsection_map_three_pt_id integer,
-    subsection_map_three_pt_br_id integer,
-    subsection_map_three_ru_id integer,
     subsection_map_three_zh_hans_id integer,
     subsection_map_two_id integer,
     subsection_map_two_ar_id integer,
@@ -5543,8 +5195,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_map_two_fr_id integer,
     subsection_map_two_ja_id integer,
     subsection_map_two_pt_id integer,
-    subsection_map_two_pt_br_id integer,
-    subsection_map_two_ru_id integer,
     subsection_map_two_zh_hans_id integer,
     subsection_title_five character varying(200) NOT NULL,
     subsection_title_five_ar character varying(200),
@@ -5554,8 +5204,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_title_five_fr character varying(200),
     subsection_title_five_ja character varying(200),
     subsection_title_five_pt character varying(200),
-    subsection_title_five_pt_br character varying(200),
-    subsection_title_five_ru character varying(200),
     subsection_title_five_zh_hans character varying(200),
     subsection_title_four character varying(200) NOT NULL,
     subsection_title_four_ar character varying(200),
@@ -5565,8 +5213,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_title_four_fr character varying(200),
     subsection_title_four_ja character varying(200),
     subsection_title_four_pt character varying(200),
-    subsection_title_four_pt_br character varying(200),
-    subsection_title_four_ru character varying(200),
     subsection_title_four_zh_hans character varying(200),
     subsection_title_one character varying(200) NOT NULL,
     subsection_title_one_ar character varying(200),
@@ -5576,8 +5222,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_title_one_fr character varying(200),
     subsection_title_one_ja character varying(200),
     subsection_title_one_pt character varying(200),
-    subsection_title_one_pt_br character varying(200),
-    subsection_title_one_ru character varying(200),
     subsection_title_one_zh_hans character varying(200),
     subsection_title_seven character varying(200) NOT NULL,
     subsection_title_seven_ar character varying(200),
@@ -5587,8 +5231,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_title_seven_fr character varying(200),
     subsection_title_seven_ja character varying(200),
     subsection_title_seven_pt character varying(200),
-    subsection_title_seven_pt_br character varying(200),
-    subsection_title_seven_ru character varying(200),
     subsection_title_seven_zh_hans character varying(200),
     subsection_title_six character varying(200) NOT NULL,
     subsection_title_six_ar character varying(200),
@@ -5598,8 +5240,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_title_six_fr character varying(200),
     subsection_title_six_ja character varying(200),
     subsection_title_six_pt character varying(200),
-    subsection_title_six_pt_br character varying(200),
-    subsection_title_six_ru character varying(200),
     subsection_title_six_zh_hans character varying(200),
     subsection_title_three character varying(200) NOT NULL,
     subsection_title_three_ar character varying(200),
@@ -5609,8 +5249,6 @@ CREATE TABLE public.invest_sectorpage (
     subsection_title_three_fr character varying(200),
     subsection_title_three_ja character varying(200),
     subsection_title_three_pt character varying(200),
-    subsection_title_three_pt_br character varying(200),
-    subsection_title_three_ru character varying(200),
     subsection_title_three_zh_hans character varying(200),
     subsection_title_two character varying(200) NOT NULL,
     subsection_title_two_ar character varying(200),
@@ -5620,10 +5258,9 @@ CREATE TABLE public.invest_sectorpage (
     subsection_title_two_fr character varying(200),
     subsection_title_two_ja character varying(200),
     subsection_title_two_pt character varying(200),
-    subsection_title_two_pt_br character varying(200),
-    subsection_title_two_ru character varying(200),
     subsection_title_two_zh_hans character varying(200),
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -5637,36 +5274,31 @@ CREATE TABLE public.invest_setupguidelandingpage (
     heading_en_gb character varying(255),
     heading_de character varying(255),
     heading_ja character varying(255),
-    heading_ru character varying(255),
     heading_zh_hans character varying(255),
     heading_fr character varying(255),
     heading_es character varying(255),
     heading_pt character varying(255),
-    heading_pt_br character varying(255),
     heading_ar character varying(255),
     sub_heading character varying(255) NOT NULL,
     sub_heading_en_gb character varying(255),
     sub_heading_de character varying(255),
     sub_heading_ja character varying(255),
-    sub_heading_ru character varying(255),
     sub_heading_zh_hans character varying(255),
     sub_heading_fr character varying(255),
     sub_heading_es character varying(255),
     sub_heading_pt character varying(255),
-    sub_heading_pt_br character varying(255),
     sub_heading_ar character varying(255),
     lead_in text NOT NULL,
     lead_in_en_gb text,
     lead_in_de text,
     lead_in_ja text,
-    lead_in_ru text,
     lead_in_zh_hans text,
     lead_in_fr text,
     lead_in_es text,
     lead_in_pt text,
-    lead_in_pt_br text,
     lead_in_ar text,
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -5680,34 +5312,28 @@ CREATE TABLE public.invest_setupguidepage (
     description_en_gb text,
     description_de text,
     description_ja text,
-    description_ru text,
     description_zh_hans text,
     description_fr text,
     description_es text,
     description_pt text,
-    description_pt_br text,
     description_ar text,
     heading character varying(255) NOT NULL,
     heading_en_gb character varying(255),
     heading_de character varying(255),
     heading_ja character varying(255),
-    heading_ru character varying(255),
     heading_zh_hans character varying(255),
     heading_fr character varying(255),
     heading_es character varying(255),
     heading_pt character varying(255),
-    heading_pt_br character varying(255),
     heading_ar character varying(255),
     sub_heading character varying(255) NOT NULL,
     sub_heading_en_gb character varying(255),
     sub_heading_de character varying(255),
     sub_heading_ja character varying(255),
-    sub_heading_ru character varying(255),
     sub_heading_zh_hans character varying(255),
     sub_heading_fr character varying(255),
     sub_heading_es character varying(255),
     sub_heading_pt character varying(255),
-    sub_heading_pt_br character varying(255),
     sub_heading_ar character varying(255),
     subsection_content_five text NOT NULL,
     subsection_content_five_ar text,
@@ -5717,8 +5343,6 @@ CREATE TABLE public.invest_setupguidepage (
     subsection_content_five_fr text,
     subsection_content_five_ja text,
     subsection_content_five_pt text,
-    subsection_content_five_pt_br text,
-    subsection_content_five_ru text,
     subsection_content_five_zh_hans text,
     subsection_content_four text NOT NULL,
     subsection_content_four_ar text,
@@ -5728,8 +5352,6 @@ CREATE TABLE public.invest_setupguidepage (
     subsection_content_four_fr text,
     subsection_content_four_ja text,
     subsection_content_four_pt text,
-    subsection_content_four_pt_br text,
-    subsection_content_four_ru text,
     subsection_content_four_zh_hans text,
     subsection_content_one text NOT NULL,
     subsection_content_one_ar text,
@@ -5739,8 +5361,6 @@ CREATE TABLE public.invest_setupguidepage (
     subsection_content_one_fr text,
     subsection_content_one_ja text,
     subsection_content_one_pt text,
-    subsection_content_one_pt_br text,
-    subsection_content_one_ru text,
     subsection_content_one_zh_hans text,
     subsection_content_seven text NOT NULL,
     subsection_content_seven_ar text,
@@ -5750,8 +5370,6 @@ CREATE TABLE public.invest_setupguidepage (
     subsection_content_seven_fr text,
     subsection_content_seven_ja text,
     subsection_content_seven_pt text,
-    subsection_content_seven_pt_br text,
-    subsection_content_seven_ru text,
     subsection_content_seven_zh_hans text,
     subsection_content_six text NOT NULL,
     subsection_content_six_ar text,
@@ -5761,8 +5379,6 @@ CREATE TABLE public.invest_setupguidepage (
     subsection_content_six_fr text,
     subsection_content_six_ja text,
     subsection_content_six_pt text,
-    subsection_content_six_pt_br text,
-    subsection_content_six_ru text,
     subsection_content_six_zh_hans text,
     subsection_content_three text NOT NULL,
     subsection_content_three_ar text,
@@ -5772,8 +5388,6 @@ CREATE TABLE public.invest_setupguidepage (
     subsection_content_three_fr text,
     subsection_content_three_ja text,
     subsection_content_three_pt text,
-    subsection_content_three_pt_br text,
-    subsection_content_three_ru text,
     subsection_content_three_zh_hans text,
     subsection_content_two text NOT NULL,
     subsection_content_two_ar text,
@@ -5783,8 +5397,6 @@ CREATE TABLE public.invest_setupguidepage (
     subsection_content_two_fr text,
     subsection_content_two_ja text,
     subsection_content_two_pt text,
-    subsection_content_two_pt_br text,
-    subsection_content_two_ru text,
     subsection_content_two_zh_hans text,
     subsection_title_five character varying(255) NOT NULL,
     subsection_title_five_ar character varying(255),
@@ -5794,8 +5406,6 @@ CREATE TABLE public.invest_setupguidepage (
     subsection_title_five_fr character varying(255),
     subsection_title_five_ja character varying(255),
     subsection_title_five_pt character varying(255),
-    subsection_title_five_pt_br character varying(255),
-    subsection_title_five_ru character varying(255),
     subsection_title_five_zh_hans character varying(255),
     subsection_title_four character varying(255) NOT NULL,
     subsection_title_four_ar character varying(255),
@@ -5805,8 +5415,6 @@ CREATE TABLE public.invest_setupguidepage (
     subsection_title_four_fr character varying(255),
     subsection_title_four_ja character varying(255),
     subsection_title_four_pt character varying(255),
-    subsection_title_four_pt_br character varying(255),
-    subsection_title_four_ru character varying(255),
     subsection_title_four_zh_hans character varying(255),
     subsection_title_one character varying(255) NOT NULL,
     subsection_title_one_ar character varying(255),
@@ -5816,8 +5424,6 @@ CREATE TABLE public.invest_setupguidepage (
     subsection_title_one_fr character varying(255),
     subsection_title_one_ja character varying(255),
     subsection_title_one_pt character varying(255),
-    subsection_title_one_pt_br character varying(255),
-    subsection_title_one_ru character varying(255),
     subsection_title_one_zh_hans character varying(255),
     subsection_title_seven character varying(255) NOT NULL,
     subsection_title_seven_ar character varying(255),
@@ -5827,8 +5433,6 @@ CREATE TABLE public.invest_setupguidepage (
     subsection_title_seven_fr character varying(255),
     subsection_title_seven_ja character varying(255),
     subsection_title_seven_pt character varying(255),
-    subsection_title_seven_pt_br character varying(255),
-    subsection_title_seven_ru character varying(255),
     subsection_title_seven_zh_hans character varying(255),
     subsection_title_six character varying(255) NOT NULL,
     subsection_title_six_ar character varying(255),
@@ -5838,8 +5442,6 @@ CREATE TABLE public.invest_setupguidepage (
     subsection_title_six_fr character varying(255),
     subsection_title_six_ja character varying(255),
     subsection_title_six_pt character varying(255),
-    subsection_title_six_pt_br character varying(255),
-    subsection_title_six_ru character varying(255),
     subsection_title_six_zh_hans character varying(255),
     subsection_title_three character varying(255) NOT NULL,
     subsection_title_three_ar character varying(255),
@@ -5849,8 +5451,6 @@ CREATE TABLE public.invest_setupguidepage (
     subsection_title_three_fr character varying(255),
     subsection_title_three_ja character varying(255),
     subsection_title_three_pt character varying(255),
-    subsection_title_three_pt_br character varying(255),
-    subsection_title_three_ru character varying(255),
     subsection_title_three_zh_hans character varying(255),
     subsection_title_two character varying(255) NOT NULL,
     subsection_title_two_ar character varying(255),
@@ -5860,10 +5460,9 @@ CREATE TABLE public.invest_setupguidepage (
     subsection_title_two_fr character varying(255),
     subsection_title_two_ja character varying(255),
     subsection_title_two_pt character varying(255),
-    subsection_title_two_pt_br character varying(255),
-    subsection_title_two_ru character varying(255),
     subsection_title_two_zh_hans character varying(255),
-    service_name character varying(100)
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL
 );
 
 
@@ -6116,32 +5715,26 @@ CREATE TABLE public.wagtailcore_page (
     search_description_en_gb text,
     search_description_de text,
     search_description_ja text,
-    search_description_ru text,
     search_description_zh_hans text,
     search_description_fr text,
     search_description_es text,
     search_description_pt text,
-    search_description_pt_br text,
     search_description_ar text,
     title_en_gb character varying(255),
     title_de character varying(255),
     title_ja character varying(255),
-    title_ru character varying(255),
     title_zh_hans character varying(255),
     title_fr character varying(255),
     title_es character varying(255),
     title_pt character varying(255),
-    title_pt_br character varying(255),
     title_ar character varying(255),
     seo_title_en_gb character varying(255),
     seo_title_de character varying(255),
     seo_title_ja character varying(255),
-    seo_title_ru character varying(255),
     seo_title_zh_hans character varying(255),
     seo_title_fr character varying(255),
     seo_title_es character varying(255),
     seo_title_pt character varying(255),
-    seo_title_pt_br character varying(255),
     seo_title_ar character varying(255),
     CONSTRAINT wagtailcore_page_depth_check CHECK ((depth >= 0)),
     CONSTRAINT wagtailcore_page_numchild_check CHECK ((numchild >= 0))
@@ -6712,6 +6305,13 @@ ALTER TABLE ONLY public.core_imagehash ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: core_routingsettings id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.core_routingsettings ALTER COLUMN id SET DEFAULT nextval('public.core_routingsettings_id_seq'::regclass);
+
+
+--
 -- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -7050,228 +6650,231 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 35	Can add document hash	14	add_documenthash
 36	Can change document hash	14	change_documenthash
 37	Can delete document hash	14	delete_documenthash
-38	Can add form submission	15	add_formsubmission
-39	Can change form submission	15	change_formsubmission
-40	Can delete form submission	15	delete_formsubmission
-41	Can add embed	16	add_embed
-42	Can change embed	16	change_embed
-43	Can delete embed	16	delete_embed
-44	Can add user profile	17	add_userprofile
-45	Can change user profile	17	change_userprofile
-46	Can delete user profile	17	delete_userprofile
-47	Can add rendition	18	add_rendition
-48	Can change rendition	18	change_rendition
-49	Can delete rendition	18	delete_rendition
-50	Can add query	19	add_query
-51	Can change query	19	change_query
-52	Can delete query	19	delete_query
-53	Can add Query Daily Hits	20	add_querydailyhits
-54	Can change Query Daily Hits	20	change_querydailyhits
-55	Can delete Query Daily Hits	20	delete_querydailyhits
-56	Can add page	1	add_page
-57	Can change page	1	change_page
-58	Can delete page	1	delete_page
-59	Can add group page permission	21	add_grouppagepermission
-60	Can change group page permission	21	change_grouppagepermission
-61	Can delete group page permission	21	delete_grouppagepermission
-62	Can add page revision	22	add_pagerevision
-63	Can change page revision	22	change_pagerevision
-64	Can delete page revision	22	delete_pagerevision
-65	Can add page view restriction	23	add_pageviewrestriction
-66	Can change page view restriction	23	change_pageviewrestriction
-67	Can delete page view restriction	23	delete_pageviewrestriction
-68	Can add site	24	add_site
-69	Can change site	24	change_site
-70	Can delete site	24	delete_site
-71	Can add collection	25	add_collection
-72	Can change collection	25	change_collection
-73	Can delete collection	25	delete_collection
-74	Can add group collection permission	26	add_groupcollectionpermission
-75	Can change group collection permission	26	change_groupcollectionpermission
-76	Can delete group collection permission	26	delete_groupcollectionpermission
-77	Can add collection view restriction	27	add_collectionviewrestriction
-78	Can change collection view restriction	27	change_collectionviewrestriction
-79	Can delete collection view restriction	27	delete_collectionviewrestriction
-80	Can add Tag	28	add_tag
-81	Can change Tag	28	change_tag
-82	Can delete Tag	28	delete_tag
-83	Can add Tagged Item	29	add_taggeditem
-84	Can change Tagged Item	29	change_taggeditem
-85	Can delete Tagged Item	29	delete_taggeditem
-86	Can add industry page	30	add_industrypage
-87	Can change industry page	30	change_industrypage
-88	Can delete industry page	30	delete_industrypage
-89	Can add industry article page	31	add_industryarticlepage
-90	Can change industry article page	31	change_industryarticlepage
-91	Can delete industry article page	31	delete_industryarticlepage
-92	Can add industry landing page	32	add_industrylandingpage
-93	Can change industry landing page	32	change_industrylandingpage
-94	Can delete industry landing page	32	delete_industrylandingpage
-95	Can add landing page	33	add_landingpage
-96	Can change landing page	33	change_landingpage
-97	Can delete landing page	33	delete_landingpage
-98	Can add industry contact page	34	add_industrycontactpage
-99	Can change industry contact page	34	change_industrycontactpage
-100	Can delete industry contact page	34	delete_industrycontactpage
-101	Can add find a supplier app	35	add_findasupplierapp
-102	Can change find a supplier app	35	change_findasupplierapp
-103	Can delete find a supplier app	35	delete_findasupplierapp
-104	Can add industry page article summary	36	add_industrypagearticlesummary
-105	Can change industry page article summary	36	change_industrypagearticlesummary
-106	Can delete industry page article summary	36	delete_industrypagearticlesummary
-107	Can add landing page article summary	37	add_landingpagearticlesummary
-108	Can change landing page article summary	37	change_landingpagearticlesummary
-109	Can delete landing page article summary	37	delete_landingpagearticlesummary
-110	Can add terms and conditions page	38	add_termsandconditionspage
-111	Can change terms and conditions page	38	change_termsandconditionspage
-112	Can delete terms and conditions page	38	delete_termsandconditionspage
-113	Can add export readiness app	39	add_exportreadinessapp
-114	Can change export readiness app	39	change_exportreadinessapp
-115	Can delete export readiness app	39	delete_exportreadinessapp
-116	Can add privacy and cookies page	40	add_privacyandcookiespage
-117	Can change privacy and cookies page	40	change_privacyandcookiespage
-118	Can delete privacy and cookies page	40	delete_privacyandcookiespage
-119	Can add performance dashboard page	41	add_performancedashboardpage
-120	Can change performance dashboard page	41	change_performancedashboardpage
-121	Can delete performance dashboard page	41	delete_performancedashboardpage
-122	Can add performance dashboard notes page	42	add_performancedashboardnotespage
-123	Can change performance dashboard notes page	42	change_performancedashboardnotespage
-124	Can delete performance dashboard notes page	42	delete_performancedashboardnotespage
-125	Can add article listing page	43	add_articlelistingpage
-126	Can change article listing page	43	change_articlelistingpage
-127	Can delete article listing page	43	delete_articlelistingpage
-128	Can add article page	44	add_articlepage
-129	Can change article page	44	change_articlepage
-130	Can delete article page	44	delete_articlepage
-131	Can add topic landing page	45	add_topiclandingpage
-132	Can change topic landing page	45	change_topiclandingpage
-133	Can delete topic landing page	45	delete_topiclandingpage
-134	Can add home page	46	add_homepage
-135	Can change home page	46	change_homepage
-136	Can delete home page	46	delete_homepage
-137	Can add eu exit international form page	47	add_euexitinternationalformpage
-138	Can change eu exit international form page	47	change_euexitinternationalformpage
-139	Can delete eu exit international form page	47	delete_euexitinternationalformpage
-140	Can add tag	48	add_tag
-141	Can change tag	48	change_tag
-142	Can delete tag	48	delete_tag
-143	Can add eu exit domestic form page	49	add_euexitdomesticformpage
-144	Can change eu exit domestic form page	49	change_euexitdomesticformpage
-145	Can delete eu exit domestic form page	49	delete_euexitdomesticformpage
-146	Can add eu exit form success page	50	add_euexitformsuccesspage
-147	Can change eu exit form success page	50	change_euexitformsuccesspage
-148	Can delete eu exit form success page	50	delete_euexitformsuccesspage
-149	Can add international landing page	51	add_internationallandingpage
-150	Can change international landing page	51	change_internationallandingpage
-151	Can delete international landing page	51	delete_internationallandingpage
-152	Can add contact us guidance page	52	add_contactusguidancepage
-153	Can change contact us guidance page	52	change_contactusguidancepage
-154	Can delete contact us guidance page	52	delete_contactusguidancepage
-155	Can add contact success page	53	add_contactsuccesspage
-156	Can change contact success page	53	change_contactsuccesspage
-157	Can delete contact success page	53	delete_contactsuccesspage
-158	Can add get finance page	54	add_getfinancepage
-159	Can change get finance page	54	change_getfinancepage
-160	Can delete get finance page	54	delete_getfinancepage
-161	Can add campaign page	55	add_campaignpage
-162	Can change campaign page	55	change_campaignpage
-163	Can delete campaign page	55	delete_campaignpage
-164	Can add marketing pages	56	add_marketingpages
-165	Can change marketing pages	56	change_marketingpages
-166	Can delete marketing pages	56	delete_marketingpages
-167	Can add contact success pages	57	add_contactsuccesspages
-168	Can change contact success pages	57	change_contactsuccesspages
-169	Can delete contact success pages	57	delete_contactsuccesspages
-170	Can add contact us guidance pages	58	add_contactusguidancepages
-171	Can change contact us guidance pages	58	change_contactusguidancepages
-172	Can delete contact us guidance pages	58	delete_contactusguidancepages
-173	Can add country guide page	59	add_countryguidepage
-174	Can change country guide page	59	change_countryguidepage
-175	Can delete country guide page	59	delete_countryguidepage
-176	Can add superregion page	60	add_superregionpage
-177	Can change superregion page	60	change_superregionpage
-178	Can delete superregion page	60	delete_superregionpage
-179	Can add site policy pages	61	add_sitepolicypages
-180	Can change site policy pages	61	change_sitepolicypages
-181	Can delete site policy pages	61	delete_sitepolicypages
-182	Can add eu exit form pages	62	add_euexitformpages
-183	Can change eu exit form pages	62	change_euexitformpages
-184	Can delete eu exit form pages	62	delete_euexitformpages
-185	Can add Forms	63	add_allcontactpagespage
-186	Can change Forms	63	change_allcontactpagespage
-187	Can delete Forms	63	delete_allcontactpagespage
-188	Can add great international app	64	add_greatinternationalapp
-189	Can change great international app	64	change_greatinternationalapp
-190	Can delete great international app	64	delete_greatinternationalapp
-191	Can add international article page	65	add_internationalarticlepage
-192	Can change international article page	65	change_internationalarticlepage
-193	Can delete international article page	65	delete_internationalarticlepage
-194	Can add international home page	66	add_internationalhomepage
-195	Can change international home page	66	change_internationalhomepage
-196	Can delete international home page	66	delete_internationalhomepage
-197	Can add international campaign page	67	add_internationalcampaignpage
-198	Can change international campaign page	67	change_internationalcampaignpage
-199	Can delete international campaign page	67	delete_internationalcampaignpage
-200	Can add international article listing page	68	add_internationalarticlelistingpage
-201	Can change international article listing page	68	change_internationalarticlelistingpage
-202	Can delete international article listing page	68	delete_internationalarticlelistingpage
-203	Can add international topic landing page	69	add_internationaltopiclandingpage
-204	Can change international topic landing page	69	change_internationaltopiclandingpage
-205	Can delete international topic landing page	69	delete_internationaltopiclandingpage
-206	Can add international region page	70	add_internationalregionpage
-207	Can change international region page	70	change_internationalregionpage
-208	Can delete international region page	70	delete_internationalregionpage
-209	Can add international localised folder page	71	add_internationallocalisedfolderpage
-210	Can change international localised folder page	71	change_internationallocalisedfolderpage
-211	Can delete international localised folder page	71	delete_internationallocalisedfolderpage
-212	Can add international sector page	72	add_internationalsectorpage
-213	Can change international sector page	72	change_internationalsectorpage
-214	Can delete international sector page	72	delete_internationalsectorpage
-215	Can add international curated topic landing page	73	add_internationalcuratedtopiclandingpage
-216	Can change international curated topic landing page	73	change_internationalcuratedtopiclandingpage
-217	Can delete international curated topic landing page	73	delete_internationalcuratedtopiclandingpage
-218	Can add international guide landing page	74	add_internationalguidelandingpage
-219	Can change international guide landing page	74	change_internationalguidelandingpage
-220	Can delete international guide landing page	74	delete_internationalguidelandingpage
-221	Can add info page	75	add_infopage
-222	Can change info page	75	change_infopage
-223	Can delete info page	75	delete_infopage
-224	Can add invest app	76	add_investapp
-225	Can change invest app	76	change_investapp
-226	Can delete invest app	76	delete_investapp
-227	Can add invest home page	77	add_investhomepage
-228	Can change invest home page	77	change_investhomepage
-229	Can delete invest home page	77	delete_investhomepage
-230	Can add sector landing page	78	add_sectorlandingpage
-231	Can change sector landing page	78	change_sectorlandingpage
-232	Can delete sector landing page	78	delete_sectorlandingpage
-233	Can add sector page	79	add_sectorpage
-234	Can change sector page	79	change_sectorpage
-235	Can delete sector page	79	delete_sectorpage
-236	Can add setup guide landing page	80	add_setupguidelandingpage
-237	Can change setup guide landing page	80	change_setupguidelandingpage
-238	Can delete setup guide landing page	80	delete_setupguidelandingpage
-239	Can add setup guide page	81	add_setupguidepage
-240	Can change setup guide page	81	change_setupguidepage
-241	Can delete setup guide page	81	delete_setupguidepage
-242	Can add region landing page	82	add_regionlandingpage
-243	Can change region landing page	82	change_regionlandingpage
-244	Can delete region landing page	82	delete_regionlandingpage
-245	Can add high potential opportunity detail page	83	add_highpotentialopportunitydetailpage
-246	Can change high potential opportunity detail page	83	change_highpotentialopportunitydetailpage
-247	Can delete high potential opportunity detail page	83	delete_highpotentialopportunitydetailpage
-248	Can add high potential opportunity form page	84	add_highpotentialopportunityformpage
-249	Can change high potential opportunity form page	84	change_highpotentialopportunityformpage
-250	Can delete high potential opportunity form page	84	delete_highpotentialopportunityformpage
-251	Can add high potential opportunity form success page	85	add_highpotentialopportunityformsuccesspage
-252	Can change high potential opportunity form success page	85	change_highpotentialopportunityformsuccesspage
-253	Can delete high potential opportunity form success page	85	delete_highpotentialopportunityformsuccesspage
-254	Can add banner component	86	add_bannercomponent
-255	Can change banner component	86	change_bannercomponent
-256	Can delete banner component	86	delete_bannercomponent
-257	Can add components app	87	add_componentsapp
-258	Can change components app	87	change_componentsapp
-259	Can delete components app	87	delete_componentsapp
+38	Can add routing settings	15	add_routingsettings
+39	Can change routing settings	15	change_routingsettings
+40	Can delete routing settings	15	delete_routingsettings
+41	Can add form submission	16	add_formsubmission
+42	Can change form submission	16	change_formsubmission
+43	Can delete form submission	16	delete_formsubmission
+44	Can add embed	17	add_embed
+45	Can change embed	17	change_embed
+46	Can delete embed	17	delete_embed
+47	Can add user profile	18	add_userprofile
+48	Can change user profile	18	change_userprofile
+49	Can delete user profile	18	delete_userprofile
+50	Can add rendition	19	add_rendition
+51	Can change rendition	19	change_rendition
+52	Can delete rendition	19	delete_rendition
+53	Can add query	20	add_query
+54	Can change query	20	change_query
+55	Can delete query	20	delete_query
+56	Can add Query Daily Hits	21	add_querydailyhits
+57	Can change Query Daily Hits	21	change_querydailyhits
+58	Can delete Query Daily Hits	21	delete_querydailyhits
+59	Can add page	1	add_page
+60	Can change page	1	change_page
+61	Can delete page	1	delete_page
+62	Can add group page permission	22	add_grouppagepermission
+63	Can change group page permission	22	change_grouppagepermission
+64	Can delete group page permission	22	delete_grouppagepermission
+65	Can add page revision	23	add_pagerevision
+66	Can change page revision	23	change_pagerevision
+67	Can delete page revision	23	delete_pagerevision
+68	Can add page view restriction	24	add_pageviewrestriction
+69	Can change page view restriction	24	change_pageviewrestriction
+70	Can delete page view restriction	24	delete_pageviewrestriction
+71	Can add site	25	add_site
+72	Can change site	25	change_site
+73	Can delete site	25	delete_site
+74	Can add collection	26	add_collection
+75	Can change collection	26	change_collection
+76	Can delete collection	26	delete_collection
+77	Can add group collection permission	27	add_groupcollectionpermission
+78	Can change group collection permission	27	change_groupcollectionpermission
+79	Can delete group collection permission	27	delete_groupcollectionpermission
+80	Can add collection view restriction	28	add_collectionviewrestriction
+81	Can change collection view restriction	28	change_collectionviewrestriction
+82	Can delete collection view restriction	28	delete_collectionviewrestriction
+83	Can add Tag	29	add_tag
+84	Can change Tag	29	change_tag
+85	Can delete Tag	29	delete_tag
+86	Can add Tagged Item	30	add_taggeditem
+87	Can change Tagged Item	30	change_taggeditem
+88	Can delete Tagged Item	30	delete_taggeditem
+89	Can add industry page	31	add_industrypage
+90	Can change industry page	31	change_industrypage
+91	Can delete industry page	31	delete_industrypage
+92	Can add industry article page	32	add_industryarticlepage
+93	Can change industry article page	32	change_industryarticlepage
+94	Can delete industry article page	32	delete_industryarticlepage
+95	Can add industry landing page	33	add_industrylandingpage
+96	Can change industry landing page	33	change_industrylandingpage
+97	Can delete industry landing page	33	delete_industrylandingpage
+98	Can add landing page	34	add_landingpage
+99	Can change landing page	34	change_landingpage
+100	Can delete landing page	34	delete_landingpage
+101	Can add industry contact page	35	add_industrycontactpage
+102	Can change industry contact page	35	change_industrycontactpage
+103	Can delete industry contact page	35	delete_industrycontactpage
+104	Can add find a supplier app	36	add_findasupplierapp
+105	Can change find a supplier app	36	change_findasupplierapp
+106	Can delete find a supplier app	36	delete_findasupplierapp
+107	Can add industry page article summary	37	add_industrypagearticlesummary
+108	Can change industry page article summary	37	change_industrypagearticlesummary
+109	Can delete industry page article summary	37	delete_industrypagearticlesummary
+110	Can add landing page article summary	38	add_landingpagearticlesummary
+111	Can change landing page article summary	38	change_landingpagearticlesummary
+112	Can delete landing page article summary	38	delete_landingpagearticlesummary
+113	Can add terms and conditions page	39	add_termsandconditionspage
+114	Can change terms and conditions page	39	change_termsandconditionspage
+115	Can delete terms and conditions page	39	delete_termsandconditionspage
+116	Can add export readiness app	40	add_exportreadinessapp
+117	Can change export readiness app	40	change_exportreadinessapp
+118	Can delete export readiness app	40	delete_exportreadinessapp
+119	Can add privacy and cookies page	41	add_privacyandcookiespage
+120	Can change privacy and cookies page	41	change_privacyandcookiespage
+121	Can delete privacy and cookies page	41	delete_privacyandcookiespage
+122	Can add performance dashboard page	42	add_performancedashboardpage
+123	Can change performance dashboard page	42	change_performancedashboardpage
+124	Can delete performance dashboard page	42	delete_performancedashboardpage
+125	Can add performance dashboard notes page	43	add_performancedashboardnotespage
+126	Can change performance dashboard notes page	43	change_performancedashboardnotespage
+127	Can delete performance dashboard notes page	43	delete_performancedashboardnotespage
+128	Can add article listing page	44	add_articlelistingpage
+129	Can change article listing page	44	change_articlelistingpage
+130	Can delete article listing page	44	delete_articlelistingpage
+131	Can add article page	45	add_articlepage
+132	Can change article page	45	change_articlepage
+133	Can delete article page	45	delete_articlepage
+134	Can add topic landing page	46	add_topiclandingpage
+135	Can change topic landing page	46	change_topiclandingpage
+136	Can delete topic landing page	46	delete_topiclandingpage
+137	Can add home page	47	add_homepage
+138	Can change home page	47	change_homepage
+139	Can delete home page	47	delete_homepage
+140	Can add eu exit international form page	48	add_euexitinternationalformpage
+141	Can change eu exit international form page	48	change_euexitinternationalformpage
+142	Can delete eu exit international form page	48	delete_euexitinternationalformpage
+143	Can add tag	49	add_tag
+144	Can change tag	49	change_tag
+145	Can delete tag	49	delete_tag
+146	Can add eu exit domestic form page	50	add_euexitdomesticformpage
+147	Can change eu exit domestic form page	50	change_euexitdomesticformpage
+148	Can delete eu exit domestic form page	50	delete_euexitdomesticformpage
+149	Can add eu exit form success page	51	add_euexitformsuccesspage
+150	Can change eu exit form success page	51	change_euexitformsuccesspage
+151	Can delete eu exit form success page	51	delete_euexitformsuccesspage
+152	Can add international landing page	52	add_internationallandingpage
+153	Can change international landing page	52	change_internationallandingpage
+154	Can delete international landing page	52	delete_internationallandingpage
+155	Can add contact us guidance page	53	add_contactusguidancepage
+156	Can change contact us guidance page	53	change_contactusguidancepage
+157	Can delete contact us guidance page	53	delete_contactusguidancepage
+158	Can add contact success page	54	add_contactsuccesspage
+159	Can change contact success page	54	change_contactsuccesspage
+160	Can delete contact success page	54	delete_contactsuccesspage
+161	Can add get finance page	55	add_getfinancepage
+162	Can change get finance page	55	change_getfinancepage
+163	Can delete get finance page	55	delete_getfinancepage
+164	Can add campaign page	56	add_campaignpage
+165	Can change campaign page	56	change_campaignpage
+166	Can delete campaign page	56	delete_campaignpage
+167	Can add marketing pages	57	add_marketingpages
+168	Can change marketing pages	57	change_marketingpages
+169	Can delete marketing pages	57	delete_marketingpages
+170	Can add contact success pages	58	add_contactsuccesspages
+171	Can change contact success pages	58	change_contactsuccesspages
+172	Can delete contact success pages	58	delete_contactsuccesspages
+173	Can add contact us guidance pages	59	add_contactusguidancepages
+174	Can change contact us guidance pages	59	change_contactusguidancepages
+175	Can delete contact us guidance pages	59	delete_contactusguidancepages
+176	Can add country guide page	60	add_countryguidepage
+177	Can change country guide page	60	change_countryguidepage
+178	Can delete country guide page	60	delete_countryguidepage
+179	Can add superregion page	61	add_superregionpage
+180	Can change superregion page	61	change_superregionpage
+181	Can delete superregion page	61	delete_superregionpage
+182	Can add site policy pages	62	add_sitepolicypages
+183	Can change site policy pages	62	change_sitepolicypages
+184	Can delete site policy pages	62	delete_sitepolicypages
+185	Can add eu exit form pages	63	add_euexitformpages
+186	Can change eu exit form pages	63	change_euexitformpages
+187	Can delete eu exit form pages	63	delete_euexitformpages
+188	Can add Forms	64	add_allcontactpagespage
+189	Can change Forms	64	change_allcontactpagespage
+190	Can delete Forms	64	delete_allcontactpagespage
+191	Can add great international app	65	add_greatinternationalapp
+192	Can change great international app	65	change_greatinternationalapp
+193	Can delete great international app	65	delete_greatinternationalapp
+194	Can add international article page	66	add_internationalarticlepage
+195	Can change international article page	66	change_internationalarticlepage
+196	Can delete international article page	66	delete_internationalarticlepage
+197	Can add international home page	67	add_internationalhomepage
+198	Can change international home page	67	change_internationalhomepage
+199	Can delete international home page	67	delete_internationalhomepage
+200	Can add international campaign page	68	add_internationalcampaignpage
+201	Can change international campaign page	68	change_internationalcampaignpage
+202	Can delete international campaign page	68	delete_internationalcampaignpage
+203	Can add international article listing page	69	add_internationalarticlelistingpage
+204	Can change international article listing page	69	change_internationalarticlelistingpage
+205	Can delete international article listing page	69	delete_internationalarticlelistingpage
+206	Can add international topic landing page	70	add_internationaltopiclandingpage
+207	Can change international topic landing page	70	change_internationaltopiclandingpage
+208	Can delete international topic landing page	70	delete_internationaltopiclandingpage
+209	Can add international region page	71	add_internationalregionpage
+210	Can change international region page	71	change_internationalregionpage
+211	Can delete international region page	71	delete_internationalregionpage
+212	Can add international localised folder page	72	add_internationallocalisedfolderpage
+213	Can change international localised folder page	72	change_internationallocalisedfolderpage
+214	Can delete international localised folder page	72	delete_internationallocalisedfolderpage
+215	Can add international sector page	73	add_internationalsectorpage
+216	Can change international sector page	73	change_internationalsectorpage
+217	Can delete international sector page	73	delete_internationalsectorpage
+218	Can add international curated topic landing page	74	add_internationalcuratedtopiclandingpage
+219	Can change international curated topic landing page	74	change_internationalcuratedtopiclandingpage
+220	Can delete international curated topic landing page	74	delete_internationalcuratedtopiclandingpage
+221	Can add international guide landing page	75	add_internationalguidelandingpage
+222	Can change international guide landing page	75	change_internationalguidelandingpage
+223	Can delete international guide landing page	75	delete_internationalguidelandingpage
+224	Can add info page	76	add_infopage
+225	Can change info page	76	change_infopage
+226	Can delete info page	76	delete_infopage
+227	Can add invest app	77	add_investapp
+228	Can change invest app	77	change_investapp
+229	Can delete invest app	77	delete_investapp
+230	Can add invest home page	78	add_investhomepage
+231	Can change invest home page	78	change_investhomepage
+232	Can delete invest home page	78	delete_investhomepage
+233	Can add sector landing page	79	add_sectorlandingpage
+234	Can change sector landing page	79	change_sectorlandingpage
+235	Can delete sector landing page	79	delete_sectorlandingpage
+236	Can add sector page	80	add_sectorpage
+237	Can change sector page	80	change_sectorpage
+238	Can delete sector page	80	delete_sectorpage
+239	Can add setup guide landing page	81	add_setupguidelandingpage
+240	Can change setup guide landing page	81	change_setupguidelandingpage
+241	Can delete setup guide landing page	81	delete_setupguidelandingpage
+242	Can add setup guide page	82	add_setupguidepage
+243	Can change setup guide page	82	change_setupguidepage
+244	Can delete setup guide page	82	delete_setupguidepage
+245	Can add region landing page	83	add_regionlandingpage
+246	Can change region landing page	83	change_regionlandingpage
+247	Can delete region landing page	83	delete_regionlandingpage
+248	Can add high potential opportunity detail page	84	add_highpotentialopportunitydetailpage
+249	Can change high potential opportunity detail page	84	change_highpotentialopportunitydetailpage
+250	Can delete high potential opportunity detail page	84	delete_highpotentialopportunitydetailpage
+251	Can add high potential opportunity form page	85	add_highpotentialopportunityformpage
+252	Can change high potential opportunity form page	85	change_highpotentialopportunityformpage
+253	Can delete high potential opportunity form page	85	delete_highpotentialopportunityformpage
+254	Can add high potential opportunity form success page	86	add_highpotentialopportunityformsuccesspage
+255	Can change high potential opportunity form success page	86	change_highpotentialopportunityformsuccesspage
+256	Can delete high potential opportunity form success page	86	delete_highpotentialopportunityformsuccesspage
+257	Can add banner component	87	add_bannercomponent
+258	Can change banner component	87	change_bannercomponent
+259	Can delete banner component	87	delete_bannercomponent
+260	Can add components app	88	add_componentsapp
+261	Can change components app	88	change_componentsapp
+262	Can delete components app	88	delete_componentsapp
 \.
 
 
@@ -7303,7 +6906,7 @@ COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 -- Data for Name: components_bannercomponent; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.components_bannercomponent (page_ptr_id, service_name, banner_content, banner_content_en_gb, banner_content_de, banner_content_ja, banner_content_ru, banner_content_zh_hans, banner_content_fr, banner_content_es, banner_content_pt, banner_content_pt_br, banner_content_ar, banner_label, banner_label_en_gb, banner_label_de, banner_label_ja, banner_label_ru, banner_label_zh_hans, banner_label_fr, banner_label_es, banner_label_pt, banner_label_pt_br, banner_label_ar) FROM stdin;
+COPY public.components_bannercomponent (page_ptr_id, service_name, banner_content, banner_content_en_gb, banner_content_de, banner_content_ja, banner_content_zh_hans, banner_content_fr, banner_content_es, banner_content_pt, banner_content_ar, banner_label, banner_label_en_gb, banner_label_de, banner_label_ja, banner_label_zh_hans, banner_label_fr, banner_label_es, banner_label_pt, banner_label_ar, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7311,7 +6914,7 @@ COPY public.components_bannercomponent (page_ptr_id, service_name, banner_conten
 -- Data for Name: components_componentsapp; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.components_componentsapp (page_ptr_id, service_name) FROM stdin;
+COPY public.components_componentsapp (page_ptr_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7319,7 +6922,7 @@ COPY public.components_componentsapp (page_ptr_id, service_name) FROM stdin;
 -- Data for Name: core_breadcrumb; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.core_breadcrumb (id, service_name, object_id, content_type_id, label, slug, label_ar, label_de, label_en_gb, label_es, label_fr, label_ja, label_pt, label_pt_br, label_ru, label_zh_hans) FROM stdin;
+COPY public.core_breadcrumb (id, service_name, object_id, content_type_id, label, slug, label_ar, label_de, label_en_gb, label_es, label_fr, label_ja, label_pt, label_zh_hans) FROM stdin;
 \.
 
 
@@ -7336,6 +6939,14 @@ COPY public.core_documenthash (id, content_hash, document_id) FROM stdin;
 --
 
 COPY public.core_imagehash (id, content_hash, image_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: core_routingsettings; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.core_routingsettings (id, root_path_prefix, include_port_in_urls, site_id) FROM stdin;
 \.
 
 
@@ -7358,79 +6969,80 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 12	core	imagehash
 13	core	breadcrumb
 14	core	documenthash
-15	wagtailforms	formsubmission
-16	wagtailembeds	embed
-17	wagtailusers	userprofile
-18	wagtailimages	rendition
-19	wagtailsearch	query
-20	wagtailsearch	querydailyhits
-21	wagtailcore	grouppagepermission
-22	wagtailcore	pagerevision
-23	wagtailcore	pageviewrestriction
-24	wagtailcore	site
-25	wagtailcore	collection
-26	wagtailcore	groupcollectionpermission
-27	wagtailcore	collectionviewrestriction
-28	taggit	tag
-29	taggit	taggeditem
-30	find_a_supplier	industrypage
-31	find_a_supplier	industryarticlepage
-32	find_a_supplier	industrylandingpage
-33	find_a_supplier	landingpage
-34	find_a_supplier	industrycontactpage
-35	find_a_supplier	findasupplierapp
-36	find_a_supplier	industrypagearticlesummary
-37	find_a_supplier	landingpagearticlesummary
-38	export_readiness	termsandconditionspage
-39	export_readiness	exportreadinessapp
-40	export_readiness	privacyandcookiespage
-41	export_readiness	performancedashboardpage
-42	export_readiness	performancedashboardnotespage
-43	export_readiness	articlelistingpage
-44	export_readiness	articlepage
-45	export_readiness	topiclandingpage
-46	export_readiness	homepage
-47	export_readiness	euexitinternationalformpage
-48	export_readiness	tag
-49	export_readiness	euexitdomesticformpage
-50	export_readiness	euexitformsuccesspage
-51	export_readiness	internationallandingpage
-52	export_readiness	contactusguidancepage
-53	export_readiness	contactsuccesspage
-54	export_readiness	getfinancepage
-55	export_readiness	campaignpage
-56	export_readiness	marketingpages
-57	export_readiness	contactsuccesspages
-58	export_readiness	contactusguidancepages
-59	export_readiness	countryguidepage
-60	export_readiness	superregionpage
-61	export_readiness	sitepolicypages
-62	export_readiness	euexitformpages
-63	export_readiness	allcontactpagespage
-64	great_international	greatinternationalapp
-65	great_international	internationalarticlepage
-66	great_international	internationalhomepage
-67	great_international	internationalcampaignpage
-68	great_international	internationalarticlelistingpage
-69	great_international	internationaltopiclandingpage
-70	great_international	internationalregionpage
-71	great_international	internationallocalisedfolderpage
-72	great_international	internationalsectorpage
-73	great_international	internationalcuratedtopiclandingpage
-74	great_international	internationalguidelandingpage
-75	invest	infopage
-76	invest	investapp
-77	invest	investhomepage
-78	invest	sectorlandingpage
-79	invest	sectorpage
-80	invest	setupguidelandingpage
-81	invest	setupguidepage
-82	invest	regionlandingpage
-83	invest	highpotentialopportunitydetailpage
-84	invest	highpotentialopportunityformpage
-85	invest	highpotentialopportunityformsuccesspage
-86	components	bannercomponent
-87	components	componentsapp
+15	core	routingsettings
+16	wagtailforms	formsubmission
+17	wagtailembeds	embed
+18	wagtailusers	userprofile
+19	wagtailimages	rendition
+20	wagtailsearch	query
+21	wagtailsearch	querydailyhits
+22	wagtailcore	grouppagepermission
+23	wagtailcore	pagerevision
+24	wagtailcore	pageviewrestriction
+25	wagtailcore	site
+26	wagtailcore	collection
+27	wagtailcore	groupcollectionpermission
+28	wagtailcore	collectionviewrestriction
+29	taggit	tag
+30	taggit	taggeditem
+31	find_a_supplier	industrypage
+32	find_a_supplier	industryarticlepage
+33	find_a_supplier	industrylandingpage
+34	find_a_supplier	landingpage
+35	find_a_supplier	industrycontactpage
+36	find_a_supplier	findasupplierapp
+37	find_a_supplier	industrypagearticlesummary
+38	find_a_supplier	landingpagearticlesummary
+39	export_readiness	termsandconditionspage
+40	export_readiness	exportreadinessapp
+41	export_readiness	privacyandcookiespage
+42	export_readiness	performancedashboardpage
+43	export_readiness	performancedashboardnotespage
+44	export_readiness	articlelistingpage
+45	export_readiness	articlepage
+46	export_readiness	topiclandingpage
+47	export_readiness	homepage
+48	export_readiness	euexitinternationalformpage
+49	export_readiness	tag
+50	export_readiness	euexitdomesticformpage
+51	export_readiness	euexitformsuccesspage
+52	export_readiness	internationallandingpage
+53	export_readiness	contactusguidancepage
+54	export_readiness	contactsuccesspage
+55	export_readiness	getfinancepage
+56	export_readiness	campaignpage
+57	export_readiness	marketingpages
+58	export_readiness	contactsuccesspages
+59	export_readiness	contactusguidancepages
+60	export_readiness	countryguidepage
+61	export_readiness	superregionpage
+62	export_readiness	sitepolicypages
+63	export_readiness	euexitformpages
+64	export_readiness	allcontactpagespage
+65	great_international	greatinternationalapp
+66	great_international	internationalarticlepage
+67	great_international	internationalhomepage
+68	great_international	internationalcampaignpage
+69	great_international	internationalarticlelistingpage
+70	great_international	internationaltopiclandingpage
+71	great_international	internationalregionpage
+72	great_international	internationallocalisedfolderpage
+73	great_international	internationalsectorpage
+74	great_international	internationalcuratedtopiclandingpage
+75	great_international	internationalguidelandingpage
+76	invest	infopage
+77	invest	investapp
+78	invest	investhomepage
+79	invest	sectorlandingpage
+80	invest	sectorpage
+81	invest	setupguidelandingpage
+82	invest	setupguidepage
+83	invest	regionlandingpage
+84	invest	highpotentialopportunitydetailpage
+85	invest	highpotentialopportunityformpage
+86	invest	highpotentialopportunityformsuccesspage
+87	components	bannercomponent
+88	components	componentsapp
 \.
 
 
@@ -7439,265 +7051,276 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
-1	contenttypes	0001_initial	2019-04-11 15:11:55.128413+01
-2	contenttypes	0002_remove_content_type_name	2019-04-11 15:11:55.139977+01
-3	auth	0001_initial	2019-04-11 15:11:55.204849+01
-4	auth	0002_alter_permission_name_max_length	2019-04-11 15:11:55.220521+01
-5	auth	0003_alter_user_email_max_length	2019-04-11 15:11:55.232846+01
-6	auth	0004_alter_user_username_opts	2019-04-11 15:11:55.242337+01
-7	auth	0005_alter_user_last_login_null	2019-04-11 15:11:55.253868+01
-8	auth	0006_require_contenttypes_0002	2019-04-11 15:11:55.255796+01
-9	auth	0007_alter_validators_add_error_messages	2019-04-11 15:11:55.266276+01
-10	auth	0008_alter_user_username_max_length	2019-04-11 15:11:55.279393+01
-11	wagtailcore	0001_initial	2019-04-11 15:11:55.492395+01
-12	wagtailcore	0002_initial_data	2019-04-11 15:11:55.494351+01
-13	wagtailcore	0003_add_uniqueness_constraint_on_group_page_permission	2019-04-11 15:11:55.496481+01
-14	wagtailcore	0004_page_locked	2019-04-11 15:11:55.498324+01
-15	wagtailcore	0005_add_page_lock_permission_to_moderators	2019-04-11 15:11:55.500186+01
-16	wagtailcore	0006_add_lock_page_permission	2019-04-11 15:11:55.502147+01
-17	wagtailcore	0007_page_latest_revision_created_at	2019-04-11 15:11:55.504161+01
-18	wagtailcore	0008_populate_latest_revision_created_at	2019-04-11 15:11:55.505963+01
-19	wagtailcore	0009_remove_auto_now_add_from_pagerevision_created_at	2019-04-11 15:11:55.507818+01
-20	wagtailcore	0010_change_page_owner_to_null_on_delete	2019-04-11 15:11:55.509808+01
-21	wagtailcore	0011_page_first_published_at	2019-04-11 15:11:55.511997+01
-22	wagtailcore	0012_extend_page_slug_field	2019-04-11 15:11:55.514022+01
-23	wagtailcore	0013_update_golive_expire_help_text	2019-04-11 15:11:55.516197+01
-24	wagtailcore	0014_add_verbose_name	2019-04-11 15:11:55.517962+01
-25	wagtailcore	0015_add_more_verbose_names	2019-04-11 15:11:55.519647+01
-26	wagtailcore	0016_change_page_url_path_to_text_field	2019-04-11 15:11:55.521362+01
-27	wagtailcore	0017_change_edit_page_permission_description	2019-04-11 15:11:55.54065+01
-28	wagtailcore	0018_pagerevision_submitted_for_moderation_index	2019-04-11 15:11:55.628363+01
-29	wagtailcore	0019_verbose_names_cleanup	2019-04-11 15:11:55.686409+01
-30	wagtailcore	0020_add_index_on_page_first_published_at	2019-04-11 15:11:55.70499+01
-31	wagtailcore	0021_capitalizeverbose	2019-04-11 15:11:56.117434+01
-32	wagtailcore	0022_add_site_name	2019-04-11 15:11:56.134122+01
-33	wagtailcore	0023_alter_page_revision_on_delete_behaviour	2019-04-11 15:11:56.156616+01
-34	wagtailcore	0024_collection	2019-04-11 15:11:56.172193+01
-35	wagtailcore	0025_collection_initial_data	2019-04-11 15:11:56.188633+01
-36	wagtailcore	0026_group_collection_permission	2019-04-11 15:11:56.231415+01
-37	wagtailcore	0027_fix_collection_path_collation	2019-04-11 15:11:56.252887+01
-38	wagtailcore	0024_alter_page_content_type_on_delete_behaviour	2019-04-11 15:11:56.277027+01
-39	wagtailcore	0028_merge	2019-04-11 15:11:56.279004+01
-40	wagtailcore	0029_unicode_slugfield_dj19	2019-04-11 15:11:56.29356+01
-41	wagtailcore	0030_index_on_pagerevision_created_at	2019-04-11 15:11:56.313766+01
-42	wagtailcore	0031_add_page_view_restriction_types	2019-04-11 15:11:56.37601+01
-43	wagtailcore	0032_add_bulk_delete_page_permission	2019-04-11 15:11:56.397298+01
-44	wagtailcore	0033_remove_golive_expiry_help_text	2019-04-11 15:11:56.425846+01
-45	wagtailcore	0034_page_live_revision	2019-04-11 15:11:56.446322+01
-46	wagtailcore	0035_page_last_published_at	2019-04-11 15:11:56.465582+01
-47	wagtailcore	0036_populate_page_last_published_at	2019-04-11 15:11:56.48431+01
-48	wagtailcore	0037_set_page_owner_editable	2019-04-11 15:11:56.50938+01
-49	wagtailcore	0038_make_first_published_at_editable	2019-04-11 15:11:56.527055+01
-50	wagtailcore	0039_collectionviewrestriction	2019-04-11 15:11:56.594229+01
-51	wagtailcore	0040_page_draft_title	2019-04-11 15:11:56.64714+01
-52	components	0001_initial	2019-04-11 15:11:56.702225+01
-53	components	0002_auto_20190206_1355	2019-04-11 15:11:56.738465+01
-54	taggit	0001_initial	2019-04-11 15:11:56.78018+01
-55	wagtaildocs	0001_initial	2019-04-11 15:11:56.811829+01
-56	wagtaildocs	0002_initial_data	2019-04-11 15:11:56.857472+01
-57	wagtaildocs	0003_add_verbose_names	2019-04-11 15:11:56.914427+01
-58	wagtaildocs	0004_capitalizeverbose	2019-04-11 15:11:57.004203+01
-59	wagtaildocs	0005_document_collection	2019-04-11 15:11:57.039309+01
-60	wagtaildocs	0006_copy_document_permissions_to_collections	2019-04-11 15:11:57.167105+01
-61	wagtaildocs	0005_alter_uploaded_by_user_on_delete_action	2019-04-11 15:11:57.198849+01
-62	wagtaildocs	0007_merge	2019-04-11 15:11:57.200987+01
-63	wagtaildocs	0008_document_file_size	2019-04-11 15:11:57.2225+01
-64	taggit	0002_auto_20150616_2121	2019-04-11 15:11:57.236365+01
-65	wagtailmedia	0001_initial	2019-04-11 15:11:57.271376+01
-66	wagtailmedia	0002_initial_data	2019-04-11 15:11:57.311565+01
-67	wagtailmedia	0003_copy_media_permissions_to_collections	2019-04-11 15:11:57.35037+01
-68	wagtailimages	0001_initial	2019-04-11 15:11:57.434191+01
-69	wagtailimages	0002_initial_data	2019-04-11 15:11:57.483264+01
-70	wagtailimages	0003_fix_focal_point_fields	2019-04-11 15:11:57.533677+01
-71	wagtailimages	0004_make_focal_point_key_not_nullable	2019-04-11 15:11:57.583871+01
-72	wagtailimages	0005_make_filter_spec_unique	2019-04-11 15:11:57.599244+01
-73	wagtailimages	0006_add_verbose_names	2019-04-11 15:11:57.669258+01
-74	wagtailimages	0007_image_file_size	2019-04-11 15:11:57.687659+01
-75	wagtailimages	0008_image_created_at_index	2019-04-11 15:11:57.709817+01
-76	wagtailimages	0009_capitalizeverbose	2019-04-11 15:11:57.830109+01
-77	wagtailimages	0010_change_on_delete_behaviour	2019-04-11 15:11:57.856835+01
-78	wagtailimages	0011_image_collection	2019-04-11 15:11:57.895051+01
-79	wagtailimages	0012_copy_image_permissions_to_collections	2019-04-11 15:11:57.940381+01
-80	wagtailimages	0013_make_rendition_upload_callable	2019-04-11 15:11:57.952533+01
-81	wagtailimages	0014_add_filter_spec_field	2019-04-11 15:11:58.002047+01
-82	wagtailimages	0015_fill_filter_spec_field	2019-04-11 15:11:58.036538+01
-83	wagtailimages	0016_deprecate_rendition_filter_relation	2019-04-11 15:11:58.084242+01
-84	wagtailimages	0017_reduce_focal_point_key_max_length	2019-04-11 15:11:58.10424+01
-85	wagtailimages	0018_remove_rendition_filter	2019-04-11 15:11:58.139087+01
-86	wagtailimages	0019_delete_filter	2019-04-11 15:11:58.147254+01
-87	wagtailimages	0020_add-verbose-name	2019-04-11 15:11:58.169227+01
-88	wagtailimages	0021_image_file_hash	2019-04-11 15:11:58.195897+01
-89	invest	0001_squashed_0006_auto_20180719_1302	2019-04-11 15:12:50.983154+01
-90	invest	0007_auto_20180719_1414	2019-04-11 15:12:52.348456+01
-91	invest	0008_auto_20180817_1630	2019-04-11 15:12:53.091118+01
-92	invest	0009_investapp_service_name	2019-04-11 15:12:53.186901+01
-93	invest	0009_highpotentialofferformpage	2019-04-11 15:12:53.29683+01
-94	wagtailforms	0001_initial	2019-04-11 15:12:53.407812+01
-95	wagtailforms	0002_add_verbose_names	2019-04-11 15:12:53.590036+01
-96	wagtailforms	0003_capitalizeverbose	2019-04-11 15:12:53.77805+01
-97	find_a_supplier	0001_squashed_0050_auto_20180425_1107	2019-04-11 15:13:26.141212+01
-98	find_a_supplier	0051_auto_20180501_1706	2019-04-11 15:14:00.586758+01
-99	find_a_supplier	0052_html_to_markdown	2019-04-11 15:14:00.742628+01
-100	find_a_supplier	0053_industrypage_show_on_industries_showcase_page	2019-04-11 15:14:00.873348+01
-101	find_a_supplier	0054_auto_20180510_0902	2019-04-11 15:14:03.878021+01
-102	find_a_supplier	0055_industrycontactpage_industry_options	2019-04-11 15:14:04.009844+01
-103	find_a_supplier	0056_auto_20180515_1552	2019-04-11 15:14:04.349871+01
-104	find_a_supplier	0057_remove_industrycontactpage_industry_options	2019-04-11 15:14:04.469042+01
-105	find_a_supplier	0058_auto_20180521_1628	2019-04-11 15:14:27.078469+01
-106	find_a_supplier	0059_auto_20180601_1412	2019-04-11 15:14:27.477938+01
-107	find_a_supplier	0060_auto_20180604_1058	2019-04-11 15:14:27.633862+01
-108	find_a_supplier	0061_auto_20180604_1344	2019-04-11 15:14:27.853136+01
-109	find_a_supplier	0062_auto_20180817_1630_squashed_0065_auto_20180829_1027	2019-04-11 15:14:28.713427+01
-110	export_readiness	0001_squashed_0009_performancedashboardpage_guidance_notes	2019-04-11 15:14:29.660439+01
-111	export_readiness	0010_performancedashboardnotespage	2019-04-11 15:14:29.809688+01
-112	export_readiness	0011_auto_20180817_1630	2019-04-11 15:14:30.79071+01
-113	export_readiness	0012_auto_20180821_0810	2019-04-11 15:14:31.423665+01
-114	core	0001_create	2019-04-11 15:14:31.589517+01
-115	core	0002_auto_20180307_1748	2019-04-11 15:14:31.765034+01
-116	core	0003_auto_20180423_1122	2019-04-11 15:14:32.229189+01
-117	core	0004_auto_20180423_1619	2019-04-11 15:14:32.504314+01
-118	core	0005_auto_20180423_1803	2019-04-11 15:14:32.774055+01
-119	core	0006_auto_20180508_1331	2019-04-11 15:14:32.777037+01
-120	core	0007_auto_20180809_1215	2019-04-11 15:14:33.090328+01
-121	core	0008_auto_20180809_1215	2019-04-11 15:14:33.419534+01
-122	core	0009_auto_20180813_1746	2019-04-11 15:14:33.600691+01
-123	core	0010_auto_20180815_1304	2019-04-11 15:14:33.884053+01
-124	core	0011_auto_20180817_1631	2019-04-11 15:14:34.11604+01
-125	core	0012_auto_20180821_1634	2019-04-11 15:14:34.53474+01
-126	core	0013_auto_20180821_1637	2019-04-11 15:14:34.694077+01
-127	core	0014_auto_20180822_0915	2019-04-11 15:14:34.97267+01
-128	core	0015_breadcrumb	2019-04-11 15:14:35.130764+01
-129	core	0016_auto_20180823_2014	2019-04-11 15:14:35.249705+01
-130	core	0017_auto_20180823_1545	2019-04-11 15:14:35.787445+01
-131	export_readiness	0013_exportreadinessapp_service_name	2019-04-11 15:14:35.813136+01
-132	core	0015_auto_20180822_1456	2019-04-11 15:14:35.995857+01
-133	core	0018_merge_20180829_0828	2019-04-11 15:14:36.000612+01
-134	core	0018_auto_20180824_1622	2019-04-11 15:14:36.026918+01
-135	core	0019_merge_20180829_0939	2019-04-11 15:14:36.029364+01
-136	invest	0010_merge_20180829_0939_squashed_0013_auto_20180830_0632	2019-04-11 15:14:43.12859+01
-137	invest	0014_auto_20180904_1113	2019-04-11 15:14:44.551211+01
-138	invest	0015_auto_20180911_1049	2019-04-11 15:14:44.553573+01
-139	invest	0016_auto_20180911_1506	2019-04-11 15:14:44.55592+01
-140	invest	0017_auto_20180911_1513	2019-04-11 15:14:44.558641+01
-141	invest	0018_auto_20180913_1445	2019-04-11 15:14:44.560963+01
-142	invest	0019_auto_20180917_0838	2019-04-11 15:14:44.563143+01
-143	invest	0020_auto_20180917_1326	2019-04-11 15:14:44.565504+01
-144	invest	0021_auto_20180917_1404	2019-04-11 15:14:44.567807+01
-145	invest	0022_auto_20180917_1622	2019-04-11 15:14:44.57015+01
-146	invest	0023_auto_20180918_0805	2019-04-11 15:14:44.572621+01
-147	invest	0024_highpotentialopportunitydetailpage_testimonial_background	2019-04-11 15:14:44.575218+01
-148	invest	0025_auto_20180920_0941	2019-04-11 15:14:44.577552+01
-149	invest	0026_auto_20181002_1534	2019-04-11 15:14:44.579801+01
-150	find_a_supplier	0066_auto_20180830_0632	2019-04-11 15:14:44.746228+01
-151	export_readiness	0014_auto_20180829_1027_squashed_0018_getfinancepage	2019-04-11 15:14:45.570722+01
-152	export_readiness	0019_auto_20180905_1350	2019-04-11 15:14:46.064624+01
-153	core	0020_auto_20180830_1737	2019-04-11 15:14:46.450402+01
-154	core	0021_auto_20180904_1511	2019-04-11 15:14:46.734356+01
-155	core	0022_auto_20180906_1344	2019-04-11 15:14:46.992614+01
-156	core	0023_auto_20180912_0758	2019-04-11 15:14:47.159205+01
-157	core	0024_auto_20180913_1321	2019-04-11 15:14:47.311117+01
-158	core	0025_documenthash	2019-04-11 15:14:47.463019+01
-159	core	0026_auto_20181024_1112	2019-04-11 15:14:47.477594+01
-160	core	0027_auto_20190206_1355	2019-04-11 15:14:47.493533+01
-161	health_check_db	0001_initial	2019-04-11 15:14:47.504884+01
-162	export_readiness	0020_articlelistingpage_articlepage_topiclandingpage_squashed_0030_auto_20181005_1449	2019-04-11 15:14:51.318087+01
-163	export_readiness	0031_internationallandingpage	2019-04-11 15:15:06.457515+01
-164	export_readiness	0032_auto_20181012_1507	2019-04-11 15:15:06.460067+01
-165	export_readiness	0033_auto_20181023_1600	2019-04-11 15:15:06.462263+01
-166	export_readiness	0034_auto_20181024_1112	2019-04-11 15:15:06.464541+01
-167	export_readiness	0035_contactusguidance	2019-04-11 15:15:06.466954+01
-168	export_readiness	0036_auto_20181105_1258	2019-04-11 15:15:06.469231+01
-169	export_readiness	0037_auto_20181106_0952	2019-04-11 15:15:06.471502+01
-170	export_readiness	0038_auto_20181106_0953	2019-04-11 15:15:06.473724+01
-171	export_readiness	0039_contactsuccesspage_topic	2019-04-11 15:15:06.476002+01
-172	export_readiness	0040_auto_20181121_1643	2019-04-11 15:15:06.478139+01
-173	export_readiness	0041_campaignpage_marketingpages	2019-04-11 15:15:06.480454+01
-174	export_readiness	0042_contactsuccesspages_contactusguidancepages	2019-04-11 15:15:06.482641+01
-175	export_readiness	0043_auto_20181205_1413	2019-04-11 15:15:06.484895+01
-176	export_readiness	0044_auto_20181214_1605	2019-04-11 15:15:06.487165+01
-177	export_readiness	0045_auto_20190115_1058	2019-04-11 15:15:06.489378+01
-178	export_readiness	0046_euexitformpages	2019-04-11 15:15:06.491621+01
-179	export_readiness	0047_allcontactpagespage	2019-04-11 15:15:06.493838+01
-180	export_readiness	0048_auto_20190206_1355	2019-04-11 15:15:06.496055+01
-181	export_readiness	0049_auto_20190207_0924	2019-04-11 15:15:06.498227+01
-182	export_readiness	0050_auto_20190219_1633	2019-04-11 15:15:06.500467+01
-183	export_readiness	0032_auto_20190307_1512	2019-04-11 15:15:06.92107+01
-184	export_readiness	0033_auto_20190312_1557	2019-04-11 15:16:00.142982+01
-185	export_readiness	0034_auto_20190314_1250	2019-04-11 15:16:21.754807+01
-186	export_readiness	0035_remove_countryguidepage_help_market_guide_cta_title	2019-04-11 15:16:22.212167+01
-187	export_readiness	0036_topiclandingpage_teaser	2019-04-11 15:16:22.423051+01
-188	export_readiness	0037_auto_20190321_0728	2019-04-11 15:16:30.430438+01
-189	export_readiness	0038_auto_20190402_1221	2019-04-11 15:16:30.628625+01
-190	export_readiness	0039_auto_20190411_1206	2019-04-11 15:16:30.834449+01
-191	export_readiness	0040_auto_20190411_1228	2019-04-11 15:16:31.20501+01
-192	find_a_supplier	0067_auto_20181012_1507	2019-04-11 15:16:33.065853+01
-193	find_a_supplier	0068_auto_20181024_1112	2019-04-11 15:16:34.546012+01
-194	find_a_supplier	0069_auto_20190206_1355	2019-04-11 15:16:35.979821+01
-195	great_international	0001_initial	2019-04-11 15:16:40.948436+01
-196	great_international	0002_auto_20190206_1146	2019-04-11 15:16:40.951655+01
-197	great_international	0003_internationalarticlelistingpage	2019-04-11 15:16:40.954196+01
-198	great_international	0003_auto_20190211_1202	2019-04-11 15:16:40.956939+01
-199	great_international	0004_merge_20190212_1003	2019-04-11 15:16:40.960019+01
-200	great_international	0005_internationalukhqpages	2019-04-11 15:16:40.962694+01
-201	great_international	0006_internationaltopiclandingpage	2019-04-11 15:16:40.965152+01
-202	great_international	0007_auto_20190219_1114	2019-04-11 15:16:40.967725+01
-203	great_international	0008_auto_20190222_1554	2019-04-11 15:16:40.970906+01
-204	great_international	0008_auto_20190222_1230	2019-04-11 15:16:40.974166+01
-205	great_international	0009_merge_20190225_1214	2019-04-11 15:16:40.976911+01
-206	great_international	0010_auto_20190228_0819	2019-04-11 15:16:40.979261+01
-207	great_international	0011_auto_20190228_1051	2019-04-11 15:16:40.981631+01
-208	great_international	0012_internationalsectorpage	2019-04-11 15:16:40.984058+01
-209	great_international	0013_auto_20190301_1227	2019-04-11 15:16:40.986413+01
-210	great_international	0014_auto_20190304_1215	2019-04-11 15:16:40.988785+01
-211	great_international	0015_auto_20190306_1521	2019-04-11 15:16:40.991399+01
-212	great_international	0002_internationalcuratedtopiclandingpage	2019-04-11 15:16:41.274633+01
-213	great_international	0003_auto_20190313_0855	2019-04-11 15:16:46.564532+01
-214	great_international	0004_internationalguidelandingpage	2019-04-11 15:16:46.845198+01
-215	great_international	0005_auto_20190320_1750	2019-04-11 15:16:52.781113+01
-216	great_international	0006_auto_20190325_0945	2019-04-11 15:16:57.012156+01
-217	great_international	0007_auto_20190402_1221	2019-04-11 15:16:57.23848+01
-218	great_international	0008_auto_20190404_1320	2019-04-11 15:19:48.046616+01
-219	great_international	0009_auto_20190404_1320	2019-04-11 15:20:17.571335+01
-220	great_international	0010_auto_20190404_1320	2019-04-11 15:22:08.378378+01
-221	great_international	0011_auto_20190404_1321	2019-04-11 15:23:34.08756+01
-222	great_international	0012_auto_20190404_1321	2019-04-11 15:24:04.348053+01
-223	great_international	0013_auto_20190404_1321	2019-04-11 15:25:26.512205+01
-224	great_international	0014_auto_20190404_1322	2019-04-11 15:26:19.555722+01
-225	great_international	0015_auto_20190404_1712	2019-04-11 15:26:24.076596+01
-226	great_international	0016_auto_20190408_1640	2019-04-11 15:26:33.62959+01
-227	great_international	0007_internationalhomepage_hero_cta_link	2019-04-11 15:26:34.059423+01
-228	great_international	0017_merge_20190411_1027	2019-04-11 15:26:34.062509+01
-229	great_international	0018_auto_20190411_1028	2019-04-11 15:26:38.493862+01
-230	invest	0015_auto_20181012_1507	2019-04-11 15:26:40.787515+01
-231	invest	0016_auto_20181025_1226	2019-04-11 15:26:45.198091+01
-232	invest	0017_auto_20190206_1355	2019-04-11 15:26:50.043557+01
-233	invest	0018_auto_20190314_1507	2019-04-11 15:27:10.489951+01
-234	invest	0019_auto_20190320_1347	2019-04-11 15:29:14.901919+01
-235	invest	0020_auto_20190402_1018	2019-04-11 15:29:36.118263+01
-236	invest	0021_auto_20190409_1246	2019-04-11 15:30:35.134554+01
-237	invest	0022_auto_20190411_1024	2019-04-11 15:30:41.145912+01
-238	sessions	0001_initial	2019-04-11 15:30:41.170809+01
-239	wagtailadmin	0001_create_admin_access_permissions	2019-04-11 15:30:41.655702+01
-240	wagtailembeds	0001_initial	2019-04-11 15:30:41.69405+01
-241	wagtailembeds	0002_add_verbose_names	2019-04-11 15:30:41.718209+01
-242	wagtailembeds	0003_capitalizeverbose	2019-04-11 15:30:41.744877+01
-243	wagtailsearch	0001_initial	2019-04-11 15:30:43.017459+01
-244	wagtailsearch	0002_add_verbose_names	2019-04-11 15:30:44.621804+01
-245	wagtailsearch	0003_remove_editors_pick	2019-04-11 15:30:45.093056+01
-246	wagtailusers	0001_initial	2019-04-11 15:30:45.830073+01
-247	wagtailusers	0002_add_verbose_name_on_userprofile	2019-04-11 15:30:45.920093+01
-248	wagtailusers	0003_add_verbose_names	2019-04-11 15:30:45.952464+01
-249	wagtailusers	0004_capitalizeverbose	2019-04-11 15:30:46.061266+01
-250	wagtailusers	0005_make_related_name_wagtail_specific	2019-04-11 15:30:46.110186+01
-251	wagtailusers	0006_userprofile_prefered_language	2019-04-11 15:30:46.152525+01
-252	wagtailusers	0007_userprofile_current_time_zone	2019-04-11 15:30:46.186469+01
-253	wagtailusers	0008_userprofile_avatar	2019-04-11 15:30:46.220364+01
-254	db	0001_initial	2019-04-11 15:30:46.225952+01
-255	wagtailcore	0001_squashed_0016_change_page_url_path_to_text_field	2019-04-11 15:30:46.22876+01
-256	export_readiness	0031_internationallandingpage_squashed_0050_auto_20190219_1633	2019-04-11 15:30:46.231452+01
-257	great_international	0001_squashed_0015_auto_20190306_1521	2019-04-11 15:30:46.23466+01
-258	invest	0014_auto_20180904_1113_squashed_0026_auto_20181002_1534	2019-04-11 15:30:46.23799+01
-259	invest	0022_auto_20190411_1449	2019-04-11 15:54:34.100863+01
+1	contenttypes	0001_initial	2019-04-23 15:27:26.294575+01
+2	contenttypes	0002_remove_content_type_name	2019-04-23 15:27:26.311335+01
+3	auth	0001_initial	2019-04-23 15:27:26.376168+01
+4	auth	0002_alter_permission_name_max_length	2019-04-23 15:27:26.387947+01
+5	auth	0003_alter_user_email_max_length	2019-04-23 15:27:26.397633+01
+6	auth	0004_alter_user_username_opts	2019-04-23 15:27:26.406358+01
+7	auth	0005_alter_user_last_login_null	2019-04-23 15:27:26.417676+01
+8	auth	0006_require_contenttypes_0002	2019-04-23 15:27:26.41989+01
+9	auth	0007_alter_validators_add_error_messages	2019-04-23 15:27:26.430765+01
+10	auth	0008_alter_user_username_max_length	2019-04-23 15:27:26.444098+01
+11	wagtailcore	0001_initial	2019-04-23 15:27:26.708088+01
+12	wagtailcore	0002_initial_data	2019-04-23 15:27:26.709799+01
+13	wagtailcore	0003_add_uniqueness_constraint_on_group_page_permission	2019-04-23 15:27:26.71138+01
+14	wagtailcore	0004_page_locked	2019-04-23 15:27:26.712968+01
+15	wagtailcore	0005_add_page_lock_permission_to_moderators	2019-04-23 15:27:26.714701+01
+16	wagtailcore	0006_add_lock_page_permission	2019-04-23 15:27:26.716321+01
+17	wagtailcore	0007_page_latest_revision_created_at	2019-04-23 15:27:26.717886+01
+18	wagtailcore	0008_populate_latest_revision_created_at	2019-04-23 15:27:26.719522+01
+19	wagtailcore	0009_remove_auto_now_add_from_pagerevision_created_at	2019-04-23 15:27:26.721135+01
+20	wagtailcore	0010_change_page_owner_to_null_on_delete	2019-04-23 15:27:26.722817+01
+21	wagtailcore	0011_page_first_published_at	2019-04-23 15:27:26.724574+01
+22	wagtailcore	0012_extend_page_slug_field	2019-04-23 15:27:26.726274+01
+23	wagtailcore	0013_update_golive_expire_help_text	2019-04-23 15:27:26.727935+01
+24	wagtailcore	0014_add_verbose_name	2019-04-23 15:27:26.729528+01
+25	wagtailcore	0015_add_more_verbose_names	2019-04-23 15:27:26.731258+01
+26	wagtailcore	0016_change_page_url_path_to_text_field	2019-04-23 15:27:26.733175+01
+27	wagtailcore	0017_change_edit_page_permission_description	2019-04-23 15:27:26.747082+01
+28	wagtailcore	0018_pagerevision_submitted_for_moderation_index	2019-04-23 15:27:26.767005+01
+29	wagtailcore	0019_verbose_names_cleanup	2019-04-23 15:27:26.827814+01
+30	wagtailcore	0020_add_index_on_page_first_published_at	2019-04-23 15:27:26.846343+01
+31	wagtailcore	0021_capitalizeverbose	2019-04-23 15:27:27.260932+01
+32	wagtailcore	0022_add_site_name	2019-04-23 15:27:27.277361+01
+33	wagtailcore	0023_alter_page_revision_on_delete_behaviour	2019-04-23 15:27:27.30039+01
+34	wagtailcore	0024_collection	2019-04-23 15:27:27.310585+01
+35	wagtailcore	0025_collection_initial_data	2019-04-23 15:27:27.328835+01
+36	wagtailcore	0026_group_collection_permission	2019-04-23 15:27:27.370066+01
+37	wagtailcore	0027_fix_collection_path_collation	2019-04-23 15:27:27.389252+01
+38	wagtailcore	0024_alter_page_content_type_on_delete_behaviour	2019-04-23 15:27:27.413772+01
+39	wagtailcore	0028_merge	2019-04-23 15:27:27.415655+01
+40	wagtailcore	0029_unicode_slugfield_dj19	2019-04-23 15:27:27.430467+01
+41	wagtailcore	0030_index_on_pagerevision_created_at	2019-04-23 15:27:27.44752+01
+42	wagtailcore	0031_add_page_view_restriction_types	2019-04-23 15:27:27.504627+01
+43	wagtailcore	0032_add_bulk_delete_page_permission	2019-04-23 15:27:27.519732+01
+44	wagtailcore	0033_remove_golive_expiry_help_text	2019-04-23 15:27:27.549667+01
+45	wagtailcore	0034_page_live_revision	2019-04-23 15:27:27.570389+01
+46	wagtailcore	0035_page_last_published_at	2019-04-23 15:27:27.587117+01
+47	wagtailcore	0036_populate_page_last_published_at	2019-04-23 15:27:27.608521+01
+48	wagtailcore	0037_set_page_owner_editable	2019-04-23 15:27:27.631092+01
+49	wagtailcore	0038_make_first_published_at_editable	2019-04-23 15:27:27.647086+01
+50	wagtailcore	0039_collectionviewrestriction	2019-04-23 15:27:27.71202+01
+51	wagtailcore	0040_page_draft_title	2019-04-23 15:27:27.760471+01
+52	components	0001_initial	2019-04-23 15:27:27.813495+01
+53	components	0002_auto_20190206_1355	2019-04-23 15:27:27.848501+01
+54	components	0003_auto_20190417_0825	2019-04-23 15:27:27.894228+01
+55	components	0004_auto_20190417_1024	2019-04-23 15:27:27.957106+01
+56	taggit	0001_initial	2019-04-23 15:27:27.997989+01
+57	wagtaildocs	0001_initial	2019-04-23 15:27:28.027275+01
+58	wagtaildocs	0002_initial_data	2019-04-23 15:27:28.06792+01
+59	wagtaildocs	0003_add_verbose_names	2019-04-23 15:27:28.117134+01
+60	wagtaildocs	0004_capitalizeverbose	2019-04-23 15:27:28.313975+01
+61	wagtaildocs	0005_document_collection	2019-04-23 15:27:28.346984+01
+62	wagtaildocs	0006_copy_document_permissions_to_collections	2019-04-23 15:27:28.383946+01
+63	wagtaildocs	0005_alter_uploaded_by_user_on_delete_action	2019-04-23 15:27:28.413793+01
+64	wagtaildocs	0007_merge	2019-04-23 15:27:28.415732+01
+65	wagtaildocs	0008_document_file_size	2019-04-23 15:27:28.435639+01
+66	taggit	0002_auto_20150616_2121	2019-04-23 15:27:28.447829+01
+67	wagtailmedia	0001_initial	2019-04-23 15:27:28.479793+01
+68	wagtailmedia	0002_initial_data	2019-04-23 15:27:28.521461+01
+69	wagtailmedia	0003_copy_media_permissions_to_collections	2019-04-23 15:27:28.558527+01
+70	wagtailimages	0001_initial	2019-04-23 15:27:28.632716+01
+71	wagtailimages	0002_initial_data	2019-04-23 15:27:28.682324+01
+72	wagtailimages	0003_fix_focal_point_fields	2019-04-23 15:27:28.731325+01
+73	wagtailimages	0004_make_focal_point_key_not_nullable	2019-04-23 15:27:28.776113+01
+74	wagtailimages	0005_make_filter_spec_unique	2019-04-23 15:27:28.790654+01
+75	wagtailimages	0006_add_verbose_names	2019-04-23 15:27:28.854966+01
+76	wagtailimages	0007_image_file_size	2019-04-23 15:27:28.875758+01
+77	wagtailimages	0008_image_created_at_index	2019-04-23 15:27:28.89815+01
+78	wagtailimages	0009_capitalizeverbose	2019-04-23 15:27:29.017845+01
+79	wagtailimages	0010_change_on_delete_behaviour	2019-04-23 15:27:29.049336+01
+80	wagtailimages	0011_image_collection	2019-04-23 15:27:29.085742+01
+81	wagtailimages	0012_copy_image_permissions_to_collections	2019-04-23 15:27:29.126317+01
+82	wagtailimages	0013_make_rendition_upload_callable	2019-04-23 15:27:29.138411+01
+83	wagtailimages	0014_add_filter_spec_field	2019-04-23 15:27:29.184502+01
+84	wagtailimages	0015_fill_filter_spec_field	2019-04-23 15:27:29.216485+01
+85	wagtailimages	0016_deprecate_rendition_filter_relation	2019-04-23 15:27:29.265714+01
+86	wagtailimages	0017_reduce_focal_point_key_max_length	2019-04-23 15:27:29.286717+01
+87	wagtailimages	0018_remove_rendition_filter	2019-04-23 15:27:29.319742+01
+88	wagtailimages	0019_delete_filter	2019-04-23 15:27:29.327713+01
+89	wagtailimages	0020_add-verbose-name	2019-04-23 15:27:29.348297+01
+90	wagtailimages	0021_image_file_hash	2019-04-23 15:27:29.374625+01
+91	invest	0001_squashed_0006_auto_20180719_1302	2019-04-23 15:28:19.78145+01
+92	invest	0007_auto_20180719_1414	2019-04-23 15:28:21.045079+01
+93	invest	0008_auto_20180817_1630	2019-04-23 15:28:21.703283+01
+94	invest	0009_investapp_service_name	2019-04-23 15:28:21.929361+01
+95	invest	0009_highpotentialofferformpage	2019-04-23 15:28:22.037882+01
+96	wagtailforms	0001_initial	2019-04-23 15:28:22.14619+01
+97	wagtailforms	0002_add_verbose_names	2019-04-23 15:28:22.3271+01
+98	wagtailforms	0003_capitalizeverbose	2019-04-23 15:28:22.502136+01
+99	find_a_supplier	0001_squashed_0050_auto_20180425_1107	2019-04-23 15:28:54.828198+01
+100	find_a_supplier	0051_auto_20180501_1706	2019-04-23 15:29:28.278797+01
+101	find_a_supplier	0052_html_to_markdown	2019-04-23 15:29:28.578387+01
+102	find_a_supplier	0053_industrypage_show_on_industries_showcase_page	2019-04-23 15:29:28.708124+01
+103	find_a_supplier	0054_auto_20180510_0902	2019-04-23 15:29:31.518898+01
+104	find_a_supplier	0055_industrycontactpage_industry_options	2019-04-23 15:29:31.639621+01
+105	find_a_supplier	0056_auto_20180515_1552	2019-04-23 15:29:31.801345+01
+106	find_a_supplier	0057_remove_industrycontactpage_industry_options	2019-04-23 15:29:31.922592+01
+107	find_a_supplier	0058_auto_20180521_1628	2019-04-23 15:29:54.36479+01
+108	find_a_supplier	0059_auto_20180601_1412	2019-04-23 15:29:54.771592+01
+109	find_a_supplier	0060_auto_20180604_1058	2019-04-23 15:29:54.933383+01
+110	find_a_supplier	0061_auto_20180604_1344	2019-04-23 15:29:55.156003+01
+111	find_a_supplier	0062_auto_20180817_1630_squashed_0065_auto_20180829_1027	2019-04-23 15:29:56.018232+01
+112	export_readiness	0001_squashed_0009_performancedashboardpage_guidance_notes	2019-04-23 15:29:56.881853+01
+113	export_readiness	0010_performancedashboardnotespage	2019-04-23 15:29:57.025567+01
+114	export_readiness	0011_auto_20180817_1630	2019-04-23 15:29:57.678013+01
+115	export_readiness	0012_auto_20180821_0810	2019-04-23 15:29:58.479036+01
+116	core	0001_create	2019-04-23 15:29:58.629487+01
+117	core	0002_auto_20180307_1748	2019-04-23 15:29:58.780576+01
+118	core	0003_auto_20180423_1122	2019-04-23 15:29:59.055632+01
+119	core	0004_auto_20180423_1619	2019-04-23 15:29:59.510987+01
+120	core	0005_auto_20180423_1803	2019-04-23 15:29:59.768315+01
+121	core	0006_auto_20180508_1331	2019-04-23 15:29:59.770772+01
+122	core	0007_auto_20180809_1215	2019-04-23 15:30:00.034749+01
+123	core	0008_auto_20180809_1215	2019-04-23 15:30:00.201823+01
+124	core	0009_auto_20180813_1746	2019-04-23 15:30:00.555543+01
+125	core	0010_auto_20180815_1304	2019-04-23 15:30:00.811869+01
+126	core	0011_auto_20180817_1631	2019-04-23 15:30:01.043472+01
+127	core	0012_auto_20180821_1634	2019-04-23 15:30:01.286601+01
+128	core	0013_auto_20180821_1637	2019-04-23 15:30:01.447761+01
+129	core	0014_auto_20180822_0915	2019-04-23 15:30:01.914622+01
+130	core	0015_breadcrumb	2019-04-23 15:30:02.06514+01
+131	core	0016_auto_20180823_2014	2019-04-23 15:30:02.180534+01
+132	core	0017_auto_20180823_1545	2019-04-23 15:30:02.525582+01
+133	export_readiness	0013_exportreadinessapp_service_name	2019-04-23 15:30:02.550136+01
+134	core	0015_auto_20180822_1456	2019-04-23 15:30:02.713419+01
+135	core	0018_merge_20180829_0828	2019-04-23 15:30:02.717916+01
+136	core	0018_auto_20180824_1622	2019-04-23 15:30:02.740838+01
+137	core	0019_merge_20180829_0939	2019-04-23 15:30:02.743213+01
+138	invest	0010_merge_20180829_0939_squashed_0013_auto_20180830_0632	2019-04-23 15:30:10.166406+01
+139	invest	0014_auto_20180904_1113	2019-04-23 15:30:11.648576+01
+140	invest	0015_auto_20180911_1049	2019-04-23 15:30:11.651119+01
+141	invest	0016_auto_20180911_1506	2019-04-23 15:30:11.653235+01
+142	invest	0017_auto_20180911_1513	2019-04-23 15:30:11.655325+01
+143	invest	0018_auto_20180913_1445	2019-04-23 15:30:11.657457+01
+144	invest	0019_auto_20180917_0838	2019-04-23 15:30:11.659589+01
+145	invest	0020_auto_20180917_1326	2019-04-23 15:30:11.661575+01
+146	invest	0021_auto_20180917_1404	2019-04-23 15:30:11.664356+01
+147	invest	0022_auto_20180917_1622	2019-04-23 15:30:11.666494+01
+148	invest	0023_auto_20180918_0805	2019-04-23 15:30:11.668639+01
+149	invest	0024_highpotentialopportunitydetailpage_testimonial_background	2019-04-23 15:30:11.670885+01
+150	invest	0025_auto_20180920_0941	2019-04-23 15:30:11.672843+01
+151	invest	0026_auto_20181002_1534	2019-04-23 15:30:11.674864+01
+152	find_a_supplier	0066_auto_20180830_0632	2019-04-23 15:30:11.845782+01
+153	export_readiness	0014_auto_20180829_1027_squashed_0018_getfinancepage	2019-04-23 15:30:12.445113+01
+154	export_readiness	0019_auto_20180905_1350	2019-04-23 15:30:13.083087+01
+155	core	0020_auto_20180830_1737	2019-04-23 15:30:13.252503+01
+156	core	0021_auto_20180904_1511	2019-04-23 15:30:13.54351+01
+157	core	0022_auto_20180906_1344	2019-04-23 15:30:13.796547+01
+158	core	0023_auto_20180912_0758	2019-04-23 15:30:13.975845+01
+159	core	0024_auto_20180913_1321	2019-04-23 15:30:14.344632+01
+160	core	0025_documenthash	2019-04-23 15:30:14.494463+01
+161	core	0026_auto_20181024_1112	2019-04-23 15:30:14.508701+01
+162	core	0027_auto_20190206_1355	2019-04-23 15:30:14.52438+01
+163	core	0028_routingsettings	2019-04-23 15:30:14.557938+01
+164	core	0029_auto_20190417_1024	2019-04-23 15:30:14.585073+01
+165	health_check_db	0001_initial	2019-04-23 15:30:14.596405+01
+166	export_readiness	0020_articlelistingpage_articlepage_topiclandingpage_squashed_0030_auto_20181005_1449	2019-04-23 15:30:17.971642+01
+167	export_readiness	0031_internationallandingpage	2019-04-23 15:30:33.260653+01
+168	export_readiness	0032_auto_20181012_1507	2019-04-23 15:30:33.26336+01
+169	export_readiness	0033_auto_20181023_1600	2019-04-23 15:30:33.26557+01
+170	export_readiness	0034_auto_20181024_1112	2019-04-23 15:30:33.267732+01
+171	export_readiness	0035_contactusguidance	2019-04-23 15:30:33.270205+01
+172	export_readiness	0036_auto_20181105_1258	2019-04-23 15:30:33.272695+01
+173	export_readiness	0037_auto_20181106_0952	2019-04-23 15:30:33.275071+01
+174	export_readiness	0038_auto_20181106_0953	2019-04-23 15:30:33.277381+01
+175	export_readiness	0039_contactsuccesspage_topic	2019-04-23 15:30:33.279617+01
+176	export_readiness	0040_auto_20181121_1643	2019-04-23 15:30:33.281751+01
+177	export_readiness	0041_campaignpage_marketingpages	2019-04-23 15:30:33.283916+01
+178	export_readiness	0042_contactsuccesspages_contactusguidancepages	2019-04-23 15:30:33.286212+01
+179	export_readiness	0043_auto_20181205_1413	2019-04-23 15:30:33.288765+01
+180	export_readiness	0044_auto_20181214_1605	2019-04-23 15:30:33.291017+01
+181	export_readiness	0045_auto_20190115_1058	2019-04-23 15:30:33.293349+01
+182	export_readiness	0046_euexitformpages	2019-04-23 15:30:33.295597+01
+183	export_readiness	0047_allcontactpagespage	2019-04-23 15:30:33.297701+01
+184	export_readiness	0048_auto_20190206_1355	2019-04-23 15:30:33.299813+01
+185	export_readiness	0049_auto_20190207_0924	2019-04-23 15:30:33.301981+01
+186	export_readiness	0050_auto_20190219_1633	2019-04-23 15:30:33.304225+01
+187	export_readiness	0032_auto_20190307_1512	2019-04-23 15:30:33.476512+01
+188	export_readiness	0033_auto_20190312_1557	2019-04-23 15:31:24.301366+01
+189	export_readiness	0034_auto_20190314_1250	2019-04-23 15:31:45.322154+01
+190	export_readiness	0035_remove_countryguidepage_help_market_guide_cta_title	2019-04-23 15:31:45.513031+01
+191	export_readiness	0036_topiclandingpage_teaser	2019-04-23 15:31:45.710472+01
+192	export_readiness	0037_auto_20190321_0728	2019-04-23 15:31:53.490239+01
+193	export_readiness	0038_auto_20190402_1221	2019-04-23 15:31:53.678352+01
+194	export_readiness	0039_auto_20190411_1206	2019-04-23 15:31:53.875909+01
+195	export_readiness	0040_auto_20190411_1228	2019-04-23 15:31:54.497046+01
+196	export_readiness	0041_auto_20190417_0825	2019-04-23 15:31:59.805364+01
+197	find_a_supplier	0067_auto_20181012_1507	2019-04-23 15:32:01.647899+01
+198	find_a_supplier	0068_auto_20181024_1112	2019-04-23 15:32:02.807214+01
+199	find_a_supplier	0069_auto_20190206_1355	2019-04-23 15:32:04.307872+01
+200	find_a_supplier	0070_auto_20190417_0825	2019-04-23 15:32:05.847252+01
+201	find_a_supplier	0071_auto_20190417_1024	2019-04-23 15:32:30.959909+01
+202	great_international	0001_initial	2019-04-23 15:32:35.55125+01
+203	great_international	0002_auto_20190206_1146	2019-04-23 15:32:35.553869+01
+204	great_international	0003_internationalarticlelistingpage	2019-04-23 15:32:35.556281+01
+205	great_international	0003_auto_20190211_1202	2019-04-23 15:32:35.558741+01
+206	great_international	0004_merge_20190212_1003	2019-04-23 15:32:35.561293+01
+207	great_international	0005_internationalukhqpages	2019-04-23 15:32:35.563978+01
+208	great_international	0006_internationaltopiclandingpage	2019-04-23 15:32:35.566542+01
+209	great_international	0007_auto_20190219_1114	2019-04-23 15:32:35.56908+01
+210	great_international	0008_auto_20190222_1554	2019-04-23 15:32:35.571559+01
+211	great_international	0008_auto_20190222_1230	2019-04-23 15:32:35.573959+01
+212	great_international	0009_merge_20190225_1214	2019-04-23 15:32:35.576269+01
+213	great_international	0010_auto_20190228_0819	2019-04-23 15:32:35.578555+01
+214	great_international	0011_auto_20190228_1051	2019-04-23 15:32:35.580875+01
+215	great_international	0012_internationalsectorpage	2019-04-23 15:32:35.583403+01
+216	great_international	0013_auto_20190301_1227	2019-04-23 15:32:35.586025+01
+217	great_international	0014_auto_20190304_1215	2019-04-23 15:32:35.588337+01
+218	great_international	0015_auto_20190306_1521	2019-04-23 15:32:35.590657+01
+219	great_international	0002_internationalcuratedtopiclandingpage	2019-04-23 15:32:36.086653+01
+220	great_international	0003_auto_20190313_0855	2019-04-23 15:32:40.979032+01
+221	great_international	0004_internationalguidelandingpage	2019-04-23 15:32:41.249028+01
+222	great_international	0005_auto_20190320_1750	2019-04-23 15:32:46.569623+01
+223	great_international	0006_auto_20190325_0945	2019-04-23 15:32:50.828624+01
+224	great_international	0007_auto_20190402_1221	2019-04-23 15:32:51.055292+01
+225	great_international	0008_auto_20190404_1320	2019-04-23 15:35:29.809577+01
+226	great_international	0009_auto_20190404_1320	2019-04-23 15:35:56.630252+01
+227	great_international	0010_auto_20190404_1320	2019-04-23 15:37:45.488333+01
+228	great_international	0011_auto_20190404_1321	2019-04-23 15:39:04.294829+01
+229	great_international	0012_auto_20190404_1321	2019-04-23 15:39:31.437557+01
+230	great_international	0013_auto_20190404_1321	2019-04-23 15:40:48.175294+01
+231	great_international	0014_auto_20190404_1322	2019-04-23 15:41:38.161965+01
+232	great_international	0015_auto_20190404_1712	2019-04-23 15:41:42.726772+01
+233	great_international	0016_auto_20190408_1640	2019-04-23 15:41:51.970334+01
+234	great_international	0007_internationalhomepage_hero_cta_link	2019-04-23 15:41:52.390334+01
+235	great_international	0017_merge_20190411_1027	2019-04-23 15:41:52.393223+01
+236	great_international	0018_auto_20190411_1028	2019-04-23 15:41:56.644036+01
+237	great_international	0019_auto_20190417_0825	2019-04-23 15:42:01.616329+01
+238	great_international	0020_auto_20190417_1024	2019-04-23 15:44:03.456166+01
+239	great_international	0021_auto_20190423_1423	2019-04-23 15:45:44.446467+01
+240	invest	0015_auto_20181012_1507	2019-04-23 15:45:46.277009+01
+241	invest	0016_auto_20181025_1226	2019-04-23 15:45:51.014407+01
+242	invest	0017_auto_20190206_1355	2019-04-23 15:45:55.864474+01
+243	invest	0018_auto_20190314_1507	2019-04-23 15:46:14.940152+01
+244	invest	0019_auto_20190320_1347	2019-04-23 15:48:17.988993+01
+245	invest	0020_auto_20190402_1018	2019-04-23 15:48:38.711515+01
+246	invest	0021_auto_20190409_1246	2019-04-23 15:49:33.050391+01
+247	invest	0022_auto_20190411_1449	2019-04-23 15:53:42.674624+01
+248	invest	0023_auto_20190417_0825	2019-04-23 15:53:48.197462+01
+249	invest	0024_auto_20190417_1024	2019-04-23 15:56:29.538543+01
+250	sessions	0001_initial	2019-04-23 15:56:29.557915+01
+251	wagtailadmin	0001_create_admin_access_permissions	2019-04-23 15:56:29.992657+01
+252	wagtailembeds	0001_initial	2019-04-23 15:56:30.030105+01
+253	wagtailembeds	0002_add_verbose_names	2019-04-23 15:56:30.047702+01
+254	wagtailembeds	0003_capitalizeverbose	2019-04-23 15:56:30.063392+01
+255	wagtailsearch	0001_initial	2019-04-23 15:56:31.227899+01
+256	wagtailsearch	0002_add_verbose_names	2019-04-23 15:56:32.753645+01
+257	wagtailsearch	0003_remove_editors_pick	2019-04-23 15:56:33.18987+01
+258	wagtailusers	0001_initial	2019-04-23 15:56:33.87278+01
+259	wagtailusers	0002_add_verbose_name_on_userprofile	2019-04-23 15:56:33.958257+01
+260	wagtailusers	0003_add_verbose_names	2019-04-23 15:56:33.992329+01
+261	wagtailusers	0004_capitalizeverbose	2019-04-23 15:56:34.098372+01
+262	wagtailusers	0005_make_related_name_wagtail_specific	2019-04-23 15:56:34.147561+01
+263	wagtailusers	0006_userprofile_prefered_language	2019-04-23 15:56:34.185633+01
+264	wagtailusers	0007_userprofile_current_time_zone	2019-04-23 15:56:34.221169+01
+265	wagtailusers	0008_userprofile_avatar	2019-04-23 15:56:34.255429+01
+266	db	0001_initial	2019-04-23 15:56:34.261444+01
+267	wagtailcore	0001_squashed_0016_change_page_url_path_to_text_field	2019-04-23 15:56:34.264587+01
+268	export_readiness	0031_internationallandingpage_squashed_0050_auto_20190219_1633	2019-04-23 15:56:34.267847+01
+269	great_international	0001_squashed_0015_auto_20190306_1521	2019-04-23 15:56:34.270881+01
+270	invest	0014_auto_20180904_1113_squashed_0026_auto_20181002_1534	2019-04-23 15:56:34.273619+01
 \.
 
 
@@ -7713,7 +7336,7 @@ COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 -- Data for Name: export_readiness_allcontactpagespage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_allcontactpagespage (page_ptr_id, service_name) FROM stdin;
+COPY public.export_readiness_allcontactpagespage (page_ptr_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7721,7 +7344,7 @@ COPY public.export_readiness_allcontactpagespage (page_ptr_id, service_name) FRO
 -- Data for Name: export_readiness_articlelistingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_articlelistingpage (page_ptr_id, service_name, landing_page_title, hero_teaser, list_teaser, hero_image_id) FROM stdin;
+COPY public.export_readiness_articlelistingpage (page_ptr_id, service_name, landing_page_title, hero_teaser, list_teaser, hero_image_id, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7729,7 +7352,7 @@ COPY public.export_readiness_articlelistingpage (page_ptr_id, service_name, land
 -- Data for Name: export_readiness_articlepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_articlepage (page_ptr_id, service_name, article_title, article_teaser, article_body_text, article_image_id, related_page_one_id, related_page_three_id, related_page_two_id) FROM stdin;
+COPY public.export_readiness_articlepage (page_ptr_id, service_name, article_title, article_teaser, article_body_text, article_image_id, related_page_one_id, related_page_three_id, related_page_two_id, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7745,7 +7368,7 @@ COPY public.export_readiness_articlepage_tags (id, articlepage_id, tag_id) FROM 
 -- Data for Name: export_readiness_campaignpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_campaignpage (page_ptr_id, service_name, campaign_heading, section_one_heading, section_one_intro, selling_point_one_heading, selling_point_one_content, selling_point_two_heading, selling_point_two_content, selling_point_three_heading, selling_point_three_content, section_one_contact_button_url, section_one_contact_button_text, section_two_heading, section_two_intro, section_two_contact_button_url, section_two_contact_button_text, related_content_heading, related_content_intro, cta_box_message, cta_box_button_url, cta_box_button_text, campaign_hero_image_id, section_one_image_id, section_two_image_id, selling_point_one_icon_id, selling_point_three_icon_id, selling_point_two_icon_id, related_page_one_id, related_page_three_id, related_page_two_id) FROM stdin;
+COPY public.export_readiness_campaignpage (page_ptr_id, service_name, campaign_heading, section_one_heading, section_one_intro, selling_point_one_heading, selling_point_one_content, selling_point_two_heading, selling_point_two_content, selling_point_three_heading, selling_point_three_content, section_one_contact_button_url, section_one_contact_button_text, section_two_heading, section_two_intro, section_two_contact_button_url, section_two_contact_button_text, related_content_heading, related_content_intro, cta_box_message, cta_box_button_url, cta_box_button_text, campaign_hero_image_id, section_one_image_id, section_two_image_id, selling_point_one_icon_id, selling_point_three_icon_id, selling_point_two_icon_id, related_page_one_id, related_page_three_id, related_page_two_id, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7753,7 +7376,7 @@ COPY public.export_readiness_campaignpage (page_ptr_id, service_name, campaign_h
 -- Data for Name: export_readiness_contactsuccesspage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_contactsuccesspage (page_ptr_id, service_name, heading, body_text, next_title, next_body_text, topic) FROM stdin;
+COPY public.export_readiness_contactsuccesspage (page_ptr_id, service_name, heading, body_text, next_title, next_body_text, topic, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7761,7 +7384,7 @@ COPY public.export_readiness_contactsuccesspage (page_ptr_id, service_name, head
 -- Data for Name: export_readiness_contactsuccesspages; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_contactsuccesspages (page_ptr_id, service_name) FROM stdin;
+COPY public.export_readiness_contactsuccesspages (page_ptr_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7769,7 +7392,7 @@ COPY public.export_readiness_contactsuccesspages (page_ptr_id, service_name) FRO
 -- Data for Name: export_readiness_contactusguidancepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_contactusguidancepage (page_ptr_id, service_name, topic, body) FROM stdin;
+COPY public.export_readiness_contactusguidancepage (page_ptr_id, service_name, topic, body, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7777,7 +7400,7 @@ COPY public.export_readiness_contactusguidancepage (page_ptr_id, service_name, t
 -- Data for Name: export_readiness_contactusguidancepages; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_contactusguidancepages (page_ptr_id, service_name) FROM stdin;
+COPY public.export_readiness_contactusguidancepages (page_ptr_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7785,7 +7408,7 @@ COPY public.export_readiness_contactusguidancepages (page_ptr_id, service_name) 
 -- Data for Name: export_readiness_countryguidepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_countryguidepage (page_ptr_id, service_name, heading, statistic_1_number, section_two_heading, statistic_1_heading, hero_image_id, related_page_one_id, related_page_three_id, related_page_two_id, accordion_1_icon_id, accordion_1_statistic_1_heading, accordion_1_statistic_1_number, accordion_1_statistic_1_smallprint, accordion_1_statistic_2_heading, accordion_1_statistic_2_number, accordion_1_statistic_2_smallprint, accordion_1_statistic_3_heading, accordion_1_statistic_3_number, accordion_1_statistic_3_smallprint, accordion_1_statistic_4_heading, accordion_1_statistic_4_number, accordion_1_statistic_4_smallprint, accordion_1_statistic_5_heading, accordion_1_statistic_5_number, accordion_1_statistic_5_smallprint, accordion_1_statistic_6_heading, accordion_1_statistic_6_number, accordion_1_statistic_6_smallprint, accordion_1_subsection_1_body, accordion_1_subsection_1_heading, accordion_1_subsection_1_icon_id, accordion_1_subsection_2_body, accordion_1_subsection_2_heading, accordion_1_subsection_2_icon_id, accordion_1_subsection_3_body, accordion_1_subsection_3_heading, accordion_1_subsection_3_icon_id, accordion_1_teaser, accordion_1_title, accordion_2_icon_id, accordion_2_statistic_1_heading, accordion_2_statistic_1_number, accordion_2_statistic_1_smallprint, accordion_2_statistic_2_heading, accordion_2_statistic_2_number, accordion_2_statistic_2_smallprint, accordion_2_statistic_3_heading, accordion_2_statistic_3_number, accordion_2_statistic_3_smallprint, accordion_2_statistic_4_heading, accordion_2_statistic_4_number, accordion_2_statistic_4_smallprint, accordion_2_statistic_5_heading, accordion_2_statistic_5_number, accordion_2_statistic_5_smallprint, accordion_2_statistic_6_heading, accordion_2_statistic_6_number, accordion_2_statistic_6_smallprint, accordion_2_subsection_1_body, accordion_2_subsection_1_heading, accordion_2_subsection_1_icon_id, accordion_2_subsection_2_body, accordion_2_subsection_2_heading, accordion_2_subsection_2_icon_id, accordion_2_subsection_3_body, accordion_2_subsection_3_heading, accordion_2_subsection_3_icon_id, accordion_2_teaser, accordion_2_title, accordion_3_icon_id, accordion_3_statistic_1_heading, accordion_3_statistic_1_number, accordion_3_statistic_1_smallprint, accordion_3_statistic_2_heading, accordion_3_statistic_2_number, accordion_3_statistic_2_smallprint, accordion_3_statistic_3_heading, accordion_3_statistic_3_number, accordion_3_statistic_3_smallprint, accordion_3_statistic_4_heading, accordion_3_statistic_4_number, accordion_3_statistic_4_smallprint, accordion_3_statistic_5_heading, accordion_3_statistic_5_number, accordion_3_statistic_5_smallprint, accordion_3_statistic_6_heading, accordion_3_statistic_6_number, accordion_3_statistic_6_smallprint, accordion_3_subsection_1_body, accordion_3_subsection_1_heading, accordion_3_subsection_1_icon_id, accordion_3_subsection_2_body, accordion_3_subsection_2_heading, accordion_3_subsection_2_icon_id, accordion_3_subsection_3_body, accordion_3_subsection_3_heading, accordion_3_subsection_3_icon_id, accordion_3_teaser, accordion_3_title, accordion_4_icon_id, accordion_4_statistic_1_heading, accordion_4_statistic_1_number, accordion_4_statistic_1_smallprint, accordion_4_statistic_2_heading, accordion_4_statistic_2_number, accordion_4_statistic_2_smallprint, accordion_4_statistic_3_heading, accordion_4_statistic_3_number, accordion_4_statistic_3_smallprint, accordion_4_statistic_4_heading, accordion_4_statistic_4_number, accordion_4_statistic_4_smallprint, accordion_4_statistic_5_heading, accordion_4_statistic_5_number, accordion_4_statistic_5_smallprint, accordion_4_statistic_6_heading, accordion_4_statistic_6_number, accordion_4_statistic_6_smallprint, accordion_4_subsection_1_body, accordion_4_subsection_1_heading, accordion_4_subsection_1_icon_id, accordion_4_subsection_2_body, accordion_4_subsection_2_heading, accordion_4_subsection_2_icon_id, accordion_4_subsection_3_body, accordion_4_subsection_3_heading, accordion_4_subsection_3_icon_id, accordion_4_teaser, accordion_4_title, accordion_5_icon_id, accordion_5_statistic_1_heading, accordion_5_statistic_1_number, accordion_5_statistic_1_smallprint, accordion_5_statistic_2_heading, accordion_5_statistic_2_number, accordion_5_statistic_2_smallprint, accordion_5_statistic_3_heading, accordion_5_statistic_3_number, accordion_5_statistic_3_smallprint, accordion_5_statistic_4_heading, accordion_5_statistic_4_number, accordion_5_statistic_4_smallprint, accordion_5_statistic_5_heading, accordion_5_statistic_5_number, accordion_5_statistic_5_smallprint, accordion_5_statistic_6_heading, accordion_5_statistic_6_number, accordion_5_statistic_6_smallprint, accordion_5_subsection_1_body, accordion_5_subsection_1_heading, accordion_5_subsection_1_icon_id, accordion_5_subsection_2_body, accordion_5_subsection_2_heading, accordion_5_subsection_2_icon_id, accordion_5_subsection_3_body, accordion_5_subsection_3_heading, accordion_5_subsection_3_icon_id, accordion_5_teaser, accordion_5_title, accordion_6_icon_id, accordion_6_statistic_1_heading, accordion_6_statistic_1_number, accordion_6_statistic_1_smallprint, accordion_6_statistic_2_heading, accordion_6_statistic_2_number, accordion_6_statistic_2_smallprint, accordion_6_statistic_3_heading, accordion_6_statistic_3_number, accordion_6_statistic_3_smallprint, accordion_6_statistic_4_heading, accordion_6_statistic_4_number, accordion_6_statistic_4_smallprint, accordion_6_statistic_5_heading, accordion_6_statistic_5_number, accordion_6_statistic_5_smallprint, accordion_6_statistic_6_heading, accordion_6_statistic_6_number, accordion_6_statistic_6_smallprint, accordion_6_subsection_1_body, accordion_6_subsection_1_heading, accordion_6_subsection_1_icon_id, accordion_6_subsection_2_body, accordion_6_subsection_2_heading, accordion_6_subsection_2_icon_id, accordion_6_subsection_3_body, accordion_6_subsection_3_heading, accordion_6_subsection_3_icon_id, accordion_6_teaser, accordion_6_title, heading_teaser, section_one_body, section_one_image_id, section_one_image_caption, section_one_image_caption_company, section_two_teaser, statistic_1_smallprint, statistic_2_heading, statistic_2_number, statistic_2_smallprint, statistic_3_heading, statistic_3_number, statistic_3_smallprint, statistic_4_heading, statistic_4_number, statistic_4_smallprint, statistic_5_heading, statistic_5_number, statistic_5_smallprint, statistic_6_heading, statistic_6_number, statistic_6_smallprint, sub_heading, accordion_1_case_study_button_link, accordion_1_case_study_button_text, accordion_1_case_study_description, accordion_1_case_study_hero_image_id, accordion_1_case_study_title, accordion_1_cta_1_link, accordion_1_cta_1_title, accordion_1_cta_2_link, accordion_1_cta_2_title, accordion_1_cta_3_link, accordion_1_cta_3_title, accordion_2_case_study_button_link, accordion_2_case_study_button_text, accordion_2_case_study_description, accordion_2_case_study_hero_image_id, accordion_2_case_study_title, accordion_2_cta_1_link, accordion_2_cta_1_title, accordion_2_cta_2_link, accordion_2_cta_2_title, accordion_2_cta_3_link, accordion_2_cta_3_title, accordion_3_case_study_button_link, accordion_3_case_study_button_text, accordion_3_case_study_description, accordion_3_case_study_hero_image_id, accordion_3_case_study_title, accordion_3_cta_1_link, accordion_3_cta_1_title, accordion_3_cta_2_link, accordion_3_cta_2_title, accordion_3_cta_3_link, accordion_3_cta_3_title, accordion_4_case_study_button_link, accordion_4_case_study_button_text, accordion_4_case_study_description, accordion_4_case_study_hero_image_id, accordion_4_case_study_title, accordion_4_cta_1_link, accordion_4_cta_1_title, accordion_4_cta_2_link, accordion_4_cta_2_title, accordion_4_cta_3_link, accordion_4_cta_3_title, accordion_5_case_study_button_link, accordion_5_case_study_button_text, accordion_5_case_study_description, accordion_5_case_study_hero_image_id, accordion_5_case_study_title, accordion_5_cta_1_link, accordion_5_cta_1_title, accordion_5_cta_2_link, accordion_5_cta_2_title, accordion_5_cta_3_link, accordion_5_cta_3_title, accordion_6_case_study_button_link, accordion_6_case_study_button_text, accordion_6_case_study_description, accordion_6_case_study_hero_image_id, accordion_6_case_study_title, accordion_6_cta_1_link, accordion_6_cta_1_title, accordion_6_cta_2_link, accordion_6_cta_2_title, accordion_6_cta_3_link, accordion_6_cta_3_title, fact_sheet_column_1_body, fact_sheet_column_1_teaser, fact_sheet_column_1_title, fact_sheet_column_2_body, fact_sheet_column_2_teaser, fact_sheet_column_2_title, fact_sheet_teaser, fact_sheet_title, help_market_guide_cta_link) FROM stdin;
+COPY public.export_readiness_countryguidepage (page_ptr_id, service_name, heading, statistic_1_number, section_two_heading, statistic_1_heading, hero_image_id, related_page_one_id, related_page_three_id, related_page_two_id, accordion_1_icon_id, accordion_1_statistic_1_heading, accordion_1_statistic_1_number, accordion_1_statistic_1_smallprint, accordion_1_statistic_2_heading, accordion_1_statistic_2_number, accordion_1_statistic_2_smallprint, accordion_1_statistic_3_heading, accordion_1_statistic_3_number, accordion_1_statistic_3_smallprint, accordion_1_statistic_4_heading, accordion_1_statistic_4_number, accordion_1_statistic_4_smallprint, accordion_1_statistic_5_heading, accordion_1_statistic_5_number, accordion_1_statistic_5_smallprint, accordion_1_statistic_6_heading, accordion_1_statistic_6_number, accordion_1_statistic_6_smallprint, accordion_1_subsection_1_body, accordion_1_subsection_1_heading, accordion_1_subsection_1_icon_id, accordion_1_subsection_2_body, accordion_1_subsection_2_heading, accordion_1_subsection_2_icon_id, accordion_1_subsection_3_body, accordion_1_subsection_3_heading, accordion_1_subsection_3_icon_id, accordion_1_teaser, accordion_1_title, accordion_2_icon_id, accordion_2_statistic_1_heading, accordion_2_statistic_1_number, accordion_2_statistic_1_smallprint, accordion_2_statistic_2_heading, accordion_2_statistic_2_number, accordion_2_statistic_2_smallprint, accordion_2_statistic_3_heading, accordion_2_statistic_3_number, accordion_2_statistic_3_smallprint, accordion_2_statistic_4_heading, accordion_2_statistic_4_number, accordion_2_statistic_4_smallprint, accordion_2_statistic_5_heading, accordion_2_statistic_5_number, accordion_2_statistic_5_smallprint, accordion_2_statistic_6_heading, accordion_2_statistic_6_number, accordion_2_statistic_6_smallprint, accordion_2_subsection_1_body, accordion_2_subsection_1_heading, accordion_2_subsection_1_icon_id, accordion_2_subsection_2_body, accordion_2_subsection_2_heading, accordion_2_subsection_2_icon_id, accordion_2_subsection_3_body, accordion_2_subsection_3_heading, accordion_2_subsection_3_icon_id, accordion_2_teaser, accordion_2_title, accordion_3_icon_id, accordion_3_statistic_1_heading, accordion_3_statistic_1_number, accordion_3_statistic_1_smallprint, accordion_3_statistic_2_heading, accordion_3_statistic_2_number, accordion_3_statistic_2_smallprint, accordion_3_statistic_3_heading, accordion_3_statistic_3_number, accordion_3_statistic_3_smallprint, accordion_3_statistic_4_heading, accordion_3_statistic_4_number, accordion_3_statistic_4_smallprint, accordion_3_statistic_5_heading, accordion_3_statistic_5_number, accordion_3_statistic_5_smallprint, accordion_3_statistic_6_heading, accordion_3_statistic_6_number, accordion_3_statistic_6_smallprint, accordion_3_subsection_1_body, accordion_3_subsection_1_heading, accordion_3_subsection_1_icon_id, accordion_3_subsection_2_body, accordion_3_subsection_2_heading, accordion_3_subsection_2_icon_id, accordion_3_subsection_3_body, accordion_3_subsection_3_heading, accordion_3_subsection_3_icon_id, accordion_3_teaser, accordion_3_title, accordion_4_icon_id, accordion_4_statistic_1_heading, accordion_4_statistic_1_number, accordion_4_statistic_1_smallprint, accordion_4_statistic_2_heading, accordion_4_statistic_2_number, accordion_4_statistic_2_smallprint, accordion_4_statistic_3_heading, accordion_4_statistic_3_number, accordion_4_statistic_3_smallprint, accordion_4_statistic_4_heading, accordion_4_statistic_4_number, accordion_4_statistic_4_smallprint, accordion_4_statistic_5_heading, accordion_4_statistic_5_number, accordion_4_statistic_5_smallprint, accordion_4_statistic_6_heading, accordion_4_statistic_6_number, accordion_4_statistic_6_smallprint, accordion_4_subsection_1_body, accordion_4_subsection_1_heading, accordion_4_subsection_1_icon_id, accordion_4_subsection_2_body, accordion_4_subsection_2_heading, accordion_4_subsection_2_icon_id, accordion_4_subsection_3_body, accordion_4_subsection_3_heading, accordion_4_subsection_3_icon_id, accordion_4_teaser, accordion_4_title, accordion_5_icon_id, accordion_5_statistic_1_heading, accordion_5_statistic_1_number, accordion_5_statistic_1_smallprint, accordion_5_statistic_2_heading, accordion_5_statistic_2_number, accordion_5_statistic_2_smallprint, accordion_5_statistic_3_heading, accordion_5_statistic_3_number, accordion_5_statistic_3_smallprint, accordion_5_statistic_4_heading, accordion_5_statistic_4_number, accordion_5_statistic_4_smallprint, accordion_5_statistic_5_heading, accordion_5_statistic_5_number, accordion_5_statistic_5_smallprint, accordion_5_statistic_6_heading, accordion_5_statistic_6_number, accordion_5_statistic_6_smallprint, accordion_5_subsection_1_body, accordion_5_subsection_1_heading, accordion_5_subsection_1_icon_id, accordion_5_subsection_2_body, accordion_5_subsection_2_heading, accordion_5_subsection_2_icon_id, accordion_5_subsection_3_body, accordion_5_subsection_3_heading, accordion_5_subsection_3_icon_id, accordion_5_teaser, accordion_5_title, accordion_6_icon_id, accordion_6_statistic_1_heading, accordion_6_statistic_1_number, accordion_6_statistic_1_smallprint, accordion_6_statistic_2_heading, accordion_6_statistic_2_number, accordion_6_statistic_2_smallprint, accordion_6_statistic_3_heading, accordion_6_statistic_3_number, accordion_6_statistic_3_smallprint, accordion_6_statistic_4_heading, accordion_6_statistic_4_number, accordion_6_statistic_4_smallprint, accordion_6_statistic_5_heading, accordion_6_statistic_5_number, accordion_6_statistic_5_smallprint, accordion_6_statistic_6_heading, accordion_6_statistic_6_number, accordion_6_statistic_6_smallprint, accordion_6_subsection_1_body, accordion_6_subsection_1_heading, accordion_6_subsection_1_icon_id, accordion_6_subsection_2_body, accordion_6_subsection_2_heading, accordion_6_subsection_2_icon_id, accordion_6_subsection_3_body, accordion_6_subsection_3_heading, accordion_6_subsection_3_icon_id, accordion_6_teaser, accordion_6_title, heading_teaser, section_one_body, section_one_image_id, section_one_image_caption, section_one_image_caption_company, section_two_teaser, statistic_1_smallprint, statistic_2_heading, statistic_2_number, statistic_2_smallprint, statistic_3_heading, statistic_3_number, statistic_3_smallprint, statistic_4_heading, statistic_4_number, statistic_4_smallprint, statistic_5_heading, statistic_5_number, statistic_5_smallprint, statistic_6_heading, statistic_6_number, statistic_6_smallprint, sub_heading, accordion_1_case_study_button_link, accordion_1_case_study_button_text, accordion_1_case_study_description, accordion_1_case_study_hero_image_id, accordion_1_case_study_title, accordion_1_cta_1_link, accordion_1_cta_1_title, accordion_1_cta_2_link, accordion_1_cta_2_title, accordion_1_cta_3_link, accordion_1_cta_3_title, accordion_2_case_study_button_link, accordion_2_case_study_button_text, accordion_2_case_study_description, accordion_2_case_study_hero_image_id, accordion_2_case_study_title, accordion_2_cta_1_link, accordion_2_cta_1_title, accordion_2_cta_2_link, accordion_2_cta_2_title, accordion_2_cta_3_link, accordion_2_cta_3_title, accordion_3_case_study_button_link, accordion_3_case_study_button_text, accordion_3_case_study_description, accordion_3_case_study_hero_image_id, accordion_3_case_study_title, accordion_3_cta_1_link, accordion_3_cta_1_title, accordion_3_cta_2_link, accordion_3_cta_2_title, accordion_3_cta_3_link, accordion_3_cta_3_title, accordion_4_case_study_button_link, accordion_4_case_study_button_text, accordion_4_case_study_description, accordion_4_case_study_hero_image_id, accordion_4_case_study_title, accordion_4_cta_1_link, accordion_4_cta_1_title, accordion_4_cta_2_link, accordion_4_cta_2_title, accordion_4_cta_3_link, accordion_4_cta_3_title, accordion_5_case_study_button_link, accordion_5_case_study_button_text, accordion_5_case_study_description, accordion_5_case_study_hero_image_id, accordion_5_case_study_title, accordion_5_cta_1_link, accordion_5_cta_1_title, accordion_5_cta_2_link, accordion_5_cta_2_title, accordion_5_cta_3_link, accordion_5_cta_3_title, accordion_6_case_study_button_link, accordion_6_case_study_button_text, accordion_6_case_study_description, accordion_6_case_study_hero_image_id, accordion_6_case_study_title, accordion_6_cta_1_link, accordion_6_cta_1_title, accordion_6_cta_2_link, accordion_6_cta_2_title, accordion_6_cta_3_link, accordion_6_cta_3_title, fact_sheet_column_1_body, fact_sheet_column_1_teaser, fact_sheet_column_1_title, fact_sheet_column_2_body, fact_sheet_column_2_teaser, fact_sheet_column_2_title, fact_sheet_teaser, fact_sheet_title, help_market_guide_cta_link, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7793,7 +7416,7 @@ COPY public.export_readiness_countryguidepage (page_ptr_id, service_name, headin
 -- Data for Name: export_readiness_euexitdomesticformpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_euexitdomesticformpage (page_ptr_id, service_name, breadcrumbs_label, first_name_help_text, first_name_label, last_name_help_text, last_name_label, email_help_text, email_label, organisation_type_help_text, organisation_type_label, company_name_help_text, company_name_label, comment_help_text, comment_label, body_text, heading, submit_button_text, disclaimer) FROM stdin;
+COPY public.export_readiness_euexitdomesticformpage (page_ptr_id, service_name, breadcrumbs_label, first_name_help_text, first_name_label, last_name_help_text, last_name_label, email_help_text, email_label, organisation_type_help_text, organisation_type_label, company_name_help_text, company_name_label, comment_help_text, comment_label, body_text, heading, submit_button_text, disclaimer, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7801,7 +7424,7 @@ COPY public.export_readiness_euexitdomesticformpage (page_ptr_id, service_name, 
 -- Data for Name: export_readiness_euexitformpages; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_euexitformpages (page_ptr_id, service_name) FROM stdin;
+COPY public.export_readiness_euexitformpages (page_ptr_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7809,7 +7432,7 @@ COPY public.export_readiness_euexitformpages (page_ptr_id, service_name) FROM st
 -- Data for Name: export_readiness_euexitformsuccesspage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_euexitformsuccesspage (page_ptr_id, service_name, breadcrumbs_label, heading, body_text, next_title, next_body_text) FROM stdin;
+COPY public.export_readiness_euexitformsuccesspage (page_ptr_id, service_name, breadcrumbs_label, heading, body_text, next_title, next_body_text, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7817,7 +7440,7 @@ COPY public.export_readiness_euexitformsuccesspage (page_ptr_id, service_name, b
 -- Data for Name: export_readiness_euexitinternationalformpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_euexitinternationalformpage (page_ptr_id, service_name, breadcrumbs_label, first_name_label, first_name_help_text, last_name_label, last_name_help_text, email_label, email_help_text, organisation_type_label, organisation_type_help_text, company_name_label, company_name_help_text, country_label, country_help_text, city_label, city_help_text, comment_label, comment_help_text, body_text, heading, submit_button_text, disclaimer) FROM stdin;
+COPY public.export_readiness_euexitinternationalformpage (page_ptr_id, service_name, breadcrumbs_label, first_name_label, first_name_help_text, last_name_label, last_name_help_text, email_label, email_help_text, organisation_type_label, organisation_type_help_text, company_name_label, company_name_help_text, country_label, country_help_text, city_label, city_help_text, comment_label, comment_help_text, body_text, heading, submit_button_text, disclaimer, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7825,7 +7448,7 @@ COPY public.export_readiness_euexitinternationalformpage (page_ptr_id, service_n
 -- Data for Name: export_readiness_exportreadinessapp; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_exportreadinessapp (page_ptr_id, service_name) FROM stdin;
+COPY public.export_readiness_exportreadinessapp (page_ptr_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7833,7 +7456,7 @@ COPY public.export_readiness_exportreadinessapp (page_ptr_id, service_name) FROM
 -- Data for Name: export_readiness_getfinancepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_getfinancepage (page_ptr_id, service_name, breadcrumbs_label, hero_text, contact_proposition, contact_button, advantages_title, advantages_one, advantages_two, advantages_three, evidence, hero_image_id, ukef_logo_id, advantages_one_icon_id, advantages_three_icon_id, advantages_two_icon_id, evidence_video_id) FROM stdin;
+COPY public.export_readiness_getfinancepage (page_ptr_id, service_name, breadcrumbs_label, hero_text, contact_proposition, contact_button, advantages_title, advantages_one, advantages_two, advantages_three, evidence, hero_image_id, ukef_logo_id, advantages_one_icon_id, advantages_three_icon_id, advantages_two_icon_id, evidence_video_id, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7841,7 +7464,7 @@ COPY public.export_readiness_getfinancepage (page_ptr_id, service_name, breadcru
 -- Data for Name: export_readiness_homepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_homepage (page_ptr_id, service_name, news_title, news_description, banner_content, banner_label) FROM stdin;
+COPY public.export_readiness_homepage (page_ptr_id, service_name, news_title, news_description, banner_content, banner_label, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7849,7 +7472,7 @@ COPY public.export_readiness_homepage (page_ptr_id, service_name, news_title, ne
 -- Data for Name: export_readiness_internationallandingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_internationallandingpage (page_ptr_id, service_name) FROM stdin;
+COPY public.export_readiness_internationallandingpage (page_ptr_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7857,7 +7480,7 @@ COPY public.export_readiness_internationallandingpage (page_ptr_id, service_name
 -- Data for Name: export_readiness_marketingpages; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_marketingpages (page_ptr_id, service_name) FROM stdin;
+COPY public.export_readiness_marketingpages (page_ptr_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7865,7 +7488,7 @@ COPY public.export_readiness_marketingpages (page_ptr_id, service_name) FROM std
 -- Data for Name: export_readiness_performancedashboardnotespage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_performancedashboardnotespage (page_ptr_id, body, service_name) FROM stdin;
+COPY public.export_readiness_performancedashboardnotespage (page_ptr_id, body, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7873,7 +7496,7 @@ COPY public.export_readiness_performancedashboardnotespage (page_ptr_id, body, s
 -- Data for Name: export_readiness_performancedashboardpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_performancedashboardpage (page_ptr_id, heading, description, product_link, data_title_row_one, data_number_row_one, data_period_row_one, data_description_row_one, data_title_row_two, data_number_row_two, data_period_row_two, data_description_row_two, data_title_row_three, data_number_row_three, data_period_row_three, data_description_row_three, data_title_row_four, data_number_row_four, data_period_row_four, data_description_row_four, landing_dashboard, guidance_notes, service_name) FROM stdin;
+COPY public.export_readiness_performancedashboardpage (page_ptr_id, heading, description, product_link, data_title_row_one, data_number_row_one, data_period_row_one, data_description_row_one, data_title_row_two, data_number_row_two, data_period_row_two, data_description_row_two, data_title_row_three, data_number_row_three, data_period_row_three, data_description_row_three, data_title_row_four, data_number_row_four, data_period_row_four, data_description_row_four, landing_dashboard, guidance_notes, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7881,7 +7504,7 @@ COPY public.export_readiness_performancedashboardpage (page_ptr_id, heading, des
 -- Data for Name: export_readiness_privacyandcookiespage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_privacyandcookiespage (page_ptr_id, body, service_name) FROM stdin;
+COPY public.export_readiness_privacyandcookiespage (page_ptr_id, body, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7889,7 +7512,7 @@ COPY public.export_readiness_privacyandcookiespage (page_ptr_id, body, service_n
 -- Data for Name: export_readiness_sitepolicypages; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_sitepolicypages (page_ptr_id, service_name) FROM stdin;
+COPY public.export_readiness_sitepolicypages (page_ptr_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7913,7 +7536,7 @@ COPY public.export_readiness_tag (id, name, slug) FROM stdin;
 -- Data for Name: export_readiness_termsandconditionspage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_termsandconditionspage (page_ptr_id, body, service_name) FROM stdin;
+COPY public.export_readiness_termsandconditionspage (page_ptr_id, body, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7921,7 +7544,7 @@ COPY public.export_readiness_termsandconditionspage (page_ptr_id, body, service_
 -- Data for Name: export_readiness_topiclandingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_topiclandingpage (page_ptr_id, service_name, landing_page_title, hero_teaser, hero_image_id, teaser, banner_text) FROM stdin;
+COPY public.export_readiness_topiclandingpage (page_ptr_id, service_name, landing_page_title, hero_teaser, hero_image_id, teaser, banner_text, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7929,7 +7552,7 @@ COPY public.export_readiness_topiclandingpage (page_ptr_id, service_name, landin
 -- Data for Name: find_a_supplier_findasupplierapp; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.find_a_supplier_findasupplierapp (page_ptr_id, service_name) FROM stdin;
+COPY public.find_a_supplier_findasupplierapp (page_ptr_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7937,7 +7560,7 @@ COPY public.find_a_supplier_findasupplierapp (page_ptr_id, service_name) FROM st
 -- Data for Name: find_a_supplier_industryarticlepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.find_a_supplier_industryarticlepage (page_ptr_id, body, body_en_gb, body_de, body_ja, body_ru, body_zh_hans, body_fr, body_es, body_pt, body_pt_br, body_ar, author_name, author_name_en_gb, author_name_de, author_name_ja, author_name_ru, author_name_zh_hans, author_name_fr, author_name_es, author_name_pt, author_name_pt_br, author_name_ar, job_title, job_title_en_gb, job_title_de, job_title_ja, job_title_ru, job_title_zh_hans, job_title_fr, job_title_es, job_title_pt, job_title_pt_br, job_title_ar, date, date_en_gb, date_de, date_ja, date_ru, date_zh_hans, date_fr, date_es, date_pt, date_pt_br, date_ar, introduction_title, introduction_title_ar, introduction_title_de, introduction_title_en_gb, introduction_title_es, introduction_title_fr, introduction_title_ja, introduction_title_pt, introduction_title_pt_br, introduction_title_ru, introduction_title_zh_hans, breadcrumbs_label, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_pt_br, breadcrumbs_label_ru, breadcrumbs_label_zh_hans, call_to_action_text, call_to_action_text_ar, call_to_action_text_de, call_to_action_text_en_gb, call_to_action_text_es, call_to_action_text_fr, call_to_action_text_ja, call_to_action_text_pt, call_to_action_text_pt_br, call_to_action_text_ru, call_to_action_text_zh_hans, proposition_text, proposition_text_ar, proposition_text_de, proposition_text_en_gb, proposition_text_es, proposition_text_fr, proposition_text_ja, proposition_text_pt, proposition_text_pt_br, proposition_text_ru, proposition_text_zh_hans, show_table_of_content, back_to_home_link_text, back_to_home_link_text_ar, back_to_home_link_text_de, back_to_home_link_text_en_gb, back_to_home_link_text_es, back_to_home_link_text_fr, back_to_home_link_text_ja, back_to_home_link_text_pt, back_to_home_link_text_pt_br, back_to_home_link_text_ru, back_to_home_link_text_zh_hans, social_share_title, social_share_title_ar, social_share_title_de, social_share_title_en_gb, social_share_title_es, social_share_title_fr, social_share_title_ja, social_share_title_pt, social_share_title_pt_br, social_share_title_ru, social_share_title_zh_hans, service_name) FROM stdin;
+COPY public.find_a_supplier_industryarticlepage (page_ptr_id, body, body_en_gb, body_de, body_ja, body_zh_hans, body_fr, body_es, body_pt, body_ar, author_name, author_name_en_gb, author_name_de, author_name_ja, author_name_zh_hans, author_name_fr, author_name_es, author_name_pt, author_name_ar, job_title, job_title_en_gb, job_title_de, job_title_ja, job_title_zh_hans, job_title_fr, job_title_es, job_title_pt, job_title_ar, date, date_en_gb, date_de, date_ja, date_zh_hans, date_fr, date_es, date_pt, date_ar, introduction_title, introduction_title_ar, introduction_title_de, introduction_title_en_gb, introduction_title_es, introduction_title_fr, introduction_title_ja, introduction_title_pt, introduction_title_zh_hans, breadcrumbs_label, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_zh_hans, call_to_action_text, call_to_action_text_ar, call_to_action_text_de, call_to_action_text_en_gb, call_to_action_text_es, call_to_action_text_fr, call_to_action_text_ja, call_to_action_text_pt, call_to_action_text_zh_hans, proposition_text, proposition_text_ar, proposition_text_de, proposition_text_en_gb, proposition_text_es, proposition_text_fr, proposition_text_ja, proposition_text_pt, proposition_text_zh_hans, show_table_of_content, back_to_home_link_text, back_to_home_link_text_ar, back_to_home_link_text_de, back_to_home_link_text_en_gb, back_to_home_link_text_es, back_to_home_link_text_fr, back_to_home_link_text_ja, back_to_home_link_text_pt, back_to_home_link_text_zh_hans, social_share_title, social_share_title_ar, social_share_title_de, social_share_title_en_gb, social_share_title_es, social_share_title_fr, social_share_title_ja, social_share_title_pt, social_share_title_zh_hans, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7945,7 +7568,7 @@ COPY public.find_a_supplier_industryarticlepage (page_ptr_id, body, body_en_gb, 
 -- Data for Name: find_a_supplier_industrycontactpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.find_a_supplier_industrycontactpage (page_ptr_id, introduction_text, introduction_text_en_gb, introduction_text_de, introduction_text_ja, introduction_text_ru, introduction_text_zh_hans, introduction_text_fr, introduction_text_es, introduction_text_pt, introduction_text_pt_br, introduction_text_ar, submit_button_text, submit_button_text_en_gb, submit_button_text_de, submit_button_text_ja, submit_button_text_ru, submit_button_text_zh_hans, submit_button_text_fr, submit_button_text_es, submit_button_text_pt, submit_button_text_pt_br, submit_button_text_ar, success_message_text, success_message_text_en_gb, success_message_text_de, success_message_text_ja, success_message_text_ru, success_message_text_zh_hans, success_message_text_fr, success_message_text_es, success_message_text_pt, success_message_text_pt_br, success_message_text_ar, success_back_link_text, success_back_link_text_en_gb, success_back_link_text_de, success_back_link_text_ja, success_back_link_text_ru, success_back_link_text_zh_hans, success_back_link_text_fr, success_back_link_text_es, success_back_link_text_pt, success_back_link_text_pt_br, success_back_link_text_ar, breadcrumbs_label, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_pt_br, breadcrumbs_label_ru, breadcrumbs_label_zh_hans, service_name) FROM stdin;
+COPY public.find_a_supplier_industrycontactpage (page_ptr_id, introduction_text, introduction_text_en_gb, introduction_text_de, introduction_text_ja, introduction_text_zh_hans, introduction_text_fr, introduction_text_es, introduction_text_pt, introduction_text_ar, submit_button_text, submit_button_text_en_gb, submit_button_text_de, submit_button_text_ja, submit_button_text_zh_hans, submit_button_text_fr, submit_button_text_es, submit_button_text_pt, submit_button_text_ar, success_message_text, success_message_text_en_gb, success_message_text_de, success_message_text_ja, success_message_text_zh_hans, success_message_text_fr, success_message_text_es, success_message_text_pt, success_message_text_ar, success_back_link_text, success_back_link_text_en_gb, success_back_link_text_de, success_back_link_text_ja, success_back_link_text_zh_hans, success_back_link_text_fr, success_back_link_text_es, success_back_link_text_pt, success_back_link_text_ar, breadcrumbs_label, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_zh_hans, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7953,7 +7576,7 @@ COPY public.find_a_supplier_industrycontactpage (page_ptr_id, introduction_text,
 -- Data for Name: find_a_supplier_industrylandingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.find_a_supplier_industrylandingpage (page_ptr_id, proposition_text, proposition_text_en_gb, proposition_text_de, proposition_text_ja, proposition_text_ru, proposition_text_zh_hans, proposition_text_fr, proposition_text_es, proposition_text_pt, proposition_text_pt_br, proposition_text_ar, call_to_action_text, call_to_action_text_en_gb, call_to_action_text_de, call_to_action_text_ja, call_to_action_text_ru, call_to_action_text_zh_hans, call_to_action_text_fr, call_to_action_text_es, call_to_action_text_pt, call_to_action_text_pt_br, call_to_action_text_ar, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_ru, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_pt_br, breadcrumbs_label_ar, hero_image_id, hero_title, hero_title_ar, hero_title_de, hero_title_en_gb, hero_title_es, hero_title_fr, hero_title_ja, hero_title_pt, hero_title_pt_br, hero_title_ru, hero_title_zh_hans, mobile_hero_image_id, more_industries_title, more_industries_title_ar, more_industries_title_de, more_industries_title_en_gb, more_industries_title_es, more_industries_title_fr, more_industries_title_ja, more_industries_title_pt, more_industries_title_pt_br, more_industries_title_ru, more_industries_title_zh_hans, hero_image_caption, hero_image_caption_ar, hero_image_caption_de, hero_image_caption_en_gb, hero_image_caption_es, hero_image_caption_fr, hero_image_caption_ja, hero_image_caption_pt, hero_image_caption_pt_br, hero_image_caption_ru, hero_image_caption_zh_hans, service_name) FROM stdin;
+COPY public.find_a_supplier_industrylandingpage (page_ptr_id, proposition_text, proposition_text_en_gb, proposition_text_de, proposition_text_ja, proposition_text_zh_hans, proposition_text_fr, proposition_text_es, proposition_text_pt, proposition_text_ar, call_to_action_text, call_to_action_text_en_gb, call_to_action_text_de, call_to_action_text_ja, call_to_action_text_zh_hans, call_to_action_text_fr, call_to_action_text_es, call_to_action_text_pt, call_to_action_text_ar, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, hero_image_id, hero_title, hero_title_ar, hero_title_de, hero_title_en_gb, hero_title_es, hero_title_fr, hero_title_ja, hero_title_pt, hero_title_zh_hans, mobile_hero_image_id, more_industries_title, more_industries_title_ar, more_industries_title_de, more_industries_title_en_gb, more_industries_title_es, more_industries_title_fr, more_industries_title_ja, more_industries_title_pt, more_industries_title_zh_hans, hero_image_caption, hero_image_caption_ar, hero_image_caption_de, hero_image_caption_en_gb, hero_image_caption_es, hero_image_caption_fr, hero_image_caption_ja, hero_image_caption_pt, hero_image_caption_zh_hans, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7961,7 +7584,7 @@ COPY public.find_a_supplier_industrylandingpage (page_ptr_id, proposition_text, 
 -- Data for Name: find_a_supplier_industrypage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.find_a_supplier_industrypage (page_ptr_id, hero_text, hero_text_en_gb, hero_text_de, hero_text_ja, hero_text_zh_hans, hero_text_fr, hero_text_es, hero_text_pt, hero_text_pt_br, hero_text_ar, introduction_text, introduction_text_en_gb, introduction_text_de, introduction_text_ja, introduction_text_zh_hans, introduction_text_fr, introduction_text_es, introduction_text_pt, introduction_text_pt_br, introduction_text_ar, introduction_column_one_text, introduction_column_one_text_en_gb, introduction_column_one_text_de, introduction_column_one_text_ja, introduction_column_one_text_zh_hans, introduction_column_one_text_fr, introduction_column_one_text_es, introduction_column_one_text_pt, introduction_column_one_text_pt_br, introduction_column_one_text_ar, introduction_column_two_text, introduction_column_two_text_en_gb, introduction_column_two_text_de, introduction_column_two_text_ja, introduction_column_two_text_zh_hans, introduction_column_two_text_fr, introduction_column_two_text_es, introduction_column_two_text_pt, introduction_column_two_text_pt_br, introduction_column_two_text_ar, introduction_column_three_text, introduction_column_three_text_en_gb, introduction_column_three_text_de, introduction_column_three_text_ja, introduction_column_three_text_zh_hans, introduction_column_three_text_fr, introduction_column_three_text_es, introduction_column_three_text_pt, introduction_column_three_text_pt_br, introduction_column_three_text_ar, hero_image_id, hero_text_ru, introduction_column_one_text_ru, introduction_column_three_text_ru, introduction_column_two_text_ru, introduction_text_ru, introduction_column_one_icon_id, introduction_column_three_icon_id, introduction_column_two_icon_id, company_list_call_to_action_text, company_list_call_to_action_text_ar, company_list_call_to_action_text_de, company_list_call_to_action_text_en_gb, company_list_call_to_action_text_es, company_list_call_to_action_text_fr, company_list_call_to_action_text_ja, company_list_call_to_action_text_pt, company_list_call_to_action_text_pt_br, company_list_call_to_action_text_ru, company_list_call_to_action_text_zh_hans, company_list_text, company_list_text_ar, company_list_text_de, company_list_text_en_gb, company_list_text_es, company_list_text_fr, company_list_text_ja, company_list_text_pt, company_list_text_pt_br, company_list_text_ru, company_list_text_zh_hans, company_list_search_input_placeholder_text, company_list_search_input_placeholder_text_ar, company_list_search_input_placeholder_text_de, company_list_search_input_placeholder_text_en_gb, company_list_search_input_placeholder_text_es, company_list_search_input_placeholder_text_fr, company_list_search_input_placeholder_text_ja, company_list_search_input_placeholder_text_pt, company_list_search_input_placeholder_text_pt_br, company_list_search_input_placeholder_text_ru, company_list_search_input_placeholder_text_zh_hans, breadcrumbs_label, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_pt_br, breadcrumbs_label_ru, breadcrumbs_label_zh_hans, introduction_call_to_action_button_text, introduction_call_to_action_button_text_ar, introduction_call_to_action_button_text_de, introduction_call_to_action_button_text_en_gb, introduction_call_to_action_button_text_es, introduction_call_to_action_button_text_fr, introduction_call_to_action_button_text_ja, introduction_call_to_action_button_text_pt, introduction_call_to_action_button_text_pt_br, introduction_call_to_action_button_text_ru, introduction_call_to_action_button_text_zh_hans, summary_image_id, search_filter_sector, search_filter_text, mobile_hero_image_id, search_filter_showcase_only, hero_image_caption, hero_image_caption_ar, hero_image_caption_de, hero_image_caption_en_gb, hero_image_caption_es, hero_image_caption_fr, hero_image_caption_ja, hero_image_caption_pt, hero_image_caption_pt_br, hero_image_caption_ru, hero_image_caption_zh_hans, introduction_title, introduction_title_ar, introduction_title_de, introduction_title_en_gb, introduction_title_es, introduction_title_fr, introduction_title_ja, introduction_title_pt, introduction_title_pt_br, introduction_title_ru, introduction_title_zh_hans, show_on_homepage, show_on_industries_showcase_page, service_name) FROM stdin;
+COPY public.find_a_supplier_industrypage (page_ptr_id, hero_text, hero_text_en_gb, hero_text_de, hero_text_ja, hero_text_zh_hans, hero_text_fr, hero_text_es, hero_text_pt, hero_text_ar, introduction_text, introduction_text_en_gb, introduction_text_de, introduction_text_ja, introduction_text_zh_hans, introduction_text_fr, introduction_text_es, introduction_text_pt, introduction_text_ar, introduction_column_one_text, introduction_column_one_text_en_gb, introduction_column_one_text_de, introduction_column_one_text_ja, introduction_column_one_text_zh_hans, introduction_column_one_text_fr, introduction_column_one_text_es, introduction_column_one_text_pt, introduction_column_one_text_ar, introduction_column_two_text, introduction_column_two_text_en_gb, introduction_column_two_text_de, introduction_column_two_text_ja, introduction_column_two_text_zh_hans, introduction_column_two_text_fr, introduction_column_two_text_es, introduction_column_two_text_pt, introduction_column_two_text_ar, introduction_column_three_text, introduction_column_three_text_en_gb, introduction_column_three_text_de, introduction_column_three_text_ja, introduction_column_three_text_zh_hans, introduction_column_three_text_fr, introduction_column_three_text_es, introduction_column_three_text_pt, introduction_column_three_text_ar, hero_image_id, introduction_column_one_icon_id, introduction_column_three_icon_id, introduction_column_two_icon_id, company_list_call_to_action_text, company_list_call_to_action_text_ar, company_list_call_to_action_text_de, company_list_call_to_action_text_en_gb, company_list_call_to_action_text_es, company_list_call_to_action_text_fr, company_list_call_to_action_text_ja, company_list_call_to_action_text_pt, company_list_call_to_action_text_zh_hans, company_list_text, company_list_text_ar, company_list_text_de, company_list_text_en_gb, company_list_text_es, company_list_text_fr, company_list_text_ja, company_list_text_pt, company_list_text_zh_hans, company_list_search_input_placeholder_text, company_list_search_input_placeholder_text_ar, company_list_search_input_placeholder_text_de, company_list_search_input_placeholder_text_en_gb, company_list_search_input_placeholder_text_es, company_list_search_input_placeholder_text_fr, company_list_search_input_placeholder_text_ja, company_list_search_input_placeholder_text_pt, company_list_search_input_placeholder_text_zh_hans, breadcrumbs_label, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_zh_hans, introduction_call_to_action_button_text, introduction_call_to_action_button_text_ar, introduction_call_to_action_button_text_de, introduction_call_to_action_button_text_en_gb, introduction_call_to_action_button_text_es, introduction_call_to_action_button_text_fr, introduction_call_to_action_button_text_ja, introduction_call_to_action_button_text_pt, introduction_call_to_action_button_text_zh_hans, summary_image_id, search_filter_sector, search_filter_text, mobile_hero_image_id, search_filter_showcase_only, hero_image_caption, hero_image_caption_ar, hero_image_caption_de, hero_image_caption_en_gb, hero_image_caption_es, hero_image_caption_fr, hero_image_caption_ja, hero_image_caption_pt, hero_image_caption_zh_hans, introduction_title, introduction_title_ar, introduction_title_de, introduction_title_en_gb, introduction_title_es, introduction_title_fr, introduction_title_ja, introduction_title_pt, introduction_title_zh_hans, show_on_homepage, show_on_industries_showcase_page, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7969,7 +7592,7 @@ COPY public.find_a_supplier_industrypage (page_ptr_id, hero_text, hero_text_en_g
 -- Data for Name: find_a_supplier_industrypagearticlesummary; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.find_a_supplier_industrypagearticlesummary (id, sort_order, industry_name, title, body, image_id, page_id, page_ar_id, page_de_id, page_en_gb_id, page_es_id, page_fr_id, page_ja_id, page_pt_id, page_pt_br_id, page_ru_id, page_zh_hans_id, video_media_id) FROM stdin;
+COPY public.find_a_supplier_industrypagearticlesummary (id, sort_order, industry_name, title, body, image_id, page_id, page_ar_id, page_de_id, page_en_gb_id, page_es_id, page_fr_id, page_ja_id, page_pt_id, page_zh_hans_id, video_media_id) FROM stdin;
 \.
 
 
@@ -7977,7 +7600,7 @@ COPY public.find_a_supplier_industrypagearticlesummary (id, sort_order, industry
 -- Data for Name: find_a_supplier_landingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.find_a_supplier_landingpage (page_ptr_id, hero_text, hero_text_en_gb, hero_text_de, hero_text_ja, hero_text_ru, hero_text_zh_hans, hero_text_fr, hero_text_es, hero_text_pt, hero_text_pt_br, hero_text_ar, search_field_placeholder, search_field_placeholder_en_gb, search_field_placeholder_de, search_field_placeholder_ja, search_field_placeholder_ru, search_field_placeholder_zh_hans, search_field_placeholder_fr, search_field_placeholder_es, search_field_placeholder_pt, search_field_placeholder_pt_br, search_field_placeholder_ar, search_button_text, search_button_text_en_gb, search_button_text_de, search_button_text_ja, search_button_text_ru, search_button_text_zh_hans, search_button_text_fr, search_button_text_es, search_button_text_pt, search_button_text_pt_br, search_button_text_ar, proposition_text, proposition_text_en_gb, proposition_text_de, proposition_text_ja, proposition_text_ru, proposition_text_zh_hans, proposition_text_fr, proposition_text_es, proposition_text_pt, proposition_text_pt_br, proposition_text_ar, call_to_action_text, call_to_action_text_en_gb, call_to_action_text_de, call_to_action_text_ja, call_to_action_text_ru, call_to_action_text_zh_hans, call_to_action_text_fr, call_to_action_text_es, call_to_action_text_pt, call_to_action_text_pt_br, call_to_action_text_ar, industries_list_text, industries_list_text_en_gb, industries_list_text_de, industries_list_text_ja, industries_list_text_ru, industries_list_text_zh_hans, industries_list_text_fr, industries_list_text_es, industries_list_text_pt, industries_list_text_pt_br, industries_list_text_ar, industries_list_call_to_action_text, industries_list_call_to_action_text_en_gb, industries_list_call_to_action_text_de, industries_list_call_to_action_text_ja, industries_list_call_to_action_text_ru, industries_list_call_to_action_text_zh_hans, industries_list_call_to_action_text_fr, industries_list_call_to_action_text_es, industries_list_call_to_action_text_pt, industries_list_call_to_action_text_pt_br, industries_list_call_to_action_text_ar, services_list_text, services_list_text_en_gb, services_list_text_de, services_list_text_ja, services_list_text_ru, services_list_text_zh_hans, services_list_text_fr, services_list_text_es, services_list_text_pt, services_list_text_pt_br, services_list_text_ar, services_column_one, services_column_one_en_gb, services_column_one_de, services_column_one_ja, services_column_one_ru, services_column_one_zh_hans, services_column_one_fr, services_column_one_es, services_column_one_pt, services_column_one_pt_br, services_column_one_ar, services_column_two, services_column_two_en_gb, services_column_two_de, services_column_two_ja, services_column_two_ru, services_column_two_zh_hans, services_column_two_fr, services_column_two_es, services_column_two_pt, services_column_two_pt_br, services_column_two_ar, services_column_three, services_column_three_en_gb, services_column_three_de, services_column_three_ja, services_column_three_ru, services_column_three_zh_hans, services_column_three_fr, services_column_three_es, services_column_three_pt, services_column_three_pt_br, services_column_three_ar, services_column_four, services_column_four_en_gb, services_column_four_de, services_column_four_ja, services_column_four_ru, services_column_four_zh_hans, services_column_four_fr, services_column_four_es, services_column_four_pt, services_column_four_pt_br, services_column_four_ar, hero_image_id, services_column_four_icon_id, services_column_four_icon_ar_id, services_column_four_icon_de_id, services_column_four_icon_en_gb_id, services_column_four_icon_es_id, services_column_four_icon_fr_id, services_column_four_icon_ja_id, services_column_four_icon_pt_id, services_column_four_icon_pt_br_id, services_column_four_icon_ru_id, services_column_four_icon_zh_hans_id, services_column_one_icon_id, services_column_one_icon_ar_id, services_column_one_icon_de_id, services_column_one_icon_en_gb_id, services_column_one_icon_es_id, services_column_one_icon_fr_id, services_column_one_icon_ja_id, services_column_one_icon_pt_id, services_column_one_icon_pt_br_id, services_column_one_icon_ru_id, services_column_one_icon_zh_hans_id, services_column_three_icon_id, services_column_three_icon_ar_id, services_column_three_icon_de_id, services_column_three_icon_en_gb_id, services_column_three_icon_es_id, services_column_three_icon_fr_id, services_column_three_icon_ja_id, services_column_three_icon_pt_id, services_column_three_icon_pt_br_id, services_column_three_icon_ru_id, services_column_three_icon_zh_hans_id, services_column_two_icon_id, services_column_two_icon_ar_id, services_column_two_icon_de_id, services_column_two_icon_en_gb_id, services_column_two_icon_es_id, services_column_two_icon_fr_id, services_column_two_icon_ja_id, services_column_two_icon_pt_id, services_column_two_icon_pt_br_id, services_column_two_icon_ru_id, services_column_two_icon_zh_hans_id, breadcrumbs_label, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_pt_br, breadcrumbs_label_ru, breadcrumbs_label_zh_hans, mobile_hero_image_id, hero_image_caption, hero_image_caption_ar, hero_image_caption_de, hero_image_caption_en_gb, hero_image_caption_es, hero_image_caption_fr, hero_image_caption_ja, hero_image_caption_pt, hero_image_caption_pt_br, hero_image_caption_ru, hero_image_caption_zh_hans, service_name) FROM stdin;
+COPY public.find_a_supplier_landingpage (page_ptr_id, hero_text, hero_text_en_gb, hero_text_de, hero_text_ja, hero_text_zh_hans, hero_text_fr, hero_text_es, hero_text_pt, hero_text_ar, search_field_placeholder, search_field_placeholder_en_gb, search_field_placeholder_de, search_field_placeholder_ja, search_field_placeholder_zh_hans, search_field_placeholder_fr, search_field_placeholder_es, search_field_placeholder_pt, search_field_placeholder_ar, search_button_text, search_button_text_en_gb, search_button_text_de, search_button_text_ja, search_button_text_zh_hans, search_button_text_fr, search_button_text_es, search_button_text_pt, search_button_text_ar, proposition_text, proposition_text_en_gb, proposition_text_de, proposition_text_ja, proposition_text_zh_hans, proposition_text_fr, proposition_text_es, proposition_text_pt, proposition_text_ar, call_to_action_text, call_to_action_text_en_gb, call_to_action_text_de, call_to_action_text_ja, call_to_action_text_zh_hans, call_to_action_text_fr, call_to_action_text_es, call_to_action_text_pt, call_to_action_text_ar, industries_list_text, industries_list_text_en_gb, industries_list_text_de, industries_list_text_ja, industries_list_text_zh_hans, industries_list_text_fr, industries_list_text_es, industries_list_text_pt, industries_list_text_ar, industries_list_call_to_action_text, industries_list_call_to_action_text_en_gb, industries_list_call_to_action_text_de, industries_list_call_to_action_text_ja, industries_list_call_to_action_text_zh_hans, industries_list_call_to_action_text_fr, industries_list_call_to_action_text_es, industries_list_call_to_action_text_pt, industries_list_call_to_action_text_ar, services_list_text, services_list_text_en_gb, services_list_text_de, services_list_text_ja, services_list_text_zh_hans, services_list_text_fr, services_list_text_es, services_list_text_pt, services_list_text_ar, services_column_one, services_column_one_en_gb, services_column_one_de, services_column_one_ja, services_column_one_zh_hans, services_column_one_fr, services_column_one_es, services_column_one_pt, services_column_one_ar, services_column_two, services_column_two_en_gb, services_column_two_de, services_column_two_ja, services_column_two_zh_hans, services_column_two_fr, services_column_two_es, services_column_two_pt, services_column_two_ar, services_column_three, services_column_three_en_gb, services_column_three_de, services_column_three_ja, services_column_three_zh_hans, services_column_three_fr, services_column_three_es, services_column_three_pt, services_column_three_ar, services_column_four, services_column_four_en_gb, services_column_four_de, services_column_four_ja, services_column_four_zh_hans, services_column_four_fr, services_column_four_es, services_column_four_pt, services_column_four_ar, hero_image_id, services_column_four_icon_id, services_column_four_icon_ar_id, services_column_four_icon_de_id, services_column_four_icon_en_gb_id, services_column_four_icon_es_id, services_column_four_icon_fr_id, services_column_four_icon_ja_id, services_column_four_icon_pt_id, services_column_four_icon_zh_hans_id, services_column_one_icon_id, services_column_one_icon_ar_id, services_column_one_icon_de_id, services_column_one_icon_en_gb_id, services_column_one_icon_es_id, services_column_one_icon_fr_id, services_column_one_icon_ja_id, services_column_one_icon_pt_id, services_column_one_icon_zh_hans_id, services_column_three_icon_id, services_column_three_icon_ar_id, services_column_three_icon_de_id, services_column_three_icon_en_gb_id, services_column_three_icon_es_id, services_column_three_icon_fr_id, services_column_three_icon_ja_id, services_column_three_icon_pt_id, services_column_three_icon_zh_hans_id, services_column_two_icon_id, services_column_two_icon_ar_id, services_column_two_icon_de_id, services_column_two_icon_en_gb_id, services_column_two_icon_es_id, services_column_two_icon_fr_id, services_column_two_icon_ja_id, services_column_two_icon_pt_id, services_column_two_icon_zh_hans_id, breadcrumbs_label, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_zh_hans, mobile_hero_image_id, hero_image_caption, hero_image_caption_ar, hero_image_caption_de, hero_image_caption_en_gb, hero_image_caption_es, hero_image_caption_fr, hero_image_caption_ja, hero_image_caption_pt, hero_image_caption_zh_hans, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -7985,7 +7608,7 @@ COPY public.find_a_supplier_landingpage (page_ptr_id, hero_text, hero_text_en_gb
 -- Data for Name: find_a_supplier_landingpagearticlesummary; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.find_a_supplier_landingpagearticlesummary (id, sort_order, industry_name, title, body, image_id, page_id, page_ar_id, page_de_id, page_en_gb_id, page_es_id, page_fr_id, page_ja_id, page_pt_id, page_pt_br_id, page_ru_id, page_zh_hans_id, video_media_id) FROM stdin;
+COPY public.find_a_supplier_landingpagearticlesummary (id, sort_order, industry_name, title, body, image_id, page_id, page_ar_id, page_de_id, page_en_gb_id, page_es_id, page_fr_id, page_ja_id, page_pt_id, page_zh_hans_id, video_media_id) FROM stdin;
 \.
 
 
@@ -7993,7 +7616,7 @@ COPY public.find_a_supplier_landingpagearticlesummary (id, sort_order, industry_
 -- Data for Name: great_international_greatinternationalapp; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_greatinternationalapp (page_ptr_id, service_name) FROM stdin;
+COPY public.great_international_greatinternationalapp (page_ptr_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8001,7 +7624,7 @@ COPY public.great_international_greatinternationalapp (page_ptr_id, service_name
 -- Data for Name: great_international_internationalarticlelistingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_internationalarticlelistingpage (page_ptr_id, service_name, landing_page_title, hero_teaser, list_teaser, hero_image_id, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_pt_br_id, hero_image_ru_id, hero_image_zh_hans_id, hero_teaser_ar, hero_teaser_de, hero_teaser_en_gb, hero_teaser_es, hero_teaser_fr, hero_teaser_ja, hero_teaser_pt, hero_teaser_pt_br, hero_teaser_ru, hero_teaser_zh_hans, landing_page_title_ar, landing_page_title_de, landing_page_title_en_gb, landing_page_title_es, landing_page_title_fr, landing_page_title_ja, landing_page_title_pt, landing_page_title_pt_br, landing_page_title_ru, landing_page_title_zh_hans, list_teaser_ar, list_teaser_de, list_teaser_en_gb, list_teaser_es, list_teaser_fr, list_teaser_ja, list_teaser_pt, list_teaser_pt_br, list_teaser_ru, list_teaser_zh_hans) FROM stdin;
+COPY public.great_international_internationalarticlelistingpage (page_ptr_id, service_name, landing_page_title, hero_teaser, list_teaser, hero_image_id, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, hero_teaser_ar, hero_teaser_de, hero_teaser_en_gb, hero_teaser_es, hero_teaser_fr, hero_teaser_ja, hero_teaser_pt, hero_teaser_zh_hans, landing_page_title_ar, landing_page_title_de, landing_page_title_en_gb, landing_page_title_es, landing_page_title_fr, landing_page_title_ja, landing_page_title_pt, landing_page_title_zh_hans, list_teaser_ar, list_teaser_de, list_teaser_en_gb, list_teaser_es, list_teaser_fr, list_teaser_ja, list_teaser_pt, list_teaser_zh_hans, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8017,7 +7640,7 @@ COPY public.great_international_internationalarticlelistingpage_tags (id, intern
 -- Data for Name: great_international_internationalarticlepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_internationalarticlepage (page_ptr_id, service_name, article_title, article_teaser, article_body_text, article_image_id, related_page_one_id, related_page_three_id, related_page_two_id, article_subheading, article_body_text_ar, article_body_text_de, article_body_text_en_gb, article_body_text_es, article_body_text_fr, article_body_text_ja, article_body_text_pt, article_body_text_pt_br, article_body_text_ru, article_body_text_zh_hans, article_image_ar_id, article_image_de_id, article_image_en_gb_id, article_image_es_id, article_image_fr_id, article_image_ja_id, article_image_pt_id, article_image_pt_br_id, article_image_ru_id, article_image_zh_hans_id, article_subheading_ar, article_subheading_de, article_subheading_en_gb, article_subheading_es, article_subheading_fr, article_subheading_ja, article_subheading_pt, article_subheading_pt_br, article_subheading_ru, article_subheading_zh_hans, article_teaser_ar, article_teaser_de, article_teaser_en_gb, article_teaser_es, article_teaser_fr, article_teaser_ja, article_teaser_pt, article_teaser_pt_br, article_teaser_ru, article_teaser_zh_hans, article_title_ar, article_title_de, article_title_en_gb, article_title_es, article_title_fr, article_title_ja, article_title_pt, article_title_pt_br, article_title_ru, article_title_zh_hans, related_page_one_ar_id, related_page_one_de_id, related_page_one_en_gb_id, related_page_one_es_id, related_page_one_fr_id, related_page_one_ja_id, related_page_one_pt_id, related_page_one_pt_br_id, related_page_one_ru_id, related_page_one_zh_hans_id, related_page_three_ar_id, related_page_three_de_id, related_page_three_en_gb_id, related_page_three_es_id, related_page_three_fr_id, related_page_three_ja_id, related_page_three_pt_id, related_page_three_pt_br_id, related_page_three_ru_id, related_page_three_zh_hans_id, related_page_two_ar_id, related_page_two_de_id, related_page_two_en_gb_id, related_page_two_es_id, related_page_two_fr_id, related_page_two_ja_id, related_page_two_pt_id, related_page_two_pt_br_id, related_page_two_ru_id, related_page_two_zh_hans_id) FROM stdin;
+COPY public.great_international_internationalarticlepage (page_ptr_id, service_name, article_title, article_teaser, article_body_text, article_image_id, related_page_one_id, related_page_three_id, related_page_two_id, article_subheading, article_body_text_ar, article_body_text_de, article_body_text_en_gb, article_body_text_es, article_body_text_fr, article_body_text_ja, article_body_text_pt, article_body_text_zh_hans, article_image_ar_id, article_image_de_id, article_image_en_gb_id, article_image_es_id, article_image_fr_id, article_image_ja_id, article_image_pt_id, article_image_zh_hans_id, article_subheading_ar, article_subheading_de, article_subheading_en_gb, article_subheading_es, article_subheading_fr, article_subheading_ja, article_subheading_pt, article_subheading_zh_hans, article_teaser_ar, article_teaser_de, article_teaser_en_gb, article_teaser_es, article_teaser_fr, article_teaser_ja, article_teaser_pt, article_teaser_zh_hans, article_title_ar, article_title_de, article_title_en_gb, article_title_es, article_title_fr, article_title_ja, article_title_pt, article_title_zh_hans, related_page_one_ar_id, related_page_one_de_id, related_page_one_en_gb_id, related_page_one_es_id, related_page_one_fr_id, related_page_one_ja_id, related_page_one_pt_id, related_page_one_zh_hans_id, related_page_three_ar_id, related_page_three_de_id, related_page_three_en_gb_id, related_page_three_es_id, related_page_three_fr_id, related_page_three_ja_id, related_page_three_pt_id, related_page_three_zh_hans_id, related_page_two_ar_id, related_page_two_de_id, related_page_two_en_gb_id, related_page_two_es_id, related_page_two_fr_id, related_page_two_ja_id, related_page_two_pt_id, related_page_two_zh_hans_id, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8033,7 +7656,7 @@ COPY public.great_international_internationalarticlepage_tags (id, international
 -- Data for Name: great_international_internationalcampaignpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_internationalcampaignpage (page_ptr_id, service_name, campaign_heading, section_one_heading, section_one_intro, selling_point_one_heading, selling_point_one_content, selling_point_two_heading, selling_point_two_content, selling_point_three_heading, selling_point_three_content, section_one_contact_button_url, section_one_contact_button_text, section_two_heading, section_two_intro, section_two_contact_button_url, section_two_contact_button_text, related_content_heading, related_content_intro, cta_box_message, cta_box_button_url, cta_box_button_text, campaign_hero_image_id, related_page_one_id, related_page_three_id, related_page_two_id, section_one_image_id, section_two_image_id, selling_point_one_icon_id, selling_point_three_icon_id, selling_point_two_icon_id, campaign_teaser, campaign_subheading, campaign_heading_ar, campaign_heading_de, campaign_heading_en_gb, campaign_heading_es, campaign_heading_fr, campaign_heading_ja, campaign_heading_pt, campaign_heading_pt_br, campaign_heading_ru, campaign_heading_zh_hans, campaign_hero_image_ar_id, campaign_hero_image_de_id, campaign_hero_image_en_gb_id, campaign_hero_image_es_id, campaign_hero_image_fr_id, campaign_hero_image_ja_id, campaign_hero_image_pt_id, campaign_hero_image_pt_br_id, campaign_hero_image_ru_id, campaign_hero_image_zh_hans_id, campaign_subheading_ar, campaign_subheading_de, campaign_subheading_en_gb, campaign_subheading_es, campaign_subheading_fr, campaign_subheading_ja, campaign_subheading_pt, campaign_subheading_pt_br, campaign_subheading_ru, campaign_subheading_zh_hans, campaign_teaser_ar, campaign_teaser_de, campaign_teaser_en_gb, campaign_teaser_es, campaign_teaser_fr, campaign_teaser_ja, campaign_teaser_pt, campaign_teaser_pt_br, campaign_teaser_ru, campaign_teaser_zh_hans, cta_box_button_text_ar, cta_box_button_text_de, cta_box_button_text_en_gb, cta_box_button_text_es, cta_box_button_text_fr, cta_box_button_text_ja, cta_box_button_text_pt, cta_box_button_text_pt_br, cta_box_button_text_ru, cta_box_button_text_zh_hans, cta_box_button_url_ar, cta_box_button_url_de, cta_box_button_url_en_gb, cta_box_button_url_es, cta_box_button_url_fr, cta_box_button_url_ja, cta_box_button_url_pt, cta_box_button_url_pt_br, cta_box_button_url_ru, cta_box_button_url_zh_hans, cta_box_message_ar, cta_box_message_de, cta_box_message_en_gb, cta_box_message_es, cta_box_message_fr, cta_box_message_ja, cta_box_message_pt, cta_box_message_pt_br, cta_box_message_ru, cta_box_message_zh_hans, related_content_heading_ar, related_content_heading_de, related_content_heading_en_gb, related_content_heading_es, related_content_heading_fr, related_content_heading_ja, related_content_heading_pt, related_content_heading_pt_br, related_content_heading_ru, related_content_heading_zh_hans, related_content_intro_ar, related_content_intro_de, related_content_intro_en_gb, related_content_intro_es, related_content_intro_fr, related_content_intro_ja, related_content_intro_pt, related_content_intro_pt_br, related_content_intro_ru, related_content_intro_zh_hans, related_page_one_ar_id, related_page_one_de_id, related_page_one_en_gb_id, related_page_one_es_id, related_page_one_fr_id, related_page_one_ja_id, related_page_one_pt_id, related_page_one_pt_br_id, related_page_one_ru_id, related_page_one_zh_hans_id, related_page_three_ar_id, related_page_three_de_id, related_page_three_en_gb_id, related_page_three_es_id, related_page_three_fr_id, related_page_three_ja_id, related_page_three_pt_id, related_page_three_pt_br_id, related_page_three_ru_id, related_page_three_zh_hans_id, related_page_two_ar_id, related_page_two_de_id, related_page_two_en_gb_id, related_page_two_es_id, related_page_two_fr_id, related_page_two_ja_id, related_page_two_pt_id, related_page_two_pt_br_id, related_page_two_ru_id, related_page_two_zh_hans_id, section_one_contact_button_text_ar, section_one_contact_button_text_de, section_one_contact_button_text_en_gb, section_one_contact_button_text_es, section_one_contact_button_text_fr, section_one_contact_button_text_ja, section_one_contact_button_text_pt, section_one_contact_button_text_pt_br, section_one_contact_button_text_ru, section_one_contact_button_text_zh_hans, section_one_contact_button_url_ar, section_one_contact_button_url_de, section_one_contact_button_url_en_gb, section_one_contact_button_url_es, section_one_contact_button_url_fr, section_one_contact_button_url_ja, section_one_contact_button_url_pt, section_one_contact_button_url_pt_br, section_one_contact_button_url_ru, section_one_contact_button_url_zh_hans, section_one_heading_ar, section_one_heading_de, section_one_heading_en_gb, section_one_heading_es, section_one_heading_fr, section_one_heading_ja, section_one_heading_pt, section_one_heading_pt_br, section_one_heading_ru, section_one_heading_zh_hans, section_one_image_ar_id, section_one_image_de_id, section_one_image_en_gb_id, section_one_image_es_id, section_one_image_fr_id, section_one_image_ja_id, section_one_image_pt_id, section_one_image_pt_br_id, section_one_image_ru_id, section_one_image_zh_hans_id, section_one_intro_ar, section_one_intro_de, section_one_intro_en_gb, section_one_intro_es, section_one_intro_fr, section_one_intro_ja, section_one_intro_pt, section_one_intro_pt_br, section_one_intro_ru, section_one_intro_zh_hans, section_two_contact_button_text_ar, section_two_contact_button_text_de, section_two_contact_button_text_en_gb, section_two_contact_button_text_es, section_two_contact_button_text_fr, section_two_contact_button_text_ja, section_two_contact_button_text_pt, section_two_contact_button_text_pt_br, section_two_contact_button_text_ru, section_two_contact_button_text_zh_hans, section_two_contact_button_url_ar, section_two_contact_button_url_de, section_two_contact_button_url_en_gb, section_two_contact_button_url_es, section_two_contact_button_url_fr, section_two_contact_button_url_ja, section_two_contact_button_url_pt, section_two_contact_button_url_pt_br, section_two_contact_button_url_ru, section_two_contact_button_url_zh_hans, section_two_heading_ar, section_two_heading_de, section_two_heading_en_gb, section_two_heading_es, section_two_heading_fr, section_two_heading_ja, section_two_heading_pt, section_two_heading_pt_br, section_two_heading_ru, section_two_heading_zh_hans, section_two_image_ar_id, section_two_image_de_id, section_two_image_en_gb_id, section_two_image_es_id, section_two_image_fr_id, section_two_image_ja_id, section_two_image_pt_id, section_two_image_pt_br_id, section_two_image_ru_id, section_two_image_zh_hans_id, section_two_intro_ar, section_two_intro_de, section_two_intro_en_gb, section_two_intro_es, section_two_intro_fr, section_two_intro_ja, section_two_intro_pt, section_two_intro_pt_br, section_two_intro_ru, section_two_intro_zh_hans, selling_point_one_content_ar, selling_point_one_content_de, selling_point_one_content_en_gb, selling_point_one_content_es, selling_point_one_content_fr, selling_point_one_content_ja, selling_point_one_content_pt, selling_point_one_content_pt_br, selling_point_one_content_ru, selling_point_one_content_zh_hans, selling_point_one_heading_ar, selling_point_one_heading_de, selling_point_one_heading_en_gb, selling_point_one_heading_es, selling_point_one_heading_fr, selling_point_one_heading_ja, selling_point_one_heading_pt, selling_point_one_heading_pt_br, selling_point_one_heading_ru, selling_point_one_heading_zh_hans, selling_point_one_icon_ar_id, selling_point_one_icon_de_id, selling_point_one_icon_en_gb_id, selling_point_one_icon_es_id, selling_point_one_icon_fr_id, selling_point_one_icon_ja_id, selling_point_one_icon_pt_id, selling_point_one_icon_pt_br_id, selling_point_one_icon_ru_id, selling_point_one_icon_zh_hans_id, selling_point_three_content_ar, selling_point_three_content_de, selling_point_three_content_en_gb, selling_point_three_content_es, selling_point_three_content_fr, selling_point_three_content_ja, selling_point_three_content_pt, selling_point_three_content_pt_br, selling_point_three_content_ru, selling_point_three_content_zh_hans, selling_point_three_heading_ar, selling_point_three_heading_de, selling_point_three_heading_en_gb, selling_point_three_heading_es, selling_point_three_heading_fr, selling_point_three_heading_ja, selling_point_three_heading_pt, selling_point_three_heading_pt_br, selling_point_three_heading_ru, selling_point_three_heading_zh_hans, selling_point_three_icon_ar_id, selling_point_three_icon_de_id, selling_point_three_icon_en_gb_id, selling_point_three_icon_es_id, selling_point_three_icon_fr_id, selling_point_three_icon_ja_id, selling_point_three_icon_pt_id, selling_point_three_icon_pt_br_id, selling_point_three_icon_ru_id, selling_point_three_icon_zh_hans_id, selling_point_two_content_ar, selling_point_two_content_de, selling_point_two_content_en_gb, selling_point_two_content_es, selling_point_two_content_fr, selling_point_two_content_ja, selling_point_two_content_pt, selling_point_two_content_pt_br, selling_point_two_content_ru, selling_point_two_content_zh_hans, selling_point_two_heading_ar, selling_point_two_heading_de, selling_point_two_heading_en_gb, selling_point_two_heading_es, selling_point_two_heading_fr, selling_point_two_heading_ja, selling_point_two_heading_pt, selling_point_two_heading_pt_br, selling_point_two_heading_ru, selling_point_two_heading_zh_hans, selling_point_two_icon_ar_id, selling_point_two_icon_de_id, selling_point_two_icon_en_gb_id, selling_point_two_icon_es_id, selling_point_two_icon_fr_id, selling_point_two_icon_ja_id, selling_point_two_icon_pt_id, selling_point_two_icon_pt_br_id, selling_point_two_icon_ru_id, selling_point_two_icon_zh_hans_id) FROM stdin;
+COPY public.great_international_internationalcampaignpage (page_ptr_id, service_name, campaign_heading, section_one_heading, section_one_intro, selling_point_one_heading, selling_point_one_content, selling_point_two_heading, selling_point_two_content, selling_point_three_heading, selling_point_three_content, section_one_contact_button_url, section_one_contact_button_text, section_two_heading, section_two_intro, section_two_contact_button_url, section_two_contact_button_text, related_content_heading, related_content_intro, cta_box_message, cta_box_button_url, cta_box_button_text, campaign_hero_image_id, related_page_one_id, related_page_three_id, related_page_two_id, section_one_image_id, section_two_image_id, selling_point_one_icon_id, selling_point_three_icon_id, selling_point_two_icon_id, campaign_teaser, campaign_subheading, campaign_heading_ar, campaign_heading_de, campaign_heading_en_gb, campaign_heading_es, campaign_heading_fr, campaign_heading_ja, campaign_heading_pt, campaign_heading_zh_hans, campaign_hero_image_ar_id, campaign_hero_image_de_id, campaign_hero_image_en_gb_id, campaign_hero_image_es_id, campaign_hero_image_fr_id, campaign_hero_image_ja_id, campaign_hero_image_pt_id, campaign_hero_image_zh_hans_id, campaign_subheading_ar, campaign_subheading_de, campaign_subheading_en_gb, campaign_subheading_es, campaign_subheading_fr, campaign_subheading_ja, campaign_subheading_pt, campaign_subheading_zh_hans, campaign_teaser_ar, campaign_teaser_de, campaign_teaser_en_gb, campaign_teaser_es, campaign_teaser_fr, campaign_teaser_ja, campaign_teaser_pt, campaign_teaser_zh_hans, cta_box_button_text_ar, cta_box_button_text_de, cta_box_button_text_en_gb, cta_box_button_text_es, cta_box_button_text_fr, cta_box_button_text_ja, cta_box_button_text_pt, cta_box_button_text_zh_hans, cta_box_button_url_ar, cta_box_button_url_de, cta_box_button_url_en_gb, cta_box_button_url_es, cta_box_button_url_fr, cta_box_button_url_ja, cta_box_button_url_pt, cta_box_button_url_zh_hans, cta_box_message_ar, cta_box_message_de, cta_box_message_en_gb, cta_box_message_es, cta_box_message_fr, cta_box_message_ja, cta_box_message_pt, cta_box_message_zh_hans, related_content_heading_ar, related_content_heading_de, related_content_heading_en_gb, related_content_heading_es, related_content_heading_fr, related_content_heading_ja, related_content_heading_pt, related_content_heading_zh_hans, related_content_intro_ar, related_content_intro_de, related_content_intro_en_gb, related_content_intro_es, related_content_intro_fr, related_content_intro_ja, related_content_intro_pt, related_content_intro_zh_hans, related_page_one_ar_id, related_page_one_de_id, related_page_one_en_gb_id, related_page_one_es_id, related_page_one_fr_id, related_page_one_ja_id, related_page_one_pt_id, related_page_one_zh_hans_id, related_page_three_ar_id, related_page_three_de_id, related_page_three_en_gb_id, related_page_three_es_id, related_page_three_fr_id, related_page_three_ja_id, related_page_three_pt_id, related_page_three_zh_hans_id, related_page_two_ar_id, related_page_two_de_id, related_page_two_en_gb_id, related_page_two_es_id, related_page_two_fr_id, related_page_two_ja_id, related_page_two_pt_id, related_page_two_zh_hans_id, section_one_contact_button_text_ar, section_one_contact_button_text_de, section_one_contact_button_text_en_gb, section_one_contact_button_text_es, section_one_contact_button_text_fr, section_one_contact_button_text_ja, section_one_contact_button_text_pt, section_one_contact_button_text_zh_hans, section_one_contact_button_url_ar, section_one_contact_button_url_de, section_one_contact_button_url_en_gb, section_one_contact_button_url_es, section_one_contact_button_url_fr, section_one_contact_button_url_ja, section_one_contact_button_url_pt, section_one_contact_button_url_zh_hans, section_one_heading_ar, section_one_heading_de, section_one_heading_en_gb, section_one_heading_es, section_one_heading_fr, section_one_heading_ja, section_one_heading_pt, section_one_heading_zh_hans, section_one_image_ar_id, section_one_image_de_id, section_one_image_en_gb_id, section_one_image_es_id, section_one_image_fr_id, section_one_image_ja_id, section_one_image_pt_id, section_one_image_zh_hans_id, section_one_intro_ar, section_one_intro_de, section_one_intro_en_gb, section_one_intro_es, section_one_intro_fr, section_one_intro_ja, section_one_intro_pt, section_one_intro_zh_hans, section_two_contact_button_text_ar, section_two_contact_button_text_de, section_two_contact_button_text_en_gb, section_two_contact_button_text_es, section_two_contact_button_text_fr, section_two_contact_button_text_ja, section_two_contact_button_text_pt, section_two_contact_button_text_zh_hans, section_two_contact_button_url_ar, section_two_contact_button_url_de, section_two_contact_button_url_en_gb, section_two_contact_button_url_es, section_two_contact_button_url_fr, section_two_contact_button_url_ja, section_two_contact_button_url_pt, section_two_contact_button_url_zh_hans, section_two_heading_ar, section_two_heading_de, section_two_heading_en_gb, section_two_heading_es, section_two_heading_fr, section_two_heading_ja, section_two_heading_pt, section_two_heading_zh_hans, section_two_image_ar_id, section_two_image_de_id, section_two_image_en_gb_id, section_two_image_es_id, section_two_image_fr_id, section_two_image_ja_id, section_two_image_pt_id, section_two_image_zh_hans_id, section_two_intro_ar, section_two_intro_de, section_two_intro_en_gb, section_two_intro_es, section_two_intro_fr, section_two_intro_ja, section_two_intro_pt, section_two_intro_zh_hans, selling_point_one_content_ar, selling_point_one_content_de, selling_point_one_content_en_gb, selling_point_one_content_es, selling_point_one_content_fr, selling_point_one_content_ja, selling_point_one_content_pt, selling_point_one_content_zh_hans, selling_point_one_heading_ar, selling_point_one_heading_de, selling_point_one_heading_en_gb, selling_point_one_heading_es, selling_point_one_heading_fr, selling_point_one_heading_ja, selling_point_one_heading_pt, selling_point_one_heading_zh_hans, selling_point_one_icon_ar_id, selling_point_one_icon_de_id, selling_point_one_icon_en_gb_id, selling_point_one_icon_es_id, selling_point_one_icon_fr_id, selling_point_one_icon_ja_id, selling_point_one_icon_pt_id, selling_point_one_icon_zh_hans_id, selling_point_three_content_ar, selling_point_three_content_de, selling_point_three_content_en_gb, selling_point_three_content_es, selling_point_three_content_fr, selling_point_three_content_ja, selling_point_three_content_pt, selling_point_three_content_zh_hans, selling_point_three_heading_ar, selling_point_three_heading_de, selling_point_three_heading_en_gb, selling_point_three_heading_es, selling_point_three_heading_fr, selling_point_three_heading_ja, selling_point_three_heading_pt, selling_point_three_heading_zh_hans, selling_point_three_icon_ar_id, selling_point_three_icon_de_id, selling_point_three_icon_en_gb_id, selling_point_three_icon_es_id, selling_point_three_icon_fr_id, selling_point_three_icon_ja_id, selling_point_three_icon_pt_id, selling_point_three_icon_zh_hans_id, selling_point_two_content_ar, selling_point_two_content_de, selling_point_two_content_en_gb, selling_point_two_content_es, selling_point_two_content_fr, selling_point_two_content_ja, selling_point_two_content_pt, selling_point_two_content_zh_hans, selling_point_two_heading_ar, selling_point_two_heading_de, selling_point_two_heading_en_gb, selling_point_two_heading_es, selling_point_two_heading_fr, selling_point_two_heading_ja, selling_point_two_heading_pt, selling_point_two_heading_zh_hans, selling_point_two_icon_ar_id, selling_point_two_icon_de_id, selling_point_two_icon_en_gb_id, selling_point_two_icon_es_id, selling_point_two_icon_fr_id, selling_point_two_icon_ja_id, selling_point_two_icon_pt_id, selling_point_two_icon_zh_hans_id, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8049,7 +7672,7 @@ COPY public.great_international_internationalcampaignpage_tags (id, internationa
 -- Data for Name: great_international_internationalcuratedtopiclandingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_internationalcuratedtopiclandingpage (page_ptr_id, service_name, display_title, teaser, feature_section_heading, feature_one_heading, feature_one_content, feature_two_heading, feature_two_content, feature_one_image_id, feature_two_image_id, hero_image_id, feature_five_heading, feature_five_image_id, feature_five_url, feature_four_heading, feature_four_image_id, feature_four_url, feature_three_heading, feature_three_image_id, feature_three_url, display_title_ar, display_title_de, display_title_en_gb, display_title_es, display_title_fr, display_title_ja, display_title_pt, display_title_pt_br, display_title_ru, display_title_zh_hans, feature_five_heading_ar, feature_five_heading_de, feature_five_heading_en_gb, feature_five_heading_es, feature_five_heading_fr, feature_five_heading_ja, feature_five_heading_pt, feature_five_heading_pt_br, feature_five_heading_ru, feature_five_heading_zh_hans, feature_five_image_ar_id, feature_five_image_de_id, feature_five_image_en_gb_id, feature_five_image_es_id, feature_five_image_fr_id, feature_five_image_ja_id, feature_five_image_pt_id, feature_five_image_pt_br_id, feature_five_image_ru_id, feature_five_image_zh_hans_id, feature_five_url_ar, feature_five_url_de, feature_five_url_en_gb, feature_five_url_es, feature_five_url_fr, feature_five_url_ja, feature_five_url_pt, feature_five_url_pt_br, feature_five_url_ru, feature_five_url_zh_hans, feature_four_heading_ar, feature_four_heading_de, feature_four_heading_en_gb, feature_four_heading_es, feature_four_heading_fr, feature_four_heading_ja, feature_four_heading_pt, feature_four_heading_pt_br, feature_four_heading_ru, feature_four_heading_zh_hans, feature_four_image_ar_id, feature_four_image_de_id, feature_four_image_en_gb_id, feature_four_image_es_id, feature_four_image_fr_id, feature_four_image_ja_id, feature_four_image_pt_id, feature_four_image_pt_br_id, feature_four_image_ru_id, feature_four_image_zh_hans_id, feature_four_url_ar, feature_four_url_de, feature_four_url_en_gb, feature_four_url_es, feature_four_url_fr, feature_four_url_ja, feature_four_url_pt, feature_four_url_pt_br, feature_four_url_ru, feature_four_url_zh_hans, feature_one_content_ar, feature_one_content_de, feature_one_content_en_gb, feature_one_content_es, feature_one_content_fr, feature_one_content_ja, feature_one_content_pt, feature_one_content_pt_br, feature_one_content_ru, feature_one_content_zh_hans, feature_one_heading_ar, feature_one_heading_de, feature_one_heading_en_gb, feature_one_heading_es, feature_one_heading_fr, feature_one_heading_ja, feature_one_heading_pt, feature_one_heading_pt_br, feature_one_heading_ru, feature_one_heading_zh_hans, feature_one_image_ar_id, feature_one_image_de_id, feature_one_image_en_gb_id, feature_one_image_es_id, feature_one_image_fr_id, feature_one_image_ja_id, feature_one_image_pt_id, feature_one_image_pt_br_id, feature_one_image_ru_id, feature_one_image_zh_hans_id, feature_section_heading_ar, feature_section_heading_de, feature_section_heading_en_gb, feature_section_heading_es, feature_section_heading_fr, feature_section_heading_ja, feature_section_heading_pt, feature_section_heading_pt_br, feature_section_heading_ru, feature_section_heading_zh_hans, feature_three_heading_ar, feature_three_heading_de, feature_three_heading_en_gb, feature_three_heading_es, feature_three_heading_fr, feature_three_heading_ja, feature_three_heading_pt, feature_three_heading_pt_br, feature_three_heading_ru, feature_three_heading_zh_hans, feature_three_image_ar_id, feature_three_image_de_id, feature_three_image_en_gb_id, feature_three_image_es_id, feature_three_image_fr_id, feature_three_image_ja_id, feature_three_image_pt_id, feature_three_image_pt_br_id, feature_three_image_ru_id, feature_three_image_zh_hans_id, feature_three_url_ar, feature_three_url_de, feature_three_url_en_gb, feature_three_url_es, feature_three_url_fr, feature_three_url_ja, feature_three_url_pt, feature_three_url_pt_br, feature_three_url_ru, feature_three_url_zh_hans, feature_two_content_ar, feature_two_content_de, feature_two_content_en_gb, feature_two_content_es, feature_two_content_fr, feature_two_content_ja, feature_two_content_pt, feature_two_content_pt_br, feature_two_content_ru, feature_two_content_zh_hans, feature_two_heading_ar, feature_two_heading_de, feature_two_heading_en_gb, feature_two_heading_es, feature_two_heading_fr, feature_two_heading_ja, feature_two_heading_pt, feature_two_heading_pt_br, feature_two_heading_ru, feature_two_heading_zh_hans, feature_two_image_ar_id, feature_two_image_de_id, feature_two_image_en_gb_id, feature_two_image_es_id, feature_two_image_fr_id, feature_two_image_ja_id, feature_two_image_pt_id, feature_two_image_pt_br_id, feature_two_image_ru_id, feature_two_image_zh_hans_id, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_pt_br_id, hero_image_ru_id, hero_image_zh_hans_id, teaser_ar, teaser_de, teaser_en_gb, teaser_es, teaser_fr, teaser_ja, teaser_pt, teaser_pt_br, teaser_ru, teaser_zh_hans) FROM stdin;
+COPY public.great_international_internationalcuratedtopiclandingpage (page_ptr_id, service_name, display_title, teaser, feature_section_heading, feature_one_heading, feature_one_content, feature_two_heading, feature_two_content, feature_one_image_id, feature_two_image_id, hero_image_id, feature_five_heading, feature_five_image_id, feature_five_url, feature_four_heading, feature_four_image_id, feature_four_url, feature_three_heading, feature_three_image_id, feature_three_url, display_title_ar, display_title_de, display_title_en_gb, display_title_es, display_title_fr, display_title_ja, display_title_pt, display_title_zh_hans, feature_five_heading_ar, feature_five_heading_de, feature_five_heading_en_gb, feature_five_heading_es, feature_five_heading_fr, feature_five_heading_ja, feature_five_heading_pt, feature_five_heading_zh_hans, feature_five_image_ar_id, feature_five_image_de_id, feature_five_image_en_gb_id, feature_five_image_es_id, feature_five_image_fr_id, feature_five_image_ja_id, feature_five_image_pt_id, feature_five_image_zh_hans_id, feature_five_url_ar, feature_five_url_de, feature_five_url_en_gb, feature_five_url_es, feature_five_url_fr, feature_five_url_ja, feature_five_url_pt, feature_five_url_zh_hans, feature_four_heading_ar, feature_four_heading_de, feature_four_heading_en_gb, feature_four_heading_es, feature_four_heading_fr, feature_four_heading_ja, feature_four_heading_pt, feature_four_heading_zh_hans, feature_four_image_ar_id, feature_four_image_de_id, feature_four_image_en_gb_id, feature_four_image_es_id, feature_four_image_fr_id, feature_four_image_ja_id, feature_four_image_pt_id, feature_four_image_zh_hans_id, feature_four_url_ar, feature_four_url_de, feature_four_url_en_gb, feature_four_url_es, feature_four_url_fr, feature_four_url_ja, feature_four_url_pt, feature_four_url_zh_hans, feature_one_content_ar, feature_one_content_de, feature_one_content_en_gb, feature_one_content_es, feature_one_content_fr, feature_one_content_ja, feature_one_content_pt, feature_one_content_zh_hans, feature_one_heading_ar, feature_one_heading_de, feature_one_heading_en_gb, feature_one_heading_es, feature_one_heading_fr, feature_one_heading_ja, feature_one_heading_pt, feature_one_heading_zh_hans, feature_one_image_ar_id, feature_one_image_de_id, feature_one_image_en_gb_id, feature_one_image_es_id, feature_one_image_fr_id, feature_one_image_ja_id, feature_one_image_pt_id, feature_one_image_zh_hans_id, feature_section_heading_ar, feature_section_heading_de, feature_section_heading_en_gb, feature_section_heading_es, feature_section_heading_fr, feature_section_heading_ja, feature_section_heading_pt, feature_section_heading_zh_hans, feature_three_heading_ar, feature_three_heading_de, feature_three_heading_en_gb, feature_three_heading_es, feature_three_heading_fr, feature_three_heading_ja, feature_three_heading_pt, feature_three_heading_zh_hans, feature_three_image_ar_id, feature_three_image_de_id, feature_three_image_en_gb_id, feature_three_image_es_id, feature_three_image_fr_id, feature_three_image_ja_id, feature_three_image_pt_id, feature_three_image_zh_hans_id, feature_three_url_ar, feature_three_url_de, feature_three_url_en_gb, feature_three_url_es, feature_three_url_fr, feature_three_url_ja, feature_three_url_pt, feature_three_url_zh_hans, feature_two_content_ar, feature_two_content_de, feature_two_content_en_gb, feature_two_content_es, feature_two_content_fr, feature_two_content_ja, feature_two_content_pt, feature_two_content_zh_hans, feature_two_heading_ar, feature_two_heading_de, feature_two_heading_en_gb, feature_two_heading_es, feature_two_heading_fr, feature_two_heading_ja, feature_two_heading_pt, feature_two_heading_zh_hans, feature_two_image_ar_id, feature_two_image_de_id, feature_two_image_en_gb_id, feature_two_image_es_id, feature_two_image_fr_id, feature_two_image_ja_id, feature_two_image_pt_id, feature_two_image_zh_hans_id, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, teaser_ar, teaser_de, teaser_en_gb, teaser_es, teaser_fr, teaser_ja, teaser_pt, teaser_zh_hans, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8065,7 +7688,7 @@ COPY public.great_international_internationalcuratedtopiclandingpage_tags (id, i
 -- Data for Name: great_international_internationalguidelandingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_internationalguidelandingpage (page_ptr_id, service_name, display_title, teaser, section_one_content, section_one_image_caption, section_two_heading, section_two_teaser, section_two_button_text, section_two_button_url, guides_section_heading, hero_image_id, section_one_image_id, section_two_image_id, display_title_ar, display_title_de, display_title_en_gb, display_title_es, display_title_fr, display_title_ja, display_title_pt, display_title_pt_br, display_title_ru, display_title_zh_hans, guides_section_heading_ar, guides_section_heading_de, guides_section_heading_en_gb, guides_section_heading_es, guides_section_heading_fr, guides_section_heading_ja, guides_section_heading_pt, guides_section_heading_pt_br, guides_section_heading_ru, guides_section_heading_zh_hans, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_pt_br_id, hero_image_ru_id, hero_image_zh_hans_id, section_one_content_ar, section_one_content_de, section_one_content_en_gb, section_one_content_es, section_one_content_fr, section_one_content_ja, section_one_content_pt, section_one_content_pt_br, section_one_content_ru, section_one_content_zh_hans, section_one_image_ar_id, section_one_image_caption_ar, section_one_image_caption_de, section_one_image_caption_en_gb, section_one_image_caption_es, section_one_image_caption_fr, section_one_image_caption_ja, section_one_image_caption_pt, section_one_image_caption_pt_br, section_one_image_caption_ru, section_one_image_caption_zh_hans, section_one_image_de_id, section_one_image_en_gb_id, section_one_image_es_id, section_one_image_fr_id, section_one_image_ja_id, section_one_image_pt_id, section_one_image_pt_br_id, section_one_image_ru_id, section_one_image_zh_hans_id, section_two_button_text_ar, section_two_button_text_de, section_two_button_text_en_gb, section_two_button_text_es, section_two_button_text_fr, section_two_button_text_ja, section_two_button_text_pt, section_two_button_text_pt_br, section_two_button_text_ru, section_two_button_text_zh_hans, section_two_button_url_ar, section_two_button_url_de, section_two_button_url_en_gb, section_two_button_url_es, section_two_button_url_fr, section_two_button_url_ja, section_two_button_url_pt, section_two_button_url_pt_br, section_two_button_url_ru, section_two_button_url_zh_hans, section_two_heading_ar, section_two_heading_de, section_two_heading_en_gb, section_two_heading_es, section_two_heading_fr, section_two_heading_ja, section_two_heading_pt, section_two_heading_pt_br, section_two_heading_ru, section_two_heading_zh_hans, section_two_image_ar_id, section_two_image_de_id, section_two_image_en_gb_id, section_two_image_es_id, section_two_image_fr_id, section_two_image_ja_id, section_two_image_pt_id, section_two_image_pt_br_id, section_two_image_ru_id, section_two_image_zh_hans_id, section_two_teaser_ar, section_two_teaser_de, section_two_teaser_en_gb, section_two_teaser_es, section_two_teaser_fr, section_two_teaser_ja, section_two_teaser_pt, section_two_teaser_pt_br, section_two_teaser_ru, section_two_teaser_zh_hans, teaser_ar, teaser_de, teaser_en_gb, teaser_es, teaser_fr, teaser_ja, teaser_pt, teaser_pt_br, teaser_ru, teaser_zh_hans) FROM stdin;
+COPY public.great_international_internationalguidelandingpage (page_ptr_id, service_name, display_title, teaser, section_one_content, section_one_image_caption, section_two_heading, section_two_teaser, section_two_button_text, section_two_button_url, guides_section_heading, hero_image_id, section_one_image_id, section_two_image_id, display_title_ar, display_title_de, display_title_en_gb, display_title_es, display_title_fr, display_title_ja, display_title_pt, display_title_zh_hans, guides_section_heading_ar, guides_section_heading_de, guides_section_heading_en_gb, guides_section_heading_es, guides_section_heading_fr, guides_section_heading_ja, guides_section_heading_pt, guides_section_heading_zh_hans, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, section_one_content_ar, section_one_content_de, section_one_content_en_gb, section_one_content_es, section_one_content_fr, section_one_content_ja, section_one_content_pt, section_one_content_zh_hans, section_one_image_ar_id, section_one_image_caption_ar, section_one_image_caption_de, section_one_image_caption_en_gb, section_one_image_caption_es, section_one_image_caption_fr, section_one_image_caption_ja, section_one_image_caption_pt, section_one_image_caption_zh_hans, section_one_image_de_id, section_one_image_en_gb_id, section_one_image_es_id, section_one_image_fr_id, section_one_image_ja_id, section_one_image_pt_id, section_one_image_zh_hans_id, section_two_button_text_ar, section_two_button_text_de, section_two_button_text_en_gb, section_two_button_text_es, section_two_button_text_fr, section_two_button_text_ja, section_two_button_text_pt, section_two_button_text_zh_hans, section_two_button_url_ar, section_two_button_url_de, section_two_button_url_en_gb, section_two_button_url_es, section_two_button_url_fr, section_two_button_url_ja, section_two_button_url_pt, section_two_button_url_zh_hans, section_two_heading_ar, section_two_heading_de, section_two_heading_en_gb, section_two_heading_es, section_two_heading_fr, section_two_heading_ja, section_two_heading_pt, section_two_heading_zh_hans, section_two_image_ar_id, section_two_image_de_id, section_two_image_en_gb_id, section_two_image_es_id, section_two_image_fr_id, section_two_image_ja_id, section_two_image_pt_id, section_two_image_zh_hans_id, section_two_teaser_ar, section_two_teaser_de, section_two_teaser_en_gb, section_two_teaser_es, section_two_teaser_fr, section_two_teaser_ja, section_two_teaser_pt, section_two_teaser_zh_hans, teaser_ar, teaser_de, teaser_en_gb, teaser_es, teaser_fr, teaser_ja, teaser_pt, teaser_zh_hans, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8081,7 +7704,7 @@ COPY public.great_international_internationalguidelandingpage_tags (id, internat
 -- Data for Name: great_international_internationalhomepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_internationalhomepage (page_ptr_id, service_name, tariffs_title, tariffs_description, tariffs_link, news_title, tariffs_image_id, related_page_one_id, related_page_three_id, related_page_two_id, hero_cta_text, hero_image_id, hero_subtitle, hero_title, invest_content, invest_image_id, invest_title, study_in_uk_cta_text, tariffs_call_to_action_text, trade_content, trade_image_id, trade_title, visit_uk_cta_text, hero_cta_text_ar, hero_cta_text_de, hero_cta_text_en_gb, hero_cta_text_es, hero_cta_text_fr, hero_cta_text_ja, hero_cta_text_pt, hero_cta_text_pt_br, hero_cta_text_ru, hero_cta_text_zh_hans, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_pt_br_id, hero_image_ru_id, hero_image_zh_hans_id, hero_subtitle_ar, hero_subtitle_de, hero_subtitle_en_gb, hero_subtitle_es, hero_subtitle_fr, hero_subtitle_ja, hero_subtitle_pt, hero_subtitle_pt_br, hero_subtitle_ru, hero_subtitle_zh_hans, hero_title_ar, hero_title_de, hero_title_en_gb, hero_title_es, hero_title_fr, hero_title_ja, hero_title_pt, hero_title_pt_br, hero_title_ru, hero_title_zh_hans, invest_content_ar, invest_content_de, invest_content_en_gb, invest_content_es, invest_content_fr, invest_content_ja, invest_content_pt, invest_content_pt_br, invest_content_ru, invest_content_zh_hans, invest_image_ar_id, invest_image_de_id, invest_image_en_gb_id, invest_image_es_id, invest_image_fr_id, invest_image_ja_id, invest_image_pt_id, invest_image_pt_br_id, invest_image_ru_id, invest_image_zh_hans_id, invest_title_ar, invest_title_de, invest_title_en_gb, invest_title_es, invest_title_fr, invest_title_ja, invest_title_pt, invest_title_pt_br, invest_title_ru, invest_title_zh_hans, news_title_ar, news_title_de, news_title_en_gb, news_title_es, news_title_fr, news_title_ja, news_title_pt, news_title_pt_br, news_title_ru, news_title_zh_hans, related_page_one_ar_id, related_page_one_de_id, related_page_one_en_gb_id, related_page_one_es_id, related_page_one_fr_id, related_page_one_ja_id, related_page_one_pt_id, related_page_one_pt_br_id, related_page_one_ru_id, related_page_one_zh_hans_id, related_page_three_ar_id, related_page_three_de_id, related_page_three_en_gb_id, related_page_three_es_id, related_page_three_fr_id, related_page_three_ja_id, related_page_three_pt_id, related_page_three_pt_br_id, related_page_three_ru_id, related_page_three_zh_hans_id, related_page_two_ar_id, related_page_two_de_id, related_page_two_en_gb_id, related_page_two_es_id, related_page_two_fr_id, related_page_two_ja_id, related_page_two_pt_id, related_page_two_pt_br_id, related_page_two_ru_id, related_page_two_zh_hans_id, study_in_uk_cta_text_ar, study_in_uk_cta_text_de, study_in_uk_cta_text_en_gb, study_in_uk_cta_text_es, study_in_uk_cta_text_fr, study_in_uk_cta_text_ja, study_in_uk_cta_text_pt, study_in_uk_cta_text_pt_br, study_in_uk_cta_text_ru, study_in_uk_cta_text_zh_hans, tariffs_call_to_action_text_ar, tariffs_call_to_action_text_de, tariffs_call_to_action_text_en_gb, tariffs_call_to_action_text_es, tariffs_call_to_action_text_fr, tariffs_call_to_action_text_ja, tariffs_call_to_action_text_pt, tariffs_call_to_action_text_pt_br, tariffs_call_to_action_text_ru, tariffs_call_to_action_text_zh_hans, tariffs_description_ar, tariffs_description_de, tariffs_description_en_gb, tariffs_description_es, tariffs_description_fr, tariffs_description_ja, tariffs_description_pt, tariffs_description_pt_br, tariffs_description_ru, tariffs_description_zh_hans, tariffs_image_ar_id, tariffs_image_de_id, tariffs_image_en_gb_id, tariffs_image_es_id, tariffs_image_fr_id, tariffs_image_ja_id, tariffs_image_pt_id, tariffs_image_pt_br_id, tariffs_image_ru_id, tariffs_image_zh_hans_id, tariffs_link_ar, tariffs_link_de, tariffs_link_en_gb, tariffs_link_es, tariffs_link_fr, tariffs_link_ja, tariffs_link_pt, tariffs_link_pt_br, tariffs_link_ru, tariffs_link_zh_hans, tariffs_title_ar, tariffs_title_de, tariffs_title_en_gb, tariffs_title_es, tariffs_title_fr, tariffs_title_ja, tariffs_title_pt, tariffs_title_pt_br, tariffs_title_ru, tariffs_title_zh_hans, trade_content_ar, trade_content_de, trade_content_en_gb, trade_content_es, trade_content_fr, trade_content_ja, trade_content_pt, trade_content_pt_br, trade_content_ru, trade_content_zh_hans, trade_image_ar_id, trade_image_de_id, trade_image_en_gb_id, trade_image_es_id, trade_image_fr_id, trade_image_ja_id, trade_image_pt_id, trade_image_pt_br_id, trade_image_ru_id, trade_image_zh_hans_id, trade_title_ar, trade_title_de, trade_title_en_gb, trade_title_es, trade_title_fr, trade_title_ja, trade_title_pt, trade_title_pt_br, trade_title_ru, trade_title_zh_hans, visit_uk_cta_text_ar, visit_uk_cta_text_de, visit_uk_cta_text_en_gb, visit_uk_cta_text_es, visit_uk_cta_text_fr, visit_uk_cta_text_ja, visit_uk_cta_text_pt, visit_uk_cta_text_pt_br, visit_uk_cta_text_ru, visit_uk_cta_text_zh_hans, hero_cta_link, hero_cta_link_ar, hero_cta_link_de, hero_cta_link_en_gb, hero_cta_link_es, hero_cta_link_fr, hero_cta_link_ja, hero_cta_link_pt, hero_cta_link_pt_br, hero_cta_link_ru, hero_cta_link_zh_hans) FROM stdin;
+COPY public.great_international_internationalhomepage (page_ptr_id, service_name, tariffs_title, tariffs_description, tariffs_link, news_title, tariffs_image_id, related_page_one_id, related_page_three_id, related_page_two_id, hero_cta_text, hero_image_id, hero_subtitle, hero_title, invest_content, invest_image_id, invest_title, study_in_uk_cta_text, tariffs_call_to_action_text, trade_content, trade_image_id, trade_title, visit_uk_cta_text, hero_cta_text_ar, hero_cta_text_de, hero_cta_text_en_gb, hero_cta_text_es, hero_cta_text_fr, hero_cta_text_ja, hero_cta_text_pt, hero_cta_text_zh_hans, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, hero_subtitle_ar, hero_subtitle_de, hero_subtitle_en_gb, hero_subtitle_es, hero_subtitle_fr, hero_subtitle_ja, hero_subtitle_pt, hero_subtitle_zh_hans, hero_title_ar, hero_title_de, hero_title_en_gb, hero_title_es, hero_title_fr, hero_title_ja, hero_title_pt, hero_title_zh_hans, invest_content_ar, invest_content_de, invest_content_en_gb, invest_content_es, invest_content_fr, invest_content_ja, invest_content_pt, invest_content_zh_hans, invest_image_ar_id, invest_image_de_id, invest_image_en_gb_id, invest_image_es_id, invest_image_fr_id, invest_image_ja_id, invest_image_pt_id, invest_image_zh_hans_id, invest_title_ar, invest_title_de, invest_title_en_gb, invest_title_es, invest_title_fr, invest_title_ja, invest_title_pt, invest_title_zh_hans, news_title_ar, news_title_de, news_title_en_gb, news_title_es, news_title_fr, news_title_ja, news_title_pt, news_title_zh_hans, related_page_one_ar_id, related_page_one_de_id, related_page_one_en_gb_id, related_page_one_es_id, related_page_one_fr_id, related_page_one_ja_id, related_page_one_pt_id, related_page_one_zh_hans_id, related_page_three_ar_id, related_page_three_de_id, related_page_three_en_gb_id, related_page_three_es_id, related_page_three_fr_id, related_page_three_ja_id, related_page_three_pt_id, related_page_three_zh_hans_id, related_page_two_ar_id, related_page_two_de_id, related_page_two_en_gb_id, related_page_two_es_id, related_page_two_fr_id, related_page_two_ja_id, related_page_two_pt_id, related_page_two_zh_hans_id, study_in_uk_cta_text_ar, study_in_uk_cta_text_de, study_in_uk_cta_text_en_gb, study_in_uk_cta_text_es, study_in_uk_cta_text_fr, study_in_uk_cta_text_ja, study_in_uk_cta_text_pt, study_in_uk_cta_text_zh_hans, tariffs_call_to_action_text_ar, tariffs_call_to_action_text_de, tariffs_call_to_action_text_en_gb, tariffs_call_to_action_text_es, tariffs_call_to_action_text_fr, tariffs_call_to_action_text_ja, tariffs_call_to_action_text_pt, tariffs_call_to_action_text_zh_hans, tariffs_description_ar, tariffs_description_de, tariffs_description_en_gb, tariffs_description_es, tariffs_description_fr, tariffs_description_ja, tariffs_description_pt, tariffs_description_zh_hans, tariffs_image_ar_id, tariffs_image_de_id, tariffs_image_en_gb_id, tariffs_image_es_id, tariffs_image_fr_id, tariffs_image_ja_id, tariffs_image_pt_id, tariffs_image_zh_hans_id, tariffs_link_ar, tariffs_link_de, tariffs_link_en_gb, tariffs_link_es, tariffs_link_fr, tariffs_link_ja, tariffs_link_pt, tariffs_link_zh_hans, tariffs_title_ar, tariffs_title_de, tariffs_title_en_gb, tariffs_title_es, tariffs_title_fr, tariffs_title_ja, tariffs_title_pt, tariffs_title_zh_hans, trade_content_ar, trade_content_de, trade_content_en_gb, trade_content_es, trade_content_fr, trade_content_ja, trade_content_pt, trade_content_zh_hans, trade_image_ar_id, trade_image_de_id, trade_image_en_gb_id, trade_image_es_id, trade_image_fr_id, trade_image_ja_id, trade_image_pt_id, trade_image_zh_hans_id, trade_title_ar, trade_title_de, trade_title_en_gb, trade_title_es, trade_title_fr, trade_title_ja, trade_title_pt, trade_title_zh_hans, visit_uk_cta_text_ar, visit_uk_cta_text_de, visit_uk_cta_text_en_gb, visit_uk_cta_text_es, visit_uk_cta_text_fr, visit_uk_cta_text_ja, visit_uk_cta_text_pt, visit_uk_cta_text_zh_hans, hero_cta_link, hero_cta_link_ar, hero_cta_link_de, hero_cta_link_en_gb, hero_cta_link_es, hero_cta_link_fr, hero_cta_link_ja, hero_cta_link_pt, hero_cta_link_zh_hans, uses_tree_based_routing, featured_link_one_heading, featured_link_one_heading_ar, featured_link_one_heading_de, featured_link_one_heading_en_gb, featured_link_one_heading_es, featured_link_one_heading_fr, featured_link_one_heading_ja, featured_link_one_heading_pt, featured_link_one_heading_zh_hans, featured_link_one_image_id, featured_link_one_image_ar_id, featured_link_one_image_de_id, featured_link_one_image_en_gb_id, featured_link_one_image_es_id, featured_link_one_image_fr_id, featured_link_one_image_ja_id, featured_link_one_image_pt_id, featured_link_one_image_zh_hans_id, featured_link_three_heading, featured_link_three_heading_ar, featured_link_three_heading_de, featured_link_three_heading_en_gb, featured_link_three_heading_es, featured_link_three_heading_fr, featured_link_three_heading_ja, featured_link_three_heading_pt, featured_link_three_heading_zh_hans, featured_link_three_image_id, featured_link_three_image_ar_id, featured_link_three_image_de_id, featured_link_three_image_en_gb_id, featured_link_three_image_es_id, featured_link_three_image_fr_id, featured_link_three_image_ja_id, featured_link_three_image_pt_id, featured_link_three_image_zh_hans_id, featured_link_two_heading, featured_link_two_heading_ar, featured_link_two_heading_de, featured_link_two_heading_en_gb, featured_link_two_heading_es, featured_link_two_heading_fr, featured_link_two_heading_ja, featured_link_two_heading_pt, featured_link_two_heading_zh_hans, featured_link_two_image_id, featured_link_two_image_ar_id, featured_link_two_image_de_id, featured_link_two_image_en_gb_id, featured_link_two_image_es_id, featured_link_two_image_fr_id, featured_link_two_image_ja_id, featured_link_two_image_pt_id, featured_link_two_image_zh_hans_id, featured_links_summary, featured_links_summary_ar, featured_links_summary_de, featured_links_summary_en_gb, featured_links_summary_es, featured_links_summary_fr, featured_links_summary_ja, featured_links_summary_pt, featured_links_summary_zh_hans, featured_links_title, featured_links_title_ar, featured_links_title_de, featured_links_title_en_gb, featured_links_title_es, featured_links_title_fr, featured_links_title_ja, featured_links_title_pt, featured_links_title_zh_hans, section_two_heading, section_two_heading_ar, section_two_heading_de, section_two_heading_en_gb, section_two_heading_es, section_two_heading_fr, section_two_heading_ja, section_two_heading_pt, section_two_heading_zh_hans, section_two_subsection_five_body, section_two_subsection_five_body_ar, section_two_subsection_five_body_de, section_two_subsection_five_body_en_gb, section_two_subsection_five_body_es, section_two_subsection_five_body_fr, section_two_subsection_five_body_ja, section_two_subsection_five_body_pt, section_two_subsection_five_body_zh_hans, section_two_subsection_five_heading, section_two_subsection_five_heading_ar, section_two_subsection_five_heading_de, section_two_subsection_five_heading_en_gb, section_two_subsection_five_heading_es, section_two_subsection_five_heading_fr, section_two_subsection_five_heading_ja, section_two_subsection_five_heading_pt, section_two_subsection_five_heading_zh_hans, section_two_subsection_five_icon_id, section_two_subsection_five_icon_ar_id, section_two_subsection_five_icon_de_id, section_two_subsection_five_icon_en_gb_id, section_two_subsection_five_icon_es_id, section_two_subsection_five_icon_fr_id, section_two_subsection_five_icon_ja_id, section_two_subsection_five_icon_pt_id, section_two_subsection_five_icon_zh_hans_id, section_two_subsection_four_body, section_two_subsection_four_body_ar, section_two_subsection_four_body_de, section_two_subsection_four_body_en_gb, section_two_subsection_four_body_es, section_two_subsection_four_body_fr, section_two_subsection_four_body_ja, section_two_subsection_four_body_pt, section_two_subsection_four_body_zh_hans, section_two_subsection_four_heading, section_two_subsection_four_heading_ar, section_two_subsection_four_heading_de, section_two_subsection_four_heading_en_gb, section_two_subsection_four_heading_es, section_two_subsection_four_heading_fr, section_two_subsection_four_heading_ja, section_two_subsection_four_heading_pt, section_two_subsection_four_heading_zh_hans, section_two_subsection_four_icon_id, section_two_subsection_four_icon_ar_id, section_two_subsection_four_icon_de_id, section_two_subsection_four_icon_en_gb_id, section_two_subsection_four_icon_es_id, section_two_subsection_four_icon_fr_id, section_two_subsection_four_icon_ja_id, section_two_subsection_four_icon_pt_id, section_two_subsection_four_icon_zh_hans_id, section_two_subsection_one_body, section_two_subsection_one_body_ar, section_two_subsection_one_body_de, section_two_subsection_one_body_en_gb, section_two_subsection_one_body_es, section_two_subsection_one_body_fr, section_two_subsection_one_body_ja, section_two_subsection_one_body_pt, section_two_subsection_one_body_zh_hans, section_two_subsection_one_heading, section_two_subsection_one_heading_ar, section_two_subsection_one_heading_de, section_two_subsection_one_heading_en_gb, section_two_subsection_one_heading_es, section_two_subsection_one_heading_fr, section_two_subsection_one_heading_ja, section_two_subsection_one_heading_pt, section_two_subsection_one_heading_zh_hans, section_two_subsection_one_icon_id, section_two_subsection_one_icon_ar_id, section_two_subsection_one_icon_de_id, section_two_subsection_one_icon_en_gb_id, section_two_subsection_one_icon_es_id, section_two_subsection_one_icon_fr_id, section_two_subsection_one_icon_ja_id, section_two_subsection_one_icon_pt_id, section_two_subsection_one_icon_zh_hans_id, section_two_subsection_six_body, section_two_subsection_six_body_ar, section_two_subsection_six_body_de, section_two_subsection_six_body_en_gb, section_two_subsection_six_body_es, section_two_subsection_six_body_fr, section_two_subsection_six_body_ja, section_two_subsection_six_body_pt, section_two_subsection_six_body_zh_hans, section_two_subsection_six_heading, section_two_subsection_six_heading_ar, section_two_subsection_six_heading_de, section_two_subsection_six_heading_en_gb, section_two_subsection_six_heading_es, section_two_subsection_six_heading_fr, section_two_subsection_six_heading_ja, section_two_subsection_six_heading_pt, section_two_subsection_six_heading_zh_hans, section_two_subsection_six_icon_id, section_two_subsection_six_icon_ar_id, section_two_subsection_six_icon_de_id, section_two_subsection_six_icon_en_gb_id, section_two_subsection_six_icon_es_id, section_two_subsection_six_icon_fr_id, section_two_subsection_six_icon_ja_id, section_two_subsection_six_icon_pt_id, section_two_subsection_six_icon_zh_hans_id, section_two_subsection_three_body, section_two_subsection_three_body_ar, section_two_subsection_three_body_de, section_two_subsection_three_body_en_gb, section_two_subsection_three_body_es, section_two_subsection_three_body_fr, section_two_subsection_three_body_ja, section_two_subsection_three_body_pt, section_two_subsection_three_body_zh_hans, section_two_subsection_three_heading, section_two_subsection_three_heading_ar, section_two_subsection_three_heading_de, section_two_subsection_three_heading_en_gb, section_two_subsection_three_heading_es, section_two_subsection_three_heading_fr, section_two_subsection_three_heading_ja, section_two_subsection_three_heading_pt, section_two_subsection_three_heading_zh_hans, section_two_subsection_three_icon_id, section_two_subsection_three_icon_ar_id, section_two_subsection_three_icon_de_id, section_two_subsection_three_icon_en_gb_id, section_two_subsection_three_icon_es_id, section_two_subsection_three_icon_fr_id, section_two_subsection_three_icon_ja_id, section_two_subsection_three_icon_pt_id, section_two_subsection_three_icon_zh_hans_id, section_two_subsection_two_body, section_two_subsection_two_body_ar, section_two_subsection_two_body_de, section_two_subsection_two_body_en_gb, section_two_subsection_two_body_es, section_two_subsection_two_body_fr, section_two_subsection_two_body_ja, section_two_subsection_two_body_pt, section_two_subsection_two_body_zh_hans, section_two_subsection_two_heading, section_two_subsection_two_heading_ar, section_two_subsection_two_heading_de, section_two_subsection_two_heading_en_gb, section_two_subsection_two_heading_es, section_two_subsection_two_heading_fr, section_two_subsection_two_heading_ja, section_two_subsection_two_heading_pt, section_two_subsection_two_heading_zh_hans, section_two_subsection_two_icon_id, section_two_subsection_two_icon_ar_id, section_two_subsection_two_icon_de_id, section_two_subsection_two_icon_en_gb_id, section_two_subsection_two_icon_es_id, section_two_subsection_two_icon_fr_id, section_two_subsection_two_icon_ja_id, section_two_subsection_two_icon_pt_id, section_two_subsection_two_icon_zh_hans_id, section_two_teaser, section_two_teaser_ar, section_two_teaser_de, section_two_teaser_en_gb, section_two_teaser_es, section_two_teaser_fr, section_two_teaser_ja, section_two_teaser_pt, section_two_teaser_zh_hans) FROM stdin;
 \.
 
 
@@ -8089,7 +7712,7 @@ COPY public.great_international_internationalhomepage (page_ptr_id, service_name
 -- Data for Name: great_international_internationallocalisedfolderpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_internationallocalisedfolderpage (page_ptr_id, service_name) FROM stdin;
+COPY public.great_international_internationallocalisedfolderpage (page_ptr_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8097,7 +7720,7 @@ COPY public.great_international_internationallocalisedfolderpage (page_ptr_id, s
 -- Data for Name: great_international_internationalregionpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_internationalregionpage (page_ptr_id, service_name) FROM stdin;
+COPY public.great_international_internationalregionpage (page_ptr_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8113,7 +7736,7 @@ COPY public.great_international_internationalregionpage_tags (id, internationalr
 -- Data for Name: great_international_internationalsectorpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_internationalsectorpage (page_ptr_id, service_name, heading, sub_heading, heading_teaser, section_one_body, statistic_1_number, statistic_1_heading, statistic_1_smallprint, statistic_2_number, statistic_2_heading, statistic_2_smallprint, statistic_3_number, statistic_3_heading, statistic_3_smallprint, statistic_4_number, statistic_4_heading, statistic_4_smallprint, statistic_5_number, statistic_5_heading, statistic_5_smallprint, statistic_6_number, statistic_6_heading, statistic_6_smallprint, section_two_heading, section_two_teaser, section_two_subsection_one_heading, section_two_subsection_one_body, section_two_subsection_two_heading, section_two_subsection_two_body, section_two_subsection_three_heading, section_two_subsection_three_body, case_study_title, case_study_description, case_study_cta_text, section_three_heading, section_three_teaser, section_three_subsection_one_heading, section_three_subsection_one_teaser, section_three_subsection_one_body, section_three_subsection_two_heading, section_three_subsection_two_teaser, section_three_subsection_two_body, case_study_image_id, hero_image_id, related_page_one_id, related_page_three_id, related_page_two_id, section_one_image_id, section_two_subsection_one_icon_id, section_two_subsection_three_icon_id, section_two_subsection_two_icon_id, case_study_cta_page_id, section_one_image_caption, section_one_image_caption_company, case_study_cta_page_ar_id, case_study_cta_page_de_id, case_study_cta_page_en_gb_id, case_study_cta_page_es_id, case_study_cta_page_fr_id, case_study_cta_page_ja_id, case_study_cta_page_pt_id, case_study_cta_page_pt_br_id, case_study_cta_page_ru_id, case_study_cta_page_zh_hans_id, case_study_cta_text_ar, case_study_cta_text_de, case_study_cta_text_en_gb, case_study_cta_text_es, case_study_cta_text_fr, case_study_cta_text_ja, case_study_cta_text_pt, case_study_cta_text_pt_br, case_study_cta_text_ru, case_study_cta_text_zh_hans, case_study_description_ar, case_study_description_de, case_study_description_en_gb, case_study_description_es, case_study_description_fr, case_study_description_ja, case_study_description_pt, case_study_description_pt_br, case_study_description_ru, case_study_description_zh_hans, case_study_image_ar_id, case_study_image_de_id, case_study_image_en_gb_id, case_study_image_es_id, case_study_image_fr_id, case_study_image_ja_id, case_study_image_pt_id, case_study_image_pt_br_id, case_study_image_ru_id, case_study_image_zh_hans_id, case_study_title_ar, case_study_title_de, case_study_title_en_gb, case_study_title_es, case_study_title_fr, case_study_title_ja, case_study_title_pt, case_study_title_pt_br, case_study_title_ru, case_study_title_zh_hans, heading_ar, heading_de, heading_en_gb, heading_es, heading_fr, heading_ja, heading_pt, heading_pt_br, heading_ru, heading_teaser_ar, heading_teaser_de, heading_teaser_en_gb, heading_teaser_es, heading_teaser_fr, heading_teaser_ja, heading_teaser_pt, heading_teaser_pt_br, heading_teaser_ru, heading_teaser_zh_hans, heading_zh_hans, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_pt_br_id, hero_image_ru_id, hero_image_zh_hans_id, related_page_one_ar_id, related_page_one_de_id, related_page_one_en_gb_id, related_page_one_es_id, related_page_one_fr_id, related_page_one_ja_id, related_page_one_pt_id, related_page_one_pt_br_id, related_page_one_ru_id, related_page_one_zh_hans_id, related_page_three_ar_id, related_page_three_de_id, related_page_three_en_gb_id, related_page_three_es_id, related_page_three_fr_id, related_page_three_ja_id, related_page_three_pt_id, related_page_three_pt_br_id, related_page_three_ru_id, related_page_three_zh_hans_id, related_page_two_ar_id, related_page_two_de_id, related_page_two_en_gb_id, related_page_two_es_id, related_page_two_fr_id, related_page_two_ja_id, related_page_two_pt_id, related_page_two_pt_br_id, related_page_two_ru_id, related_page_two_zh_hans_id, section_one_body_ar, section_one_body_de, section_one_body_en_gb, section_one_body_es, section_one_body_fr, section_one_body_ja, section_one_body_pt, section_one_body_pt_br, section_one_body_ru, section_one_body_zh_hans, section_one_image_ar_id, section_one_image_caption_ar, section_one_image_caption_company_ar, section_one_image_caption_company_de, section_one_image_caption_company_en_gb, section_one_image_caption_company_es, section_one_image_caption_company_fr, section_one_image_caption_company_ja, section_one_image_caption_company_pt, section_one_image_caption_company_pt_br, section_one_image_caption_company_ru, section_one_image_caption_company_zh_hans, section_one_image_caption_de, section_one_image_caption_en_gb, section_one_image_caption_es, section_one_image_caption_fr, section_one_image_caption_ja, section_one_image_caption_pt, section_one_image_caption_pt_br, section_one_image_caption_ru, section_one_image_caption_zh_hans, section_one_image_de_id, section_one_image_en_gb_id, section_one_image_es_id, section_one_image_fr_id, section_one_image_ja_id, section_one_image_pt_id, section_one_image_pt_br_id, section_one_image_ru_id, section_one_image_zh_hans_id, section_three_heading_ar, section_three_heading_de, section_three_heading_en_gb, section_three_heading_es, section_three_heading_fr, section_three_heading_ja, section_three_heading_pt, section_three_heading_pt_br, section_three_heading_ru, section_three_heading_zh_hans, section_three_subsection_one_body_ar, section_three_subsection_one_body_de, section_three_subsection_one_body_en_gb, section_three_subsection_one_body_es, section_three_subsection_one_body_fr, section_three_subsection_one_body_ja, section_three_subsection_one_body_pt, section_three_subsection_one_body_pt_br, section_three_subsection_one_body_ru, section_three_subsection_one_body_zh_hans, section_three_subsection_one_heading_ar, section_three_subsection_one_heading_de, section_three_subsection_one_heading_en_gb, section_three_subsection_one_heading_es, section_three_subsection_one_heading_fr, section_three_subsection_one_heading_ja, section_three_subsection_one_heading_pt, section_three_subsection_one_heading_pt_br, section_three_subsection_one_heading_ru, section_three_subsection_one_heading_zh_hans, section_three_subsection_one_teaser_ar, section_three_subsection_one_teaser_de, section_three_subsection_one_teaser_en_gb, section_three_subsection_one_teaser_es, section_three_subsection_one_teaser_fr, section_three_subsection_one_teaser_ja, section_three_subsection_one_teaser_pt, section_three_subsection_one_teaser_pt_br, section_three_subsection_one_teaser_ru, section_three_subsection_one_teaser_zh_hans, section_three_subsection_two_body_ar, section_three_subsection_two_body_de, section_three_subsection_two_body_en_gb, section_three_subsection_two_body_es, section_three_subsection_two_body_fr, section_three_subsection_two_body_ja, section_three_subsection_two_body_pt, section_three_subsection_two_body_pt_br, section_three_subsection_two_body_ru, section_three_subsection_two_body_zh_hans, section_three_subsection_two_heading_ar, section_three_subsection_two_heading_de, section_three_subsection_two_heading_en_gb, section_three_subsection_two_heading_es, section_three_subsection_two_heading_fr, section_three_subsection_two_heading_ja, section_three_subsection_two_heading_pt, section_three_subsection_two_heading_pt_br, section_three_subsection_two_heading_ru, section_three_subsection_two_heading_zh_hans, section_three_subsection_two_teaser_ar, section_three_subsection_two_teaser_de, section_three_subsection_two_teaser_en_gb, section_three_subsection_two_teaser_es, section_three_subsection_two_teaser_fr, section_three_subsection_two_teaser_ja, section_three_subsection_two_teaser_pt, section_three_subsection_two_teaser_pt_br, section_three_subsection_two_teaser_ru, section_three_subsection_two_teaser_zh_hans, section_three_teaser_ar, section_three_teaser_de, section_three_teaser_en_gb, section_three_teaser_es, section_three_teaser_fr, section_three_teaser_ja, section_three_teaser_pt, section_three_teaser_pt_br, section_three_teaser_ru, section_three_teaser_zh_hans, section_two_heading_ar, section_two_heading_de, section_two_heading_en_gb, section_two_heading_es, section_two_heading_fr, section_two_heading_ja, section_two_heading_pt, section_two_heading_pt_br, section_two_heading_ru, section_two_heading_zh_hans, section_two_subsection_one_body_ar, section_two_subsection_one_body_de, section_two_subsection_one_body_en_gb, section_two_subsection_one_body_es, section_two_subsection_one_body_fr, section_two_subsection_one_body_ja, section_two_subsection_one_body_pt, section_two_subsection_one_body_pt_br, section_two_subsection_one_body_ru, section_two_subsection_one_body_zh_hans, section_two_subsection_one_heading_ar, section_two_subsection_one_heading_de, section_two_subsection_one_heading_en_gb, section_two_subsection_one_heading_es, section_two_subsection_one_heading_fr, section_two_subsection_one_heading_ja, section_two_subsection_one_heading_pt, section_two_subsection_one_heading_pt_br, section_two_subsection_one_heading_ru, section_two_subsection_one_heading_zh_hans, section_two_subsection_one_icon_ar_id, section_two_subsection_one_icon_de_id, section_two_subsection_one_icon_en_gb_id, section_two_subsection_one_icon_es_id, section_two_subsection_one_icon_fr_id, section_two_subsection_one_icon_ja_id, section_two_subsection_one_icon_pt_id, section_two_subsection_one_icon_pt_br_id, section_two_subsection_one_icon_ru_id, section_two_subsection_one_icon_zh_hans_id, section_two_subsection_three_body_ar, section_two_subsection_three_body_de, section_two_subsection_three_body_en_gb, section_two_subsection_three_body_es, section_two_subsection_three_body_fr, section_two_subsection_three_body_ja, section_two_subsection_three_body_pt, section_two_subsection_three_body_pt_br, section_two_subsection_three_body_ru, section_two_subsection_three_body_zh_hans, section_two_subsection_three_heading_ar, section_two_subsection_three_heading_de, section_two_subsection_three_heading_en_gb, section_two_subsection_three_heading_es, section_two_subsection_three_heading_fr, section_two_subsection_three_heading_ja, section_two_subsection_three_heading_pt, section_two_subsection_three_heading_pt_br, section_two_subsection_three_heading_ru, section_two_subsection_three_heading_zh_hans, section_two_subsection_three_icon_ar_id, section_two_subsection_three_icon_de_id, section_two_subsection_three_icon_en_gb_id, section_two_subsection_three_icon_es_id, section_two_subsection_three_icon_fr_id, section_two_subsection_three_icon_ja_id, section_two_subsection_three_icon_pt_id, section_two_subsection_three_icon_pt_br_id, section_two_subsection_three_icon_ru_id, section_two_subsection_three_icon_zh_hans_id, section_two_subsection_two_body_ar, section_two_subsection_two_body_de, section_two_subsection_two_body_en_gb, section_two_subsection_two_body_es, section_two_subsection_two_body_fr, section_two_subsection_two_body_ja, section_two_subsection_two_body_pt, section_two_subsection_two_body_pt_br, section_two_subsection_two_body_ru, section_two_subsection_two_body_zh_hans, section_two_subsection_two_heading_ar, section_two_subsection_two_heading_de, section_two_subsection_two_heading_en_gb, section_two_subsection_two_heading_es, section_two_subsection_two_heading_fr, section_two_subsection_two_heading_ja, section_two_subsection_two_heading_pt, section_two_subsection_two_heading_pt_br, section_two_subsection_two_heading_ru, section_two_subsection_two_heading_zh_hans, section_two_subsection_two_icon_ar_id, section_two_subsection_two_icon_de_id, section_two_subsection_two_icon_en_gb_id, section_two_subsection_two_icon_es_id, section_two_subsection_two_icon_fr_id, section_two_subsection_two_icon_ja_id, section_two_subsection_two_icon_pt_id, section_two_subsection_two_icon_pt_br_id, section_two_subsection_two_icon_ru_id, section_two_subsection_two_icon_zh_hans_id, section_two_teaser_ar, section_two_teaser_de, section_two_teaser_en_gb, section_two_teaser_es, section_two_teaser_fr, section_two_teaser_ja, section_two_teaser_pt, section_two_teaser_pt_br, section_two_teaser_ru, section_two_teaser_zh_hans, statistic_1_heading_ar, statistic_1_heading_de, statistic_1_heading_en_gb, statistic_1_heading_es, statistic_1_heading_fr, statistic_1_heading_ja, statistic_1_heading_pt, statistic_1_heading_pt_br, statistic_1_heading_ru, statistic_1_heading_zh_hans, statistic_1_number_ar, statistic_1_number_de, statistic_1_number_en_gb, statistic_1_number_es, statistic_1_number_fr, statistic_1_number_ja, statistic_1_number_pt, statistic_1_number_pt_br, statistic_1_number_ru, statistic_1_number_zh_hans, statistic_1_smallprint_ar, statistic_1_smallprint_de, statistic_1_smallprint_en_gb, statistic_1_smallprint_es, statistic_1_smallprint_fr, statistic_1_smallprint_ja, statistic_1_smallprint_pt, statistic_1_smallprint_pt_br, statistic_1_smallprint_ru, statistic_1_smallprint_zh_hans, statistic_2_heading_ar, statistic_2_heading_de, statistic_2_heading_en_gb, statistic_2_heading_es, statistic_2_heading_fr, statistic_2_heading_ja, statistic_2_heading_pt, statistic_2_heading_pt_br, statistic_2_heading_ru, statistic_2_heading_zh_hans, statistic_2_number_ar, statistic_2_number_de, statistic_2_number_en_gb, statistic_2_number_es, statistic_2_number_fr, statistic_2_number_ja, statistic_2_number_pt, statistic_2_number_pt_br, statistic_2_number_ru, statistic_2_number_zh_hans, statistic_2_smallprint_ar, statistic_2_smallprint_de, statistic_2_smallprint_en_gb, statistic_2_smallprint_es, statistic_2_smallprint_fr, statistic_2_smallprint_ja, statistic_2_smallprint_pt, statistic_2_smallprint_pt_br, statistic_2_smallprint_ru, statistic_2_smallprint_zh_hans, statistic_3_heading_ar, statistic_3_heading_de, statistic_3_heading_en_gb, statistic_3_heading_es, statistic_3_heading_fr, statistic_3_heading_ja, statistic_3_heading_pt, statistic_3_heading_pt_br, statistic_3_heading_ru, statistic_3_heading_zh_hans, statistic_3_number_ar, statistic_3_number_de, statistic_3_number_en_gb, statistic_3_number_es, statistic_3_number_fr, statistic_3_number_ja, statistic_3_number_pt, statistic_3_number_pt_br, statistic_3_number_ru, statistic_3_number_zh_hans, statistic_3_smallprint_ar, statistic_3_smallprint_de, statistic_3_smallprint_en_gb, statistic_3_smallprint_es, statistic_3_smallprint_fr, statistic_3_smallprint_ja, statistic_3_smallprint_pt, statistic_3_smallprint_pt_br, statistic_3_smallprint_ru, statistic_3_smallprint_zh_hans, statistic_4_heading_ar, statistic_4_heading_de, statistic_4_heading_en_gb, statistic_4_heading_es, statistic_4_heading_fr, statistic_4_heading_ja, statistic_4_heading_pt, statistic_4_heading_pt_br, statistic_4_heading_ru, statistic_4_heading_zh_hans, statistic_4_number_ar, statistic_4_number_de, statistic_4_number_en_gb, statistic_4_number_es, statistic_4_number_fr, statistic_4_number_ja, statistic_4_number_pt, statistic_4_number_pt_br, statistic_4_number_ru, statistic_4_number_zh_hans, statistic_4_smallprint_ar, statistic_4_smallprint_de, statistic_4_smallprint_en_gb, statistic_4_smallprint_es, statistic_4_smallprint_fr, statistic_4_smallprint_ja, statistic_4_smallprint_pt, statistic_4_smallprint_pt_br, statistic_4_smallprint_ru, statistic_4_smallprint_zh_hans, statistic_5_heading_ar, statistic_5_heading_de, statistic_5_heading_en_gb, statistic_5_heading_es, statistic_5_heading_fr, statistic_5_heading_ja, statistic_5_heading_pt, statistic_5_heading_pt_br, statistic_5_heading_ru, statistic_5_heading_zh_hans, statistic_5_number_ar, statistic_5_number_de, statistic_5_number_en_gb, statistic_5_number_es, statistic_5_number_fr, statistic_5_number_ja, statistic_5_number_pt, statistic_5_number_pt_br, statistic_5_number_ru, statistic_5_number_zh_hans, statistic_5_smallprint_ar, statistic_5_smallprint_de, statistic_5_smallprint_en_gb, statistic_5_smallprint_es, statistic_5_smallprint_fr, statistic_5_smallprint_ja, statistic_5_smallprint_pt, statistic_5_smallprint_pt_br, statistic_5_smallprint_ru, statistic_5_smallprint_zh_hans, statistic_6_heading_ar, statistic_6_heading_de, statistic_6_heading_en_gb, statistic_6_heading_es, statistic_6_heading_fr, statistic_6_heading_ja, statistic_6_heading_pt, statistic_6_heading_pt_br, statistic_6_heading_ru, statistic_6_heading_zh_hans, statistic_6_number_ar, statistic_6_number_de, statistic_6_number_en_gb, statistic_6_number_es, statistic_6_number_fr, statistic_6_number_ja, statistic_6_number_pt, statistic_6_number_pt_br, statistic_6_number_ru, statistic_6_number_zh_hans, statistic_6_smallprint_ar, statistic_6_smallprint_de, statistic_6_smallprint_en_gb, statistic_6_smallprint_es, statistic_6_smallprint_fr, statistic_6_smallprint_ja, statistic_6_smallprint_pt, statistic_6_smallprint_pt_br, statistic_6_smallprint_ru, statistic_6_smallprint_zh_hans, sub_heading_ar, sub_heading_de, sub_heading_en_gb, sub_heading_es, sub_heading_fr, sub_heading_ja, sub_heading_pt, sub_heading_pt_br, sub_heading_ru, sub_heading_zh_hans) FROM stdin;
+COPY public.great_international_internationalsectorpage (page_ptr_id, service_name, heading, sub_heading, heading_teaser, section_one_body, statistic_1_number, statistic_1_heading, statistic_1_smallprint, statistic_2_number, statistic_2_heading, statistic_2_smallprint, statistic_3_number, statistic_3_heading, statistic_3_smallprint, statistic_4_number, statistic_4_heading, statistic_4_smallprint, statistic_5_number, statistic_5_heading, statistic_5_smallprint, statistic_6_number, statistic_6_heading, statistic_6_smallprint, section_two_heading, section_two_teaser, section_two_subsection_one_heading, section_two_subsection_one_body, section_two_subsection_two_heading, section_two_subsection_two_body, section_two_subsection_three_heading, section_two_subsection_three_body, case_study_title, case_study_description, case_study_cta_text, section_three_heading, section_three_teaser, section_three_subsection_one_heading, section_three_subsection_one_teaser, section_three_subsection_one_body, section_three_subsection_two_heading, section_three_subsection_two_teaser, section_three_subsection_two_body, case_study_image_id, hero_image_id, related_page_one_id, related_page_three_id, related_page_two_id, section_one_image_id, section_two_subsection_one_icon_id, section_two_subsection_three_icon_id, section_two_subsection_two_icon_id, case_study_cta_page_id, section_one_image_caption, section_one_image_caption_company, case_study_cta_page_ar_id, case_study_cta_page_de_id, case_study_cta_page_en_gb_id, case_study_cta_page_es_id, case_study_cta_page_fr_id, case_study_cta_page_ja_id, case_study_cta_page_pt_id, case_study_cta_page_zh_hans_id, case_study_cta_text_ar, case_study_cta_text_de, case_study_cta_text_en_gb, case_study_cta_text_es, case_study_cta_text_fr, case_study_cta_text_ja, case_study_cta_text_pt, case_study_cta_text_zh_hans, case_study_description_ar, case_study_description_de, case_study_description_en_gb, case_study_description_es, case_study_description_fr, case_study_description_ja, case_study_description_pt, case_study_description_zh_hans, case_study_image_ar_id, case_study_image_de_id, case_study_image_en_gb_id, case_study_image_es_id, case_study_image_fr_id, case_study_image_ja_id, case_study_image_pt_id, case_study_image_zh_hans_id, case_study_title_ar, case_study_title_de, case_study_title_en_gb, case_study_title_es, case_study_title_fr, case_study_title_ja, case_study_title_pt, case_study_title_zh_hans, heading_ar, heading_de, heading_en_gb, heading_es, heading_fr, heading_ja, heading_pt, heading_teaser_ar, heading_teaser_de, heading_teaser_en_gb, heading_teaser_es, heading_teaser_fr, heading_teaser_ja, heading_teaser_pt, heading_teaser_zh_hans, heading_zh_hans, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, related_page_one_ar_id, related_page_one_de_id, related_page_one_en_gb_id, related_page_one_es_id, related_page_one_fr_id, related_page_one_ja_id, related_page_one_pt_id, related_page_one_zh_hans_id, related_page_three_ar_id, related_page_three_de_id, related_page_three_en_gb_id, related_page_three_es_id, related_page_three_fr_id, related_page_three_ja_id, related_page_three_pt_id, related_page_three_zh_hans_id, related_page_two_ar_id, related_page_two_de_id, related_page_two_en_gb_id, related_page_two_es_id, related_page_two_fr_id, related_page_two_ja_id, related_page_two_pt_id, related_page_two_zh_hans_id, section_one_body_ar, section_one_body_de, section_one_body_en_gb, section_one_body_es, section_one_body_fr, section_one_body_ja, section_one_body_pt, section_one_body_zh_hans, section_one_image_ar_id, section_one_image_caption_ar, section_one_image_caption_company_ar, section_one_image_caption_company_de, section_one_image_caption_company_en_gb, section_one_image_caption_company_es, section_one_image_caption_company_fr, section_one_image_caption_company_ja, section_one_image_caption_company_pt, section_one_image_caption_company_zh_hans, section_one_image_caption_de, section_one_image_caption_en_gb, section_one_image_caption_es, section_one_image_caption_fr, section_one_image_caption_ja, section_one_image_caption_pt, section_one_image_caption_zh_hans, section_one_image_de_id, section_one_image_en_gb_id, section_one_image_es_id, section_one_image_fr_id, section_one_image_ja_id, section_one_image_pt_id, section_one_image_zh_hans_id, section_three_heading_ar, section_three_heading_de, section_three_heading_en_gb, section_three_heading_es, section_three_heading_fr, section_three_heading_ja, section_three_heading_pt, section_three_heading_zh_hans, section_three_subsection_one_body_ar, section_three_subsection_one_body_de, section_three_subsection_one_body_en_gb, section_three_subsection_one_body_es, section_three_subsection_one_body_fr, section_three_subsection_one_body_ja, section_three_subsection_one_body_pt, section_three_subsection_one_body_zh_hans, section_three_subsection_one_heading_ar, section_three_subsection_one_heading_de, section_three_subsection_one_heading_en_gb, section_three_subsection_one_heading_es, section_three_subsection_one_heading_fr, section_three_subsection_one_heading_ja, section_three_subsection_one_heading_pt, section_three_subsection_one_heading_zh_hans, section_three_subsection_one_teaser_ar, section_three_subsection_one_teaser_de, section_three_subsection_one_teaser_en_gb, section_three_subsection_one_teaser_es, section_three_subsection_one_teaser_fr, section_three_subsection_one_teaser_ja, section_three_subsection_one_teaser_pt, section_three_subsection_one_teaser_zh_hans, section_three_subsection_two_body_ar, section_three_subsection_two_body_de, section_three_subsection_two_body_en_gb, section_three_subsection_two_body_es, section_three_subsection_two_body_fr, section_three_subsection_two_body_ja, section_three_subsection_two_body_pt, section_three_subsection_two_body_zh_hans, section_three_subsection_two_heading_ar, section_three_subsection_two_heading_de, section_three_subsection_two_heading_en_gb, section_three_subsection_two_heading_es, section_three_subsection_two_heading_fr, section_three_subsection_two_heading_ja, section_three_subsection_two_heading_pt, section_three_subsection_two_heading_zh_hans, section_three_subsection_two_teaser_ar, section_three_subsection_two_teaser_de, section_three_subsection_two_teaser_en_gb, section_three_subsection_two_teaser_es, section_three_subsection_two_teaser_fr, section_three_subsection_two_teaser_ja, section_three_subsection_two_teaser_pt, section_three_subsection_two_teaser_zh_hans, section_three_teaser_ar, section_three_teaser_de, section_three_teaser_en_gb, section_three_teaser_es, section_three_teaser_fr, section_three_teaser_ja, section_three_teaser_pt, section_three_teaser_zh_hans, section_two_heading_ar, section_two_heading_de, section_two_heading_en_gb, section_two_heading_es, section_two_heading_fr, section_two_heading_ja, section_two_heading_pt, section_two_heading_zh_hans, section_two_subsection_one_body_ar, section_two_subsection_one_body_de, section_two_subsection_one_body_en_gb, section_two_subsection_one_body_es, section_two_subsection_one_body_fr, section_two_subsection_one_body_ja, section_two_subsection_one_body_pt, section_two_subsection_one_body_zh_hans, section_two_subsection_one_heading_ar, section_two_subsection_one_heading_de, section_two_subsection_one_heading_en_gb, section_two_subsection_one_heading_es, section_two_subsection_one_heading_fr, section_two_subsection_one_heading_ja, section_two_subsection_one_heading_pt, section_two_subsection_one_heading_zh_hans, section_two_subsection_one_icon_ar_id, section_two_subsection_one_icon_de_id, section_two_subsection_one_icon_en_gb_id, section_two_subsection_one_icon_es_id, section_two_subsection_one_icon_fr_id, section_two_subsection_one_icon_ja_id, section_two_subsection_one_icon_pt_id, section_two_subsection_one_icon_zh_hans_id, section_two_subsection_three_body_ar, section_two_subsection_three_body_de, section_two_subsection_three_body_en_gb, section_two_subsection_three_body_es, section_two_subsection_three_body_fr, section_two_subsection_three_body_ja, section_two_subsection_three_body_pt, section_two_subsection_three_body_zh_hans, section_two_subsection_three_heading_ar, section_two_subsection_three_heading_de, section_two_subsection_three_heading_en_gb, section_two_subsection_three_heading_es, section_two_subsection_three_heading_fr, section_two_subsection_three_heading_ja, section_two_subsection_three_heading_pt, section_two_subsection_three_heading_zh_hans, section_two_subsection_three_icon_ar_id, section_two_subsection_three_icon_de_id, section_two_subsection_three_icon_en_gb_id, section_two_subsection_three_icon_es_id, section_two_subsection_three_icon_fr_id, section_two_subsection_three_icon_ja_id, section_two_subsection_three_icon_pt_id, section_two_subsection_three_icon_zh_hans_id, section_two_subsection_two_body_ar, section_two_subsection_two_body_de, section_two_subsection_two_body_en_gb, section_two_subsection_two_body_es, section_two_subsection_two_body_fr, section_two_subsection_two_body_ja, section_two_subsection_two_body_pt, section_two_subsection_two_body_zh_hans, section_two_subsection_two_heading_ar, section_two_subsection_two_heading_de, section_two_subsection_two_heading_en_gb, section_two_subsection_two_heading_es, section_two_subsection_two_heading_fr, section_two_subsection_two_heading_ja, section_two_subsection_two_heading_pt, section_two_subsection_two_heading_zh_hans, section_two_subsection_two_icon_ar_id, section_two_subsection_two_icon_de_id, section_two_subsection_two_icon_en_gb_id, section_two_subsection_two_icon_es_id, section_two_subsection_two_icon_fr_id, section_two_subsection_two_icon_ja_id, section_two_subsection_two_icon_pt_id, section_two_subsection_two_icon_zh_hans_id, section_two_teaser_ar, section_two_teaser_de, section_two_teaser_en_gb, section_two_teaser_es, section_two_teaser_fr, section_two_teaser_ja, section_two_teaser_pt, section_two_teaser_zh_hans, statistic_1_heading_ar, statistic_1_heading_de, statistic_1_heading_en_gb, statistic_1_heading_es, statistic_1_heading_fr, statistic_1_heading_ja, statistic_1_heading_pt, statistic_1_heading_zh_hans, statistic_1_number_ar, statistic_1_number_de, statistic_1_number_en_gb, statistic_1_number_es, statistic_1_number_fr, statistic_1_number_ja, statistic_1_number_pt, statistic_1_number_zh_hans, statistic_1_smallprint_ar, statistic_1_smallprint_de, statistic_1_smallprint_en_gb, statistic_1_smallprint_es, statistic_1_smallprint_fr, statistic_1_smallprint_ja, statistic_1_smallprint_pt, statistic_1_smallprint_zh_hans, statistic_2_heading_ar, statistic_2_heading_de, statistic_2_heading_en_gb, statistic_2_heading_es, statistic_2_heading_fr, statistic_2_heading_ja, statistic_2_heading_pt, statistic_2_heading_zh_hans, statistic_2_number_ar, statistic_2_number_de, statistic_2_number_en_gb, statistic_2_number_es, statistic_2_number_fr, statistic_2_number_ja, statistic_2_number_pt, statistic_2_number_zh_hans, statistic_2_smallprint_ar, statistic_2_smallprint_de, statistic_2_smallprint_en_gb, statistic_2_smallprint_es, statistic_2_smallprint_fr, statistic_2_smallprint_ja, statistic_2_smallprint_pt, statistic_2_smallprint_zh_hans, statistic_3_heading_ar, statistic_3_heading_de, statistic_3_heading_en_gb, statistic_3_heading_es, statistic_3_heading_fr, statistic_3_heading_ja, statistic_3_heading_pt, statistic_3_heading_zh_hans, statistic_3_number_ar, statistic_3_number_de, statistic_3_number_en_gb, statistic_3_number_es, statistic_3_number_fr, statistic_3_number_ja, statistic_3_number_pt, statistic_3_number_zh_hans, statistic_3_smallprint_ar, statistic_3_smallprint_de, statistic_3_smallprint_en_gb, statistic_3_smallprint_es, statistic_3_smallprint_fr, statistic_3_smallprint_ja, statistic_3_smallprint_pt, statistic_3_smallprint_zh_hans, statistic_4_heading_ar, statistic_4_heading_de, statistic_4_heading_en_gb, statistic_4_heading_es, statistic_4_heading_fr, statistic_4_heading_ja, statistic_4_heading_pt, statistic_4_heading_zh_hans, statistic_4_number_ar, statistic_4_number_de, statistic_4_number_en_gb, statistic_4_number_es, statistic_4_number_fr, statistic_4_number_ja, statistic_4_number_pt, statistic_4_number_zh_hans, statistic_4_smallprint_ar, statistic_4_smallprint_de, statistic_4_smallprint_en_gb, statistic_4_smallprint_es, statistic_4_smallprint_fr, statistic_4_smallprint_ja, statistic_4_smallprint_pt, statistic_4_smallprint_zh_hans, statistic_5_heading_ar, statistic_5_heading_de, statistic_5_heading_en_gb, statistic_5_heading_es, statistic_5_heading_fr, statistic_5_heading_ja, statistic_5_heading_pt, statistic_5_heading_zh_hans, statistic_5_number_ar, statistic_5_number_de, statistic_5_number_en_gb, statistic_5_number_es, statistic_5_number_fr, statistic_5_number_ja, statistic_5_number_pt, statistic_5_number_zh_hans, statistic_5_smallprint_ar, statistic_5_smallprint_de, statistic_5_smallprint_en_gb, statistic_5_smallprint_es, statistic_5_smallprint_fr, statistic_5_smallprint_ja, statistic_5_smallprint_pt, statistic_5_smallprint_zh_hans, statistic_6_heading_ar, statistic_6_heading_de, statistic_6_heading_en_gb, statistic_6_heading_es, statistic_6_heading_fr, statistic_6_heading_ja, statistic_6_heading_pt, statistic_6_heading_zh_hans, statistic_6_number_ar, statistic_6_number_de, statistic_6_number_en_gb, statistic_6_number_es, statistic_6_number_fr, statistic_6_number_ja, statistic_6_number_pt, statistic_6_number_zh_hans, statistic_6_smallprint_ar, statistic_6_smallprint_de, statistic_6_smallprint_en_gb, statistic_6_smallprint_es, statistic_6_smallprint_fr, statistic_6_smallprint_ja, statistic_6_smallprint_pt, statistic_6_smallprint_zh_hans, sub_heading_ar, sub_heading_de, sub_heading_en_gb, sub_heading_es, sub_heading_fr, sub_heading_ja, sub_heading_pt, sub_heading_zh_hans, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8129,7 +7752,7 @@ COPY public.great_international_internationalsectorpage_tags (id, internationals
 -- Data for Name: great_international_internationaltopiclandingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_internationaltopiclandingpage (page_ptr_id, service_name, landing_page_title, hero_teaser, hero_image_id, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_pt_br_id, hero_image_ru_id, hero_image_zh_hans_id, hero_teaser_ar, hero_teaser_de, hero_teaser_en_gb, hero_teaser_es, hero_teaser_fr, hero_teaser_ja, hero_teaser_pt, hero_teaser_pt_br, hero_teaser_ru, hero_teaser_zh_hans, landing_page_title_ar, landing_page_title_de, landing_page_title_en_gb, landing_page_title_es, landing_page_title_fr, landing_page_title_ja, landing_page_title_pt, landing_page_title_pt_br, landing_page_title_ru, landing_page_title_zh_hans) FROM stdin;
+COPY public.great_international_internationaltopiclandingpage (page_ptr_id, service_name, landing_page_title, hero_teaser, hero_image_id, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, hero_teaser_ar, hero_teaser_de, hero_teaser_en_gb, hero_teaser_es, hero_teaser_fr, hero_teaser_ja, hero_teaser_pt, hero_teaser_zh_hans, landing_page_title_ar, landing_page_title_de, landing_page_title_en_gb, landing_page_title_es, landing_page_title_fr, landing_page_title_ja, landing_page_title_pt, landing_page_title_zh_hans, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8153,7 +7776,7 @@ COPY public.health_check_db_testmodel (id, title) FROM stdin;
 -- Data for Name: invest_highpotentialopportunitydetailpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.invest_highpotentialopportunitydetailpage (page_ptr_id, service_name, breadcrumbs_label, heading, contact_proposition, contact_button, proposition_one, opportunity_list_title, opportunity_list_item_one, opportunity_list_item_two, opportunity_list_item_three, proposition_two, proposition_two_list_item_one, proposition_two_list_item_two, proposition_two_list_item_three, competitive_advantages_title, competitive_advantages_list_item_one, competitive_advantages_list_item_two, competitive_advantages_list_item_three, testimonial, companies_list_text, case_study_list_title, case_study_one_text, case_study_two_text, case_study_three_text, case_study_four_text, case_study_four_image_id, case_study_one_image_id, case_study_three_image_id, case_study_two_image_id, companies_list_item_image_eight_id, companies_list_item_image_five_id, companies_list_item_image_four_id, companies_list_item_image_one_id, companies_list_item_image_seven_id, companies_list_item_image_six_id, companies_list_item_image_three_id, companies_list_item_image_two_id, hero_image_id, opportunity_list_image_id, proposition_one_image_id, proposition_one_video_id, proposition_two_image_id, proposition_two_video_id, competitive_advantages_list_item_one_icon_id, competitive_advantages_list_item_three_icon_id, competitive_advantages_list_item_two_icon_id, other_opportunities_title, summary_image_id, pdf_document_id, testimonial_background_id, description, featured, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_pt_br, breadcrumbs_label_ru, breadcrumbs_label_zh_hans, case_study_four_image_ar_id, case_study_four_image_de_id, case_study_four_image_en_gb_id, case_study_four_image_es_id, case_study_four_image_fr_id, case_study_four_image_ja_id, case_study_four_image_pt_id, case_study_four_image_pt_br_id, case_study_four_image_ru_id, case_study_four_image_zh_hans_id, case_study_four_text_ar, case_study_four_text_de, case_study_four_text_en_gb, case_study_four_text_es, case_study_four_text_fr, case_study_four_text_ja, case_study_four_text_pt, case_study_four_text_pt_br, case_study_four_text_ru, case_study_four_text_zh_hans, case_study_list_title_ar, case_study_list_title_de, case_study_list_title_en_gb, case_study_list_title_es, case_study_list_title_fr, case_study_list_title_ja, case_study_list_title_pt, case_study_list_title_pt_br, case_study_list_title_ru, case_study_list_title_zh_hans, case_study_one_image_ar_id, case_study_one_image_de_id, case_study_one_image_en_gb_id, case_study_one_image_es_id, case_study_one_image_fr_id, case_study_one_image_ja_id, case_study_one_image_pt_id, case_study_one_image_pt_br_id, case_study_one_image_ru_id, case_study_one_image_zh_hans_id, case_study_one_text_ar, case_study_one_text_de, case_study_one_text_en_gb, case_study_one_text_es, case_study_one_text_fr, case_study_one_text_ja, case_study_one_text_pt, case_study_one_text_pt_br, case_study_one_text_ru, case_study_one_text_zh_hans, case_study_three_image_ar_id, case_study_three_image_de_id, case_study_three_image_en_gb_id, case_study_three_image_es_id, case_study_three_image_fr_id, case_study_three_image_ja_id, case_study_three_image_pt_id, case_study_three_image_pt_br_id, case_study_three_image_ru_id, case_study_three_image_zh_hans_id, case_study_three_text_ar, case_study_three_text_de, case_study_three_text_en_gb, case_study_three_text_es, case_study_three_text_fr, case_study_three_text_ja, case_study_three_text_pt, case_study_three_text_pt_br, case_study_three_text_ru, case_study_three_text_zh_hans, case_study_two_image_ar_id, case_study_two_image_de_id, case_study_two_image_en_gb_id, case_study_two_image_es_id, case_study_two_image_fr_id, case_study_two_image_ja_id, case_study_two_image_pt_id, case_study_two_image_pt_br_id, case_study_two_image_ru_id, case_study_two_image_zh_hans_id, case_study_two_text_ar, case_study_two_text_de, case_study_two_text_en_gb, case_study_two_text_es, case_study_two_text_fr, case_study_two_text_ja, case_study_two_text_pt, case_study_two_text_pt_br, case_study_two_text_ru, case_study_two_text_zh_hans, companies_list_item_image_eight_ar_id, companies_list_item_image_eight_de_id, companies_list_item_image_eight_en_gb_id, companies_list_item_image_eight_es_id, companies_list_item_image_eight_fr_id, companies_list_item_image_eight_ja_id, companies_list_item_image_eight_pt_id, companies_list_item_image_eight_pt_br_id, companies_list_item_image_eight_ru_id, companies_list_item_image_eight_zh_hans_id, companies_list_item_image_five_ar_id, companies_list_item_image_five_de_id, companies_list_item_image_five_en_gb_id, companies_list_item_image_five_es_id, companies_list_item_image_five_fr_id, companies_list_item_image_five_ja_id, companies_list_item_image_five_pt_id, companies_list_item_image_five_pt_br_id, companies_list_item_image_five_ru_id, companies_list_item_image_five_zh_hans_id, companies_list_item_image_four_ar_id, companies_list_item_image_four_de_id, companies_list_item_image_four_en_gb_id, companies_list_item_image_four_es_id, companies_list_item_image_four_fr_id, companies_list_item_image_four_ja_id, companies_list_item_image_four_pt_id, companies_list_item_image_four_pt_br_id, companies_list_item_image_four_ru_id, companies_list_item_image_four_zh_hans_id, companies_list_item_image_one_ar_id, companies_list_item_image_one_de_id, companies_list_item_image_one_en_gb_id, companies_list_item_image_one_es_id, companies_list_item_image_one_fr_id, companies_list_item_image_one_ja_id, companies_list_item_image_one_pt_id, companies_list_item_image_one_pt_br_id, companies_list_item_image_one_ru_id, companies_list_item_image_one_zh_hans_id, companies_list_item_image_seven_ar_id, companies_list_item_image_seven_de_id, companies_list_item_image_seven_en_gb_id, companies_list_item_image_seven_es_id, companies_list_item_image_seven_fr_id, companies_list_item_image_seven_ja_id, companies_list_item_image_seven_pt_id, companies_list_item_image_seven_pt_br_id, companies_list_item_image_seven_ru_id, companies_list_item_image_seven_zh_hans_id, companies_list_item_image_six_ar_id, companies_list_item_image_six_de_id, companies_list_item_image_six_en_gb_id, companies_list_item_image_six_es_id, companies_list_item_image_six_fr_id, companies_list_item_image_six_ja_id, companies_list_item_image_six_pt_id, companies_list_item_image_six_pt_br_id, companies_list_item_image_six_ru_id, companies_list_item_image_six_zh_hans_id, companies_list_item_image_three_ar_id, companies_list_item_image_three_de_id, companies_list_item_image_three_en_gb_id, companies_list_item_image_three_es_id, companies_list_item_image_three_fr_id, companies_list_item_image_three_ja_id, companies_list_item_image_three_pt_id, companies_list_item_image_three_pt_br_id, companies_list_item_image_three_ru_id, companies_list_item_image_three_zh_hans_id, companies_list_item_image_two_ar_id, companies_list_item_image_two_de_id, companies_list_item_image_two_en_gb_id, companies_list_item_image_two_es_id, companies_list_item_image_two_fr_id, companies_list_item_image_two_ja_id, companies_list_item_image_two_pt_id, companies_list_item_image_two_pt_br_id, companies_list_item_image_two_ru_id, companies_list_item_image_two_zh_hans_id, companies_list_text_ar, companies_list_text_de, companies_list_text_en_gb, companies_list_text_es, companies_list_text_fr, companies_list_text_ja, companies_list_text_pt, companies_list_text_pt_br, companies_list_text_ru, companies_list_text_zh_hans, competitive_advantages_list_item_one_ar, competitive_advantages_list_item_one_de, competitive_advantages_list_item_one_en_gb, competitive_advantages_list_item_one_es, competitive_advantages_list_item_one_fr, competitive_advantages_list_item_one_icon_ar_id, competitive_advantages_list_item_one_icon_de_id, competitive_advantages_list_item_one_icon_en_gb_id, competitive_advantages_list_item_one_icon_es_id, competitive_advantages_list_item_one_icon_fr_id, competitive_advantages_list_item_one_icon_ja_id, competitive_advantages_list_item_one_icon_pt_id, competitive_advantages_list_item_one_icon_pt_br_id, competitive_advantages_list_item_one_icon_ru_id, competitive_advantages_list_item_one_icon_zh_hans_id, competitive_advantages_list_item_one_ja, competitive_advantages_list_item_one_pt, competitive_advantages_list_item_one_pt_br, competitive_advantages_list_item_one_ru, competitive_advantages_list_item_one_zh_hans, competitive_advantages_list_item_three_ar, competitive_advantages_list_item_three_de, competitive_advantages_list_item_three_en_gb, competitive_advantages_list_item_three_es, competitive_advantages_list_item_three_fr, competitive_advantages_list_item_three_icon_ar_id, competitive_advantages_list_item_three_icon_de_id, competitive_advantages_list_item_three_icon_en_gb_id, competitive_advantages_list_item_three_icon_es_id, competitive_advantages_list_item_three_icon_fr_id, competitive_advantages_list_item_three_icon_ja_id, competitive_advantages_list_item_three_icon_pt_id, competitive_advantages_list_item_three_icon_pt_br_id, competitive_advantages_list_item_three_icon_ru_id, competitive_advantages_list_item_three_icon_zh_hans_id, competitive_advantages_list_item_three_ja, competitive_advantages_list_item_three_pt, competitive_advantages_list_item_three_pt_br, competitive_advantages_list_item_three_ru, competitive_advantages_list_item_three_zh_hans, competitive_advantages_list_item_two_ar, competitive_advantages_list_item_two_de, competitive_advantages_list_item_two_en_gb, competitive_advantages_list_item_two_es, competitive_advantages_list_item_two_fr, competitive_advantages_list_item_two_icon_ar_id, competitive_advantages_list_item_two_icon_de_id, competitive_advantages_list_item_two_icon_en_gb_id, competitive_advantages_list_item_two_icon_es_id, competitive_advantages_list_item_two_icon_fr_id, competitive_advantages_list_item_two_icon_ja_id, competitive_advantages_list_item_two_icon_pt_id, competitive_advantages_list_item_two_icon_pt_br_id, competitive_advantages_list_item_two_icon_ru_id, competitive_advantages_list_item_two_icon_zh_hans_id, competitive_advantages_list_item_two_ja, competitive_advantages_list_item_two_pt, competitive_advantages_list_item_two_pt_br, competitive_advantages_list_item_two_ru, competitive_advantages_list_item_two_zh_hans, competitive_advantages_title_ar, competitive_advantages_title_de, competitive_advantages_title_en_gb, competitive_advantages_title_es, competitive_advantages_title_fr, competitive_advantages_title_ja, competitive_advantages_title_pt, competitive_advantages_title_pt_br, competitive_advantages_title_ru, competitive_advantages_title_zh_hans, contact_button_ar, contact_button_de, contact_button_en_gb, contact_button_es, contact_button_fr, contact_button_ja, contact_button_pt, contact_button_pt_br, contact_button_ru, contact_button_zh_hans, contact_proposition_ar, contact_proposition_de, contact_proposition_en_gb, contact_proposition_es, contact_proposition_fr, contact_proposition_ja, contact_proposition_pt, contact_proposition_pt_br, contact_proposition_ru, contact_proposition_zh_hans, description_ar, description_de, description_en_gb, description_es, description_fr, description_ja, description_pt, description_pt_br, description_ru, description_zh_hans, featured_ar, featured_de, featured_en_gb, featured_es, featured_fr, featured_ja, featured_pt, featured_pt_br, featured_ru, featured_zh_hans, heading_ar, heading_de, heading_en_gb, heading_es, heading_fr, heading_ja, heading_pt, heading_pt_br, heading_ru, heading_zh_hans, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_pt_br_id, hero_image_ru_id, hero_image_zh_hans_id, opportunity_list_image_ar_id, opportunity_list_image_de_id, opportunity_list_image_en_gb_id, opportunity_list_image_es_id, opportunity_list_image_fr_id, opportunity_list_image_ja_id, opportunity_list_image_pt_id, opportunity_list_image_pt_br_id, opportunity_list_image_ru_id, opportunity_list_image_zh_hans_id, opportunity_list_item_one_ar, opportunity_list_item_one_de, opportunity_list_item_one_en_gb, opportunity_list_item_one_es, opportunity_list_item_one_fr, opportunity_list_item_one_ja, opportunity_list_item_one_pt, opportunity_list_item_one_pt_br, opportunity_list_item_one_ru, opportunity_list_item_one_zh_hans, opportunity_list_item_three_ar, opportunity_list_item_three_de, opportunity_list_item_three_en_gb, opportunity_list_item_three_es, opportunity_list_item_three_fr, opportunity_list_item_three_ja, opportunity_list_item_three_pt, opportunity_list_item_three_pt_br, opportunity_list_item_three_ru, opportunity_list_item_three_zh_hans, opportunity_list_item_two_ar, opportunity_list_item_two_de, opportunity_list_item_two_en_gb, opportunity_list_item_two_es, opportunity_list_item_two_fr, opportunity_list_item_two_ja, opportunity_list_item_two_pt, opportunity_list_item_two_pt_br, opportunity_list_item_two_ru, opportunity_list_item_two_zh_hans, opportunity_list_title_ar, opportunity_list_title_de, opportunity_list_title_en_gb, opportunity_list_title_es, opportunity_list_title_fr, opportunity_list_title_ja, opportunity_list_title_pt, opportunity_list_title_pt_br, opportunity_list_title_ru, opportunity_list_title_zh_hans, other_opportunities_title_ar, other_opportunities_title_de, other_opportunities_title_en_gb, other_opportunities_title_es, other_opportunities_title_fr, other_opportunities_title_ja, other_opportunities_title_pt, other_opportunities_title_pt_br, other_opportunities_title_ru, other_opportunities_title_zh_hans, proposition_one_ar, proposition_one_de, proposition_one_en_gb, proposition_one_es, proposition_one_fr, proposition_one_image_ar_id, proposition_one_image_de_id, proposition_one_image_en_gb_id, proposition_one_image_es_id, proposition_one_image_fr_id, proposition_one_image_ja_id, proposition_one_image_pt_id, proposition_one_image_pt_br_id, proposition_one_image_ru_id, proposition_one_image_zh_hans_id, proposition_one_ja, proposition_one_pt, proposition_one_pt_br, proposition_one_ru, proposition_one_video_ar_id, proposition_one_video_de_id, proposition_one_video_en_gb_id, proposition_one_video_es_id, proposition_one_video_fr_id, proposition_one_video_ja_id, proposition_one_video_pt_id, proposition_one_video_pt_br_id, proposition_one_video_ru_id, proposition_one_video_zh_hans_id, proposition_one_zh_hans, proposition_two_ar, proposition_two_de, proposition_two_en_gb, proposition_two_es, proposition_two_fr, proposition_two_image_ar_id, proposition_two_image_de_id, proposition_two_image_en_gb_id, proposition_two_image_es_id, proposition_two_image_fr_id, proposition_two_image_ja_id, proposition_two_image_pt_id, proposition_two_image_pt_br_id, proposition_two_image_ru_id, proposition_two_image_zh_hans_id, proposition_two_ja, proposition_two_list_item_one_ar, proposition_two_list_item_one_de, proposition_two_list_item_one_en_gb, proposition_two_list_item_one_es, proposition_two_list_item_one_fr, proposition_two_list_item_one_ja, proposition_two_list_item_one_pt, proposition_two_list_item_one_pt_br, proposition_two_list_item_one_ru, proposition_two_list_item_one_zh_hans, proposition_two_list_item_three_ar, proposition_two_list_item_three_de, proposition_two_list_item_three_en_gb, proposition_two_list_item_three_es, proposition_two_list_item_three_fr, proposition_two_list_item_three_ja, proposition_two_list_item_three_pt, proposition_two_list_item_three_pt_br, proposition_two_list_item_three_ru, proposition_two_list_item_three_zh_hans, proposition_two_list_item_two_ar, proposition_two_list_item_two_de, proposition_two_list_item_two_en_gb, proposition_two_list_item_two_es, proposition_two_list_item_two_fr, proposition_two_list_item_two_ja, proposition_two_list_item_two_pt, proposition_two_list_item_two_pt_br, proposition_two_list_item_two_ru, proposition_two_list_item_two_zh_hans, proposition_two_pt, proposition_two_pt_br, proposition_two_ru, proposition_two_video_ar_id, proposition_two_video_de_id, proposition_two_video_en_gb_id, proposition_two_video_es_id, proposition_two_video_fr_id, proposition_two_video_ja_id, proposition_two_video_pt_id, proposition_two_video_pt_br_id, proposition_two_video_ru_id, proposition_two_video_zh_hans_id, proposition_two_zh_hans, summary_image_ar_id, summary_image_de_id, summary_image_en_gb_id, summary_image_es_id, summary_image_fr_id, summary_image_ja_id, summary_image_pt_id, summary_image_pt_br_id, summary_image_ru_id, summary_image_zh_hans_id, testimonial_ar, testimonial_background_ar_id, testimonial_background_de_id, testimonial_background_en_gb_id, testimonial_background_es_id, testimonial_background_fr_id, testimonial_background_ja_id, testimonial_background_pt_id, testimonial_background_pt_br_id, testimonial_background_ru_id, testimonial_background_zh_hans_id, testimonial_de, testimonial_en_gb, testimonial_es, testimonial_fr, testimonial_ja, testimonial_pt, testimonial_pt_br, testimonial_ru, testimonial_zh_hans) FROM stdin;
+COPY public.invest_highpotentialopportunitydetailpage (page_ptr_id, service_name, breadcrumbs_label, heading, contact_proposition, contact_button, proposition_one, opportunity_list_title, opportunity_list_item_one, opportunity_list_item_two, opportunity_list_item_three, proposition_two, proposition_two_list_item_one, proposition_two_list_item_two, proposition_two_list_item_three, competitive_advantages_title, competitive_advantages_list_item_one, competitive_advantages_list_item_two, competitive_advantages_list_item_three, testimonial, companies_list_text, case_study_list_title, case_study_one_text, case_study_two_text, case_study_three_text, case_study_four_text, case_study_four_image_id, case_study_one_image_id, case_study_three_image_id, case_study_two_image_id, companies_list_item_image_eight_id, companies_list_item_image_five_id, companies_list_item_image_four_id, companies_list_item_image_one_id, companies_list_item_image_seven_id, companies_list_item_image_six_id, companies_list_item_image_three_id, companies_list_item_image_two_id, hero_image_id, opportunity_list_image_id, proposition_one_image_id, proposition_one_video_id, proposition_two_image_id, proposition_two_video_id, competitive_advantages_list_item_one_icon_id, competitive_advantages_list_item_three_icon_id, competitive_advantages_list_item_two_icon_id, other_opportunities_title, summary_image_id, pdf_document_id, testimonial_background_id, description, featured, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_zh_hans, case_study_four_image_ar_id, case_study_four_image_de_id, case_study_four_image_en_gb_id, case_study_four_image_es_id, case_study_four_image_fr_id, case_study_four_image_ja_id, case_study_four_image_pt_id, case_study_four_image_zh_hans_id, case_study_four_text_ar, case_study_four_text_de, case_study_four_text_en_gb, case_study_four_text_es, case_study_four_text_fr, case_study_four_text_ja, case_study_four_text_pt, case_study_four_text_zh_hans, case_study_list_title_ar, case_study_list_title_de, case_study_list_title_en_gb, case_study_list_title_es, case_study_list_title_fr, case_study_list_title_ja, case_study_list_title_pt, case_study_list_title_zh_hans, case_study_one_image_ar_id, case_study_one_image_de_id, case_study_one_image_en_gb_id, case_study_one_image_es_id, case_study_one_image_fr_id, case_study_one_image_ja_id, case_study_one_image_pt_id, case_study_one_image_zh_hans_id, case_study_one_text_ar, case_study_one_text_de, case_study_one_text_en_gb, case_study_one_text_es, case_study_one_text_fr, case_study_one_text_ja, case_study_one_text_pt, case_study_one_text_zh_hans, case_study_three_image_ar_id, case_study_three_image_de_id, case_study_three_image_en_gb_id, case_study_three_image_es_id, case_study_three_image_fr_id, case_study_three_image_ja_id, case_study_three_image_pt_id, case_study_three_image_zh_hans_id, case_study_three_text_ar, case_study_three_text_de, case_study_three_text_en_gb, case_study_three_text_es, case_study_three_text_fr, case_study_three_text_ja, case_study_three_text_pt, case_study_three_text_zh_hans, case_study_two_image_ar_id, case_study_two_image_de_id, case_study_two_image_en_gb_id, case_study_two_image_es_id, case_study_two_image_fr_id, case_study_two_image_ja_id, case_study_two_image_pt_id, case_study_two_image_zh_hans_id, case_study_two_text_ar, case_study_two_text_de, case_study_two_text_en_gb, case_study_two_text_es, case_study_two_text_fr, case_study_two_text_ja, case_study_two_text_pt, case_study_two_text_zh_hans, companies_list_item_image_eight_ar_id, companies_list_item_image_eight_de_id, companies_list_item_image_eight_en_gb_id, companies_list_item_image_eight_es_id, companies_list_item_image_eight_fr_id, companies_list_item_image_eight_ja_id, companies_list_item_image_eight_pt_id, companies_list_item_image_eight_zh_hans_id, companies_list_item_image_five_ar_id, companies_list_item_image_five_de_id, companies_list_item_image_five_en_gb_id, companies_list_item_image_five_es_id, companies_list_item_image_five_fr_id, companies_list_item_image_five_ja_id, companies_list_item_image_five_pt_id, companies_list_item_image_five_zh_hans_id, companies_list_item_image_four_ar_id, companies_list_item_image_four_de_id, companies_list_item_image_four_en_gb_id, companies_list_item_image_four_es_id, companies_list_item_image_four_fr_id, companies_list_item_image_four_ja_id, companies_list_item_image_four_pt_id, companies_list_item_image_four_zh_hans_id, companies_list_item_image_one_ar_id, companies_list_item_image_one_de_id, companies_list_item_image_one_en_gb_id, companies_list_item_image_one_es_id, companies_list_item_image_one_fr_id, companies_list_item_image_one_ja_id, companies_list_item_image_one_pt_id, companies_list_item_image_one_zh_hans_id, companies_list_item_image_seven_ar_id, companies_list_item_image_seven_de_id, companies_list_item_image_seven_en_gb_id, companies_list_item_image_seven_es_id, companies_list_item_image_seven_fr_id, companies_list_item_image_seven_ja_id, companies_list_item_image_seven_pt_id, companies_list_item_image_seven_zh_hans_id, companies_list_item_image_six_ar_id, companies_list_item_image_six_de_id, companies_list_item_image_six_en_gb_id, companies_list_item_image_six_es_id, companies_list_item_image_six_fr_id, companies_list_item_image_six_ja_id, companies_list_item_image_six_pt_id, companies_list_item_image_six_zh_hans_id, companies_list_item_image_three_ar_id, companies_list_item_image_three_de_id, companies_list_item_image_three_en_gb_id, companies_list_item_image_three_es_id, companies_list_item_image_three_fr_id, companies_list_item_image_three_ja_id, companies_list_item_image_three_pt_id, companies_list_item_image_three_zh_hans_id, companies_list_item_image_two_ar_id, companies_list_item_image_two_de_id, companies_list_item_image_two_en_gb_id, companies_list_item_image_two_es_id, companies_list_item_image_two_fr_id, companies_list_item_image_two_ja_id, companies_list_item_image_two_pt_id, companies_list_item_image_two_zh_hans_id, companies_list_text_ar, companies_list_text_de, companies_list_text_en_gb, companies_list_text_es, companies_list_text_fr, companies_list_text_ja, companies_list_text_pt, companies_list_text_zh_hans, competitive_advantages_list_item_one_ar, competitive_advantages_list_item_one_de, competitive_advantages_list_item_one_en_gb, competitive_advantages_list_item_one_es, competitive_advantages_list_item_one_fr, competitive_advantages_list_item_one_icon_ar_id, competitive_advantages_list_item_one_icon_de_id, competitive_advantages_list_item_one_icon_en_gb_id, competitive_advantages_list_item_one_icon_es_id, competitive_advantages_list_item_one_icon_fr_id, competitive_advantages_list_item_one_icon_ja_id, competitive_advantages_list_item_one_icon_pt_id, competitive_advantages_list_item_one_icon_zh_hans_id, competitive_advantages_list_item_one_ja, competitive_advantages_list_item_one_pt, competitive_advantages_list_item_one_zh_hans, competitive_advantages_list_item_three_ar, competitive_advantages_list_item_three_de, competitive_advantages_list_item_three_en_gb, competitive_advantages_list_item_three_es, competitive_advantages_list_item_three_fr, competitive_advantages_list_item_three_icon_ar_id, competitive_advantages_list_item_three_icon_de_id, competitive_advantages_list_item_three_icon_en_gb_id, competitive_advantages_list_item_three_icon_es_id, competitive_advantages_list_item_three_icon_fr_id, competitive_advantages_list_item_three_icon_ja_id, competitive_advantages_list_item_three_icon_pt_id, competitive_advantages_list_item_three_icon_zh_hans_id, competitive_advantages_list_item_three_ja, competitive_advantages_list_item_three_pt, competitive_advantages_list_item_three_zh_hans, competitive_advantages_list_item_two_ar, competitive_advantages_list_item_two_de, competitive_advantages_list_item_two_en_gb, competitive_advantages_list_item_two_es, competitive_advantages_list_item_two_fr, competitive_advantages_list_item_two_icon_ar_id, competitive_advantages_list_item_two_icon_de_id, competitive_advantages_list_item_two_icon_en_gb_id, competitive_advantages_list_item_two_icon_es_id, competitive_advantages_list_item_two_icon_fr_id, competitive_advantages_list_item_two_icon_ja_id, competitive_advantages_list_item_two_icon_pt_id, competitive_advantages_list_item_two_icon_zh_hans_id, competitive_advantages_list_item_two_ja, competitive_advantages_list_item_two_pt, competitive_advantages_list_item_two_zh_hans, competitive_advantages_title_ar, competitive_advantages_title_de, competitive_advantages_title_en_gb, competitive_advantages_title_es, competitive_advantages_title_fr, competitive_advantages_title_ja, competitive_advantages_title_pt, competitive_advantages_title_zh_hans, contact_button_ar, contact_button_de, contact_button_en_gb, contact_button_es, contact_button_fr, contact_button_ja, contact_button_pt, contact_button_zh_hans, contact_proposition_ar, contact_proposition_de, contact_proposition_en_gb, contact_proposition_es, contact_proposition_fr, contact_proposition_ja, contact_proposition_pt, contact_proposition_zh_hans, description_ar, description_de, description_en_gb, description_es, description_fr, description_ja, description_pt, description_zh_hans, featured_ar, featured_de, featured_en_gb, featured_es, featured_fr, featured_ja, featured_pt, featured_zh_hans, heading_ar, heading_de, heading_en_gb, heading_es, heading_fr, heading_ja, heading_pt, heading_zh_hans, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, opportunity_list_image_ar_id, opportunity_list_image_de_id, opportunity_list_image_en_gb_id, opportunity_list_image_es_id, opportunity_list_image_fr_id, opportunity_list_image_ja_id, opportunity_list_image_pt_id, opportunity_list_image_zh_hans_id, opportunity_list_item_one_ar, opportunity_list_item_one_de, opportunity_list_item_one_en_gb, opportunity_list_item_one_es, opportunity_list_item_one_fr, opportunity_list_item_one_ja, opportunity_list_item_one_pt, opportunity_list_item_one_zh_hans, opportunity_list_item_three_ar, opportunity_list_item_three_de, opportunity_list_item_three_en_gb, opportunity_list_item_three_es, opportunity_list_item_three_fr, opportunity_list_item_three_ja, opportunity_list_item_three_pt, opportunity_list_item_three_zh_hans, opportunity_list_item_two_ar, opportunity_list_item_two_de, opportunity_list_item_two_en_gb, opportunity_list_item_two_es, opportunity_list_item_two_fr, opportunity_list_item_two_ja, opportunity_list_item_two_pt, opportunity_list_item_two_zh_hans, opportunity_list_title_ar, opportunity_list_title_de, opportunity_list_title_en_gb, opportunity_list_title_es, opportunity_list_title_fr, opportunity_list_title_ja, opportunity_list_title_pt, opportunity_list_title_zh_hans, other_opportunities_title_ar, other_opportunities_title_de, other_opportunities_title_en_gb, other_opportunities_title_es, other_opportunities_title_fr, other_opportunities_title_ja, other_opportunities_title_pt, other_opportunities_title_zh_hans, proposition_one_ar, proposition_one_de, proposition_one_en_gb, proposition_one_es, proposition_one_fr, proposition_one_image_ar_id, proposition_one_image_de_id, proposition_one_image_en_gb_id, proposition_one_image_es_id, proposition_one_image_fr_id, proposition_one_image_ja_id, proposition_one_image_pt_id, proposition_one_image_zh_hans_id, proposition_one_ja, proposition_one_pt, proposition_one_video_ar_id, proposition_one_video_de_id, proposition_one_video_en_gb_id, proposition_one_video_es_id, proposition_one_video_fr_id, proposition_one_video_ja_id, proposition_one_video_pt_id, proposition_one_video_zh_hans_id, proposition_one_zh_hans, proposition_two_ar, proposition_two_de, proposition_two_en_gb, proposition_two_es, proposition_two_fr, proposition_two_image_ar_id, proposition_two_image_de_id, proposition_two_image_en_gb_id, proposition_two_image_es_id, proposition_two_image_fr_id, proposition_two_image_ja_id, proposition_two_image_pt_id, proposition_two_image_zh_hans_id, proposition_two_ja, proposition_two_list_item_one_ar, proposition_two_list_item_one_de, proposition_two_list_item_one_en_gb, proposition_two_list_item_one_es, proposition_two_list_item_one_fr, proposition_two_list_item_one_ja, proposition_two_list_item_one_pt, proposition_two_list_item_one_zh_hans, proposition_two_list_item_three_ar, proposition_two_list_item_three_de, proposition_two_list_item_three_en_gb, proposition_two_list_item_three_es, proposition_two_list_item_three_fr, proposition_two_list_item_three_ja, proposition_two_list_item_three_pt, proposition_two_list_item_three_zh_hans, proposition_two_list_item_two_ar, proposition_two_list_item_two_de, proposition_two_list_item_two_en_gb, proposition_two_list_item_two_es, proposition_two_list_item_two_fr, proposition_two_list_item_two_ja, proposition_two_list_item_two_pt, proposition_two_list_item_two_zh_hans, proposition_two_pt, proposition_two_video_ar_id, proposition_two_video_de_id, proposition_two_video_en_gb_id, proposition_two_video_es_id, proposition_two_video_fr_id, proposition_two_video_ja_id, proposition_two_video_pt_id, proposition_two_video_zh_hans_id, proposition_two_zh_hans, summary_image_ar_id, summary_image_de_id, summary_image_en_gb_id, summary_image_es_id, summary_image_fr_id, summary_image_ja_id, summary_image_pt_id, summary_image_zh_hans_id, testimonial_ar, testimonial_background_ar_id, testimonial_background_de_id, testimonial_background_en_gb_id, testimonial_background_es_id, testimonial_background_fr_id, testimonial_background_ja_id, testimonial_background_pt_id, testimonial_background_zh_hans_id, testimonial_de, testimonial_en_gb, testimonial_es, testimonial_fr, testimonial_ja, testimonial_pt, testimonial_zh_hans, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8161,7 +7784,7 @@ COPY public.invest_highpotentialopportunitydetailpage (page_ptr_id, service_name
 -- Data for Name: invest_highpotentialopportunityformpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.invest_highpotentialopportunityformpage (page_ptr_id, service_name, comment_help_text, comment_label, company_name_help_text, company_name_label, company_size_help_text, company_size_label, country_help_text, country_label, email_address_help_text, email_address_label, full_name_help_text, full_name_label, opportunities_help_text, opportunities_label, phone_number_help_text, phone_number_label, role_in_company_help_text, role_in_company_label, website_url_help_text, website_url_label, heading, sub_heading, breadcrumbs_label) FROM stdin;
+COPY public.invest_highpotentialopportunityformpage (page_ptr_id, service_name, comment_help_text, comment_label, company_name_help_text, company_name_label, company_size_help_text, company_size_label, country_help_text, country_label, email_address_help_text, email_address_label, full_name_help_text, full_name_label, opportunities_help_text, opportunities_label, phone_number_help_text, phone_number_label, role_in_company_help_text, role_in_company_label, website_url_help_text, website_url_label, heading, sub_heading, breadcrumbs_label, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8169,7 +7792,7 @@ COPY public.invest_highpotentialopportunityformpage (page_ptr_id, service_name, 
 -- Data for Name: invest_highpotentialopportunityformsuccesspage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.invest_highpotentialopportunityformsuccesspage (page_ptr_id, service_name, breadcrumbs_label, heading, sub_heading, next_steps_title, next_steps_body, documents_title, documents_body) FROM stdin;
+COPY public.invest_highpotentialopportunityformsuccesspage (page_ptr_id, service_name, breadcrumbs_label, heading, sub_heading, next_steps_title, next_steps_body, documents_title, documents_body, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8177,7 +7800,7 @@ COPY public.invest_highpotentialopportunityformsuccesspage (page_ptr_id, service
 -- Data for Name: invest_infopage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.invest_infopage (page_ptr_id, content, content_en_gb, content_de, content_ja, content_ru, content_zh_hans, content_fr, content_es, content_pt, content_pt_br, content_ar, service_name) FROM stdin;
+COPY public.invest_infopage (page_ptr_id, content, content_en_gb, content_de, content_ja, content_zh_hans, content_fr, content_es, content_pt, content_ar, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8185,7 +7808,7 @@ COPY public.invest_infopage (page_ptr_id, content, content_en_gb, content_de, co
 -- Data for Name: invest_investapp; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.invest_investapp (page_ptr_id, service_name) FROM stdin;
+COPY public.invest_investapp (page_ptr_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8193,7 +7816,7 @@ COPY public.invest_investapp (page_ptr_id, service_name) FROM stdin;
 -- Data for Name: invest_investhomepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.invest_investhomepage (page_ptr_id, heading, heading_en_gb, heading_de, heading_ja, heading_ru, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_pt_br, heading_ar, sub_heading, sub_heading_en_gb, sub_heading_de, sub_heading_ja, sub_heading_ru, sub_heading_zh_hans, sub_heading_fr, sub_heading_es, sub_heading_pt, sub_heading_pt_br, sub_heading_ar, sector_title, sector_title_en_gb, sector_title_de, sector_title_ja, sector_title_ru, sector_title_zh_hans, sector_title_fr, sector_title_es, sector_title_pt, sector_title_pt_br, sector_title_ar, sector_button_text, sector_button_text_en_gb, sector_button_text_de, sector_button_text_ja, sector_button_text_ru, sector_button_text_zh_hans, sector_button_text_fr, sector_button_text_es, sector_button_text_pt, sector_button_text_pt_br, sector_button_text_ar, setup_guide_title, setup_guide_title_en_gb, setup_guide_title_de, setup_guide_title_ja, setup_guide_title_ru, setup_guide_title_zh_hans, setup_guide_title_fr, setup_guide_title_es, setup_guide_title_pt, setup_guide_title_pt_br, setup_guide_title_ar, setup_guide_lead_in, setup_guide_lead_in_en_gb, setup_guide_lead_in_de, setup_guide_lead_in_ja, setup_guide_lead_in_ru, setup_guide_lead_in_zh_hans, setup_guide_lead_in_fr, setup_guide_lead_in_es, setup_guide_lead_in_pt, setup_guide_lead_in_pt_br, setup_guide_lead_in_ar, how_we_help_title, how_we_help_title_en_gb, how_we_help_title_de, how_we_help_title_ja, how_we_help_title_ru, how_we_help_title_zh_hans, how_we_help_title_fr, how_we_help_title_es, how_we_help_title_pt, how_we_help_title_pt_br, how_we_help_title_ar, how_we_help_lead_in, how_we_help_lead_in_en_gb, how_we_help_lead_in_de, how_we_help_lead_in_ja, how_we_help_lead_in_ru, how_we_help_lead_in_zh_hans, how_we_help_lead_in_fr, how_we_help_lead_in_es, how_we_help_lead_in_pt, how_we_help_lead_in_pt_br, how_we_help_lead_in_ar, hero_image_id, how_we_help_icon_five_id, how_we_help_icon_five_ar_id, how_we_help_icon_five_de_id, how_we_help_icon_five_en_gb_id, how_we_help_icon_five_es_id, how_we_help_icon_five_fr_id, how_we_help_icon_five_ja_id, how_we_help_icon_five_pt_id, how_we_help_icon_five_pt_br_id, how_we_help_icon_five_ru_id, how_we_help_icon_five_zh_hans_id, how_we_help_icon_four_id, how_we_help_icon_four_ar_id, how_we_help_icon_four_de_id, how_we_help_icon_four_en_gb_id, how_we_help_icon_four_es_id, how_we_help_icon_four_fr_id, how_we_help_icon_four_ja_id, how_we_help_icon_four_pt_id, how_we_help_icon_four_pt_br_id, how_we_help_icon_four_ru_id, how_we_help_icon_four_zh_hans_id, how_we_help_icon_one_id, how_we_help_icon_one_ar_id, how_we_help_icon_one_de_id, how_we_help_icon_one_en_gb_id, how_we_help_icon_one_es_id, how_we_help_icon_one_fr_id, how_we_help_icon_one_ja_id, how_we_help_icon_one_pt_id, how_we_help_icon_one_pt_br_id, how_we_help_icon_one_ru_id, how_we_help_icon_one_zh_hans_id, how_we_help_icon_three_id, how_we_help_icon_three_ar_id, how_we_help_icon_three_de_id, how_we_help_icon_three_en_gb_id, how_we_help_icon_three_es_id, how_we_help_icon_three_fr_id, how_we_help_icon_three_ja_id, how_we_help_icon_three_pt_id, how_we_help_icon_three_pt_br_id, how_we_help_icon_three_ru_id, how_we_help_icon_three_zh_hans_id, how_we_help_icon_two_id, how_we_help_icon_two_ar_id, how_we_help_icon_two_de_id, how_we_help_icon_two_en_gb_id, how_we_help_icon_two_es_id, how_we_help_icon_two_fr_id, how_we_help_icon_two_ja_id, how_we_help_icon_two_pt_id, how_we_help_icon_two_pt_br_id, how_we_help_icon_two_ru_id, how_we_help_icon_two_zh_hans_id, how_we_help_text_five, how_we_help_text_five_ar, how_we_help_text_five_de, how_we_help_text_five_en_gb, how_we_help_text_five_es, how_we_help_text_five_fr, how_we_help_text_five_ja, how_we_help_text_five_pt, how_we_help_text_five_pt_br, how_we_help_text_five_ru, how_we_help_text_five_zh_hans, how_we_help_text_four, how_we_help_text_four_ar, how_we_help_text_four_de, how_we_help_text_four_en_gb, how_we_help_text_four_es, how_we_help_text_four_fr, how_we_help_text_four_ja, how_we_help_text_four_pt, how_we_help_text_four_pt_br, how_we_help_text_four_ru, how_we_help_text_four_zh_hans, how_we_help_text_one, how_we_help_text_one_ar, how_we_help_text_one_de, how_we_help_text_one_en_gb, how_we_help_text_one_es, how_we_help_text_one_fr, how_we_help_text_one_ja, how_we_help_text_one_pt, how_we_help_text_one_pt_br, how_we_help_text_one_ru, how_we_help_text_one_zh_hans, how_we_help_text_six, how_we_help_text_six_ar, how_we_help_text_six_de, how_we_help_text_six_en_gb, how_we_help_text_six_es, how_we_help_text_six_fr, how_we_help_text_six_ja, how_we_help_text_six_pt, how_we_help_text_six_pt_br, how_we_help_text_six_ru, how_we_help_text_six_zh_hans, how_we_help_text_three, how_we_help_text_three_ar, how_we_help_text_three_de, how_we_help_text_three_en_gb, how_we_help_text_three_es, how_we_help_text_three_fr, how_we_help_text_three_ja, how_we_help_text_three_pt, how_we_help_text_three_pt_br, how_we_help_text_three_ru, how_we_help_text_three_zh_hans, how_we_help_text_two, how_we_help_text_two_ar, how_we_help_text_two_de, how_we_help_text_two_en_gb, how_we_help_text_two_es, how_we_help_text_two_fr, how_we_help_text_two_ja, how_we_help_text_two_pt, how_we_help_text_two_pt_br, how_we_help_text_two_ru, how_we_help_text_two_zh_hans, subsection_content_five, subsection_content_five_ar, subsection_content_five_de, subsection_content_five_en_gb, subsection_content_five_es, subsection_content_five_fr, subsection_content_five_ja, subsection_content_five_pt, subsection_content_five_pt_br, subsection_content_five_ru, subsection_content_five_zh_hans, subsection_content_four, subsection_content_four_ar, subsection_content_four_de, subsection_content_four_en_gb, subsection_content_four_es, subsection_content_four_fr, subsection_content_four_ja, subsection_content_four_pt, subsection_content_four_pt_br, subsection_content_four_ru, subsection_content_four_zh_hans, subsection_content_one, subsection_content_one_ar, subsection_content_one_de, subsection_content_one_en_gb, subsection_content_one_es, subsection_content_one_fr, subsection_content_one_ja, subsection_content_one_pt, subsection_content_one_pt_br, subsection_content_one_ru, subsection_content_one_zh_hans, subsection_content_seven, subsection_content_seven_ar, subsection_content_seven_de, subsection_content_seven_en_gb, subsection_content_seven_es, subsection_content_seven_fr, subsection_content_seven_ja, subsection_content_seven_pt, subsection_content_seven_pt_br, subsection_content_seven_ru, subsection_content_seven_zh_hans, subsection_content_six, subsection_content_six_ar, subsection_content_six_de, subsection_content_six_en_gb, subsection_content_six_es, subsection_content_six_fr, subsection_content_six_ja, subsection_content_six_pt, subsection_content_six_pt_br, subsection_content_six_ru, subsection_content_six_zh_hans, subsection_content_three, subsection_content_three_ar, subsection_content_three_de, subsection_content_three_en_gb, subsection_content_three_es, subsection_content_three_fr, subsection_content_three_ja, subsection_content_three_pt, subsection_content_three_pt_br, subsection_content_three_ru, subsection_content_three_zh_hans, subsection_content_two, subsection_content_two_ar, subsection_content_two_de, subsection_content_two_en_gb, subsection_content_two_es, subsection_content_two_fr, subsection_content_two_ja, subsection_content_two_pt, subsection_content_two_pt_br, subsection_content_two_ru, subsection_content_two_zh_hans, subsection_title_five, subsection_title_five_ar, subsection_title_five_de, subsection_title_five_en_gb, subsection_title_five_es, subsection_title_five_fr, subsection_title_five_ja, subsection_title_five_pt, subsection_title_five_pt_br, subsection_title_five_ru, subsection_title_five_zh_hans, subsection_title_four, subsection_title_four_ar, subsection_title_four_de, subsection_title_four_en_gb, subsection_title_four_es, subsection_title_four_fr, subsection_title_four_ja, subsection_title_four_pt, subsection_title_four_pt_br, subsection_title_four_ru, subsection_title_four_zh_hans, subsection_title_one, subsection_title_one_ar, subsection_title_one_de, subsection_title_one_en_gb, subsection_title_one_es, subsection_title_one_fr, subsection_title_one_ja, subsection_title_one_pt, subsection_title_one_pt_br, subsection_title_one_ru, subsection_title_one_zh_hans, subsection_title_seven, subsection_title_seven_ar, subsection_title_seven_de, subsection_title_seven_en_gb, subsection_title_seven_es, subsection_title_seven_fr, subsection_title_seven_ja, subsection_title_seven_pt, subsection_title_seven_pt_br, subsection_title_seven_ru, subsection_title_seven_zh_hans, subsection_title_six, subsection_title_six_ar, subsection_title_six_de, subsection_title_six_en_gb, subsection_title_six_es, subsection_title_six_fr, subsection_title_six_ja, subsection_title_six_pt, subsection_title_six_pt_br, subsection_title_six_ru, subsection_title_six_zh_hans, subsection_title_three, subsection_title_three_ar, subsection_title_three_de, subsection_title_three_en_gb, subsection_title_three_es, subsection_title_three_fr, subsection_title_three_ja, subsection_title_three_pt, subsection_title_three_pt_br, subsection_title_three_ru, subsection_title_three_zh_hans, subsection_title_two, subsection_title_two_ar, subsection_title_two_de, subsection_title_two_en_gb, subsection_title_two_es, subsection_title_two_fr, subsection_title_two_ja, subsection_title_two_pt, subsection_title_two_pt_br, subsection_title_two_ru, subsection_title_two_zh_hans, service_name, setup_guide_call_to_action_text, setup_guide_call_to_action_text_ar, setup_guide_call_to_action_text_de, setup_guide_call_to_action_text_en_gb, setup_guide_call_to_action_text_es, setup_guide_call_to_action_text_fr, setup_guide_call_to_action_text_ja, setup_guide_call_to_action_text_pt, setup_guide_call_to_action_text_pt_br, setup_guide_call_to_action_text_ru, setup_guide_call_to_action_text_zh_hans, setup_guide_content, setup_guide_content_ar, setup_guide_content_de, setup_guide_content_en_gb, setup_guide_content_es, setup_guide_content_fr, setup_guide_content_ja, setup_guide_content_pt, setup_guide_content_pt_br, setup_guide_content_ru, setup_guide_content_zh_hans, setup_guide_img_id, setup_guide_img_ar_id, setup_guide_img_de_id, setup_guide_img_en_gb_id, setup_guide_img_es_id, setup_guide_img_fr_id, setup_guide_img_ja_id, setup_guide_img_pt_id, setup_guide_img_pt_br_id, setup_guide_img_ru_id, setup_guide_img_zh_hans_id, benefits_section_content, benefits_section_content_ar, benefits_section_content_de, benefits_section_content_en_gb, benefits_section_content_es, benefits_section_content_fr, benefits_section_content_ja, benefits_section_content_pt, benefits_section_content_pt_br, benefits_section_content_ru, benefits_section_content_zh_hans, benefits_section_img_id, benefits_section_img_ar_id, benefits_section_img_de_id, benefits_section_img_en_gb_id, benefits_section_img_es_id, benefits_section_img_fr_id, benefits_section_img_ja_id, benefits_section_img_pt_id, benefits_section_img_pt_br_id, benefits_section_img_ru_id, benefits_section_img_zh_hans_id, benefits_section_intro, benefits_section_intro_ar, benefits_section_intro_de, benefits_section_intro_en_gb, benefits_section_intro_es, benefits_section_intro_fr, benefits_section_intro_ja, benefits_section_intro_pt, benefits_section_intro_pt_br, benefits_section_intro_ru, benefits_section_intro_zh_hans, benefits_section_title, benefits_section_title_ar, benefits_section_title_de, benefits_section_title_en_gb, benefits_section_title_es, benefits_section_title_fr, benefits_section_title_ja, benefits_section_title_pt, benefits_section_title_pt_br, benefits_section_title_ru, benefits_section_title_zh_hans, breadcrumbs_label, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_pt_br, breadcrumbs_label_ru, breadcrumbs_label_zh_hans, contact_section_call_to_action_text, contact_section_call_to_action_text_ar, contact_section_call_to_action_text_de, contact_section_call_to_action_text_en_gb, contact_section_call_to_action_text_es, contact_section_call_to_action_text_fr, contact_section_call_to_action_text_ja, contact_section_call_to_action_text_pt, contact_section_call_to_action_text_pt_br, contact_section_call_to_action_text_ru, contact_section_call_to_action_text_zh_hans, contact_section_content, contact_section_content_ar, contact_section_content_de, contact_section_content_en_gb, contact_section_content_es, contact_section_content_fr, contact_section_content_ja, contact_section_content_pt, contact_section_content_pt_br, contact_section_content_ru, contact_section_content_zh_hans, contact_section_title, contact_section_title_ar, contact_section_title_de, contact_section_title_en_gb, contact_section_title_es, contact_section_title_fr, contact_section_title_ja, contact_section_title_pt, contact_section_title_pt_br, contact_section_title_ru, contact_section_title_zh_hans, eu_exit_section_call_to_action_text, eu_exit_section_call_to_action_text_ar, eu_exit_section_call_to_action_text_de, eu_exit_section_call_to_action_text_en_gb, eu_exit_section_call_to_action_text_es, eu_exit_section_call_to_action_text_fr, eu_exit_section_call_to_action_text_ja, eu_exit_section_call_to_action_text_pt, eu_exit_section_call_to_action_text_pt_br, eu_exit_section_call_to_action_text_ru, eu_exit_section_call_to_action_text_zh_hans, eu_exit_section_content, eu_exit_section_content_ar, eu_exit_section_content_de, eu_exit_section_content_en_gb, eu_exit_section_content_es, eu_exit_section_content_fr, eu_exit_section_content_ja, eu_exit_section_content_pt, eu_exit_section_content_pt_br, eu_exit_section_content_ru, eu_exit_section_content_zh_hans, eu_exit_section_img_id, eu_exit_section_img_ar_id, eu_exit_section_img_de_id, eu_exit_section_img_en_gb_id, eu_exit_section_img_es_id, eu_exit_section_img_fr_id, eu_exit_section_img_ja_id, eu_exit_section_img_pt_id, eu_exit_section_img_pt_br_id, eu_exit_section_img_ru_id, eu_exit_section_img_zh_hans_id, eu_exit_section_title, eu_exit_section_title_ar, eu_exit_section_title_de, eu_exit_section_title_en_gb, eu_exit_section_title_es, eu_exit_section_title_fr, eu_exit_section_title_ja, eu_exit_section_title_pt, eu_exit_section_title_pt_br, eu_exit_section_title_ru, eu_exit_section_title_zh_hans, hero_call_to_action_text, hero_call_to_action_text_ar, hero_call_to_action_text_de, hero_call_to_action_text_en_gb, hero_call_to_action_text_es, hero_call_to_action_text_fr, hero_call_to_action_text_ja, hero_call_to_action_text_pt, hero_call_to_action_text_pt_br, hero_call_to_action_text_ru, hero_call_to_action_text_zh_hans, hpo_intro, hpo_intro_ar, hpo_intro_de, hpo_intro_en_gb, hpo_intro_es, hpo_intro_fr, hpo_intro_ja, hpo_intro_pt, hpo_intro_pt_br, hpo_intro_ru, hpo_intro_zh_hans, hpo_title, hpo_title_ar, hpo_title_de, hpo_title_en_gb, hpo_title_es, hpo_title_fr, hpo_title_ja, hpo_title_pt, hpo_title_pt_br, hpo_title_ru, hpo_title_zh_hans, sector_intro, sector_intro_ar, sector_intro_de, sector_intro_en_gb, sector_intro_es, sector_intro_fr, sector_intro_ja, sector_intro_pt, sector_intro_pt_br, sector_intro_ru, sector_intro_zh_hans, capital_invest_section_background_image_id, capital_invest_section_background_image_ar_id, capital_invest_section_background_image_de_id, capital_invest_section_background_image_en_gb_id, capital_invest_section_background_image_es_id, capital_invest_section_background_image_fr_id, capital_invest_section_background_image_ja_id, capital_invest_section_background_image_pt_id, capital_invest_section_background_image_pt_br_id, capital_invest_section_background_image_ru_id, capital_invest_section_background_image_zh_hans_id, capital_invest_section_content, capital_invest_section_content_ar, capital_invest_section_content_de, capital_invest_section_content_en_gb, capital_invest_section_content_es, capital_invest_section_content_fr, capital_invest_section_content_ja, capital_invest_section_content_pt, capital_invest_section_content_pt_br, capital_invest_section_content_ru, capital_invest_section_content_zh_hans, capital_invest_section_cta_text, capital_invest_section_cta_text_ar, capital_invest_section_cta_text_de, capital_invest_section_cta_text_en_gb, capital_invest_section_cta_text_es, capital_invest_section_cta_text_fr, capital_invest_section_cta_text_ja, capital_invest_section_cta_text_pt, capital_invest_section_cta_text_pt_br, capital_invest_section_cta_text_ru, capital_invest_section_cta_text_zh_hans, capital_invest_section_title, capital_invest_section_title_ar, capital_invest_section_title_de, capital_invest_section_title_en_gb, capital_invest_section_title_es, capital_invest_section_title_fr, capital_invest_section_title_ja, capital_invest_section_title_pt, capital_invest_section_title_pt_br, capital_invest_section_title_ru, capital_invest_section_title_zh_hans, capital_invest_section_cta_url, capital_invest_section_cta_url_ar, capital_invest_section_cta_url_de, capital_invest_section_cta_url_en_gb, capital_invest_section_cta_url_es, capital_invest_section_cta_url_fr, capital_invest_section_cta_url_ja, capital_invest_section_cta_url_pt, capital_invest_section_cta_url_pt_br, capital_invest_section_cta_url_ru, capital_invest_section_cta_url_zh_hans, contact_section_call_to_action_url, contact_section_call_to_action_url_ar, contact_section_call_to_action_url_de, contact_section_call_to_action_url_en_gb, contact_section_call_to_action_url_es, contact_section_call_to_action_url_fr, contact_section_call_to_action_url_ja, contact_section_call_to_action_url_pt, contact_section_call_to_action_url_pt_br, contact_section_call_to_action_url_ru, contact_section_call_to_action_url_zh_hans, eu_exit_section_call_to_action_url, eu_exit_section_call_to_action_url_ar, eu_exit_section_call_to_action_url_de, eu_exit_section_call_to_action_url_en_gb, eu_exit_section_call_to_action_url_es, eu_exit_section_call_to_action_url_fr, eu_exit_section_call_to_action_url_ja, eu_exit_section_call_to_action_url_pt, eu_exit_section_call_to_action_url_pt_br, eu_exit_section_call_to_action_url_ru, eu_exit_section_call_to_action_url_zh_hans, hero_call_to_action_url, hero_call_to_action_url_ar, hero_call_to_action_url_de, hero_call_to_action_url_en_gb, hero_call_to_action_url_es, hero_call_to_action_url_fr, hero_call_to_action_url_ja, hero_call_to_action_url_pt, hero_call_to_action_url_pt_br, hero_call_to_action_url_ru, hero_call_to_action_url_zh_hans, sector_button_url, sector_button_url_ar, sector_button_url_de, sector_button_url_en_gb, sector_button_url_es, sector_button_url_fr, sector_button_url_ja, sector_button_url_pt, sector_button_url_pt_br, sector_button_url_ru, sector_button_url_zh_hans, setup_guide_call_to_action_url, setup_guide_call_to_action_url_ar, setup_guide_call_to_action_url_de, setup_guide_call_to_action_url_en_gb, setup_guide_call_to_action_url_es, setup_guide_call_to_action_url_fr, setup_guide_call_to_action_url_ja, setup_guide_call_to_action_url_pt, setup_guide_call_to_action_url_pt_br, setup_guide_call_to_action_url_ru, setup_guide_call_to_action_url_zh_hans) FROM stdin;
+COPY public.invest_investhomepage (page_ptr_id, heading, heading_en_gb, heading_de, heading_ja, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_ar, sub_heading, sub_heading_en_gb, sub_heading_de, sub_heading_ja, sub_heading_zh_hans, sub_heading_fr, sub_heading_es, sub_heading_pt, sub_heading_ar, sector_title, sector_title_en_gb, sector_title_de, sector_title_ja, sector_title_zh_hans, sector_title_fr, sector_title_es, sector_title_pt, sector_title_ar, sector_button_text, sector_button_text_en_gb, sector_button_text_de, sector_button_text_ja, sector_button_text_zh_hans, sector_button_text_fr, sector_button_text_es, sector_button_text_pt, sector_button_text_ar, setup_guide_title, setup_guide_title_en_gb, setup_guide_title_de, setup_guide_title_ja, setup_guide_title_zh_hans, setup_guide_title_fr, setup_guide_title_es, setup_guide_title_pt, setup_guide_title_ar, setup_guide_lead_in, setup_guide_lead_in_en_gb, setup_guide_lead_in_de, setup_guide_lead_in_ja, setup_guide_lead_in_zh_hans, setup_guide_lead_in_fr, setup_guide_lead_in_es, setup_guide_lead_in_pt, setup_guide_lead_in_ar, how_we_help_title, how_we_help_title_en_gb, how_we_help_title_de, how_we_help_title_ja, how_we_help_title_zh_hans, how_we_help_title_fr, how_we_help_title_es, how_we_help_title_pt, how_we_help_title_ar, how_we_help_lead_in, how_we_help_lead_in_en_gb, how_we_help_lead_in_de, how_we_help_lead_in_ja, how_we_help_lead_in_zh_hans, how_we_help_lead_in_fr, how_we_help_lead_in_es, how_we_help_lead_in_pt, how_we_help_lead_in_ar, hero_image_id, how_we_help_icon_five_id, how_we_help_icon_five_ar_id, how_we_help_icon_five_de_id, how_we_help_icon_five_en_gb_id, how_we_help_icon_five_es_id, how_we_help_icon_five_fr_id, how_we_help_icon_five_ja_id, how_we_help_icon_five_pt_id, how_we_help_icon_five_zh_hans_id, how_we_help_icon_four_id, how_we_help_icon_four_ar_id, how_we_help_icon_four_de_id, how_we_help_icon_four_en_gb_id, how_we_help_icon_four_es_id, how_we_help_icon_four_fr_id, how_we_help_icon_four_ja_id, how_we_help_icon_four_pt_id, how_we_help_icon_four_zh_hans_id, how_we_help_icon_one_id, how_we_help_icon_one_ar_id, how_we_help_icon_one_de_id, how_we_help_icon_one_en_gb_id, how_we_help_icon_one_es_id, how_we_help_icon_one_fr_id, how_we_help_icon_one_ja_id, how_we_help_icon_one_pt_id, how_we_help_icon_one_zh_hans_id, how_we_help_icon_three_id, how_we_help_icon_three_ar_id, how_we_help_icon_three_de_id, how_we_help_icon_three_en_gb_id, how_we_help_icon_three_es_id, how_we_help_icon_three_fr_id, how_we_help_icon_three_ja_id, how_we_help_icon_three_pt_id, how_we_help_icon_three_zh_hans_id, how_we_help_icon_two_id, how_we_help_icon_two_ar_id, how_we_help_icon_two_de_id, how_we_help_icon_two_en_gb_id, how_we_help_icon_two_es_id, how_we_help_icon_two_fr_id, how_we_help_icon_two_ja_id, how_we_help_icon_two_pt_id, how_we_help_icon_two_zh_hans_id, how_we_help_text_five, how_we_help_text_five_ar, how_we_help_text_five_de, how_we_help_text_five_en_gb, how_we_help_text_five_es, how_we_help_text_five_fr, how_we_help_text_five_ja, how_we_help_text_five_pt, how_we_help_text_five_zh_hans, how_we_help_text_four, how_we_help_text_four_ar, how_we_help_text_four_de, how_we_help_text_four_en_gb, how_we_help_text_four_es, how_we_help_text_four_fr, how_we_help_text_four_ja, how_we_help_text_four_pt, how_we_help_text_four_zh_hans, how_we_help_text_one, how_we_help_text_one_ar, how_we_help_text_one_de, how_we_help_text_one_en_gb, how_we_help_text_one_es, how_we_help_text_one_fr, how_we_help_text_one_ja, how_we_help_text_one_pt, how_we_help_text_one_zh_hans, how_we_help_text_six, how_we_help_text_six_ar, how_we_help_text_six_de, how_we_help_text_six_en_gb, how_we_help_text_six_es, how_we_help_text_six_fr, how_we_help_text_six_ja, how_we_help_text_six_pt, how_we_help_text_six_zh_hans, how_we_help_text_three, how_we_help_text_three_ar, how_we_help_text_three_de, how_we_help_text_three_en_gb, how_we_help_text_three_es, how_we_help_text_three_fr, how_we_help_text_three_ja, how_we_help_text_three_pt, how_we_help_text_three_zh_hans, how_we_help_text_two, how_we_help_text_two_ar, how_we_help_text_two_de, how_we_help_text_two_en_gb, how_we_help_text_two_es, how_we_help_text_two_fr, how_we_help_text_two_ja, how_we_help_text_two_pt, how_we_help_text_two_zh_hans, subsection_content_five, subsection_content_five_ar, subsection_content_five_de, subsection_content_five_en_gb, subsection_content_five_es, subsection_content_five_fr, subsection_content_five_ja, subsection_content_five_pt, subsection_content_five_zh_hans, subsection_content_four, subsection_content_four_ar, subsection_content_four_de, subsection_content_four_en_gb, subsection_content_four_es, subsection_content_four_fr, subsection_content_four_ja, subsection_content_four_pt, subsection_content_four_zh_hans, subsection_content_one, subsection_content_one_ar, subsection_content_one_de, subsection_content_one_en_gb, subsection_content_one_es, subsection_content_one_fr, subsection_content_one_ja, subsection_content_one_pt, subsection_content_one_zh_hans, subsection_content_seven, subsection_content_seven_ar, subsection_content_seven_de, subsection_content_seven_en_gb, subsection_content_seven_es, subsection_content_seven_fr, subsection_content_seven_ja, subsection_content_seven_pt, subsection_content_seven_zh_hans, subsection_content_six, subsection_content_six_ar, subsection_content_six_de, subsection_content_six_en_gb, subsection_content_six_es, subsection_content_six_fr, subsection_content_six_ja, subsection_content_six_pt, subsection_content_six_zh_hans, subsection_content_three, subsection_content_three_ar, subsection_content_three_de, subsection_content_three_en_gb, subsection_content_three_es, subsection_content_three_fr, subsection_content_three_ja, subsection_content_three_pt, subsection_content_three_zh_hans, subsection_content_two, subsection_content_two_ar, subsection_content_two_de, subsection_content_two_en_gb, subsection_content_two_es, subsection_content_two_fr, subsection_content_two_ja, subsection_content_two_pt, subsection_content_two_zh_hans, subsection_title_five, subsection_title_five_ar, subsection_title_five_de, subsection_title_five_en_gb, subsection_title_five_es, subsection_title_five_fr, subsection_title_five_ja, subsection_title_five_pt, subsection_title_five_zh_hans, subsection_title_four, subsection_title_four_ar, subsection_title_four_de, subsection_title_four_en_gb, subsection_title_four_es, subsection_title_four_fr, subsection_title_four_ja, subsection_title_four_pt, subsection_title_four_zh_hans, subsection_title_one, subsection_title_one_ar, subsection_title_one_de, subsection_title_one_en_gb, subsection_title_one_es, subsection_title_one_fr, subsection_title_one_ja, subsection_title_one_pt, subsection_title_one_zh_hans, subsection_title_seven, subsection_title_seven_ar, subsection_title_seven_de, subsection_title_seven_en_gb, subsection_title_seven_es, subsection_title_seven_fr, subsection_title_seven_ja, subsection_title_seven_pt, subsection_title_seven_zh_hans, subsection_title_six, subsection_title_six_ar, subsection_title_six_de, subsection_title_six_en_gb, subsection_title_six_es, subsection_title_six_fr, subsection_title_six_ja, subsection_title_six_pt, subsection_title_six_zh_hans, subsection_title_three, subsection_title_three_ar, subsection_title_three_de, subsection_title_three_en_gb, subsection_title_three_es, subsection_title_three_fr, subsection_title_three_ja, subsection_title_three_pt, subsection_title_three_zh_hans, subsection_title_two, subsection_title_two_ar, subsection_title_two_de, subsection_title_two_en_gb, subsection_title_two_es, subsection_title_two_fr, subsection_title_two_ja, subsection_title_two_pt, subsection_title_two_zh_hans, service_name, setup_guide_call_to_action_text, setup_guide_call_to_action_text_ar, setup_guide_call_to_action_text_de, setup_guide_call_to_action_text_en_gb, setup_guide_call_to_action_text_es, setup_guide_call_to_action_text_fr, setup_guide_call_to_action_text_ja, setup_guide_call_to_action_text_pt, setup_guide_call_to_action_text_zh_hans, setup_guide_content, setup_guide_content_ar, setup_guide_content_de, setup_guide_content_en_gb, setup_guide_content_es, setup_guide_content_fr, setup_guide_content_ja, setup_guide_content_pt, setup_guide_content_zh_hans, setup_guide_img_id, setup_guide_img_ar_id, setup_guide_img_de_id, setup_guide_img_en_gb_id, setup_guide_img_es_id, setup_guide_img_fr_id, setup_guide_img_ja_id, setup_guide_img_pt_id, setup_guide_img_zh_hans_id, benefits_section_content, benefits_section_content_ar, benefits_section_content_de, benefits_section_content_en_gb, benefits_section_content_es, benefits_section_content_fr, benefits_section_content_ja, benefits_section_content_pt, benefits_section_content_zh_hans, benefits_section_img_id, benefits_section_img_ar_id, benefits_section_img_de_id, benefits_section_img_en_gb_id, benefits_section_img_es_id, benefits_section_img_fr_id, benefits_section_img_ja_id, benefits_section_img_pt_id, benefits_section_img_zh_hans_id, benefits_section_intro, benefits_section_intro_ar, benefits_section_intro_de, benefits_section_intro_en_gb, benefits_section_intro_es, benefits_section_intro_fr, benefits_section_intro_ja, benefits_section_intro_pt, benefits_section_intro_zh_hans, benefits_section_title, benefits_section_title_ar, benefits_section_title_de, benefits_section_title_en_gb, benefits_section_title_es, benefits_section_title_fr, benefits_section_title_ja, benefits_section_title_pt, benefits_section_title_zh_hans, breadcrumbs_label, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_zh_hans, contact_section_call_to_action_text, contact_section_call_to_action_text_ar, contact_section_call_to_action_text_de, contact_section_call_to_action_text_en_gb, contact_section_call_to_action_text_es, contact_section_call_to_action_text_fr, contact_section_call_to_action_text_ja, contact_section_call_to_action_text_pt, contact_section_call_to_action_text_zh_hans, contact_section_content, contact_section_content_ar, contact_section_content_de, contact_section_content_en_gb, contact_section_content_es, contact_section_content_fr, contact_section_content_ja, contact_section_content_pt, contact_section_content_zh_hans, contact_section_title, contact_section_title_ar, contact_section_title_de, contact_section_title_en_gb, contact_section_title_es, contact_section_title_fr, contact_section_title_ja, contact_section_title_pt, contact_section_title_zh_hans, eu_exit_section_call_to_action_text, eu_exit_section_call_to_action_text_ar, eu_exit_section_call_to_action_text_de, eu_exit_section_call_to_action_text_en_gb, eu_exit_section_call_to_action_text_es, eu_exit_section_call_to_action_text_fr, eu_exit_section_call_to_action_text_ja, eu_exit_section_call_to_action_text_pt, eu_exit_section_call_to_action_text_zh_hans, eu_exit_section_content, eu_exit_section_content_ar, eu_exit_section_content_de, eu_exit_section_content_en_gb, eu_exit_section_content_es, eu_exit_section_content_fr, eu_exit_section_content_ja, eu_exit_section_content_pt, eu_exit_section_content_zh_hans, eu_exit_section_img_id, eu_exit_section_img_ar_id, eu_exit_section_img_de_id, eu_exit_section_img_en_gb_id, eu_exit_section_img_es_id, eu_exit_section_img_fr_id, eu_exit_section_img_ja_id, eu_exit_section_img_pt_id, eu_exit_section_img_zh_hans_id, eu_exit_section_title, eu_exit_section_title_ar, eu_exit_section_title_de, eu_exit_section_title_en_gb, eu_exit_section_title_es, eu_exit_section_title_fr, eu_exit_section_title_ja, eu_exit_section_title_pt, eu_exit_section_title_zh_hans, hero_call_to_action_text, hero_call_to_action_text_ar, hero_call_to_action_text_de, hero_call_to_action_text_en_gb, hero_call_to_action_text_es, hero_call_to_action_text_fr, hero_call_to_action_text_ja, hero_call_to_action_text_pt, hero_call_to_action_text_zh_hans, hpo_intro, hpo_intro_ar, hpo_intro_de, hpo_intro_en_gb, hpo_intro_es, hpo_intro_fr, hpo_intro_ja, hpo_intro_pt, hpo_intro_zh_hans, hpo_title, hpo_title_ar, hpo_title_de, hpo_title_en_gb, hpo_title_es, hpo_title_fr, hpo_title_ja, hpo_title_pt, hpo_title_zh_hans, sector_intro, sector_intro_ar, sector_intro_de, sector_intro_en_gb, sector_intro_es, sector_intro_fr, sector_intro_ja, sector_intro_pt, sector_intro_zh_hans, capital_invest_section_background_image_id, capital_invest_section_background_image_ar_id, capital_invest_section_background_image_de_id, capital_invest_section_background_image_en_gb_id, capital_invest_section_background_image_es_id, capital_invest_section_background_image_fr_id, capital_invest_section_background_image_ja_id, capital_invest_section_background_image_pt_id, capital_invest_section_background_image_zh_hans_id, capital_invest_section_content, capital_invest_section_content_ar, capital_invest_section_content_de, capital_invest_section_content_en_gb, capital_invest_section_content_es, capital_invest_section_content_fr, capital_invest_section_content_ja, capital_invest_section_content_pt, capital_invest_section_content_zh_hans, capital_invest_section_cta_text, capital_invest_section_cta_text_ar, capital_invest_section_cta_text_de, capital_invest_section_cta_text_en_gb, capital_invest_section_cta_text_es, capital_invest_section_cta_text_fr, capital_invest_section_cta_text_ja, capital_invest_section_cta_text_pt, capital_invest_section_cta_text_zh_hans, capital_invest_section_title, capital_invest_section_title_ar, capital_invest_section_title_de, capital_invest_section_title_en_gb, capital_invest_section_title_es, capital_invest_section_title_fr, capital_invest_section_title_ja, capital_invest_section_title_pt, capital_invest_section_title_zh_hans, capital_invest_section_cta_url, capital_invest_section_cta_url_ar, capital_invest_section_cta_url_de, capital_invest_section_cta_url_en_gb, capital_invest_section_cta_url_es, capital_invest_section_cta_url_fr, capital_invest_section_cta_url_ja, capital_invest_section_cta_url_pt, capital_invest_section_cta_url_zh_hans, contact_section_call_to_action_url, contact_section_call_to_action_url_ar, contact_section_call_to_action_url_de, contact_section_call_to_action_url_en_gb, contact_section_call_to_action_url_es, contact_section_call_to_action_url_fr, contact_section_call_to_action_url_ja, contact_section_call_to_action_url_pt, contact_section_call_to_action_url_zh_hans, eu_exit_section_call_to_action_url, eu_exit_section_call_to_action_url_ar, eu_exit_section_call_to_action_url_de, eu_exit_section_call_to_action_url_en_gb, eu_exit_section_call_to_action_url_es, eu_exit_section_call_to_action_url_fr, eu_exit_section_call_to_action_url_ja, eu_exit_section_call_to_action_url_pt, eu_exit_section_call_to_action_url_zh_hans, hero_call_to_action_url, hero_call_to_action_url_ar, hero_call_to_action_url_de, hero_call_to_action_url_en_gb, hero_call_to_action_url_es, hero_call_to_action_url_fr, hero_call_to_action_url_ja, hero_call_to_action_url_pt, hero_call_to_action_url_zh_hans, sector_button_url, sector_button_url_ar, sector_button_url_de, sector_button_url_en_gb, sector_button_url_es, sector_button_url_fr, sector_button_url_ja, sector_button_url_pt, sector_button_url_zh_hans, setup_guide_call_to_action_url, setup_guide_call_to_action_url_ar, setup_guide_call_to_action_url_de, setup_guide_call_to_action_url_en_gb, setup_guide_call_to_action_url_es, setup_guide_call_to_action_url_fr, setup_guide_call_to_action_url_ja, setup_guide_call_to_action_url_pt, setup_guide_call_to_action_url_zh_hans, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8201,7 +7824,7 @@ COPY public.invest_investhomepage (page_ptr_id, heading, heading_en_gb, heading_
 -- Data for Name: invest_regionlandingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.invest_regionlandingpage (page_ptr_id, heading, heading_en_gb, heading_de, heading_ja, heading_ru, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_pt_br, heading_ar, hero_image_id, service_name) FROM stdin;
+COPY public.invest_regionlandingpage (page_ptr_id, heading, heading_en_gb, heading_de, heading_ja, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_ar, hero_image_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8209,7 +7832,7 @@ COPY public.invest_regionlandingpage (page_ptr_id, heading, heading_en_gb, headi
 -- Data for Name: invest_sectorlandingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.invest_sectorlandingpage (page_ptr_id, heading, heading_en_gb, heading_de, heading_ja, heading_ru, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_pt_br, heading_ar, hero_image_id, service_name) FROM stdin;
+COPY public.invest_sectorlandingpage (page_ptr_id, heading, heading_en_gb, heading_de, heading_ja, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_ar, hero_image_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8217,7 +7840,7 @@ COPY public.invest_sectorlandingpage (page_ptr_id, heading, heading_en_gb, headi
 -- Data for Name: invest_sectorpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.invest_sectorpage (page_ptr_id, featured, description, description_en_gb, description_de, description_ja, description_ru, description_zh_hans, description_fr, description_es, description_pt, description_pt_br, description_ar, heading, heading_en_gb, heading_de, heading_ja, heading_ru, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_pt_br, heading_ar, hero_image_id, pullout_stat, pullout_stat_ar, pullout_stat_de, pullout_stat_en_gb, pullout_stat_es, pullout_stat_fr, pullout_stat_ja, pullout_stat_pt, pullout_stat_pt_br, pullout_stat_ru, pullout_stat_text, pullout_stat_text_ar, pullout_stat_text_de, pullout_stat_text_en_gb, pullout_stat_text_es, pullout_stat_text_fr, pullout_stat_text_ja, pullout_stat_text_pt, pullout_stat_text_pt_br, pullout_stat_text_ru, pullout_stat_text_zh_hans, pullout_stat_zh_hans, pullout_text, pullout_text_ar, pullout_text_de, pullout_text_en_gb, pullout_text_es, pullout_text_fr, pullout_text_ja, pullout_text_pt, pullout_text_pt_br, pullout_text_ru, pullout_text_zh_hans, subsection_content_five, subsection_content_five_ar, subsection_content_five_de, subsection_content_five_en_gb, subsection_content_five_es, subsection_content_five_fr, subsection_content_five_ja, subsection_content_five_pt, subsection_content_five_pt_br, subsection_content_five_ru, subsection_content_five_zh_hans, subsection_content_four, subsection_content_four_ar, subsection_content_four_de, subsection_content_four_en_gb, subsection_content_four_es, subsection_content_four_fr, subsection_content_four_ja, subsection_content_four_pt, subsection_content_four_pt_br, subsection_content_four_ru, subsection_content_four_zh_hans, subsection_content_one, subsection_content_one_ar, subsection_content_one_de, subsection_content_one_en_gb, subsection_content_one_es, subsection_content_one_fr, subsection_content_one_ja, subsection_content_one_pt, subsection_content_one_pt_br, subsection_content_one_ru, subsection_content_one_zh_hans, subsection_content_seven, subsection_content_seven_ar, subsection_content_seven_de, subsection_content_seven_en_gb, subsection_content_seven_es, subsection_content_seven_fr, subsection_content_seven_ja, subsection_content_seven_pt, subsection_content_seven_pt_br, subsection_content_seven_ru, subsection_content_seven_zh_hans, subsection_content_six, subsection_content_six_ar, subsection_content_six_de, subsection_content_six_en_gb, subsection_content_six_es, subsection_content_six_fr, subsection_content_six_ja, subsection_content_six_pt, subsection_content_six_pt_br, subsection_content_six_ru, subsection_content_six_zh_hans, subsection_content_three, subsection_content_three_ar, subsection_content_three_de, subsection_content_three_en_gb, subsection_content_three_es, subsection_content_three_fr, subsection_content_three_ja, subsection_content_three_pt, subsection_content_three_pt_br, subsection_content_three_ru, subsection_content_three_zh_hans, subsection_content_two, subsection_content_two_ar, subsection_content_two_de, subsection_content_two_en_gb, subsection_content_two_es, subsection_content_two_fr, subsection_content_two_ja, subsection_content_two_pt, subsection_content_two_pt_br, subsection_content_two_ru, subsection_content_two_zh_hans, subsection_map_five_id, subsection_map_five_ar_id, subsection_map_five_de_id, subsection_map_five_en_gb_id, subsection_map_five_es_id, subsection_map_five_fr_id, subsection_map_five_ja_id, subsection_map_five_pt_id, subsection_map_five_pt_br_id, subsection_map_five_ru_id, subsection_map_five_zh_hans_id, subsection_map_four_id, subsection_map_four_ar_id, subsection_map_four_de_id, subsection_map_four_en_gb_id, subsection_map_four_es_id, subsection_map_four_fr_id, subsection_map_four_ja_id, subsection_map_four_pt_id, subsection_map_four_pt_br_id, subsection_map_four_ru_id, subsection_map_four_zh_hans_id, subsection_map_one_id, subsection_map_one_ar_id, subsection_map_one_de_id, subsection_map_one_en_gb_id, subsection_map_one_es_id, subsection_map_one_fr_id, subsection_map_one_ja_id, subsection_map_one_pt_id, subsection_map_one_pt_br_id, subsection_map_one_ru_id, subsection_map_one_zh_hans_id, subsection_map_seven_id, subsection_map_seven_ar_id, subsection_map_seven_de_id, subsection_map_seven_en_gb_id, subsection_map_seven_es_id, subsection_map_seven_fr_id, subsection_map_seven_ja_id, subsection_map_seven_pt_id, subsection_map_seven_pt_br_id, subsection_map_seven_ru_id, subsection_map_seven_zh_hans_id, subsection_map_six_id, subsection_map_six_ar_id, subsection_map_six_de_id, subsection_map_six_en_gb_id, subsection_map_six_es_id, subsection_map_six_fr_id, subsection_map_six_ja_id, subsection_map_six_pt_id, subsection_map_six_pt_br_id, subsection_map_six_ru_id, subsection_map_six_zh_hans_id, subsection_map_three_id, subsection_map_three_ar_id, subsection_map_three_de_id, subsection_map_three_en_gb_id, subsection_map_three_es_id, subsection_map_three_fr_id, subsection_map_three_ja_id, subsection_map_three_pt_id, subsection_map_three_pt_br_id, subsection_map_three_ru_id, subsection_map_three_zh_hans_id, subsection_map_two_id, subsection_map_two_ar_id, subsection_map_two_de_id, subsection_map_two_en_gb_id, subsection_map_two_es_id, subsection_map_two_fr_id, subsection_map_two_ja_id, subsection_map_two_pt_id, subsection_map_two_pt_br_id, subsection_map_two_ru_id, subsection_map_two_zh_hans_id, subsection_title_five, subsection_title_five_ar, subsection_title_five_de, subsection_title_five_en_gb, subsection_title_five_es, subsection_title_five_fr, subsection_title_five_ja, subsection_title_five_pt, subsection_title_five_pt_br, subsection_title_five_ru, subsection_title_five_zh_hans, subsection_title_four, subsection_title_four_ar, subsection_title_four_de, subsection_title_four_en_gb, subsection_title_four_es, subsection_title_four_fr, subsection_title_four_ja, subsection_title_four_pt, subsection_title_four_pt_br, subsection_title_four_ru, subsection_title_four_zh_hans, subsection_title_one, subsection_title_one_ar, subsection_title_one_de, subsection_title_one_en_gb, subsection_title_one_es, subsection_title_one_fr, subsection_title_one_ja, subsection_title_one_pt, subsection_title_one_pt_br, subsection_title_one_ru, subsection_title_one_zh_hans, subsection_title_seven, subsection_title_seven_ar, subsection_title_seven_de, subsection_title_seven_en_gb, subsection_title_seven_es, subsection_title_seven_fr, subsection_title_seven_ja, subsection_title_seven_pt, subsection_title_seven_pt_br, subsection_title_seven_ru, subsection_title_seven_zh_hans, subsection_title_six, subsection_title_six_ar, subsection_title_six_de, subsection_title_six_en_gb, subsection_title_six_es, subsection_title_six_fr, subsection_title_six_ja, subsection_title_six_pt, subsection_title_six_pt_br, subsection_title_six_ru, subsection_title_six_zh_hans, subsection_title_three, subsection_title_three_ar, subsection_title_three_de, subsection_title_three_en_gb, subsection_title_three_es, subsection_title_three_fr, subsection_title_three_ja, subsection_title_three_pt, subsection_title_three_pt_br, subsection_title_three_ru, subsection_title_three_zh_hans, subsection_title_two, subsection_title_two_ar, subsection_title_two_de, subsection_title_two_en_gb, subsection_title_two_es, subsection_title_two_fr, subsection_title_two_ja, subsection_title_two_pt, subsection_title_two_pt_br, subsection_title_two_ru, subsection_title_two_zh_hans, service_name) FROM stdin;
+COPY public.invest_sectorpage (page_ptr_id, featured, description, description_en_gb, description_de, description_ja, description_zh_hans, description_fr, description_es, description_pt, description_ar, heading, heading_en_gb, heading_de, heading_ja, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_ar, hero_image_id, pullout_stat, pullout_stat_ar, pullout_stat_de, pullout_stat_en_gb, pullout_stat_es, pullout_stat_fr, pullout_stat_ja, pullout_stat_pt, pullout_stat_text, pullout_stat_text_ar, pullout_stat_text_de, pullout_stat_text_en_gb, pullout_stat_text_es, pullout_stat_text_fr, pullout_stat_text_ja, pullout_stat_text_pt, pullout_stat_text_zh_hans, pullout_stat_zh_hans, pullout_text, pullout_text_ar, pullout_text_de, pullout_text_en_gb, pullout_text_es, pullout_text_fr, pullout_text_ja, pullout_text_pt, pullout_text_zh_hans, subsection_content_five, subsection_content_five_ar, subsection_content_five_de, subsection_content_five_en_gb, subsection_content_five_es, subsection_content_five_fr, subsection_content_five_ja, subsection_content_five_pt, subsection_content_five_zh_hans, subsection_content_four, subsection_content_four_ar, subsection_content_four_de, subsection_content_four_en_gb, subsection_content_four_es, subsection_content_four_fr, subsection_content_four_ja, subsection_content_four_pt, subsection_content_four_zh_hans, subsection_content_one, subsection_content_one_ar, subsection_content_one_de, subsection_content_one_en_gb, subsection_content_one_es, subsection_content_one_fr, subsection_content_one_ja, subsection_content_one_pt, subsection_content_one_zh_hans, subsection_content_seven, subsection_content_seven_ar, subsection_content_seven_de, subsection_content_seven_en_gb, subsection_content_seven_es, subsection_content_seven_fr, subsection_content_seven_ja, subsection_content_seven_pt, subsection_content_seven_zh_hans, subsection_content_six, subsection_content_six_ar, subsection_content_six_de, subsection_content_six_en_gb, subsection_content_six_es, subsection_content_six_fr, subsection_content_six_ja, subsection_content_six_pt, subsection_content_six_zh_hans, subsection_content_three, subsection_content_three_ar, subsection_content_three_de, subsection_content_three_en_gb, subsection_content_three_es, subsection_content_three_fr, subsection_content_three_ja, subsection_content_three_pt, subsection_content_three_zh_hans, subsection_content_two, subsection_content_two_ar, subsection_content_two_de, subsection_content_two_en_gb, subsection_content_two_es, subsection_content_two_fr, subsection_content_two_ja, subsection_content_two_pt, subsection_content_two_zh_hans, subsection_map_five_id, subsection_map_five_ar_id, subsection_map_five_de_id, subsection_map_five_en_gb_id, subsection_map_five_es_id, subsection_map_five_fr_id, subsection_map_five_ja_id, subsection_map_five_pt_id, subsection_map_five_zh_hans_id, subsection_map_four_id, subsection_map_four_ar_id, subsection_map_four_de_id, subsection_map_four_en_gb_id, subsection_map_four_es_id, subsection_map_four_fr_id, subsection_map_four_ja_id, subsection_map_four_pt_id, subsection_map_four_zh_hans_id, subsection_map_one_id, subsection_map_one_ar_id, subsection_map_one_de_id, subsection_map_one_en_gb_id, subsection_map_one_es_id, subsection_map_one_fr_id, subsection_map_one_ja_id, subsection_map_one_pt_id, subsection_map_one_zh_hans_id, subsection_map_seven_id, subsection_map_seven_ar_id, subsection_map_seven_de_id, subsection_map_seven_en_gb_id, subsection_map_seven_es_id, subsection_map_seven_fr_id, subsection_map_seven_ja_id, subsection_map_seven_pt_id, subsection_map_seven_zh_hans_id, subsection_map_six_id, subsection_map_six_ar_id, subsection_map_six_de_id, subsection_map_six_en_gb_id, subsection_map_six_es_id, subsection_map_six_fr_id, subsection_map_six_ja_id, subsection_map_six_pt_id, subsection_map_six_zh_hans_id, subsection_map_three_id, subsection_map_three_ar_id, subsection_map_three_de_id, subsection_map_three_en_gb_id, subsection_map_three_es_id, subsection_map_three_fr_id, subsection_map_three_ja_id, subsection_map_three_pt_id, subsection_map_three_zh_hans_id, subsection_map_two_id, subsection_map_two_ar_id, subsection_map_two_de_id, subsection_map_two_en_gb_id, subsection_map_two_es_id, subsection_map_two_fr_id, subsection_map_two_ja_id, subsection_map_two_pt_id, subsection_map_two_zh_hans_id, subsection_title_five, subsection_title_five_ar, subsection_title_five_de, subsection_title_five_en_gb, subsection_title_five_es, subsection_title_five_fr, subsection_title_five_ja, subsection_title_five_pt, subsection_title_five_zh_hans, subsection_title_four, subsection_title_four_ar, subsection_title_four_de, subsection_title_four_en_gb, subsection_title_four_es, subsection_title_four_fr, subsection_title_four_ja, subsection_title_four_pt, subsection_title_four_zh_hans, subsection_title_one, subsection_title_one_ar, subsection_title_one_de, subsection_title_one_en_gb, subsection_title_one_es, subsection_title_one_fr, subsection_title_one_ja, subsection_title_one_pt, subsection_title_one_zh_hans, subsection_title_seven, subsection_title_seven_ar, subsection_title_seven_de, subsection_title_seven_en_gb, subsection_title_seven_es, subsection_title_seven_fr, subsection_title_seven_ja, subsection_title_seven_pt, subsection_title_seven_zh_hans, subsection_title_six, subsection_title_six_ar, subsection_title_six_de, subsection_title_six_en_gb, subsection_title_six_es, subsection_title_six_fr, subsection_title_six_ja, subsection_title_six_pt, subsection_title_six_zh_hans, subsection_title_three, subsection_title_three_ar, subsection_title_three_de, subsection_title_three_en_gb, subsection_title_three_es, subsection_title_three_fr, subsection_title_three_ja, subsection_title_three_pt, subsection_title_three_zh_hans, subsection_title_two, subsection_title_two_ar, subsection_title_two_de, subsection_title_two_en_gb, subsection_title_two_es, subsection_title_two_fr, subsection_title_two_ja, subsection_title_two_pt, subsection_title_two_zh_hans, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8225,7 +7848,7 @@ COPY public.invest_sectorpage (page_ptr_id, featured, description, description_e
 -- Data for Name: invest_setupguidelandingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.invest_setupguidelandingpage (page_ptr_id, heading, heading_en_gb, heading_de, heading_ja, heading_ru, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_pt_br, heading_ar, sub_heading, sub_heading_en_gb, sub_heading_de, sub_heading_ja, sub_heading_ru, sub_heading_zh_hans, sub_heading_fr, sub_heading_es, sub_heading_pt, sub_heading_pt_br, sub_heading_ar, lead_in, lead_in_en_gb, lead_in_de, lead_in_ja, lead_in_ru, lead_in_zh_hans, lead_in_fr, lead_in_es, lead_in_pt, lead_in_pt_br, lead_in_ar, service_name) FROM stdin;
+COPY public.invest_setupguidelandingpage (page_ptr_id, heading, heading_en_gb, heading_de, heading_ja, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_ar, sub_heading, sub_heading_en_gb, sub_heading_de, sub_heading_ja, sub_heading_zh_hans, sub_heading_fr, sub_heading_es, sub_heading_pt, sub_heading_ar, lead_in, lead_in_en_gb, lead_in_de, lead_in_ja, lead_in_zh_hans, lead_in_fr, lead_in_es, lead_in_pt, lead_in_ar, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8233,7 +7856,7 @@ COPY public.invest_setupguidelandingpage (page_ptr_id, heading, heading_en_gb, h
 -- Data for Name: invest_setupguidepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.invest_setupguidepage (page_ptr_id, description, description_en_gb, description_de, description_ja, description_ru, description_zh_hans, description_fr, description_es, description_pt, description_pt_br, description_ar, heading, heading_en_gb, heading_de, heading_ja, heading_ru, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_pt_br, heading_ar, sub_heading, sub_heading_en_gb, sub_heading_de, sub_heading_ja, sub_heading_ru, sub_heading_zh_hans, sub_heading_fr, sub_heading_es, sub_heading_pt, sub_heading_pt_br, sub_heading_ar, subsection_content_five, subsection_content_five_ar, subsection_content_five_de, subsection_content_five_en_gb, subsection_content_five_es, subsection_content_five_fr, subsection_content_five_ja, subsection_content_five_pt, subsection_content_five_pt_br, subsection_content_five_ru, subsection_content_five_zh_hans, subsection_content_four, subsection_content_four_ar, subsection_content_four_de, subsection_content_four_en_gb, subsection_content_four_es, subsection_content_four_fr, subsection_content_four_ja, subsection_content_four_pt, subsection_content_four_pt_br, subsection_content_four_ru, subsection_content_four_zh_hans, subsection_content_one, subsection_content_one_ar, subsection_content_one_de, subsection_content_one_en_gb, subsection_content_one_es, subsection_content_one_fr, subsection_content_one_ja, subsection_content_one_pt, subsection_content_one_pt_br, subsection_content_one_ru, subsection_content_one_zh_hans, subsection_content_seven, subsection_content_seven_ar, subsection_content_seven_de, subsection_content_seven_en_gb, subsection_content_seven_es, subsection_content_seven_fr, subsection_content_seven_ja, subsection_content_seven_pt, subsection_content_seven_pt_br, subsection_content_seven_ru, subsection_content_seven_zh_hans, subsection_content_six, subsection_content_six_ar, subsection_content_six_de, subsection_content_six_en_gb, subsection_content_six_es, subsection_content_six_fr, subsection_content_six_ja, subsection_content_six_pt, subsection_content_six_pt_br, subsection_content_six_ru, subsection_content_six_zh_hans, subsection_content_three, subsection_content_three_ar, subsection_content_three_de, subsection_content_three_en_gb, subsection_content_three_es, subsection_content_three_fr, subsection_content_three_ja, subsection_content_three_pt, subsection_content_three_pt_br, subsection_content_three_ru, subsection_content_three_zh_hans, subsection_content_two, subsection_content_two_ar, subsection_content_two_de, subsection_content_two_en_gb, subsection_content_two_es, subsection_content_two_fr, subsection_content_two_ja, subsection_content_two_pt, subsection_content_two_pt_br, subsection_content_two_ru, subsection_content_two_zh_hans, subsection_title_five, subsection_title_five_ar, subsection_title_five_de, subsection_title_five_en_gb, subsection_title_five_es, subsection_title_five_fr, subsection_title_five_ja, subsection_title_five_pt, subsection_title_five_pt_br, subsection_title_five_ru, subsection_title_five_zh_hans, subsection_title_four, subsection_title_four_ar, subsection_title_four_de, subsection_title_four_en_gb, subsection_title_four_es, subsection_title_four_fr, subsection_title_four_ja, subsection_title_four_pt, subsection_title_four_pt_br, subsection_title_four_ru, subsection_title_four_zh_hans, subsection_title_one, subsection_title_one_ar, subsection_title_one_de, subsection_title_one_en_gb, subsection_title_one_es, subsection_title_one_fr, subsection_title_one_ja, subsection_title_one_pt, subsection_title_one_pt_br, subsection_title_one_ru, subsection_title_one_zh_hans, subsection_title_seven, subsection_title_seven_ar, subsection_title_seven_de, subsection_title_seven_en_gb, subsection_title_seven_es, subsection_title_seven_fr, subsection_title_seven_ja, subsection_title_seven_pt, subsection_title_seven_pt_br, subsection_title_seven_ru, subsection_title_seven_zh_hans, subsection_title_six, subsection_title_six_ar, subsection_title_six_de, subsection_title_six_en_gb, subsection_title_six_es, subsection_title_six_fr, subsection_title_six_ja, subsection_title_six_pt, subsection_title_six_pt_br, subsection_title_six_ru, subsection_title_six_zh_hans, subsection_title_three, subsection_title_three_ar, subsection_title_three_de, subsection_title_three_en_gb, subsection_title_three_es, subsection_title_three_fr, subsection_title_three_ja, subsection_title_three_pt, subsection_title_three_pt_br, subsection_title_three_ru, subsection_title_three_zh_hans, subsection_title_two, subsection_title_two_ar, subsection_title_two_de, subsection_title_two_en_gb, subsection_title_two_es, subsection_title_two_fr, subsection_title_two_ja, subsection_title_two_pt, subsection_title_two_pt_br, subsection_title_two_ru, subsection_title_two_zh_hans, service_name) FROM stdin;
+COPY public.invest_setupguidepage (page_ptr_id, description, description_en_gb, description_de, description_ja, description_zh_hans, description_fr, description_es, description_pt, description_ar, heading, heading_en_gb, heading_de, heading_ja, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_ar, sub_heading, sub_heading_en_gb, sub_heading_de, sub_heading_ja, sub_heading_zh_hans, sub_heading_fr, sub_heading_es, sub_heading_pt, sub_heading_ar, subsection_content_five, subsection_content_five_ar, subsection_content_five_de, subsection_content_five_en_gb, subsection_content_five_es, subsection_content_five_fr, subsection_content_five_ja, subsection_content_five_pt, subsection_content_five_zh_hans, subsection_content_four, subsection_content_four_ar, subsection_content_four_de, subsection_content_four_en_gb, subsection_content_four_es, subsection_content_four_fr, subsection_content_four_ja, subsection_content_four_pt, subsection_content_four_zh_hans, subsection_content_one, subsection_content_one_ar, subsection_content_one_de, subsection_content_one_en_gb, subsection_content_one_es, subsection_content_one_fr, subsection_content_one_ja, subsection_content_one_pt, subsection_content_one_zh_hans, subsection_content_seven, subsection_content_seven_ar, subsection_content_seven_de, subsection_content_seven_en_gb, subsection_content_seven_es, subsection_content_seven_fr, subsection_content_seven_ja, subsection_content_seven_pt, subsection_content_seven_zh_hans, subsection_content_six, subsection_content_six_ar, subsection_content_six_de, subsection_content_six_en_gb, subsection_content_six_es, subsection_content_six_fr, subsection_content_six_ja, subsection_content_six_pt, subsection_content_six_zh_hans, subsection_content_three, subsection_content_three_ar, subsection_content_three_de, subsection_content_three_en_gb, subsection_content_three_es, subsection_content_three_fr, subsection_content_three_ja, subsection_content_three_pt, subsection_content_three_zh_hans, subsection_content_two, subsection_content_two_ar, subsection_content_two_de, subsection_content_two_en_gb, subsection_content_two_es, subsection_content_two_fr, subsection_content_two_ja, subsection_content_two_pt, subsection_content_two_zh_hans, subsection_title_five, subsection_title_five_ar, subsection_title_five_de, subsection_title_five_en_gb, subsection_title_five_es, subsection_title_five_fr, subsection_title_five_ja, subsection_title_five_pt, subsection_title_five_zh_hans, subsection_title_four, subsection_title_four_ar, subsection_title_four_de, subsection_title_four_en_gb, subsection_title_four_es, subsection_title_four_fr, subsection_title_four_ja, subsection_title_four_pt, subsection_title_four_zh_hans, subsection_title_one, subsection_title_one_ar, subsection_title_one_de, subsection_title_one_en_gb, subsection_title_one_es, subsection_title_one_fr, subsection_title_one_ja, subsection_title_one_pt, subsection_title_one_zh_hans, subsection_title_seven, subsection_title_seven_ar, subsection_title_seven_de, subsection_title_seven_en_gb, subsection_title_seven_es, subsection_title_seven_fr, subsection_title_seven_ja, subsection_title_seven_pt, subsection_title_seven_zh_hans, subsection_title_six, subsection_title_six_ar, subsection_title_six_de, subsection_title_six_en_gb, subsection_title_six_es, subsection_title_six_fr, subsection_title_six_ja, subsection_title_six_pt, subsection_title_six_zh_hans, subsection_title_three, subsection_title_three_ar, subsection_title_three_de, subsection_title_three_en_gb, subsection_title_three_es, subsection_title_three_fr, subsection_title_three_ja, subsection_title_three_pt, subsection_title_three_zh_hans, subsection_title_two, subsection_title_two_ar, subsection_title_two_de, subsection_title_two_en_gb, subsection_title_two_es, subsection_title_two_fr, subsection_title_two_ja, subsection_title_two_pt, subsection_title_two_zh_hans, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -8316,9 +7939,9 @@ COPY public.wagtailcore_grouppagepermission (id, permission_type, group_id, page
 -- Data for Name: wagtailcore_page; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.wagtailcore_page (id, path, depth, numchild, title, slug, live, has_unpublished_changes, url_path, seo_title, show_in_menus, search_description, go_live_at, expire_at, expired, content_type_id, owner_id, locked, latest_revision_created_at, first_published_at, live_revision_id, last_published_at, draft_title, search_description_en_gb, search_description_de, search_description_ja, search_description_ru, search_description_zh_hans, search_description_fr, search_description_es, search_description_pt, search_description_pt_br, search_description_ar, title_en_gb, title_de, title_ja, title_ru, title_zh_hans, title_fr, title_es, title_pt, title_pt_br, title_ar, seo_title_en_gb, seo_title_de, seo_title_ja, seo_title_ru, seo_title_zh_hans, seo_title_fr, seo_title_es, seo_title_pt, seo_title_pt_br, seo_title_ar) FROM stdin;
-1	0001	1	1	Root	root	t	f	/		f		\N	\N	f	1	\N	f	\N	\N	\N	\N	Root	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
-2	00010001	2	0	Welcome to your new Wagtail site!	home	t	f	/home/		f		\N	\N	f	1	\N	f	\N	\N	\N	\N	Welcome to your new Wagtail site!	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
+COPY public.wagtailcore_page (id, path, depth, numchild, title, slug, live, has_unpublished_changes, url_path, seo_title, show_in_menus, search_description, go_live_at, expire_at, expired, content_type_id, owner_id, locked, latest_revision_created_at, first_published_at, live_revision_id, last_published_at, draft_title, search_description_en_gb, search_description_de, search_description_ja, search_description_zh_hans, search_description_fr, search_description_es, search_description_pt, search_description_ar, title_en_gb, title_de, title_ja, title_zh_hans, title_fr, title_es, title_pt, title_ar, seo_title_en_gb, seo_title_de, seo_title_ja, seo_title_zh_hans, seo_title_fr, seo_title_es, seo_title_pt, seo_title_ar) FROM stdin;
+1	0001	1	1	Root	root	t	f	/		f		\N	\N	f	1	\N	f	\N	\N	\N	\N	Root	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
+2	00010001	2	0	Welcome to your new Wagtail site!	home	t	f	/home/		f		\N	\N	f	1	\N	f	\N	\N	\N	\N	Welcome to your new Wagtail site!	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
 \.
 
 
@@ -8453,7 +8076,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 20, true);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 259, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 262, true);
 
 
 --
@@ -8499,17 +8122,24 @@ SELECT pg_catalog.setval('public.core_imagehash_id_seq', 1, false);
 
 
 --
+-- Name: core_routingsettings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.core_routingsettings_id_seq', 1, false);
+
+
+--
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 87, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 88, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 259, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 270, true);
 
 
 --
@@ -8891,6 +8521,22 @@ ALTER TABLE ONLY public.core_documenthash
 
 ALTER TABLE ONLY public.core_imagehash
     ADD CONSTRAINT core_imagehash_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: core_routingsettings core_routingsettings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.core_routingsettings
+    ADD CONSTRAINT core_routingsettings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: core_routingsettings core_routingsettings_site_id_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.core_routingsettings
+    ADD CONSTRAINT core_routingsettings_site_id_key UNIQUE (site_id);
 
 
 --
@@ -10853,13 +10499,6 @@ CREATE INDEX find_a_supplier_industrypa_page_en_gb_id_1818656b ON public.find_a_
 
 
 --
--- Name: find_a_supplier_industrypa_page_pt_br_id_2e23fb1f; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX find_a_supplier_industrypa_page_pt_br_id_2e23fb1f ON public.find_a_supplier_industrypagearticlesummary USING btree (page_pt_br_id);
-
-
---
 -- Name: find_a_supplier_industrypa_page_zh_hans_id_2c9fc29d; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -10965,24 +10604,10 @@ CREATE INDEX find_a_supplier_industrypagearticlesummary_page_pt_id_a2f522f7 ON p
 
 
 --
--- Name: find_a_supplier_industrypagearticlesummary_page_ru_id_bc3a8809; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX find_a_supplier_industrypagearticlesummary_page_ru_id_bc3a8809 ON public.find_a_supplier_industrypagearticlesummary USING btree (page_ru_id);
-
-
---
 -- Name: find_a_supplier_landingpag_page_en_gb_id_ad4dd2fd; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX find_a_supplier_landingpag_page_en_gb_id_ad4dd2fd ON public.find_a_supplier_landingpagearticlesummary USING btree (page_en_gb_id);
-
-
---
--- Name: find_a_supplier_landingpag_page_pt_br_id_a6ffa0f7; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX find_a_supplier_landingpag_page_pt_br_id_a6ffa0f7 ON public.find_a_supplier_landingpagearticlesummary USING btree (page_pt_br_id);
 
 
 --
@@ -11035,24 +10660,10 @@ CREATE INDEX find_a_supplier_landingpag_services_column_four_icon__85cc6518 ON p
 
 
 --
--- Name: find_a_supplier_landingpag_services_column_four_icon__987a4695; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX find_a_supplier_landingpag_services_column_four_icon__987a4695 ON public.find_a_supplier_landingpage USING btree (services_column_four_icon_pt_br_id);
-
-
---
 -- Name: find_a_supplier_landingpag_services_column_four_icon__ad868ac2; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX find_a_supplier_landingpag_services_column_four_icon__ad868ac2 ON public.find_a_supplier_landingpage USING btree (services_column_four_icon_de_id);
-
-
---
--- Name: find_a_supplier_landingpag_services_column_four_icon__cf16e03e; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX find_a_supplier_landingpag_services_column_four_icon__cf16e03e ON public.find_a_supplier_landingpage USING btree (services_column_four_icon_ru_id);
 
 
 --
@@ -11119,24 +10730,10 @@ CREATE INDEX find_a_supplier_landingpag_services_column_one_icon_j_fdb1b3bf ON p
 
 
 --
--- Name: find_a_supplier_landingpag_services_column_one_icon_p_d33d9fb6; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX find_a_supplier_landingpag_services_column_one_icon_p_d33d9fb6 ON public.find_a_supplier_landingpage USING btree (services_column_one_icon_pt_br_id);
-
-
---
 -- Name: find_a_supplier_landingpag_services_column_one_icon_p_db9a4d43; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX find_a_supplier_landingpag_services_column_one_icon_p_db9a4d43 ON public.find_a_supplier_landingpage USING btree (services_column_one_icon_pt_id);
-
-
---
--- Name: find_a_supplier_landingpag_services_column_one_icon_r_5b8e4485; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX find_a_supplier_landingpag_services_column_one_icon_r_5b8e4485 ON public.find_a_supplier_landingpage USING btree (services_column_one_icon_ru_id);
 
 
 --
@@ -11172,20 +10769,6 @@ CREATE INDEX find_a_supplier_landingpag_services_column_three_icon_60905b76 ON p
 --
 
 CREATE INDEX find_a_supplier_landingpag_services_column_three_icon_70034717 ON public.find_a_supplier_landingpage USING btree (services_column_three_icon_es_id);
-
-
---
--- Name: find_a_supplier_landingpag_services_column_three_icon_7bb2e58b; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX find_a_supplier_landingpag_services_column_three_icon_7bb2e58b ON public.find_a_supplier_landingpage USING btree (services_column_three_icon_ru_id);
-
-
---
--- Name: find_a_supplier_landingpag_services_column_three_icon_ae7ddbb5; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX find_a_supplier_landingpag_services_column_three_icon_ae7ddbb5 ON public.find_a_supplier_landingpage USING btree (services_column_three_icon_pt_br_id);
 
 
 --
@@ -11273,24 +10856,10 @@ CREATE INDEX find_a_supplier_landingpag_services_column_two_icon_j_43e311fb ON p
 
 
 --
--- Name: find_a_supplier_landingpag_services_column_two_icon_p_a437d62f; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX find_a_supplier_landingpag_services_column_two_icon_p_a437d62f ON public.find_a_supplier_landingpage USING btree (services_column_two_icon_pt_br_id);
-
-
---
 -- Name: find_a_supplier_landingpag_services_column_two_icon_p_bafd2caf; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX find_a_supplier_landingpag_services_column_two_icon_p_bafd2caf ON public.find_a_supplier_landingpage USING btree (services_column_two_icon_pt_id);
-
-
---
--- Name: find_a_supplier_landingpag_services_column_two_icon_r_0add801a; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX find_a_supplier_landingpag_services_column_two_icon_r_0add801a ON public.find_a_supplier_landingpage USING btree (services_column_two_icon_ru_id);
 
 
 --
@@ -11389,13 +10958,6 @@ CREATE INDEX find_a_supplier_landingpagearticlesummary_page_ja_id_551b0c52 ON pu
 --
 
 CREATE INDEX find_a_supplier_landingpagearticlesummary_page_pt_id_1e3fe6a9 ON public.find_a_supplier_landingpagearticlesummary USING btree (page_pt_id);
-
-
---
--- Name: find_a_supplier_landingpagearticlesummary_page_ru_id_51fd06ed; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX find_a_supplier_landingpagearticlesummary_page_ru_id_51fd06ed ON public.find_a_supplier_landingpagearticlesummary USING btree (page_ru_id);
 
 
 --
@@ -11532,24 +11094,10 @@ CREATE INDEX great_international_intern_article_image_ja_id_db501d73 ON public.g
 
 
 --
--- Name: great_international_intern_article_image_pt_br_id_d26d8e12; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_article_image_pt_br_id_d26d8e12 ON public.great_international_internationalarticlepage USING btree (article_image_pt_br_id);
-
-
---
 -- Name: great_international_intern_article_image_pt_id_fd60b36a; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_article_image_pt_id_fd60b36a ON public.great_international_internationalarticlepage USING btree (article_image_pt_id);
-
-
---
--- Name: great_international_intern_article_image_ru_id_76173232; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_article_image_ru_id_76173232 ON public.great_international_internationalarticlepage USING btree (article_image_ru_id);
 
 
 --
@@ -11609,24 +11157,10 @@ CREATE INDEX great_international_intern_campaign_hero_image_ja_id_86395cbc ON pu
 
 
 --
--- Name: great_international_intern_campaign_hero_image_pt_br__b8dcf389; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_campaign_hero_image_pt_br__b8dcf389 ON public.great_international_internationalcampaignpage USING btree (campaign_hero_image_pt_br_id);
-
-
---
 -- Name: great_international_intern_campaign_hero_image_pt_id_73834416; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_campaign_hero_image_pt_id_73834416 ON public.great_international_internationalcampaignpage USING btree (campaign_hero_image_pt_id);
-
-
---
--- Name: great_international_intern_campaign_hero_image_ru_id_93ec3771; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_campaign_hero_image_ru_id_93ec3771 ON public.great_international_internationalcampaignpage USING btree (campaign_hero_image_ru_id);
 
 
 --
@@ -11686,24 +11220,10 @@ CREATE INDEX great_international_intern_case_study_cta_page_ja_id_2600e8a5 ON pu
 
 
 --
--- Name: great_international_intern_case_study_cta_page_pt_br__4e65039b; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_case_study_cta_page_pt_br__4e65039b ON public.great_international_internationalsectorpage USING btree (case_study_cta_page_pt_br_id);
-
-
---
 -- Name: great_international_intern_case_study_cta_page_pt_id_80e12a43; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_case_study_cta_page_pt_id_80e12a43 ON public.great_international_internationalsectorpage USING btree (case_study_cta_page_pt_id);
-
-
---
--- Name: great_international_intern_case_study_cta_page_ru_id_2d807bf2; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_case_study_cta_page_ru_id_2d807bf2 ON public.great_international_internationalsectorpage USING btree (case_study_cta_page_ru_id);
 
 
 --
@@ -11763,24 +11283,10 @@ CREATE INDEX great_international_intern_case_study_image_ja_id_3ef6c4ba ON publi
 
 
 --
--- Name: great_international_intern_case_study_image_pt_br_id_dc47da8f; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_case_study_image_pt_br_id_dc47da8f ON public.great_international_internationalsectorpage USING btree (case_study_image_pt_br_id);
-
-
---
 -- Name: great_international_intern_case_study_image_pt_id_112e1d7e; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_case_study_image_pt_id_112e1d7e ON public.great_international_internationalsectorpage USING btree (case_study_image_pt_id);
-
-
---
--- Name: great_international_intern_case_study_image_ru_id_dfec6b74; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_case_study_image_ru_id_dfec6b74 ON public.great_international_internationalsectorpage USING btree (case_study_image_ru_id);
 
 
 --
@@ -11840,24 +11346,10 @@ CREATE INDEX great_international_intern_feature_five_image_ja_id_88a80a01 ON pub
 
 
 --
--- Name: great_international_intern_feature_five_image_pt_br_i_abd77e9f; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_feature_five_image_pt_br_i_abd77e9f ON public.great_international_internationalcuratedtopiclandingpage USING btree (feature_five_image_pt_br_id);
-
-
---
 -- Name: great_international_intern_feature_five_image_pt_id_d83671a6; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_feature_five_image_pt_id_d83671a6 ON public.great_international_internationalcuratedtopiclandingpage USING btree (feature_five_image_pt_id);
-
-
---
--- Name: great_international_intern_feature_five_image_ru_id_61c48c2b; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_feature_five_image_ru_id_61c48c2b ON public.great_international_internationalcuratedtopiclandingpage USING btree (feature_five_image_ru_id);
 
 
 --
@@ -11917,24 +11409,10 @@ CREATE INDEX great_international_intern_feature_four_image_ja_id_95371b53 ON pub
 
 
 --
--- Name: great_international_intern_feature_four_image_pt_br_i_4bd7b591; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_feature_four_image_pt_br_i_4bd7b591 ON public.great_international_internationalcuratedtopiclandingpage USING btree (feature_four_image_pt_br_id);
-
-
---
 -- Name: great_international_intern_feature_four_image_pt_id_fc729e2b; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_feature_four_image_pt_id_fc729e2b ON public.great_international_internationalcuratedtopiclandingpage USING btree (feature_four_image_pt_id);
-
-
---
--- Name: great_international_intern_feature_four_image_ru_id_5710de33; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_feature_four_image_ru_id_5710de33 ON public.great_international_internationalcuratedtopiclandingpage USING btree (feature_four_image_ru_id);
 
 
 --
@@ -11994,24 +11472,10 @@ CREATE INDEX great_international_intern_feature_one_image_ja_id_9a0da52d ON publ
 
 
 --
--- Name: great_international_intern_feature_one_image_pt_br_id_0522c56c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_feature_one_image_pt_br_id_0522c56c ON public.great_international_internationalcuratedtopiclandingpage USING btree (feature_one_image_pt_br_id);
-
-
---
 -- Name: great_international_intern_feature_one_image_pt_id_0fda8ffc; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_feature_one_image_pt_id_0fda8ffc ON public.great_international_internationalcuratedtopiclandingpage USING btree (feature_one_image_pt_id);
-
-
---
--- Name: great_international_intern_feature_one_image_ru_id_5618a608; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_feature_one_image_ru_id_5618a608 ON public.great_international_internationalcuratedtopiclandingpage USING btree (feature_one_image_ru_id);
 
 
 --
@@ -12071,24 +11535,10 @@ CREATE INDEX great_international_intern_feature_three_image_ja_id_cf67b473 ON pu
 
 
 --
--- Name: great_international_intern_feature_three_image_pt_br__31a2744a; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_feature_three_image_pt_br__31a2744a ON public.great_international_internationalcuratedtopiclandingpage USING btree (feature_three_image_pt_br_id);
-
-
---
 -- Name: great_international_intern_feature_three_image_pt_id_be7fe7ab; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_feature_three_image_pt_id_be7fe7ab ON public.great_international_internationalcuratedtopiclandingpage USING btree (feature_three_image_pt_id);
-
-
---
--- Name: great_international_intern_feature_three_image_ru_id_77f6e56e; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_feature_three_image_ru_id_77f6e56e ON public.great_international_internationalcuratedtopiclandingpage USING btree (feature_three_image_ru_id);
 
 
 --
@@ -12148,13 +11598,6 @@ CREATE INDEX great_international_intern_feature_two_image_ja_id_fe444f70 ON publ
 
 
 --
--- Name: great_international_intern_feature_two_image_pt_br_id_8f5f4778; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_feature_two_image_pt_br_id_8f5f4778 ON public.great_international_internationalcuratedtopiclandingpage USING btree (feature_two_image_pt_br_id);
-
-
---
 -- Name: great_international_intern_feature_two_image_pt_id_62c3b921; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -12162,17 +11605,199 @@ CREATE INDEX great_international_intern_feature_two_image_pt_id_62c3b921 ON publ
 
 
 --
--- Name: great_international_intern_feature_two_image_ru_id_a2d7e0df; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_feature_two_image_ru_id_a2d7e0df ON public.great_international_internationalcuratedtopiclandingpage USING btree (feature_two_image_ru_id);
-
-
---
 -- Name: great_international_intern_feature_two_image_zh_hans__8a169803; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_feature_two_image_zh_hans__8a169803 ON public.great_international_internationalcuratedtopiclandingpage USING btree (feature_two_image_zh_hans_id);
+
+
+--
+-- Name: great_international_intern_featured_link_one_image_ar_1bdbbd0d; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_one_image_ar_1bdbbd0d ON public.great_international_internationalhomepage USING btree (featured_link_one_image_ar_id);
+
+
+--
+-- Name: great_international_intern_featured_link_one_image_de_0a369add; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_one_image_de_0a369add ON public.great_international_internationalhomepage USING btree (featured_link_one_image_de_id);
+
+
+--
+-- Name: great_international_intern_featured_link_one_image_en_a19e542b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_one_image_en_a19e542b ON public.great_international_internationalhomepage USING btree (featured_link_one_image_en_gb_id);
+
+
+--
+-- Name: great_international_intern_featured_link_one_image_es_1da8e61b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_one_image_es_1da8e61b ON public.great_international_internationalhomepage USING btree (featured_link_one_image_es_id);
+
+
+--
+-- Name: great_international_intern_featured_link_one_image_fr_0f8dcd31; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_one_image_fr_0f8dcd31 ON public.great_international_internationalhomepage USING btree (featured_link_one_image_fr_id);
+
+
+--
+-- Name: great_international_intern_featured_link_one_image_id_25769845; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_one_image_id_25769845 ON public.great_international_internationalhomepage USING btree (featured_link_one_image_id);
+
+
+--
+-- Name: great_international_intern_featured_link_one_image_ja_cab42276; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_one_image_ja_cab42276 ON public.great_international_internationalhomepage USING btree (featured_link_one_image_ja_id);
+
+
+--
+-- Name: great_international_intern_featured_link_one_image_pt_9aaf16a1; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_one_image_pt_9aaf16a1 ON public.great_international_internationalhomepage USING btree (featured_link_one_image_pt_id);
+
+
+--
+-- Name: great_international_intern_featured_link_one_image_zh_ff3a6a8d; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_one_image_zh_ff3a6a8d ON public.great_international_internationalhomepage USING btree (featured_link_one_image_zh_hans_id);
+
+
+--
+-- Name: great_international_intern_featured_link_three_image__067a49d3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_three_image__067a49d3 ON public.great_international_internationalhomepage USING btree (featured_link_three_image_de_id);
+
+
+--
+-- Name: great_international_intern_featured_link_three_image__0cb3d847; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_three_image__0cb3d847 ON public.great_international_internationalhomepage USING btree (featured_link_three_image_fr_id);
+
+
+--
+-- Name: great_international_intern_featured_link_three_image__10e46550; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_three_image__10e46550 ON public.great_international_internationalhomepage USING btree (featured_link_three_image_ja_id);
+
+
+--
+-- Name: great_international_intern_featured_link_three_image__364a6f12; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_three_image__364a6f12 ON public.great_international_internationalhomepage USING btree (featured_link_three_image_pt_id);
+
+
+--
+-- Name: great_international_intern_featured_link_three_image__49bfde26; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_three_image__49bfde26 ON public.great_international_internationalhomepage USING btree (featured_link_three_image_zh_hans_id);
+
+
+--
+-- Name: great_international_intern_featured_link_three_image__8579b9ad; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_three_image__8579b9ad ON public.great_international_internationalhomepage USING btree (featured_link_three_image_es_id);
+
+
+--
+-- Name: great_international_intern_featured_link_three_image__959a5496; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_three_image__959a5496 ON public.great_international_internationalhomepage USING btree (featured_link_three_image_id);
+
+
+--
+-- Name: great_international_intern_featured_link_three_image__a80b5a6c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_three_image__a80b5a6c ON public.great_international_internationalhomepage USING btree (featured_link_three_image_en_gb_id);
+
+
+--
+-- Name: great_international_intern_featured_link_three_image__baf90673; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_three_image__baf90673 ON public.great_international_internationalhomepage USING btree (featured_link_three_image_ar_id);
+
+
+--
+-- Name: great_international_intern_featured_link_two_image_ar_f3878aea; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_two_image_ar_f3878aea ON public.great_international_internationalhomepage USING btree (featured_link_two_image_ar_id);
+
+
+--
+-- Name: great_international_intern_featured_link_two_image_de_909c0133; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_two_image_de_909c0133 ON public.great_international_internationalhomepage USING btree (featured_link_two_image_de_id);
+
+
+--
+-- Name: great_international_intern_featured_link_two_image_en_37d3fff3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_two_image_en_37d3fff3 ON public.great_international_internationalhomepage USING btree (featured_link_two_image_en_gb_id);
+
+
+--
+-- Name: great_international_intern_featured_link_two_image_es_14eb901f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_two_image_es_14eb901f ON public.great_international_internationalhomepage USING btree (featured_link_two_image_es_id);
+
+
+--
+-- Name: great_international_intern_featured_link_two_image_fr_f1391adc; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_two_image_fr_f1391adc ON public.great_international_internationalhomepage USING btree (featured_link_two_image_fr_id);
+
+
+--
+-- Name: great_international_intern_featured_link_two_image_id_be21120a; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_two_image_id_be21120a ON public.great_international_internationalhomepage USING btree (featured_link_two_image_id);
+
+
+--
+-- Name: great_international_intern_featured_link_two_image_ja_7e2bec97; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_two_image_ja_7e2bec97 ON public.great_international_internationalhomepage USING btree (featured_link_two_image_ja_id);
+
+
+--
+-- Name: great_international_intern_featured_link_two_image_pt_3f837e13; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_two_image_pt_3f837e13 ON public.great_international_internationalhomepage USING btree (featured_link_two_image_pt_id);
+
+
+--
+-- Name: great_international_intern_featured_link_two_image_zh_965f99ea; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_featured_link_two_image_zh_965f99ea ON public.great_international_internationalhomepage USING btree (featured_link_two_image_zh_hans_id);
 
 
 --
@@ -12470,48 +12095,6 @@ CREATE INDEX great_international_intern_hero_image_ja_id_f3f31184 ON public.grea
 
 
 --
--- Name: great_international_intern_hero_image_pt_br_id_0068d929; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_hero_image_pt_br_id_0068d929 ON public.great_international_internationalcuratedtopiclandingpage USING btree (hero_image_pt_br_id);
-
-
---
--- Name: great_international_intern_hero_image_pt_br_id_6bd141ff; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_hero_image_pt_br_id_6bd141ff ON public.great_international_internationalhomepage USING btree (hero_image_pt_br_id);
-
-
---
--- Name: great_international_intern_hero_image_pt_br_id_7e40c582; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_hero_image_pt_br_id_7e40c582 ON public.great_international_internationalsectorpage USING btree (hero_image_pt_br_id);
-
-
---
--- Name: great_international_intern_hero_image_pt_br_id_8414405c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_hero_image_pt_br_id_8414405c ON public.great_international_internationalguidelandingpage USING btree (hero_image_pt_br_id);
-
-
---
--- Name: great_international_intern_hero_image_pt_br_id_d8dd60c9; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_hero_image_pt_br_id_d8dd60c9 ON public.great_international_internationalarticlelistingpage USING btree (hero_image_pt_br_id);
-
-
---
--- Name: great_international_intern_hero_image_pt_br_id_ed1e2031; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_hero_image_pt_br_id_ed1e2031 ON public.great_international_internationaltopiclandingpage USING btree (hero_image_pt_br_id);
-
-
---
 -- Name: great_international_intern_hero_image_pt_id_1a7cbd84; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -12551,48 +12134,6 @@ CREATE INDEX great_international_intern_hero_image_pt_id_b242b880 ON public.grea
 --
 
 CREATE INDEX great_international_intern_hero_image_pt_id_c016e5c7 ON public.great_international_internationalsectorpage USING btree (hero_image_pt_id);
-
-
---
--- Name: great_international_intern_hero_image_ru_id_086fcbf5; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_hero_image_ru_id_086fcbf5 ON public.great_international_internationalcuratedtopiclandingpage USING btree (hero_image_ru_id);
-
-
---
--- Name: great_international_intern_hero_image_ru_id_0e4a75ab; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_hero_image_ru_id_0e4a75ab ON public.great_international_internationalarticlelistingpage USING btree (hero_image_ru_id);
-
-
---
--- Name: great_international_intern_hero_image_ru_id_124bc0fb; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_hero_image_ru_id_124bc0fb ON public.great_international_internationalguidelandingpage USING btree (hero_image_ru_id);
-
-
---
--- Name: great_international_intern_hero_image_ru_id_3237df0d; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_hero_image_ru_id_3237df0d ON public.great_international_internationaltopiclandingpage USING btree (hero_image_ru_id);
-
-
---
--- Name: great_international_intern_hero_image_ru_id_d0049265; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_hero_image_ru_id_d0049265 ON public.great_international_internationalsectorpage USING btree (hero_image_ru_id);
-
-
---
--- Name: great_international_intern_hero_image_ru_id_dc1e83cf; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_hero_image_ru_id_dc1e83cf ON public.great_international_internationalhomepage USING btree (hero_image_ru_id);
 
 
 --
@@ -12743,24 +12284,10 @@ CREATE INDEX great_international_intern_invest_image_ja_id_89bdab85 ON public.gr
 
 
 --
--- Name: great_international_intern_invest_image_pt_br_id_0eea0aac; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_invest_image_pt_br_id_0eea0aac ON public.great_international_internationalhomepage USING btree (invest_image_pt_br_id);
-
-
---
 -- Name: great_international_intern_invest_image_pt_id_cbe9dc80; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_invest_image_pt_id_cbe9dc80 ON public.great_international_internationalhomepage USING btree (invest_image_pt_id);
-
-
---
--- Name: great_international_intern_invest_image_ru_id_f73c4288; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_invest_image_ru_id_f73c4288 ON public.great_international_internationalhomepage USING btree (invest_image_ru_id);
 
 
 --
@@ -12967,34 +12494,6 @@ CREATE INDEX great_international_intern_related_page_one_ja_id_90a67580 ON publi
 
 
 --
--- Name: great_international_intern_related_page_one_pt_br_id_814a76d8; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_one_pt_br_id_814a76d8 ON public.great_international_internationalarticlepage USING btree (related_page_one_pt_br_id);
-
-
---
--- Name: great_international_intern_related_page_one_pt_br_id_a56637dd; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_one_pt_br_id_a56637dd ON public.great_international_internationalhomepage USING btree (related_page_one_pt_br_id);
-
-
---
--- Name: great_international_intern_related_page_one_pt_br_id_bce08b61; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_one_pt_br_id_bce08b61 ON public.great_international_internationalcampaignpage USING btree (related_page_one_pt_br_id);
-
-
---
--- Name: great_international_intern_related_page_one_pt_br_id_c5b8ddc0; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_one_pt_br_id_c5b8ddc0 ON public.great_international_internationalsectorpage USING btree (related_page_one_pt_br_id);
-
-
---
 -- Name: great_international_intern_related_page_one_pt_id_029f0cdf; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -13020,34 +12519,6 @@ CREATE INDEX great_international_intern_related_page_one_pt_id_5c5b0f2a ON publi
 --
 
 CREATE INDEX great_international_intern_related_page_one_pt_id_695ddefa ON public.great_international_internationalsectorpage USING btree (related_page_one_pt_id);
-
-
---
--- Name: great_international_intern_related_page_one_ru_id_1452ac1b; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_one_ru_id_1452ac1b ON public.great_international_internationalsectorpage USING btree (related_page_one_ru_id);
-
-
---
--- Name: great_international_intern_related_page_one_ru_id_8a2bd8ea; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_one_ru_id_8a2bd8ea ON public.great_international_internationalcampaignpage USING btree (related_page_one_ru_id);
-
-
---
--- Name: great_international_intern_related_page_one_ru_id_91ac3d63; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_one_ru_id_91ac3d63 ON public.great_international_internationalarticlepage USING btree (related_page_one_ru_id);
-
-
---
--- Name: great_international_intern_related_page_one_ru_id_ddd2fa49; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_one_ru_id_ddd2fa49 ON public.great_international_internationalhomepage USING btree (related_page_one_ru_id);
 
 
 --
@@ -13275,34 +12746,6 @@ CREATE INDEX great_international_intern_related_page_three_ja_id_f6087b0e ON pub
 
 
 --
--- Name: great_international_intern_related_page_three_pt_br_i_5831a9f8; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_three_pt_br_i_5831a9f8 ON public.great_international_internationalhomepage USING btree (related_page_three_pt_br_id);
-
-
---
--- Name: great_international_intern_related_page_three_pt_br_i_678fd034; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_three_pt_br_i_678fd034 ON public.great_international_internationalarticlepage USING btree (related_page_three_pt_br_id);
-
-
---
--- Name: great_international_intern_related_page_three_pt_br_i_a521dca4; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_three_pt_br_i_a521dca4 ON public.great_international_internationalcampaignpage USING btree (related_page_three_pt_br_id);
-
-
---
--- Name: great_international_intern_related_page_three_pt_br_i_b40400a6; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_three_pt_br_i_b40400a6 ON public.great_international_internationalsectorpage USING btree (related_page_three_pt_br_id);
-
-
---
 -- Name: great_international_intern_related_page_three_pt_id_0e5f156d; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -13328,34 +12771,6 @@ CREATE INDEX great_international_intern_related_page_three_pt_id_74f5c555 ON pub
 --
 
 CREATE INDEX great_international_intern_related_page_three_pt_id_7fd59ab7 ON public.great_international_internationalhomepage USING btree (related_page_three_pt_id);
-
-
---
--- Name: great_international_intern_related_page_three_ru_id_282e58b0; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_three_ru_id_282e58b0 ON public.great_international_internationalcampaignpage USING btree (related_page_three_ru_id);
-
-
---
--- Name: great_international_intern_related_page_three_ru_id_741e21af; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_three_ru_id_741e21af ON public.great_international_internationalsectorpage USING btree (related_page_three_ru_id);
-
-
---
--- Name: great_international_intern_related_page_three_ru_id_75826622; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_three_ru_id_75826622 ON public.great_international_internationalarticlepage USING btree (related_page_three_ru_id);
-
-
---
--- Name: great_international_intern_related_page_three_ru_id_8a147f2d; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_three_ru_id_8a147f2d ON public.great_international_internationalhomepage USING btree (related_page_three_ru_id);
 
 
 --
@@ -13583,34 +12998,6 @@ CREATE INDEX great_international_intern_related_page_two_ja_id_e7775194 ON publi
 
 
 --
--- Name: great_international_intern_related_page_two_pt_br_id_02b3ea27; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_two_pt_br_id_02b3ea27 ON public.great_international_internationalcampaignpage USING btree (related_page_two_pt_br_id);
-
-
---
--- Name: great_international_intern_related_page_two_pt_br_id_0e149a5d; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_two_pt_br_id_0e149a5d ON public.great_international_internationalhomepage USING btree (related_page_two_pt_br_id);
-
-
---
--- Name: great_international_intern_related_page_two_pt_br_id_39d03224; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_two_pt_br_id_39d03224 ON public.great_international_internationalarticlepage USING btree (related_page_two_pt_br_id);
-
-
---
--- Name: great_international_intern_related_page_two_pt_br_id_c8d36540; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_two_pt_br_id_c8d36540 ON public.great_international_internationalsectorpage USING btree (related_page_two_pt_br_id);
-
-
---
 -- Name: great_international_intern_related_page_two_pt_id_2a50d1be; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -13636,34 +13023,6 @@ CREATE INDEX great_international_intern_related_page_two_pt_id_78a94f29 ON publi
 --
 
 CREATE INDEX great_international_intern_related_page_two_pt_id_d76daa2c ON public.great_international_internationalsectorpage USING btree (related_page_two_pt_id);
-
-
---
--- Name: great_international_intern_related_page_two_ru_id_1699564e; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_two_ru_id_1699564e ON public.great_international_internationalhomepage USING btree (related_page_two_ru_id);
-
-
---
--- Name: great_international_intern_related_page_two_ru_id_32f30d13; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_two_ru_id_32f30d13 ON public.great_international_internationalarticlepage USING btree (related_page_two_ru_id);
-
-
---
--- Name: great_international_intern_related_page_two_ru_id_522b98e3; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_two_ru_id_522b98e3 ON public.great_international_internationalsectorpage USING btree (related_page_two_ru_id);
-
-
---
--- Name: great_international_intern_related_page_two_ru_id_8448cdfc; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_related_page_two_ru_id_8448cdfc ON public.great_international_internationalcampaignpage USING btree (related_page_two_ru_id);
 
 
 --
@@ -13842,27 +13201,6 @@ CREATE INDEX great_international_intern_section_one_image_ja_id_def27cfd ON publ
 
 
 --
--- Name: great_international_intern_section_one_image_pt_br_id_1afc84ae; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_section_one_image_pt_br_id_1afc84ae ON public.great_international_internationalsectorpage USING btree (section_one_image_pt_br_id);
-
-
---
--- Name: great_international_intern_section_one_image_pt_br_id_4f00ca20; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_section_one_image_pt_br_id_4f00ca20 ON public.great_international_internationalcampaignpage USING btree (section_one_image_pt_br_id);
-
-
---
--- Name: great_international_intern_section_one_image_pt_br_id_edaf370b; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_section_one_image_pt_br_id_edaf370b ON public.great_international_internationalguidelandingpage USING btree (section_one_image_pt_br_id);
-
-
---
 -- Name: great_international_intern_section_one_image_pt_id_85ef343e; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -13881,27 +13219,6 @@ CREATE INDEX great_international_intern_section_one_image_pt_id_db22e213 ON publ
 --
 
 CREATE INDEX great_international_intern_section_one_image_pt_id_fb056a71 ON public.great_international_internationalsectorpage USING btree (section_one_image_pt_id);
-
-
---
--- Name: great_international_intern_section_one_image_ru_id_4b9314c3; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_section_one_image_ru_id_4b9314c3 ON public.great_international_internationalcampaignpage USING btree (section_one_image_ru_id);
-
-
---
--- Name: great_international_intern_section_one_image_ru_id_793f3412; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_section_one_image_ru_id_793f3412 ON public.great_international_internationalsectorpage USING btree (section_one_image_ru_id);
-
-
---
--- Name: great_international_intern_section_one_image_ru_id_8e7b57aa; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_section_one_image_ru_id_8e7b57aa ON public.great_international_internationalguidelandingpage USING btree (section_one_image_ru_id);
 
 
 --
@@ -14024,20 +13341,6 @@ CREATE INDEX great_international_intern_section_two_image_ja_id_aec694f0 ON publ
 
 
 --
--- Name: great_international_intern_section_two_image_pt_br_id_8b283f28; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_section_two_image_pt_br_id_8b283f28 ON public.great_international_internationalguidelandingpage USING btree (section_two_image_pt_br_id);
-
-
---
--- Name: great_international_intern_section_two_image_pt_br_id_a146a73f; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_section_two_image_pt_br_id_a146a73f ON public.great_international_internationalcampaignpage USING btree (section_two_image_pt_br_id);
-
-
---
 -- Name: great_international_intern_section_two_image_pt_id_18e913d1; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -14049,20 +13352,6 @@ CREATE INDEX great_international_intern_section_two_image_pt_id_18e913d1 ON publ
 --
 
 CREATE INDEX great_international_intern_section_two_image_pt_id_b01865e0 ON public.great_international_internationalguidelandingpage USING btree (section_two_image_pt_id);
-
-
---
--- Name: great_international_intern_section_two_image_ru_id_e9338503; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_section_two_image_ru_id_e9338503 ON public.great_international_internationalguidelandingpage USING btree (section_two_image_ru_id);
-
-
---
--- Name: great_international_intern_section_two_image_ru_id_f0d8f7e8; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_section_two_image_ru_id_f0d8f7e8 ON public.great_international_internationalcampaignpage USING btree (section_two_image_ru_id);
 
 
 --
@@ -14080,6 +13369,139 @@ CREATE INDEX great_international_intern_section_two_image_zh_hans__98ee0194 ON p
 
 
 --
+-- Name: great_international_intern_section_two_subsection_fiv_0db7affb; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fiv_0db7affb ON public.great_international_internationalhomepage USING btree (section_two_subsection_five_icon_de_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fiv_109552f9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fiv_109552f9 ON public.great_international_internationalhomepage USING btree (section_two_subsection_five_icon_es_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fiv_118f056a; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fiv_118f056a ON public.great_international_internationalhomepage USING btree (section_two_subsection_five_icon_ja_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fiv_335d13a0; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fiv_335d13a0 ON public.great_international_internationalhomepage USING btree (section_two_subsection_five_icon_zh_hans_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fiv_6213adce; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fiv_6213adce ON public.great_international_internationalhomepage USING btree (section_two_subsection_five_icon_pt_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fiv_69812a78; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fiv_69812a78 ON public.great_international_internationalhomepage USING btree (section_two_subsection_five_icon_en_gb_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fiv_af019b24; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fiv_af019b24 ON public.great_international_internationalhomepage USING btree (section_two_subsection_five_icon_fr_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fiv_c3298e8a; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fiv_c3298e8a ON public.great_international_internationalhomepage USING btree (section_two_subsection_five_icon_ar_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fiv_d450c2d4; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fiv_d450c2d4 ON public.great_international_internationalhomepage USING btree (section_two_subsection_five_icon_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fou_2a68de10; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fou_2a68de10 ON public.great_international_internationalhomepage USING btree (section_two_subsection_four_icon_pt_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fou_37851b99; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fou_37851b99 ON public.great_international_internationalhomepage USING btree (section_two_subsection_four_icon_es_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fou_4a95ea27; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fou_4a95ea27 ON public.great_international_internationalhomepage USING btree (section_two_subsection_four_icon_de_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fou_7e90d9c9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fou_7e90d9c9 ON public.great_international_internationalhomepage USING btree (section_two_subsection_four_icon_ar_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fou_a2a84b67; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fou_a2a84b67 ON public.great_international_internationalhomepage USING btree (section_two_subsection_four_icon_fr_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fou_b3670c8a; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fou_b3670c8a ON public.great_international_internationalhomepage USING btree (section_two_subsection_four_icon_ja_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fou_b6e5930f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fou_b6e5930f ON public.great_international_internationalhomepage USING btree (section_two_subsection_four_icon_zh_hans_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fou_d779cea1; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fou_d779cea1 ON public.great_international_internationalhomepage USING btree (section_two_subsection_four_icon_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_fou_d7ba88e4; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_fou_d7ba88e4 ON public.great_international_internationalhomepage USING btree (section_two_subsection_four_icon_en_gb_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_one_47a3ca3d; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_one_47a3ca3d ON public.great_international_internationalhomepage USING btree (section_two_subsection_one_icon_de_id);
+
+
+--
 -- Name: great_international_intern_section_two_subsection_one_47c5a7dc; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -14087,17 +13509,17 @@ CREATE INDEX great_international_intern_section_two_subsection_one_47c5a7dc ON p
 
 
 --
--- Name: great_international_intern_section_two_subsection_one_48d95311; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_section_two_subsection_one_48d95311 ON public.great_international_internationalsectorpage USING btree (section_two_subsection_one_icon_pt_br_id);
-
-
---
 -- Name: great_international_intern_section_two_subsection_one_4bfa40d3; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_section_two_subsection_one_4bfa40d3 ON public.great_international_internationalsectorpage USING btree (section_two_subsection_one_icon_en_gb_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_one_530c392b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_one_530c392b ON public.great_international_internationalhomepage USING btree (section_two_subsection_one_icon_id);
 
 
 --
@@ -14115,10 +13537,24 @@ CREATE INDEX great_international_intern_section_two_subsection_one_7646efd8 ON p
 
 
 --
+-- Name: great_international_intern_section_two_subsection_one_8021158d; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_one_8021158d ON public.great_international_internationalhomepage USING btree (section_two_subsection_one_icon_ar_id);
+
+
+--
 -- Name: great_international_intern_section_two_subsection_one_85d08a6b; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_section_two_subsection_one_85d08a6b ON public.great_international_internationalsectorpage USING btree (section_two_subsection_one_icon_ar_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_one_b3314cd7; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_one_b3314cd7 ON public.great_international_internationalhomepage USING btree (section_two_subsection_one_icon_en_gb_id);
 
 
 --
@@ -14129,10 +13565,45 @@ CREATE INDEX great_international_intern_section_two_subsection_one_bd587b46 ON p
 
 
 --
+-- Name: great_international_intern_section_two_subsection_one_c0972147; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_one_c0972147 ON public.great_international_internationalhomepage USING btree (section_two_subsection_one_icon_ja_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_one_cb5c3363; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_one_cb5c3363 ON public.great_international_internationalhomepage USING btree (section_two_subsection_one_icon_zh_hans_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_one_ccdea1ee; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_one_ccdea1ee ON public.great_international_internationalhomepage USING btree (section_two_subsection_one_icon_fr_id);
+
+
+--
 -- Name: great_international_intern_section_two_subsection_one_d9f23d98; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_section_two_subsection_one_d9f23d98 ON public.great_international_internationalsectorpage USING btree (section_two_subsection_one_icon_ja_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_one_da9b148c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_one_da9b148c ON public.great_international_internationalhomepage USING btree (section_two_subsection_one_icon_es_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_one_dbbda277; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_one_dbbda277 ON public.great_international_internationalhomepage USING btree (section_two_subsection_one_icon_pt_id);
 
 
 --
@@ -14150,10 +13621,66 @@ CREATE INDEX great_international_intern_section_two_subsection_one_e2753e90 ON p
 
 
 --
--- Name: great_international_intern_section_two_subsection_one_ea55a0a9; Type: INDEX; Schema: public; Owner: -
+-- Name: great_international_intern_section_two_subsection_six_1ec1811a; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX great_international_intern_section_two_subsection_one_ea55a0a9 ON public.great_international_internationalsectorpage USING btree (section_two_subsection_one_icon_ru_id);
+CREATE INDEX great_international_intern_section_two_subsection_six_1ec1811a ON public.great_international_internationalhomepage USING btree (section_two_subsection_six_icon_en_gb_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_six_27aef34f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_six_27aef34f ON public.great_international_internationalhomepage USING btree (section_two_subsection_six_icon_es_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_six_3c381935; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_six_3c381935 ON public.great_international_internationalhomepage USING btree (section_two_subsection_six_icon_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_six_5db54111; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_six_5db54111 ON public.great_international_internationalhomepage USING btree (section_two_subsection_six_icon_zh_hans_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_six_638ff660; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_six_638ff660 ON public.great_international_internationalhomepage USING btree (section_two_subsection_six_icon_pt_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_six_7079efc9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_six_7079efc9 ON public.great_international_internationalhomepage USING btree (section_two_subsection_six_icon_de_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_six_7fa562dd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_six_7fa562dd ON public.great_international_internationalhomepage USING btree (section_two_subsection_six_icon_ar_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_six_c287efe5; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_six_c287efe5 ON public.great_international_internationalhomepage USING btree (section_two_subsection_six_icon_fr_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_six_e2910421; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_six_e2910421 ON public.great_international_internationalhomepage USING btree (section_two_subsection_six_icon_ja_id);
 
 
 --
@@ -14164,10 +13691,31 @@ CREATE INDEX great_international_intern_section_two_subsection_thr_005ada49 ON p
 
 
 --
+-- Name: great_international_intern_section_two_subsection_thr_062c1cf4; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_thr_062c1cf4 ON public.great_international_internationalhomepage USING btree (section_two_subsection_three_icon_ja_id);
+
+
+--
 -- Name: great_international_intern_section_two_subsection_thr_1a0f9261; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_section_two_subsection_thr_1a0f9261 ON public.great_international_internationalsectorpage USING btree (section_two_subsection_three_icon_ja_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_thr_38bda492; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_thr_38bda492 ON public.great_international_internationalhomepage USING btree (section_two_subsection_three_icon_ar_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_thr_43ccc557; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_thr_43ccc557 ON public.great_international_internationalhomepage USING btree (section_two_subsection_three_icon_id);
 
 
 --
@@ -14178,10 +13726,45 @@ CREATE INDEX great_international_intern_section_two_subsection_thr_46ac2ad9 ON p
 
 
 --
+-- Name: great_international_intern_section_two_subsection_thr_4bb8abcd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_thr_4bb8abcd ON public.great_international_internationalhomepage USING btree (section_two_subsection_three_icon_de_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_thr_4da1223a; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_thr_4da1223a ON public.great_international_internationalhomepage USING btree (section_two_subsection_three_icon_en_gb_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_thr_55f21249; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_thr_55f21249 ON public.great_international_internationalhomepage USING btree (section_two_subsection_three_icon_fr_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_thr_64dfb934; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_thr_64dfb934 ON public.great_international_internationalhomepage USING btree (section_two_subsection_three_icon_es_id);
+
+
+--
 -- Name: great_international_intern_section_two_subsection_thr_8b4b1999; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_section_two_subsection_thr_8b4b1999 ON public.great_international_internationalsectorpage USING btree (section_two_subsection_three_icon_pt_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_thr_958ce223; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_thr_958ce223 ON public.great_international_internationalhomepage USING btree (section_two_subsection_three_icon_pt_id);
 
 
 --
@@ -14206,10 +13789,10 @@ CREATE INDEX great_international_intern_section_two_subsection_thr_a5de79a7 ON p
 
 
 --
--- Name: great_international_intern_section_two_subsection_thr_b7b33eb8; Type: INDEX; Schema: public; Owner: -
+-- Name: great_international_intern_section_two_subsection_thr_b9c6bbdb; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX great_international_intern_section_two_subsection_thr_b7b33eb8 ON public.great_international_internationalsectorpage USING btree (section_two_subsection_three_icon_ru_id);
+CREATE INDEX great_international_intern_section_two_subsection_thr_b9c6bbdb ON public.great_international_internationalhomepage USING btree (section_two_subsection_three_icon_zh_hans_id);
 
 
 --
@@ -14220,24 +13803,10 @@ CREATE INDEX great_international_intern_section_two_subsection_thr_df77a4b0 ON p
 
 
 --
--- Name: great_international_intern_section_two_subsection_thr_f469475b; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_section_two_subsection_thr_f469475b ON public.great_international_internationalsectorpage USING btree (section_two_subsection_three_icon_pt_br_id);
-
-
---
 -- Name: great_international_intern_section_two_subsection_thr_fe5dfaf4; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_section_two_subsection_thr_fe5dfaf4 ON public.great_international_internationalsectorpage USING btree (section_two_subsection_three_icon_id);
-
-
---
--- Name: great_international_intern_section_two_subsection_two_0c837b27; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_section_two_subsection_two_0c837b27 ON public.great_international_internationalsectorpage USING btree (section_two_subsection_two_icon_ru_id);
 
 
 --
@@ -14248,10 +13817,45 @@ CREATE INDEX great_international_intern_section_two_subsection_two_2b941f15 ON p
 
 
 --
+-- Name: great_international_intern_section_two_subsection_two_2ffb14b9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_two_2ffb14b9 ON public.great_international_internationalhomepage USING btree (section_two_subsection_two_icon_es_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_two_50252f0a; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_two_50252f0a ON public.great_international_internationalhomepage USING btree (section_two_subsection_two_icon_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_two_520fe588; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_two_520fe588 ON public.great_international_internationalhomepage USING btree (section_two_subsection_two_icon_fr_id);
+
+
+--
 -- Name: great_international_intern_section_two_subsection_two_54883480; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_section_two_subsection_two_54883480 ON public.great_international_internationalsectorpage USING btree (section_two_subsection_two_icon_es_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_two_5762b2bb; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_two_5762b2bb ON public.great_international_internationalhomepage USING btree (section_two_subsection_two_icon_zh_hans_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_two_66f01e6a; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_two_66f01e6a ON public.great_international_internationalhomepage USING btree (section_two_subsection_two_icon_en_gb_id);
 
 
 --
@@ -14262,10 +13866,38 @@ CREATE INDEX great_international_intern_section_two_subsection_two_6ac830f1 ON p
 
 
 --
+-- Name: great_international_intern_section_two_subsection_two_8c1509df; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_two_8c1509df ON public.great_international_internationalhomepage USING btree (section_two_subsection_two_icon_ja_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_two_963eacc3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_two_963eacc3 ON public.great_international_internationalhomepage USING btree (section_two_subsection_two_icon_pt_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_two_9b67fe37; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_two_9b67fe37 ON public.great_international_internationalhomepage USING btree (section_two_subsection_two_icon_ar_id);
+
+
+--
 -- Name: great_international_intern_section_two_subsection_two_9c130204; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_section_two_subsection_two_9c130204 ON public.great_international_internationalsectorpage USING btree (section_two_subsection_two_icon_id);
+
+
+--
+-- Name: great_international_intern_section_two_subsection_two_9d9a6e70; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_intern_section_two_subsection_two_9d9a6e70 ON public.great_international_internationalhomepage USING btree (section_two_subsection_two_icon_de_id);
 
 
 --
@@ -14280,13 +13912,6 @@ CREATE INDEX great_international_intern_section_two_subsection_two_9dae4976 ON p
 --
 
 CREATE INDEX great_international_intern_section_two_subsection_two_a2e61ee3 ON public.great_international_internationalsectorpage USING btree (section_two_subsection_two_icon_pt_id);
-
-
---
--- Name: great_international_intern_section_two_subsection_two_b2e5e3c8; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_section_two_subsection_two_b2e5e3c8 ON public.great_international_internationalsectorpage USING btree (section_two_subsection_two_icon_pt_br_id);
 
 
 --
@@ -14367,20 +13992,6 @@ CREATE INDEX great_international_intern_selling_point_one_icon_pt__f26687eb ON p
 
 
 --
--- Name: great_international_intern_selling_point_one_icon_pt__f53ad4d4; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_selling_point_one_icon_pt__f53ad4d4 ON public.great_international_internationalcampaignpage USING btree (selling_point_one_icon_pt_br_id);
-
-
---
--- Name: great_international_intern_selling_point_one_icon_ru__8606ed30; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_selling_point_one_icon_ru__8606ed30 ON public.great_international_internationalcampaignpage USING btree (selling_point_one_icon_ru_id);
-
-
---
 -- Name: great_international_intern_selling_point_one_icon_zh__919b5f78; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -14444,20 +14055,6 @@ CREATE INDEX great_international_intern_selling_point_three_icon_p_7bce2ec1 ON p
 
 
 --
--- Name: great_international_intern_selling_point_three_icon_p_cbdb1e2f; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_selling_point_three_icon_p_cbdb1e2f ON public.great_international_internationalcampaignpage USING btree (selling_point_three_icon_pt_br_id);
-
-
---
--- Name: great_international_intern_selling_point_three_icon_r_9cbe465d; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_selling_point_three_icon_r_9cbe465d ON public.great_international_internationalcampaignpage USING btree (selling_point_three_icon_ru_id);
-
-
---
 -- Name: great_international_intern_selling_point_three_icon_z_9c295d37; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -14518,20 +14115,6 @@ CREATE INDEX great_international_intern_selling_point_two_icon_ja__e809a982 ON p
 --
 
 CREATE INDEX great_international_intern_selling_point_two_icon_pt__93079beb ON public.great_international_internationalcampaignpage USING btree (selling_point_two_icon_pt_id);
-
-
---
--- Name: great_international_intern_selling_point_two_icon_pt__df3fab43; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_selling_point_two_icon_pt__df3fab43 ON public.great_international_internationalcampaignpage USING btree (selling_point_two_icon_pt_br_id);
-
-
---
--- Name: great_international_intern_selling_point_two_icon_ru__af248f6f; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_selling_point_two_icon_ru__af248f6f ON public.great_international_internationalcampaignpage USING btree (selling_point_two_icon_ru_id);
 
 
 --
@@ -14710,24 +14293,10 @@ CREATE INDEX great_international_intern_tariffs_image_ja_id_38d4eaf7 ON public.g
 
 
 --
--- Name: great_international_intern_tariffs_image_pt_br_id_f6daaac9; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_tariffs_image_pt_br_id_f6daaac9 ON public.great_international_internationalhomepage USING btree (tariffs_image_pt_br_id);
-
-
---
 -- Name: great_international_intern_tariffs_image_pt_id_17eb134e; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_tariffs_image_pt_id_17eb134e ON public.great_international_internationalhomepage USING btree (tariffs_image_pt_id);
-
-
---
--- Name: great_international_intern_tariffs_image_ru_id_c0d13de9; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_tariffs_image_ru_id_c0d13de9 ON public.great_international_internationalhomepage USING btree (tariffs_image_ru_id);
 
 
 --
@@ -14787,24 +14356,10 @@ CREATE INDEX great_international_intern_trade_image_ja_id_7b05a445 ON public.gre
 
 
 --
--- Name: great_international_intern_trade_image_pt_br_id_21cb8ef8; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_trade_image_pt_br_id_21cb8ef8 ON public.great_international_internationalhomepage USING btree (trade_image_pt_br_id);
-
-
---
 -- Name: great_international_intern_trade_image_pt_id_7d6a9189; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_intern_trade_image_pt_id_7d6a9189 ON public.great_international_internationalhomepage USING btree (trade_image_pt_id);
-
-
---
--- Name: great_international_intern_trade_image_ru_id_3a4b8f8a; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_trade_image_ru_id_3a4b8f8a ON public.great_international_internationalhomepage USING btree (trade_image_ru_id);
 
 
 --
@@ -14899,24 +14454,10 @@ CREATE INDEX invest_highpotentialopport_case_study_four_image_ja_i_35db6dca ON p
 
 
 --
--- Name: invest_highpotentialopport_case_study_four_image_pt_b_b0c6dfdb; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_case_study_four_image_pt_b_b0c6dfdb ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_four_image_pt_br_id);
-
-
---
 -- Name: invest_highpotentialopport_case_study_four_image_pt_i_b57f68d1; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_case_study_four_image_pt_i_b57f68d1 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_four_image_pt_id);
-
-
---
--- Name: invest_highpotentialopport_case_study_four_image_ru_i_b3fda3b4; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_case_study_four_image_ru_i_b3fda3b4 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_four_image_ru_id);
 
 
 --
@@ -14976,24 +14517,10 @@ CREATE INDEX invest_highpotentialopport_case_study_one_image_ja_id_2dc6ca68 ON p
 
 
 --
--- Name: invest_highpotentialopport_case_study_one_image_pt_br_34e92817; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_case_study_one_image_pt_br_34e92817 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_one_image_pt_br_id);
-
-
---
 -- Name: invest_highpotentialopport_case_study_one_image_pt_id_1765ef73; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_case_study_one_image_pt_id_1765ef73 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_one_image_pt_id);
-
-
---
--- Name: invest_highpotentialopport_case_study_one_image_ru_id_0efb330f; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_case_study_one_image_ru_id_0efb330f ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_one_image_ru_id);
 
 
 --
@@ -15060,20 +14587,6 @@ CREATE INDEX invest_highpotentialopport_case_study_three_image_pt__98ab1a6c ON p
 
 
 --
--- Name: invest_highpotentialopport_case_study_three_image_pt__ea81a176; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_case_study_three_image_pt__ea81a176 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_three_image_pt_br_id);
-
-
---
--- Name: invest_highpotentialopport_case_study_three_image_ru__fc95e69b; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_case_study_three_image_ru__fc95e69b ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_three_image_ru_id);
-
-
---
 -- Name: invest_highpotentialopport_case_study_three_image_zh__f1c26cf8; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -15130,13 +14643,6 @@ CREATE INDEX invest_highpotentialopport_case_study_two_image_ja_id_3ae0c712 ON p
 
 
 --
--- Name: invest_highpotentialopport_case_study_two_image_pt_br_3b90bac9; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_case_study_two_image_pt_br_3b90bac9 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_two_image_pt_br_id);
-
-
---
 -- Name: invest_highpotentialopport_case_study_two_image_pt_id_95396154; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -15144,24 +14650,10 @@ CREATE INDEX invest_highpotentialopport_case_study_two_image_pt_id_95396154 ON p
 
 
 --
--- Name: invest_highpotentialopport_case_study_two_image_ru_id_1413d098; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_case_study_two_image_ru_id_1413d098 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_two_image_ru_id);
-
-
---
 -- Name: invest_highpotentialopport_case_study_two_image_zh_ha_cffd7135; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_case_study_two_image_zh_ha_cffd7135 ON public.invest_highpotentialopportunitydetailpage USING btree (case_study_two_image_zh_hans_id);
-
-
---
--- Name: invest_highpotentialopport_companies_list_item_image__005cd673; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_companies_list_item_image__005cd673 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_six_pt_br_id);
 
 
 --
@@ -15176,13 +14668,6 @@ CREATE INDEX invest_highpotentialopport_companies_list_item_image__03188ba9 ON p
 --
 
 CREATE INDEX invest_highpotentialopport_companies_list_item_image__0615da74 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_five_en_gb_id);
-
-
---
--- Name: invest_highpotentialopport_companies_list_item_image__06588a44; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_companies_list_item_image__06588a44 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_five_pt_br_id);
 
 
 --
@@ -15211,13 +14696,6 @@ CREATE INDEX invest_highpotentialopport_companies_list_item_image__1ea750f9 ON p
 --
 
 CREATE INDEX invest_highpotentialopport_companies_list_item_image__1f3cb5d9 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_four_fr_id);
-
-
---
--- Name: invest_highpotentialopport_companies_list_item_image__22db3d6c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_companies_list_item_image__22db3d6c ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_eight_pt_br_id);
 
 
 --
@@ -15263,13 +14741,6 @@ CREATE INDEX invest_highpotentialopport_companies_list_item_image__3a6335b6 ON p
 
 
 --
--- Name: invest_highpotentialopport_companies_list_item_image__3b566bd4; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_companies_list_item_image__3b566bd4 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_one_ru_id);
-
-
---
 -- Name: invest_highpotentialopport_companies_list_item_image__3c85a46c; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -15291,24 +14762,10 @@ CREATE INDEX invest_highpotentialopport_companies_list_item_image__4c8ef91b ON p
 
 
 --
--- Name: invest_highpotentialopport_companies_list_item_image__4cbc431c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_companies_list_item_image__4cbc431c ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_two_ru_id);
-
-
---
 -- Name: invest_highpotentialopport_companies_list_item_image__564ef0fd; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_companies_list_item_image__564ef0fd ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_five_pt_id);
-
-
---
--- Name: invest_highpotentialopport_companies_list_item_image__57dd1361; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_companies_list_item_image__57dd1361 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_eight_ru_id);
 
 
 --
@@ -15368,13 +14825,6 @@ CREATE INDEX invest_highpotentialopport_companies_list_item_image__63f109d4 ON p
 
 
 --
--- Name: invest_highpotentialopport_companies_list_item_image__652f6a73; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_companies_list_item_image__652f6a73 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_one_pt_br_id);
-
-
---
 -- Name: invest_highpotentialopport_companies_list_item_image__689352eb; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -15386,13 +14836,6 @@ CREATE INDEX invest_highpotentialopport_companies_list_item_image__689352eb ON p
 --
 
 CREATE INDEX invest_highpotentialopport_companies_list_item_image__69535e2d ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_one_id);
-
-
---
--- Name: invest_highpotentialopport_companies_list_item_image__6b8c075d; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_companies_list_item_image__6b8c075d ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_seven_ru_id);
 
 
 --
@@ -15522,24 +14965,10 @@ CREATE INDEX invest_highpotentialopport_companies_list_item_image__942b9799 ON p
 
 
 --
--- Name: invest_highpotentialopport_companies_list_item_image__9432ab61; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_companies_list_item_image__9432ab61 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_four_ru_id);
-
-
---
 -- Name: invest_highpotentialopport_companies_list_item_image__95574cde; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_companies_list_item_image__95574cde ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_six_ar_id);
-
-
---
--- Name: invest_highpotentialopport_companies_list_item_image__963d5e95; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_companies_list_item_image__963d5e95 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_six_ru_id);
 
 
 --
@@ -15554,13 +14983,6 @@ CREATE INDEX invest_highpotentialopport_companies_list_item_image__99d5ea71 ON p
 --
 
 CREATE INDEX invest_highpotentialopport_companies_list_item_image__9ba14e5d ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_one_pt_id);
-
-
---
--- Name: invest_highpotentialopport_companies_list_item_image__9bbd9294; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_companies_list_item_image__9bbd9294 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_five_ru_id);
 
 
 --
@@ -15613,13 +15035,6 @@ CREATE INDEX invest_highpotentialopport_companies_list_item_image__c1c5c3d7 ON p
 
 
 --
--- Name: invest_highpotentialopport_companies_list_item_image__c352b555; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_companies_list_item_image__c352b555 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_four_pt_br_id);
-
-
---
 -- Name: invest_highpotentialopport_companies_list_item_image__c4205164; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -15655,13 +15070,6 @@ CREATE INDEX invest_highpotentialopport_companies_list_item_image__cd499f99 ON p
 
 
 --
--- Name: invest_highpotentialopport_companies_list_item_image__cee4ed55; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_companies_list_item_image__cee4ed55 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_three_pt_br_id);
-
-
---
 -- Name: invest_highpotentialopport_companies_list_item_image__d0a25bdf; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -15669,31 +15077,10 @@ CREATE INDEX invest_highpotentialopport_companies_list_item_image__d0a25bdf ON p
 
 
 --
--- Name: invest_highpotentialopport_companies_list_item_image__d24f18fc; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_companies_list_item_image__d24f18fc ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_three_ru_id);
-
-
---
 -- Name: invest_highpotentialopport_companies_list_item_image__d5f7085c; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_companies_list_item_image__d5f7085c ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_three_en_gb_id);
-
-
---
--- Name: invest_highpotentialopport_companies_list_item_image__da963152; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_companies_list_item_image__da963152 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_seven_pt_br_id);
-
-
---
--- Name: invest_highpotentialopport_companies_list_item_image__dae81be9; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_companies_list_item_image__dae81be9 ON public.invest_highpotentialopportunitydetailpage USING btree (companies_list_item_image_two_pt_br_id);
 
 
 --
@@ -15816,13 +15203,6 @@ CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_33a2dcf6 ON p
 
 
 --
--- Name: invest_highpotentialopport_competitive_advantages_lis_36aee8de; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_36aee8de ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_one_icon_pt_br_id);
-
-
---
 -- Name: invest_highpotentialopport_competitive_advantages_lis_40d6c9af; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -15834,13 +15214,6 @@ CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_40d6c9af ON p
 --
 
 CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_4fe4a95d ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_two_icon_es_id);
-
-
---
--- Name: invest_highpotentialopport_competitive_advantages_lis_51b584c9; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_51b584c9 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_one_icon_ru_id);
 
 
 --
@@ -15883,13 +15256,6 @@ CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_7811fc8c ON p
 --
 
 CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_7e3568fe ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_three_icon_zh_hans_id);
-
-
---
--- Name: invest_highpotentialopport_competitive_advantages_lis_841529ec; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_841529ec ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_three_icon_pt_br_id);
 
 
 --
@@ -15956,20 +15322,6 @@ CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_d41b8b94 ON p
 
 
 --
--- Name: invest_highpotentialopport_competitive_advantages_lis_da967f8b; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_da967f8b ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_two_icon_pt_br_id);
-
-
---
--- Name: invest_highpotentialopport_competitive_advantages_lis_df368cd3; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_df368cd3 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_two_icon_ru_id);
-
-
---
 -- Name: invest_highpotentialopport_competitive_advantages_lis_f20ed168; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -15981,13 +15333,6 @@ CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_f20ed168 ON p
 --
 
 CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_f29f52a0 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_three_icon_ar_id);
-
-
---
--- Name: invest_highpotentialopport_competitive_advantages_lis_f61b1221; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_competitive_advantages_lis_f61b1221 ON public.invest_highpotentialopportunitydetailpage USING btree (competitive_advantages_list_item_three_icon_ru_id);
 
 
 --
@@ -16054,24 +15399,10 @@ CREATE INDEX invest_highpotentialopport_hero_image_ja_id_f89a9b4a ON public.inve
 
 
 --
--- Name: invest_highpotentialopport_hero_image_pt_br_id_e1e40d6e; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_hero_image_pt_br_id_e1e40d6e ON public.invest_highpotentialopportunitydetailpage USING btree (hero_image_pt_br_id);
-
-
---
 -- Name: invest_highpotentialopport_hero_image_pt_id_51007d85; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_hero_image_pt_id_51007d85 ON public.invest_highpotentialopportunitydetailpage USING btree (hero_image_pt_id);
-
-
---
--- Name: invest_highpotentialopport_hero_image_ru_id_140509ba; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_hero_image_ru_id_140509ba ON public.invest_highpotentialopportunitydetailpage USING btree (hero_image_ru_id);
 
 
 --
@@ -16138,20 +15469,6 @@ CREATE INDEX invest_highpotentialopport_opportunity_list_image_pt__6c3086d9 ON p
 
 
 --
--- Name: invest_highpotentialopport_opportunity_list_image_pt__9b2d4414; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_opportunity_list_image_pt__9b2d4414 ON public.invest_highpotentialopportunitydetailpage USING btree (opportunity_list_image_pt_br_id);
-
-
---
--- Name: invest_highpotentialopport_opportunity_list_image_ru__b1000b00; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_opportunity_list_image_ru__b1000b00 ON public.invest_highpotentialopportunitydetailpage USING btree (opportunity_list_image_ru_id);
-
-
---
 -- Name: invest_highpotentialopport_opportunity_list_image_zh__59455d63; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -16215,24 +15532,10 @@ CREATE INDEX invest_highpotentialopport_proposition_one_image_ja_i_2cd1be5b ON p
 
 
 --
--- Name: invest_highpotentialopport_proposition_one_image_pt_b_6813d18c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_proposition_one_image_pt_b_6813d18c ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_image_pt_br_id);
-
-
---
 -- Name: invest_highpotentialopport_proposition_one_image_pt_i_7c2d515e; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_proposition_one_image_pt_i_7c2d515e ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_image_pt_id);
-
-
---
--- Name: invest_highpotentialopport_proposition_one_image_ru_i_47c472b1; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_proposition_one_image_ru_i_47c472b1 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_image_ru_id);
 
 
 --
@@ -16292,24 +15595,10 @@ CREATE INDEX invest_highpotentialopport_proposition_one_video_ja_i_55b11348 ON p
 
 
 --
--- Name: invest_highpotentialopport_proposition_one_video_pt_b_ce8e8454; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_proposition_one_video_pt_b_ce8e8454 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_video_pt_br_id);
-
-
---
 -- Name: invest_highpotentialopport_proposition_one_video_pt_i_5c934044; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_proposition_one_video_pt_i_5c934044 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_video_pt_id);
-
-
---
--- Name: invest_highpotentialopport_proposition_one_video_ru_i_6b7aa1e5; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_proposition_one_video_ru_i_6b7aa1e5 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_one_video_ru_id);
 
 
 --
@@ -16369,24 +15658,10 @@ CREATE INDEX invest_highpotentialopport_proposition_two_image_ja_i_85fe3796 ON p
 
 
 --
--- Name: invest_highpotentialopport_proposition_two_image_pt_b_18a94aa9; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_proposition_two_image_pt_b_18a94aa9 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_image_pt_br_id);
-
-
---
 -- Name: invest_highpotentialopport_proposition_two_image_pt_i_44846e1d; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_proposition_two_image_pt_i_44846e1d ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_image_pt_id);
-
-
---
--- Name: invest_highpotentialopport_proposition_two_image_ru_i_f5802195; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_proposition_two_image_ru_i_f5802195 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_image_ru_id);
 
 
 --
@@ -16446,24 +15721,10 @@ CREATE INDEX invest_highpotentialopport_proposition_two_video_ja_i_0bdf31fd ON p
 
 
 --
--- Name: invest_highpotentialopport_proposition_two_video_pt_b_85a6c70c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_proposition_two_video_pt_b_85a6c70c ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_video_pt_br_id);
-
-
---
 -- Name: invest_highpotentialopport_proposition_two_video_pt_i_f7ab4c50; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_proposition_two_video_pt_i_f7ab4c50 ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_video_pt_id);
-
-
---
--- Name: invest_highpotentialopport_proposition_two_video_ru_i_6281f41b; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_proposition_two_video_ru_i_6281f41b ON public.invest_highpotentialopportunitydetailpage USING btree (proposition_two_video_ru_id);
 
 
 --
@@ -16530,24 +15791,10 @@ CREATE INDEX invest_highpotentialopport_summary_image_ja_id_35f75f42 ON public.i
 
 
 --
--- Name: invest_highpotentialopport_summary_image_pt_br_id_d6b5dbd5; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_summary_image_pt_br_id_d6b5dbd5 ON public.invest_highpotentialopportunitydetailpage USING btree (summary_image_pt_br_id);
-
-
---
 -- Name: invest_highpotentialopport_summary_image_pt_id_88426c0d; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_summary_image_pt_id_88426c0d ON public.invest_highpotentialopportunitydetailpage USING btree (summary_image_pt_id);
-
-
---
--- Name: invest_highpotentialopport_summary_image_ru_id_8a836a43; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_summary_image_ru_id_8a836a43 ON public.invest_highpotentialopportunitydetailpage USING btree (summary_image_ru_id);
 
 
 --
@@ -16607,24 +15854,10 @@ CREATE INDEX invest_highpotentialopport_testimonial_background_ja__bcacb436 ON p
 
 
 --
--- Name: invest_highpotentialopport_testimonial_background_pt__2736ceb9; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_testimonial_background_pt__2736ceb9 ON public.invest_highpotentialopportunitydetailpage USING btree (testimonial_background_pt_br_id);
-
-
---
 -- Name: invest_highpotentialopport_testimonial_background_pt__bbd70775; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_highpotentialopport_testimonial_background_pt__bbd70775 ON public.invest_highpotentialopportunitydetailpage USING btree (testimonial_background_pt_id);
-
-
---
--- Name: invest_highpotentialopport_testimonial_background_ru__be696a19; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_highpotentialopport_testimonial_background_ru__be696a19 ON public.invest_highpotentialopportunitydetailpage USING btree (testimonial_background_ru_id);
 
 
 --
@@ -16719,13 +15952,6 @@ CREATE INDEX invest_investhomepage_benefits_section_img_ja_id_e20207a0 ON public
 
 
 --
--- Name: invest_investhomepage_benefits_section_img_pt_br_id_fd503de4; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_benefits_section_img_pt_br_id_fd503de4 ON public.invest_investhomepage USING btree (benefits_section_img_pt_br_id);
-
-
---
 -- Name: invest_investhomepage_benefits_section_img_pt_id_d2dd2d9c; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -16733,24 +15959,10 @@ CREATE INDEX invest_investhomepage_benefits_section_img_pt_id_d2dd2d9c ON public
 
 
 --
--- Name: invest_investhomepage_benefits_section_img_ru_id_da5c9cd3; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_benefits_section_img_ru_id_da5c9cd3 ON public.invest_investhomepage USING btree (benefits_section_img_ru_id);
-
-
---
 -- Name: invest_investhomepage_benefits_section_img_zh_hans_id_b2f6c8f5; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_investhomepage_benefits_section_img_zh_hans_id_b2f6c8f5 ON public.invest_investhomepage USING btree (benefits_section_img_zh_hans_id);
-
-
---
--- Name: invest_investhomepage_capital_invest_section_bac_03acd114; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_capital_invest_section_bac_03acd114 ON public.invest_investhomepage USING btree (capital_invest_section_background_image_ru_id);
 
 
 --
@@ -16800,13 +16012,6 @@ CREATE INDEX invest_investhomepage_capital_invest_section_bac_8d1889ba ON public
 --
 
 CREATE INDEX invest_investhomepage_capital_invest_section_bac_8eed7739 ON public.invest_investhomepage USING btree (capital_invest_section_background_image_ar_id);
-
-
---
--- Name: invest_investhomepage_capital_invest_section_bac_9230e099; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_capital_invest_section_bac_9230e099 ON public.invest_investhomepage USING btree (capital_invest_section_background_image_pt_br_id);
 
 
 --
@@ -16873,24 +16078,10 @@ CREATE INDEX invest_investhomepage_eu_exit_section_img_ja_id_46ac21b9 ON public.
 
 
 --
--- Name: invest_investhomepage_eu_exit_section_img_pt_br_id_0f8a41fa; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_eu_exit_section_img_pt_br_id_0f8a41fa ON public.invest_investhomepage USING btree (eu_exit_section_img_pt_br_id);
-
-
---
 -- Name: invest_investhomepage_eu_exit_section_img_pt_id_dcc8af9a; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_investhomepage_eu_exit_section_img_pt_id_dcc8af9a ON public.invest_investhomepage USING btree (eu_exit_section_img_pt_id);
-
-
---
--- Name: invest_investhomepage_eu_exit_section_img_ru_id_918b2da9; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_eu_exit_section_img_ru_id_918b2da9 ON public.invest_investhomepage USING btree (eu_exit_section_img_ru_id);
 
 
 --
@@ -16957,24 +16148,10 @@ CREATE INDEX invest_investhomepage_how_we_help_icon_five_ja_id_c8f0a784 ON publi
 
 
 --
--- Name: invest_investhomepage_how_we_help_icon_five_pt_br_id_f1712768; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_how_we_help_icon_five_pt_br_id_f1712768 ON public.invest_investhomepage USING btree (how_we_help_icon_five_pt_br_id);
-
-
---
 -- Name: invest_investhomepage_how_we_help_icon_five_pt_id_f452675a; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_investhomepage_how_we_help_icon_five_pt_id_f452675a ON public.invest_investhomepage USING btree (how_we_help_icon_five_pt_id);
-
-
---
--- Name: invest_investhomepage_how_we_help_icon_five_ru_id_569e774c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_how_we_help_icon_five_ru_id_569e774c ON public.invest_investhomepage USING btree (how_we_help_icon_five_ru_id);
 
 
 --
@@ -17034,24 +16211,10 @@ CREATE INDEX invest_investhomepage_how_we_help_icon_four_ja_id_ddda13d6 ON publi
 
 
 --
--- Name: invest_investhomepage_how_we_help_icon_four_pt_br_id_eb716ad6; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_how_we_help_icon_four_pt_br_id_eb716ad6 ON public.invest_investhomepage USING btree (how_we_help_icon_four_pt_br_id);
-
-
---
 -- Name: invest_investhomepage_how_we_help_icon_four_pt_id_6cc9c5ef; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_investhomepage_how_we_help_icon_four_pt_id_6cc9c5ef ON public.invest_investhomepage USING btree (how_we_help_icon_four_pt_id);
-
-
---
--- Name: invest_investhomepage_how_we_help_icon_four_ru_id_cd433b63; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_how_we_help_icon_four_ru_id_cd433b63 ON public.invest_investhomepage USING btree (how_we_help_icon_four_ru_id);
 
 
 --
@@ -17111,24 +16274,10 @@ CREATE INDEX invest_investhomepage_how_we_help_icon_one_ja_id_8fdb9362 ON public
 
 
 --
--- Name: invest_investhomepage_how_we_help_icon_one_pt_br_id_a3afab67; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_how_we_help_icon_one_pt_br_id_a3afab67 ON public.invest_investhomepage USING btree (how_we_help_icon_one_pt_br_id);
-
-
---
 -- Name: invest_investhomepage_how_we_help_icon_one_pt_id_fcfe99e1; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_investhomepage_how_we_help_icon_one_pt_id_fcfe99e1 ON public.invest_investhomepage USING btree (how_we_help_icon_one_pt_id);
-
-
---
--- Name: invest_investhomepage_how_we_help_icon_one_ru_id_4bd58fed; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_how_we_help_icon_one_ru_id_4bd58fed ON public.invest_investhomepage USING btree (how_we_help_icon_one_ru_id);
 
 
 --
@@ -17188,24 +16337,10 @@ CREATE INDEX invest_investhomepage_how_we_help_icon_three_ja_id_ee1b291e ON publ
 
 
 --
--- Name: invest_investhomepage_how_we_help_icon_three_pt_br_id_e8b61047; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_how_we_help_icon_three_pt_br_id_e8b61047 ON public.invest_investhomepage USING btree (how_we_help_icon_three_pt_br_id);
-
-
---
 -- Name: invest_investhomepage_how_we_help_icon_three_pt_id_7e9a29db; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_investhomepage_how_we_help_icon_three_pt_id_7e9a29db ON public.invest_investhomepage USING btree (how_we_help_icon_three_pt_id);
-
-
---
--- Name: invest_investhomepage_how_we_help_icon_three_ru_id_b415bb95; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_how_we_help_icon_three_ru_id_b415bb95 ON public.invest_investhomepage USING btree (how_we_help_icon_three_ru_id);
 
 
 --
@@ -17265,24 +16400,10 @@ CREATE INDEX invest_investhomepage_how_we_help_icon_two_ja_id_5fd75f90 ON public
 
 
 --
--- Name: invest_investhomepage_how_we_help_icon_two_pt_br_id_4a6e272c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_how_we_help_icon_two_pt_br_id_4a6e272c ON public.invest_investhomepage USING btree (how_we_help_icon_two_pt_br_id);
-
-
---
 -- Name: invest_investhomepage_how_we_help_icon_two_pt_id_3578bda4; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_investhomepage_how_we_help_icon_two_pt_id_3578bda4 ON public.invest_investhomepage USING btree (how_we_help_icon_two_pt_id);
-
-
---
--- Name: invest_investhomepage_how_we_help_icon_two_ru_id_aa9742a9; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_how_we_help_icon_two_ru_id_aa9742a9 ON public.invest_investhomepage USING btree (how_we_help_icon_two_ru_id);
 
 
 --
@@ -17356,24 +16477,10 @@ CREATE INDEX invest_investhomepage_setup_guide_img_ja_id_b07295db ON public.inve
 
 
 --
--- Name: invest_investhomepage_setup_guide_img_pt_br_id_e95b7046; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_setup_guide_img_pt_br_id_e95b7046 ON public.invest_investhomepage USING btree (setup_guide_img_pt_br_id);
-
-
---
 -- Name: invest_investhomepage_setup_guide_img_pt_id_df9dbd8d; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_investhomepage_setup_guide_img_pt_id_df9dbd8d ON public.invest_investhomepage USING btree (setup_guide_img_pt_id);
-
-
---
--- Name: invest_investhomepage_setup_guide_img_ru_id_91355e60; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_setup_guide_img_ru_id_91355e60 ON public.invest_investhomepage USING btree (setup_guide_img_ru_id);
 
 
 --
@@ -17496,24 +16603,10 @@ CREATE INDEX invest_sectorpage_subsection_map_five_ja_id_5dd8444c ON public.inve
 
 
 --
--- Name: invest_sectorpage_subsection_map_five_pt_br_id_275133b7; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_sectorpage_subsection_map_five_pt_br_id_275133b7 ON public.invest_sectorpage USING btree (subsection_map_five_pt_br_id);
-
-
---
 -- Name: invest_sectorpage_subsection_map_five_pt_id_c06e94ea; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_sectorpage_subsection_map_five_pt_id_c06e94ea ON public.invest_sectorpage USING btree (subsection_map_five_pt_id);
-
-
---
--- Name: invest_sectorpage_subsection_map_five_ru_id_a267a7b3; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_sectorpage_subsection_map_five_ru_id_a267a7b3 ON public.invest_sectorpage USING btree (subsection_map_five_ru_id);
 
 
 --
@@ -17573,24 +16666,10 @@ CREATE INDEX invest_sectorpage_subsection_map_four_ja_id_28b40bd3 ON public.inve
 
 
 --
--- Name: invest_sectorpage_subsection_map_four_pt_br_id_5750dcc0; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_sectorpage_subsection_map_four_pt_br_id_5750dcc0 ON public.invest_sectorpage USING btree (subsection_map_four_pt_br_id);
-
-
---
 -- Name: invest_sectorpage_subsection_map_four_pt_id_407eb5cf; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_sectorpage_subsection_map_four_pt_id_407eb5cf ON public.invest_sectorpage USING btree (subsection_map_four_pt_id);
-
-
---
--- Name: invest_sectorpage_subsection_map_four_ru_id_b47d357c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_sectorpage_subsection_map_four_ru_id_b47d357c ON public.invest_sectorpage USING btree (subsection_map_four_ru_id);
 
 
 --
@@ -17650,24 +16729,10 @@ CREATE INDEX invest_sectorpage_subsection_map_one_ja_id_ff99bbbe ON public.inves
 
 
 --
--- Name: invest_sectorpage_subsection_map_one_pt_br_id_bae51dfd; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_sectorpage_subsection_map_one_pt_br_id_bae51dfd ON public.invest_sectorpage USING btree (subsection_map_one_pt_br_id);
-
-
---
 -- Name: invest_sectorpage_subsection_map_one_pt_id_3704faa0; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_sectorpage_subsection_map_one_pt_id_3704faa0 ON public.invest_sectorpage USING btree (subsection_map_one_pt_id);
-
-
---
--- Name: invest_sectorpage_subsection_map_one_ru_id_5aa7df5b; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_sectorpage_subsection_map_one_ru_id_5aa7df5b ON public.invest_sectorpage USING btree (subsection_map_one_ru_id);
 
 
 --
@@ -17727,24 +16792,10 @@ CREATE INDEX invest_sectorpage_subsection_map_seven_ja_id_5a450f7a ON public.inv
 
 
 --
--- Name: invest_sectorpage_subsection_map_seven_pt_br_id_2a54736c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_sectorpage_subsection_map_seven_pt_br_id_2a54736c ON public.invest_sectorpage USING btree (subsection_map_seven_pt_br_id);
-
-
---
 -- Name: invest_sectorpage_subsection_map_seven_pt_id_5024f4b4; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_sectorpage_subsection_map_seven_pt_id_5024f4b4 ON public.invest_sectorpage USING btree (subsection_map_seven_pt_id);
-
-
---
--- Name: invest_sectorpage_subsection_map_seven_ru_id_bde5e042; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_sectorpage_subsection_map_seven_ru_id_bde5e042 ON public.invest_sectorpage USING btree (subsection_map_seven_ru_id);
 
 
 --
@@ -17804,24 +16855,10 @@ CREATE INDEX invest_sectorpage_subsection_map_six_ja_id_e2bede44 ON public.inves
 
 
 --
--- Name: invest_sectorpage_subsection_map_six_pt_br_id_382643bc; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_sectorpage_subsection_map_six_pt_br_id_382643bc ON public.invest_sectorpage USING btree (subsection_map_six_pt_br_id);
-
-
---
 -- Name: invest_sectorpage_subsection_map_six_pt_id_461ab6e9; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_sectorpage_subsection_map_six_pt_id_461ab6e9 ON public.invest_sectorpage USING btree (subsection_map_six_pt_id);
-
-
---
--- Name: invest_sectorpage_subsection_map_six_ru_id_8a62efd9; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_sectorpage_subsection_map_six_ru_id_8a62efd9 ON public.invest_sectorpage USING btree (subsection_map_six_ru_id);
 
 
 --
@@ -17881,24 +16918,10 @@ CREATE INDEX invest_sectorpage_subsection_map_three_ja_id_4a0b8e49 ON public.inv
 
 
 --
--- Name: invest_sectorpage_subsection_map_three_pt_br_id_c1bc090a; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_sectorpage_subsection_map_three_pt_br_id_c1bc090a ON public.invest_sectorpage USING btree (subsection_map_three_pt_br_id);
-
-
---
 -- Name: invest_sectorpage_subsection_map_three_pt_id_3276a701; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_sectorpage_subsection_map_three_pt_id_3276a701 ON public.invest_sectorpage USING btree (subsection_map_three_pt_id);
-
-
---
--- Name: invest_sectorpage_subsection_map_three_ru_id_debe81d6; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_sectorpage_subsection_map_three_ru_id_debe81d6 ON public.invest_sectorpage USING btree (subsection_map_three_ru_id);
 
 
 --
@@ -17958,24 +16981,10 @@ CREATE INDEX invest_sectorpage_subsection_map_two_ja_id_0cc7f6b9 ON public.inves
 
 
 --
--- Name: invest_sectorpage_subsection_map_two_pt_br_id_785d41e9; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_sectorpage_subsection_map_two_pt_br_id_785d41e9 ON public.invest_sectorpage USING btree (subsection_map_two_pt_br_id);
-
-
---
 -- Name: invest_sectorpage_subsection_map_two_pt_id_ddc3e9c4; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX invest_sectorpage_subsection_map_two_pt_id_ddc3e9c4 ON public.invest_sectorpage USING btree (subsection_map_two_pt_id);
-
-
---
--- Name: invest_sectorpage_subsection_map_two_ru_id_d3c7eaa5; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_sectorpage_subsection_map_two_ru_id_d3c7eaa5 ON public.invest_sectorpage USING btree (subsection_map_two_ru_id);
 
 
 --
@@ -18436,6 +17445,14 @@ ALTER TABLE ONLY public.core_documenthash
 
 ALTER TABLE ONLY public.core_imagehash
     ADD CONSTRAINT core_imagehash_image_id_ee947939_fk_wagtailimages_image_id FOREIGN KEY (image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: core_routingsettings core_routingsettings_site_id_e1aaee75_fk_wagtailcore_site_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.core_routingsettings
+    ADD CONSTRAINT core_routingsettings_site_id_e1aaee75_fk_wagtailcore_site_id FOREIGN KEY (site_id) REFERENCES public.wagtailcore_site(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -19231,14 +18248,6 @@ ALTER TABLE ONLY public.find_a_supplier_industrypagearticlesummary
 
 
 --
--- Name: find_a_supplier_industrypagearticlesummary find_a_supplier_indu_page_pt_br_id_2e23fb1f_fk_find_a_su; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.find_a_supplier_industrypagearticlesummary
-    ADD CONSTRAINT find_a_supplier_indu_page_pt_br_id_2e23fb1f_fk_find_a_su FOREIGN KEY (page_pt_br_id) REFERENCES public.find_a_supplier_industrypage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: find_a_supplier_industrypagearticlesummary find_a_supplier_indu_page_pt_id_a2f522f7_fk_find_a_su; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -19276,14 +18285,6 @@ ALTER TABLE ONLY public.find_a_supplier_industrylandingpage
 
 ALTER TABLE ONLY public.find_a_supplier_industryarticlepage
     ADD CONSTRAINT find_a_supplier_indu_page_ptr_id_dfe5af72_fk_wagtailco FOREIGN KEY (page_ptr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: find_a_supplier_industrypagearticlesummary find_a_supplier_indu_page_ru_id_bc3a8809_fk_find_a_su; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.find_a_supplier_industrypagearticlesummary
-    ADD CONSTRAINT find_a_supplier_indu_page_ru_id_bc3a8809_fk_find_a_su FOREIGN KEY (page_ru_id) REFERENCES public.find_a_supplier_industrypage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -19391,14 +18392,6 @@ ALTER TABLE ONLY public.find_a_supplier_landingpagearticlesummary
 
 
 --
--- Name: find_a_supplier_landingpagearticlesummary find_a_supplier_land_page_pt_br_id_a6ffa0f7_fk_find_a_su; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.find_a_supplier_landingpagearticlesummary
-    ADD CONSTRAINT find_a_supplier_land_page_pt_br_id_a6ffa0f7_fk_find_a_su FOREIGN KEY (page_pt_br_id) REFERENCES public.find_a_supplier_landingpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: find_a_supplier_landingpagearticlesummary find_a_supplier_land_page_pt_id_1e3fe6a9_fk_find_a_su; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -19412,14 +18405,6 @@ ALTER TABLE ONLY public.find_a_supplier_landingpagearticlesummary
 
 ALTER TABLE ONLY public.find_a_supplier_landingpage
     ADD CONSTRAINT find_a_supplier_land_page_ptr_id_1fb2205e_fk_wagtailco FOREIGN KEY (page_ptr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: find_a_supplier_landingpagearticlesummary find_a_supplier_land_page_ru_id_51fd06ed_fk_find_a_su; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.find_a_supplier_landingpagearticlesummary
-    ADD CONSTRAINT find_a_supplier_land_page_ru_id_51fd06ed_fk_find_a_su FOREIGN KEY (page_ru_id) REFERENCES public.find_a_supplier_landingpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -19479,27 +18464,11 @@ ALTER TABLE ONLY public.find_a_supplier_landingpage
 
 
 --
--- Name: find_a_supplier_landingpage find_a_supplier_land_services_column_four_987a4695_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.find_a_supplier_landingpage
-    ADD CONSTRAINT find_a_supplier_land_services_column_four_987a4695_fk_wagtailim FOREIGN KEY (services_column_four_icon_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: find_a_supplier_landingpage find_a_supplier_land_services_column_four_ad868ac2_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.find_a_supplier_landingpage
     ADD CONSTRAINT find_a_supplier_land_services_column_four_ad868ac2_fk_wagtailim FOREIGN KEY (services_column_four_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: find_a_supplier_landingpage find_a_supplier_land_services_column_four_cf16e03e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.find_a_supplier_landingpage
-    ADD CONSTRAINT find_a_supplier_land_services_column_four_cf16e03e_fk_wagtailim FOREIGN KEY (services_column_four_icon_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -19551,14 +18520,6 @@ ALTER TABLE ONLY public.find_a_supplier_landingpage
 
 
 --
--- Name: find_a_supplier_landingpage find_a_supplier_land_services_column_one__5b8e4485_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.find_a_supplier_landingpage
-    ADD CONSTRAINT find_a_supplier_land_services_column_one__5b8e4485_fk_wagtailim FOREIGN KEY (services_column_one_icon_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: find_a_supplier_landingpage find_a_supplier_land_services_column_one__7e8adcef_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -19572,14 +18533,6 @@ ALTER TABLE ONLY public.find_a_supplier_landingpage
 
 ALTER TABLE ONLY public.find_a_supplier_landingpage
     ADD CONSTRAINT find_a_supplier_land_services_column_one__b1109e29_fk_wagtailim FOREIGN KEY (services_column_one_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: find_a_supplier_landingpage find_a_supplier_land_services_column_one__d33d9fb6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.find_a_supplier_landingpage
-    ADD CONSTRAINT find_a_supplier_land_services_column_one__d33d9fb6_fk_wagtailim FOREIGN KEY (services_column_one_icon_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -19639,22 +18592,6 @@ ALTER TABLE ONLY public.find_a_supplier_landingpage
 
 
 --
--- Name: find_a_supplier_landingpage find_a_supplier_land_services_column_thre_7bb2e58b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.find_a_supplier_landingpage
-    ADD CONSTRAINT find_a_supplier_land_services_column_thre_7bb2e58b_fk_wagtailim FOREIGN KEY (services_column_three_icon_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: find_a_supplier_landingpage find_a_supplier_land_services_column_thre_ae7ddbb5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.find_a_supplier_landingpage
-    ADD CONSTRAINT find_a_supplier_land_services_column_thre_ae7ddbb5_fk_wagtailim FOREIGN KEY (services_column_three_icon_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: find_a_supplier_landingpage find_a_supplier_land_services_column_thre_b2bd5ecc_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -19695,14 +18632,6 @@ ALTER TABLE ONLY public.find_a_supplier_landingpage
 
 
 --
--- Name: find_a_supplier_landingpage find_a_supplier_land_services_column_two__0add801a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.find_a_supplier_landingpage
-    ADD CONSTRAINT find_a_supplier_land_services_column_two__0add801a_fk_wagtailim FOREIGN KEY (services_column_two_icon_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: find_a_supplier_landingpage find_a_supplier_land_services_column_two__3119d3f7_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -19740,14 +18669,6 @@ ALTER TABLE ONLY public.find_a_supplier_landingpage
 
 ALTER TABLE ONLY public.find_a_supplier_landingpage
     ADD CONSTRAINT find_a_supplier_land_services_column_two__76cf917f_fk_wagtailim FOREIGN KEY (services_column_two_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: find_a_supplier_landingpage find_a_supplier_land_services_column_two__a437d62f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.find_a_supplier_landingpage
-    ADD CONSTRAINT find_a_supplier_land_services_column_two__a437d62f_fk_wagtailim FOREIGN KEY (services_column_two_icon_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -19847,27 +18768,11 @@ ALTER TABLE ONLY public.great_international_internationalarticlepage
 
 
 --
--- Name: great_international_internationalarticlepage great_international__article_image_pt_br__d26d8e12_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_pt_br__d26d8e12_fk_wagtailim FOREIGN KEY (article_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalarticlepage great_international__article_image_pt_id_fd60b36a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalarticlepage
     ADD CONSTRAINT great_international__article_image_pt_id_fd60b36a_fk_wagtailim FOREIGN KEY (article_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__article_image_ru_id_76173232_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_ru_id_76173232_fk_wagtailim FOREIGN KEY (article_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -19919,14 +18824,6 @@ ALTER TABLE ONLY public.great_international_internationalcampaignpage
 
 
 --
--- Name: great_international_internationalcampaignpage great_international__campaign_hero_image__93ec3771_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__campaign_hero_image__93ec3771_fk_wagtailim FOREIGN KEY (campaign_hero_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcampaignpage great_international__campaign_hero_image__9b18fa0d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -19951,14 +18848,6 @@ ALTER TABLE ONLY public.great_international_internationalcampaignpage
 
 
 --
--- Name: great_international_internationalcampaignpage great_international__campaign_hero_image__b8dcf389_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__campaign_hero_image__b8dcf389_fk_wagtailim FOREIGN KEY (campaign_hero_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcampaignpage great_international__campaign_hero_image__eb974834_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -19975,27 +18864,11 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
--- Name: great_international_internationalsectorpage great_international__case_study_cta_page__2d807bf2_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__case_study_cta_page__2d807bf2_fk_wagtailco FOREIGN KEY (case_study_cta_page_ru_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalsectorpage great_international__case_study_cta_page__2e993231_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalsectorpage
     ADD CONSTRAINT great_international__case_study_cta_page__2e993231_fk_wagtailco FOREIGN KEY (case_study_cta_page_en_gb_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalsectorpage great_international__case_study_cta_page__4e65039b_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__case_study_cta_page__4e65039b_fk_wagtailco FOREIGN KEY (case_study_cta_page_pt_br_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -20119,22 +18992,6 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
--- Name: great_international_internationalsectorpage great_international__case_study_image_pt__dc47da8f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__case_study_image_pt__dc47da8f_fk_wagtailim FOREIGN KEY (case_study_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalsectorpage great_international__case_study_image_ru__dfec6b74_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__case_study_image_ru__dfec6b74_fk_wagtailim FOREIGN KEY (case_study_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalsectorpage great_international__case_study_image_zh__4c30a9f0_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -20199,27 +19056,11 @@ ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
 
 
 --
--- Name: great_international_internationalcuratedtopiclandingpage great_international__feature_five_image_p_abd77e9f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
-    ADD CONSTRAINT great_international__feature_five_image_p_abd77e9f_fk_wagtailim FOREIGN KEY (feature_five_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcuratedtopiclandingpage great_international__feature_five_image_p_d83671a6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
     ADD CONSTRAINT great_international__feature_five_image_p_d83671a6_fk_wagtailim FOREIGN KEY (feature_five_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcuratedtopiclandingpage great_international__feature_five_image_r_61c48c2b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
-    ADD CONSTRAINT great_international__feature_five_image_r_61c48c2b_fk_wagtailim FOREIGN KEY (feature_five_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -20287,27 +19128,11 @@ ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
 
 
 --
--- Name: great_international_internationalcuratedtopiclandingpage great_international__feature_four_image_p_4bd7b591_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
-    ADD CONSTRAINT great_international__feature_four_image_p_4bd7b591_fk_wagtailim FOREIGN KEY (feature_four_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcuratedtopiclandingpage great_international__feature_four_image_p_fc729e2b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
     ADD CONSTRAINT great_international__feature_four_image_p_fc729e2b_fk_wagtailim FOREIGN KEY (feature_four_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcuratedtopiclandingpage great_international__feature_four_image_r_5710de33_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
-    ADD CONSTRAINT great_international__feature_four_image_r_5710de33_fk_wagtailim FOREIGN KEY (feature_four_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -20375,27 +19200,11 @@ ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
 
 
 --
--- Name: great_international_internationalcuratedtopiclandingpage great_international__feature_one_image_pt_0522c56c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
-    ADD CONSTRAINT great_international__feature_one_image_pt_0522c56c_fk_wagtailim FOREIGN KEY (feature_one_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcuratedtopiclandingpage great_international__feature_one_image_pt_0fda8ffc_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
     ADD CONSTRAINT great_international__feature_one_image_pt_0fda8ffc_fk_wagtailim FOREIGN KEY (feature_one_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcuratedtopiclandingpage great_international__feature_one_image_ru_5618a608_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
-    ADD CONSTRAINT great_international__feature_one_image_ru_5618a608_fk_wagtailim FOREIGN KEY (feature_one_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -20415,27 +19224,11 @@ ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
 
 
 --
--- Name: great_international_internationalcuratedtopiclandingpage great_international__feature_three_image__31a2744a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
-    ADD CONSTRAINT great_international__feature_three_image__31a2744a_fk_wagtailim FOREIGN KEY (feature_three_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcuratedtopiclandingpage great_international__feature_three_image__441dd289_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
     ADD CONSTRAINT great_international__feature_three_image__441dd289_fk_wagtailim FOREIGN KEY (feature_three_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcuratedtopiclandingpage great_international__feature_three_image__77f6e56e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
-    ADD CONSTRAINT great_international__feature_three_image__77f6e56e_fk_wagtailim FOREIGN KEY (feature_three_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -20559,27 +19352,227 @@ ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
 
 
 --
--- Name: great_international_internationalcuratedtopiclandingpage great_international__feature_two_image_pt_8f5f4778_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
-    ADD CONSTRAINT great_international__feature_two_image_pt_8f5f4778_fk_wagtailim FOREIGN KEY (feature_two_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcuratedtopiclandingpage great_international__feature_two_image_ru_a2d7e0df_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
-    ADD CONSTRAINT great_international__feature_two_image_ru_a2d7e0df_fk_wagtailim FOREIGN KEY (feature_two_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcuratedtopiclandingpage great_international__feature_two_image_zh_8a169803_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
     ADD CONSTRAINT great_international__feature_two_image_zh_8a169803_fk_wagtailim FOREIGN KEY (feature_two_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_one_im_0a369add_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_one_im_0a369add_fk_wagtailim FOREIGN KEY (featured_link_one_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_one_im_0f8dcd31_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_one_im_0f8dcd31_fk_wagtailim FOREIGN KEY (featured_link_one_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_one_im_1bdbbd0d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_one_im_1bdbbd0d_fk_wagtailim FOREIGN KEY (featured_link_one_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_one_im_1da8e61b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_one_im_1da8e61b_fk_wagtailim FOREIGN KEY (featured_link_one_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_one_im_25769845_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_one_im_25769845_fk_wagtailim FOREIGN KEY (featured_link_one_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_one_im_9aaf16a1_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_one_im_9aaf16a1_fk_wagtailim FOREIGN KEY (featured_link_one_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_one_im_a19e542b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_one_im_a19e542b_fk_wagtailim FOREIGN KEY (featured_link_one_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_one_im_cab42276_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_one_im_cab42276_fk_wagtailim FOREIGN KEY (featured_link_one_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_one_im_ff3a6a8d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_one_im_ff3a6a8d_fk_wagtailim FOREIGN KEY (featured_link_one_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_three__067a49d3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_three__067a49d3_fk_wagtailim FOREIGN KEY (featured_link_three_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_three__0cb3d847_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_three__0cb3d847_fk_wagtailim FOREIGN KEY (featured_link_three_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_three__10e46550_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_three__10e46550_fk_wagtailim FOREIGN KEY (featured_link_three_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_three__364a6f12_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_three__364a6f12_fk_wagtailim FOREIGN KEY (featured_link_three_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_three__49bfde26_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_three__49bfde26_fk_wagtailim FOREIGN KEY (featured_link_three_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_three__8579b9ad_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_three__8579b9ad_fk_wagtailim FOREIGN KEY (featured_link_three_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_three__959a5496_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_three__959a5496_fk_wagtailim FOREIGN KEY (featured_link_three_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_three__a80b5a6c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_three__a80b5a6c_fk_wagtailim FOREIGN KEY (featured_link_three_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_three__baf90673_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_three__baf90673_fk_wagtailim FOREIGN KEY (featured_link_three_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_two_im_14eb901f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_two_im_14eb901f_fk_wagtailim FOREIGN KEY (featured_link_two_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_two_im_37d3fff3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_two_im_37d3fff3_fk_wagtailim FOREIGN KEY (featured_link_two_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_two_im_3f837e13_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_two_im_3f837e13_fk_wagtailim FOREIGN KEY (featured_link_two_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_two_im_7e2bec97_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_two_im_7e2bec97_fk_wagtailim FOREIGN KEY (featured_link_two_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_two_im_909c0133_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_two_im_909c0133_fk_wagtailim FOREIGN KEY (featured_link_two_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_two_im_965f99ea_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_two_im_965f99ea_fk_wagtailim FOREIGN KEY (featured_link_two_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_two_im_be21120a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_two_im_be21120a_fk_wagtailim FOREIGN KEY (featured_link_two_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_two_im_f1391adc_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_two_im_f1391adc_fk_wagtailim FOREIGN KEY (featured_link_two_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__featured_link_two_im_f3878aea_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__featured_link_two_im_f3878aea_fk_wagtailim FOREIGN KEY (featured_link_two_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -20919,54 +19912,6 @@ ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
 
 
 --
--- Name: great_international_internationalcuratedtopiclandingpage great_international__hero_image_pt_br_id_0068d929_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
-    ADD CONSTRAINT great_international__hero_image_pt_br_id_0068d929_fk_wagtailim FOREIGN KEY (hero_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalhomepage great_international__hero_image_pt_br_id_6bd141ff_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalhomepage
-    ADD CONSTRAINT great_international__hero_image_pt_br_id_6bd141ff_fk_wagtailim FOREIGN KEY (hero_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalsectorpage great_international__hero_image_pt_br_id_7e40c582_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__hero_image_pt_br_id_7e40c582_fk_wagtailim FOREIGN KEY (hero_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalguidelandingpage great_international__hero_image_pt_br_id_8414405c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalguidelandingpage
-    ADD CONSTRAINT great_international__hero_image_pt_br_id_8414405c_fk_wagtailim FOREIGN KEY (hero_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlelistingpage great_international__hero_image_pt_br_id_d8dd60c9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlelistingpage
-    ADD CONSTRAINT great_international__hero_image_pt_br_id_d8dd60c9_fk_wagtailim FOREIGN KEY (hero_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationaltopiclandingpage great_international__hero_image_pt_br_id_ed1e2031_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationaltopiclandingpage
-    ADD CONSTRAINT great_international__hero_image_pt_br_id_ed1e2031_fk_wagtailim FOREIGN KEY (hero_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationaltopiclandingpage great_international__hero_image_pt_id_1a7cbd84_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -21012,54 +19957,6 @@ ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
 
 ALTER TABLE ONLY public.great_international_internationalsectorpage
     ADD CONSTRAINT great_international__hero_image_pt_id_c016e5c7_fk_wagtailim FOREIGN KEY (hero_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcuratedtopiclandingpage great_international__hero_image_ru_id_086fcbf5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
-    ADD CONSTRAINT great_international__hero_image_ru_id_086fcbf5_fk_wagtailim FOREIGN KEY (hero_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlelistingpage great_international__hero_image_ru_id_0e4a75ab_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlelistingpage
-    ADD CONSTRAINT great_international__hero_image_ru_id_0e4a75ab_fk_wagtailim FOREIGN KEY (hero_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalguidelandingpage great_international__hero_image_ru_id_124bc0fb_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalguidelandingpage
-    ADD CONSTRAINT great_international__hero_image_ru_id_124bc0fb_fk_wagtailim FOREIGN KEY (hero_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationaltopiclandingpage great_international__hero_image_ru_id_3237df0d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationaltopiclandingpage
-    ADD CONSTRAINT great_international__hero_image_ru_id_3237df0d_fk_wagtailim FOREIGN KEY (hero_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalsectorpage great_international__hero_image_ru_id_d0049265_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__hero_image_ru_id_d0049265_fk_wagtailim FOREIGN KEY (hero_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalhomepage great_international__hero_image_ru_id_dc1e83cf_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalhomepage
-    ADD CONSTRAINT great_international__hero_image_ru_id_dc1e83cf_fk_wagtailim FOREIGN KEY (hero_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -21231,27 +20128,11 @@ ALTER TABLE ONLY public.great_international_internationalhomepage
 
 
 --
--- Name: great_international_internationalhomepage great_international__invest_image_pt_br_i_0eea0aac_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalhomepage
-    ADD CONSTRAINT great_international__invest_image_pt_br_i_0eea0aac_fk_wagtailim FOREIGN KEY (invest_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalhomepage great_international__invest_image_pt_id_cbe9dc80_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalhomepage
     ADD CONSTRAINT great_international__invest_image_pt_id_cbe9dc80_fk_wagtailim FOREIGN KEY (invest_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalhomepage great_international__invest_image_ru_id_f73c4288_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalhomepage
-    ADD CONSTRAINT great_international__invest_image_ru_id_f73c4288_fk_wagtailim FOREIGN KEY (invest_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -21607,70 +20488,6 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
--- Name: great_international_internationalarticlepage great_international__related_page_one_pt__814a76d8_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__related_page_one_pt__814a76d8_fk_great_int FOREIGN KEY (related_page_one_pt_br_id) REFERENCES public.great_international_internationalarticlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalhomepage great_international__related_page_one_pt__a56637dd_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalhomepage
-    ADD CONSTRAINT great_international__related_page_one_pt__a56637dd_fk_wagtailco FOREIGN KEY (related_page_one_pt_br_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcampaignpage great_international__related_page_one_pt__bce08b61_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__related_page_one_pt__bce08b61_fk_great_int FOREIGN KEY (related_page_one_pt_br_id) REFERENCES public.great_international_internationalarticlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalsectorpage great_international__related_page_one_pt__c5b8ddc0_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__related_page_one_pt__c5b8ddc0_fk_wagtailco FOREIGN KEY (related_page_one_pt_br_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalsectorpage great_international__related_page_one_ru__1452ac1b_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__related_page_one_ru__1452ac1b_fk_wagtailco FOREIGN KEY (related_page_one_ru_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcampaignpage great_international__related_page_one_ru__8a2bd8ea_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__related_page_one_ru__8a2bd8ea_fk_great_int FOREIGN KEY (related_page_one_ru_id) REFERENCES public.great_international_internationalarticlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__related_page_one_ru__91ac3d63_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__related_page_one_ru__91ac3d63_fk_great_int FOREIGN KEY (related_page_one_ru_id) REFERENCES public.great_international_internationalarticlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalhomepage great_international__related_page_one_ru__ddd2fa49_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalhomepage
-    ADD CONSTRAINT great_international__related_page_one_ru__ddd2fa49_fk_wagtailco FOREIGN KEY (related_page_one_ru_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalsectorpage great_international__related_page_one_zh__66cb3283_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -21935,27 +20752,11 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
--- Name: great_international_internationalhomepage great_international__related_page_three_p_5831a9f8_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalhomepage
-    ADD CONSTRAINT great_international__related_page_three_p_5831a9f8_fk_wagtailco FOREIGN KEY (related_page_three_pt_br_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcampaignpage great_international__related_page_three_p_6148cf10_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalcampaignpage
     ADD CONSTRAINT great_international__related_page_three_p_6148cf10_fk_great_int FOREIGN KEY (related_page_three_pt_id) REFERENCES public.great_international_internationalarticlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__related_page_three_p_678fd034_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__related_page_three_p_678fd034_fk_great_int FOREIGN KEY (related_page_three_pt_br_id) REFERENCES public.great_international_internationalarticlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -21972,54 +20773,6 @@ ALTER TABLE ONLY public.great_international_internationalarticlepage
 
 ALTER TABLE ONLY public.great_international_internationalhomepage
     ADD CONSTRAINT great_international__related_page_three_p_7fd59ab7_fk_wagtailco FOREIGN KEY (related_page_three_pt_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcampaignpage great_international__related_page_three_p_a521dca4_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__related_page_three_p_a521dca4_fk_great_int FOREIGN KEY (related_page_three_pt_br_id) REFERENCES public.great_international_internationalarticlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalsectorpage great_international__related_page_three_p_b40400a6_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__related_page_three_p_b40400a6_fk_wagtailco FOREIGN KEY (related_page_three_pt_br_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcampaignpage great_international__related_page_three_r_282e58b0_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__related_page_three_r_282e58b0_fk_great_int FOREIGN KEY (related_page_three_ru_id) REFERENCES public.great_international_internationalarticlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalsectorpage great_international__related_page_three_r_741e21af_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__related_page_three_r_741e21af_fk_wagtailco FOREIGN KEY (related_page_three_ru_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__related_page_three_r_75826622_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__related_page_three_r_75826622_fk_great_int FOREIGN KEY (related_page_three_ru_id) REFERENCES public.great_international_internationalarticlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalhomepage great_international__related_page_three_r_8a147f2d_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalhomepage
-    ADD CONSTRAINT great_international__related_page_three_r_8a147f2d_fk_wagtailco FOREIGN KEY (related_page_three_ru_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -22279,22 +21032,6 @@ ALTER TABLE ONLY public.great_international_internationalcampaignpage
 
 
 --
--- Name: great_international_internationalcampaignpage great_international__related_page_two_pt__02b3ea27_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__related_page_two_pt__02b3ea27_fk_great_int FOREIGN KEY (related_page_two_pt_br_id) REFERENCES public.great_international_internationalarticlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalhomepage great_international__related_page_two_pt__0e149a5d_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalhomepage
-    ADD CONSTRAINT great_international__related_page_two_pt__0e149a5d_fk_wagtailco FOREIGN KEY (related_page_two_pt_br_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalarticlepage great_international__related_page_two_pt__2a50d1be_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -22311,14 +21048,6 @@ ALTER TABLE ONLY public.great_international_internationalcampaignpage
 
 
 --
--- Name: great_international_internationalarticlepage great_international__related_page_two_pt__39d03224_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__related_page_two_pt__39d03224_fk_great_int FOREIGN KEY (related_page_two_pt_br_id) REFERENCES public.great_international_internationalarticlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalhomepage great_international__related_page_two_pt__78a94f29_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -22327,51 +21056,11 @@ ALTER TABLE ONLY public.great_international_internationalhomepage
 
 
 --
--- Name: great_international_internationalsectorpage great_international__related_page_two_pt__c8d36540_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__related_page_two_pt__c8d36540_fk_wagtailco FOREIGN KEY (related_page_two_pt_br_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalsectorpage great_international__related_page_two_pt__d76daa2c_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalsectorpage
     ADD CONSTRAINT great_international__related_page_two_pt__d76daa2c_fk_wagtailco FOREIGN KEY (related_page_two_pt_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalhomepage great_international__related_page_two_ru__1699564e_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalhomepage
-    ADD CONSTRAINT great_international__related_page_two_ru__1699564e_fk_wagtailco FOREIGN KEY (related_page_two_ru_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__related_page_two_ru__32f30d13_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__related_page_two_ru__32f30d13_fk_great_int FOREIGN KEY (related_page_two_ru_id) REFERENCES public.great_international_internationalarticlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalsectorpage great_international__related_page_two_ru__522b98e3_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__related_page_two_ru__522b98e3_fk_wagtailco FOREIGN KEY (related_page_two_ru_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcampaignpage great_international__related_page_two_ru__8448cdfc_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__related_page_two_ru__8448cdfc_fk_great_int FOREIGN KEY (related_page_two_ru_id) REFERENCES public.great_international_internationalarticlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -22575,22 +21264,6 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
--- Name: great_international_internationalsectorpage great_international__section_one_image_pt_1afc84ae_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__section_one_image_pt_1afc84ae_fk_wagtailim FOREIGN KEY (section_one_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcampaignpage great_international__section_one_image_pt_4f00ca20_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__section_one_image_pt_4f00ca20_fk_wagtailim FOREIGN KEY (section_one_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalguidelandingpage great_international__section_one_image_pt_85ef343e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -22607,43 +21280,11 @@ ALTER TABLE ONLY public.great_international_internationalcampaignpage
 
 
 --
--- Name: great_international_internationalguidelandingpage great_international__section_one_image_pt_edaf370b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalguidelandingpage
-    ADD CONSTRAINT great_international__section_one_image_pt_edaf370b_fk_wagtailim FOREIGN KEY (section_one_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalsectorpage great_international__section_one_image_pt_fb056a71_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalsectorpage
     ADD CONSTRAINT great_international__section_one_image_pt_fb056a71_fk_wagtailim FOREIGN KEY (section_one_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcampaignpage great_international__section_one_image_ru_4b9314c3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__section_one_image_ru_4b9314c3_fk_wagtailim FOREIGN KEY (section_one_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalsectorpage great_international__section_one_image_ru_793f3412_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__section_one_image_ru_793f3412_fk_wagtailim FOREIGN KEY (section_one_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalguidelandingpage great_international__section_one_image_ru_8e7b57aa_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalguidelandingpage
-    ADD CONSTRAINT great_international__section_one_image_ru_8e7b57aa_fk_wagtailim FOREIGN KEY (section_one_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -22791,43 +21432,11 @@ ALTER TABLE ONLY public.great_international_internationalcampaignpage
 
 
 --
--- Name: great_international_internationalguidelandingpage great_international__section_two_image_pt_8b283f28_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalguidelandingpage
-    ADD CONSTRAINT great_international__section_two_image_pt_8b283f28_fk_wagtailim FOREIGN KEY (section_two_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcampaignpage great_international__section_two_image_pt_a146a73f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__section_two_image_pt_a146a73f_fk_wagtailim FOREIGN KEY (section_two_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalguidelandingpage great_international__section_two_image_pt_b01865e0_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalguidelandingpage
     ADD CONSTRAINT great_international__section_two_image_pt_b01865e0_fk_wagtailim FOREIGN KEY (section_two_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalguidelandingpage great_international__section_two_image_ru_e9338503_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalguidelandingpage
-    ADD CONSTRAINT great_international__section_two_image_ru_e9338503_fk_wagtailim FOREIGN KEY (section_two_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcampaignpage great_international__section_two_image_ru_f0d8f7e8_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__section_two_image_ru_f0d8f7e8_fk_wagtailim FOREIGN KEY (section_two_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -22855,11 +21464,35 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
--- Name: great_international_internationalsectorpage great_international__section_two_subsecti_0c837b27_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_062c1cf4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__section_two_subsecti_0c837b27_fk_wagtailim FOREIGN KEY (section_two_subsection_two_icon_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_062c1cf4_fk_wagtailim FOREIGN KEY (section_two_subsection_three_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_0db7affb_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_0db7affb_fk_wagtailim FOREIGN KEY (section_two_subsection_five_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_109552f9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_109552f9_fk_wagtailim FOREIGN KEY (section_two_subsection_five_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_118f056a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_118f056a_fk_wagtailim FOREIGN KEY (section_two_subsection_five_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -22871,11 +21504,83 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_1ec1811a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_1ec1811a_fk_wagtailim FOREIGN KEY (section_two_subsection_six_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_27aef34f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_27aef34f_fk_wagtailim FOREIGN KEY (section_two_subsection_six_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_2a68de10_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_2a68de10_fk_wagtailim FOREIGN KEY (section_two_subsection_four_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: great_international_internationalsectorpage great_international__section_two_subsecti_2b941f15_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalsectorpage
     ADD CONSTRAINT great_international__section_two_subsecti_2b941f15_fk_wagtailim FOREIGN KEY (section_two_subsection_two_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_2ffb14b9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_2ffb14b9_fk_wagtailim FOREIGN KEY (section_two_subsection_two_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_335d13a0_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_335d13a0_fk_wagtailim FOREIGN KEY (section_two_subsection_five_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_37851b99_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_37851b99_fk_wagtailim FOREIGN KEY (section_two_subsection_four_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_38bda492_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_38bda492_fk_wagtailim FOREIGN KEY (section_two_subsection_three_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_3c381935_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_3c381935_fk_wagtailim FOREIGN KEY (section_two_subsection_six_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_43ccc557_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_43ccc557_fk_wagtailim FOREIGN KEY (section_two_subsection_three_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -22887,6 +21592,14 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_47a3ca3d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_47a3ca3d_fk_wagtailim FOREIGN KEY (section_two_subsection_one_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: great_international_internationalsectorpage great_international__section_two_subsecti_47c5a7dc_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -22895,11 +21608,19 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
--- Name: great_international_internationalsectorpage great_international__section_two_subsecti_48d95311_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_4a95ea27_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__section_two_subsecti_48d95311_fk_wagtailim FOREIGN KEY (section_two_subsection_one_icon_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_4a95ea27_fk_wagtailim FOREIGN KEY (section_two_subsection_four_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_4bb8abcd_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_4bb8abcd_fk_wagtailim FOREIGN KEY (section_two_subsection_three_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -22908,6 +21629,38 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 ALTER TABLE ONLY public.great_international_internationalsectorpage
     ADD CONSTRAINT great_international__section_two_subsecti_4bfa40d3_fk_wagtailim FOREIGN KEY (section_two_subsection_one_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_4da1223a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_4da1223a_fk_wagtailim FOREIGN KEY (section_two_subsection_three_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_50252f0a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_50252f0a_fk_wagtailim FOREIGN KEY (section_two_subsection_two_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_520fe588_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_520fe588_fk_wagtailim FOREIGN KEY (section_two_subsection_two_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_530c392b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_530c392b_fk_wagtailim FOREIGN KEY (section_two_subsection_one_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -22927,6 +21680,70 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_55f21249_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_55f21249_fk_wagtailim FOREIGN KEY (section_two_subsection_three_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_5762b2bb_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_5762b2bb_fk_wagtailim FOREIGN KEY (section_two_subsection_two_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_5db54111_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_5db54111_fk_wagtailim FOREIGN KEY (section_two_subsection_six_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_6213adce_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_6213adce_fk_wagtailim FOREIGN KEY (section_two_subsection_five_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_638ff660_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_638ff660_fk_wagtailim FOREIGN KEY (section_two_subsection_six_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_64dfb934_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_64dfb934_fk_wagtailim FOREIGN KEY (section_two_subsection_three_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_66f01e6a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_66f01e6a_fk_wagtailim FOREIGN KEY (section_two_subsection_two_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_69812a78_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_69812a78_fk_wagtailim FOREIGN KEY (section_two_subsection_five_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: great_international_internationalsectorpage great_international__section_two_subsecti_6ac830f1_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -22935,11 +21752,43 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_7079efc9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_7079efc9_fk_wagtailim FOREIGN KEY (section_two_subsection_six_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: great_international_internationalsectorpage great_international__section_two_subsecti_7646efd8_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalsectorpage
     ADD CONSTRAINT great_international__section_two_subsecti_7646efd8_fk_wagtailim FOREIGN KEY (section_two_subsection_one_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_7e90d9c9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_7e90d9c9_fk_wagtailim FOREIGN KEY (section_two_subsection_four_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_7fa562dd_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_7fa562dd_fk_wagtailim FOREIGN KEY (section_two_subsection_six_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_8021158d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_8021158d_fk_wagtailim FOREIGN KEY (section_two_subsection_one_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -22959,11 +21808,51 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_8c1509df_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_8c1509df_fk_wagtailim FOREIGN KEY (section_two_subsection_two_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_958ce223_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_958ce223_fk_wagtailim FOREIGN KEY (section_two_subsection_three_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_963eacc3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_963eacc3_fk_wagtailim FOREIGN KEY (section_two_subsection_two_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_9b67fe37_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_9b67fe37_fk_wagtailim FOREIGN KEY (section_two_subsection_two_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: great_international_internationalsectorpage great_international__section_two_subsecti_9c130204_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalsectorpage
     ADD CONSTRAINT great_international__section_two_subsecti_9c130204_fk_wagtailim FOREIGN KEY (section_two_subsection_two_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_9d9a6e70_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_9d9a6e70_fk_wagtailim FOREIGN KEY (section_two_subsection_two_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -22980,6 +21869,14 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 ALTER TABLE ONLY public.great_international_internationalsectorpage
     ADD CONSTRAINT great_international__section_two_subsecti_a0f3b350_fk_wagtailim FOREIGN KEY (section_two_subsection_three_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_a2a84b67_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_a2a84b67_fk_wagtailim FOREIGN KEY (section_two_subsection_four_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -23007,19 +21904,43 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
--- Name: great_international_internationalsectorpage great_international__section_two_subsecti_b2e5e3c8_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_af019b24_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__section_two_subsecti_b2e5e3c8_fk_wagtailim FOREIGN KEY (section_two_subsection_two_icon_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_af019b24_fk_wagtailim FOREIGN KEY (section_two_subsection_five_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_internationalsectorpage great_international__section_two_subsecti_b7b33eb8_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_b3314cd7_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__section_two_subsecti_b7b33eb8_fk_wagtailim FOREIGN KEY (section_two_subsection_three_icon_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_b3314cd7_fk_wagtailim FOREIGN KEY (section_two_subsection_one_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_b3670c8a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_b3670c8a_fk_wagtailim FOREIGN KEY (section_two_subsection_four_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_b6e5930f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_b6e5930f_fk_wagtailim FOREIGN KEY (section_two_subsection_four_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_b9c6bbdb_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_b9c6bbdb_fk_wagtailim FOREIGN KEY (section_two_subsection_three_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -23031,11 +21952,91 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_c0972147_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_c0972147_fk_wagtailim FOREIGN KEY (section_two_subsection_one_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_c287efe5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_c287efe5_fk_wagtailim FOREIGN KEY (section_two_subsection_six_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_c3298e8a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_c3298e8a_fk_wagtailim FOREIGN KEY (section_two_subsection_five_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_cb5c3363_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_cb5c3363_fk_wagtailim FOREIGN KEY (section_two_subsection_one_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_ccdea1ee_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_ccdea1ee_fk_wagtailim FOREIGN KEY (section_two_subsection_one_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_d450c2d4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_d450c2d4_fk_wagtailim FOREIGN KEY (section_two_subsection_five_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_d779cea1_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_d779cea1_fk_wagtailim FOREIGN KEY (section_two_subsection_four_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_d7ba88e4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_d7ba88e4_fk_wagtailim FOREIGN KEY (section_two_subsection_four_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: great_international_internationalsectorpage great_international__section_two_subsecti_d9f23d98_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalsectorpage
     ADD CONSTRAINT great_international__section_two_subsecti_d9f23d98_fk_wagtailim FOREIGN KEY (section_two_subsection_one_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_da9b148c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_da9b148c_fk_wagtailim FOREIGN KEY (section_two_subsection_one_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_dbbda277_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_dbbda277_fk_wagtailim FOREIGN KEY (section_two_subsection_one_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -23063,6 +22064,14 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
+-- Name: great_international_internationalhomepage great_international__section_two_subsecti_e2910421_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_internationalhomepage
+    ADD CONSTRAINT great_international__section_two_subsecti_e2910421_fk_wagtailim FOREIGN KEY (section_two_subsection_six_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: great_international_internationalsectorpage great_international__section_two_subsecti_e42b3587_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -23071,27 +22080,11 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
--- Name: great_international_internationalsectorpage great_international__section_two_subsecti_ea55a0a9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__section_two_subsecti_ea55a0a9_fk_wagtailim FOREIGN KEY (section_two_subsection_one_icon_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalsectorpage great_international__section_two_subsecti_ef570180_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalsectorpage
     ADD CONSTRAINT great_international__section_two_subsecti_ef570180_fk_wagtailim FOREIGN KEY (section_two_subsection_two_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalsectorpage great_international__section_two_subsecti_f469475b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalsectorpage
-    ADD CONSTRAINT great_international__section_two_subsecti_f469475b_fk_wagtailim FOREIGN KEY (section_two_subsection_three_icon_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -23143,14 +22136,6 @@ ALTER TABLE ONLY public.great_international_internationalcampaignpage
 
 
 --
--- Name: great_international_internationalcampaignpage great_international__selling_point_one_ic_8606ed30_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__selling_point_one_ic_8606ed30_fk_wagtailim FOREIGN KEY (selling_point_one_icon_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcampaignpage great_international__selling_point_one_ic_8ebffcd2_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -23188,14 +22173,6 @@ ALTER TABLE ONLY public.great_international_internationalcampaignpage
 
 ALTER TABLE ONLY public.great_international_internationalcampaignpage
     ADD CONSTRAINT great_international__selling_point_one_ic_f26687eb_fk_wagtailim FOREIGN KEY (selling_point_one_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcampaignpage great_international__selling_point_one_ic_f53ad4d4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__selling_point_one_ic_f53ad4d4_fk_wagtailim FOREIGN KEY (selling_point_one_icon_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -23263,27 +22240,11 @@ ALTER TABLE ONLY public.great_international_internationalcampaignpage
 
 
 --
--- Name: great_international_internationalcampaignpage great_international__selling_point_three__9cbe465d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__selling_point_three__9cbe465d_fk_wagtailim FOREIGN KEY (selling_point_three_icon_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcampaignpage great_international__selling_point_three__c2bca9b6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalcampaignpage
     ADD CONSTRAINT great_international__selling_point_three__c2bca9b6_fk_wagtailim FOREIGN KEY (selling_point_three_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcampaignpage great_international__selling_point_three__cbdb1e2f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__selling_point_three__cbdb1e2f_fk_wagtailim FOREIGN KEY (selling_point_three_icon_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -23335,27 +22296,11 @@ ALTER TABLE ONLY public.great_international_internationalcampaignpage
 
 
 --
--- Name: great_international_internationalcampaignpage great_international__selling_point_two_ic_af248f6f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__selling_point_two_ic_af248f6f_fk_wagtailim FOREIGN KEY (selling_point_two_icon_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcampaignpage great_international__selling_point_two_ic_ca530800_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalcampaignpage
     ADD CONSTRAINT great_international__selling_point_two_ic_ca530800_fk_wagtailim FOREIGN KEY (selling_point_two_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalcampaignpage great_international__selling_point_two_ic_df3fab43_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalcampaignpage
-    ADD CONSTRAINT great_international__selling_point_two_ic_df3fab43_fk_wagtailim FOREIGN KEY (selling_point_two_icon_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -23495,27 +22440,11 @@ ALTER TABLE ONLY public.great_international_internationalhomepage
 
 
 --
--- Name: great_international_internationalhomepage great_international__tariffs_image_pt_br__f6daaac9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalhomepage
-    ADD CONSTRAINT great_international__tariffs_image_pt_br__f6daaac9_fk_wagtailim FOREIGN KEY (tariffs_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalhomepage great_international__tariffs_image_pt_id_17eb134e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalhomepage
     ADD CONSTRAINT great_international__tariffs_image_pt_id_17eb134e_fk_wagtailim FOREIGN KEY (tariffs_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalhomepage great_international__tariffs_image_ru_id_c0d13de9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalhomepage
-    ADD CONSTRAINT great_international__tariffs_image_ru_id_c0d13de9_fk_wagtailim FOREIGN KEY (tariffs_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -23583,27 +22512,11 @@ ALTER TABLE ONLY public.great_international_internationalhomepage
 
 
 --
--- Name: great_international_internationalhomepage great_international__trade_image_pt_br_id_21cb8ef8_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalhomepage
-    ADD CONSTRAINT great_international__trade_image_pt_br_id_21cb8ef8_fk_wagtailim FOREIGN KEY (trade_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalhomepage great_international__trade_image_pt_id_7d6a9189_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalhomepage
     ADD CONSTRAINT great_international__trade_image_pt_id_7d6a9189_fk_wagtailim FOREIGN KEY (trade_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalhomepage great_international__trade_image_ru_id_3a4b8f8a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalhomepage
-    ADD CONSTRAINT great_international__trade_image_ru_id_3a4b8f8a_fk_wagtailim FOREIGN KEY (trade_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -23655,22 +22568,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_four_imag_b0c6dfdb_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_case_study_four_imag_b0c6dfdb_fk_wagtailim FOREIGN KEY (case_study_four_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_four_imag_b3fda3b4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_case_study_four_imag_b3fda3b4_fk_wagtailim FOREIGN KEY (case_study_four_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_four_imag_b57f68d1_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -23703,14 +22600,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_one_image_0efb330f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_case_study_one_image_0efb330f_fk_wagtailim FOREIGN KEY (case_study_one_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_one_image_11098e79_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -23732,14 +22621,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_case_study_one_image_2dc6ca68_fk_wagtailim FOREIGN KEY (case_study_one_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_one_image_34e92817_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_case_study_one_image_34e92817_fk_wagtailim FOREIGN KEY (case_study_one_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -23831,14 +22712,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_three_ima_ea81a176_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_case_study_three_ima_ea81a176_fk_wagtailim FOREIGN KEY (case_study_three_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_three_ima_eaac3bf5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -23871,35 +22744,11 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_three_ima_fc95e69b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_case_study_three_ima_fc95e69b_fk_wagtailim FOREIGN KEY (case_study_three_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_two_image_1413d098_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_case_study_two_image_1413d098_fk_wagtailim FOREIGN KEY (case_study_two_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_two_image_3ae0c712_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_case_study_two_image_3ae0c712_fk_wagtailim FOREIGN KEY (case_study_two_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_case_study_two_image_3b90bac9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_case_study_two_image_3b90bac9_fk_wagtailim FOREIGN KEY (case_study_two_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -23967,14 +22816,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__005cd673_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_companies_list_item__005cd673_fk_wagtailim FOREIGN KEY (companies_list_item_image_six_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__03188ba9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -23988,14 +22829,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_companies_list_item__0615da74_fk_wagtailim FOREIGN KEY (companies_list_item_image_five_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__06588a44_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_companies_list_item__06588a44_fk_wagtailim FOREIGN KEY (companies_list_item_image_five_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -24028,14 +22861,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_companies_list_item__1f3cb5d9_fk_wagtailim FOREIGN KEY (companies_list_item_image_four_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__22db3d6c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_companies_list_item__22db3d6c_fk_wagtailim FOREIGN KEY (companies_list_item_image_eight_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -24087,14 +22912,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__3b566bd4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_companies_list_item__3b566bd4_fk_wagtailim FOREIGN KEY (companies_list_item_image_one_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__3c85a46c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -24119,27 +22936,11 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__4cbc431c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_companies_list_item__4cbc431c_fk_wagtailim FOREIGN KEY (companies_list_item_image_two_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__564ef0fd_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_companies_list_item__564ef0fd_fk_wagtailim FOREIGN KEY (companies_list_item_image_five_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__57dd1361_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_companies_list_item__57dd1361_fk_wagtailim FOREIGN KEY (companies_list_item_image_eight_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -24207,14 +23008,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__652f6a73_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_companies_list_item__652f6a73_fk_wagtailim FOREIGN KEY (companies_list_item_image_one_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__689352eb_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -24228,14 +23021,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_companies_list_item__69535e2d_fk_wagtailim FOREIGN KEY (companies_list_item_image_one_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__6b8c075d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_companies_list_item__6b8c075d_fk_wagtailim FOREIGN KEY (companies_list_item_image_seven_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -24383,27 +23168,11 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__9432ab61_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_companies_list_item__9432ab61_fk_wagtailim FOREIGN KEY (companies_list_item_image_four_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__95574cde_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_companies_list_item__95574cde_fk_wagtailim FOREIGN KEY (companies_list_item_image_six_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__963d5e95_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_companies_list_item__963d5e95_fk_wagtailim FOREIGN KEY (companies_list_item_image_six_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -24420,14 +23189,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_companies_list_item__9ba14e5d_fk_wagtailim FOREIGN KEY (companies_list_item_image_one_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__9bbd9294_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_companies_list_item__9bbd9294_fk_wagtailim FOREIGN KEY (companies_list_item_image_five_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -24487,14 +23248,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__c352b555_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_companies_list_item__c352b555_fk_wagtailim FOREIGN KEY (companies_list_item_image_four_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__c4205164_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -24535,14 +23288,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__cee4ed55_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_companies_list_item__cee4ed55_fk_wagtailim FOREIGN KEY (companies_list_item_image_three_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__d0a25bdf_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -24551,35 +23296,11 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__d24f18fc_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_companies_list_item__d24f18fc_fk_wagtailim FOREIGN KEY (companies_list_item_image_three_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__d5f7085c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_companies_list_item__d5f7085c_fk_wagtailim FOREIGN KEY (companies_list_item_image_three_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__da963152_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_companies_list_item__da963152_fk_wagtailim FOREIGN KEY (companies_list_item_image_seven_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_companies_list_item__dae81be9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_companies_list_item__dae81be9_fk_wagtailim FOREIGN KEY (companies_list_item_image_two_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -24719,14 +23440,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_36aee8de_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_competitive_advantag_36aee8de_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_one_icon_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_40d6c9af_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -24740,14 +23453,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_competitive_advantag_4fe4a95d_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_two_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_51b584c9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_competitive_advantag_51b584c9_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_one_icon_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -24796,14 +23501,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_competitive_advantag_7e3568fe_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_three_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_841529ec_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_competitive_advantag_841529ec_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_three_icon_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -24879,22 +23576,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_da967f8b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_competitive_advantag_da967f8b_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_two_icon_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_df368cd3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_competitive_advantag_df368cd3_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_two_icon_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_f20ed168_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -24908,14 +23589,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_competitive_advantag_f29f52a0_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_three_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_competitive_advantag_f61b1221_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_competitive_advantag_f61b1221_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_three_icon_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -24991,27 +23664,11 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_hero_image_pt_br_id_e1e40d6e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_hero_image_pt_br_id_e1e40d6e_fk_wagtailim FOREIGN KEY (hero_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_hero_image_pt_id_51007d85_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_hero_image_pt_id_51007d85_fk_wagtailim FOREIGN KEY (hero_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_hero_image_ru_id_140509ba_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_hero_image_ru_id_140509ba_fk_wagtailim FOREIGN KEY (hero_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -25060,22 +23717,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_opportunity_list_ima_6c3086d9_fk_wagtailim FOREIGN KEY (opportunity_list_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_opportunity_list_ima_9b2d4414_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_opportunity_list_ima_9b2d4414_fk_wagtailim FOREIGN KEY (opportunity_list_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_opportunity_list_ima_b1000b00_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_opportunity_list_ima_b1000b00_fk_wagtailim FOREIGN KEY (opportunity_list_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -25167,27 +23808,11 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_imag_47c472b1_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_proposition_one_imag_47c472b1_fk_wagtailim FOREIGN KEY (proposition_one_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_imag_553a4afe_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_proposition_one_imag_553a4afe_fk_wagtailim FOREIGN KEY (proposition_one_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_imag_6813d18c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_proposition_one_imag_6813d18c_fk_wagtailim FOREIGN KEY (proposition_one_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -25279,27 +23904,11 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_vide_6b7aa1e5_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_proposition_one_vide_6b7aa1e5_fk_wagtailme FOREIGN KEY (proposition_one_video_ru_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_vide_a55cdde4_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_proposition_one_vide_a55cdde4_fk_wagtailme FOREIGN KEY (proposition_one_video_de_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_one_vide_ce8e8454_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_proposition_one_vide_ce8e8454_fk_wagtailme FOREIGN KEY (proposition_one_video_pt_br_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -25332,14 +23941,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_proposition_two_imag_16381e09_fk_wagtailim FOREIGN KEY (proposition_two_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_imag_18a94aa9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_proposition_two_imag_18a94aa9_fk_wagtailim FOREIGN KEY (proposition_two_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -25399,14 +24000,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_imag_f5802195_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_proposition_two_imag_f5802195_fk_wagtailim FOREIGN KEY (proposition_two_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_vide_0bdf31fd_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -25423,14 +24016,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_vide_6281f41b_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_proposition_two_vide_6281f41b_fk_wagtailme FOREIGN KEY (proposition_two_video_ru_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_vide_6a2941a3_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -25444,14 +24029,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_proposition_two_vide_81ed7649_fk_wagtailme FOREIGN KEY (proposition_two_video_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_proposition_two_vide_85a6c70c_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_proposition_two_vide_85a6c70c_fk_wagtailme FOREIGN KEY (proposition_two_video_pt_br_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -25551,14 +24128,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_summary_image_pt_br__d6b5dbd5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_summary_image_pt_br__d6b5dbd5_fk_wagtailim FOREIGN KEY (summary_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_summary_image_pt_id_88426c0d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -25567,27 +24136,11 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 
 --
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_summary_image_ru_id_8a836a43_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_summary_image_ru_id_8a836a43_fk_wagtailim FOREIGN KEY (summary_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_highpotentialopportunitydetailpage invest_highpotential_summary_image_zh_han_b0e31f01_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_summary_image_zh_han_b0e31f01_fk_wagtailim FOREIGN KEY (summary_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_testimonial_backgrou_2736ceb9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_testimonial_backgrou_2736ceb9_fk_wagtailim FOREIGN KEY (testimonial_background_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -25644,14 +24197,6 @@ ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
 
 ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
     ADD CONSTRAINT invest_highpotential_testimonial_backgrou_bcacb436_fk_wagtailim FOREIGN KEY (testimonial_background_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_highpotentialopportunitydetailpage invest_highpotential_testimonial_backgrou_be696a19_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_highpotentialopportunitydetailpage
-    ADD CONSTRAINT invest_highpotential_testimonial_backgrou_be696a19_fk_wagtailim FOREIGN KEY (testimonial_background_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -25751,35 +24296,11 @@ ALTER TABLE ONLY public.invest_investhomepage
 
 
 --
--- Name: invest_investhomepage invest_investhomepag_benefits_section_img_da5c9cd3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_benefits_section_img_da5c9cd3_fk_wagtailim FOREIGN KEY (benefits_section_img_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_investhomepage invest_investhomepag_benefits_section_img_e20207a0_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_investhomepage
     ADD CONSTRAINT invest_investhomepag_benefits_section_img_e20207a0_fk_wagtailim FOREIGN KEY (benefits_section_img_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_investhomepage invest_investhomepag_benefits_section_img_fd503de4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_benefits_section_img_fd503de4_fk_wagtailim FOREIGN KEY (benefits_section_img_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_03acd114_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_03acd114_fk_wagtailim FOREIGN KEY (capital_invest_section_background_image_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -25839,14 +24360,6 @@ ALTER TABLE ONLY public.invest_investhomepage
 
 
 --
--- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_9230e099_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_9230e099_fk_wagtailim FOREIGN KEY (capital_invest_section_background_image_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_a227465c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -25860,14 +24373,6 @@ ALTER TABLE ONLY public.invest_investhomepage
 
 ALTER TABLE ONLY public.invest_investhomepage
     ADD CONSTRAINT invest_investhomepag_capital_invest_secti_afbe9e94_fk_wagtailim FOREIGN KEY (capital_invest_section_background_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_investhomepage invest_investhomepag_eu_exit_section_img__0f8a41fa_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_eu_exit_section_img__0f8a41fa_fk_wagtailim FOREIGN KEY (eu_exit_section_img_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -25919,14 +24424,6 @@ ALTER TABLE ONLY public.invest_investhomepage
 
 
 --
--- Name: invest_investhomepage invest_investhomepag_eu_exit_section_img__918b2da9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_eu_exit_section_img__918b2da9_fk_wagtailim FOREIGN KEY (eu_exit_section_img_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_investhomepage invest_investhomepag_eu_exit_section_img__d9fd3c18_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -25956,14 +24453,6 @@ ALTER TABLE ONLY public.invest_investhomepage
 
 ALTER TABLE ONLY public.invest_investhomepage
     ADD CONSTRAINT invest_investhomepag_hero_image_id_a2dbcafe_fk_wagtailim FOREIGN KEY (hero_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_investhomepage invest_investhomepag_how_we_help_icon_fiv_569e774c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_how_we_help_icon_fiv_569e774c_fk_wagtailim FOREIGN KEY (how_we_help_icon_five_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -26012,14 +24501,6 @@ ALTER TABLE ONLY public.invest_investhomepage
 
 ALTER TABLE ONLY public.invest_investhomepage
     ADD CONSTRAINT invest_investhomepag_how_we_help_icon_fiv_c8f0a784_fk_wagtailim FOREIGN KEY (how_we_help_icon_five_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_investhomepage invest_investhomepag_how_we_help_icon_fiv_f1712768_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_how_we_help_icon_fiv_f1712768_fk_wagtailim FOREIGN KEY (how_we_help_icon_five_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -26111,27 +24592,11 @@ ALTER TABLE ONLY public.invest_investhomepage
 
 
 --
--- Name: invest_investhomepage invest_investhomepag_how_we_help_icon_fou_cd433b63_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_how_we_help_icon_fou_cd433b63_fk_wagtailim FOREIGN KEY (how_we_help_icon_four_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_investhomepage invest_investhomepag_how_we_help_icon_fou_ddda13d6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_investhomepage
     ADD CONSTRAINT invest_investhomepag_how_we_help_icon_fou_ddda13d6_fk_wagtailim FOREIGN KEY (how_we_help_icon_four_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_investhomepage invest_investhomepag_how_we_help_icon_fou_eb716ad6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_how_we_help_icon_fou_eb716ad6_fk_wagtailim FOREIGN KEY (how_we_help_icon_four_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -26148,14 +24613,6 @@ ALTER TABLE ONLY public.invest_investhomepage
 
 ALTER TABLE ONLY public.invest_investhomepage
     ADD CONSTRAINT invest_investhomepag_how_we_help_icon_one_26bdd075_fk_wagtailim FOREIGN KEY (how_we_help_icon_one_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_investhomepage invest_investhomepag_how_we_help_icon_one_4bd58fed_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_how_we_help_icon_one_4bd58fed_fk_wagtailim FOREIGN KEY (how_we_help_icon_one_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -26180,14 +24637,6 @@ ALTER TABLE ONLY public.invest_investhomepage
 
 ALTER TABLE ONLY public.invest_investhomepage
     ADD CONSTRAINT invest_investhomepag_how_we_help_icon_one_97d549f8_fk_wagtailim FOREIGN KEY (how_we_help_icon_one_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_investhomepage invest_investhomepag_how_we_help_icon_one_a3afab67_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_how_we_help_icon_one_a3afab67_fk_wagtailim FOREIGN KEY (how_we_help_icon_one_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -26271,27 +24720,11 @@ ALTER TABLE ONLY public.invest_investhomepage
 
 
 --
--- Name: invest_investhomepage invest_investhomepag_how_we_help_icon_thr_b415bb95_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_how_we_help_icon_thr_b415bb95_fk_wagtailim FOREIGN KEY (how_we_help_icon_three_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_investhomepage invest_investhomepag_how_we_help_icon_thr_e0c8e962_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_investhomepage
     ADD CONSTRAINT invest_investhomepag_how_we_help_icon_thr_e0c8e962_fk_wagtailim FOREIGN KEY (how_we_help_icon_three_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_investhomepage invest_investhomepag_how_we_help_icon_thr_e8b61047_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_how_we_help_icon_thr_e8b61047_fk_wagtailim FOREIGN KEY (how_we_help_icon_three_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -26335,14 +24768,6 @@ ALTER TABLE ONLY public.invest_investhomepage
 
 
 --
--- Name: invest_investhomepage invest_investhomepag_how_we_help_icon_two_4a6e272c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_how_we_help_icon_two_4a6e272c_fk_wagtailim FOREIGN KEY (how_we_help_icon_two_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_investhomepage invest_investhomepag_how_we_help_icon_two_5dfa1ff1_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -26364,14 +24789,6 @@ ALTER TABLE ONLY public.invest_investhomepage
 
 ALTER TABLE ONLY public.invest_investhomepage
     ADD CONSTRAINT invest_investhomepag_how_we_help_icon_two_96bb49e3_fk_wagtailim FOREIGN KEY (how_we_help_icon_two_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_investhomepage invest_investhomepag_how_we_help_icon_two_aa9742a9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_how_we_help_icon_two_aa9742a9_fk_wagtailim FOREIGN KEY (how_we_help_icon_two_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -26463,27 +24880,11 @@ ALTER TABLE ONLY public.invest_investhomepage
 
 
 --
--- Name: invest_investhomepage invest_investhomepag_setup_guide_img_pt_b_e95b7046_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_setup_guide_img_pt_b_e95b7046_fk_wagtailim FOREIGN KEY (setup_guide_img_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_investhomepage invest_investhomepag_setup_guide_img_pt_i_df9dbd8d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_investhomepage
     ADD CONSTRAINT invest_investhomepag_setup_guide_img_pt_i_df9dbd8d_fk_wagtailim FOREIGN KEY (setup_guide_img_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_investhomepage invest_investhomepag_setup_guide_img_ru_i_91355e60_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_setup_guide_img_ru_i_91355e60_fk_wagtailim FOREIGN KEY (setup_guide_img_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -26559,14 +24960,6 @@ ALTER TABLE ONLY public.invest_sectorpage
 
 
 --
--- Name: invest_sectorpage invest_sectorpage_subsection_map_five__275133b7_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_sectorpage
-    ADD CONSTRAINT invest_sectorpage_subsection_map_five__275133b7_fk_wagtailim FOREIGN KEY (subsection_map_five_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_sectorpage invest_sectorpage_subsection_map_five__5dd8444c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -26580,14 +24973,6 @@ ALTER TABLE ONLY public.invest_sectorpage
 
 ALTER TABLE ONLY public.invest_sectorpage
     ADD CONSTRAINT invest_sectorpage_subsection_map_five__8d54aae9_fk_wagtailim FOREIGN KEY (subsection_map_five_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_sectorpage invest_sectorpage_subsection_map_five__a267a7b3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_sectorpage
-    ADD CONSTRAINT invest_sectorpage_subsection_map_five__a267a7b3_fk_wagtailim FOREIGN KEY (subsection_map_five_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -26687,27 +25072,11 @@ ALTER TABLE ONLY public.invest_sectorpage
 
 
 --
--- Name: invest_sectorpage invest_sectorpage_subsection_map_four__5750dcc0_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_sectorpage
-    ADD CONSTRAINT invest_sectorpage_subsection_map_four__5750dcc0_fk_wagtailim FOREIGN KEY (subsection_map_four_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_sectorpage invest_sectorpage_subsection_map_four__85eee56b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_sectorpage
     ADD CONSTRAINT invest_sectorpage_subsection_map_four__85eee56b_fk_wagtailim FOREIGN KEY (subsection_map_four_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_sectorpage invest_sectorpage_subsection_map_four__b47d357c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_sectorpage
-    ADD CONSTRAINT invest_sectorpage_subsection_map_four__b47d357c_fk_wagtailim FOREIGN KEY (subsection_map_four_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -26783,35 +25152,11 @@ ALTER TABLE ONLY public.invest_sectorpage
 
 
 --
--- Name: invest_sectorpage invest_sectorpage_subsection_map_one_p_bae51dfd_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_sectorpage
-    ADD CONSTRAINT invest_sectorpage_subsection_map_one_p_bae51dfd_fk_wagtailim FOREIGN KEY (subsection_map_one_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_sectorpage invest_sectorpage_subsection_map_one_r_5aa7df5b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_sectorpage
-    ADD CONSTRAINT invest_sectorpage_subsection_map_one_r_5aa7df5b_fk_wagtailim FOREIGN KEY (subsection_map_one_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_sectorpage invest_sectorpage_subsection_map_one_z_a4839796_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_sectorpage
     ADD CONSTRAINT invest_sectorpage_subsection_map_one_z_a4839796_fk_wagtailim FOREIGN KEY (subsection_map_one_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_sectorpage invest_sectorpage_subsection_map_seven_2a54736c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_sectorpage
-    ADD CONSTRAINT invest_sectorpage_subsection_map_seven_2a54736c_fk_wagtailim FOREIGN KEY (subsection_map_seven_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -26868,14 +25213,6 @@ ALTER TABLE ONLY public.invest_sectorpage
 
 ALTER TABLE ONLY public.invest_sectorpage
     ADD CONSTRAINT invest_sectorpage_subsection_map_seven_a67c2e79_fk_wagtailim FOREIGN KEY (subsection_map_seven_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_sectorpage invest_sectorpage_subsection_map_seven_bde5e042_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_sectorpage
-    ADD CONSTRAINT invest_sectorpage_subsection_map_seven_bde5e042_fk_wagtailim FOREIGN KEY (subsection_map_seven_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -26951,27 +25288,11 @@ ALTER TABLE ONLY public.invest_sectorpage
 
 
 --
--- Name: invest_sectorpage invest_sectorpage_subsection_map_six_p_382643bc_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_sectorpage
-    ADD CONSTRAINT invest_sectorpage_subsection_map_six_p_382643bc_fk_wagtailim FOREIGN KEY (subsection_map_six_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_sectorpage invest_sectorpage_subsection_map_six_p_461ab6e9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_sectorpage
     ADD CONSTRAINT invest_sectorpage_subsection_map_six_p_461ab6e9_fk_wagtailim FOREIGN KEY (subsection_map_six_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_sectorpage invest_sectorpage_subsection_map_six_r_8a62efd9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_sectorpage
-    ADD CONSTRAINT invest_sectorpage_subsection_map_six_r_8a62efd9_fk_wagtailim FOREIGN KEY (subsection_map_six_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -27047,22 +25368,6 @@ ALTER TABLE ONLY public.invest_sectorpage
 
 
 --
--- Name: invest_sectorpage invest_sectorpage_subsection_map_three_c1bc090a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_sectorpage
-    ADD CONSTRAINT invest_sectorpage_subsection_map_three_c1bc090a_fk_wagtailim FOREIGN KEY (subsection_map_three_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_sectorpage invest_sectorpage_subsection_map_three_debe81d6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_sectorpage
-    ADD CONSTRAINT invest_sectorpage_subsection_map_three_debe81d6_fk_wagtailim FOREIGN KEY (subsection_map_three_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_sectorpage invest_sectorpage_subsection_map_three_f4e53d96_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -27127,27 +25432,11 @@ ALTER TABLE ONLY public.invest_sectorpage
 
 
 --
--- Name: invest_sectorpage invest_sectorpage_subsection_map_two_p_785d41e9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_sectorpage
-    ADD CONSTRAINT invest_sectorpage_subsection_map_two_p_785d41e9_fk_wagtailim FOREIGN KEY (subsection_map_two_pt_br_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: invest_sectorpage invest_sectorpage_subsection_map_two_p_ddc3e9c4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_sectorpage
     ADD CONSTRAINT invest_sectorpage_subsection_map_two_p_ddc3e9c4_fk_wagtailim FOREIGN KEY (subsection_map_two_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_sectorpage invest_sectorpage_subsection_map_two_r_d3c7eaa5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_sectorpage
-    ADD CONSTRAINT invest_sectorpage_subsection_map_two_r_d3c7eaa5_fk_wagtailim FOREIGN KEY (subsection_map_two_ru_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
