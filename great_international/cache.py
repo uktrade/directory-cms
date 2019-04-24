@@ -68,3 +68,24 @@ class InternationalGuideLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
         models.InternationalArticlePage,
         models.InternationalArticleListingPage,
     ]
+
+
+class CapitalInvestRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.CapitalInvestRegionPage
+    subscriptions = [
+        models.CapitalInvestSectorPage
+    ]
+
+
+class CapitalInvestSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.CapitalInvestSectorPage
+    subscriptions = [
+        models.CapitalInvestOpportunityPage
+    ]
+
+
+class CapitalInvestOpportunityPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.CapitalInvestOpportunityPage
+    subscriptions = [
+        models.CapitalInvestOpportunityPage
+    ]
