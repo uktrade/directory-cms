@@ -74,7 +74,7 @@ def test_meta_field_contains_draft_token(page_with_reversion, rf):
         context={'request': rf.get('/')}
     )
 
-    url = 'http://supplier.trade.great:8005/test-slug/'
+    url = 'http://supplier.trade.great:8005/123-555-61/test-slug/'
     token = page_with_reversion.get_draft_token()
     assert serializer.data['meta']['draft_token'] == token
     assert serializer.data['meta']['languages'] == [

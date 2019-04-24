@@ -349,22 +349,6 @@ def test_lookup_by_slug_draft(page_with_reversion, client):
 
 
 @pytest.mark.django_db
-@patch('core.filters.ServiceNameFilter.filter_service_name')
-def test_lookup_by_slug_filter_called(mock_filter_service_name, admin_client):
-    mock_filter_service_name.return_value = Page.objects.all()
-    url = reverse('api:lookup-by-slug', kwargs={'slug': 'food-and-drink'})
-    response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
-
-    assert response.status_code == 404
-    assert mock_filter_service_name.call_count == 1
-    assert mock_filter_service_name.call_args == call(
-        ANY,
-        'service_name',
-        cms.FIND_A_SUPPLIER,
-    )
-
-
-@pytest.mark.django_db
 def test_lookup_by_full_path(translated_page, admin_client):
     url = reverse('api:lookup-by-full-path')
     response = admin_client.get(

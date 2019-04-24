@@ -140,7 +140,9 @@ DATABASES = {
     'default': dj_database_url.config()
 }
 
-if env.bool('API_CACHE_DISABLED', False):
+API_CACHE_DISABLED = env.bool('API_CACHE_DISABLED', False)
+
+if API_CACHE_DISABLED:
     CACHES = {
         'default': {
             'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
@@ -159,6 +161,12 @@ else:
 
 API_CACHE_EXPIRE_SECONDS = env.int(
     'API_CACHE_EXPIRE_SECONDS', 60 * 60 * 24 * 30  # 30 days
+)
+PAGE_ID_CACHE_EXPIRE_SECONDS = env.int(
+    'PAGE_ID_CACHE_EXPIRE_SECONDS', API_CACHE_EXPIRE_SECONDS
+)
+SITE_CACHE_EXPIRE_SECONDS = env.int(
+    'SITE_CACHE_EXPIRE_SECONDS', API_CACHE_EXPIRE_SECONDS
 )
 
 

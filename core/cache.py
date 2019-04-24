@@ -236,3 +236,141 @@ class RegionAwareCachePopulator(CachePopulator):
                             },
                             data=serializer.data,
                         )
+
+class PageIDCache:
+    """
+    A helper class to for adding dictionaries to the cache that help map page
+    slugs and url_path values to their respective page ids.
+    """
+    cache = cache
+    cache_key = 'page-ids'
+    by_path_map_key = 'by-path'
+    by_slug_map_key = 'by-slug'
+
+    @staticmethod
+    def build_slug_lookup_key(service_name_root_path, slug):
+        return f'{service_name_root_path}:{slug}'
+
+    @classmethod
+    def get_population_queryset(cls):
+        return Page.objects.values('id', 'slug', 'url_path')
+
+    @classmethod
+    def populate(cls):
+        ids_by_path = {}
+        ids_by_slug = {}
+
+        for page in cls.get_population_queryset():
+            # url_path lookup keys are simple
+            ids_by_path[page['url_path']] = page['id']
+            # slug lookup keys must include the service name root path,
+            # which is always the first portion of url_path (after
+            # the first forward slash)
+            slug_lookup_key = cls.build_slug_lookup_key(
+                service_name_root_path=page['url_path'].split('/')[1],
+                slug=page['slug'],
+            )
+            ids_by_slug[slug_lookup_key] = page['id']
+
+        page_ids = {
+            cls.by_path_map_key: ids_by_path,
+            cls.by_slug_map_key: ids_by_slug,
+        }
+        cls.cache.set(cls.cache_key, page_ids, timeout=settings.PAGE_ID_CACHE_EXPIRE_SECONDS) # noqa
+        return page_ids
+
+    @classmethod
+    def clear(cls):
+        return cls.cache.delete(cls.cache_key)
+
+    @classmethod
+    def get(cls, populate_if_cold=False):
+        result = cls.cache.get(cls.cache_key)
+        if result is not None:
+            return result
+        if populate_if_cold:
+            return cls.populate()
+
+    @classmethod
+    def get_mapping(cls, map_key):
+        return cls.get(populate_if_cold=True)[map_key]
+
+    @classmethod
+    def get_for_slug(cls, service_name, slug):
+        lookup_key = cls.build_slug_lookup_key(service_name, slug)
+        return cls.get_mapping(cls.by_slug_map_key).get(lookup_key)
+
+    @classmethod
+    def get_for_path(cls, path):
+        return cls.get_mapping(cls.by_path_map_key).get(path)
+
+    @classmethod
+    def subscribe_to_signals(cls):
+        post_save.connect(receiver=cls.populate, sender=Page)
+        post_delete.connect(receiver=cls.populate, sender=Page)
+
+
+class SiteCache:
+    cache = cache
+    cache_key = 'sites_by_id'
+
+    @classmethod
+    def get_population_queryset(cls):
+        return Site.objects.select_related(
+            'root_page',
+            *[model.__name__.lower() for model in settings_registry]
+        )
+
+    @classmethod
+    def populate(cls, *args, **kwargs):
+        sites = {}
+        for site in cls.get_population_queryset():
+            sites[site.id] = site
+        cls.cache.set(cls.cache_key, sites, timeout=settings.SITE_CACHE_EXPIRE_SECONDS) # noqa
+        return sites
+
+    @classmethod
+    def get(cls, populate_if_cold=False):
+        result = cls.cache.get(cls.cache_key)
+        if result is not None:
+            return result
+        if populate_if_cold:
+            return cls.populate()
+
+    @classmethod
+    def clear(cls, *args, **kwargs):
+        return cls.cache.delete(cls.cache_key)
+
+    @classmethod
+    def populate_if_root_page_changes(cls, instance, **kwargs):
+        if instance.id in cls.get_root_page_ids():
+            cls.populate()
+
+    @classmethod
+    def get_for_id(cls, id):
+        try:
+            return cls.get(populate_if_cold=True)[int(id)]
+        except KeyError:
+            raise Site.DoesNotExist
+
+    @classmethod
+    def get_root_page_ids(cls):
+        sites_by_id = cls.get(populate_if_cold=False)
+        if not sites_by_id:
+            return ()
+        return tuple(site.root_page_id for site in sites_by_id.values())
+
+    @classmethod
+    def subscribe_to_signals(cls):
+        post_save.connect(sender=Site, receiver=cls.populate)
+        post_delete.connect(sender=Site, receiver=cls.populate)
+        post_save.connect(sender=Page, receiver=cls.populate_if_root_page_changes) # noqa
+        # Population effort would be wasted if multiple apps were
+        # migrated. The next request can trigger population instead.
+        post_migrate.connect(receiver=cls.clear)
+        for model in settings_registry:
+            post_save.connect(sender=model, receiver=cls.populate)
+            # Population effort would be wasted if multiple objects were
+            # deleted as a result of a cascading delete. The next request
+            # can trigger population instead.
+            post_delete.connect(sender=model, receiver=cls.clear)

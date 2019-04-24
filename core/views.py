@@ -108,9 +108,9 @@ class DetailViewEndpointBase(APIEndpointBase):
         self.get_object_id()
 
     def get(self, request, *args, **kwargs):
+        raise Exception  # FIXME: IS THIS METHOD NEEDED?
         # Exit early if there are any issues
         self.check_parameter_validity()
-
         if helpers.is_draft_requested(request):
             return super().get(request, *args, **kwargs)
 
@@ -148,7 +148,7 @@ class DetailViewEndpointBase(APIEndpointBase):
         # Find page by its ID
         instance = get_object_or_404(
             self.filter_queryset(self.get_queryset()),
-            id=self.kwargs['slug'],
+            id=self.get_object_id(),
         ).specific
 
         # Check perms or load draft if requested
@@ -161,6 +161,10 @@ class DetailViewEndpointBase(APIEndpointBase):
         return instance
 
     def detail_view(self, request, **kwargs):
+        # Exit early if there are any issues
+        self.check_parameter_validity()
+
+        # FIXME: WHY DOES THIS EXIST?
         return super().detail_view(request, pk=None)
 
 
@@ -221,7 +225,7 @@ class PageLookupBySlugAPIEndpoint(DetailViewEndpointBase):
             raise ValidationError(
                 detail={'service_name': 'This parameter is required'}
             )
-        if 'service_name' not in self.SERVICE_NAME_ROOT_PATHS.keys():
+        if self.request.GET['service_name'] not in self.SERVICE_NAME_ROOT_PATHS.keys():
             raise ValidationError(
                 detail={'service_name': 'This value is invalid'}
             )

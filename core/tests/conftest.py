@@ -5,6 +5,9 @@ from modeltranslation.utils import build_localized_fieldname
 from wagtail.core.models import Page
 from wagtail.documents.models import Document
 
+from directory_constants.constants import cms
+
+from find_a_supplier.models import FindASupplierApp
 from find_a_supplier.tests.factories import (
     IndustryPageFactory,
     IndustryLandingPageFactory
@@ -38,8 +41,16 @@ def high_potential_opportunity_page(page):
 
 @pytest.fixture
 def translated_page(settings, root_page):
+    app_root = root_page.add_child(
+        instance=FindASupplierApp(
+            slug=cms.FIND_A_SUPPLIER,
+            title="Find a supplier",
+            service_name=cms.FIND_A_SUPPLIER,
+        )
+    )
+
     page = IndustryPageFactory(
-        parent=root_page,
+        parent=app_root,
         title_en_gb='ENGLISH',
         title_de='GERMAN',
         title_ja='JAPANESE',
