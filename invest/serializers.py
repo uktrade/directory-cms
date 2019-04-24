@@ -188,10 +188,6 @@ class InvestHomePageSerializer(BasePageSerializer):
     benefits_section_img = wagtail_fields.ImageRenditionField('original')
     capital_invest_section_title = serializers.CharField(max_length=255)
     capital_invest_section_content = core_fields.MarkdownToHTMLField()
-    capital_invest_section_cta_text = serializers.CharField(max_length=255)
-    capital_invest_section_cta_url = serializers.CharField(max_length=255)
-    capital_invest_section_background_image = \
-        wagtail_fields.ImageRenditionField('original')
     eu_exit_section_title = serializers.CharField(max_length=255)
     eu_exit_section_content = core_fields.MarkdownToHTMLField()
     eu_exit_section_call_to_action_text = serializers.CharField(max_length=255)
