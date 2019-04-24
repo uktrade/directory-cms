@@ -75,3 +75,24 @@ class InternationalEUExitFormSuccessPageSubscriber(
 ):
     model = models.InternationalEUExitFormSuccessPage
     subscriptions = []
+
+
+class CapitalInvestRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.CapitalInvestRegionPage
+    subscriptions = [
+        models.CapitalInvestSectorPage
+    ]
+
+
+class CapitalInvestSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.CapitalInvestSectorPage
+    subscriptions = [
+        models.CapitalInvestOpportunityPage
+    ]
+
+
+class CapitalInvestOpportunityPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.CapitalInvestOpportunityPage
+    subscriptions = [
+        models.CapitalInvestOpportunityPage
+    ]

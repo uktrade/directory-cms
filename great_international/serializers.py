@@ -1,4 +1,3 @@
-import ipdb as ipdb
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
 
@@ -17,7 +16,7 @@ from .models import (
     InternationalGuideLandingPage,
     InternationalSectorPage,
     InternationalEUExitFormPage,
-    CapitalInvestSectorPage, CapitalInvestRegionPage,
+    CapitalInvestSectorPage,
     CapitalInvestOpportunityPage)
 
 
@@ -250,11 +249,12 @@ class RelatedCapitalInvestSectorPageSerializer(BasePageSerializer):
 class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
     title = serializers.CharField(
         max_length=255, source='hero_title')
-    teaser = serializers.CharField(
-        max_length=255, source='location')
-    thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg',
-        source='hero_image')
+    location = serializers.CharField(
+        max_length=255)
+    scale = serializers.CharField(
+        max_length=255)
+    investment_type = serializers.CharField(
+        max_length=255)
 
 
 MODEL_TO_SERIALIZER_MAPPING = {
@@ -279,12 +279,14 @@ class PageWithRelatedPagesSerializer(BasePageSerializer):
         ]
         for related_page in items:
             if not related_page:
+                print('\n\n\n\n This one was empty')
                 continue
-            # currently only used for articles and campaigns
             serializer_class = MODEL_TO_SERIALIZER_MAPPING[
                 related_page.specific.__class__]
             serializer = serializer_class(related_page.specific)
             serialized.append(serializer.data)
+            print('\n\n\n\n appended this', serializer.data)
+        print('\n\n\n\n about to return ', serialized)
         return serialized
 
 
@@ -913,25 +915,6 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer):
     invest_cta_link = serializers.CharField(max_length=255)
     buy_cta_text = serializers.CharField(max_length=255)
     buy_cta_link = serializers.CharField(max_length=255)
-
-    related_pages = serializers.SerializerMethodField()
-
-    def get_related_pages(self, obj):
-        serialized = []
-        items = [
-            obj.related_page_one,
-            obj.related_page_two,
-            obj.related_page_three
-        ]
-        for related_page in items:
-            if not related_page:
-                continue
-            # currently only used for articles and campaigns
-            serializer_class = MODEL_TO_SERIALIZER_MAPPING[
-                related_page.specific.__class__]
-            serializer = serializer_class(related_page.specific)
-            serialized.append(serializer.data)
-        return serialized
 
 
 class CapitalInvestSectorPageSerializer(
