@@ -1,7 +1,7 @@
 # Changelog
 
 ## Pre-release
-- Removed unused fields for the capital invest banner on the Invest landing page [CI-99](https://uktrade.atlassian.net/browse/CI-99)
+- [CI-99](https://uktrade.atlassian.net/browse/CI-99) Removed unused fields for the capital invest banner on the Invest landing page 
 
 ## [2019.04.24](https://github.com/uktrade/directory-cms/releases/tag/2019.04.24)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.04.10...2019.04.24)
