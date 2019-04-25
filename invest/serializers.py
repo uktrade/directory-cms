@@ -209,6 +209,10 @@ class InvestHomePageSerializer(BasePageSerializer):
         max_length=255,
         allow_null=True
     )
+    isd_section_image = wagtail_fields.ImageRenditionField('original')
+    isd_section_title = serializers.CharField(max_length=255)
+    isd_section_text = core_fields.MarkdownToHTMLField(max_length=255)
+    isd_section_cta_text = serializers.CharField(max_length=255)
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_lead_in = serializers.CharField(max_length=255)
     how_we_help = serializers.SerializerMethodField()
