@@ -20,16 +20,18 @@ def test_update_default_listing_buttons_from_base_page(page_with_reversion):
 
 @pytest.mark.django_db
 def test_update_default_listing_buttons_not_from_base_page(
-    settings, root_page
+    settings, page_without_specific_type
 ):
     translation.activate(settings.LANGUAGE_CODE)
 
+    # For a page without a type, there should also be an 'Add child page'
+    # and 'Delete' button
     buttons = wagtail_hooks.update_default_listing_buttons(
-        page=root_page, page_perms=Mock()
+        page=page_without_specific_type, page_perms=Mock()
     )
-
-    assert len(buttons) == 1
+    assert len(buttons) == 2
     assert buttons[0].label == 'Add child page'
+    assert buttons[1].label == 'Delete'
 
 
 @pytest.mark.django_db

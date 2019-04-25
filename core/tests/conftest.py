@@ -2,6 +2,7 @@ from itertools import product
 
 import pytest
 from modeltranslation.utils import build_localized_fieldname
+from wagtail.core.models import Page
 from wagtail.documents.models import Document
 
 from find_a_supplier.tests.factories import (
@@ -17,6 +18,13 @@ def page(root_page):
         parent=root_page,
         slug='the-slug'
     )
+
+
+@pytest.fixture
+def page_without_specific_type(root_page):
+    page = Page(title="No specific type", slug='no-specific-type')
+    root_page.add_child(instance=page)
+    return page
 
 
 @pytest.fixture
@@ -39,7 +47,6 @@ def translated_page(settings, root_page):
         title_fr='FRENCH',
         title_es='SPANISH',
         title_pt='PORTUGUESE',
-        title_pt_br='BRAZILIAN',
         title_ar='ARABIC',
         breadcrumbs_label_en_gb='label',
         introduction_text_en_gb='lede',
@@ -78,7 +85,6 @@ def translated_fas_industry_page(settings, fas_industry_landing_page):
         title_fr='FRENCH',
         title_es='SPANISH',
         title_pt='PORTUGUESE',
-        title_pt_br='BRAZILIAN',
         title_ar='ARABIC',
         breadcrumbs_label_en_gb='label',
         introduction_text_en_gb='lede',

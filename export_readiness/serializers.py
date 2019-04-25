@@ -506,7 +506,7 @@ class TopicLandingPageSerializer(
     display_title = serializers.CharField(source='landing_page_title')
     hero_teaser = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
-
+    banner_text = core_fields.MarkdownToHTMLField()
     hero_image_thumbnail = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
 
