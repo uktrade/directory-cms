@@ -55,16 +55,9 @@ class InternationalCuratedTopicLandingPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
     model = models.InternationalCuratedTopicLandingPage
-    subscriptions = [
-        models.InternationalGuideLandingPage,
-        models.InternationalArticlePage,
-        models.InternationalArticleListingPage,
-    ]
+    subscriptions = []
 
 
 class InternationalGuideLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalGuideLandingPage
-    subscriptions = [
-        models.InternationalArticlePage,
-        models.InternationalArticleListingPage,
-    ]
+    subscriptions = [models.InternationalArticlePage]

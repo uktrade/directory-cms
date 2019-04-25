@@ -75,30 +75,28 @@ def test_meta_field_contains_draft_token(page_with_reversion, rf):
     )
 
     url = 'http://supplier.trade.great:8005/test-slug/'
-    assert serializer.data['meta'] == {
-        'draft_token': page_with_reversion.get_draft_token(),
-        'languages': [
-            ('en-gb', 'English'), ('de', 'Deutsch'), ('ja', '日本語'),
-            ('ru', 'Russian'), ('zh-hans', '简体中文'), ('fr', 'Français'),
-            ('es', 'español'), ('pt', 'Português'),
-            ('pt-br', 'Português Brasileiro'), ('ar', 'العربيّة'),
-        ],
-        'url': url,
-        'localised_urls': [
-            ('en-gb', url),
-            ('de', '{}{}'.format(url, '?lang=de')),
-            ('ja', '{}{}'.format(url, '?lang=ja')),
-            ('ru', '{}{}'.format(url, '?lang=ru')),
-            ('zh-hans', '{}{}'.format(url, '?lang=zh-hans')),
-            ('fr', '{}{}'.format(url, '?lang=fr')),
-            ('es', '{}{}'.format(url, '?lang=es')),
-            ('pt', '{}{}'.format(url, '?lang=pt')),
-            ('pt-br', '{}{}'.format(url, '?lang=pt-br')),
-            ('ar', '{}{}'.format(url, '?lang=ar'))
-        ],
-        'slug': 'test-slug',
-        'pk': page_with_reversion.pk,
-    }
+    token = page_with_reversion.get_draft_token()
+    assert serializer.data['meta']['draft_token'] == token
+    assert serializer.data['meta']['languages'] == [
+            ('en-gb', 'English'),
+            ('de', 'Deutsch'),
+            ('ja', '日本語'),
+            ('zh-hans', '简体中文'),
+            ('fr', 'Français'),
+            ('es', 'español'),
+            ('pt', 'Português'),
+            ('ar', 'العربيّة'),
+    ]
+    assert sorted(serializer.data['meta']['localised_urls']) == [
+        ('ar', '{}{}'.format(url, '?lang=ar')),
+        ('de', '{}{}'.format(url, '?lang=de')),
+        ('en-gb', url),
+        ('es', '{}{}'.format(url, '?lang=es')),
+        ('fr', '{}{}'.format(url, '?lang=fr')),
+        ('ja', '{}{}'.format(url, '?lang=ja')),
+        ('pt', '{}{}'.format(url, '?lang=pt')),
+        ('zh-hans', '{}{}'.format(url, '?lang=zh-hans')),
+    ]
 
 
 @pytest.mark.django_db

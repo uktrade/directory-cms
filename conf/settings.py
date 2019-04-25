@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
     'wagtail.contrib.forms',
+    'wagtail.contrib.settings',
     'wagtail.embeds',
     'wagtail.users',
     'wagtail.snippets',
@@ -179,12 +180,10 @@ LANGUAGES_DETAILS = (
     ('en-gb', 'English', 'English'),
     ('de', 'German', 'Deutsch'),
     ('ja', 'Japanese', '日本語'),
-    ('ru', 'Russian', 'Russian'),
     ('zh-hans', 'Simplified Chinese', '简体中文'),
     ('fr', 'French', 'Français'),
     ('es', 'Spanish', 'español'),
     ('pt', 'Portuguese', 'Português'),
-    ('pt-br', 'Portuguese (Brazilian)', 'Português Brasileiro'),
     ('ar', 'Arabic', 'العربيّة'),
 )
 LANGUAGES = [(code, label) for code, label, _ in LANGUAGES_DETAILS]

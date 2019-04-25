@@ -149,10 +149,10 @@ def django_db_setup(django_db_blocker):
     """Load db schema from template."""
     with django_db_blocker.unblock():
         settings.DATABASES['default']['NAME'] = 'test_directory_cms_debug'
-        os.system('PGPASSWORD=debug dropdb, test_directory_cms_debug')
+        os.system('PGPASSWORD=debug dropdb  test_directory_cms_debug')
         os.system('PGPASSWORD=debug createdb -h localhost -U debug test_directory_cms_debug')  # NOQA
-        os.system('PGPASSWORD=debug psql -h localhost -U debug -d test_directory_cms_debug -f db_template.sql')  # NOQA
-        call_command('migrate')  # if the template is old we might need to migrate  # NOQA
+        os.system('PGPASSWORD=debug psql -h localhost -U debug -d test_directory_cms_debug -f db_template.sql >/dev/null 2>&1')  # NOQA
+        call_command('migrate')  # if the template is old we need to migrate
         yield
 
         for connection in db.connections.all():

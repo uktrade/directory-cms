@@ -1,4 +1,4 @@
-from wagtail.admin.widgets import Button
+from wagtail.admin.widgets import Button, PageListingButton
 from wagtail.core import hooks
 from wagtail.admin.wagtail_hooks import page_listing_buttons
 
@@ -33,13 +33,24 @@ def update_default_listing_buttons(page, page_perms, is_parent=False):
         for button in buttons:
             if helpers.get_button_url_name(button) == 'view_draft':
                 button.url = page.get_url(is_draft=True)
+
     else:
-        # for non-subclasses-of-BasePage allow only adding children
+        # limit buttons for non-subclasses-of-BasePage
         allowed_urls = ['add_subpage']
         buttons = [
             button for button in buttons
             if helpers.get_button_url_name(button) in allowed_urls
         ]
+        # since the drop-down is removed by the above, add a delete
+        # button to this list
+        if page_perms.can_delete():
+            buttons.append(PageListingButton(
+                'Delete',
+                reverse('wagtailadmin_pages:delete', args=[page.id]),
+                attrs={
+                    'title': "Delete '%s'" % page.get_admin_display_title()
+                },
+            ))
     return buttons
 
 

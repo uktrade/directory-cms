@@ -149,7 +149,6 @@ def test_base_model_redirect_published_url(rf, page):
     ('fr', 'FRENCH'),
     ('es', 'SPANISH'),
     ('pt', 'PORTUGUESE'),
-    ('pt-br', 'BRAZILIAN'),
     ('ar', 'ARABIC'),
 ))
 @pytest.mark.django_db
@@ -170,8 +169,8 @@ def test_translated_languages(page, language_code):
     if language_code == 'en-gb':
         expected = ['en-gb']
     else:
-        expected = [settings.LANGUAGE_CODE, language_code]
-    assert page.translated_languages == expected
+        expected = [language_code, settings.LANGUAGE_CODE]
+    assert sorted(page.translated_languages) == sorted(expected)
 
 
 @pytest.mark.django_db
@@ -186,17 +185,15 @@ def test_translated_localised_urls(translated_page):
 
     domain = 'http://supplier.trade.great:8005'
 
-    assert translated_page.get_localized_urls() == [
-        ('en-gb', domain + '/slug/'),
+    assert sorted(translated_page.get_localized_urls()) == [
+        ('ar', domain + '/slug/?lang=ar'),
         ('de', domain + '/slug/?lang=de'),
-        ('ja', domain + '/slug/?lang=ja'),
-        ('ru', domain + '/slug/?lang=ru'),
-        ('zh-hans', domain + '/slug/?lang=zh-hans'),
-        ('fr', domain + '/slug/?lang=fr'),
+        ('en-gb', domain + '/slug/'),
         ('es', domain + '/slug/?lang=es'),
+        ('fr', domain + '/slug/?lang=fr'),
+        ('ja', domain + '/slug/?lang=ja'),
         ('pt', domain + '/slug/?lang=pt'),
-        ('pt-br', domain + '/slug/?lang=pt-br'),
-        ('ar', domain + '/slug/?lang=ar')
+        ('zh-hans', domain + '/slug/?lang=zh-hans')
     ]
 
 
@@ -213,9 +210,8 @@ def test_translated_localised_urls_untranslated_page(page):
 @pytest.mark.django_db
 def test_language_names_translated(translated_page):
     assert translated_page.language_names == (
-        'Translated to German, Japanese, Russian, '
-        'Simplified Chinese, French, Spanish, Portuguese, '
-        'Portuguese (Brazilian), Arabic'
+        'Translated to German, Japanese, Simplified Chinese, '
+        'French, Spanish, Portuguese, Arabic'
     )
 
 

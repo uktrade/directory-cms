@@ -38,6 +38,26 @@ class SectionThreeSubsectionProxyDataWrapper:
         )
 
 
+class FeaturedLinkProxyDataWrapper:
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def image(self):
+        return getattr(
+            self.instance,
+            f'featured_link_{self.position_number}_image'
+        )
+
+    @property
+    def heading(self):
+        return getattr(
+            self.instance,
+            f'featured_link_{self.position_number}_heading'
+        )
+
+
 class SectionTwoSubsectionProxyDataWrapper:
 
     def __init__(self, instance, position_number):
@@ -110,6 +130,11 @@ class StatisticSerializer(serializers.Serializer):
     number = serializers.CharField(max_length=255)
     heading = serializers.CharField(max_length=255)
     smallprint = serializers.CharField(max_length=255)
+
+
+class FeaturedLinkSerializer(serializers.Serializer):
+    image = wagtail_fields.ImageRenditionField('original')
+    heading = serializers.CharField(max_length=255)
 
 
 class RelatedArticlePageSerializer(BasePageSerializer):
@@ -295,6 +320,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
     hero_title = serializers.CharField(max_length=255)
     hero_subtitle = serializers.CharField(max_length=255)
     hero_cta_text = serializers.CharField(max_length=255)
+    hero_cta_link = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
 
     invest_title = serializers.CharField(max_length=255)
@@ -302,6 +328,36 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
     invest_image = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg'
     )
+
+    section_two_heading = serializers.CharField()
+    section_two_teaser = serializers.CharField()
+    section_two_subsections = serializers.SerializerMethodField()
+
+    def get_section_two_subsections(self, instance):
+        data = [
+            SectionTwoSubsectionProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['one', 'two', 'three', 'four', 'five', 'six']
+        ]
+        serializer = SectionTwoSubsectionSerializer(data, many=True)
+        return serializer.data
+
+    featured_links_title = serializers.CharField()
+    featured_links_summary = serializers.CharField()
+    featured_links = serializers.SerializerMethodField()
+
+    def get_featured_links(self, instance):
+        data = [
+            FeaturedLinkProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['one', 'two', 'three']
+        ]
+        serializer = FeaturedLinkSerializer(data, many=True)
+        return serializer.data
 
     trade_title = serializers.CharField(max_length=255)
     trade_content = core_fields.MarkdownToHTMLField()

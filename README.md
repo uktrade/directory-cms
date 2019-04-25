@@ -26,7 +26,9 @@
 
 ### Requirements
 [Python 3.6](https://www.python.org/downloads/release/python-368/)
+
 [Postgres 9.5](https://www.postgresql.org/)
+
 [Redis](https://redis.io/)
 
 
@@ -53,12 +55,12 @@ Pages and images can be copied "upstream" from one environment to another. To fa
 
 The entries must be added on your `conf/.env` file:
 ```
-DIRECTORY_CMS_AWS_STORAGE_BUCKET_NAME
-DIRECTORY_CMS_AWS_ACCESS_KEY_ID
-DIRECTORY_CMS_AWS_SECRET_ACCESS_KEY
+AWS_STORAGE_BUCKET_NAME
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
 ```
 
-Speak to a team mate or consult heroku settings to retrieve the `DIRECTORY_CMS_AWS_STORAGE_BUCKET_NAME`.
+Speak to a team mate or consult dev vault to retrieve the `AWS_STORAGE_BUCKET_NAME`.
 
 #### /etc/hosts file entry
 
@@ -80,7 +82,7 @@ You can test this works by attempting to visit http://cms.trade.great:8010/admin
 ### Create a new template_sql file
 
     To speed up tests a SQL template file is provided. If the file becomes obsolete run the following command on an up-to-date db instance
-    $ pg_dump -O -f db_template.sql directory_cms_debug
+    $ make update_db_template
 
 ## Session
 
@@ -114,6 +116,7 @@ Note on `subscriptions`: the page is serialized when saved to the cache as a JSO
 
 ## Related projects:
 https://github.com/uktrade?q=directory
+
 https://github.com/uktrade?q=great
 
 [code-climate-image]: https://codeclimate.com/github/uktrade/directory-cms/badges/issue_count.svg

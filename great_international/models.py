@@ -32,15 +32,17 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
 
     @classmethod
     def allowed_subpage_models(cls):
-        return [InternationalArticleListingPage,
-                InternationalTopicLandingPage,
-                InternationalCuratedTopicLandingPage,
-                InternationalRegionPage,
-                InternationalHomePage]
+        return [
+            InternationalArticleListingPage,
+            InternationalTopicLandingPage,
+            InternationalCuratedTopicLandingPage,
+            InternationalGuideLandingPage,
+            InternationalRegionPage,
+            InternationalHomePage,
+        ]
 
 
 class InternationalSectorPage(BasePage):
-
     class Meta:
         ordering = ['-heading']
 
@@ -476,6 +478,7 @@ class InternationalHomePage(
         null=True,
         blank=True
     )
+    hero_cta_link = models.CharField(max_length=255, blank=True)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -504,6 +507,126 @@ class InternationalHomePage(
         related_name='+',
     )
 
+    # features highlight
+    section_two_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Features highlight title'
+    )
+    section_two_teaser = models.TextField(
+        blank=True,
+        verbose_name='Features highlight summary'
+    )
+
+    section_two_subsection_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Features highlight 1 icon'
+    )
+    section_two_subsection_one_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Features highlight 1 heading'
+    )
+    section_two_subsection_one_body = models.TextField(
+        blank=True,
+        verbose_name='Features highlight 1 body'
+    )
+
+    section_two_subsection_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Features highlight 2 icon'
+    )
+    section_two_subsection_two_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Features highlight 2 heading'
+    )
+    section_two_subsection_two_body = models.TextField(
+        blank=True,
+        verbose_name='Features highlight 2 body'
+    )
+
+    section_two_subsection_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Features highlight 3 icon'
+    )
+    section_two_subsection_three_heading = models.CharField(
+        blank=True,
+        max_length=255,
+        verbose_name='Features highlight 3 heading'
+    )
+    section_two_subsection_three_body = models.TextField(
+        blank=True,
+        verbose_name='Features highlight 3 body'
+    )
+
+    section_two_subsection_four_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Features highlight 4 icon'
+    )
+    section_two_subsection_four_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Features highlight 4 heading'
+    )
+    section_two_subsection_four_body = models.TextField(
+        blank=True,
+        verbose_name='Features highlight 4 body'
+    )
+
+    section_two_subsection_five_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Features highlight 5 icon'
+    )
+    section_two_subsection_five_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Features highlight 5 heading'
+    )
+    section_two_subsection_five_body = models.TextField(
+        blank=True,
+        verbose_name='Features highlight 5 body'
+    )
+
+    section_two_subsection_six_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Features highlight 6 icon'
+    )
+    section_two_subsection_six_heading = models.CharField(
+        blank=True,
+        max_length=255,
+        verbose_name='Features highlight 6 heading'
+    )
+    section_two_subsection_six_body = models.TextField(
+        blank=True,
+        verbose_name='Features highlight 6 body'
+    )
+
+    # tariffs
     tariffs_title = models.CharField(max_length=255)
     tariffs_description = MarkdownField()
     tariffs_link = models.URLField()
@@ -516,6 +639,39 @@ class InternationalHomePage(
     )
     tariffs_call_to_action_text = models.CharField(max_length=255)
 
+    # featured links
+    featured_links_title = models.CharField(
+        blank=True,
+        max_length=255,
+    )
+    featured_links_summary = models.TextField(blank=True)
+
+    featured_link_one_heading = models.TextField(blank=True)
+    featured_link_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    featured_link_two_heading = models.TextField(blank=True)
+    featured_link_two_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    featured_link_three_heading = models.TextField(blank=True)
+    featured_link_three_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    # news
     news_title = models.CharField(max_length=255)
     related_page_one = models.ForeignKey(
         'wagtailcore.Page',
@@ -549,6 +705,7 @@ class InternationalHomePage(
                 FieldPanel('hero_title'),
                 FieldPanel('hero_subtitle'),
                 FieldPanel("hero_cta_text"),
+                FieldPanel("hero_cta_link"),
                 ImageChooserPanel("hero_image")
             ]
         ),
@@ -577,6 +734,63 @@ class InternationalHomePage(
         ),
 
         MultiFieldPanel(
+            heading='Features highlight',
+            children=[
+                FieldPanel('section_two_heading'),
+                FieldPanel('section_two_teaser'),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_one_icon'
+                            ),
+                            FieldPanel('section_two_subsection_one_heading'),
+                            FieldPanel('section_two_subsection_one_body')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_two_icon'
+                            ),
+                            FieldPanel('section_two_subsection_two_heading'),
+                            FieldPanel('section_two_subsection_two_body')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_three_icon'
+                            ),
+                            FieldPanel('section_two_subsection_three_heading'),
+                            FieldPanel('section_two_subsection_three_body')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_four_icon'
+                            ),
+                            FieldPanel('section_two_subsection_four_heading'),
+                            FieldPanel('section_two_subsection_four_body')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_five_icon'
+                            ),
+                            FieldPanel('section_two_subsection_five_heading'),
+                            FieldPanel('section_two_subsection_five_body')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_six_icon'),
+                            FieldPanel('section_two_subsection_six_heading'
+                                       ),
+                            FieldPanel('section_two_subsection_six_body')
+                        ])
+                ])
+            ]),
+
+        MultiFieldPanel(
             heading='Tariffs',
             children=[
                 FieldPanel('tariffs_title'),
@@ -585,6 +799,30 @@ class InternationalHomePage(
                 ImageChooserPanel('tariffs_image'),
                 FieldPanel('tariffs_call_to_action_text')
             ]
+        ),
+
+        MultiFieldPanel(
+            heading='Featured links',
+            children=[
+                FieldPanel('featured_links_title'),
+                FieldPanel('featured_links_summary'),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        children=[
+                            FieldPanel('featured_link_one_heading'),
+                            ImageChooserPanel('featured_link_one_image')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            FieldPanel('featured_link_two_heading'),
+                            ImageChooserPanel('featured_link_two_image')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            FieldPanel('featured_link_three_heading'),
+                            ImageChooserPanel('featured_link_three_image')
+                        ])
+                ])]
         ),
 
         MultiFieldPanel(
@@ -1085,7 +1323,6 @@ class InternationalTopicLandingPage(BasePage):
     subpage_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
-        'great_international.InternationalGuideLandingPage',
         'great_international.InternationalSectorPage',
     ]
 
@@ -1128,10 +1365,7 @@ class InternationalTopicLandingPage(BasePage):
 class InternationalCuratedTopicLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.GreatInternationalApp']
-    subpage_types = [
-        'great_international.InternationalArticlePage',
-        'great_international.InternationalGuideLandingPage',
-    ]
+    subpage_types = []
 
     display_title = models.CharField(max_length=255, blank=True, null=True)
 
@@ -1260,13 +1494,8 @@ class InternationalCuratedTopicLandingPage(BasePage):
 
 class InternationalGuideLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    parent_page_types = [
-        'great_international.InternationalCuratedTopicLandingPage',
-        'great_international.InternationalTopicLandingPage',
-    ]
-    subpage_types = [
-        'great_international.InternationalArticlePage',
-    ]
+    parent_page_types = ['great_international.GreatInternationalApp']
+    subpage_types = ['great_international.InternationalArticlePage']
 
     display_title = models.CharField(max_length=255)
 
