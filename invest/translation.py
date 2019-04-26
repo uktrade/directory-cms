@@ -59,6 +59,10 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'setup_guide_call_to_action_text',
         'setup_guide_call_to_action_url',
         'setup_guide_lead_in',
+        'isd_section_image',
+        'isd_section_title',
+        'isd_section_text',
+        'isd_section_cta_text',
         'how_we_help_title',
         'how_we_help_lead_in',
         # how we help
