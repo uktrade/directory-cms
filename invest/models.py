@@ -480,18 +480,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
     capital_invest_section_content = MarkdownField(
         blank=True
     )
-    capital_invest_section_cta_text = models.CharField(
-        max_length=255
-    )
-    capital_invest_section_cta_url = models.CharField(
-        max_length=255
-    )
-    capital_invest_section_background_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
 
     eu_exit_section_title = models.CharField(
         max_length=255,
@@ -689,9 +677,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
             children=[
                 FieldPanel('capital_invest_section_title'),
                 FieldPanel('capital_invest_section_content'),
-                FieldPanel('capital_invest_section_cta_text'),
-                FieldPanel('capital_invest_section_cta_url'),
-                ImageChooserPanel('capital_invest_section_background_image'),
             ],
 
         ),
