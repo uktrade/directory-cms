@@ -17,4 +17,4 @@ class CoreConfig(AppConfig):
             receiver=signals.create_document_hash,
             sender='wagtaildocs.Document'
         )
-        PageIDCache.subscribe_to_signals()
+        PageIDCache.subscribe()

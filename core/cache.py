@@ -350,7 +350,7 @@ class PageIDCache:
         return cls.get_mapping(cls.by_path_map_key).get(key)
 
     @classmethod
-    def subscribe_to_signals(cls):
+    def subscribe(cls):
         post_save.connect(receiver=cls.clear, sender=Page)
         post_delete.connect(receiver=cls.clear, sender=Page)
         post_save.connect(receiver=cls.clear, sender=Site)
