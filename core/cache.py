@@ -17,6 +17,15 @@ from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
 from conf.celery import app
 
 
+ROOT_PATHS_TO_SERVICE_NAMES = {
+    'export-readiness-app': cms.EXPORT_READINESS,
+    'great-international-app': cms.GREAT_INTERNATIONAL,
+    'find-a-supplier-app': cms.FIND_A_SUPPLIER,
+    'invest-app': cms.INVEST,
+    'components-app': cms.COMPONENTS,
+}
+
+
 class PageCache:
     cache = cache
 
@@ -234,15 +243,6 @@ class RegionAwareCachePopulator(CachePopulator):
                         lang=language_code,
                         region=region,
                     )
-
-
-ROOT_PATHS_TO_SERVICE_NAMES = {
-    'export-readiness-app': cms.EXPORT_READINESS,
-    'great-international-app': cms.GREAT_INTERNATIONAL,
-    'find-a-supplier-app': cms.FIND_A_SUPPLIER,
-    'invest-app': cms.INVEST,
-    'components-app': cms.COMPONENTS,
-}
 
 
 class PageIDCache:
