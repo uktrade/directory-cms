@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import pytest
 from wagtail.images.models import Image
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Site
 
 from django.core.cache import cache
 from django.core.files.storage import default_storage
@@ -39,6 +39,16 @@ def untranslated_page(root_page):
         introduction_column_three_text_en_gb='lede column three',
         company_list_text_en_gb='companies',
         company_list_call_to_action_text_en_gb='view all',
+    )
+
+
+@pytest.fixture
+def site_with_untranslated_page_as_root(untranslated_page):
+    return Site.objects.create(
+        site_name='Test',
+        hostname='example.com',
+        port=8096,
+        root_page=untranslated_page,
     )
 
 
