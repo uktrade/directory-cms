@@ -20,7 +20,7 @@ from great_international.tests.factories import (
         1,
         None,
         None,
-        'serialized-page-1'
+        'serialized-page-1:'
     ),
     (
         2,
@@ -327,9 +327,9 @@ def test_transactional_cache_delete(mock_delete_many, mock_delete):
     assert mock_delete.call_count == 0
     assert mock_delete_many.call_count == 1
     assert mock_delete_many.call_args == mock.call([
-        'serialized-page-1',
-        'serialized-page-2',
-        'serialized-page-3',
+        'serialized-page-1:',
+        'serialized-page-2:',
+        'serialized-page-3:',
     ])
 
 
