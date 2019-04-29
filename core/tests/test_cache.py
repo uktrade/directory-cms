@@ -20,19 +20,19 @@ from great_international.tests.factories import (
         1,
         None,
         None,
-        '{'+'{'+'page-1'+'}'+'}'
+        'serialized-page-1'
     ),
     (
         2,
         'en-gb',
         None,
-        '{'+'{'+'page-2'+'}'+'}lang=en-gb'
+        'serialized-page-2:lang=en-gb'
     ),
     (
         3,
         'en-gb',
         'eu',
-        '{'+'{'+'page-3'+'}'+'}lang=en-gb&region=eu'
+        'serialized-page-3:lang=en-gb&region=eu'
     ),
 ))
 def test_page_cache_build_keys(page_id, language_code, region, expected):
@@ -299,15 +299,15 @@ def test_transactional_cache_set(mock_set_many, mock_set, settings):
     assert mock_set_many.call_count == 1
     assert mock_set_many.call_args == mock.call(
         {
-            '{'+'{'+'page-1'+'}'+'}': {
+            'serialized-page-1:': {
                 'key': 'value-one',
                 'etag': '"67216138eb3d94858a5014cfcd83688f"',
             },
-            '{'+'{'+'page-2'+'}'+'}': {
+            'serialized-page-2:': {
                 'key': 'value-two',
                 'etag': '"4bb0f72aae58a2f70bc87ee99161a585"',
             },
-            '{'+'{'+'page-3'+'}'+'}': {
+            'serialized-page-3:': {
                 'key': 'value-three',
                 'etag': '"92b996db2b999fb74640d7d88aa5124c"',
             },
@@ -327,9 +327,9 @@ def test_transactional_cache_delete(mock_delete_many, mock_delete):
     assert mock_delete.call_count == 0
     assert mock_delete_many.call_count == 1
     assert mock_delete_many.call_args == mock.call([
-        '{'+'{'+'page-1'+'}'+'}',
-        '{'+'{'+'page-2'+'}'+'}',
-        '{'+'{'+'page-3'+'}'+'}',
+        'serialized-page-1',
+        'serialized-page-2',
+        'serialized-page-3',
     ])
 
 
