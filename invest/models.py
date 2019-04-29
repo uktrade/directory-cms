@@ -480,18 +480,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
     capital_invest_section_content = MarkdownField(
         blank=True
     )
-    capital_invest_section_cta_text = models.CharField(
-        max_length=255
-    )
-    capital_invest_section_cta_url = models.CharField(
-        max_length=255
-    )
-    capital_invest_section_background_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
 
     eu_exit_section_title = models.CharField(
         max_length=255,
@@ -591,6 +579,30 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
     setup_guide_call_to_action_text = models.CharField(max_length=255)
     setup_guide_call_to_action_url = models.CharField(max_length=255)
 
+    isd_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Investment Support Directory section image'
+    )
+    isd_section_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Investment Support Directory section title'
+    )
+    isd_section_text = MarkdownField(
+        max_length=255,
+        blank=True,
+        verbose_name='Investment Support Directory section text'
+    )
+    isd_section_cta_text = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Investment Support Directory section cta text'
+    )
+
     how_we_help_title = models.CharField(default='How we help', max_length=255)
     how_we_help_lead_in = models.TextField(blank=True, null=True)
     # how we help
@@ -689,9 +701,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
             children=[
                 FieldPanel('capital_invest_section_title'),
                 FieldPanel('capital_invest_section_content'),
-                FieldPanel('capital_invest_section_cta_text'),
-                FieldPanel('capital_invest_section_cta_url'),
-                ImageChooserPanel('capital_invest_section_background_image'),
             ],
 
         ),
@@ -728,6 +737,16 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
             ],
         ),
 
+        MultiFieldPanel(
+            heading='Investor Support Directory section',
+            classname='collapsible',
+            children=[
+                ImageChooserPanel('isd_section_image'),
+                FieldPanel('isd_section_title'),
+                FieldPanel('isd_section_text'),
+                FieldPanel('isd_section_cta_text'),
+            ],
+        ),
 
         MultiFieldPanel(
             heading='How we help section',
