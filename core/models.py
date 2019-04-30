@@ -203,10 +203,8 @@ class BasePage(Page):
             # if select_related() above was successful, great!
             site.routingsettings
         except RoutingSettings.DoesNotExist:
-            # RoutingSettings probably need creating
-            # using get_or_create() to help guard against race conditions
-            site.routingsettings, _ = RoutingSettings.objects.get_or_create(
-                site=site)
+            # RoutingSettings need creating
+            site.routingsettings = RoutingSettings.objects.create(site=site)
         return site
 
     def get_tree_based_url(self, include_site_url=False):
