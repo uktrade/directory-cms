@@ -8,5 +8,5 @@ class Command(helpers.ExclusiveDistributedHandleMixin, MigrateCommand):
     lock_id = 'migrations'
 
     def handle(self, *args, **options):
-        if not settings.SKIP_MIGRATE:
+        if not settings.FEATURE_FLAGS['SKIP_MIGRATE']:
             super().handle(*args, **options)
