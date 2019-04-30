@@ -281,8 +281,8 @@ def test_get_site_fetches_routing_settings_if_they_exist(
     site = Site.objects.create(hostname='example.org', root_page=page)
     RoutingSettings.objects.create(site=site)
 
-    # running this first so that the query doesn't cound toward
-    # the total query count, as the value is usually cached
+    # running this first so that the query doesn't count toward
+    # the total query count (the value is usually cached)
     page._get_site_root_paths()
 
     with django_assert_num_queries(1):
@@ -296,12 +296,17 @@ def test_get_site_creates_routing_settings_if_none_exist(
     page = IndustryPageFactory(parent=root_page, slug='123')
     site = Site.objects.create(hostname='example.gov', root_page=page)
 
-    # running this first so that the query doesn't cound toward
-    # the total query count, as the value is usually cached
+    # running this first so that the query doesn't count toward
+    # the total query count (the value is usually cached)
     page._get_site_root_paths()
 
     with django_assert_num_queries(2):
+        # 1 query to check for an existing object, 1 to create
         site = page.get_site()
+
+    with django_assert_num_queries(0):
+        # The method sets this attribute to reference the newly
+        # created object, so it should be available without a query
         site.routingsettings
 
 
