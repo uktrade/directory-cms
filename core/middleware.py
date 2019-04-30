@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.http import HttpResponse
 from django.middleware.locale import LocaleMiddleware
 from django.utils import translation
 
@@ -21,3 +23,10 @@ class StubSiteMiddleware(LocaleMiddleware):
 
     def process_request(self, request):
         request.site = None
+
+
+class MaintenanceModeMiddleware:
+
+    def process_request(self, request):
+        if settings.FEATURE_FLAGS['MAINTENANCE_MODE_ON']:
+            return HttpResponse('CMS is offline for maintenance', status=503)
