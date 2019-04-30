@@ -274,31 +274,35 @@ def test_get_tree_based_url(root_page):
     )
 
 
-@pytest.mark.django_db
-def test_get_tree_based_url_without_routing_settings(root_page):
-    # This time, call without RoutingSettings configured for the site
-    # and check that an instance is created
-    domestic_app = ExportReadinessAppFactory(parent=root_page)
-    domestic_page_one = TopicLandingPageFactory(
-        parent=domestic_app, slug='topic')
-    domestic_page_two = ArticleListingPageFactory(
-        parent=domestic_page_one, slug='list')
+def test_get_site_fetches_routing_settings_if_they_exist(
+    root_page, django_assert_num_queries
+):
+    page = IndustryPageFactory(parent=root_page, slug='abc')
+    site = Site.objects.create(hostname='example.org', root_page=page)
+    RoutingSettings.objects.create(site=site)
 
-    Site.objects.all().delete()
-    site = Site.objects.create(
-        site_name='Great Domestic',
-        hostname='domestic.trade.great',
-        port=8007,
-        root_page=domestic_app,
-    )
+    # running this first so that the query doesn't cound toward
+    # the total query count, as the value is usually cached
+    page._get_site_root_paths()
 
-    domestic_page_two.get_tree_based_url()
+    with django_assert_num_queries(1):
+        site = page.get_site()
+        site.routingsettings
 
-    # Check routing settings were created
-    routing_settings = RoutingSettings.objects.get()
-    assert routing_settings.site == site
-    assert routing_settings.root_path_prefix == ''
-    assert routing_settings.include_port_in_urls is True
+
+def test_get_site_creates_routing_settings_if_none_exist(
+    root_page, django_assert_num_queries
+):
+    page = IndustryPageFactory(parent=root_page, slug='123')
+    site = Site.objects.create(hostname='example.gov', root_page=page)
+
+    # running this first so that the query doesn't cound toward
+    # the total query count, as the value is usually cached
+    page._get_site_root_paths()
+
+    with django_assert_num_queries(2):
+        site = page.get_site()
+        site.routingsettings
 
 
 @pytest.mark.django_db
