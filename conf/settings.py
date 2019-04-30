@@ -87,6 +87,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+    'core.middleware.MaintenanceModeMiddleware',
     'core.middleware.StubSiteMiddleware',
     'directory_components.middleware.MaintenanceModeMiddleware',
     'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware',
@@ -410,13 +411,13 @@ INTERNATIONAL_NEWS_MARKETING_FOLDER_PAGE_SLUG = env.str(
 # feature flags
 
 FEATURE_FLAGS = {
-    # used by directory-components
     'MAINTENANCE_MODE_ON': env.bool('FEATURE_MAINTENANCE_MODE_ENABLED', False),
+    'SKIP_MIGRATE': env.bool('FEATURE_SKIP_MIGRATE', False),
     # used by directory-components
     'SEARCH_ENGINE_INDEXING_OFF': env.bool(
         'FEATURE_SEARCH_ENGINE_INDEXING_DISABLED', False
     ),
-    'DEBUG_TOOLBAR_ON': env.bool('FEATURE_DEBUG_TOOLBAR_ENABLED', False)
+    'DEBUG_TOOLBAR_ON': env.bool('FEATURE_DEBUG_TOOLBAR_ENABLED', False),
 }
 
 REST_FRAMEWORK = {
@@ -461,6 +462,3 @@ CELERY_TASK_ALWAYS_EAGER = env.bool('CELERY_ALWAYS_EAGER', False)
 ACTIVITY_STREAM_ACCESS_KEY_ID = env.str('ACTIVITY_STREAM_ACCESS_KEY_ID')
 ACTIVITY_STREAM_SECRET_ACCESS_KEY = \
     env.str('ACTIVITY_STREAM_SECRET_ACCESS_KEY')
-
-
-SKIP_MIGRATE = env.bool('FEATURE_SKIP_MIGRATE', False)

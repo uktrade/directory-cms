@@ -37,3 +37,28 @@ def test_locale_middleware_handles_missing_querystring_language(rf):
 
     expected = settings.LANGUAGE_CODE
     assert request.LANGUAGE_CODE == expected == translation.get_language()
+
+
+def test_maintenance_mode_middleware_installed():
+    expected = 'core.middleware.MaintenanceModeMiddleware'
+    assert expected in settings.MIDDLEWARE_CLASSES
+
+
+def test_maintenance_mode_middleware_feature_flag_on(rf, settings):
+    settings.FEATURE_FLAGS['MAINTENANCE_MODE_ON'] = True
+    request = rf.get('/')
+
+    response = middleware.MaintenanceModeMiddleware().process_request(request)
+
+    assert response.status_code == 503
+    assert response.content == b'CMS is offline for maintenance'
+
+
+def test_maintenance_mode_middleware_feature_flag_off(rf, settings):
+    settings.FEATURE_FLAGS['MAINTENANCE_MODE_ON'] = False
+
+    request = rf.get('/')
+
+    response = middleware.MaintenanceModeMiddleware().process_request(request)
+
+    assert response is None
