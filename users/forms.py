@@ -44,10 +44,46 @@ class EntryPointAwareUserActionForm(forms.Form):
             ).distinct('id')
 
 
-class UserEditForm(EntryPointAwareUserActionForm, wagtail_forms.UserEditForm):
+class DisableUserFieldsMixin(forms.Form):
+    """
+    Disables all user fields except for roles
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            # Disable the fields
+            self.fields['username'].widget.attrs['readonly'] = True
+            self.fields['email'].widget.attrs['readonly'] = True
+            self.fields['first_name'].widget.attrs['readonly'] = True
+            self.fields['last_name'].widget.attrs['readonly'] = True
+
+            # Note: When editing self, the 'is_active' field doesn't exist
+            if 'is_active' in self.fields:
+                # Note: checkboxes don't support "readonly" so disable instead
+                self.fields['is_active'].widget.attrs['disabled'] = True
+
+            # Make sure the values haven't been changed
+            data = self.data.copy()
+            data['username'] = instance.username
+            data['email'] = instance.email
+            data['first_name'] = instance.first_name
+            data['last_name'] = instance.last_name
+
+            if instance.is_active:
+                data['is_active'] = 'on'
+            elif 'is_active' in data:
+                del data['is_active']
+
+            self.data = data
+
+
+class UserEditForm(EntryPointAwareUserActionForm, DisableUserFieldsMixin,
+                   wagtail_forms.UserEditForm):
     pass
 
 
-class UserCreationForm(EntryPointAwareUserActionForm,
+class UserCreationForm(EntryPointAwareUserActionForm, DisableUserFieldsMixin,
                        wagtail_forms.UserCreationForm):
     pass

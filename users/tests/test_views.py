@@ -21,8 +21,6 @@ def test_create_user_view(admin_client):
             'email': 'test@test.com',
             'first_name': 'Test',
             'last_name': 'User',
-            'password1': 'password',
-            'password2': 'password',
             'groups': ['1']
         }
     )
@@ -38,11 +36,9 @@ def test_create_user_view_invalid_form(admin_client):
         url,
         data={
             'username': 'test',
-            'email': 'test@test.com',
+            'email': 'This is not an email address',
             'first_name': 'Test',
             'last_name': 'User',
-            'password1': 'password',
-            'password2': 'passwords',
             'groups': ['1']
         }
     )
@@ -53,7 +49,7 @@ def test_create_user_view_invalid_form(admin_client):
 
 @pytest.mark.django_db
 def test_edit_user_view(admin_client):
-    user = UserFactory(username='test')
+    user = UserFactory(username='test', email='test@test.com')
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
     response = admin_client.post(
         url,
@@ -65,26 +61,30 @@ def test_edit_user_view(admin_client):
             'groups': ['1']
         }
     )
-    assert response.context['message'] == 'User foobar updated.'
+    assert response.context['message'] == 'User test updated.'
     assert response.status_code == status.HTTP_302_FOUND
     assert response.url == reverse('wagtailusers_users:index')
     user.refresh_from_db()
-    assert user.username == 'foobar'
+    group_ids = set(user.groups.values_list('id', flat=True))
+    assert group_ids == {1}
 
 
 @pytest.mark.django_db
-def test_edit_user_view_invliad(admin_client):
-    user = UserFactory(username='test')
+def test_edit_user_view_cant_change_basic_details(admin_client):
+    user = UserFactory(username='test', email='test@test.com')
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
     response = admin_client.post(
         url,
         data={
             'username': 'foobar',
             'email': 'test@test.com',
+            'first_name': 'Test',
             'last_name': 'User',
             'groups': ['1']
         }
     )
-    message = response.context['message']
-    assert message == 'The user could not be saved due to errors.'
-    assert response.status_code == status.HTTP_200_OK
+    assert response.context['message'] == 'User test updated.'
+    assert response.status_code == status.HTTP_302_FOUND
+    assert response.url == reverse('wagtailusers_users:index')
+    user.refresh_from_db()
+    assert user.username == 'test'
