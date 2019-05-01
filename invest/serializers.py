@@ -185,13 +185,9 @@ class InvestHomePageSerializer(BasePageSerializer):
     benefits_section_title = serializers.CharField(max_length=255)
     benefits_section_intro = serializers.CharField(max_length=255)
     benefits_section_content = core_fields.MarkdownToHTMLField()
-    benefits_section_img = wagtail_fields.ImageRenditionField('original')
+    benefits_section_img = wagtail_fields.ImageRenditionField('fill-640x360')
     capital_invest_section_title = serializers.CharField(max_length=255)
     capital_invest_section_content = core_fields.MarkdownToHTMLField()
-    capital_invest_section_cta_text = serializers.CharField(max_length=255)
-    capital_invest_section_cta_url = serializers.CharField(max_length=255)
-    capital_invest_section_background_image = \
-        wagtail_fields.ImageRenditionField('original')
     eu_exit_section_title = serializers.CharField(max_length=255)
     eu_exit_section_content = core_fields.MarkdownToHTMLField()
     eu_exit_section_call_to_action_text = serializers.CharField(max_length=255)
@@ -206,13 +202,17 @@ class InvestHomePageSerializer(BasePageSerializer):
     sector_button_url = serializers.CharField(max_length=255)
     setup_guide_title = serializers.CharField(max_length=255)
     setup_guide_content = core_fields.MarkdownToHTMLField()
-    setup_guide_img = wagtail_fields.ImageRenditionField('original')
+    setup_guide_img = wagtail_fields.ImageRenditionField('fill-640x360')
     setup_guide_call_to_action_text = serializers.CharField(max_length=255)
     setup_guide_call_to_action_url = serializers.CharField(max_length=255)
     setup_guide_lead_in = serializers.CharField(
         max_length=255,
         allow_null=True
     )
+    isd_section_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    isd_section_title = serializers.CharField(max_length=255)
+    isd_section_text = core_fields.MarkdownToHTMLField(max_length=255)
+    isd_section_cta_text = serializers.CharField(max_length=255)
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_lead_in = serializers.CharField(max_length=255)
     how_we_help = serializers.SerializerMethodField()

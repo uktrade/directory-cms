@@ -2,15 +2,14 @@ import abc
 import hashlib
 from urllib.parse import urlencode
 
+from directory_constants.constants import cms
 from rest_framework.renderers import JSONRenderer
-from w3lib.url import canonicalize_url
 from wagtail.core.signals import page_published, page_unpublished
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Site
 
 from django.conf import settings
 from django.core.cache import cache
-from django.db.models.signals import post_save
-from django.urls import reverse
+from django.db.models.signals import post_delete, post_save
 from django.utils import translation
 from django.utils.http import quote_etag
 
@@ -18,32 +17,48 @@ from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
 from conf.celery import app
 
 
+ROOT_PATHS_TO_SERVICE_NAMES = {
+    'export-readiness-app': cms.EXPORT_READINESS,
+    'great-international-app': cms.GREAT_INTERNATIONAL,
+    'find-a-supplier-app': cms.FIND_A_SUPPLIER,
+    'invest-app': cms.INVEST,
+    'components-app': cms.COMPONENTS,
+}
+
+
 class PageCache:
     cache = cache
 
     @staticmethod
-    def build_key(slug, params):
-        url = reverse('api:lookup-by-slug', kwargs={'slug': slug})
-        params = {key: value for key, value in params.items() if value}
-        # using the page slug as a redis hash tag ensures the keys related to
-        # the same page in the same node, preventing delete_many from failing
-        # because the keys could be stored across different nodes
-        return f'{{slug}}' + canonicalize_url(url + '?' + urlencode(params))
+    def build_key(page_id, **variation_kwargs):
+        """
+        Return a string from the supplied arguments that is suitable for use
+        as a cache key.
+        """
+        variation_kwargs_sorted = sorted(
+            item for item in variation_kwargs.items()
+            if item[1]
+        )
+
+        return 'serialized-page-{page_id}:{varation_kwargs_encoded}'.format(
+            page_id=page_id,
+            varation_kwargs_encoded=urlencode(variation_kwargs_sorted)
+        )
 
     @classmethod
-    def set(cls, slug, params, data):
+    def set(cls, page_id, data, **variation_kwargs):
         data['etag'] = cls.generate_etag(data)
-        key = cls.build_key(slug=slug, params=params)
+        key = cls.build_key(page_id=page_id, **variation_kwargs)
         cls.cache.set(key, data, timeout=settings.API_CACHE_EXPIRE_SECONDS)
 
     @classmethod
-    def get(cls, slug, params):
-        key = cls.build_key(slug=slug, params=params)
+    def get(cls, page_id, **variation_kwargs):
+        key = cls.build_key(page_id=page_id, **variation_kwargs)
         return cls.cache.get(key)
 
     @classmethod
-    def delete(cls, slug, params):
-        key = cls.build_key(slug=slug, params=params)
+    def delete(cls, page_id, **variation_kwargs):
+        key = cls.build_key(page_id=page_id, **variation_kwargs)
         cls.cache.delete(key)
 
     @staticmethod
@@ -101,15 +116,7 @@ class CachePopulator:
 
     @classmethod
     def populate_async(cls, instance):
-        with PageCache.transaction() as page_cache:
-            for language_code in instance.translated_languages:
-                page_cache.delete(
-                    slug=instance.slug,
-                    params={
-                        'service_name': instance.service_name,
-                        'lang': language_code
-                    }
-                )
+        cls.delete(instance)
         cls.populate.delay(instance.pk)
 
     @classmethod
@@ -120,13 +127,19 @@ class CachePopulator:
                 with translation.override(language_code):
                     serializer = serializer_class(instance=instance)
                     page_cache.set(
-                        slug=instance.slug,
-                        params={
-                            'lang': language_code,
-                            'service_name': instance.service_name,
-                        },
+                        page_id=instance.id,
                         data=serializer.data,
+                        lang=language_code,
                     )
+
+    @classmethod
+    def delete(cls, instance):
+        with PageCache.transaction() as page_cache:
+            for language_code in instance.translated_languages:
+                page_cache.delete(
+                    page_id=instance.id,
+                    lang=language_code,
+                )
 
 
 class AbstractDatabaseCacheSubscriber(abc.ABC):
@@ -176,15 +189,7 @@ class AbstractDatabaseCacheSubscriber(abc.ABC):
 
     @classmethod
     def delete(cls, sender, instance, *args, **kwargs):
-        with PageCache.transaction() as page_cache:
-            for lang in instance.translated_languages:
-                page_cache.delete(
-                    slug=instance.slug,
-                    params={
-                        'lang': lang,
-                        'service_name': instance.service_name,
-                    }
-                )
+        cls.cache_populator.delete(instance)
 
     @classmethod
     def populate_many(cls, sender, instance, *args, **kwargs):
@@ -203,17 +208,7 @@ class RegionAwareCachePopulator(CachePopulator):
 
     @classmethod
     def populate_async(cls, instance):
-        with PageCache.transaction() as page_cache:
-            for language_code in instance.translated_languages:
-                for region in cls.regions:
-                    page_cache.delete(
-                        slug=instance.slug,
-                        params={
-                            'service_name': instance.service_name,
-                            'lang': language_code,
-                            'region': region,
-                        }
-                    )
+        cls.delete(instance)
         cls.populate.delay(instance.pk)
 
     @classmethod
@@ -228,11 +223,131 @@ class RegionAwareCachePopulator(CachePopulator):
                             context={'region': region}
                         )
                         page_cache.set(
-                            slug=instance.slug,
-                            params={
-                                'lang': language_code,
-                                'service_name': instance.service_name,
-                                'region': region,
-                            },
+                            page_id=instance.id,
                             data=serializer.data,
+                            lang=language_code,
+                            region=region,
                         )
+
+    @classmethod
+    def delete(cls, instance):
+        with PageCache.transaction() as page_cache:
+            for language_code in instance.translated_languages:
+                for region in cls.regions:
+                    page_cache.delete(
+                        page_id=instance.id,
+                        lang=language_code,
+                        region=region,
+                    )
+
+
+class PageIDCache:
+    """
+    Helps to efficiently map page slugs and path values to their respective
+    page ids.
+
+    Population happens on request. Invalidation happens automatically when
+    page or site data changes, but those actions do not trigger
+    repopulation.
+
+    Population is efficient due to only needing to query the database for
+    vanilla `Page` objects with a small subset of fields. Site data almost
+    always comes from a cache, and content type data (if needed) is typically
+    cached also.
+    """
+    cache = cache
+    cache_key = 'page-ids'
+    by_path_map_key = 'by-path'
+    by_slug_map_key = 'by-slug'
+
+    @staticmethod
+    def build_slug_lookup_key(service_name, slug):
+        return f'{service_name}:{slug}'
+
+    @staticmethod
+    def build_path_lookup_key(site_id, path):
+        return f'{site_id}:{path}'
+
+    @staticmethod
+    def get_service_name_for_page(page):
+        try:
+            # This works for all pages in practice, because pages always
+            # live below an 'app' root page, and so always have a predictable
+            # segment at the start of their url_path
+            root_path = page.url_path.split('/')[1]
+            return ROOT_PATHS_TO_SERVICE_NAMES[root_path]
+        except KeyError:
+            # In tests, pages are often added as direct children of the root
+            # page node, so the above won't work. Instead, we fetch the model
+            # for the page from its content type, and get the value from there
+            return getattr(page.specific_class, 'service_name_value', None)
+
+    @classmethod
+    def get_population_queryset(cls):
+        return Page.objects.only('id', 'slug', 'url_path', 'content_type_id')
+
+    @classmethod
+    def populate(cls, *args, **kwargs):
+        ids_by_path = {}
+        ids_by_slug = {}
+
+        # This value should be cached by Wagtail
+        site_root_paths = Site.get_site_root_paths()
+
+        for page in cls.get_population_queryset():
+            # Path lookup keys must include the site id and url_path, minus
+            # the site root path, which Page.get_url_parts() can give us
+
+            # setting this prevents repeat cache lookups
+            page._wagtail_cached_site_root_paths = site_root_paths
+            url_parts = page.get_url_parts()
+            if url_parts:
+                key = cls.build_path_lookup_key(url_parts[0], url_parts[2])
+                ids_by_path[key] = page.id
+
+            # Slug lookup keys must include the service name, as well as the
+            # slug, which we need to work out
+            service_name = cls.get_service_name_for_page(page)
+            if service_name:
+                key = cls.build_slug_lookup_key(service_name, page.slug)
+                ids_by_slug[key] = page.id
+
+        page_ids = {
+            cls.by_path_map_key: ids_by_path,
+            cls.by_slug_map_key: ids_by_slug,
+        }
+        cls.cache.set(cls.cache_key, page_ids, timeout=settings.API_CACHE_EXPIRE_SECONDS) # noqa
+        return page_ids
+
+    @classmethod
+    def clear(cls, *args, **kwargs):
+        return cls.cache.delete(cls.cache_key)
+
+    @classmethod
+    def get(cls, populate_if_cold=False):
+        result = cls.cache.get(cls.cache_key)
+        if result is not None:
+            return result
+        if populate_if_cold:
+            return cls.populate()
+
+    @classmethod
+    def get_mapping(cls, map_key):
+        return cls.populate(populate_if_cold=True)[map_key]
+
+    @classmethod
+    def get_for_slug(cls, slug, service_name):
+        key = cls.build_slug_lookup_key(service_name, slug)
+        return cls.get_mapping(cls.by_slug_map_key).get(key)
+
+    @classmethod
+    def get_for_path(cls, path, site_id):
+        key = cls.build_path_lookup_key(site_id, path)
+        return cls.get_mapping(cls.by_path_map_key).get(key)
+
+    @classmethod
+    def subscribe(cls):
+        post_save.connect(receiver=cls.clear, sender=Page)
+        post_delete.connect(receiver=cls.clear, sender=Page)
+        post_save.connect(receiver=cls.clear, sender=Site)
+        post_delete.connect(receiver=cls.clear, sender=Site)

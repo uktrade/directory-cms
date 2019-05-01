@@ -1,12 +1,14 @@
 import pytest
+from unittest import mock
 
 from modeltranslation.utils import build_localized_fieldname
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils import translation
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Site
 
+from core.models import RoutingSettings
 from find_a_supplier.tests.factories import (
     FindASupplierAppFactory, IndustryPageFactory, IndustryLandingPageFactory,
     IndustryArticlePageFactory,
@@ -224,3 +226,127 @@ def test_language_names_untranslated(page):
 def test_base_app_slugs_are_created_in_all_languages(root_page):
     app = InvestAppFactory(title='foo', parent=root_page)
     assert app.slug == InvestApp.slug_identity
+
+
+@pytest.mark.django_db
+def test_get_tree_based_url(root_page):
+    domestic_app = ExportReadinessAppFactory(parent=root_page)
+    domestic_page_one = TopicLandingPageFactory(
+        parent=domestic_app, slug='topic')
+    domestic_page_two = ArticleListingPageFactory(
+        parent=domestic_page_one, slug='list')
+    domestic_page_three = ArticlePageFactory(
+        parent=domestic_page_two, slug='article')
+
+    Site.objects.all().delete()
+    site = Site.objects.create(
+        site_name='Great Domestic',
+        hostname='domestic.trade.great',
+        port=8007,
+        root_page=domestic_app,
+    )
+
+    routing_settings = RoutingSettings.objects.create(
+        site=site,
+        root_path_prefix='/domestic/c',
+        include_port_in_urls=False,
+    )
+
+    assert domestic_page_two.get_tree_based_url() == '/domestic/c/topic/list/'
+    assert (
+        domestic_page_three.get_tree_based_url() ==
+        '/domestic/c/topic/list/article/'
+    )
+
+    # Test include_site_url
+    assert (
+        domestic_page_two.get_tree_based_url(include_site_url=True) ==
+        'http://domestic.trade.great/domestic/c/topic/list/'
+    )
+
+    # Test RoutingSettings.include_port_in_urls
+    routing_settings.include_port_in_urls = True
+    routing_settings.save()
+
+    assert (
+        domestic_page_two.get_tree_based_url(include_site_url=True) ==
+        'http://domestic.trade.great:8007/domestic/c/topic/list/'
+    )
+
+
+@pytest.mark.django_db
+def test_get_tree_based_url_without_routing_settings(root_page):
+    # This time, call without RoutingSettings configured for the site
+    # and check that an instance is created
+    domestic_app = ExportReadinessAppFactory(parent=root_page)
+    domestic_page_one = TopicLandingPageFactory(
+        parent=domestic_app, slug='topic')
+    domestic_page_two = ArticleListingPageFactory(
+        parent=domestic_page_one, slug='list')
+
+    Site.objects.all().delete()
+    site = Site.objects.create(
+        site_name='Great Domestic',
+        hostname='domestic.trade.great',
+        port=8007,
+        root_page=domestic_app,
+    )
+
+    domestic_page_two.get_tree_based_url()
+
+    # Check routing settings were created
+    routing_settings = RoutingSettings.objects.get()
+    assert routing_settings.site == site
+    assert routing_settings.root_path_prefix == ''
+    assert routing_settings.include_port_in_urls is True
+
+
+@pytest.mark.django_db
+def test_url_methods_use_tree_based_routing(root_page):
+    # Checks that the full_path and full_url methods call get_tree_based_url
+    # when uses_tree_based_routing is True
+    domestic_app = ExportReadinessAppFactory(parent=root_page)
+    domestic_page_one = TopicLandingPageFactory(
+        parent=domestic_app, slug='topic')
+    domestic_page_two = ArticleListingPageFactory(
+        parent=domestic_page_one, slug='list')
+    domestic_page_three = ArticlePageFactory(
+        parent=domestic_page_two, slug='article')
+
+    Site.objects.all().delete()
+    site = Site.objects.create(
+        site_name='Great Domestic',
+        hostname='domestic.trade.great',
+        port=8007,
+        root_page=domestic_app,
+    )
+
+    RoutingSettings.objects.create(
+        site=site,
+        root_path_prefix='/domestic/c',
+        include_port_in_urls=False,
+    )
+
+    domestic_page_three.get_tree_based_url = mock.MagicMock(
+        side_effect=domestic_page_three.get_tree_based_url
+    )
+
+    # First check without tree based routing
+    domestic_page_three.uses_tree_based_routing = False
+    assert domestic_page_three.full_path == '/topic/list/article/'
+    assert (
+        domestic_page_three.full_url ==
+        'http://exred.trade.great:8007/topic/list/article/'
+    )
+    domestic_page_three.get_tree_based_url.assert_not_called()
+
+    domestic_page_three.get_tree_based_url.reset_mock()
+
+    # Now check with tree based routing
+    domestic_page_three.uses_tree_based_routing = True
+    assert domestic_page_three.full_path == '/domestic/c/topic/list/article/'
+    assert (
+        domestic_page_three.full_url ==
+        'http://domestic.trade.great/domestic/c/topic/list/article/'
+    )
+    domestic_page_three.get_tree_based_url.assert_called()

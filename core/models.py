@@ -1,6 +1,6 @@
 from functools import partial
 import hashlib
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urljoin
 
 from directory_constants.constants import choices
 from django.core.exceptions import ValidationError
@@ -171,6 +171,45 @@ class BasePage(Page):
         else:
             return str(self.pk) == str(value)
 
+    def get_non_prefixed_url(self, site=None):
+        """
+        Returns the page's url_path value with the url_path of the
+        site's root page removed from the start, and starting with
+        a forward slash. e.g. "/international/some-some-page".
+        Used by get_tree_based_url() and for generating `old_path`
+        values when creating redirects for this page
+        """
+        site = site or self.get_site()
+        return self.url_path[len(site.root_page.url_path):]
+
+    def get_tree_based_url(self, include_site_url=False):
+        """
+        Returns the URL for this page based on it's position in the tree,
+        and the RoutingSettings options for the `Site` the page belongs to.
+        Wagtail multisite must be set up in order for this to work.
+        """
+        site = self.get_site()
+        page_path = self.get_non_prefixed_url(site)
+
+        # get routing settings for the site
+        try:
+            routing_settings = site.routingsettings
+        except RoutingSettings.DoesNotExist:
+            routing_settings = RoutingSettings.objects.create(site=site)
+
+        # prefix path with prefix from routing settings
+        prefix = routing_settings.root_path_prefix.rstrip('/')
+        if prefix:
+            page_path = prefix + '/' + page_path
+
+        if include_site_url:
+            if not routing_settings.include_port_in_urls:
+                # prevent the port being included in site.root_url
+                site.port = 80
+            return urljoin(site.root_url, page_path)
+
+        return page_path
+
     def get_url_path_parts(self):
         return [self.view_path, self.slug + '/']
 
@@ -190,6 +229,10 @@ class BasePage(Page):
         """Return the full path of a page, ignoring the root_page and
         the app page. Used by the lookup-by-url view in prototype mode
         """
+        if self.uses_tree_based_routing:
+            return self.get_tree_based_url(include_site_url=False)
+
+        # continue with existing behaviour
         if self.full_path_override:
             return self.full_path_override
 
@@ -214,6 +257,10 @@ class BasePage(Page):
 
     @property
     def full_url(self):
+        if self.uses_tree_based_routing:
+            return self.get_tree_based_url(include_site_url=True)
+
+        # continue with existing behaviour
         domain = dict(constants.APP_URLS)[self.service_name_value]
         return get_page_full_url(domain, self.full_path)
 
