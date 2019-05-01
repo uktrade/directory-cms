@@ -305,7 +305,8 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.INVEST
     subpage_types = ['invest.SetupGuidePage']
     slug_identity = cms.INVEST_GUIDE_LANDING_PAGE_SLUG
-    view_path = 'setup-guide-landing/'
+    # override the slug when generating the url
+    slug_override = 'uk-setup-guide'
 
     # page fields
     heading = models.CharField(max_length=255)
