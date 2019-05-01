@@ -275,6 +275,16 @@ def test_get_tree_based_url(root_page):
 
 
 @pytest.mark.django_db
+def test_get_site_returns_none_when_page_not_routable(
+    root_page, django_assert_num_queries
+):
+    Site.objects.delete() # ensures pages are not routable
+    page = IndustryPageFactory(parent=root_page, slug='industry')
+    result = page.get_site()
+    assert result is None
+
+
+@pytest.mark.django_db
 def test_get_site_fetches_routing_settings_if_they_exist(
     root_page, django_assert_num_queries
 ):
