@@ -274,10 +274,11 @@ def test_get_tree_based_url(root_page):
     )
 
 
+@pytest.mark.django_db
 def test_get_site_fetches_routing_settings_if_they_exist(
     root_page, django_assert_num_queries
 ):
-    page = IndustryPageFactory(parent=root_page, slug='abc')
+    page = IndustryPageFactory(parent=root_page, slug='industry')
     site = Site.objects.create(hostname='example.org', root_page=page)
     RoutingSettings.objects.create(site=site)
 
@@ -286,14 +287,22 @@ def test_get_site_fetches_routing_settings_if_they_exist(
     page._get_site_root_paths()
 
     with django_assert_num_queries(1):
-        site = page.get_site()
-        site.routingsettings
+        # site and routing settings should be fetched in one query
+        result_site = page.get_site()
+
+        # Check the correct site was returned
+        assert result_site == site
+
+        # This attribute is set to reference the newly created object,
+        # so this shouldn't result in another query
+        result_site.routingsettings
 
 
+@pytest.mark.django_db
 def test_get_site_creates_routing_settings_if_none_exist(
     root_page, django_assert_num_queries
 ):
-    page = IndustryPageFactory(parent=root_page, slug='123')
+    page = IndustryPageFactory(parent=root_page, slug='industry')
     site = Site.objects.create(hostname='example.gov', root_page=page)
 
     # running this first so that the query doesn't count toward
@@ -301,13 +310,15 @@ def test_get_site_creates_routing_settings_if_none_exist(
     page._get_site_root_paths()
 
     with django_assert_num_queries(2):
-        # 1 query to check for an existing object, 1 to create
-        site = page.get_site()
+        # 1 query to get the site, 1 to create routing settings
+        result_site = page.get_site()
 
-    with django_assert_num_queries(0):
-        # The method sets this attribute to reference the newly
-        # created object, so it should be available without a query
-        site.routingsettings
+        # Check the correct site was returned
+        assert result_site == site
+
+        # This attribute is set to reference the newly created object,
+        # so this shouldn't result in another query
+        result_site.routingsettings
 
 
 @pytest.mark.django_db
