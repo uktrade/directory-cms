@@ -42,7 +42,6 @@ class InvestHomePageFactory(wagtail_factories.PageFactory):
     sector_button_url = factory.fuzzy.FuzzyText(length=10)
     hpo_title = factory.fuzzy.FuzzyText(length=10)
     setup_guide_title = factory.fuzzy.FuzzyText(length=10)
-    setup_guide_call_to_action_text = factory.fuzzy.FuzzyText(length=10)
     setup_guide_call_to_action_url = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_one_en_gb = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_two_en_gb = factory.fuzzy.FuzzyText(length=10)
