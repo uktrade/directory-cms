@@ -20,6 +20,7 @@ class InvestHomePageTranslation(BaseTranslationOptions):
 
         'capital_invest_section_title',
         'capital_invest_section_content',
+        'capital_invest_section_image',
 
         'eu_exit_section_title',
         'eu_exit_section_content',

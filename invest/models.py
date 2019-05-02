@@ -481,6 +481,13 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
     capital_invest_section_content = MarkdownField(
         blank=True
     )
+    capital_invest_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     eu_exit_section_title = models.CharField(
         max_length=255,
@@ -689,16 +696,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
             ],
 
         ),
-
-        MultiFieldPanel(
-            heading='Capital Investment section',
-            classname='collapsible',
-            children=[
-                FieldPanel('capital_invest_section_title'),
-                FieldPanel('capital_invest_section_content'),
-            ],
-
-        ),
         MultiFieldPanel(
             heading='Featured card links ',
             classname='collapsible',
@@ -719,6 +716,15 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
                                 FieldPanel('isd_section_title'),
                                 FieldPanel('isd_section_text')
                             ],
+                        ),
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel(
+                                    'capital_invest_section_image'
+                                ),
+                                FieldPanel('capital_invest_section_title'),
+                                FieldPanel('capital_invest_section_content'),
+                            ]
                         ),
                     ]
                 ),
