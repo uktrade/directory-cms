@@ -203,7 +203,6 @@ class InvestHomePageSerializer(BasePageSerializer):
     setup_guide_title = serializers.CharField(max_length=255)
     setup_guide_content = core_fields.MarkdownToHTMLField()
     setup_guide_img = wagtail_fields.ImageRenditionField('fill-640x360')
-    setup_guide_call_to_action_text = serializers.CharField(max_length=255)
     setup_guide_call_to_action_url = serializers.CharField(max_length=255)
     setup_guide_lead_in = serializers.CharField(
         max_length=255,
@@ -212,7 +211,6 @@ class InvestHomePageSerializer(BasePageSerializer):
     isd_section_image = wagtail_fields.ImageRenditionField('fill-640x360')
     isd_section_title = serializers.CharField(max_length=255)
     isd_section_text = core_fields.MarkdownToHTMLField(max_length=255)
-    isd_section_cta_text = serializers.CharField(max_length=255)
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_lead_in = serializers.CharField(max_length=255)
     how_we_help = serializers.SerializerMethodField()
