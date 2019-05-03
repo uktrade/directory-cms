@@ -22,6 +22,7 @@ class GroupInfoAdmin(ModelAdmin):
     menu_icon = 'cog'
     menu_order = 602
     add_to_settings_menu = True
+    permission_helper_class = GroupPermissionHelper
     list_display = (
         'group_name',
         'name_singular',
