@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             name='GroupInfo',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name_singular', models.CharField(help_text='e.g. Content writer', max_length=100, verbose_name='name (singular)')),
+                ('name_singular', models.CharField(help_text='e.g. Content writer', max_length=100, verbose_name='group name (singular)')),
                 ('permission_summary', models.TextField(blank=True, help_text='A simple summary of what belonging to the group allows a user to do. Used to help managers decide what groups users should belong to. For example: Can only create drafts.')),
                 ('role_match_description', models.TextField(blank=True, help_text='A simple description to help non-technical users understand which group is most suitable for them based on their real-life role. For example: If your role requires you to produce content for your department and you are located in POST or in the UK, you should select this as your role.')),
                 ('visibility', models.PositiveSmallIntegerField(choices=[(0, 'Visible to anyone'), (1, 'Visible only to managers and superusers'), (2, 'Visible only to superusers')], db_index=True, default=2)),

@@ -31,7 +31,7 @@ class GroupInfo(models.Model):
     group = models.OneToOneField('auth.Group', related_name='info')
     name_singular = models.CharField(
         max_length=100,
-        verbose_name='name (singular)',
+        verbose_name='group name (singular)',
         help_text='e.g. Content writer',
     )
     permission_summary = models.TextField(
