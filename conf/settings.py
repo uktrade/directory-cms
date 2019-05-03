@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'directory_components',
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
+    'groups.apps.GroupsConfig',
     'wagtail.contrib.forms',
     'wagtail.contrib.settings',
     'wagtail.embeds',

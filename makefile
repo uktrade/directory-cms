@@ -38,7 +38,7 @@ debug_db:
 	$(DEBUG_SET_ENV_VARS) && $(DEBUG_CREATE_DB)
 
 migrations:
-	$(DEBUG_SET_ENV_VARS) && ./manage.py makemigrations core export_readiness find_a_supplier invest components great_international
+	$(DEBUG_SET_ENV_VARS) && ./manage.py makemigrations core export_readiness find_a_supplier invest components great_international groups
 
 
 DEBUG_SET_ENV_VARS := \
