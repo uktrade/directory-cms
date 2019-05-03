@@ -5,12 +5,15 @@ from .models import GroupInfo
 
 
 class GroupPermissionHelper(PermissionHelper):
+    """
+    Creation and deletion is handled automatically, so overriding these
+    methods to hide those options in the UI
+    """
 
     def user_can_create(self, user):
-        """
-        Creation is handled automatically, so overriding this to hide the
-        create functionality in the UI
-        """
+        return False
+
+    def user_can_delete_obj(self, user, obj):
         return False
 
 
