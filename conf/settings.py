@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'wagtail_modeltranslation',
     'wagtail_modeltranslation.makemigrations',
     'wagtail_modeltranslation.migrate',
-    'django.contrib.admin',
+    'django.contrib.admin',  # required by wagtail.contrib.modeladmin
     'django.contrib.auth',
     'django.contrib.staticfiles',
     'django.contrib.contenttypes',
