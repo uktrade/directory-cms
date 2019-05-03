@@ -2,7 +2,7 @@ from itertools import product
 
 import pytest
 from modeltranslation.utils import build_localized_fieldname
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Site
 from wagtail.documents.models import Document
 
 from find_a_supplier.tests.factories import (
@@ -70,6 +70,16 @@ def translated_page(settings, root_page):
 
 
 @pytest.fixture
+def site_with_translated_page_as_root(translated_page):
+    return Site.objects.create(
+        site_name='Test',
+        hostname='example.com',
+        port=8097,
+        root_page=translated_page,
+    )
+
+
+@pytest.fixture
 def fas_industry_landing_page(root_page):
     return IndustryLandingPageFactory(parent=root_page)
 
@@ -119,3 +129,13 @@ def page_with_reversion(admin_user, translated_page):
         submitted_for_moderation=False,
     )
     return translated_page
+
+
+@pytest.fixture
+def site_with_revised_page_as_root(page_with_reversion):
+    return Site.objects.create(
+        site_name='Test',
+        hostname='example.com',
+        port=8098,
+        root_page=page_with_reversion,
+    )

@@ -1,10 +1,9 @@
 import pytest
-from unittest.mock import ANY, call, patch
 
 from bs4 import BeautifulSoup
 from directory_constants.constants import cms
 from modeltranslation.utils import build_localized_fieldname
-from wagtail.core.models import Page
+from wagtail.core.models import Site
 
 from django.forms.models import model_to_dict
 from django.urls import reverse
@@ -12,6 +11,9 @@ from django.urls import reverse
 from core import helpers, permissions, views
 from core.helpers import CachedResponse
 from conf.signature import SignatureCheckPermission
+from find_a_supplier.tests.factories import (
+    FindASupplierAppFactory, IndustryLandingPageFactory
+)
 from invest.tests.factories import InfoPageFactory
 
 
@@ -48,7 +50,7 @@ def test_permissions_published(rf):
     ]
 
 
-@pytest.mark.parametrize('language_code,expected', (
+@pytest.mark.parametrize('language_code,expected_title', (
     ('en-gb', 'ENGLISH'),
     ('de', 'GERMAN'),
     ('ja', 'JAPANESE'),
@@ -59,51 +61,129 @@ def test_permissions_published(rf):
     ('ar', 'ARABIC'),
 ))
 @pytest.mark.django_db
-def test_api_translations(client, translated_page, language_code, expected):
-    url = reverse('api:api:pages:detail', kwargs={'pk': translated_page.pk})
-    response = client.get(url, {'lang': language_code})
+def test_api_translations_are_loaded_when_available(
+    client, translated_page, site_with_translated_page_as_root, language_code,
+    expected_title
+):
+    # to be added as a query params to all requests
+    languge_query_params = {'lang': language_code}
 
+    # looking up by id
+    url = reverse('api:api:pages:detail', kwargs={'pk': translated_page.pk})
+    response = client.get(url, languge_query_params)
     assert response.status_code == 200
-    assert response.json()['title'] == expected
+    assert response.json()['title'] == expected_title
+
+    # looking up by path and site_id
+    # NOTE: path should be blank when you want a site root page
+    url = reverse('api:lookup-by-path', kwargs={
+        'path': '', 'site_id': site_with_translated_page_as_root.id,
+    })
+    response = client.get(url, languge_query_params)
+    assert response.status_code == 200
+    assert response.json()['title'] == expected_title
+
+    # looking up by slug and service_name
+    url = reverse('api:lookup-by-slug', kwargs={'slug': translated_page.slug})
+    query_params = {'service_name': 'FIND_A_SUPPLIER'}
+    query_params.update(languge_query_params)
+    response = client.get(url, query_params)
+    assert response.status_code == 200
+    assert response.json()['title'] == expected_title
 
 
 @pytest.mark.parametrize('language_code', (
     'en-gb' 'de' 'ja', 'zh-hans', 'fr', 'es', 'pt', 'ar',
 ))
 @pytest.mark.django_db
-def test_api_translations_not_populated(
-    client, untranslated_page, language_code
+def test_api_falls_back_to_english_when_translations_unavailable(
+    client, untranslated_page, site_with_untranslated_page_as_root,
+    language_code
 ):
-    url = reverse('api:api:pages:detail', kwargs={'pk': untranslated_page.pk})
-    response = client.get(url, {'lang': language_code})
+    # to be added as a query params to all requests
+    languge_query_params = {'lang': language_code}
 
+    # looking up by id
+    url = reverse(
+        'api:api:pages:detail',
+        kwargs={'pk': untranslated_page.pk}
+    )
+    response = client.get(url, languge_query_params)
+    assert response.status_code == 200
+    assert response.json()['title'] == 'ENGLISH'
+
+    # looking up by site_id + path
+    # NOTE: path should be blank when you want a site root page
+    url = reverse(
+        'api:lookup-by-path',
+        kwargs={'path': '', 'site_id': site_with_untranslated_page_as_root.id}
+    )
+    response = client.get(url, languge_query_params)
+    assert response.status_code == 200
+    assert response.json()['title'] == 'ENGLISH'
+
+    # looking up by service_name + slug
+    url = reverse(
+        'api:lookup-by-slug',
+        kwargs={'slug': untranslated_page.slug}
+    )
+    query_params = {'service_name': 'FIND_A_SUPPLIER'}
+    query_params.update(languge_query_params)
+    response = client.get(url, query_params)
     assert response.status_code == 200
     assert response.json()['title'] == 'ENGLISH'
 
 
 @pytest.mark.django_db
-def test_api_draft(client, page_with_reversion):
+def test_api_serves_drafts(
+    client, page_with_reversion, site_with_revised_page_as_root
+):
+    # For applying the draft token as a query param for each request
+    param_name = permissions.DraftTokenPermisison.TOKEN_PARAM
+    draft_query_params = {
+        param_name: page_with_reversion.get_draft_token()
+    }
+
+    # first we'll get a non-draft response for comparison
     url = reverse(
         'api:api:pages:detail', kwargs={'pk': page_with_reversion.pk}
     )
-    param = permissions.DraftTokenPermisison.TOKEN_PARAM
+    response = client.get(url)
+    assert response.status_code == 200
+    data = response.json()
+    assert data['title'] == 'published-title'
+    assert data['meta']['url'] == page_with_reversion.get_url()
 
-    draft_response = client.get(url, {
-        param: page_with_reversion.get_draft_token()
-    })
-    draft_data = draft_response.json()
-    published_response = client.get(url)
-    published_data = published_response.json()
+    # get draft version, looking up by id
+    response = client.get(url, draft_query_params)
+    assert response.status_code == 200
+    data = response.json()
+    assert data['title'] == 'draft-title'
+    assert data['meta']['url'] == page_with_reversion.get_url(is_draft=True)
 
-    assert draft_response.status_code == 200
-    assert draft_data['title'] == 'draft-title'
-    assert draft_data['meta']['url'] == page_with_reversion.get_url(
-        is_draft=True
+    # get draft version, looking up by site_id + path
+    # NOTE: path should be blank when you want a site root page
+    url = reverse(
+        'api:lookup-by-path',
+        kwargs={'path': '', 'site_id': site_with_revised_page_as_root.id}
     )
+    response = client.get(url, draft_query_params)
+    assert response.status_code == 200
+    data = response.json()
+    assert data['title'] == 'draft-title'
+    assert data['meta']['url'] == page_with_reversion.get_url(is_draft=True)
 
-    assert published_response.status_code == 200
-    assert published_data['title'] == 'published-title'
-    assert published_data['meta']['url'] == page_with_reversion.get_url()
+    # get draft version, looking up by service_name + slug
+    url = reverse(
+        'api:lookup-by-slug', kwargs={'slug': page_with_reversion.slug}
+    )
+    query_params = {'service_name': 'FIND_A_SUPPLIER'}
+    query_params.update(draft_query_params)
+    response = client.get(url, query_params)
+    assert response.status_code == 200
+    data = response.json()
+    assert data['title'] == 'draft-title'
+    assert data['meta']['url'] == page_with_reversion.get_url(is_draft=True)
 
 
 @pytest.mark.django_db
@@ -282,6 +362,52 @@ def test_translations_exposed(page, translated_page, settings, client):
 
 
 @pytest.mark.django_db
+def test_lookup_by_path(root_page, page, admin_client):
+    # Creating a semi-realistic page structure and moving page into it
+    app_root_page = FindASupplierAppFactory(parent=root_page)
+    parent_page = IndustryLandingPageFactory(parent=app_root_page)
+    page.move(target=parent_page, pos='last-child')
+
+    # Creating a site with app_root_page as the root
+    site = Site.objects.create(
+        site_name='Test',
+        hostname='example.com',
+        root_page=app_root_page,
+    )
+
+    # to lookup page, the path should include the parent's slug and
+    # the page's slug, but NOT that of app_root_page
+    path = '/'.join([parent_page.slug, page.slug])
+    response = admin_client.get(reverse(
+        'api:lookup-by-path', kwargs={'site_id': site.id, 'path': path}
+    ))
+    assert response.status_code == 200
+    assert response.json()['id'] == page.id
+
+    # paths are normalised by the view, so the presence of extra '/'
+    # characters on either end of the value shouldn't hinder matching
+    dodgy_path = '///' + path + '///'
+    response = admin_client.get(reverse(
+        'api:lookup-by-path', kwargs={'site_id': site.id, 'path': dodgy_path}
+    ))
+    assert response.status_code == 200
+    assert response.json()['id'] == page.id
+
+
+@pytest.mark.django_db
+def test_lookup_for_path_for_non_existent_page(client):
+    site_id = 52
+    path = 'xyz'
+    response = client.get(reverse(
+        'api:lookup-by-path', kwargs={'site_id': site_id, 'path': path}
+    ))
+    assert response.status_code == 404
+
+    expected_msg = f"No page could be found matching site_id '{site_id}' and path '{path}'" # noqa
+    assert response.json() == {'message': expected_msg}
+
+
+@pytest.mark.django_db
 def test_lookup_by_slug(translated_page, admin_client):
     url = reverse(
         'api:lookup-by-slug',
@@ -314,92 +440,25 @@ def test_lookup_by_slug_missing_required_query_param(translated_page,
 
 @pytest.mark.django_db
 def test_lookup_by_slug_missing_page(admin_client):
-    url = reverse('api:lookup-by-slug', kwargs={'slug': 'thing'})
+    service_name = cms.FIND_A_SUPPLIER
+    slug = 'thing'
 
-    response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
+    url = reverse('api:lookup-by-slug', kwargs={'slug': slug})
 
-    assert response.status_code == 404
-
-
-@pytest.mark.django_db
-def test_lookup_by_slug_draft(page_with_reversion, client):
-    url = reverse(
-        'api:lookup-by-slug', kwargs={'slug': page_with_reversion.slug}
-    )
-
-    param = permissions.DraftTokenPermisison.TOKEN_PARAM
-
-    draft_response = client.get(url, {
-        param: page_with_reversion.get_draft_token(),
-        'service_name': cms.FIND_A_SUPPLIER
-    })
-    draft_data = draft_response.json()
-    published_response = client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
-    published_data = published_response.json()
-
-    assert draft_response.status_code == 200
-    assert draft_data['title'] == 'draft-title'
-    assert draft_data['meta']['url'] == page_with_reversion.get_url(
-        is_draft=True
-    )
-
-    assert published_response.status_code == 200
-    assert published_data['title'] == 'published-title'
-    assert published_data['meta']['url'] == page_with_reversion.get_url()
-
-
-@pytest.mark.django_db
-@patch('core.filters.ServiceNameFilter.filter_service_name')
-def test_lookup_by_slug_filter_called(mock_filter_service_name, admin_client):
-    mock_filter_service_name.return_value = Page.objects.all()
-    url = reverse('api:lookup-by-slug', kwargs={'slug': 'food-and-drink'})
-    response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
+    response = admin_client.get(url, {'service_name': service_name})
 
     assert response.status_code == 404
-    assert mock_filter_service_name.call_count == 1
-    assert mock_filter_service_name.call_args == call(
-        ANY,
-        'service_name',
-        cms.FIND_A_SUPPLIER,
-    )
+
+    expected_msg = f"No page could be found matching service_name '{service_name}' and slug '{slug}'" # noqa
+    assert response.json() == {'message': expected_msg}
 
 
-@pytest.mark.django_db
-def test_lookup_by_full_path(translated_page, admin_client):
-    url = reverse('api:lookup-by-full-path')
-    response = admin_client.get(
-        url,
-        {'full_path': translated_page.full_path}
-    )
-    assert response.status_code == 200
-    assert response.json()['id'] == translated_page.id
-
-
-@pytest.mark.django_db
-def test_lookup_by_full_path_missing_param(admin_client):
-    url = reverse('api:lookup-by-full-path')
-    response = admin_client.get(url)
-    assert response.status_code == 400
-    assert response.json() == {'full_path': 'This parameter is required'}
-
-
-@pytest.mark.django_db
-def test_lookup_by_full_path_not_found(admin_client):
-    url = reverse('api:lookup-by-full-path')
-    response = admin_client.get(
-        url,
-        {'full_path': 'foo'}
-    )
-    assert response.status_code == 404
-
-
-def test_cache_etags_match(admin_client):
+def test_cache_etags_match(admin_client, root_page):
     service_name = cms.INVEST
-    # given there exists a page that is cached
-    page = InfoPageFactory.create(live=True)
-    url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
 
-    # and the page is cached
+    # given there exists a page that is cached
+    page = InfoPageFactory.create(parent=root_page, live=True)
+    url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
     admin_client.get(url, {'service_name': service_name})
 
     # and the cached page is retrieved
@@ -415,10 +474,10 @@ def test_cache_etags_match(admin_client):
     assert response_three.content == b''
 
 
-def test_cache_etags_mismatch(admin_client):
+def test_cache_etags_mismatch(admin_client, root_page):
     service_name = cms.INVEST
     # given there exists a page that is cached
-    page = InfoPageFactory.create(live=True)
+    page = InfoPageFactory.create(parent=root_page, live=True)
 
     # when the page is retrieved
     url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})

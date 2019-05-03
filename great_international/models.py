@@ -455,6 +455,7 @@ class InternationalSectorPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
@@ -878,6 +879,7 @@ class InternationalHomePage(
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('uses_tree_based_routing'),
     ]
 
     edit_handler = make_translated_interface(
@@ -898,6 +900,7 @@ class InternationalRegionPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
@@ -916,6 +919,7 @@ class InternationalLocalisedFolderPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('uses_tree_based_routing'),
     ]
 
     def save(self, *args, **kwargs):
@@ -1012,6 +1016,7 @@ class InternationalArticlePage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
@@ -1066,6 +1071,7 @@ class InternationalArticleListingPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
@@ -1308,6 +1314,7 @@ class InternationalCampaignPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
@@ -1353,6 +1360,7 @@ class InternationalTopicLandingPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
@@ -1483,6 +1491,7 @@ class InternationalCuratedTopicLandingPage(BasePage):
         FieldPanel('title_en_gb'),
         SearchEngineOptimisationPanel(),
         FieldPanel('slug'),
+        FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
@@ -1591,6 +1600,7 @@ class InternationalGuideLandingPage(BasePage):
         FieldPanel('title_en_gb'),
         SearchEngineOptimisationPanel(),
         FieldPanel('slug'),
+        FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
