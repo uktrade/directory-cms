@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('role_match_description', models.TextField(blank=True, help_text='A simple description to help non-technical users understand which group is most suitable for them based on their real-life role. For example: If your role requires you to produce content for your department and you are located in POST or in the UK, you should select this as your role.')),
                 ('visibility', models.PositiveSmallIntegerField(choices=[(0, 'Visible to anyone'), (1, 'Visible only to managers and superusers'), (2, 'Visible only to superusers')], db_index=True, default=2)),
                 ('seniority_level', models.PositiveSmallIntegerField(choices=[(1, '1 (lowest)'), (2, '2'), (3, '3'), (4, '4'), (5, '5 (highest)')], default=5, help_text="Used to order groups in a more natural way. For example, a 'Content editors' group might have the lowest value, and so should be displayed first.")),
-                ('group', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='auth.Group')),
+                ('group', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='auth.Group', related_name='info')),
             ],
             options={
                 'verbose_name': 'group info',
