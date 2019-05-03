@@ -23,10 +23,12 @@ class GroupInfoAdmin(ModelAdmin):
     menu_order = 602
     add_to_settings_menu = True
     list_display = (
+        'group_name',
         'name_singular',
-        'get_visibility_display',
+        'visibility',
         'seniority_level',
     )
+    ordering = ('group__name',)
     list_filter = (
         'visibility',
         'seniority_level',
@@ -36,5 +38,6 @@ class GroupInfoAdmin(ModelAdmin):
         'permission_summary',
         'role_match_description',
     )
+    form_fields_exclude = ('group',)
 
 modeladmin_register(GroupInfoAdmin)

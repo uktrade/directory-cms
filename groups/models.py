@@ -72,9 +72,9 @@ class GroupInfo(models.Model):
         verbose_name_plural = 'group info'
         ordering = ('visibility', 'seniority_level', 'name_singular')
 
-    @property
-    def name(self):
+    def group_name(self):
         return self.group.name
+    group_name.admin_order_field = 'group__name'
 
     def __str__(self):
         return self.name_singular
