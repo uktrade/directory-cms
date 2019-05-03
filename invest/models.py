@@ -583,7 +583,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         related_name='+',
         verbose_name="Setup guide image"
     )
-
     setup_guide_call_to_action_url = models.CharField(max_length=255)
 
     isd_section_image = models.ForeignKey(
