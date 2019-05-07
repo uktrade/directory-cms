@@ -14,6 +14,10 @@ ASSIGNMENT_CHOICES = (
 
 
 class UserProfile(models.Model):
+    ASSIGNMENT_STATUS_AWAITING_APPROVAL = AWAITING_APPROVAL
+    ASSIGNMENT_STATUS_CREATED = CREATED
+    ASSIGNMENT_STATUS_APPROVED = APPROVED
+
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                  on_delete=models.CASCADE)
 
