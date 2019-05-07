@@ -9,11 +9,10 @@ from django.db import migrations
 def set_existing_users_as_approved(apps, schema_editor):
     User = get_user_model()
     UserProfile = apps.get_model('users', 'UserProfile')
-    for user in User.objects.all():
-        if user.is_active:
-            profile = UserProfile(user_id=user.id,
-                                  assignment_status=UserProfile.APPROVED)
-            profile.save()
+    for user in User.objects.filter(is_active=True):
+        profile = UserProfile(user_id=user.id,
+                              assignment_status=UserProfile.APPROVED)
+        profile.save()
 
 
 class Migration(migrations.Migration):
