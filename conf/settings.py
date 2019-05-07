@@ -86,7 +86,8 @@ INSTALLED_APPS = [
     'invest.apps.InvestConfig',
     'components.apps.ComponentsConfig',
     'activitystream.apps.ActivityStreamConfig',
-    'django_filters'
+    'django_filters',
+    'authbroker_client',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -128,7 +129,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'conf.wsgi.application'
-
 VCAP_SERVICES = env.json('VCAP_SERVICES', {})
 
 if 'redis' in VCAP_SERVICES:
@@ -415,6 +415,7 @@ INTERNATIONAL_NEWS_MARKETING_FOLDER_PAGE_SLUG = env.str(
 # feature flags
 
 FEATURE_FLAGS = {
+    'ENFORCE_STAFF_SSO_ON': env.bool('FEATURE_ENFORCE_STAFF_SSO_ENABLED', True),
     'MAINTENANCE_MODE_ON': env.bool('FEATURE_MAINTENANCE_MODE_ENABLED', False),
     'SKIP_MIGRATE': env.bool('FEATURE_SKIP_MIGRATE', False),
     # used by directory-components
@@ -424,6 +425,19 @@ FEATURE_FLAGS = {
     'DEBUG_TOOLBAR_ON': env.bool('FEATURE_DEBUG_TOOLBAR_ENABLED', False),
 }
 
+if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
+    AUTHENTICATION_BACKENDS = [
+        'django.contrib.auth.backends.ModelBackend',
+        'authbroker_client.backends.AuthbrokerBackend'
+    ]
+    LOGIN_URL = 'authbroker:login'
+    LOGIN_REDIRECT_URL = 'sso_logged_in_landing'
+
+    # authbroker config
+    AUTHBROKER_URL = env.url('STAFF_SSO_AUTHBROKER_URL')
+    AUTHBROKER_CLIENT_ID = env.str('AUTHBROKER_CLIENT_ID')
+    AUTHBROKER_CLIENT_SECRET = env.str('AUTHBROKER_CLIENT_SECRET')
+
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
@@ -431,6 +445,7 @@ REST_FRAMEWORK = {
 }
 
 if FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
+
     INSTALLED_APPS += ['debug_toolbar']
 
     MIDDLEWARE_CLASSES = (

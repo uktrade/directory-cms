@@ -2,6 +2,9 @@
 
 ## Pre-release
 
+## [2019.05.03](https://github.com/uktrade/directory-cms/releases/tag/2019.05.03)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.04.24_1...2019.05.03)
+
 **Implemented enhancements:**
 
 - [CI-99](https://uktrade.atlassian.net/browse/CI-99) Removed unused fields for the capital invest banner on the Invest landing page 
@@ -9,6 +12,7 @@
 - [CMS-1397](https://uktrade.atlassian.net/browse/CMS-1397) Updated custom url methods on `BasePage` to support tree-based routing when enabled
 - [CMS-13998](https://uktrade.atlassian.net/browse/CMS-13998) Replaced unused `lookup_by_full_path` API endpoint with new `lookup_by_path` API endpoint to support tree-based routing
 - [CMS-1396](https://uktrade.atlassian.net/browse/CMS-1396) Made 'uses_tree_based_routing' field editable in the CMS for all international page types
+- [CI-116](https://uktrade.atlassian.net/browse/CI-116) Moved sections around in content panels, removed cta_text fields and added capital investment image on Invest Landing Page
 
 ### Fixed bugs:
 
