@@ -112,8 +112,8 @@ def test_force_staff_sso(client):
     settings.AUTHBROKER_URL = 'https://test.com'
     reload_urlconf()
 
-    assert reverse('sso_logged_in_landing') == '/sso/logged-in-landing/'
     assert reverse('authbroker:login') == '/auth/login/'
+    assert reverse('authbroker:callback') == '/auth/callback/'
     response = client.get('/admin/login/')
     assert response.status_code == 302
     assert response.url == '/auth/login/'

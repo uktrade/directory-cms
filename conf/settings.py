@@ -428,7 +428,7 @@ if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
         'authbroker_client.backends.AuthbrokerBackend'
     ]
     LOGIN_URL = reverse_lazy('authbroker:login')
-    LOGIN_REDIRECT_URL = reverse_lazy('sso_logged_in_landing')
+    LOGIN_REDIRECT_URL = reverse_lazy('wagtail_homepage')
 
     # authbroker config
     AUTHBROKER_URL = env.url('STAFF_SSO_AUTHBROKER_URL')

@@ -105,7 +105,3 @@ class EditUserView(
         can_delete = user_can_delete_user(self.request.user, self.object)
         ctx.update(can_delete=can_delete)
         return ctx
-
-
-class SSOLoggedinLandingView(generic.TemplateView):
-    template_name = 'sso/user_landing.html'
