@@ -1,5 +1,5 @@
 {% extends "wagtailadmin/base.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% block titletag %}{% trans "Welcome to Wagtail!" %}{% endblock %}
 
 {% block extra_css %}
@@ -9,6 +9,7 @@
 
 {% block extra_js %}
     {% include "wagtailadmin/pages/_editor_js.html" %}
+    <script src="{% static 'wagtailadmin/sso/js/request_access.js' %}"></script>
     {{ form.media.js }}
 {% endblock %}
 
@@ -36,7 +37,7 @@
                 <section class="active nice-padding">
                     <ul class="fields">
                         {% block fields %}
-                            {% include "wagtailadmin/field_as_li_with_groups_modal.html" with field=form.self_assigned_group %}
+                            {% include "wagtailadmin/shared/field_as_li_with_group_info_modal.html" with field=form.self_assigned_group %}
                             {% include "wagtailadmin/shared/field_as_li.html" with field=form.team_leader %}
                         {% endblock fields %}
                         <li><button class="button">{% trans "Request access" %}</button></li>

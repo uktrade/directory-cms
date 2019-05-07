@@ -1,0 +1,5 @@
+{% extends 'wagtailadmin/shared/field.html' %}
+{% load i18n %}
+{% block after_label %}
+    <p class="help"><a href="{% url 'group-info' %}" class="action-view-group-info">{% trans 'Not sure which role to choose?' %}</a></p>
+{% endblock %}
