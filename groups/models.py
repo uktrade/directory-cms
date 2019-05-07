@@ -1,6 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
+from groups.query import GroupInfoQuerySet
+
 
 class GroupInfo(models.Model):
     """
@@ -68,6 +70,8 @@ class GroupInfo(models.Model):
         )
     )
     is_team_leaders_group = models.BooleanField(default=False)
+
+    objects = GroupInfoQuerySet.as_manager()
 
     class Meta:
         verbose_name = 'group info'
