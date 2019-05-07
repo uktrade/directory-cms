@@ -104,7 +104,7 @@ urlpatterns = [
     ),
     url(
         r'^admin/group-info/$',
-        login_required(core.views.UpdateUpstreamView.as_view()),
+        login_required(GroupInfoModalView.as_view()),
         name='group-info',
     ),
     url(r'^admin/', include(wagtailadmin_urls)),

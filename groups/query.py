@@ -4,21 +4,18 @@ from wagtail.users.views.users import change_user_perm
 
 class GroupInfoQuerySet(models.QuerySet):
 
-    def visibility(self, visibility):
-        return self.filter(visibility=visibility)
-
     def visibile_to_anyone(self):
-        return self.visibility(self.model.VISIBILITY_UNRESTRICTED)
+        return self.filter(visibility=self.model.VISIBILITY_UNRESTRICTED)
 
     def visibile_to_managers(self):
-        return self.visibility(self.model.VISIBILITY_MANAGERS_ONLY)
-
-    def visible_to_superusers(self):
-        return self.visibility(self.model.VISIBILITY_SUPERUSERS_ONLY)
+        return self.filter(visibility__in=(
+            self.model.VISIBILITY_UNRESTRICTED,
+            self.model.VISIBILITY_MANAGERS_ONLY,
+        ))
 
     def visible_to_user(self, user):
         if user.is_superuser:
-            return self.visible_to_superusers()
+            return self.all()
         if user.has_perm(change_user_perm):
             return self.visibile_to_managers()
         return self.visibile_to_anyone()
