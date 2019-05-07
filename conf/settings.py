@@ -104,6 +104,7 @@ MIDDLEWARE_CLASSES = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'core.middleware.LocaleQuerystringMiddleware',
+    'users.middleware.RedirectAdminUsersToRequestAccessViewsMiddleware',
 ]
 
 ROOT_URLCONF = 'conf.urls'
