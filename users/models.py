@@ -14,7 +14,7 @@ class UserProfile(models.Model):
     )
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
-                                 on_delete=models.CASCADE)
+                                on_delete=models.CASCADE)
     assignment_status = models.CharField(
         choices=STATUSES,
         default=CREATED,

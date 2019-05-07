@@ -411,7 +411,8 @@ INTERNATIONAL_NEWS_MARKETING_FOLDER_PAGE_SLUG = env.str(
 # feature flags
 
 FEATURE_FLAGS = {
-    'ENFORCE_STAFF_SSO_ON': env.bool('FEATURE_ENFORCE_STAFF_SSO_ENABLED', True),
+    'ENFORCE_STAFF_SSO_ON': env.bool('FEATURE_ENFORCE_STAFF_SSO_ENABLED',
+                                     True),
     'MAINTENANCE_MODE_ON': env.bool('FEATURE_MAINTENANCE_MODE_ENABLED', False),
     'SKIP_MIGRATE': env.bool('FEATURE_SKIP_MIGRATE', False),
     # used by directory-components
