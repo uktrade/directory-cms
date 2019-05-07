@@ -3,10 +3,10 @@ from django.urls import reverse_lazy
 from .models import UserProfile
 
 
-class RedirectAdminUsersToRequestAccessViewsMiddleware:
+class SSORedirectUsersToRequestAccessViews:
 
     admin_root_url = reverse_lazy('wagtailadmin_home')
-    permitted_admin_urls = (
+    ignore_admin_urls = (
         reverse_lazy('wagtailusers_users:sso_request_access'),
         reverse_lazy('wagtailusers_users:sso_request_access_success'),
     )
@@ -15,16 +15,16 @@ class RedirectAdminUsersToRequestAccessViewsMiddleware:
 
         user = request.user
 
-        # allow the view to handle these
         if not user.is_authenticated() or user.is_superuser:
+            # allow the view to handle these
             return
 
-        # not an 'admin' url, so no need to intervene
         if not request.url.startswith(self.admin_root_url):
+            # not an 'admin' url, so no need to intervene
             return
 
-        # no need to redirect if these views are being accessed
-        for url in self.permitted_admin_urls:
+        # no need to intervene if these views are already being accessed
+        for url in self.ignore_admin_urls:
             if request.url == url:
                 return
 

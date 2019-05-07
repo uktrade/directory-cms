@@ -105,7 +105,6 @@ MIDDLEWARE_CLASSES = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'core.middleware.LocaleQuerystringMiddleware',
-    'users.middleware.RedirectAdminUsersToRequestAccessViewsMiddleware',
 ]
 
 ROOT_URLCONF = 'conf.urls'
@@ -438,6 +437,10 @@ if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
     AUTHBROKER_URL = env.url('STAFF_SSO_AUTHBROKER_URL')
     AUTHBROKER_CLIENT_ID = env.str('AUTHBROKER_CLIENT_ID')
     AUTHBROKER_CLIENT_SECRET = env.str('AUTHBROKER_CLIENT_SECRET')
+
+    MIDDLEWARE_CLASSES.append(
+        'users.middleware.SSORedirectUsersToRequestAccessViews'
+    )
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
