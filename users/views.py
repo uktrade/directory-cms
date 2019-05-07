@@ -136,7 +136,7 @@ class SSORequestAccessView(generic.UpdateView):
         leader that this user is awaiting approval
         """
         response = super().form_valid(form)
-        self.object.assignment_status = UserProfile.ASSIGNMENT_STATUS_AWAITING_APPROVAL
+        self.object.assignment_status = UserProfile.AWAITING_APPROVAL
         self.object.save()
         self.notify_team_leader()
         return response

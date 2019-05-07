@@ -28,8 +28,8 @@ class RedirectAdminUsersToRequestAccessViewsMiddleware:
             if request.url == url:
                 return
 
-        if user.profile.assignment_status == UserProfile.ASSIGNMENT_STATUS_CREATED: # noqa
+        if user.profile.assignment_status == UserProfile.CREATED:
             return redirect('wagtailusers_users:sso_request_access')
 
-        if user.profile.assignment_status == UserProfile.ASSIGNMENT_STATUS_AWAITING_APPROVAL: # noqa
+        if user.profile.assignment_status == UserProfile.AWAITING_APPROVAL:
             return redirect('wagtailusers_users:sso_request_access_success')
