@@ -14,6 +14,7 @@ from django.views.generic import RedirectView
 import core.views
 import export_readiness.views
 from activitystream.views import ActivityStreamView
+from users.views import SSOLoggedinLandingView
 
 api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
@@ -101,7 +102,6 @@ urlpatterns = [
         login_required(csrf_exempt(core.views.PreloadPageView.as_view())),
         name='preload-add-page',
     ),
-
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(
@@ -116,6 +116,19 @@ urlpatterns = [
     url(r'', include(wagtail_urls)),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+if settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
+    urlpatterns = [
+        url('^sso/logged-in-landing/$',
+            SSOLoggedinLandingView.as_view(), name='sso_logged_in_landing'),
+        url('^auth/', include('authbroker_client.urls',
+                              namespace='authbroker',
+                              app_name='authbroker_client')
+            ),
+        url(r'^admin/login/$',
+            RedirectView.as_view(url='/auth/login/', query_string=True)),
+    ] + urlpatterns
 
 
 if settings.FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
