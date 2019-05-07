@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model, update_session_auth_hash
-from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.functional import cached_property
@@ -117,16 +116,16 @@ class SSORequestAccessView(generic.UpdateView):
 
     def dispatch(self, request):
         self.get_object()
-        if self.object.assignment_status != 'created':
-            if request.user.has_perm('wagtailadmin.can_access_admin'):
-                return redirect('wagtailadmin_home')
-            raise PermissionDenied
+        if self.object.assignment_status == UserProfile.ASSIGNED:
+            return redirect('wagtailadmin_home')
+        if self.object.assignment_status == UserProfile.AWAITING_APPROVAL:
+            return redirect(self.success_url)
         return super().dispatch(request)
 
     def get_object(self):
         if hasattr(self, 'object'):
             return self.object
-        self.object = self.request.user.profile
+        self.object = self.request.user.userprofile
         return self.object
 
     def form_valid(self, form):
