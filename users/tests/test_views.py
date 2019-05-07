@@ -101,7 +101,7 @@ def test_edit_user_view_cant_change_basic_details(admin_client):
 
 
 @pytest.mark.django_db
-def test_edit_user_view_cant_reactivate_disabled_users(admin_client):
+def test_edit_user_view_can_reactivate_disabled_users(admin_client):
     user = UserFactory(username='test', email='test@test.com', is_active=False)
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
     response = admin_client.post(
@@ -118,4 +118,4 @@ def test_edit_user_view_cant_reactivate_disabled_users(admin_client):
     assert response.status_code == status.HTTP_302_FOUND
     assert response.url == reverse('wagtailusers_users:index')
     user.refresh_from_db()
-    assert user.is_active is False
+    assert user.is_active is True

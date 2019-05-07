@@ -59,10 +59,6 @@ class DisableUserFieldsMixin(forms.Form):
             self.fields['first_name'].disabled = True
             self.fields['last_name'].disabled = True
 
-            # Note: When editing self, the 'is_active' field doesn't exist
-            if 'is_active' in self.fields:
-                self.fields['is_active'].disabled = True
-
 
 class UserEditForm(EntryPointAwareUserActionForm, DisableUserFieldsMixin,
                    wagtail_forms.UserEditForm):
