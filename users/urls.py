@@ -19,7 +19,7 @@ urlpatterns = [
         TemplateView.as_view(
             template_name="sso/request_access_success.html"
         ),
-        name="sso_request_access_success
+        name="sso_request_access_success",
     ),
     url(r'^(?P<pk>\d+)/$', views.EditUserView.as_view(), name='edit'),
     url(r'^([^\/]+)/delete/$', original_users_views.delete, name='delete'),
