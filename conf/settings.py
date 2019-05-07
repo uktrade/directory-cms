@@ -433,7 +433,7 @@ if FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
         ['debug_toolbar.middleware.DebugToolbarMiddleware'] +
         MIDDLEWARE_CLASSES
     )
-    INTERNAL_IPS = '127.0.0.1'
+    INTERNAL_IPS = ['127.0.0.1', '10.0.2.2']
 
 ENVIRONMENT_CSS_THEME_FILE = env.str('ENVIRONMENT_CSS_THEME_FILE', '')
 
