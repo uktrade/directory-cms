@@ -10,7 +10,7 @@ from core.widgets import Select2Widget
 from groups.models import GroupInfo
 from groups.widgets import RadioSelectWithGroupInfoModal
 
-from users.models import Profile
+# from users.models import Profile
 
 
 class EntryPointAwareUserActionForm(forms.Form):

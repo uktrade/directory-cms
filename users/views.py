@@ -10,6 +10,7 @@ from wagtail.core import hooks
 from wagtail.users.utils import user_can_delete_user
 from wagtail.users.views.users import add_user_perm, change_user_perm
 
+# from users.models import Profile
 from . import forms, mixins
 
 User = get_user_model()
@@ -110,8 +111,9 @@ class EditUserView(
 
 class RequestAccessView(generic.UpdateView):
     form_class = forms.RequestAccessForm
+    # model = Profile
     template_name = "users/request_access.html"
-    success_url = reverse_lazy('request_access_success')
+    success_url = reverse_lazy('wagtailusers_users:request_access_success')
 
     def dispatch(self, request):
         self.get_object()
@@ -134,7 +136,7 @@ class RequestAccessView(generic.UpdateView):
         leader that this user is awaiting approval
         """
         response = super().form_valid(form)
-        self.object.assignment_status = 'awaiting_approval'
+        self.object.assignment_status = 'unassigned'
         self.object.save()
         self.notify_team_leader()
         return response
