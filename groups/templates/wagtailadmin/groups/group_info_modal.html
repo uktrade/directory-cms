@@ -1,0 +1,11 @@
+{% load i18n wagtailadmin_tags %}
+
+<div class="">
+    <h1>{% trans "Content roles in Wagtail" %}</h1>
+    <dl>
+        {% for group in queryset.all %}
+            <dt>{{ group.name_singular }}</dt>
+            <dd>{{ group.role_match_description}}</dd>
+        {% endfor %}
+    </dl>
+</div>
