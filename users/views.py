@@ -1,9 +1,10 @@
 from django.contrib.auth import get_user_model, update_session_auth_hash
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.utils.functional import cached_property
 from django.utils.translation import ugettext as _
 from django.views import generic
-
 from wagtail.admin import messages
 from wagtail.core import hooks
 from wagtail.users.utils import user_can_delete_user
@@ -105,3 +106,38 @@ class EditUserView(
         can_delete = user_can_delete_user(self.request.user, self.object)
         ctx.update(can_delete=can_delete)
         return ctx
+
+
+class RequestAccessView(generic.UpdateView):
+    form_class = forms.RequestAccessForm
+    template_name = "users/request_access.html"
+    success_url = reverse_lazy('request_access_success')
+
+    def dispatch(self, request):
+        self.get_object()
+        if self.object.assignment_status != 'created':
+            if request.user.has_perm('wagtailadmin.can_access_admin'):
+                return redirect('wagtailadmin_home')
+            raise PermissionDenied
+        return super().dispatch(request)
+
+    def get_object(self):
+        if hasattr(self, 'object'):
+            return self.object
+        self.object = self.request.user.profile
+        return self.object
+
+    def form_valid(self, form):
+        """
+        Before redirecting to the success page, update the
+        profile's ``assignment_status`` and notify the team
+        leader that this user is awaiting approval
+        """
+        response = super().form_valid(form)
+        self.object.assignment_status = 'awaiting_approval'
+        self.object.save()
+        self.notify_team_leader()
+        return response
+
+    def notify_team_leader(self):
+        recipient = self.object.team_leader
