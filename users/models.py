@@ -1,12 +1,11 @@
 from django.conf import settings
 from django.db import models
 
+CREATED = 'CREATED'
+AWAITING_APPROVAL = 'AWAITING_APPROVAL'
+APPROVED = 'APPROVED'
 
 class UserProfile(models.Model):
-    CREATED = 'CREATED'
-    AWAITING_APPROVAL = 'AWAITING_APPROVAL'
-    APPROVED = 'APPROVED'
-
     STATUSES = (
         (CREATED, CREATED),
         (AWAITING_APPROVAL, AWAITING_APPROVAL),
