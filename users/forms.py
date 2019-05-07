@@ -10,7 +10,7 @@ from core.widgets import Select2Widget
 from groups.models import GroupInfo
 from groups.widgets import RadioSelectWithGroupInfoModal
 
-# from users.models import Profile
+from users.models import UserProfile
 
 
 class EntryPointAwareUserActionForm(forms.Form):
@@ -69,7 +69,7 @@ class UserChoiceField(forms.ModelChoiceField):
         return "{name} <{email}>".format(name=obj.get_full_name(), email=obj.email)
 
 
-class RequestAccessForm(forms.ModelForm):
+class SSORequestAccessForm(forms.ModelForm):
 
     self_assigned_group = forms.ModelChoiceField(
         label="Which best describes your content role?",
@@ -85,7 +85,7 @@ class RequestAccessForm(forms.ModelForm):
     )
 
     class Meta:
-        # model = Profile
+        model = UserProfile
         fields = ["self_assigned_group", "team_leader"]
 
     def __init__(self, *args, **kwargs):

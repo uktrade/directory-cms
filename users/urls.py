@@ -11,15 +11,15 @@ urlpatterns = [
     url(r'^add/$', views.CreateUserView.as_view(), name='add'),
     url(
         r'^request-access/$',
-        views.RequestAccessView.as_view(),
-        name='request_access'
+        views.SSORequestAccessView.as_view(),
+        name="sso_request_access",
     ),
     url(
         r'^request-access/thanks/$',
         TemplateView.as_view(
-            template_name="users/request_access_success.html"
+            template_name="sso/request_access_success.html"
         ),
-        name='request_access_success'
+        name="sso_request_access_success
     ),
     url(r'^(?P<pk>\d+)/$', views.EditUserView.as_view(), name='edit'),
     url(r'^([^\/]+)/delete/$', original_users_views.delete, name='delete'),
