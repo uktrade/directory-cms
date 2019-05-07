@@ -16,7 +16,7 @@ import os
 
 import dj_database_url
 import environ
-
+from django.urls import reverse_lazy
 
 env = environ.Env()
 env.read_env()
@@ -426,8 +426,8 @@ if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
         'django.contrib.auth.backends.ModelBackend',
         'authbroker_client.backends.AuthbrokerBackend'
     ]
-    LOGIN_URL = 'authbroker:login'
-    LOGIN_REDIRECT_URL = 'sso_logged_in_landing'
+    LOGIN_URL = reverse_lazy('authbroker:login')
+    LOGIN_REDIRECT_URL = reverse_lazy('sso_logged_in_landing')
 
     # authbroker config
     AUTHBROKER_URL = env.url('STAFF_SSO_AUTHBROKER_URL')

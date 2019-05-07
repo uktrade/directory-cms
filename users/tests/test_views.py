@@ -88,3 +88,5 @@ def test_edit_user_view_invliad(admin_client):
     message = response.context['message']
     assert message == 'The user could not be saved due to errors.'
     assert response.status_code == status.HTTP_200_OK
+
+
