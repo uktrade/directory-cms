@@ -241,9 +241,9 @@ class BasePage(Page):
         if not self.view_path:
             # starts from 2 to remove root page and app page
             path_components = [
-                page.specific.slug_override or page.specific.slug
+                page.specific_class.slug_override or page.slug
                 for page in self.get_ancestors()[2:]
-                if not page.specific.folder_page]
+                if not page.specific_class.folder_page]
 
         # need to also take into account the view_path if it's set
         else:
