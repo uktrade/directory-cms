@@ -74,6 +74,7 @@ class SSORequestAccessForm(forms.ModelForm):
         label="Which best describes your content role?",
         queryset=GroupInfo.objects.none(),
         empty_label=None,
+        widget=forms.RadioSelect,
     )
 
     team_leader = UserChoiceField(
