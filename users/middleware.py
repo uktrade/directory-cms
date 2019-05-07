@@ -28,8 +28,8 @@ class SSORedirectUsersToRequestAccessViews:
             if request.url == url:
                 return
 
-        if user.profile.assignment_status == UserProfile.CREATED:
+        if user.profile.assignment_status == UserProfile.STATUS_CREATED:
             return redirect('wagtailusers_users:sso_request_access')
 
-        if user.profile.assignment_status == UserProfile.AWAITING_APPROVAL:
+        if user.profile.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL: # noqa
             return redirect('wagtailusers_users:sso_request_access_success')

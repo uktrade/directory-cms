@@ -116,9 +116,9 @@ class SSORequestAccessView(generic.UpdateView):
 
     def dispatch(self, request):
         self.get_object()
-        if self.object.assignment_status == UserProfile.ASSIGNED:
+        if self.object.assignment_status == UserProfile.STATUS_APPROVED:
             return redirect('wagtailadmin_home')
-        if self.object.assignment_status == UserProfile.AWAITING_APPROVAL:
+        if self.object.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL:
             return redirect(self.success_url)
         return super().dispatch(request)
 
@@ -135,7 +135,7 @@ class SSORequestAccessView(generic.UpdateView):
         leader that this user is awaiting approval
         """
         response = super().form_valid(form)
-        self.object.assignment_status = UserProfile.AWAITING_APPROVAL
+        self.object.assignment_status = UserProfile.STATUS_AWAITING_APPROVAL
         self.object.save()
         self.notify_team_leader()
         return response
