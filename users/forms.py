@@ -54,29 +54,14 @@ class DisableUserFieldsMixin(forms.Form):
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
             # Disable the fields
-            self.fields['username'].widget.attrs['readonly'] = True
-            self.fields['email'].widget.attrs['readonly'] = True
-            self.fields['first_name'].widget.attrs['readonly'] = True
-            self.fields['last_name'].widget.attrs['readonly'] = True
+            self.fields['username'].disabled = True
+            self.fields['email'].disabled = True
+            self.fields['first_name'].disabled = True
+            self.fields['last_name'].disabled = True
 
             # Note: When editing self, the 'is_active' field doesn't exist
             if 'is_active' in self.fields:
-                # Note: checkboxes don't support "readonly" so disable instead
-                self.fields['is_active'].widget.attrs['disabled'] = True
-
-            # Make sure the values haven't been changed
-            data = self.data.copy()
-            data['username'] = instance.username
-            data['email'] = instance.email
-            data['first_name'] = instance.first_name
-            data['last_name'] = instance.last_name
-
-            if instance.is_active:
-                data['is_active'] = 'on'
-            elif 'is_active' in data:
-                del data['is_active']
-
-            self.data = data
+                self.fields['is_active'].disabled = True
 
 
 class UserEditForm(EntryPointAwareUserActionForm, DisableUserFieldsMixin,
