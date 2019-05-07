@@ -1,5 +1,8 @@
+import sys
 import pytest
+from importlib import import_module, reload
 from django.conf import settings
+from django.core.urlresolvers import clear_url_caches
 from django.urls import reverse
 from rest_framework import status
 
@@ -91,11 +94,29 @@ def test_edit_user_view_invalid(admin_client):
     assert response.status_code == status.HTTP_200_OK
 
 
+def reload_urlconf(urlconf=None):
+    clear_url_caches()
+    if urlconf is None:
+        urlconf = settings.ROOT_URLCONF
+    if urlconf in sys.modules:
+        reload(sys.modules[urlconf])
+    else:
+        import_module(urlconf)
+
+
 def test_force_staff_sso(client):
     """Test that URLs and redirects are in place."""
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = True
+    settings.AUTHBROKER_CLIENT_ID = 'debug'
+    settings.AUTHBROKER_CLIENT_SECRET = 'debug'
+    settings.AUTHBROKER_URL = 'https://test.com'
+    reload_urlconf()
+
     assert reverse('sso_logged_in_landing') == '/sso/logged-in-landing/'
     assert reverse('authbroker:login') == '/auth/login/'
-    response = client.get('admin/login')
+    response = client.get('/admin/login/')
     assert response.status_code == 302
-    assert response.url == 'auth/login/'
+    assert response.url == '/auth/login/'
+
+    settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
+    reload_urlconf()
