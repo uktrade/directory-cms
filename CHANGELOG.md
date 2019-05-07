@@ -2,6 +2,11 @@
 
 ## Pre-release
 
+**Implemented enhancements:**
+
+- [CMS-1417](https://uktrade.atlassian.net/browse/CMS-1417) Integrate staff SSO
+
+
 ## [2019.05.03](https://github.com/uktrade/directory-cms/releases/tag/2019.05.03)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.04.24_1...2019.05.03)
 
