@@ -14,7 +14,6 @@ from django.views.generic import RedirectView
 import core.views
 import export_readiness.views
 from activitystream.views import ActivityStreamView
-from users.views import SSOLoggedinLandingView
 
 api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
@@ -120,8 +119,6 @@ urlpatterns = [
 
 if settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
     urlpatterns = [
-        url('^sso/logged-in-landing/$',
-            SSOLoggedinLandingView.as_view(), name='sso_logged_in_landing'),
         url('^auth/', include('authbroker_client.urls',
                               namespace='authbroker',
                               app_name='authbroker_client')

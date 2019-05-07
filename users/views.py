@@ -143,7 +143,3 @@ class SSORequestAccessView(generic.UpdateView):
 
     def notify_team_leader(self):
         recipient = self.object.team_leader
-
-
-class SSOLoggedinLandingView(generic.TemplateView):
-    template_name = 'sso/user_landing.html'
