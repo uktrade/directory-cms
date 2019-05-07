@@ -8,7 +8,6 @@ from wagtail.users import forms as wagtail_forms
 
 from core.widgets import Select2Widget
 from groups.models import GroupInfo
-from groups.widgets import RadioSelectWithGroupInfoModal
 
 from users.models import UserProfile
 
@@ -75,7 +74,6 @@ class SSORequestAccessForm(forms.ModelForm):
         label="Which best describes your content role?",
         queryset=GroupInfo.objects.none(),
         empty_label=None,
-        widget=RadioSelectWithGroupInfoModal,
     )
 
     team_leader = UserChoiceField(
@@ -96,5 +94,5 @@ class SSORequestAccessForm(forms.ModelForm):
 
     @property
     def team_leader_queryset(self):
-        group = GroupInfo.objects.team_leaders_group.group
+        group = GroupInfo.objects.all().team_leaders_group.group
         return group.user_set.all()

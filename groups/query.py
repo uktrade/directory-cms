@@ -15,6 +15,7 @@ class GroupInfoQuerySet(models.QuerySet):
     def visible_to_superusers(self):
         return self.visibility(self.model.VISIBILITY_SUPERUSERS_ONLY)
 
+    @property
     def team_leaders_group(self):
         """Returns a single object"""
         return self.get(is_team_leaders_group=True)

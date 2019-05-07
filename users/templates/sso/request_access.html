@@ -36,7 +36,7 @@
                 <section class="active nice-padding">
                     <ul class="fields">
                         {% block fields %}
-                            {% include "wagtailadmin/shared/field_as_li.html" with field=form.group %}
+                            {% include "wagtailadmin/field_as_li_with_groups_modal.html" with field=form.self_assigned_group %}
                             {% include "wagtailadmin/shared/field_as_li.html" with field=form.team_leader %}
                         {% endblock fields %}
                         <li><button class="button">{% trans "Request access" %}</button></li>
