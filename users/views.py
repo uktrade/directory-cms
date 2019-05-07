@@ -1,7 +1,7 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
-from django.utils.functional import cached_property
 from django.utils.translation import ugettext as _
 from django.views import generic
 from wagtail.admin import messages
@@ -116,10 +116,12 @@ class SSORequestAccessView(generic.UpdateView):
 
     def dispatch(self, request):
         self.get_object()
-        if self.object.assignment_status == UserProfile.STATUS_APPROVED:
-            return redirect('wagtailadmin_home')
-        if self.object.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL:
-            return redirect(self.success_url)
+        if settings.USERS_REQUEST_ACCESS_VIEW_REDIRECT_ON_LOAD:
+            # Allow toggling of this behavior to aid in testing
+            if self.object.assignment_status == UserProfile.STATUS_APPROVED:
+                return redirect('wagtailadmin_home')
+            if self.object.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL: # noqa
+                return redirect(self.success_url)
         return super().dispatch(request)
 
     def get_object(self):
