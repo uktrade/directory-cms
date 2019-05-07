@@ -16,7 +16,7 @@ import os
 
 import dj_database_url
 import environ
-
+from django.urls import reverse_lazy
 
 env = environ.Env()
 env.read_env()
@@ -415,7 +415,8 @@ INTERNATIONAL_NEWS_MARKETING_FOLDER_PAGE_SLUG = env.str(
 # feature flags
 
 FEATURE_FLAGS = {
-    'ENFORCE_STAFF_SSO_ON': env.bool('FEATURE_ENFORCE_STAFF_SSO_ENABLED', True),
+    'ENFORCE_STAFF_SSO_ON': env.bool('FEATURE_ENFORCE_STAFF_SSO_ENABLED',
+                                     True),
     'MAINTENANCE_MODE_ON': env.bool('FEATURE_MAINTENANCE_MODE_ENABLED', False),
     'SKIP_MIGRATE': env.bool('FEATURE_SKIP_MIGRATE', False),
     # used by directory-components
@@ -430,8 +431,8 @@ if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
         'django.contrib.auth.backends.ModelBackend',
         'authbroker_client.backends.AuthbrokerBackend'
     ]
-    LOGIN_URL = 'authbroker:login'
-    LOGIN_REDIRECT_URL = 'sso_logged_in_landing'
+    LOGIN_URL = reverse_lazy('authbroker:login')
+    LOGIN_REDIRECT_URL = reverse_lazy('sso_logged_in_landing')
 
     # authbroker config
     AUTHBROKER_URL = env.url('STAFF_SSO_AUTHBROKER_URL')

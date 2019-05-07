@@ -1,4 +1,5 @@
 import pytest
+from django.conf import settings
 from django.urls import reverse
 from rest_framework import status
 
@@ -73,7 +74,7 @@ def test_edit_user_view(admin_client):
 
 
 @pytest.mark.django_db
-def test_edit_user_view_invliad(admin_client):
+def test_edit_user_view_invalid(admin_client):
     user = UserFactory(username='test')
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
     response = admin_client.post(
@@ -88,3 +89,13 @@ def test_edit_user_view_invliad(admin_client):
     message = response.context['message']
     assert message == 'The user could not be saved due to errors.'
     assert response.status_code == status.HTTP_200_OK
+
+
+def test_force_staff_sso(client):
+    """Test that URLs and redirects are in place."""
+    settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = True
+    assert reverse('sso_logged_in_landing') == '/sso/logged-in-landing/'
+    assert reverse('authbroker:login') == '/auth/login/'
+    response = client.get('admin/login')
+    assert response.status_code == 302
+    assert response.url == 'auth/login/'
