@@ -463,14 +463,16 @@ class HomePageSerializer(BasePageSerializer):
     banner_label = serializers.CharField(max_length=50, allow_null=True)
 
     def get_articles(self, obj):
-        queryset = None
-        slug = settings.EU_EXIT_NEWS_LISTING_PAGE_SLUG
-        if ArticleListingPage.objects.filter(slug=slug).exists():
-            queryset = ArticleListingPage.objects.get(
-                slug=slug
-            ).get_descendants().type(
-                ArticlePage
-            ).live().specific()
+        try:
+            article_listing_page = ArticleListingPage.objects.get(
+                slug=settings.EU_EXIT_NEWS_LISTING_PAGE_SLUG
+            )
+            queryset = (
+                ArticlePage.objects.descendant_of(article_listing_page).live()
+            )
+        except ArticleListingPage.DoesNotExist:
+            queryset = None
+
         serializer = ArticlePageSerializer(
             queryset,
             many=True,
@@ -480,15 +482,17 @@ class HomePageSerializer(BasePageSerializer):
         return serializer.data
 
     def get_advice(self, obj):
-        queryset = None
-        if TopicLandingPage.objects.filter(
+        try:
+            topic_landing_page = TopicLandingPage.objects.get(
                 slug=cms.GREAT_ADVICE_SLUG
-        ).exists():
-            queryset = TopicLandingPage.objects.get(
-                slug=cms.GREAT_ADVICE_SLUG
-            ).get_descendants().type(
-                ArticleListingPage
-            ).live().specific()
+            )
+            queryset = (
+                ArticleListingPage.objects.descendant_of(topic_landing_page)
+                .live()
+            )
+        except TopicLandingPage.DoesNotExist:
+            queryset = None
+
         serializer = ArticleListingPageSerializer(
             queryset,
             many=True,
