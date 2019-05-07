@@ -5,6 +5,7 @@ CREATED = 'CREATED'
 AWAITING_APPROVAL = 'AWAITING_APPROVAL'
 APPROVED = 'APPROVED'
 
+
 class UserProfile(models.Model):
     STATUSES = (
         (CREATED, CREATED),

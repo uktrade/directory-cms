@@ -11,7 +11,6 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import call_command
 from django.utils import translation
 from django import db
-from django.db.migrations.executor import MigrationExecutor
 
 from conf import settings
 from find_a_supplier.tests.factories import IndustryPageFactory
