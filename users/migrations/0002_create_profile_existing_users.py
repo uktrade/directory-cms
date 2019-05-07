@@ -5,13 +5,15 @@ from __future__ import unicode_literals
 from django.contrib.auth import get_user_model
 from django.db import migrations
 
+from users.models import APPROVED
+
 
 def set_existing_users_as_approved(apps, schema_editor):
     User = get_user_model()
     UserProfile = apps.get_model('users', 'UserProfile')
     for user in User.objects.filter(is_active=True):
         profile = UserProfile(user_id=user.id,
-                              assignment_status=UserProfile.APPROVED)
+                              assignment_status=APPROVED)
         profile.save()
 
 
