@@ -53,7 +53,7 @@ class InternationalSectorPage(BasePage):
     tags = ParentalManyToManyField(Tag, blank=True)
 
     heading = models.CharField(max_length=255, verbose_name='Sector name')
-    sub_heading = models.CharField(max_length=255, blank=True)
+    sub_heading = models.TextField(blank=True)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -939,15 +939,13 @@ class InternationalArticlePage(BasePage):
     ]
     subpage_types = []
 
-    article_title = models.CharField(max_length=255)
-    article_subheading = models.CharField(
-        max_length=255,
+    article_title = models.TextField()
+    article_subheading = models.TextField(
         blank=True,
         help_text="This is a subheading that displays "
                   "below the main title on the article page"
     )
-    article_teaser = models.CharField(
-        max_length=255,
+    article_teaser = models.TextField(
         help_text="This is a subheading that displays when the article "
                   "is featured on another page"
     )
