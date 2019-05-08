@@ -35,3 +35,17 @@ td.ord .handle {
 .table-headers {
     height: 35px;
 }
+
+/* Fix styling for custom group list checkboxes on user update view */
+.group_with_summaries_multiple_choice_field ul li label {
+    display: block;
+    font-weight: normal;
+    float: none;
+    width: auto;
+    padding: 0.4em 0;
+}
+@media (min-width: 50em) {
+    .group_with_summaries_multiple_choice_field .field-content {
+        padding-top: 1em;
+    }
+}
