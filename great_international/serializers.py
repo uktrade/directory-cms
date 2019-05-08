@@ -138,12 +138,9 @@ class FeaturedLinkSerializer(serializers.Serializer):
 
 
 class RelatedArticlePageSerializer(BasePageSerializer):
-    title = serializers.CharField(max_length=255, source='article_title')
-    subheading = serializers.CharField(
-        max_length=255,
-        source='article_subheading'
-    )
-    teaser = serializers.CharField(max_length=255, source='article_teaser')
+    title = serializers.CharField(source='article_title')
+    subheading = serializers.CharField(source='article_subheading')
+    teaser = serializers.CharField(source='article_teaser')
     thumbnail = wagtail_fields.ImageRenditionField(
         'fill-640x360', source='article_image')
 
@@ -191,7 +188,7 @@ class PageWithRelatedPagesSerializer(BasePageSerializer):
 
 class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
     heading = serializers.CharField(max_length=255)
-    sub_heading = serializers.CharField(max_length=255)
+    sub_heading = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('original')
     hero_image_thumbnail = wagtail_fields.ImageRenditionField(
         'fill-640x360', source='hero_image')
@@ -306,10 +303,10 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
 
 
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
-    article_title = serializers.CharField(max_length=255)
-    article_subheading = serializers.CharField(max_length=255)
+    article_title = serializers.CharField()
+    article_subheading = serializers.CharField()
     display_title = serializers.CharField(source='article_title')
-    article_teaser = serializers.CharField(max_length=255)
+    article_teaser = serializers.CharField()
     article_image = wagtail_fields.ImageRenditionField('original')
     article_image_thumbnail = wagtail_fields.ImageRenditionField(
         'fill-640x360', source='article_image')

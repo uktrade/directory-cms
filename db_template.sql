@@ -1945,14 +1945,14 @@ ALTER SEQUENCE public.great_international_internationalarticlelistingpage_tags_i
 CREATE TABLE public.great_international_internationalarticlepage (
     page_ptr_id integer NOT NULL,
     service_name character varying(100),
-    article_title character varying(255) NOT NULL,
-    article_teaser character varying(255) NOT NULL,
+    article_title text NOT NULL,
+    article_teaser text NOT NULL,
     article_body_text text NOT NULL,
     article_image_id integer,
     related_page_one_id integer,
     related_page_three_id integer,
     related_page_two_id integer,
-    article_subheading character varying(255) NOT NULL,
+    article_subheading text NOT NULL,
     article_body_text_ar text,
     article_body_text_de text,
     article_body_text_en_gb text,
@@ -1969,30 +1969,30 @@ CREATE TABLE public.great_international_internationalarticlepage (
     article_image_ja_id integer,
     article_image_pt_id integer,
     article_image_zh_hans_id integer,
-    article_subheading_ar character varying(255),
-    article_subheading_de character varying(255),
-    article_subheading_en_gb character varying(255),
-    article_subheading_es character varying(255),
-    article_subheading_fr character varying(255),
-    article_subheading_ja character varying(255),
-    article_subheading_pt character varying(255),
-    article_subheading_zh_hans character varying(255),
-    article_teaser_ar character varying(255),
-    article_teaser_de character varying(255),
-    article_teaser_en_gb character varying(255),
-    article_teaser_es character varying(255),
-    article_teaser_fr character varying(255),
-    article_teaser_ja character varying(255),
-    article_teaser_pt character varying(255),
-    article_teaser_zh_hans character varying(255),
-    article_title_ar character varying(255),
-    article_title_de character varying(255),
-    article_title_en_gb character varying(255),
-    article_title_es character varying(255),
-    article_title_fr character varying(255),
-    article_title_ja character varying(255),
-    article_title_pt character varying(255),
-    article_title_zh_hans character varying(255),
+    article_subheading_ar text,
+    article_subheading_de text,
+    article_subheading_en_gb text,
+    article_subheading_es text,
+    article_subheading_fr text,
+    article_subheading_ja text,
+    article_subheading_pt text,
+    article_subheading_zh_hans text,
+    article_teaser_ar text,
+    article_teaser_de text,
+    article_teaser_en_gb text,
+    article_teaser_es text,
+    article_teaser_fr text,
+    article_teaser_ja text,
+    article_teaser_pt text,
+    article_teaser_zh_hans text,
+    article_title_ar text,
+    article_title_de text,
+    article_title_en_gb text,
+    article_title_es text,
+    article_title_fr text,
+    article_title_ja text,
+    article_title_pt text,
+    article_title_zh_hans text,
     related_page_one_ar_id integer,
     related_page_one_de_id integer,
     related_page_one_en_gb_id integer,
@@ -3253,7 +3253,7 @@ CREATE TABLE public.great_international_internationalsectorpage (
     page_ptr_id integer NOT NULL,
     service_name character varying(100),
     heading character varying(255) NOT NULL,
-    sub_heading character varying(255) NOT NULL,
+    sub_heading text NOT NULL,
     heading_teaser text NOT NULL,
     section_one_body text,
     statistic_1_number character varying(255) NOT NULL,
@@ -3721,14 +3721,14 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_6_smallprint_ja character varying(255),
     statistic_6_smallprint_pt character varying(255),
     statistic_6_smallprint_zh_hans character varying(255),
-    sub_heading_ar character varying(255),
-    sub_heading_de character varying(255),
-    sub_heading_en_gb character varying(255),
-    sub_heading_es character varying(255),
-    sub_heading_fr character varying(255),
-    sub_heading_ja character varying(255),
-    sub_heading_pt character varying(255),
-    sub_heading_zh_hans character varying(255),
+    sub_heading_ar text,
+    sub_heading_de text,
+    sub_heading_en_gb text,
+    sub_heading_es text,
+    sub_heading_fr text,
+    sub_heading_ja text,
+    sub_heading_pt text,
+    sub_heading_zh_hans text,
     uses_tree_based_routing boolean NOT NULL
 );
 
@@ -7368,6 +7368,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 274	export_readiness	0031_internationallandingpage_squashed_0050_auto_20190219_1633	2019-05-07 16:09:11.621909+01
 275	great_international	0001_squashed_0015_auto_20190306_1521	2019-05-07 16:09:11.625176+01
 276	invest	0014_auto_20180904_1113_squashed_0026_auto_20181002_1534	2019-05-07 16:09:11.627852+01
+277	great_international	0022_auto_20190508_1300	2019-05-08 14:13:33.110663+01
 \.
 
 
@@ -8194,7 +8195,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 89, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 276, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 277, true);
 
 
 --
