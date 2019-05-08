@@ -1,27 +1,23 @@
 from django import forms
+from django.contrib.auth.models import Group
 from django.urls import reverse
 from django.utils.html import format_html
 
 from groups.models import GroupInfo
 
 
-class RoleChoiceField(forms.ModelChoiceField):
-    """
-    Use as ModelChoiceField to the Group model to get options powered
-    by a GroupInfoQuerySet - which provides singular names as labels,
-    and more natural ordering (by seniority)
-    """
+class GroupChoiceFieldWithRolesModal(forms.ModelChoiceField):
     def __init__(self, *args, **kwargs):
         if 'queryset' not in kwargs:
-            kwargs['queryset'] = GroupInfo.objects.visible_to_anyone()
-        kwargs['to_field_name'] = 'group_id'
-        super().__init__(*args, **kwargs)
+            kwargs['queryset'] = Group.objects.filter(
+                info__visibility=GroupInfo.VISIBILITY_UNRESTRICTED
+            )
 
-    def to_python(self, value):
-        val = super().to_python(value)
-        if isinstance(val, GroupInfo):
-            return val.group
-        return val
+        kwargs['queryset'] = (
+            kwargs['queryset'].select_related('info')
+            .order_by('info__seniority_level', 'info__name_singular')
+        )
+        super().__init__(*args, **kwargs)
 
     def get_bound_field(self, form, field_name):
         # Overriding help_text here because forms are loaded before
@@ -32,6 +28,9 @@ class RoleChoiceField(forms.ModelChoiceField):
             url=reverse('group-info')
         )
         return super().get_bound_field(form, field_name)
+
+    def label_from_instance(self, obj):
+        return obj.info.name_singular
 
 
 class GroupWithSummariesMultipleChoiceField(forms.ModelMultipleChoiceField):

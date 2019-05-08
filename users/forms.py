@@ -7,10 +7,13 @@ from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 
 from wagtail.users import forms as wagtail_forms
+from wagtail.users.views.users import change_user_perm
 
 from core.widgets import Select2Widget
 from groups.models import GroupInfo
-from groups.fields import RoleChoiceField
+from groups.fields import (
+    GroupChoiceFieldWithRolesModal,
+)
 from users.models import UserProfile
 
 
@@ -82,7 +85,7 @@ class TeamLeaderChoiceField(forms.ModelChoiceField):
 
 class SSORequestAccessForm(forms.ModelForm):
 
-    self_assigned_group = RoleChoiceField(
+    self_assigned_group = GroupChoiceFieldWithRolesModal(
         label="Which best describes your content role?",
         empty_label=None,
         widget=forms.RadioSelect,
