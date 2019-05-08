@@ -96,6 +96,7 @@ class SSORequestAccessForm(forms.ModelForm):
 
     team_leader = UserNameWithEmailChoiceField(
         label="Who is your content team leader?",
+        queryset=get_user_model().objects.none(),
         widget=Select2Widget,
     )
 
@@ -107,11 +108,9 @@ class SSORequestAccessForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         try:
             group = GroupInfo.objects.all().team_leaders_group.group
-            team_leaders_queryset = group.user_set.all()
+            self.fields["team_leader"].queryset = group.user_set.all()
         except GroupInfo.DoesNotExist:
-            team_leaders_queryset = get_user_model().objects.none()
-
-        self.fields["team_leader"].queryset = team_leaders_queryset
+            pass
         self.fields["team_leader"].widget.select2_options = {
             'placeholder': 'Search available team leaders',
         }
