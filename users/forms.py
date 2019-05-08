@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
+from django.urls import reverse
 from django.utils.functional import cached_property
+from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 
 from wagtail.users import forms as wagtail_forms
@@ -91,9 +93,14 @@ class SSORequestAccessForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         group_queryset = GroupInfo.objects.visibile_to_anyone()
         self.fields["self_assigned_group"].queryset = group_queryset
+        self.fields["self_assigned_group"].help_text = format_html(
+            '<a href="{url}" class="action-view-group-info">'
+            'Not sure which role to choose?</a>',
+            url=reverse('group-info')
+        )
         self.fields["team_leader"].queryset = self.team_leader_queryset
         self.fields["team_leader"].widget.select2_options = {
-            'placeholder': 'Search to find them',
+            'placeholder': 'Search available team leaders',
         }
 
     @property
