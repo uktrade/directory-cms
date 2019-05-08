@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
 from django.utils.translation import ugettext as _
 from django.views import generic
 from wagtail.admin import messages
@@ -87,17 +88,36 @@ class EditUserView(
     form_valid_message = 'User ''{0}'' updated.'
 
     def get_form_kwargs(self):
-        editing_self = self.request.user == self.object
+        user = self.object
+        profile = user.userprofile
+        editing_self = self.request.user == user
+        is_approval = profile.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL # noqa
+        self.is_approval = is_approval  # saving reference to use in form_valid
         kwargs = super().get_form_kwargs()
         kwargs.update(editing_self=editing_self)
+        if is_approval:
+            groups = []
+            if profile.self_assigned_group_id:
+                groups.append(profile.self_assigned_group_id)
+            kwargs['initial']['groups'] = groups
         return kwargs
 
     def form_valid(self, form):
         self.object = user = form.save()
+
         if user == self.request.user and 'password1' in form.changed_data:
             # User is changing their own password;
             # need to update their session hash
             update_session_auth_hash(self.request, user)
+
+        if self.is_approval and user.has_perm('wagtailadmin.access_admin'):
+            profile = user.userprofile
+            profile.assignment_status = UserProfile.STATUS_APPROVED
+            profile.approved_by = self.request.user
+            profile.approved_at = timezone.now()
+            profile.save()
+            self.notify_user_of_approval()
+
         self.handle_success_message()
         return redirect('wagtailusers_users:index')
 
@@ -106,6 +126,10 @@ class EditUserView(
         can_delete = user_can_delete_user(self.request.user, self.object)
         ctx.update(can_delete=can_delete)
         return ctx
+
+    def notify_user_of_approval(self):
+        # TODO: connect to gov.notify
+        pass
 
 
 class SSORequestAccessView(generic.UpdateView):
@@ -139,8 +163,9 @@ class SSORequestAccessView(generic.UpdateView):
         response = super().form_valid(form)
         self.object.assignment_status = UserProfile.STATUS_AWAITING_APPROVAL
         self.object.save()
-        self.notify_team_leader()
+        self.notify_team_leader_of_pending_approval()
         return response
 
-    def notify_team_leader(self):
-        recipient = self.object.team_leader
+    def notify_team_leader_of_pending_approval(self):
+        # TODO: connect to gov.notify
+        pass
