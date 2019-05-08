@@ -13,6 +13,7 @@ from core.widgets import Select2Widget
 from groups.models import GroupInfo
 from groups.fields import (
     GroupChoiceFieldWithRolesModal,
+    GroupWithSummariesMultipleChoiceField,
 )
 from users.models import UserProfile
 
@@ -33,12 +34,23 @@ class EntryPointAwareUserActionForm(forms.Form):
             "Superusers have full access to manage any object " "or setting."),
     )
 
+    groups = GroupWithSummariesMultipleChoiceField(
+        label=_('Groups'),
+        required=False,
+        queryset=Group.objects.none(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+
     def __init__(self, user, *args, **kwargs):
         """Creating user (session user) should only see the groups
         that have the same tree entry point of their own group(s).
         """
         super().__init__(*args, **kwargs)
-        self.fields["groups"].queryset = self.get_groups_queryset(user)
+        self.fields["groups"].queryset = (
+            self.get_groups_queryset(user)
+            .select_related('info')
+            .order_by('info__seniority_level', 'name')
+        )
 
     def get_groups_queryset(self, user):
         """Return the groups with the same entrypoint(s) of the the user in

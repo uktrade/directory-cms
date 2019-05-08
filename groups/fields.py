@@ -34,12 +34,11 @@ class GroupChoiceFieldWithRolesModal(forms.ModelChoiceField):
 
 
 class GroupWithSummariesMultipleChoiceField(forms.ModelMultipleChoiceField):
-    def __init__(self, *args, **kwargs):
-        kwargs['queryset'] = kwargs['queryset'].select_related('info')
-        return super().__init__(*args, **kwargs)
 
     def label_from_instance(self, obj):
+        permission_summary = obj.info.permission_summary
         return format_html(
-            '<b>{name}</b> {permission_summary}',
-            name=obj.name, permission_summary=obj.info.permission_summary,
+            '<b>{name}</b>{summary}',
+            name=obj.name,
+            summary=' - ' + permission_summary if permission_summary else ''
         )
