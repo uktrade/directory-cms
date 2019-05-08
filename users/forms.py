@@ -92,6 +92,9 @@ class SSORequestAccessForm(forms.ModelForm):
         group_queryset = GroupInfo.objects.visibile_to_anyone()
         self.fields["self_assigned_group"].queryset = group_queryset
         self.fields["team_leader"].queryset = self.team_leader_queryset
+        self.fields["team_leader"].widget.select2_options = {
+            'placeholder': 'Search to find them',
+        }
 
     @property
     def team_leader_queryset(self):
