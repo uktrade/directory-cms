@@ -115,7 +115,7 @@ class BasePage(Page):
     # if True when generating the url this page's slug will be ignored
     folder_page = False
     # overrides page.slug when generating the url
-    slug_override = ''
+    slug_override = None
 
     subpage_types = []
     base_form_class = forms.WagtailAdminPageForm
@@ -267,9 +267,11 @@ class BasePage(Page):
 
         # need to also take into account the view_path if it's set
         else:
-            path_components.insert(0, self.view_path.replace('/', ''))
+            path_components.insert(0, self.view_path.strip('/'))
 
-        path_components.append(self.slug_override or self.slug)
+        path_components.append(
+            self.slug_override if self.slug_override is not None else self.slug
+        )
 
         return '/{path}/'.format(path='/'.join(path_components))
 

@@ -20,6 +20,7 @@ class InvestHomePageTranslation(BaseTranslationOptions):
 
         'capital_invest_section_title',
         'capital_invest_section_content',
+        'capital_invest_section_image',
 
         'eu_exit_section_title',
         'eu_exit_section_content',
@@ -56,13 +57,11 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'setup_guide_title',
         'setup_guide_content',
         'setup_guide_img',
-        'setup_guide_call_to_action_text',
         'setup_guide_call_to_action_url',
         'setup_guide_lead_in',
         'isd_section_image',
         'isd_section_title',
         'isd_section_text',
-        'isd_section_cta_text',
         'how_we_help_title',
         'how_we_help_lead_in',
         # how we help

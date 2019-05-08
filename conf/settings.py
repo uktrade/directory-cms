@@ -16,7 +16,7 @@ import os
 
 import dj_database_url
 import environ
-
+from django.urls import reverse_lazy
 
 env = environ.Env()
 env.read_env()
@@ -83,10 +83,12 @@ INSTALLED_APPS = [
     'invest.apps.InvestConfig',
     'components.apps.ComponentsConfig',
     'activitystream.apps.ActivityStreamConfig',
-    'django_filters'
+    'django_filters',
+    'authbroker_client',
 ]
 
 MIDDLEWARE_CLASSES = [
+    'core.middleware.MaintenanceModeMiddleware',
     'core.middleware.StubSiteMiddleware',
     'directory_components.middleware.MaintenanceModeMiddleware',
     'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware',
@@ -123,7 +125,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'conf.wsgi.application'
-
 VCAP_SERVICES = env.json('VCAP_SERVICES', {})
 
 if 'redis' in VCAP_SERVICES:
@@ -410,14 +411,29 @@ INTERNATIONAL_NEWS_MARKETING_FOLDER_PAGE_SLUG = env.str(
 # feature flags
 
 FEATURE_FLAGS = {
-    # used by directory-components
+    'ENFORCE_STAFF_SSO_ON': env.bool('FEATURE_ENFORCE_STAFF_SSO_ENABLED',
+                                     True),
     'MAINTENANCE_MODE_ON': env.bool('FEATURE_MAINTENANCE_MODE_ENABLED', False),
+    'SKIP_MIGRATE': env.bool('FEATURE_SKIP_MIGRATE', False),
     # used by directory-components
     'SEARCH_ENGINE_INDEXING_OFF': env.bool(
         'FEATURE_SEARCH_ENGINE_INDEXING_DISABLED', False
     ),
-    'DEBUG_TOOLBAR_ON': env.bool('FEATURE_DEBUG_TOOLBAR_ENABLED', False)
+    'DEBUG_TOOLBAR_ON': env.bool('FEATURE_DEBUG_TOOLBAR_ENABLED', False),
 }
+
+if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
+    AUTHENTICATION_BACKENDS = [
+        'django.contrib.auth.backends.ModelBackend',
+        'authbroker_client.backends.AuthbrokerBackend'
+    ]
+    LOGIN_URL = reverse_lazy('authbroker:login')
+    LOGIN_REDIRECT_URL = reverse_lazy('wagtail_homepage')
+
+    # authbroker config
+    AUTHBROKER_URL = env.url('STAFF_SSO_AUTHBROKER_URL')
+    AUTHBROKER_CLIENT_ID = env.str('AUTHBROKER_CLIENT_ID')
+    AUTHBROKER_CLIENT_SECRET = env.str('AUTHBROKER_CLIENT_SECRET')
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
@@ -426,6 +442,7 @@ REST_FRAMEWORK = {
 }
 
 if FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
+
     INSTALLED_APPS += ['debug_toolbar']
 
     MIDDLEWARE_CLASSES = (
@@ -461,6 +478,3 @@ CELERY_TASK_ALWAYS_EAGER = env.bool('CELERY_ALWAYS_EAGER', False)
 ACTIVITY_STREAM_ACCESS_KEY_ID = env.str('ACTIVITY_STREAM_ACCESS_KEY_ID')
 ACTIVITY_STREAM_SECRET_ACCESS_KEY = \
     env.str('ACTIVITY_STREAM_SECRET_ACCESS_KEY')
-
-
-SKIP_MIGRATE = env.bool('FEATURE_SKIP_MIGRATE', False)
