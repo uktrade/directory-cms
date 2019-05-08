@@ -41,4 +41,5 @@ class GroupInfoAdmin(ModelAdmin):
     )
     form_fields_exclude = ('group',)
 
+
 modeladmin_register(GroupInfoAdmin)

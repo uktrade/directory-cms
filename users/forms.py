@@ -1,13 +1,8 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-
-from django.utils.functional import cached_property
-from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
-
 from wagtail.users import forms as wagtail_forms
-from wagtail.users.views.users import change_user_perm
 
 from core.widgets import Select2Widget
 from groups.models import GroupInfo
@@ -72,18 +67,27 @@ class EntryPointAwareUserActionForm(forms.Form):
             ).distinct()
 
 
-class UserEditForm(EntryPointAwareUserActionForm, wagtail_forms.UserEditForm):
+class UserEditForm(
+    EntryPointAwareUserActionForm,
+    wagtail_forms.UserEditForm,
+):
     pass
 
 
-class UserCreationForm(EntryPointAwareUserActionForm, wagtail_forms.UserCreationForm):
+class UserCreationForm(
+    EntryPointAwareUserActionForm,
+    wagtail_forms.UserCreationForm,
+):
     pass
 
 
 class UserNameWithEmailChoiceField(forms.ModelChoiceField):
 
     def label_from_instance(self, obj):
-        return "{name} <{email}>".format(name=obj.get_full_name(), email=obj.email)
+        return "{name} <{email}>".format(
+            name=obj.get_full_name(),
+            email=obj.email
+        )
 
 
 class SSORequestAccessForm(forms.ModelForm):

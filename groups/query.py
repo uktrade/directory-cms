@@ -1,5 +1,4 @@
 from django.db import models
-from wagtail.users.views.users import change_user_perm
 
 
 class GroupInfoQuerySet(models.QuerySet):
