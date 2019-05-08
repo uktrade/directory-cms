@@ -18,6 +18,7 @@
 - [CMS-13998](https://uktrade.atlassian.net/browse/CMS-13998) Replaced unused `lookup_by_full_path` API endpoint with new `lookup_by_path` API endpoint to support tree-based routing
 - [CMS-1396](https://uktrade.atlassian.net/browse/CMS-1396) Made 'uses_tree_based_routing' field editable in the CMS for all international page types
 - [CI-116](https://uktrade.atlassian.net/browse/CI-116) Moved sections around in content panels, removed cta_text fields and added capital investment image on Invest Landing Page
+- [CMS-1248](https://uktrade.atlassian.net/browse/CMS-1248) Removed JPEG compression overrides to improve image quality
 
 ### Fixed bugs:
 

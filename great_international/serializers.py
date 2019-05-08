@@ -145,7 +145,7 @@ class RelatedArticlePageSerializer(BasePageSerializer):
     )
     teaser = serializers.CharField(max_length=255, source='article_teaser')
     thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg', source='article_image')
+        'fill-640x360', source='article_image')
 
 
 class RelatedCampaignPageSerializer(BasePageSerializer):
@@ -157,7 +157,7 @@ class RelatedCampaignPageSerializer(BasePageSerializer):
     teaser = serializers.CharField(
         max_length=255, source='campaign_teaser')
     thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg',
+        'fill-640x360',
         source='campaign_hero_image')
 
 
@@ -194,7 +194,7 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
     sub_heading = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
     hero_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
+        'fill-640x360', source='hero_image')
     heading_teaser = serializers.CharField()
 
     section_one_body = core_fields.MarkdownToHTMLField()
@@ -312,7 +312,7 @@ class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
     article_teaser = serializers.CharField(max_length=255)
     article_image = wagtail_fields.ImageRenditionField('original')
     article_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg', source='article_image')
+        'fill-640x360', source='article_image')
     article_body_text = core_fields.MarkdownToHTMLField()
 
 
@@ -326,7 +326,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
     invest_title = serializers.CharField(max_length=255)
     invest_content = core_fields.MarkdownToHTMLField()
     invest_image = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg'
+        'fill-640x360'
     )
 
     section_two_heading = serializers.CharField()
@@ -362,7 +362,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
     trade_title = serializers.CharField(max_length=255)
     trade_content = core_fields.MarkdownToHTMLField()
     trade_image = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg'
+        'fill-640x360'
     )
 
     news_title = serializers.CharField(max_length=255)
@@ -371,7 +371,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
     tariffs_description = core_fields.MarkdownToHTMLField()
     tariffs_link = serializers.URLField()
     tariffs_image = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg'
+        'fill-640x360'
     )
     tariffs_call_to_action_text = serializers.CharField(max_length=255)
     study_in_uk_cta_text = serializers.CharField(max_length=255)
@@ -431,7 +431,7 @@ class InternationalArticleListingPageSerializer(
     display_title = serializers.CharField(source='landing_page_title')
     hero_image = wagtail_fields.ImageRenditionField('original')
     hero_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
+        'fill-640x360', source='hero_image')
 
     articles_count = serializers.IntegerField()
     list_teaser = core_fields.MarkdownToHTMLField(allow_null=True)
@@ -482,7 +482,7 @@ class InternationalTopicLandingPageSerializer(
     hero_image = wagtail_fields.ImageRenditionField('original')
 
     hero_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
+        'fill-640x360', source='hero_image')
 
     child_pages = serializers.SerializerMethodField()
 
@@ -515,7 +515,7 @@ class FeatureSerializer(serializers.Serializer):
     heading = serializers.CharField()
     content = core_fields.MarkdownToHTMLField()
     image = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg')
+        'fill-640x360')
     url = serializers.CharField()
 
 
@@ -554,7 +554,7 @@ class InternationalCuratedTopicLandingPageSerializer(BasePageSerializer):
 
     hero_image = wagtail_fields.ImageRenditionField('original')
     hero_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
+        'fill-640x360', source='hero_image')
 
     teaser = serializers.CharField()
 
@@ -589,13 +589,13 @@ class InternationalGuideLandingPageSerializer(BasePageSerializer):
 
     hero_image = wagtail_fields.ImageRenditionField('original')
     hero_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg', source='hero_image')
+        'fill-640x360', source='hero_image')
 
     teaser = serializers.CharField()
 
     section_one_content = core_fields.MarkdownToHTMLField()
     section_one_image = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg')
+        'fill-640x360')
     section_one_image_caption = serializers.CharField()
 
     section_two_heading = serializers.CharField()
@@ -603,7 +603,7 @@ class InternationalGuideLandingPageSerializer(BasePageSerializer):
     section_two_button_text = serializers.CharField()
     section_two_button_url = serializers.CharField()
     section_two_image = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg')
+        'fill-640x360')
 
     guides_section_heading = serializers.CharField()
     guides = serializers.SerializerMethodField()
