@@ -80,16 +80,7 @@ class UserCreationForm(EntryPointAwareUserActionForm, wagtail_forms.UserCreation
     pass
 
 
-class TeamLeaderChoiceField(forms.ModelChoiceField):
-
-    def __init__(self, *args, **kwargs):
-        if 'queryset' not in kwargs:
-            try:
-                group = GroupInfo.objects.all().team_leaders_group.group
-                kwargs['queryset'] = group.user_set.all()
-            except GroupInfo.DoesNotExist:
-                kwargs['queryset'] = get_user_model().objects.none()
-        return super().__init__(*args, **kwargs)
+class UserNameWithEmailChoiceField(forms.ModelChoiceField):
 
     def label_from_instance(self, obj):
         return "{name} <{email}>".format(name=obj.get_full_name(), email=obj.email)
@@ -103,7 +94,7 @@ class SSORequestAccessForm(forms.ModelForm):
         widget=forms.RadioSelect,
     )
 
-    team_leader = TeamLeaderChoiceField(
+    team_leader = UserNameWithEmailChoiceField(
         label="Who is your content team leader?",
         widget=Select2Widget,
     )
@@ -114,6 +105,13 @@ class SSORequestAccessForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        try:
+            group = GroupInfo.objects.all().team_leaders_group.group
+            team_leaders_queryset = group.user_set.all()
+        except GroupInfo.DoesNotExist:
+            team_leaders_queryset = get_user_model().objects.none()
+
+        self.fields["team_leader"].queryset = team_leaders_queryset
         self.fields["team_leader"].widget.select2_options = {
             'placeholder': 'Search available team leaders',
         }
