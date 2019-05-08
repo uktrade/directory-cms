@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from django.urls import reverse
+
 from django.utils.functional import cached_property
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
@@ -10,7 +10,7 @@ from wagtail.users import forms as wagtail_forms
 
 from core.widgets import Select2Widget
 from groups.models import GroupInfo
-
+from groups.fields import RoleChoiceField
 from users.models import UserProfile
 
 
@@ -65,23 +65,31 @@ class UserCreationForm(EntryPointAwareUserActionForm, wagtail_forms.UserCreation
     pass
 
 
-class UserChoiceField(forms.ModelChoiceField):
+class TeamLeaderChoiceField(forms.ModelChoiceField):
+
+    def __init__(self, *args, **kwargs):
+        if 'queryset' not in kwargs:
+            try:
+                group = GroupInfo.objects.all().team_leaders_group.group
+                kwargs['queryset'] = group.user_set.all()
+            except GroupInfo.DoesNotExist:
+                kwargs['queryset'] = get_user_model().objects.none()
+        return super().__init__(*args, **kwargs)
+
     def label_from_instance(self, obj):
         return "{name} <{email}>".format(name=obj.get_full_name(), email=obj.email)
 
 
 class SSORequestAccessForm(forms.ModelForm):
 
-    self_assigned_group = forms.ModelChoiceField(
+    self_assigned_group = RoleChoiceField(
         label="Which best describes your content role?",
-        queryset=GroupInfo.objects.none(),
         empty_label=None,
         widget=forms.RadioSelect,
     )
 
-    team_leader = UserChoiceField(
+    team_leader = TeamLeaderChoiceField(
         label="Who is your content team leader?",
-        queryset=get_user_model().objects.none(),
         widget=Select2Widget,
     )
 
@@ -91,19 +99,6 @@ class SSORequestAccessForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        group_queryset = GroupInfo.objects.visibile_to_anyone()
-        self.fields["self_assigned_group"].queryset = group_queryset
-        self.fields["self_assigned_group"].help_text = format_html(
-            '<a href="{url}" class="action-view-group-info">'
-            'Not sure which role to choose?</a>',
-            url=reverse('group-info')
-        )
-        self.fields["team_leader"].queryset = self.team_leader_queryset
         self.fields["team_leader"].widget.select2_options = {
             'placeholder': 'Search available team leaders',
         }
-
-    @property
-    def team_leader_queryset(self):
-        group = GroupInfo.objects.all().team_leaders_group.group
-        return group.user_set.all()

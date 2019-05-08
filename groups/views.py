@@ -9,6 +9,6 @@ class GroupInfoModalView(generic.TemplateView):
     def get(self, request):
         return render_modal_workflow(
             request, 'wagtailadmin/groups/group_info_modal.html', None, {
-                'queryset': GroupInfo.objects.visible_to_user(request.user),
+                'queryset': GroupInfo.objects.visible_to_anyone(),
             }
         )
