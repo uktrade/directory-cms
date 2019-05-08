@@ -40,3 +40,12 @@ class UserProfile(models.Model):
         null=True,
         on_delete=models.SET_NULL,
     )
+
+    approved_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='approved_users',
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
+    approved_at = models.DateTimeField(null=True)
