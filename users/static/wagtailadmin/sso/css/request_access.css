@@ -1,0 +1,27 @@
+.nav-search,
+.nav-main {
+    display: none;
+}
+
+.intro {
+    color: #444444;
+    font-size: 1.24em;
+    line-height: 1.5em;
+    max-width: 800px;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.field label {
+    display: block;
+    font-weight: normal;
+    float: none;
+}
+
+.field > label {
+    font-weight: bold;
+}
+
+.field .help {
+    font-size: 1.1em;
+}
