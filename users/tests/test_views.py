@@ -1,4 +1,8 @@
+import sys
 import pytest
+from importlib import import_module, reload
+from django.conf import settings
+from django.core.urlresolvers import clear_url_caches
 from django.urls import reverse
 from rest_framework import status
 
@@ -73,7 +77,7 @@ def test_edit_user_view(admin_client):
 
 
 @pytest.mark.django_db
-def test_edit_user_view_invliad(admin_client):
+def test_edit_user_view_invalid(admin_client):
     user = UserFactory(username='test')
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
     response = admin_client.post(
@@ -88,3 +92,31 @@ def test_edit_user_view_invliad(admin_client):
     message = response.context['message']
     assert message == 'The user could not be saved due to errors.'
     assert response.status_code == status.HTTP_200_OK
+
+
+def reload_urlconf(urlconf=None):
+    clear_url_caches()
+    if urlconf is None:
+        urlconf = settings.ROOT_URLCONF
+    if urlconf in sys.modules:
+        reload(sys.modules[urlconf])
+    else:
+        import_module(urlconf)
+
+
+def test_force_staff_sso(client):
+    """Test that URLs and redirects are in place."""
+    settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = True
+    settings.AUTHBROKER_CLIENT_ID = 'debug'
+    settings.AUTHBROKER_CLIENT_SECRET = 'debug'
+    settings.AUTHBROKER_URL = 'https://test.com'
+    reload_urlconf()
+
+    assert reverse('authbroker:login') == '/auth/login/'
+    assert reverse('authbroker:callback') == '/auth/callback/'
+    response = client.get('/admin/login/')
+    assert response.status_code == 302
+    assert response.url == '/auth/login/'
+
+    settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
+    reload_urlconf()

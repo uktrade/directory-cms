@@ -108,6 +108,20 @@ class MyPageSubscriber(AbstractDatabaseCacheSubscriber):
 Note on `subscriptions`: the page is serialized when saved to the cache as a JSON document. The serializer may contain content provided by another page. How do we clear the page's cache when related content changes? By adding the related page to `subscriptions` . Any model defined in `subscriptions` will result in the cache entry being cleared when related content is changed.
 
 
+## Staff SSO
+
+On local machine, SSO is turned off by default.
+If you need to enable, set the `FEATURE_ENFORCE_STAFF_SSO_ENABLED` to `true`.
+You also need to set:
+```
+STAFF_SSO_AUTHBROKER_URL
+AUTHBROKER_CLIENT_ID
+AUTHBROKER_CLIENT_SECRET
+```
+
+Speak to webops or a team mate for the above values.
+
+
 ## Helpful links
 * [Developers Onboarding Checklist](https://uktrade.atlassian.net/wiki/spaces/ED/pages/32243946/Developers+onboarding+checklist)
 * [Gitflow branching](https://uktrade.atlassian.net/wiki/spaces/ED/pages/737182153/Gitflow+and+releases)
