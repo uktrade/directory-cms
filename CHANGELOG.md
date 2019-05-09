@@ -4,6 +4,12 @@
 
 **Implemented enhancements:**
 
+
+## [2019.05.09](https://github.com/uktrade/directory-cms/releases/tag/2019.05.09)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.03...2019.05.09)
+
+**Implemented enhancements:**
+
 - [CMS-1417](https://uktrade.atlassian.net/browse/CMS-1417) Integrate staff SSO
 - [CMS-1462](https://uktrade.atlassian.net/browse/CMS-1462) Remove char limit from fields in `InternationalArticlePage`
 - [CMS-1449](https://uktrade.atlassian.net/browse/CMS-1449) Upgrade to wagtailmedia 0.3.0, for future Wagtail 2.4+ compat
