@@ -16,7 +16,6 @@ from .models import (
     InternationalGuideLandingPage,
     InternationalSectorPage,
     InternationalEUExitFormPage,
-    InternationalEUExitFormSuccessPage,
 )
 
 

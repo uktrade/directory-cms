@@ -59,7 +59,7 @@ def test_models_hierarchy():
     assert models.InternationalEUExitFormPage.allowed_subpage_models() == [
         models.InternationalEUExitFormSuccessPage,
     ]
-    assert models.InternationalEUExitFormSuccessPage.allowed_parent_page_models() == [
+    assert models.InternationalEUExitFormSuccessPage.allowed_parent_page_models() == [  # NOQA
         models.InternationalEUExitFormPage,
     ]
 
