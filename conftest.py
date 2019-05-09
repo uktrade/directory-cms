@@ -6,7 +6,6 @@ from wagtail.images.models import Image
 from wagtail.core.models import Page, Site
 
 from django import db
-from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -15,8 +14,9 @@ from django.utils import translation
 
 from conf import settings
 from groups.models import GroupInfo
+from users.models import UserProfile
 from find_a_supplier.tests.factories import IndustryPageFactory
-
+from users.tests.factories import UserFactory
 
 @pytest.fixture
 def root_page():
@@ -158,18 +158,26 @@ def team_leaders_group(groups_with_info):
 
 @pytest.fixture
 def team_leaders(team_leaders_group):
-    User = get_user_model()
-    user_1 = User.objects.create(
-        username='user1',
-        first_name='User',
-        last_name='One',
-        email='user1@example.com'
-    )
-    user_2 = User.objects.create(
-        username='user2',
-        first_name='User',
-        last_name='Two',
-        email='user2@example.com'
-    )
+    user_1 = UserFactory(username='user1', first_name='Adam')
+    user_2 = UserFactory(username='user2', first_name='Zac')
     team_leaders_group.user_set.set([user_1, user_2])
     return (user_1, user_2)
+
+
+@pytest.fixture
+def approved_user():
+    user = UserFactory(username='approved-user')
+    profile = user.userprofile
+    profile.assignment_status = UserProfile.STATUS_APPROVED
+    profile.save()
+    return user
+
+
+@pytest.fixture
+def user_awaiting_approval(groups_with_info):
+    user = UserFactory(username='awaiting-approval-user')
+    profile = user.userprofile
+    profile.assignment_status = UserProfile.STATUS_AWAITING_APPROVAL
+    profile.self_assigned_group_id = groups_with_info[0].id
+    profile.save()
+    return user

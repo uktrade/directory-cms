@@ -82,9 +82,8 @@ def test_edit_user_view(admin_client):
 
 
 @pytest.mark.django_db
-def test_edit_user_view_invalid(admin_client):
-    user = UserFactory(username='test')
-    url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
+def test_edit_user_view_invalid(admin_client, approved_user):
+    url = reverse('wagtailusers_users:edit', kwargs={'pk': approved_user.pk})
     response = admin_client.post(
         url,
         data={
@@ -97,6 +96,82 @@ def test_edit_user_view_invalid(admin_client):
     message = response.context['message']
     assert message == 'The user could not be saved due to errors.'
     assert response.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
+def test_edit_user_view_warns_administrator_if_user_is_awaiting_approval(
+    admin_client, user_awaiting_approval
+):
+    user = user_awaiting_approval
+    url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
+    response = admin_client.get(url)
+
+    message = response.context['message']
+    assert "This user is awaiting approval" in message
+    assert "requested to be added to the 'Moderators' group" in message
+
+
+@pytest.mark.django_db
+def test_edit_user_view_marks_user_as_approved_if_added_to_group(
+    admin_client, admin_user, user_awaiting_approval
+):
+    user = user_awaiting_approval
+    profile = user_awaiting_approval.userprofile
+    url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
+
+    with patch('users.views.EditUserView.notify_user_of_approval') as mock_method: # noqa
+        response = admin_client.post(url, {
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email,
+            'is_active': True,
+            'groups': [profile.self_assigned_group_id],
+        })
+
+    # Ensure the post was successful
+    assert response.context['message'] == 'User %s updated.' % user.username
+    assert response.status_code == status.HTTP_302_FOUND
+    assert response.url == reverse('wagtailusers_users:index')
+
+    # The UserProfile should have been updated
+    profile.refresh_from_db()
+    assert profile.assignment_status == UserProfile.STATUS_APPROVED
+    assert profile.approved_by_id == admin_user.id
+    assert profile.approved_at is not None
+    # notify_user_of_approval() should have been called too
+    mock_method.assert_called()
+
+
+@pytest.mark.django_db
+def test_edit_user_view_does_not_mark_user_as_approved_if_not_added_to_a_group(
+    admin_client, admin_user, user_awaiting_approval
+):
+    user = user_awaiting_approval
+    profile = user_awaiting_approval.userprofile
+    url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
+
+    with patch('users.views.EditUserView.notify_user_of_approval') as mock_method: # noqa
+        response = admin_client.post(url, {
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email,
+            'is_active': True,
+        })
+
+    # Ensure the post was successful
+    assert response.context['message'] == 'User %s updated.' % user.username
+    assert response.status_code == status.HTTP_302_FOUND
+    assert response.url == reverse('wagtailusers_users:index')
+
+    # The UserProfile should NOT have been updated
+    profile.refresh_from_db()
+    assert profile.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL
+    assert profile.approved_by_id is None
+    assert profile.approved_at is None
+    # notify_user_of_approval() should NOT have been called either
+    mock_method.assert_not_called()
 
 
 def reload_urlconf(urlconf=None):
