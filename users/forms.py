@@ -113,7 +113,8 @@ class SSORequestAccessForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         try:
             group = GroupInfo.objects.all().team_leaders_group.group
-            self.fields["team_leader"].queryset = group.user_set.all()
+            users = group.user_set.all().order_by('first_name', 'last_name')
+            self.fields["team_leader"].queryset = users
         except GroupInfo.DoesNotExist:
             pass
         self.fields["team_leader"].widget.select2_options = {
