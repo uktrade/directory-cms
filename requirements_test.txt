@@ -34,6 +34,7 @@ django-modelcluster==4.3  # via wagtail
 django-modeltranslation==0.12.2
 django-pglocks==1.0.2
 django-redis==4.8.0
+django-staff-sso-client==0.2.0
 django-taggit==0.23.0     # via wagtail
 django-treebeard==4.3     # via wagtail
 django==1.11.20
@@ -58,8 +59,8 @@ markdown==2.6
 mccabe==0.6.1             # via flake8
 mohawk==0.3.4             # via directory-components, sigauth
 more-itertools==4.3.0     # via pytest
+oauthlib==3.0.1           # via requests-oauthlib
 packaging==18.0           # via pytest-sugar
-pathlib2==2.3.3           # via pytest
 pillow==5.3.0             # via wagtail
 pluggy==0.8.0             # via pytest
 psycopg2==2.7.3.2
@@ -77,10 +78,11 @@ pytz==2018.7              # via celery, django, django-modelcluster, wagtail
 raven==5.19.0
 redis==2.10.6             # via celery, django-redis
 requests-mock==1.5.2
+requests-oauthlib==1.2.0  # via django-staff-sso-client
 requests==2.21.0
 s3transfer==0.1.13        # via boto3
 sigauth==4.0.1
-six==1.12.0               # via bleach, fake-factory, faker, freezegun, html5lib, mohawk, more-itertools, packaging, pathlib2, pytest, python-dateutil, requests-mock, w3lib, wagtail
+six==1.12.0               # via bleach, fake-factory, faker, freezegun, html5lib, mohawk, more-itertools, packaging, pytest, python-dateutil, requests-mock, w3lib, wagtail
 sqlparse==0.2.4           # via django-debug-toolbar
 termcolor==1.1.0          # via pytest-sugar
 text-unidecode==1.2       # via faker
@@ -90,7 +92,7 @@ vine==1.1.4               # via amqp
 w3lib==1.20.0
 wagtail-factories==1.0.0
 wagtail==2.3
-wagtailmedia==0.2.0
+wagtailmedia==0.3.0
 webencodings==0.5.1       # via bleach, html5lib
 whitenoise==3.1
 willow==1.1               # via wagtail

@@ -61,3 +61,17 @@ class InternationalCuratedTopicLandingPageSubscriber(
 class InternationalGuideLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalGuideLandingPage
     subscriptions = [models.InternationalArticlePage]
+
+
+class InternationalEUExitFormPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = models.InternationalEUExitFormPage
+    subscriptions = []
+
+
+class InternationalEUExitFormSuccessPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = models.InternationalEUExitFormSuccessPage
+    subscriptions = []

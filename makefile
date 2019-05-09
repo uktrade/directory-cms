@@ -73,7 +73,9 @@ DEBUG_SET_ENV_VARS := \
 	export ENVIRONMENT_CSS_THEME_FILE=core/css/environment_dev_theme.css; \
 	export CELERY_ALWAYS_EAGER=true; \
 	export ACTIVITY_STREAM_ACCESS_KEY_ID=123-id-key; \
-	export ACTIVITY_STREAM_SECRET_ACCESS_KEY=123-secret-key
+	export ACTIVITY_STREAM_SECRET_ACCESS_KEY=123-secret-key; \
+	export FEATURE_ENFORCE_STAFF_SSO_ENABLED=false
+
 
 TEST_SET_ENV_VARS := \
 	export DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage; \
@@ -87,7 +89,8 @@ TEST_SET_ENV_VARS := \
 	export EMAIL_PORT=debug; \
 	export EMAIL_HOST_USER=debug; \
 	export EMAIL_HOST_PASSWORD=debug; \
-	export DEFAULT_FROM_EMAIL=debug
+	export DEFAULT_FROM_EMAIL=debug; \
+	export FEATURE_ENFORCE_STAFF_SSO_ENABLED=false
 
 debug_migrate:
 	$(DEBUG_SET_ENV_VARS) && ./manage.py migrate

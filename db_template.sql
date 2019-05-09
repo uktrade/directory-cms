@@ -1945,14 +1945,14 @@ ALTER SEQUENCE public.great_international_internationalarticlelistingpage_tags_i
 CREATE TABLE public.great_international_internationalarticlepage (
     page_ptr_id integer NOT NULL,
     service_name character varying(100),
-    article_title character varying(255) NOT NULL,
-    article_teaser character varying(255) NOT NULL,
+    article_title text NOT NULL,
+    article_teaser text NOT NULL,
     article_body_text text NOT NULL,
     article_image_id integer,
     related_page_one_id integer,
     related_page_three_id integer,
     related_page_two_id integer,
-    article_subheading character varying(255) NOT NULL,
+    article_subheading text NOT NULL,
     article_body_text_ar text,
     article_body_text_de text,
     article_body_text_en_gb text,
@@ -1969,30 +1969,30 @@ CREATE TABLE public.great_international_internationalarticlepage (
     article_image_ja_id integer,
     article_image_pt_id integer,
     article_image_zh_hans_id integer,
-    article_subheading_ar character varying(255),
-    article_subheading_de character varying(255),
-    article_subheading_en_gb character varying(255),
-    article_subheading_es character varying(255),
-    article_subheading_fr character varying(255),
-    article_subheading_ja character varying(255),
-    article_subheading_pt character varying(255),
-    article_subheading_zh_hans character varying(255),
-    article_teaser_ar character varying(255),
-    article_teaser_de character varying(255),
-    article_teaser_en_gb character varying(255),
-    article_teaser_es character varying(255),
-    article_teaser_fr character varying(255),
-    article_teaser_ja character varying(255),
-    article_teaser_pt character varying(255),
-    article_teaser_zh_hans character varying(255),
-    article_title_ar character varying(255),
-    article_title_de character varying(255),
-    article_title_en_gb character varying(255),
-    article_title_es character varying(255),
-    article_title_fr character varying(255),
-    article_title_ja character varying(255),
-    article_title_pt character varying(255),
-    article_title_zh_hans character varying(255),
+    article_subheading_ar text,
+    article_subheading_de text,
+    article_subheading_en_gb text,
+    article_subheading_es text,
+    article_subheading_fr text,
+    article_subheading_ja text,
+    article_subheading_pt text,
+    article_subheading_zh_hans text,
+    article_teaser_ar text,
+    article_teaser_de text,
+    article_teaser_en_gb text,
+    article_teaser_es text,
+    article_teaser_fr text,
+    article_teaser_ja text,
+    article_teaser_pt text,
+    article_teaser_zh_hans text,
+    article_title_ar text,
+    article_title_de text,
+    article_title_en_gb text,
+    article_title_es text,
+    article_title_fr text,
+    article_title_ja text,
+    article_title_pt text,
+    article_title_zh_hans text,
     related_page_one_ar_id integer,
     related_page_one_de_id integer,
     related_page_one_en_gb_id integer,
@@ -3253,7 +3253,7 @@ CREATE TABLE public.great_international_internationalsectorpage (
     page_ptr_id integer NOT NULL,
     service_name character varying(100),
     heading character varying(255) NOT NULL,
-    sub_heading character varying(255) NOT NULL,
+    sub_heading text NOT NULL,
     heading_teaser text NOT NULL,
     section_one_body text,
     statistic_1_number character varying(255) NOT NULL,
@@ -3721,14 +3721,14 @@ CREATE TABLE public.great_international_internationalsectorpage (
     statistic_6_smallprint_ja character varying(255),
     statistic_6_smallprint_pt character varying(255),
     statistic_6_smallprint_zh_hans character varying(255),
-    sub_heading_ar character varying(255),
-    sub_heading_de character varying(255),
-    sub_heading_en_gb character varying(255),
-    sub_heading_es character varying(255),
-    sub_heading_fr character varying(255),
-    sub_heading_ja character varying(255),
-    sub_heading_pt character varying(255),
-    sub_heading_zh_hans character varying(255),
+    sub_heading_ar text,
+    sub_heading_de text,
+    sub_heading_en_gb text,
+    sub_heading_es text,
+    sub_heading_fr text,
+    sub_heading_ja text,
+    sub_heading_pt text,
+    sub_heading_zh_hans text,
     uses_tree_based_routing boolean NOT NULL
 );
 
@@ -4710,15 +4710,6 @@ CREATE TABLE public.invest_investhomepage (
     subsection_title_two_pt character varying(255),
     subsection_title_two_zh_hans character varying(255),
     service_name character varying(100),
-    setup_guide_call_to_action_text character varying(255) NOT NULL,
-    setup_guide_call_to_action_text_ar character varying(255),
-    setup_guide_call_to_action_text_de character varying(255),
-    setup_guide_call_to_action_text_en_gb character varying(255),
-    setup_guide_call_to_action_text_es character varying(255),
-    setup_guide_call_to_action_text_fr character varying(255),
-    setup_guide_call_to_action_text_ja character varying(255),
-    setup_guide_call_to_action_text_pt character varying(255),
-    setup_guide_call_to_action_text_zh_hans character varying(255),
     setup_guide_content text NOT NULL,
     setup_guide_content_ar text,
     setup_guide_content_de text,
@@ -4881,15 +4872,6 @@ CREATE TABLE public.invest_investhomepage (
     sector_intro_ja text,
     sector_intro_pt text,
     sector_intro_zh_hans text,
-    capital_invest_section_background_image_id integer,
-    capital_invest_section_background_image_ar_id integer,
-    capital_invest_section_background_image_de_id integer,
-    capital_invest_section_background_image_en_gb_id integer,
-    capital_invest_section_background_image_es_id integer,
-    capital_invest_section_background_image_fr_id integer,
-    capital_invest_section_background_image_ja_id integer,
-    capital_invest_section_background_image_pt_id integer,
-    capital_invest_section_background_image_zh_hans_id integer,
     capital_invest_section_content text NOT NULL,
     capital_invest_section_content_ar text,
     capital_invest_section_content_de text,
@@ -4899,15 +4881,6 @@ CREATE TABLE public.invest_investhomepage (
     capital_invest_section_content_ja text,
     capital_invest_section_content_pt text,
     capital_invest_section_content_zh_hans text,
-    capital_invest_section_cta_text character varying(255) NOT NULL,
-    capital_invest_section_cta_text_ar character varying(255),
-    capital_invest_section_cta_text_de character varying(255),
-    capital_invest_section_cta_text_en_gb character varying(255),
-    capital_invest_section_cta_text_es character varying(255),
-    capital_invest_section_cta_text_fr character varying(255),
-    capital_invest_section_cta_text_ja character varying(255),
-    capital_invest_section_cta_text_pt character varying(255),
-    capital_invest_section_cta_text_zh_hans character varying(255),
     capital_invest_section_title character varying(255) NOT NULL,
     capital_invest_section_title_ar character varying(255),
     capital_invest_section_title_de character varying(255),
@@ -4917,15 +4890,6 @@ CREATE TABLE public.invest_investhomepage (
     capital_invest_section_title_ja character varying(255),
     capital_invest_section_title_pt character varying(255),
     capital_invest_section_title_zh_hans character varying(255),
-    capital_invest_section_cta_url character varying(255) NOT NULL,
-    capital_invest_section_cta_url_ar character varying(255),
-    capital_invest_section_cta_url_de character varying(255),
-    capital_invest_section_cta_url_en_gb character varying(255),
-    capital_invest_section_cta_url_es character varying(255),
-    capital_invest_section_cta_url_fr character varying(255),
-    capital_invest_section_cta_url_ja character varying(255),
-    capital_invest_section_cta_url_pt character varying(255),
-    capital_invest_section_cta_url_zh_hans character varying(255),
     contact_section_call_to_action_url character varying(255) NOT NULL,
     contact_section_call_to_action_url_ar character varying(255),
     contact_section_call_to_action_url_de character varying(255),
@@ -4971,7 +4935,43 @@ CREATE TABLE public.invest_investhomepage (
     setup_guide_call_to_action_url_ja character varying(255),
     setup_guide_call_to_action_url_pt character varying(255),
     setup_guide_call_to_action_url_zh_hans character varying(255),
-    uses_tree_based_routing boolean NOT NULL
+    uses_tree_based_routing boolean NOT NULL,
+    isd_section_image_id integer,
+    isd_section_image_ar_id integer,
+    isd_section_image_de_id integer,
+    isd_section_image_en_gb_id integer,
+    isd_section_image_es_id integer,
+    isd_section_image_fr_id integer,
+    isd_section_image_ja_id integer,
+    isd_section_image_pt_id integer,
+    isd_section_image_zh_hans_id integer,
+    isd_section_text text NOT NULL,
+    isd_section_text_ar text,
+    isd_section_text_de text,
+    isd_section_text_en_gb text,
+    isd_section_text_es text,
+    isd_section_text_fr text,
+    isd_section_text_ja text,
+    isd_section_text_pt text,
+    isd_section_text_zh_hans text,
+    isd_section_title character varying(255) NOT NULL,
+    isd_section_title_ar character varying(255),
+    isd_section_title_de character varying(255),
+    isd_section_title_en_gb character varying(255),
+    isd_section_title_es character varying(255),
+    isd_section_title_fr character varying(255),
+    isd_section_title_ja character varying(255),
+    isd_section_title_pt character varying(255),
+    isd_section_title_zh_hans character varying(255),
+    capital_invest_section_image_id integer,
+    capital_invest_section_image_ar_id integer,
+    capital_invest_section_image_de_id integer,
+    capital_invest_section_image_en_gb_id integer,
+    capital_invest_section_image_es_id integer,
+    capital_invest_section_image_fr_id integer,
+    capital_invest_section_image_ja_id integer,
+    capital_invest_section_image_pt_id integer,
+    capital_invest_section_image_zh_hans_id integer
 );
 
 
@@ -5528,6 +5528,36 @@ ALTER SEQUENCE public.taggit_taggeditem_id_seq OWNED BY public.taggit_taggeditem
 
 
 --
+-- Name: users_userprofile; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.users_userprofile (
+    id integer NOT NULL,
+    assignment_status character varying(30) NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+--
+-- Name: users_userprofile_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.users_userprofile_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: users_userprofile_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.users_userprofile_id_seq OWNED BY public.users_userprofile.id;
+
+
+--
 -- Name: wagtailcore_collection; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -5712,14 +5742,6 @@ CREATE TABLE public.wagtailcore_page (
     live_revision_id integer,
     last_published_at timestamp with time zone,
     draft_title character varying(255) NOT NULL,
-    search_description_en_gb text,
-    search_description_de text,
-    search_description_ja text,
-    search_description_zh_hans text,
-    search_description_fr text,
-    search_description_es text,
-    search_description_pt text,
-    search_description_ar text,
     title_en_gb character varying(255),
     title_de character varying(255),
     title_ja character varying(255),
@@ -5736,6 +5758,14 @@ CREATE TABLE public.wagtailcore_page (
     seo_title_es character varying(255),
     seo_title_pt character varying(255),
     seo_title_ar character varying(255),
+    search_description_en_gb text,
+    search_description_de text,
+    search_description_ja text,
+    search_description_zh_hans text,
+    search_description_fr text,
+    search_description_es text,
+    search_description_pt text,
+    search_description_ar text,
     CONSTRAINT wagtailcore_page_depth_check CHECK ((depth >= 0)),
     CONSTRAINT wagtailcore_page_numchild_check CHECK ((numchild >= 0))
 );
@@ -6431,6 +6461,13 @@ ALTER TABLE ONLY public.taggit_taggeditem ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
+-- Name: users_userprofile id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users_userprofile ALTER COLUMN id SET DEFAULT nextval('public.users_userprofile_id_seq'::regclass);
+
+
+--
 -- Name: wagtailcore_collection id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -6653,228 +6690,231 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 38	Can add routing settings	15	add_routingsettings
 39	Can change routing settings	15	change_routingsettings
 40	Can delete routing settings	15	delete_routingsettings
-41	Can add form submission	16	add_formsubmission
-42	Can change form submission	16	change_formsubmission
-43	Can delete form submission	16	delete_formsubmission
-44	Can add embed	17	add_embed
-45	Can change embed	17	change_embed
-46	Can delete embed	17	delete_embed
-47	Can add user profile	18	add_userprofile
-48	Can change user profile	18	change_userprofile
-49	Can delete user profile	18	delete_userprofile
-50	Can add rendition	19	add_rendition
-51	Can change rendition	19	change_rendition
-52	Can delete rendition	19	delete_rendition
-53	Can add query	20	add_query
-54	Can change query	20	change_query
-55	Can delete query	20	delete_query
-56	Can add Query Daily Hits	21	add_querydailyhits
-57	Can change Query Daily Hits	21	change_querydailyhits
-58	Can delete Query Daily Hits	21	delete_querydailyhits
-59	Can add page	1	add_page
-60	Can change page	1	change_page
-61	Can delete page	1	delete_page
-62	Can add group page permission	22	add_grouppagepermission
-63	Can change group page permission	22	change_grouppagepermission
-64	Can delete group page permission	22	delete_grouppagepermission
-65	Can add page revision	23	add_pagerevision
-66	Can change page revision	23	change_pagerevision
-67	Can delete page revision	23	delete_pagerevision
-68	Can add page view restriction	24	add_pageviewrestriction
-69	Can change page view restriction	24	change_pageviewrestriction
-70	Can delete page view restriction	24	delete_pageviewrestriction
-71	Can add site	25	add_site
-72	Can change site	25	change_site
-73	Can delete site	25	delete_site
-74	Can add collection	26	add_collection
-75	Can change collection	26	change_collection
-76	Can delete collection	26	delete_collection
-77	Can add group collection permission	27	add_groupcollectionpermission
-78	Can change group collection permission	27	change_groupcollectionpermission
-79	Can delete group collection permission	27	delete_groupcollectionpermission
-80	Can add collection view restriction	28	add_collectionviewrestriction
-81	Can change collection view restriction	28	change_collectionviewrestriction
-82	Can delete collection view restriction	28	delete_collectionviewrestriction
-83	Can add Tag	29	add_tag
-84	Can change Tag	29	change_tag
-85	Can delete Tag	29	delete_tag
-86	Can add Tagged Item	30	add_taggeditem
-87	Can change Tagged Item	30	change_taggeditem
-88	Can delete Tagged Item	30	delete_taggeditem
-89	Can add industry page	31	add_industrypage
-90	Can change industry page	31	change_industrypage
-91	Can delete industry page	31	delete_industrypage
-92	Can add industry article page	32	add_industryarticlepage
-93	Can change industry article page	32	change_industryarticlepage
-94	Can delete industry article page	32	delete_industryarticlepage
-95	Can add industry landing page	33	add_industrylandingpage
-96	Can change industry landing page	33	change_industrylandingpage
-97	Can delete industry landing page	33	delete_industrylandingpage
-98	Can add landing page	34	add_landingpage
-99	Can change landing page	34	change_landingpage
-100	Can delete landing page	34	delete_landingpage
-101	Can add industry contact page	35	add_industrycontactpage
-102	Can change industry contact page	35	change_industrycontactpage
-103	Can delete industry contact page	35	delete_industrycontactpage
-104	Can add find a supplier app	36	add_findasupplierapp
-105	Can change find a supplier app	36	change_findasupplierapp
-106	Can delete find a supplier app	36	delete_findasupplierapp
-107	Can add industry page article summary	37	add_industrypagearticlesummary
-108	Can change industry page article summary	37	change_industrypagearticlesummary
-109	Can delete industry page article summary	37	delete_industrypagearticlesummary
-110	Can add landing page article summary	38	add_landingpagearticlesummary
-111	Can change landing page article summary	38	change_landingpagearticlesummary
-112	Can delete landing page article summary	38	delete_landingpagearticlesummary
-113	Can add terms and conditions page	39	add_termsandconditionspage
-114	Can change terms and conditions page	39	change_termsandconditionspage
-115	Can delete terms and conditions page	39	delete_termsandconditionspage
-116	Can add export readiness app	40	add_exportreadinessapp
-117	Can change export readiness app	40	change_exportreadinessapp
-118	Can delete export readiness app	40	delete_exportreadinessapp
-119	Can add privacy and cookies page	41	add_privacyandcookiespage
-120	Can change privacy and cookies page	41	change_privacyandcookiespage
-121	Can delete privacy and cookies page	41	delete_privacyandcookiespage
-122	Can add performance dashboard page	42	add_performancedashboardpage
-123	Can change performance dashboard page	42	change_performancedashboardpage
-124	Can delete performance dashboard page	42	delete_performancedashboardpage
-125	Can add performance dashboard notes page	43	add_performancedashboardnotespage
-126	Can change performance dashboard notes page	43	change_performancedashboardnotespage
-127	Can delete performance dashboard notes page	43	delete_performancedashboardnotespage
-128	Can add article listing page	44	add_articlelistingpage
-129	Can change article listing page	44	change_articlelistingpage
-130	Can delete article listing page	44	delete_articlelistingpage
-131	Can add article page	45	add_articlepage
-132	Can change article page	45	change_articlepage
-133	Can delete article page	45	delete_articlepage
-134	Can add topic landing page	46	add_topiclandingpage
-135	Can change topic landing page	46	change_topiclandingpage
-136	Can delete topic landing page	46	delete_topiclandingpage
-137	Can add home page	47	add_homepage
-138	Can change home page	47	change_homepage
-139	Can delete home page	47	delete_homepage
-140	Can add eu exit international form page	48	add_euexitinternationalformpage
-141	Can change eu exit international form page	48	change_euexitinternationalformpage
-142	Can delete eu exit international form page	48	delete_euexitinternationalformpage
-143	Can add tag	49	add_tag
-144	Can change tag	49	change_tag
-145	Can delete tag	49	delete_tag
-146	Can add eu exit domestic form page	50	add_euexitdomesticformpage
-147	Can change eu exit domestic form page	50	change_euexitdomesticformpage
-148	Can delete eu exit domestic form page	50	delete_euexitdomesticformpage
-149	Can add eu exit form success page	51	add_euexitformsuccesspage
-150	Can change eu exit form success page	51	change_euexitformsuccesspage
-151	Can delete eu exit form success page	51	delete_euexitformsuccesspage
-152	Can add international landing page	52	add_internationallandingpage
-153	Can change international landing page	52	change_internationallandingpage
-154	Can delete international landing page	52	delete_internationallandingpage
-155	Can add contact us guidance page	53	add_contactusguidancepage
-156	Can change contact us guidance page	53	change_contactusguidancepage
-157	Can delete contact us guidance page	53	delete_contactusguidancepage
-158	Can add contact success page	54	add_contactsuccesspage
-159	Can change contact success page	54	change_contactsuccesspage
-160	Can delete contact success page	54	delete_contactsuccesspage
-161	Can add get finance page	55	add_getfinancepage
-162	Can change get finance page	55	change_getfinancepage
-163	Can delete get finance page	55	delete_getfinancepage
-164	Can add campaign page	56	add_campaignpage
-165	Can change campaign page	56	change_campaignpage
-166	Can delete campaign page	56	delete_campaignpage
-167	Can add marketing pages	57	add_marketingpages
-168	Can change marketing pages	57	change_marketingpages
-169	Can delete marketing pages	57	delete_marketingpages
-170	Can add contact success pages	58	add_contactsuccesspages
-171	Can change contact success pages	58	change_contactsuccesspages
-172	Can delete contact success pages	58	delete_contactsuccesspages
-173	Can add contact us guidance pages	59	add_contactusguidancepages
-174	Can change contact us guidance pages	59	change_contactusguidancepages
-175	Can delete contact us guidance pages	59	delete_contactusguidancepages
-176	Can add country guide page	60	add_countryguidepage
-177	Can change country guide page	60	change_countryguidepage
-178	Can delete country guide page	60	delete_countryguidepage
-179	Can add superregion page	61	add_superregionpage
-180	Can change superregion page	61	change_superregionpage
-181	Can delete superregion page	61	delete_superregionpage
-182	Can add site policy pages	62	add_sitepolicypages
-183	Can change site policy pages	62	change_sitepolicypages
-184	Can delete site policy pages	62	delete_sitepolicypages
-185	Can add eu exit form pages	63	add_euexitformpages
-186	Can change eu exit form pages	63	change_euexitformpages
-187	Can delete eu exit form pages	63	delete_euexitformpages
-188	Can add Forms	64	add_allcontactpagespage
-189	Can change Forms	64	change_allcontactpagespage
-190	Can delete Forms	64	delete_allcontactpagespage
-191	Can add great international app	65	add_greatinternationalapp
-192	Can change great international app	65	change_greatinternationalapp
-193	Can delete great international app	65	delete_greatinternationalapp
-194	Can add international article page	66	add_internationalarticlepage
-195	Can change international article page	66	change_internationalarticlepage
-196	Can delete international article page	66	delete_internationalarticlepage
-197	Can add international home page	67	add_internationalhomepage
-198	Can change international home page	67	change_internationalhomepage
-199	Can delete international home page	67	delete_internationalhomepage
-200	Can add international campaign page	68	add_internationalcampaignpage
-201	Can change international campaign page	68	change_internationalcampaignpage
-202	Can delete international campaign page	68	delete_internationalcampaignpage
-203	Can add international article listing page	69	add_internationalarticlelistingpage
-204	Can change international article listing page	69	change_internationalarticlelistingpage
-205	Can delete international article listing page	69	delete_internationalarticlelistingpage
-206	Can add international topic landing page	70	add_internationaltopiclandingpage
-207	Can change international topic landing page	70	change_internationaltopiclandingpage
-208	Can delete international topic landing page	70	delete_internationaltopiclandingpage
-209	Can add international region page	71	add_internationalregionpage
-210	Can change international region page	71	change_internationalregionpage
-211	Can delete international region page	71	delete_internationalregionpage
-212	Can add international localised folder page	72	add_internationallocalisedfolderpage
-213	Can change international localised folder page	72	change_internationallocalisedfolderpage
-214	Can delete international localised folder page	72	delete_internationallocalisedfolderpage
-215	Can add international sector page	73	add_internationalsectorpage
-216	Can change international sector page	73	change_internationalsectorpage
-217	Can delete international sector page	73	delete_internationalsectorpage
-218	Can add international curated topic landing page	74	add_internationalcuratedtopiclandingpage
-219	Can change international curated topic landing page	74	change_internationalcuratedtopiclandingpage
-220	Can delete international curated topic landing page	74	delete_internationalcuratedtopiclandingpage
-221	Can add international guide landing page	75	add_internationalguidelandingpage
-222	Can change international guide landing page	75	change_internationalguidelandingpage
-223	Can delete international guide landing page	75	delete_internationalguidelandingpage
-224	Can add info page	76	add_infopage
-225	Can change info page	76	change_infopage
-226	Can delete info page	76	delete_infopage
-227	Can add invest app	77	add_investapp
-228	Can change invest app	77	change_investapp
-229	Can delete invest app	77	delete_investapp
-230	Can add invest home page	78	add_investhomepage
-231	Can change invest home page	78	change_investhomepage
-232	Can delete invest home page	78	delete_investhomepage
-233	Can add sector landing page	79	add_sectorlandingpage
-234	Can change sector landing page	79	change_sectorlandingpage
-235	Can delete sector landing page	79	delete_sectorlandingpage
-236	Can add sector page	80	add_sectorpage
-237	Can change sector page	80	change_sectorpage
-238	Can delete sector page	80	delete_sectorpage
-239	Can add setup guide landing page	81	add_setupguidelandingpage
-240	Can change setup guide landing page	81	change_setupguidelandingpage
-241	Can delete setup guide landing page	81	delete_setupguidelandingpage
-242	Can add setup guide page	82	add_setupguidepage
-243	Can change setup guide page	82	change_setupguidepage
-244	Can delete setup guide page	82	delete_setupguidepage
-245	Can add region landing page	83	add_regionlandingpage
-246	Can change region landing page	83	change_regionlandingpage
-247	Can delete region landing page	83	delete_regionlandingpage
-248	Can add high potential opportunity detail page	84	add_highpotentialopportunitydetailpage
-249	Can change high potential opportunity detail page	84	change_highpotentialopportunitydetailpage
-250	Can delete high potential opportunity detail page	84	delete_highpotentialopportunitydetailpage
-251	Can add high potential opportunity form page	85	add_highpotentialopportunityformpage
-252	Can change high potential opportunity form page	85	change_highpotentialopportunityformpage
-253	Can delete high potential opportunity form page	85	delete_highpotentialopportunityformpage
-254	Can add high potential opportunity form success page	86	add_highpotentialopportunityformsuccesspage
-255	Can change high potential opportunity form success page	86	change_highpotentialopportunityformsuccesspage
-256	Can delete high potential opportunity form success page	86	delete_highpotentialopportunityformsuccesspage
-257	Can add banner component	87	add_bannercomponent
-258	Can change banner component	87	change_bannercomponent
-259	Can delete banner component	87	delete_bannercomponent
-260	Can add components app	88	add_componentsapp
-261	Can change components app	88	change_componentsapp
-262	Can delete components app	88	delete_componentsapp
+41	Can add user profile	16	add_userprofile
+42	Can change user profile	16	change_userprofile
+43	Can delete user profile	16	delete_userprofile
+44	Can add form submission	17	add_formsubmission
+45	Can change form submission	17	change_formsubmission
+46	Can delete form submission	17	delete_formsubmission
+47	Can add embed	18	add_embed
+48	Can change embed	18	change_embed
+49	Can delete embed	18	delete_embed
+50	Can add user profile	19	add_userprofile
+51	Can change user profile	19	change_userprofile
+52	Can delete user profile	19	delete_userprofile
+53	Can add rendition	20	add_rendition
+54	Can change rendition	20	change_rendition
+55	Can delete rendition	20	delete_rendition
+56	Can add query	21	add_query
+57	Can change query	21	change_query
+58	Can delete query	21	delete_query
+59	Can add Query Daily Hits	22	add_querydailyhits
+60	Can change Query Daily Hits	22	change_querydailyhits
+61	Can delete Query Daily Hits	22	delete_querydailyhits
+62	Can add page	1	add_page
+63	Can change page	1	change_page
+64	Can delete page	1	delete_page
+65	Can add group page permission	23	add_grouppagepermission
+66	Can change group page permission	23	change_grouppagepermission
+67	Can delete group page permission	23	delete_grouppagepermission
+68	Can add page revision	24	add_pagerevision
+69	Can change page revision	24	change_pagerevision
+70	Can delete page revision	24	delete_pagerevision
+71	Can add page view restriction	25	add_pageviewrestriction
+72	Can change page view restriction	25	change_pageviewrestriction
+73	Can delete page view restriction	25	delete_pageviewrestriction
+74	Can add site	26	add_site
+75	Can change site	26	change_site
+76	Can delete site	26	delete_site
+77	Can add collection	27	add_collection
+78	Can change collection	27	change_collection
+79	Can delete collection	27	delete_collection
+80	Can add group collection permission	28	add_groupcollectionpermission
+81	Can change group collection permission	28	change_groupcollectionpermission
+82	Can delete group collection permission	28	delete_groupcollectionpermission
+83	Can add collection view restriction	29	add_collectionviewrestriction
+84	Can change collection view restriction	29	change_collectionviewrestriction
+85	Can delete collection view restriction	29	delete_collectionviewrestriction
+86	Can add Tag	30	add_tag
+87	Can change Tag	30	change_tag
+88	Can delete Tag	30	delete_tag
+89	Can add Tagged Item	31	add_taggeditem
+90	Can change Tagged Item	31	change_taggeditem
+91	Can delete Tagged Item	31	delete_taggeditem
+92	Can add industry page	32	add_industrypage
+93	Can change industry page	32	change_industrypage
+94	Can delete industry page	32	delete_industrypage
+95	Can add industry article page	33	add_industryarticlepage
+96	Can change industry article page	33	change_industryarticlepage
+97	Can delete industry article page	33	delete_industryarticlepage
+98	Can add industry landing page	34	add_industrylandingpage
+99	Can change industry landing page	34	change_industrylandingpage
+100	Can delete industry landing page	34	delete_industrylandingpage
+101	Can add landing page	35	add_landingpage
+102	Can change landing page	35	change_landingpage
+103	Can delete landing page	35	delete_landingpage
+104	Can add industry contact page	36	add_industrycontactpage
+105	Can change industry contact page	36	change_industrycontactpage
+106	Can delete industry contact page	36	delete_industrycontactpage
+107	Can add find a supplier app	37	add_findasupplierapp
+108	Can change find a supplier app	37	change_findasupplierapp
+109	Can delete find a supplier app	37	delete_findasupplierapp
+110	Can add industry page article summary	38	add_industrypagearticlesummary
+111	Can change industry page article summary	38	change_industrypagearticlesummary
+112	Can delete industry page article summary	38	delete_industrypagearticlesummary
+113	Can add landing page article summary	39	add_landingpagearticlesummary
+114	Can change landing page article summary	39	change_landingpagearticlesummary
+115	Can delete landing page article summary	39	delete_landingpagearticlesummary
+116	Can add terms and conditions page	40	add_termsandconditionspage
+117	Can change terms and conditions page	40	change_termsandconditionspage
+118	Can delete terms and conditions page	40	delete_termsandconditionspage
+119	Can add export readiness app	41	add_exportreadinessapp
+120	Can change export readiness app	41	change_exportreadinessapp
+121	Can delete export readiness app	41	delete_exportreadinessapp
+122	Can add privacy and cookies page	42	add_privacyandcookiespage
+123	Can change privacy and cookies page	42	change_privacyandcookiespage
+124	Can delete privacy and cookies page	42	delete_privacyandcookiespage
+125	Can add performance dashboard page	43	add_performancedashboardpage
+126	Can change performance dashboard page	43	change_performancedashboardpage
+127	Can delete performance dashboard page	43	delete_performancedashboardpage
+128	Can add performance dashboard notes page	44	add_performancedashboardnotespage
+129	Can change performance dashboard notes page	44	change_performancedashboardnotespage
+130	Can delete performance dashboard notes page	44	delete_performancedashboardnotespage
+131	Can add article listing page	45	add_articlelistingpage
+132	Can change article listing page	45	change_articlelistingpage
+133	Can delete article listing page	45	delete_articlelistingpage
+134	Can add article page	46	add_articlepage
+135	Can change article page	46	change_articlepage
+136	Can delete article page	46	delete_articlepage
+137	Can add topic landing page	47	add_topiclandingpage
+138	Can change topic landing page	47	change_topiclandingpage
+139	Can delete topic landing page	47	delete_topiclandingpage
+140	Can add home page	48	add_homepage
+141	Can change home page	48	change_homepage
+142	Can delete home page	48	delete_homepage
+143	Can add eu exit international form page	49	add_euexitinternationalformpage
+144	Can change eu exit international form page	49	change_euexitinternationalformpage
+145	Can delete eu exit international form page	49	delete_euexitinternationalformpage
+146	Can add tag	50	add_tag
+147	Can change tag	50	change_tag
+148	Can delete tag	50	delete_tag
+149	Can add eu exit domestic form page	51	add_euexitdomesticformpage
+150	Can change eu exit domestic form page	51	change_euexitdomesticformpage
+151	Can delete eu exit domestic form page	51	delete_euexitdomesticformpage
+152	Can add eu exit form success page	52	add_euexitformsuccesspage
+153	Can change eu exit form success page	52	change_euexitformsuccesspage
+154	Can delete eu exit form success page	52	delete_euexitformsuccesspage
+155	Can add international landing page	53	add_internationallandingpage
+156	Can change international landing page	53	change_internationallandingpage
+157	Can delete international landing page	53	delete_internationallandingpage
+158	Can add contact us guidance page	54	add_contactusguidancepage
+159	Can change contact us guidance page	54	change_contactusguidancepage
+160	Can delete contact us guidance page	54	delete_contactusguidancepage
+161	Can add contact success page	55	add_contactsuccesspage
+162	Can change contact success page	55	change_contactsuccesspage
+163	Can delete contact success page	55	delete_contactsuccesspage
+164	Can add get finance page	56	add_getfinancepage
+165	Can change get finance page	56	change_getfinancepage
+166	Can delete get finance page	56	delete_getfinancepage
+167	Can add campaign page	57	add_campaignpage
+168	Can change campaign page	57	change_campaignpage
+169	Can delete campaign page	57	delete_campaignpage
+170	Can add marketing pages	58	add_marketingpages
+171	Can change marketing pages	58	change_marketingpages
+172	Can delete marketing pages	58	delete_marketingpages
+173	Can add contact success pages	59	add_contactsuccesspages
+174	Can change contact success pages	59	change_contactsuccesspages
+175	Can delete contact success pages	59	delete_contactsuccesspages
+176	Can add contact us guidance pages	60	add_contactusguidancepages
+177	Can change contact us guidance pages	60	change_contactusguidancepages
+178	Can delete contact us guidance pages	60	delete_contactusguidancepages
+179	Can add country guide page	61	add_countryguidepage
+180	Can change country guide page	61	change_countryguidepage
+181	Can delete country guide page	61	delete_countryguidepage
+182	Can add superregion page	62	add_superregionpage
+183	Can change superregion page	62	change_superregionpage
+184	Can delete superregion page	62	delete_superregionpage
+185	Can add site policy pages	63	add_sitepolicypages
+186	Can change site policy pages	63	change_sitepolicypages
+187	Can delete site policy pages	63	delete_sitepolicypages
+188	Can add eu exit form pages	64	add_euexitformpages
+189	Can change eu exit form pages	64	change_euexitformpages
+190	Can delete eu exit form pages	64	delete_euexitformpages
+191	Can add Forms	65	add_allcontactpagespage
+192	Can change Forms	65	change_allcontactpagespage
+193	Can delete Forms	65	delete_allcontactpagespage
+194	Can add great international app	66	add_greatinternationalapp
+195	Can change great international app	66	change_greatinternationalapp
+196	Can delete great international app	66	delete_greatinternationalapp
+197	Can add international article page	67	add_internationalarticlepage
+198	Can change international article page	67	change_internationalarticlepage
+199	Can delete international article page	67	delete_internationalarticlepage
+200	Can add international home page	68	add_internationalhomepage
+201	Can change international home page	68	change_internationalhomepage
+202	Can delete international home page	68	delete_internationalhomepage
+203	Can add international campaign page	69	add_internationalcampaignpage
+204	Can change international campaign page	69	change_internationalcampaignpage
+205	Can delete international campaign page	69	delete_internationalcampaignpage
+206	Can add international article listing page	70	add_internationalarticlelistingpage
+207	Can change international article listing page	70	change_internationalarticlelistingpage
+208	Can delete international article listing page	70	delete_internationalarticlelistingpage
+209	Can add international topic landing page	71	add_internationaltopiclandingpage
+210	Can change international topic landing page	71	change_internationaltopiclandingpage
+211	Can delete international topic landing page	71	delete_internationaltopiclandingpage
+212	Can add international region page	72	add_internationalregionpage
+213	Can change international region page	72	change_internationalregionpage
+214	Can delete international region page	72	delete_internationalregionpage
+215	Can add international localised folder page	73	add_internationallocalisedfolderpage
+216	Can change international localised folder page	73	change_internationallocalisedfolderpage
+217	Can delete international localised folder page	73	delete_internationallocalisedfolderpage
+218	Can add international sector page	74	add_internationalsectorpage
+219	Can change international sector page	74	change_internationalsectorpage
+220	Can delete international sector page	74	delete_internationalsectorpage
+221	Can add international curated topic landing page	75	add_internationalcuratedtopiclandingpage
+222	Can change international curated topic landing page	75	change_internationalcuratedtopiclandingpage
+223	Can delete international curated topic landing page	75	delete_internationalcuratedtopiclandingpage
+224	Can add international guide landing page	76	add_internationalguidelandingpage
+225	Can change international guide landing page	76	change_internationalguidelandingpage
+226	Can delete international guide landing page	76	delete_internationalguidelandingpage
+227	Can add info page	77	add_infopage
+228	Can change info page	77	change_infopage
+229	Can delete info page	77	delete_infopage
+230	Can add invest app	78	add_investapp
+231	Can change invest app	78	change_investapp
+232	Can delete invest app	78	delete_investapp
+233	Can add invest home page	79	add_investhomepage
+234	Can change invest home page	79	change_investhomepage
+235	Can delete invest home page	79	delete_investhomepage
+236	Can add sector landing page	80	add_sectorlandingpage
+237	Can change sector landing page	80	change_sectorlandingpage
+238	Can delete sector landing page	80	delete_sectorlandingpage
+239	Can add sector page	81	add_sectorpage
+240	Can change sector page	81	change_sectorpage
+241	Can delete sector page	81	delete_sectorpage
+242	Can add setup guide landing page	82	add_setupguidelandingpage
+243	Can change setup guide landing page	82	change_setupguidelandingpage
+244	Can delete setup guide landing page	82	delete_setupguidelandingpage
+245	Can add setup guide page	83	add_setupguidepage
+246	Can change setup guide page	83	change_setupguidepage
+247	Can delete setup guide page	83	delete_setupguidepage
+248	Can add region landing page	84	add_regionlandingpage
+249	Can change region landing page	84	change_regionlandingpage
+250	Can delete region landing page	84	delete_regionlandingpage
+251	Can add high potential opportunity detail page	85	add_highpotentialopportunitydetailpage
+252	Can change high potential opportunity detail page	85	change_highpotentialopportunitydetailpage
+253	Can delete high potential opportunity detail page	85	delete_highpotentialopportunitydetailpage
+254	Can add high potential opportunity form page	86	add_highpotentialopportunityformpage
+255	Can change high potential opportunity form page	86	change_highpotentialopportunityformpage
+256	Can delete high potential opportunity form page	86	delete_highpotentialopportunityformpage
+257	Can add high potential opportunity form success page	87	add_highpotentialopportunityformsuccesspage
+258	Can change high potential opportunity form success page	87	change_highpotentialopportunityformsuccesspage
+259	Can delete high potential opportunity form success page	87	delete_highpotentialopportunityformsuccesspage
+260	Can add banner component	88	add_bannercomponent
+261	Can change banner component	88	change_bannercomponent
+262	Can delete banner component	88	delete_bannercomponent
+263	Can add components app	89	add_componentsapp
+264	Can change components app	89	change_componentsapp
+265	Can delete components app	89	delete_componentsapp
 \.
 
 
@@ -6970,79 +7010,80 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 13	core	breadcrumb
 14	core	documenthash
 15	core	routingsettings
-16	wagtailforms	formsubmission
-17	wagtailembeds	embed
-18	wagtailusers	userprofile
-19	wagtailimages	rendition
-20	wagtailsearch	query
-21	wagtailsearch	querydailyhits
-22	wagtailcore	grouppagepermission
-23	wagtailcore	pagerevision
-24	wagtailcore	pageviewrestriction
-25	wagtailcore	site
-26	wagtailcore	collection
-27	wagtailcore	groupcollectionpermission
-28	wagtailcore	collectionviewrestriction
-29	taggit	tag
-30	taggit	taggeditem
-31	find_a_supplier	industrypage
-32	find_a_supplier	industryarticlepage
-33	find_a_supplier	industrylandingpage
-34	find_a_supplier	landingpage
-35	find_a_supplier	industrycontactpage
-36	find_a_supplier	findasupplierapp
-37	find_a_supplier	industrypagearticlesummary
-38	find_a_supplier	landingpagearticlesummary
-39	export_readiness	termsandconditionspage
-40	export_readiness	exportreadinessapp
-41	export_readiness	privacyandcookiespage
-42	export_readiness	performancedashboardpage
-43	export_readiness	performancedashboardnotespage
-44	export_readiness	articlelistingpage
-45	export_readiness	articlepage
-46	export_readiness	topiclandingpage
-47	export_readiness	homepage
-48	export_readiness	euexitinternationalformpage
-49	export_readiness	tag
-50	export_readiness	euexitdomesticformpage
-51	export_readiness	euexitformsuccesspage
-52	export_readiness	internationallandingpage
-53	export_readiness	contactusguidancepage
-54	export_readiness	contactsuccesspage
-55	export_readiness	getfinancepage
-56	export_readiness	campaignpage
-57	export_readiness	marketingpages
-58	export_readiness	contactsuccesspages
-59	export_readiness	contactusguidancepages
-60	export_readiness	countryguidepage
-61	export_readiness	superregionpage
-62	export_readiness	sitepolicypages
-63	export_readiness	euexitformpages
-64	export_readiness	allcontactpagespage
-65	great_international	greatinternationalapp
-66	great_international	internationalarticlepage
-67	great_international	internationalhomepage
-68	great_international	internationalcampaignpage
-69	great_international	internationalarticlelistingpage
-70	great_international	internationaltopiclandingpage
-71	great_international	internationalregionpage
-72	great_international	internationallocalisedfolderpage
-73	great_international	internationalsectorpage
-74	great_international	internationalcuratedtopiclandingpage
-75	great_international	internationalguidelandingpage
-76	invest	infopage
-77	invest	investapp
-78	invest	investhomepage
-79	invest	sectorlandingpage
-80	invest	sectorpage
-81	invest	setupguidelandingpage
-82	invest	setupguidepage
-83	invest	regionlandingpage
-84	invest	highpotentialopportunitydetailpage
-85	invest	highpotentialopportunityformpage
-86	invest	highpotentialopportunityformsuccesspage
-87	components	bannercomponent
-88	components	componentsapp
+16	users	userprofile
+17	wagtailforms	formsubmission
+18	wagtailembeds	embed
+19	wagtailusers	userprofile
+20	wagtailimages	rendition
+21	wagtailsearch	query
+22	wagtailsearch	querydailyhits
+23	wagtailcore	grouppagepermission
+24	wagtailcore	pagerevision
+25	wagtailcore	pageviewrestriction
+26	wagtailcore	site
+27	wagtailcore	collection
+28	wagtailcore	groupcollectionpermission
+29	wagtailcore	collectionviewrestriction
+30	taggit	tag
+31	taggit	taggeditem
+32	find_a_supplier	industrypage
+33	find_a_supplier	industryarticlepage
+34	find_a_supplier	industrylandingpage
+35	find_a_supplier	landingpage
+36	find_a_supplier	industrycontactpage
+37	find_a_supplier	findasupplierapp
+38	find_a_supplier	industrypagearticlesummary
+39	find_a_supplier	landingpagearticlesummary
+40	export_readiness	termsandconditionspage
+41	export_readiness	exportreadinessapp
+42	export_readiness	privacyandcookiespage
+43	export_readiness	performancedashboardpage
+44	export_readiness	performancedashboardnotespage
+45	export_readiness	articlelistingpage
+46	export_readiness	articlepage
+47	export_readiness	topiclandingpage
+48	export_readiness	homepage
+49	export_readiness	euexitinternationalformpage
+50	export_readiness	tag
+51	export_readiness	euexitdomesticformpage
+52	export_readiness	euexitformsuccesspage
+53	export_readiness	internationallandingpage
+54	export_readiness	contactusguidancepage
+55	export_readiness	contactsuccesspage
+56	export_readiness	getfinancepage
+57	export_readiness	campaignpage
+58	export_readiness	marketingpages
+59	export_readiness	contactsuccesspages
+60	export_readiness	contactusguidancepages
+61	export_readiness	countryguidepage
+62	export_readiness	superregionpage
+63	export_readiness	sitepolicypages
+64	export_readiness	euexitformpages
+65	export_readiness	allcontactpagespage
+66	great_international	greatinternationalapp
+67	great_international	internationalarticlepage
+68	great_international	internationalhomepage
+69	great_international	internationalcampaignpage
+70	great_international	internationalarticlelistingpage
+71	great_international	internationaltopiclandingpage
+72	great_international	internationalregionpage
+73	great_international	internationallocalisedfolderpage
+74	great_international	internationalsectorpage
+75	great_international	internationalcuratedtopiclandingpage
+76	great_international	internationalguidelandingpage
+77	invest	infopage
+78	invest	investapp
+79	invest	investhomepage
+80	invest	sectorlandingpage
+81	invest	sectorpage
+82	invest	setupguidelandingpage
+83	invest	setupguidepage
+84	invest	regionlandingpage
+85	invest	highpotentialopportunitydetailpage
+86	invest	highpotentialopportunityformpage
+87	invest	highpotentialopportunityformsuccesspage
+88	components	bannercomponent
+89	components	componentsapp
 \.
 
 
@@ -7051,276 +7092,283 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
-1	contenttypes	0001_initial	2019-04-23 15:27:26.294575+01
-2	contenttypes	0002_remove_content_type_name	2019-04-23 15:27:26.311335+01
-3	auth	0001_initial	2019-04-23 15:27:26.376168+01
-4	auth	0002_alter_permission_name_max_length	2019-04-23 15:27:26.387947+01
-5	auth	0003_alter_user_email_max_length	2019-04-23 15:27:26.397633+01
-6	auth	0004_alter_user_username_opts	2019-04-23 15:27:26.406358+01
-7	auth	0005_alter_user_last_login_null	2019-04-23 15:27:26.417676+01
-8	auth	0006_require_contenttypes_0002	2019-04-23 15:27:26.41989+01
-9	auth	0007_alter_validators_add_error_messages	2019-04-23 15:27:26.430765+01
-10	auth	0008_alter_user_username_max_length	2019-04-23 15:27:26.444098+01
-11	wagtailcore	0001_initial	2019-04-23 15:27:26.708088+01
-12	wagtailcore	0002_initial_data	2019-04-23 15:27:26.709799+01
-13	wagtailcore	0003_add_uniqueness_constraint_on_group_page_permission	2019-04-23 15:27:26.71138+01
-14	wagtailcore	0004_page_locked	2019-04-23 15:27:26.712968+01
-15	wagtailcore	0005_add_page_lock_permission_to_moderators	2019-04-23 15:27:26.714701+01
-16	wagtailcore	0006_add_lock_page_permission	2019-04-23 15:27:26.716321+01
-17	wagtailcore	0007_page_latest_revision_created_at	2019-04-23 15:27:26.717886+01
-18	wagtailcore	0008_populate_latest_revision_created_at	2019-04-23 15:27:26.719522+01
-19	wagtailcore	0009_remove_auto_now_add_from_pagerevision_created_at	2019-04-23 15:27:26.721135+01
-20	wagtailcore	0010_change_page_owner_to_null_on_delete	2019-04-23 15:27:26.722817+01
-21	wagtailcore	0011_page_first_published_at	2019-04-23 15:27:26.724574+01
-22	wagtailcore	0012_extend_page_slug_field	2019-04-23 15:27:26.726274+01
-23	wagtailcore	0013_update_golive_expire_help_text	2019-04-23 15:27:26.727935+01
-24	wagtailcore	0014_add_verbose_name	2019-04-23 15:27:26.729528+01
-25	wagtailcore	0015_add_more_verbose_names	2019-04-23 15:27:26.731258+01
-26	wagtailcore	0016_change_page_url_path_to_text_field	2019-04-23 15:27:26.733175+01
-27	wagtailcore	0017_change_edit_page_permission_description	2019-04-23 15:27:26.747082+01
-28	wagtailcore	0018_pagerevision_submitted_for_moderation_index	2019-04-23 15:27:26.767005+01
-29	wagtailcore	0019_verbose_names_cleanup	2019-04-23 15:27:26.827814+01
-30	wagtailcore	0020_add_index_on_page_first_published_at	2019-04-23 15:27:26.846343+01
-31	wagtailcore	0021_capitalizeverbose	2019-04-23 15:27:27.260932+01
-32	wagtailcore	0022_add_site_name	2019-04-23 15:27:27.277361+01
-33	wagtailcore	0023_alter_page_revision_on_delete_behaviour	2019-04-23 15:27:27.30039+01
-34	wagtailcore	0024_collection	2019-04-23 15:27:27.310585+01
-35	wagtailcore	0025_collection_initial_data	2019-04-23 15:27:27.328835+01
-36	wagtailcore	0026_group_collection_permission	2019-04-23 15:27:27.370066+01
-37	wagtailcore	0027_fix_collection_path_collation	2019-04-23 15:27:27.389252+01
-38	wagtailcore	0024_alter_page_content_type_on_delete_behaviour	2019-04-23 15:27:27.413772+01
-39	wagtailcore	0028_merge	2019-04-23 15:27:27.415655+01
-40	wagtailcore	0029_unicode_slugfield_dj19	2019-04-23 15:27:27.430467+01
-41	wagtailcore	0030_index_on_pagerevision_created_at	2019-04-23 15:27:27.44752+01
-42	wagtailcore	0031_add_page_view_restriction_types	2019-04-23 15:27:27.504627+01
-43	wagtailcore	0032_add_bulk_delete_page_permission	2019-04-23 15:27:27.519732+01
-44	wagtailcore	0033_remove_golive_expiry_help_text	2019-04-23 15:27:27.549667+01
-45	wagtailcore	0034_page_live_revision	2019-04-23 15:27:27.570389+01
-46	wagtailcore	0035_page_last_published_at	2019-04-23 15:27:27.587117+01
-47	wagtailcore	0036_populate_page_last_published_at	2019-04-23 15:27:27.608521+01
-48	wagtailcore	0037_set_page_owner_editable	2019-04-23 15:27:27.631092+01
-49	wagtailcore	0038_make_first_published_at_editable	2019-04-23 15:27:27.647086+01
-50	wagtailcore	0039_collectionviewrestriction	2019-04-23 15:27:27.71202+01
-51	wagtailcore	0040_page_draft_title	2019-04-23 15:27:27.760471+01
-52	components	0001_initial	2019-04-23 15:27:27.813495+01
-53	components	0002_auto_20190206_1355	2019-04-23 15:27:27.848501+01
-54	components	0003_auto_20190417_0825	2019-04-23 15:27:27.894228+01
-55	components	0004_auto_20190417_1024	2019-04-23 15:27:27.957106+01
-56	taggit	0001_initial	2019-04-23 15:27:27.997989+01
-57	wagtaildocs	0001_initial	2019-04-23 15:27:28.027275+01
-58	wagtaildocs	0002_initial_data	2019-04-23 15:27:28.06792+01
-59	wagtaildocs	0003_add_verbose_names	2019-04-23 15:27:28.117134+01
-60	wagtaildocs	0004_capitalizeverbose	2019-04-23 15:27:28.313975+01
-61	wagtaildocs	0005_document_collection	2019-04-23 15:27:28.346984+01
-62	wagtaildocs	0006_copy_document_permissions_to_collections	2019-04-23 15:27:28.383946+01
-63	wagtaildocs	0005_alter_uploaded_by_user_on_delete_action	2019-04-23 15:27:28.413793+01
-64	wagtaildocs	0007_merge	2019-04-23 15:27:28.415732+01
-65	wagtaildocs	0008_document_file_size	2019-04-23 15:27:28.435639+01
-66	taggit	0002_auto_20150616_2121	2019-04-23 15:27:28.447829+01
-67	wagtailmedia	0001_initial	2019-04-23 15:27:28.479793+01
-68	wagtailmedia	0002_initial_data	2019-04-23 15:27:28.521461+01
-69	wagtailmedia	0003_copy_media_permissions_to_collections	2019-04-23 15:27:28.558527+01
-70	wagtailimages	0001_initial	2019-04-23 15:27:28.632716+01
-71	wagtailimages	0002_initial_data	2019-04-23 15:27:28.682324+01
-72	wagtailimages	0003_fix_focal_point_fields	2019-04-23 15:27:28.731325+01
-73	wagtailimages	0004_make_focal_point_key_not_nullable	2019-04-23 15:27:28.776113+01
-74	wagtailimages	0005_make_filter_spec_unique	2019-04-23 15:27:28.790654+01
-75	wagtailimages	0006_add_verbose_names	2019-04-23 15:27:28.854966+01
-76	wagtailimages	0007_image_file_size	2019-04-23 15:27:28.875758+01
-77	wagtailimages	0008_image_created_at_index	2019-04-23 15:27:28.89815+01
-78	wagtailimages	0009_capitalizeverbose	2019-04-23 15:27:29.017845+01
-79	wagtailimages	0010_change_on_delete_behaviour	2019-04-23 15:27:29.049336+01
-80	wagtailimages	0011_image_collection	2019-04-23 15:27:29.085742+01
-81	wagtailimages	0012_copy_image_permissions_to_collections	2019-04-23 15:27:29.126317+01
-82	wagtailimages	0013_make_rendition_upload_callable	2019-04-23 15:27:29.138411+01
-83	wagtailimages	0014_add_filter_spec_field	2019-04-23 15:27:29.184502+01
-84	wagtailimages	0015_fill_filter_spec_field	2019-04-23 15:27:29.216485+01
-85	wagtailimages	0016_deprecate_rendition_filter_relation	2019-04-23 15:27:29.265714+01
-86	wagtailimages	0017_reduce_focal_point_key_max_length	2019-04-23 15:27:29.286717+01
-87	wagtailimages	0018_remove_rendition_filter	2019-04-23 15:27:29.319742+01
-88	wagtailimages	0019_delete_filter	2019-04-23 15:27:29.327713+01
-89	wagtailimages	0020_add-verbose-name	2019-04-23 15:27:29.348297+01
-90	wagtailimages	0021_image_file_hash	2019-04-23 15:27:29.374625+01
-91	invest	0001_squashed_0006_auto_20180719_1302	2019-04-23 15:28:19.78145+01
-92	invest	0007_auto_20180719_1414	2019-04-23 15:28:21.045079+01
-93	invest	0008_auto_20180817_1630	2019-04-23 15:28:21.703283+01
-94	invest	0009_investapp_service_name	2019-04-23 15:28:21.929361+01
-95	invest	0009_highpotentialofferformpage	2019-04-23 15:28:22.037882+01
-96	wagtailforms	0001_initial	2019-04-23 15:28:22.14619+01
-97	wagtailforms	0002_add_verbose_names	2019-04-23 15:28:22.3271+01
-98	wagtailforms	0003_capitalizeverbose	2019-04-23 15:28:22.502136+01
-99	find_a_supplier	0001_squashed_0050_auto_20180425_1107	2019-04-23 15:28:54.828198+01
-100	find_a_supplier	0051_auto_20180501_1706	2019-04-23 15:29:28.278797+01
-101	find_a_supplier	0052_html_to_markdown	2019-04-23 15:29:28.578387+01
-102	find_a_supplier	0053_industrypage_show_on_industries_showcase_page	2019-04-23 15:29:28.708124+01
-103	find_a_supplier	0054_auto_20180510_0902	2019-04-23 15:29:31.518898+01
-104	find_a_supplier	0055_industrycontactpage_industry_options	2019-04-23 15:29:31.639621+01
-105	find_a_supplier	0056_auto_20180515_1552	2019-04-23 15:29:31.801345+01
-106	find_a_supplier	0057_remove_industrycontactpage_industry_options	2019-04-23 15:29:31.922592+01
-107	find_a_supplier	0058_auto_20180521_1628	2019-04-23 15:29:54.36479+01
-108	find_a_supplier	0059_auto_20180601_1412	2019-04-23 15:29:54.771592+01
-109	find_a_supplier	0060_auto_20180604_1058	2019-04-23 15:29:54.933383+01
-110	find_a_supplier	0061_auto_20180604_1344	2019-04-23 15:29:55.156003+01
-111	find_a_supplier	0062_auto_20180817_1630_squashed_0065_auto_20180829_1027	2019-04-23 15:29:56.018232+01
-112	export_readiness	0001_squashed_0009_performancedashboardpage_guidance_notes	2019-04-23 15:29:56.881853+01
-113	export_readiness	0010_performancedashboardnotespage	2019-04-23 15:29:57.025567+01
-114	export_readiness	0011_auto_20180817_1630	2019-04-23 15:29:57.678013+01
-115	export_readiness	0012_auto_20180821_0810	2019-04-23 15:29:58.479036+01
-116	core	0001_create	2019-04-23 15:29:58.629487+01
-117	core	0002_auto_20180307_1748	2019-04-23 15:29:58.780576+01
-118	core	0003_auto_20180423_1122	2019-04-23 15:29:59.055632+01
-119	core	0004_auto_20180423_1619	2019-04-23 15:29:59.510987+01
-120	core	0005_auto_20180423_1803	2019-04-23 15:29:59.768315+01
-121	core	0006_auto_20180508_1331	2019-04-23 15:29:59.770772+01
-122	core	0007_auto_20180809_1215	2019-04-23 15:30:00.034749+01
-123	core	0008_auto_20180809_1215	2019-04-23 15:30:00.201823+01
-124	core	0009_auto_20180813_1746	2019-04-23 15:30:00.555543+01
-125	core	0010_auto_20180815_1304	2019-04-23 15:30:00.811869+01
-126	core	0011_auto_20180817_1631	2019-04-23 15:30:01.043472+01
-127	core	0012_auto_20180821_1634	2019-04-23 15:30:01.286601+01
-128	core	0013_auto_20180821_1637	2019-04-23 15:30:01.447761+01
-129	core	0014_auto_20180822_0915	2019-04-23 15:30:01.914622+01
-130	core	0015_breadcrumb	2019-04-23 15:30:02.06514+01
-131	core	0016_auto_20180823_2014	2019-04-23 15:30:02.180534+01
-132	core	0017_auto_20180823_1545	2019-04-23 15:30:02.525582+01
-133	export_readiness	0013_exportreadinessapp_service_name	2019-04-23 15:30:02.550136+01
-134	core	0015_auto_20180822_1456	2019-04-23 15:30:02.713419+01
-135	core	0018_merge_20180829_0828	2019-04-23 15:30:02.717916+01
-136	core	0018_auto_20180824_1622	2019-04-23 15:30:02.740838+01
-137	core	0019_merge_20180829_0939	2019-04-23 15:30:02.743213+01
-138	invest	0010_merge_20180829_0939_squashed_0013_auto_20180830_0632	2019-04-23 15:30:10.166406+01
-139	invest	0014_auto_20180904_1113	2019-04-23 15:30:11.648576+01
-140	invest	0015_auto_20180911_1049	2019-04-23 15:30:11.651119+01
-141	invest	0016_auto_20180911_1506	2019-04-23 15:30:11.653235+01
-142	invest	0017_auto_20180911_1513	2019-04-23 15:30:11.655325+01
-143	invest	0018_auto_20180913_1445	2019-04-23 15:30:11.657457+01
-144	invest	0019_auto_20180917_0838	2019-04-23 15:30:11.659589+01
-145	invest	0020_auto_20180917_1326	2019-04-23 15:30:11.661575+01
-146	invest	0021_auto_20180917_1404	2019-04-23 15:30:11.664356+01
-147	invest	0022_auto_20180917_1622	2019-04-23 15:30:11.666494+01
-148	invest	0023_auto_20180918_0805	2019-04-23 15:30:11.668639+01
-149	invest	0024_highpotentialopportunitydetailpage_testimonial_background	2019-04-23 15:30:11.670885+01
-150	invest	0025_auto_20180920_0941	2019-04-23 15:30:11.672843+01
-151	invest	0026_auto_20181002_1534	2019-04-23 15:30:11.674864+01
-152	find_a_supplier	0066_auto_20180830_0632	2019-04-23 15:30:11.845782+01
-153	export_readiness	0014_auto_20180829_1027_squashed_0018_getfinancepage	2019-04-23 15:30:12.445113+01
-154	export_readiness	0019_auto_20180905_1350	2019-04-23 15:30:13.083087+01
-155	core	0020_auto_20180830_1737	2019-04-23 15:30:13.252503+01
-156	core	0021_auto_20180904_1511	2019-04-23 15:30:13.54351+01
-157	core	0022_auto_20180906_1344	2019-04-23 15:30:13.796547+01
-158	core	0023_auto_20180912_0758	2019-04-23 15:30:13.975845+01
-159	core	0024_auto_20180913_1321	2019-04-23 15:30:14.344632+01
-160	core	0025_documenthash	2019-04-23 15:30:14.494463+01
-161	core	0026_auto_20181024_1112	2019-04-23 15:30:14.508701+01
-162	core	0027_auto_20190206_1355	2019-04-23 15:30:14.52438+01
-163	core	0028_routingsettings	2019-04-23 15:30:14.557938+01
-164	core	0029_auto_20190417_1024	2019-04-23 15:30:14.585073+01
-165	health_check_db	0001_initial	2019-04-23 15:30:14.596405+01
-166	export_readiness	0020_articlelistingpage_articlepage_topiclandingpage_squashed_0030_auto_20181005_1449	2019-04-23 15:30:17.971642+01
-167	export_readiness	0031_internationallandingpage	2019-04-23 15:30:33.260653+01
-168	export_readiness	0032_auto_20181012_1507	2019-04-23 15:30:33.26336+01
-169	export_readiness	0033_auto_20181023_1600	2019-04-23 15:30:33.26557+01
-170	export_readiness	0034_auto_20181024_1112	2019-04-23 15:30:33.267732+01
-171	export_readiness	0035_contactusguidance	2019-04-23 15:30:33.270205+01
-172	export_readiness	0036_auto_20181105_1258	2019-04-23 15:30:33.272695+01
-173	export_readiness	0037_auto_20181106_0952	2019-04-23 15:30:33.275071+01
-174	export_readiness	0038_auto_20181106_0953	2019-04-23 15:30:33.277381+01
-175	export_readiness	0039_contactsuccesspage_topic	2019-04-23 15:30:33.279617+01
-176	export_readiness	0040_auto_20181121_1643	2019-04-23 15:30:33.281751+01
-177	export_readiness	0041_campaignpage_marketingpages	2019-04-23 15:30:33.283916+01
-178	export_readiness	0042_contactsuccesspages_contactusguidancepages	2019-04-23 15:30:33.286212+01
-179	export_readiness	0043_auto_20181205_1413	2019-04-23 15:30:33.288765+01
-180	export_readiness	0044_auto_20181214_1605	2019-04-23 15:30:33.291017+01
-181	export_readiness	0045_auto_20190115_1058	2019-04-23 15:30:33.293349+01
-182	export_readiness	0046_euexitformpages	2019-04-23 15:30:33.295597+01
-183	export_readiness	0047_allcontactpagespage	2019-04-23 15:30:33.297701+01
-184	export_readiness	0048_auto_20190206_1355	2019-04-23 15:30:33.299813+01
-185	export_readiness	0049_auto_20190207_0924	2019-04-23 15:30:33.301981+01
-186	export_readiness	0050_auto_20190219_1633	2019-04-23 15:30:33.304225+01
-187	export_readiness	0032_auto_20190307_1512	2019-04-23 15:30:33.476512+01
-188	export_readiness	0033_auto_20190312_1557	2019-04-23 15:31:24.301366+01
-189	export_readiness	0034_auto_20190314_1250	2019-04-23 15:31:45.322154+01
-190	export_readiness	0035_remove_countryguidepage_help_market_guide_cta_title	2019-04-23 15:31:45.513031+01
-191	export_readiness	0036_topiclandingpage_teaser	2019-04-23 15:31:45.710472+01
-192	export_readiness	0037_auto_20190321_0728	2019-04-23 15:31:53.490239+01
-193	export_readiness	0038_auto_20190402_1221	2019-04-23 15:31:53.678352+01
-194	export_readiness	0039_auto_20190411_1206	2019-04-23 15:31:53.875909+01
-195	export_readiness	0040_auto_20190411_1228	2019-04-23 15:31:54.497046+01
-196	export_readiness	0041_auto_20190417_0825	2019-04-23 15:31:59.805364+01
-197	find_a_supplier	0067_auto_20181012_1507	2019-04-23 15:32:01.647899+01
-198	find_a_supplier	0068_auto_20181024_1112	2019-04-23 15:32:02.807214+01
-199	find_a_supplier	0069_auto_20190206_1355	2019-04-23 15:32:04.307872+01
-200	find_a_supplier	0070_auto_20190417_0825	2019-04-23 15:32:05.847252+01
-201	find_a_supplier	0071_auto_20190417_1024	2019-04-23 15:32:30.959909+01
-202	great_international	0001_initial	2019-04-23 15:32:35.55125+01
-203	great_international	0002_auto_20190206_1146	2019-04-23 15:32:35.553869+01
-204	great_international	0003_internationalarticlelistingpage	2019-04-23 15:32:35.556281+01
-205	great_international	0003_auto_20190211_1202	2019-04-23 15:32:35.558741+01
-206	great_international	0004_merge_20190212_1003	2019-04-23 15:32:35.561293+01
-207	great_international	0005_internationalukhqpages	2019-04-23 15:32:35.563978+01
-208	great_international	0006_internationaltopiclandingpage	2019-04-23 15:32:35.566542+01
-209	great_international	0007_auto_20190219_1114	2019-04-23 15:32:35.56908+01
-210	great_international	0008_auto_20190222_1554	2019-04-23 15:32:35.571559+01
-211	great_international	0008_auto_20190222_1230	2019-04-23 15:32:35.573959+01
-212	great_international	0009_merge_20190225_1214	2019-04-23 15:32:35.576269+01
-213	great_international	0010_auto_20190228_0819	2019-04-23 15:32:35.578555+01
-214	great_international	0011_auto_20190228_1051	2019-04-23 15:32:35.580875+01
-215	great_international	0012_internationalsectorpage	2019-04-23 15:32:35.583403+01
-216	great_international	0013_auto_20190301_1227	2019-04-23 15:32:35.586025+01
-217	great_international	0014_auto_20190304_1215	2019-04-23 15:32:35.588337+01
-218	great_international	0015_auto_20190306_1521	2019-04-23 15:32:35.590657+01
-219	great_international	0002_internationalcuratedtopiclandingpage	2019-04-23 15:32:36.086653+01
-220	great_international	0003_auto_20190313_0855	2019-04-23 15:32:40.979032+01
-221	great_international	0004_internationalguidelandingpage	2019-04-23 15:32:41.249028+01
-222	great_international	0005_auto_20190320_1750	2019-04-23 15:32:46.569623+01
-223	great_international	0006_auto_20190325_0945	2019-04-23 15:32:50.828624+01
-224	great_international	0007_auto_20190402_1221	2019-04-23 15:32:51.055292+01
-225	great_international	0008_auto_20190404_1320	2019-04-23 15:35:29.809577+01
-226	great_international	0009_auto_20190404_1320	2019-04-23 15:35:56.630252+01
-227	great_international	0010_auto_20190404_1320	2019-04-23 15:37:45.488333+01
-228	great_international	0011_auto_20190404_1321	2019-04-23 15:39:04.294829+01
-229	great_international	0012_auto_20190404_1321	2019-04-23 15:39:31.437557+01
-230	great_international	0013_auto_20190404_1321	2019-04-23 15:40:48.175294+01
-231	great_international	0014_auto_20190404_1322	2019-04-23 15:41:38.161965+01
-232	great_international	0015_auto_20190404_1712	2019-04-23 15:41:42.726772+01
-233	great_international	0016_auto_20190408_1640	2019-04-23 15:41:51.970334+01
-234	great_international	0007_internationalhomepage_hero_cta_link	2019-04-23 15:41:52.390334+01
-235	great_international	0017_merge_20190411_1027	2019-04-23 15:41:52.393223+01
-236	great_international	0018_auto_20190411_1028	2019-04-23 15:41:56.644036+01
-237	great_international	0019_auto_20190417_0825	2019-04-23 15:42:01.616329+01
-238	great_international	0020_auto_20190417_1024	2019-04-23 15:44:03.456166+01
-239	great_international	0021_auto_20190423_1423	2019-04-23 15:45:44.446467+01
-240	invest	0015_auto_20181012_1507	2019-04-23 15:45:46.277009+01
-241	invest	0016_auto_20181025_1226	2019-04-23 15:45:51.014407+01
-242	invest	0017_auto_20190206_1355	2019-04-23 15:45:55.864474+01
-243	invest	0018_auto_20190314_1507	2019-04-23 15:46:14.940152+01
-244	invest	0019_auto_20190320_1347	2019-04-23 15:48:17.988993+01
-245	invest	0020_auto_20190402_1018	2019-04-23 15:48:38.711515+01
-246	invest	0021_auto_20190409_1246	2019-04-23 15:49:33.050391+01
-247	invest	0022_auto_20190411_1449	2019-04-23 15:53:42.674624+01
-248	invest	0023_auto_20190417_0825	2019-04-23 15:53:48.197462+01
-249	invest	0024_auto_20190417_1024	2019-04-23 15:56:29.538543+01
-250	sessions	0001_initial	2019-04-23 15:56:29.557915+01
-251	wagtailadmin	0001_create_admin_access_permissions	2019-04-23 15:56:29.992657+01
-252	wagtailembeds	0001_initial	2019-04-23 15:56:30.030105+01
-253	wagtailembeds	0002_add_verbose_names	2019-04-23 15:56:30.047702+01
-254	wagtailembeds	0003_capitalizeverbose	2019-04-23 15:56:30.063392+01
-255	wagtailsearch	0001_initial	2019-04-23 15:56:31.227899+01
-256	wagtailsearch	0002_add_verbose_names	2019-04-23 15:56:32.753645+01
-257	wagtailsearch	0003_remove_editors_pick	2019-04-23 15:56:33.18987+01
-258	wagtailusers	0001_initial	2019-04-23 15:56:33.87278+01
-259	wagtailusers	0002_add_verbose_name_on_userprofile	2019-04-23 15:56:33.958257+01
-260	wagtailusers	0003_add_verbose_names	2019-04-23 15:56:33.992329+01
-261	wagtailusers	0004_capitalizeverbose	2019-04-23 15:56:34.098372+01
-262	wagtailusers	0005_make_related_name_wagtail_specific	2019-04-23 15:56:34.147561+01
-263	wagtailusers	0006_userprofile_prefered_language	2019-04-23 15:56:34.185633+01
-264	wagtailusers	0007_userprofile_current_time_zone	2019-04-23 15:56:34.221169+01
-265	wagtailusers	0008_userprofile_avatar	2019-04-23 15:56:34.255429+01
-266	db	0001_initial	2019-04-23 15:56:34.261444+01
-267	wagtailcore	0001_squashed_0016_change_page_url_path_to_text_field	2019-04-23 15:56:34.264587+01
-268	export_readiness	0031_internationallandingpage_squashed_0050_auto_20190219_1633	2019-04-23 15:56:34.267847+01
-269	great_international	0001_squashed_0015_auto_20190306_1521	2019-04-23 15:56:34.270881+01
-270	invest	0014_auto_20180904_1113_squashed_0026_auto_20181002_1534	2019-04-23 15:56:34.273619+01
+1	contenttypes	0001_initial	2019-05-07 15:39:17.640491+01
+2	contenttypes	0002_remove_content_type_name	2019-05-07 15:39:17.65238+01
+3	auth	0001_initial	2019-05-07 15:39:17.715765+01
+4	auth	0002_alter_permission_name_max_length	2019-05-07 15:39:17.72785+01
+5	auth	0003_alter_user_email_max_length	2019-05-07 15:39:17.73769+01
+6	auth	0004_alter_user_username_opts	2019-05-07 15:39:17.748803+01
+7	auth	0005_alter_user_last_login_null	2019-05-07 15:39:17.758133+01
+8	auth	0006_require_contenttypes_0002	2019-05-07 15:39:17.760468+01
+9	auth	0007_alter_validators_add_error_messages	2019-05-07 15:39:17.769342+01
+10	auth	0008_alter_user_username_max_length	2019-05-07 15:39:17.782805+01
+11	wagtailcore	0001_initial	2019-05-07 15:39:18.062826+01
+12	wagtailcore	0002_initial_data	2019-05-07 15:39:18.064587+01
+13	wagtailcore	0003_add_uniqueness_constraint_on_group_page_permission	2019-05-07 15:39:18.066369+01
+14	wagtailcore	0004_page_locked	2019-05-07 15:39:18.068482+01
+15	wagtailcore	0005_add_page_lock_permission_to_moderators	2019-05-07 15:39:18.070449+01
+16	wagtailcore	0006_add_lock_page_permission	2019-05-07 15:39:18.072226+01
+17	wagtailcore	0007_page_latest_revision_created_at	2019-05-07 15:39:18.07404+01
+18	wagtailcore	0008_populate_latest_revision_created_at	2019-05-07 15:39:18.075852+01
+19	wagtailcore	0009_remove_auto_now_add_from_pagerevision_created_at	2019-05-07 15:39:18.077673+01
+20	wagtailcore	0010_change_page_owner_to_null_on_delete	2019-05-07 15:39:18.079387+01
+21	wagtailcore	0011_page_first_published_at	2019-05-07 15:39:18.081141+01
+22	wagtailcore	0012_extend_page_slug_field	2019-05-07 15:39:18.082834+01
+23	wagtailcore	0013_update_golive_expire_help_text	2019-05-07 15:39:18.084431+01
+24	wagtailcore	0014_add_verbose_name	2019-05-07 15:39:18.086021+01
+25	wagtailcore	0015_add_more_verbose_names	2019-05-07 15:39:18.087588+01
+26	wagtailcore	0016_change_page_url_path_to_text_field	2019-05-07 15:39:18.089147+01
+27	wagtailcore	0017_change_edit_page_permission_description	2019-05-07 15:39:18.103073+01
+28	wagtailcore	0018_pagerevision_submitted_for_moderation_index	2019-05-07 15:39:18.121112+01
+29	wagtailcore	0019_verbose_names_cleanup	2019-05-07 15:39:18.179333+01
+30	wagtailcore	0020_add_index_on_page_first_published_at	2019-05-07 15:39:18.197997+01
+31	wagtailcore	0021_capitalizeverbose	2019-05-07 15:39:18.603656+01
+32	wagtailcore	0022_add_site_name	2019-05-07 15:39:18.61826+01
+33	wagtailcore	0023_alter_page_revision_on_delete_behaviour	2019-05-07 15:39:18.641894+01
+34	wagtailcore	0024_collection	2019-05-07 15:39:18.652559+01
+35	wagtailcore	0025_collection_initial_data	2019-05-07 15:39:18.6714+01
+36	wagtailcore	0026_group_collection_permission	2019-05-07 15:39:18.714307+01
+37	wagtailcore	0027_fix_collection_path_collation	2019-05-07 15:39:18.733998+01
+38	wagtailcore	0024_alter_page_content_type_on_delete_behaviour	2019-05-07 15:39:18.759996+01
+39	wagtailcore	0028_merge	2019-05-07 15:39:18.762016+01
+40	wagtailcore	0029_unicode_slugfield_dj19	2019-05-07 15:39:18.778205+01
+41	wagtailcore	0030_index_on_pagerevision_created_at	2019-05-07 15:39:18.794859+01
+42	wagtailcore	0031_add_page_view_restriction_types	2019-05-07 15:39:18.855371+01
+43	wagtailcore	0032_add_bulk_delete_page_permission	2019-05-07 15:39:18.872366+01
+44	wagtailcore	0033_remove_golive_expiry_help_text	2019-05-07 15:39:18.90316+01
+45	wagtailcore	0034_page_live_revision	2019-05-07 15:39:18.925047+01
+46	wagtailcore	0035_page_last_published_at	2019-05-07 15:39:18.940975+01
+47	wagtailcore	0036_populate_page_last_published_at	2019-05-07 15:39:18.959261+01
+48	wagtailcore	0037_set_page_owner_editable	2019-05-07 15:39:18.982758+01
+49	wagtailcore	0038_make_first_published_at_editable	2019-05-07 15:39:19.000484+01
+50	wagtailcore	0039_collectionviewrestriction	2019-05-07 15:39:19.063748+01
+51	wagtailcore	0040_page_draft_title	2019-05-07 15:39:19.114903+01
+52	components	0001_initial	2019-05-07 15:39:19.166407+01
+53	components	0002_auto_20190206_1355	2019-05-07 15:39:19.200144+01
+54	components	0003_auto_20190417_0825	2019-05-07 15:39:19.247132+01
+55	components	0004_auto_20190417_1024	2019-05-07 15:39:19.314359+01
+56	taggit	0001_initial	2019-05-07 15:39:19.355547+01
+57	wagtaildocs	0001_initial	2019-05-07 15:39:19.386301+01
+58	wagtaildocs	0002_initial_data	2019-05-07 15:39:19.43311+01
+59	wagtaildocs	0003_add_verbose_names	2019-05-07 15:39:19.483109+01
+60	wagtaildocs	0004_capitalizeverbose	2019-05-07 15:39:19.6584+01
+61	wagtaildocs	0005_document_collection	2019-05-07 15:39:19.68989+01
+62	wagtaildocs	0006_copy_document_permissions_to_collections	2019-05-07 15:39:19.728651+01
+63	wagtaildocs	0005_alter_uploaded_by_user_on_delete_action	2019-05-07 15:39:19.759412+01
+64	wagtaildocs	0007_merge	2019-05-07 15:39:19.761723+01
+65	wagtaildocs	0008_document_file_size	2019-05-07 15:39:19.77975+01
+66	taggit	0002_auto_20150616_2121	2019-05-07 15:39:19.790292+01
+67	wagtailmedia	0001_initial	2019-05-07 15:39:19.825283+01
+68	wagtailmedia	0002_initial_data	2019-05-07 15:39:19.864641+01
+69	wagtailmedia	0003_copy_media_permissions_to_collections	2019-05-07 15:39:19.902714+01
+70	wagtailimages	0001_initial	2019-05-07 15:39:19.979628+01
+71	wagtailimages	0002_initial_data	2019-05-07 15:39:20.025334+01
+72	wagtailimages	0003_fix_focal_point_fields	2019-05-07 15:39:20.072243+01
+73	wagtailimages	0004_make_focal_point_key_not_nullable	2019-05-07 15:39:20.114515+01
+74	wagtailimages	0005_make_filter_spec_unique	2019-05-07 15:39:20.128798+01
+75	wagtailimages	0006_add_verbose_names	2019-05-07 15:39:20.194201+01
+76	wagtailimages	0007_image_file_size	2019-05-07 15:39:20.213181+01
+77	wagtailimages	0008_image_created_at_index	2019-05-07 15:39:20.232422+01
+78	wagtailimages	0009_capitalizeverbose	2019-05-07 15:39:20.345598+01
+79	wagtailimages	0010_change_on_delete_behaviour	2019-05-07 15:39:20.371608+01
+80	wagtailimages	0011_image_collection	2019-05-07 15:39:20.406598+01
+81	wagtailimages	0012_copy_image_permissions_to_collections	2019-05-07 15:39:20.448363+01
+82	wagtailimages	0013_make_rendition_upload_callable	2019-05-07 15:39:20.460757+01
+83	wagtailimages	0014_add_filter_spec_field	2019-05-07 15:39:20.507722+01
+84	wagtailimages	0015_fill_filter_spec_field	2019-05-07 15:39:20.54008+01
+85	wagtailimages	0016_deprecate_rendition_filter_relation	2019-05-07 15:39:20.590749+01
+86	wagtailimages	0017_reduce_focal_point_key_max_length	2019-05-07 15:39:20.611502+01
+87	wagtailimages	0018_remove_rendition_filter	2019-05-07 15:39:20.647396+01
+88	wagtailimages	0019_delete_filter	2019-05-07 15:39:20.653332+01
+89	wagtailimages	0020_add-verbose-name	2019-05-07 15:39:20.675459+01
+90	wagtailimages	0021_image_file_hash	2019-05-07 15:39:20.701456+01
+91	invest	0001_squashed_0006_auto_20180719_1302	2019-05-07 15:40:09.942178+01
+92	invest	0007_auto_20180719_1414	2019-05-07 15:40:11.02553+01
+93	invest	0008_auto_20180817_1630	2019-05-07 15:40:11.730118+01
+94	invest	0009_investapp_service_name	2019-05-07 15:40:11.824335+01
+95	invest	0009_highpotentialofferformpage	2019-05-07 15:40:11.938567+01
+96	wagtailforms	0001_initial	2019-05-07 15:40:12.04603+01
+97	wagtailforms	0002_add_verbose_names	2019-05-07 15:40:12.217506+01
+98	wagtailforms	0003_capitalizeverbose	2019-05-07 15:40:12.508952+01
+99	find_a_supplier	0001_squashed_0050_auto_20180425_1107	2019-05-07 15:40:42.998739+01
+100	find_a_supplier	0051_auto_20180501_1706	2019-05-07 15:41:14.657713+01
+101	find_a_supplier	0052_html_to_markdown	2019-05-07 15:41:14.959763+01
+102	find_a_supplier	0053_industrypage_show_on_industries_showcase_page	2019-05-07 15:41:15.087593+01
+103	find_a_supplier	0054_auto_20180510_0902	2019-05-07 15:41:17.705236+01
+104	find_a_supplier	0055_industrycontactpage_industry_options	2019-05-07 15:41:17.816844+01
+105	find_a_supplier	0056_auto_20180515_1552	2019-05-07 15:41:17.970725+01
+106	find_a_supplier	0057_remove_industrycontactpage_industry_options	2019-05-07 15:41:18.08493+01
+107	find_a_supplier	0058_auto_20180521_1628	2019-05-07 15:41:39.165451+01
+108	find_a_supplier	0059_auto_20180601_1412	2019-05-07 15:41:39.400149+01
+109	find_a_supplier	0060_auto_20180604_1058	2019-05-07 15:41:39.692207+01
+110	find_a_supplier	0061_auto_20180604_1344	2019-05-07 15:41:39.905724+01
+111	find_a_supplier	0062_auto_20180817_1630_squashed_0065_auto_20180829_1027	2019-05-07 15:41:40.724499+01
+112	export_readiness	0001_squashed_0009_performancedashboardpage_guidance_notes	2019-05-07 15:41:41.380378+01
+113	export_readiness	0010_performancedashboardnotespage	2019-05-07 15:41:41.523643+01
+114	export_readiness	0011_auto_20180817_1630	2019-05-07 15:41:42.302856+01
+115	export_readiness	0012_auto_20180821_0810	2019-05-07 15:41:43.086216+01
+116	core	0001_create	2019-05-07 15:41:43.231843+01
+117	core	0002_auto_20180307_1748	2019-05-07 15:41:43.380563+01
+118	core	0003_auto_20180423_1122	2019-05-07 15:41:43.639202+01
+119	core	0004_auto_20180423_1619	2019-05-07 15:41:43.902257+01
+120	core	0005_auto_20180423_1803	2019-05-07 15:41:44.340793+01
+121	core	0006_auto_20180508_1331	2019-05-07 15:41:44.34287+01
+122	core	0007_auto_20180809_1215	2019-05-07 15:41:44.599608+01
+123	core	0008_auto_20180809_1215	2019-05-07 15:41:44.760018+01
+124	core	0009_auto_20180813_1746	2019-05-07 15:41:44.914543+01
+125	core	0010_auto_20180815_1304	2019-05-07 15:41:45.336394+01
+126	core	0011_auto_20180817_1631	2019-05-07 15:41:45.55956+01
+127	core	0012_auto_20180821_1634	2019-05-07 15:41:45.79912+01
+128	core	0013_auto_20180821_1637	2019-05-07 15:41:45.953064+01
+129	core	0014_auto_20180822_0915	2019-05-07 15:41:46.216091+01
+130	core	0015_breadcrumb	2019-05-07 15:41:46.568879+01
+131	core	0016_auto_20180823_2014	2019-05-07 15:41:46.681777+01
+132	core	0017_auto_20180823_1545	2019-05-07 15:41:47.010851+01
+133	export_readiness	0013_exportreadinessapp_service_name	2019-05-07 15:41:47.035444+01
+134	core	0015_auto_20180822_1456	2019-05-07 15:41:47.193987+01
+135	core	0018_merge_20180829_0828	2019-05-07 15:41:47.198747+01
+136	core	0018_auto_20180824_1622	2019-05-07 15:41:47.223788+01
+137	core	0019_merge_20180829_0939	2019-05-07 15:41:47.226183+01
+138	invest	0010_merge_20180829_0939_squashed_0013_auto_20180830_0632	2019-05-07 15:41:53.998173+01
+139	invest	0014_auto_20180904_1113	2019-05-07 15:41:55.412297+01
+140	invest	0015_auto_20180911_1049	2019-05-07 15:41:55.415765+01
+141	invest	0016_auto_20180911_1506	2019-05-07 15:41:55.419463+01
+142	invest	0017_auto_20180911_1513	2019-05-07 15:41:55.422653+01
+143	invest	0018_auto_20180913_1445	2019-05-07 15:41:55.425145+01
+144	invest	0019_auto_20180917_0838	2019-05-07 15:41:55.427559+01
+145	invest	0020_auto_20180917_1326	2019-05-07 15:41:55.429711+01
+146	invest	0021_auto_20180917_1404	2019-05-07 15:41:55.431842+01
+147	invest	0022_auto_20180917_1622	2019-05-07 15:41:55.43386+01
+148	invest	0023_auto_20180918_0805	2019-05-07 15:41:55.436075+01
+149	invest	0024_highpotentialopportunitydetailpage_testimonial_background	2019-05-07 15:41:55.438151+01
+150	invest	0025_auto_20180920_0941	2019-05-07 15:41:55.440354+01
+151	invest	0026_auto_20181002_1534	2019-05-07 15:41:55.442463+01
+152	find_a_supplier	0066_auto_20180830_0632	2019-05-07 15:41:55.802061+01
+153	export_readiness	0014_auto_20180829_1027_squashed_0018_getfinancepage	2019-05-07 15:41:56.374511+01
+154	export_readiness	0019_auto_20180905_1350	2019-05-07 15:41:56.788885+01
+155	core	0020_auto_20180830_1737	2019-05-07 15:41:57.152541+01
+156	core	0021_auto_20180904_1511	2019-05-07 15:41:57.431694+01
+157	core	0022_auto_20180906_1344	2019-05-07 15:41:57.668702+01
+158	core	0023_auto_20180912_0758	2019-05-07 15:41:57.833979+01
+159	core	0024_auto_20180913_1321	2019-05-07 15:41:57.982909+01
+160	core	0025_documenthash	2019-05-07 15:41:58.131665+01
+161	core	0026_auto_20181024_1112	2019-05-07 15:41:58.147557+01
+162	core	0027_auto_20190206_1355	2019-05-07 15:41:58.162762+01
+163	core	0028_routingsettings	2019-05-07 15:41:58.201398+01
+164	core	0029_auto_20190417_1024	2019-05-07 15:41:58.229817+01
+165	health_check_db	0001_initial	2019-05-07 15:41:58.239351+01
+166	export_readiness	0020_articlelistingpage_articlepage_topiclandingpage_squashed_0030_auto_20181005_1449	2019-05-07 15:42:01.587167+01
+167	export_readiness	0031_internationallandingpage	2019-05-07 15:42:15.895847+01
+168	export_readiness	0032_auto_20181012_1507	2019-05-07 15:42:15.898289+01
+169	export_readiness	0033_auto_20181023_1600	2019-05-07 15:42:15.900447+01
+170	export_readiness	0034_auto_20181024_1112	2019-05-07 15:42:15.902617+01
+171	export_readiness	0035_contactusguidance	2019-05-07 15:42:15.904762+01
+172	export_readiness	0036_auto_20181105_1258	2019-05-07 15:42:15.906973+01
+173	export_readiness	0037_auto_20181106_0952	2019-05-07 15:42:15.909232+01
+174	export_readiness	0038_auto_20181106_0953	2019-05-07 15:42:15.912771+01
+175	export_readiness	0039_contactsuccesspage_topic	2019-05-07 15:42:15.916085+01
+176	export_readiness	0040_auto_20181121_1643	2019-05-07 15:42:15.91886+01
+177	export_readiness	0041_campaignpage_marketingpages	2019-05-07 15:42:15.921754+01
+178	export_readiness	0042_contactsuccesspages_contactusguidancepages	2019-05-07 15:42:15.924548+01
+179	export_readiness	0043_auto_20181205_1413	2019-05-07 15:42:15.926794+01
+180	export_readiness	0044_auto_20181214_1605	2019-05-07 15:42:15.928866+01
+181	export_readiness	0045_auto_20190115_1058	2019-05-07 15:42:15.930938+01
+182	export_readiness	0046_euexitformpages	2019-05-07 15:42:15.933023+01
+183	export_readiness	0047_allcontactpagespage	2019-05-07 15:42:15.935117+01
+184	export_readiness	0048_auto_20190206_1355	2019-05-07 15:42:15.937208+01
+185	export_readiness	0049_auto_20190207_0924	2019-05-07 15:42:15.939315+01
+186	export_readiness	0050_auto_20190219_1633	2019-05-07 15:42:15.941455+01
+187	export_readiness	0032_auto_20190307_1512	2019-05-07 15:42:16.106423+01
+188	export_readiness	0033_auto_20190312_1557	2019-05-07 15:43:05.555005+01
+189	export_readiness	0034_auto_20190314_1250	2019-05-07 15:43:26.193344+01
+190	export_readiness	0035_remove_countryguidepage_help_market_guide_cta_title	2019-05-07 15:43:26.373532+01
+191	export_readiness	0036_topiclandingpage_teaser	2019-05-07 15:43:26.57211+01
+192	export_readiness	0037_auto_20190321_0728	2019-05-07 15:43:34.197481+01
+193	export_readiness	0038_auto_20190402_1221	2019-05-07 15:43:34.376952+01
+194	export_readiness	0039_auto_20190411_1206	2019-05-07 15:43:34.569907+01
+195	export_readiness	0040_auto_20190411_1228	2019-05-07 15:43:34.914289+01
+196	export_readiness	0041_auto_20190417_0825	2019-05-07 15:43:40.143447+01
+197	find_a_supplier	0067_auto_20181012_1507	2019-05-07 15:43:42.015971+01
+198	find_a_supplier	0068_auto_20181024_1112	2019-05-07 15:43:43.444852+01
+199	find_a_supplier	0069_auto_20190206_1355	2019-05-07 15:43:44.950663+01
+200	find_a_supplier	0070_auto_20190417_0825	2019-05-07 15:43:46.496023+01
+201	find_a_supplier	0071_auto_20190417_1024	2019-05-07 15:44:12.076632+01
+202	great_international	0001_initial	2019-05-07 15:44:16.869251+01
+203	great_international	0002_auto_20190206_1146	2019-05-07 15:44:16.872215+01
+204	great_international	0003_internationalarticlelistingpage	2019-05-07 15:44:16.874654+01
+205	great_international	0003_auto_20190211_1202	2019-05-07 15:44:16.877038+01
+206	great_international	0004_merge_20190212_1003	2019-05-07 15:44:16.879672+01
+207	great_international	0005_internationalukhqpages	2019-05-07 15:44:16.882104+01
+208	great_international	0006_internationaltopiclandingpage	2019-05-07 15:44:16.884465+01
+209	great_international	0007_auto_20190219_1114	2019-05-07 15:44:16.887295+01
+210	great_international	0008_auto_20190222_1554	2019-05-07 15:44:16.889961+01
+211	great_international	0008_auto_20190222_1230	2019-05-07 15:44:16.892519+01
+212	great_international	0009_merge_20190225_1214	2019-05-07 15:44:16.895536+01
+213	great_international	0010_auto_20190228_0819	2019-05-07 15:44:16.898187+01
+214	great_international	0011_auto_20190228_1051	2019-05-07 15:44:16.900671+01
+215	great_international	0012_internationalsectorpage	2019-05-07 15:44:16.903554+01
+216	great_international	0013_auto_20190301_1227	2019-05-07 15:44:16.906014+01
+217	great_international	0014_auto_20190304_1215	2019-05-07 15:44:16.908405+01
+218	great_international	0015_auto_20190306_1521	2019-05-07 15:44:16.911358+01
+219	great_international	0002_internationalcuratedtopiclandingpage	2019-05-07 15:44:17.174564+01
+220	great_international	0003_auto_20190313_0855	2019-05-07 15:44:22.406575+01
+221	great_international	0004_internationalguidelandingpage	2019-05-07 15:44:22.669691+01
+222	great_international	0005_auto_20190320_1750	2019-05-07 15:44:28.112499+01
+223	great_international	0006_auto_20190325_0945	2019-05-07 15:44:32.275419+01
+224	great_international	0007_auto_20190402_1221	2019-05-07 15:44:32.520622+01
+225	great_international	0008_auto_20190404_1320	2019-05-07 15:47:14.257346+01
+226	great_international	0009_auto_20190404_1320	2019-05-07 15:47:40.065113+01
+227	great_international	0010_auto_20190404_1320	2019-05-07 15:49:25.602727+01
+228	great_international	0011_auto_20190404_1321	2019-05-07 15:50:39.228102+01
+229	great_international	0012_auto_20190404_1321	2019-05-07 15:51:04.760707+01
+230	great_international	0013_auto_20190404_1321	2019-05-07 15:52:16.433831+01
+231	great_international	0014_auto_20190404_1322	2019-05-07 15:53:04.620046+01
+232	great_international	0015_auto_20190404_1712	2019-05-07 15:53:10.150213+01
+233	great_international	0016_auto_20190408_1640	2019-05-07 15:53:19.949861+01
+234	great_international	0007_internationalhomepage_hero_cta_link	2019-05-07 15:53:20.745812+01
+235	great_international	0017_merge_20190411_1027	2019-05-07 15:53:20.749088+01
+236	great_international	0018_auto_20190411_1028	2019-05-07 15:53:24.860117+01
+237	great_international	0019_auto_20190417_0825	2019-05-07 15:53:29.792666+01
+238	great_international	0020_auto_20190417_1024	2019-05-07 15:55:37.154326+01
+239	great_international	0021_auto_20190423_1423	2019-05-07 15:57:24.752296+01
+240	invest	0015_auto_20181012_1507	2019-05-07 15:57:26.849+01
+241	invest	0016_auto_20181025_1226	2019-05-07 15:57:31.234138+01
+242	invest	0017_auto_20190206_1355	2019-05-07 15:57:35.701435+01
+243	invest	0018_auto_20190314_1507	2019-05-07 15:57:55.293578+01
+244	invest	0019_auto_20190320_1347	2019-05-07 15:59:57.933645+01
+245	invest	0020_auto_20190402_1018	2019-05-07 16:00:18.838324+01
+246	invest	0021_auto_20190409_1246	2019-05-07 16:01:16.195239+01
+247	invest	0022_auto_20190411_1449	2019-05-07 16:05:22.774919+01
+248	invest	0023_auto_20190417_0825	2019-05-07 16:05:28.721686+01
+249	invest	0024_auto_20190417_1024	2019-05-07 16:08:16.364261+01
+250	invest	0025_auto_20190424_1501	2019-05-07 16:08:30.107272+01
+251	invest	0026_auto_20190425_1524	2019-05-07 16:08:48.964703+01
+252	invest	0027_auto_20190503_0844	2019-05-07 16:08:58.013594+01
+253	invest	0028_auto_20190503_0949	2019-05-07 16:09:06.22686+01
+254	sessions	0001_initial	2019-05-07 16:09:06.246058+01
+255	users	0001_initial	2019-05-07 16:09:06.654534+01
+256	users	0002_create_profile_existing_users	2019-05-07 16:09:07.304072+01
+257	wagtailadmin	0001_create_admin_access_permissions	2019-05-07 16:09:07.735271+01
+258	wagtailembeds	0001_initial	2019-05-07 16:09:07.770756+01
+259	wagtailembeds	0002_add_verbose_names	2019-05-07 16:09:07.786547+01
+260	wagtailembeds	0003_capitalizeverbose	2019-05-07 16:09:07.800716+01
+261	wagtailsearch	0001_initial	2019-05-07 16:09:08.860614+01
+262	wagtailsearch	0002_add_verbose_names	2019-05-07 16:09:10.218667+01
+263	wagtailsearch	0003_remove_editors_pick	2019-05-07 16:09:10.617784+01
+264	wagtailusers	0001_initial	2019-05-07 16:09:11.229879+01
+265	wagtailusers	0002_add_verbose_name_on_userprofile	2019-05-07 16:09:11.312869+01
+266	wagtailusers	0003_add_verbose_names	2019-05-07 16:09:11.344286+01
+267	wagtailusers	0004_capitalizeverbose	2019-05-07 16:09:11.453174+01
+268	wagtailusers	0005_make_related_name_wagtail_specific	2019-05-07 16:09:11.504007+01
+269	wagtailusers	0006_userprofile_prefered_language	2019-05-07 16:09:11.53844+01
+270	wagtailusers	0007_userprofile_current_time_zone	2019-05-07 16:09:11.572732+01
+271	wagtailusers	0008_userprofile_avatar	2019-05-07 16:09:11.60854+01
+272	db	0001_initial	2019-05-07 16:09:11.614717+01
+273	wagtailcore	0001_squashed_0016_change_page_url_path_to_text_field	2019-05-07 16:09:11.61835+01
+274	export_readiness	0031_internationallandingpage_squashed_0050_auto_20190219_1633	2019-05-07 16:09:11.621909+01
+275	great_international	0001_squashed_0015_auto_20190306_1521	2019-05-07 16:09:11.625176+01
+276	invest	0014_auto_20180904_1113_squashed_0026_auto_20181002_1534	2019-05-07 16:09:11.627852+01
+277	great_international	0022_auto_20190508_1300	2019-05-08 14:13:33.110663+01
 \.
 
 
@@ -7816,7 +7864,7 @@ COPY public.invest_investapp (page_ptr_id, service_name, uses_tree_based_routing
 -- Data for Name: invest_investhomepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.invest_investhomepage (page_ptr_id, heading, heading_en_gb, heading_de, heading_ja, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_ar, sub_heading, sub_heading_en_gb, sub_heading_de, sub_heading_ja, sub_heading_zh_hans, sub_heading_fr, sub_heading_es, sub_heading_pt, sub_heading_ar, sector_title, sector_title_en_gb, sector_title_de, sector_title_ja, sector_title_zh_hans, sector_title_fr, sector_title_es, sector_title_pt, sector_title_ar, sector_button_text, sector_button_text_en_gb, sector_button_text_de, sector_button_text_ja, sector_button_text_zh_hans, sector_button_text_fr, sector_button_text_es, sector_button_text_pt, sector_button_text_ar, setup_guide_title, setup_guide_title_en_gb, setup_guide_title_de, setup_guide_title_ja, setup_guide_title_zh_hans, setup_guide_title_fr, setup_guide_title_es, setup_guide_title_pt, setup_guide_title_ar, setup_guide_lead_in, setup_guide_lead_in_en_gb, setup_guide_lead_in_de, setup_guide_lead_in_ja, setup_guide_lead_in_zh_hans, setup_guide_lead_in_fr, setup_guide_lead_in_es, setup_guide_lead_in_pt, setup_guide_lead_in_ar, how_we_help_title, how_we_help_title_en_gb, how_we_help_title_de, how_we_help_title_ja, how_we_help_title_zh_hans, how_we_help_title_fr, how_we_help_title_es, how_we_help_title_pt, how_we_help_title_ar, how_we_help_lead_in, how_we_help_lead_in_en_gb, how_we_help_lead_in_de, how_we_help_lead_in_ja, how_we_help_lead_in_zh_hans, how_we_help_lead_in_fr, how_we_help_lead_in_es, how_we_help_lead_in_pt, how_we_help_lead_in_ar, hero_image_id, how_we_help_icon_five_id, how_we_help_icon_five_ar_id, how_we_help_icon_five_de_id, how_we_help_icon_five_en_gb_id, how_we_help_icon_five_es_id, how_we_help_icon_five_fr_id, how_we_help_icon_five_ja_id, how_we_help_icon_five_pt_id, how_we_help_icon_five_zh_hans_id, how_we_help_icon_four_id, how_we_help_icon_four_ar_id, how_we_help_icon_four_de_id, how_we_help_icon_four_en_gb_id, how_we_help_icon_four_es_id, how_we_help_icon_four_fr_id, how_we_help_icon_four_ja_id, how_we_help_icon_four_pt_id, how_we_help_icon_four_zh_hans_id, how_we_help_icon_one_id, how_we_help_icon_one_ar_id, how_we_help_icon_one_de_id, how_we_help_icon_one_en_gb_id, how_we_help_icon_one_es_id, how_we_help_icon_one_fr_id, how_we_help_icon_one_ja_id, how_we_help_icon_one_pt_id, how_we_help_icon_one_zh_hans_id, how_we_help_icon_three_id, how_we_help_icon_three_ar_id, how_we_help_icon_three_de_id, how_we_help_icon_three_en_gb_id, how_we_help_icon_three_es_id, how_we_help_icon_three_fr_id, how_we_help_icon_three_ja_id, how_we_help_icon_three_pt_id, how_we_help_icon_three_zh_hans_id, how_we_help_icon_two_id, how_we_help_icon_two_ar_id, how_we_help_icon_two_de_id, how_we_help_icon_two_en_gb_id, how_we_help_icon_two_es_id, how_we_help_icon_two_fr_id, how_we_help_icon_two_ja_id, how_we_help_icon_two_pt_id, how_we_help_icon_two_zh_hans_id, how_we_help_text_five, how_we_help_text_five_ar, how_we_help_text_five_de, how_we_help_text_five_en_gb, how_we_help_text_five_es, how_we_help_text_five_fr, how_we_help_text_five_ja, how_we_help_text_five_pt, how_we_help_text_five_zh_hans, how_we_help_text_four, how_we_help_text_four_ar, how_we_help_text_four_de, how_we_help_text_four_en_gb, how_we_help_text_four_es, how_we_help_text_four_fr, how_we_help_text_four_ja, how_we_help_text_four_pt, how_we_help_text_four_zh_hans, how_we_help_text_one, how_we_help_text_one_ar, how_we_help_text_one_de, how_we_help_text_one_en_gb, how_we_help_text_one_es, how_we_help_text_one_fr, how_we_help_text_one_ja, how_we_help_text_one_pt, how_we_help_text_one_zh_hans, how_we_help_text_six, how_we_help_text_six_ar, how_we_help_text_six_de, how_we_help_text_six_en_gb, how_we_help_text_six_es, how_we_help_text_six_fr, how_we_help_text_six_ja, how_we_help_text_six_pt, how_we_help_text_six_zh_hans, how_we_help_text_three, how_we_help_text_three_ar, how_we_help_text_three_de, how_we_help_text_three_en_gb, how_we_help_text_three_es, how_we_help_text_three_fr, how_we_help_text_three_ja, how_we_help_text_three_pt, how_we_help_text_three_zh_hans, how_we_help_text_two, how_we_help_text_two_ar, how_we_help_text_two_de, how_we_help_text_two_en_gb, how_we_help_text_two_es, how_we_help_text_two_fr, how_we_help_text_two_ja, how_we_help_text_two_pt, how_we_help_text_two_zh_hans, subsection_content_five, subsection_content_five_ar, subsection_content_five_de, subsection_content_five_en_gb, subsection_content_five_es, subsection_content_five_fr, subsection_content_five_ja, subsection_content_five_pt, subsection_content_five_zh_hans, subsection_content_four, subsection_content_four_ar, subsection_content_four_de, subsection_content_four_en_gb, subsection_content_four_es, subsection_content_four_fr, subsection_content_four_ja, subsection_content_four_pt, subsection_content_four_zh_hans, subsection_content_one, subsection_content_one_ar, subsection_content_one_de, subsection_content_one_en_gb, subsection_content_one_es, subsection_content_one_fr, subsection_content_one_ja, subsection_content_one_pt, subsection_content_one_zh_hans, subsection_content_seven, subsection_content_seven_ar, subsection_content_seven_de, subsection_content_seven_en_gb, subsection_content_seven_es, subsection_content_seven_fr, subsection_content_seven_ja, subsection_content_seven_pt, subsection_content_seven_zh_hans, subsection_content_six, subsection_content_six_ar, subsection_content_six_de, subsection_content_six_en_gb, subsection_content_six_es, subsection_content_six_fr, subsection_content_six_ja, subsection_content_six_pt, subsection_content_six_zh_hans, subsection_content_three, subsection_content_three_ar, subsection_content_three_de, subsection_content_three_en_gb, subsection_content_three_es, subsection_content_three_fr, subsection_content_three_ja, subsection_content_three_pt, subsection_content_three_zh_hans, subsection_content_two, subsection_content_two_ar, subsection_content_two_de, subsection_content_two_en_gb, subsection_content_two_es, subsection_content_two_fr, subsection_content_two_ja, subsection_content_two_pt, subsection_content_two_zh_hans, subsection_title_five, subsection_title_five_ar, subsection_title_five_de, subsection_title_five_en_gb, subsection_title_five_es, subsection_title_five_fr, subsection_title_five_ja, subsection_title_five_pt, subsection_title_five_zh_hans, subsection_title_four, subsection_title_four_ar, subsection_title_four_de, subsection_title_four_en_gb, subsection_title_four_es, subsection_title_four_fr, subsection_title_four_ja, subsection_title_four_pt, subsection_title_four_zh_hans, subsection_title_one, subsection_title_one_ar, subsection_title_one_de, subsection_title_one_en_gb, subsection_title_one_es, subsection_title_one_fr, subsection_title_one_ja, subsection_title_one_pt, subsection_title_one_zh_hans, subsection_title_seven, subsection_title_seven_ar, subsection_title_seven_de, subsection_title_seven_en_gb, subsection_title_seven_es, subsection_title_seven_fr, subsection_title_seven_ja, subsection_title_seven_pt, subsection_title_seven_zh_hans, subsection_title_six, subsection_title_six_ar, subsection_title_six_de, subsection_title_six_en_gb, subsection_title_six_es, subsection_title_six_fr, subsection_title_six_ja, subsection_title_six_pt, subsection_title_six_zh_hans, subsection_title_three, subsection_title_three_ar, subsection_title_three_de, subsection_title_three_en_gb, subsection_title_three_es, subsection_title_three_fr, subsection_title_three_ja, subsection_title_three_pt, subsection_title_three_zh_hans, subsection_title_two, subsection_title_two_ar, subsection_title_two_de, subsection_title_two_en_gb, subsection_title_two_es, subsection_title_two_fr, subsection_title_two_ja, subsection_title_two_pt, subsection_title_two_zh_hans, service_name, setup_guide_call_to_action_text, setup_guide_call_to_action_text_ar, setup_guide_call_to_action_text_de, setup_guide_call_to_action_text_en_gb, setup_guide_call_to_action_text_es, setup_guide_call_to_action_text_fr, setup_guide_call_to_action_text_ja, setup_guide_call_to_action_text_pt, setup_guide_call_to_action_text_zh_hans, setup_guide_content, setup_guide_content_ar, setup_guide_content_de, setup_guide_content_en_gb, setup_guide_content_es, setup_guide_content_fr, setup_guide_content_ja, setup_guide_content_pt, setup_guide_content_zh_hans, setup_guide_img_id, setup_guide_img_ar_id, setup_guide_img_de_id, setup_guide_img_en_gb_id, setup_guide_img_es_id, setup_guide_img_fr_id, setup_guide_img_ja_id, setup_guide_img_pt_id, setup_guide_img_zh_hans_id, benefits_section_content, benefits_section_content_ar, benefits_section_content_de, benefits_section_content_en_gb, benefits_section_content_es, benefits_section_content_fr, benefits_section_content_ja, benefits_section_content_pt, benefits_section_content_zh_hans, benefits_section_img_id, benefits_section_img_ar_id, benefits_section_img_de_id, benefits_section_img_en_gb_id, benefits_section_img_es_id, benefits_section_img_fr_id, benefits_section_img_ja_id, benefits_section_img_pt_id, benefits_section_img_zh_hans_id, benefits_section_intro, benefits_section_intro_ar, benefits_section_intro_de, benefits_section_intro_en_gb, benefits_section_intro_es, benefits_section_intro_fr, benefits_section_intro_ja, benefits_section_intro_pt, benefits_section_intro_zh_hans, benefits_section_title, benefits_section_title_ar, benefits_section_title_de, benefits_section_title_en_gb, benefits_section_title_es, benefits_section_title_fr, benefits_section_title_ja, benefits_section_title_pt, benefits_section_title_zh_hans, breadcrumbs_label, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_zh_hans, contact_section_call_to_action_text, contact_section_call_to_action_text_ar, contact_section_call_to_action_text_de, contact_section_call_to_action_text_en_gb, contact_section_call_to_action_text_es, contact_section_call_to_action_text_fr, contact_section_call_to_action_text_ja, contact_section_call_to_action_text_pt, contact_section_call_to_action_text_zh_hans, contact_section_content, contact_section_content_ar, contact_section_content_de, contact_section_content_en_gb, contact_section_content_es, contact_section_content_fr, contact_section_content_ja, contact_section_content_pt, contact_section_content_zh_hans, contact_section_title, contact_section_title_ar, contact_section_title_de, contact_section_title_en_gb, contact_section_title_es, contact_section_title_fr, contact_section_title_ja, contact_section_title_pt, contact_section_title_zh_hans, eu_exit_section_call_to_action_text, eu_exit_section_call_to_action_text_ar, eu_exit_section_call_to_action_text_de, eu_exit_section_call_to_action_text_en_gb, eu_exit_section_call_to_action_text_es, eu_exit_section_call_to_action_text_fr, eu_exit_section_call_to_action_text_ja, eu_exit_section_call_to_action_text_pt, eu_exit_section_call_to_action_text_zh_hans, eu_exit_section_content, eu_exit_section_content_ar, eu_exit_section_content_de, eu_exit_section_content_en_gb, eu_exit_section_content_es, eu_exit_section_content_fr, eu_exit_section_content_ja, eu_exit_section_content_pt, eu_exit_section_content_zh_hans, eu_exit_section_img_id, eu_exit_section_img_ar_id, eu_exit_section_img_de_id, eu_exit_section_img_en_gb_id, eu_exit_section_img_es_id, eu_exit_section_img_fr_id, eu_exit_section_img_ja_id, eu_exit_section_img_pt_id, eu_exit_section_img_zh_hans_id, eu_exit_section_title, eu_exit_section_title_ar, eu_exit_section_title_de, eu_exit_section_title_en_gb, eu_exit_section_title_es, eu_exit_section_title_fr, eu_exit_section_title_ja, eu_exit_section_title_pt, eu_exit_section_title_zh_hans, hero_call_to_action_text, hero_call_to_action_text_ar, hero_call_to_action_text_de, hero_call_to_action_text_en_gb, hero_call_to_action_text_es, hero_call_to_action_text_fr, hero_call_to_action_text_ja, hero_call_to_action_text_pt, hero_call_to_action_text_zh_hans, hpo_intro, hpo_intro_ar, hpo_intro_de, hpo_intro_en_gb, hpo_intro_es, hpo_intro_fr, hpo_intro_ja, hpo_intro_pt, hpo_intro_zh_hans, hpo_title, hpo_title_ar, hpo_title_de, hpo_title_en_gb, hpo_title_es, hpo_title_fr, hpo_title_ja, hpo_title_pt, hpo_title_zh_hans, sector_intro, sector_intro_ar, sector_intro_de, sector_intro_en_gb, sector_intro_es, sector_intro_fr, sector_intro_ja, sector_intro_pt, sector_intro_zh_hans, capital_invest_section_background_image_id, capital_invest_section_background_image_ar_id, capital_invest_section_background_image_de_id, capital_invest_section_background_image_en_gb_id, capital_invest_section_background_image_es_id, capital_invest_section_background_image_fr_id, capital_invest_section_background_image_ja_id, capital_invest_section_background_image_pt_id, capital_invest_section_background_image_zh_hans_id, capital_invest_section_content, capital_invest_section_content_ar, capital_invest_section_content_de, capital_invest_section_content_en_gb, capital_invest_section_content_es, capital_invest_section_content_fr, capital_invest_section_content_ja, capital_invest_section_content_pt, capital_invest_section_content_zh_hans, capital_invest_section_cta_text, capital_invest_section_cta_text_ar, capital_invest_section_cta_text_de, capital_invest_section_cta_text_en_gb, capital_invest_section_cta_text_es, capital_invest_section_cta_text_fr, capital_invest_section_cta_text_ja, capital_invest_section_cta_text_pt, capital_invest_section_cta_text_zh_hans, capital_invest_section_title, capital_invest_section_title_ar, capital_invest_section_title_de, capital_invest_section_title_en_gb, capital_invest_section_title_es, capital_invest_section_title_fr, capital_invest_section_title_ja, capital_invest_section_title_pt, capital_invest_section_title_zh_hans, capital_invest_section_cta_url, capital_invest_section_cta_url_ar, capital_invest_section_cta_url_de, capital_invest_section_cta_url_en_gb, capital_invest_section_cta_url_es, capital_invest_section_cta_url_fr, capital_invest_section_cta_url_ja, capital_invest_section_cta_url_pt, capital_invest_section_cta_url_zh_hans, contact_section_call_to_action_url, contact_section_call_to_action_url_ar, contact_section_call_to_action_url_de, contact_section_call_to_action_url_en_gb, contact_section_call_to_action_url_es, contact_section_call_to_action_url_fr, contact_section_call_to_action_url_ja, contact_section_call_to_action_url_pt, contact_section_call_to_action_url_zh_hans, eu_exit_section_call_to_action_url, eu_exit_section_call_to_action_url_ar, eu_exit_section_call_to_action_url_de, eu_exit_section_call_to_action_url_en_gb, eu_exit_section_call_to_action_url_es, eu_exit_section_call_to_action_url_fr, eu_exit_section_call_to_action_url_ja, eu_exit_section_call_to_action_url_pt, eu_exit_section_call_to_action_url_zh_hans, hero_call_to_action_url, hero_call_to_action_url_ar, hero_call_to_action_url_de, hero_call_to_action_url_en_gb, hero_call_to_action_url_es, hero_call_to_action_url_fr, hero_call_to_action_url_ja, hero_call_to_action_url_pt, hero_call_to_action_url_zh_hans, sector_button_url, sector_button_url_ar, sector_button_url_de, sector_button_url_en_gb, sector_button_url_es, sector_button_url_fr, sector_button_url_ja, sector_button_url_pt, sector_button_url_zh_hans, setup_guide_call_to_action_url, setup_guide_call_to_action_url_ar, setup_guide_call_to_action_url_de, setup_guide_call_to_action_url_en_gb, setup_guide_call_to_action_url_es, setup_guide_call_to_action_url_fr, setup_guide_call_to_action_url_ja, setup_guide_call_to_action_url_pt, setup_guide_call_to_action_url_zh_hans, uses_tree_based_routing) FROM stdin;
+COPY public.invest_investhomepage (page_ptr_id, heading, heading_en_gb, heading_de, heading_ja, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_ar, sub_heading, sub_heading_en_gb, sub_heading_de, sub_heading_ja, sub_heading_zh_hans, sub_heading_fr, sub_heading_es, sub_heading_pt, sub_heading_ar, sector_title, sector_title_en_gb, sector_title_de, sector_title_ja, sector_title_zh_hans, sector_title_fr, sector_title_es, sector_title_pt, sector_title_ar, sector_button_text, sector_button_text_en_gb, sector_button_text_de, sector_button_text_ja, sector_button_text_zh_hans, sector_button_text_fr, sector_button_text_es, sector_button_text_pt, sector_button_text_ar, setup_guide_title, setup_guide_title_en_gb, setup_guide_title_de, setup_guide_title_ja, setup_guide_title_zh_hans, setup_guide_title_fr, setup_guide_title_es, setup_guide_title_pt, setup_guide_title_ar, setup_guide_lead_in, setup_guide_lead_in_en_gb, setup_guide_lead_in_de, setup_guide_lead_in_ja, setup_guide_lead_in_zh_hans, setup_guide_lead_in_fr, setup_guide_lead_in_es, setup_guide_lead_in_pt, setup_guide_lead_in_ar, how_we_help_title, how_we_help_title_en_gb, how_we_help_title_de, how_we_help_title_ja, how_we_help_title_zh_hans, how_we_help_title_fr, how_we_help_title_es, how_we_help_title_pt, how_we_help_title_ar, how_we_help_lead_in, how_we_help_lead_in_en_gb, how_we_help_lead_in_de, how_we_help_lead_in_ja, how_we_help_lead_in_zh_hans, how_we_help_lead_in_fr, how_we_help_lead_in_es, how_we_help_lead_in_pt, how_we_help_lead_in_ar, hero_image_id, how_we_help_icon_five_id, how_we_help_icon_five_ar_id, how_we_help_icon_five_de_id, how_we_help_icon_five_en_gb_id, how_we_help_icon_five_es_id, how_we_help_icon_five_fr_id, how_we_help_icon_five_ja_id, how_we_help_icon_five_pt_id, how_we_help_icon_five_zh_hans_id, how_we_help_icon_four_id, how_we_help_icon_four_ar_id, how_we_help_icon_four_de_id, how_we_help_icon_four_en_gb_id, how_we_help_icon_four_es_id, how_we_help_icon_four_fr_id, how_we_help_icon_four_ja_id, how_we_help_icon_four_pt_id, how_we_help_icon_four_zh_hans_id, how_we_help_icon_one_id, how_we_help_icon_one_ar_id, how_we_help_icon_one_de_id, how_we_help_icon_one_en_gb_id, how_we_help_icon_one_es_id, how_we_help_icon_one_fr_id, how_we_help_icon_one_ja_id, how_we_help_icon_one_pt_id, how_we_help_icon_one_zh_hans_id, how_we_help_icon_three_id, how_we_help_icon_three_ar_id, how_we_help_icon_three_de_id, how_we_help_icon_three_en_gb_id, how_we_help_icon_three_es_id, how_we_help_icon_three_fr_id, how_we_help_icon_three_ja_id, how_we_help_icon_three_pt_id, how_we_help_icon_three_zh_hans_id, how_we_help_icon_two_id, how_we_help_icon_two_ar_id, how_we_help_icon_two_de_id, how_we_help_icon_two_en_gb_id, how_we_help_icon_two_es_id, how_we_help_icon_two_fr_id, how_we_help_icon_two_ja_id, how_we_help_icon_two_pt_id, how_we_help_icon_two_zh_hans_id, how_we_help_text_five, how_we_help_text_five_ar, how_we_help_text_five_de, how_we_help_text_five_en_gb, how_we_help_text_five_es, how_we_help_text_five_fr, how_we_help_text_five_ja, how_we_help_text_five_pt, how_we_help_text_five_zh_hans, how_we_help_text_four, how_we_help_text_four_ar, how_we_help_text_four_de, how_we_help_text_four_en_gb, how_we_help_text_four_es, how_we_help_text_four_fr, how_we_help_text_four_ja, how_we_help_text_four_pt, how_we_help_text_four_zh_hans, how_we_help_text_one, how_we_help_text_one_ar, how_we_help_text_one_de, how_we_help_text_one_en_gb, how_we_help_text_one_es, how_we_help_text_one_fr, how_we_help_text_one_ja, how_we_help_text_one_pt, how_we_help_text_one_zh_hans, how_we_help_text_six, how_we_help_text_six_ar, how_we_help_text_six_de, how_we_help_text_six_en_gb, how_we_help_text_six_es, how_we_help_text_six_fr, how_we_help_text_six_ja, how_we_help_text_six_pt, how_we_help_text_six_zh_hans, how_we_help_text_three, how_we_help_text_three_ar, how_we_help_text_three_de, how_we_help_text_three_en_gb, how_we_help_text_three_es, how_we_help_text_three_fr, how_we_help_text_three_ja, how_we_help_text_three_pt, how_we_help_text_three_zh_hans, how_we_help_text_two, how_we_help_text_two_ar, how_we_help_text_two_de, how_we_help_text_two_en_gb, how_we_help_text_two_es, how_we_help_text_two_fr, how_we_help_text_two_ja, how_we_help_text_two_pt, how_we_help_text_two_zh_hans, subsection_content_five, subsection_content_five_ar, subsection_content_five_de, subsection_content_five_en_gb, subsection_content_five_es, subsection_content_five_fr, subsection_content_five_ja, subsection_content_five_pt, subsection_content_five_zh_hans, subsection_content_four, subsection_content_four_ar, subsection_content_four_de, subsection_content_four_en_gb, subsection_content_four_es, subsection_content_four_fr, subsection_content_four_ja, subsection_content_four_pt, subsection_content_four_zh_hans, subsection_content_one, subsection_content_one_ar, subsection_content_one_de, subsection_content_one_en_gb, subsection_content_one_es, subsection_content_one_fr, subsection_content_one_ja, subsection_content_one_pt, subsection_content_one_zh_hans, subsection_content_seven, subsection_content_seven_ar, subsection_content_seven_de, subsection_content_seven_en_gb, subsection_content_seven_es, subsection_content_seven_fr, subsection_content_seven_ja, subsection_content_seven_pt, subsection_content_seven_zh_hans, subsection_content_six, subsection_content_six_ar, subsection_content_six_de, subsection_content_six_en_gb, subsection_content_six_es, subsection_content_six_fr, subsection_content_six_ja, subsection_content_six_pt, subsection_content_six_zh_hans, subsection_content_three, subsection_content_three_ar, subsection_content_three_de, subsection_content_three_en_gb, subsection_content_three_es, subsection_content_three_fr, subsection_content_three_ja, subsection_content_three_pt, subsection_content_three_zh_hans, subsection_content_two, subsection_content_two_ar, subsection_content_two_de, subsection_content_two_en_gb, subsection_content_two_es, subsection_content_two_fr, subsection_content_two_ja, subsection_content_two_pt, subsection_content_two_zh_hans, subsection_title_five, subsection_title_five_ar, subsection_title_five_de, subsection_title_five_en_gb, subsection_title_five_es, subsection_title_five_fr, subsection_title_five_ja, subsection_title_five_pt, subsection_title_five_zh_hans, subsection_title_four, subsection_title_four_ar, subsection_title_four_de, subsection_title_four_en_gb, subsection_title_four_es, subsection_title_four_fr, subsection_title_four_ja, subsection_title_four_pt, subsection_title_four_zh_hans, subsection_title_one, subsection_title_one_ar, subsection_title_one_de, subsection_title_one_en_gb, subsection_title_one_es, subsection_title_one_fr, subsection_title_one_ja, subsection_title_one_pt, subsection_title_one_zh_hans, subsection_title_seven, subsection_title_seven_ar, subsection_title_seven_de, subsection_title_seven_en_gb, subsection_title_seven_es, subsection_title_seven_fr, subsection_title_seven_ja, subsection_title_seven_pt, subsection_title_seven_zh_hans, subsection_title_six, subsection_title_six_ar, subsection_title_six_de, subsection_title_six_en_gb, subsection_title_six_es, subsection_title_six_fr, subsection_title_six_ja, subsection_title_six_pt, subsection_title_six_zh_hans, subsection_title_three, subsection_title_three_ar, subsection_title_three_de, subsection_title_three_en_gb, subsection_title_three_es, subsection_title_three_fr, subsection_title_three_ja, subsection_title_three_pt, subsection_title_three_zh_hans, subsection_title_two, subsection_title_two_ar, subsection_title_two_de, subsection_title_two_en_gb, subsection_title_two_es, subsection_title_two_fr, subsection_title_two_ja, subsection_title_two_pt, subsection_title_two_zh_hans, service_name, setup_guide_content, setup_guide_content_ar, setup_guide_content_de, setup_guide_content_en_gb, setup_guide_content_es, setup_guide_content_fr, setup_guide_content_ja, setup_guide_content_pt, setup_guide_content_zh_hans, setup_guide_img_id, setup_guide_img_ar_id, setup_guide_img_de_id, setup_guide_img_en_gb_id, setup_guide_img_es_id, setup_guide_img_fr_id, setup_guide_img_ja_id, setup_guide_img_pt_id, setup_guide_img_zh_hans_id, benefits_section_content, benefits_section_content_ar, benefits_section_content_de, benefits_section_content_en_gb, benefits_section_content_es, benefits_section_content_fr, benefits_section_content_ja, benefits_section_content_pt, benefits_section_content_zh_hans, benefits_section_img_id, benefits_section_img_ar_id, benefits_section_img_de_id, benefits_section_img_en_gb_id, benefits_section_img_es_id, benefits_section_img_fr_id, benefits_section_img_ja_id, benefits_section_img_pt_id, benefits_section_img_zh_hans_id, benefits_section_intro, benefits_section_intro_ar, benefits_section_intro_de, benefits_section_intro_en_gb, benefits_section_intro_es, benefits_section_intro_fr, benefits_section_intro_ja, benefits_section_intro_pt, benefits_section_intro_zh_hans, benefits_section_title, benefits_section_title_ar, benefits_section_title_de, benefits_section_title_en_gb, benefits_section_title_es, benefits_section_title_fr, benefits_section_title_ja, benefits_section_title_pt, benefits_section_title_zh_hans, breadcrumbs_label, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_zh_hans, contact_section_call_to_action_text, contact_section_call_to_action_text_ar, contact_section_call_to_action_text_de, contact_section_call_to_action_text_en_gb, contact_section_call_to_action_text_es, contact_section_call_to_action_text_fr, contact_section_call_to_action_text_ja, contact_section_call_to_action_text_pt, contact_section_call_to_action_text_zh_hans, contact_section_content, contact_section_content_ar, contact_section_content_de, contact_section_content_en_gb, contact_section_content_es, contact_section_content_fr, contact_section_content_ja, contact_section_content_pt, contact_section_content_zh_hans, contact_section_title, contact_section_title_ar, contact_section_title_de, contact_section_title_en_gb, contact_section_title_es, contact_section_title_fr, contact_section_title_ja, contact_section_title_pt, contact_section_title_zh_hans, eu_exit_section_call_to_action_text, eu_exit_section_call_to_action_text_ar, eu_exit_section_call_to_action_text_de, eu_exit_section_call_to_action_text_en_gb, eu_exit_section_call_to_action_text_es, eu_exit_section_call_to_action_text_fr, eu_exit_section_call_to_action_text_ja, eu_exit_section_call_to_action_text_pt, eu_exit_section_call_to_action_text_zh_hans, eu_exit_section_content, eu_exit_section_content_ar, eu_exit_section_content_de, eu_exit_section_content_en_gb, eu_exit_section_content_es, eu_exit_section_content_fr, eu_exit_section_content_ja, eu_exit_section_content_pt, eu_exit_section_content_zh_hans, eu_exit_section_img_id, eu_exit_section_img_ar_id, eu_exit_section_img_de_id, eu_exit_section_img_en_gb_id, eu_exit_section_img_es_id, eu_exit_section_img_fr_id, eu_exit_section_img_ja_id, eu_exit_section_img_pt_id, eu_exit_section_img_zh_hans_id, eu_exit_section_title, eu_exit_section_title_ar, eu_exit_section_title_de, eu_exit_section_title_en_gb, eu_exit_section_title_es, eu_exit_section_title_fr, eu_exit_section_title_ja, eu_exit_section_title_pt, eu_exit_section_title_zh_hans, hero_call_to_action_text, hero_call_to_action_text_ar, hero_call_to_action_text_de, hero_call_to_action_text_en_gb, hero_call_to_action_text_es, hero_call_to_action_text_fr, hero_call_to_action_text_ja, hero_call_to_action_text_pt, hero_call_to_action_text_zh_hans, hpo_intro, hpo_intro_ar, hpo_intro_de, hpo_intro_en_gb, hpo_intro_es, hpo_intro_fr, hpo_intro_ja, hpo_intro_pt, hpo_intro_zh_hans, hpo_title, hpo_title_ar, hpo_title_de, hpo_title_en_gb, hpo_title_es, hpo_title_fr, hpo_title_ja, hpo_title_pt, hpo_title_zh_hans, sector_intro, sector_intro_ar, sector_intro_de, sector_intro_en_gb, sector_intro_es, sector_intro_fr, sector_intro_ja, sector_intro_pt, sector_intro_zh_hans, capital_invest_section_content, capital_invest_section_content_ar, capital_invest_section_content_de, capital_invest_section_content_en_gb, capital_invest_section_content_es, capital_invest_section_content_fr, capital_invest_section_content_ja, capital_invest_section_content_pt, capital_invest_section_content_zh_hans, capital_invest_section_title, capital_invest_section_title_ar, capital_invest_section_title_de, capital_invest_section_title_en_gb, capital_invest_section_title_es, capital_invest_section_title_fr, capital_invest_section_title_ja, capital_invest_section_title_pt, capital_invest_section_title_zh_hans, contact_section_call_to_action_url, contact_section_call_to_action_url_ar, contact_section_call_to_action_url_de, contact_section_call_to_action_url_en_gb, contact_section_call_to_action_url_es, contact_section_call_to_action_url_fr, contact_section_call_to_action_url_ja, contact_section_call_to_action_url_pt, contact_section_call_to_action_url_zh_hans, eu_exit_section_call_to_action_url, eu_exit_section_call_to_action_url_ar, eu_exit_section_call_to_action_url_de, eu_exit_section_call_to_action_url_en_gb, eu_exit_section_call_to_action_url_es, eu_exit_section_call_to_action_url_fr, eu_exit_section_call_to_action_url_ja, eu_exit_section_call_to_action_url_pt, eu_exit_section_call_to_action_url_zh_hans, hero_call_to_action_url, hero_call_to_action_url_ar, hero_call_to_action_url_de, hero_call_to_action_url_en_gb, hero_call_to_action_url_es, hero_call_to_action_url_fr, hero_call_to_action_url_ja, hero_call_to_action_url_pt, hero_call_to_action_url_zh_hans, sector_button_url, sector_button_url_ar, sector_button_url_de, sector_button_url_en_gb, sector_button_url_es, sector_button_url_fr, sector_button_url_ja, sector_button_url_pt, sector_button_url_zh_hans, setup_guide_call_to_action_url, setup_guide_call_to_action_url_ar, setup_guide_call_to_action_url_de, setup_guide_call_to_action_url_en_gb, setup_guide_call_to_action_url_es, setup_guide_call_to_action_url_fr, setup_guide_call_to_action_url_ja, setup_guide_call_to_action_url_pt, setup_guide_call_to_action_url_zh_hans, uses_tree_based_routing, isd_section_image_id, isd_section_image_ar_id, isd_section_image_de_id, isd_section_image_en_gb_id, isd_section_image_es_id, isd_section_image_fr_id, isd_section_image_ja_id, isd_section_image_pt_id, isd_section_image_zh_hans_id, isd_section_text, isd_section_text_ar, isd_section_text_de, isd_section_text_en_gb, isd_section_text_es, isd_section_text_fr, isd_section_text_ja, isd_section_text_pt, isd_section_text_zh_hans, isd_section_title, isd_section_title_ar, isd_section_title_de, isd_section_title_en_gb, isd_section_title_es, isd_section_title_fr, isd_section_title_ja, isd_section_title_pt, isd_section_title_zh_hans, capital_invest_section_image_id, capital_invest_section_image_ar_id, capital_invest_section_image_de_id, capital_invest_section_image_en_gb_id, capital_invest_section_image_es_id, capital_invest_section_image_fr_id, capital_invest_section_image_ja_id, capital_invest_section_image_pt_id, capital_invest_section_image_zh_hans_id) FROM stdin;
 \.
 
 
@@ -7873,6 +7921,14 @@ COPY public.taggit_tag (id, name, slug) FROM stdin;
 --
 
 COPY public.taggit_taggeditem (id, object_id, content_type_id, tag_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: users_userprofile; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.users_userprofile (id, assignment_status, user_id) FROM stdin;
 \.
 
 
@@ -7939,7 +7995,7 @@ COPY public.wagtailcore_grouppagepermission (id, permission_type, group_id, page
 -- Data for Name: wagtailcore_page; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.wagtailcore_page (id, path, depth, numchild, title, slug, live, has_unpublished_changes, url_path, seo_title, show_in_menus, search_description, go_live_at, expire_at, expired, content_type_id, owner_id, locked, latest_revision_created_at, first_published_at, live_revision_id, last_published_at, draft_title, search_description_en_gb, search_description_de, search_description_ja, search_description_zh_hans, search_description_fr, search_description_es, search_description_pt, search_description_ar, title_en_gb, title_de, title_ja, title_zh_hans, title_fr, title_es, title_pt, title_ar, seo_title_en_gb, seo_title_de, seo_title_ja, seo_title_zh_hans, seo_title_fr, seo_title_es, seo_title_pt, seo_title_ar) FROM stdin;
+COPY public.wagtailcore_page (id, path, depth, numchild, title, slug, live, has_unpublished_changes, url_path, seo_title, show_in_menus, search_description, go_live_at, expire_at, expired, content_type_id, owner_id, locked, latest_revision_created_at, first_published_at, live_revision_id, last_published_at, draft_title, title_en_gb, title_de, title_ja, title_zh_hans, title_fr, title_es, title_pt, title_ar, seo_title_en_gb, seo_title_de, seo_title_ja, seo_title_zh_hans, seo_title_fr, seo_title_es, seo_title_pt, seo_title_ar, search_description_en_gb, search_description_de, search_description_ja, search_description_zh_hans, search_description_fr, search_description_es, search_description_pt, search_description_ar) FROM stdin;
 1	0001	1	1	Root	root	t	f	/		f		\N	\N	f	1	\N	f	\N	\N	\N	\N	Root	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
 2	00010001	2	0	Welcome to your new Wagtail site!	home	t	f	/home/		f		\N	\N	f	1	\N	f	\N	\N	\N	\N	Welcome to your new Wagtail site!	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
 \.
@@ -8076,7 +8132,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 20, true);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 262, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 265, true);
 
 
 --
@@ -8132,14 +8188,14 @@ SELECT pg_catalog.setval('public.core_routingsettings_id_seq', 1, false);
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 88, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 89, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 270, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 277, true);
 
 
 --
@@ -8245,6 +8301,13 @@ SELECT pg_catalog.setval('public.taggit_tag_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.taggit_taggeditem_id_seq', 1, false);
+
+
+--
+-- Name: users_userprofile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.users_userprofile_id_seq', 1, false);
 
 
 --
@@ -9225,6 +9288,22 @@ ALTER TABLE ONLY public.taggit_tag
 
 ALTER TABLE ONLY public.taggit_taggeditem
     ADD CONSTRAINT taggit_taggeditem_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_userprofile users_userprofile_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users_userprofile
+    ADD CONSTRAINT users_userprofile_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_userprofile users_userprofile_user_id_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users_userprofile
+    ADD CONSTRAINT users_userprofile_user_id_key UNIQUE (user_id);
 
 
 --
@@ -15966,66 +16045,66 @@ CREATE INDEX invest_investhomepage_benefits_section_img_zh_hans_id_b2f6c8f5 ON p
 
 
 --
--- Name: invest_investhomepage_capital_invest_section_bac_34efabe5; Type: INDEX; Schema: public; Owner: -
+-- Name: invest_investhomepage_capital_invest_section_ima_0b9e6076; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX invest_investhomepage_capital_invest_section_bac_34efabe5 ON public.invest_investhomepage USING btree (capital_invest_section_background_image_es_id);
-
-
---
--- Name: invest_investhomepage_capital_invest_section_bac_3b381100; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_capital_invest_section_bac_3b381100 ON public.invest_investhomepage USING btree (capital_invest_section_background_image_zh_hans_id);
+CREATE INDEX invest_investhomepage_capital_invest_section_ima_0b9e6076 ON public.invest_investhomepage USING btree (capital_invest_section_image_zh_hans_id);
 
 
 --
--- Name: invest_investhomepage_capital_invest_section_bac_574a088b; Type: INDEX; Schema: public; Owner: -
+-- Name: invest_investhomepage_capital_invest_section_ima_0f12ee91; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX invest_investhomepage_capital_invest_section_bac_574a088b ON public.invest_investhomepage USING btree (capital_invest_section_background_image_de_id);
-
-
---
--- Name: invest_investhomepage_capital_invest_section_bac_86db7b4f; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_capital_invest_section_bac_86db7b4f ON public.invest_investhomepage USING btree (capital_invest_section_background_image_id);
+CREATE INDEX invest_investhomepage_capital_invest_section_ima_0f12ee91 ON public.invest_investhomepage USING btree (capital_invest_section_image_ar_id);
 
 
 --
--- Name: invest_investhomepage_capital_invest_section_bac_89c832ea; Type: INDEX; Schema: public; Owner: -
+-- Name: invest_investhomepage_capital_invest_section_ima_1ada7ca5; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX invest_investhomepage_capital_invest_section_bac_89c832ea ON public.invest_investhomepage USING btree (capital_invest_section_background_image_fr_id);
-
-
---
--- Name: invest_investhomepage_capital_invest_section_bac_8d1889ba; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_capital_invest_section_bac_8d1889ba ON public.invest_investhomepage USING btree (capital_invest_section_background_image_en_gb_id);
+CREATE INDEX invest_investhomepage_capital_invest_section_ima_1ada7ca5 ON public.invest_investhomepage USING btree (capital_invest_section_image_es_id);
 
 
 --
--- Name: invest_investhomepage_capital_invest_section_bac_8eed7739; Type: INDEX; Schema: public; Owner: -
+-- Name: invest_investhomepage_capital_invest_section_ima_32e1347e; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX invest_investhomepage_capital_invest_section_bac_8eed7739 ON public.invest_investhomepage USING btree (capital_invest_section_background_image_ar_id);
-
-
---
--- Name: invest_investhomepage_capital_invest_section_bac_a227465c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX invest_investhomepage_capital_invest_section_bac_a227465c ON public.invest_investhomepage USING btree (capital_invest_section_background_image_pt_id);
+CREATE INDEX invest_investhomepage_capital_invest_section_ima_32e1347e ON public.invest_investhomepage USING btree (capital_invest_section_image_de_id);
 
 
 --
--- Name: invest_investhomepage_capital_invest_section_bac_afbe9e94; Type: INDEX; Schema: public; Owner: -
+-- Name: invest_investhomepage_capital_invest_section_ima_7532ff59; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX invest_investhomepage_capital_invest_section_bac_afbe9e94 ON public.invest_investhomepage USING btree (capital_invest_section_background_image_ja_id);
+CREATE INDEX invest_investhomepage_capital_invest_section_ima_7532ff59 ON public.invest_investhomepage USING btree (capital_invest_section_image_en_gb_id);
+
+
+--
+-- Name: invest_investhomepage_capital_invest_section_ima_a7163053; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_investhomepage_capital_invest_section_ima_a7163053 ON public.invest_investhomepage USING btree (capital_invest_section_image_pt_id);
+
+
+--
+-- Name: invest_investhomepage_capital_invest_section_ima_b3341560; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_investhomepage_capital_invest_section_ima_b3341560 ON public.invest_investhomepage USING btree (capital_invest_section_image_ja_id);
+
+
+--
+-- Name: invest_investhomepage_capital_invest_section_ima_e3eeb9ef; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_investhomepage_capital_invest_section_ima_e3eeb9ef ON public.invest_investhomepage USING btree (capital_invest_section_image_fr_id);
+
+
+--
+-- Name: invest_investhomepage_capital_invest_section_image_id_f0999483; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_investhomepage_capital_invest_section_image_id_f0999483 ON public.invest_investhomepage USING btree (capital_invest_section_image_id);
 
 
 --
@@ -16411,6 +16490,69 @@ CREATE INDEX invest_investhomepage_how_we_help_icon_two_pt_id_3578bda4 ON public
 --
 
 CREATE INDEX invest_investhomepage_how_we_help_icon_two_zh_hans_id_d9b9dbcf ON public.invest_investhomepage USING btree (how_we_help_icon_two_zh_hans_id);
+
+
+--
+-- Name: invest_investhomepage_isd_section_image_ar_id_a47d30f3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_investhomepage_isd_section_image_ar_id_a47d30f3 ON public.invest_investhomepage USING btree (isd_section_image_ar_id);
+
+
+--
+-- Name: invest_investhomepage_isd_section_image_de_id_506701ae; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_investhomepage_isd_section_image_de_id_506701ae ON public.invest_investhomepage USING btree (isd_section_image_de_id);
+
+
+--
+-- Name: invest_investhomepage_isd_section_image_en_gb_id_08c6f296; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_investhomepage_isd_section_image_en_gb_id_08c6f296 ON public.invest_investhomepage USING btree (isd_section_image_en_gb_id);
+
+
+--
+-- Name: invest_investhomepage_isd_section_image_es_id_1673ca3f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_investhomepage_isd_section_image_es_id_1673ca3f ON public.invest_investhomepage USING btree (isd_section_image_es_id);
+
+
+--
+-- Name: invest_investhomepage_isd_section_image_fr_id_b9c1ca46; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_investhomepage_isd_section_image_fr_id_b9c1ca46 ON public.invest_investhomepage USING btree (isd_section_image_fr_id);
+
+
+--
+-- Name: invest_investhomepage_isd_section_image_id_c961b30e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_investhomepage_isd_section_image_id_c961b30e ON public.invest_investhomepage USING btree (isd_section_image_id);
+
+
+--
+-- Name: invest_investhomepage_isd_section_image_ja_id_802b5ec2; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_investhomepage_isd_section_image_ja_id_802b5ec2 ON public.invest_investhomepage USING btree (isd_section_image_ja_id);
+
+
+--
+-- Name: invest_investhomepage_isd_section_image_pt_id_4bf5b5cf; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_investhomepage_isd_section_image_pt_id_4bf5b5cf ON public.invest_investhomepage USING btree (isd_section_image_pt_id);
+
+
+--
+-- Name: invest_investhomepage_isd_section_image_zh_hans_id_c3f420f4; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX invest_investhomepage_isd_section_image_zh_hans_id_c3f420f4 ON public.invest_investhomepage USING btree (isd_section_image_zh_hans_id);
 
 
 --
@@ -24304,75 +24446,75 @@ ALTER TABLE ONLY public.invest_investhomepage
 
 
 --
--- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_34efabe5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_0b9e6076_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_34efabe5_fk_wagtailim FOREIGN KEY (capital_invest_section_background_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_0b9e6076_fk_wagtailim FOREIGN KEY (capital_invest_section_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_3b381100_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_3b381100_fk_wagtailim FOREIGN KEY (capital_invest_section_background_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_574a088b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_0f12ee91_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_574a088b_fk_wagtailim FOREIGN KEY (capital_invest_section_background_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_0f12ee91_fk_wagtailim FOREIGN KEY (capital_invest_section_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_86db7b4f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_86db7b4f_fk_wagtailim FOREIGN KEY (capital_invest_section_background_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_89c832ea_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_1ada7ca5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_89c832ea_fk_wagtailim FOREIGN KEY (capital_invest_section_background_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_1ada7ca5_fk_wagtailim FOREIGN KEY (capital_invest_section_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_8d1889ba_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_8d1889ba_fk_wagtailim FOREIGN KEY (capital_invest_section_background_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_8eed7739_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_32e1347e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_8eed7739_fk_wagtailim FOREIGN KEY (capital_invest_section_background_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_32e1347e_fk_wagtailim FOREIGN KEY (capital_invest_section_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_a227465c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_a227465c_fk_wagtailim FOREIGN KEY (capital_invest_section_background_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_afbe9e94_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_7532ff59_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.invest_investhomepage
-    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_afbe9e94_fk_wagtailim FOREIGN KEY (capital_invest_section_background_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_7532ff59_fk_wagtailim FOREIGN KEY (capital_invest_section_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_a7163053_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_investhomepage
+    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_a7163053_fk_wagtailim FOREIGN KEY (capital_invest_section_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_b3341560_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_investhomepage
+    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_b3341560_fk_wagtailim FOREIGN KEY (capital_invest_section_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_e3eeb9ef_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_investhomepage
+    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_e3eeb9ef_fk_wagtailim FOREIGN KEY (capital_invest_section_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_investhomepage invest_investhomepag_capital_invest_secti_f0999483_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_investhomepage
+    ADD CONSTRAINT invest_investhomepag_capital_invest_secti_f0999483_fk_wagtailim FOREIGN KEY (capital_invest_section_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -24813,6 +24955,78 @@ ALTER TABLE ONLY public.invest_investhomepage
 
 ALTER TABLE ONLY public.invest_investhomepage
     ADD CONSTRAINT invest_investhomepag_how_we_help_icon_two_e5fd145e_fk_wagtailim FOREIGN KEY (how_we_help_icon_two_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_investhomepage invest_investhomepag_isd_section_image_ar_a47d30f3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_investhomepage
+    ADD CONSTRAINT invest_investhomepag_isd_section_image_ar_a47d30f3_fk_wagtailim FOREIGN KEY (isd_section_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_investhomepage invest_investhomepag_isd_section_image_de_506701ae_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_investhomepage
+    ADD CONSTRAINT invest_investhomepag_isd_section_image_de_506701ae_fk_wagtailim FOREIGN KEY (isd_section_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_investhomepage invest_investhomepag_isd_section_image_en_08c6f296_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_investhomepage
+    ADD CONSTRAINT invest_investhomepag_isd_section_image_en_08c6f296_fk_wagtailim FOREIGN KEY (isd_section_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_investhomepage invest_investhomepag_isd_section_image_es_1673ca3f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_investhomepage
+    ADD CONSTRAINT invest_investhomepag_isd_section_image_es_1673ca3f_fk_wagtailim FOREIGN KEY (isd_section_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_investhomepage invest_investhomepag_isd_section_image_fr_b9c1ca46_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_investhomepage
+    ADD CONSTRAINT invest_investhomepag_isd_section_image_fr_b9c1ca46_fk_wagtailim FOREIGN KEY (isd_section_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_investhomepage invest_investhomepag_isd_section_image_id_c961b30e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_investhomepage
+    ADD CONSTRAINT invest_investhomepag_isd_section_image_id_c961b30e_fk_wagtailim FOREIGN KEY (isd_section_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_investhomepage invest_investhomepag_isd_section_image_ja_802b5ec2_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_investhomepage
+    ADD CONSTRAINT invest_investhomepag_isd_section_image_ja_802b5ec2_fk_wagtailim FOREIGN KEY (isd_section_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_investhomepage invest_investhomepag_isd_section_image_pt_4bf5b5cf_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_investhomepage
+    ADD CONSTRAINT invest_investhomepag_isd_section_image_pt_4bf5b5cf_fk_wagtailim FOREIGN KEY (isd_section_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: invest_investhomepage invest_investhomepag_isd_section_image_zh_c3f420f4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invest_investhomepage
+    ADD CONSTRAINT invest_investhomepag_isd_section_image_zh_c3f420f4_fk_wagtailim FOREIGN KEY (isd_section_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -25477,6 +25691,14 @@ ALTER TABLE ONLY public.taggit_taggeditem
 
 ALTER TABLE ONLY public.taggit_taggeditem
     ADD CONSTRAINT taggit_taggeditem_tag_id_f4f5b767_fk_taggit_tag_id FOREIGN KEY (tag_id) REFERENCES public.taggit_tag(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_userprofile users_userprofile_user_id_87251ef1_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users_userprofile
+    ADD CONSTRAINT users_userprofile_user_id_87251ef1_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
