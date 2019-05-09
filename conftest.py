@@ -5,14 +5,16 @@ import pytest
 from wagtail.images.models import Image
 from wagtail.core.models import Page, Site
 
+from django import db
+from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import call_command
 from django.utils import translation
-from django import db
 
 from conf import settings
+from groups.models import GroupInfo
 from find_a_supplier.tests.factories import IndustryPageFactory
 
 
@@ -124,3 +126,50 @@ def feature_flags(settings):
     # solves this issue: https://github.com/pytest-dev/pytest-django/issues/601
     settings.FEATURE_FLAGS = {**settings.FEATURE_FLAGS}
     yield settings.FEATURE_FLAGS
+
+
+@pytest.fixture
+def groups_with_info():
+    from django.contrib.auth.models import Group
+    groups = []
+    for i, group in enumerate(Group.objects.select_related('info').all(), 1):
+        try:
+            info = group.info
+        except GroupInfo.DoesNotExist:
+            info = GroupInfo(group=group)
+        info.name_singular = group.name[:-1]
+        info.permission_summary = 'For managers'
+        info.role_match_description = 'For content admins'
+        info.visibility = GroupInfo.VISIBILITY_UNRESTRICTED
+        info.seniority_level = i  # determines order in choices etc
+        info.save()
+        group.info = info
+        groups.append(group)
+    return groups
+
+
+@pytest.fixture
+def team_leaders_group(groups_with_info):
+    group = list(groups_with_info).pop()
+    group.info.is_team_leaders_group = True
+    group.info.save()
+    return group
+
+
+@pytest.fixture
+def team_leaders(team_leaders_group):
+    User = get_user_model()
+    user_1 = User.objects.create(
+        username='user1',
+        first_name='User',
+        last_name='One',
+        email='user1@example.com'
+    )
+    user_2 = User.objects.create(
+        username='user2',
+        first_name='User',
+        last_name='Two',
+        email='user2@example.com'
+    )
+    team_leaders_group.user_set.set([user_1, user_2])
+    return (user_1, user_2)
