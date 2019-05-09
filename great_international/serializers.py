@@ -642,7 +642,7 @@ class InternationalEUExitFormPageSerializer(
         model_class = InternationalEUExitFormPage
 
 
-class EUExitFormSuccessPageSerializer(BasePageSerializer):
+class InternationalEUExitFormSuccessPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     heading = serializers.CharField()
     body_text = serializers.CharField()
