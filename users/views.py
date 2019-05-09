@@ -88,50 +88,56 @@ class EditUserView(
     form_invalid_message = 'The user could not be saved due to errors.'
     form_valid_message = 'User ''{0}'' updated.'
 
-    def get_form_kwargs(self):
-        user = self.object
-        profile = user.userprofile
-        editing_self = self.request.user == user
-        is_approval = profile.assignment_status in (
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        profile = self.object.userprofile
+
+        self.is_approval = profile.assignment_status in (
             UserProfile.STATUS_CREATED,
             UserProfile.STATUS_AWAITING_APPROVAL,
         )
-        self.is_approval = is_approval  # to use in form_valid()
-        kwargs = super().get_form_kwargs()
-        kwargs.update(editing_self=editing_self)
-        if is_approval:
-            # Let the user know that this is an 'approval' and preselect
-            # a group if the user selected on at registration
+        if self.is_approval and request.method == 'GET':
+            # Warn the current user that this is an 'approval'
             message_text = (
                 "This user is awaiting approval and will be automatically "
                 "notified via email if added to a group that grants access "
                 "to the Wagtail CMS."
             )
             if profile.self_assigned_group:
-                kwargs['initial']['groups'] = [profile.self_assigned_group.id]
+                # Preselect the user-selcted group in the form
+                self.initial['groups'] = [profile.self_assigned_group.id]
+                # Also mention this to the current user
                 message_text += (
                     " They requested to be added to the '{}' group, so this "
                     "has been preselected for you under the 'Roles' tab."
                 ).format(profile.self_assigned_group.name)
+            messages.warning(request, message_text)
+        return super().dispatch(request, *args, **kwargs)
 
-            messages.warning(self.request, message_text)
-
+    def get_form_kwargs(self):
+        user = self.object
+        kwargs = super().get_form_kwargs()
+        editing_self = self.request.user == user
+        kwargs.update(editing_self=editing_self)
         return kwargs
 
     def form_valid(self, form):
         self.object = user = form.save()
+        self.profile = user.userprofile
 
         if user == self.request.user and 'password1' in form.changed_data:
             # User is changing their own password;
             # need to update their session hash
             update_session_auth_hash(self.request, user)
 
-        if self.is_approval and user.has_perm('wagtailadmin.access_admin'):
-            profile = user.userprofile
-            profile.assignment_status = UserProfile.STATUS_APPROVED
-            profile.approved_by = self.request.user
-            profile.approved_at = timezone.now()
-            profile.save()
+        if(
+            self.is_approval and user.is_active and
+            user.has_perm('wagtailadmin.access_admin')
+        ):
+            self.profile.assignment_status = UserProfile.STATUS_APPROVED
+            self.profile.approved_by = self.request.user
+            self.profile.approved_at = timezone.now()
+            self.profile.save()
             self.notify_user_of_approval()
 
         self.handle_success_message()
