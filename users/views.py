@@ -140,8 +140,8 @@ class SSORequestAccessView(generic.UpdateView):
 
     def dispatch(self, request):
         self.get_object()
-        if settings.USERS_REQUEST_ACCESS_VIEW_REDIRECT_ON_LOAD:
-            # Allow toggling of this behavior to aid in testing
+        if settings.USERS_REQUEST_ACCESS_PREVENT_RESUBMISSION:
+            # Toggling behaviour here to aid local testing
             if self.object.assignment_status == UserProfile.STATUS_APPROVED:
                 return redirect('wagtailadmin_home')
             if self.object.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL: # noqa
