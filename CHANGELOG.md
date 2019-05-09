@@ -4,7 +4,7 @@
 
 ### Implemented enhancements:
 
-- Copied international EU Exit contact form models into great_international
+- [CMS-1468](https://uktrade.atlassian.net/browse/CMS-1468) Copied international EU Exit contact form models into great_international
 
 
 ## [2019.05.09](https://github.com/uktrade/directory-cms/releases/tag/2019.05.09)
