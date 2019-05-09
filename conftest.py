@@ -18,6 +18,7 @@ from users.models import UserProfile
 from find_a_supplier.tests.factories import IndustryPageFactory
 from users.tests.factories import UserFactory
 
+
 @pytest.fixture
 def root_page():
     """
