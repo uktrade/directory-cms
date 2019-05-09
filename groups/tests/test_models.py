@@ -6,6 +6,12 @@ from groups.models import GroupInfo
 
 
 @pytest.mark.django_db
+def test_groupinfo_uses_name_singular_for_str(groups_with_info):
+    for group in groups_with_info:
+        assert str(group.info) == group.info.name_singular
+
+
+@pytest.mark.django_db
 def test_groupinfo_clean_fields_allows_one_team_leaders_group():
     group = Group.objects.create(name='team leaders')
     group.info.is_team_leaders_group = True
