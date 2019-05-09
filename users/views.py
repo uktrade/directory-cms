@@ -92,15 +92,30 @@ class EditUserView(
         user = self.object
         profile = user.userprofile
         editing_self = self.request.user == user
-        is_approval = profile.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL # noqa
+        is_approval = profile.assignment_status in (
+            UserProfile.STATUS_CREATED,
+            UserProfile.STATUS_AWAITING_APPROVAL,
+        )
         self.is_approval = is_approval  # to use in form_valid()
         kwargs = super().get_form_kwargs()
         kwargs.update(editing_self=editing_self)
         if is_approval:
-            groups = []
-            if profile.self_assigned_group_id:
-                groups.append(profile.self_assigned_group_id)
-            kwargs['initial']['groups'] = groups
+            # Let the user know that this is an 'approval' and preselect
+            # a group if the user selected on at registration
+            message_text = (
+                "This user is awaiting approval and will be automatically "
+                "notified via email if added to a group that grants access "
+                "to the Wagtail CMS."
+            )
+            if profile.self_assigned_group:
+                kwargs['initial']['groups'] = [profile.self_assigned_group.id]
+                message_text += (
+                    " They requested to be added to the '{}' group, so this "
+                    "has been preselected for you under the 'Roles' tab."
+                ).format(profile.self_assigned_group.name)
+
+            messages.warning(self.request, message_text)
+
         return kwargs
 
     def form_valid(self, form):
