@@ -92,7 +92,7 @@ class EditUserView(
         profile = user.userprofile
         editing_self = self.request.user == user
         is_approval = profile.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL # noqa
-        self.is_approval = is_approval  # saving reference to use in form_valid
+        self.is_approval = is_approval  # to use in form_valid()
         kwargs = super().get_form_kwargs()
         kwargs.update(editing_self=editing_self)
         if is_approval:

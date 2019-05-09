@@ -112,7 +112,7 @@ class SSORequestAccessForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         try:
-            group = GroupInfo.objects.team_leaders_group.group
+            group = GroupInfo.objects.all().team_leaders_group.group
             self.fields["team_leader"].queryset = group.user_set.all()
         except GroupInfo.DoesNotExist:
             pass
