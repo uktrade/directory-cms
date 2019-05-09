@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext as _
 from django.views import generic
 from wagtail.admin import messages
+from wagtail.admin.views.generic import EditView
 from wagtail.core import hooks
 from wagtail.users.utils import user_can_delete_user
 from wagtail.users.views.users import add_user_perm, change_user_perm
@@ -132,9 +133,11 @@ class EditUserView(
         pass
 
 
-class SSORequestAccessView(generic.UpdateView):
-    form_class = forms.SSORequestAccessForm
+class SSORequestAccessView(EditView):
     model = UserProfile
+    form_class = forms.SSORequestAccessForm
+    permission_required = None
+    error_message = 'There was a problem with your submission'
     template_name = "sso/request_access.html"
     success_url = reverse_lazy('wagtailusers_users:sso_request_access_success')
 
@@ -154,17 +157,15 @@ class SSORequestAccessView(generic.UpdateView):
         self.object = self.request.user.userprofile
         return self.object
 
-    def form_valid(self, form):
-        """
-        Before redirecting to the success page, update the
-        profile's ``assignment_status`` and notify the team
-        leader that this user is awaiting approval
-        """
-        response = super().form_valid(form)
+    def save_instance(self):
+        self.object = super().save_instance()
         self.object.assignment_status = UserProfile.STATUS_AWAITING_APPROVAL
         self.object.save()
         self.notify_team_leader_of_pending_approval()
-        return response
+        return self.object
+
+    def get_success_url(self):
+        return self.success_url
 
     def notify_team_leader_of_pending_approval(self):
         # TODO: connect to gov.notify
