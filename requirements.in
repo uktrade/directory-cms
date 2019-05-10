@@ -16,7 +16,7 @@ directory-constants==14.7.0
 django-staff-sso-client==0.2.0
 html2text==2018.1.9
 wagtail==2.3
-wagtailmedia==0.2.0
+wagtailmedia==0.3.0
 pytube==9.2.2
 django-filter==1.0.4
 django-redis==4.8.0

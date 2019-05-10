@@ -15,6 +15,7 @@ from core.model_fields import MarkdownField
 from core.models import (
     BasePage,
     ExclusivePageMixin,
+    FormPageMetaClass,
     ServiceMixin,
 )
 from core.mixins import ServiceHomepageMixin
@@ -39,6 +40,8 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
             InternationalGuideLandingPage,
             InternationalRegionPage,
             InternationalHomePage,
+            InternationalEUExitFormPage,
+            InternationalEUExitFormSuccessPage,
         ]
 
 
@@ -1606,3 +1609,103 @@ class InternationalGuideLandingPage(BasePage):
         content_panels=content_panels,
         settings_panels=settings_panels
     )
+
+
+class InternationalEUExitFormPage(
+    ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
+):
+    # metaclass creates <fild_name>_label and <field_name>_help_text
+    form_field_names = [
+        'first_name',
+        'last_name',
+        'email',
+        'organisation_type',
+        'company_name',
+        'country',
+        'city',
+        'comment',
+    ]
+
+    service_name_value = cms.GREAT_INTERNATIONAL
+    full_path_override = '/eu-exit-news/contact/'
+    slug_identity = cms.GREAT_EUEXIT_INTERNATIONAL_FORM_SLUG
+
+    subpage_types = [
+        'great_international.InternationalEUExitFormSuccessPage']
+
+    breadcrumbs_label = models.CharField(max_length=50)
+    heading = models.CharField(max_length=255)
+    body_text = MarkdownField()
+    submit_button_text = models.CharField(max_length=50)
+    disclaimer = models.TextField(max_length=500)
+
+    content_panels_before_form = [
+        MultiFieldPanel(
+            heading='Hero',
+            children=[
+                FieldPanel('breadcrumbs_label'),
+                FieldPanel('heading'),
+                FieldPanel('body_text'),
+            ]
+        ),
+    ]
+    content_panels_after_form = [
+        FieldPanel('disclaimer', widget=Textarea),
+        FieldPanel('submit_button_text'),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+
+class InternationalEUExitFormSuccessPage(ExclusivePageMixin, BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+    full_path_override = '/eu-exit-news/contact/success/'
+    slug_identity = cms.GREAT_EUEXIT_FORM_SUCCESS_SLUG
+
+    parent_page_types = ['great_international.InternationalEUExitFormPage']
+
+    breadcrumbs_label = models.CharField(max_length=50)
+    heading = models.CharField(
+        max_length=255,
+        verbose_name='Title'
+    )
+    body_text = models.CharField(
+        max_length=255,
+        verbose_name='Body text',
+    )
+    next_title = models.CharField(
+        max_length=255,
+        verbose_name='Title'
+    )
+    next_body_text = models.CharField(
+        max_length=255,
+        verbose_name='Body text',
+    )
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading='heading',
+            children=[
+                FieldPanel('heading'),
+                FieldPanel('body_text'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Next steps',
+            children=[
+                FieldPanel('next_title'),
+                FieldPanel('next_body_text'),
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
