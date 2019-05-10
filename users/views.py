@@ -115,9 +115,8 @@ class EditUserView(
         return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
-        user = self.object
+        editing_self = self.request.user == self.object
         kwargs = super().get_form_kwargs()
-        editing_self = self.request.user == user
         kwargs.update(editing_self=editing_self)
         return kwargs
 

@@ -1,13 +1,12 @@
 {% load wagtailadmin_tags %}
 <div class="field {{ field|fieldtype }} {{ field|widgettype }} {{ field_classes }}{% if field.field.widget.attrs.required_for_language %}required-for-language-container{% endif %}">
     {% if show_label|default_if_none:True %}{{ field.label_tag }}{% endif %}
-    {% block after_label %}{% endblock %}
     <div class="field-content">
         <div class="input {{ input_classes }} ">
             {% block form_field %}
                 {{ field|render_with_errors }}
             {% endblock %}
-
+            
             {# This span only used on rare occasions by certain types of input #}
             <span></span>
         </div>
