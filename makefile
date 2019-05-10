@@ -91,7 +91,7 @@ TEST_SET_ENV_VARS := \
 	export EMAIL_HOST_PASSWORD=debug; \
 	export DEFAULT_FROM_EMAIL=debug; \
 	export FEATURE_ENFORCE_STAFF_SSO_ENABLED=false; \
-	export GOVNOTIFY_API_KEY=debug; \
+	export GOVNOTIFY_API_KEY=directory_cms_test-03185ee5-578c-4ffc-8774-2288e7b34e63-e82262ea-ae8c-4c6d-8570-c16afdc8347f; \
 	export GOVNOTIFY_USER_PENDING_APPROVAL_TEMPLATE_ID=pending-template-id; \
 	export GOVNOTIFY_USER_APPROVED_TEMPLATE_ID=approved-template-id
 
