@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import pytest
 from wagtail.images.models import Image
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Site
 
 from django.core.cache import cache
 from django.core.files.storage import default_storage
@@ -11,7 +11,6 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import call_command
 from django.utils import translation
 from django import db
-from django.db.migrations.executor import MigrationExecutor
 
 from conf import settings
 from find_a_supplier.tests.factories import IndustryPageFactory
@@ -39,6 +38,16 @@ def untranslated_page(root_page):
         introduction_column_three_text_en_gb='lede column three',
         company_list_text_en_gb='companies',
         company_list_call_to_action_text_en_gb='view all',
+    )
+
+
+@pytest.fixture
+def site_with_untranslated_page_as_root(untranslated_page):
+    return Site.objects.create(
+        site_name='Test',
+        hostname='example.com',
+        port=8096,
+        root_page=untranslated_page,
     )
 
 
@@ -83,55 +92,6 @@ def reset_language(settings):
     translation.activate(settings.LANGUAGE_CODE)
 
 
-@pytest.fixture()
-def migration(transactional_db):
-    """
-    This fixture returns a helper object to test Django data migrations.
-    The fixture returns an object with two methods;
-     - `before` to initialize db to the state before the migration under test
-     - `after` to execute the migration and bring db to the state after the
-    migration. The methods return `old_apps` and `new_apps` respectively; these
-    can be used to initiate the ORM models as in the migrations themselves.
-    For example:
-        def test_foo_set_to_bar(migration):
-            old_apps = migration.before([('my_app', '0001_inital')])
-            Foo = old_apps.get_model('my_app', 'foo')
-            Foo.objects.create(bar=False)
-            assert Foo.objects.count() == 1
-            assert Foo.objects.filter(bar=False).count() == Foo.objects.count()
-            # executing migration
-            new_apps = migration.apply('my_app', '0002_set_foo_bar')
-            Foo = new_apps.get_model('my_app', 'foo')
-            assert Foo.objects.filter(bar=False).count() == 0
-            assert Foo.objects.filter(bar=True).count() == Foo.objects.count()
-    From: https://gist.github.com/asfaltboy/b3e6f9b5d95af8ba2cc46f2ba6eae5e2
-    """
-    class Migrator:
-        def before(self, migrate_from):
-            """ Specify app and starting migration name as in:
-                before(['app', '0001_before']) => app/migrations/0001_before.py
-            """
-
-            self.migrate_from = migrate_from
-            self.executor = MigrationExecutor(db.connection)
-            self.executor.migrate(self.migrate_from)
-            self._old_apps = self.executor.loader.project_state(
-                self.migrate_from).apps
-            return self._old_apps
-
-        def apply(self, app, migrate_to):
-            """ Migrate forwards to the "migrate_to" migration """
-            self.migrate_to = [(app, migrate_to)]
-            self.executor.loader.build_graph()  # reload.
-            self.executor.migrate(self.migrate_to)
-            self._new_apps = self.executor.loader.project_state(
-                self.migrate_to).apps
-            return self._new_apps
-
-    yield Migrator()
-    call_command('migrate')
-
-
 @pytest.fixture(autouse=True)
 def clear_django_cache():
     cache.clear()
@@ -157,3 +117,10 @@ def django_db_setup(django_db_blocker):
 
         for connection in db.connections.all():
             connection.close()
+
+
+@pytest.fixture(autouse=True)
+def feature_flags(settings):
+    # solves this issue: https://github.com/pytest-dev/pytest-django/issues/601
+    settings.FEATURE_FLAGS = {**settings.FEATURE_FLAGS}
+    yield settings.FEATURE_FLAGS

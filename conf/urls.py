@@ -31,13 +31,13 @@ api_urls = [
         name='lookup-by-slug'
     ),
     url(
-        r'^pages/lookup-by-full-path/$',
+        r'^pages/lookup-by-path/(?P<site_id>[0-9]+)/(?P<path>[\w\-/]*)$',
         api_router.wrap_view(
-            core.views.PageLookupByFullPathAPIEndpoint.as_view(
+            core.views.PageLookupByPathAPIEndpoint.as_view(
                 {'get': 'detail_view'}
             )
         ),
-        name='lookup-by-full-path'
+        name='lookup-by-path'
     ),
     url(
         r'^pages/lookup-by-tag/(?P<slug>[\w-]+)/$',
@@ -101,7 +101,6 @@ urlpatterns = [
         login_required(csrf_exempt(core.views.PreloadPageView.as_view())),
         name='preload-add-page',
     ),
-
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(
@@ -116,6 +115,17 @@ urlpatterns = [
     url(r'', include(wagtail_urls)),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+if settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
+    urlpatterns = [
+        url('^auth/', include('authbroker_client.urls',
+                              namespace='authbroker',
+                              app_name='authbroker_client')
+            ),
+        url(r'^admin/login/$',
+            RedirectView.as_view(url='/auth/login/', query_string=True)),
+    ] + urlpatterns
 
 
 if settings.FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
