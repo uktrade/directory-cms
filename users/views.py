@@ -122,21 +122,14 @@ class EditUserView(
 
     def form_valid(self, form):
         self.object = user = form.save()
-        self.profile = user.userprofile
 
         if user == self.request.user and 'password1' in form.changed_data:
             # User is changing their own password;
             # need to update their session hash
             update_session_auth_hash(self.request, user)
 
-        if(
-            self.is_approval and user.is_active and
-            user.has_perm('wagtailadmin.access_admin')
-        ):
-            self.profile.assignment_status = UserProfile.STATUS_APPROVED
-            self.profile.approved_by = self.request.user
-            self.profile.approved_at = timezone.now()
-            self.profile.save()
+        if self.is_approval and user.has_perm('wagtailadmin.access_admin'):
+            self.mark_user_as_approved()
             self.notify_user_of_approval()
 
         self.handle_success_message()
@@ -147,6 +140,13 @@ class EditUserView(
         can_delete = user_can_delete_user(self.request.user, self.object)
         ctx.update(can_delete=can_delete)
         return ctx
+
+    def mark_user_as_approved(self):
+        profile = self.object.userprofile
+        profile.assignment_status = UserProfile.STATUS_APPROVED
+        profile.approved_by = self.request.user
+        profile.approved_at = timezone.now()
+        profile.save()
 
     def notify_user_of_approval(self):
         # TODO: connect to gov.notify
