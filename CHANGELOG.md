@@ -5,6 +5,7 @@
 **Implemented enhancements:**
 
 - [CMS-1417](https://uktrade.atlassian.net/browse/CMS-1417) Integrate staff SSO
+- Removed blanket debug logging to remove noise when using interactive shell tools
 
 
 ## [2019.05.03](https://github.com/uktrade/directory-cms/releases/tag/2019.05.03)
