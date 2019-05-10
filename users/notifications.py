@@ -20,7 +20,7 @@ def notify_team_leader_of_access_request(
     }
     return notifications_client.send_email_notification(
         email_address=team_leader_email,
-        template_id=settings.GOVNOTIFY_USER_ACCESS_REVIEW_TEMPLATE_ID,
+        template_id=settings.GOVNOTIFY_USER_PENDING_APPROVAL_TEMPLATE_ID,
         personalisation=personalisation,
         email_reply_to_id=settings.GOVNOTIFY_REPLY_TO_EMAIL_ID or None,
     )
@@ -28,13 +28,15 @@ def notify_team_leader_of_access_request(
 
 def notify_user_of_access_approval(request, user_email, user_name, reviewer_name):
     personalisation = {
-        'name': user_email,
+        'name': user_name,
         'reviewer_name': reviewer_name,
-        'sign_in_url': request.build_absolute_uri(settings.LOGIN_URL),
+        'sign_in_url': request.build_absolute_uri(
+            settings.LOGIN_URL
+        ),
     }
     return notifications_client.send_email_notification(
         email_address=user_email,
-        template_id=settings.GOVNOTIFY_USER_ACCESS_APPROVED_TEMPLATE_ID,
+        template_id=settings.GOVNOTIFY_USER_APPROVED_TEMPLATE_ID,
         personalisation=personalisation,
         email_reply_to_id=settings.GOVNOTIFY_REPLY_TO_EMAIL_ID or None,
     )
