@@ -383,7 +383,7 @@ AWS_ACCESS_KEY_ID = env.str('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env.str('AWS_SECRET_ACCESS_KEY')
 AWS_S3_HOST = 's3-us-west-1.amazonaws.com'
 
-# Email
+# Email and notifications
 EMAIL_BACKED_CLASSES = {
     'default': 'django.core.mail.backends.smtp.EmailBackend',
     'console': 'django.core.mail.backends.console.EmailBackend'
@@ -397,10 +397,20 @@ EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL', '')
 
+GOVNOTIFY_API_KEY = env.str('GOVNOTIFY_API_KEY', '')
+GOVNOTIFY_REPLY_TO_EMAIL_ID = env.str('GOVNOTIFY_REPLY_TO_EMAIL_ID', '')
+GOVNOTIFY_USER_ACCESS_REVIEW_TEMPLATE_ID = env.str(
+    'GOVNOTIFY_USER_ACCESS_REVIEW_TEMPLATE_ID', '')
+GOVNOTIFY_USER_ACCESS_APPROVED_TEMPLATE_ID = env.str(
+    'GOVNOTIFY_USER_ACCESS_APPROVED_TEMPLATE_ID', ''
+)
+
+# Translation
 MODELTRANSLATION_CUSTOM_FIELDS = ('RichTextField', )
 MODELTRANSLATION_FALLBACK_LANGUAGES = ()
 WAGTAILMODELTRANSLATION_TRANSLATE_SLUGS = False
 
+# Misc
 EU_EXIT_NEWS_LISTING_PAGE_SLUG = env.str(
     'EU_EXIT_NEWS_LISTING_PAGE_SLUG', 'eu-exit-news'
 )
@@ -408,8 +418,7 @@ INTERNATIONAL_NEWS_MARKETING_FOLDER_PAGE_SLUG = env.str(
     'INTERNATIONAL_NEWS_MARKETING_FOLDER_PAGE_SLUG', 'news-and-events'
 )
 
-# feature flags
-
+# Feature flags
 FEATURE_FLAGS = {
     'ENFORCE_STAFF_SSO_ON': env.bool('FEATURE_ENFORCE_STAFF_SSO_ENABLED',
                                      True),
