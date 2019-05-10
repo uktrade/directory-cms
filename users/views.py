@@ -151,7 +151,7 @@ class EditUserView(
 
     def notify_user_of_approval(self):
         # TODO: connect to gov.notify
-        pass
+        pass  # pragma: no cover
 
 
 class SSORequestAccessView(EditView):
@@ -190,4 +190,4 @@ class SSORequestAccessView(EditView):
 
     def notify_team_leader_of_pending_approval(self):
         # TODO: connect to gov.notify
-        pass
+        pass  # pragma: no cover
