@@ -334,3 +334,21 @@ def test_ssorequestaccessview_post_with_complete_data(
 
     # notify_team_leader_of_pending_approval() should have been called too!
     assert mock_method.called
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize('url', (
+    reverse('wagtailusers_users:sso_request_access'),
+    reverse('wagtailusers_users:sso_request_access_success'),
+))
+def test_ssorequestaccess_views_only_available_to_authenticated_users(
+    client, admin_client, url
+):
+    # When not authenticated, the user is redirected to the login page
+    response = client.get(url)
+    assert response.status_code == 302
+    assert response.url.startswith(settings.LOGIN_URL)
+
+    # When authenticated, things work fine
+    response = admin_client.get(url)
+    assert response.status_code == 200
