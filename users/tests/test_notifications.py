@@ -1,5 +1,4 @@
 from unittest.mock import patch
-from django.conf import settings
 from users.notifications import (
     notify_user_of_access_approval,
     notify_team_leader_of_access_request,

@@ -26,7 +26,9 @@ def notify_team_leader_of_access_request(
     )
 
 
-def notify_user_of_access_approval(request, user_email, user_name, reviewer_name):
+def notify_user_of_access_approval(
+    request, user_email, user_name, reviewer_name
+):
     personalisation = {
         'name': user_name,
         'reviewer_name': reviewer_name,
