@@ -44,6 +44,8 @@ MODELS_SERIALIZERS_MAPPING = {
     great_international.models.InternationalTopicLandingPage: great_international.serializers.InternationalTopicLandingPageSerializer,  # NOQA
     great_international.models.InternationalCuratedTopicLandingPage: great_international.serializers.InternationalCuratedTopicLandingPageSerializer,  # NOQA
     great_international.models.InternationalGuideLandingPage: great_international.serializers.InternationalGuideLandingPageSerializer,  # NOQA
+    great_international.models.InternationalEUExitFormPage: great_international.serializers.InternationalEUExitFormPageSerializer,  # NOQA
+    great_international.models.InternationalEUExitFormSuccessPage: great_international.serializers.InternationalEUExitFormSuccessPageSerializer,  # NOQA
     # invest
     invest.models.SectorLandingPage: invest.serializers.SectorLandingPageGenericSerializer,  # NOQA
     invest.models.RegionLandingPage: invest.serializers.SectorLandingPageGenericSerializer,  # NOQA

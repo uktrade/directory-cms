@@ -251,3 +251,15 @@ class InternationalRegionalFolderPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = []
+
+
+@register(models.InternationalEUExitFormPage)
+class InternationalEUExitFormPageTranslationOptions(BaseTranslationOptions):
+    fields = []
+
+
+@register(models.InternationalEUExitFormSuccessPage)
+class InternationalEUExitFormSuccessPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = []
