@@ -2,12 +2,21 @@ from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
 
 from core import fields as core_fields
-from core.serializers import BasePageSerializer, ChildPagesSerializerHelper
+from core.serializers import (
+    BasePageSerializer,
+    ChildPagesSerializerHelper,
+    FormPageSerializerMetaclass,
+)
 
-from .models import (InternationalArticlePage, InternationalArticleListingPage,
-                     InternationalLocalisedFolderPage,
-                     InternationalCampaignPage, InternationalGuideLandingPage,
-                     InternationalSectorPage)
+from .models import (
+    InternationalArticlePage,
+    InternationalArticleListingPage,
+    InternationalLocalisedFolderPage,
+    InternationalCampaignPage,
+    InternationalGuideLandingPage,
+    InternationalSectorPage,
+    InternationalEUExitFormPage,
+)
 
 
 class SectionThreeSubsectionProxyDataWrapper:
@@ -614,3 +623,27 @@ class InternationalGuideLandingPageSerializer(BasePageSerializer):
         )[:9]
         serializer = RelatedArticlePageSerializer(article_list, many=True)
         return serializer.data
+
+
+class EUExitGenericFormPageSerializer(BasePageSerializer):
+    breadcrumbs_label = serializers.CharField()
+    heading = serializers.CharField()
+    body_text = core_fields.MarkdownToHTMLField()
+    submit_button_text = serializers.CharField()
+    disclaimer = core_fields.MarkdownToHTMLField()
+
+
+class InternationalEUExitFormPageSerializer(
+    EUExitGenericFormPageSerializer,
+    metaclass=FormPageSerializerMetaclass
+):
+    class Meta:
+        model_class = InternationalEUExitFormPage
+
+
+class InternationalEUExitFormSuccessPageSerializer(BasePageSerializer):
+    breadcrumbs_label = serializers.CharField()
+    heading = serializers.CharField()
+    body_text = serializers.CharField()
+    next_title = serializers.CharField()
+    next_body_text = serializers.CharField()
