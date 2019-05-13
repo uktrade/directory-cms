@@ -79,7 +79,7 @@ def test_edit_user_view(admin_client):
 
 
 @pytest.mark.django_db
-def test_edit_user_view_cant_change_basic_details(admin_client):
+def test_edit_user_view_cannot_change_basic_details(admin_client):
     user = UserFactory(username='test', email='test@test.com')
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
     response = admin_client.post(
@@ -97,7 +97,6 @@ def test_edit_user_view_cant_change_basic_details(admin_client):
     assert response.url == reverse('wagtailusers_users:index')
     user.refresh_from_db()
     assert user.username == 'test'
-    assert user.is_active is True
 
 
 @pytest.mark.django_db
