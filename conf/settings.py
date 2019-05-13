@@ -435,6 +435,12 @@ if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
     AUTHBROKER_CLIENT_ID = env.str('AUTHBROKER_CLIENT_ID')
     AUTHBROKER_CLIENT_SECRET = env.str('AUTHBROKER_CLIENT_SECRET')
 
+    # Disable password management in Wagtail admin
+    WAGTAIL_PASSWORD_MANAGEMENT_ENABLED = False
+    WAGTAIL_PASSWORD_RESET_ENABLED = False
+    WAGTAILUSERS_PASSWORD_ENABLED = False
+
+
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
