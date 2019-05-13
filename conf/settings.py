@@ -397,13 +397,17 @@ EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL', '')
 
-GOVNOTIFY_API_KEY = env.str('GOVNOTIFY_API_KEY', '')
+# NOTE: Notify keys must be in a specfic format for the client to initialise,
+# so using an invalid default here to prevent breakages locally / in tests
+GOVNOTIFY_API_KEY = env.str(
+    'GOVNOTIFY_API_KEY',
+    'directory_cms_invalid-03185ee5-578c-4ffc-8774-2288e7b34e63-e82262ea-ae8c-4c6d-8570-c16afdc8347f' # noqa
+)
 GOVNOTIFY_REPLY_TO_EMAIL_ID = env.str('GOVNOTIFY_REPLY_TO_EMAIL_ID', '')
 GOVNOTIFY_USER_PENDING_APPROVAL_TEMPLATE_ID = env.str(
     'GOVNOTIFY_USER_PENDING_APPROVAL_TEMPLATE_ID', '')
 GOVNOTIFY_USER_APPROVED_TEMPLATE_ID = env.str(
-    'GOVNOTIFY_USER_APPROVED_TEMPLATE_ID', ''
-)
+    'GOVNOTIFY_USER_APPROVED_TEMPLATE_ID', '')
 
 # Translation
 MODELTRANSLATION_CUSTOM_FIELDS = ('RichTextField', )
