@@ -11,6 +11,7 @@
 - [CMS-1417](https://uktrade.atlassian.net/browse/CMS-1417) Integrate staff SSO
 - [CMS-1462](https://uktrade.atlassian.net/browse/CMS-1462) Remove char limit from fields in `InternationalArticlePage`
 - [CMS-1449](https://uktrade.atlassian.net/browse/CMS-1449) Upgrade to wagtailmedia 0.3.0, for future Wagtail 2.4+ compat
+- [CMS-1396](https://uktrade.atlassian.net/browse/CMS-1396) Improve `BasePage.get_tree_based_routing()` efficiency by fetching site and routing settings in the same query
 - [CI-99](https://uktrade.atlassian.net/browse/CI-99) Removed unused fields for the capital invest banner on the Invest landing page
 - [CI-101](https://uktrade.atlassian.net/browse/CI-101) Added Investor Support Directory section to `InvestHomePage`
 - [CMS-1397](https://uktrade.atlassian.net/browse/CMS-1397) Updated custom url methods on `BasePage` to support tree-based routing when enabled
@@ -19,6 +20,7 @@
 - [CI-116](https://uktrade.atlassian.net/browse/CI-116) Moved sections around in content panels, removed cta_text fields and added capital investment image on Invest Landing Page
 - [CMS-1248](https://uktrade.atlassian.net/browse/CMS-1248) Removed JPEG compression overrides to improve image quality
 - [CMS-1419](https://uktrade.atlassian.net/browse/CMS-1419) Added Wagtail registration view for SSO users, group info management UI, and updated user edit view to mark users as approved
+- [CMS-1446](https://uktrade.atlassian.net/browse/CMS-1446) Prevent changing of a user's personal details when SSO is enforced for users
 
 ### Fixed bugs:
 

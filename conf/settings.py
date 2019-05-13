@@ -444,6 +444,11 @@ if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
     MIDDLEWARE_CLASSES.append(
         'users.middleware.SSORedirectUsersToRequestAccessViews'
     )
+    # Disable password management in Wagtail admin
+    WAGTAIL_PASSWORD_MANAGEMENT_ENABLED = False
+    WAGTAIL_PASSWORD_RESET_ENABLED = False
+    WAGTAILUSERS_PASSWORD_ENABLED = False
+
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (

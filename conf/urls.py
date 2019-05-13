@@ -107,6 +107,10 @@ urlpatterns = [
         login_required(GroupInfoModalView.as_view()),
         name='group-info',
     ),
+
+    # Prevent users from changing their email address
+    url(r'^admin/account/change_email/$', RedirectView.as_view(url='/admin/')),
+
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(
