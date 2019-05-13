@@ -8,6 +8,23 @@ from rest_framework import status
 
 from .factories import UserFactory
 
+USER_DETAILS = {
+    'username': 'test',
+    'email': 'test@test.com',
+    'first_name': 'Foo',
+    'last_name': 'Bar',
+}
+
+USER_DETAILS_CREATE = USER_DETAILS.copy()
+USER_DETAILS_CREATE.update(password1='pass', password2='pass')
+
+USER_DETAILS_CHANGING = {
+    'username': 'johnsmith',
+    'email': 'john@smiths.com',
+    'first_name': 'John',
+    'last_name': 'Smith',
+}
+
 
 def test_create_user_view_get(admin_client):
     url = reverse('wagtailusers_users:add')
@@ -18,18 +35,9 @@ def test_create_user_view_get(admin_client):
 @pytest.mark.django_db
 def test_create_user_view(admin_client):
     url = reverse('wagtailusers_users:add')
-    response = admin_client.post(
-        url,
-        data={
-            'username': 'test',
-            'email': 'test@test.com',
-            'first_name': 'Test',
-            'last_name': 'User',
-            'password1': 'password',
-            'password2': 'password',
-            'groups': ['1']
-        }
-    )
+
+    response = admin_client.post(url, data=USER_DETAILS_CREATE)
+
     assert response.context['message'] == 'User test created.'
     assert response.status_code == status.HTTP_302_FOUND
     assert response.url == reverse('wagtailusers_users:index')
@@ -38,60 +46,95 @@ def test_create_user_view(admin_client):
 @pytest.mark.django_db
 def test_create_user_view_invalid_form(admin_client):
     url = reverse('wagtailusers_users:add')
-    response = admin_client.post(
-        url,
-        data={
-            'username': 'test',
-            'email': 'test@test.com',
-            'first_name': 'Test',
-            'last_name': 'User',
-            'password1': 'password',
-            'password2': 'passwords',
-            'groups': ['1']
-        }
-    )
+
+    post_data = USER_DETAILS.copy()
+    post_data.update(email='This is not an email address')
+    response = admin_client.post(url, post_data)
+
     message = response.context['message']
     assert message == 'The user could not be created due to errors.'
     assert response.status_code == status.HTTP_200_OK
 
 
 @pytest.mark.django_db
-def test_edit_user_view(admin_client):
-    user = UserFactory(username='test')
+def test_get_edit_user_view(admin_client):
+    user = UserFactory(**USER_DETAILS)
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
-    response = admin_client.post(
-        url,
-        data={
-            'username': 'foobar',
-            'email': 'test@test.com',
-            'first_name': 'Test',
-            'last_name': 'User',
-            'groups': ['1']
-        }
-    )
-    assert response.context['message'] == 'User foobar updated.'
-    assert response.status_code == status.HTTP_302_FOUND
-    assert response.url == reverse('wagtailusers_users:index')
-    user.refresh_from_db()
-    assert user.username == 'foobar'
+    response = admin_client.get(url)
+    assert response.status_code == status.HTTP_200_OK
+    assert response.context['can_delete'] is True
 
 
 @pytest.mark.django_db
-def test_edit_user_view_invalid(admin_client):
-    user = UserFactory(username='test')
+def test_edit_user_view(admin_client):
+    user = UserFactory(**USER_DETAILS)
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
-    response = admin_client.post(
-        url,
-        data={
-            'username': 'foobar',
-            'email': 'test@test.com',
-            'last_name': 'User',
-            'groups': ['1']
-        }
-    )
-    message = response.context['message']
-    assert message == 'The user could not be saved due to errors.'
-    assert response.status_code == status.HTTP_200_OK
+
+    # We'll add the user to a group, as well as changing their details
+    post_data = USER_DETAILS_CHANGING.copy()
+    post_data['groups'] = ['1']
+    response = admin_client.post(url, data=post_data)
+
+    assert response.context['message'] == 'User johnsmith updated.'
+    assert response.status_code == status.HTTP_302_FOUND
+    assert response.url == reverse('wagtailusers_users:index')
+
+    user.refresh_from_db()
+    # The user's details should have changed to reflect the posted values
+    user.refresh_from_db()
+    for field_name, changed_value in USER_DETAILS_CHANGING.items():
+        assert getattr(user, field_name) == changed_value
+    # And they should have been added to a group
+    group_ids = set(user.groups.values_list('id', flat=True))
+    assert group_ids == {1}
+
+
+@pytest.mark.django_db
+def test_edit_user_view_cannot_change_personal_details_when_sso_enforced(
+    admin_client
+):
+    # Set this flag to True and actions if previous test
+    settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = True
+
+    user = UserFactory(**USER_DETAILS)
+
+    # Post changes to the view
+    url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
+    admin_client.post(url, data=USER_DETAILS_CHANGING)
+
+    # The users details should remain unchanged, because the
+    # personal detail fields should all be disabled
+    user.refresh_from_db()
+    for field_name, original_value in USER_DETAILS.items():
+        assert getattr(user, field_name) == original_value
+
+    # Change this back to avoid cross-test pollution
+    settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
+
+
+@pytest.mark.django_db
+def test_edit_user_view_preserves_ability_to_update_is_active(admin_client):
+    # Set this flag to True and actions if previous test
+    settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = True
+
+    # Create an 'inactive' user to test with
+    user = UserFactory(**USER_DETAILS)
+    user.is_active = False
+    user.save()
+
+    # Post using the same details + 'is_active=on'
+    post_data = USER_DETAILS.copy()
+    post_data.update(is_active='on')
+    url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
+    admin_client.post(url, data=post_data)
+
+    # The change to 'is_active' should have been applied, because that field
+    # is not disabled along with the personal detail ones
+    user.refresh_from_db()
+    assert user.is_active is True
+
+    # Change this back to avoid cross-test pollution
+    settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
 
 
 def reload_urlconf(urlconf=None):

@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
@@ -44,10 +45,26 @@ class EntryPointAwareUserActionForm(forms.Form):
             ).distinct('id')
 
 
-class UserEditForm(EntryPointAwareUserActionForm, wagtail_forms.UserEditForm):
-    pass
+class UserEditForm(
+    EntryPointAwareUserActionForm,
+    wagtail_forms.UserEditForm
+):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        """
+        Prevents personal details from being update when
+        when SSO is enforced.
+        """
+        if settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
+            # Disable the fields
+            self.fields['username'].disabled = True
+            self.fields['email'].disabled = True
+            self.fields['first_name'].disabled = True
+            self.fields['last_name'].disabled = True
 
 
-class UserCreationForm(EntryPointAwareUserActionForm,
-                       wagtail_forms.UserCreationForm):
+class UserCreationForm(
+    EntryPointAwareUserActionForm,
+    wagtail_forms.UserCreationForm
+):
     pass

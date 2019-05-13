@@ -14,7 +14,9 @@ def test_models_hierarchy():
         models.InternationalCuratedTopicLandingPage,
         models.InternationalGuideLandingPage,
         models.InternationalRegionPage,
-        models.InternationalHomePage
+        models.InternationalHomePage,
+        models.InternationalEUExitFormPage,
+        models.InternationalEUExitFormSuccessPage,
     ]
     assert models.GreatInternationalApp.allowed_parent_page_models() == [
         Page,
@@ -52,6 +54,13 @@ def test_models_hierarchy():
     # campaign
     assert models.InternationalCampaignPage.allowed_subpage_models() == [
         models.InternationalArticlePage,
+    ]
+    # EU Exit forms
+    assert models.InternationalEUExitFormPage.allowed_subpage_models() == [
+        models.InternationalEUExitFormSuccessPage,
+    ]
+    assert models.InternationalEUExitFormSuccessPage.allowed_parent_page_models() == [  # NOQA
+        models.InternationalEUExitFormPage,
     ]
 
 
