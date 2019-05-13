@@ -82,46 +82,81 @@ def test_edit_user_view(admin_client):
     assert group_ids == {1}
 
 
+USER_DETAILS_ORIGINAL = {
+    'username': 'test',
+    'email': 'test@test.com',
+    'first_name': 'Foo',
+    'last_name': 'Bar',
+}
+
+USER_DETAILS_CHANGING = {
+    'username': 'johnsmith',
+    'email': 'john@smiths.com',
+    'first_name': 'John',
+    'last_name': 'Smith',
+}
+
+
 @pytest.mark.django_db
-def test_edit_user_view_cannot_change_basic_details(admin_client):
-    user = UserFactory(username='test', email='test@test.com')
+def test_edit_user_view_can_change_personal_details_by_default(admin_client):
+    user = UserFactory(**USER_DETAILS_ORIGINAL)
+
+    # Post changes to the view
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
-    response = admin_client.post(
-        url,
-        data={
-            'username': 'foobar',
-            'email': 'test@test.com',
-            'first_name': 'Test',
-            'last_name': 'User',
-            'groups': ['1']
-        }
-    )
-    assert response.context['message'] == 'User test updated.'
-    assert response.status_code == status.HTTP_302_FOUND
-    assert response.url == reverse('wagtailusers_users:index')
+    admin_client.post(url, data=USER_DETAILS_CHANGING)
+
+    # The user's details should have changed to reflect the posted values
     user.refresh_from_db()
-    assert user.username == 'test'
+    for field_name, changed_value in USER_DETAILS_CHANGING.items():
+        assert getattr(user, field_name) == changed_value
 
 
 @pytest.mark.django_db
-def test_edit_user_view_can_reactivate_disabled_users(admin_client):
-    user = UserFactory(username='test', email='test@test.com', is_active=False)
+def test_edit_user_view_cannot_change_personal_details_when_sso_enforced(
+    admin_client
+):
+    # Set this flag to True and actions if previous test
+    settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = True
+
+    user = UserFactory(**USER_DETAILS_ORIGINAL)
+
+    # Post changes to the view
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
-    response = admin_client.post(
-        url,
-        data={
-            'username': 'foobar',
-            'email': 'test@test.com',
-            'first_name': 'Test',
-            'last_name': 'User',
-            'is_active': 'on',
-            'groups': ['1']
-        }
-    )
-    assert response.status_code == status.HTTP_302_FOUND
-    assert response.url == reverse('wagtailusers_users:index')
+    admin_client.post(url, data=USER_DETAILS_CHANGING)
+
+    # The users details should remain unchanged, because the
+    # personal detail fields should all be disabled
+    user.refresh_from_db()
+    for field_name, original_value in USER_DETAILS_ORIGINAL.items():
+        assert getattr(user, field_name) == original_value
+
+    # Change this back to avoid cross-test pollution
+    settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
+
+
+@pytest.mark.django_db
+def test_edit_user_view_preserves_ability_to_update_is_active(admin_client):
+    # Set this flag to True and actions if previous test
+    settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = True
+
+    # Create an 'inactive' user to test with
+    user = UserFactory(**USER_DETAILS_ORIGINAL)
+    user.is_active = False
+    user.save()
+
+    # Post using the same details + 'is_active=on'
+    post_data = USER_DETAILS_ORIGINAL.copy()
+    post_data['is_active'] = 'on'
+    url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
+    admin_client.post(url, data=post_data)
+
+    # The change to 'is_active' should have been applied, because that field
+    # is not disabled along with the personal detail ones
     user.refresh_from_db()
     assert user.is_active is True
+
+    # Change this back to avoid cross-test pollution
+    settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
 
 
 def reload_urlconf(urlconf=None):
