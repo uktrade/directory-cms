@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
@@ -44,15 +45,19 @@ class EntryPointAwareUserActionForm(forms.Form):
             ).distinct('id')
 
 
-class DisableUserFieldsMixin(forms.Form):
+class PreventPersonalDetailChangesMixin(forms.Form):
     """
-    Disables all user fields except for roles
+    Prevents personal details from being update for existing users when
+    SSO is enforced.
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         instance = getattr(self, 'instance', None)
-        if instance and instance.pk:
+        if(
+            settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] and
+            instance and instance.pk
+        ):
             # Disable the fields
             self.fields['username'].disabled = True
             self.fields['email'].disabled = True
@@ -60,11 +65,17 @@ class DisableUserFieldsMixin(forms.Form):
             self.fields['last_name'].disabled = True
 
 
-class UserEditForm(EntryPointAwareUserActionForm, DisableUserFieldsMixin,
-                   wagtail_forms.UserEditForm):
+class UserEditForm(
+    EntryPointAwareUserActionForm,
+    PreventPersonalDetailChangesMixin,
+    wagtail_forms.UserEditForm
+):
     pass
 
 
-class UserCreationForm(EntryPointAwareUserActionForm, DisableUserFieldsMixin,
-                       wagtail_forms.UserCreationForm):
+class UserCreationForm(
+    EntryPointAwareUserActionForm,
+    PreventPersonalDetailChangesMixin,
+    wagtail_forms.UserCreationForm
+):
     pass
