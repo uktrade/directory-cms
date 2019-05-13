@@ -45,19 +45,17 @@ class EntryPointAwareUserActionForm(forms.Form):
             ).distinct('id')
 
 
-class PreventPersonalDetailChangesMixin(forms.Form):
-    """
-    Prevents personal details from being update for existing users when
-    SSO is enforced.
-    """
+class UserEditForm(
+    EntryPointAwareUserActionForm,
+    wagtail_forms.UserEditForm
+):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        instance = getattr(self, 'instance', None)
-        if(
-            settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] and
-            instance and instance.pk
-        ):
+        """
+        Prevents personal details from being update when
+        when SSO is enforced.
+        """
+        if settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
             # Disable the fields
             self.fields['username'].disabled = True
             self.fields['email'].disabled = True
@@ -65,17 +63,8 @@ class PreventPersonalDetailChangesMixin(forms.Form):
             self.fields['last_name'].disabled = True
 
 
-class UserEditForm(
-    EntryPointAwareUserActionForm,
-    PreventPersonalDetailChangesMixin,
-    wagtail_forms.UserEditForm
-):
-    pass
-
-
 class UserCreationForm(
     EntryPointAwareUserActionForm,
-    PreventPersonalDetailChangesMixin,
     wagtail_forms.UserCreationForm
 ):
     pass
