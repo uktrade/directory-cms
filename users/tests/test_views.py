@@ -1,4 +1,8 @@
+import sys
 import pytest
+from importlib import import_module, reload
+from django.conf import settings
+from django.core.urlresolvers import clear_url_caches
 from django.urls import reverse
 from rest_framework import status
 

@@ -481,6 +481,13 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
     capital_invest_section_content = MarkdownField(
         blank=True
     )
+    capital_invest_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     eu_exit_section_title = models.CharField(
         max_length=255,
@@ -576,8 +583,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         related_name='+',
         verbose_name="Setup guide image"
     )
-
-    setup_guide_call_to_action_text = models.CharField(max_length=255)
     setup_guide_call_to_action_url = models.CharField(max_length=255)
 
     isd_section_image = models.ForeignKey(
@@ -597,11 +602,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         max_length=255,
         blank=True,
         verbose_name='Investment Support Directory section text'
-    )
-    isd_section_cta_text = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Investment Support Directory section cta text'
     )
 
     how_we_help_title = models.CharField(default='How we help', max_length=255)
@@ -695,17 +695,40 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
             ],
 
         ),
-
         MultiFieldPanel(
-            heading='Capital Investment section',
+            heading='Featured card links ',
             classname='collapsible',
             children=[
-                FieldPanel('capital_invest_section_title'),
-                FieldPanel('capital_invest_section_content'),
+                FieldRowPanel(
+                    [
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel('setup_guide_img'),
+                                FieldPanel('setup_guide_title'),
+                                FieldPanel('setup_guide_content'),
+                                FieldPanel('setup_guide_call_to_action_url'),
+                            ],
+                        ),
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel('isd_section_image'),
+                                FieldPanel('isd_section_title'),
+                                FieldPanel('isd_section_text')
+                            ],
+                        ),
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel(
+                                    'capital_invest_section_image'
+                                ),
+                                FieldPanel('capital_invest_section_title'),
+                                FieldPanel('capital_invest_section_content'),
+                            ]
+                        ),
+                    ]
+                ),
             ],
-
         ),
-
         MultiFieldPanel(
             heading='Industries section',
             children=[
@@ -724,29 +747,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
                 FieldPanel('hpo_intro')
             ],
 
-        ),
-
-        MultiFieldPanel(
-            heading='Set up guide section',
-            classname='collapsible',
-            children=[
-                FieldPanel('setup_guide_title'),
-                FieldPanel('setup_guide_content'),
-                ImageChooserPanel('setup_guide_img'),
-                FieldPanel('setup_guide_call_to_action_text'),
-                FieldPanel('setup_guide_call_to_action_url'),
-            ],
-        ),
-
-        MultiFieldPanel(
-            heading='Investor Support Directory section',
-            classname='collapsible',
-            children=[
-                ImageChooserPanel('isd_section_image'),
-                FieldPanel('isd_section_title'),
-                FieldPanel('isd_section_text'),
-                FieldPanel('isd_section_cta_text'),
-            ],
         ),
 
         MultiFieldPanel(

@@ -121,6 +121,17 @@ urlpatterns = [
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
+if settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
+    urlpatterns = [
+        url('^auth/', include('authbroker_client.urls',
+                              namespace='authbroker',
+                              app_name='authbroker_client')
+            ),
+        url(r'^admin/login/$',
+            RedirectView.as_view(url='/auth/login/', query_string=True)),
+    ] + urlpatterns
+
+
 if settings.FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
     import debug_toolbar
     urlpatterns = [
