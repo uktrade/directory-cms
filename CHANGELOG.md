@@ -19,6 +19,7 @@
 - [CMS-1396](https://uktrade.atlassian.net/browse/CMS-1396) Made 'uses_tree_based_routing' field editable in the CMS for all international page types
 - [CI-116](https://uktrade.atlassian.net/browse/CI-116) Moved sections around in content panels, removed cta_text fields and added capital investment image on Invest Landing Page
 - [CMS-1248](https://uktrade.atlassian.net/browse/CMS-1248) Removed JPEG compression overrides to improve image quality
+- [CMS-1446](https://uktrade.atlassian.net/browse/CMS-1446) Prevent changing of a user's personal details when SSO is enforced for users
 
 ### Fixed bugs:
 

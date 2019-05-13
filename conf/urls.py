@@ -101,6 +101,10 @@ urlpatterns = [
         login_required(csrf_exempt(core.views.PreloadPageView.as_view())),
         name='preload-add-page',
     ),
+
+    # Prevent users from changing their email address
+    url(r'^admin/account/change_email/$', RedirectView.as_view(url='/admin/')),
+
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(
