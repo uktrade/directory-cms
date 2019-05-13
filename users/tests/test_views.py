@@ -8,12 +8,15 @@ from rest_framework import status
 
 from .factories import UserFactory
 
-USER_DETAILS_ORIGINAL = {
+USER_DETAILS = {
     'username': 'test',
     'email': 'test@test.com',
     'first_name': 'Foo',
     'last_name': 'Bar',
 }
+
+USER_DETAILS_CREATE = USER_DETAILS.copy()
+USER_DETAILS_CREATE.update(password1='pass', password2='pass')
 
 USER_DETAILS_CHANGING = {
     'username': 'johnsmith',
@@ -33,10 +36,7 @@ def test_create_user_view_get(admin_client):
 def test_create_user_view(admin_client):
     url = reverse('wagtailusers_users:add')
 
-    post_data = USER_DETAILS_ORIGINAL.copy()
-    post_data['password'] = '1234'
-    post_data['password2'] = '1234'
-    response = admin_client.post(url, data=post_data)
+    response = admin_client.post(url, data=USER_DETAILS_CREATE)
 
     assert response.context['message'] == 'User test created.'
     assert response.status_code == status.HTTP_302_FOUND
@@ -46,16 +46,11 @@ def test_create_user_view(admin_client):
 @pytest.mark.django_db
 def test_create_user_view_invalid_form(admin_client):
     url = reverse('wagtailusers_users:add')
-    response = admin_client.post(
-        url,
-        data={
-            'username': 'test',
-            'email': 'This is not an email address',
-            'first_name': 'Test',
-            'last_name': 'User',
-            'groups': ['1']
-        }
-    )
+
+    post_data = USER_DETAILS.copy()
+    post_data.update(email='This is not an email address')
+    response = admin_client.post(url, post_data)
+
     message = response.context['message']
     assert message == 'The user could not be created due to errors.'
     assert response.status_code == status.HTTP_200_OK
@@ -63,7 +58,7 @@ def test_create_user_view_invalid_form(admin_client):
 
 @pytest.mark.django_db
 def test_get_edit_user_view(admin_client):
-    user = UserFactory(**USER_DETAILS_ORIGINAL)
+    user = UserFactory(**USER_DETAILS)
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
     response = admin_client.get(url)
     assert response.status_code == status.HTTP_200_OK
@@ -72,7 +67,7 @@ def test_get_edit_user_view(admin_client):
 
 @pytest.mark.django_db
 def test_edit_user_view(admin_client):
-    user = UserFactory(**USER_DETAILS_ORIGINAL)
+    user = UserFactory(**USER_DETAILS)
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
 
     # We'll add the user to a group, as well as changing their details
@@ -80,7 +75,7 @@ def test_edit_user_view(admin_client):
     post_data['groups'] = ['1']
     response = admin_client.post(url, data=post_data)
 
-    assert response.context['message'] == 'User test updated.'
+    assert response.context['message'] == 'User johnsmith updated.'
     assert response.status_code == status.HTTP_302_FOUND
     assert response.url == reverse('wagtailusers_users:index')
 
@@ -101,7 +96,7 @@ def test_edit_user_view_cannot_change_personal_details_when_sso_enforced(
     # Set this flag to True and actions if previous test
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = True
 
-    user = UserFactory(**USER_DETAILS_ORIGINAL)
+    user = UserFactory(**USER_DETAILS)
 
     # Post changes to the view
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
@@ -110,7 +105,7 @@ def test_edit_user_view_cannot_change_personal_details_when_sso_enforced(
     # The users details should remain unchanged, because the
     # personal detail fields should all be disabled
     user.refresh_from_db()
-    for field_name, original_value in USER_DETAILS_ORIGINAL.items():
+    for field_name, original_value in USER_DETAILS.items():
         assert getattr(user, field_name) == original_value
 
     # Change this back to avoid cross-test pollution
@@ -123,13 +118,13 @@ def test_edit_user_view_preserves_ability_to_update_is_active(admin_client):
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = True
 
     # Create an 'inactive' user to test with
-    user = UserFactory(**USER_DETAILS_ORIGINAL)
+    user = UserFactory(**USER_DETAILS)
     user.is_active = False
     user.save()
 
     # Post using the same details + 'is_active=on'
-    post_data = USER_DETAILS_ORIGINAL.copy()
-    post_data['is_active'] = 'on'
+    post_data = USER_DETAILS.copy()
+    post_data.update(is_active='on')
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
     admin_client.post(url, data=post_data)
 
