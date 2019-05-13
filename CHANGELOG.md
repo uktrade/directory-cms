@@ -20,6 +20,7 @@
 - [CI-116](https://uktrade.atlassian.net/browse/CI-116) Moved sections around in content panels, removed cta_text fields and added capital investment image on Invest Landing Page
 - [CMS-1248](https://uktrade.atlassian.net/browse/CMS-1248) Removed JPEG compression overrides to improve image quality
 - [CMS-1446](https://uktrade.atlassian.net/browse/CMS-1446) Prevent changing of a user's personal details when SSO is enforced for users
+- [CMS-1421](https://uktrade.atlassian.net/browse/CMS-1421) Integrate with GOV.UK Notify to send SSO user approval notifications
 
 ### Fixed bugs:
 
