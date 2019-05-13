@@ -8,6 +8,20 @@ from rest_framework import status
 
 from .factories import UserFactory
 
+USER_DETAILS_ORIGINAL = {
+    'username': 'test',
+    'email': 'test@test.com',
+    'first_name': 'Foo',
+    'last_name': 'Bar',
+}
+
+USER_DETAILS_CHANGING = {
+    'username': 'johnsmith',
+    'email': 'john@smiths.com',
+    'first_name': 'John',
+    'last_name': 'Smith',
+}
+
 
 def test_create_user_view_get(admin_client):
     url = reverse('wagtailusers_users:add')
@@ -18,16 +32,12 @@ def test_create_user_view_get(admin_client):
 @pytest.mark.django_db
 def test_create_user_view(admin_client):
     url = reverse('wagtailusers_users:add')
-    response = admin_client.post(
-        url,
-        data={
-            'username': 'test',
-            'email': 'test@test.com',
-            'first_name': 'Test',
-            'last_name': 'User',
-            'groups': ['1']
-        }
-    )
+
+    post_data = USER_DETAILS_ORIGINAL.copy()
+    post_data['password'] = '1234'
+    post_data['password2'] = '1234'
+    response = admin_client.post(url, data=post_data)
+
     assert response.context['message'] == 'User test created.'
     assert response.status_code == status.HTTP_302_FOUND
     assert response.url == reverse('wagtailusers_users:index')
@@ -53,7 +63,7 @@ def test_create_user_view_invalid_form(admin_client):
 
 @pytest.mark.django_db
 def test_get_edit_user_view(admin_client):
-    user = UserFactory(username='test', email='test@test.com')
+    user = UserFactory(**USER_DETAILS_ORIGINAL)
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
     response = admin_client.get(url)
     assert response.status_code == status.HTTP_200_OK
@@ -62,53 +72,26 @@ def test_get_edit_user_view(admin_client):
 
 @pytest.mark.django_db
 def test_edit_user_view(admin_client):
-    user = UserFactory(username='test', email='test@test.com')
+    user = UserFactory(**USER_DETAILS_ORIGINAL)
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
-    response = admin_client.post(
-        url,
-        data={
-            'username': 'foobar',
-            'email': 'test@test.com',
-            'first_name': 'Test',
-            'last_name': 'User',
-            'groups': ['1']
-        }
-    )
+
+    # We'll add the user to a group, as well as changing their details
+    post_data = USER_DETAILS_CHANGING.copy()
+    post_data['groups'] = ['1']
+    response = admin_client.post(url, data=post_data)
+
     assert response.context['message'] == 'User test updated.'
     assert response.status_code == status.HTTP_302_FOUND
     assert response.url == reverse('wagtailusers_users:index')
+
     user.refresh_from_db()
-    group_ids = set(user.groups.values_list('id', flat=True))
-    assert group_ids == {1}
-
-
-USER_DETAILS_ORIGINAL = {
-    'username': 'test',
-    'email': 'test@test.com',
-    'first_name': 'Foo',
-    'last_name': 'Bar',
-}
-
-USER_DETAILS_CHANGING = {
-    'username': 'johnsmith',
-    'email': 'john@smiths.com',
-    'first_name': 'John',
-    'last_name': 'Smith',
-}
-
-
-@pytest.mark.django_db
-def test_edit_user_view_can_change_personal_details_by_default(admin_client):
-    user = UserFactory(**USER_DETAILS_ORIGINAL)
-
-    # Post changes to the view
-    url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
-    admin_client.post(url, data=USER_DETAILS_CHANGING)
-
     # The user's details should have changed to reflect the posted values
     user.refresh_from_db()
     for field_name, changed_value in USER_DETAILS_CHANGING.items():
         assert getattr(user, field_name) == changed_value
+    # And they should have been added to a group
+    group_ids = set(user.groups.values_list('id', flat=True))
+    assert group_ids == {1}
 
 
 @pytest.mark.django_db
