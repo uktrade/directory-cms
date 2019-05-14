@@ -5,7 +5,7 @@ from django.urls import reverse
 notifications_client = NotificationsAPIClient(settings.GOVNOTIFY_API_KEY)
 
 
-def notify_team_leader_of_access_request(
+def notify_team_leader_of_pending_access_request(
     request, team_leader_email, team_leader_name, user_id, user_name,
     user_email, user_role
 ):
@@ -26,7 +26,7 @@ def notify_team_leader_of_access_request(
     )
 
 
-def notify_user_of_access_approval(
+def notify_user_of_access_request_approval(
     request, user_email, user_name, reviewer_name
 ):
     personalisation = {
