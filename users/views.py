@@ -16,7 +16,7 @@ from users.notifications import (
     notify_team_leader_of_pending_access_request,
     notify_user_of_access_request_approval,
 )
-from . import forms, mixins, notifications
+from . import forms, mixins
 
 User = get_user_model()
 

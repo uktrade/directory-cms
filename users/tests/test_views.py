@@ -176,7 +176,10 @@ def test_edit_user_view_marks_user_as_approved_if_added_to_group(
     profile = user_awaiting_approval.userprofile
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
 
-    with patch('users.views.EditUserView.notify_user_of_approval') as mock_method: # noqa
+    with patch(
+        'users.views.notify_user_of_access_request_approval',
+        autospec=True
+    ) as mocked_method:
         response = admin_client.post(url, {
             'username': user.username,
             'first_name': user.first_name,
@@ -196,8 +199,14 @@ def test_edit_user_view_marks_user_as_approved_if_added_to_group(
     assert profile.assignment_status == UserProfile.STATUS_APPROVED
     assert profile.approved_by_id == admin_user.id
     assert profile.approved_at is not None
-    # notify_user_of_approval() should have been called too
-    mock_method.assert_called()
+    # A notification should have been triggered for the user
+    expected_call_args = dict(
+        request=response.wsgi_request,
+        user_email=user.email,
+        user_name=user.get_full_name(),
+        reviewer_name=admin_user.get_full_name(),
+    )
+    mocked_method.assert_called_with(**expected_call_args)
 
 
 @pytest.mark.django_db
@@ -208,7 +217,9 @@ def test_edit_user_view_does_not_mark_user_as_approved_if_not_added_to_a_group(
     profile = user_awaiting_approval.userprofile
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
 
-    with patch('users.views.EditUserView.notify_user_of_approval') as mock_method: # noqa
+    with patch(
+        'users.views.notify_user_of_access_request_approval'
+    ) as mocked_method:
         response = admin_client.post(url, {
             'username': user.username,
             'first_name': user.first_name,
@@ -227,8 +238,8 @@ def test_edit_user_view_does_not_mark_user_as_approved_if_not_added_to_a_group(
     assert profile.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL
     assert profile.approved_by_id is None
     assert profile.approved_at is None
-    # notify_user_of_approval() should NOT have been called either
-    mock_method.assert_not_called()
+    # no notification should have been triggered
+    mocked_method.assert_not_called()
 
 
 def reload_urlconf(urlconf=None):
@@ -370,7 +381,10 @@ def test_ssorequestaccessview_post_with_complete_data(
     group = groups_with_info[0]
     team_leader = team_leaders[0]
 
-    with patch('users.views.SSORequestAccessView.notify_team_leader_of_pending_approval') as mock_method: # noqa
+    with patch(
+        'users.views.notify_team_leader_of_pending_access_request',
+        autospec=True
+    ) as mocked_method:
         response = admin_client.post(
             reverse('wagtailusers_users:sso_request_access'),
             data={
@@ -387,10 +401,19 @@ def test_ssorequestaccessview_post_with_complete_data(
     profile = admin_user.userprofile
     assert profile.self_assigned_group_id == group.id
     assert profile.team_leader_id == team_leader.id
-    assert profile.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL
+    assert profile.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL # noqa
 
-    # notify_team_leader_of_pending_approval() should have been called too!
-    assert mock_method.called
+    # A notification should have been triggered for the user
+    expected_call_args = dict(
+        request=response.wsgi_request,
+        team_leader_email=team_leader.email,
+        team_leader_name=team_leader.get_full_name(),
+        user_id=admin_user.id,
+        user_name=admin_user.get_full_name(),
+        user_email=admin_user.email,
+        user_role=group.info.name_singular,
+    )
+    mocked_method.assert_called_with(**expected_call_args)
 
 
 @pytest.mark.django_db
