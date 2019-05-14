@@ -100,7 +100,10 @@ class EditUserView(
             UserProfile.STATUS_CREATED,
             UserProfile.STATUS_AWAITING_APPROVAL,
         )
-        if self.is_approval and request.method == 'GET':
+        if (
+            settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] and
+            self.is_approval and request.method == 'GET'
+        ):
             # Warn the current user that this is an 'approval'
             message_text = (
                 "This user is awaiting approval and will be automatically "
@@ -115,6 +118,7 @@ class EditUserView(
                     " They requested to be added to the '{}' group, so this "
                     "has been preselected for you under the 'Roles' tab."
                 ).format(profile.self_assigned_group.name)
+
             messages.warning(request, message_text)
         return super().dispatch(request, *args, **kwargs)
 
@@ -153,12 +157,13 @@ class EditUserView(
         profile.save()
 
     def notify_user(self):
-        notify_user_of_access_request_approval(
-            request=self.request,
-            user_email=self.object.email,
-            user_name=self.object.get_full_name(),
-            reviewer_name=self.request.user.get_full_name(),
-        )
+        if settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
+            notify_user_of_access_request_approval(
+                request=self.request,
+                user_email=self.object.email,
+                user_name=self.object.get_full_name(),
+                reviewer_name=self.request.user.get_full_name(),
+            )
 
 
 class SSORequestAccessView(EditView):
