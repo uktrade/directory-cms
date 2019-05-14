@@ -125,9 +125,7 @@ class SetupGuidePageSerializer(BasePageSerializer):
     children_setup_guides = serializers.SerializerMethodField()
 
     def get_children_setup_guides(self, instance):
-        queryset = instance.get_descendants().type(
-            SetupGuidePage
-        ).live().specific()
+        queryset = SetupGuidePage.objects.descendant_of(instance).live()
         serializer = SetupGuidePageSerializer(
             queryset,
             many=True,
@@ -154,10 +152,7 @@ class SetupGuideLandingPageSerializer(
     children_setup_guides = serializers.SerializerMethodField()
 
     def get_children_setup_guides(self, instance):
-        from .models import SetupGuidePage
-        queryset = instance.get_descendants().type(
-            SetupGuidePage
-        ).live().specific()
+        queryset = SetupGuidePage.objects.descendant_of(instance).live()
         serializer = SetupGuidePageSerializer(
             queryset,
             many=True,
