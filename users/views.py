@@ -12,6 +12,10 @@ from wagtail.users.utils import user_can_delete_user
 from wagtail.users.views.users import add_user_perm, change_user_perm
 
 from users.models import UserProfile
+from users.notifications import (
+    notify_team_leader_of_pending_access_request,
+    notify_user_of_access_request_approval,
+)
 from . import forms, mixins
 
 User = get_user_model()
@@ -96,7 +100,10 @@ class EditUserView(
             UserProfile.STATUS_CREATED,
             UserProfile.STATUS_AWAITING_APPROVAL,
         )
-        if self.is_approval and request.method == 'GET':
+        if (
+            settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] and
+            self.is_approval and request.method == 'GET'
+        ):
             # Warn the current user that this is an 'approval'
             message_text = (
                 "This user is awaiting approval and will be automatically "
@@ -111,6 +118,7 @@ class EditUserView(
                     " They requested to be added to the '{}' group, so this "
                     "has been preselected for you under the 'Roles' tab."
                 ).format(profile.self_assigned_group.name)
+
             messages.warning(request, message_text)
         return super().dispatch(request, *args, **kwargs)
 
@@ -130,7 +138,7 @@ class EditUserView(
 
         if self.is_approval and user.has_perm('wagtailadmin.access_admin'):
             self.mark_user_as_approved()
-            self.notify_user_of_approval()
+            self.notify_user()
 
         self.handle_success_message()
         return redirect('wagtailusers_users:index')
@@ -148,9 +156,14 @@ class EditUserView(
         profile.approved_at = timezone.now()
         profile.save()
 
-    def notify_user_of_approval(self):
-        # TODO: connect to gov.notify
-        pass  # pragma: no cover
+    def notify_user(self):
+        if settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
+            notify_user_of_access_request_approval(
+                request=self.request,
+                user_email=self.object.email,
+                user_name=self.object.get_full_name(),
+                reviewer_name=self.request.user.get_full_name(),
+            )
 
 
 class SSORequestAccessView(EditView):
@@ -181,12 +194,19 @@ class SSORequestAccessView(EditView):
         self.object = super().save_instance()
         self.object.assignment_status = UserProfile.STATUS_AWAITING_APPROVAL
         self.object.save()
-        self.notify_team_leader_of_pending_approval()
+        self.notify_team_leader()
         return self.object
 
     def get_success_url(self):
         return self.success_url
 
-    def notify_team_leader_of_pending_approval(self):
-        # TODO: connect to gov.notify
-        pass  # pragma: no cover
+    def notify_team_leader(self):
+        notify_team_leader_of_pending_access_request(
+            request=self.request,
+            team_leader_email=self.object.team_leader.email,
+            team_leader_name=self.object.team_leader.get_full_name(),
+            user_id=self.request.user.id,
+            user_name=self.request.user.get_full_name(),
+            user_email=self.request.user.email,
+            user_role=self.object.self_assigned_group.info.name_singular,
+        )

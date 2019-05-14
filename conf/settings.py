@@ -386,7 +386,7 @@ AWS_ACCESS_KEY_ID = env.str('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env.str('AWS_SECRET_ACCESS_KEY')
 AWS_S3_HOST = 's3-us-west-1.amazonaws.com'
 
-# Email
+# Email and notifications
 EMAIL_BACKED_CLASSES = {
     'default': 'django.core.mail.backends.smtp.EmailBackend',
     'console': 'django.core.mail.backends.console.EmailBackend'
@@ -400,10 +400,24 @@ EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL', '')
 
+# NOTE: Notify keys must be in a specfic format for the client to initialise,
+# so using an invalid default here to prevent breakages locally / in tests
+GOVNOTIFY_API_KEY = env.str(
+    'GOVNOTIFY_API_KEY',
+    'directory_cms_invalid-03185ee5-578c-4ffc-8774-2288e7b34e63-e82262ea-ae8c-4c6d-8570-c16afdc8347f' # noqa
+)
+GOVNOTIFY_REPLY_TO_EMAIL_ID = env.str('GOVNOTIFY_REPLY_TO_EMAIL_ID', '')
+GOVNOTIFY_USER_PENDING_APPROVAL_TEMPLATE_ID = env.str(
+    'GOVNOTIFY_USER_PENDING_APPROVAL_TEMPLATE_ID', '')
+GOVNOTIFY_USER_APPROVED_TEMPLATE_ID = env.str(
+    'GOVNOTIFY_USER_APPROVED_TEMPLATE_ID', '')
+
+# Translation
 MODELTRANSLATION_CUSTOM_FIELDS = ('RichTextField', )
 MODELTRANSLATION_FALLBACK_LANGUAGES = ()
 WAGTAILMODELTRANSLATION_TRANSLATE_SLUGS = False
 
+# Misc
 EU_EXIT_NEWS_LISTING_PAGE_SLUG = env.str(
     'EU_EXIT_NEWS_LISTING_PAGE_SLUG', 'eu-exit-news'
 )
@@ -414,8 +428,7 @@ USERS_REQUEST_ACCESS_PREVENT_RESUBMISSION = env.bool(
     'USERS_REQUEST_ACCESS_PREVENT_RESUBMISSION', True
 )
 
-# feature flags
-
+# Feature flags
 FEATURE_FLAGS = {
     'ENFORCE_STAFF_SSO_ON': env.bool('FEATURE_ENFORCE_STAFF_SSO_ENABLED',
                                      True),

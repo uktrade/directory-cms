@@ -3,7 +3,9 @@
 ## Pre-release
 
 **Implemented enhancements:**
+
 - [CMS-1419](https://uktrade.atlassian.net/browse/CMS-1419) Added Wagtail registration view for SSO users, group info management UI, and updated user edit view to mark users as approved
+- [CMS-1421](https://uktrade.atlassian.net/browse/CMS-1421) Integrate with GOV.UK Notify to send SSO user approval notifications
 
 ## [2019.05.09](https://github.com/uktrade/directory-cms/releases/tag/2019.05.09)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.04.24_1...2019.05.09)
@@ -25,6 +27,7 @@
 - [CMS-1446](https://uktrade.atlassian.net/browse/CMS-1446) Prevent changing of a user's personal details when SSO is enforced for users
 - [NOTICKET] Optimised `BasePage.full_path` by uisng `specific_class` to access class attribute values instead of `specific`
 - [NOTICKET] Optimised serializers by using page-type specific queries instead of `PageQuerySet.specific()` where possible
+
 
 ### Fixed bugs:
 

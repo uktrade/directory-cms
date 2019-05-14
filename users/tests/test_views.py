@@ -84,11 +84,11 @@ def test_edit_user_view(admin_client):
     assert response.status_code == status.HTTP_302_FOUND
     assert response.url == reverse('wagtailusers_users:index')
 
-    user.refresh_from_db()
     # The user's details should have changed to reflect the posted values
     user.refresh_from_db()
     for field_name, changed_value in USER_DETAILS_CHANGING.items():
         assert getattr(user, field_name) == changed_value
+
     # And they should have been added to a group
     group_ids = set(user.groups.values_list('id', flat=True))
     assert group_ids == {1}
@@ -111,7 +111,7 @@ def test_edit_user_view_invalid_form(admin_client, approved_user):
 def test_edit_user_view_cannot_change_personal_details_when_sso_enforced(
     admin_client
 ):
-    # Set this flag to True and actions if previous test
+    # Set this flag to True and repeat previous test
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = True
 
     user = UserFactory(**USER_DETAILS)
@@ -151,7 +151,7 @@ def test_edit_user_view_preserves_ability_to_update_is_active(admin_client):
     user.refresh_from_db()
     assert user.is_active is True
 
-    # Change this back to avoid cross-test pollution
+    # Reset flag to avoid cross-test pollution
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
 
 
@@ -159,6 +159,9 @@ def test_edit_user_view_preserves_ability_to_update_is_active(admin_client):
 def test_edit_user_view_warns_administrator_if_user_is_awaiting_approval(
     admin_client, user_awaiting_approval
 ):
+    # This flag must be set for the warning to show
+    settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = True
+
     user = user_awaiting_approval
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
     response = admin_client.get(url)
@@ -167,16 +170,25 @@ def test_edit_user_view_warns_administrator_if_user_is_awaiting_approval(
     assert "This user is awaiting approval" in message
     assert "requested to be added to the 'Moderators' group" in message
 
+    # Reset flag to avoid cross-test pollution
+    settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
+
 
 @pytest.mark.django_db
 def test_edit_user_view_marks_user_as_approved_if_added_to_group(
     admin_client, admin_user, user_awaiting_approval
 ):
+    # This flag must be set for the warning to show
+    settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = True
+
     user = user_awaiting_approval
     profile = user_awaiting_approval.userprofile
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
 
-    with patch('users.views.EditUserView.notify_user_of_approval') as mock_method: # noqa
+    with patch(
+        'users.views.notify_user_of_access_request_approval',
+        autospec=True
+    ) as mocked_method:
         response = admin_client.post(url, {
             'username': user.username,
             'first_name': user.first_name,
@@ -196,8 +208,18 @@ def test_edit_user_view_marks_user_as_approved_if_added_to_group(
     assert profile.assignment_status == UserProfile.STATUS_APPROVED
     assert profile.approved_by_id == admin_user.id
     assert profile.approved_at is not None
-    # notify_user_of_approval() should have been called too
-    mock_method.assert_called()
+
+    # A notification should have been triggered for the user
+    expected_call_args = dict(
+        request=response.wsgi_request,
+        user_email=user.email,
+        user_name=user.get_full_name(),
+        reviewer_name=admin_user.get_full_name(),
+    )
+    mocked_method.assert_called_with(**expected_call_args)
+
+    # Reset flag to avoid cross-test pollution
+    settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
 
 
 @pytest.mark.django_db
@@ -208,7 +230,9 @@ def test_edit_user_view_does_not_mark_user_as_approved_if_not_added_to_a_group(
     profile = user_awaiting_approval.userprofile
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
 
-    with patch('users.views.EditUserView.notify_user_of_approval') as mock_method: # noqa
+    with patch(
+        'users.views.notify_user_of_access_request_approval'
+    ) as mocked_method:
         response = admin_client.post(url, {
             'username': user.username,
             'first_name': user.first_name,
@@ -227,8 +251,9 @@ def test_edit_user_view_does_not_mark_user_as_approved_if_not_added_to_a_group(
     assert profile.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL
     assert profile.approved_by_id is None
     assert profile.approved_at is None
-    # notify_user_of_approval() should NOT have been called either
-    mock_method.assert_not_called()
+
+    # no notification should have been triggered
+    mocked_method.assert_not_called()
 
 
 def reload_urlconf(urlconf=None):
@@ -370,7 +395,10 @@ def test_ssorequestaccessview_post_with_complete_data(
     group = groups_with_info[0]
     team_leader = team_leaders[0]
 
-    with patch('users.views.SSORequestAccessView.notify_team_leader_of_pending_approval') as mock_method: # noqa
+    with patch(
+        'users.views.notify_team_leader_of_pending_access_request',
+        autospec=True
+    ) as mocked_method:
         response = admin_client.post(
             reverse('wagtailusers_users:sso_request_access'),
             data={
@@ -387,10 +415,19 @@ def test_ssorequestaccessview_post_with_complete_data(
     profile = admin_user.userprofile
     assert profile.self_assigned_group_id == group.id
     assert profile.team_leader_id == team_leader.id
-    assert profile.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL
+    assert profile.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL # noqa
 
-    # notify_team_leader_of_pending_approval() should have been called too!
-    assert mock_method.called
+    # A notification should have been triggered for the user
+    expected_call_args = dict(
+        request=response.wsgi_request,
+        team_leader_email=team_leader.email,
+        team_leader_name=team_leader.get_full_name(),
+        user_id=admin_user.id,
+        user_name=admin_user.get_full_name(),
+        user_email=admin_user.email,
+        user_role=group.info.name_singular,
+    )
+    mocked_method.assert_called_with(**expected_call_args)
 
 
 @pytest.mark.django_db

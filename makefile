@@ -92,7 +92,9 @@ TEST_SET_ENV_VARS := \
 	export EMAIL_HOST_PASSWORD=debug; \
 	export DEFAULT_FROM_EMAIL=debug; \
 	export FEATURE_ENFORCE_STAFF_SSO_ENABLED=false; \
-	export USERS_REQUEST_ACCESS_PREVENT_RESUBMISSION=true
+	export USERS_REQUEST_ACCESS_PREVENT_RESUBMISSION=true; \
+	export GOVNOTIFY_USER_PENDING_APPROVAL_TEMPLATE_ID=pending-template-id; \
+	export GOVNOTIFY_USER_APPROVED_TEMPLATE_ID=approved-template-id
 
 debug_migrate:
 	$(DEBUG_SET_ENV_VARS) && ./manage.py migrate
