@@ -21,6 +21,8 @@
 - [CMS-1248](https://uktrade.atlassian.net/browse/CMS-1248) Removed JPEG compression overrides to improve image quality
 - [CMS-1419](https://uktrade.atlassian.net/browse/CMS-1419) Added Wagtail registration view for SSO users, group info management UI, and updated user edit view to mark users as approved
 - [CMS-1446](https://uktrade.atlassian.net/browse/CMS-1446) Prevent changing of a user's personal details when SSO is enforced for users
+- [NOTICKET] Optimised `BasePage.full_path` by uisng `specific_class` to access class attribute values instead of `specific`
+- [NOTICKET] Optimised serializers by using page-type specific queries instead of `PageQuerySet.specific()` where possible
 
 ### Fixed bugs:
 
