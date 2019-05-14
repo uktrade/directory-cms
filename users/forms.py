@@ -1,9 +1,17 @@
 from django import forms
+from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
-
 from wagtail.users import forms as wagtail_forms
+
+from core.widgets import Select2Widget
+from groups.models import GroupInfo
+from groups.fields import (
+    GroupChoiceFieldWithRolesModal,
+    GroupWithSummariesMultipleChoiceField,
+)
+from users.models import UserProfile
 
 
 class EntryPointAwareUserActionForm(forms.Form):
@@ -14,18 +22,32 @@ class EntryPointAwareUserActionForm(forms.Form):
     2) Makes group selection entry point aware/filtered
 
     """
+
     is_superuser = forms.BooleanField(
-        label=_('Superuser'),
+        label=_("Superuser"),
         required=False,
-        help_text=_('Superusers have full access to manage any object '
-                    'or setting.'))
+        help_text=_(
+            "Superusers have full access to manage any object or setting."
+        ),
+    )
+
+    groups = GroupWithSummariesMultipleChoiceField(
+        label=_('Groups'),
+        required=False,
+        queryset=Group.objects.none(),
+        widget=forms.CheckboxSelectMultiple,
+    )
 
     def __init__(self, user, *args, **kwargs):
         """Creating user (session user) should only see the groups
         that have the same tree entry point of their own group(s).
         """
         super().__init__(*args, **kwargs)
-        self.fields['groups'].queryset = self.get_groups_queryset(user)
+        self.fields["groups"].queryset = (
+            self.get_groups_queryset(user)
+            .select_related('info')
+            .order_by('info__seniority_level', 'name')
+        )
 
     def get_groups_queryset(self, user):
         """Return the groups with the same entrypoint(s) of the the user in
@@ -37,12 +59,14 @@ class EntryPointAwareUserActionForm(forms.Form):
             # normal users with no tree entry point shouldn't exist but...
             return Group.objects.none()
         else:
-            entry_points_ids = user.groups.all().values_list(
-                'page_permissions__page_id', flat=True
-            ).distinct()
+            entry_points_ids = (
+                user.groups.all()
+                .values_list("page_permissions__page_id", flat=True)
+                .distinct()
+            )
             return Group.objects.filter(
                 page_permissions__page_id=entry_points_ids
-            ).distinct('id')
+            ).distinct()
 
 
 class UserEditForm(
@@ -68,3 +92,43 @@ class UserCreationForm(
     wagtail_forms.UserCreationForm
 ):
     pass
+
+
+class UserNameWithEmailChoiceField(forms.ModelChoiceField):
+
+    def label_from_instance(self, obj):
+        return "{name} <{email}>".format(
+            name=obj.get_full_name(),
+            email=obj.email
+        )
+
+
+class SSORequestAccessForm(forms.ModelForm):
+
+    self_assigned_group = GroupChoiceFieldWithRolesModal(
+        label="Which best describes your content role?",
+        empty_label=None,
+        widget=forms.RadioSelect,
+    )
+
+    team_leader = UserNameWithEmailChoiceField(
+        label="Who is your content team leader?",
+        queryset=get_user_model().objects.none(),
+        widget=Select2Widget,
+    )
+
+    class Meta:
+        model = UserProfile
+        fields = ["self_assigned_group", "team_leader"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        try:
+            group = GroupInfo.objects.all().team_leaders_group.group
+            users = group.user_set.all().order_by('first_name', 'last_name')
+            self.fields["team_leader"].queryset = users
+        except GroupInfo.DoesNotExist:
+            pass
+        self.fields["team_leader"].widget.select2_options = {
+            'placeholder': 'Search available team leaders',
+        }

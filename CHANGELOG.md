@@ -4,6 +4,7 @@
 
 **Implemented enhancements:**
 
+- [CMS-1419](https://uktrade.atlassian.net/browse/CMS-1419) Added Wagtail registration view for SSO users, group info management UI, and updated user edit view to mark users as approved
 - [CMS-1421](https://uktrade.atlassian.net/browse/CMS-1421) Integrate with GOV.UK Notify to send SSO user approval notifications
 
 ## [2019.05.09](https://github.com/uktrade/directory-cms/releases/tag/2019.05.09)

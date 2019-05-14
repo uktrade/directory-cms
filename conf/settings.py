@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'wagtail_modeltranslation',
     'wagtail_modeltranslation.makemigrations',
     'wagtail_modeltranslation.migrate',
+    'django.contrib.admin',  # required by wagtail.contrib.modeladmin
     'django.contrib.auth',
     'django.contrib.staticfiles',
     'django.contrib.contenttypes',
@@ -60,7 +61,9 @@ INSTALLED_APPS = [
     'directory_components',
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
+    'groups.apps.GroupsConfig',
     'wagtail.contrib.forms',
+    'wagtail.contrib.modeladmin',
     'wagtail.contrib.settings',
     'wagtail.embeds',
     'wagtail.users',
@@ -421,6 +424,9 @@ EU_EXIT_NEWS_LISTING_PAGE_SLUG = env.str(
 INTERNATIONAL_NEWS_MARKETING_FOLDER_PAGE_SLUG = env.str(
     'INTERNATIONAL_NEWS_MARKETING_FOLDER_PAGE_SLUG', 'news-and-events'
 )
+USERS_REQUEST_ACCESS_PREVENT_RESUBMISSION = env.bool(
+    'USERS_REQUEST_ACCESS_PREVENT_RESUBMISSION', True
+)
 
 # Feature flags
 FEATURE_FLAGS = {
@@ -448,6 +454,9 @@ if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
     AUTHBROKER_CLIENT_ID = env.str('AUTHBROKER_CLIENT_ID')
     AUTHBROKER_CLIENT_SECRET = env.str('AUTHBROKER_CLIENT_SECRET')
 
+    MIDDLEWARE_CLASSES.append(
+        'users.middleware.SSORedirectUsersToRequestAccessViews'
+    )
     # Disable password management in Wagtail admin
     WAGTAIL_PASSWORD_MANAGEMENT_ENABLED = False
     WAGTAIL_PASSWORD_RESET_ENABLED = False

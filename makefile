@@ -38,7 +38,7 @@ debug_db:
 	$(DEBUG_SET_ENV_VARS) && $(DEBUG_CREATE_DB)
 
 migrations:
-	$(DEBUG_SET_ENV_VARS) && ./manage.py makemigrations core export_readiness find_a_supplier invest components great_international
+	$(DEBUG_SET_ENV_VARS) && ./manage.py makemigrations core export_readiness find_a_supplier invest components great_international groups users
 
 
 DEBUG_SET_ENV_VARS := \
@@ -74,7 +74,8 @@ DEBUG_SET_ENV_VARS := \
 	export CELERY_ALWAYS_EAGER=true; \
 	export ACTIVITY_STREAM_ACCESS_KEY_ID=123-id-key; \
 	export ACTIVITY_STREAM_SECRET_ACCESS_KEY=123-secret-key; \
-	export FEATURE_ENFORCE_STAFF_SSO_ENABLED=false
+	export FEATURE_ENFORCE_STAFF_SSO_ENABLED=false; \
+	export USERS_REQUEST_ACCESS_PREVENT_RESUBMISSION=false \
 
 
 TEST_SET_ENV_VARS := \
@@ -91,6 +92,7 @@ TEST_SET_ENV_VARS := \
 	export EMAIL_HOST_PASSWORD=debug; \
 	export DEFAULT_FROM_EMAIL=debug; \
 	export FEATURE_ENFORCE_STAFF_SSO_ENABLED=false; \
+	export USERS_REQUEST_ACCESS_PREVENT_RESUBMISSION=true; \
 	export GOVNOTIFY_USER_PENDING_APPROVAL_TEMPLATE_ID=pending-template-id; \
 	export GOVNOTIFY_USER_APPROVED_TEMPLATE_ID=approved-template-id
 
