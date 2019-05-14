@@ -2,6 +2,9 @@
 
 ## Pre-release
 
+**Implemented enhancements:**
+- [CMS-1419](https://uktrade.atlassian.net/browse/CMS-1419) Added Wagtail registration view for SSO users, group info management UI, and updated user edit view to mark users as approved
+
 ## [2019.05.09](https://github.com/uktrade/directory-cms/releases/tag/2019.05.09)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.04.24_1...2019.05.09)
 

@@ -67,6 +67,7 @@ class UserFactory(factory.django.DjangoModelFactory):
     last_name = factory.Faker('last_name')
     is_superuser = False
     is_staff = False
+    email = factory.Faker('email')
 
     @factory.post_generation
     def groups(self, create, extracted, **kwargs):
