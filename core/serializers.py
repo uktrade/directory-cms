@@ -55,4 +55,16 @@ class ChildPagesSerializerHelper(serializers.Serializer):
             allow_null=True,
             context=self.context
         )
+        print('\n\n\n\n\n the child sector serialized being returned ', serializer.data)
+        return serializer.data
+
+
+class ParentPageSerializerHelper(serializers.Serializer):
+    def get_parent_page(self, instance, serializer):
+        queryset = instance.get_parent().specific
+        serializer = serializer(
+            queryset,
+            allow_null=True,
+            context=self.context
+        )
         return serializer.data

@@ -61,3 +61,44 @@ class InternationalCuratedTopicLandingPageSubscriber(
 class InternationalGuideLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalGuideLandingPage
     subscriptions = [models.InternationalArticlePage]
+
+
+class InternationalCapitalInvestLandingPageSubscriber(
+                                        AbstractDatabaseCacheSubscriber):
+    model = models.InternationalCapitalInvestLandingPage
+    subscriptions = [models.CapitalInvestRegionPage]
+
+
+class CapitalInvestRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.CapitalInvestRegionPage
+    subscriptions = [
+        models.CapitalInvestRegionalSectorPage,
+        models.InternationalCapitalInvestLandingPage
+    ]
+
+
+class CapitalInvestRegionalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.CapitalInvestRegionalSectorPage
+    subscriptions = [
+        models.CapitalInvestOpportunityPage,
+        models.CapitalInvestRegionPage
+    ]
+
+
+class CapitalInvestRegionalSectorOpportunityPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.CapitalInvestRegionalSectorOpportunityPage
+    subscriptions = [
+        models.CapitalInvestOpportunityPage,
+        models.CapitalInvestRegionPage,
+        models.CapitalInvestRegionalSectorPage
+    ]
+
+
+class CapitalInvestOpportunityPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.CapitalInvestOpportunityPage
+    subscriptions = [
+        models.CapitalInvestOpportunityPage,
+        models.CapitalInvestRegionalSectorPage,
+        models.CapitalInvestRegionPage,
+        models.CapitalInvestRegionalSectorOpportunityPage
+    ]

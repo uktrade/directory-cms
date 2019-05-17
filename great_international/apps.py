@@ -15,6 +15,11 @@ class GreatInternationalConfig(AppConfig):
         cache.InternationalTopicLandingPageSubscriber.subscribe()
         cache.InternationalCuratedTopicLandingPageSubscriber.subscribe()
         cache.InternationalGuideLandingPageSubscriber.subscribe()
+        cache.InternationalCapitalInvestLandingPageSubscriber.subscribe()
+        cache.CapitalInvestRegionPageSubscriber.subscribe()
+        cache.CapitalInvestRegionalSectorPageSubscriber.subscribe()
+        cache.CapitalInvestOpportunityPageSubscriber.subscribe()
+        cache.CapitalInvestRegionalSectorOpportunityPageSubscriber.subscribe()
         # tags inheritance signals
         post_save.connect(
             receiver=signals.inherit_tags_from_parent,

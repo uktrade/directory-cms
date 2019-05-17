@@ -1,9 +1,12 @@
+from wagtail.documents.edit_handlers import DocumentChooserPanel
+
 from directory_constants.constants import cms
 from django.forms import Textarea, CheckboxSelectMultiple
 from django.utils.text import slugify
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
-    HelpPanel, FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel
+    HelpPanel, FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel,
+    InlinePanel
 )
 from wagtail.images.edit_handlers import ImageChooserPanel
 
@@ -20,6 +23,7 @@ from core.models import (
 from core.mixins import ServiceHomepageMixin
 from core.panels import SearchEngineOptimisationPanel
 from export_readiness.models import Tag
+from wagtail.snippets.models import register_snippet
 
 
 class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
@@ -32,12 +36,18 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
 
     @classmethod
     def allowed_subpage_models(cls):
-        return [InternationalArticleListingPage,
-                InternationalTopicLandingPage,
-                InternationalCuratedTopicLandingPage,
-                InternationalRegionPage,
-                InternationalHomePage,
-                InternationalCapitalInvestLandingPage]
+        return [
+            InternationalArticleListingPage,
+            InternationalTopicLandingPage,
+            InternationalCuratedTopicLandingPage,
+            InternationalGuideLandingPage,
+            InternationalRegionPage,
+            InternationalHomePage,
+            InternationalRegionPage,
+            InternationalCapitalInvestLandingPage,
+            CapitalInvestRegionListingPage,
+            CapitalInvestSectorListingPage,
+            CapitalInvestOpportunityListingPage]
 
 
 class InternationalSectorPage(BasePage):
@@ -1606,15 +1616,29 @@ class InternationalGuideLandingPage(BasePage):
     )
 
 
-class InternationalCapitalInvestLandingPage(BasePage):
+class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
+    slug_identity = 'capital-invest'
 
     parent_page_types = ['great_international.GreatInternationalApp']
 
-    hero_title = models.CharField(max_length=255, blank=True)
-    hero_subheading = models.CharField(max_length=255, blank=True)
+    hero_title = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+', blank=True
+    )
+    hero_subheading = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Please use if you'd like to "
+                  "add to the title on a second line"
+    )
     hero_subtitle = models.CharField(max_length=255, blank=True)
     hero_cta_text = models.CharField(max_length=255)
+
+    featured_description = models.TextField(max_length=255, blank=True)
 
     reason_to_invest_section_title = models.CharField(max_length=255)
     reason_to_invest_section_intro = models.CharField(
@@ -1626,79 +1650,132 @@ class InternationalCapitalInvestLandingPage(BasePage):
         'wagtailimages.Image',
         null=True,
         on_delete=models.SET_NULL,
-        related_name='+', blank=True
-    )
-    reason_to_invest_section_image_caption = models.CharField(
-        max_length=255,
+        related_name='+',
         blank=True
     )
 
-    region_ops_section_title = models.CharField(max_length=255)
-    region_ops_section_intro = models.CharField(max_length=255, blank=True)
-
-    region_card_one_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+', blank=True
+    region_ops_section_title = models.CharField(
+        max_length=255,
+        verbose_name="Region opportunities section title"
     )
-    region_card_one_title = models.CharField(max_length=255)
-    region_card_one_description = models.TextField(max_length=255, blank=True)
-    region_card_one_cta_text = models.CharField(max_length=255)
-
-    region_card_two_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+', blank=True
+    region_ops_section_intro = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Region opportunities section intro"
     )
-    region_card_two_title = models.CharField(max_length=255)
-    region_card_two_description = models.TextField(max_length=255, blank=True)
-    region_card_two_cta_text = models.CharField(max_length=255)
 
-    region_card_three_image = models.ForeignKey(
-        'wagtailimages.Image',
+    related_region_one = models.ForeignKey(
+        'great_international.CapitalInvestRegionPage',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
-        related_name='+', blank=True
+        related_name='+'
     )
-    region_card_three_title = models.CharField(max_length=255)
-    region_card_three_description = models.TextField(max_length=255, blank=True)
-    region_card_three_cta_text = models.CharField(max_length=255)
+    region_card_one_cta_text = models.CharField(max_length=255, blank=True)
+    region_card_one_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
-    region_card_four_image = models.ForeignKey(
-        'wagtailimages.Image',
+    related_region_two = models.ForeignKey(
+        'great_international.CapitalInvestRegionPage',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
-        related_name='+', blank=True
+        related_name='+'
     )
-    region_card_four_title = models.CharField(max_length=255)
-    region_card_four_description = models.TextField(max_length=255, blank=True)
-    region_card_four_cta_text = models.CharField(max_length=255)
+    region_card_two_cta_text = models.CharField(max_length=255, blank=True)
+    region_card_two_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
-    region_card_five_image = models.ForeignKey(
-        'wagtailimages.Image',
+    related_region_three = models.ForeignKey(
+        'great_international.CapitalInvestRegionPage',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
-        related_name='+', blank=True
+        related_name='+'
     )
-    region_card_five_title = models.CharField(max_length=255)
-    region_card_five_description = models.TextField(max_length=255, blank=True)
-    region_card_five_cta_text = models.CharField(max_length=255)
+    region_card_three_cta_text = models.CharField(max_length=255, blank=True)
+    region_card_three_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
-    region_card_six_image = models.ForeignKey(
-        'wagtailimages.Image',
+    related_region_four = models.ForeignKey(
+        'great_international.CapitalInvestRegionPage',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
-        related_name='+', blank=True
+        related_name='+'
     )
-    region_card_six_title = models.CharField(max_length=255)
-    region_card_six_description = models.TextField(max_length=255, blank=True)
-    region_card_six_cta_text = models.CharField(max_length=255)
+    region_card_four_cta_text = models.CharField(max_length=255, blank=True)
+    region_card_four_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    related_region_five = models.ForeignKey(
+        'great_international.CapitalInvestRegionPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    region_card_five_cta_text = models.CharField(max_length=255, blank=True)
+    region_card_five_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    related_region_six = models.ForeignKey(
+        'great_international.CapitalInvestRegionPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    region_card_six_cta_text = models.CharField(max_length=255, blank=True)
+    region_card_six_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     energy_sector_title = models.CharField(max_length=255)
     energy_sector_content = MarkdownField(blank=True)
+    energy_sector_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+', blank=True
+    )
     energy_sector_cta_text = models.CharField(max_length=255)
+    energy_sector_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     how_we_help_title = models.CharField(max_length=255)
     how_we_help_intro = models.TextField(max_length=255, blank=True)
@@ -1740,14 +1817,14 @@ class InternationalCapitalInvestLandingPage(BasePage):
     contact_section_text = models.CharField(max_length=255, blank=True)
     contact_section_cta_text = models.CharField(max_length=255)
 
-    tags = ParentalManyToManyField(Tag, blank=True)
     content_panels = [
         MultiFieldPanel(
             heading="Hero",
             children=[
+                ImageChooserPanel('hero_image'),
                 FieldPanel('hero_title'),
-                FieldPanel('hero_subtitle'),
                 FieldPanel('hero_subheading'),
+                FieldPanel('hero_subtitle'),
                 FieldPanel('hero_cta_text')
             ]
         ),
@@ -1757,8 +1834,7 @@ class InternationalCapitalInvestLandingPage(BasePage):
                 FieldPanel('reason_to_invest_section_title'),
                 FieldPanel('reason_to_invest_section_intro'),
                 FieldPanel('reason_to_invest_section_content'),
-                FieldPanel('reason_to_invest_section_image_caption'),
-                ImageChooserPanel('reason_to_invest_section_image')
+                ImageChooserPanel('reason_to_invest_section_image'),
             ]
         ),
         MultiFieldPanel(
@@ -1768,42 +1844,72 @@ class InternationalCapitalInvestLandingPage(BasePage):
                 FieldPanel('region_ops_section_intro'),
                 FieldRowPanel([
                     MultiFieldPanel([
-                        ImageChooserPanel('region_card_one_image'),
-                        FieldPanel('region_card_one_title'),
-                        FieldPanel('region_card_one_description'),
+                        PageChooserPanel(
+                            'related_region_one',
+                            [
+                                'great_international.'
+                                'CapitalInvestRegionPage'
+                            ]
+                        ),
                         FieldPanel('region_card_one_cta_text'),
+                        DocumentChooserPanel('region_card_one_pdf_document'),
                     ]),
                     MultiFieldPanel([
-                        ImageChooserPanel('region_card_two_image'),
-                        FieldPanel('region_card_two_title'),
-                        FieldPanel('region_card_two_description'),
+                        PageChooserPanel(
+                            'related_region_two',
+                            [
+                                'great_international.'
+                                'CapitalInvestRegionPage'
+                            ]
+                        ),
                         FieldPanel('region_card_two_cta_text'),
+                        DocumentChooserPanel('region_card_two_pdf_document'),
                     ]),
                     MultiFieldPanel([
-                        ImageChooserPanel('region_card_three_image'),
-                        FieldPanel('region_card_three_title'),
-                        FieldPanel('region_card_three_description'),
+                        PageChooserPanel(
+                            'related_region_three',
+                            [
+                                'great_international.'
+                                'CapitalInvestRegionPage'
+                            ]
+                        ),
                         FieldPanel('region_card_three_cta_text'),
+                        DocumentChooserPanel('region_card_three_pdf_document'),
                     ]),
                 ]),
                 FieldRowPanel([
                     MultiFieldPanel([
-                        ImageChooserPanel('region_card_four_image'),
-                        FieldPanel('region_card_four_title'),
-                        FieldPanel('region_card_four_description'),
+                        PageChooserPanel(
+                            'related_region_four',
+                            [
+                                'great_international.'
+                                'CapitalInvestRegionPage'
+                            ]
+                        ),
                         FieldPanel('region_card_four_cta_text'),
+                        DocumentChooserPanel('region_card_four_pdf_document'),
                     ]),
                     MultiFieldPanel([
-                        ImageChooserPanel('region_card_five_image'),
-                        FieldPanel('region_card_five_title'),
-                        FieldPanel('region_card_five_description'),
+                        PageChooserPanel(
+                            'related_region_five',
+                            [
+                                'great_international.'
+                                'CapitalInvestRegionPage'
+                            ]
+                        ),
                         FieldPanel('region_card_five_cta_text'),
+                        DocumentChooserPanel('region_card_five_pdf_document'),
                     ]),
                     MultiFieldPanel([
-                        ImageChooserPanel('region_card_six_image'),
-                        FieldPanel('region_card_six_title'),
-                        FieldPanel('region_card_six_description'),
+                        PageChooserPanel(
+                            'related_region_six',
+                            [
+                                'great_international.'
+                                'CapitalInvestRegionPage'
+                            ]
+                        ),
                         FieldPanel('region_card_six_cta_text'),
+                        DocumentChooserPanel('region_card_six_pdf_document'),
                     ]),
                 ]),
             ]
@@ -1813,15 +1919,17 @@ class InternationalCapitalInvestLandingPage(BasePage):
             children=[
                 FieldPanel('energy_sector_title'),
                 FieldPanel('energy_sector_content'),
-                FieldPanel('energy_sector_cta_text')
+                ImageChooserPanel('energy_sector_image'),
+                FieldPanel('energy_sector_cta_text'),
+                DocumentChooserPanel('energy_sector_pdf_document'),
             ]
         ),
         MultiFieldPanel(
             heading="How we help section",
             children=[
+                FieldPanel('how_we_help_title'),
+                FieldPanel('how_we_help_intro'),
                 FieldRowPanel([
-                    FieldPanel('how_we_help_title'),
-                    FieldPanel('how_we_help_intro'),
                     MultiFieldPanel([
                         ImageChooserPanel('how_we_help_one_icon'),
                         FieldPanel('how_we_help_one_text'),
@@ -1830,6 +1938,8 @@ class InternationalCapitalInvestLandingPage(BasePage):
                         ImageChooserPanel('how_we_help_two_icon'),
                         FieldPanel('how_we_help_two_text'),
                     ]),
+                ]),
+                FieldRowPanel([
                     MultiFieldPanel([
                         ImageChooserPanel('how_we_help_three_icon'),
                         FieldPanel('how_we_help_three_text'),
@@ -1854,5 +1964,783 @@ class InternationalCapitalInvestLandingPage(BasePage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
+
+
+class CapitalInvestRegionListingPage(ExclusivePageMixin,
+                                     ServiceMixin, BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+    slug_identity = 'region'
+
+    parent_page_types = [
+        'great_international.GreatInternationalApp'
+    ]
+
+    @classmethod
+    def get_required_translatable_fields(cls):
+        return []
+
+    @classmethod
+    def allowed_subpage_models(cls):
+        return [CapitalInvestRegionPage]
+
+
+class CapitalInvestRegionPage(BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+
+    parent_page_types = ['great_international.GreatInternationalApp']
+    subpage_types = [
+        'great_international.CapitalInvestRegionalSectorPage',
+    ]
+
+    breadcrumbs_label = models.CharField(max_length=255)
+    hero_title = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    featured_description = models.CharField(max_length=255, blank=True)
+
+    region_summary_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    region_summary_section_intro = models.TextField(max_length=255)
+    region_summary_section_content = MarkdownField(blank=True)
+
+    investment_opps_title = models.CharField(
+        max_length=255,
+        verbose_name="Investment opportunities title"
+    )
+    investment_opps_intro = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Investment opportunities intro"
+    )
+
+    economics_data_title = models.CharField(max_length=255, blank=True)
+    economics_stat_1_number = models.CharField(max_length=255, blank=True)
+    economics_stat_1_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_1_smallprint = models.CharField(max_length=255, blank=True)
+
+    economics_stat_2_number = models.CharField(max_length=255, blank=True)
+    economics_stat_2_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_2_smallprint = models.CharField(max_length=255, blank=True)
+
+    economics_stat_3_number = models.CharField(max_length=255, blank=True)
+    economics_stat_3_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_3_smallprint = models.CharField(max_length=255, blank=True)
+
+    economics_stat_4_number = models.CharField(max_length=255, blank=True)
+    economics_stat_4_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_4_smallprint = models.CharField(max_length=255, blank=True)
+
+    location_data_title = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_1_number = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_1_heading = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_1_smallprint = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    location_stat_2_number = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_2_heading = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_2_smallprint = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    location_stat_3_number = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_3_heading = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_3_smallprint = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    location_stat_4_number = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_4_heading = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_4_smallprint = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    section_title = models.CharField(max_length=255, blank=True)
+    section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    section_content = MarkdownField(blank=True)
+
+    case_study_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    case_study_title = models.CharField(max_length=255)
+    case_study_text = models.TextField(max_length=255, blank=True)
+    case_study_cta_text = models.CharField(max_length=255)
+    case_study_cta_link = models.CharField(max_length=255, blank=True)
+
+    next_steps_title = models.CharField(max_length=255)
+    next_steps_intro = models.TextField(max_length=255, blank=True)
+
+    invest_cta_text = models.CharField(max_length=255)
+
+    buy_cta_text = models.CharField(max_length=255)
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading="Hero",
+            children=[
+                FieldPanel('hero_title'),
+                ImageChooserPanel('hero_image'),
+            ],
+        ),
+        FieldPanel('featured_description'),
+        MultiFieldPanel(
+            heading="Region summary",
+            children=[
+                ImageChooserPanel('region_summary_section_image'),
+                FieldPanel('region_summary_section_intro'),
+                FieldPanel('region_summary_section_content'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Investment opportunities",
+            children=[
+                FieldPanel('investment_opps_title'),
+                FieldPanel('investment_opps_intro'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Economics Statistics",
+            children=[
+                FieldPanel('economics_data_title'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('economics_stat_1_number'),
+                        FieldPanel('economics_stat_1_heading'),
+                        FieldPanel('economics_stat_1_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('economics_stat_2_number'),
+                        FieldPanel('economics_stat_2_heading'),
+                        FieldPanel('economics_stat_2_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('economics_stat_3_number'),
+                        FieldPanel('economics_stat_3_heading'),
+                        FieldPanel('economics_stat_3_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('economics_stat_4_number'),
+                        FieldPanel('economics_stat_4_heading'),
+                        FieldPanel('economics_stat_4_smallprint'),
+                    ]),
+                ]),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Location Statistics",
+            children=[
+                FieldPanel('location_data_title'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('location_stat_1_number'),
+                        FieldPanel('location_stat_1_heading'),
+                        FieldPanel('location_stat_1_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('location_stat_2_number'),
+                        FieldPanel('location_stat_2_heading'),
+                        FieldPanel('location_stat_2_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('location_stat_3_number'),
+                        FieldPanel('location_stat_3_heading'),
+                        FieldPanel('location_stat_3_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('location_stat_4_number'),
+                        FieldPanel('location_stat_4_heading'),
+                        FieldPanel('location_stat_4_smallprint'),
+                    ]),
+                ]),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Extra optional section",
+            children=[
+                ImageChooserPanel('section_image'),
+                FieldPanel('section_title'),
+                FieldPanel('section_content'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Case study",
+            children=[
+                ImageChooserPanel('case_study_image'),
+                FieldPanel('case_study_title'),
+                FieldPanel('case_study_text'),
+                FieldPanel('case_study_cta_text'),
+                FieldPanel('case_study_cta_link'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Next steps",
+            children=[
+                FieldPanel('next_steps_title'),
+                FieldPanel('next_steps_intro'),
+                FieldRowPanel([
+                    FieldPanel('invest_cta_text'),
+                    FieldPanel('buy_cta_text'),
+                ]),
+            ],
+        ),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
+
+
+class CapitalInvestRegionalSectorPage(BasePage):
+    class Meta:
+        ordering = ['-hero_title']
+
+    service_name_value = cms.GREAT_INTERNATIONAL
+
+    parent_page_types = ['great_international.CapitalInvestRegionPage']
+    subpage_types = [
+        'great_international.CapitalInvestRegionalSectorOpportunityPage',
+    ]
+
+    breadcrumbs_label = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    hero_title = models.CharField(max_length=255)
+    featured_description = models.TextField(
+        max_length=255,
+        blank=True,
+        help_text="This description is used when this page is featured "
+                  "on another page, i.e. the Capital Invest Region "
+                  "page"
+    )
+
+    sector_summary_intro = models.TextField(max_length=255, blank=True)
+    sector_summary_content = MarkdownField(blank=True)
+    sector_summary_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    investment_opportunities_title = models.CharField(max_length=255)
+
+    next_steps_title = models.CharField(max_length=255)
+    next_steps_intro = models.CharField(max_length=255, blank=True)
+
+    invest_cta_text = models.CharField(max_length=255)
+    buy_cta_text = models.CharField(max_length=255)
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading="Hero",
+            children=[
+                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_title'),
+            ],
+        ),
+        FieldPanel('featured_description'),
+        MultiFieldPanel(
+            heading="Sector summary",
+            children=[
+                FieldPanel('sector_summary_intro'),
+                FieldPanel('sector_summary_content'),
+                ImageChooserPanel('sector_summary_image'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Investment opportunities",
+            children=[
+                FieldPanel('investment_opportunities_title'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Next steps",
+            children=[
+                FieldPanel('next_steps_title'),
+                FieldPanel('next_steps_intro'),
+                FieldRowPanel([
+                    FieldPanel('invest_cta_text'),
+                    FieldPanel('buy_cta_text'),
+                ]),
+            ],
+        ),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
+
+
+@register_snippet
+class OpportunitySnippet(models.Model):
+    breadcrumbs_label = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    hero_title = models.CharField(max_length=255)
+
+    opportunity_summary_intro = models.TextField(max_length=255)
+    opportunity_summary_content = MarkdownField(blank=True)
+    opportunity_summary_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    location = models.CharField(max_length=255)
+    project_promoter = models.CharField(max_length=255)
+    scale = models.CharField(max_length=255)
+    programme = models.CharField(max_length=255)
+    investment_type = models.CharField(max_length=255)
+    planning_status = models.CharField(max_length=255)
+
+    project_background_title = models.CharField(max_length=255, blank=True)
+    project_background_intro = models.TextField(max_length=255, blank=True)
+    project_description_title = models.CharField(max_length=255, blank=True)
+    project_description_content = MarkdownField(blank=True)
+    project_promoter_title = models.CharField(max_length=255, blank=True)
+    project_promoter_content = MarkdownField(blank=True)
+    project_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    case_study_title = models.CharField(max_length=255)
+    case_study_text = models.CharField(max_length=255, blank=True)
+    case_study_cta_text = models.CharField(max_length=255)
+    case_study_cta_link = models.CharField(max_length=255, blank=True)
+    case_study_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    next_steps_title = models.CharField(max_length=255)
+    next_steps_intro = models.CharField(max_length=255, blank=True)
+
+    invest_cta_text = models.CharField(max_length=255)
+    buy_cta_text = models.CharField(max_length=255)
+
+    panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading="Hero",
+            children=[
+                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_title'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Opportunity summary",
+            children=[
+                FieldPanel('opportunity_summary_intro'),
+                FieldPanel('opportunity_summary_content'),
+                ImageChooserPanel('opportunity_summary_image'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Opportunity Details",
+            children=[
+                FieldRowPanel([
+                    FieldPanel('location'),
+                    FieldPanel('project_promoter'),
+                    FieldPanel('scale'),
+                ]),
+                FieldRowPanel([
+                    FieldPanel('programme'),
+                    FieldPanel('investment_type'),
+                    FieldPanel('planning_status'),
+                ]),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Project Details",
+            children=[
+                FieldPanel('project_background_title'),
+                FieldPanel('project_background_intro'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('project_description_title'),
+                        FieldPanel('project_description_content'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('project_promoter_title'),
+                        FieldPanel('project_promoter_content'),
+                    ]),
+                ]),
+                ImageChooserPanel('project_image')
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Case study",
+            children=[
+                ImageChooserPanel('case_study_image'),
+                FieldPanel('case_study_title'),
+                FieldPanel('case_study_text'),
+                FieldPanel('case_study_cta_text'),
+                FieldPanel('case_study_cta_link'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Next steps",
+            children=[
+                FieldPanel('next_steps_title'),
+                FieldPanel('next_steps_intro'),
+                FieldRowPanel([
+                    FieldPanel('invest_cta_text'),
+                    FieldPanel('buy_cta_text'),
+                ]),
+            ],
+        ),
+    ]
+
+    def __str__(self):
+        return self.hero_title
+
+    class Meta:
+        verbose_name_plural = "Opportunities"
+
+
+class CapitalInvestRegionalSectorOpportunityPage(BasePage):
+
+    service_name_value = cms.GREAT_INTERNATIONAL
+    parent_page_types = ['great_international.CapitalInvestRegionalSectorPage']
+
+    heading = models.CharField(max_length=255, blank=True)
+
+    opportunities = ParentalManyToManyField(OpportunitySnippet, blank=True)
+
+    content_panels = [
+        FieldPanel('opportunities', widget=CheckboxSelectMultiple)
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+
+class CapitalInvestSectorListingPage(ExclusivePageMixin,
+                                     ServiceMixin, BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+    slug_identity = 'sectors'
+
+    parent_page_types = [
+        'great_international.GreatInternationalApp'
+    ]
+
+    @classmethod
+    def get_required_translatable_fields(cls):
+        return []
+
+    # @classmethod
+    # def allowed_subpage_models(cls):
+    #     return [CapitalInvestSectorPage]
+
+
+class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
+                                          BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+    slug_identity = 'opportunity'
+
+    parent_page_types = [
+        'great_international.GreatInternationalApp'
+    ]
+
+    @classmethod
+    def get_required_translatable_fields(cls):
+        return []
+
+    @classmethod
+    def allowed_subpage_models(cls):
+        return [CapitalInvestOpportunityPage]
+
+
+class CapitalInvestOpportunityPage(BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+
+    parent_page_types = ['great_international.GreatInternationalApp']
+
+    breadcrumbs_label = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    hero_title = models.CharField(max_length=255)
+
+    opportunity_summary_intro = models.TextField(max_length=255)
+    opportunity_summary_content = MarkdownField(blank=True)
+    opportunity_summary_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    location = models.CharField(max_length=255)
+    project_promoter = models.CharField(max_length=255)
+    scale = models.CharField(max_length=255)
+    programme = models.CharField(max_length=255)
+    investment_type = models.CharField(max_length=255)
+    planning_status = models.CharField(max_length=255)
+
+    project_background_title = models.CharField(max_length=255, blank=True)
+    project_background_intro = models.TextField(max_length=255, blank=True)
+    project_description_title = models.CharField(max_length=255, blank=True)
+    project_description_content = MarkdownField(blank=True)
+    project_promoter_title = models.CharField(max_length=255, blank=True)
+    project_promoter_content = MarkdownField(blank=True)
+    project_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    case_study_title = models.CharField(max_length=255)
+    case_study_text = models.CharField(max_length=255, blank=True)
+    case_study_cta_text = models.CharField(max_length=255)
+    case_study_cta_link = models.CharField(max_length=255, blank=True)
+    case_study_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    similar_projects_title = models.CharField(max_length=255)
+    related_page_one = models.ForeignKey(
+        'great_international.CapitalInvestOpportunityPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    related_page_two = models.ForeignKey(
+        'great_international.CapitalInvestOpportunityPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    related_page_three = models.ForeignKey(
+        'great_international.CapitalInvestOpportunityPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    similar_projects_cta_text = models.CharField(max_length=255)
+    similar_projects_cta_link = models.CharField(max_length=255, blank=True)
+
+    next_steps_title = models.CharField(max_length=255)
+    next_steps_intro = models.CharField(max_length=255, blank=True)
+
+    invest_cta_text = models.CharField(max_length=255)
+    buy_cta_text = models.CharField(max_length=255)
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading="Hero",
+            children=[
+                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_title'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Opportunity summary",
+            children=[
+                FieldPanel('opportunity_summary_intro'),
+                FieldPanel('opportunity_summary_content'),
+                ImageChooserPanel('opportunity_summary_image'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Opportunity Details",
+            children=[
+                FieldRowPanel([
+                    FieldPanel('location'),
+                    FieldPanel('project_promoter'),
+                    FieldPanel('scale'),
+                ]),
+                FieldRowPanel([
+                    FieldPanel('programme'),
+                    FieldPanel('investment_type'),
+                    FieldPanel('planning_status'),
+                ]),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Project Details",
+            children=[
+                FieldPanel('project_background_title'),
+                FieldPanel('project_background_intro'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('project_description_title'),
+                        FieldPanel('project_description_content'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('project_promoter_title'),
+                        FieldPanel('project_promoter_content'),
+                    ]),
+                ]),
+                ImageChooserPanel('project_image')
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Case study",
+            children=[
+                ImageChooserPanel('case_study_image'),
+                FieldPanel('case_study_title'),
+                FieldPanel('case_study_text'),
+                FieldPanel('case_study_cta_text'),
+                FieldPanel('case_study_cta_link'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Similar projects",
+            children=[
+                FieldPanel('similar_projects_title'),
+                FieldRowPanel([
+                    PageChooserPanel(
+                        'related_page_one',
+                        [
+                            'great_international.'
+                            'CapitalInvestOpportunityPage'
+                        ]),
+                    PageChooserPanel(
+                        'related_page_two',
+                        [
+                            'great_international.'
+                            'CapitalInvestOpportunityPage'
+                        ]),
+                    PageChooserPanel(
+                        'related_page_three',
+                        [
+                            'great_international.'
+                            'CapitalInvestOpportunityPage'
+                        ]),
+                ]),
+                FieldPanel('similar_projects_cta_text'),
+                FieldPanel('similar_projects_cta_link'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Next steps",
+            children=[
+                FieldPanel('next_steps_title'),
+                FieldPanel('next_steps_intro'),
+                FieldRowPanel([
+                    FieldPanel('invest_cta_text'),
+                    FieldPanel('buy_cta_text'),
+                ]),
+            ],
+        ),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
