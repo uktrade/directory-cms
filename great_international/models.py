@@ -1739,11 +1739,14 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
                   "add to the title on a second line"
     )
     hero_subtitle = models.CharField(max_length=255, blank=True)
-    hero_cta_text = models.CharField(max_length=255)
+    hero_cta_text = models.CharField(max_length=255, blank=True)
 
     featured_description = models.TextField(max_length=255, blank=True)
 
-    reason_to_invest_section_title = models.CharField(max_length=255)
+    reason_to_invest_section_title = models.CharField(
+        max_length=255,
+        blank=True
+    )
     reason_to_invest_section_intro = models.CharField(
         max_length=255,
         blank=True
@@ -1759,7 +1762,8 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
 
     region_ops_section_title = models.CharField(
         max_length=255,
-        verbose_name="Region opportunities section title"
+        verbose_name="Region opportunities section title",
+        blank=True
     )
     region_ops_section_intro = models.CharField(
         max_length=255,
@@ -1863,7 +1867,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         related_name='+'
     )
 
-    energy_sector_title = models.CharField(max_length=255)
+    energy_sector_title = models.CharField(max_length=255, blank=True)
     energy_sector_content = MarkdownField(blank=True)
     energy_sector_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -1871,7 +1875,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+', blank=True
     )
-    energy_sector_cta_text = models.CharField(max_length=255)
+    energy_sector_cta_text = models.CharField(max_length=255, blank=True)
     energy_sector_pdf_document = models.ForeignKey(
         'wagtaildocs.Document',
         null=True,
@@ -1880,7 +1884,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         related_name='+'
     )
 
-    how_we_help_title = models.CharField(max_length=255)
+    how_we_help_title = models.CharField(max_length=255, blank=True)
     how_we_help_intro = models.TextField(max_length=255, blank=True)
 
     how_we_help_one_icon = models.ForeignKey(
@@ -1890,7 +1894,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         related_name='+',
         blank=True
     )
-    how_we_help_one_text = models.CharField(max_length=255)
+    how_we_help_one_text = models.CharField(max_length=255, blank=True)
 
     how_we_help_two_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -1898,7 +1902,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+', blank=True
     )
-    how_we_help_two_text = models.CharField(max_length=255)
+    how_we_help_two_text = models.CharField(max_length=255, blank=True)
 
     how_we_help_three_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -1906,7 +1910,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+', blank=True
     )
-    how_we_help_three_text = models.CharField(max_length=255)
+    how_we_help_three_text = models.CharField(max_length=255, blank=True)
 
     how_we_help_four_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -1914,11 +1918,11 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+', blank=True
     )
-    how_we_help_four_text = models.CharField(max_length=255)
+    how_we_help_four_text = models.CharField(max_length=255, blank=True)
 
-    contact_section_title = models.CharField(max_length=255)
+    contact_section_title = models.CharField(max_length=255, blank=True)
     contact_section_text = models.CharField(max_length=255, blank=True)
-    contact_section_cta_text = models.CharField(max_length=255)
+    contact_section_cta_text = models.CharField(max_length=255, blank=True)
 
     content_panels = [
         MultiFieldPanel(
@@ -2103,12 +2107,12 @@ class CapitalInvestRegionPage(BasePage):
         related_name='+',
         blank=True
     )
-    region_summary_section_intro = models.TextField(max_length=255)
+    region_summary_section_intro = models.TextField(max_length=255, blank=True)
     region_summary_section_content = MarkdownField(blank=True)
 
     investment_opps_title = models.CharField(
         max_length=255,
-        verbose_name="Investment opportunities title"
+        verbose_name="Investment opportunities title", blank=True
     )
     investment_opps_intro = models.CharField(
         max_length=255,
@@ -2206,17 +2210,17 @@ class CapitalInvestRegionPage(BasePage):
         related_name='+',
         blank=True
     )
-    case_study_title = models.CharField(max_length=255)
+    case_study_title = models.CharField(max_length=255, blank=True)
     case_study_text = models.TextField(max_length=255, blank=True)
-    case_study_cta_text = models.CharField(max_length=255)
+    case_study_cta_text = models.CharField(max_length=255, blank=True)
     case_study_cta_link = models.CharField(max_length=255, blank=True)
 
-    next_steps_title = models.CharField(max_length=255)
+    next_steps_title = models.CharField(max_length=255, blank=True)
     next_steps_intro = models.TextField(max_length=255, blank=True)
 
-    invest_cta_text = models.CharField(max_length=255)
+    invest_cta_text = models.CharField(max_length=255, blank=True)
 
-    buy_cta_text = models.CharField(max_length=255)
+    buy_cta_text = models.CharField(max_length=255, blank=True)
 
     content_panels = [
         FieldPanel('breadcrumbs_label'),
@@ -2408,13 +2412,13 @@ class CapitalInvestRegionalSectorPage(BasePage):
         blank=True
     )
 
-    investment_opportunities_title = models.CharField(max_length=255)
+    investment_opportunities_title = models.CharField(max_length=255, blank=True)
 
-    next_steps_title = models.CharField(max_length=255)
+    next_steps_title = models.CharField(max_length=255, blank=True)
     next_steps_intro = models.CharField(max_length=255, blank=True)
 
-    invest_cta_text = models.CharField(max_length=255)
-    buy_cta_text = models.CharField(max_length=255)
+    invest_cta_text = models.CharField(max_length=255, blank=True)
+    buy_cta_text = models.CharField(max_length=255, blank=True)
 
     content_panels = [
         FieldPanel('breadcrumbs_label'),
@@ -2503,7 +2507,7 @@ class CapitalInvestOpportunityPage(BasePage):
     )
     hero_title = models.CharField(max_length=255)
 
-    opportunity_summary_intro = models.TextField(max_length=255)
+    opportunity_summary_intro = models.TextField(max_length=255, blank=True)
     opportunity_summary_content = MarkdownField(blank=True)
     opportunity_summary_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -2513,12 +2517,12 @@ class CapitalInvestOpportunityPage(BasePage):
         blank=True
     )
 
-    location = models.CharField(max_length=255)
-    project_promoter = models.CharField(max_length=255)
-    scale = models.CharField(max_length=255)
-    programme = models.CharField(max_length=255)
-    investment_type = models.CharField(max_length=255)
-    planning_status = models.CharField(max_length=255)
+    location = models.CharField(max_length=255, blank=True)
+    project_promoter = models.CharField(max_length=255, blank=True)
+    scale = models.CharField(max_length=255, blank=True)
+    programme = models.CharField(max_length=255, blank=True)
+    investment_type = models.CharField(max_length=255, blank=True)
+    planning_status = models.CharField(max_length=255, blank=True)
 
     project_background_title = models.CharField(max_length=255, blank=True)
     project_background_intro = models.TextField(max_length=255, blank=True)
@@ -2534,9 +2538,9 @@ class CapitalInvestOpportunityPage(BasePage):
         blank=True
     )
 
-    case_study_title = models.CharField(max_length=255)
+    case_study_title = models.CharField(max_length=255, blank=True)
     case_study_text = models.CharField(max_length=255, blank=True)
-    case_study_cta_text = models.CharField(max_length=255)
+    case_study_cta_text = models.CharField(max_length=255, blank=True)
     case_study_cta_link = models.CharField(max_length=255, blank=True)
     case_study_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -2546,7 +2550,7 @@ class CapitalInvestOpportunityPage(BasePage):
         blank=True
     )
 
-    similar_projects_title = models.CharField(max_length=255)
+    similar_projects_title = models.CharField(max_length=255, blank=True)
     related_page_one = models.ForeignKey(
         'great_international.CapitalInvestOpportunityPage',
         null=True,
@@ -2568,14 +2572,14 @@ class CapitalInvestOpportunityPage(BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    similar_projects_cta_text = models.CharField(max_length=255)
+    similar_projects_cta_text = models.CharField(max_length=255, blank=True)
     similar_projects_cta_link = models.CharField(max_length=255, blank=True)
 
-    next_steps_title = models.CharField(max_length=255)
+    next_steps_title = models.CharField(max_length=255, blank=True)
     next_steps_intro = models.CharField(max_length=255, blank=True)
 
-    invest_cta_text = models.CharField(max_length=255)
-    buy_cta_text = models.CharField(max_length=255)
+    invest_cta_text = models.CharField(max_length=255, blank=True)
+    buy_cta_text = models.CharField(max_length=255, blank=True)
 
     content_panels = [
         FieldPanel('breadcrumbs_label'),
