@@ -270,8 +270,18 @@ class AddedRelatedPageSummarySerializer(serializers.Serializer):
         serializer = RelatedCapitalInvestOpportunityPageSerializer(
             added_related_page.specific)
         serialized.append(serializer.data)
-        print('\n\n\n\n\n\n serialized ', serialized)
-        return serialized
+        print('\n\n\n\n\n\n serialized [0]', serialized[0])
+        print('\n\n\n\n\n\n serialized not[0]', serialized)
+        return serialized[0]
+
+
+MODEL_TO_SERIALIZER_MAPPING = {
+        InternationalArticlePage: RelatedArticlePageSerializer,
+        InternationalCampaignPage: RelatedCampaignPageSerializer,
+        CapitalInvestOpportunityPage
+        : RelatedCapitalInvestOpportunityPageSerializer,
+
+    }
 
 
 class PageWithRelatedRegionPagesSerializer(serializers.Serializer):
@@ -296,15 +306,6 @@ class PageWithRelatedRegionPagesSerializer(serializers.Serializer):
             print('\n\n\n\n appended this', serializer.data)
         print('\n\n\n\n about to return ', serialized)
         return serialized
-
-
-MODEL_TO_SERIALIZER_MAPPING = {
-        InternationalArticlePage: RelatedArticlePageSerializer,
-        InternationalCampaignPage: RelatedCampaignPageSerializer,
-        CapitalInvestOpportunityPage
-        : RelatedCapitalInvestOpportunityPageSerializer,
-
-    }
 
 
 class PageWithRelatedPagesSerializer(BasePageSerializer):
@@ -805,29 +806,57 @@ class InternationalCapitalInvestLandingPageSerializer(
     region_ops_section_title = serializers.CharField(max_length=255)
     region_ops_section_intro = serializers.CharField(max_length=255)
 
+    region_card_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    region_card_one_title = serializers.CharField(max_length=255)
+    region_card_one_summary = serializers.CharField(max_length=255)
     region_card_one_cta_text = serializers.CharField(max_length=255)
     region_card_one_pdf_document = core_fields.DocumentURLField()
 
+    region_card_two_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    region_card_two_title = serializers.CharField(max_length=255)
+    region_card_two_summary = serializers.CharField(max_length=255)
     region_card_two_cta_text = serializers.CharField(max_length=255)
     region_card_two_pdf_document = core_fields.DocumentURLField()
 
+    region_card_three_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360'
+    )
+    region_card_three_title = serializers.CharField(max_length=255)
+    region_card_three_summary = serializers.CharField(max_length=255)
     region_card_three_cta_text = serializers.CharField(max_length=255)
     region_card_three_pdf_document = core_fields.DocumentURLField()
 
+    region_card_four_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360'
+    )
+    region_card_four_title = serializers.CharField(max_length=255)
+    region_card_four_summary = serializers.CharField(max_length=255)
     region_card_four_cta_text = serializers.CharField(max_length=255)
     region_card_four_pdf_document = core_fields.DocumentURLField()
 
+    region_card_five_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    region_card_five_title = serializers.CharField(max_length=255)
+    region_card_five_summary = serializers.CharField(max_length=255)
     region_card_five_cta_text = serializers.CharField(max_length=255)
     region_card_five_pdf_document = core_fields.DocumentURLField()
 
+    region_card_six_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    region_card_six_title = serializers.CharField(max_length=255)
+    region_card_six_summary = serializers.CharField(max_length=255)
     region_card_six_cta_text = serializers.CharField(max_length=255)
     region_card_six_pdf_document = core_fields.DocumentURLField()
 
     energy_sector_title = serializers.CharField(max_length=255)
     energy_sector_content = core_fields.MarkdownToHTMLField()
-    energy_sector_image = wagtail_fields.ImageRenditionField('original')
+    energy_sector_image = wagtail_fields.ImageRenditionField('fill-640x360')
     energy_sector_cta_text = serializers.CharField(max_length=255)
     energy_sector_pdf_document = core_fields.DocumentURLField()
+
+    section_title = serializers.CharField(max_length=255)
+    section_content = core_fields.MarkdownToHTMLField()
+    section_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    section_cta_text = serializers.CharField(max_length=255)
+    section_pdf_document = core_fields.DocumentURLField()
 
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_intro = serializers.CharField(max_length=255)
@@ -993,6 +1022,8 @@ class CapitalInvestRegionalSectorPageSerializer(
             allow_null=True,
             context=self.context
         )
+        print('\n\n\n\n\n\n [0]', serializer.data[0])
+        print('\n\n\n\n\n\n not[0]', serializer.data)
         return serializer.data
 
 
