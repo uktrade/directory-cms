@@ -108,3 +108,10 @@ class CapitalInvestOpportunityPageSubscriber(AbstractDatabaseCacheSubscriber):
         models.CapitalInvestRegionalSectorPage,
         models.CapitalInvestRegionPage,
     ]
+
+
+class CapitalInvestOpportunityListingPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = models.CapitalInvestOpportunityListingPage
+    subscriptions = []
