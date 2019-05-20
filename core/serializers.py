@@ -64,6 +64,4 @@ class ParentPageSerializerHelper(serializers.Serializer):
             allow_null=True,
             context=self.context
         )
-        print('\n\n\n\n\n the parent region serialized being returned ',
-              serializer.data)
         return serializer.data
