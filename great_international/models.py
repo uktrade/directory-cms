@@ -1,4 +1,3 @@
-from wagtail.documents.models import Document
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 
 from directory_constants.constants import cms
@@ -2530,7 +2529,10 @@ class CapitalInvestRegionalSectorPage(BasePage):
         blank=True
     )
 
-    investment_opportunities_title = models.CharField(max_length=255, blank=True)
+    investment_opportunities_title = models.CharField(
+        max_length=255,
+        blank=True
+    )
 
     next_steps_title = models.CharField(max_length=255, blank=True)
     next_steps_intro = models.CharField(max_length=255, blank=True)

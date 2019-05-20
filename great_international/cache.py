@@ -91,7 +91,9 @@ class CapitalInvestRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
     ]
 
 
-class CapitalInvestRegionalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
+class CapitalInvestRegionalSectorPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
     model = models.CapitalInvestRegionalSectorPage
     subscriptions = [
         models.CapitalInvestOpportunityPage,

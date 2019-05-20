@@ -511,4 +511,3 @@ class CapitalInvestSectorRelatedPageSummarySerializer(
     fields = (
         'page',
     )
-

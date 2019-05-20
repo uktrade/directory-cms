@@ -53,7 +53,6 @@ class ChildPagesSerializerHelper(serializers.Serializer):
             allow_null=True,
             context=self.context
         )
-        print('\n\n\n\n\n the child sector serialized being returned ', serializer.data)
         return serializer.data
 
 

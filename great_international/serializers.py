@@ -270,17 +270,14 @@ class AddedRelatedPageSummarySerializer(serializers.Serializer):
         serializer = RelatedCapitalInvestOpportunityPageSerializer(
             added_related_page.specific)
         serialized.append(serializer.data)
-        print('\n\n\n\n\n\n serialized [0]', serialized[0])
-        print('\n\n\n\n\n\n serialized not[0]', serialized)
         return serialized[0]
 
 
 MODEL_TO_SERIALIZER_MAPPING = {
         InternationalArticlePage: RelatedArticlePageSerializer,
         InternationalCampaignPage: RelatedCampaignPageSerializer,
-        CapitalInvestOpportunityPage
-        : RelatedCapitalInvestOpportunityPageSerializer,
-
+        CapitalInvestOpportunityPage:
+        RelatedCapitalInvestOpportunityPageSerializer,
     }
 
 
@@ -303,8 +300,6 @@ class PageWithRelatedRegionPagesSerializer(serializers.Serializer):
             serializer = RelatedCapitalInvestPageSerializer(
                 related_region.specific)
             serialized.append(serializer.data)
-            print('\n\n\n\n appended this', serializer.data)
-        print('\n\n\n\n about to return ', serialized)
         return serialized
 
 
@@ -321,15 +316,11 @@ class PageWithRelatedPagesSerializer(BasePageSerializer):
         ]
         for related_page in items:
             if not related_page:
-                print('\n\n\n\n This one was empty')
                 continue
             serializer_class = MODEL_TO_SERIALIZER_MAPPING[
                 related_page.specific.__class__]
-            print('\n\n\n\n\n\n\n\n\n serializer class ===>', serializer_class)
             serializer = serializer_class(related_page.specific)
             serialized.append(serializer.data)
-            print('\n\n\n\n appended this', serializer.data)
-        print('\n\n\n\n about to return ', serialized)
         return serialized
 
 
@@ -754,11 +745,11 @@ class InternationalGuideLandingPageSerializer(BasePageSerializer):
 
     def get_guides(self, obj):
         article_list = (
-                           InternationalArticlePage.objects
-                               .descendant_of(obj)
-                               .live()
-                               .order_by('-first_published_at')
-                       )[:9]
+               InternationalArticlePage.objects
+                   .descendant_of(obj)
+                   .live()
+                   .order_by('-first_published_at')
+           )[:9]
         serializer = RelatedArticlePageSerializer(article_list, many=True)
         return serializer.data
 
@@ -977,7 +968,6 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer,
             CapitalInvestRegionalSectorPage,
             RelatedCapitalInvestPageSerializer
         )
-        print('\n\n\n\n\n the child sector being returned ', sectors)
         return sectors
 
 
@@ -1022,8 +1012,6 @@ class CapitalInvestRegionalSectorPageSerializer(
             allow_null=True,
             context=self.context
         )
-        print('\n\n\n\n\n\n [0]', serializer.data[0])
-        print('\n\n\n\n\n\n not[0]', serializer.data)
         return serializer.data
 
 

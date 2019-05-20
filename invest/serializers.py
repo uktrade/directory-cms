@@ -114,7 +114,7 @@ class SectorLandingPageGenericSerializer(
             instance,
             SectorPage,
             SectorPageSerializer
-    )
+        )
 
 
 class SetupGuidePageSerializer(BasePageSerializer):
