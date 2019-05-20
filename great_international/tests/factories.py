@@ -327,7 +327,9 @@ class InternationalCapitalInvestLandingPageFactory(
     region_card_two_summary = factory.fuzzy.FuzzyText(length=10)
     region_card_two_cta_text = factory.fuzzy.FuzzyText(length=10)
     region_card_two_pdf_document = factory.fuzzy.FuzzyText(length=10)
-    region_card_three_image = factory.SubFactory(wagtail_factories.ImageFactory)
+    region_card_three_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
     region_card_three_title = factory.fuzzy.FuzzyText(length=10)
     region_card_three_summary = factory.fuzzy.FuzzyText(length=10)
     region_card_three_cta_text = factory.fuzzy.FuzzyText(length=10)
@@ -457,7 +459,9 @@ class CapitalInvestOpportunityPageFactory(wagtail_factories.PageFactory):
     hero_title = factory.fuzzy.FuzzyText(length=10)
     opportunity_summary_intro = factory.fuzzy.FuzzyText(length=10)
     opportunity_summary_content = factory.fuzzy.FuzzyText(length=10)
-    opportunity_summary_image = factory.SubFactory(wagtail_factories.ImageFactory)
+    opportunity_summary_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
     location = factory.fuzzy.FuzzyText(length=10)
     project_promoter = factory.fuzzy.FuzzyText(length=10)
     scale = factory.fuzzy.FuzzyText(length=10)
