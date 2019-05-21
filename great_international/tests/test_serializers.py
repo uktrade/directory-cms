@@ -353,7 +353,7 @@ def test_capital_invest_regional_sector_page_gets_parent(
 
 
 @pytest.mark.django_db
-def test_capital_invest_region_page_has_statistics(rf):
+def test_capital_invest_landing_page_has_region_cards_in_list(rf):
     home_page = InternationalCapitalInvestLandingPageFactory(
         slug='some-slug',
         parent=None
