@@ -6,17 +6,14 @@ from great_international.serializers import (
     InternationalCuratedTopicLandingPageSerializer,
     InternationalGuideLandingPageSerializer,
     CapitalInvestRegionPageSerializer,
-    InternationalCapitalInvestLandingPageSerializer,
-    CapitalInvestRegionalSectorPageSerializer)
+    InternationalCapitalInvestLandingPageSerializer)
 from great_international.tests.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
     InternationalCuratedTopicLandingPageFactory,
     InternationalGuideLandingPageFactory,
     CapitalInvestRegionPageFactory,
-    InternationalCapitalInvestLandingPageFactory,
-    CapitalInvestOpportunityPageFactory,
-    CapitalInvestRegionalSectorPageFactory)
+    InternationalCapitalInvestLandingPageFactory)
 
 
 @pytest.mark.django_db
@@ -311,16 +308,15 @@ def test_capital_invest_region_page_has_statistics(rf):
 
 # @pytest.mark.django_db
 # def test_capital_invest_regional_sector_gets_added_related_page(root_page, rf):
-#
-#     added_related_pages = CapitalInvestOpportunityPageFactory(
+#     added_related_page = CapitalInvestOpportunityPageFactory(
 #         parent=root_page,
 #         slug='one'
 #     )
-#     print('\n\n\n\n added pages ', added_related_pages)
+#     print('\n\n\n\n added pages ', added_related_page)
 #     opportunity = CapitalInvestRegionalSectorPageFactory(
 #         parent=root_page,
 #         slug='some-slug',
-#         added_related_pages=added_related_pages
+#         added_related_pages=added_related_page
 #     )
 #     print('\n\n\n\n oppo ', opportunity)
 #     serializer = CapitalInvestRegionalSectorPageSerializer(
