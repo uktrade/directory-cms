@@ -15,7 +15,9 @@ from great_international.tests.factories import (
     InternationalGuideLandingPageFactory,
     CapitalInvestRegionPageFactory,
     InternationalCapitalInvestLandingPageFactory,
-    CapitalInvestRegionalSectorPageFactory)
+    CapitalInvestRegionalSectorPageFactory,
+    CapitalInvestOpportunityPageFactory,
+    CapitalInvestSectorRelatedPageSummaryFactory)
 
 
 @pytest.mark.django_db
@@ -307,30 +309,34 @@ def test_capital_invest_region_page_has_statistics(rf):
         assert 'heading' in statistic
         assert 'smallprint' in statistic
 
-#
-# @pytest.mark.django_db
-# def test_capital_invest_regional_sector_gets_added_related_page(
-#         root_page, rf
-# ):
-#
-#     opp = CapitalInvestOpportunityPageFactory(
-#         parent=root_page,
-#         slug='opp'
-#     )
-#
-#     sector_page = CapitalInvestRegionalSectorPageFactory(
-#         parent=root_page,
-#         slug='home-page',
-#         added_related_pages=[opp]
-#     )
-#
-#     serializer = CapitalInvestRegionalSectorPageSerializer(
-#         instance=sector_page,
-#         context={'request': rf.get('/')}
-#     )
-#
-#     print('\n\n\n\n serializer ', serializer.data)
-#     assert serializer.data['added_related_pages']['meta']['slug'] == 'opp'
+
+@pytest.mark.django_db
+def test_capital_invest_regional_sector_gets_added_related_page(
+        root_page, rf
+):
+    opp = CapitalInvestOpportunityPageFactory(
+        parent=root_page,
+        slug='opp'
+    )
+    print('\n\n\n\n\n opp ', opp)
+    opportunity = CapitalInvestSectorRelatedPageSummaryFactory(
+        parent=opp
+    )
+
+    print('\n\n\n\n\n opportunity ', opportunity)
+    sector_page = CapitalInvestRegionalSectorPageFactory(
+        parent=root_page,
+        slug='home-page',
+        added_related_pages=[opportunity]
+    )
+
+    serializer = CapitalInvestRegionalSectorPageSerializer(
+        instance=sector_page,
+        context={'request': rf.get('/')}
+    )
+
+    print('\n\n\n\n serializer ', serializer.data)
+    assert serializer.data['added_related_pages']['meta']['slug'] == 'opp'
 
 
 @pytest.mark.django_db
