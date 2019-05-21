@@ -181,6 +181,48 @@ class LocationStatisticProxyDataWrapper:
         )
 
 
+class RegionCardsProxyDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def image(self):
+        return getattr(
+            self.instance,
+            f'region_card_{self.position_number}_image'
+        )
+
+    @property
+    def title(self):
+        return getattr(
+            self.instance,
+            f'region_card_{self.position_number}_title'
+        )
+
+    @property
+    def summary(self):
+        return getattr(
+            self.instance,
+            f'region_card_{self.position_number}_summary'
+        )
+
+    @property
+    def cta_text(self):
+        return getattr(
+            self.instance,
+            f'region_card_{self.position_number}_cta_text'
+        )
+
+    @property
+    def pdf_document(self):
+        return getattr(
+            self.instance,
+            f'region_card_{self.position_number}_pdf_document'
+        )
+
+
 class SectionThreeSubsectionSerializer(serializers.Serializer):
     heading = serializers.CharField(max_length=255)
     teaser = serializers.CharField()
@@ -214,6 +256,14 @@ class LocationStatSerializer(serializers.Serializer):
     number = serializers.CharField(max_length=255)
     heading = serializers.CharField(max_length=255)
     smallprint = serializers.CharField(max_length=255)
+
+
+class RegionCardSerializer(serializers.Serializer):
+    image = wagtail_fields.ImageRenditionField('original')
+    title = serializers.CharField(max_length=255)
+    summary = serializers.CharField(max_length=255)
+    cta_text = serializers.CharField(max_length=255)
+    pdf_document = core_fields.DocumentURLField()
 
 
 class RelatedArticlePageSerializer(BasePageSerializer):
@@ -863,6 +913,19 @@ class InternationalCapitalInvestLandingPageSerializer(
     contact_section_title = serializers.CharField(max_length=255)
     contact_section_text = serializers.CharField(max_length=255)
     contact_section_cta_text = serializers.CharField(max_length=255)
+
+    region_cards = serializers.SerializerMethodField()
+
+    def get_region_cards(self, instance):
+        data = [
+            RegionCardsProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['one', 'two', 'three', 'four', 'five', 'six']
+        ]
+        serializer = RegionCardSerializer(data, many=True)
+        return serializer.data
 
 
 class CapitalInvestRegionPageSerializer(BasePageSerializer,

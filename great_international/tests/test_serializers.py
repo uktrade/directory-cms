@@ -312,21 +312,25 @@ def test_capital_invest_region_page_has_statistics(rf):
 # def test_capital_invest_regional_sector_gets_added_related_page(
 #         root_page, rf
 # ):
-#     related_page = CapitalInvestSectorRelatedPageSummaryFactory()
 #
-#     home_page = CapitalInvestRegionalSectorPageFactory(
+#     opp = CapitalInvestOpportunityPageFactory(
+#         parent=root_page,
+#         slug='opp'
+#     )
+#
+#     sector_page = CapitalInvestRegionalSectorPageFactory(
 #         parent=root_page,
 #         slug='home-page',
-#         added_related_pages=[related_page]
+#         added_related_pages=[opp]
 #     )
 #
 #     serializer = CapitalInvestRegionalSectorPageSerializer(
-#         instance=home_page,
+#         instance=sector_page,
 #         context={'request': rf.get('/')}
 #     )
 #
 #     print('\n\n\n\n serializer ', serializer.data)
-#     assert len(serializer.data['a']) == 1
+#     assert serializer.data['added_related_pages']['meta']['slug'] == 'opp'
 
 
 @pytest.mark.django_db
@@ -346,3 +350,24 @@ def test_capital_invest_regional_sector_page_gets_parent(
     )
 
     assert serializer.data['parent']['meta']['slug'] == 'page-slug'
+
+
+@pytest.mark.django_db
+def test_capital_invest_region_page_has_statistics(rf):
+    home_page = InternationalCapitalInvestLandingPageFactory(
+        slug='some-slug',
+        parent=None
+    )
+
+    serializer = InternationalCapitalInvestLandingPageSerializer(
+        instance=home_page,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['region_cards'][0]) == 5
+    for field in serializer.data['region_cards']:
+        assert 'image' in field
+        assert 'title' in field
+        assert 'summary' in field
+        assert 'cta_text' in field
+        assert 'pdf_document' in field
