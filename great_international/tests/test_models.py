@@ -80,6 +80,13 @@ def test_app_required_translatable_fields(model):
     assert model.get_required_translatable_fields() == []
 
 
+@pytest.mark.parametrize('model', [
+    models.CapitalInvestOpportunityListingPage,
+])
+def test_opp_listing_required_translatable_fields(model):
+    assert model.get_required_translatable_fields() == []
+
+
 @pytest.mark.django_db
 def test_set_slug():
     instance = models.GreatInternationalApp.objects.create(
