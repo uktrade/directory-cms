@@ -14,7 +14,6 @@ class SSORedirectUsersToRequestAccessViews:
     def process_request(self, request):
 
         user = request.user
-        profile = user.userprofile
 
         if not user.is_authenticated() or user.is_superuser:
             # allow the view to handle these
@@ -28,6 +27,8 @@ class SSORedirectUsersToRequestAccessViews:
         for url in self.ignore_admin_urls:
             if request.path == str(url):
                 return
+
+        profile = user.userprofile
 
         if profile.assignment_status == UserProfile.STATUS_CREATED:
             return redirect('wagtailusers_users:sso_request_access')

@@ -1,6 +1,7 @@
 import pytest
 
 from django.urls import reverse
+from django.contrib.auth.models import AnonymousUser
 
 from users.models import UserProfile
 from users.middleware import SSORedirectUsersToRequestAccessViews
@@ -16,7 +17,7 @@ class MockProfile:
 class MockUser:
     def __init__(
         self, authenticated=False, superuser=False,
-        assignment_status=None
+        assignment_status=None,
     ):
         self.authenticated = authenticated
         self.is_superuser = superuser
@@ -28,14 +29,14 @@ class MockUser:
 
 def test_process_request_returns_none_if_user_is_not_authenticated(rf):
     request = rf.get('/admin/')
-    request.user = MockUser(authenticated=False)
+    request.user = AnonymousUser()
     result = SSORedirectUsersToRequestAccessViews().process_request(request)
     assert result is None
 
 
 def test_process_request_returns_none_if_user_is_a_superuser(rf):
     request = rf.get('/admin/')
-    request.user = MockUser(authenticated=True, superuser=True)
+    request.user = MockUser(authenticated=True)
     result = SSORedirectUsersToRequestAccessViews().process_request(request)
     assert result is None
 
