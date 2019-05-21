@@ -5,16 +5,14 @@ from great_international.serializers import (
     InternationalCampaignPageSerializer, InternationalHomePageSerializer,
     InternationalCuratedTopicLandingPageSerializer,
     InternationalGuideLandingPageSerializer,
-    CapitalInvestRegionPageSerializer,
-    CapitalInvestRegionalSectorPageSerializer)
+    CapitalInvestRegionPageSerializer)
 from great_international.tests.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
     InternationalCuratedTopicLandingPageFactory,
     InternationalGuideLandingPageFactory,
     CapitalInvestRegionPageFactory,
-    InternationalCapitalInvestLandingPageFactory,
-    CapitalInvestRegionalSectorPageFactory)
+    InternationalCapitalInvestLandingPageFactory)
 
 
 @pytest.mark.django_db
