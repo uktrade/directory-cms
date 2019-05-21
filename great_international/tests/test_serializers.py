@@ -305,23 +305,28 @@ def test_capital_invest_region_page_has_statistics(rf):
         assert 'heading' in statistic
         assert 'smallprint' in statistic
 
-
+#
 # @pytest.mark.django_db
-# def test_capital_invest_regional_sector_gets_added_related_page(root_page, rf):
-#     added_related_page = CapitalInvestOpportunityPageFactory(
+# def test_capital_invest_regional_sector_gets_added_related_page(
+# root_page, rf):
+#     related_page = CapitalInvestOpportunityPageFactory(
 #         parent=root_page,
 #         slug='one'
 #     )
-#     print('\n\n\n\n added pages ', added_related_page)
-#     opportunity = CapitalInvestRegionalSectorPageFactory(
+#
+#     home_page = CapitalInvestRegionalSectorPageFactory(
 #         parent=root_page,
-#         slug='some-slug',
-#         added_related_pages=added_related_page
+#         slug='home-page',
+#         added_related_pages=related_page
 #     )
-#     print('\n\n\n\n oppo ', opportunity)
+#
 #     serializer = CapitalInvestRegionalSectorPageSerializer(
-#         instance=opportunity,
+#         instance=home_page,
 #         context={'request': rf.get('/')}
 #     )
-#     print('\n\n\n\n serializer ', serializer)
-#     assert len(serializer.data['added_related_page']) == 1
+#
+#     assert len(serializer.data['related_regions']) == 1
+#     for page in serializer.data['related_regions']:
+#         assert 'title' in page
+#         assert 'image' in page
+#         assert 'featured_description' in page
