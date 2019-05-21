@@ -1,18 +1,20 @@
 import pytest
 
-from great_international.models import CapitalInvestRegionPage
 from great_international.serializers import (
     InternationalSectorPageSerializer, InternationalArticlePageSerializer,
     InternationalCampaignPageSerializer, InternationalHomePageSerializer,
     InternationalCuratedTopicLandingPageSerializer,
     InternationalGuideLandingPageSerializer,
-    CapitalInvestRegionPageSerializer)
+    CapitalInvestRegionPageSerializer,
+    CapitalInvestRegionalSectorPageSerializer)
 from great_international.tests.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
     InternationalCuratedTopicLandingPageFactory,
     InternationalGuideLandingPageFactory,
-    CapitalInvestRegionPageFactory)
+    CapitalInvestRegionPageFactory,
+    InternationalCapitalInvestLandingPageFactory,
+    CapitalInvestRegionalSectorPageFactory)
 
 
 @pytest.mark.django_db
@@ -256,6 +258,56 @@ def test_guide_landing_page_serializer_guide_list(root_page, image, rf):
 
 
 @pytest.mark.django_db
+def test_capital_invest_landing_page_related_regions(root_page, rf):
+    related_region_one = InternationalCapitalInvestLandingPageFactory(
+        parent=root_page,
+        slug='one'
+    )
+    related_region_two = InternationalCapitalInvestLandingPageFactory(
+        parent=root_page,
+        slug='two'
+    )
+    related_region_three = InternationalCapitalInvestLandingPageFactory(
+        parent=root_page,
+        slug='three'
+    )
+    related_region_four = InternationalCapitalInvestLandingPageFactory(
+        parent=root_page,
+        slug='four'
+    )
+    related_region_five = InternationalCapitalInvestLandingPageFactory(
+        parent=root_page,
+        slug='five'
+    )
+    related_region_six = InternationalCapitalInvestLandingPageFactory(
+        parent=root_page,
+        slug='six'
+    )
+
+    home_page = InternationalHomePageFactory(
+        parent=root_page,
+        slug='home-page',
+        related_region_one=related_region_one,
+        related_region_two=related_region_two,
+        related_region_three=related_region_three,
+        related_region_four=related_region_four,
+        related_region_five=related_region_five,
+        related_region_six=related_region_six,
+    )
+
+    serializer = InternationalHomePageSerializer(
+        instance=home_page,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['related_regions']) == 6
+    for page in serializer.data['related_regions']:
+        assert 'title' in page
+        assert 'image' in page
+        assert 'featured_description' in page
+
+
+@pytest.mark.django_db
 def test_capital_invest_region_page_has_statistics(rf):
     region = CapitalInvestRegionPageFactory(
         slug='region-slug',
@@ -269,11 +321,11 @@ def test_capital_invest_region_page_has_statistics(rf):
 
     assert len(serializer.data['location_stats']) == 4
     assert len(serializer.data['economics_stats']) == 4
-    for statistic in serializer.data['location_statistics']:
+    for statistic in serializer.data['location_stats']:
         assert 'number' in statistic
         assert 'heading' in statistic
         assert 'smallprint' in statistic
-    for statistic in serializer.data['economics_statistics']:
+    for statistic in serializer.data['economics_stats']:
         assert 'number' in statistic
         assert 'heading' in statistic
         assert 'smallprint' in statistic
