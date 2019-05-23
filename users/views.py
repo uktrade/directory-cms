@@ -172,7 +172,7 @@ class SSORequestAccessView(EditView):
     permission_required = None
     error_message = 'There was a problem with your submission'
     template_name = "sso/request_access.html"
-    success_url = reverse_lazy('wagtailusers_users:sso_request_access_success')
+    success_url = reverse_lazy('sso:request_access_success')
 
     def dispatch(self, request):
         self.get_object()
