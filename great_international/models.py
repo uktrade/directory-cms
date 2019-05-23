@@ -1937,7 +1937,9 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         related_name='+'
     )
 
-    homes_in_england_section_title = models.CharField(max_length=255, blank=True)
+    homes_in_england_section_title = models.CharField(
+        max_length=255, blank=True
+    )
     homes_in_england_section_content = MarkdownField(blank=True)
     homes_in_england_section_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -1945,7 +1947,10 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+', blank=True
     )
-    homes_in_england_section_cta_text = models.CharField(max_length=255, blank=True)
+    homes_in_england_section_cta_text = models.CharField(
+        max_length=255,
+        blank=True
+    )
     homes_in_england_section_pdf_document = models.ForeignKey(
         'wagtaildocs.Document',
         null=True,
@@ -2307,7 +2312,10 @@ class CapitalInvestRegionPage(BasePage):
         blank=True
     )
 
-    property_and_infrastructure_section_title = models.CharField(max_length=255, blank=True)
+    property_and_infrastructure_section_title = models.CharField(
+        max_length=255,
+        blank=True
+    )
     property_and_infrastructure_section_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,

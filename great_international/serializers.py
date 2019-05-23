@@ -895,7 +895,9 @@ class InternationalCapitalInvestLandingPageSerializer(
 
     homes_in_england_section_title = serializers.CharField(max_length=255)
     homes_in_england_section_content = core_fields.MarkdownToHTMLField()
-    homes_in_england_section_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    homes_in_england_section_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360'
+    )
     homes_in_england_section_cta_text = serializers.CharField(max_length=255)
     homes_in_england_section_pdf_document = core_fields.DocumentURLField()
 
@@ -1007,9 +1009,13 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer,
     location_stat_4_heading = serializers.CharField(max_length=255)
     location_stat_4_smallprint = serializers.CharField(max_length=255)
 
-    property_and_infrastructure_section_title = serializers.CharField(max_length=255)
-    property_and_infrastructure_section_image = wagtail_fields.ImageRenditionField('original')
-    property_and_infrastructure_section_content = core_fields.MarkdownToHTMLField(max_length=255)
+    property_and_infrastructure_section_title = serializers.CharField(
+        max_length=255
+    )
+    property_and_infrastructure_section_image = \
+        wagtail_fields.ImageRenditionField('original')
+    property_and_infrastructure_section_content = \
+        core_fields.MarkdownToHTMLField(max_length=255)
 
     case_study_image = wagtail_fields.ImageRenditionField('original')
     case_study_title = serializers.CharField(max_length=255)
