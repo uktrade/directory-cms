@@ -2637,11 +2637,53 @@ class CapitalInvestOpportunityPage(BasePage):
         blank=True
     )
 
+    location_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
     location = models.CharField(max_length=255, blank=True)
+    project_promoter_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
     project_promoter = models.CharField(max_length=255, blank=True)
+    scale_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
     scale = models.CharField(max_length=255, blank=True)
+    programme_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
     programme = models.CharField(max_length=255, blank=True)
+    investment_type_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
     investment_type = models.CharField(max_length=255, blank=True)
+    planning_status_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
     planning_status = models.CharField(max_length=255, blank=True)
 
     project_background_title = models.CharField(max_length=255, blank=True)
@@ -2722,14 +2764,32 @@ class CapitalInvestOpportunityPage(BasePage):
             heading="Opportunity Details",
             children=[
                 FieldRowPanel([
-                    FieldPanel('location'),
-                    FieldPanel('project_promoter'),
-                    FieldPanel('scale'),
+                    MultiFieldPanel([
+                        ImageChooserPanel('location_icon'),
+                        FieldPanel('location'),
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('project_promoter_icon'),
+                        FieldPanel('project_promoter'),
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('scale_icon'),
+                        FieldPanel('scale'),
+                    ]),
                 ]),
                 FieldRowPanel([
-                    FieldPanel('programme'),
-                    FieldPanel('investment_type'),
-                    FieldPanel('planning_status'),
+                    MultiFieldPanel([
+                        ImageChooserPanel('programme_icon'),
+                        FieldPanel('programme'),
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('investment_type_icon'),
+                        FieldPanel('investment_type'),
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('planning_status_icon'),
+                        FieldPanel('planning_status'),
+                    ]),
                 ]),
             ],
         ),

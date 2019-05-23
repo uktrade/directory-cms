@@ -469,11 +469,17 @@ class CapitalInvestOpportunityPageTranslationOptions(
         'opportunity_summary_content',
         'opportunity_summary_image',
 
+        'location_icon',
         'location',
+        'project_promoter_icon',
         'project_promoter',
+        'scale_icon',
         'scale',
+        'programme_icon',
         'programme',
+        'investment_type_icon',
         'investment_type',
+        'planning_status_icon',
         'planning_status',
 
         'project_background_title',

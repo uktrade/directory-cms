@@ -1092,11 +1092,34 @@ class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
     opportunity_summary_image = wagtail_fields.ImageRenditionField(
         'original')
 
+    location_icon = wagtail_fields.ImageRenditionField(
+        'fill-640x360'
+    )
     location = serializers.CharField(max_length=255)
+
+    project_promoter_icon = wagtail_fields.ImageRenditionField(
+        'fill-640x360'
+    )
     project_promoter = serializers.CharField(max_length=255)
+
+    scale_icon = wagtail_fields.ImageRenditionField(
+        'fill-640x360'
+    )
     scale = serializers.CharField(max_length=255)
+
+    programme_icon = wagtail_fields.ImageRenditionField(
+        'fill-640x360'
+    )
     programme = serializers.CharField(max_length=255)
+
+    investment_type_icon = wagtail_fields.ImageRenditionField(
+        'fill-640x360'
+    )
     investment_type = serializers.CharField(max_length=255)
+
+    planning_status_icon = wagtail_fields.ImageRenditionField(
+        'fill-640x360'
+    )
     planning_status = serializers.CharField(max_length=255)
 
     project_background_title = serializers.CharField(max_length=255)
