@@ -54,3 +54,14 @@ class ChildPagesSerializerHelper(serializers.Serializer):
             context=self.context
         )
         return serializer.data
+
+
+class ParentPageSerializerHelper(serializers.Serializer):
+    def get_parent_page_data_for(self, instance, serializer):
+        queryset = instance.get_parent().specific
+        serializer = serializer(
+            queryset,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data

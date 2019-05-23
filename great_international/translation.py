@@ -263,3 +263,257 @@ class InternationalEUExitFormSuccessPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = []
+
+
+@register(models.InternationalCapitalInvestLandingPage)
+class InternationalCapitalInvestLandingPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'hero_title',
+        'hero_image',
+        'hero_subheading',
+        'hero_subtitle',
+        'hero_cta_text',
+
+        'reason_to_invest_section_title',
+        'reason_to_invest_section_intro',
+        'reason_to_invest_section_content',
+        'reason_to_invest_section_image',
+
+        'region_ops_section_title',
+        'region_ops_section_intro',
+
+        'related_region_one',
+        'related_region_two',
+        'related_region_three',
+        'related_region_four',
+        'related_region_five',
+        'related_region_six',
+
+        'region_card_one_image',
+        'region_card_one_title',
+        'region_card_one_summary',
+        'region_card_one_cta_text',
+        'region_card_one_pdf_document',
+
+        'region_card_two_image',
+        'region_card_two_title',
+        'region_card_two_summary',
+        'region_card_two_cta_text',
+        'region_card_two_pdf_document',
+
+        'region_card_three_image',
+        'region_card_three_title',
+        'region_card_three_summary',
+        'region_card_three_cta_text',
+        'region_card_three_pdf_document',
+
+        'region_card_four_image',
+        'region_card_four_title',
+        'region_card_four_summary',
+        'region_card_four_cta_text',
+        'region_card_four_pdf_document',
+
+        'region_card_five_image',
+        'region_card_five_title',
+        'region_card_five_summary',
+        'region_card_five_cta_text',
+        'region_card_five_pdf_document',
+
+        'region_card_six_image',
+        'region_card_six_title',
+        'region_card_six_summary',
+        'region_card_six_cta_text',
+        'region_card_six_pdf_document',
+
+        'energy_sector_title',
+        'energy_sector_content',
+        'energy_sector_image',
+        'energy_sector_cta_text',
+        'energy_sector_pdf_document',
+
+        'homes_in_england_section_title',
+        'homes_in_england_section_content',
+        'homes_in_england_section_image',
+        'homes_in_england_section_cta_text',
+        'homes_in_england_section_pdf_document',
+
+        'how_we_help_title',
+        'how_we_help_intro',
+        'how_we_help_one_icon',
+        'how_we_help_one_text',
+        'how_we_help_two_icon',
+        'how_we_help_two_text',
+        'how_we_help_three_icon',
+        'how_we_help_three_text',
+        'how_we_help_four_icon',
+        'how_we_help_four_text',
+
+        'contact_section_title',
+        'contact_section_text',
+        'contact_section_cta_text',
+    )
+
+
+@register(models.CapitalInvestRegionPage)
+class CapitalInvestRegionPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'hero_title',
+        'breadcrumbs_label',
+        'hero_image',
+
+        'featured_description',
+
+        'region_summary_section_image',
+        'region_summary_section_intro',
+        'region_summary_section_content',
+
+        'investment_opps_title',
+        'investment_opps_intro',
+
+        'economics_data_title',
+        'economics_stat_1_number',
+        'economics_stat_1_heading',
+        'economics_stat_1_smallprint',
+
+        'economics_stat_2_number',
+        'economics_stat_2_heading',
+        'economics_stat_2_smallprint',
+
+        'economics_stat_3_number',
+        'economics_stat_3_heading',
+        'economics_stat_3_smallprint',
+
+        'economics_stat_4_number',
+        'economics_stat_4_heading',
+        'economics_stat_4_smallprint',
+
+        'location_data_title',
+        'location_stat_1_number',
+        'location_stat_1_heading',
+        'location_stat_1_smallprint',
+
+        'location_stat_2_number',
+        'location_stat_2_heading',
+        'location_stat_2_smallprint',
+
+        'location_stat_3_number',
+        'location_stat_3_heading',
+        'location_stat_3_smallprint',
+
+        'location_stat_4_number',
+        'location_stat_4_heading',
+        'location_stat_4_smallprint',
+
+        'property_and_infrastructure_section_title',
+        'property_and_infrastructure_section_image',
+        'property_and_infrastructure_section_content',
+
+        'case_study_image',
+        'case_study_title',
+        'case_study_text',
+        'case_study_cta_text',
+        'case_study_cta_link',
+
+        'next_steps_title',
+        'next_steps_intro',
+        'invest_cta_text',
+        'buy_cta_text',
+    )
+
+
+@register(models.CapitalInvestRegionalSectorPage)
+class CapitalInvestRegionalSectorPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'hero_image',
+        'hero_title',
+        'featured_description',
+
+        'sector_summary_intro',
+        'sector_summary_content',
+        'sector_summary_image',
+
+        'investment_opportunities_title',
+
+        'next_steps_title',
+        'next_steps_intro',
+
+        'invest_cta_text',
+        'buy_cta_text',
+
+    )
+
+
+@register(models.CapitalInvestOpportunityListingPage)
+class CapitalInvestOpportunityListingPageTranslationOptions(
+        BaseTranslationOptions):
+    fields = []
+
+
+@register(models.CapitalInvestOpportunityPage)
+class CapitalInvestOpportunityPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'hero_image',
+        'hero_title',
+
+        'opportunity_summary_intro',
+        'opportunity_summary_content',
+        'opportunity_summary_image',
+
+        'location_icon',
+        'location',
+        'project_promoter_icon',
+        'project_promoter',
+        'scale_icon',
+        'scale',
+        'sector_icon',
+        'sector',
+        'investment_type_icon',
+        'investment_type',
+        'planning_status_icon',
+        'planning_status',
+
+        'project_background_title',
+        'project_background_intro',
+        'project_description_title',
+        'project_description_content',
+        'project_promoter_title',
+        'project_promoter_content',
+        'project_image',
+
+        'case_study_image',
+        'case_study_title',
+        'case_study_text',
+        'case_study_cta_text',
+        'case_study_cta_link',
+
+        'similar_projects_title',
+        'related_page_one',
+        'related_page_two',
+        'related_page_three',
+        'similar_projects_cta_text',
+        'similar_projects_cta_link',
+
+        'next_steps_title',
+        'next_steps_intro',
+
+        'invest_cta_text',
+        'buy_cta_text',
+    )
+
+
+@register(models.SectorRelatedOpportunities)
+class SectorRelatedOpportunitiesSerializer(
+        BaseTranslationOptions):
+    fields = (
+        'page',
+    )
