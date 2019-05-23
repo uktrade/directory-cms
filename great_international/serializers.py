@@ -1,3 +1,4 @@
+import ipdb as ipdb
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
 
@@ -329,28 +330,6 @@ MODEL_TO_SERIALIZER_MAPPING = {
         CapitalInvestOpportunityPage:
         RelatedCapitalInvestOpportunityPageSerializer,
     }
-
-
-class PageWithRelatedRegionPagesSerializer(serializers.Serializer):
-    related_regions = serializers.SerializerMethodField()
-
-    def get_related_regions(self, obj):
-        serialized = []
-        items = [
-            obj.related_region_one,
-            obj.related_region_two,
-            obj.related_region_three,
-            obj.related_region_four,
-            obj.related_region_five,
-            obj.related_region_six,
-        ]
-        for related_region in items:
-            if not related_region:
-                continue
-            serializer = RelatedCapitalInvestPageSerializer(
-                related_region.specific)
-            serialized.append(serializer.data)
-        return serialized
 
 
 class PageWithRelatedPagesSerializer(BasePageSerializer):
@@ -828,9 +807,7 @@ class InternationalEUExitFormSuccessPageSerializer(BasePageSerializer):
     next_body_text = serializers.CharField()
 
 
-class InternationalCapitalInvestLandingPageSerializer(
-                                        BasePageSerializer,
-                                        PageWithRelatedRegionPagesSerializer):
+class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
 
     hero_title = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
@@ -928,6 +905,21 @@ class InternationalCapitalInvestLandingPageSerializer(
         ]
         serializer = RegionCardSerializer(data, many=True)
         return serializer.data
+
+    related_regions = serializers.SerializerMethodField()
+
+    def get_related_regions(self, obj):
+        items = [
+            obj.related_region_one,
+            obj.related_region_two,
+            obj.related_region_three,
+            obj.related_region_four,
+            obj.related_region_five,
+            obj.related_region_six,
+        ]
+        ipdb.set_trace()
+        return [RelatedCapitalInvestPageSerializer(region.specific).data
+                for region in items if region is not None]
 
 
 class CapitalInvestRegionPageSerializer(BasePageSerializer,
