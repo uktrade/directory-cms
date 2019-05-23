@@ -213,7 +213,7 @@ def test_edit_user_view_marks_user_as_approved_if_added_to_group(
     expected_call_args = dict(
         request=response.wsgi_request,
         user_email=user.email,
-        user_name=user.get_full_name(),
+        user_name=user.first_name,
         reviewer_name=admin_user.get_full_name(),
     )
     mocked_method.assert_called_with(**expected_call_args)
@@ -421,7 +421,7 @@ def test_ssorequestaccessview_post_with_complete_data(
     expected_call_args = dict(
         request=response.wsgi_request,
         team_leader_email=team_leader.email,
-        team_leader_name=team_leader.get_full_name(),
+        team_leader_name=team_leader.first_name,
         user_id=admin_user.id,
         user_name=admin_user.get_full_name(),
         user_email=admin_user.email,
