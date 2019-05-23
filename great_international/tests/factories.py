@@ -355,3 +355,14 @@ class CapitalInvestSectorRelatedPageSummaryFactory(
         model = models.CapitalInvestSectorRelatedPageSummary
 
     parent = None
+
+
+class CapitalInvestOpportunityListingPageFactory(
+    wagtail_factories.PageFactory
+):
+    class Meta:
+        model = models.CapitalInvestOpportunityListingPage
+
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None
