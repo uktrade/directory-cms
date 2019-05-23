@@ -1158,20 +1158,5 @@ class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
     buy_cta_text = serializers.CharField(max_length=255)
 
 
-class MinimalPageWithParentSerializer(BasePageSerializer,
-                                      ParentPageSerializerHelper):
-
-    hero_title = serializers.CharField(max_length=255)
-
-    parent = serializers.SerializerMethodField()
-
-    def get_parent(self, obj):
-        parent = self.get_parent_page(
-            obj,
-            MinimalPageSerializer
-        )
-        return parent
-
-
 class MinimalPageSerializer(BasePageSerializer):
     hero_title = serializers.CharField(max_length=255)
