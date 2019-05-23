@@ -2468,8 +2468,8 @@ class CapitalInvestRegionPage(BasePage):
     )
 
 
-class AddedRelatedPageSummary(models.Model):
-    added_related_pages = models.ForeignKey(
+class RelatedOpportunity(models.Model):
+    opportunity = models.ForeignKey(
         'great_international.CapitalInvestOpportunityPage',
         null=True,
         blank=True,
@@ -2479,7 +2479,7 @@ class AddedRelatedPageSummary(models.Model):
 
     panels = [
         PageChooserPanel(
-            'added_related_pages',
+            'opportunity',
             [
                 'great_international.'
                 'CapitalInvestOpportunityPage'
@@ -2490,12 +2490,11 @@ class AddedRelatedPageSummary(models.Model):
         abstract = True
 
 
-class CapitalInvestSectorRelatedPageSummary(Orderable,
-                                            AddedRelatedPageSummary):
+class SectorRelatedOpportunities(Orderable, RelatedOpportunity):
     page = ParentalKey(
         'great_international.CapitalInvestRegionalSectorPage',
         on_delete=models.CASCADE,
-        related_name='added_related_pages',
+        related_name='added_opportunities',
         blank=True,
         null=True,
     )
@@ -2567,7 +2566,10 @@ class CapitalInvestRegionalSectorPage(BasePage):
             heading="Investment opportunities",
             children=[
                 FieldPanel('investment_opportunities_title'),
-                InlinePanel('added_related_pages', label="Related Pages"),
+                InlinePanel(
+                    'added_opportunities',
+                    label="Related Opportunities"
+                ),
             ],
         ),
         MultiFieldPanel(

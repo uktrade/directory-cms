@@ -19,7 +19,7 @@ from great_international.tests.factories import (
     CapitalInvestOpportunityPageFactory,
     CapitalInvestOpportunityListingPageFactory)
 
-from great_international.models import CapitalInvestSectorRelatedPageSummary
+from great_international.models import SectorRelatedOpportunities
 
 
 @pytest.mark.django_db
@@ -313,9 +313,7 @@ def test_capital_invest_region_page_has_statistics(rf):
 
 
 @pytest.mark.django_db
-def test_capital_invest_regional_sector_gets_added_related_page(
-        rf
-):
+def test_capital_invest_regional_sector_gets_added_opportunities(rf):
     opportunity_listing_page = CapitalInvestOpportunityListingPageFactory(
         parent=None,
         slug='listing-opps'
@@ -325,8 +323,8 @@ def test_capital_invest_regional_sector_gets_added_related_page(
         slug='opp'
     )
 
-    related_page = CapitalInvestSectorRelatedPageSummary(
-        added_related_pages=opportunity
+    related_page = SectorRelatedOpportunities(
+        opportunity=opportunity
     )
     region_page = CapitalInvestRegionPageFactory(
         parent=None,
@@ -335,7 +333,7 @@ def test_capital_invest_regional_sector_gets_added_related_page(
     sector_page = CapitalInvestRegionalSectorPageFactory(
         parent=region_page,
         slug='sector',
-        added_related_pages=[related_page]
+        added_opportunities=[related_page]
     )
 
     serializer = CapitalInvestRegionalSectorPageSerializer(
@@ -343,8 +341,8 @@ def test_capital_invest_regional_sector_gets_added_related_page(
         context={'request': rf.get('/')}
     )
 
-    for page in serializer.data['added_related_pages']:
-        assert page['added_related_page']['meta']['slug'] == 'opp'
+    for page in serializer.data['added_opportunities']:
+        assert page['opportunity']['meta']['slug'] == 'opp'
 
 
 @pytest.mark.django_db

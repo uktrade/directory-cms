@@ -347,16 +347,6 @@ class CapitalInvestOpportunityPageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
-class CapitalInvestSectorRelatedPageSummaryFactory(
-    wagtail_factories.PageFactory
-):
-
-    class Meta:
-        model = models.CapitalInvestSectorRelatedPageSummary
-
-    parent = None
-
-
 class CapitalInvestOpportunityListingPageFactory(
     wagtail_factories.PageFactory
 ):

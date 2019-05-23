@@ -308,17 +308,17 @@ class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
         max_length=255)
 
 
-class AddedRelatedPageSummarySerializer(serializers.Serializer):
-    added_related_page = serializers.SerializerMethodField()
+class RelatedOpportunitySerializer(serializers.Serializer):
+    opportunity = serializers.SerializerMethodField()
 
-    def get_added_related_page(self, obj):
+    def get_opportunity(self, obj):
         serialized = []
-        added_related_page = obj.added_related_pages
+        opp = obj.opportunity
 
-        if not added_related_page:
+        if not opp:
             return serialized
         serializer = RelatedCapitalInvestOpportunityPageSerializer(
-            added_related_page.specific)
+            opp.specific)
         serialized.append(serializer.data)
         return serialized[0]
 
@@ -1072,11 +1072,11 @@ class CapitalInvestRegionalSectorPageSerializer(
         )
         return parent
 
-    added_related_pages = serializers.SerializerMethodField()
+    added_opportunities = serializers.SerializerMethodField()
 
-    def get_added_related_pages(self, instance):
-        serializer = AddedRelatedPageSummarySerializer(
-            instance.added_related_pages.all(),
+    def get_added_opportunities(self, instance):
+        serializer = RelatedOpportunitySerializer(
+            instance.added_opportunities.all(),
             many=True,
             allow_null=True,
             context=self.context

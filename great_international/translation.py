@@ -511,8 +511,8 @@ class CapitalInvestOpportunityPageTranslationOptions(
     )
 
 
-@register(models.CapitalInvestSectorRelatedPageSummary)
-class CapitalInvestSectorRelatedPageSummarySerializer(
+@register(models.SectorRelatedOpportunities)
+class SectorRelatedOpportunitiesSerializer(
         BaseTranslationOptions):
     fields = (
         'page',
