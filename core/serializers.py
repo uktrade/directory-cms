@@ -57,7 +57,7 @@ class ChildPagesSerializerHelper(serializers.Serializer):
 
 
 class ParentPageSerializerHelper(serializers.Serializer):
-    def get_parent_page(self, instance, serializer):
+    def get_parent_page_data_for(self, instance, serializer):
         queryset = instance.get_parent().specific
         serializer = serializer(
             queryset,

@@ -1066,7 +1066,7 @@ class CapitalInvestRegionalSectorPageSerializer(
     parent = serializers.SerializerMethodField()
 
     def get_parent(self, obj):
-        parent = self.get_parent_page(
+        parent = self.get_parent_page_data_for(
             obj,
             MinimalPageSerializer
         )
