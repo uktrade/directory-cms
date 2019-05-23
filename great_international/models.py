@@ -2666,14 +2666,14 @@ class CapitalInvestOpportunityPage(BasePage):
         blank=True
     )
     scale = models.CharField(max_length=255, blank=True)
-    programme_icon = models.ForeignKey(
+    sector_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         on_delete=models.SET_NULL,
         related_name='+',
         blank=True
     )
-    programme = models.CharField(max_length=255, blank=True)
+    sector = models.CharField(max_length=255, blank=True)
     investment_type_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -2784,8 +2784,8 @@ class CapitalInvestOpportunityPage(BasePage):
                 ]),
                 FieldRowPanel([
                     MultiFieldPanel([
-                        ImageChooserPanel('programme_icon'),
-                        FieldPanel('programme'),
+                        ImageChooserPanel('sector_icon'),
+                        FieldPanel('sector'),
                     ]),
                     MultiFieldPanel([
                         ImageChooserPanel('investment_type_icon'),
