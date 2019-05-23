@@ -333,11 +333,11 @@ class InternationalCapitalInvestLandingPageTranslationOptions(
         'energy_sector_cta_text',
         'energy_sector_pdf_document',
 
-        'section_title',
-        'section_content',
-        'section_image',
-        'section_cta_text',
-        'section_pdf_document',
+        'homes_in_england_section_title',
+        'homes_in_england_section_content',
+        'homes_in_england_section_image',
+        'homes_in_england_section_cta_text',
+        'homes_in_england_section_pdf_document',
 
         'how_we_help_title',
         'how_we_help_intro',
@@ -408,9 +408,9 @@ class CapitalInvestRegionPageTranslationOptions(
         'location_stat_4_heading',
         'location_stat_4_smallprint',
 
-        'section_title',
-        'section_image',
-        'section_content',
+        'property_and_infrastructure_section_title',
+        'property_and_infrastructure_section_image',
+        'property_and_infrastructure_section_content',
 
         'case_study_image',
         'case_study_title',

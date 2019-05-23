@@ -1937,16 +1937,16 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         related_name='+'
     )
 
-    section_title = models.CharField(max_length=255, blank=True)
-    section_content = MarkdownField(blank=True)
-    section_image = models.ForeignKey(
+    homes_in_england_section_title = models.CharField(max_length=255, blank=True)
+    homes_in_england_section_content = MarkdownField(blank=True)
+    homes_in_england_section_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         on_delete=models.SET_NULL,
         related_name='+', blank=True
     )
-    section_cta_text = models.CharField(max_length=255, blank=True)
-    section_pdf_document = models.ForeignKey(
+    homes_in_england_section_cta_text = models.CharField(max_length=255, blank=True)
+    homes_in_england_section_pdf_document = models.ForeignKey(
         'wagtaildocs.Document',
         null=True,
         blank=True,
@@ -2136,14 +2136,11 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
             heading="Extra Featured Section",
             classname='collapsible collapsed',
             children=[
-                HelpPanel('This is an extra section that can be used for '
-                          'another featured industry, '
-                          'for example \'Homes in England\' '),
-                FieldPanel('section_title'),
-                FieldPanel('section_content'),
-                ImageChooserPanel('section_image'),
-                FieldPanel('section_cta_text'),
-                DocumentChooserPanel('section_pdf_document'),
+                FieldPanel('homes_in_england_section_title'),
+                FieldPanel('homes_in_england_section_content'),
+                ImageChooserPanel('homes_in_england_section_image'),
+                FieldPanel('homes_in_england_section_cta_text'),
+                DocumentChooserPanel('homes_in_england_section_pdf_document'),
             ]
         ),
         MultiFieldPanel(
@@ -2310,15 +2307,15 @@ class CapitalInvestRegionPage(BasePage):
         blank=True
     )
 
-    section_title = models.CharField(max_length=255, blank=True)
-    section_image = models.ForeignKey(
+    property_and_infrastructure_section_title = models.CharField(max_length=255, blank=True)
+    property_and_infrastructure_section_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         on_delete=models.SET_NULL,
         related_name='+',
         blank=True
     )
-    section_content = MarkdownField(blank=True)
+    property_and_infrastructure_section_content = MarkdownField(blank=True)
 
     case_study_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -2421,11 +2418,11 @@ class CapitalInvestRegionPage(BasePage):
             ],
         ),
         MultiFieldPanel(
-            heading="Extra optional section",
+            heading="Extra optional Property and Infrastructure section",
             children=[
-                ImageChooserPanel('section_image'),
-                FieldPanel('section_title'),
-                FieldPanel('section_content'),
+                ImageChooserPanel('property_and_infrastructure_section_image'),
+                FieldPanel('property_and_infrastructure_section_title'),
+                FieldPanel('property_and_infrastructure_section_content'),
             ],
         ),
         MultiFieldPanel(
