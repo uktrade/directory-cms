@@ -16,12 +16,10 @@ from great_international.tests.factories import (
     CapitalInvestRegionPageFactory,
     InternationalCapitalInvestLandingPageFactory,
     CapitalInvestRegionalSectorPageFactory,
-    CapitalInvestOpportunityPageFactory,
-    CapitalInvestSectorRelatedPageSummaryFactory,
+    CapitalInvestOpportunityPageFactory,,
     CapitalInvestOpportunityListingPageFactory)
 
-from great_international.models import CapitalInvestSectorRelatedPageSummary, \
-    CapitalInvestOpportunityListingPage
+from great_international.models import CapitalInvestSectorRelatedPageSummary
 
 
 @pytest.mark.django_db
