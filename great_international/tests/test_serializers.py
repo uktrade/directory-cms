@@ -343,7 +343,6 @@ def test_capital_invest_regional_sector_gets_added_related_page(
         context={'request': rf.get('/')}
     )
 
-    print('\n\n\n serializer.data in the test => ', serializer.data['added_related_pages'])
     for page in serializer.data['added_related_pages']:
         assert page['added_related_page']['meta']['slug'] == 'opp'
 
