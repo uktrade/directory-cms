@@ -7,6 +7,7 @@
 - [CMS-1556] Fixed copy upstream not working for pages that have the same slug but exist under different apps
 - [CMS-1578] Fixed issue with `SSORedirectUsersToRequestAccessViews` middleware that caused an `AttributeError` to be raised when a users was not authenticated
 - [CMS-1423] Updated SSO notifications to use the user's first name in the greeting, instead of the full name
+- [CMS-1419] Fixed 'too_many_redirects' when logging in via SSO
 
 
 **Implemented enhancements:**

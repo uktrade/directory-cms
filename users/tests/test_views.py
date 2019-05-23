@@ -293,7 +293,7 @@ def test_force_staff_sso(client):
 def test_ssorequestaccessview_responds_based_on_assignment_status(
     admin_client, admin_user, assignment_status, expected_status_code
 ):
-    url = reverse('wagtailusers_users:sso_request_access')
+    url = reverse('sso:request_access')
     profile = admin_user.userprofile
     profile.assignment_status = assignment_status
     profile.save()
@@ -305,7 +305,7 @@ def test_ssorequestaccessview_responds_based_on_assignment_status(
 def test_ssorequestaccessview_shows_unlimited_visibilty_groups_only(
     admin_client, groups_with_info
 ):
-    url = reverse('wagtailusers_users:sso_request_access')
+    url = reverse('sso:request_access')
 
     # Visbility is set to 'unrestricted' for all groups in `groups_with_info`,
     # so choices should reflect that by default
@@ -333,7 +333,7 @@ def test_ssorequestaccessview_shows_unlimited_visibilty_groups_only(
 def test_ssorequestaccessview_with_no_team_leaders_group(admin_client):
     # If no 'team leaders group' has been designated, the 'team_leaders'
     # field should only have a 'blank' option
-    url = reverse('wagtailusers_users:sso_request_access')
+    url = reverse('sso:request_access')
     response = admin_client.get(url)
     team_leader_field = response.context['form']['team_leader'].field
     assert tuple(team_leader_field.choices) == (BLANK_CHOICE,)
@@ -345,7 +345,7 @@ def test_ssorequestaccessview_with_team_leaders_group_but_no_members(
 ):
     # If the designated 'team leaders group' has no members, the 'team_leaders'
     # field should only have a 'blank' option
-    url = reverse('wagtailusers_users:sso_request_access')
+    url = reverse('sso:request_access')
     response = admin_client.get(url)
     team_leader_field = response.context['form']['team_leader'].field
     assert team_leaders_group.user_set.all().exists() is False
@@ -356,7 +356,7 @@ def test_ssorequestaccessview_with_team_leaders_group_but_no_members(
 def test_ssorequestaccessview_with_team_leaders(
     admin_client, team_leaders_group, team_leaders
 ):
-    url = reverse('wagtailusers_users:sso_request_access')
+    url = reverse('sso:request_access')
 
     # When team leaders are defined, they will appear as choices
     # for the 'team_leaders' field
@@ -377,7 +377,7 @@ def test_ssorequestaccessview_with_team_leaders(
 def test_ssorequestaccessview_fails_validation_if_form_incomplete(
     admin_client, groups_with_info, team_leaders
 ):
-    url = reverse('wagtailusers_users:sso_request_access')
+    url = reverse('sso:request_access')
     response = admin_client.post(url, data={})
 
     # Should still be on the same view
@@ -400,7 +400,7 @@ def test_ssorequestaccessview_post_with_complete_data(
         autospec=True
     ) as mocked_method:
         response = admin_client.post(
-            reverse('wagtailusers_users:sso_request_access'),
+            reverse('sso:request_access'),
             data={
                 'self_assigned_group': group.id,
                 'team_leader': team_leader.id,
@@ -408,7 +408,7 @@ def test_ssorequestaccessview_post_with_complete_data(
         )
 
     # Should be redirected to the success url
-    success_url = reverse('wagtailusers_users:sso_request_access_success')
+    success_url = reverse('sso:request_access_success')
     assert response.url == success_url
 
     # The UserProfile for `admin_user` should have been updated
@@ -432,8 +432,8 @@ def test_ssorequestaccessview_post_with_complete_data(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize('url', (
-    reverse('wagtailusers_users:sso_request_access'),
-    reverse('wagtailusers_users:sso_request_access_success'),
+    reverse('sso:request_access'),
+    reverse('sso:request_access_success'),
 ))
 def test_ssorequestaccess_views_only_available_to_authenticated_users(
     client, admin_client, url
