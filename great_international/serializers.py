@@ -1,4 +1,3 @@
-import ipdb as ipdb
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
 
@@ -917,7 +916,7 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
             obj.related_region_five,
             obj.related_region_six,
         ]
-        ipdb.set_trace()
+
         return [RelatedCapitalInvestPageSerializer(region.specific).data
                 for region in items if region is not None]
 
