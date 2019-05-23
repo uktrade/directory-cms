@@ -78,7 +78,8 @@ class InternationalEUExitFormSuccessPageSubscriber(
 
 
 class InternationalCapitalInvestLandingPageSubscriber(
-                                        AbstractDatabaseCacheSubscriber):
+    AbstractDatabaseCacheSubscriber
+):
     model = models.InternationalCapitalInvestLandingPage
     subscriptions = [models.CapitalInvestRegionPage]
 
