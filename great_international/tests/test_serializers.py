@@ -16,7 +16,7 @@ from great_international.tests.factories import (
     CapitalInvestRegionPageFactory,
     InternationalCapitalInvestLandingPageFactory,
     CapitalInvestRegionalSectorPageFactory,
-    CapitalInvestOpportunityPageFactory,,
+    CapitalInvestOpportunityPageFactory,
     CapitalInvestOpportunityListingPageFactory)
 
 from great_international.models import CapitalInvestSectorRelatedPageSummary
