@@ -183,43 +183,42 @@ class LocationStatisticProxyDataWrapper:
 
 class RegionCardsProxyDataWrapper:
 
-    def __init__(self, instance, position_number):
-        self.position_number = position_number
+    def __init__(self, instance):
         self.instance = instance
 
     @property
     def image(self):
         return getattr(
             self.instance,
-            f'region_card_{self.position_number}_image'
+            f'region_card_image'
         )
 
     @property
     def title(self):
         return getattr(
             self.instance,
-            f'region_card_{self.position_number}_title'
+            f'region_card_title'
         )
 
     @property
     def summary(self):
         return getattr(
             self.instance,
-            f'region_card_{self.position_number}_summary'
+            f'region_card_summary'
         )
 
     @property
     def cta_text(self):
         return getattr(
             self.instance,
-            f'region_card_{self.position_number}_cta_text'
+            f'region_card_cta_text'
         )
 
     @property
     def pdf_document(self):
         return getattr(
             self.instance,
-            f'region_card_{self.position_number}_pdf_document'
+            f'region_card_pdf_document'
         )
 
 
@@ -258,14 +257,6 @@ class LocationStatSerializer(serializers.Serializer):
     smallprint = serializers.CharField(max_length=255)
 
 
-class RegionCardSerializer(serializers.Serializer):
-    image = wagtail_fields.ImageRenditionField('original')
-    title = serializers.CharField(max_length=255)
-    summary = core_fields.MarkdownToHTMLField()
-    cta_text = serializers.CharField(max_length=255)
-    pdf_document = core_fields.DocumentURLField()
-
-
 class RelatedArticlePageSerializer(BasePageSerializer):
     title = serializers.CharField(source='article_title')
     subheading = serializers.CharField(source='article_subheading')
@@ -297,7 +288,7 @@ class RelatedCapitalInvestPageSerializer(BasePageSerializer):
     featured_description = serializers.CharField(max_length=255)
 
 
-class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
+class RelatedCapitalInvestOpportunityPageSerializer(serializers.Serializer):
     title = serializers.CharField(
         max_length=255, source='hero_title')
     location = serializers.CharField(
@@ -306,6 +297,14 @@ class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
         max_length=255)
     investment_type = serializers.CharField(
         max_length=255)
+
+
+class RegionCardFieldSerializer(serializers.Serializer):
+    region_card_image = wagtail_fields.ImageRenditionField('original')
+    region_card_title = serializers.CharField(max_length=255)
+    region_card_summary = core_fields.MarkdownToHTMLField()
+    region_card_cta_text = serializers.CharField(max_length=255)
+    region_card_pdf_document = core_fields.DocumentURLField()
 
 
 class RelatedRegionSerializer(serializers.Serializer):
@@ -838,46 +837,6 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
     region_ops_section_title = serializers.CharField(max_length=255)
     region_ops_section_intro = serializers.CharField(max_length=255)
 
-    region_card_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
-    region_card_one_title = serializers.CharField(max_length=255)
-    region_card_one_summary = core_fields.MarkdownToHTMLField()
-    region_card_one_cta_text = serializers.CharField(max_length=255)
-    region_card_one_pdf_document = core_fields.DocumentURLField()
-
-    region_card_two_image = wagtail_fields.ImageRenditionField('fill-640x360')
-    region_card_two_title = serializers.CharField(max_length=255)
-    region_card_two_summary = core_fields.MarkdownToHTMLField()
-    region_card_two_cta_text = serializers.CharField(max_length=255)
-    region_card_two_pdf_document = core_fields.DocumentURLField()
-
-    region_card_three_image = wagtail_fields.ImageRenditionField(
-        'fill-640x360'
-    )
-    region_card_three_title = serializers.CharField(max_length=255)
-    region_card_three_summary = core_fields.MarkdownToHTMLField()
-    region_card_three_cta_text = serializers.CharField(max_length=255)
-    region_card_three_pdf_document = core_fields.DocumentURLField()
-
-    region_card_four_image = wagtail_fields.ImageRenditionField(
-        'fill-640x360'
-    )
-    region_card_four_title = serializers.CharField(max_length=255)
-    region_card_four_summary = core_fields.MarkdownToHTMLField()
-    region_card_four_cta_text = serializers.CharField(max_length=255)
-    region_card_four_pdf_document = core_fields.DocumentURLField()
-
-    region_card_five_image = wagtail_fields.ImageRenditionField('fill-640x360')
-    region_card_five_title = serializers.CharField(max_length=255)
-    region_card_five_summary = core_fields.MarkdownToHTMLField()
-    region_card_five_cta_text = serializers.CharField(max_length=255)
-    region_card_five_pdf_document = core_fields.DocumentURLField()
-
-    region_card_six_image = wagtail_fields.ImageRenditionField('fill-640x360')
-    region_card_six_title = serializers.CharField(max_length=255)
-    region_card_six_summary = core_fields.MarkdownToHTMLField()
-    region_card_six_cta_text = serializers.CharField(max_length=255)
-    region_card_six_pdf_document = core_fields.DocumentURLField()
-
     banner_information = core_fields.MarkdownToHTMLField()
 
     energy_sector_title = serializers.CharField(max_length=255)
@@ -909,17 +868,15 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
     contact_section_text = serializers.CharField(max_length=255)
     contact_section_cta_text = serializers.CharField(max_length=255)
 
-    region_cards = serializers.SerializerMethodField()
+    added_region_card_fields = serializers.SerializerMethodField()
 
-    def get_region_cards(self, instance):
-        data = [
-            RegionCardsProxyDataWrapper(
-                instance=instance,
-                position_number=num
-            )
-            for num in ['one', 'two', 'three', 'four', 'five', 'six']
-        ]
-        serializer = RegionCardSerializer(data, many=True)
+    def get_added_region_card_fields(self, instance):
+        serializer = RegionCardFieldSerializer(
+            instance.added_region_card_fields.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
         return serializer.data
 
     added_regions = serializers.SerializerMethodField()
