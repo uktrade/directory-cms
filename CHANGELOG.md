@@ -2,6 +2,13 @@
 
 ## Pre-release
 
+**Implemented enhancements:**
+
+- CMS-1419 - Added Wagtail registration view for SSO users, group info management UI, and updated user edit view to mark users as approved
+- CMS-1421 - Integrate with GOV.UK Notify to send SSO user approval notifications
+- CI-104 - Added capital invest landing, region, sector and opportunity pages.
+- NOTICKET - Removed blanket debug logging to remove noise when using interactive shell tools
+
 ### Fixed bugs:
 
 - CMS-1556 - Fixed copy upstream not working for pages that have the same slug but exist under different apps
@@ -9,15 +16,7 @@
 - CMS-1423 - Updated SSO notifications to use the user's first name in the greeting, instead of the full name
 - CMS-1419 - Fixed 'too_many_redirects' when logging in via SSO
 - NOTICKET - Upgrade django-restframework to 3.9.4 to fix XSS vulnerability
-- CMS-1589 - Upgrade django-staff-sso-client to version 0.3.0
-
-
-**Implemented enhancements:**
-
-- CMS-1419 - Added Wagtail registration view for SSO users, group info management UI, and updated user edit view to mark users as approved
-- CMS-1421 - Integrate with GOV.UK Notify to send SSO user approval notifications
-- CI-104 - Added capital invest landing, region, sector and opportunity pages.
-- NOTICKET - Removed blanket debug logging to remove noise when using interactive shell tools
+- CMS-1589 - Upgrade django-staff-sso-client to version 0.3.0 to fix blank username field bug
 
 
 ## [2019.05.09](https://github.com/uktrade/directory-cms/releases/tag/2019.05.09)
