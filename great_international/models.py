@@ -2217,7 +2217,7 @@ class CapitalInvestRegionPage(BasePage):
         blank=True
     )
 
-    featured_description = models.CharField(max_length=255, blank=True)
+    featured_description = MarkdownField(blank=True)
 
     region_summary_section_image = models.ForeignKey(
         'wagtailimages.Image',

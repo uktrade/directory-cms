@@ -261,7 +261,7 @@ class LocationStatSerializer(serializers.Serializer):
 class RegionCardSerializer(serializers.Serializer):
     image = wagtail_fields.ImageRenditionField('original')
     title = serializers.CharField(max_length=255)
-    summary = serializers.CharField(max_length=255)
+    summary = core_fields.MarkdownToHTMLField()
     cta_text = serializers.CharField(max_length=255)
     pdf_document = core_fields.DocumentURLField()
 
@@ -294,7 +294,7 @@ class RelatedCapitalInvestPageSerializer(BasePageSerializer):
     image = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg',
         source='hero_image')
-    featured_description = serializers.CharField(max_length=255)
+    featured_description = core_fields.MarkdownToHTMLField()
 
 
 class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
@@ -928,7 +928,7 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer,
     breadcrumbs_label = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
 
-    featured_description = serializers.CharField(max_length=255)
+    featured_description = core_fields.MarkdownToHTMLField()
 
     region_summary_section_image = wagtail_fields.ImageRenditionField(
         'original')
