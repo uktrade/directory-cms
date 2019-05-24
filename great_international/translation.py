@@ -284,13 +284,6 @@ class InternationalCapitalInvestLandingPageTranslationOptions(
         'region_ops_section_title',
         'region_ops_section_intro',
 
-        'related_region_one',
-        'related_region_two',
-        'related_region_three',
-        'related_region_four',
-        'related_region_five',
-        'related_region_six',
-
         'region_card_one_image',
         'region_card_one_title',
         'region_card_one_summary',
@@ -515,6 +508,14 @@ class CapitalInvestOpportunityPageTranslationOptions(
 
 @register(models.SectorRelatedOpportunities)
 class SectorRelatedOpportunitiesSerializer(
+        BaseTranslationOptions):
+    fields = (
+        'page',
+    )
+
+
+@register(models.RelatedRegions)
+class RelatedRegionsSerializer(
         BaseTranslationOptions):
     fields = (
         'page',
