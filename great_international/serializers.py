@@ -825,13 +825,13 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
 
     region_card_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
     region_card_one_title = serializers.CharField(max_length=255)
-    region_card_one_summary = serializers.CharField(max_length=255)
+    region_card_one_summary = core_fields.MarkdownToHTMLField()
     region_card_one_cta_text = serializers.CharField(max_length=255)
     region_card_one_pdf_document = core_fields.DocumentURLField()
 
     region_card_two_image = wagtail_fields.ImageRenditionField('fill-640x360')
     region_card_two_title = serializers.CharField(max_length=255)
-    region_card_two_summary = serializers.CharField(max_length=255)
+    region_card_two_summary = core_fields.MarkdownToHTMLField()
     region_card_two_cta_text = serializers.CharField(max_length=255)
     region_card_two_pdf_document = core_fields.DocumentURLField()
 
@@ -839,7 +839,7 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
         'fill-640x360'
     )
     region_card_three_title = serializers.CharField(max_length=255)
-    region_card_three_summary = serializers.CharField(max_length=255)
+    region_card_three_summary = core_fields.MarkdownToHTMLField()
     region_card_three_cta_text = serializers.CharField(max_length=255)
     region_card_three_pdf_document = core_fields.DocumentURLField()
 
@@ -847,19 +847,19 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
         'fill-640x360'
     )
     region_card_four_title = serializers.CharField(max_length=255)
-    region_card_four_summary = serializers.CharField(max_length=255)
+    region_card_four_summary = core_fields.MarkdownToHTMLField()
     region_card_four_cta_text = serializers.CharField(max_length=255)
     region_card_four_pdf_document = core_fields.DocumentURLField()
 
     region_card_five_image = wagtail_fields.ImageRenditionField('fill-640x360')
     region_card_five_title = serializers.CharField(max_length=255)
-    region_card_five_summary = serializers.CharField(max_length=255)
+    region_card_five_summary = core_fields.MarkdownToHTMLField()
     region_card_five_cta_text = serializers.CharField(max_length=255)
     region_card_five_pdf_document = core_fields.DocumentURLField()
 
     region_card_six_image = wagtail_fields.ImageRenditionField('fill-640x360')
     region_card_six_title = serializers.CharField(max_length=255)
-    region_card_six_summary = serializers.CharField(max_length=255)
+    region_card_six_summary = core_fields.MarkdownToHTMLField()
     region_card_six_cta_text = serializers.CharField(max_length=255)
     region_card_six_pdf_document = core_fields.DocumentURLField()
 
