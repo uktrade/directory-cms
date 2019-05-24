@@ -1785,7 +1785,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         blank=True
     )
     region_card_one_title = models.CharField(max_length=255, blank=True)
-    region_card_one_summary = models.TextField(max_length=255, blank=True)
+    region_card_one_summary = MarkdownField(blank=True)
     region_card_one_cta_text = models.CharField(max_length=255, blank=True)
     region_card_one_pdf_document = models.ForeignKey(
         'wagtaildocs.Document',
@@ -1810,7 +1810,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         blank=True
     )
     region_card_two_title = models.CharField(max_length=255, blank=True)
-    region_card_two_summary = models.TextField(max_length=255, blank=True)
+    region_card_two_summary = MarkdownField(blank=True)
     region_card_two_cta_text = models.CharField(max_length=255, blank=True)
     region_card_two_pdf_document = models.ForeignKey(
         'wagtaildocs.Document',
@@ -1835,7 +1835,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         blank=True
     )
     region_card_three_title = models.CharField(max_length=255, blank=True)
-    region_card_three_summary = models.TextField(max_length=255, blank=True)
+    region_card_three_summary = MarkdownField(blank=True)
     region_card_three_cta_text = models.CharField(max_length=255, blank=True)
     region_card_three_pdf_document = models.ForeignKey(
         'wagtaildocs.Document',
@@ -1860,7 +1860,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         blank=True
     )
     region_card_four_title = models.CharField(max_length=255, blank=True)
-    region_card_four_summary = models.TextField(max_length=255, blank=True)
+    region_card_four_summary = MarkdownField(blank=True)
     region_card_four_cta_text = models.CharField(max_length=255, blank=True)
     region_card_four_pdf_document = models.ForeignKey(
         'wagtaildocs.Document',
@@ -1885,7 +1885,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         blank=True
     )
     region_card_five_title = models.CharField(max_length=255, blank=True)
-    region_card_five_summary = models.TextField(max_length=255, blank=True)
+    region_card_five_summary = MarkdownField(blank=True)
     region_card_five_cta_text = models.CharField(max_length=255, blank=True)
     region_card_five_pdf_document = models.ForeignKey(
         'wagtaildocs.Document',
@@ -1910,7 +1910,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         blank=True
     )
     region_card_six_title = models.CharField(max_length=255, blank=True)
-    region_card_six_summary = models.TextField(max_length=255, blank=True)
+    region_card_six_summary = MarkdownField(blank=True)
     region_card_six_cta_text = models.CharField(max_length=255, blank=True)
     region_card_six_pdf_document = models.ForeignKey(
         'wagtaildocs.Document',
