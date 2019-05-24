@@ -181,47 +181,6 @@ class LocationStatisticProxyDataWrapper:
         )
 
 
-class RegionCardsProxyDataWrapper:
-
-    def __init__(self, instance):
-        self.instance = instance
-
-    @property
-    def image(self):
-        return getattr(
-            self.instance,
-            f'region_card_image'
-        )
-
-    @property
-    def title(self):
-        return getattr(
-            self.instance,
-            f'region_card_title'
-        )
-
-    @property
-    def summary(self):
-        return getattr(
-            self.instance,
-            f'region_card_summary'
-        )
-
-    @property
-    def cta_text(self):
-        return getattr(
-            self.instance,
-            f'region_card_cta_text'
-        )
-
-    @property
-    def pdf_document(self):
-        return getattr(
-            self.instance,
-            f'region_card_pdf_document'
-        )
-
-
 class SectionThreeSubsectionSerializer(serializers.Serializer):
     heading = serializers.CharField(max_length=255)
     teaser = serializers.CharField()
@@ -305,6 +264,14 @@ class RegionCardFieldSerializer(serializers.Serializer):
     region_card_summary = core_fields.MarkdownToHTMLField()
     region_card_cta_text = serializers.CharField(max_length=255)
     region_card_pdf_document = core_fields.DocumentURLField()
+
+
+class HomesInEnglandCardFieldSerializer(serializers.Serializer):
+    homes_in_england_card_image = wagtail_fields.ImageRenditionField(
+        'original'
+    )
+    homes_in_england_card_title = serializers.CharField(max_length=255)
+    homes_in_england_card_pdf_document = core_fields.DocumentURLField()
 
 
 class RelatedRegionSerializer(serializers.Serializer):
@@ -846,12 +813,6 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
     energy_sector_pdf_document = core_fields.DocumentURLField()
 
     homes_in_england_section_title = serializers.CharField(max_length=255)
-    homes_in_england_section_content = core_fields.MarkdownToHTMLField()
-    homes_in_england_section_image = wagtail_fields.ImageRenditionField(
-        'fill-640x360'
-    )
-    homes_in_england_section_cta_text = serializers.CharField(max_length=255)
-    homes_in_england_section_pdf_document = core_fields.DocumentURLField()
 
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_intro = serializers.CharField(max_length=255)
@@ -867,6 +828,17 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
     contact_section_title = serializers.CharField(max_length=255)
     contact_section_text = serializers.CharField(max_length=255)
     contact_section_cta_text = serializers.CharField(max_length=255)
+
+    added_homes_in_england_card_fields = serializers.SerializerMethodField()
+
+    def get_added_homes_in_england_card_fields(self, instance):
+        serializer = HomesInEnglandCardFieldSerializer(
+            instance.added_homes_in_england_card_fields.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
 
     added_region_card_fields = serializers.SerializerMethodField()
 

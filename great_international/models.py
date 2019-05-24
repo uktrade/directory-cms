@@ -1761,6 +1761,48 @@ class CapitalInvestRegionCardFieldsSummary(Orderable, RegionCardField):
     )
 
 
+class HomesInEnglandCardField(models.Model):
+    homes_in_england_card_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    homes_in_england_card_title = models.CharField(max_length=255, blank=True)
+    homes_in_england_card_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    panels = [
+        MultiFieldPanel([
+            ImageChooserPanel('homes_in_england_card_image'),
+            FieldPanel('homes_in_england_card_title'),
+            DocumentChooserPanel('homes_in_england_card_pdf_document'),
+        ]),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class CapitalInvestHomesInEnglandCardFieldsSummary(
+    Orderable,
+    HomesInEnglandCardField
+):
+    page = ParentalKey(
+        'great_international.InternationalCapitalInvestLandingPage',
+        on_delete=models.CASCADE,
+        related_name='added_homes_in_england_card_fields',
+        blank=True,
+        null=True,
+    )
+
+
 class RelatedRegion(models.Model):
     related_region = models.ForeignKey(
         'great_international.CapitalInvestRegionPage',
@@ -1873,24 +1915,6 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
 
     homes_in_england_section_title = models.CharField(
         max_length=255, blank=True
-    )
-    homes_in_england_section_content = MarkdownField(blank=True)
-    homes_in_england_section_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+', blank=True
-    )
-    homes_in_england_section_cta_text = models.CharField(
-        max_length=255,
-        blank=True
-    )
-    homes_in_england_section_pdf_document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
     )
 
     how_we_help_title = models.CharField(max_length=255, blank=True)
@@ -2030,10 +2054,10 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
             classname='collapsible collapsed',
             children=[
                 FieldPanel('homes_in_england_section_title'),
-                FieldPanel('homes_in_england_section_content'),
-                ImageChooserPanel('homes_in_england_section_image'),
-                FieldPanel('homes_in_england_section_cta_text'),
-                DocumentChooserPanel('homes_in_england_section_pdf_document'),
+                InlinePanel(
+                    'added_homes_in_england_card_fields',
+                    label="Homes In England cards"
+                )
             ]
         ),
         MultiFieldPanel(

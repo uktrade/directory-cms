@@ -293,10 +293,6 @@ class InternationalCapitalInvestLandingPageTranslationOptions(
         'energy_sector_pdf_document',
 
         'homes_in_england_section_title',
-        'homes_in_england_section_content',
-        'homes_in_england_section_image',
-        'homes_in_england_section_cta_text',
-        'homes_in_england_section_pdf_document',
 
         'how_we_help_title',
         'how_we_help_intro',
@@ -488,6 +484,14 @@ class RelatedRegionsSerializer(
 
 @register(models.CapitalInvestRegionCardFieldsSummary)
 class CapitalInvestRegionCardFieldSerializer(
+        BaseTranslationOptions):
+    fields = (
+        'page',
+    )
+
+
+@register(models.CapitalInvestHomesInEnglandCardFieldsSummary)
+class CapitalInvestHomesInEnglandCardFieldsSummarySerializer(
         BaseTranslationOptions):
     fields = (
         'page',
