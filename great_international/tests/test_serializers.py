@@ -19,8 +19,9 @@ from great_international.tests.factories import (
     CapitalInvestOpportunityPageFactory,
     CapitalInvestOpportunityListingPageFactory)
 
-from great_international.models import SectorRelatedOpportunities, \
-    RelatedRegions
+from great_international.models import SectorRelatedOpportunities,\
+    CapitalInvestRelatedRegions, \
+    CapitalInvestHomesInEnglandCardFieldsSummary
 
 
 @pytest.mark.django_db
@@ -366,27 +367,6 @@ def test_capital_invest_regional_sector_page_gets_parent(
 
 
 @pytest.mark.django_db
-def test_capital_invest_landing_page_has_region_cards_in_list(rf):
-    home_page = InternationalCapitalInvestLandingPageFactory(
-        slug='some-slug',
-        parent=None
-    )
-
-    serializer = InternationalCapitalInvestLandingPageSerializer(
-        instance=home_page,
-        context={'request': rf.get('/')}
-    )
-
-    assert len(serializer.data['region_cards'][0]) == 5
-    for field in serializer.data['region_cards']:
-        assert 'image' in field
-        assert 'title' in field
-        assert 'summary' in field
-        assert 'cta_text' in field
-        assert 'pdf_document' in field
-
-
-@pytest.mark.django_db
 def test_capital_invest_landing_page_gets_added_related_regions(rf):
 
     region = CapitalInvestRegionPageFactory(
@@ -394,7 +374,7 @@ def test_capital_invest_landing_page_gets_added_related_regions(rf):
         slug='region'
     )
 
-    related_page = RelatedRegions(
+    related_page = CapitalInvestRelatedRegions(
         related_region=region
     )
     capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
@@ -411,22 +391,48 @@ def test_capital_invest_landing_page_gets_added_related_regions(rf):
     for page in serializer.data['added_regions']:
         assert page['related_region']['meta']['slug'] == 'region'
 
-#
-# @pytest.mark.django_db
-# def test_capital_invest_landing_page_gets_added_related_region_card_fields(rf):
-#
-#     capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
-#         parent=None,
-#         slug='sector',
-#         added_region_card_fields=[{
-#             region_card_title="This"
-#         }]
-#     )
-#     print('\n\n\n\n\ landing page ', capital_invest_landing_page)
-#     serializer = InternationalCapitalInvestLandingPageSerializer(
-#         instance=capital_invest_landing_page,
-#         context={'request': rf.get('/')}
-#     )
-#
-#     for page in serializer.data['added_regions']:
-#         assert page['related_region']['meta']['slug'] == 'region'
+
+@pytest.mark.django_db
+def test_capital_invest_landing_page_gets_added_related_region_card_fields(rf):
+
+    region_fields = CapitalInvestRelatedRegions(
+        related_region_card_title="title"
+    )
+
+    capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
+        parent=None,
+        slug='sector',
+        added_region_card_fields=[region_fields]
+    )
+    print('\n\n\n\n\ landing page ', capital_invest_landing_page)
+    serializer = InternationalCapitalInvestLandingPageSerializer(
+        instance=capital_invest_landing_page,
+        context={'request': rf.get('/')}
+    )
+
+    for page in serializer.data['added_region_card_fields']:
+        assert page['related_region_card_title'] == 'title'
+
+
+@pytest.mark.django_db
+def test_capital_invest_landing_page_gets_added_homes_in_england_card_fields(
+        rf
+):
+
+    homes_in_england_fields = CapitalInvestHomesInEnglandCardFieldsSummary(
+        homes_in_england_card_title="title",
+    )
+
+    capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
+        parent=None,
+        slug='sector',
+        added_homes_in_england_card_fields=[homes_in_england_fields]
+    )
+    print('\n\n\n\n\ landing page ', capital_invest_landing_page)
+    serializer = InternationalCapitalInvestLandingPageSerializer(
+        instance=capital_invest_landing_page,
+        context={'request': rf.get('/')}
+    )
+
+    for page in serializer.data['added_homes_in_england_card_fields']:
+        assert page['homes_in_england_card_title'] == 'title'
