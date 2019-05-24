@@ -1718,6 +1718,49 @@ class InternationalEUExitFormSuccessPage(ExclusivePageMixin, BasePage):
     ]
 
 
+class RegionCardField(models.Model):
+    region_card_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    region_card_title = models.CharField(max_length=255, blank=True)
+    region_card_summary = MarkdownField(blank=True)
+    region_card_cta_text = models.CharField(max_length=255, blank=True)
+    region_card_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    panels = [
+        MultiFieldPanel([
+            ImageChooserPanel('region_card_image'),
+            FieldPanel('region_card_title'),
+            FieldPanel('region_card_summary'),
+            FieldPanel('region_card_cta_text'),
+            DocumentChooserPanel('region_card_pdf_document'),
+        ]),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class CapitalInvestRegionCardFieldsSummary(Orderable, RegionCardField):
+    page = ParentalKey(
+        'great_international.InternationalCapitalInvestLandingPage',
+        on_delete=models.CASCADE,
+        related_name='added_region_card_fields',
+        blank=True,
+        null=True,
+    )
+
+
 class RelatedRegion(models.Model):
     related_region = models.ForeignKey(
         'great_international.CapitalInvestRegionPage',
@@ -1741,7 +1784,7 @@ class RelatedRegion(models.Model):
         abstract = True
 
 
-class RelatedRegions(Orderable, RelatedRegion):
+class CapitalInvestRelatedRegions(Orderable, RelatedRegion):
     page = ParentalKey(
         'great_international.InternationalCapitalInvestLandingPage',
         on_delete=models.CASCADE,
@@ -1809,107 +1852,6 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         related_name='+',
         blank=True
     )
-    region_card_one_title = models.CharField(max_length=255, blank=True)
-    region_card_one_summary = MarkdownField(blank=True)
-    region_card_one_cta_text = models.CharField(max_length=255, blank=True)
-    region_card_one_pdf_document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    region_card_two_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    region_card_two_title = models.CharField(max_length=255, blank=True)
-    region_card_two_summary = MarkdownField(blank=True)
-    region_card_two_cta_text = models.CharField(max_length=255, blank=True)
-    region_card_two_pdf_document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    region_card_three_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    region_card_three_title = models.CharField(max_length=255, blank=True)
-    region_card_three_summary = MarkdownField(blank=True)
-    region_card_three_cta_text = models.CharField(max_length=255, blank=True)
-    region_card_three_pdf_document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    region_card_four_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    region_card_four_title = models.CharField(max_length=255, blank=True)
-    region_card_four_summary = MarkdownField(blank=True)
-    region_card_four_cta_text = models.CharField(max_length=255, blank=True)
-    region_card_four_pdf_document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    region_card_five_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    region_card_five_title = models.CharField(max_length=255, blank=True)
-    region_card_five_summary = MarkdownField(blank=True)
-    region_card_five_cta_text = models.CharField(max_length=255, blank=True)
-    region_card_five_pdf_document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    region_card_six_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    region_card_six_title = models.CharField(max_length=255, blank=True)
-    region_card_six_summary = MarkdownField(blank=True)
-    region_card_six_cta_text = models.CharField(max_length=255, blank=True)
-    region_card_six_pdf_document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
     banner_information = MarkdownField(blank=True)
 
     energy_sector_title = models.CharField(max_length=255, blank=True)
@@ -2046,52 +1988,10 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
             children=[
                 FieldPanel('region_ops_section_title'),
                 FieldPanel('region_ops_section_intro'),
-                FieldRowPanel([
-                    MultiFieldPanel([
-                        ImageChooserPanel('region_card_one_image'),
-                        FieldPanel('region_card_one_title'),
-                        FieldPanel('region_card_one_summary'),
-                        FieldPanel('region_card_one_cta_text'),
-                        DocumentChooserPanel('region_card_one_pdf_document'),
-                    ]),
-                    MultiFieldPanel([
-                        ImageChooserPanel('region_card_two_image'),
-                        FieldPanel('region_card_two_title'),
-                        FieldPanel('region_card_two_summary'),
-                        FieldPanel('region_card_two_cta_text'),
-                        DocumentChooserPanel('region_card_two_pdf_document'),
-                    ]),
-                    MultiFieldPanel([
-                        ImageChooserPanel('region_card_three_image'),
-                        FieldPanel('region_card_three_title'),
-                        FieldPanel('region_card_three_summary'),
-                        FieldPanel('region_card_three_cta_text'),
-                        DocumentChooserPanel('region_card_three_pdf_document'),
-                    ]),
-                ]),
-                FieldRowPanel([
-                    MultiFieldPanel([
-                        ImageChooserPanel('region_card_four_image'),
-                        FieldPanel('region_card_four_title'),
-                        FieldPanel('region_card_four_summary'),
-                        FieldPanel('region_card_four_cta_text'),
-                        DocumentChooserPanel('region_card_four_pdf_document'),
-                    ]),
-                    MultiFieldPanel([
-                        ImageChooserPanel('region_card_five_image'),
-                        FieldPanel('region_card_five_title'),
-                        FieldPanel('region_card_five_summary'),
-                        FieldPanel('region_card_five_cta_text'),
-                        DocumentChooserPanel('region_card_five_pdf_document'),
-                    ]),
-                    MultiFieldPanel([
-                        ImageChooserPanel('region_card_six_image'),
-                        FieldPanel('region_card_six_title'),
-                        FieldPanel('region_card_six_summary'),
-                        FieldPanel('region_card_six_cta_text'),
-                        DocumentChooserPanel('region_card_six_pdf_document'),
-                    ]),
-                ]),
+                InlinePanel(
+                    'added_region_card_fields',
+                    label="Region card fields"
+                ),
             ]
         ),
         MultiFieldPanel(

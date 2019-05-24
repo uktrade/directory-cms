@@ -284,42 +284,6 @@ class InternationalCapitalInvestLandingPageTranslationOptions(
         'region_ops_section_title',
         'region_ops_section_intro',
 
-        'region_card_one_image',
-        'region_card_one_title',
-        'region_card_one_summary',
-        'region_card_one_cta_text',
-        'region_card_one_pdf_document',
-
-        'region_card_two_image',
-        'region_card_two_title',
-        'region_card_two_summary',
-        'region_card_two_cta_text',
-        'region_card_two_pdf_document',
-
-        'region_card_three_image',
-        'region_card_three_title',
-        'region_card_three_summary',
-        'region_card_three_cta_text',
-        'region_card_three_pdf_document',
-
-        'region_card_four_image',
-        'region_card_four_title',
-        'region_card_four_summary',
-        'region_card_four_cta_text',
-        'region_card_four_pdf_document',
-
-        'region_card_five_image',
-        'region_card_five_title',
-        'region_card_five_summary',
-        'region_card_five_cta_text',
-        'region_card_five_pdf_document',
-
-        'region_card_six_image',
-        'region_card_six_title',
-        'region_card_six_summary',
-        'region_card_six_cta_text',
-        'region_card_six_pdf_document',
-
         'banner_information',
 
         'energy_sector_title',
@@ -514,8 +478,16 @@ class SectorRelatedOpportunitiesSerializer(
     )
 
 
-@register(models.RelatedRegions)
+@register(models.CapitalInvestRelatedRegions)
 class RelatedRegionsSerializer(
+        BaseTranslationOptions):
+    fields = (
+        'page',
+    )
+
+
+@register(models.CapitalInvestRegionCardFieldsSummary)
+class CapitalInvestRegionCardFieldSerializer(
         BaseTranslationOptions):
     fields = (
         'page',

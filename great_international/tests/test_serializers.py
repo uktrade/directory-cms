@@ -410,3 +410,23 @@ def test_capital_invest_landing_page_gets_added_related_regions(rf):
 
     for page in serializer.data['added_regions']:
         assert page['related_region']['meta']['slug'] == 'region'
+
+#
+# @pytest.mark.django_db
+# def test_capital_invest_landing_page_gets_added_related_region_card_fields(rf):
+#
+#     capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
+#         parent=None,
+#         slug='sector',
+#         added_region_card_fields=[{
+#             region_card_title="This"
+#         }]
+#     )
+#     print('\n\n\n\n\ landing page ', capital_invest_landing_page)
+#     serializer = InternationalCapitalInvestLandingPageSerializer(
+#         instance=capital_invest_landing_page,
+#         context={'request': rf.get('/')}
+#     )
+#
+#     for page in serializer.data['added_regions']:
+#         assert page['related_region']['meta']['slug'] == 'region'
