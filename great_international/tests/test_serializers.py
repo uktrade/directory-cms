@@ -19,9 +19,10 @@ from great_international.tests.factories import (
     CapitalInvestOpportunityPageFactory,
     CapitalInvestOpportunityListingPageFactory)
 
-from great_international.models import SectorRelatedOpportunities,\
+from great_international.models import SectorRelatedOpportunities, \
     CapitalInvestRelatedRegions, \
-    CapitalInvestHomesInEnglandCardFieldsSummary
+    CapitalInvestHomesInEnglandCardFieldsSummary, \
+    CapitalInvestRegionCardFieldsSummary
 
 
 @pytest.mark.django_db
@@ -395,8 +396,8 @@ def test_capital_invest_landing_page_gets_added_related_regions(rf):
 @pytest.mark.django_db
 def test_capital_invest_landing_page_gets_added_related_region_card_fields(rf):
 
-    region_fields = CapitalInvestRelatedRegions(
-        related_region_card_title="title"
+    region_fields = CapitalInvestRegionCardFieldsSummary(
+        region_card_title="title"
     )
 
     capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
@@ -404,14 +405,14 @@ def test_capital_invest_landing_page_gets_added_related_region_card_fields(rf):
         slug='sector',
         added_region_card_fields=[region_fields]
     )
-    print('\n\n\n\n\ landing page ', capital_invest_landing_page)
+
     serializer = InternationalCapitalInvestLandingPageSerializer(
         instance=capital_invest_landing_page,
         context={'request': rf.get('/')}
     )
 
     for page in serializer.data['added_region_card_fields']:
-        assert page['related_region_card_title'] == 'title'
+        assert page['region_card_title'] == 'title'
 
 
 @pytest.mark.django_db
@@ -428,7 +429,7 @@ def test_capital_invest_landing_page_gets_added_homes_in_england_card_fields(
         slug='sector',
         added_homes_in_england_card_fields=[homes_in_england_fields]
     )
-    print('\n\n\n\n\ landing page ', capital_invest_landing_page)
+
     serializer = InternationalCapitalInvestLandingPageSerializer(
         instance=capital_invest_landing_page,
         context={'request': rf.get('/')}
