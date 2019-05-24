@@ -1718,6 +1718,39 @@ class InternationalEUExitFormSuccessPage(ExclusivePageMixin, BasePage):
     ]
 
 
+class RelatedRegion(models.Model):
+    related_region = models.ForeignKey(
+        'great_international.CapitalInvestRegionPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    panels = [
+        PageChooserPanel(
+            'related_region',
+            [
+                'great_international.'
+                'CapitalInvestRegionPage'
+            ]
+        ),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class RelatedRegions(Orderable, RelatedRegion):
+    page = ParentalKey(
+        'great_international.InternationalCapitalInvestLandingPage',
+        on_delete=models.CASCADE,
+        related_name='added_regions',
+        blank=True,
+        null=True,
+    )
+
+
 class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = 'capital-invest'
@@ -1769,14 +1802,6 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         blank=True,
         verbose_name="Region opportunities section intro"
     )
-
-    related_region_one = models.ForeignKey(
-        'great_international.CapitalInvestRegionPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
     region_card_one_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1795,13 +1820,6 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         related_name='+'
     )
 
-    related_region_two = models.ForeignKey(
-        'great_international.CapitalInvestRegionPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
     region_card_two_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1820,13 +1838,6 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         related_name='+'
     )
 
-    related_region_three = models.ForeignKey(
-        'great_international.CapitalInvestRegionPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
     region_card_three_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1845,13 +1856,6 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         related_name='+'
     )
 
-    related_region_four = models.ForeignKey(
-        'great_international.CapitalInvestRegionPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
     region_card_four_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1870,13 +1874,6 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         related_name='+'
     )
 
-    related_region_five = models.ForeignKey(
-        'great_international.CapitalInvestRegionPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
     region_card_five_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1895,13 +1892,6 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         related_name='+'
     )
 
-    related_region_six = models.ForeignKey(
-        'great_international.CapitalInvestRegionPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
     region_card_six_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -2118,47 +2108,9 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
                           'rather than adding in manually the region title, '
                           'image and text in the above section when the '
                           'capital invest region pages are available'),
-                PageChooserPanel(
-                    'related_region_one',
-                    [
-                        'great_international.'
-                        'CapitalInvestRegionPage'
-                    ]
-                ),
-                PageChooserPanel(
-                    'related_region_two',
-                    [
-                        'great_international.'
-                        'CapitalInvestRegionPage'
-                    ]
-                ),
-                PageChooserPanel(
-                    'related_region_three',
-                    [
-                        'great_international.'
-                        'CapitalInvestRegionPage'
-                    ]
-                ),
-                PageChooserPanel(
-                    'related_region_four',
-                    [
-                        'great_international.'
-                        'CapitalInvestRegionPage'
-                    ]
-                ),
-                PageChooserPanel(
-                    'related_region_five',
-                    [
-                        'great_international.'
-                        'CapitalInvestRegionPage'
-                    ]
-                ),
-                PageChooserPanel(
-                    'related_region_six',
-                    [
-                        'great_international.'
-                        'CapitalInvestRegionPage'
-                    ]
+                InlinePanel(
+                    'added_regions',
+                    label="Related Regions"
                 ),
             ]
         ),
@@ -2225,7 +2177,7 @@ class CapitalInvestRegionPage(BasePage):
         blank=True
     )
 
-    featured_description = MarkdownField(blank=True)
+    featured_description = models.TextField(max_length=255, blank=True)
 
     region_summary_section_image = models.ForeignKey(
         'wagtailimages.Image',

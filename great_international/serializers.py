@@ -294,7 +294,7 @@ class RelatedCapitalInvestPageSerializer(BasePageSerializer):
     image = wagtail_fields.ImageRenditionField(
         'fill-640x360|jpegquality-60|format-jpeg',
         source='hero_image')
-    featured_description = core_fields.MarkdownToHTMLField()
+    featured_description = serializers.CharField(max_length=255)
 
 
 class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
@@ -306,6 +306,21 @@ class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
         max_length=255)
     investment_type = serializers.CharField(
         max_length=255)
+
+
+class RelatedRegionSerializer(serializers.Serializer):
+    related_region = serializers.SerializerMethodField()
+
+    def get_related_region(self, obj):
+        serialized = []
+        region = obj.related_region
+
+        if not region:
+            return serialized
+        serializer = RelatedCapitalInvestPageSerializer(
+            region.specific)
+        serialized.append(serializer.data)
+        return serialized[0]
 
 
 class RelatedOpportunitySerializer(serializers.Serializer):
@@ -907,20 +922,16 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
         serializer = RegionCardSerializer(data, many=True)
         return serializer.data
 
-    related_regions = serializers.SerializerMethodField()
+    added_regions = serializers.SerializerMethodField()
 
-    def get_related_regions(self, obj):
-        items = [
-            obj.related_region_one,
-            obj.related_region_two,
-            obj.related_region_three,
-            obj.related_region_four,
-            obj.related_region_five,
-            obj.related_region_six,
-        ]
-
-        return [RelatedCapitalInvestPageSerializer(region.specific).data
-                for region in items if region is not None]
+    def get_added_regions(self, instance):
+        serializer = RelatedRegionSerializer(
+            instance.added_regions.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
 
 
 class CapitalInvestRegionPageSerializer(BasePageSerializer,
@@ -930,7 +941,7 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer,
     breadcrumbs_label = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
 
-    featured_description = core_fields.MarkdownToHTMLField()
+    featured_description = serializers.CharField(max_length=255)
 
     region_summary_section_image = wagtail_fields.ImageRenditionField(
         'original')

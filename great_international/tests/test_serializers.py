@@ -19,7 +19,8 @@ from great_international.tests.factories import (
     CapitalInvestOpportunityPageFactory,
     CapitalInvestOpportunityListingPageFactory)
 
-from great_international.models import SectorRelatedOpportunities
+from great_international.models import SectorRelatedOpportunities, \
+    RelatedRegions
 
 
 @pytest.mark.django_db
@@ -383,3 +384,29 @@ def test_capital_invest_landing_page_has_region_cards_in_list(rf):
         assert 'summary' in field
         assert 'cta_text' in field
         assert 'pdf_document' in field
+
+
+@pytest.mark.django_db
+def test_capital_invest_landing_page_gets_added_related_regions(rf):
+
+    region = CapitalInvestRegionPageFactory(
+        parent=None,
+        slug='region'
+    )
+
+    related_page = RelatedRegions(
+        related_region=region
+    )
+    capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
+        parent=None,
+        slug='sector',
+        added_regions=[related_page]
+    )
+
+    serializer = InternationalCapitalInvestLandingPageSerializer(
+        instance=capital_invest_landing_page,
+        context={'request': rf.get('/')}
+    )
+
+    for page in serializer.data['added_regions']:
+        assert page['related_region']['meta']['slug'] == 'region'
