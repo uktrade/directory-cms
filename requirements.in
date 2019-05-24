@@ -14,7 +14,7 @@ sigauth==4.0.1
 directory-healthcheck==1.0.1
 directory-components==8.8.0
 directory-constants==14.7.0
-django-staff-sso-client==0.2.0
+django-staff-sso-client==0.3.0
 html2text==2018.1.9
 wagtail==2.3
 wagtailmedia==0.3.0
