@@ -267,31 +267,6 @@ def test_guide_landing_page_serializer_guide_list(root_page, image, rf):
 
 
 @pytest.mark.django_db
-def test_capital_invest_landing_page_related_regions(root_page, rf):
-    related_region_one = CapitalInvestRegionPageFactory(
-        parent=root_page,
-        slug='one'
-    )
-
-    home_page = InternationalCapitalInvestLandingPageFactory(
-        parent=root_page,
-        slug='home-page',
-        related_region_one=related_region_one
-    )
-
-    serializer = InternationalCapitalInvestLandingPageSerializer(
-        instance=home_page,
-        context={'request': rf.get('/')}
-    )
-
-    assert len(serializer.data['related_regions']) == 1
-    for page in serializer.data['related_regions']:
-        assert 'title' in page
-        assert 'image' in page
-        assert 'featured_description' in page
-
-
-@pytest.mark.django_db
 def test_capital_invest_region_page_has_statistics(rf):
     region = CapitalInvestRegionPageFactory(
         slug='region-slug',
