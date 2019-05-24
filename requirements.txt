@@ -34,9 +34,11 @@ django-taggit==0.23.0     # via wagtail
 django-treebeard==4.3     # via wagtail
 django==1.11.20
 django_storages==1.6.5
-djangorestframework==3.9.0  # via sigauth, wagtail
+djangorestframework==3.9.4
+docopt==0.6.2             # via notifications-python-client
 docutils==0.14            # via botocore
 draftjs-exporter==2.1.5   # via wagtail
+future==0.17.1            # via notifications-python-client
 gevent==1.2.2
 greenlet==0.4.15          # via gevent
 gunicorn==19.5.0
@@ -47,9 +49,12 @@ jmespath==0.9.3           # via boto3, botocore
 kombu==4.2.1
 markdown==2.6
 mohawk==0.3.4             # via directory-components, sigauth
+monotonic==1.5            # via notifications-python-client
+notifications-python-client==5.3.0
 oauthlib==3.0.1           # via requests-oauthlib
 pillow==5.3.0             # via wagtail
 psycopg2==2.7.3.2
+pyjwt==1.7.1              # via notifications-python-client
 python-dateutil==2.6.1    # via botocore
 pytube==9.2.2
 pytz==2018.7              # via celery, django, django-modelcluster, wagtail
@@ -65,7 +70,7 @@ urllib3==1.24.2
 vine==1.1.4               # via amqp
 w3lib==1.20.0
 wagtail==2.3
-wagtailmedia==0.2.0
+wagtailmedia==0.3.0
 webencodings==0.5.1       # via bleach, html5lib
 whitenoise==3.1
 willow==1.1               # via wagtail

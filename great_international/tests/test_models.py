@@ -14,7 +14,12 @@ def test_models_hierarchy():
         models.InternationalCuratedTopicLandingPage,
         models.InternationalGuideLandingPage,
         models.InternationalRegionPage,
-        models.InternationalHomePage
+        models.InternationalHomePage,
+        models.InternationalEUExitFormPage,
+        models.InternationalEUExitFormSuccessPage,
+        models.InternationalCapitalInvestLandingPage,
+        models.CapitalInvestOpportunityListingPage,
+        models.CapitalInvestRegionPage
     ]
     assert models.GreatInternationalApp.allowed_parent_page_models() == [
         Page,
@@ -53,12 +58,32 @@ def test_models_hierarchy():
     assert models.InternationalCampaignPage.allowed_subpage_models() == [
         models.InternationalArticlePage,
     ]
+    # EU Exit forms
+    assert models.InternationalEUExitFormPage.allowed_subpage_models() == [
+        models.InternationalEUExitFormSuccessPage,
+    ]
+    assert models.InternationalEUExitFormSuccessPage.allowed_parent_page_models() == [  # NOQA
+        models.InternationalEUExitFormPage,
+    ]
+    assert models.CapitalInvestRegionPage.allowed_subpage_models() == [
+        models.CapitalInvestRegionalSectorPage,
+    ]
+    assert models.CapitalInvestOpportunityListingPage.allowed_subpage_models() == [  # NOQA
+        models.CapitalInvestOpportunityPage,
+    ]
 
 
 @pytest.mark.parametrize('model', [
     models.GreatInternationalApp,
 ])
 def test_app_required_translatable_fields(model):
+    assert model.get_required_translatable_fields() == []
+
+
+@pytest.mark.parametrize('model', [
+    models.CapitalInvestOpportunityListingPage,
+])
+def test_opp_listing_required_translatable_fields(model):
     assert model.get_required_translatable_fields() == []
 
 

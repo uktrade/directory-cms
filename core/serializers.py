@@ -46,12 +46,21 @@ class WagtailPageSerializer(serializers.Serializer):
 
 class ChildPagesSerializerHelper(serializers.Serializer):
     def get_child_pages_data_for(self, parent, page_type, serializer):
-        queryset = parent.get_descendants().type(
-            page_type
-        ).live().specific()
+        queryset = page_type.objects.descendant_of(parent).live()
         serializer = serializer(
             queryset,
             many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
+
+class ParentPageSerializerHelper(serializers.Serializer):
+    def get_parent_page_data_for(self, instance, serializer):
+        queryset = instance.get_parent().specific
+        serializer = serializer(
+            queryset,
             allow_null=True,
             context=self.context
         )
