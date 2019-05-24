@@ -327,6 +327,8 @@ class InternationalCapitalInvestLandingPageTranslationOptions(
         'region_card_six_cta_text',
         'region_card_six_pdf_document',
 
+        'banner_information',
+
         'energy_sector_title',
         'energy_sector_content',
         'energy_sector_image',
