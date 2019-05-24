@@ -863,6 +863,8 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
     region_card_six_cta_text = serializers.CharField(max_length=255)
     region_card_six_pdf_document = core_fields.DocumentURLField()
 
+    banner_information = core_fields.MarkdownToHTMLField()
+
     energy_sector_title = serializers.CharField(max_length=255)
     energy_sector_content = core_fields.MarkdownToHTMLField()
     energy_sector_image = wagtail_fields.ImageRenditionField('fill-640x360')

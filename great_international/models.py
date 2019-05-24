@@ -1920,6 +1920,8 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         related_name='+'
     )
 
+    banner_information = MarkdownField(blank=True)
+
     energy_sector_title = models.CharField(max_length=255, blank=True)
     energy_sector_content = MarkdownField(blank=True)
     energy_sector_image = models.ForeignKey(
@@ -2021,6 +2023,34 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
             ]
         ),
         MultiFieldPanel(
+            heading="How we help section",
+            classname='collapsible',
+            children=[
+                FieldPanel('how_we_help_title'),
+                FieldPanel('how_we_help_intro'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        ImageChooserPanel('how_we_help_one_icon'),
+                        FieldPanel('how_we_help_one_text'),
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('how_we_help_two_icon'),
+                        FieldPanel('how_we_help_two_text'),
+                    ]),
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        ImageChooserPanel('how_we_help_three_icon'),
+                        FieldPanel('how_we_help_three_text'),
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('how_we_help_four_icon'),
+                        FieldPanel('how_we_help_four_text'),
+                    ]),
+                ]),
+            ]
+        ),
+        MultiFieldPanel(
             heading="Investment Opportunities by regions",
             classname='collapsible',
             children=[
@@ -2073,6 +2103,12 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
                     ]),
                 ]),
             ]
+        ),
+        MultiFieldPanel(
+            heading="Informative banner",
+            children=[
+                FieldPanel('banner_information')
+            ],
         ),
         MultiFieldPanel(
             heading="Related region pages",
@@ -2146,34 +2182,6 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
                 ImageChooserPanel('homes_in_england_section_image'),
                 FieldPanel('homes_in_england_section_cta_text'),
                 DocumentChooserPanel('homes_in_england_section_pdf_document'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading="How we help section",
-            classname='collapsible',
-            children=[
-                FieldPanel('how_we_help_title'),
-                FieldPanel('how_we_help_intro'),
-                FieldRowPanel([
-                    MultiFieldPanel([
-                        ImageChooserPanel('how_we_help_one_icon'),
-                        FieldPanel('how_we_help_one_text'),
-                    ]),
-                    MultiFieldPanel([
-                        ImageChooserPanel('how_we_help_two_icon'),
-                        FieldPanel('how_we_help_two_text'),
-                    ]),
-                ]),
-                FieldRowPanel([
-                    MultiFieldPanel([
-                        ImageChooserPanel('how_we_help_three_icon'),
-                        FieldPanel('how_we_help_three_text'),
-                    ]),
-                    MultiFieldPanel([
-                        ImageChooserPanel('how_we_help_four_icon'),
-                        FieldPanel('how_we_help_four_text'),
-                    ]),
-                ]),
             ]
         ),
         MultiFieldPanel(
