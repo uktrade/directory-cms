@@ -247,7 +247,7 @@ class RelatedCapitalInvestPageSerializer(BasePageSerializer):
     featured_description = serializers.CharField(max_length=255)
 
 
-class RelatedCapitalInvestOpportunityPageSerializer(serializers.Serializer):
+class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
     title = serializers.CharField(
         max_length=255, source='hero_title')
     location = serializers.CharField(
