@@ -278,30 +278,27 @@ class RelatedRegionSerializer(serializers.Serializer):
     related_region = serializers.SerializerMethodField()
 
     def get_related_region(self, obj):
-        serialized = []
         region = obj.related_region
 
         if not region:
-            return serialized
+            return []
         serializer = RelatedCapitalInvestPageSerializer(
             region.specific)
-        serialized.append(serializer.data)
-        return serialized[0]
+        return serializer.data
 
 
 class RelatedOpportunitySerializer(serializers.Serializer):
     opportunity = serializers.SerializerMethodField()
 
     def get_opportunity(self, obj):
-        serialized = []
         opp = obj.opportunity
 
         if not opp:
-            return serialized
+            return []
         serializer = RelatedCapitalInvestOpportunityPageSerializer(
             opp.specific)
-        serialized.append(serializer.data)
-        return serialized[0]
+
+        return serializer.data
 
 
 MODEL_TO_SERIALIZER_MAPPING = {
