@@ -428,4 +428,3 @@ def test_capital_invest_landing_page_returns_empty_when_no_related_regions(rf):
     )
 
     assert serializer.data['added_region_card_fields'] == []
-
