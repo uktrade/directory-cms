@@ -412,3 +412,20 @@ def test_capital_invest_landing_page_gets_added_homes_in_england_card_fields(
 
     for page in serializer.data['added_homes_in_england_card_fields']:
         assert page['homes_in_england_card_title'] == 'title'
+
+
+@pytest.mark.django_db
+def test_capital_invest_landing_page_returns_empty_when_no_related_regions(rf):
+
+    capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
+        parent=None,
+        slug='sector',
+    )
+
+    serializer = InternationalCapitalInvestLandingPageSerializer(
+        instance=capital_invest_landing_page,
+        context={'request': rf.get('/')}
+    )
+
+    assert serializer.data['added_region_card_fields'] == []
+
