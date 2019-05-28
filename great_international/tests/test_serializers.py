@@ -19,7 +19,10 @@ from great_international.tests.factories import (
     CapitalInvestOpportunityPageFactory,
     CapitalInvestOpportunityListingPageFactory)
 
-from great_international.models import SectorRelatedOpportunities
+from great_international.models import SectorRelatedOpportunities, \
+    CapitalInvestRelatedRegions, \
+    CapitalInvestHomesInEnglandCardFieldsSummary, \
+    CapitalInvestRegionCardFieldsSummary
 
 
 @pytest.mark.django_db
@@ -264,31 +267,6 @@ def test_guide_landing_page_serializer_guide_list(root_page, image, rf):
 
 
 @pytest.mark.django_db
-def test_capital_invest_landing_page_related_regions(root_page, rf):
-    related_region_one = CapitalInvestRegionPageFactory(
-        parent=root_page,
-        slug='one'
-    )
-
-    home_page = InternationalCapitalInvestLandingPageFactory(
-        parent=root_page,
-        slug='home-page',
-        related_region_one=related_region_one
-    )
-
-    serializer = InternationalCapitalInvestLandingPageSerializer(
-        instance=home_page,
-        context={'request': rf.get('/')}
-    )
-
-    assert len(serializer.data['related_regions']) == 1
-    for page in serializer.data['related_regions']:
-        assert 'title' in page
-        assert 'image' in page
-        assert 'featured_description' in page
-
-
-@pytest.mark.django_db
 def test_capital_invest_region_page_has_statistics(rf):
     region = CapitalInvestRegionPageFactory(
         slug='region-slug',
@@ -365,21 +343,91 @@ def test_capital_invest_regional_sector_page_gets_parent(
 
 
 @pytest.mark.django_db
-def test_capital_invest_landing_page_has_region_cards_in_list(rf):
-    home_page = InternationalCapitalInvestLandingPageFactory(
-        slug='some-slug',
-        parent=None
+def test_capital_invest_landing_page_gets_added_related_regions(rf):
+
+    region = CapitalInvestRegionPageFactory(
+        parent=None,
+        slug='region'
+    )
+
+    related_page = CapitalInvestRelatedRegions(
+        related_region=region
+    )
+    capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
+        parent=None,
+        slug='sector',
+        added_regions=[related_page]
     )
 
     serializer = InternationalCapitalInvestLandingPageSerializer(
-        instance=home_page,
+        instance=capital_invest_landing_page,
         context={'request': rf.get('/')}
     )
 
-    assert len(serializer.data['region_cards'][0]) == 5
-    for field in serializer.data['region_cards']:
-        assert 'image' in field
-        assert 'title' in field
-        assert 'summary' in field
-        assert 'cta_text' in field
-        assert 'pdf_document' in field
+    for page in serializer.data['added_regions']:
+        assert page['related_region']['meta']['slug'] == 'region'
+
+
+@pytest.mark.django_db
+def test_capital_invest_landing_page_gets_added_related_region_card_fields(rf):
+
+    region_fields = CapitalInvestRegionCardFieldsSummary(
+        region_card_title="title"
+    )
+
+    capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
+        parent=None,
+        slug='sector',
+        added_region_card_fields=[region_fields]
+    )
+
+    serializer = InternationalCapitalInvestLandingPageSerializer(
+        instance=capital_invest_landing_page,
+        context={'request': rf.get('/')}
+    )
+
+    for page in serializer.data['added_region_card_fields']:
+        assert page['region_card_title'] == 'title'
+
+
+@pytest.mark.django_db
+def test_capital_invest_landing_page_gets_added_homes_in_england_card_fields(
+        rf
+):
+
+    homes_in_england_fields = CapitalInvestHomesInEnglandCardFieldsSummary(
+        homes_in_england_card_title="title",
+    )
+
+    capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
+        parent=None,
+        slug='sector',
+        added_homes_in_england_card_fields=[homes_in_england_fields]
+    )
+
+    serializer = InternationalCapitalInvestLandingPageSerializer(
+        instance=capital_invest_landing_page,
+        context={'request': rf.get('/')}
+    )
+
+    for page in serializer.data['added_homes_in_england_card_fields']:
+        assert page['homes_in_england_card_title'] == 'title'
+
+
+@pytest.mark.django_db
+def test_capital_invest_landing_page_returns_empty_when_no_related_regions(rf):
+
+    related_page = CapitalInvestRelatedRegions()
+
+    capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
+        parent=None,
+        slug='sector',
+        added_regions=[related_page]
+    )
+
+    serializer = InternationalCapitalInvestLandingPageSerializer(
+        instance=capital_invest_landing_page,
+        context={'request': rf.get('/')}
+    )
+
+    assert serializer.data['added_region_card_fields'] == []

@@ -1718,6 +1718,124 @@ class InternationalEUExitFormSuccessPage(ExclusivePageMixin, BasePage):
     ]
 
 
+class RegionCardField(models.Model):
+    region_card_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    region_card_title = models.CharField(max_length=255, blank=True)
+    region_card_summary = MarkdownField(blank=True)
+    region_card_cta_text = models.CharField(max_length=255, blank=True)
+    region_card_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    panels = [
+        MultiFieldPanel([
+            ImageChooserPanel('region_card_image'),
+            FieldPanel('region_card_title'),
+            FieldPanel('region_card_summary'),
+            FieldPanel('region_card_cta_text'),
+            DocumentChooserPanel('region_card_pdf_document'),
+        ]),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class CapitalInvestRegionCardFieldsSummary(Orderable, RegionCardField):
+    page = ParentalKey(
+        'great_international.InternationalCapitalInvestLandingPage',
+        on_delete=models.CASCADE,
+        related_name='added_region_card_fields',
+        blank=True,
+        null=True,
+    )
+
+
+class HomesInEnglandCardField(models.Model):
+    homes_in_england_card_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    homes_in_england_card_title = models.CharField(max_length=255, blank=True)
+    homes_in_england_card_pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    panels = [
+        MultiFieldPanel([
+            ImageChooserPanel('homes_in_england_card_image'),
+            FieldPanel('homes_in_england_card_title'),
+            DocumentChooserPanel('homes_in_england_card_pdf_document'),
+        ]),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class CapitalInvestHomesInEnglandCardFieldsSummary(
+    Orderable,
+    HomesInEnglandCardField
+):
+    page = ParentalKey(
+        'great_international.InternationalCapitalInvestLandingPage',
+        on_delete=models.CASCADE,
+        related_name='added_homes_in_england_card_fields',
+        blank=True,
+        null=True,
+    )
+
+
+class RelatedRegion(models.Model):
+    related_region = models.ForeignKey(
+        'great_international.CapitalInvestRegionPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    panels = [
+        PageChooserPanel(
+            'related_region',
+            [
+                'great_international.'
+                'CapitalInvestRegionPage'
+            ]
+        ),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class CapitalInvestRelatedRegions(Orderable, RelatedRegion):
+    page = ParentalKey(
+        'great_international.InternationalCapitalInvestLandingPage',
+        on_delete=models.CASCADE,
+        related_name='added_regions',
+        blank=True,
+        null=True,
+    )
+
+
 class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = 'capital-invest'
@@ -1769,14 +1887,6 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         blank=True,
         verbose_name="Region opportunities section intro"
     )
-
-    related_region_one = models.ForeignKey(
-        'great_international.CapitalInvestRegionPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
     region_card_one_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1784,141 +1894,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         related_name='+',
         blank=True
     )
-    region_card_one_title = models.CharField(max_length=255, blank=True)
-    region_card_one_summary = models.TextField(max_length=255, blank=True)
-    region_card_one_cta_text = models.CharField(max_length=255, blank=True)
-    region_card_one_pdf_document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    related_region_two = models.ForeignKey(
-        'great_international.CapitalInvestRegionPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    region_card_two_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    region_card_two_title = models.CharField(max_length=255, blank=True)
-    region_card_two_summary = models.TextField(max_length=255, blank=True)
-    region_card_two_cta_text = models.CharField(max_length=255, blank=True)
-    region_card_two_pdf_document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    related_region_three = models.ForeignKey(
-        'great_international.CapitalInvestRegionPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    region_card_three_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    region_card_three_title = models.CharField(max_length=255, blank=True)
-    region_card_three_summary = models.TextField(max_length=255, blank=True)
-    region_card_three_cta_text = models.CharField(max_length=255, blank=True)
-    region_card_three_pdf_document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    related_region_four = models.ForeignKey(
-        'great_international.CapitalInvestRegionPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    region_card_four_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    region_card_four_title = models.CharField(max_length=255, blank=True)
-    region_card_four_summary = models.TextField(max_length=255, blank=True)
-    region_card_four_cta_text = models.CharField(max_length=255, blank=True)
-    region_card_four_pdf_document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    related_region_five = models.ForeignKey(
-        'great_international.CapitalInvestRegionPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    region_card_five_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    region_card_five_title = models.CharField(max_length=255, blank=True)
-    region_card_five_summary = models.TextField(max_length=255, blank=True)
-    region_card_five_cta_text = models.CharField(max_length=255, blank=True)
-    region_card_five_pdf_document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    related_region_six = models.ForeignKey(
-        'great_international.CapitalInvestRegionPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    region_card_six_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    region_card_six_title = models.CharField(max_length=255, blank=True)
-    region_card_six_summary = models.TextField(max_length=255, blank=True)
-    region_card_six_cta_text = models.CharField(max_length=255, blank=True)
-    region_card_six_pdf_document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
+    banner_information = MarkdownField(blank=True)
 
     energy_sector_title = models.CharField(max_length=255, blank=True)
     energy_sector_content = MarkdownField(blank=True)
@@ -1939,24 +1915,6 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
 
     homes_in_england_section_title = models.CharField(
         max_length=255, blank=True
-    )
-    homes_in_england_section_content = MarkdownField(blank=True)
-    homes_in_england_section_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+', blank=True
-    )
-    homes_in_england_section_cta_text = models.CharField(
-        max_length=255,
-        blank=True
-    )
-    homes_in_england_section_pdf_document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
     )
 
     how_we_help_title = models.CharField(max_length=255, blank=True)
@@ -2021,134 +1979,6 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading="Investment Opportunities by regions",
-            classname='collapsible',
-            children=[
-                FieldPanel('region_ops_section_title'),
-                FieldPanel('region_ops_section_intro'),
-                FieldRowPanel([
-                    MultiFieldPanel([
-                        ImageChooserPanel('region_card_one_image'),
-                        FieldPanel('region_card_one_title'),
-                        FieldPanel('region_card_one_summary'),
-                        FieldPanel('region_card_one_cta_text'),
-                        DocumentChooserPanel('region_card_one_pdf_document'),
-                    ]),
-                    MultiFieldPanel([
-                        ImageChooserPanel('region_card_two_image'),
-                        FieldPanel('region_card_two_title'),
-                        FieldPanel('region_card_two_summary'),
-                        FieldPanel('region_card_two_cta_text'),
-                        DocumentChooserPanel('region_card_two_pdf_document'),
-                    ]),
-                    MultiFieldPanel([
-                        ImageChooserPanel('region_card_three_image'),
-                        FieldPanel('region_card_three_title'),
-                        FieldPanel('region_card_three_summary'),
-                        FieldPanel('region_card_three_cta_text'),
-                        DocumentChooserPanel('region_card_three_pdf_document'),
-                    ]),
-                ]),
-                FieldRowPanel([
-                    MultiFieldPanel([
-                        ImageChooserPanel('region_card_four_image'),
-                        FieldPanel('region_card_four_title'),
-                        FieldPanel('region_card_four_summary'),
-                        FieldPanel('region_card_four_cta_text'),
-                        DocumentChooserPanel('region_card_four_pdf_document'),
-                    ]),
-                    MultiFieldPanel([
-                        ImageChooserPanel('region_card_five_image'),
-                        FieldPanel('region_card_five_title'),
-                        FieldPanel('region_card_five_summary'),
-                        FieldPanel('region_card_five_cta_text'),
-                        DocumentChooserPanel('region_card_five_pdf_document'),
-                    ]),
-                    MultiFieldPanel([
-                        ImageChooserPanel('region_card_six_image'),
-                        FieldPanel('region_card_six_title'),
-                        FieldPanel('region_card_six_summary'),
-                        FieldPanel('region_card_six_cta_text'),
-                        DocumentChooserPanel('region_card_six_pdf_document'),
-                    ]),
-                ]),
-            ]
-        ),
-        MultiFieldPanel(
-            heading="Related region pages",
-            classname='collapsible collapsed',
-            children=[
-                HelpPanel('Please use this to link to a related region, '
-                          'rather than adding in manually the region title, '
-                          'image and text in the above section when the '
-                          'capital invest region pages are available'),
-                PageChooserPanel(
-                    'related_region_one',
-                    [
-                        'great_international.'
-                        'CapitalInvestRegionPage'
-                    ]
-                ),
-                PageChooserPanel(
-                    'related_region_two',
-                    [
-                        'great_international.'
-                        'CapitalInvestRegionPage'
-                    ]
-                ),
-                PageChooserPanel(
-                    'related_region_three',
-                    [
-                        'great_international.'
-                        'CapitalInvestRegionPage'
-                    ]
-                ),
-                PageChooserPanel(
-                    'related_region_four',
-                    [
-                        'great_international.'
-                        'CapitalInvestRegionPage'
-                    ]
-                ),
-                PageChooserPanel(
-                    'related_region_five',
-                    [
-                        'great_international.'
-                        'CapitalInvestRegionPage'
-                    ]
-                ),
-                PageChooserPanel(
-                    'related_region_six',
-                    [
-                        'great_international.'
-                        'CapitalInvestRegionPage'
-                    ]
-                ),
-            ]
-        ),
-        MultiFieldPanel(
-            heading="Energy Sector",
-            classname='collapsible',
-            children=[
-                FieldPanel('energy_sector_title'),
-                FieldPanel('energy_sector_content'),
-                ImageChooserPanel('energy_sector_image'),
-                FieldPanel('energy_sector_cta_text'),
-                DocumentChooserPanel('energy_sector_pdf_document'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading="Extra Featured Section",
-            classname='collapsible collapsed',
-            children=[
-                FieldPanel('homes_in_england_section_title'),
-                FieldPanel('homes_in_england_section_content'),
-                ImageChooserPanel('homes_in_england_section_image'),
-                FieldPanel('homes_in_england_section_cta_text'),
-                DocumentChooserPanel('homes_in_england_section_pdf_document'),
-            ]
-        ),
-        MultiFieldPanel(
             heading="How we help section",
             classname='collapsible',
             children=[
@@ -2174,6 +2004,60 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
                         FieldPanel('how_we_help_four_text'),
                     ]),
                 ]),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Investment Opportunities by regions",
+            classname='collapsible',
+            children=[
+                FieldPanel('region_ops_section_title'),
+                FieldPanel('region_ops_section_intro'),
+                InlinePanel(
+                    'added_region_card_fields',
+                    label="Region card fields"
+                ),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Informative banner",
+            children=[
+                FieldPanel('banner_information')
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Related region pages",
+            classname='collapsible collapsed',
+            children=[
+                HelpPanel('Please use this to link to a related region, '
+                          'rather than adding in manually the region title, '
+                          'image and text in the above section when the '
+                          'capital invest region pages are available'),
+                InlinePanel(
+                    'added_regions',
+                    label="Related Regions"
+                ),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Energy Sector",
+            classname='collapsible',
+            children=[
+                FieldPanel('energy_sector_title'),
+                FieldPanel('energy_sector_content'),
+                ImageChooserPanel('energy_sector_image'),
+                FieldPanel('energy_sector_cta_text'),
+                DocumentChooserPanel('energy_sector_pdf_document'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Extra Featured Section",
+            classname='collapsible collapsed',
+            children=[
+                FieldPanel('homes_in_england_section_title'),
+                InlinePanel(
+                    'added_homes_in_england_card_fields',
+                    label="Homes In England cards"
+                )
             ]
         ),
         MultiFieldPanel(
@@ -2217,7 +2101,7 @@ class CapitalInvestRegionPage(BasePage):
         blank=True
     )
 
-    featured_description = models.CharField(max_length=255, blank=True)
+    featured_description = models.TextField(max_length=255, blank=True)
 
     region_summary_section_image = models.ForeignKey(
         'wagtailimages.Image',
