@@ -8,6 +8,7 @@
 - CMS-1421 - Integrate with GOV.UK Notify to send SSO user approval notifications
 - CI-104 - Added capital invest landing, region, sector and opportunity pages.
 - NOTICKET - Removed blanket debug logging to remove noise when using interactive shell tools
+- CI-144 - Updated capital invest landing page to match more recent invision designs
 
 ### Fixed bugs:
 
