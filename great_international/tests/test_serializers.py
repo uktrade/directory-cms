@@ -417,9 +417,12 @@ def test_capital_invest_landing_page_gets_added_homes_in_england_card_fields(
 @pytest.mark.django_db
 def test_capital_invest_landing_page_returns_empty_when_no_related_regions(rf):
 
+    related_page = CapitalInvestRelatedRegions()
+    
     capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
         parent=None,
         slug='sector',
+        added_regions=[related_page]
     )
 
     serializer = InternationalCapitalInvestLandingPageSerializer(
