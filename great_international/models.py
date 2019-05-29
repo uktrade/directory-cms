@@ -1829,7 +1829,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = 'capital-invest'
 
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
 
     hero_title = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
@@ -2075,7 +2075,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
 class CapitalInvestRegionPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
 
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.CapitalInvestRegionalSectorPage',
     ]
@@ -2476,9 +2476,7 @@ class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = 'opportunities'
 
-    parent_page_types = [
-        'great_international.GreatInternationalApp'
-    ]
+    parent_page_types = ['great_international.InternationalHomePage']
 
     @classmethod
     def get_required_translatable_fields(cls):
