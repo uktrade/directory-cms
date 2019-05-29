@@ -52,6 +52,41 @@ class HowWeHelpProxyDataWrapper:
         )
 
 
+class FeaturedCardsDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def image(self):
+        return getattr(
+            self.instance,
+            f'featured_card_{self.position_number}_image'
+        )
+
+    @property
+    def title(self):
+        return getattr(
+            self.instance,
+            f'featured_card_{self.position_number}_title'
+        )
+
+    @property
+    def summary(self):
+        return getattr(
+            self.instance,
+            f'featured_card_{self.position_number}_summary'
+        )
+
+    @property
+    def cta_link(self):
+        return getattr(
+            self.instance,
+            f'featured_card_{self.position_number}_cta_link'
+        )
+
+
 class PulloutSerializer(serializers.Serializer):
     text = core_fields.MarkdownToHTMLField()
     stat = serializers.CharField(allow_null=True)
@@ -170,6 +205,15 @@ class HowWeHelpSerializer(serializers.Serializer):
     )
 
 
+class FeaturedCardsSerializer(serializers.Serializer):
+    image = wagtail_fields.ImageRenditionField(
+        'fill-640x360'
+    )
+    title = serializers.CharField(max_length=255)
+    summary = core_fields.MarkdownToHTMLField(max_length=255)
+    cta_link = serializers.CharField(max_length=255)
+
+
 class InvestHomePageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField(max_length=50)
     heading = serializers.CharField(max_length=255)
@@ -194,28 +238,18 @@ class InvestHomePageSerializer(BasePageSerializer):
     sector_button_text = serializers.CharField(max_length=255)
     sector_button_url = serializers.CharField(max_length=255)
 
-    featured_card_one_image = wagtail_fields.ImageRenditionField(
-        'fill-640x360'
-    )
-    featured_card_one_title = serializers.CharField(max_length=255)
-    featured_card_one_summary = core_fields.MarkdownToHTMLField(max_length=255)
-    featured_card_one_cta_link = serializers.CharField(max_length=255)
+    featured_cards = serializers.SerializerMethodField()
 
-    featured_card_two_image = wagtail_fields.ImageRenditionField(
-        'fill-640x360'
-    )
-    featured_card_two_title = serializers.CharField(max_length=255)
-    featured_card_two_summary = core_fields.MarkdownToHTMLField(max_length=255)
-    featured_card_two_cta_link = serializers.CharField(max_length=255)
-
-    featured_card_three_image = wagtail_fields.ImageRenditionField(
-        'fill-640x360'
-    )
-    featured_card_three_title = serializers.CharField(max_length=255)
-    featured_card_three_summary = core_fields.MarkdownToHTMLField(
-        max_length=255
-    )
-    featured_card_three_cta_link = serializers.CharField(max_length=255)
+    def get_featured_cards(self, instance):
+        data = [
+            FeaturedCardsDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['one', 'two', 'three']
+        ]
+        serializer = FeaturedCardsSerializer(data, many=True)
+        return serializer.data
 
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_lead_in = serializers.CharField(max_length=255)
