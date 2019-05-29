@@ -54,8 +54,8 @@ def test_process_request_returns_none_if_url_not_in_admin(rf, url):
 
 
 @pytest.mark.parametrize('url', (
-    reverse('wagtailusers_users:sso_request_access'),
-    reverse('wagtailusers_users:sso_request_access_success'),
+    reverse('sso:request_access'),
+    reverse('sso:request_access_success'),
 ))
 def test_process_request_returns_none_if_user_requesting_access(rf, url):
     request = rf.get(url)
@@ -67,11 +67,11 @@ def test_process_request_returns_none_if_user_requesting_access(rf, url):
 @pytest.mark.parametrize('assignment_status, redirects_to', (
     (
         UserProfile.STATUS_CREATED,
-        reverse('wagtailusers_users:sso_request_access')
+        reverse('sso:request_access')
     ),
     (
         UserProfile.STATUS_AWAITING_APPROVAL,
-        reverse('wagtailusers_users:sso_request_access_success')
+        reverse('sso:request_access_success')
     ),
 ))
 def test_process_request_redirects_for_assignment_status(

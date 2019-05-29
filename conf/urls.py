@@ -113,6 +113,7 @@ urlpatterns = [
 
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
+    url(r'^auth/request-access/', include('users.urls_sso', namespace="sso")),
     url(
         r'^activity-stream/v1/',
         ActivityStreamView.as_view(),

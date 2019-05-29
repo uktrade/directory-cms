@@ -161,7 +161,7 @@ class EditUserView(
             notify_user_of_access_request_approval(
                 request=self.request,
                 user_email=self.object.email,
-                user_name=self.object.get_full_name(),
+                user_name=self.object.first_name,
                 reviewer_name=self.request.user.get_full_name(),
             )
 
@@ -172,7 +172,7 @@ class SSORequestAccessView(EditView):
     permission_required = None
     error_message = 'There was a problem with your submission'
     template_name = "sso/request_access.html"
-    success_url = reverse_lazy('wagtailusers_users:sso_request_access_success')
+    success_url = reverse_lazy('sso:request_access_success')
 
     def dispatch(self, request):
         self.get_object()
@@ -204,7 +204,7 @@ class SSORequestAccessView(EditView):
         notify_team_leader_of_pending_access_request(
             request=self.request,
             team_leader_email=self.object.team_leader.email,
-            team_leader_name=self.object.team_leader.get_full_name(),
+            team_leader_name=self.object.team_leader.first_name,
             user_id=self.request.user.id,
             user_name=self.request.user.get_full_name(),
             user_email=self.request.user.email,

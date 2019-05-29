@@ -278,11 +278,6 @@ if DEBUG:
                 'level': 'WARNING',
                 'propagate': False,
             },
-            '': {
-                'handlers': ['console'],
-                'level': 'DEBUG',
-                'propagate': False,
-            },
         }
     }
 else:
