@@ -1,0 +1,42 @@
+{% load i18n %}
+
+{% if pending_moderations %}
+<div class="panel nice-padding">
+    <section>
+        <h2>{% trans "Your pending Page moderations" %}</h2>
+
+        <table class="listing listing-page">
+            <col />
+            <col width="15%"/>
+            <col width="15%"/>
+            <thead>
+                <tr>
+                    <th class="title">{% trans "Title" %}</th>
+                    <th>{% trans "Date" %}</th>
+                    <th>{% trans "Author" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for pending_moderation in pending_moderations %}
+                <tr>
+                    <td class="title" valign="top">
+                        <h2>{{ pending_moderation.revision.page.title }}</h2>
+                    </td>
+                    <td valign="top">
+                        <div class="human-readable-date" title="{{ pending_moderation.created_at|date:"d M Y H:i" }}">
+                            {% blocktrans with time_period=pending_moderation.created_at|timesince %}{{ time_period }} ago{% endblocktrans %}
+                        </div>
+                    </td>
+                    <td valign="top">
+                        <p>{{ pending_moderation.user }}</p>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+    </section>
+</div>
+{% endif %}
