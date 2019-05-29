@@ -181,10 +181,6 @@ class InvestHomePageSerializer(BasePageSerializer):
     benefits_section_intro = serializers.CharField(max_length=255)
     benefits_section_content = core_fields.MarkdownToHTMLField()
     benefits_section_img = wagtail_fields.ImageRenditionField('fill-640x360')
-    capital_invest_section_title = serializers.CharField(max_length=255)
-    capital_invest_section_content = core_fields.MarkdownToHTMLField()
-    capital_invest_section_image = wagtail_fields.ImageRenditionField(
-        'fill-640x360')
     eu_exit_section_title = serializers.CharField(max_length=255)
     eu_exit_section_content = core_fields.MarkdownToHTMLField()
     eu_exit_section_call_to_action_text = serializers.CharField(max_length=255)
@@ -197,17 +193,6 @@ class InvestHomePageSerializer(BasePageSerializer):
     hpo_intro = serializers.CharField(max_length=255)
     sector_button_text = serializers.CharField(max_length=255)
     sector_button_url = serializers.CharField(max_length=255)
-    setup_guide_title = serializers.CharField(max_length=255)
-    setup_guide_content = core_fields.MarkdownToHTMLField()
-    setup_guide_img = wagtail_fields.ImageRenditionField('fill-640x360')
-    setup_guide_call_to_action_url = serializers.CharField(max_length=255)
-    setup_guide_lead_in = serializers.CharField(
-        max_length=255,
-        allow_null=True
-    )
-    isd_section_image = wagtail_fields.ImageRenditionField('fill-640x360')
-    isd_section_title = serializers.CharField(max_length=255)
-    isd_section_text = core_fields.MarkdownToHTMLField(max_length=255)
 
     featured_card_one_image = wagtail_fields.ImageRenditionField(
         'fill-640x360'
