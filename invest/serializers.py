@@ -237,20 +237,6 @@ class InvestHomePageSerializer(BasePageSerializer):
     hpo_intro = serializers.CharField(max_length=255)
     sector_button_text = serializers.CharField(max_length=255)
     sector_button_url = serializers.CharField(max_length=255)
-
-    featured_cards = serializers.SerializerMethodField()
-
-    def get_featured_cards(self, instance):
-        data = [
-            FeaturedCardsDataWrapper(
-                instance=instance,
-                position_number=num
-            )
-            for num in ['one', 'two', 'three']
-        ]
-        serializer = FeaturedCardsSerializer(data, many=True)
-        return serializer.data
-
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_lead_in = serializers.CharField(max_length=255)
     how_we_help = serializers.SerializerMethodField()
@@ -261,6 +247,7 @@ class InvestHomePageSerializer(BasePageSerializer):
     sectors = serializers.SerializerMethodField()
     high_potential_opportunities = serializers.SerializerMethodField()
     guides = serializers.SerializerMethodField()
+    featured_cards = serializers.SerializerMethodField()
 
     def get_how_we_help(self, instance):
         data = [
@@ -311,6 +298,17 @@ class InvestHomePageSerializer(BasePageSerializer):
             allow_null=True,
             context=self.context
         )
+        return serializer.data
+
+    def get_featured_cards(self, instance):
+        data = [
+            FeaturedCardsDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['one', 'two', 'three']
+        ]
+        serializer = FeaturedCardsSerializer(data, many=True)
         return serializer.data
 
 
