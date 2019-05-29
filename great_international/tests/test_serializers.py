@@ -6,6 +6,7 @@ from great_international.serializers import (
     InternationalGuideLandingPageSerializer,
 )
 from great_international.tests.factories import (
+    GreatInternationalAppFactory,
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
     InternationalCuratedTopicLandingPageFactory,
@@ -142,6 +143,36 @@ def test_related_article_page_serializer_has_pages(
     )
 
     assert len(serializer.data['related_pages']) == 3
+
+
+@pytest.mark.django_db
+def test_home_page_related_pages(root_page, rf):
+    related_page_one = InternationalArticlePageFactory(
+        parent=root_page,
+        slug='one'
+    )
+    related_page_two = InternationalCampaignPageFactory(
+        parent=root_page,
+        slug='two'
+    )
+
+    home_page = GreatInternationalAppFactory(
+        parent=root_page,
+        slug='home-page',
+        related_page_one=related_page_one,
+        related_page_two=related_page_two,
+    )
+
+    serializer = InternationalHomePageSerializer(
+        instance=home_page,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['related_pages']) == 2
+    for page in serializer.data['related_pages']:
+        assert 'title' in page
+        assert 'teaser' in page
+        assert 'thumbnail' in page
 
 
 @pytest.mark.django_db
