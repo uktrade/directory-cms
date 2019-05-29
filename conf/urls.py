@@ -15,6 +15,7 @@ import core.views
 import export_readiness.views
 from activitystream.views import ActivityStreamView
 from groups.views import GroupInfoModalView
+from moderation_queue.views import PendingModerations
 from review.api import urls as review_api_urls
 
 api_router = WagtailAPIRouter('api')
@@ -111,6 +112,11 @@ urlpatterns = [
         r'^admin/group-info/$',
         login_required(GroupInfoModalView.as_view()),
         name='group-info',
+    ),
+    url(
+        r'^admin/moderation-queue/$',
+        login_required(PendingModerations.as_view()),
+        name='moderation-queue',
     ),
 
     # Prevent users from changing their email address

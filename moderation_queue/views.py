@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.views.generic import ListView
 
-# Create your views here.
+from .models import PagePendingModeration
+
+
+class PendingModerations(ListView):
+    model = PagePendingModeration
+    template_name = "moderation_queue/list.html"
