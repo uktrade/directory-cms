@@ -2050,8 +2050,8 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading="Extra Featured Section",
-            classname='collapsible collapsed',
+            heading="Homes in England Section",
+            classname='collapsible',
             children=[
                 FieldPanel('homes_in_england_section_title'),
                 InlinePanel(
@@ -2062,7 +2062,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         ),
         MultiFieldPanel(
             heading="Contact Section",
-            classname='collapsible',
+            classname='collapsible collapsed',
             children=[
                 FieldPanel('contact_section_title'),
                 FieldPanel('contact_section_text'),
