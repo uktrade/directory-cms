@@ -21,7 +21,6 @@ from core.models import (
     FormPageMetaClass,
     ServiceMixin,
 )
-from core.mixins import ServiceHomepageMixin
 from core.panels import SearchEngineOptimisationPanel
 from export_readiness.models import Tag
 from wagtail.core.models import Orderable
@@ -884,7 +883,6 @@ class InternationalSectorPage(BasePage):
         content_panels=content_panels,
         settings_panels=settings_panels
     )
-
 
 
 class InternationalRegionPage(BasePage):
