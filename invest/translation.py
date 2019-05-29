@@ -62,6 +62,22 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'isd_section_image',
         'isd_section_title',
         'isd_section_text',
+
+        'featured_card_one_image',
+        'featured_card_one_title',
+        'featured_card_one_summary',
+        'featured_card_one_cta_link',
+
+        'featured_card_two_image',
+        'featured_card_two_title',
+        'featured_card_two_summary',
+        'featured_card_two_cta_link',
+
+        'featured_card_three_image',
+        'featured_card_three_title',
+        'featured_card_three_summary',
+        'featured_card_three_cta_link',
+
         'how_we_help_title',
         'how_we_help_lead_in',
         # how we help

@@ -208,6 +208,30 @@ class InvestHomePageSerializer(BasePageSerializer):
     isd_section_image = wagtail_fields.ImageRenditionField('fill-640x360')
     isd_section_title = serializers.CharField(max_length=255)
     isd_section_text = core_fields.MarkdownToHTMLField(max_length=255)
+
+    featured_card_one_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360'
+    )
+    featured_card_one_title = serializers.CharField(max_length=255)
+    featured_card_one_summary = core_fields.MarkdownToHTMLField(max_length=255)
+    featured_card_one_cta_link = serializers.CharField(max_length=255)
+
+    featured_card_two_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360'
+    )
+    featured_card_two_title = serializers.CharField(max_length=255)
+    featured_card_two_summary = core_fields.MarkdownToHTMLField(max_length=255)
+    featured_card_two_cta_link = serializers.CharField(max_length=255)
+
+    featured_card_three_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360'
+    )
+    featured_card_three_title = serializers.CharField(max_length=255)
+    featured_card_three_summary = core_fields.MarkdownToHTMLField(
+        max_length=255
+    )
+    featured_card_three_cta_link = serializers.CharField(max_length=255)
+
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_lead_in = serializers.CharField(max_length=255)
     how_we_help = serializers.SerializerMethodField()
