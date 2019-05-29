@@ -9,7 +9,6 @@ class GreatInternationalConfig(AppConfig):
         from great_international import cache, models, signals
         cache.GreatInternationalAppSubscriber.subscribe()
         cache.InternationalSectorPageSubscriber.subscribe()
-        cache.InternationalHomePageSubscriber.subscribe()
         cache.InternationalArticlePageSubscriber.subscribe()
         cache.InternationalCampaignPageSubscriber.subscribe()
         cache.InternationalArticleListingPageSubscriber.subscribe()

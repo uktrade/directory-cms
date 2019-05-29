@@ -127,12 +127,6 @@ class InternationalSectorPageFactory(wagtail_factories.PageFactory):
     section_three_subsection_two_body = factory.fuzzy.FuzzyText(length=10)
 
 
-class InternationalHomePageFactory(GreatInternationalAppFactory):
-
-    class Meta:
-        model = models.InternationalHomePage
-
-
 class InternationalArticleListingPageFactory(wagtail_factories.PageFactory):
 
     class Meta:

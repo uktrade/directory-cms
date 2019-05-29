@@ -20,13 +20,6 @@ class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
     ]
 
 
-class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InternationalHomePage
-    subscriptions = [
-        models.InternationalArticlePage,
-    ]
-
-
 class InternationalArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalArticlePage
     subscriptions = []

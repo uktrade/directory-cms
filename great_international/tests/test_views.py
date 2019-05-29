@@ -15,7 +15,7 @@ def test_international_sector_page(admin_client, root_page):
 
 
 def test_international_homepage(admin_client, root_page):
-    home_page = factories.InternationalHomePageFactory.create(
+    home_page = factories.GreatInternationalAppFactory.create(
         parent=root_page
     )
     url = reverse('api:api:pages:detail', kwargs={'pk': home_page.pk})
