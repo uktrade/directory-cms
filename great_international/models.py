@@ -23,7 +23,7 @@ from core.panels import SearchEngineOptimisationPanel
 from export_readiness.models import Tag
 
 
-class GreatInternationalApp(ExclusivePageMixin, BasePage):
+class InternationalHomePage(ExclusivePageMixin, BasePage):
     slug_identity = 'great-international-app'
     service_name_value = cms.GREAT_INTERNATIONAL
 
@@ -878,9 +878,10 @@ class InternationalSectorPage(BasePage):
     )
 
 
+
 class InternationalRegionPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.InternationalLocalisedFolderPage'
     ]
@@ -1017,7 +1018,7 @@ class InternationalArticlePage(BasePage):
 class InternationalArticleListingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = [
-        'great_international.GreatInternationalApp',
+        'great_international.InternationalHomePage',
         'great_international.InternationalTopicLandingPage'
     ]
     subpage_types = [
@@ -1314,7 +1315,7 @@ class InternationalCampaignPage(BasePage):
 
 class InternationalTopicLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
@@ -1360,7 +1361,7 @@ class InternationalTopicLandingPage(BasePage):
 
 class InternationalCuratedTopicLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = []
 
     display_title = models.CharField(max_length=255, blank=True, null=True)
@@ -1491,7 +1492,7 @@ class InternationalCuratedTopicLandingPage(BasePage):
 
 class InternationalGuideLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = ['great_international.InternationalArticlePage']
 
     display_title = models.CharField(max_length=255)

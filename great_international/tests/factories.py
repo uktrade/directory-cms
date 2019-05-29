@@ -7,10 +7,10 @@ from django.utils import timezone
 from great_international import models
 
 
-class GreatInternationalAppFactory(wagtail_factories.PageFactory):
+class InternationalHomePageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.GreatInternationalApp
+        model = models.InternationalHomePage
 
     hero_title = factory.fuzzy.FuzzyText(length=10)
     invest_title = factory.fuzzy.FuzzyText(length=10)

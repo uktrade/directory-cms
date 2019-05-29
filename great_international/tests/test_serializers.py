@@ -6,7 +6,7 @@ from great_international.serializers import (
     InternationalGuideLandingPageSerializer,
 )
 from great_international.tests.factories import (
-    GreatInternationalAppFactory,
+    InternationalHomePageFactory,
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory,
     InternationalCuratedTopicLandingPageFactory,
@@ -156,7 +156,7 @@ def test_home_page_related_pages(root_page, rf):
         slug='two'
     )
 
-    home_page = GreatInternationalAppFactory(
+    home_page = InternationalHomePageFactory(
         parent=root_page,
         slug='home-page',
         related_page_one=related_page_one,

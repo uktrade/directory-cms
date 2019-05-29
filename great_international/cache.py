@@ -5,8 +5,8 @@ from core.cache import (
 from great_international import models
 
 
-class GreatInternationalAppSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.GreatInternationalApp
+class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.InternationalHomePage
     subscriptions = [
         models.InternationalArticlePage,
     ]

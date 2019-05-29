@@ -7,8 +7,8 @@ from export_readiness.tests import factories as exread_factories
 
 
 def test_models_hierarchy():
-    # app
-    assert models.GreatInternationalApp.allowed_subpage_models() == [
+    # homepage
+    assert models.InternationalHomePage.allowed_subpage_models() == [
         models.InternationalArticleListingPage,
         models.InternationalTopicLandingPage,
         models.InternationalCuratedTopicLandingPage,
@@ -17,11 +17,9 @@ def test_models_hierarchy():
         models.InternationalEUExitFormPage,
         models.InternationalEUExitFormSuccessPage,
     ]
-    assert models.GreatInternationalApp.allowed_parent_page_models() == [
+    assert models.InternationalHomePage.allowed_parent_page_models() == [
         Page,
     ]
-    # homepage
-    assert models.InternationalHomePage.allowed_subpage_models() == []
     # region page
     assert models.InternationalRegionPage.allowed_subpage_models() == [
         models.InternationalLocalisedFolderPage
@@ -72,13 +70,13 @@ def test_app_required_translatable_fields(model):
 
 @pytest.mark.django_db
 def test_set_slug():
-    instance = models.GreatInternationalApp.objects.create(
+    instance = models.InternationalHomePage.objects.create(
         title_en_gb='the app',
         depth=2,
         path='/thing',
     )
 
-    assert instance.slug == models.GreatInternationalApp.slug_identity
+    assert instance.slug == models.InternationalHomePage.slug_identity
 
 
 @pytest.mark.django_db
