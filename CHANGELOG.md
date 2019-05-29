@@ -9,6 +9,7 @@
 - CI-104 - Added capital invest landing, region, sector and opportunity pages.
 - NOTICKET - Removed blanket debug logging to remove noise when using interactive shell tools
 - CI-144 - Updated capital invest landing page to match more recent invision designs
+- CI-148 - Updated capital invest pages to match more recent page designs
 
 ### Fixed bugs:
 

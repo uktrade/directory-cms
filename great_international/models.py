@@ -2050,8 +2050,8 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
             ]
         ),
         MultiFieldPanel(
-            heading="Extra Featured Section",
-            classname='collapsible collapsed',
+            heading="Homes in England Section",
+            classname='collapsible',
             children=[
                 FieldPanel('homes_in_england_section_title'),
                 InlinePanel(
@@ -2062,7 +2062,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
         ),
         MultiFieldPanel(
             heading="Contact Section",
-            classname='collapsible',
+            classname='collapsible collapsed',
             children=[
                 FieldPanel('contact_section_title'),
                 FieldPanel('contact_section_text'),
@@ -2578,7 +2578,7 @@ class CapitalInvestOpportunityPage(BasePage):
     planning_status = models.CharField(max_length=255, blank=True)
 
     project_background_title = models.CharField(max_length=255, blank=True)
-    project_background_intro = models.TextField(max_length=255, blank=True)
+    project_background_intro = models.TextField(blank=True)
     project_description_title = models.CharField(max_length=255, blank=True)
     project_description_content = MarkdownField(blank=True)
     project_promoter_title = models.CharField(max_length=255, blank=True)
@@ -2685,6 +2685,24 @@ class CapitalInvestOpportunityPage(BasePage):
             ],
         ),
         MultiFieldPanel(
+            heading="Project Details",
+            children=[
+                FieldPanel('project_background_title'),
+                FieldPanel('project_background_intro'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('project_description_title'),
+                        FieldPanel('project_description_content'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('project_promoter_title'),
+                        FieldPanel('project_promoter_content'),
+                    ]),
+                ]),
+                ImageChooserPanel('project_image')
+            ],
+        ),
+        MultiFieldPanel(
             heading="Similar projects",
             children=[
                 FieldPanel('similar_projects_title'),
@@ -2710,24 +2728,6 @@ class CapitalInvestOpportunityPage(BasePage):
                 ]),
                 FieldPanel('similar_projects_cta_text'),
                 FieldPanel('similar_projects_cta_link'),
-            ],
-        ),
-        MultiFieldPanel(
-            heading="Project Details",
-            children=[
-                FieldPanel('project_background_title'),
-                FieldPanel('project_background_intro'),
-                FieldRowPanel([
-                    MultiFieldPanel([
-                        FieldPanel('project_description_title'),
-                        FieldPanel('project_description_content'),
-                    ]),
-                    MultiFieldPanel([
-                        FieldPanel('project_promoter_title'),
-                        FieldPanel('project_promoter_content'),
-                    ]),
-                ]),
-                ImageChooserPanel('project_image')
             ],
         ),
         MultiFieldPanel(
