@@ -13,20 +13,6 @@ def test_required_fields_invest_home_page():
             'breadcrumbs_label',
             'heading',
             'sub_heading',
-            'benefits_section_title',
-            'sector_title',
-            'sector_button_text',
-            'sector_button_url',
-            'hpo_title',
-            'how_we_help_title',
-            'how_we_help_text_one',
-            'how_we_help_text_two',
-            'how_we_help_text_three',
-            'how_we_help_text_four',
-            'how_we_help_text_five',
-            'contact_section_title',
-            'contact_section_call_to_action_text',
-            'contact_section_call_to_action_url'
         ]
     }
 
