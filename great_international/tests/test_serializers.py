@@ -6,9 +6,8 @@ from great_international.serializers import (
     InternationalGuideLandingPageSerializer,
 )
 from great_international.tests.factories import (
-    InternationalHomePageFactory,
     InternationalSectorPageFactory, InternationalArticlePageFactory,
-    InternationalCampaignPageFactory,
+    InternationalCampaignPageFactory, InternationalHomePageFactory,
     InternationalCuratedTopicLandingPageFactory,
     InternationalGuideLandingPageFactory,
 )

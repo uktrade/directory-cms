@@ -5,18 +5,18 @@ from core.cache import (
 from great_international import models
 
 
-class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InternationalHomePage
-    subscriptions = [
-        models.InternationalArticlePage,
-    ]
-
-
 class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalSectorPage
     subscriptions = [
         models.InternationalArticlePage,
         models.InternationalCampaignPage
+    ]
+
+
+class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.InternationalHomePage
+    subscriptions = [
+        models.InternationalArticlePage,
     ]
 
 

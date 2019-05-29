@@ -104,9 +104,9 @@ def test_page_paths(root_page):
     assert domestic_cookies_one.full_path == '/privacy/'
     assert domestic_cookies_two.full_path == '/privacy/cookies/'
 
-    international_app = InternationalHomePageFactory(parent=root_page)
+    international_homepage = InternationalHomePageFactory(parent=root_page)
     international_page_one = InternationalTopicLandingPageFactory(
-        parent=international_app, slug='topic')
+        parent=international_homepage, slug='topic')
     international_page_two = InternationalArticleListingPageFactory(
         parent=international_page_one, slug='list')
     international_page_three = InternationalArticlePageFactory(

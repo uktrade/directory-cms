@@ -46,7 +46,6 @@ def populate_apppage_fields_from_homepage(apps, schema_editor):
         revision_content['draft_title'] = new_title
 
         revision.content_json = json.dumps(revision_content)
-        print(json.dumps(revision_content, sort_keys=True, indent=4))
         revision.save()
 
         # ------------------------------------------------------------------------
@@ -56,9 +55,8 @@ def populate_apppage_fields_from_homepage(apps, schema_editor):
         # Values we want the app page to keep
         preserve_attrs = (
             'id', 'slug', 'live', 'url_path', 'path', 'depth',
-            'content_type_id', 'numchild', 'latest_revision_created_at',
-            'live_revision', 'owner', 'locked',
-            'revisions', '_live_revision_cache', '_owner_cache', '_state'
+            'content_type_id', 'numchild', 'owner', 'locked',
+            '_live_revision_cache', '_owner_cache', '_state'
         )
 
         # update app_page values with home_page ones
@@ -76,8 +74,7 @@ def populate_apppage_fields_from_homepage(apps, schema_editor):
         app_page.draft_title = new_title
         app_page.title = new_title
 
-        print(app_page.__dict__)
-        # save the page
+        # save changes
         app_page.save()
 
 

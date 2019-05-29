@@ -7,8 +7,8 @@ class GreatInternationalConfig(AppConfig):
 
     def ready(self):
         from great_international import cache, models, signals
-        cache.InternationalHomePageSubscriber.subscribe()
         cache.InternationalSectorPageSubscriber.subscribe()
+        cache.InternationalHomePageSubscriber.subscribe()
         cache.InternationalArticlePageSubscriber.subscribe()
         cache.InternationalCampaignPageSubscriber.subscribe()
         cache.InternationalArticleListingPageSubscriber.subscribe()
