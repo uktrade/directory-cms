@@ -431,3 +431,21 @@ def test_capital_invest_landing_page_returns_empty_when_no_related_regions(rf):
     )
 
     assert serializer.data['added_region_card_fields'] == []
+
+
+@pytest.mark.django_db
+def test_capital_invest_landing_page_has_how_we_help(rf):
+    region = InternationalCapitalInvestLandingPageFactory(
+        slug='region-slug',
+        parent=None
+    )
+
+    serializer = InternationalCapitalInvestLandingPageSerializer(
+        instance=region,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['how_we_help_icon_and_text']) == 4
+    for statistic in serializer.data['how_we_help_icon_and_text']:
+        assert 'text' in statistic
+        assert 'icon' in statistic
