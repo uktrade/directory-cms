@@ -954,10 +954,8 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer,
 
     case_study_cta_link = serializers.CharField(max_length=255)
 
-    next_steps_title = serializers.CharField(max_length=255)
-    next_steps_intro = serializers.CharField(max_length=255)
-    invest_cta_text = serializers.CharField(max_length=255)
-    buy_cta_text = serializers.CharField(max_length=255)
+    contact_title = serializers.CharField(max_length=255)
+    contact_text = core_fields.MarkdownToHTMLField()
 
     child_pages = serializers.SerializerMethodField()
 
@@ -987,11 +985,8 @@ class CapitalInvestRegionalSectorPageSerializer(
 
     investment_opportunities_title = serializers.CharField(max_length=255)
 
-    next_steps_title = serializers.CharField(max_length=255)
-    next_steps_intro = serializers.CharField(max_length=255)
-
-    invest_cta_text = serializers.CharField(max_length=255)
-    buy_cta_text = serializers.CharField(max_length=255)
+    contact_title = serializers.CharField(max_length=255)
+    contact_text = core_fields.MarkdownToHTMLField()
 
     parent = serializers.SerializerMethodField()
 
@@ -1081,11 +1076,8 @@ class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
     similar_projects_cta_text = serializers.CharField(max_length=255)
     similar_projects_cta_link = serializers.CharField(max_length=255)
 
-    next_steps_title = serializers.CharField(max_length=255)
-    next_steps_intro = serializers.CharField(max_length=255)
-
-    invest_cta_text = serializers.CharField(max_length=255)
-    buy_cta_text = serializers.CharField(max_length=255)
+    contact_title = serializers.CharField(max_length=255)
+    contact_text = core_fields.MarkdownToHTMLField()
 
 
 class MinimalPageSerializer(BasePageSerializer):
