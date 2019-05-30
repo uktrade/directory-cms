@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import patch
+from unittest import mock
 
 from bs4 import BeautifulSoup
 from directory_constants.constants import cms
@@ -10,7 +10,6 @@ from django.forms.models import model_to_dict
 from django.urls import reverse
 
 from core import helpers, permissions, views
-from core.cache import PageIDCache
 from core.helpers import CachedResponse
 from conf.signature import SignatureCheckPermission
 from find_a_supplier.tests.factories import (
@@ -396,19 +395,21 @@ def test_lookup_by_path(root_page, page, admin_client):
     assert response.json()['id'] == page.id
 
 
-@pytest.mark.parametrize(
-    'path,override_path',
-    views.PageLookupByPathAPIEndpoint.path_lookup_overrides
-)
+@pytest.mark.django_db
+@mock.patch('core.cache.PageIDCache.get_for_path')
 def test_lookup_by_path_view_respects_overrides(
-    admin_client, path, override_path
+    mocked_method, admin_client
 ):
+    path = '/international/'
+    override_path = '/'
+
+    overrides = views.PageLookupByPathAPIEndpoint.path_lookup_overrides
+    assert (path, override_path) in overrides
+
     url = reverse(
         'api:lookup-by-path', kwargs={'path': path, 'site_id': 1}
     )
-
-    with patch.object(PageIDCache, 'get_for_path') as mocked_method:
-        admin_client.get(url)
+    admin_client.get(url)
 
     mocked_method.assert_called_with(site_id=1, path=override_path)
 
@@ -441,19 +442,18 @@ def test_lookup_by_slug(translated_page, admin_client):
     assert response.json()['id'] == translated_page.id
 
 
-@pytest.mark.parametrize(
-    'service_name,slug,override_slug',
-    views.PageLookupBySlugAPIEndpoint.slug_lookup_overrides
-)
-def test_lookup_by_slug_view_respects_overrides(
-    admin_client, service_name, slug, override_slug
-):
-    url = reverse(
-        'api:lookup-by-slug', kwargs={'slug': slug}
-    )
+@pytest.mark.django_db
+@mock.patch('core.cache.PageIDCache.get_for_slug')
+def test_lookup_by_slug_view_respects_overrides(mocked_method, admin_client):
+    service_name = cms.GREAT_INTERNATIONAL
+    slug = 'international'
+    override_slug = 'great-international-app'
 
-    with patch.object(PageIDCache, 'get_for_slug') as mocked_method:
-        admin_client.get(url, {'service_name': service_name})
+    overrides = views.PageLookupBySlugAPIEndpoint.slug_lookup_overrides
+    assert (service_name, slug, override_slug) in overrides
+
+    url = reverse('api:lookup-by-slug', kwargs={'slug': slug})
+    admin_client.get(url, {'service_name': service_name})
 
     mocked_method.assert_called_with(
         service_name=service_name,
