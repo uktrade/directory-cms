@@ -5,6 +5,14 @@ from __future__ import unicode_literals
 from django.db import migrations
 
 
+def unset_page_content_type(apps, schema_editor):
+    ContentType = apps.get_model('contenttypes', 'ContentType')
+    Page = apps.get_model('wagtailcore', 'Page')
+    page_ct = ContentType.objects.get(app_label='wagtailcore', model='page')
+    homepage_ct = ContentType.objects.get(app_label='great_international', model='internationalhomepage')
+    Page.objects.filter(content_type=homepage_ct).update(content_type=page_ct)
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -16,5 +24,8 @@ class Migration(migrations.Migration):
     operations = [
         migrations.DeleteModel(
             name='InternationalHomePage',
+        ),
+        migrations.RunPython(
+            unset_page_content_type, migrations.RunPython.noop
         ),
     ]

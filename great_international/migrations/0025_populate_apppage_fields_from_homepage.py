@@ -33,7 +33,7 @@ def populate_apppage_fields_from_homepage(apps, schema_editor):
         revision_content = json.loads(revision.content_json)
         for field_name in (
             'pk', 'slug', 'path', 'url_path', 'depth', 'numchild',
-            'live_revision', 'content_type', 'owner', 'locked'
+            'live_revision', 'owner', 'locked'
         ):
             val = getattr(app_page, field_name)
             if hasattr(val, 'pk'):
@@ -41,10 +41,10 @@ def populate_apppage_fields_from_homepage(apps, schema_editor):
                 revision_content[field_name] = val.pk
             else:
                 revision_content[field_name] = val
+
         revision_content['title'] = new_title
         revision_content['title_en_gb'] = new_title
         revision_content['draft_title'] = new_title
-
         revision.content_json = json.dumps(revision_content)
         revision.save()
 
