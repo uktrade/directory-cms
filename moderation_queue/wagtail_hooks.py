@@ -42,3 +42,18 @@ def replace_moderation_panel(request, panels):
         # replace standard Wagtail Moderation panel (PagesForModerationPanel)
         # with a custom panel to show PagePendingModeration objects.
         panels[i] = ModerationQueuePanel(request)
+
+
+@hooks.register('after_create_page')
+@hooks.register('after_edit_page')
+def add_page_to_moderation_queue(request, page):
+    latest_revision = page.revisions.latest('created_at')
+
+    if not latest_revision.submitted_for_moderation:
+        return
+
+    # TODO: should we remove exiting PagePendingModeration rows for the given page?
+    PagePendingModeration.objects.create(
+        revision=latest_revision,
+        user_id=latest_revision.user_id,
+    )
