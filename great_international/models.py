@@ -2208,12 +2208,8 @@ class CapitalInvestRegionPage(BasePage):
     case_study_cta_text = models.CharField(max_length=255, blank=True)
     case_study_cta_link = models.CharField(max_length=255, blank=True)
 
-    next_steps_title = models.CharField(max_length=255, blank=True)
-    next_steps_intro = models.TextField(max_length=255, blank=True)
-
-    invest_cta_text = models.CharField(max_length=255, blank=True)
-
-    buy_cta_text = models.CharField(max_length=255, blank=True)
+    contact_title = models.CharField(max_length=255, blank=True)
+    contact_text = MarkdownField(blank=True)
 
     content_panels = [
         FieldPanel('breadcrumbs_label'),
@@ -2315,14 +2311,10 @@ class CapitalInvestRegionPage(BasePage):
             ],
         ),
         MultiFieldPanel(
-            heading="Next steps",
+            heading="Contact",
             children=[
-                FieldPanel('next_steps_title'),
-                FieldPanel('next_steps_intro'),
-                FieldRowPanel([
-                    FieldPanel('invest_cta_text'),
-                    FieldPanel('buy_cta_text'),
-                ]),
+                FieldPanel('contact_title'),
+                FieldPanel('contact_text'),
             ],
         ),
     ]
@@ -2409,11 +2401,8 @@ class CapitalInvestRegionalSectorPage(BasePage):
         blank=True
     )
 
-    next_steps_title = models.CharField(max_length=255, blank=True)
-    next_steps_intro = models.CharField(max_length=255, blank=True)
-
-    invest_cta_text = models.CharField(max_length=255, blank=True)
-    buy_cta_text = models.CharField(max_length=255, blank=True)
+    contact_title = models.CharField(max_length=255, blank=True)
+    contact_text = MarkdownField(blank=True)
 
     content_panels = [
         FieldPanel('breadcrumbs_label'),
@@ -2444,14 +2433,10 @@ class CapitalInvestRegionalSectorPage(BasePage):
             ],
         ),
         MultiFieldPanel(
-            heading="Next steps",
+            heading="Contact",
             children=[
-                FieldPanel('next_steps_title'),
-                FieldPanel('next_steps_intro'),
-                FieldRowPanel([
-                    FieldPanel('invest_cta_text'),
-                    FieldPanel('buy_cta_text'),
-                ]),
+                FieldPanel('contact_title'),
+                FieldPanel('contact_text'),
             ],
         ),
     ]
@@ -2613,11 +2598,8 @@ class CapitalInvestOpportunityPage(BasePage):
     similar_projects_cta_text = models.CharField(max_length=255, blank=True)
     similar_projects_cta_link = models.CharField(max_length=255, blank=True)
 
-    next_steps_title = models.CharField(max_length=255, blank=True)
-    next_steps_intro = models.CharField(max_length=255, blank=True)
-
-    invest_cta_text = models.CharField(max_length=255, blank=True)
-    buy_cta_text = models.CharField(max_length=255, blank=True)
+    contact_title = models.CharField(max_length=255, blank=True)
+    contact_text = MarkdownField(blank=True)
 
     content_panels = [
         FieldPanel('breadcrumbs_label'),
@@ -2727,14 +2709,10 @@ class CapitalInvestOpportunityPage(BasePage):
         ),
 
         MultiFieldPanel(
-            heading="Next steps",
+            heading="Contact",
             children=[
-                FieldPanel('next_steps_title'),
-                FieldPanel('next_steps_intro'),
-                FieldRowPanel([
-                    FieldPanel('invest_cta_text'),
-                    FieldPanel('buy_cta_text'),
-                ]),
+                FieldPanel('contact_title'),
+                FieldPanel('contact_text'),
             ],
         ),
     ]
