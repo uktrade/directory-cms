@@ -12,6 +12,7 @@
 - CI-148 - Updated capital invest pages to match more recent page designs
 - CI-150 - Updated featured cards on Invest home page to be more flexible and all from cms
 - CI-128 - Changed required fields to be nullable and removed unused fields on Invest home page
+- CI-152 - Changed `next steps` sections to be `contact` section on capital invest pages
 
 ### Fixed bugs:
 
