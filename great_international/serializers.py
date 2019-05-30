@@ -845,6 +845,7 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
     contact_section_cta_text = serializers.CharField(max_length=255)
     added_homes_in_england_card_fields = serializers.SerializerMethodField()
     added_region_card_fields = serializers.SerializerMethodField()
+    added_regions = serializers.SerializerMethodField()
 
     def get_how_we_help_icon_and_text(self, instance):
         data = [
