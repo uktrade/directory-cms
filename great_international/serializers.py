@@ -181,6 +181,27 @@ class LocationStatisticProxyDataWrapper:
         )
 
 
+class HowWeHelpProxyDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def text(self):
+        return getattr(
+            self.instance,
+            f'how_we_help_{self.position_number}_text'
+        )
+
+    @property
+    def icon(self):
+        return getattr(
+            self.instance,
+            f'how_we_help_{self.position_number}_icon'
+        )
+
+
 class SectionThreeSubsectionSerializer(serializers.Serializer):
     heading = serializers.CharField(max_length=255)
     teaser = serializers.CharField()
@@ -214,6 +235,11 @@ class LocationStatSerializer(serializers.Serializer):
     number = serializers.CharField(max_length=255)
     heading = serializers.CharField(max_length=255)
     smallprint = serializers.CharField(max_length=255)
+
+
+class HowWeHelpSerializer(serializers.Serializer):
+    text = serializers.CharField(max_length=255)
+    icon = wagtail_fields.ImageRenditionField('original')
 
 
 class RelatedArticlePageSerializer(BasePageSerializer):
@@ -813,14 +839,19 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
 
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_intro = serializers.CharField(max_length=255)
-    how_we_help_one_icon = wagtail_fields.ImageRenditionField('original')
-    how_we_help_one_text = serializers.CharField(max_length=255)
-    how_we_help_two_icon = wagtail_fields.ImageRenditionField('original')
-    how_we_help_two_text = serializers.CharField(max_length=255)
-    how_we_help_three_icon = wagtail_fields.ImageRenditionField('original')
-    how_we_help_three_text = serializers.CharField(max_length=255)
-    how_we_help_four_icon = wagtail_fields.ImageRenditionField('original')
-    how_we_help_four_text = serializers.CharField(max_length=255)
+
+    how_we_help_icon_and_text = serializers.SerializerMethodField()
+
+    def get_how_we_help_icon_and_text(self, instance):
+        data = [
+            HowWeHelpProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['one', 'two', 'three', 'four']
+        ]
+        serializer = HowWeHelpSerializer(data, many=True)
+        return serializer.data
 
     contact_section_title = serializers.CharField(max_length=255)
     contact_section_text = serializers.CharField(max_length=255)
