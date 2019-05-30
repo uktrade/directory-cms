@@ -5,26 +5,6 @@ from __future__ import unicode_literals
 from django.db import migrations
 
 
-def migrate_forwards(apps, schema_editor):
-    ContentType = apps.get_model('contenttypes', 'ContentType')
-    Page = apps.get_model('wagtailcore', 'Page')
-
-    homepage_ct = ContentType.objects.get(app_label='great_international', model='internationalhomepage')
-    apppage_ct = ContentType.objects.get(app_label='great_international', model='greatinternationalapp')
-
-    Page.objects.filter(content_type=apppage_ct).update(content_type=homepage_ct)
-
-
-def migrate_backwards(apps, schema_editor):
-    ContentType = apps.get_model('contenttypes', 'ContentType')
-    Page = apps.get_model('wagtailcore', 'Page')
-
-    homepage_ct = ContentType.objects.get(app_label='great_international', model='internationalhomepage')
-    apppage_ct = ContentType.objects.get(app_label='great_international', model='greatinternationalapp')
-
-    Page.objects.filter(content_type=homepage_ct).update(content_type=apppage_ct)
-
-
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -36,5 +16,4 @@ class Migration(migrations.Migration):
             old_name='GreatInternationalApp',
             new_name='InternationalHomePage',
         ),
-        migrations.RunPython(migrate_forwards, migrate_backwards),
     ]
