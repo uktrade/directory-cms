@@ -230,7 +230,6 @@ class InvestHomePageSerializer(BasePageSerializer):
     eu_exit_section_call_to_action_text = serializers.CharField(max_length=255)
     eu_exit_section_call_to_action_url = serializers.CharField(max_length=255)
     eu_exit_section_img = wagtail_fields.ImageRenditionField('original')
-    subsections = serializers.SerializerMethodField()
     sector_title = serializers.CharField(max_length=255)
     sector_intro = serializers.CharField(max_length=255)
     hpo_title = serializers.CharField(max_length=255)
@@ -255,14 +254,6 @@ class InvestHomePageSerializer(BasePageSerializer):
             for num in ONE_TO_SIX_WORDS
         ]
         serializer = HowWeHelpSerializer(data, many=True)
-        return serializer.data
-
-    def get_subsections(self, instance):
-        data = [
-            SubsectionProxyDataWrapper(instance=instance, suffix=num)
-            for num in ONE_TO_SEVEN_WORDS
-        ]
-        serializer = SubsectionSerializer(data, many=True)
         return serializer.data
 
     def get_sectors(self, instance):

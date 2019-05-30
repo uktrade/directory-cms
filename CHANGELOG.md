@@ -11,6 +11,7 @@
 - CI-144 - Updated capital invest landing page to match more recent invision designs
 - CI-148 - Updated capital invest pages to match more recent page designs
 - CI-150 - Updated featured cards on Invest home page to be more flexible and all from cms
+- CI-128 - Changed required fields to be nullable and removed unused fields on Invest home page
 
 ### Fixed bugs:
 
