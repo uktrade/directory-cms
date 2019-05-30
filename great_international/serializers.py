@@ -288,8 +288,6 @@ class RegionCardFieldSerializer(serializers.Serializer):
     region_card_image = wagtail_fields.ImageRenditionField('original')
     region_card_title = serializers.CharField(max_length=255)
     region_card_summary = core_fields.MarkdownToHTMLField()
-    region_card_cta_text = serializers.CharField(max_length=255)
-    region_card_pdf_document = core_fields.DocumentURLField()
 
 
 class HomesInEnglandCardFieldSerializer(serializers.Serializer):

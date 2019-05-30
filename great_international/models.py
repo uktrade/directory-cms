@@ -1728,22 +1728,12 @@ class RegionCardField(models.Model):
     )
     region_card_title = models.CharField(max_length=255, blank=True)
     region_card_summary = MarkdownField(blank=True)
-    region_card_cta_text = models.CharField(max_length=255, blank=True)
-    region_card_pdf_document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
 
     panels = [
         MultiFieldPanel([
             ImageChooserPanel('region_card_image'),
             FieldPanel('region_card_title'),
             FieldPanel('region_card_summary'),
-            FieldPanel('region_card_cta_text'),
-            DocumentChooserPanel('region_card_pdf_document'),
         ]),
     ]
 
