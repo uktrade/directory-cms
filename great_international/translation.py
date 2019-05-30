@@ -373,10 +373,9 @@ class CapitalInvestRegionPageTranslationOptions(
         'case_study_cta_text',
         'case_study_cta_link',
 
-        'next_steps_title',
-        'next_steps_intro',
-        'invest_cta_text',
-        'buy_cta_text',
+        'contact_title',
+        'contact_text',
+
     )
 
 
@@ -396,11 +395,8 @@ class CapitalInvestRegionalSectorPageTranslationOptions(
 
         'investment_opportunities_title',
 
-        'next_steps_title',
-        'next_steps_intro',
-
-        'invest_cta_text',
-        'buy_cta_text',
+        'contact_title',
+        'contact_text',
 
     )
 
@@ -458,11 +454,8 @@ class CapitalInvestOpportunityPageTranslationOptions(
         'similar_projects_cta_text',
         'similar_projects_cta_link',
 
-        'next_steps_title',
-        'next_steps_intro',
-
-        'invest_cta_text',
-        'buy_cta_text',
+        'contact_title',
+        'contact_text',
     )
 
 
