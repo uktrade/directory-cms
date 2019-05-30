@@ -18,7 +18,7 @@ from django.views.generic.edit import FormView
 
 from conf.signature import SignatureCheckPermission
 from core import cache, filters, forms, helpers, permissions, serializers
-from core.upstream_serializers import UpstreamModelSerilaizer
+from core.upstream_serializers import UpstreamModelSerializer
 from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
 
 
@@ -252,7 +252,7 @@ class UpstreamBaseView(FormView):
         for field in instance._meta.related_objects:
             if issubclass(field.related_model, Orderable):
                 serialized = map(
-                    UpstreamModelSerilaizer.serialize,
+                    UpstreamModelSerializer.serialize,
                     getattr(instance, field.name).all()
                 )
                 data = helpers.nested_form_data({
@@ -263,7 +263,7 @@ class UpstreamBaseView(FormView):
 
     def serialize_object(self):
         instance = self.get_object()
-        return UpstreamModelSerilaizer.serialize(instance).items()
+        return UpstreamModelSerializer.serialize(instance).items()
 
     def get_context_data(self, **kwargs):
         page = self.get_object()
@@ -367,7 +367,7 @@ class PreloadPageView(FormView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        data = UpstreamModelSerilaizer.deserialize(
+        data = UpstreamModelSerializer.deserialize(
             kwargs['data'], request=self.request
         )
         kwargs['data'] = data

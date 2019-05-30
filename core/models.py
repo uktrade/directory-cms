@@ -9,7 +9,7 @@ from modeltranslation.translator import translator
 from modeltranslation.utils import build_localized_fieldname
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
-from wagtail.core.models import Page, PageBase
+from wagtail.core.models import Page, PageBase, Site
 
 from django.core import signing
 from django.conf import settings
@@ -182,6 +182,31 @@ class BasePage(Page):
         site = site or self.get_site()
         return self.url_path[len(site.root_page.url_path):]
 
+    def get_site(self):
+        """
+        Overrides Page.get_site() in order to fetch ``RoutingSettings``
+        in the same query (for tree-based-routing). Will also create a
+        ``RoutingSettings`` for the site if they haven't been created yet.
+        """
+        url_parts = self.get_url_parts()
+
+        if url_parts is None:
+            # page is not routable
+            return
+
+        site_id, root_url, page_path = url_parts
+
+        site = Site.objects.select_related('routingsettings').get(id=site_id)
+
+        # Ensure the site has routingsettings before returning
+        try:
+            # if select_related() above was successful, great!
+            site.routingsettings
+        except RoutingSettings.DoesNotExist:
+            # RoutingSettings need creating
+            site.routingsettings = RoutingSettings.objects.create(site=site)
+        return site
+
     def get_tree_based_url(self, include_site_url=False):
         """
         Returns the URL for this page based on it's position in the tree,
@@ -189,13 +214,8 @@ class BasePage(Page):
         Wagtail multisite must be set up in order for this to work.
         """
         site = self.get_site()
+        routing_settings = site.routingsettings
         page_path = self.get_non_prefixed_url(site)
-
-        # get routing settings for the site
-        try:
-            routing_settings = site.routingsettings
-        except RoutingSettings.DoesNotExist:
-            routing_settings = RoutingSettings.objects.create(site=site)
 
         # prefix path with prefix from routing settings
         prefix = routing_settings.root_path_prefix.rstrip('/')
@@ -241,9 +261,9 @@ class BasePage(Page):
         if not self.view_path:
             # starts from 2 to remove root page and app page
             path_components = [
-                page.specific.slug_override or page.specific.slug
+                page.specific_class.slug_override or page.slug
                 for page in self.get_ancestors()[2:]
-                if not page.specific.folder_page]
+                if not page.specific_class.folder_page]
 
         # need to also take into account the view_path if it's set
         else:
