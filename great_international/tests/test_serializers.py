@@ -444,7 +444,7 @@ def test_capital_invest_landing_page_has_how_we_help(rf):
         instance=region,
         context={'request': rf.get('/')}
     )
-    
+
     assert len(serializer.data['how_we_help_icon_and_text']) == 4
     for statistic in serializer.data['how_we_help_icon_and_text']:
         assert 'text' in statistic
