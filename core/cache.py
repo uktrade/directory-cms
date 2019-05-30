@@ -25,6 +25,9 @@ ROOT_PATHS_TO_SERVICE_NAMES = {
     'components-app': cms.COMPONENTS,
 }
 
+SERVICE_NAMES_TO_ROOT_PATHS = {
+    value: key for key, value in ROOT_PATHS_TO_SERVICE_NAMES.items()}
+
 
 class PageCache:
     cache = cache

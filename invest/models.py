@@ -463,7 +463,7 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         related_name='+'
     )
 
-    benefits_section_title = models.CharField(max_length=255)
+    benefits_section_title = models.CharField(max_length=255, blank=True)
     benefits_section_intro = models.TextField(max_length=255, blank=True)
     benefits_section_content = MarkdownField(blank=True)
     benefits_section_img = models.ForeignKey(
@@ -473,20 +473,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+',
         verbose_name="Benefits section image"
-    )
-
-    capital_invest_section_title = models.CharField(
-        max_length=255
-    )
-    capital_invest_section_content = MarkdownField(
-        blank=True
-    )
-    capital_invest_section_image = models.ForeignKey(
-        'wagtailimages.Image',
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
     )
 
     eu_exit_section_title = models.CharField(
@@ -521,44 +507,29 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         verbose_name="EU exit section image"
     )
 
-    # subsections
-    subsection_title_one = models.CharField(max_length=255, blank=True)
-    subsection_content_one = MarkdownField(blank=True)
-
-    subsection_title_two = models.CharField(max_length=255, blank=True)
-    subsection_content_two = MarkdownField(blank=True)
-
-    subsection_title_three = models.CharField(max_length=255, blank=True)
-    subsection_content_three = MarkdownField(blank=True)
-
-    subsection_title_four = models.CharField(max_length=255, blank=True)
-    subsection_content_four = MarkdownField(blank=True)
-
-    subsection_title_five = models.CharField(max_length=255, blank=True)
-    subsection_content_five = MarkdownField(blank=True)
-
-    subsection_title_six = models.CharField(max_length=255, blank=True)
-    subsection_content_six = MarkdownField(blank=True)
-
-    subsection_title_seven = models.CharField(max_length=255, blank=True)
-    subsection_content_seven = MarkdownField(blank=True)
-
     sector_title = models.TextField(
         default="Discover UK Industries",
-        max_length=255)
+        max_length=255,
+        blank=True
+    )
 
     sector_button_text = models.TextField(
         default="See more industries",
-        max_length=255)
+        max_length=255,
+        blank=True
+    )
 
     sector_button_url = models.CharField(
-        max_length=255)
+        max_length=255,
+        blank=True
+    )
 
     sector_intro = models.TextField(max_length=255, blank=True)
 
     hpo_title = models.CharField(
         max_length=255,
-        verbose_name="High potential opportunity section title"
+        verbose_name="High potential opportunity section title",
+        blank=True
     )
     hpo_intro = models.TextField(
         max_length=255,
@@ -566,48 +537,55 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         verbose_name="High potential opportunity section intro"
     )
 
-    setup_guide_title = models.CharField(
-        default='Set up an overseas business in the UK',
-        max_length=255)
-
-    setup_guide_lead_in = models.TextField(
-        blank=True,
-        null=True)
-
-    setup_guide_content = MarkdownField(blank=True)
-    setup_guide_img = models.ForeignKey(
+    featured_card_one_image = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name="Setup guide image"
     )
-    setup_guide_call_to_action_url = models.CharField(max_length=255)
+    featured_card_one_title = models.CharField(blank=True, max_length=255)
+    featured_card_one_summary = MarkdownField(blank=True)
+    featured_card_one_cta_link = models.CharField(max_length=255, blank=True)
 
-    isd_section_image = models.ForeignKey(
+    featured_card_two_image = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Investment Support Directory section image'
     )
-    isd_section_title = models.CharField(
+    featured_card_two_title = models.CharField(
         max_length=255,
         blank=True,
-        verbose_name='Investment Support Directory section title'
     )
-    isd_section_text = MarkdownField(
+    featured_card_two_summary = MarkdownField(
         max_length=255,
         blank=True,
-        verbose_name='Investment Support Directory section text'
     )
+    featured_card_two_cta_link = models.CharField(max_length=255, blank=True)
 
-    how_we_help_title = models.CharField(default='How we help', max_length=255)
+    featured_card_three_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    featured_card_three_title = models.CharField(
+        max_length=255, blank=True
+    )
+    featured_card_three_summary = MarkdownField(blank=True)
+    featured_card_three_cta_link = models.CharField(max_length=255, blank=True)
+
+    how_we_help_title = models.CharField(
+        default='How we help',
+        max_length=255,
+        blank=True
+    )
     how_we_help_lead_in = models.TextField(blank=True, null=True)
     # how we help
-    how_we_help_text_one = models.CharField(max_length=255)
+    how_we_help_text_one = models.CharField(max_length=255, blank=True)
     how_we_help_icon_one = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -615,7 +593,7 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    how_we_help_text_two = models.CharField(max_length=255)
+    how_we_help_text_two = models.CharField(max_length=255, blank=True)
     how_we_help_icon_two = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -623,7 +601,7 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    how_we_help_text_three = models.CharField(max_length=255)
+    how_we_help_text_three = models.CharField(max_length=255, blank=True)
     how_we_help_icon_three = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -631,7 +609,7 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    how_we_help_text_four = models.CharField(max_length=255)
+    how_we_help_text_four = models.CharField(max_length=255, blank=True)
     how_we_help_icon_four = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -639,7 +617,7 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    how_we_help_text_five = models.CharField(max_length=255)
+    how_we_help_text_five = models.CharField(max_length=255, blank=True)
     how_we_help_icon_five = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -649,10 +627,16 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
     )
     how_we_help_text_six = models.CharField(max_length=255, blank=True)
 
-    contact_section_title = models.CharField(max_length=255)
+    contact_section_title = models.CharField(max_length=255, blank=True)
     contact_section_content = models.TextField(max_length=255, blank=True)
-    contact_section_call_to_action_text = models.CharField(max_length=255)
-    contact_section_call_to_action_url = models.CharField(max_length=255)
+    contact_section_call_to_action_text = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    contact_section_call_to_action_url = models.CharField(
+        max_length=255,
+        blank=True
+    )
 
     image_panels = [
         ImageChooserPanel('hero_image'),
@@ -685,7 +669,7 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
 
         MultiFieldPanel(
             heading='EU Exit section',
-            classname='collapsible',
+            classname='collapsible collapsed',
             children=[
                 FieldPanel('eu_exit_section_title'),
                 FieldPanel('eu_exit_section_content'),
@@ -703,26 +687,26 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
                     [
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel('setup_guide_img'),
-                                FieldPanel('setup_guide_title'),
-                                FieldPanel('setup_guide_content'),
-                                FieldPanel('setup_guide_call_to_action_url'),
+                                ImageChooserPanel('featured_card_one_image'),
+                                FieldPanel('featured_card_one_title'),
+                                FieldPanel('featured_card_one_summary'),
+                                FieldPanel('featured_card_one_cta_link'),
                             ],
                         ),
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel('isd_section_image'),
-                                FieldPanel('isd_section_title'),
-                                FieldPanel('isd_section_text')
+                                ImageChooserPanel('featured_card_two_image'),
+                                FieldPanel('featured_card_two_title'),
+                                FieldPanel('featured_card_two_summary'),
+                                FieldPanel('featured_card_two_cta_link'),
                             ],
                         ),
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel(
-                                    'capital_invest_section_image'
-                                ),
-                                FieldPanel('capital_invest_section_title'),
-                                FieldPanel('capital_invest_section_content'),
+                                ImageChooserPanel('featured_card_three_image'),
+                                FieldPanel('featured_card_three_title'),
+                                FieldPanel('featured_card_three_summary'),
+                                FieldPanel('featured_card_three_cta_link'),
                             ]
                         ),
                     ]
@@ -739,16 +723,13 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
             ],
 
         ),
-
         MultiFieldPanel(
             heading='High Potential Opportunities',
             children=[
                 FieldPanel('hpo_title'),
                 FieldPanel('hpo_intro')
             ],
-
         ),
-
         MultiFieldPanel(
             heading='How we help section',
             classname='collapsible',
@@ -776,7 +757,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
                             ],
                         ),
                     ],
-
                 ),
                 FieldRowPanel(
                     [
@@ -797,7 +777,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
                 ),
             ],
         ),
-
         MultiFieldPanel(
             heading='Contact Section',
             classname='collapsible',
@@ -807,7 +786,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
                 FieldPanel('contact_section_call_to_action_text'),
                 FieldPanel('contact_section_call_to_action_url'),
             ],
-
         ),
         SearchEngineOptimisationPanel()
     ]

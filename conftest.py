@@ -5,15 +5,18 @@ import pytest
 from wagtail.images.models import Image
 from wagtail.core.models import Page, Site
 
+from django import db
 from django.core.cache import cache
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import call_command
 from django.utils import translation
-from django import db
 
 from conf import settings
+from groups.models import GroupInfo
+from users.models import UserProfile
 from find_a_supplier.tests.factories import IndustryPageFactory
+from users.tests.factories import UserFactory
 
 
 @pytest.fixture
@@ -124,3 +127,58 @@ def feature_flags(settings):
     # solves this issue: https://github.com/pytest-dev/pytest-django/issues/601
     settings.FEATURE_FLAGS = {**settings.FEATURE_FLAGS}
     yield settings.FEATURE_FLAGS
+
+
+@pytest.fixture
+def groups_with_info():
+    from django.contrib.auth.models import Group
+    groups = []
+    for i, group in enumerate(Group.objects.select_related('info').all(), 1):
+        try:
+            info = group.info
+        except GroupInfo.DoesNotExist:
+            info = GroupInfo(group=group)
+        info.name_singular = group.name[:-1]
+        info.permission_summary = 'For managers'
+        info.role_match_description = 'For content admins'
+        info.visibility = GroupInfo.VISIBILITY_UNRESTRICTED
+        info.seniority_level = i  # determines order in choices etc
+        info.save()
+        group.info = info
+        groups.append(group)
+    return groups
+
+
+@pytest.fixture
+def team_leaders_group(groups_with_info):
+    group = list(groups_with_info).pop()
+    group.info.is_team_leaders_group = True
+    group.info.save()
+    return group
+
+
+@pytest.fixture
+def team_leaders(team_leaders_group):
+    user_1 = UserFactory(username='user1', first_name='Adam')
+    user_2 = UserFactory(username='user2', first_name='Zac')
+    team_leaders_group.user_set.set([user_1, user_2])
+    return (user_1, user_2)
+
+
+@pytest.fixture
+def approved_user():
+    user = UserFactory(username='approved-user')
+    profile = user.userprofile
+    profile.assignment_status = UserProfile.STATUS_APPROVED
+    profile.save()
+    return user
+
+
+@pytest.fixture
+def user_awaiting_approval(groups_with_info):
+    user = UserFactory(username='awaiting-approval-user')
+    profile = user.userprofile
+    profile.assignment_status = UserProfile.STATUS_AWAITING_APPROVAL
+    profile.self_assigned_group_id = groups_with_info[0].id
+    profile.save()
+    return user

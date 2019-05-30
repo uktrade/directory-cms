@@ -10,6 +10,7 @@ from django.forms.models import model_to_dict
 from django.contrib import messages
 
 from core import helpers
+from core.cache import SERVICE_NAMES_TO_ROOT_PATHS
 
 
 class AbstractFieldSerializer(abc.ABC):
@@ -90,15 +91,23 @@ class RelatedPageSerializer(AbstractFieldSerializer):
 
     @classmethod
     def serialize_value(cls, value):
-        return value.slug
+        return {
+            'slug': value.slug,
+            'service_name_value': value.specific.service_name_value
+        }
 
     @classmethod
     def deserialize_value(cls, value):
+        parent_app_slug = SERVICE_NAMES_TO_ROOT_PATHS[
+            value['service_name_value']]
+        app_pages = Page.objects.get(slug=parent_app_slug).get_descendants()
+
         try:
-            return Page.objects.get(slug=value).specific
+            return app_pages.get(slug=value['slug'])
+
         except Page.DoesNotExist:
             raise ValidationError(
-                f"Related page with the slug {value} could not be "
+                f"Related page with the slug {value['slug']} could not be "
                 "found in this environment. Please create it then "
                 "add it as one of this page's related pages."
             )
@@ -116,7 +125,7 @@ class NoOpFieldSerializer(AbstractFieldSerializer):
         return value
 
 
-class UpstreamModelSerilaizer:
+class UpstreamModelSerializer:
 
     EMPTY_VALUES = ['', 'None', None]
 
@@ -154,7 +163,7 @@ class UpstreamModelSerilaizer:
 
     @classmethod
     def serialize(cls, model_instance):
-        data = model_to_dict(model_instance, exclude=['pk', 'id'])
+        data = model_to_dict(model_instance, exclude=['pk', 'id', 'page_ptr'])
         serialized = {}
         for name in cls.remove_empty(data):
             value = getattr(model_instance, name)

@@ -275,30 +275,60 @@ def test_get_tree_based_url(root_page):
 
 
 @pytest.mark.django_db
-def test_get_tree_based_url_without_routing_settings(root_page):
-    # This time, call without RoutingSettings configured for the site
-    # and check that an instance is created
-    domestic_app = ExportReadinessAppFactory(parent=root_page)
-    domestic_page_one = TopicLandingPageFactory(
-        parent=domestic_app, slug='topic')
-    domestic_page_two = ArticleListingPageFactory(
-        parent=domestic_page_one, slug='list')
+def test_get_site_returns_none_when_page_not_routable(
+    root_page, django_assert_num_queries
+):
+    Site.objects.all().delete()  # ensures pages are not routable
+    page = IndustryPageFactory(parent=root_page, slug='industry')
+    result = page.get_site()
+    assert result is None
 
-    Site.objects.all().delete()
-    site = Site.objects.create(
-        site_name='Great Domestic',
-        hostname='domestic.trade.great',
-        port=8007,
-        root_page=domestic_app,
-    )
 
-    domestic_page_two.get_tree_based_url()
+@pytest.mark.django_db
+def test_get_site_fetches_routing_settings_if_they_exist(
+    root_page, django_assert_num_queries
+):
+    page = IndustryPageFactory(parent=root_page, slug='industry')
+    site = Site.objects.create(hostname='example.org', root_page=page)
+    RoutingSettings.objects.create(site=site)
 
-    # Check routing settings were created
-    routing_settings = RoutingSettings.objects.get()
-    assert routing_settings.site == site
-    assert routing_settings.root_path_prefix == ''
-    assert routing_settings.include_port_in_urls is True
+    # running this first so that the query doesn't count toward
+    # the total query count (the value is usually cached)
+    page._get_site_root_paths()
+
+    with django_assert_num_queries(1):
+        # site and routing settings should be fetched in one query
+        result_site = page.get_site()
+
+        # Check the correct site was returned
+        assert result_site == site
+
+        # This attribute is set to reference the newly created object,
+        # so this shouldn't result in another query
+        result_site.routingsettings
+
+
+@pytest.mark.django_db
+def test_get_site_creates_routing_settings_if_none_exist(
+    root_page, django_assert_num_queries
+):
+    page = IndustryPageFactory(parent=root_page, slug='industry')
+    site = Site.objects.create(hostname='example.gov', root_page=page)
+
+    # running this first so that the query doesn't count toward
+    # the total query count (the value is usually cached)
+    page._get_site_root_paths()
+
+    with django_assert_num_queries(2):
+        # 1 query to get the site, 1 to create routing settings
+        result_site = page.get_site()
+
+        # Check the correct site was returned
+        assert result_site == site
+
+        # This attribute is set to reference the newly created object,
+        # so this shouldn't result in another query
+        result_site.routingsettings
 
 
 @pytest.mark.django_db
