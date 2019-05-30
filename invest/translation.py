@@ -18,10 +18,6 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'benefits_section_content',
         'benefits_section_img',
 
-        'capital_invest_section_title',
-        'capital_invest_section_content',
-        'capital_invest_section_image',
-
         'eu_exit_section_title',
         'eu_exit_section_content',
         'eu_exit_section_call_to_action_text',
@@ -54,14 +50,22 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'sector_intro',
         'hpo_title',
         'hpo_intro',
-        'setup_guide_title',
-        'setup_guide_content',
-        'setup_guide_img',
-        'setup_guide_call_to_action_url',
-        'setup_guide_lead_in',
-        'isd_section_image',
-        'isd_section_title',
-        'isd_section_text',
+
+        'featured_card_one_image',
+        'featured_card_one_title',
+        'featured_card_one_summary',
+        'featured_card_one_cta_link',
+
+        'featured_card_two_image',
+        'featured_card_two_title',
+        'featured_card_two_summary',
+        'featured_card_two_cta_link',
+
+        'featured_card_three_image',
+        'featured_card_three_title',
+        'featured_card_three_summary',
+        'featured_card_three_cta_link',
+
         'how_we_help_title',
         'how_we_help_lead_in',
         # how we help

@@ -475,20 +475,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         verbose_name="Benefits section image"
     )
 
-    capital_invest_section_title = models.CharField(
-        max_length=255
-    )
-    capital_invest_section_content = MarkdownField(
-        blank=True
-    )
-    capital_invest_section_image = models.ForeignKey(
-        'wagtailimages.Image',
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
     eu_exit_section_title = models.CharField(
         max_length=255,
         blank=True,
@@ -566,43 +552,46 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         verbose_name="High potential opportunity section intro"
     )
 
-    setup_guide_title = models.CharField(
-        default='Set up an overseas business in the UK',
-        max_length=255)
-
-    setup_guide_lead_in = models.TextField(
-        blank=True,
-        null=True)
-
-    setup_guide_content = MarkdownField(blank=True)
-    setup_guide_img = models.ForeignKey(
+    featured_card_one_image = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name="Setup guide image"
     )
-    setup_guide_call_to_action_url = models.CharField(max_length=255)
+    featured_card_one_title = models.CharField(blank=True, max_length=255)
+    featured_card_one_summary = MarkdownField(blank=True)
+    featured_card_one_cta_link = models.CharField(max_length=255, blank=True)
 
-    isd_section_image = models.ForeignKey(
+    featured_card_two_image = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Investment Support Directory section image'
     )
-    isd_section_title = models.CharField(
+    featured_card_two_title = models.CharField(
         max_length=255,
         blank=True,
-        verbose_name='Investment Support Directory section title'
     )
-    isd_section_text = MarkdownField(
+    featured_card_two_summary = MarkdownField(
         max_length=255,
         blank=True,
-        verbose_name='Investment Support Directory section text'
     )
+    featured_card_two_cta_link = models.CharField(max_length=255, blank=True)
+
+    featured_card_three_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    featured_card_three_title = models.CharField(
+        max_length=255, blank=True
+    )
+    featured_card_three_summary = MarkdownField(blank=True)
+    featured_card_three_cta_link = models.CharField(max_length=255, blank=True)
 
     how_we_help_title = models.CharField(default='How we help', max_length=255)
     how_we_help_lead_in = models.TextField(blank=True, null=True)
@@ -685,7 +674,7 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
 
         MultiFieldPanel(
             heading='EU Exit section',
-            classname='collapsible',
+            classname='collapsible collapsed',
             children=[
                 FieldPanel('eu_exit_section_title'),
                 FieldPanel('eu_exit_section_content'),
@@ -703,26 +692,26 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
                     [
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel('setup_guide_img'),
-                                FieldPanel('setup_guide_title'),
-                                FieldPanel('setup_guide_content'),
-                                FieldPanel('setup_guide_call_to_action_url'),
+                                ImageChooserPanel('featured_card_one_image'),
+                                FieldPanel('featured_card_one_title'),
+                                FieldPanel('featured_card_one_summary'),
+                                FieldPanel('featured_card_one_cta_link'),
                             ],
                         ),
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel('isd_section_image'),
-                                FieldPanel('isd_section_title'),
-                                FieldPanel('isd_section_text')
+                                ImageChooserPanel('featured_card_two_image'),
+                                FieldPanel('featured_card_two_title'),
+                                FieldPanel('featured_card_two_summary'),
+                                FieldPanel('featured_card_two_cta_link'),
                             ],
                         ),
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel(
-                                    'capital_invest_section_image'
-                                ),
-                                FieldPanel('capital_invest_section_title'),
-                                FieldPanel('capital_invest_section_content'),
+                                ImageChooserPanel('featured_card_three_image'),
+                                FieldPanel('featured_card_three_title'),
+                                FieldPanel('featured_card_three_summary'),
+                                FieldPanel('featured_card_three_cta_link'),
                             ]
                         ),
                     ]
