@@ -9,25 +9,27 @@ def migrate_forwards(apps, schema_editor):
     ContentType = apps.get_model('contenttypes', 'ContentType')
     Page = apps.get_model('wagtailcore', 'Page')
 
-    vanilla_page_ct = ContentType.objects.get(app_label='wagtailcore', model='page')
-    homepage_ct = ContentType.objects.get(app_label='great_international', model='internationalhomepage')
-    apppage_ct = ContentType.objects.get(app_label='great_international', model='greatinternationalapp')
+    page_ct = ContentType.objects.filter(app_label='wagtailcore', model='page').first()
+    home_page_ct = ContentType.objects.filter(model='internationalhomepage').first()
+    app_page_ct = ContentType.objects.filter(model='greatinternationalapp').first()
 
-    # Unset content type for old home page
-    Page.objects.filter(content_type=homepage_ct).update(content_type=vanilla_page_ct)
+    if home_page_ct and app_page_ct:
+        # Unset content type for old home page
+        Page.objects.filter(content_type=home_page_ct).update(content_type=page_ct)
 
-    # Update content type for new home page, as the old content type is now redundant
-    Page.objects.filter(content_type=apppage_ct).update(content_type=homepage_ct)
+        # Update content type for new home page, as the old content type is now redundant
+        Page.objects.filter(content_type=app_page_ct).update(content_type=home_page_ct)
 
 
 def migrate_backwards(apps, schema_editor):
     ContentType = apps.get_model('contenttypes', 'ContentType')
     Page = apps.get_model('wagtailcore', 'Page')
 
-    homepage_ct = ContentType.objects.get(app_label='great_international', model='internationalhomepage')
-    apppage_ct = ContentType.objects.get(app_label='great_international', model='greatinternationalapp')
+    home_page_ct = ContentType.objects.filter(model='internationalhomepage').first()
+    app_page_ct = ContentType.objects.filter(model='greatinternationalapp').first()
 
-    Page.objects.filter(content_type=homepage_ct).update(content_type=apppage_ct)
+    if home_page_ct and app_page_ct:
+        Page.objects.filter(content_type=home_page_ct).update(content_type=app_page_ct)
 
 
 class Migration(migrations.Migration):
