@@ -181,6 +181,27 @@ class LocationStatisticProxyDataWrapper:
         )
 
 
+class HowWeHelpProxyDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def text(self):
+        return getattr(
+            self.instance,
+            f'how_we_help_{self.position_number}_text'
+        )
+
+    @property
+    def icon(self):
+        return getattr(
+            self.instance,
+            f'how_we_help_{self.position_number}_icon'
+        )
+
+
 class SectionThreeSubsectionSerializer(serializers.Serializer):
     heading = serializers.CharField(max_length=255)
     teaser = serializers.CharField()
@@ -214,6 +235,11 @@ class LocationStatSerializer(serializers.Serializer):
     number = serializers.CharField(max_length=255)
     heading = serializers.CharField(max_length=255)
     smallprint = serializers.CharField(max_length=255)
+
+
+class HowWeHelpSerializer(serializers.Serializer):
+    text = serializers.CharField(max_length=255)
+    icon = wagtail_fields.ImageRenditionField('original')
 
 
 class RelatedArticlePageSerializer(BasePageSerializer):
@@ -813,20 +839,24 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
 
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_intro = serializers.CharField(max_length=255)
-    how_we_help_one_icon = wagtail_fields.ImageRenditionField('original')
-    how_we_help_one_text = serializers.CharField(max_length=255)
-    how_we_help_two_icon = wagtail_fields.ImageRenditionField('original')
-    how_we_help_two_text = serializers.CharField(max_length=255)
-    how_we_help_three_icon = wagtail_fields.ImageRenditionField('original')
-    how_we_help_three_text = serializers.CharField(max_length=255)
-    how_we_help_four_icon = wagtail_fields.ImageRenditionField('original')
-    how_we_help_four_text = serializers.CharField(max_length=255)
-
+    how_we_help_icon_and_text = serializers.SerializerMethodField()
     contact_section_title = serializers.CharField(max_length=255)
     contact_section_text = serializers.CharField(max_length=255)
     contact_section_cta_text = serializers.CharField(max_length=255)
-
     added_homes_in_england_card_fields = serializers.SerializerMethodField()
+    added_region_card_fields = serializers.SerializerMethodField()
+    added_regions = serializers.SerializerMethodField()
+
+    def get_how_we_help_icon_and_text(self, instance):
+        data = [
+            HowWeHelpProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['one', 'two', 'three', 'four']
+        ]
+        serializer = HowWeHelpSerializer(data, many=True)
+        return serializer.data
 
     def get_added_homes_in_england_card_fields(self, instance):
         serializer = HomesInEnglandCardFieldSerializer(
@@ -837,8 +867,6 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
         )
         return serializer.data
 
-    added_region_card_fields = serializers.SerializerMethodField()
-
     def get_added_region_card_fields(self, instance):
         serializer = RegionCardFieldSerializer(
             instance.added_region_card_fields.all(),
@@ -847,8 +875,6 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
             context=self.context
         )
         return serializer.data
-
-    added_regions = serializers.SerializerMethodField()
 
     def get_added_regions(self, instance):
         serializer = RelatedRegionSerializer(
@@ -878,67 +904,8 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer,
 
     investment_opps_title = serializers.CharField(max_length=255)
     investment_opps_intro = serializers.CharField(max_length=255)
-
     economics_stats = serializers.SerializerMethodField()
-
-    def get_economics_stats(self, instance):
-        data = [
-            EconomicsStatisticProxyDataWrapper(
-                instance=instance,
-                position_number=num
-            )
-            for num in ['1', '2', '3', '4']
-        ]
-        serializer = EconomicStatSerializer(data, many=True)
-        return serializer.data
-
-    economics_data_title = serializers.CharField(max_length=255)
-    economics_stat_1_number = serializers.CharField(max_length=255)
-    economics_stat_1_heading = serializers.CharField(max_length=255)
-    economics_stat_1_smallprint = serializers.CharField(max_length=255)
-
-    economics_stat_2_number = serializers.CharField(max_length=255)
-    economics_stat_2_heading = serializers.CharField(max_length=255)
-    economics_stat_2_smallprint = serializers.CharField(max_length=255)
-
-    economics_stat_3_number = serializers.CharField(max_length=255)
-    economics_stat_3_heading = serializers.CharField(max_length=255)
-    economics_stat_3_smallprint = serializers.CharField(max_length=255)
-
-    economics_stat_4_number = serializers.CharField(max_length=255)
-    economics_stat_4_heading = serializers.CharField(max_length=255)
-    economics_stat_4_smallprint = serializers.CharField(max_length=255)
-
     location_stats = serializers.SerializerMethodField()
-
-    def get_location_stats(self, instance):
-        data = [
-            LocationStatisticProxyDataWrapper(
-                instance=instance,
-                position_number=num
-            )
-            for num in ['1', '2', '3', '4']
-        ]
-        serializer = LocationStatSerializer(data, many=True)
-        return serializer.data
-
-    location_data_title = serializers.CharField(max_length=255)
-    location_stat_1_number = serializers.CharField(max_length=255)
-    location_stat_1_heading = serializers.CharField(max_length=255)
-    location_stat_1_smallprint = serializers.CharField(max_length=255)
-
-    location_stat_2_number = serializers.CharField(max_length=255)
-    location_stat_2_heading = serializers.CharField(max_length=255)
-    location_stat_2_smallprint = serializers.CharField(max_length=255)
-
-    location_stat_3_number = serializers.CharField(max_length=255)
-    location_stat_3_heading = serializers.CharField(max_length=255)
-    location_stat_3_smallprint = serializers.CharField(max_length=255)
-
-    location_stat_4_number = serializers.CharField(max_length=255)
-    location_stat_4_heading = serializers.CharField(max_length=255)
-    location_stat_4_smallprint = serializers.CharField(max_length=255)
-
     property_and_infrastructure_section_title = serializers.CharField(
         max_length=255
     )
@@ -954,10 +921,8 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer,
 
     case_study_cta_link = serializers.CharField(max_length=255)
 
-    next_steps_title = serializers.CharField(max_length=255)
-    next_steps_intro = serializers.CharField(max_length=255)
-    invest_cta_text = serializers.CharField(max_length=255)
-    buy_cta_text = serializers.CharField(max_length=255)
+    contact_title = serializers.CharField(max_length=255)
+    contact_text = core_fields.MarkdownToHTMLField()
 
     child_pages = serializers.SerializerMethodField()
 
@@ -968,6 +933,28 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer,
             RelatedCapitalInvestPageSerializer
         )
         return sectors
+
+    def get_economics_stats(self, instance):
+        data = [
+            EconomicsStatisticProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['1', '2', '3', '4']
+        ]
+        serializer = EconomicStatSerializer(data, many=True)
+        return serializer.data
+
+    def get_location_stats(self, instance):
+        data = [
+            LocationStatisticProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['1', '2', '3', '4']
+        ]
+        serializer = LocationStatSerializer(data, many=True)
+        return serializer.data
 
 
 class CapitalInvestRegionalSectorPageSerializer(
@@ -987,13 +974,11 @@ class CapitalInvestRegionalSectorPageSerializer(
 
     investment_opportunities_title = serializers.CharField(max_length=255)
 
-    next_steps_title = serializers.CharField(max_length=255)
-    next_steps_intro = serializers.CharField(max_length=255)
-
-    invest_cta_text = serializers.CharField(max_length=255)
-    buy_cta_text = serializers.CharField(max_length=255)
+    contact_title = serializers.CharField(max_length=255)
+    contact_text = core_fields.MarkdownToHTMLField()
 
     parent = serializers.SerializerMethodField()
+    added_opportunities = serializers.SerializerMethodField()
 
     def get_parent(self, obj):
         parent = self.get_parent_page_data_for(
@@ -1001,8 +986,6 @@ class CapitalInvestRegionalSectorPageSerializer(
             MinimalPageSerializer
         )
         return parent
-
-    added_opportunities = serializers.SerializerMethodField()
 
     def get_added_opportunities(self, instance):
         serializer = RelatedOpportunitySerializer(
@@ -1081,11 +1064,8 @@ class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
     similar_projects_cta_text = serializers.CharField(max_length=255)
     similar_projects_cta_link = serializers.CharField(max_length=255)
 
-    next_steps_title = serializers.CharField(max_length=255)
-    next_steps_intro = serializers.CharField(max_length=255)
-
-    invest_cta_text = serializers.CharField(max_length=255)
-    buy_cta_text = serializers.CharField(max_length=255)
+    contact_title = serializers.CharField(max_length=255)
+    contact_text = core_fields.MarkdownToHTMLField()
 
 
 class MinimalPageSerializer(BasePageSerializer):
