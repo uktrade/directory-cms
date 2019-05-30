@@ -10,7 +10,7 @@ from .models import PagePendingModeration
 def add_moderation_queue_to_menu():
     return MenuItem(
         'Moderation Queue',
-        reverse('moderation-queue'),
+        reverse('moderation-queue:pending'),
         classnames='icon icon-folder-inverse',
         order=600,
     )
@@ -19,11 +19,18 @@ def add_moderation_queue_to_menu():
 class ModerationQueuePanel:
     order = 200
 
+    def __init__(self, request):
+        self.request = request
+
     def render(self):
         pending_moderations = (PagePendingModeration.objects.order_by('-created_at')
                                                             .select_related('revision', 'user'))
         context = {'pending_moderations': pending_moderations}
-        return render_to_string('moderation_queue/panel.html', context=context)
+        return render_to_string(
+            'moderation_queue/panel.html',
+            context=context,
+            request=self.request,
+        )
 
 
 @hooks.register('construct_homepage_panels')
@@ -34,4 +41,4 @@ def replace_moderation_panel(request, panels):
 
         # replace standard Wagtail Moderation panel (PagesForModerationPanel)
         # with a custom panel to show PagePendingModeration objects.
-        panels[i] = ModerationQueuePanel()
+        panels[i] = ModerationQueuePanel(request)

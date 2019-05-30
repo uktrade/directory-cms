@@ -1,42 +1,87 @@
 {% load i18n %}
+{% load wagtailadmin_tags %}
 
 {% if pending_moderations %}
 <div class="panel nice-padding">
     <section>
-        <h2>{% trans "Your pending Page moderations" %}</h2>
+        <h2>{% trans 'Your pending Page moderations' %}</h2>
 
-        <table class="listing listing-page">
+        <table class="listing">
             <col />
+            <col width="30%"/>
             <col width="15%"/>
             <col width="15%"/>
             <thead>
                 <tr>
                     <th class="title">{% trans "Title" %}</th>
-                    <th>{% trans "Date" %}</th>
-                    <th>{% trans "Author" %}</th>
+                    <th>{% trans "Parent" %}</th>
+                    <th>{% trans "Type" %}</th>
+                    <th>{% trans "Edited" %}</th>
                 </tr>
             </thead>
             <tbody>
-
                 {% for pending_moderation in pending_moderations %}
+                {% with page=pending_moderation.revision.page %}
                 <tr>
                     <td class="title" valign="top">
-                        <h2>{{ pending_moderation.revision.page.title }}</h2>
+                        <h2>
+                            <a href="{% url 'wagtailadmin_pages:edit' page.id %}" title="{% trans 'Edit this page' %}">{{ page.get_admin_display_title }}</a>
+
+                            {% include "wagtailadmin/pages/listing/_privacy_indicator.html" %}
+                            {% include "wagtailadmin/pages/listing/_locked_indicator.html" %}
+                        </h2>
+
+                        <ul class="actions">
+
+                            <li>
+                                <form action="{% url 'moderation-queue:approve_moderation' pending_moderation.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="submit" class="button button-small button-secondary" value="{% trans 'Approve' %}">
+                                </form>
+                            </li>
+
+                            <li class="no-border">
+                                <form action="{% url 'moderation-queue:reject_moderation' pending_moderation.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="submit" class="button button-small button-secondary no" value="{% trans 'Reject' %}">
+                                </form>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'wagtailadmin_pages:edit' page.id %}" class="button button-small button-secondary">
+                                    {% trans 'Edit' %}
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'wagtailadmin_pages:preview_for_moderation' pending_moderation.revision.id %}" class="button button-small button-secondary" target="_blank">
+                                    {% trans 'Preview' %}
+                                </a>
+                            </li>
+
+                        </ul>
                     </td>
+
+                    <td valign="top">
+                        <a href="{% url 'wagtailadmin_explore' page.get_parent.id %}">{{ page.get_parent.get_admin_display_title }}</a>
+                    </td>
+
+                    <td class="type" valign="top">
+                        {{ page.content_type.model_class.get_verbose_name }}
+                    </td>
+
                     <td valign="top">
                         <div class="human-readable-date" title="{{ pending_moderation.created_at|date:"d M Y H:i" }}">
                             {% blocktrans with time_period=pending_moderation.created_at|timesince %}{{ time_period }} ago{% endblocktrans %}
                         </div>
+                        by {{ pending_moderation.user.get_full_name|default:pending_moderation.user.get_username }}
                     </td>
-                    <td valign="top">
-                        <p>{{ pending_moderation.user }}</p>
-                    </td>
-                </tr>
-                {% endfor %}
 
+                </tr>
+                {% endwith %}
+                {% endfor %}
             </tbody>
         </table>
-
     </section>
 </div>
 {% endif %}
