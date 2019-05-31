@@ -28,30 +28,6 @@ from wagtail.core.models import Orderable
 from modelcluster.fields import ParentalKey
 
 
-class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
-    slug_identity = 'great-international-app'
-    service_name_value = cms.GREAT_INTERNATIONAL
-
-    @classmethod
-    def get_required_translatable_fields(cls):
-        return []
-
-    @classmethod
-    def allowed_subpage_models(cls):
-        return [
-            InternationalArticleListingPage,
-            InternationalTopicLandingPage,
-            InternationalCuratedTopicLandingPage,
-            InternationalGuideLandingPage,
-            InternationalRegionPage,
-            InternationalHomePage,
-            InternationalEUExitFormPage,
-            InternationalEUExitFormSuccessPage,
-            InternationalCapitalInvestLandingPage,
-            CapitalInvestOpportunityListingPage,
-            CapitalInvestRegionPage]
-
-
 class InternationalSectorPage(BasePage):
     class Meta:
         ordering = ['-heading']
@@ -475,12 +451,9 @@ class InternationalSectorPage(BasePage):
     )
 
 
-class InternationalHomePage(
-    ExclusivePageMixin, ServiceHomepageMixin, BasePage
-):
+class InternationalHomePage(ExclusivePageMixin, BasePage):
+    slug_identity = 'great-international-app'
     service_name_value = cms.GREAT_INTERNATIONAL
-    slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
-    subpage_types = []
 
     hero_title = models.CharField(max_length=255)
     hero_subtitle = models.CharField(max_length=255, blank=True)
@@ -709,6 +682,21 @@ class InternationalHomePage(
     study_in_uk_cta_text = models.CharField(max_length=255)
     visit_uk_cta_text = models.CharField(max_length=255)
 
+    @classmethod
+    def allowed_subpage_models(cls):
+        return [
+            InternationalArticleListingPage,
+            InternationalTopicLandingPage,
+            InternationalCuratedTopicLandingPage,
+            InternationalGuideLandingPage,
+            InternationalRegionPage,
+            InternationalEUExitFormPage,
+            InternationalEUExitFormSuccessPage,
+            InternationalCapitalInvestLandingPage,
+            CapitalInvestOpportunityListingPage,
+            CapitalInvestRegionPage,
+        ]
+
     content_panels = [
         MultiFieldPanel(
             heading="Hero Section",
@@ -900,7 +888,7 @@ class InternationalHomePage(
 
 class InternationalRegionPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.InternationalLocalisedFolderPage'
     ]
@@ -1037,7 +1025,7 @@ class InternationalArticlePage(BasePage):
 class InternationalArticleListingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = [
-        'great_international.GreatInternationalApp',
+        'great_international.InternationalHomePage',
         'great_international.InternationalTopicLandingPage'
     ]
     subpage_types = [
@@ -1334,7 +1322,7 @@ class InternationalCampaignPage(BasePage):
 
 class InternationalTopicLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
@@ -1380,7 +1368,7 @@ class InternationalTopicLandingPage(BasePage):
 
 class InternationalCuratedTopicLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = []
 
     display_title = models.CharField(max_length=255, blank=True, null=True)
@@ -1511,7 +1499,7 @@ class InternationalCuratedTopicLandingPage(BasePage):
 
 class InternationalGuideLandingPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = ['great_international.InternationalArticlePage']
 
     display_title = models.CharField(max_length=255)
@@ -1830,7 +1818,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = 'capital-invest'
 
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
 
     hero_title = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
@@ -2076,7 +2064,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
 class CapitalInvestRegionPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
 
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.CapitalInvestRegionalSectorPage',
     ]
@@ -2463,7 +2451,7 @@ class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
     slug_identity = 'opportunities'
 
     parent_page_types = [
-        'great_international.GreatInternationalApp'
+        'great_international.InternationalHomePage'
     ]
 
     @classmethod
