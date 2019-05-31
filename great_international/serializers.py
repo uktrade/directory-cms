@@ -773,6 +773,11 @@ class InternationalGuideLandingPageSerializer(BasePageSerializer):
     guides_section_heading = serializers.CharField()
     guides = serializers.SerializerMethodField()
 
+    section_three_title = serializers.CharField(max_length=255)
+    section_three_text = serializers.CharField()
+    section_three_cta_text = serializers.CharField(max_length=255)
+    section_three_cta_link = serializers.CharField(max_length=255)
+
     def get_guides(self, obj):
         article_list = (
                InternationalArticlePage.objects

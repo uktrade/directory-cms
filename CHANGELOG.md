@@ -24,6 +24,7 @@
 - NOTICKET - Upgrade django-restframework to 3.9.4 to fix XSS vulnerability
 - CMS-1589 - Upgrade django-staff-sso-client to version 0.3.0 to fix blank username field bug
 - NOTICKET - Update guidance for `update_db_template` in README
+- CI-154 - Added section three to guide landing page for ISD/contact section
 
 
 ## [2019.05.09](https://github.com/uktrade/directory-cms/releases/tag/2019.05.09)
