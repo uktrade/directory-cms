@@ -3149,7 +3149,7 @@ class ArticlePage(BasePage):
     ]
 
 
-class HomePage(ExclusivePageMixin, BasePage):
+class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
     slug_identity = 'export-readiness-app'
     parent_page_types = ['wagtailcore.Page']
