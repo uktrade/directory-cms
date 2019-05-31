@@ -3,6 +3,7 @@ from directory_constants.constants import urls
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel, HelpPanel)
+from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
@@ -28,15 +29,6 @@ from core.panels import SearchEngineOptimisationPanel
 ACCORDION_FIELDS_HELP_TEXT = (
     'To be displayed, this industry needs at least: a title, a teaser, '
     '2 bullet points, and 2 calls to action (CTAs).')
-
-
-class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
-    slug_identity = 'export-readiness-app'
-    service_name_value = cms.EXPORT_READINESS
-
-    @classmethod
-    def get_required_translatable_fields(cls):
-        return []
 
 
 class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
@@ -3157,14 +3149,10 @@ class ArticlePage(BasePage):
     ]
 
 
-class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
+class HomePage(ExclusivePageMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
-    slug_identity = cms.GREAT_HOME_SLUG
-    subpage_types = [
-        'export_readiness.TopicLandingPage',
-        'export_readiness.ArticleListingPage',
-        'export_readiness.ArticlePage'
-    ]
+    slug_identity = 'export-readiness-app'
+    parent_page_types = ['wagtailcore.Page']
 
     banner_content = MarkdownField()
     banner_label = models.CharField(max_length=50, null=True, blank=True)
@@ -3193,6 +3181,17 @@ class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
+
+    @classmethod
+    def allowed_subpage_models(cls):
+        allowed_name = cls.service_name_value
+        return [
+            model for model in Page.allowed_subpage_models()
+            if(
+                getattr(model, 'service_name_value', None) == allowed_name
+                and model is not cls
+            )
+        ]
 
 
 class InternationalLandingPage(ExclusivePageMixin, BasePage):
