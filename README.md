@@ -81,8 +81,12 @@ You can test this works by attempting to visit http://cms.trade.great:8010/admin
 
 ### Create a new template_sql file
 
-    To speed up tests a SQL template file is provided. If the file becomes obsolete run the following command on an up-to-date db instance
+    To speed up tests a SQL template file is provided. If the file becomes obsolete run the following command on an up-to-date db instance to improve test speeds locally.
+
+    *NOTE:* You should avoid committing updated database templates to the repository, as doing so has the potential to expose sensitive data from your copy of the database. Only templates created from a freshly created/migrated database should ever be committed to the repository.
+
     $ make update_db_template
+
 
 ## Session
 
