@@ -248,7 +248,6 @@ def test_subscriber_populate_many(mock_populate, translated_page):
 def test_all_models_cached():
     exclude = {
         # apps
-        export_readiness.models.ExportReadinessApp,
         components.models.ComponentsApp,
         find_a_supplier.models.FindASupplierApp,
         invest.models.InvestApp,

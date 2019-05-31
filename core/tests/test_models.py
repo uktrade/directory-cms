@@ -17,7 +17,7 @@ from invest.tests.factories import (
     InvestAppFactory, SectorLandingPageFactory, SectorPageFactory,
 )
 from export_readiness.tests.factories import (
-    ExportReadinessAppFactory, TopicLandingPageFactory,
+    HomePageFactory, TopicLandingPageFactory,
     ArticleListingPageFactory, ArticlePageFactory,
     PrivacyAndCookiesPageFactory, SitePolicyPagesFactory,
 )
@@ -84,9 +84,9 @@ def test_page_paths(root_page):
     assert fas_industry_two.full_path == '/industries/bar/'
     assert fas_industry_article.full_path == '/industry-articles/article/'
 
-    domestic_app = ExportReadinessAppFactory(parent=root_page)
+    domestic_homepage = HomePageFactory(parent=root_page)
     domestic_page_one = TopicLandingPageFactory(
-        parent=domestic_app, slug='topic')
+        parent=domestic_homepage, slug='topic')
     domestic_page_two = ArticleListingPageFactory(
         parent=domestic_page_one, slug='list')
     domestic_page_three = ArticlePageFactory(
@@ -95,7 +95,7 @@ def test_page_paths(root_page):
     assert domestic_page_two.full_path == '/topic/list/'
     assert domestic_page_three.full_path == '/topic/list/article/'
 
-    domestice_site_policy = SitePolicyPagesFactory(parent=domestic_app)
+    domestice_site_policy = SitePolicyPagesFactory(parent=domestic_homepage)
     domestic_cookies_one = PrivacyAndCookiesPageFactory(
         slug='privacy', parent=domestice_site_policy)
     domestic_cookies_two = PrivacyAndCookiesPageFactory(
@@ -230,9 +230,9 @@ def test_base_app_slugs_are_created_in_all_languages(root_page):
 
 @pytest.mark.django_db
 def test_get_tree_based_url(root_page):
-    domestic_app = ExportReadinessAppFactory(parent=root_page)
+    domestic_homepage = HomePageFactory(parent=root_page)
     domestic_page_one = TopicLandingPageFactory(
-        parent=domestic_app, slug='topic')
+        parent=domestic_homepage, slug='topic')
     domestic_page_two = ArticleListingPageFactory(
         parent=domestic_page_one, slug='list')
     domestic_page_three = ArticlePageFactory(
@@ -243,7 +243,7 @@ def test_get_tree_based_url(root_page):
         site_name='Great Domestic',
         hostname='domestic.trade.great',
         port=8007,
-        root_page=domestic_app,
+        root_page=domestic_homepage,
     )
 
     routing_settings = RoutingSettings.objects.create(
@@ -335,9 +335,9 @@ def test_get_site_creates_routing_settings_if_none_exist(
 def test_url_methods_use_tree_based_routing(root_page):
     # Checks that the full_path and full_url methods call get_tree_based_url
     # when uses_tree_based_routing is True
-    domestic_app = ExportReadinessAppFactory(parent=root_page)
+    domestic_homepage = HomePageFactory(parent=root_page)
     domestic_page_one = TopicLandingPageFactory(
-        parent=domestic_app, slug='topic')
+        parent=domestic_homepage, slug='topic')
     domestic_page_two = ArticleListingPageFactory(
         parent=domestic_page_one, slug='list')
     domestic_page_three = ArticlePageFactory(
@@ -348,7 +348,7 @@ def test_url_methods_use_tree_based_routing(root_page):
         site_name='Great Domestic',
         hostname='domestic.trade.great',
         port=8007,
-        root_page=domestic_app,
+        root_page=domestic_homepage,
     )
 
     RoutingSettings.objects.create(
