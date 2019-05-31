@@ -7,8 +7,8 @@ from export_readiness.tests import factories as exread_factories
 
 
 def test_models_hierarchy():
-    # app
-    assert models.GreatInternationalApp.allowed_subpage_models() == [
+    # homepage / app root
+    assert models.InternationalHomePage.allowed_subpage_models() == [
         models.InternationalArticleListingPage,
         models.InternationalTopicLandingPage,
         models.InternationalCuratedTopicLandingPage,
@@ -21,11 +21,9 @@ def test_models_hierarchy():
         models.CapitalInvestOpportunityListingPage,
         models.CapitalInvestRegionPage
     ]
-    assert models.GreatInternationalApp.allowed_parent_page_models() == [
+    assert models.InternationalHomePage.allowed_parent_page_models() == [
         Page,
     ]
-    # homepage
-    assert models.InternationalHomePage.allowed_subpage_models() == []
     # region page
     assert models.InternationalRegionPage.allowed_subpage_models() == [
         models.InternationalLocalisedFolderPage
@@ -74,13 +72,6 @@ def test_models_hierarchy():
 
 
 @pytest.mark.parametrize('model', [
-    models.GreatInternationalApp,
-])
-def test_app_required_translatable_fields(model):
-    assert model.get_required_translatable_fields() == []
-
-
-@pytest.mark.parametrize('model', [
     models.CapitalInvestOpportunityListingPage,
 ])
 def test_opp_listing_required_translatable_fields(model):
@@ -89,13 +80,33 @@ def test_opp_listing_required_translatable_fields(model):
 
 @pytest.mark.django_db
 def test_set_slug():
-    instance = models.GreatInternationalApp.objects.create(
+    instance = models.InternationalHomePage.objects.create(
         title_en_gb='the app',
         depth=2,
         path='/thing',
+        hero_title='blah',
+        hero_title_en_gb='blah',
+        invest_title='blah',
+        invest_title_en_gb='blah',
+        trade_title='blah',
+        trade_title_en_gb='blah',
+        tariffs_title='blah',
+        tariffs_title_en_gb='blah',
+        tariffs_description='blah',
+        tariffs_description_en_gb='blah',
+        tariffs_link='http://blah.com/',
+        tariffs_link_en_gb='http://blah.com/',
+        tariffs_call_to_action_text='blah',
+        tariffs_call_to_action_text_en_gb='blah',
+        news_title='blah',
+        news_title_en_gb='blah',
+        study_in_uk_cta_text='blah',
+        study_in_uk_cta_text_en_gb='blah',
+        visit_uk_cta_text='blah',
+        visit_uk_cta_text_en_gb='blah',
     )
 
-    assert instance.slug == models.GreatInternationalApp.slug_identity
+    assert instance.slug == models.InternationalHomePage.slug_identity
 
 
 @pytest.mark.django_db
