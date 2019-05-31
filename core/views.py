@@ -1,5 +1,5 @@
+from directory_constants.constants import cms
 from django_filters.rest_framework import DjangoFilterBackend
-
 from rest_framework.exceptions import ValidationError
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
@@ -173,6 +173,13 @@ class DetailViewEndpointBase(APIEndpointBase):
 
 class PageLookupBySlugAPIEndpoint(DetailViewEndpointBase):
 
+    # NOTE: Temporary measure to ensure front-ends requesting OLD home page
+    # instances receive the updated page at the root level. Each item should
+    # be a tuple in the format (match_service_name, match_slug, override_slug)
+    slug_lookup_overrides = (
+        (cms.GREAT_INTERNATIONAL, 'international', 'great-international-app'),
+    )
+
     def check_parameter_validity(self):
         # Check 'service_name' was provided
         if 'service_name' not in self.request.GET:
@@ -191,6 +198,13 @@ class PageLookupBySlugAPIEndpoint(DetailViewEndpointBase):
 
         slug = self.kwargs['slug']
         service_name = self.request.GET['service_name']
+
+        # TODO: Remove once front-ends have been updated to use the new slugs
+        for match_service_name, match_slug, override_slug in self.slug_lookup_overrides: # NOQA
+            if service_name == match_service_name and slug == match_slug:
+                slug = override_slug
+                break
+
         object_id = cache.PageIDCache.get_for_slug(
             slug=slug, service_name=service_name
         )
@@ -205,6 +219,13 @@ class PageLookupBySlugAPIEndpoint(DetailViewEndpointBase):
 
 
 class PageLookupByPathAPIEndpoint(DetailViewEndpointBase):
+
+    # NOTE: Temporary measure to ensure front-ends requesting OLD home page
+    # instances receive the updated page at the root level. Each item should
+    # be a tuple in the format (match_path, override_path)
+    path_lookup_overrides = (
+        ('/international/', '/'),
+    )
 
     def get_object_id(self):
         """
@@ -221,8 +242,16 @@ class PageLookupByPathAPIEndpoint(DetailViewEndpointBase):
         else:
             lookup_path = '/' + path.strip('/') + '/'
 
+        # TODO: Remove once front-ends have been updated to use the new paths
+        for match_path, override_path in self.path_lookup_overrides:
+            if lookup_path == match_path:
+                lookup_path = override_path
+                break
+
         # Query the cache for a matching `id`
-        object_id = cache.PageIDCache.get_for_path(lookup_path, site_id)
+        object_id = cache.PageIDCache.get_for_path(
+            site_id=site_id, path=lookup_path
+        )
         if object_id is None:
             raise Http404(
                 "No page could be found matching site_id '{}' and path '{}'"
