@@ -9,7 +9,7 @@ from .models import Moderation
 @hooks.register('register_admin_menu_item')
 def add_moderation_queue_to_menu():
     return MenuItem(
-        'Moderation Queue',
+        'Review',
         reverse('moderation-queue:pending'),
         classnames='icon icon-folder-inverse',
         order=600,
