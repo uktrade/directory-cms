@@ -4,16 +4,16 @@ from wagtail.core.models import Site
 
 from core.cache import PageIDCache
 from export_readiness.tests.factories import (
-    ExportReadinessAppFactory, TopicLandingPageFactory,
+    HomePageFactory, TopicLandingPageFactory,
     ArticleListingPageFactory, ArticlePageFactory,
 )
 
 
 @pytest.mark.django_db
 def test_population_and_value_getting(root_page, django_assert_num_queries):
-    domestic_root_page = ExportReadinessAppFactory(parent=root_page)
+    domestic_homepage = HomePageFactory(parent=root_page)
     topic_page = TopicLandingPageFactory(
-        parent=domestic_root_page, slug='topic')
+        parent=domestic_homepage, slug='topic')
     article_list_page = ArticleListingPageFactory(
         parent=topic_page, slug='list')
     article_page = ArticlePageFactory(
@@ -23,7 +23,7 @@ def test_population_and_value_getting(root_page, django_assert_num_queries):
     site = Site.objects.create(
         site_name='Great Domestic',
         hostname='domestic.trade.great',
-        root_page=domestic_root_page,
+        root_page=domestic_homepage,
     )
 
     # Trigger population of site root paths cache
@@ -40,13 +40,13 @@ def test_population_and_value_getting(root_page, django_assert_num_queries):
     # Check result looks as expected
     assert result == {
         'by-path': {
-            f'{site.id}:/': domestic_root_page.id,
+            f'{site.id}:/': domestic_homepage.id,
             f'{site.id}:/topic/': topic_page.id,
             f'{site.id}:/topic/list/': article_list_page.id,
             f'{site.id}:/topic/list/article/': article_page.id
         },
         'by-slug': {
-            'EXPORT_READINESS:export-readiness-app': domestic_root_page.id,
+            'EXPORT_READINESS:export-readiness-app': domestic_homepage.id,
             'EXPORT_READINESS:topic': topic_page.id,
             'EXPORT_READINESS:list': article_list_page.id,
             'EXPORT_READINESS:article': article_page.id,
@@ -55,7 +55,7 @@ def test_population_and_value_getting(root_page, django_assert_num_queries):
 
     # Check get_for_path()
     result_1 = PageIDCache.get_for_path('/', site.id)
-    assert result_1 == domestic_root_page.id
+    assert result_1 == domestic_homepage.id
     result_2 = PageIDCache.get_for_path('/topic/list/article/', site.id)
     assert result_2 == article_page.id
 
