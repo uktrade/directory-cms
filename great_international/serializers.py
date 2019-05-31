@@ -1103,37 +1103,10 @@ class SubsectionProxyDataWrapper:
         return getattr(self.instance, f'subsection_map_{self.suffix}', None)
 
 
-class HowWeHelpProxyDataWrapper:
-
-    def __init__(self, instance, suffix):
-        self.suffix = suffix
-        self.instance = instance
-
-    @property
-    def text(self):
-        return getattr(self.instance, f'how_we_help_text_{self.suffix}')
-
-    @property
-    def icon(self):
-        return getattr(
-            self.instance,
-            f'how_we_help_icon_{self.suffix}',
-            None
-        )
-
-
 class SubsectionSerializer(serializers.Serializer):
     title = serializers.CharField(max_length=255)
     content = core_fields.MarkdownToHTMLField()
     map = wagtail_fields.ImageRenditionField(
-        'original',
-        allow_null=True
-    )
-
-
-class HowWeHelpSerializer(serializers.Serializer):
-    text = serializers.CharField(max_length=255)
-    icon = wagtail_fields.ImageRenditionField(
         'original',
         allow_null=True
     )
@@ -1307,7 +1280,7 @@ class InvestHighPotentialOpportunityDetailPageBaseSerializer(
 
 
 class InvestHighPotentialOpportunityDetailPageSerializer(
-    InvestHighPotentialOpportunityDetailPageBaseSerializer
+        InvestHighPotentialOpportunityDetailPageBaseSerializer
 ):
     other_opportunities = serializers.SerializerMethodField()
 
@@ -1327,8 +1300,11 @@ class InvestHighPotentialOpportunityDetailPageSerializer(
         return serializer.data
 
 
-class InvestHighPotentialOpportunityFormPageSerializer(BasePageSerializer,
-    metaclass=FormPageSerializerMetaclass):
+class InvestHighPotentialOpportunityFormPageSerializer(
+    BasePageSerializer,
+    metaclass=FormPageSerializerMetaclass
+):
+
     class Meta:
         model_class = InvestHighPotentialOpportunityFormPage
 

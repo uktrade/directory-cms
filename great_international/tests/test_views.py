@@ -1,6 +1,9 @@
 from directory_constants.constants import cms
+from django.core.files.base import ContentFile
 
 from rest_framework.reverse import reverse
+from six import b
+from wagtail.documents.models import Document
 
 from great_international.tests import factories
 
@@ -207,3 +210,73 @@ def test_client_not_passing_region(admin_client, root_page):
     assert response.status_code == 200
     assert 'localised_child_pages' in response.json()
     assert response.json()['localised_child_pages'] == []
+
+
+def test_invest_home_page(admin_client):
+    page = factories.InvestInternationalHomePageFactory(live=True)
+    factories.InternationalSectorPageFactory(live=True, featured=True)
+    factories.InternationalSectorPageFactory(live=True, featured=False)
+
+    fake_file = ContentFile(b('A boring example document'))
+    fake_file.name = 'test.pdf'
+    pdf = Document.objects.create(title='Test document', file=fake_file)
+
+    factories.InvestHighPotentialOpportunityDetailPageFactory(
+        title='Featured',
+        live=True,
+        pdf_document=pdf,
+        featured=True
+    )
+
+    factories.InvestHighPotentialOpportunityDetailPageFactory(
+        title='Not Featured',
+        live=True,
+        pdf_document=pdf,
+        featured=False
+    )
+
+    url = reverse(
+        'api:lookup-by-slug',
+        kwargs={'slug': page.slug}
+    )
+
+    response = admin_client.get(url, {'service_name': cms.INVEST})
+    assert response.status_code == 200
+    meta = response.json()['meta']
+    assert meta['url'] == 'http://invest.trade.great:8011'
+    assert meta['slug'] == 'home-page'
+    assert len(response.json()['sectors']) == 1
+    high_potential_ops = response.json()['high_potential_opportunities']
+    assert len(high_potential_ops) == 1
+    assert high_potential_ops[0]['title'] == 'Featured'
+
+
+def test_high_potential_opportunity_api(page, admin_client, root_page):
+    pdf_document = Document.objects.create(
+        title='document.pdf',
+        file=page.introduction_column_two_icon.file  # not really pdf
+    )
+
+    factories.InvestHighPotentialOpportunityDetailPageFactory(
+        parent=root_page,
+        live=True,
+        pdf_document=pdf_document,
+    )
+    page = factories.InvestHighPotentialOpportunityDetailPageFactory(
+        parent=root_page,
+        live=True,
+        pdf_document=pdf_document,
+        slug='some-nice-slug',
+    )
+
+    url = reverse(
+        'api:lookup-by-slug',
+        kwargs={'slug': page.slug}
+    )
+
+    response = admin_client.get(url, {'service_name': cms.INVEST})
+
+    assert response.status_code == 200
+    parsed = response.json()
+    assert 'other_opportunities' in parsed
+    assert 'other_opportunities' not in parsed['other_opportunities'][0]
