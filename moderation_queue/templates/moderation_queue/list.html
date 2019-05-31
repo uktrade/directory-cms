@@ -1,9 +1,166 @@
 {% extends "wagtailadmin/base.html" %}
 
+{% load i18n %}
+
 {% block content %}
-<ul>
-{% for moderation_request in object_list %}
-<li>{{ moderation_request }}</li>
-{% endfor %}
-</ul>
+<header>
+    <div class="row nice-padding">
+        <div class="col header-title">
+            <h1>Review</h1>
+        </div>
+    </div>
+</header>
+
+<div class="panel nice-padding">
+    <section>
+        <h2>{% trans 'ready for publish' %}</h2>
+
+        <table class="listing">
+            <thead>
+                <tr>
+                    <th class="title">{% trans "Page name" %}</th>
+                    <th>{% trans "Parent page" %}</th>
+                    <th>{% trans "Created by" %}</th>
+                    <th>{% trans "Creation date" %}</th>
+                    <th>{% trans "2i moderator" %}</th>
+                    <th>{% trans "Business approver" %}</th>
+                    <th>{% trans "Approver comment" %}</th>
+                    <th>{% trans "Review status" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for moderation in object_list %}
+                {% with page=moderation.revision.page %}
+                <tr>
+                    <td class="title" valign="top">
+                        <h2>
+                            <a href="{% url 'wagtailadmin_pages:edit' page.id %}" title="{% trans 'Edit this page' %}">{{ page.get_admin_display_title }}</a>
+
+                            {% include "wagtailadmin/pages/listing/_privacy_indicator.html" %}
+                            {% include "wagtailadmin/pages/listing/_locked_indicator.html" %}
+                        </h2>
+
+                        <ul class="actions">
+
+                            <li>
+                                <a href="{% url 'wagtailadmin_pages:edit' page.id %}" class="button button-small button-secondary">
+                                    {% trans 'Edit' %}
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'wagtailadmin_pages:preview_for_moderation' moderation.revision.id %}" class="button button-small button-secondary" target="_blank">
+                                    {% trans 'Preview' %}
+                                </a>
+                            </li>
+
+                        </ul>
+                    </td>
+
+                    <td valign="top">
+                        <a href="{% url 'wagtailadmin_explore' page.get_parent.id %}">{{ page.get_parent.get_admin_display_title }}</a>
+                    </td>
+
+                    <td class="type" valign="top">
+                        {{ moderation.revision.user.get_full_name|default:moderation.revision.user.get_username }}
+                    </td>
+
+                    <td valign="top">
+                        <div class="human-readable-date" title="{{ moderation.created_at|date:"d M Y H:i" }}">
+                            {% blocktrans with time_period=moderation.created_at|timesince %}{{ time_period }} ago{% endblocktrans %}
+                        </div>
+                    </td>
+
+                    <td valign="top">
+                        <ul>
+                            {% for review in moderation.reviews.all %}
+                            <li>{{ review.user.get_full_name|default:review.user.get_username }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+
+                    <td valign="top">
+                        {{ moderation.business_approver }}
+                    </td>
+
+                    <td valign="top">
+                        <p>Static demo comment</p>
+                    </td>
+
+                    <td valign="top">
+                        {% if moderation.is_2i_moderated %}
+                        <p>2i Approved</p>
+                        {% endif %}
+
+                        {% if moderation.business_approver %}
+                        <p>Business Approved</p>
+                        {% endif %}
+
+                        <a href="" class="button button-small button-secondary">
+                            {% trans "Schedule Publish" %}
+                        </a>
+                    </td>
+
+                </tr>
+                {% endwith %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>{% trans "Draft pages that need changes" %}</h2>
+
+        <table class="listing">
+            <col width="30%"/>
+            <col width="15%"/>
+            <col width="15%"/>
+            <thead>
+                <tr>
+                    <th>{% trans "Page name" %}</th>
+                    <th>{% trans "Parent page" %}</th>
+                    <th>{% trans "Created by" %}</th>
+                    <th>{% trans "Creation date" %}</th>
+                    <th>{% trans "Status reason" %}</th>
+                    <th>{% trans "Review status" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="title" valign="top">
+                        <h2>
+                            {# <a href="{% url 'wagtailadmin_pages:edit' page.id %}" title="{% trans 'Edit this page' %}"> #}
+                            {#     {{ page.get_admin_display_title }} #}
+                            {# </a> #}
+
+                            {# {% include "wagtailadmin/pages/listing/_privacy_indicator.html" %} #}
+                            {# {% include "wagtailadmin/pages/listing/_locked_indicator.html" %} #}
+                        </h2>
+                    </td>
+
+                    <td valign="top">
+                        {# <a href="{% url 'wagtailadmin_explore' page.get_parent.id %}">{{ page.get_parent.get_admin_display_title }}</a> #}
+                    </td>
+
+                    <td class="type" valign="top">
+                        {# {{ moderation.revision.user.get_full_name|default:moderation.revision.user.get_username }} #}
+                    </td>
+
+                    <td valign="top">
+                        {# <div class="human-readable-date" title="{{ moderation.created_at|date:"d M Y H:i" }}"> #}
+                        {#     {% blocktrans with time_period=moderation.created_at|timesince %}{{ time_period }} ago{% endblocktrans %} #}
+                        {# </div> #}
+                    </td>
+
+                    <td valign="top">
+                        <p>Static demo comment</p>
+                    </td>
+
+                    <td valign="top">
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+</div>
 {% endblock content %}

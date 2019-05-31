@@ -15,6 +15,9 @@ class Moderation(models.Model):
     def __str__(self):
         return f'{self.revision.user} requested moderation of "{self.revision.page}" at {self.created_at}'
 
+    def is_2i_moderated(self):
+        return self.reviews.filter(is_accepted=True).exists()
+
 
 class ModeratorReview(models.Model):
     moderation = models.ForeignKey('Moderation', verbose_name=_('moderation'), on_delete=models.CASCADE, related_name="reviews")
