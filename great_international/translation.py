@@ -496,3 +496,161 @@ class CapitalInvestHomesInEnglandCardFieldsSummarySerializer(
     fields = (
         'page',
     )
+
+
+@register(models.InvestInternationalHomePage)
+class InvestHomePageTranslation(BaseTranslationOptions):
+    fields = (
+        'breadcrumbs_label',
+        'heading',
+        'sub_heading',
+        'hero_call_to_action_text',
+        'hero_call_to_action_url',
+
+        'benefits_section_title',
+        'benefits_section_intro',
+        'benefits_section_content',
+        'benefits_section_img',
+
+        'capital_invest_section_title',
+        'capital_invest_section_content',
+        'capital_invest_section_image',
+
+        'eu_exit_section_title',
+        'eu_exit_section_content',
+        'eu_exit_section_call_to_action_text',
+        'eu_exit_section_call_to_action_url',
+        'eu_exit_section_img',
+
+        # subsections
+        'subsection_title_one',
+        'subsection_content_one',
+
+        'subsection_title_two',
+        'subsection_content_two',
+
+        'subsection_title_three',
+        'subsection_content_three',
+
+        'subsection_title_four',
+        'subsection_content_four',
+
+        'subsection_title_five',
+        'subsection_content_five',
+
+        'subsection_title_six',
+        'subsection_content_six',
+
+        'subsection_title_seven',
+        'subsection_content_seven',
+
+        'sector_title',
+        'sector_intro',
+        'hpo_title',
+        'hpo_intro',
+        'setup_guide_title',
+        'setup_guide_content',
+        'setup_guide_img',
+        'setup_guide_call_to_action_url',
+        'setup_guide_lead_in',
+        'isd_section_image',
+        'isd_section_title',
+        'isd_section_text',
+        'how_we_help_title',
+        'how_we_help_lead_in',
+        # how we help
+        'how_we_help_text_one',
+        'how_we_help_icon_one',
+
+        'how_we_help_text_two',
+        'how_we_help_icon_two',
+
+        'how_we_help_text_three',
+        'how_we_help_icon_three',
+
+        'how_we_help_text_four',
+        'how_we_help_icon_four',
+
+        'how_we_help_text_five',
+        'how_we_help_icon_five',
+
+        'how_we_help_text_six',
+        'sector_button_text',
+        'sector_button_url',
+        'contact_section_title',
+        'contact_section_content',
+        'contact_section_call_to_action_text',
+        'contact_section_call_to_action_url'
+    )
+
+
+@register(models.InvestHighPotentialOpportunityFormPage)
+class HighPotentialOpportunityFormPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = []
+
+
+@register(models.InvestHighPotentialOpportunityDetailPage)
+class HighPotentialOpportunityDetailPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'heading',
+        'hero_image',
+        'description',
+        'featured',
+        'contact_proposition',
+        'contact_button',
+        'proposition_one',
+        'proposition_one_image',
+        'proposition_one_video',
+        'opportunity_list_title',
+        'opportunity_list_item_one',
+        'opportunity_list_item_two',
+        'opportunity_list_item_three',
+        'opportunity_list_image',
+        'proposition_two',
+        'proposition_two_list_item_one',
+        'proposition_two_list_item_two',
+        'proposition_two_list_item_three',
+        'proposition_two_image',
+        'proposition_two_video',
+        'competitive_advantages_title',
+        'competitive_advantages_list_item_one',
+        'competitive_advantages_list_item_one_icon',
+        'competitive_advantages_list_item_two',
+        'competitive_advantages_list_item_two_icon',
+        'competitive_advantages_list_item_three',
+        'competitive_advantages_list_item_three_icon',
+        'testimonial',
+        'testimonial_background',
+        'companies_list_text',
+        'companies_list_item_image_one',
+        'companies_list_item_image_two',
+        'companies_list_item_image_three',
+        'companies_list_item_image_four',
+        'companies_list_item_image_five',
+        'companies_list_item_image_six',
+        'companies_list_item_image_seven',
+        'companies_list_item_image_eight',
+        'case_study_list_title',
+        'case_study_one_text',
+        'case_study_one_image',
+        'case_study_two_text',
+        'case_study_two_image',
+        'case_study_three_text',
+        'case_study_three_image',
+        'case_study_four_text',
+        'case_study_four_image',
+        'other_opportunities_title',
+        'summary_image',
+    )
+
+
+@register(models.InvestHighPotentialOpportunityFormSuccessPage)
+class HighPotentialOpportunityFormSuccessPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = []
