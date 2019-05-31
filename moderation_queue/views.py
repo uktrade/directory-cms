@@ -45,7 +45,7 @@ class ApproveModeration(View):
 
         with transaction.atomic():
             revision.approve_moderation()
-            moderation.delete()
+            moderation.reviews.create(user=request.user, is_accepted=True)
 
         message = _("Page '{0}' published.").format(page.get_admin_display_title())
         buttons = []
@@ -87,7 +87,7 @@ class RejectModeration(View):
 
         with transaction.atomic():
             revision.reject_moderation()
-            moderation.delete()
+            moderation.reviews.create(user=request.user, is_accepted=False)
 
         page_title = page.get_admin_display_title()
         messages.success(request, _(f"Page '{page_title}' rejected for publication."), buttons=[
