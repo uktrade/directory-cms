@@ -249,7 +249,9 @@ class PageLookupByPathAPIEndpoint(DetailViewEndpointBase):
                 break
 
         # Query the cache for a matching `id`
-        object_id = cache.PageIDCache.get_for_path(lookup_path, site_id)
+        object_id = cache.PageIDCache.get_for_path(
+            site_id=site_id, path=lookup_path
+        )
         if object_id is None:
             raise Http404(
                 "No page could be found matching site_id '{}' and path '{}'"

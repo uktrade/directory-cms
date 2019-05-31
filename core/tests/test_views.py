@@ -396,22 +396,26 @@ def test_lookup_by_path(root_page, page, admin_client):
 
 
 @pytest.mark.django_db
-@mock.patch('core.cache.PageIDCache.get_for_path')
+@pytest.mark.parametrize(
+    'path,override_path',
+    tuple(views.PageLookupByPathAPIEndpoint.path_lookup_overrides)
+)
 def test_lookup_by_path_view_respects_overrides(
-    mocked_method, admin_client
+    admin_client, path, override_path
 ):
-    path = '/international/'
-    override_path = '/'
-
-    overrides = views.PageLookupByPathAPIEndpoint.path_lookup_overrides
-    assert (path, override_path) in overrides
+    site_id = '1'
 
     url = reverse(
-        'api:lookup-by-path', kwargs={'path': path, 'site_id': 1}
+        'api:lookup-by-path', kwargs={'path': path, 'site_id': site_id}
     )
-    admin_client.get(url)
+    with mock.patch(
+        'core.cache.PageIDCache.get_for_path', return_value=None
+    ) as mocked_method:
+        admin_client.get(url)
 
-    mocked_method.assert_called_with(site_id=1, path=override_path)
+    mocked_method.assert_called_with(
+        path=override_path, site_id=site_id,
+    )
 
 
 @pytest.mark.django_db
@@ -443,21 +447,23 @@ def test_lookup_by_slug(translated_page, admin_client):
 
 
 @pytest.mark.django_db
-@mock.patch('core.cache.PageIDCache.get_for_slug')
-def test_lookup_by_slug_view_respects_overrides(mocked_method, admin_client):
-    service_name = cms.GREAT_INTERNATIONAL
-    slug = 'international'
-    override_slug = 'great-international-app'
-
-    overrides = views.PageLookupBySlugAPIEndpoint.slug_lookup_overrides
-    assert (service_name, slug, override_slug) in overrides
-
+@pytest.mark.parametrize(
+    'service_name,slug,override_slug',
+    tuple(views.PageLookupBySlugAPIEndpoint.slug_lookup_overrides)
+)
+def test_lookup_by_slug_view_respects_overrides(
+    admin_client, service_name, slug, override_slug
+):
     url = reverse('api:lookup-by-slug', kwargs={'slug': slug})
-    admin_client.get(url, {'service_name': service_name})
+
+    with mock.patch(
+        'core.cache.PageIDCache.get_for_slug', return_value=None
+    ) as mocked_method:
+        admin_client.get(url, {'service_name': service_name})
 
     mocked_method.assert_called_with(
-        service_name=service_name,
         slug=override_slug,
+        service_name=service_name,
     )
 
 
