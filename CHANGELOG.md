@@ -9,6 +9,7 @@
 - CI-104 - Added capital invest landing, region, sector and opportunity pages.
 - NOTICKET - Removed blanket debug logging to remove noise when using interactive shell tools
 - CI-144 - Updated capital invest landing page to match more recent invision designs
+- CMS-1591 - Copy invest homepage and HPO pages in International app
 
 ### Fixed bugs:
 
