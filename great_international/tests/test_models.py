@@ -14,7 +14,6 @@ def test_models_hierarchy():
         models.InternationalCuratedTopicLandingPage,
         models.InternationalGuideLandingPage,
         models.InternationalRegionPage,
-        models.InternationalHomePage,
         models.InternationalEUExitFormPage,
         models.InternationalEUExitFormSuccessPage,
         models.InternationalCapitalInvestLandingPage,
