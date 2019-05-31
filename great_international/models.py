@@ -51,7 +51,7 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
             InternationalCapitalInvestLandingPage,
             CapitalInvestOpportunityListingPage,
             CapitalInvestRegionPage,
-            InvestHomePage,
+            InvestInternationalHomePage,
             InvestHighPotentialOpportunityDetailPage,
             InvestHighPotentialOpportunityFormPage,
             InvestHighPotentialOpportunityFormSuccessPage
