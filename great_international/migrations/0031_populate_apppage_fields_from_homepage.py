@@ -52,16 +52,17 @@ def populate_apppage_fields_from_homepage(apps, schema_editor):
         # Update the app page with the values from home page
         # ------------------------------------------------------------------------
 
-        # Values we want the app page to keep
-        preserve_attrs = (
-            'id', 'slug', 'live', 'url_path', 'path', 'depth',
-            'content_type_id', 'numchild', 'owner', 'locked',
+        # Don't copy these attributes from the home page
+        ignore_attrs = (
+            'id', 'owner_id', 'slug', 'live', 'url_path', 'path', 'depth',
+            'page_ptr_id', 'live_revision_id', 'first_published_at'
+            'content_type_id', 'numchild', 'locked',
             '_live_revision_cache', '_owner_cache', '_state'
         )
 
         # update app_page values with home_page ones
         for key, val in home_page.__dict__.items():
-            if key not in preserve_attrs:
+            if key not in ignore_attrs:
                 setattr(app_page, key, val)
 
         # make the new revision the latest one and set some other
