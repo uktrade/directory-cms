@@ -9,12 +9,12 @@ from django.views.generic import ListView, View
 from wagtail.admin import messages
 from wagtail.admin.utils import send_notification
 
-from .models import PagePendingModeration
+from .models import Moderation
 
 
 @method_decorator(login_required, name='dispatch')
 class PendingModerations(ListView):
-    model = PagePendingModeration
+    model = Moderation
     template_name = "moderation_queue/list.html"
 
 
@@ -24,28 +24,28 @@ class ApproveModeration(View):
     Approve moderation requests.
 
     This is a modified version of wagtail.admin.views.pages.approve_moderation
-    to handle PagePendingModeration objects in lock step with
+    to handle Moderation objects in lock step with
     PageRevision.submitted_for_moderation.
     """
     http_method_names = ['post']
 
     def post(self, request, *args, **kwargs):
-        pending_moderation = get_object_or_404(PagePendingModeration, id=self.kwargs['pk'])
+        moderation = get_object_or_404(Moderation, id=self.kwargs['pk'])
 
-        if not pending_moderation.revision.page.permissions_for_user(request.user).can_publish():
+        if not moderation.revision.page.permissions_for_user(request.user).can_publish():
             raise PermissionDenied
 
-        if not pending_moderation.revision.submitted_for_moderation:
-            page_title = pending_moderation.revision.page.get_admin_display_title()
+        if not moderation.revision.submitted_for_moderation:
+            page_title = moderation.revision.page.get_admin_display_title()
             messages.error(request, _(f"The page '{page_title}' is not currently awaiting moderation."))
             return redirect('wagtailadmin_home')
 
-        page = pending_moderation.revision.page
-        revision = pending_moderation.revision
+        page = moderation.revision.page
+        revision = moderation.revision
 
         with transaction.atomic():
             revision.approve_moderation()
-            pending_moderation.delete()
+            moderation.delete()
 
         message = _("Page '{0}' published.").format(page.get_admin_display_title())
         buttons = []
@@ -66,28 +66,28 @@ class RejectModeration(View):
     Reject moderation requests.
 
     This is a modified version of wagtail.admin.views.pages.reject_moderation
-    to handle PagePendingModeration objects in lock step with
+    to handle Moderation objects in lock step with
     PageRevision.submitted_for_moderation.
     """
     http_method_names = ['post']
 
     def post(self, request, *args, **kwargs):
-        pending_moderation = get_object_or_404(PagePendingModeration, id=self.kwargs['pk'])
+        moderation = get_object_or_404(Moderation, id=self.kwargs['pk'])
 
-        if not pending_moderation.revision.page.permissions_for_user(request.user).can_publish():
+        if not moderation.revision.page.permissions_for_user(request.user).can_publish():
             raise PermissionDenied
 
-        if not pending_moderation.revision.submitted_for_moderation:
-            page_title = pending_moderation.revision.page.get_admin_display_title()
+        if not moderation.revision.submitted_for_moderation:
+            page_title = moderation.revision.page.get_admin_display_title()
             messages.error(request, _(f"The page '{page_title}' is not currently awaiting moderation."))
             return redirect('wagtailadmin_home')
 
-        page = pending_moderation.revision.page
-        revision = pending_moderation.revision
+        page = moderation.revision.page
+        revision = moderation.revision
 
         with transaction.atomic():
             revision.reject_moderation()
-            pending_moderation.delete()
+            moderation.delete()
 
         page_title = page.get_admin_display_title()
         messages.success(request, _(f"Page '{page_title}' rejected for publication."), buttons=[

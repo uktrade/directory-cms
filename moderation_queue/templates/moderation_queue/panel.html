@@ -74,7 +74,7 @@
                         <div class="human-readable-date" title="{{ pending_moderation.created_at|date:"d M Y H:i" }}">
                             {% blocktrans with time_period=pending_moderation.created_at|timesince %}{{ time_period }} ago{% endblocktrans %}
                         </div>
-                        by {{ pending_moderation.user.get_full_name|default:pending_moderation.user.get_username }}
+                        by {{ pending_moderation.revision.user.get_full_name|default:pending_moderation.revision.user.get_username }}
                     </td>
 
                 </tr>

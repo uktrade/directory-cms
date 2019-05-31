@@ -3,7 +3,7 @@ from django.urls import reverse
 from wagtail.admin.menu import MenuItem
 from wagtail.core import hooks
 
-from .models import PagePendingModeration
+from .models import Moderation
 
 
 @hooks.register('register_admin_menu_item')
@@ -23,9 +23,9 @@ class ModerationQueuePanel:
         self.request = request
 
     def render(self):
-        pending_moderations = (PagePendingModeration.objects.order_by('-created_at')
-                                                            .select_related('revision', 'user'))
-        context = {'pending_moderations': pending_moderations}
+        pending = (Moderation.objects.order_by('-created_at')
+                                     .select_related('revision', 'revision__user'))
+        context = {'pending_moderations': pending}
         return render_to_string(
             'moderation_queue/panel.html',
             context=context,
@@ -40,7 +40,7 @@ def replace_moderation_panel(request, panels):
             continue
 
         # replace standard Wagtail Moderation panel (PagesForModerationPanel)
-        # with a custom panel to show PagePendingModeration objects.
+        # with a custom panel to show Moderation objects.
         panels[i] = ModerationQueuePanel(request)
 
 
@@ -52,8 +52,5 @@ def add_page_to_moderation_queue(request, page):
     if not latest_revision.submitted_for_moderation:
         return
 
-    # TODO: should we remove exiting PagePendingModeration rows for the given page?
-    PagePendingModeration.objects.create(
-        revision=latest_revision,
-        user_id=latest_revision.user_id,
-    )
+    # TODO: should we remove exiting Moderation rows for the given page?
+    Moderation.objects.create(revision=latest_revision)
