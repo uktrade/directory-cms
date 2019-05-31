@@ -214,8 +214,8 @@ def test_client_not_passing_region(admin_client, root_page):
 
 def test_invest_home_page(admin_client):
     page = factories.InvestInternationalHomePageFactory(live=True)
-    factories.InternationalSectorPageFactory(live=True, featured=True)
-    factories.InternationalSectorPageFactory(live=True, featured=False)
+    factories.InternationalSectorPageFactory(live=True)
+    factories.InternationalSectorPageFactory(live=True)
 
     fake_file = ContentFile(b('A boring example document'))
     fake_file.name = 'test.pdf'
@@ -240,7 +240,7 @@ def test_invest_home_page(admin_client):
         kwargs={'slug': page.slug}
     )
 
-    response = admin_client.get(url, {'service_name': cms.INVEST})
+    response = admin_client.get(url, {'service_name': cms.GREAT_INTERNATIONAL})
     assert response.status_code == 200
     meta = response.json()['meta']
     assert meta['url'] == 'http://invest.trade.great:8011'
@@ -274,7 +274,7 @@ def test_high_potential_opportunity_api(page, admin_client, root_page):
         kwargs={'slug': page.slug}
     )
 
-    response = admin_client.get(url, {'service_name': cms.INVEST})
+    response = admin_client.get(url, {'service_name': cms.GREAT_INTERNATIONAL})
 
     assert response.status_code == 200
     parsed = response.json()
