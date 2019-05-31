@@ -9,6 +9,11 @@
 - CI-104 - Added capital invest landing, region, sector and opportunity pages.
 - NOTICKET - Removed blanket debug logging to remove noise when using interactive shell tools
 - CI-144 - Updated capital invest landing page to match more recent invision designs
+- CI-148 - Updated capital invest pages to match more recent page designs
+- CI-150 - Updated featured cards on Invest home page to be more flexible and all from cms
+- CI-128 - Changed required fields to be nullable and removed unused fields on Invest home page
+- CI-152 - Changed `next steps` sections to be `contact` section on capital invest pages
+- CI-153 - Removed the cards pdf buttons on Capital Invest Landing page, region cards are now only displayed with markdown text
 - CMS-1591 - Copy invest homepage and HPO pages in International app
 
 ### Fixed bugs:
@@ -19,6 +24,8 @@
 - CMS-1419 - Fixed 'too_many_redirects' when logging in via SSO
 - NOTICKET - Upgrade django-restframework to 3.9.4 to fix XSS vulnerability
 - CMS-1589 - Upgrade django-staff-sso-client to version 0.3.0 to fix blank username field bug
+- NOTICKET - Update guidance for `update_db_template` in README
+- CI-154 - Added section three to guide landing page for ISD/contact section
 
 
 ## [2019.05.09](https://github.com/uktrade/directory-cms/releases/tag/2019.05.09)

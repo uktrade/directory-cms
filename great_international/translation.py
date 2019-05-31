@@ -243,6 +243,10 @@ class InternationalGuideLandingPageTranslationOptions(
         'section_two_button_url',
         'section_two_image',
         'guides_section_heading',
+        'section_three_title',
+        'section_three_text',
+        'section_three_cta_text',
+        'section_three_cta_link',
     )
 
 
@@ -373,10 +377,9 @@ class CapitalInvestRegionPageTranslationOptions(
         'case_study_cta_text',
         'case_study_cta_link',
 
-        'next_steps_title',
-        'next_steps_intro',
-        'invest_cta_text',
-        'buy_cta_text',
+        'contact_title',
+        'contact_text',
+
     )
 
 
@@ -396,11 +399,8 @@ class CapitalInvestRegionalSectorPageTranslationOptions(
 
         'investment_opportunities_title',
 
-        'next_steps_title',
-        'next_steps_intro',
-
-        'invest_cta_text',
-        'buy_cta_text',
+        'contact_title',
+        'contact_text',
 
     )
 
@@ -458,11 +458,8 @@ class CapitalInvestOpportunityPageTranslationOptions(
         'similar_projects_cta_text',
         'similar_projects_cta_link',
 
-        'next_steps_title',
-        'next_steps_intro',
-
-        'invest_cta_text',
-        'buy_cta_text',
+        'contact_title',
+        'contact_text',
     )
 
 

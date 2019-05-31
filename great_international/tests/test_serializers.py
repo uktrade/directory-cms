@@ -7,7 +7,8 @@ from great_international.serializers import (
     InternationalGuideLandingPageSerializer,
     CapitalInvestRegionPageSerializer,
     InternationalCapitalInvestLandingPageSerializer,
-    CapitalInvestRegionalSectorPageSerializer)
+    CapitalInvestRegionalSectorPageSerializer,
+    InvestHighPotentialOpportunityFormPageSerializer)
 from great_international.tests.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
@@ -483,3 +484,21 @@ def test_high_potential_opportunity_form_page_serializer():
         'label': instance.comment_label,
         'help_text': instance.comment_help_text,
     }
+
+
+@pytest.mark.django_db
+def test_capital_invest_landing_page_has_how_we_help(rf):
+    region = InternationalCapitalInvestLandingPageFactory(
+        slug='region-slug',
+        parent=None
+    )
+
+    serializer = InternationalCapitalInvestLandingPageSerializer(
+        instance=region,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['how_we_help_icon_and_text']) == 4
+    for statistic in serializer.data['how_we_help_icon_and_text']:
+        assert 'text' in statistic
+        assert 'icon' in statistic
