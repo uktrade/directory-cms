@@ -451,7 +451,7 @@ class InternationalSectorPage(BasePage):
     )
 
 
-class InternationalHomePage(ExclusivePageMixin, BasePage):
+class InternationalHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
     slug_identity = 'great-international-app'
     service_name_value = cms.GREAT_INTERNATIONAL
 
