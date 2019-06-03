@@ -49,7 +49,7 @@
                             </li>
 
                             <li>
-                                <a href="{% url 'wagtailadmin_pages:preview_for_moderation' moderation.revision.id %}" class="button button-small button-secondary" target="_blank">
+                                <a href="{% url 'moderation-queue:preview_moderation' moderation.id %}" class="button button-small button-secondary" target="_blank">
                                     {% trans 'Preview' %}
                                 </a>
                             </li>

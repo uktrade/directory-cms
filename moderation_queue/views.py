@@ -60,6 +60,29 @@ class ApproveModeration(View):
         return redirect('wagtailadmin_home')
 
 
+class PreviewModeration(View):
+    """
+    Preview a moderation request.
+
+    This is based on wagtail.admin.views.page.preview_for_moderation but looks
+    at Modreation objects instead of PageReivews.  It doesn't check the status
+    of PageReview.submitted_for_moderation since it is expected this view will
+    be used for previewing Pages which are pending or have passed moderation.
+    """
+    http_method_names = ['get']
+
+    def get(self, request, *args, **kwargs):
+        moderation = get_object_or_404(Moderation, id=self.kwargs['pk'])
+        if not moderation.revision.page.permissions_for_user(request.user).can_publish():
+            raise PermissionDenied
+
+        page = moderation.revision.as_page_object()
+
+        # pass in the real user request rather than page.dummy_request(), so that request.user
+        # and request.revision_id will be picked up by the wagtail user bar
+        return page.serve_preview(request, page.default_preview_mode)
+
+
 @method_decorator(login_required, name='dispatch')
 class RejectModeration(View):
     """
