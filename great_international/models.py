@@ -28,7 +28,12 @@ from wagtail.core.models import Orderable
 from modelcluster.fields import ParentalKey
 
 
-class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
+class InternationalBasePage(BasePage):
+    class Meta:
+        abstract = True
+
+
+class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, InternationalBasePage):
     slug_identity = 'great-international-app'
     service_name_value = cms.GREAT_INTERNATIONAL
 
@@ -52,7 +57,7 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
             CapitalInvestRegionPage]
 
 
-class InternationalSectorPage(BasePage):
+class InternationalSectorPage(InternationalBasePage):
     class Meta:
         ordering = ['-heading']
 
@@ -476,7 +481,7 @@ class InternationalSectorPage(BasePage):
 
 
 class InternationalHomePage(
-    ExclusivePageMixin, ServiceHomepageMixin, BasePage
+    ExclusivePageMixin, ServiceHomepageMixin, InternationalBasePage
 ):
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
@@ -898,7 +903,7 @@ class InternationalHomePage(
     )
 
 
-class InternationalRegionPage(BasePage):
+class InternationalRegionPage(InternationalBasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = [
@@ -918,7 +923,7 @@ class InternationalRegionPage(BasePage):
         return super().save(*args, **kwargs)
 
 
-class InternationalLocalisedFolderPage(BasePage):
+class InternationalLocalisedFolderPage(InternationalBasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.InternationalRegionPage']
     subpage_types = [
@@ -938,7 +943,7 @@ class InternationalLocalisedFolderPage(BasePage):
         return super().save(*args, **kwargs)
 
 
-class InternationalArticlePage(BasePage):
+class InternationalArticlePage(InternationalBasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
@@ -1034,7 +1039,7 @@ class InternationalArticlePage(BasePage):
     )
 
 
-class InternationalArticleListingPage(BasePage):
+class InternationalArticleListingPage(InternationalBasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = [
         'great_international.GreatInternationalApp',
@@ -1089,7 +1094,7 @@ class InternationalArticleListingPage(BasePage):
     )
 
 
-class InternationalCampaignPage(BasePage):
+class InternationalCampaignPage(InternationalBasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
@@ -1332,7 +1337,7 @@ class InternationalCampaignPage(BasePage):
     )
 
 
-class InternationalTopicLandingPage(BasePage):
+class InternationalTopicLandingPage(InternationalBasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = [
@@ -1378,7 +1383,7 @@ class InternationalTopicLandingPage(BasePage):
     )
 
 
-class InternationalCuratedTopicLandingPage(BasePage):
+class InternationalCuratedTopicLandingPage(InternationalBasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = []
@@ -1509,7 +1514,7 @@ class InternationalCuratedTopicLandingPage(BasePage):
     )
 
 
-class InternationalGuideLandingPage(BasePage):
+class InternationalGuideLandingPage(InternationalBasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = ['great_international.InternationalArticlePage']
@@ -1633,7 +1638,7 @@ class InternationalGuideLandingPage(BasePage):
 
 
 class InternationalEUExitFormPage(
-    ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
+    ExclusivePageMixin, InternationalBasePage, metaclass=FormPageMetaClass
 ):
     # metaclass creates <fild_name>_label and <field_name>_help_text
     form_field_names = [
@@ -1682,7 +1687,7 @@ class InternationalEUExitFormPage(
     ]
 
 
-class InternationalEUExitFormSuccessPage(ExclusivePageMixin, BasePage):
+class InternationalEUExitFormSuccessPage(ExclusivePageMixin, InternationalBasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     full_path_override = '/eu-exit-news/contact/success/'
     slug_identity = cms.GREAT_EUEXIT_FORM_SUCCESS_SLUG
@@ -1840,7 +1845,7 @@ class CapitalInvestRelatedRegions(Orderable, RelatedRegion):
     )
 
 
-class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
+class InternationalCapitalInvestLandingPage(ExclusivePageMixin, InternationalBasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = 'capital-invest'
 
@@ -2087,7 +2092,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
     )
 
 
-class CapitalInvestRegionPage(BasePage):
+class CapitalInvestRegionPage(InternationalBasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
 
     parent_page_types = ['great_international.GreatInternationalApp']
@@ -2380,7 +2385,7 @@ class SectorRelatedOpportunities(Orderable, RelatedOpportunity):
     )
 
 
-class CapitalInvestRegionalSectorPage(BasePage):
+class CapitalInvestRegionalSectorPage(InternationalBasePage):
 
     service_name_value = cms.GREAT_INTERNATIONAL
 
@@ -2471,7 +2476,7 @@ class CapitalInvestRegionalSectorPage(BasePage):
 
 
 class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
-                                          BasePage):
+                                          InternationalBasePage):
 
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = 'opportunities'
@@ -2489,7 +2494,7 @@ class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
         return [CapitalInvestOpportunityPage]
 
 
-class CapitalInvestOpportunityPage(BasePage):
+class CapitalInvestOpportunityPage(InternationalBasePage):
 
     service_name_value = cms.GREAT_INTERNATIONAL
 
