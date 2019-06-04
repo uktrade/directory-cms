@@ -28,7 +28,7 @@ from wagtail.core.models import Orderable
 from modelcluster.fields import ParentalKey
 
 
-class InternationalBasePage(BasePage):
+class BaseInternationalPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
 
     class Meta:
@@ -36,7 +36,7 @@ class InternationalBasePage(BasePage):
 
 
 class GreatInternationalApp(
-    ExclusivePageMixin, ServiceMixin, InternationalBasePage
+    ExclusivePageMixin, ServiceMixin, BaseInternationalPage
 ):
     slug_identity = 'great-international-app'
 
@@ -60,7 +60,7 @@ class GreatInternationalApp(
             CapitalInvestRegionPage]
 
 
-class InternationalSectorPage(InternationalBasePage):
+class InternationalSectorPage(BaseInternationalPage):
     class Meta:
         ordering = ['-heading']
 
@@ -483,7 +483,7 @@ class InternationalSectorPage(InternationalBasePage):
 
 
 class InternationalHomePage(
-    ExclusivePageMixin, ServiceHomepageMixin, InternationalBasePage
+    ExclusivePageMixin, ServiceHomepageMixin, BaseInternationalPage
 ):
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
     subpage_types = []
@@ -904,7 +904,7 @@ class InternationalHomePage(
     )
 
 
-class InternationalRegionPage(InternationalBasePage):
+class InternationalRegionPage(BaseInternationalPage):
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = [
         'great_international.InternationalLocalisedFolderPage'
@@ -923,7 +923,7 @@ class InternationalRegionPage(InternationalBasePage):
         return super().save(*args, **kwargs)
 
 
-class InternationalLocalisedFolderPage(InternationalBasePage):
+class InternationalLocalisedFolderPage(BaseInternationalPage):
     parent_page_types = ['great_international.InternationalRegionPage']
     subpage_types = [
         'great_international.InternationalArticlePage',
@@ -942,7 +942,7 @@ class InternationalLocalisedFolderPage(InternationalBasePage):
         return super().save(*args, **kwargs)
 
 
-class InternationalArticlePage(InternationalBasePage):
+class InternationalArticlePage(BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
@@ -1037,7 +1037,7 @@ class InternationalArticlePage(InternationalBasePage):
     )
 
 
-class InternationalArticleListingPage(InternationalBasePage):
+class InternationalArticleListingPage(BaseInternationalPage):
     parent_page_types = [
         'great_international.GreatInternationalApp',
         'great_international.InternationalTopicLandingPage'
@@ -1091,7 +1091,7 @@ class InternationalArticleListingPage(InternationalBasePage):
     )
 
 
-class InternationalCampaignPage(InternationalBasePage):
+class InternationalCampaignPage(BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalTopicLandingPage',
@@ -1333,7 +1333,7 @@ class InternationalCampaignPage(InternationalBasePage):
     )
 
 
-class InternationalTopicLandingPage(InternationalBasePage):
+class InternationalTopicLandingPage(BaseInternationalPage):
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = [
         'great_international.InternationalArticleListingPage',
@@ -1378,7 +1378,7 @@ class InternationalTopicLandingPage(InternationalBasePage):
     )
 
 
-class InternationalCuratedTopicLandingPage(InternationalBasePage):
+class InternationalCuratedTopicLandingPage(BaseInternationalPage):
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = []
 
@@ -1508,7 +1508,7 @@ class InternationalCuratedTopicLandingPage(InternationalBasePage):
     )
 
 
-class InternationalGuideLandingPage(InternationalBasePage):
+class InternationalGuideLandingPage(BaseInternationalPage):
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = ['great_international.InternationalArticlePage']
 
@@ -1631,7 +1631,7 @@ class InternationalGuideLandingPage(InternationalBasePage):
 
 
 class InternationalEUExitFormPage(
-    ExclusivePageMixin, InternationalBasePage, metaclass=FormPageMetaClass
+    ExclusivePageMixin, BaseInternationalPage, metaclass=FormPageMetaClass
 ):
     # metaclass creates <fild_name>_label and <field_name>_help_text
     form_field_names = [
@@ -1680,7 +1680,7 @@ class InternationalEUExitFormPage(
 
 
 class InternationalEUExitFormSuccessPage(
-    ExclusivePageMixin, InternationalBasePage
+    ExclusivePageMixin, BaseInternationalPage
 ):
     full_path_override = '/eu-exit-news/contact/success/'
     slug_identity = cms.GREAT_EUEXIT_FORM_SUCCESS_SLUG
@@ -1839,7 +1839,7 @@ class CapitalInvestRelatedRegions(Orderable, RelatedRegion):
 
 
 class InternationalCapitalInvestLandingPage(
-    ExclusivePageMixin, InternationalBasePage
+    ExclusivePageMixin, BaseInternationalPage
 ):
     slug_identity = 'capital-invest'
 
@@ -2086,7 +2086,7 @@ class InternationalCapitalInvestLandingPage(
     )
 
 
-class CapitalInvestRegionPage(InternationalBasePage):
+class CapitalInvestRegionPage(BaseInternationalPage):
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = [
         'great_international.CapitalInvestRegionalSectorPage',
@@ -2377,7 +2377,7 @@ class SectorRelatedOpportunities(Orderable, RelatedOpportunity):
     )
 
 
-class CapitalInvestRegionalSectorPage(InternationalBasePage):
+class CapitalInvestRegionalSectorPage(BaseInternationalPage):
 
     parent_page_types = ['great_international.CapitalInvestRegionPage']
 
@@ -2466,7 +2466,7 @@ class CapitalInvestRegionalSectorPage(InternationalBasePage):
 
 
 class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
-                                          InternationalBasePage):
+                                          BaseInternationalPage):
 
     slug_identity = 'opportunities'
 
@@ -2483,7 +2483,7 @@ class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
         return [CapitalInvestOpportunityPage]
 
 
-class CapitalInvestOpportunityPage(InternationalBasePage):
+class CapitalInvestOpportunityPage(BaseInternationalPage):
 
     parent_page_types = [
         'great_international.CapitalInvestOpportunityListingPage'

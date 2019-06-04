@@ -17,7 +17,14 @@ class ServiceNameFilter(django_filters.FilterSet):
         fields = ['service_name']
 
     def filter_service_name(self, queryset, name, value):
-        exclude_model_names = ['baseapp']
+        exclude_model_names = (
+            'baseapp',
+            'basecomponentspage',
+            'basedomesticpage',
+            'basefaspage',
+            'baseinternationalpage',
+            'baseinvestpage',
+        )
         concrete_model_names = [
             concrete_model_class._meta.model_name
             for concrete_model_class in BasePage.__subclasses__()

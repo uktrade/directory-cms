@@ -13,14 +13,14 @@ from core.helpers import make_translated_interface
 from core.model_fields import MarkdownField
 
 
-class ComponentsBasePage(ServiceNameUniqueSlugMixin, BasePage):
+class BaseComponentsPage(ServiceNameUniqueSlugMixin, BasePage):
     service_name_value = cms.COMPONENTS
 
     class Meta:
         abstract = True
 
 
-class ComponentsApp(ExclusivePageMixin, ServiceMixin, ComponentsBasePage):
+class ComponentsApp(ExclusivePageMixin, ServiceMixin, BaseComponentsPage):
     slug_identity = 'components-app'
 
     @classmethod
@@ -28,7 +28,7 @@ class ComponentsApp(ExclusivePageMixin, ServiceMixin, ComponentsBasePage):
         return []
 
 
-class BannerComponent(ComponentsBasePage):
+class BannerComponent(BaseComponentsPage):
     view_path = ''
 
     banner_content = MarkdownField()
