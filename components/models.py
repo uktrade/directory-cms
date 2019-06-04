@@ -14,7 +14,7 @@ from core.model_fields import MarkdownField
 
 
 class ComponentsBasePage(ServiceNameUniqueSlugMixin, BasePage):
-    service_name_value = cms.EXPORT_READINESS
+    service_name_value = cms.COMPONENTS
 
     class Meta:
         abstract = True
