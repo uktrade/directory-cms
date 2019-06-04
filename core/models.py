@@ -17,7 +17,7 @@ from django.contrib.contenttypes.fields import (
 )
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import ArrayField
-from django.db import models
+from django.db import models, transaction
 from django.forms import MultipleChoiceField
 from django.shortcuts import redirect
 
@@ -280,6 +280,11 @@ class BasePage(ModeltranslationPageMixin, Page):
         if not parent.specific_class:
             return False
         return super().can_exist_under(parent)
+
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        self.service_name = self.service_name_value
+        return super().save(*args, **kwargs)
 
 
 class AbstractObjectHash(models.Model):
