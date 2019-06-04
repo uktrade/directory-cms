@@ -1,10 +1,6 @@
-from functools import reduce
-import operator
-
 import django_filters
+from django.contrib.contenttypes.models import ContentType
 from wagtail.core.models import PAGE_MODEL_CLASSES, Page
-
-from django.db.models import Q
 
 
 class ServiceNameFilter(django_filters.FilterSet):
@@ -15,19 +11,17 @@ class ServiceNameFilter(django_filters.FilterSet):
         fields = ['service_name']
 
     def filter_service_name(self, queryset, name, value):
-
-        concrete_page_model_names = [
-            model._meta.model_name
-            for model in PAGE_MODEL_CLASSES if(
+        relevant_models = [
+            model for model in PAGE_MODEL_CLASSES if (
                 not model._meta.abstract and
-                hasattr(model, 'service_name_value')
+                getattr(model, 'service_name_value', '') == value
             )
         ]
-        queries = (
-            Q(**{model_name + '__service_name': value})
-            for model_name in concrete_page_model_names
-        )
-        return queryset.filter(reduce(operator.or_, queries))
+        ctype_ids = [
+            ctype.id for ctype in
+            ContentType.objects.get_for_models(*relevant_models).values()
+        ]
+        return queryset.filter(content_type_id__in=ctype_ids)
 
 
 class ServiceNameDRFFilter(django_filters.rest_framework.FilterSet,
