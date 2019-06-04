@@ -363,7 +363,6 @@ class BreadcrumbMixin(models.Model):
 
 
 class ServiceMixin(models.Model):
-    service_name_value = None
     base_form_class = forms.BaseAppAdminPageForm
     view_path = ''
     parent_page_types = ['wagtailcore.Page']
@@ -373,7 +372,7 @@ class ServiceMixin(models.Model):
 
     @classmethod
     def allowed_subpage_models(cls):
-        allowed_name = cls.service_name_value
+        allowed_name = getattr(cls, 'service_name_value', None)
         return [
             model for model in Page.allowed_subpage_models()
             if getattr(model, 'service_name_value', None) == allowed_name
