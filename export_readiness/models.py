@@ -21,7 +21,7 @@ from core.models import (
     FormPageMetaClass,
     ServiceMixin,
 )
-from core.mixins import ServiceHomepageMixin
+from core.mixins import ServiceHomepageMixin, ServiceNameUniqueSlugMixin
 from core.panels import SearchEngineOptimisationPanel
 
 
@@ -30,18 +30,23 @@ ACCORDION_FIELDS_HELP_TEXT = (
     '2 bullet points, and 2 calls to action (CTAs).')
 
 
-class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BasePage):
-    slug_identity = 'export-readiness-app'
+class DomesticBasePage(ServiceNameUniqueSlugMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
+
+    class Meta:
+        abstract = True
+
+
+class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, DomesticBasePage):
+    slug_identity = 'export-readiness-app'
 
     @classmethod
     def get_required_translatable_fields(cls):
         return []
 
 
-class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
+class TermsAndConditionsPage(ExclusivePageMixin, DomesticBasePage):
 
-    service_name_value = cms.EXPORT_READINESS
     slug_identity = cms.GREAT_TERMS_AND_CONDITIONS_SLUG
 
     body = MarkdownField(blank=False)
@@ -62,9 +67,8 @@ class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
     ]
 
 
-class PrivacyAndCookiesPage(BasePage):
+class PrivacyAndCookiesPage(DomesticBasePage):
 
-    service_name_value = cms.EXPORT_READINESS
     subpage_types = ['export_readiness.PrivacyAndCookiesPage']
 
     body = MarkdownField(blank=False)
@@ -87,9 +91,8 @@ class PrivacyAndCookiesPage(BasePage):
     promote_panels = []
 
 
-class SitePolicyPages(ExclusivePageMixin, BasePage):
+class SitePolicyPages(ExclusivePageMixin, DomesticBasePage):
     # a folder for T&C and privacy & cookies pages
-    service_name_value = cms.EXPORT_READINESS
     slug_identity = cms.GREAT_SITE_POLICY_PAGES_SLUG
     folder_page = True
 
@@ -105,9 +108,7 @@ class SitePolicyPages(ExclusivePageMixin, BasePage):
         return super().save(*args, **kwargs)
 
 
-class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
-
-    service_name_value = cms.EXPORT_READINESS
+class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, DomesticBasePage):
     slug_identity = cms.GREAT_GET_FINANCE_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -227,9 +228,7 @@ class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     ]
 
 
-class PerformanceDashboardPage(BasePage):
-
-    service_name_value = cms.EXPORT_READINESS
+class PerformanceDashboardPage(DomesticBasePage):
     subpage_types = [
         'export_readiness.PerformanceDashboardPage',
         'export_readiness.PerformanceDashboardNotesPage',
@@ -381,9 +380,8 @@ class PerformanceDashboardPage(BasePage):
     ]
 
 
-class PerformanceDashboardNotesPage(ExclusivePageMixin, BasePage):
+class PerformanceDashboardNotesPage(ExclusivePageMixin, DomesticBasePage):
 
-    service_name_value = cms.EXPORT_READINESS
     slug_identity = cms.GREAT_PERFORMANCE_DASHBOARD_NOTES_SLUG
     slug_override = 'guidance-notes'
 
@@ -410,8 +408,7 @@ class PerformanceDashboardNotesPage(ExclusivePageMixin, BasePage):
     promote_panels = []
 
 
-class TopicLandingPage(BasePage):
-    service_name_value = cms.EXPORT_READINESS
+class TopicLandingPage(DomesticBasePage):
     subpage_types = [
         'export_readiness.ArticleListingPage',
         'export_readiness.SuperregionPage',
@@ -463,8 +460,8 @@ class SuperregionPage(TopicLandingPage):
         return self.get_descendants().live().count()
 
 
-class ArticleListingPage(BasePage):
-    service_name_value = cms.EXPORT_READINESS
+class ArticleListingPage(DomesticBasePage):
+
     subpage_types = [
         'export_readiness.ArticlePage',
     ]
@@ -505,13 +502,13 @@ class ArticleListingPage(BasePage):
     ]
 
 
-class CountryGuidePage(BasePage):
+class CountryGuidePage(DomesticBasePage):
     """Make a cup of tea, this model is BIG!"""
 
     class Meta:
         ordering = ['-heading']
 
-    service_name_value = cms.EXPORT_READINESS
+
     subpage_types = [
         'export_readiness.ArticleListingPage',
         'export_readiness.ArticlePage',
@@ -2825,8 +2822,8 @@ class CountryGuidePage(BasePage):
     ]
 
 
-class MarketingPages(ExclusivePageMixin, BasePage):
-    service_name_value = cms.EXPORT_READINESS
+class MarketingPages(ExclusivePageMixin, DomesticBasePage):
+
     slug_identity = cms.GREAT_MARKETING_PAGES_SLUG
     slug_override = 'campaigns'
 
@@ -2841,8 +2838,8 @@ class MarketingPages(ExclusivePageMixin, BasePage):
         return super().save(*args, **kwargs)
 
 
-class CampaignPage(BasePage):
-    service_name_value = cms.EXPORT_READINESS
+class CampaignPage(DomesticBasePage):
+
     subpage_types = []
 
     campaign_heading = models.CharField(max_length=255)
@@ -3080,8 +3077,8 @@ class Tag(index.Indexed, models.Model):
         return super().save(force_insert, force_update, using, update_fields)
 
 
-class ArticlePage(BasePage):
-    service_name_value = cms.EXPORT_READINESS
+class ArticlePage(DomesticBasePage):
+
     subpage_types = []
 
     article_title = models.CharField(max_length=255)
@@ -3157,8 +3154,8 @@ class ArticlePage(BasePage):
     ]
 
 
-class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
-    service_name_value = cms.EXPORT_READINESS
+class HomePage(ExclusivePageMixin, ServiceHomepageMixin, DomesticBasePage):
+
     slug_identity = cms.GREAT_HOME_SLUG
     subpage_types = [
         'export_readiness.TopicLandingPage',
@@ -3195,8 +3192,8 @@ class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
     ]
 
 
-class InternationalLandingPage(ExclusivePageMixin, BasePage):
-    service_name_value = cms.EXPORT_READINESS
+class InternationalLandingPage(ExclusivePageMixin, DomesticBasePage):
+
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
     # slug_override = 'international'
     subpage_types = [
@@ -3221,7 +3218,7 @@ class InternationalLandingPage(ExclusivePageMixin, BasePage):
 
 
 class EUExitInternationalFormPage(
-    ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
+    ExclusivePageMixin, DomesticBasePage, metaclass=FormPageMetaClass
 ):
     # metaclass creates <fild_name>_label and <field_name>_help_text
     form_field_names = [
@@ -3235,7 +3232,7 @@ class EUExitInternationalFormPage(
         'comment',
     ]
 
-    service_name_value = cms.EXPORT_READINESS
+
     full_path_override = '/international/eu-exit-news/contact/'
     slug_identity = cms.GREAT_EUEXIT_INTERNATIONAL_FORM_SLUG
 
@@ -3268,7 +3265,7 @@ class EUExitInternationalFormPage(
 
 
 class EUExitDomesticFormPage(
-    ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
+    ExclusivePageMixin, DomesticBasePage, metaclass=FormPageMetaClass
 ):
     # metaclass creates <fild_name>_label and <field_name>_help_text
     form_field_names = [
@@ -3280,7 +3277,6 @@ class EUExitDomesticFormPage(
         'comment',
     ]
 
-    service_name_value = cms.EXPORT_READINESS
     full_path_override = '/eu-exit-news/contact/'
     slug_identity = cms.GREAT_EUEXIT_DOMESTIC_FORM_SLUG
 
@@ -3312,8 +3308,7 @@ class EUExitDomesticFormPage(
     ]
 
 
-class EUExitFormSuccessPage(ExclusivePageMixin, BasePage):
-    service_name_value = cms.EXPORT_READINESS
+class EUExitFormSuccessPage(ExclusivePageMixin, DomesticBasePage):
     full_path_override = '/eu-exit-news/contact/success/'
     slug_identity = cms.GREAT_EUEXIT_FORM_SUCCESS_SLUG
 
@@ -3360,9 +3355,8 @@ class EUExitFormSuccessPage(ExclusivePageMixin, BasePage):
     ]
 
 
-class EUExitFormPages(ExclusivePageMixin, BasePage):
+class EUExitFormPages(ExclusivePageMixin, DomesticBasePage):
     # this is just a folder. it will not be requested by the client.
-    service_name_value = cms.EXPORT_READINESS
     slug_identity = 'eu-exit-form-pages'
     folder_page = True
 
@@ -3379,9 +3373,8 @@ class EUExitFormPages(ExclusivePageMixin, BasePage):
         return super().save(*args, **kwargs)
 
 
-class ContactUsGuidancePages(ExclusivePageMixin, BasePage):
+class ContactUsGuidancePages(ExclusivePageMixin, DomesticBasePage):
     # this is just a folder. it will not be requested by the client.
-    service_name_value = cms.EXPORT_READINESS
     slug_identity = 'contact-us-guidance-pages'
     folder_page = True
 
@@ -3396,9 +3389,8 @@ class ContactUsGuidancePages(ExclusivePageMixin, BasePage):
         return super().save(*args, **kwargs)
 
 
-class ContactSuccessPages(ExclusivePageMixin, BasePage):
+class ContactSuccessPages(ExclusivePageMixin, DomesticBasePage):
     # this is just a folder. it will not be requested by the client.
-    service_name_value = cms.EXPORT_READINESS
     slug_identity = 'contact-us-success-pages'
     folder_page = True
 
@@ -3413,9 +3405,8 @@ class ContactSuccessPages(ExclusivePageMixin, BasePage):
         return super().save(*args, **kwargs)
 
 
-class ContactUsGuidancePage(BasePage):
+class ContactUsGuidancePage(DomesticBasePage):
 
-    service_name_value = cms.EXPORT_READINESS
 
     topic_mapping = {
         cms.GREAT_HELP_EXOPP_ALERTS_IRRELEVANT_SLUG: {
@@ -3513,9 +3504,9 @@ class ContactUsGuidancePage(BasePage):
         return super().save(*args, **kwargs)
 
 
-class ContactSuccessPage(BasePage):
+class ContactSuccessPage(DomesticBasePage):
 
-    service_name_value = cms.EXPORT_READINESS
+
 
     topic_mapping = {
         cms.GREAT_CONTACT_US_FORM_SUCCESS_SLUG: {
@@ -3626,9 +3617,9 @@ class ContactSuccessPage(BasePage):
         return super().save(*args, **kwargs)
 
 
-class AllContactPagesPage(ExclusivePageMixin, BasePage):
+class AllContactPagesPage(ExclusivePageMixin, DomesticBasePage):
     # this is just a folder. it will not be requested by the client.
-    service_name_value = cms.EXPORT_READINESS
+
     slug_identity = 'all-export-readiness-contact-pages'
     folder_page = True
 
