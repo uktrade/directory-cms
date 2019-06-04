@@ -16,15 +16,19 @@
         <h2>{% trans 'ready for publish' %}</h2>
 
         <table class="listing">
+            <col width="15%"/>
+            <col width="15%"/>
+            <col width="15%"/>
+            <col width="15%"/>
+            <col />
+            <col width="15%"/>
             <thead>
                 <tr>
                     <th class="title">{% trans "Page name" %}</th>
                     <th>{% trans "Parent page" %}</th>
                     <th>{% trans "Created by" %}</th>
                     <th>{% trans "Creation date" %}</th>
-                    <th>{% trans "2i moderator" %}</th>
-                    <th>{% trans "Business approver" %}</th>
-                    <th>{% trans "Approver comment" %}</th>
+                    <th>{% trans "Review status reason" %}</th>
                     <th>{% trans "Review status" %}</th>
                 </tr>
             </thead>
@@ -72,28 +76,12 @@
                     </td>
 
                     <td valign="top">
-                        <ul>
-                            {% for review in moderation.reviews.all %}
-                            <li>{{ review.user.get_full_name|default:review.user.get_username }}</li>
-                            {% endfor %}
-                        </ul>
-                    </td>
-
-                    <td valign="top">
-                        {{ moderation.business_approver }}
-                    </td>
-
-                    <td valign="top">
                         <p>Static demo comment</p>
                     </td>
 
                     <td valign="top">
                         {% if moderation.is_2i_moderated %}
-                        <p>2i Approved</p>
-                        {% endif %}
-
-                        {% if moderation.business_approver %}
-                        <p>Business Approved</p>
+                        <p>Approved</p>
                         {% endif %}
 
                         <a href="" class="button button-small button-secondary">
