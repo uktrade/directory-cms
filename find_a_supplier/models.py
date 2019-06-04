@@ -22,7 +22,7 @@ from core.mixins import ServiceHomepageMixin, ServiceNameUniqueSlugMixin
 from core.panels import SearchEngineOptimisationPanel
 
 
-class FASBasePage(ServiceNameUniqueSlugMixin, BasePage):
+class BaseFASPage(ServiceNameUniqueSlugMixin, BasePage):
     service_name_value = cms.FIND_A_SUPPLIER
 
     class Meta:
@@ -33,7 +33,7 @@ class ImageChooserPanel(ImageChooserPanel):
     classname = ""
 
 
-class FindASupplierApp(ExclusivePageMixin, ServiceMixin, FASBasePage):
+class FindASupplierApp(ExclusivePageMixin, ServiceMixin, BaseFASPage):
     slug_identity = 'find-a-supplier-app'
 
     @classmethod
@@ -96,7 +96,7 @@ class LandingPageArticleSummary(Orderable, ArticleSummary):
     )
 
 
-class IndustryPage(FASBasePage):
+class IndustryPage(BaseFASPage):
 
     parent_page_types = [
         'find_a_supplier.IndustryLandingPage',
@@ -294,7 +294,7 @@ class IndustryPage(FASBasePage):
     )
 
 
-class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, FASBasePage):
+class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BaseFASPage):
     slug_identity = cms.FIND_A_SUPPLIER_INDUSTRY_LANDING_SLUG
     slug_override = 'industries'
     subpage_types = [
@@ -364,7 +364,7 @@ class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, FASBasePage):
     )
 
 
-class IndustryArticlePage(FASBasePage):
+class IndustryArticlePage(BaseFASPage):
 
     view_path = 'industry-articles/'
 
@@ -438,7 +438,7 @@ class IndustryArticlePage(FASBasePage):
 
 
 class LandingPage(
-    ExclusivePageMixin, ServiceHomepageMixin, BreadcrumbMixin, FASBasePage
+    ExclusivePageMixin, ServiceHomepageMixin, BreadcrumbMixin, BaseFASPage
 ):
     slug_identity = cms.FIND_A_SUPPLIER_LANDING_SLUG
 
@@ -583,7 +583,7 @@ class LandingPage(
     )
 
 
-class IndustryContactPage(ExclusivePageMixin, BreadcrumbMixin, FASBasePage):
+class IndustryContactPage(ExclusivePageMixin, BreadcrumbMixin, BaseFASPage):
 
     view_path = 'industries/contact/'
     slug_identity = cms.FIND_A_SUPPLIER_INDUSTRY_CONTACT_SLUG
