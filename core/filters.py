@@ -2,11 +2,9 @@ from functools import reduce
 import operator
 
 import django_filters
-from wagtail.core.models import Page
+from wagtail.core.models import PAGE_MODEL_CLASSES, Page
 
 from django.db.models import Q
-
-from core.models import BasePage
 
 
 class ServiceNameFilter(django_filters.FilterSet):
@@ -17,22 +15,17 @@ class ServiceNameFilter(django_filters.FilterSet):
         fields = ['service_name']
 
     def filter_service_name(self, queryset, name, value):
-        exclude_model_names = (
-            'baseapp',
-            'basecomponentspage',
-            'basedomesticpage',
-            'basefaspage',
-            'baseinternationalpage',
-            'baseinvestpage',
-        )
-        concrete_model_names = [
-            concrete_model_class._meta.model_name
-            for concrete_model_class in BasePage.__subclasses__()
-            if concrete_model_class._meta.model_name not in exclude_model_names
+
+        concrete_page_model_names = [
+            model._meta.model_name
+            for model in PAGE_MODEL_CLASSES if(
+                not model._meta.abstract and
+                hasattr(model, 'service_name_value')
+            )
         ]
         queries = (
-            Q(**{concrete_model_name + '__service_name': value})
-            for concrete_model_name in concrete_model_names
+            Q(**{model_name + '__service_name': value})
+            for model_name in concrete_page_model_names
         )
         return queryset.filter(reduce(operator.or_, queries))
 
