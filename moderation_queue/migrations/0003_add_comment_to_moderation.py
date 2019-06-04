@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('moderation_queue', '0002_auto_20190531_1011'),
+        ('moderation_queue', '0002_rebuild_moderation_model'),
     ]
 
     operations = [
