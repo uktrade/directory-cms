@@ -29,13 +29,14 @@ from modelcluster.fields import ParentalKey
 
 
 class InternationalBasePage(BasePage):
+    service_name_value = cms.GREAT_INTERNATIONAL
+
     class Meta:
         abstract = True
 
 
 class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, InternationalBasePage):
     slug_identity = 'great-international-app'
-    service_name_value = cms.GREAT_INTERNATIONAL
 
     @classmethod
     def get_required_translatable_fields(cls):
@@ -61,7 +62,6 @@ class InternationalSectorPage(InternationalBasePage):
     class Meta:
         ordering = ['-heading']
 
-    service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.InternationalTopicLandingPage']
     subpage_types = []
 
@@ -483,7 +483,6 @@ class InternationalSectorPage(InternationalBasePage):
 class InternationalHomePage(
     ExclusivePageMixin, ServiceHomepageMixin, InternationalBasePage
 ):
-    service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
     subpage_types = []
 
@@ -904,7 +903,6 @@ class InternationalHomePage(
 
 
 class InternationalRegionPage(InternationalBasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = [
         'great_international.InternationalLocalisedFolderPage'
@@ -924,7 +922,6 @@ class InternationalRegionPage(InternationalBasePage):
 
 
 class InternationalLocalisedFolderPage(InternationalBasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.InternationalRegionPage']
     subpage_types = [
         'great_international.InternationalArticlePage',
@@ -944,7 +941,6 @@ class InternationalLocalisedFolderPage(InternationalBasePage):
 
 
 class InternationalArticlePage(InternationalBasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
@@ -1040,7 +1036,6 @@ class InternationalArticlePage(InternationalBasePage):
 
 
 class InternationalArticleListingPage(InternationalBasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = [
         'great_international.GreatInternationalApp',
         'great_international.InternationalTopicLandingPage'
@@ -1095,7 +1090,6 @@ class InternationalArticleListingPage(InternationalBasePage):
 
 
 class InternationalCampaignPage(InternationalBasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalTopicLandingPage',
@@ -1338,7 +1332,6 @@ class InternationalCampaignPage(InternationalBasePage):
 
 
 class InternationalTopicLandingPage(InternationalBasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = [
         'great_international.InternationalArticleListingPage',
@@ -1384,7 +1377,6 @@ class InternationalTopicLandingPage(InternationalBasePage):
 
 
 class InternationalCuratedTopicLandingPage(InternationalBasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = []
 
@@ -1515,7 +1507,6 @@ class InternationalCuratedTopicLandingPage(InternationalBasePage):
 
 
 class InternationalGuideLandingPage(InternationalBasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = ['great_international.InternationalArticlePage']
 
@@ -1652,7 +1643,6 @@ class InternationalEUExitFormPage(
         'comment',
     ]
 
-    service_name_value = cms.GREAT_INTERNATIONAL
     full_path_override = '/eu-exit-news/contact/'
     slug_identity = cms.GREAT_EUEXIT_INTERNATIONAL_FORM_SLUG
 
@@ -1688,7 +1678,6 @@ class InternationalEUExitFormPage(
 
 
 class InternationalEUExitFormSuccessPage(ExclusivePageMixin, InternationalBasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
     full_path_override = '/eu-exit-news/contact/success/'
     slug_identity = cms.GREAT_EUEXIT_FORM_SUCCESS_SLUG
 
@@ -1846,7 +1835,6 @@ class CapitalInvestRelatedRegions(Orderable, RelatedRegion):
 
 
 class InternationalCapitalInvestLandingPage(ExclusivePageMixin, InternationalBasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = 'capital-invest'
 
     parent_page_types = ['great_international.GreatInternationalApp']
@@ -2093,8 +2081,6 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, InternationalBas
 
 
 class CapitalInvestRegionPage(InternationalBasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
-
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = [
         'great_international.CapitalInvestRegionalSectorPage',
@@ -2387,8 +2373,6 @@ class SectorRelatedOpportunities(Orderable, RelatedOpportunity):
 
 class CapitalInvestRegionalSectorPage(InternationalBasePage):
 
-    service_name_value = cms.GREAT_INTERNATIONAL
-
     parent_page_types = ['great_international.CapitalInvestRegionPage']
 
     breadcrumbs_label = models.CharField(max_length=255)
@@ -2478,7 +2462,6 @@ class CapitalInvestRegionalSectorPage(InternationalBasePage):
 class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
                                           InternationalBasePage):
 
-    service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = 'opportunities'
 
     parent_page_types = [
@@ -2495,8 +2478,6 @@ class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
 
 
 class CapitalInvestOpportunityPage(InternationalBasePage):
-
-    service_name_value = cms.GREAT_INTERNATIONAL
 
     parent_page_types = [
         'great_international.CapitalInvestOpportunityListingPage'
