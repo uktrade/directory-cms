@@ -4,6 +4,7 @@
 
 **Implemented enhancements:**
 
+- CMS-1561 - Removed CTA fields from accordions on country guide page. Added new CTAs to be displayed at the top of the page
 - CMS-1419 - Added Wagtail registration view for SSO users, group info management UI, and updated user edit view to mark users as approved
 - CMS-1421 - Integrate with GOV.UK Notify to send SSO user approval notifications
 - CI-104 - Added capital invest landing, region, sector and opportunity pages.
