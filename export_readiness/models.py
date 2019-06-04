@@ -508,7 +508,6 @@ class CountryGuidePage(DomesticBasePage):
     class Meta:
         ordering = ['-heading']
 
-
     subpage_types = [
         'export_readiness.ArticleListingPage',
         'export_readiness.ArticlePage',
@@ -3232,7 +3231,6 @@ class EUExitInternationalFormPage(
         'comment',
     ]
 
-
     full_path_override = '/international/eu-exit-news/contact/'
     slug_identity = cms.GREAT_EUEXIT_INTERNATIONAL_FORM_SLUG
 
@@ -3407,7 +3405,6 @@ class ContactSuccessPages(ExclusivePageMixin, DomesticBasePage):
 
 class ContactUsGuidancePage(DomesticBasePage):
 
-
     topic_mapping = {
         cms.GREAT_HELP_EXOPP_ALERTS_IRRELEVANT_SLUG: {
             'title': 'Guidance - Daily alerts are not relevant',
@@ -3505,8 +3502,6 @@ class ContactUsGuidancePage(DomesticBasePage):
 
 
 class ContactSuccessPage(DomesticBasePage):
-
-
 
     topic_mapping = {
         cms.GREAT_CONTACT_US_FORM_SUCCESS_SLUG: {
