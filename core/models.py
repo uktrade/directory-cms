@@ -23,7 +23,7 @@ from django.shortcuts import redirect
 
 from core import constants, forms
 from core.helpers import get_page_full_url
-from core.mixins import ServiceNameUniqueSlugMixin, ModeltranslationPageMixin
+from core.mixins import ModeltranslationPageMixin
 from core.wagtail_fields import FormHelpTextField, FormLabelField
 
 

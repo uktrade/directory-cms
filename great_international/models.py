@@ -35,7 +35,9 @@ class InternationalBasePage(BasePage):
         abstract = True
 
 
-class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, InternationalBasePage):
+class GreatInternationalApp(
+    ExclusivePageMixin, ServiceMixin, InternationalBasePage
+):
     slug_identity = 'great-international-app'
 
     @classmethod
@@ -1677,7 +1679,9 @@ class InternationalEUExitFormPage(
     ]
 
 
-class InternationalEUExitFormSuccessPage(ExclusivePageMixin, InternationalBasePage):
+class InternationalEUExitFormSuccessPage(
+    ExclusivePageMixin, InternationalBasePage
+):
     full_path_override = '/eu-exit-news/contact/success/'
     slug_identity = cms.GREAT_EUEXIT_FORM_SUCCESS_SLUG
 
@@ -1834,7 +1838,9 @@ class CapitalInvestRelatedRegions(Orderable, RelatedRegion):
     )
 
 
-class InternationalCapitalInvestLandingPage(ExclusivePageMixin, InternationalBasePage):
+class InternationalCapitalInvestLandingPage(
+    ExclusivePageMixin, InternationalBasePage
+):
     slug_identity = 'capital-invest'
 
     parent_page_types = ['great_international.GreatInternationalApp']
