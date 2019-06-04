@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 class Moderation(models.Model):
     revision = models.ForeignKey('wagtailcore.PageRevision', verbose_name=_('revision'), on_delete=models.CASCADE)
     publish_at = models.DateTimeField(null=True)
+    comment = models.TextField(max_length=100, blank=True)
 
     # TODO: confirm this is still a string after security/comments work has been confirmed.
     business_approver = models.TextField()

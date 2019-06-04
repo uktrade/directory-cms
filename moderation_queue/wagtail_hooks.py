@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
 from wagtail.admin.menu import MenuItem
@@ -48,10 +49,25 @@ def replace_moderation_panel(request, panels):
 @hooks.register('after_create_page')
 @hooks.register('after_edit_page')
 def add_page_to_moderation_queue(request, page):
-    latest_revision = page.revisions.latest('created_at')
+    """
+    Add a Moderation record for a Page submitted for moderation
 
-    if not latest_revision.submitted_for_moderation:
+    By default a submission for moderation sets the relevant
+    PageRevision.submitted_for_moderation field to True.  However this project
+    needs to handle 2i moderation which we've modeled with the Moderation
+    object.  We need to ask the user for extra data to create that object so
+    this hook sends them to the submit interstitial after a page has been
+    created/edited and they clicked "submit for moderation".
+    """
+    # ignore if the user didn't click "Submit for moderation?"
+    is_submitting = bool(request.POST.get('action-submit'))
+    if not is_submitting:
         return
 
-    # TODO: should we remove exiting Moderation rows for the given page?
-    Moderation.objects.create(revision=latest_revision)
+    # TODO: use latest() once Django is upgraded to 2.0+
+    latest_revision = page.revisions.order_by('-created_at', 'id').first()
+
+    return redirect(
+        "moderation-queue:submit_moderation",
+        pk=latest_revision.id,
+    )

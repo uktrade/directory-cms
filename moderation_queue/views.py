@@ -2,13 +2,15 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
-from django.views.generic import ListView, View
+from django.views.generic import CreateView, ListView, View
 from wagtail.admin import messages
 from wagtail.admin.utils import send_notification
+from wagtail.core.models import PageRevision
 
+from .forms import SubmitForm
 from .models import Moderation
 
 
@@ -120,3 +122,23 @@ class RejectModeration(View):
             messages.error(request, _("Failed to send rejection notifications"))
 
         return redirect('wagtailadmin_home')
+
+
+@method_decorator(login_required, name='dispatch')
+class SubmitModeration(CreateView):
+    form_class = SubmitForm
+    model = Moderation
+    success_url = reverse_lazy('wagtailadmin_explore_root')
+    template_name = 'moderation_queue/submit.html'
+
+    def form_valid(self, form):
+        revision = get_object_or_404(PageRevision, id=self.kwargs['pk'])
+
+        # TODO: should we remove exiting Moderation rows for the given page?
+        self.object = Moderation.objects.create(
+            revision=revision,
+            publish_at=form.cleaned_data['publish_at'],
+            comment=form.cleaned_data['comment'],
+        )
+
+        return redirect(self.get_success_url())

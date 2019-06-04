@@ -20,6 +20,7 @@ from moderation_queue.views import (
     PendingModerations,
     PreviewModeration,
     RejectModeration,
+    SubmitModeration,
 )
 from review.api import urls as review_api_urls
 
@@ -125,6 +126,7 @@ urlpatterns = [
         url(r'^(?P<pk>\d+)/approve/$', ApproveModeration.as_view(), name='approve_moderation'),
         url(r'^(?P<pk>\d+)/preview/$', PreviewModeration.as_view(), name='preview_moderation'),
         url(r'^(?P<pk>\d+)/reject/$', RejectModeration.as_view(), name='reject_moderation'),
+        url(r'^(?P<pk>\d+)/submit/$', SubmitModeration.as_view(), name='submit_moderation'),
     ], namespace="moderation-queue")),
 
     # Prevent users from changing their email address

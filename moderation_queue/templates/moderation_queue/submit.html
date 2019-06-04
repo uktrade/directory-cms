@@ -1,0 +1,27 @@
+{% extends "wagtailadmin/base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+<header>
+    <div class="row nice-padding">
+        <div class="col header-title">
+            <h1>Information for Moderator</h1>
+        </div>
+    </div>
+</header>
+
+<div class="panel nice-padding">
+    <section>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button class="button" type="submit">Add to moderation queue</button>
+        </form>
+
+    </section>
+</div>
+{% endblock content %}
