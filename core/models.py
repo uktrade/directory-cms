@@ -282,17 +282,6 @@ class BasePage(ModeltranslationPageMixin, Page):
         return super().can_exist_under(parent)
 
 
-class NonInternationalBasePage(
-    ServiceNameUniqueSlugMixin,
-    BasePage,
-):
-    """
-    Currently only used for non-international page-types
-    """
-    class Meta:
-        abstract = True
-
-
 class AbstractObjectHash(models.Model):
     class Meta:
         abstract = True
