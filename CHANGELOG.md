@@ -14,6 +14,7 @@
 - CI-128 - Changed required fields to be nullable and removed unused fields on Invest home page
 - CI-152 - Changed `next steps` sections to be `contact` section on capital invest pages
 - CI-153 - Removed the cards pdf buttons on Capital Invest Landing page, region cards are now only displayed with markdown text
+- CMS-1638 - Prevent leaking user information on sql table dump
 
 ### Fixed bugs:
 
