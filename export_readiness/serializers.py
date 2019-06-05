@@ -210,9 +210,8 @@ class AccordionSubsectionProxyDataWrapper:
         )
 
 
-class AccordionCTAProxyDataWrapper:
-    def __init__(self, instance, accordion, position_number):
-        self.accordion = accordion
+class IntroCTAProxyDataWrapper:
+    def __init__(self, instance, position_number):
         self.position_number = position_number
         self.instance = instance
 
@@ -220,14 +219,14 @@ class AccordionCTAProxyDataWrapper:
     def link(self):
         return getattr(
             self.instance,
-            f'{self.accordion}_cta_{self.position_number}_link'
+            f'intro_cta_{self.position_number}_link'
         )
 
     @property
     def title(self):
         return getattr(
             self.instance,
-            f'{self.accordion}_cta_{self.position_number}_title'
+            f'intro_cta_{self.position_number}_title'
         )
 
 
@@ -412,21 +411,12 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
     help_market_guide_cta_link = serializers.CharField(max_length=255)
 
     def get_intro_ctas(self, instance):
-        ctas = [
-            {
-                'link': instance.intro_cta_one_link,
-                'title': instance.intro_cta_one_title,
-            },
-            {
-                'link': instance.intro_cta_two_link,
-                'title': instance.intro_cta_two_title,
-            },
-            {
-                'link': instance.intro_cta_three_link,
-                'title': instance.intro_cta_three_title,
-            },
+        data = [
+            IntroCTAProxyDataWrapper(instance=instance, position_number=num)
+            for num in ['one', 'two', 'three']
         ]
-        return IntroCTAsSerializer(ctas, many=True).data
+        serialized = IntroCTAsSerializer(data, many=True).data
+        return [cta for cta in serialized if cta['link'] and cta['title']]
 
     def get_fact_sheet(self, instance):
         data = {
