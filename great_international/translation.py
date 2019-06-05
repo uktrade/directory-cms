@@ -243,6 +243,10 @@ class InternationalGuideLandingPageTranslationOptions(
         'section_two_button_url',
         'section_two_image',
         'guides_section_heading',
+        'section_three_title',
+        'section_three_text',
+        'section_three_cta_text',
+        'section_three_cta_link',
     )
 
 

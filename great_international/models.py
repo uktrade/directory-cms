@@ -1567,6 +1567,11 @@ class InternationalGuideLandingPage(BasePage):
         max_length=100,
     )
 
+    section_three_title = models.CharField(max_length=255, blank=True)
+    section_three_text = models.TextField(blank=True)
+    section_three_cta_text = models.CharField(max_length=255, blank=True)
+    section_three_cta_link = models.CharField(max_length=255, blank=True)
+
     tags = ParentalManyToManyField(Tag, blank=True)
 
     content_panels = [
@@ -1600,6 +1605,15 @@ class InternationalGuideLandingPage(BasePage):
             heading="Guides section",
             children=[
                 FieldPanel('guides_section_heading'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Section three",
+            children=[
+                FieldPanel('section_three_title'),
+                FieldPanel('section_three_text'),
+                FieldPanel('section_three_cta_text'),
+                FieldPanel('section_three_cta_link'),
             ]
         )
     ]
