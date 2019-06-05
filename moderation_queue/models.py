@@ -3,6 +3,11 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 
+class ModerationQuerySet(models.QuerySet):
+    def accepted(self):
+        return self.filter(reviews__is_accepted=True)
+
+
 class Moderation(models.Model):
     revision = models.ForeignKey('wagtailcore.PageRevision', verbose_name=_('revision'), on_delete=models.CASCADE)
     publish_at = models.DateTimeField(null=True)

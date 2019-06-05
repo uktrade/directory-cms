@@ -15,9 +15,9 @@ from .models import Moderation
 
 
 @method_decorator(login_required, name='dispatch')
-class PendingModerations(ListView):
-    model = Moderation
-    template_name = "moderation_queue/list.html"
+class Review(ListView):
+    queryset = Moderation.objects.accepted()
+    template_name = "moderation_queue/review.html"
 
 
 @method_decorator(login_required, name='dispatch')

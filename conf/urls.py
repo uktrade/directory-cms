@@ -17,8 +17,8 @@ from activitystream.views import ActivityStreamView
 from groups.views import GroupInfoModalView
 from moderation_queue.views import (
     ApproveModeration,
-    PendingModerations,
     PreviewModeration,
+    Review,
     RejectModeration,
     SubmitModeration,
 )
@@ -122,7 +122,7 @@ urlpatterns = [
 
     # Bespoke moderation queue views
     url(r'^admin/moderation-queue/', include([
-        url(r'^$', PendingModerations.as_view(), name='pending'),
+        url(r'^$', Review.as_view(), name='pending'),
         url(r'^(?P<pk>\d+)/approve/$', ApproveModeration.as_view(), name='approve_moderation'),
         url(r'^(?P<pk>\d+)/preview/$', PreviewModeration.as_view(), name='preview_moderation'),
         url(r'^(?P<pk>\d+)/reject/$', RejectModeration.as_view(), name='reject_moderation'),
