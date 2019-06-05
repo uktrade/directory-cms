@@ -19,7 +19,8 @@ class Review(ListView):
     template_name = "moderation_queue/review.html"
 
     def get_queryset(self):
-        return Moderation.objects.filter(revision__user=self.request.user).accepted()
+        return (Moderation.objects.filter(revision__user=self.request.user)
+                                  .accepted())
 
 
 @method_decorator(login_required, name='dispatch')
@@ -35,27 +36,39 @@ class ApproveModeration(View):
 
     def post(self, request, *args, **kwargs):
         moderation = get_object_or_404(Moderation, id=self.kwargs['pk'])
-
-        if not moderation.revision.page.permissions_for_user(request.user).can_publish():
-            raise PermissionDenied
-
-        if not moderation.revision.submitted_for_moderation:
-            page_title = moderation.revision.page.get_admin_display_title()
-            messages.error(request, _(f"The page '{page_title}' is not currently awaiting moderation."))
-            return redirect('wagtailadmin_home')
-
         page = moderation.revision.page
         revision = moderation.revision
+
+        if not page.permissions_for_user(request.user).can_publish():
+            raise PermissionDenied
+
+        if not revision.submitted_for_moderation:
+            page_title = moderation.revision.page.get_admin_display_title()
+            messages.error(
+                request,
+                _(f"The page '{page_title}' is not currently awaiting moderation."),  # noqa: E501
+            )
+            return redirect('wagtailadmin_home')
 
         with transaction.atomic():
             revision.approve_moderation()
             moderation.reviews.create(user=request.user, is_accepted=True)
 
-        message = _("Page '{0}' published.").format(page.get_admin_display_title())
+        admin_display_title = page.get_admin_display_title()
+        message = _(f"Page '{admin_display_title}' published.")
         buttons = []
         if page.url is not None:
-            buttons.append(messages.button(page.url, _('View live'), new_window=True))
-        buttons.append(messages.button(reverse('wagtailadmin_pages:edit', args=(page.id,)), _('Edit')))
+            buttons.append(messages.button(
+                page.url,
+                _('View live'),
+                new_window=True,
+            ))
+        buttons.append(
+            messages.button(
+                reverse('wagtailadmin_pages:edit', args=(page.id,)),
+                _('Edit'),
+            ),
+        )
         messages.success(request, message, buttons=buttons)
 
         if not send_notification(revision.id, 'approved', request.user.pk):
@@ -78,13 +91,15 @@ class PreviewModeration(View):
 
     def get(self, request, *args, **kwargs):
         moderation = get_object_or_404(Moderation, id=self.kwargs['pk'])
-        if not moderation.revision.page.permissions_for_user(request.user).can_publish():
+        page = moderation.revision.page
+        if not page.permissions_for_user(request.user).can_publish():
             raise PermissionDenied
 
         page = moderation.revision.as_page_object()
 
-        # pass in the real user request rather than page.dummy_request(), so that request.user
-        # and request.revision_id will be picked up by the wagtail user bar
+        # pass in the real user request rather than page.dummy_request(), so
+        # that request.user and request.revision_id will be picked up by the
+        # wagtail user bar
         return page.serve_preview(request, page.default_preview_mode)
 
 
@@ -101,28 +116,41 @@ class RejectModeration(View):
 
     def post(self, request, *args, **kwargs):
         moderation = get_object_or_404(Moderation, id=self.kwargs['pk'])
-
-        if not moderation.revision.page.permissions_for_user(request.user).can_publish():
-            raise PermissionDenied
-
-        if not moderation.revision.submitted_for_moderation:
-            page_title = moderation.revision.page.get_admin_display_title()
-            messages.error(request, _(f"The page '{page_title}' is not currently awaiting moderation."))
-            return redirect('wagtailadmin_home')
-
         page = moderation.revision.page
         revision = moderation.revision
+
+        if not page.permissions_for_user(request.user).can_publish():
+            raise PermissionDenied
+
+        if not revision.submitted_for_moderation:
+            page_title = moderation.revision.page.get_admin_display_title()
+            messages.error(
+                request,
+                _(f"The page '{page_title}' is not currently awaiting moderation."),  # noqa: E501
+            )
+            return redirect('wagtailadmin_home')
 
         with transaction.atomic():
             revision.reject_moderation()
             moderation.reviews.create(user=request.user, is_accepted=False)
 
         page_title = page.get_admin_display_title()
-        messages.success(request, _(f"Page '{page_title}' rejected for publication."), buttons=[
-            messages.button(reverse('wagtailadmin_pages:edit', args=(page.id,)), _('Edit'))
-        ])
+        buttons = [
+            messages.button(
+                reverse('wagtailadmin_pages:edit', args=(page.id,)),
+                _('Edit'),
+            ),
+        ],
+        messages.success(
+            request,
+            _(f"Page '{page_title}' rejected for publication."),
+            buttons=buttons,
+        )
         if not send_notification(revision.id, 'rejected', request.user.pk):
-            messages.error(request, _("Failed to send rejection notifications"))
+            messages.error(
+                request,
+                _("Failed to send rejection notifications"),
+            )
 
         return redirect('wagtailadmin_home')
 

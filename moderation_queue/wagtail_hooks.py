@@ -24,13 +24,9 @@ class ModerationQueuePanel:
         self.request = request
 
     def render(self):
-        pending = (Moderation.objects.filter(reviews__isnull=True)
-                                     .order_by('-created_at')
-                                     .select_related('revision', 'revision__user'))
-        context = {'pending_moderations': pending}
         return render_to_string(
             'moderation_queue/panel.html',
-            context=context,
+            context={'pending_moderations': Moderation.objects.pending()},
             request=self.request,
         )
 

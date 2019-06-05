@@ -123,10 +123,26 @@ urlpatterns = [
     # Bespoke moderation queue views
     url(r'^admin/moderation-queue/', include([
         url(r'^$', Review.as_view(), name='pending'),
-        url(r'^(?P<pk>\d+)/approve/$', ApproveModeration.as_view(), name='approve_moderation'),
-        url(r'^(?P<pk>\d+)/preview/$', PreviewModeration.as_view(), name='preview_moderation'),
-        url(r'^(?P<pk>\d+)/reject/$', RejectModeration.as_view(), name='reject_moderation'),
-        url(r'^(?P<pk>\d+)/submit/$', SubmitModeration.as_view(), name='submit_moderation'),
+        url(
+            r'^(?P<pk>\d+)/approve/$',
+            ApproveModeration.as_view(),
+            name='approve_moderation',
+        ),
+        url(
+            r'^(?P<pk>\d+)/preview/$',
+            PreviewModeration.as_view(),
+            name='preview_moderation',
+        ),
+        url(
+            r'^(?P<pk>\d+)/reject/$',
+            RejectModeration.as_view(),
+            name='reject_moderation',
+        ),
+        url(
+            r'^(?P<pk>\d+)/submit/$',
+            SubmitModeration.as_view(),
+            name='submit_moderation',
+        ),
     ], namespace="moderation-queue")),
 
     # Prevent users from changing their email address
