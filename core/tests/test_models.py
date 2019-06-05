@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 from django.utils import translation
 from wagtail.core.models import Page, Site
 
-from core.models import RoutingSettings
+from core.models import RoutingSettings, ExclusivePageMixin
 from find_a_supplier.tests.factories import (
     FindASupplierAppFactory, IndustryPageFactory, IndustryLandingPageFactory,
     IndustryArticlePageFactory,
@@ -380,3 +380,10 @@ def test_url_methods_use_tree_based_routing(root_page):
         'http://domestic.trade.great/domestic/c/topic/list/article/'
     )
     domestic_page_three.get_tree_based_url.assert_called()
+
+
+@pytest.mark.django_db
+def test_exclusivepagemixin_can_create_at(root_page):
+    page = SitePolicyPagesFactory(parent=root_page)
+    assert isinstance(page, ExclusivePageMixin)
+    assert page.can_create_at(root_page) is False
