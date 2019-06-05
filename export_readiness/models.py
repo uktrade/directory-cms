@@ -534,6 +534,30 @@ class CountryGuidePage(BasePage):
         blank=True,
         verbose_name='Introduction'
     )
+    intro_cta_one_title = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name='CTA 1 title')
+    intro_cta_one_link = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name='CTA 1 link')
+    intro_cta_two_title = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name='CTA 2 title')
+    intro_cta_two_link = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name='CTA 2 link')
+    intro_cta_three_title = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name='CTA 3 title')
+    intro_cta_three_link = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name='CTA 3 link')
 
     section_one_body = MarkdownField(
         null=True,
@@ -686,37 +710,6 @@ class CountryGuidePage(BasePage):
         max_length=255,
         blank=True,
         verbose_name='Case study description'
-    )
-
-    accordion_1_cta_1_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 1'
-    )
-    accordion_1_cta_1_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 1'
-    )
-    accordion_1_cta_2_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 2'
-    )
-    accordion_1_cta_2_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 2'
-    )
-    accordion_1_cta_3_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 3'
-    )
-    accordion_1_cta_3_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 3'
     )
 
     accordion_1_statistic_1_number = models.CharField(
@@ -912,37 +905,6 @@ class CountryGuidePage(BasePage):
         max_length=255,
         blank=True,
         verbose_name='Case study description'
-    )
-
-    accordion_2_cta_1_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 1'
-    )
-    accordion_2_cta_1_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 1'
-    )
-    accordion_2_cta_2_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 2'
-    )
-    accordion_2_cta_2_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 2'
-    )
-    accordion_2_cta_3_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 3'
-    )
-    accordion_2_cta_3_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 3'
     )
 
     accordion_2_statistic_1_number = models.CharField(
@@ -1142,37 +1104,6 @@ class CountryGuidePage(BasePage):
         verbose_name='Case study description'
     )
 
-    accordion_3_cta_1_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 1'
-    )
-    accordion_3_cta_1_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 1'
-    )
-    accordion_3_cta_2_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 2'
-    )
-    accordion_3_cta_2_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 2'
-    )
-    accordion_3_cta_3_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 3'
-    )
-    accordion_3_cta_3_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 3'
-    )
-
     accordion_3_statistic_1_number = models.CharField(
         max_length=255,
         blank=True,
@@ -1368,37 +1299,6 @@ class CountryGuidePage(BasePage):
         max_length=255,
         blank=True,
         verbose_name='Case study description'
-    )
-
-    accordion_4_cta_1_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 1'
-    )
-    accordion_4_cta_1_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 1'
-    )
-    accordion_4_cta_2_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 2'
-    )
-    accordion_4_cta_2_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 2'
-    )
-    accordion_4_cta_3_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 3'
-    )
-    accordion_4_cta_3_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 3'
     )
 
     accordion_4_statistic_1_number = models.CharField(
@@ -1598,37 +1498,6 @@ class CountryGuidePage(BasePage):
         verbose_name='Case study description'
     )
 
-    accordion_5_cta_1_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 1'
-    )
-    accordion_5_cta_1_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 1'
-    )
-    accordion_5_cta_2_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 2'
-    )
-    accordion_5_cta_2_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 2'
-    )
-    accordion_5_cta_3_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 3'
-    )
-    accordion_5_cta_3_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 3'
-    )
-
     accordion_5_statistic_1_number = models.CharField(
         max_length=255,
         blank=True,
@@ -1826,37 +1695,6 @@ class CountryGuidePage(BasePage):
         verbose_name='Case study description'
     )
 
-    accordion_6_cta_1_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 1'
-    )
-    accordion_6_cta_1_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 1'
-    )
-    accordion_6_cta_2_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 2'
-    )
-    accordion_6_cta_2_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 2'
-    )
-    accordion_6_cta_3_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 3'
-    )
-    accordion_6_cta_3_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 3'
-    )
-
     accordion_6_statistic_1_number = models.CharField(
         max_length=255,
         blank=True,
@@ -2030,12 +1868,26 @@ class CountryGuidePage(BasePage):
 
     content_panels = [
         MultiFieldPanel(
-            heading='Heading',
+            heading='Heading and introduction',
             children=[
                 FieldPanel('heading'),
                 FieldPanel('sub_heading'),
                 ImageChooserPanel('hero_image'),
-                FieldPanel('heading_teaser')
+                FieldPanel('heading_teaser'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('intro_cta_one_link'),
+                        FieldPanel('intro_cta_one_title'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('intro_cta_two_link'),
+                        FieldPanel('intro_cta_two_title'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('intro_cta_three_link'),
+                        FieldPanel('intro_cta_three_title'),
+                    ])
+                ]),
             ]
 
         ),
@@ -2201,26 +2053,6 @@ class CountryGuidePage(BasePage):
                         ]
                     )
                 ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_1_cta_1_link'),
-                            FieldPanel('accordion_1_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_1_cta_2_link'),
-                            FieldPanel('accordion_1_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_1_cta_3_link'),
-                            FieldPanel('accordion_1_cta_3_title'),
-                        ]
-                    )
-                ])
             ]
         ),
         MultiFieldPanel(
@@ -2309,26 +2141,6 @@ class CountryGuidePage(BasePage):
                         ]
                     )
                 ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_2_cta_1_link'),
-                            FieldPanel('accordion_2_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_2_cta_2_link'),
-                            FieldPanel('accordion_2_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_2_cta_3_link'),
-                            FieldPanel('accordion_2_cta_3_title'),
-                        ]
-                    )
-                ])
             ]
         ),
         MultiFieldPanel(
@@ -2417,26 +2229,6 @@ class CountryGuidePage(BasePage):
                         ]
                     )
                 ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_3_cta_1_link'),
-                            FieldPanel('accordion_3_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_3_cta_2_link'),
-                            FieldPanel('accordion_3_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_3_cta_3_link'),
-                            FieldPanel('accordion_3_cta_3_title'),
-                        ]
-                    )
-                ])
             ]
         ),
         MultiFieldPanel(
@@ -2525,26 +2317,6 @@ class CountryGuidePage(BasePage):
                         ]
                     )
                 ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_4_cta_1_link'),
-                            FieldPanel('accordion_4_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_4_cta_2_link'),
-                            FieldPanel('accordion_4_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_4_cta_3_link'),
-                            FieldPanel('accordion_4_cta_3_title'),
-                        ]
-                    )
-                ])
             ]
         ),
         MultiFieldPanel(
@@ -2633,26 +2405,6 @@ class CountryGuidePage(BasePage):
                         ]
                     )
                 ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_5_cta_1_link'),
-                            FieldPanel('accordion_5_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_5_cta_2_link'),
-                            FieldPanel('accordion_5_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_5_cta_3_link'),
-                            FieldPanel('accordion_5_cta_3_title'),
-                        ]
-                    )
-                ])
             ]
         ),
         MultiFieldPanel(
@@ -2741,26 +2493,6 @@ class CountryGuidePage(BasePage):
                         ]
                     )
                 ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_6_cta_1_link'),
-                            FieldPanel('accordion_6_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_6_cta_2_link'),
-                            FieldPanel('accordion_6_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_6_cta_3_link'),
-                            FieldPanel('accordion_6_cta_3_title'),
-                        ]
-                    )
-                ])
             ]
         ),
         MultiFieldPanel(
