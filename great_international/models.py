@@ -18,6 +18,7 @@ from core.model_fields import MarkdownField
 from core.models import (
     BasePage,
     ExclusivePageMixin,
+    WagtailAdminExclusivePageMixin,
     FormPageMetaClass,
     ServiceMixin,
 )
@@ -476,7 +477,7 @@ class InternationalSectorPage(BasePage):
 
 
 class InternationalHomePage(
-    ExclusivePageMixin, ServiceHomepageMixin, BasePage
+    WagtailAdminExclusivePageMixin, ServiceHomepageMixin, BasePage
 ):
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
@@ -1633,7 +1634,7 @@ class InternationalGuideLandingPage(BasePage):
 
 
 class InternationalEUExitFormPage(
-    ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
+    WagtailAdminExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
 ):
     # metaclass creates <fild_name>_label and <field_name>_help_text
     form_field_names = [
@@ -1682,7 +1683,7 @@ class InternationalEUExitFormPage(
     ]
 
 
-class InternationalEUExitFormSuccessPage(ExclusivePageMixin, BasePage):
+class InternationalEUExitFormSuccessPage(WagtailAdminExclusivePageMixin, BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     full_path_override = '/eu-exit-news/contact/success/'
     slug_identity = cms.GREAT_EUEXIT_FORM_SUCCESS_SLUG
@@ -1840,7 +1841,7 @@ class CapitalInvestRelatedRegions(Orderable, RelatedRegion):
     )
 
 
-class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
+class InternationalCapitalInvestLandingPage(WagtailAdminExclusivePageMixin, BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = 'capital-invest'
 
@@ -2470,8 +2471,9 @@ class CapitalInvestRegionalSectorPage(BasePage):
     )
 
 
-class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
-                                          BasePage):
+class CapitalInvestOpportunityListingPage(
+    WagtailAdminExclusivePageMixin, ServiceMixin, BasePage
+):
 
     service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = 'opportunities'
