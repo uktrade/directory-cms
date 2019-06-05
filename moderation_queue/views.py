@@ -16,8 +16,10 @@ from .models import Moderation
 
 @method_decorator(login_required, name='dispatch')
 class Review(ListView):
-    queryset = Moderation.objects.accepted()
     template_name = "moderation_queue/review.html"
+
+    def get_queryset(self):
+        return Moderation.objects.filter(revision__user=self.request.user).accepted()
 
 
 @method_decorator(login_required, name='dispatch')
