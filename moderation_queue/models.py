@@ -13,9 +13,6 @@ class Moderation(models.Model):
     publish_at = models.DateTimeField(null=True)
     comment = models.TextField(max_length=100, blank=True)
 
-    # TODO: confirm this is still a string after security/comments work has been confirmed.
-    business_approver = models.TextField()
-
     created_at = models.DateTimeField(auto_now_add=True)
 
     objects = ModerationQuerySet.as_manager()
