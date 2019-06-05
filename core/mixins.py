@@ -35,17 +35,6 @@ class ServiceNameUniqueSlugMixin:
             raise ValidationError({'slug': 'This slug is already in use'})
         return super().save(*args, **kwargs)
 
-    def delete(self, *args, **kwargs):
-        """
-        NOTE: This override should probably be removed
-
-        We need to override delete to use the Page's parent one.
-
-        Using the Page one would cause the original _slug_is_available method
-        to be called and that is not considering services
-        """
-        super(Page, self).delete(*args, **kwargs)
-
 
 class ModeltranslationPageMixin:
 
