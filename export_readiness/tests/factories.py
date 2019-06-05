@@ -213,7 +213,12 @@ class CountryGuidePageFactory(wagtail_factories.PageFactory):
     hero_image = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
-
+    intro_cta_one_title = factory.fuzzy.FuzzyText(length=10)
+    intro_cta_one_link = factory.fuzzy.FuzzyText(length=10)
+    intro_cta_two_title = factory.fuzzy.FuzzyText(length=10)
+    intro_cta_two_link = factory.fuzzy.FuzzyText(length=10)
+    intro_cta_three_title = factory.fuzzy.FuzzyText(length=10)
+    intro_cta_three_link = factory.fuzzy.FuzzyText(length=10)
     section_one_body = factory.fuzzy.FuzzyText(length=10)
     section_one_image = factory.SubFactory(
         wagtail_factories.ImageFactory
@@ -273,9 +278,6 @@ class CountryGuidePageFactory(wagtail_factories.PageFactory):
     accordion_1_case_study_button_link = factory.fuzzy.FuzzyText(length=10)
     accordion_1_case_study_title = factory.fuzzy.FuzzyText(length=10)
     accordion_1_case_study_description = factory.fuzzy.FuzzyText(length=10)
-
-    accordion_1_cta_1_link = factory.fuzzy.FuzzyText(length=10)
-    accordion_1_cta_1_title = factory.fuzzy.FuzzyText(length=10)
 
     accordion_1_statistic_1_number = factory.fuzzy.FuzzyText(length=10)
     accordion_1_statistic_1_heading = factory.fuzzy.FuzzyText(length=10)
