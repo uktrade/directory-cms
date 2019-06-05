@@ -210,10 +210,10 @@ def test_country_page_view(admin_client, root_page):
     assert 'accordions' in response.json()
     assert 'statistics' in response.json()
     assert 'fact_sheet' in response.json()
+    assert 'intro_ctas' in response.json()
     assert 'subsections' in response.json()['accordions'][0]
     assert 'statistics' in response.json()['accordions'][0]
     assert 'case_study' in response.json()['accordions'][0]
-    assert 'ctas' in response.json()['accordions'][0]
 
 
 @pytest.mark.django_db
