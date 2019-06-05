@@ -11,17 +11,23 @@ class ServiceNameFilter(django_filters.FilterSet):
         fields = ['service_name']
 
     def filter_service_name(self, queryset, name, value):
+        # All pages inherit their 'service_name' value from the
+        # 'service_name_value' attribute on their class, so we
+        # can use this class attribute to filter the queryset
         relevant_models = [
             model for model in PAGE_MODEL_CLASSES if (
                 not model._meta.abstract and
                 getattr(model, 'service_name_value', '') == value
             )
         ]
-        ctype_ids = [
+        # ContentTypes use a cached manager, so this should not
+        # result in any queries
+        content_type_ids = [
             ctype.id for ctype in
             ContentType.objects.get_for_models(*relevant_models).values()
         ]
-        return queryset.filter(content_type_id__in=ctype_ids)
+        # Filter the queryset
+        return queryset.filter(content_type_id__in=content_type_ids)
 
 
 class ServiceNameDRFFilter(django_filters.rest_framework.FilterSet,
