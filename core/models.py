@@ -395,10 +395,10 @@ class ImageHash(AbstractObjectHash):
 
 class WagtailAdminExclusivePageMixin:
     """
-    Limits creation of pages in Wagtail's admin UI so that only a
-    single instance of this type can be created. If a `slug_identity`
-    attribute is set on the class, that will be used as default slug
-    when the page is created via the UI.
+    Limits creation of pages in Wagtail's admin UI to only one
+    instance of a specific type. If the class also has a `slug_identity`
+    attribute set, that will be used as default slug in the page
+    creation UI.
     """
     base_form_class = forms.WagtailAdminPageExclusivePageForm
 
@@ -409,9 +409,9 @@ class WagtailAdminExclusivePageMixin:
 
 class ExclusivePageMixin(WagtailAdminExclusivePageMixin):
     """
-    A more restrictive version of WagtailAdminExclusivePageMixin that
+    A more restrictive version of `WagtailAdminExclusivePageMixin` that
     prevents anything other than the `slug_identity` class attribute
-    value from being used when creating new pages.
+    value being used as the `slug` when creating new pages.
     """
     read_only_fields = ['slug']
 
