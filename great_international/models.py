@@ -1632,7 +1632,9 @@ class InternationalGuideLandingPage(BaseInternationalPage):
 
 
 class InternationalEUExitFormPage(
-    WagtailAdminExclusivePageMixin, BaseInternationalPage, metaclass=FormPageMetaClass
+    WagtailAdminExclusivePageMixin,
+    BaseInternationalPage,
+    metaclass=FormPageMetaClass
 ):
     # metaclass creates <fild_name>_label and <field_name>_help_text
     form_field_names = [
