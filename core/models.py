@@ -129,6 +129,11 @@ class BasePage(Page):
         self.clean = lambda: None
         super().__init__(*args, **kwargs)
 
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        self.service_name = self.service_name_value
+        return super().save(*args, **kwargs)
+
     def get_draft_token(self):
         return self.signer.sign(self.pk)
 
@@ -257,8 +262,29 @@ class BasePage(Page):
     def url(self):
         return self.get_url()
 
+    def get_localized_urls(self):
+        # localized urls are used to tell google of alternative urls for
+        # available languages, so there should be no need to expose the draft
+        # url
+        return [
+            (language_code, self.get_url(language_code=language_code))
+            for language_code in self.translated_languages
+        ]
+
     def serve(self, request, *args, **kwargs):
         return redirect(self.get_url())
+
+    def get_latest_nested_revision_as_page(self):
+        revision = self.get_latest_revision_as_page()
+        foreign_key_names = [
+            field.name for field in revision._meta.get_fields()
+            if isinstance(field, models.ForeignKey)
+        ]
+        for name in foreign_key_names:
+            field = getattr(revision, name)
+            if hasattr(field, 'get_latest_revision_as_page'):
+                setattr(revision, name, field.get_latest_revision_as_page())
+        return revision
 
     @classmethod
     def get_translatable_fields(cls):
@@ -321,27 +347,6 @@ class BasePage(Page):
             return 'Translated to {}'.format(', '.join(names))
         return ''
 
-    def get_localized_urls(self):
-        # localized urls are used to tell google of alternative urls for
-        # available languages, so there should be no need to expose the draft
-        # url
-        return [
-            (language_code, self.get_url(language_code=language_code))
-            for language_code in self.translated_languages
-        ]
-
-    def get_latest_nested_revision_as_page(self):
-        revision = self.get_latest_revision_as_page()
-        foreign_key_names = [
-            field.name for field in revision._meta.get_fields()
-            if isinstance(field, models.ForeignKey)
-        ]
-        for name in foreign_key_names:
-            field = getattr(revision, name)
-            if hasattr(field, 'get_latest_revision_as_page'):
-                setattr(revision, name, field.get_latest_revision_as_page())
-        return revision
-
     @classmethod
     def can_exist_under(cls, parent):
         """
@@ -351,11 +356,6 @@ class BasePage(Page):
         if not parent.specific_class:
             return False
         return super().can_exist_under(parent)
-
-    @transaction.atomic
-    def save(self, *args, **kwargs):
-        self.service_name = self.service_name_value
-        return super().save(*args, **kwargs)
 
 
 class AbstractObjectHash(models.Model):
