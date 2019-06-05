@@ -64,6 +64,7 @@ class ApproveModeration(View):
         return redirect('wagtailadmin_home')
 
 
+@method_decorator(login_required, name='dispatch')
 class PreviewModeration(View):
     """
     Preview a moderation request.
