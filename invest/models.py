@@ -13,12 +13,18 @@ from core.model_fields import MarkdownField
 from core.models import (
     BasePage, ExclusivePageMixin, ServiceMixin, FormPageMetaClass
 )
-from core.mixins import ServiceHomepageMixin
+from core.mixins import ServiceHomepageMixin, ServiceNameUniqueSlugMixin
 from core.panels import SearchEngineOptimisationPanel
 
 
-class InvestApp(ExclusivePageMixin, ServiceMixin, BasePage):
+class BaseInvestPage(ServiceNameUniqueSlugMixin, BasePage):
     service_name_value = cms.INVEST
+
+    class Meta:
+        abstract = True
+
+
+class InvestApp(ExclusivePageMixin, ServiceMixin, BaseInvestPage):
     slug_identity = 'invest-app'
 
     @classmethod
@@ -28,8 +34,7 @@ class InvestApp(ExclusivePageMixin, ServiceMixin, BasePage):
 
 # Sector models
 
-class SectorLandingPage(ExclusivePageMixin, BasePage):
-    service_name_value = cms.INVEST
+class SectorLandingPage(ExclusivePageMixin, BaseInvestPage):
     subpage_types = ['invest.sectorPage']
     slug_identity = cms.INVEST_SECTOR_LANDING_PAGE_SLUG
     slug_override = 'industries'
@@ -67,8 +72,7 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
     )
 
 
-class RegionLandingPage(ExclusivePageMixin, BasePage):
-    service_name_value = cms.INVEST
+class RegionLandingPage(ExclusivePageMixin, BaseInvestPage):
     subpage_types = ['invest.sectorPage']
     slug_identity = cms.INVEST_UK_REGION_LANDING_PAGE_SLUG
     slug_override = 'uk-regions'
@@ -105,9 +109,8 @@ class RegionLandingPage(ExclusivePageMixin, BasePage):
     )
 
 
-class SectorPage(BasePage):
+class SectorPage(BaseInvestPage):
     # Related sector are implemented as subpages
-    service_name_value = cms.INVEST
     subpage_types = ['invest.SectorPage']
 
     featured = models.BooleanField(default=False)
@@ -301,8 +304,7 @@ class SectorPage(BasePage):
 
 # Setup guide models
 
-class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
-    service_name_value = cms.INVEST
+class SetupGuideLandingPage(ExclusivePageMixin, BaseInvestPage):
     subpage_types = ['invest.SetupGuidePage']
     slug_identity = cms.INVEST_GUIDE_LANDING_PAGE_SLUG
     # override the slug when generating the url
@@ -331,8 +333,7 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
     )
 
 
-class SetupGuidePage(BasePage):
-    service_name_value = cms.INVEST
+class SetupGuidePage(BaseInvestPage):
     view_path = 'setup-guides/'
 
     description = models.TextField()  # appears in card on external pages
@@ -445,8 +446,7 @@ class SetupGuidePage(BasePage):
     )
 
 
-class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
-    service_name_value = cms.INVEST
+class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
     slug_identity = cms.INVEST_HOME_PAGE_SLUG
     view_path = ''
 
@@ -894,12 +894,11 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
     )
 
 
-class InfoPage(BasePage):
+class InfoPage(BaseInvestPage):
     """
     Markdown page - used for terms and conditions
     and privacy policy
     """
-    service_name_value = cms.INVEST
     view_path = 'info/'
     content = MarkdownField()
 
@@ -920,7 +919,7 @@ class InfoPage(BasePage):
 
 
 class HighPotentialOpportunityFormPage(
-    ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
+    ExclusivePageMixin, BaseInvestPage, metaclass=FormPageMetaClass
 ):
     # metaclass creates <fild_name>_label and <field_name>_help_text
     form_field_names = [
@@ -936,7 +935,6 @@ class HighPotentialOpportunityFormPage(
         'comment',
     ]
 
-    service_name_value = cms.INVEST
     slug_identity = cms.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SLUG
     full_path_override = 'high-potential-opportunities/rail/contact/'
 
@@ -962,8 +960,7 @@ class HighPotentialOpportunityFormPage(
     ]
 
 
-class HighPotentialOpportunityDetailPage(BasePage):
-    service_name_value = cms.INVEST
+class HighPotentialOpportunityDetailPage(BaseInvestPage):
     subpage_types = ['invest.HighPotentialOpportunityDetailPage']
     view_path = 'high-potential-opportunities/'
 
@@ -1386,8 +1383,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
     )
 
 
-class HighPotentialOpportunityFormSuccessPage(BasePage):
-    service_name_value = cms.INVEST
+class HighPotentialOpportunityFormSuccessPage(BaseInvestPage):
     view_path = 'high-potential-opportunities/rail/contact/'
     slug_identity = cms.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SUCCESS_SLUG
 
