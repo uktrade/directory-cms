@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     'taggit',
     'storages',
     'rest_framework',
+    'corsheaders',
     'wagtailmedia',
     'find_a_supplier.apps.FindASupplierConfig',
     'export_readiness.apps.GreatDomesticConfig',
@@ -88,6 +89,7 @@ INSTALLED_APPS = [
     'activitystream.apps.ActivityStreamConfig',
     'django_filters',
     'authbroker_client',
+    'review',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -95,6 +97,7 @@ MIDDLEWARE_CLASSES = [
     'core.middleware.StubSiteMiddleware',
     'directory_components.middleware.MaintenanceModeMiddleware',
     'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -106,6 +109,12 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'core.middleware.LocaleQuerystringMiddleware',
 ]
+
+# FIXME Temporarily disabled so I can render frontend pages
+DEFAULT_FILE_STORAGE = env.str(
+    'DEFAULT_FILE_STORAGE',
+    'core.storage_backends.ImmutableFilesS3Boto3Storage'
+)
 
 ROOT_URLCONF = 'conf.urls'
 
@@ -206,10 +215,7 @@ STATICFILES_STORAGE = env.str(
     'STATICFILES_STORAGE',
     'whitenoise.storage.CompressedManifestStaticFilesStorage'
 )
-DEFAULT_FILE_STORAGE = env.str(
-    'DEFAULT_FILE_STORAGE',
-    'core.storage_backends.ImmutableFilesS3Boto3Storage'
-)
+
 
 # Logging for development
 if DEBUG:
@@ -501,3 +507,11 @@ CELERY_TASK_ALWAYS_EAGER = env.bool('CELERY_ALWAYS_EAGER', False)
 ACTIVITY_STREAM_ACCESS_KEY_ID = env.str('ACTIVITY_STREAM_ACCESS_KEY_ID')
 ACTIVITY_STREAM_SECRET_ACCESS_KEY = \
     env.str('ACTIVITY_STREAM_SECRET_ACCESS_KEY')
+
+CORS_ORIGIN_ALLOW_ALL = True  # FIXME
+
+from corsheaders.defaults import default_headers
+
+CORS_ALLOW_HEADERS = default_headers + (
+    'x-review-token',
+)

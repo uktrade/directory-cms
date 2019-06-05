@@ -8,6 +8,9 @@ from django.urls import reverse
 from django.utils.html import format_html
 from core import helpers, models
 
+from review.models import Reviewer
+from review.api.token import get_review_token
+
 
 @hooks.register('register_page_listing_more_buttons')
 def add_copy_button(page, page_perms, is_parent=False):
@@ -32,7 +35,9 @@ def update_default_listing_buttons(page, page_perms, is_parent=False):
     if isinstance(page, models.BasePage):
         for button in buttons:
             if helpers.get_button_url_name(button) == 'view_draft':
-                button.url = page.get_url(is_draft=True)
+                reviewer, created = Reviewer.objects.get_or_create(user=page_perms.user)
+                review_token = get_review_token(reviewer, page.get_latest_revision())
+                button.url = page.get_url(is_draft=True) + '&review_token=' + review_token.decode('utf-8')
 
     else:
         # limit buttons for non-subclasses-of-BasePage

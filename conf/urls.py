@@ -15,6 +15,7 @@ import core.views
 import export_readiness.views
 from activitystream.views import ActivityStreamView
 from groups.views import GroupInfoModalView
+from review.api import urls as review_api_urls
 
 api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
@@ -51,7 +52,11 @@ api_urls = [
         r'^pages/types/$',
         core.views.PageTypeView.as_view(),
         name='pages-types-list'
-    )
+    ),
+    url(
+        r'^review/',
+        include(review_api_urls, namespace='review', app_name='review')
+    ),
 ]
 
 
