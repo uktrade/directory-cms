@@ -26,6 +26,7 @@ class ServiceNameUniqueSlugMixin:
 
     @transaction.atomic
     def save(self, *args, **kwargs):
+        self.service_name = self.service_name_value
         if not self._slug_is_available(
             slug=self.slug,
             parent=self.get_parent(),
