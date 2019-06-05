@@ -16,6 +16,8 @@
 - CI-152 - Changed `next steps` sections to be `contact` section on capital invest pages
 - CI-153 - Removed the cards pdf buttons on Capital Invest Landing page, region cards are now only displayed with markdown text
 - CMS-1638 - Prevent leaking user information on sql table dump
+- CMS-1603 - Introduced separate base page classes for each app so that unique slug enforcement can be relaxed in great_international
+
 
 ### Fixed bugs:
 
@@ -27,6 +29,7 @@
 - CMS-1589 - Upgrade django-staff-sso-client to version 0.3.0 to fix blank username field bug
 - NOTICKET - Update guidance for `update_db_template` in README
 - CI-154 - Added section three to guide landing page for ISD/contact section
+- CMS-1633 - Removed `Page.delete()` override from `BasePage` so that child pages of differing types are deleted as intended
 
 
 ## [2019.05.09](https://github.com/uktrade/directory-cms/releases/tag/2019.05.09)
