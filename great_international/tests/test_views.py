@@ -248,7 +248,7 @@ def test_invest_home_page(admin_client, root_page):
 
     response = admin_client.get(url, {'service_name': cms.GREAT_INTERNATIONAL})
     assert response.status_code == 200
-    assert len(response.json()['sectors']) == 1
+    assert len(response.json()['sectors']) == 2
     high_potential_ops = response.json()['high_potential_opportunities']
     assert len(high_potential_ops) == 1
     assert high_potential_ops[0]['title'] == 'Featured'
