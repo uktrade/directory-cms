@@ -82,7 +82,7 @@ def populate_apppage_fields_from_homepage(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('great_international', '0030_add_homepage_fields_to_apppage'),
+        ('great_international', '0033_add_homepage_fields_to_apppage'),
     ]
 
     operations = [

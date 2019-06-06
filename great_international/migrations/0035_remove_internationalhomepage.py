@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('wagtailforms', '0003_capitalizeverbose'),
         ('wagtailcore', '0040_page_draft_title'),
-        ('great_international', '0031_populate_apppage_fields_from_homepage'),
+        ('great_international', '0034_populate_apppage_fields_from_homepage'),
     ]
 
     operations = [
