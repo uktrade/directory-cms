@@ -207,3 +207,67 @@ def test_client_not_passing_region(admin_client, root_page):
     assert response.status_code == 200
     assert 'localised_child_pages' in response.json()
     assert response.json()['localised_child_pages'] == []
+
+
+def test_invest_home_page(document, admin_client, root_page):
+    page = factories.InvestInternationalHomePageFactory(live=True)
+    sector_one = factories.InternationalSectorPageFactory(
+        live=True, parent=page
+    )
+    sector_two = factories.InternationalSectorPageFactory(
+        live=True, parent=page
+    )
+
+    factories.InvestHighPotentialOpportunityDetailPageFactory(
+        title='Featured',
+        live=True,
+        pdf_document=document,
+        featured=True,
+        parent=sector_one,
+    )
+
+    factories.InvestHighPotentialOpportunityDetailPageFactory(
+        title='Not Featured',
+        live=True,
+        pdf_document=document,
+        featured=False,
+        parent=sector_two,
+    )
+
+    url = reverse(
+        'api:lookup-by-slug',
+        kwargs={'slug': page.slug}
+    )
+
+    response = admin_client.get(url, {'service_name': cms.GREAT_INTERNATIONAL})
+    assert response.status_code == 200
+    assert len(response.json()['sectors']) == 2
+    high_potential_ops = response.json()['high_potential_opportunities']
+    assert len(high_potential_ops) == 1
+    assert high_potential_ops[0]['title'] == 'Featured'
+
+
+def test_high_potential_opportunity_api(document, admin_client, root_page):
+    factories.InvestHighPotentialOpportunityDetailPageFactory(
+        parent=root_page,
+        live=True,
+        pdf_document=document,
+    )
+    page = factories.InvestHighPotentialOpportunityDetailPageFactory(
+        parent=root_page,
+        live=True,
+        pdf_document=document,
+        slug='some-nice-slug',
+    )
+
+    url = reverse(
+        'api:lookup-by-slug',
+        kwargs={'slug': page.slug}
+    )
+
+    response = admin_client.get(url, {'service_name': cms.GREAT_INTERNATIONAL})
+
+    assert response.status_code == 200
+    parsed = response.json()
+    assert 'other_opportunities' in parsed
+    assert 'other_opportunities' not in parsed['other_opportunities'][0]
