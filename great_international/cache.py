@@ -88,19 +88,7 @@ class InternationalCapitalInvestLandingPageSubscriber(
 
 class CapitalInvestRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.CapitalInvestRegionPage
-    subscriptions = [
-        models.CapitalInvestRegionalSectorPage
-    ]
-
-
-class CapitalInvestRegionalSectorPageSubscriber(
-    AbstractDatabaseCacheSubscriber
-):
-    model = models.CapitalInvestRegionalSectorPage
-    subscriptions = [
-        models.CapitalInvestOpportunityPage,
-        models.CapitalInvestRegionPage
-    ]
+    subscriptions = []
 
 
 class CapitalInvestOpportunityPageSubscriber(AbstractDatabaseCacheSubscriber):

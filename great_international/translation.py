@@ -383,28 +383,6 @@ class CapitalInvestRegionPageTranslationOptions(
     )
 
 
-@register(models.CapitalInvestRegionalSectorPage)
-class CapitalInvestRegionalSectorPageTranslationOptions(
-    BaseTranslationOptions
-):
-    fields = (
-        'breadcrumbs_label',
-        'hero_image',
-        'hero_title',
-        'featured_description',
-
-        'sector_summary_intro',
-        'sector_summary_content',
-        'sector_summary_image',
-
-        'investment_opportunities_title',
-
-        'contact_title',
-        'contact_text',
-
-    )
-
-
 @register(models.CapitalInvestOpportunityListingPage)
 class CapitalInvestOpportunityListingPageTranslationOptions(
         BaseTranslationOptions):
@@ -460,14 +438,6 @@ class CapitalInvestOpportunityPageTranslationOptions(
 
         'contact_title',
         'contact_text',
-    )
-
-
-@register(models.SectorRelatedOpportunities)
-class SectorRelatedOpportunitiesSerializer(
-        BaseTranslationOptions):
-    fields = (
-        'page',
     )
 
 
