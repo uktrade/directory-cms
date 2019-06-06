@@ -2752,9 +2752,11 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
 
 # Invest models
 
-class InvestInternationalHomePage(ExclusivePageMixin, ServiceHomepageMixin,
-                                  BasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
+class InvestInternationalHomePage(
+    WagtailAdminExclusivePageMixin,
+    ServiceHomepageMixin,
+    BaseInternationalPage
+):
     slug_identity = cms.INVEST_HOME_PAGE_SLUG
     view_path = ''
 
@@ -3142,7 +3144,9 @@ class InvestInternationalHomePage(ExclusivePageMixin, ServiceHomepageMixin,
 
 
 class InvestHighPotentialOpportunityFormPage(
-    ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
+    WagtailAdminExclusivePageMixin,
+    BaseInternationalPage,
+    metaclass=FormPageMetaClass
 ):
     # metaclass creates <field_name>_label and <field_name>_help_text
     form_field_names = [
@@ -3158,7 +3162,6 @@ class InvestHighPotentialOpportunityFormPage(
         'comment',
     ]
 
-    service_name_value = cms.INVEST
     slug_identity = cms.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SLUG
     full_path_override = 'high-potential-opportunities/rail/contact/'
 
@@ -3184,8 +3187,7 @@ class InvestHighPotentialOpportunityFormPage(
     ]
 
 
-class InvestHighPotentialOpportunityDetailPage(BasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
+class InvestHighPotentialOpportunityDetailPage(BaseInternationalPage):
     subpage_types = ['invest.HighPotentialOpportunityDetailPage']
     view_path = 'high-potential-opportunities/'
 
@@ -3608,8 +3610,7 @@ class InvestHighPotentialOpportunityDetailPage(BasePage):
     )
 
 
-class InvestHighPotentialOpportunityFormSuccessPage(BasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
+class InvestHighPotentialOpportunityFormSuccessPage(BaseInternationalPage):
     view_path = 'high-potential-opportunities/rail/contact/'
     slug_identity = cms.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SUCCESS_SLUG
 
