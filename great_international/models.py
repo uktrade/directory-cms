@@ -2097,9 +2097,6 @@ class InternationalCapitalInvestLandingPage(
 
 class CapitalInvestRegionPage(BaseInternationalPage):
     parent_page_types = ['great_international.GreatInternationalApp']
-    subpage_types = [
-        'great_international.CapitalInvestRegionalSectorPage',
-    ]
 
     breadcrumbs_label = models.CharField(max_length=255)
     hero_title = models.CharField(max_length=255)
@@ -2354,129 +2351,8 @@ class CapitalInvestRegionPage(BaseInternationalPage):
     )
 
 
-class RelatedOpportunity(models.Model):
-    opportunity = models.ForeignKey(
-        'great_international.CapitalInvestOpportunityPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    panels = [
-        PageChooserPanel(
-            'opportunity',
-            [
-                'great_international.'
-                'CapitalInvestOpportunityPage'
-            ])
-    ]
-
-    class Meta:
-        abstract = True
-
-
-class SectorRelatedOpportunities(Orderable, RelatedOpportunity):
-    page = ParentalKey(
-        'great_international.CapitalInvestRegionalSectorPage',
-        on_delete=models.CASCADE,
-        related_name='added_opportunities',
-        blank=True,
-        null=True,
-    )
-
-
-class CapitalInvestRegionalSectorPage(BaseInternationalPage):
-
-    parent_page_types = ['great_international.CapitalInvestRegionPage']
-
-    breadcrumbs_label = models.CharField(max_length=255)
-    hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    hero_title = models.CharField(max_length=255)
-    featured_description = models.TextField(
-        max_length=255,
-        blank=True,
-        help_text="This description is used when this page is featured "
-                  "on another page, i.e. the Capital Invest Region "
-                  "page"
-    )
-
-    sector_summary_intro = models.TextField(max_length=255, blank=True)
-    sector_summary_content = MarkdownField(blank=True)
-    sector_summary_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-
-    investment_opportunities_title = models.CharField(
-        max_length=255,
-        blank=True
-    )
-
-    contact_title = models.CharField(max_length=255, blank=True)
-    contact_text = MarkdownField(blank=True)
-
-    content_panels = [
-        FieldPanel('breadcrumbs_label'),
-        MultiFieldPanel(
-            heading="Hero",
-            children=[
-                ImageChooserPanel('hero_image'),
-                FieldPanel('hero_title'),
-            ],
-        ),
-        FieldPanel('featured_description'),
-        MultiFieldPanel(
-            heading="Sector summary",
-            children=[
-                FieldPanel('sector_summary_intro'),
-                FieldPanel('sector_summary_content'),
-                ImageChooserPanel('sector_summary_image'),
-            ],
-        ),
-        MultiFieldPanel(
-            heading="Investment opportunities",
-            children=[
-                FieldPanel('investment_opportunities_title'),
-                InlinePanel(
-                    'added_opportunities',
-                    label="Related Opportunities"
-                ),
-            ],
-        ),
-        MultiFieldPanel(
-            heading="Contact",
-            children=[
-                FieldPanel('contact_title'),
-                FieldPanel('contact_text'),
-            ],
-        ),
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
-    ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
-
-
-class CapitalInvestOpportunityListingPage(
-    WagtailAdminExclusivePageMixin, ServiceMixin, BaseInternationalPage
-):
+class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
+                                          BaseInternationalPage):
 
     slug_identity = 'opportunities'
 
