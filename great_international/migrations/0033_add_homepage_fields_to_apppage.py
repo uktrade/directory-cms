@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('wagtailcore', '0040_page_draft_title'),
         ('wagtailimages', '0021_image_file_hash'),
-        ('great_international', '0029_auto_20190530_1344'),
+        ('great_international', '0032_investinternationalhomepage_how_we_help_icon_six'),
     ]
 
     operations = [

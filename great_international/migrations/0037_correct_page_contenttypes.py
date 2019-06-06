@@ -35,7 +35,7 @@ def migrate_backwards(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('great_international', '0033_rename_apppage_model'),
+        ('great_international', '0036_rename_apppage_model'),
     ]
 
     operations = [
