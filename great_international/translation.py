@@ -64,7 +64,8 @@ class InternationalSectorPageTranslationOptions(BaseTranslationOptions):
         'section_three_subsection_two_body',
         'related_page_one',
         'related_page_two',
-        'related_page_three'
+        'related_page_three',
+        'project_opportunities_title'
     )
 
 
