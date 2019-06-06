@@ -1,9 +1,6 @@
 from directory_constants.constants import cms
-from django.core.files.base import ContentFile
 
 from rest_framework.reverse import reverse
-from six import b
-from wagtail.documents.models import Document
 
 from great_international.tests import factories
 
@@ -212,7 +209,7 @@ def test_client_not_passing_region(admin_client, root_page):
     assert response.json()['localised_child_pages'] == []
 
 
-def test_invest_home_page(admin_client, root_page):
+def test_invest_home_page(document, admin_client, root_page):
     page = factories.InvestInternationalHomePageFactory(live=True)
     sector_one = factories.InternationalSectorPageFactory(
         live=True, parent=page
@@ -221,14 +218,10 @@ def test_invest_home_page(admin_client, root_page):
         live=True, parent=page
     )
 
-    fake_file = ContentFile(b('A boring example document'))
-    fake_file.name = 'test.pdf'
-    pdf = Document.objects.create(title='Test document', file=fake_file)
-
     factories.InvestHighPotentialOpportunityDetailPageFactory(
         title='Featured',
         live=True,
-        pdf_document=pdf,
+        pdf_document=document,
         featured=True,
         parent=sector_one,
     )
@@ -236,7 +229,7 @@ def test_invest_home_page(admin_client, root_page):
     factories.InvestHighPotentialOpportunityDetailPageFactory(
         title='Not Featured',
         live=True,
-        pdf_document=pdf,
+        pdf_document=document,
         featured=False,
         parent=sector_two,
     )
@@ -254,21 +247,16 @@ def test_invest_home_page(admin_client, root_page):
     assert high_potential_ops[0]['title'] == 'Featured'
 
 
-def test_high_potential_opportunity_api(page, admin_client, root_page):
-    pdf_document = Document.objects.create(
-        title='document.pdf',
-        file=page.introduction_column_two_icon.file  # not really pdf
-    )
-
+def test_high_potential_opportunity_api(document, admin_client, root_page):
     factories.InvestHighPotentialOpportunityDetailPageFactory(
         parent=root_page,
         live=True,
-        pdf_document=pdf_document,
+        pdf_document=document,
     )
     page = factories.InvestHighPotentialOpportunityDetailPageFactory(
         parent=root_page,
         live=True,
-        pdf_document=pdf_document,
+        pdf_document=document,
         slug='some-nice-slug',
     )
 
