@@ -19,7 +19,10 @@ class Reviewer(models.Model):
         return self.email or self.user.email
 
     def get_name(self):
-        return self.user.get_full_name() if self.user else self.email
+        if self.user:
+            return self.user.get_full_name() or self.user.username
+        else:
+            return self.email
 
     def send_request_email(self):
         # FIXME

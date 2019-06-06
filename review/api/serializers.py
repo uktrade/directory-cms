@@ -12,11 +12,11 @@ class ReviewerSerializer(serializers.ModelSerializer):
 
 
 class CommentReplySerializer(serializers.ModelSerializer):
-    reviewer = ReviewerSerializer()
+    author = ReviewerSerializer(source='reviewer', read_only=True)
 
     class Meta:
         model = models.CommentReply
-        fields = ['reviewer', 'text', 'created_at', 'updated_at']
+        fields = ['id', 'author', 'text', 'created_at', 'updated_at']
 
 
 class CommentLocationSerializer(serializers.ModelSerializer):
@@ -27,9 +27,9 @@ class CommentLocationSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    reviewer = ReviewerSerializer(read_only=True)
+    author = ReviewerSerializer(source='reviewer', read_only=True)
     replies = CommentReplySerializer(many=True, read_only=True)
 
     class Meta:
         model = models.Comment
-        fields = ['id', 'reviewer', 'quote', 'text', 'created_at', 'updated_at', 'is_resolved', 'replies', 'content_path', 'start_xpath', 'start_offset', 'end_xpath', 'end_offset']
+        fields = ['id', 'author', 'quote', 'text', 'created_at', 'updated_at', 'is_resolved', 'replies', 'content_path', 'start_xpath', 'start_offset', 'end_xpath', 'end_offset']

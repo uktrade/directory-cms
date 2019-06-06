@@ -23,26 +23,38 @@ class ReviewTokenMixin:
 
 
 class CommentList(ReviewTokenMixin, generics.ListCreateAPIView):
-    queryset = models.Comment.objects.all()
     serializer_class = serializers.CommentSerializer
+
+    def get_queryset(self):
+        return models.Comment.objects.filter(page_revision_id=self.page_revision_id)
 
     def perform_create(self, serializer):
         serializer.save(reviewer_id=self.reviewer_id, page_revision_id=self.page_revision_id)
 
 
 class Comment(ReviewTokenMixin, generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.Comment.objects.all()
     serializer_class = serializers.CommentSerializer
+
+    def get_queryset(self):
+        return models.Comment.objects.filter(page_revision_id=self.page_revision_id)
 
 
 # class CommentResolved():
 
 
 class CommentReplyList(ReviewTokenMixin, generics.ListCreateAPIView):
-    queryset = models.CommentReply.objects.all()
     serializer_class = serializers.CommentReplySerializer
+
+    def get_queryset(self):
+        return models.CommentReply.objects.filter(comment_id=self.kwargs['pk'])
+
+    def perform_create(self, serializer):
+        # TODO: Make sure self.kwargs['comment_pk'] is on the current page revision
+        serializer.save(reviewer_id=self.reviewer_id, comment_id=self.kwargs['pk'])
 
 
 class CommentReply(ReviewTokenMixin, generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.CommentReply.objects.all()
     serializer_class = serializers.CommentReplySerializer
+
+    def get_queryset(self):
+        return models.CommentReply.objects.filter(comment_id=self.kwargs['comment_pk'])
