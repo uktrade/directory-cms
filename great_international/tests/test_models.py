@@ -82,37 +82,6 @@ def test_opp_listing_required_translatable_fields(model):
 
 
 @pytest.mark.django_db
-def test_set_slug():
-    instance = models.InternationalHomePage.objects.create(
-        title_en_gb='the app',
-        depth=2,
-        path='/thing',
-        hero_title='blah',
-        hero_title_en_gb='blah',
-        invest_title='blah',
-        invest_title_en_gb='blah',
-        trade_title='blah',
-        trade_title_en_gb='blah',
-        tariffs_title='blah',
-        tariffs_title_en_gb='blah',
-        tariffs_description='blah',
-        tariffs_description_en_gb='blah',
-        tariffs_link='http://blah.com/',
-        tariffs_link_en_gb='http://blah.com/',
-        tariffs_call_to_action_text='blah',
-        tariffs_call_to_action_text_en_gb='blah',
-        news_title='blah',
-        news_title_en_gb='blah',
-        study_in_uk_cta_text='blah',
-        study_in_uk_cta_text_en_gb='blah',
-        visit_uk_cta_text='blah',
-        visit_uk_cta_text_en_gb='blah',
-    )
-
-    assert instance.slug == models.InternationalHomePage.slug_identity
-
-
-@pytest.mark.django_db
 def test_article_inherit_tags_from_parent(root_page):
     tag1 = exread_factories.TagFactory(name='foo')
     tag2 = exread_factories.TagFactory(name='bar')
