@@ -3,10 +3,10 @@ import hashlib
 from urllib.parse import urlencode, urljoin
 
 from directory_constants.constants import choices
-from django.core.exceptions import ValidationError
+
 from modeltranslation import settings as modeltranslation_settings
-from modeltranslation.translator import translator
 from modeltranslation.utils import build_localized_fieldname
+from modeltranslation.translator import translator
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core.models import Page, PageBase, Site
@@ -18,8 +18,7 @@ from django.contrib.contenttypes.fields import (
 )
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import ArrayField
-from django.db import models
-from django.db import transaction
+from django.db import models, transaction
 from django.forms import MultipleChoiceField
 from django.shortcuts import redirect
 from django.utils import translation
@@ -133,32 +132,7 @@ class BasePage(Page):
     @transaction.atomic
     def save(self, *args, **kwargs):
         self.service_name = self.service_name_value
-        if not self._slug_is_available(
-            slug=self.slug,
-            parent=self.get_parent(),
-            page=self
-        ):
-            raise ValidationError({'slug': 'This slug is already in use'})
         return super().save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        """We need to override delete to use the Page's parent one.
-
-        Using the Page one would cause the original _slug_is_available method
-        to be called and that is not considering services
-        """
-        super(Page, self).delete(*args, **kwargs)
-
-    @staticmethod
-    def _slug_is_available(slug, parent, page=None):
-        from core import filters  # circular dependencies
-        queryset = filters.ServiceNameFilter().filter_service_name(
-            queryset=Page.objects.filter(slug=slug).exclude(pk=page.pk),
-            name=None,
-            value=page.service_name,
-        )
-        is_unique_in_service = (queryset.count() == 0)
-        return is_unique_in_service
 
     def get_draft_token(self):
         return self.signer.sign(self.pk)
@@ -375,8 +349,12 @@ class BasePage(Page):
 
     @classmethod
     def can_exist_under(cls, parent):
+        """
+        Overrides Page.can_exist_under() so that pages cannot be created or
+        moved below a parent page whos specific page class has been removed.
+        """
         if not parent.specific_class:
-            return []
+            return False
         return super().can_exist_under(parent)
 
 
@@ -461,7 +439,6 @@ class BreadcrumbMixin(models.Model):
 
 
 class ServiceMixin(models.Model):
-    service_name_value = None
     base_form_class = forms.BaseAppAdminPageForm
     view_path = ''
     parent_page_types = ['wagtailcore.Page']
@@ -471,7 +448,7 @@ class ServiceMixin(models.Model):
 
     @classmethod
     def allowed_subpage_models(cls):
-        allowed_name = cls.service_name_value
+        allowed_name = getattr(cls, 'service_name_value', None)
         return [
             model for model in Page.allowed_subpage_models()
             if getattr(model, 'service_name_value', None) == allowed_name
