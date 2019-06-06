@@ -459,11 +459,9 @@ class InternationalSectorPage(BaseInternationalPage):
 
 
 class InternationalHomePage(
-    WagtailAdminExclusivePageMixin,
-    ServiceHomepageMixin,
-    BaseInternationalPage
+    WagtailAdminExclusivePageMixin, ServiceHomepageMixin, BaseInternationalPage
 ):
-    slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
+    slug_identity = 'great-international-app'
 
     hero_title = models.CharField(max_length=255)
     hero_subtitle = models.CharField(max_length=255, blank=True)
