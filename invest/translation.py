@@ -29,6 +29,18 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'hpo_title',
         'hpo_intro',
 
+        'capital_invest_section_title',
+        'capital_invest_section_content',
+        'capital_invest_section_image',
+        'setup_guide_title',
+        'setup_guide_content',
+        'setup_guide_img',
+        'setup_guide_call_to_action_url',
+        'setup_guide_lead_in',
+        'isd_section_image',
+        'isd_section_title',
+        'isd_section_text',
+
         'featured_card_one_image',
         'featured_card_one_title',
         'featured_card_one_summary',

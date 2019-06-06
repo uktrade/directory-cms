@@ -19,6 +19,7 @@ from core.model_fields import MarkdownField
 from core.models import (
     BasePage,
     ExclusivePageMixin,
+    WagtailAdminExclusivePageMixin,
     FormPageMetaClass,
     ServiceMixin,
 )
@@ -29,9 +30,17 @@ from wagtail.core.models import Orderable
 from modelcluster.fields import ParentalKey
 
 
-class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
-    slug_identity = 'great-international-app'
+class BaseInternationalPage(BasePage):
     service_name_value = cms.GREAT_INTERNATIONAL
+
+    class Meta:
+        abstract = True
+
+
+class GreatInternationalApp(
+    ExclusivePageMixin, ServiceMixin, BaseInternationalPage
+):
+    slug_identity = 'great-international-app'
 
     @classmethod
     def get_required_translatable_fields(cls):
@@ -58,11 +67,10 @@ class GreatInternationalApp(ExclusivePageMixin, ServiceMixin, BasePage):
         ]
 
 
-class InternationalSectorPage(BasePage):
+class InternationalSectorPage(BaseInternationalPage):
     class Meta:
         ordering = ['-heading']
 
-    service_name_value = cms.GREAT_INTERNATIONAL
     parent_page_types = ['great_international.InternationalTopicLandingPage']
     subpage_types = []
 
@@ -482,9 +490,8 @@ class InternationalSectorPage(BasePage):
 
 
 class InternationalHomePage(
-    ExclusivePageMixin, ServiceHomepageMixin, BasePage
+    WagtailAdminExclusivePageMixin, ServiceHomepageMixin, BaseInternationalPage
 ):
-    service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
     subpage_types = []
 
@@ -904,8 +911,7 @@ class InternationalHomePage(
     )
 
 
-class InternationalRegionPage(BasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
+class InternationalRegionPage(BaseInternationalPage):
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = [
         'great_international.InternationalLocalisedFolderPage'
@@ -924,8 +930,7 @@ class InternationalRegionPage(BasePage):
         return super().save(*args, **kwargs)
 
 
-class InternationalLocalisedFolderPage(BasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
+class InternationalLocalisedFolderPage(BaseInternationalPage):
     parent_page_types = ['great_international.InternationalRegionPage']
     subpage_types = [
         'great_international.InternationalArticlePage',
@@ -944,8 +949,7 @@ class InternationalLocalisedFolderPage(BasePage):
         return super().save(*args, **kwargs)
 
 
-class InternationalArticlePage(BasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
+class InternationalArticlePage(BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
@@ -1040,8 +1044,7 @@ class InternationalArticlePage(BasePage):
     )
 
 
-class InternationalArticleListingPage(BasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
+class InternationalArticleListingPage(BaseInternationalPage):
     parent_page_types = [
         'great_international.GreatInternationalApp',
         'great_international.InternationalTopicLandingPage'
@@ -1095,8 +1098,7 @@ class InternationalArticleListingPage(BasePage):
     )
 
 
-class InternationalCampaignPage(BasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
+class InternationalCampaignPage(BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalTopicLandingPage',
@@ -1338,8 +1340,7 @@ class InternationalCampaignPage(BasePage):
     )
 
 
-class InternationalTopicLandingPage(BasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
+class InternationalTopicLandingPage(BaseInternationalPage):
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = [
         'great_international.InternationalArticleListingPage',
@@ -1384,8 +1385,7 @@ class InternationalTopicLandingPage(BasePage):
     )
 
 
-class InternationalCuratedTopicLandingPage(BasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
+class InternationalCuratedTopicLandingPage(BaseInternationalPage):
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = []
 
@@ -1515,8 +1515,7 @@ class InternationalCuratedTopicLandingPage(BasePage):
     )
 
 
-class InternationalGuideLandingPage(BasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
+class InternationalGuideLandingPage(BaseInternationalPage):
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = ['great_international.InternationalArticlePage']
 
@@ -1639,7 +1638,9 @@ class InternationalGuideLandingPage(BasePage):
 
 
 class InternationalEUExitFormPage(
-    ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
+    WagtailAdminExclusivePageMixin,
+    BaseInternationalPage,
+    metaclass=FormPageMetaClass
 ):
     # metaclass creates <fild_name>_label and <field_name>_help_text
     form_field_names = [
@@ -1653,7 +1654,6 @@ class InternationalEUExitFormPage(
         'comment',
     ]
 
-    service_name_value = cms.GREAT_INTERNATIONAL
     full_path_override = '/eu-exit-news/contact/'
     slug_identity = cms.GREAT_EUEXIT_INTERNATIONAL_FORM_SLUG
 
@@ -1688,8 +1688,9 @@ class InternationalEUExitFormPage(
     ]
 
 
-class InternationalEUExitFormSuccessPage(ExclusivePageMixin, BasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
+class InternationalEUExitFormSuccessPage(
+    WagtailAdminExclusivePageMixin, BaseInternationalPage
+):
     full_path_override = '/eu-exit-news/contact/success/'
     slug_identity = cms.GREAT_EUEXIT_FORM_SUCCESS_SLUG
 
@@ -1846,8 +1847,9 @@ class CapitalInvestRelatedRegions(Orderable, RelatedRegion):
     )
 
 
-class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
+class InternationalCapitalInvestLandingPage(
+    WagtailAdminExclusivePageMixin, BaseInternationalPage
+):
     slug_identity = 'capital-invest'
 
     parent_page_types = ['great_international.GreatInternationalApp']
@@ -2093,9 +2095,7 @@ class InternationalCapitalInvestLandingPage(ExclusivePageMixin, BasePage):
     )
 
 
-class CapitalInvestRegionPage(BasePage):
-    service_name_value = cms.GREAT_INTERNATIONAL
-
+class CapitalInvestRegionPage(BaseInternationalPage):
     parent_page_types = ['great_international.GreatInternationalApp']
     subpage_types = [
         'great_international.CapitalInvestRegionalSectorPage',
@@ -2386,9 +2386,7 @@ class SectorRelatedOpportunities(Orderable, RelatedOpportunity):
     )
 
 
-class CapitalInvestRegionalSectorPage(BasePage):
-
-    service_name_value = cms.GREAT_INTERNATIONAL
+class CapitalInvestRegionalSectorPage(BaseInternationalPage):
 
     parent_page_types = ['great_international.CapitalInvestRegionPage']
 
@@ -2476,10 +2474,10 @@ class CapitalInvestRegionalSectorPage(BasePage):
     )
 
 
-class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
-                                          BasePage):
+class CapitalInvestOpportunityListingPage(
+    WagtailAdminExclusivePageMixin, ServiceMixin, BaseInternationalPage
+):
 
-    service_name_value = cms.GREAT_INTERNATIONAL
     slug_identity = 'opportunities'
 
     parent_page_types = [
@@ -2495,9 +2493,7 @@ class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
         return [CapitalInvestOpportunityPage]
 
 
-class CapitalInvestOpportunityPage(BasePage):
-
-    service_name_value = cms.GREAT_INTERNATIONAL
+class CapitalInvestOpportunityPage(BaseInternationalPage):
 
     parent_page_types = [
         'great_international.CapitalInvestOpportunityListingPage'
@@ -2750,7 +2746,7 @@ class CapitalInvestOpportunityPage(BasePage):
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
-        settings_panels=settings_panels
+        settings_panels=settings_panels,
     )
 
 
