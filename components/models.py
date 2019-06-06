@@ -8,21 +8,27 @@ from core.models import (
 from wagtail.admin.edit_handlers import (
     FieldPanel, MultiFieldPanel
 )
+from core.mixins import ServiceNameUniqueSlugMixin
 from core.helpers import make_translated_interface
 from core.model_fields import MarkdownField
 
 
-class ComponentsApp(ExclusivePageMixin, ServiceMixin, BasePage):
-    slug_identity = 'components-app'
+class BaseComponentsPage(ServiceNameUniqueSlugMixin, BasePage):
     service_name_value = cms.COMPONENTS
+
+    class Meta:
+        abstract = True
+
+
+class ComponentsApp(ExclusivePageMixin, ServiceMixin, BaseComponentsPage):
+    slug_identity = 'components-app'
 
     @classmethod
     def get_required_translatable_fields(cls):
         return []
 
 
-class BannerComponent(BasePage):
-    service_name_value = cms.COMPONENTS
+class BannerComponent(BaseComponentsPage):
     view_path = ''
 
     banner_content = MarkdownField()
