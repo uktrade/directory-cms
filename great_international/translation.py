@@ -438,11 +438,20 @@ class CapitalInvestOpportunityPageTranslationOptions(
 
         'contact_title',
         'contact_text',
+
     )
 
 
 @register(models.CapitalInvestRelatedRegions)
 class RelatedRegionsSerializer(
+        BaseTranslationOptions):
+    fields = (
+        'page',
+    )
+
+
+@register(models.CapitalInvestRelatedSectors)
+class RelatedSectorsSerializer(
         BaseTranslationOptions):
     fields = (
         'page',

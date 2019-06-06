@@ -2369,6 +2369,39 @@ class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
         return [CapitalInvestOpportunityPage]
 
 
+class RelatedSector(models.Model):
+    related_sector = models.ForeignKey(
+        'great_international.InternationalSectorPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    panels = [
+        PageChooserPanel(
+            'related_sector',
+            [
+                'great_international.'
+                'InternationalSectorPage'
+            ]
+        ),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class CapitalInvestRelatedSectors(Orderable, RelatedSector):
+    page = ParentalKey(
+        'great_international.CapitalInvestOpportunityPage',
+        on_delete=models.CASCADE,
+        related_name='related_sectors',
+        blank=True,
+        null=True,
+    )
+
+
 class CapitalInvestOpportunityPage(BaseInternationalPage):
 
     parent_page_types = [
@@ -2498,7 +2531,19 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
     contact_title = models.CharField(max_length=255, blank=True)
     contact_text = MarkdownField(blank=True)
 
+    prioritised_opportunity = models.BooleanField(
+        default=False,
+        verbose_name="Prioritise project?"
+    )
+
     content_panels = [
+        MultiFieldPanel(
+            heading="Related sector",
+            classname='collapsible collapsed',
+            children=[
+                InlinePanel('related_sectors', label="Related Sectors"),
+            ],
+        ),
         FieldPanel('breadcrumbs_label'),
         MultiFieldPanel(
             heading="Hero",
@@ -2509,6 +2554,7 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         ),
         MultiFieldPanel(
             heading="Opportunity summary",
+            classname='collapsible',
             children=[
                 FieldPanel('opportunity_summary_intro'),
                 FieldPanel('opportunity_summary_content'),
@@ -2517,6 +2563,7 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         ),
         MultiFieldPanel(
             heading="Opportunity Details",
+            classname='collapsible',
             children=[
                 FieldRowPanel([
                     MultiFieldPanel([
@@ -2550,6 +2597,7 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         ),
         MultiFieldPanel(
             heading="Project Details",
+            classname='collapsible',
             children=[
                 FieldPanel('project_background_title'),
                 FieldPanel('project_background_intro'),
@@ -2568,6 +2616,7 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         ),
         MultiFieldPanel(
             heading="Similar projects",
+            classname='collapsible',
             children=[
                 FieldPanel('similar_projects_title'),
                 FieldRowPanel([
@@ -2596,6 +2645,7 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         ),
         MultiFieldPanel(
             heading="Case study",
+            classname='collapsible',
             children=[
                 ImageChooserPanel('case_study_image'),
                 FieldPanel('case_study_title'),
@@ -2607,6 +2657,7 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
 
         MultiFieldPanel(
             heading="Contact",
+            classname='collapsible',
             children=[
                 FieldPanel('contact_title'),
                 FieldPanel('contact_text'),
@@ -2617,6 +2668,7 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('prioritised_opportunity'),
         FieldPanel('uses_tree_based_routing'),
     ]
 
