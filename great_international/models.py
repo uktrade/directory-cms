@@ -460,7 +460,7 @@ class InternationalSectorPage(BaseInternationalPage):
 
 
 class InternationalHomePage(
-    WagtailAdminExclusivePageMixin,
+    ExclusivePageMixin,
     ServiceHomepageMixin,
     BaseInternationalPage
 ):
