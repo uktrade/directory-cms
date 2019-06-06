@@ -210,9 +210,8 @@ class AccordionSubsectionProxyDataWrapper:
         )
 
 
-class AccordionCTAProxyDataWrapper:
-    def __init__(self, instance, accordion, position_number):
-        self.accordion = accordion
+class IntroCTAProxyDataWrapper:
+    def __init__(self, instance, position_number):
         self.position_number = position_number
         self.instance = instance
 
@@ -220,14 +219,14 @@ class AccordionCTAProxyDataWrapper:
     def link(self):
         return getattr(
             self.instance,
-            f'{self.accordion}_cta_{self.position_number}_link'
+            f'intro_cta_{self.position_number}_link'
         )
 
     @property
     def title(self):
         return getattr(
             self.instance,
-            f'{self.accordion}_cta_{self.position_number}_title'
+            f'intro_cta_{self.position_number}_title'
         )
 
 
@@ -311,17 +310,6 @@ class AccordionProxyDataWrapper:
             'description': description,
         }
 
-    @property
-    def ctas(self):
-        return [
-            AccordionCTAProxyDataWrapper(
-                instance=self.instance,
-                accordion=f'accordion_{self.position_number}',
-                position_number=num
-            )
-            for num in ('1', '2', '3')
-        ]
-
 
 class FactSheetColumnProxyDataWrapper:
 
@@ -351,11 +339,6 @@ class FactSheetColumnProxyDataWrapper:
         )
 
 
-class AccordionCTASerializer(serializers.Serializer):
-    link = serializers.CharField()
-    title = serializers.CharField()
-
-
 class AccordionCaseStudySerializer(serializers.Serializer):
     image = wagtail_fields.ImageRenditionField('original')
     button_text = serializers.CharField()
@@ -383,7 +366,6 @@ class AccordionSerializer(serializers.Serializer):
     case_study = AccordionCaseStudySerializer()
     subsections = AccordionSubsectionSerializer(many=True)
     statistics = StatisticSubsectionSerializer(many=True)
-    ctas = AccordionCTASerializer(many=True)
 
 
 class FactSheetColumnSerializer(serializers.Serializer):
@@ -398,11 +380,17 @@ class FactSheetSerializer(serializers.Serializer):
     columns = FactSheetColumnSerializer(many=True)
 
 
+class IntroCTAsSerializer(serializers.Serializer):
+    link = serializers.CharField()
+    title = serializers.CharField()
+
+
 class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
     hero_image = wagtail_fields.ImageRenditionField('original')
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
     heading_teaser = serializers.CharField()
+    intro_ctas = serializers.SerializerMethodField()
     hero_image = wagtail_fields.ImageRenditionField('original')
     hero_image_thumbnail = wagtail_fields.ImageRenditionField(
         'fill-640x360', source='hero_image')
@@ -421,6 +409,14 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
     fact_sheet = serializers.SerializerMethodField()
 
     help_market_guide_cta_link = serializers.CharField(max_length=255)
+
+    def get_intro_ctas(self, instance):
+        data = [
+            IntroCTAProxyDataWrapper(instance=instance, position_number=num)
+            for num in ['one', 'two', 'three']
+        ]
+        serialized = IntroCTAsSerializer(data, many=True).data
+        return [cta for cta in serialized if cta['link'] and cta['title']]
 
     def get_fact_sheet(self, instance):
         data = {
