@@ -270,6 +270,8 @@ class InternationalSectorPage(BaseInternationalPage):
         related_name='+'
     )
 
+    project_opportunities_title = models.CharField(max_length=255, blank=True)
+
     content_panels = [
         MultiFieldPanel(
             heading='Heading',
@@ -471,6 +473,17 @@ class InternationalSectorPage(BaseInternationalPage):
                             'great_international.InternationalCampaignPage',
                         ]),
                 ])
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Project Opportunities',
+            classname='collapsible collapsed',
+            help_text='Opportunity pages can link to a sector page. '
+                      'If there are opportunity pages which link to this '
+                      'sector and a `project_opportunities_title` is added, '
+                      'the section will display the prioritised opportunities',
+            children=[
+                FieldPanel('project_opportunities_title')
             ]
         ),
         SearchEngineOptimisationPanel()
@@ -2533,7 +2546,9 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
 
     prioritised_opportunity = models.BooleanField(
         default=False,
-        verbose_name="Prioritise project?"
+        verbose_name="Prioritise project?",
+        help_text='Mark this if this opportunity is a priority and should be '
+                  'promoted on the related sector page'
     )
 
     content_panels = [
