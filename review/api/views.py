@@ -1,7 +1,9 @@
-from rest_framework import generics
+from rest_framework import generics, views
+from rest_framework.response import Response
 import jwt
 
 from django.conf import settings
+from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
@@ -39,7 +41,18 @@ class Comment(ReviewTokenMixin, generics.RetrieveUpdateDestroyAPIView):
         return models.Comment.objects.filter(page_revision_id=self.page_revision_id)
 
 
-# class CommentResolved():
+class CommentResolved(ReviewTokenMixin, views.APIView):
+    def put(self, *args, **kwargs):
+        comment = get_object_or_404(models.Comment.objects.filter(page_revision_id=self.page_revision_id), id=kwargs['pk'])
+        comment.is_resolved = True
+        comment.save(update_fields=['is_resolved'])
+        return Response()
+
+    def delete(self, *args, **kwargs):
+        comment = get_object_or_404(models.Comment.objects.filter(page_revision_id=self.page_revision_id), id=kwargs['pk'])
+        comment.is_resolved = False
+        comment.save(update_fields=['is_resolved'])
+        return Response()
 
 
 class CommentReplyList(ReviewTokenMixin, generics.ListCreateAPIView):
