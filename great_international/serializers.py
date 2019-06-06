@@ -188,7 +188,6 @@ class LocationStatisticProxyDataWrapper:
         )
 
 
-
 class InvestHowWeHelpProxyDataWrapper:
 
     def __init__(self, instance, position_number):
