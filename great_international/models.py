@@ -18,7 +18,6 @@ from core.model_fields import MarkdownField
 
 from core.models import (
     BasePage,
-    ExclusivePageMixin,
     WagtailAdminExclusivePageMixin,
     FormPageMetaClass,
     ServiceMixin,
@@ -460,7 +459,7 @@ class InternationalSectorPage(BaseInternationalPage):
 
 
 class InternationalHomePage(
-    ExclusivePageMixin,
+    WagtailAdminExclusivePageMixin,
     ServiceHomepageMixin,
     BaseInternationalPage
 ):
