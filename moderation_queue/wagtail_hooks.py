@@ -26,7 +26,7 @@ class ModerationQueuePanel:
     def render(self):
         pending = Moderation.objects.pending().exclude(
             revision__user=self.request.user
-        )
+        ).order_by('-publish_at')[:10]
         return render_to_string(
             'moderation_queue/panel.html',
             context={'pending_moderations': pending},
