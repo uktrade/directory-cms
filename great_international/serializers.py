@@ -6,7 +6,6 @@ from core.serializers import (
     BasePageSerializer,
     ChildPagesSerializerHelper,
     FormPageSerializerMetaclass,
-    ParentPageSerializerHelper
     )
 
 from .models import (
@@ -17,8 +16,7 @@ from .models import (
     InternationalGuideLandingPage,
     InternationalSectorPage,
     InternationalEUExitFormPage,
-    CapitalInvestOpportunityPage,
-    CapitalInvestRegionalSectorPage)
+    CapitalInvestOpportunityPage,)
 
 
 class SectionThreeSubsectionProxyDataWrapper:
@@ -957,46 +955,6 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer,
             for num in ['1', '2', '3', '4']
         ]
         serializer = LocationStatSerializer(data, many=True)
-        return serializer.data
-
-
-class CapitalInvestRegionalSectorPageSerializer(
-                                        ParentPageSerializerHelper,
-                                        BasePageSerializer):
-
-    breadcrumbs_label = serializers.CharField(max_length=255)
-    hero_image = wagtail_fields.ImageRenditionField(
-        'original')
-    hero_title = serializers.CharField(max_length=255)
-    featured_description = serializers.CharField(max_length=255)
-
-    sector_summary_intro = serializers.CharField(max_length=255)
-    sector_summary_content = core_fields.MarkdownToHTMLField(max_length=255)
-    sector_summary_image = wagtail_fields.ImageRenditionField(
-        'original')
-
-    investment_opportunities_title = serializers.CharField(max_length=255)
-
-    contact_title = serializers.CharField(max_length=255)
-    contact_text = core_fields.MarkdownToHTMLField()
-
-    parent = serializers.SerializerMethodField()
-    added_opportunities = serializers.SerializerMethodField()
-
-    def get_parent(self, obj):
-        parent = self.get_parent_page_data_for(
-            obj,
-            MinimalPageSerializer
-        )
-        return parent
-
-    def get_added_opportunities(self, instance):
-        serializer = RelatedOpportunitySerializer(
-            instance.added_opportunities.all(),
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
         return serializer.data
 
 
