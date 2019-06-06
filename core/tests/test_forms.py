@@ -1,7 +1,10 @@
 import itertools
+import pytest
 
 from modeltranslation.utils import build_localized_fieldname
-import pytest
+
+from great_international.models import InternationalHomePage
+from core import forms
 
 
 @pytest.mark.django_db
@@ -55,8 +58,52 @@ def test_slug_editable_when_creating_a_page(translated_page, rf):
     edit_handler.bind_to_instance(
         instance=translated_page,
         form=form,
-        request=rf
+        request=rf.get(path='/')
     )
 
     assert form.fields['slug'].required is True
     assert form.fields['slug'].disabled is False
+
+
+@pytest.mark.django_db
+def test_wagtailadminexclusivepageform_when_slug_identity_set_on_model(rf):
+    edit_handler = InternationalHomePage.get_edit_handler()
+    form_class = edit_handler.get_form_class()
+    form = form_class()
+    assert isinstance(form, forms.WagtailAdminPageExclusivePageForm)
+
+    edit_handler.bind_to_instance(
+        instance=InternationalHomePage(),
+        form=form,
+        request=rf.get(path='/')
+    )
+
+    assert form.fields['slug'].required is True
+    assert form.fields['slug'].disabled is False
+    assert form.initial['slug'] == InternationalHomePage.slug_identity
+
+
+@pytest.mark.django_db
+def test_wagtailadminexclusivepageform_when_slug_identity_not_set_on_model(rf):
+    # temporarily remove the slug_identity attribute
+    slug_identity = InternationalHomePage.slug_identity
+    del InternationalHomePage.slug_identity
+
+    try:
+        edit_handler = InternationalHomePage.get_edit_handler()
+        form_class = edit_handler.get_form_class()
+        form = form_class()
+        assert isinstance(form, forms.WagtailAdminPageExclusivePageForm)
+
+        edit_handler.bind_to_instance(
+            instance=InternationalHomePage(),
+            form=form,
+            request=rf.get('/')
+        )
+
+        assert form.fields['slug'].required is True
+        assert form.fields['slug'].disabled is False
+        assert 'slug' not in form.initial
+    finally:
+        # using finally to ensure slug_identity always restored
+        InternationalHomePage.slug_identity = slug_identity

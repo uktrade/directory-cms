@@ -393,13 +393,27 @@ class ImageHash(AbstractObjectHash):
     )
 
 
-class ExclusivePageMixin:
-    read_only_fields = ['slug']
+class WagtailAdminExclusivePageMixin:
+    """
+    Limits creation of pages in Wagtail's admin UI to only one
+    instance of a specific type. If the class also has a `slug_identity`
+    attribute set, that will be used as default slug in the page
+    creation UI.
+    """
     base_form_class = forms.WagtailAdminPageExclusivePageForm
 
     @classmethod
     def can_create_at(cls, parent):
         return super().can_create_at(parent) and not cls.objects.exists()
+
+
+class ExclusivePageMixin(WagtailAdminExclusivePageMixin):
+    """
+    A more restrictive version of `WagtailAdminExclusivePageMixin` that
+    prevents anything other than the `slug_identity` class attribute
+    value being used as the `slug` when creating new pages.
+    """
+    read_only_fields = ['slug']
 
     def save(self, *args, **kwargs):
         if not self.pk and hasattr(self, 'slug_identity'):
