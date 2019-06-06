@@ -212,10 +212,14 @@ def test_client_not_passing_region(admin_client, root_page):
     assert response.json()['localised_child_pages'] == []
 
 
-def test_invest_home_page(admin_client):
+def test_invest_home_page(admin_client, root_page):
     page = factories.InvestInternationalHomePageFactory(live=True)
-    factories.InternationalSectorPageFactory(live=True)
-    factories.InternationalSectorPageFactory(live=True)
+    sector_one = factories.InternationalSectorPageFactory(
+        live=True, parent=page
+    )
+    sector_two = factories.InternationalSectorPageFactory(
+        live=True, parent=page
+    )
 
     fake_file = ContentFile(b('A boring example document'))
     fake_file.name = 'test.pdf'
@@ -225,14 +229,16 @@ def test_invest_home_page(admin_client):
         title='Featured',
         live=True,
         pdf_document=pdf,
-        featured=True
+        featured=True,
+        parent=sector_one,
     )
 
     factories.InvestHighPotentialOpportunityDetailPageFactory(
         title='Not Featured',
         live=True,
         pdf_document=pdf,
-        featured=False
+        featured=False,
+        parent=sector_two,
     )
 
     url = reverse(
@@ -243,7 +249,7 @@ def test_invest_home_page(admin_client):
     response = admin_client.get(url, {'service_name': cms.GREAT_INTERNATIONAL})
     assert response.status_code == 200
     meta = response.json()['meta']
-    assert meta['url'] == 'http://invest.trade.great:8011'
+    assert meta['url'] == 'http://invest.trade.great:8011/'
     assert meta['slug'] == 'home-page'
     assert len(response.json()['sectors']) == 1
     high_potential_ops = response.json()['high_potential_opportunities']

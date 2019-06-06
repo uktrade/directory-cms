@@ -188,6 +188,28 @@ class LocationStatisticProxyDataWrapper:
         )
 
 
+
+class InvestHowWeHelpProxyDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def text(self):
+        return getattr(
+            self.instance,
+            f'how_we_help_text_{self.position_number}'
+        )
+
+    @property
+    def icon(self):
+        return getattr(
+            self.instance,
+            f'how_we_help_icon_{self.position_number}'
+        )
+
+
 class HowWeHelpProxyDataWrapper:
 
     def __init__(self, instance, position_number):
@@ -1163,8 +1185,10 @@ class InvestInternationalHomePageSerializer(BasePageSerializer):
 
     def get_how_we_help(self, instance):
         data = [
-            HowWeHelpProxyDataWrapper(instance=instance, suffix=num)
-            for num in ONE_TO_SIX_WORDS
+            InvestHowWeHelpProxyDataWrapper(
+                instance=instance, position_number=position_number
+            )
+            for position_number in ONE_TO_SIX_WORDS
         ]
         serializer = HowWeHelpSerializer(data, many=True)
         return serializer.data
@@ -1178,7 +1202,11 @@ class InvestInternationalHomePageSerializer(BasePageSerializer):
         return serializer.data
 
     def get_sectors(self, instance):
-        queryset = InternationalSectorPage.objects.all().filter(
+        # usage of `SectorPage` will _eventually_ be replaced with usage of
+        # _InternationalSectorPage once all instances of SectorPage have been
+        # copied to _InternationalSectorPage
+        from invest.models import SectorPage
+        queryset = SectorPage.objects.all().filter(
             featured=True
         ).live().order_by('heading')
         serializer = InternationalSectorPageSerializer(
@@ -1201,6 +1229,16 @@ class InvestInternationalHomePageSerializer(BasePageSerializer):
             allow_null=True,
             context=self.context
         )
+        return serializer.data
+
+    def get_guides(self, obj):
+        article_list = (
+               InternationalArticlePage.objects
+               .descendant_of(obj)
+               .live()
+               .order_by('-first_published_at')
+           )[:9]
+        serializer = RelatedArticlePageSerializer(article_list, many=True)
         return serializer.data
 
 

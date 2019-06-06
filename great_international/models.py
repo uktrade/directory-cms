@@ -2960,6 +2960,13 @@ class InvestInternationalHomePage(ExclusivePageMixin, ServiceHomepageMixin,
         related_name='+'
     )
     how_we_help_text_six = models.CharField(max_length=255, blank=True)
+    how_we_help_icon_six = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     contact_section_title = models.CharField(max_length=255)
     contact_section_content = models.TextField(max_length=255, blank=True)
