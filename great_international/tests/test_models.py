@@ -18,7 +18,11 @@ def test_models_hierarchy():
         models.InternationalEUExitFormSuccessPage,
         models.InternationalCapitalInvestLandingPage,
         models.CapitalInvestOpportunityListingPage,
-        models.CapitalInvestRegionPage
+        models.CapitalInvestRegionPage,
+        models.InvestInternationalHomePage,
+        models.InvestHighPotentialOpportunityDetailPage,
+        models.InvestHighPotentialOpportunityFormPage,
+        models.InvestHighPotentialOpportunityFormSuccessPage
     ]
     assert models.InternationalHomePage.allowed_parent_page_models() == [
         Page,

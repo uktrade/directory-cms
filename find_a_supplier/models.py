@@ -18,17 +18,23 @@ from core.models import (
     ExclusivePageMixin,
     ServiceMixin,
 )
-from core.mixins import ServiceHomepageMixin
+from core.mixins import ServiceHomepageMixin, ServiceNameUniqueSlugMixin
 from core.panels import SearchEngineOptimisationPanel
+
+
+class BaseFASPage(ServiceNameUniqueSlugMixin, BasePage):
+    service_name_value = cms.FIND_A_SUPPLIER
+
+    class Meta:
+        abstract = True
 
 
 class ImageChooserPanel(ImageChooserPanel):
     classname = ""
 
 
-class FindASupplierApp(ExclusivePageMixin, ServiceMixin, BasePage):
+class FindASupplierApp(ExclusivePageMixin, ServiceMixin, BaseFASPage):
     slug_identity = 'find-a-supplier-app'
-    service_name_value = cms.FIND_A_SUPPLIER
 
     @classmethod
     def get_required_translatable_fields(cls):
@@ -90,9 +96,8 @@ class LandingPageArticleSummary(Orderable, ArticleSummary):
     )
 
 
-class IndustryPage(BasePage):
+class IndustryPage(BaseFASPage):
 
-    service_name_value = cms.FIND_A_SUPPLIER
     parent_page_types = [
         'find_a_supplier.IndustryLandingPage',
     ]
@@ -289,8 +294,7 @@ class IndustryPage(BasePage):
     )
 
 
-class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
-    service_name_value = cms.FIND_A_SUPPLIER
+class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BaseFASPage):
     slug_identity = cms.FIND_A_SUPPLIER_INDUSTRY_LANDING_SLUG
     slug_override = 'industries'
     subpage_types = [
@@ -360,9 +364,8 @@ class IndustryLandingPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     )
 
 
-class IndustryArticlePage(BasePage):
+class IndustryArticlePage(BaseFASPage):
 
-    service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industry-articles/'
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -435,9 +438,8 @@ class IndustryArticlePage(BasePage):
 
 
 class LandingPage(
-    ExclusivePageMixin, ServiceHomepageMixin, BreadcrumbMixin, BasePage
+    ExclusivePageMixin, ServiceHomepageMixin, BreadcrumbMixin, BaseFASPage
 ):
-    service_name_value = cms.FIND_A_SUPPLIER
     slug_identity = cms.FIND_A_SUPPLIER_LANDING_SLUG
 
     hero_image = models.ForeignKey(
@@ -581,9 +583,8 @@ class LandingPage(
     )
 
 
-class IndustryContactPage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
+class IndustryContactPage(ExclusivePageMixin, BreadcrumbMixin, BaseFASPage):
 
-    service_name_value = cms.FIND_A_SUPPLIER
     view_path = 'industries/contact/'
     slug_identity = cms.FIND_A_SUPPLIER_INDUSTRY_CONTACT_SLUG
     # override the slug when generating the url
