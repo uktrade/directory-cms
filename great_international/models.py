@@ -18,6 +18,7 @@ from core.model_fields import MarkdownField
 from core.models import (
     BasePage,
     ExclusivePageMixin,
+    WagtailAdminExclusivePageMixin,
     FormPageMetaClass,
     ServiceMixin,
 )
@@ -483,7 +484,7 @@ class InternationalSectorPage(BaseInternationalPage):
 
 
 class InternationalHomePage(
-    ExclusivePageMixin, ServiceHomepageMixin, BaseInternationalPage
+    WagtailAdminExclusivePageMixin, ServiceHomepageMixin, BaseInternationalPage
 ):
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
     subpage_types = []
@@ -1631,7 +1632,9 @@ class InternationalGuideLandingPage(BaseInternationalPage):
 
 
 class InternationalEUExitFormPage(
-    ExclusivePageMixin, BaseInternationalPage, metaclass=FormPageMetaClass
+    WagtailAdminExclusivePageMixin,
+    BaseInternationalPage,
+    metaclass=FormPageMetaClass
 ):
     # metaclass creates <fild_name>_label and <field_name>_help_text
     form_field_names = [
@@ -1680,7 +1683,7 @@ class InternationalEUExitFormPage(
 
 
 class InternationalEUExitFormSuccessPage(
-    ExclusivePageMixin, BaseInternationalPage
+    WagtailAdminExclusivePageMixin, BaseInternationalPage
 ):
     full_path_override = '/eu-exit-news/contact/success/'
     slug_identity = cms.GREAT_EUEXIT_FORM_SUCCESS_SLUG
@@ -1839,7 +1842,7 @@ class CapitalInvestRelatedRegions(Orderable, RelatedRegion):
 
 
 class InternationalCapitalInvestLandingPage(
-    ExclusivePageMixin, BaseInternationalPage
+    WagtailAdminExclusivePageMixin, BaseInternationalPage
 ):
     slug_identity = 'capital-invest'
 
@@ -2465,8 +2468,9 @@ class CapitalInvestRegionalSectorPage(BaseInternationalPage):
     )
 
 
-class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
-                                          BaseInternationalPage):
+class CapitalInvestOpportunityListingPage(
+    WagtailAdminExclusivePageMixin, ServiceMixin, BaseInternationalPage
+):
 
     slug_identity = 'opportunities'
 
@@ -2736,5 +2740,5 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
-        settings_panels=settings_panels
+        settings_panels=settings_panels,
     )
