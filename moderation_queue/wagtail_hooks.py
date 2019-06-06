@@ -24,9 +24,12 @@ class ModerationQueuePanel:
         self.request = request
 
     def render(self):
+        pending = Moderation.objects.pending().exclude(
+            revision__user=self.request.user
+        )
         return render_to_string(
             'moderation_queue/panel.html',
-            context={'pending_moderations': Moderation.objects.pending()},
+            context={'pending_moderations': pending},
             request=self.request,
         )
 
