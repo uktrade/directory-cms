@@ -46,7 +46,7 @@ class CommentReplyList(ReviewTokenMixin, generics.ListCreateAPIView):
     serializer_class = serializers.CommentReplySerializer
 
     def get_queryset(self):
-        return models.CommentReply.objects.filter(comment_id=self.kwargs['pk'])
+        return models.CommentReply.objects.filter(comment_id=self.kwargs['pk']).order_by('created_at')
 
     def perform_create(self, serializer):
         # TODO: Make sure self.kwargs['comment_pk'] is on the current page revision
