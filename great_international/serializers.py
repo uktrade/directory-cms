@@ -508,6 +508,7 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
     section_three_subsection_two_teaser = serializers.CharField()
     section_three_subsection_two_body = core_fields.MarkdownToHTMLField()
 
+    project_opportunities_title = serializers.CharField(max_length=255)
 
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
     article_title = serializers.CharField()
@@ -1072,7 +1073,7 @@ class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
 
 
 class MinimalPageSerializer(BasePageSerializer):
-    hero_title = serializers.CharField(max_length=255)
+    heading = serializers.CharField(max_length=255)
 
 
 # Invest seralizers
