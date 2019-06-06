@@ -1201,15 +1201,9 @@ class InvestInternationalHomePageSerializer(BasePageSerializer):
         return serializer.data
 
     def get_sectors(self, instance):
-        # usage of `SectorPage` will _eventually_ be replaced with usage of
-        # _InternationalSectorPage once all instances of SectorPage have been
-        # copied to _InternationalSectorPage
-        from invest.models import SectorPage
-        queryset = SectorPage.objects.all().filter(
-            featured=True
-        ).live().order_by('heading')
+        from .models import InternationalSectorPage
         serializer = InternationalSectorPageSerializer(
-            queryset,
+            InternationalSectorPage.objects.live().order_by('heading'),
             many=True,
             allow_null=True,
             context=self.context
