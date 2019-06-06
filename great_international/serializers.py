@@ -309,6 +309,19 @@ class RelatedRegionSerializer(serializers.Serializer):
         return serializer.data
 
 
+class RelatedSectorSerializer(serializers.Serializer):
+    related_sector = serializers.SerializerMethodField()
+
+    def get_related_sector(self, obj):
+        sector = obj.related_sector
+
+        if not sector:
+            return []
+        serializer = MinimalPageSerializer(
+            sector.specific)
+        return serializer.data
+
+
 class RelatedOpportunitySerializer(serializers.Serializer):
     opportunity = serializers.SerializerMethodField()
 
@@ -887,8 +900,7 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
         return serializer.data
 
 
-class CapitalInvestRegionPageSerializer(BasePageSerializer,
-                                        ChildPagesSerializerHelper):
+class CapitalInvestRegionPageSerializer(BasePageSerializer):
 
     hero_title = serializers.CharField(max_length=255)
     breadcrumbs_label = serializers.CharField(max_length=255)
@@ -924,16 +936,6 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer,
 
     contact_title = serializers.CharField(max_length=255)
     contact_text = core_fields.MarkdownToHTMLField()
-
-    child_pages = serializers.SerializerMethodField()
-
-    def get_child_pages(self, obj):
-        sectors = self.get_child_pages_data_for(
-            obj,
-            CapitalInvestRegionalSectorPage,
-            RelatedCapitalInvestPageSerializer
-        )
-        return sectors
 
     def get_economics_stats(self, instance):
         data = [
@@ -1027,6 +1029,18 @@ class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
 
     contact_title = serializers.CharField(max_length=255)
     contact_text = core_fields.MarkdownToHTMLField()
+
+    prioritised_opportunity = serializers.BooleanField()
+    related_sectors = serializers.SerializerMethodField()
+
+    def get_related_sectors(self, instance):
+        serializer = RelatedSectorSerializer(
+            instance.related_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
 
 
 class MinimalPageSerializer(BasePageSerializer):
