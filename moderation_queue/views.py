@@ -78,6 +78,14 @@ class ApproveModeration(View):
 
 
 @method_decorator(login_required, name='dispatch')
+class ModerationQueue(ListView):
+    ordering = '-publish_at'
+    paginate_by = 20
+    queryset = Moderation.objects.pending()
+    template_name = 'moderation_queue/all.html'
+
+
+@method_decorator(login_required, name='dispatch')
 class PreviewModeration(View):
     """
     Preview a moderation request.
