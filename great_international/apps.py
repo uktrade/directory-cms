@@ -21,6 +21,10 @@ class GreatInternationalConfig(AppConfig):
         cache.CapitalInvestRegionPageSubscriber.subscribe()
         cache.CapitalInvestRegionalSectorPageSubscriber.subscribe()
         cache.CapitalInvestOpportunityPageSubscriber.subscribe()
+        cache.InvestInternationalHomePageSubscriber.subscribe()
+        cache.InvestHighPotentialOpportunityDetailPageSubscriber.subscribe()
+        cache.InvestHighPotentialOpportunityFormPageSubscriber.subscribe()
+        cache.InvestHighPotentialOpportunityFormSuccessPageSubscriber.subscribe()  # noqa
         # tags inheritance signals
         post_save.connect(
             receiver=signals.inherit_tags_from_parent,
