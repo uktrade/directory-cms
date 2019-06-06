@@ -248,9 +248,6 @@ def test_invest_home_page(admin_client, root_page):
 
     response = admin_client.get(url, {'service_name': cms.GREAT_INTERNATIONAL})
     assert response.status_code == 200
-    meta = response.json()['meta']
-    assert meta['url'] == 'http://invest.trade.great:8011/'
-    assert meta['slug'] == 'home-page'
     assert len(response.json()['sectors']) == 1
     high_potential_ops = response.json()['high_potential_opportunities']
     assert len(high_potential_ops) == 1
