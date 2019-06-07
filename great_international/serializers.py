@@ -336,7 +336,6 @@ class RelatedRegionSerializer(serializers.Serializer):
             return []
         serializer = RelatedCapitalInvestPageSerializer(
             region.specific)
-        print('\n\n\n\n\n\n regions serialized ', serializer.data)
         return serializer.data
 
 
@@ -365,7 +364,6 @@ class RelatedOpportunitySerializer(serializers.Serializer):
             serializer = RelatedCapitalInvestOpportunityPageSerializer(
                 opp.specific)
             serialized.append(serializer.data)
-        print('\n\n\n\n\n\n opportunities serialized ', serialized)
         return serialized
 
 

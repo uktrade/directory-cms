@@ -3,7 +3,7 @@ from wagtail.admin.edit_handlers import (
     FieldPanel, ObjectList, MultiFieldPanel, FieldRowPanel
 )
 from wagtail.documents.edit_handlers import DocumentChooserPanel
-from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.images.edit_handlers import ImageChooserPanel, HelpPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
 from django.db import models
@@ -716,6 +716,8 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
             heading='Benefits section',
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Benefits Section Title, Benefits Section Content'),
                 FieldPanel('benefits_section_title'),
                 FieldPanel('benefits_section_intro'),
                 FieldPanel('benefits_section_content'),
@@ -773,6 +775,8 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
             heading='Featured card links ',
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'All images, titles and summaries'),
                 FieldRowPanel(
                     [
                         MultiFieldPanel(
@@ -806,6 +810,8 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
         MultiFieldPanel(
             heading='Industries section',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Sector Title, Sector Content'),
                 FieldPanel('sector_title'),
                 FieldPanel('sector_intro'),
                 FieldPanel('sector_button_text'),
@@ -816,6 +822,8 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
         MultiFieldPanel(
             heading='High Potential Opportunities',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'HPO title, 1 HPO in active language'),
                 FieldPanel('hpo_title'),
                 FieldPanel('hpo_intro')
             ],
@@ -824,8 +832,12 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
             heading='How we help section',
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'How We Help Title, How We Help Lead In'),
                 FieldPanel('how_we_help_title'),
                 FieldPanel('how_we_help_lead_in'),
+                HelpPanel('Each icon requires the corresponding text to '
+                          'show on the page'),
                 FieldRowPanel(
                     [
                         MultiFieldPanel(
@@ -871,8 +883,12 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
             heading='Contact Section',
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Contact Title, Contact Content'),
                 FieldPanel('contact_section_title'),
                 FieldPanel('contact_section_content'),
+                HelpPanel('Cta\'s require both text and a link to show '
+                          'on page. '),
                 FieldPanel('contact_section_call_to_action_text'),
                 FieldPanel('contact_section_call_to_action_url'),
             ],
