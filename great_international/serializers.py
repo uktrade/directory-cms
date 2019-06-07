@@ -6,7 +6,7 @@ from core.serializers import (
     BasePageSerializer,
     ChildPagesSerializerHelper,
     FormPageSerializerMetaclass,
-    )
+    ParentPageSerializerHelper, PageRelatedPageOfSelfSerializerHelper)
 
 from .models import (
     InternationalArticlePage,
@@ -323,17 +323,19 @@ class RelatedSectorSerializer(serializers.Serializer):
 
 
 class RelatedOpportunitySerializer(serializers.Serializer):
-    opportunity = serializers.SerializerMethodField()
+    opportunities = serializers.SerializerMethodField()
 
-    def get_opportunity(self, obj):
-        opp = obj.opportunity
+    def get_opportunities(self, obj):
 
-        if not opp:
-            return []
-        serializer = RelatedCapitalInvestOpportunityPageSerializer(
-            opp.specific)
+        serialized = []
+        for opp in obj:
+            if not opp:
+                return []
+            serializer = RelatedCapitalInvestOpportunityPageSerializer(
+                opp.specific)
+            serialized.append(serializer.data)
 
-        return serializer.data
+        return serialized
 
 
 MODEL_TO_SERIALIZER_MAPPING = {
@@ -365,7 +367,11 @@ class PageWithRelatedPagesSerializer(BasePageSerializer):
         return serialized
 
 
-class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
+class InternationalSectorPageSerializer(
+    PageWithRelatedPagesSerializer,
+    PageRelatedPageOfSelfSerializerHelper
+):
+
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('original')
@@ -481,6 +487,17 @@ class InternationalSectorPageSerializer(PageWithRelatedPagesSerializer):
     section_three_subsection_two_body = core_fields.MarkdownToHTMLField()
 
     project_opportunities_title = serializers.CharField(max_length=255)
+
+    related_opportunities = serializers.SerializerMethodField()
+
+    def get_related_opportunities(self, obj):
+        opportunities = self.get_page_with_related_page_of_self(
+            obj,
+            CapitalInvestOpportunityPage,
+            RelatedOpportunitySerializer
+        )
+        return opportunities
+
 
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
     article_title = serializers.CharField()
