@@ -11,12 +11,26 @@ from wagtail.admin.utils import send_notification
 from wagtail.core.models import PageRevision
 
 from .forms import SubmitForm
-from .models import Moderation
+from .models import Moderation, ModeratorReview
 
 
 @method_decorator(login_required, name='dispatch')
 class Review(ListView):
     template_name = "moderation_queue/review.html"
+
+    def get_context_data(self, **kwargs):
+        pending_reviews = ModeratorReview.objects.filter(
+            moderation__revision__user=self.request.user,
+        ).order_by('created_at').select_related(
+            'moderation',
+            'moderation__revision',
+            'moderation__revision__user',
+            'user',
+        )
+
+        context = super().get_context_data(**kwargs)
+        context['pending_reviews'] = pending_reviews
+        return context
 
     def get_queryset(self):
         return (Moderation.objects.filter(revision__user=self.request.user)

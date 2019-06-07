@@ -2,6 +2,8 @@
 
 {% load i18n %}
 
+{% block titletag %}{% trans "Review" %}{% endblock %}
+
 {% block content %}
 <header>
     <div class="row nice-padding">
@@ -95,11 +97,15 @@
             </tbody>
         </table>
 
+        {% if pending_reviews %}
         <h2>{% trans "Draft pages that need changes" %}</h2>
 
         <table class="listing">
-            <col width="30%"/>
             <col width="15%"/>
+            <col width="15%"/>
+            <col width="15%"/>
+            <col width="15%"/>
+            <col />
             <col width="15%"/>
             <thead>
                 <tr>
@@ -107,47 +113,59 @@
                     <th>{% trans "Parent page" %}</th>
                     <th>{% trans "Created by" %}</th>
                     <th>{% trans "Creation date" %}</th>
-                    <th>{% trans "Status reason" %}</th>
+                    <th>{% trans "Review status reason" %}</th>
                     <th>{% trans "Review status" %}</th>
                 </tr>
             </thead>
             <tbody>
+                {% for review in pending_reviews %}
+                {% with page=review.moderation.revision.page %}
                 <tr>
                     <td class="title" valign="top">
                         <h2>
-                            {# <a href="{% url 'wagtailadmin_pages:edit' page.id %}" title="{% trans 'Edit this page' %}"> #}
-                            {#     {{ page.get_admin_display_title }} #}
-                            {# </a> #}
+                            {{ page.get_admin_display_title }}
 
-                            {# {% include "wagtailadmin/pages/listing/_privacy_indicator.html" %} #}
-                            {# {% include "wagtailadmin/pages/listing/_locked_indicator.html" %} #}
+                            {% include "wagtailadmin/pages/listing/_privacy_indicator.html" %}
+                            {% include "wagtailadmin/pages/listing/_locked_indicator.html" %}
                         </h2>
                     </td>
 
                     <td valign="top">
-                        {# <a href="{% url 'wagtailadmin_explore' page.get_parent.id %}">{{ page.get_parent.get_admin_display_title }}</a> #}
+                        <a href="{% url 'wagtailadmin_explore' page.get_parent.id %}">{{ page.get_parent.get_admin_display_title }}</a>
                     </td>
 
                     <td class="type" valign="top">
-                        {# {{ moderation.revision.user.get_full_name|default:moderation.revision.user.get_username }} #}
+                        {% if review.user == request.user %}
+                        {% trans "You" %}
+                        {% else %}
+                        {{ review.user.get_full_name|default:review.user.get_username }}
+                        {% endif %}
                     </td>
 
                     <td valign="top">
-                        {# <div class="human-readable-date" title="{{ moderation.created_at|date:"d M Y H:i" }}"> #}
-                        {#     {% blocktrans with time_period=moderation.created_at|timesince %}{{ time_period }} ago{% endblocktrans %} #}
-                        {# </div> #}
+                        <div class="human-readable-date" title="{{ review.created_at|date:"d M Y H:i" }}">
+                            {% blocktrans with time_period=review.created_at|timesince %}{{ time_period }} ago{% endblocktrans %}
+                        </div>
                     </td>
 
                     <td valign="top">
-                        <p>Static demo comment</p>
+                        <p>{{ review.comment }}</p>
                     </td>
 
                     <td valign="top">
+                        <p>Needs changes</p>
+
+                        <a href="{% url 'wagtailadmin_pages:edit' page.id %}" class="button button-small button-secondary">
+                            {% trans "Update" %}
+                        </a>
                     </td>
 
                 </tr>
+                {% endwith %}
+                {% endfor %}
             </tbody>
         </table>
+        {% endif %}
 
     </section>
 </div>
