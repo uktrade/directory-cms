@@ -9,33 +9,32 @@ def migrate_forwards(apps, schema_editor):
     ContentType = apps.get_model('contenttypes', 'ContentType')
     Page = apps.get_model('wagtailcore', 'Page')
 
-    page_ct = ContentType.objects.filter(app_label='wagtailcore', model='page').first()
-    home_page_ct = ContentType.objects.filter(app_label='export_readiness', model='homepage').first()
-    app_page_ct = ContentType.objects.filter(model='exportreadinessapp').first()
+    homepage_ct = ContentType.objects.filter(app_label='export_readiness', model='homepage').first()
+    if homepage_ct:
+        exportreadinessapp_ct, _ = ContentType.objects.get_or_create(app_label='export_readiness', model='exportreadinessapp')
+        homepageold_ct, _ = ContentType.objects.get_or_create(app_label='export_readiness', model='homepageold')
 
-    if home_page_ct and app_page_ct:
-        # Unset content type for old home page
-        Page.objects.filter(content_type=home_page_ct).update(content_type=page_ct)
-
-        # Update content type for new home page, as the old content type is now redundant
-        Page.objects.filter(content_type=app_page_ct).update(content_type=home_page_ct)
+        Page.objects.filter(content_type=homepage_ct).update(content_type=homepageold_ct)
+        Page.objects.filter(content_type=exportreadinessapp_ct).update(content_type=homepage_ct)
 
 
 def migrate_backwards(apps, schema_editor):
     ContentType = apps.get_model('contenttypes', 'ContentType')
     Page = apps.get_model('wagtailcore', 'Page')
 
-    home_page_ct = ContentType.objects.filter(app_label='export_readiness', model='homepage').first()
-    app_page_ct = ContentType.objects.filter(model='exportreadinessapp').first()
+    homepage_ct = ContentType.objects.filter(app_label='export_readiness', model='homepage').first()
+    if homepage_ct:
+        exportreadinessapp_ct, _ = ContentType.objects.get_or_create(app_label='export_readiness', model='exportreadinessapp')
+        homepageold_ct, _ = ContentType.objects.get_or_create(app_label='export_readiness', model='homepageold')
 
-    if home_page_ct and app_page_ct:
-        Page.objects.filter(content_type=home_page_ct).update(content_type=app_page_ct)
+        Page.objects.filter(content_type=homepage_ct).update(content_type=exportreadinessapp_ct)
+        Page.objects.filter(content_type=homepageold_ct).update(content_type=homepage_ct)
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('export_readiness', '0045_rename_exportreadinessapp'),
+        ('export_readiness', '0045_rename_exportreadinessapp_to_homepage'),
     ]
 
     operations = [

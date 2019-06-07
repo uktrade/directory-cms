@@ -2922,6 +2922,40 @@ class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
         ]
 
 
+class HomePageOld(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
+    slug_identity = cms.GREAT_HOME_SLUG
+    parent_page_types = []
+    subpage_types = []
+
+    banner_content = MarkdownField()
+    banner_label = models.CharField(max_length=50, null=True, blank=True)
+    news_title = models.CharField(max_length=255)
+    news_description = MarkdownField()
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='EU Exit banner',
+            children=[
+                FieldPanel('banner_label'),
+                FieldPanel('banner_content'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='EU exit news',
+            children=[
+                FieldPanel('news_title'),
+                FieldPanel('news_description')
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+
 class InternationalLandingPage(ExclusivePageMixin, BaseDomesticPage):
 
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
