@@ -68,7 +68,7 @@ class ParentPageSerializerHelper(serializers.Serializer):
 
 
 class PageRelatedPageOfSelfSerializerHelper(serializers.Serializer):
-    def get_page_with_related_page_of_self(
+    def get_page_with_related_page_of_self_data_for(
             self,
             instance,
             page_type,
@@ -80,7 +80,9 @@ class PageRelatedPageOfSelfSerializerHelper(serializers.Serializer):
 
         for page in all_opportunity_pages:
             for related_sectors in page.related_sectors.all():
-                if related_sectors.related_sector.title == instance.title:
+                if not related_sectors.related_sector:
+                    continue
+                elif related_sectors.related_sector.title == instance.title:
                     queryset.append(page)
 
         if not queryset:
