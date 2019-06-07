@@ -34,7 +34,7 @@ def migrate_backwards(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('export_readiness', '0045_rename_exportreadinessapp_to_homepage'),
+        ('export_readiness', '0046_rename_exportreadinessapp_to_homepage'),
     ]
 
     operations = [
