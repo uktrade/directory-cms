@@ -86,7 +86,7 @@
                         <p>Approved</p>
                         {% endif %}
 
-                        <a href="" class="button button-small button-secondary">
+                        <a href="{% url 'wagtailadmin_pages:edit' page.id %}#tab-settings" class="button button-small button-secondary">
                             {% trans "Schedule Publish" %}
                         </a>
                     </td>
