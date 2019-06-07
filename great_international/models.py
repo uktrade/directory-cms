@@ -80,22 +80,23 @@ class InternationalSectorPage(BaseInternationalPage):
     sub_heading = models.TextField(blank=True)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
+        on_delete=models.PROTECT
     )
     heading_teaser = models.TextField(blank=True, verbose_name='Introduction')
 
     section_one_body = MarkdownField(
         null=True,
-        verbose_name='3 unique selling points markdown'
+        verbose_name='3 unique selling points markdown',
+        blank=True
     )
     section_one_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Image for unique selling points'
+        verbose_name='Image for unique selling points',
+        blank=True
     )
     section_one_image_caption = models.CharField(
         max_length=255,
@@ -106,12 +107,12 @@ class InternationalSectorPage(BaseInternationalPage):
         blank=True,
         verbose_name='Image caption attribution')
 
-    statistic_1_number = models.CharField(max_length=255)
-    statistic_1_heading = models.CharField(max_length=255)
+    statistic_1_number = models.CharField(max_length=255, blank=True)
+    statistic_1_heading = models.CharField(max_length=255, blank=True)
     statistic_1_smallprint = models.CharField(max_length=255, blank=True)
 
-    statistic_2_number = models.CharField(max_length=255)
-    statistic_2_heading = models.CharField(max_length=255)
+    statistic_2_number = models.CharField(max_length=255, blank=True)
+    statistic_2_heading = models.CharField(max_length=255, blank=True)
     statistic_2_smallprint = models.CharField(max_length=255, blank=True)
 
     statistic_3_number = models.CharField(max_length=255, blank=True)
@@ -132,10 +133,11 @@ class InternationalSectorPage(BaseInternationalPage):
 
     section_two_heading = models.CharField(
         max_length=255,
-        verbose_name='Spotlight'
+        verbose_name='Spotlight',
+        blank = True
     )
     section_two_teaser = models.TextField(
-        verbose_name='Spotlight summary'
+        verbose_name='Spotlight summary', blank=True
     )
 
     section_two_subsection_one_icon = models.ForeignKey(
@@ -148,10 +150,10 @@ class InternationalSectorPage(BaseInternationalPage):
     )
     section_two_subsection_one_heading = models.CharField(
         max_length=255,
-        verbose_name='Spotlight 1 heading'
+        verbose_name='Spotlight 1 heading', blank=True
     )
     section_two_subsection_one_body = models.TextField(
-        verbose_name='Spotlight 1 body'
+        verbose_name='Spotlight 1 body', blank=True
     )
 
     section_two_subsection_two_icon = models.ForeignKey(
@@ -164,10 +166,10 @@ class InternationalSectorPage(BaseInternationalPage):
     )
     section_two_subsection_two_heading = models.CharField(
         max_length=255,
-        verbose_name='Spotlight 2 heading'
+        verbose_name='Spotlight 2 heading', blank=True
     )
     section_two_subsection_two_body = models.TextField(
-        verbose_name='Spotlight 2 body'
+        verbose_name='Spotlight 2 body', blank=True
     )
 
     section_two_subsection_three_icon = models.ForeignKey(
@@ -180,10 +182,10 @@ class InternationalSectorPage(BaseInternationalPage):
     )
     section_two_subsection_three_heading = models.CharField(
         max_length=255,
-        verbose_name='Spotlight 3 heading'
+        verbose_name='Spotlight 3 heading', blank=True
     )
     section_two_subsection_three_body = models.TextField(
-        verbose_name='Spotlight 3 body'
+        verbose_name='Spotlight 3 body', blank=True
     )
 
     case_study_title = models.CharField(max_length=255, blank=True)
@@ -2116,10 +2118,8 @@ class CapitalInvestRegionPage(BaseInternationalPage):
     hero_title = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
         related_name='+',
-        blank=True
+        on_delete=models.PROTECT
     )
 
     featured_description = models.TextField(max_length=255, blank=True)
@@ -2425,10 +2425,8 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
     breadcrumbs_label = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
         related_name='+',
-        blank=True
+        on_delete=models.PROTECT
     )
     hero_title = models.CharField(max_length=255)
 
@@ -2572,6 +2570,8 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
             heading="Opportunity summary",
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Opportunity summary intro'),
                 FieldPanel('opportunity_summary_intro'),
                 FieldPanel('opportunity_summary_content'),
                 ImageChooserPanel('opportunity_summary_image'),
@@ -2581,6 +2581,8 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
             heading="Opportunity Details",
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'at least one icon with the corresponding text'),
                 FieldRowPanel([
                     MultiFieldPanel([
                         ImageChooserPanel('location_icon'),
@@ -2615,6 +2617,8 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
             heading="Project Details",
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'at least one title with corresponding text'),
                 FieldPanel('project_background_title'),
                 FieldPanel('project_background_intro'),
                 FieldRowPanel([
@@ -2634,6 +2638,8 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
             heading="Similar projects",
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Similar projects title and related pages'),
                 FieldPanel('similar_projects_title'),
                 FieldRowPanel([
                     PageChooserPanel(
@@ -2655,6 +2661,7 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
                             'CapitalInvestOpportunityPage'
                         ]),
                 ]),
+                HelpPanel('Cta\'s require both text and a link to show. '),
                 FieldPanel('similar_projects_cta_text'),
                 FieldPanel('similar_projects_cta_link'),
             ],
@@ -2663,18 +2670,23 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
             heading="Case study",
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Case study image and Case study title'),
                 ImageChooserPanel('case_study_image'),
                 FieldPanel('case_study_title'),
                 FieldPanel('case_study_text'),
+                HelpPanel('Cta\'s require both text and a link to show. '),
                 FieldPanel('case_study_cta_text'),
                 FieldPanel('case_study_cta_link'),
             ],
         ),
 
         MultiFieldPanel(
-            heading="Contact",
+            heading="Contact - Title and text required for section to show",
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Contact title and Contact text'),
                 FieldPanel('contact_title'),
                 FieldPanel('contact_text'),
             ],
