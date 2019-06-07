@@ -9,7 +9,8 @@ class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalSectorPage
     subscriptions = [
         models.InternationalArticlePage,
-        models.InternationalCampaignPage
+        models.InternationalCampaignPage,
+        models.CapitalInvestOpportunityPage
     ]
 
 
