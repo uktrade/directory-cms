@@ -477,13 +477,14 @@ class InternationalSectorPage(BaseInternationalPage):
         ),
         MultiFieldPanel(
             heading='Project Opportunities',
-            classname='collapsible collapsed',
-            help_text='Opportunity pages can link to a sector page. '
-                      'If there are opportunity pages which link to this '
-                      'sector and a `project_opportunities_title` is added, '
-                      'the section will display the prioritised opportunities',
+            classname='collapsible ',
             children=[
-                FieldPanel('project_opportunities_title')
+                FieldPanel('project_opportunities_title'),
+                HelpPanel('Prioritised opportunity pages that link to this '
+                          'sector will display here. Only if there are '
+                          'opportunity pages which link to '
+                          'this sector and a `project_opportunities_title` '
+                          'will this section display on the page'),
             ]
         ),
         SearchEngineOptimisationPanel()

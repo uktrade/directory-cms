@@ -65,3 +65,31 @@ class ParentPageSerializerHelper(serializers.Serializer):
             context=self.context
         )
         return serializer.data
+
+
+class PageRelatedPageOfSelfSerializerHelper(serializers.Serializer):
+    def get_page_with_related_page_of_self(
+            self,
+            instance,
+            page_type,
+            serializer
+    ):
+        queryset = []
+
+        all_opportunity_pages = page_type.objects.live().public()
+
+        for page in all_opportunity_pages:
+            for related_sectors in page.related_sectors.all():
+                if related_sectors.related_sector.title == instance.title:
+                    queryset.append(page)
+
+        if not queryset:
+            return []
+
+        serializer = serializer(
+            queryset,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
