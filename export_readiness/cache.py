@@ -62,6 +62,15 @@ class HomePageSubscriber(AbstractDatabaseCacheSubscriber):
     ]
 
 
+class HomePageOldSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.HomePageOld
+    subscriptions = [
+        models.ArticleListingPage,
+        models.TopicLandingPage,
+        models.ArticlePage,
+    ]
+
+
 class InternationalLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalLandingPage
     subscriptions = []

@@ -15,6 +15,7 @@ class GreatDomesticConfig(AppConfig):
         cache.ArticleListingPageSubscriber.subscribe()
         cache.ArticlePageSubscriber.subscribe()
         cache.HomePageSubscriber.subscribe()
+        cache.HomePageOldSubscriber.subscribe()
         cache.InternationalLandingPageSubscriber.subscribe()
         cache.EUExitInternationalFormPageSubscriber.subscribe()
         cache.EUExitDomesticFormPageSubscriber.subscribe()

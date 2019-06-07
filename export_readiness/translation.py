@@ -70,6 +70,7 @@ class ArticlePageTranslationOptions(BaseTranslationOptions):
 
 
 @register(models.HomePage)
+@register(models.HomePageOld)
 class HomePageTranslationOptions(BaseTranslationOptions):
     fields = []
 
