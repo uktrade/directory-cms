@@ -8,7 +8,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('great_international', '0035_remove_internationalhomepage'),
+        ('great_international', '0035_rename_internationalhomepage_to_internationalhomepageold'),
     ]
 
     operations = [

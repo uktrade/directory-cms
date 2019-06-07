@@ -9,33 +9,36 @@ def migrate_forwards(apps, schema_editor):
     ContentType = apps.get_model('contenttypes', 'ContentType')
     Page = apps.get_model('wagtailcore', 'Page')
 
-    page_ct = ContentType.objects.filter(app_label='wagtailcore', model='page').first()
-    home_page_ct = ContentType.objects.filter(model='internationalhomepage').first()
-    app_page_ct = ContentType.objects.filter(model='greatinternationalapp').first()
+    internationalhompepage_ct = ContentType.objects.filter(model='internationalhomepage').first()
+    greatinternationalapp_ct = ContentType.objects.filter(model='greatinternationalapp').first()
+    internationalhompepageold_ct, _ = ContentType.objects.get_or_create(
+        app_label='great_international', model='internationalhomepageold'
+    )
 
-    if home_page_ct and app_page_ct:
-        # Unset content type for old home page
-        Page.objects.filter(content_type=home_page_ct).update(content_type=page_ct)
-
-        # Update content type for new home page, as the old content type is now redundant
-        Page.objects.filter(content_type=app_page_ct).update(content_type=home_page_ct)
+    if internationalhompepage_ct and greatinternationalapp_ct:
+        Page.objects.filter(content_type=internationalhompepage_ct).update(content_type=internationalhompepageold_ct)
+        Page.objects.filter(content_type=greatinternationalapp_ct).update(content_type=internationalhompepage_ct)
 
 
 def migrate_backwards(apps, schema_editor):
     ContentType = apps.get_model('contenttypes', 'ContentType')
     Page = apps.get_model('wagtailcore', 'Page')
 
-    home_page_ct = ContentType.objects.filter(model='internationalhomepage').first()
-    app_page_ct = ContentType.objects.filter(model='greatinternationalapp').first()
+    internationalhompepage_ct = ContentType.objects.filter(model='internationalhomepage').first()
 
-    if home_page_ct and app_page_ct:
-        Page.objects.filter(content_type=home_page_ct).update(content_type=app_page_ct)
+    if internationalhompepage_ct:
+        greatinternationalapp_ct, _ = ContentType.objects.get_or_create(
+            app_label='great_international', model='greatinternationalapp')
+        internationalhompepageold_ct, _ = ContentType.objects.get_or_create(
+            app_label='great_international', model='internationalhomepageold')
+        Page.objects.filter(content_type=internationalhompepage_ct).update(content_type=greatinternationalapp_ct)
+        Page.objects.filter(content_type=internationalhompepageold_ct).update(content_type=internationalhompepage_ct)
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('great_international', '0036_rename_apppage_model'),
+        ('great_international', '0036_rename_greatinternationalapp_to_internationalhomepage'),
     ]
 
     operations = [

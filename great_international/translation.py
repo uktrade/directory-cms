@@ -115,6 +115,7 @@ class InternationalCampaignPageTranslationOptions(BaseTranslationOptions):
 
 
 @register(models.InternationalHomePage)
+@register(models.InternationalHomePageOld)
 class InternationalHomePageTranslationOptions(BaseTranslationOptions):
     fields = (
         'hero_title',

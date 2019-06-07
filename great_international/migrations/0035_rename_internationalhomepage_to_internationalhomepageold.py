@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.DeleteModel(
-            name='InternationalHomePage',
+        migrations.RenameModel(
+            old_name='InternationalHomePage',
+            new_name='InternationalHomePageOld',
         ),
     ]
