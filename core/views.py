@@ -178,6 +178,7 @@ class PageLookupBySlugAPIEndpoint(DetailViewEndpointBase):
     # be a tuple in the format (match_service_name, match_slug, override_slug)
     slug_lookup_overrides = (
         (cms.GREAT_INTERNATIONAL, 'international', 'great-international-app'),
+        (cms.EXPORT_READINESS, 'home', 'export-readiness-app'),
     )
 
     def check_parameter_validity(self):
@@ -224,7 +225,8 @@ class PageLookupByPathAPIEndpoint(DetailViewEndpointBase):
     # instances receive the updated page at the root level. Each item should
     # be a tuple in the format (match_path, override_path)
     path_lookup_overrides = (
-        ('/international/', '/'),
+        ('/international/', '/'),  # international homepage
+        ('/home/', '/'),  # domestic homepage
     )
 
     def get_object_id(self):
