@@ -3,7 +3,8 @@
 ## Pre-release
 
 **Implemented enhancements:**
-
+- CMS-1561 - (follow up) Don't output intro CTA dictionary when link and/or title are empty
+- CMS-1561 - Removed CTA fields from accordions on country guide page. Added new CTAs to be displayed at the top of the page. Regenerated db template to speed up tests
 - CMS-1419 - Added Wagtail registration view for SSO users, group info management UI, and updated user edit view to mark users as approved
 - CMS-1421 - Integrate with GOV.UK Notify to send SSO user approval notifications
 - CI-104 - Added capital invest landing, region, sector and opportunity pages.
@@ -11,9 +12,14 @@
 - CI-144 - Updated capital invest landing page to match more recent invision designs
 - CI-148 - Updated capital invest pages to match more recent page designs
 - CI-150 - Updated featured cards on Invest home page to be more flexible and all from cms
-- CI-128 - Changed required fields to be nullable and removed unused fields on Invest home page
+- CI-128 - Changed required fields to be nullable and added new fields for featured cards on Invest home page
 - CI-152 - Changed `next steps` sections to be `contact` section on capital invest pages
 - CI-153 - Removed the cards pdf buttons on Capital Invest Landing page, region cards are now only displayed with markdown text
+- CMS-1591 - Copy invest homepage and HPO pages in International app
+- CMS-1638 - Prevent leaking user information on sql table dump
+- CMS-1603 - Introduced separate base page classes for each app so that unique slug enforcement can be relaxed in great_international
+- CMS-1604 - Added `WagtailAdminExclusivePageMixin` (a less restrictive version of `ExclusivePageMixin`) and used for page types in great_international
+
 
 ### Fixed bugs:
 
@@ -24,6 +30,8 @@
 - NOTICKET - Upgrade django-restframework to 3.9.4 to fix XSS vulnerability
 - CMS-1589 - Upgrade django-staff-sso-client to version 0.3.0 to fix blank username field bug
 - NOTICKET - Update guidance for `update_db_template` in README
+- CI-154 - Added section three to guide landing page for ISD/contact section
+- CMS-1633 - Removed `Page.delete()` override from `BasePage` so that child pages of differing types are deleted as intended
 
 
 ## [2019.05.09](https://github.com/uktrade/directory-cms/releases/tag/2019.05.09)

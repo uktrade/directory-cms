@@ -4,11 +4,12 @@ from unittest import mock
 from modeltranslation.utils import build_localized_fieldname
 
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.utils import translation
 from wagtail.core.models import Page, Site
 
-from core.models import RoutingSettings
+from core.models import BasePage, ExclusivePageMixin, RoutingSettings
 from find_a_supplier.tests.factories import (
     FindASupplierAppFactory, IndustryPageFactory, IndustryLandingPageFactory,
     IndustryArticlePageFactory,
@@ -22,7 +23,7 @@ from export_readiness.tests.factories import (
     PrivacyAndCookiesPageFactory, SitePolicyPagesFactory,
 )
 from great_international.tests.factories import (
-    GreatInternationalAppFactory, InternationalTopicLandingPageFactory,
+    InternationalHomePageFactory, InternationalTopicLandingPageFactory,
     InternationalArticleListingPageFactory, InternationalArticlePageFactory,
 )
 from invest.models import InvestApp
@@ -104,9 +105,9 @@ def test_page_paths(root_page):
     assert domestic_cookies_one.full_path == '/privacy/'
     assert domestic_cookies_two.full_path == '/privacy/cookies/'
 
-    international_app = GreatInternationalAppFactory(parent=root_page)
+    international_homepage = InternationalHomePageFactory(parent=root_page)
     international_page_one = InternationalTopicLandingPageFactory(
-        parent=international_app, slug='topic')
+        parent=international_homepage, slug='topic')
     international_page_two = InternationalArticleListingPageFactory(
         parent=international_page_one, slug='list')
     international_page_three = InternationalArticlePageFactory(
@@ -380,3 +381,20 @@ def test_url_methods_use_tree_based_routing(root_page):
         'http://domestic.trade.great/domestic/c/topic/list/article/'
     )
     domestic_page_three.get_tree_based_url.assert_called()
+
+
+@pytest.mark.django_db
+def test_basepage_can_exist_under(root_page):
+    page = IndustryPageFactory(parent=root_page)
+    assert isinstance(page, BasePage)
+    dummy_ctype = ContentType.objects.create(app_label='blah', model='blah')
+    test_parent = Page(slug='basic', title='Page')
+    test_parent.content_type = dummy_ctype
+    assert page.can_exist_under(test_parent) is False
+
+
+@pytest.mark.django_db
+def test_exclusivepagemixin_can_create_at(root_page):
+    page = SitePolicyPagesFactory(parent=root_page)
+    assert isinstance(page, ExclusivePageMixin)
+    assert page.can_create_at(root_page) is False

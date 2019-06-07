@@ -1,4 +1,5 @@
 import pytest
+from unittest import mock
 
 from bs4 import BeautifulSoup
 from directory_constants.constants import cms
@@ -395,7 +396,7 @@ def test_lookup_by_path(root_page, page, admin_client):
 
 
 @pytest.mark.django_db
-def test_lookup_for_path_for_non_existent_page(client):
+def test_lookup_by_path_for_non_existent_page(client):
     site_id = 52
     path = 'xyz'
     response = client.get(reverse(
@@ -405,6 +406,29 @@ def test_lookup_for_path_for_non_existent_page(client):
 
     expected_msg = f"No page could be found matching site_id '{site_id}' and path '{path}'" # noqa
     assert response.json() == {'message': expected_msg}
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    'path,override_path',
+    views.PageLookupByPathAPIEndpoint.path_lookup_overrides
+)
+def test_lookup_by_path_view_respects_overrides(
+    admin_client, path, override_path
+):
+    site_id = '1'
+
+    url = reverse(
+        'api:lookup-by-path', kwargs={'path': path, 'site_id': site_id}
+    )
+    with mock.patch(
+        'core.cache.PageIDCache.get_for_path', return_value=None
+    ) as mocked_method:
+        admin_client.get(url)
+
+    mocked_method.assert_called_with(
+        path=override_path, site_id=site_id,
+    )
 
 
 @pytest.mark.django_db
@@ -451,6 +475,27 @@ def test_lookup_by_slug_missing_page(admin_client):
 
     expected_msg = f"No page could be found matching service_name '{service_name}' and slug '{slug}'" # noqa
     assert response.json() == {'message': expected_msg}
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    'service_name,slug,override_slug',
+    views.PageLookupBySlugAPIEndpoint.slug_lookup_overrides
+)
+def test_lookup_by_slug_view_respects_overrides(
+    admin_client, service_name, slug, override_slug
+):
+    url = reverse('api:lookup-by-slug', kwargs={'slug': slug})
+
+    with mock.patch(
+        'core.cache.PageIDCache.get_for_slug', return_value=None
+    ) as mocked_method:
+        admin_client.get(url, {'service_name': service_name})
+
+    mocked_method.assert_called_with(
+        slug=override_slug,
+        service_name=service_name,
+    )
 
 
 def test_cache_etags_match(admin_client, root_page):

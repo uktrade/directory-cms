@@ -20,6 +20,13 @@ class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     ]
 
 
+class InternationalHomePageOldSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.InternationalHomePageOld
+    subscriptions = [
+        models.InternationalArticlePage,
+    ]
+
+
 class InternationalArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalArticlePage
     subscriptions = []
@@ -115,3 +122,38 @@ class CapitalInvestOpportunityListingPageSubscriber(
 ):
     model = models.CapitalInvestOpportunityListingPage
     subscriptions = []
+
+
+class InvestInternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.InvestInternationalHomePage
+    subscriptions = [
+        models.InternationalSectorPage,
+        models.InvestHighPotentialOpportunityDetailPage
+    ]
+
+
+class InvestHighPotentialOpportunityFormPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = models.InvestHighPotentialOpportunityFormPage
+    subscriptions = [
+        models.InvestHighPotentialOpportunityDetailPage,
+    ]
+
+
+class InvestHighPotentialOpportunityDetailPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = models.InvestHighPotentialOpportunityDetailPage
+    subscriptions = [
+        models.InvestHighPotentialOpportunityDetailPage,
+    ]
+
+
+class InvestHighPotentialOpportunityFormSuccessPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = models.InvestHighPotentialOpportunityFormSuccessPage
+    subscriptions = [
+        models.InvestHighPotentialOpportunityDetailPage,
+    ]

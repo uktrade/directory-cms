@@ -22,7 +22,7 @@ from core.models import (
     FormPageMetaClass,
     ServiceMixin,
 )
-from core.mixins import ServiceHomepageMixin
+from core.mixins import ServiceHomepageMixin, ServiceNameUniqueSlugMixin
 from core.panels import SearchEngineOptimisationPanel
 
 
@@ -31,9 +31,15 @@ ACCORDION_FIELDS_HELP_TEXT = (
     '2 bullet points, and 2 calls to action (CTAs).')
 
 
-class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
-
+class BaseDomesticPage(ServiceNameUniqueSlugMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
+
+    class Meta:
+        abstract = True
+
+
+class TermsAndConditionsPage(ExclusivePageMixin, BaseDomesticPage):
+
     slug_identity = cms.GREAT_TERMS_AND_CONDITIONS_SLUG
 
     body = MarkdownField(blank=False)
@@ -54,9 +60,8 @@ class TermsAndConditionsPage(ExclusivePageMixin, BasePage):
     ]
 
 
-class PrivacyAndCookiesPage(BasePage):
+class PrivacyAndCookiesPage(BaseDomesticPage):
 
-    service_name_value = cms.EXPORT_READINESS
     subpage_types = ['export_readiness.PrivacyAndCookiesPage']
 
     body = MarkdownField(blank=False)
@@ -79,9 +84,8 @@ class PrivacyAndCookiesPage(BasePage):
     promote_panels = []
 
 
-class SitePolicyPages(ExclusivePageMixin, BasePage):
+class SitePolicyPages(ExclusivePageMixin, BaseDomesticPage):
     # a folder for T&C and privacy & cookies pages
-    service_name_value = cms.EXPORT_READINESS
     slug_identity = cms.GREAT_SITE_POLICY_PAGES_SLUG
     folder_page = True
 
@@ -97,9 +101,7 @@ class SitePolicyPages(ExclusivePageMixin, BasePage):
         return super().save(*args, **kwargs)
 
 
-class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
-
-    service_name_value = cms.EXPORT_READINESS
+class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BaseDomesticPage):
     slug_identity = cms.GREAT_GET_FINANCE_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -219,9 +221,7 @@ class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BasePage):
     ]
 
 
-class PerformanceDashboardPage(BasePage):
-
-    service_name_value = cms.EXPORT_READINESS
+class PerformanceDashboardPage(BaseDomesticPage):
     subpage_types = [
         'export_readiness.PerformanceDashboardPage',
         'export_readiness.PerformanceDashboardNotesPage',
@@ -373,9 +373,8 @@ class PerformanceDashboardPage(BasePage):
     ]
 
 
-class PerformanceDashboardNotesPage(ExclusivePageMixin, BasePage):
+class PerformanceDashboardNotesPage(ExclusivePageMixin, BaseDomesticPage):
 
-    service_name_value = cms.EXPORT_READINESS
     slug_identity = cms.GREAT_PERFORMANCE_DASHBOARD_NOTES_SLUG
     slug_override = 'guidance-notes'
 
@@ -402,8 +401,7 @@ class PerformanceDashboardNotesPage(ExclusivePageMixin, BasePage):
     promote_panels = []
 
 
-class TopicLandingPage(BasePage):
-    service_name_value = cms.EXPORT_READINESS
+class TopicLandingPage(BaseDomesticPage):
     subpage_types = [
         'export_readiness.ArticleListingPage',
         'export_readiness.SuperregionPage',
@@ -455,8 +453,8 @@ class SuperregionPage(TopicLandingPage):
         return self.get_descendants().live().count()
 
 
-class ArticleListingPage(BasePage):
-    service_name_value = cms.EXPORT_READINESS
+class ArticleListingPage(BaseDomesticPage):
+
     subpage_types = [
         'export_readiness.ArticlePage',
     ]
@@ -497,13 +495,12 @@ class ArticleListingPage(BasePage):
     ]
 
 
-class CountryGuidePage(BasePage):
+class CountryGuidePage(BaseDomesticPage):
     """Make a cup of tea, this model is BIG!"""
 
     class Meta:
         ordering = ['-heading']
 
-    service_name_value = cms.EXPORT_READINESS
     subpage_types = [
         'export_readiness.ArticleListingPage',
         'export_readiness.ArticlePage',
@@ -526,6 +523,30 @@ class CountryGuidePage(BasePage):
         blank=True,
         verbose_name='Introduction'
     )
+    intro_cta_one_title = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name='CTA 1 title')
+    intro_cta_one_link = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name='CTA 1 link')
+    intro_cta_two_title = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name='CTA 2 title')
+    intro_cta_two_link = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name='CTA 2 link')
+    intro_cta_three_title = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name='CTA 3 title')
+    intro_cta_three_link = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name='CTA 3 link')
 
     section_one_body = MarkdownField(
         null=True,
@@ -678,37 +699,6 @@ class CountryGuidePage(BasePage):
         max_length=255,
         blank=True,
         verbose_name='Case study description'
-    )
-
-    accordion_1_cta_1_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 1'
-    )
-    accordion_1_cta_1_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 1'
-    )
-    accordion_1_cta_2_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 2'
-    )
-    accordion_1_cta_2_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 2'
-    )
-    accordion_1_cta_3_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 3'
-    )
-    accordion_1_cta_3_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 3'
     )
 
     accordion_1_statistic_1_number = models.CharField(
@@ -904,37 +894,6 @@ class CountryGuidePage(BasePage):
         max_length=255,
         blank=True,
         verbose_name='Case study description'
-    )
-
-    accordion_2_cta_1_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 1'
-    )
-    accordion_2_cta_1_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 1'
-    )
-    accordion_2_cta_2_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 2'
-    )
-    accordion_2_cta_2_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 2'
-    )
-    accordion_2_cta_3_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 3'
-    )
-    accordion_2_cta_3_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 3'
     )
 
     accordion_2_statistic_1_number = models.CharField(
@@ -1134,37 +1093,6 @@ class CountryGuidePage(BasePage):
         verbose_name='Case study description'
     )
 
-    accordion_3_cta_1_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 1'
-    )
-    accordion_3_cta_1_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 1'
-    )
-    accordion_3_cta_2_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 2'
-    )
-    accordion_3_cta_2_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 2'
-    )
-    accordion_3_cta_3_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 3'
-    )
-    accordion_3_cta_3_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 3'
-    )
-
     accordion_3_statistic_1_number = models.CharField(
         max_length=255,
         blank=True,
@@ -1360,37 +1288,6 @@ class CountryGuidePage(BasePage):
         max_length=255,
         blank=True,
         verbose_name='Case study description'
-    )
-
-    accordion_4_cta_1_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 1'
-    )
-    accordion_4_cta_1_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 1'
-    )
-    accordion_4_cta_2_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 2'
-    )
-    accordion_4_cta_2_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 2'
-    )
-    accordion_4_cta_3_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 3'
-    )
-    accordion_4_cta_3_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 3'
     )
 
     accordion_4_statistic_1_number = models.CharField(
@@ -1590,37 +1487,6 @@ class CountryGuidePage(BasePage):
         verbose_name='Case study description'
     )
 
-    accordion_5_cta_1_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 1'
-    )
-    accordion_5_cta_1_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 1'
-    )
-    accordion_5_cta_2_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 2'
-    )
-    accordion_5_cta_2_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 2'
-    )
-    accordion_5_cta_3_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 3'
-    )
-    accordion_5_cta_3_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 3'
-    )
-
     accordion_5_statistic_1_number = models.CharField(
         max_length=255,
         blank=True,
@@ -1818,37 +1684,6 @@ class CountryGuidePage(BasePage):
         verbose_name='Case study description'
     )
 
-    accordion_6_cta_1_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 1'
-    )
-    accordion_6_cta_1_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 1'
-    )
-    accordion_6_cta_2_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 2'
-    )
-    accordion_6_cta_2_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 2'
-    )
-    accordion_6_cta_3_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link 3'
-    )
-    accordion_6_cta_3_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title 3'
-    )
-
     accordion_6_statistic_1_number = models.CharField(
         max_length=255,
         blank=True,
@@ -2022,12 +1857,26 @@ class CountryGuidePage(BasePage):
 
     content_panels = [
         MultiFieldPanel(
-            heading='Heading',
+            heading='Heading and introduction',
             children=[
                 FieldPanel('heading'),
                 FieldPanel('sub_heading'),
                 ImageChooserPanel('hero_image'),
-                FieldPanel('heading_teaser')
+                FieldPanel('heading_teaser'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('intro_cta_one_link'),
+                        FieldPanel('intro_cta_one_title'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('intro_cta_two_link'),
+                        FieldPanel('intro_cta_two_title'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('intro_cta_three_link'),
+                        FieldPanel('intro_cta_three_title'),
+                    ])
+                ]),
             ]
 
         ),
@@ -2193,26 +2042,6 @@ class CountryGuidePage(BasePage):
                         ]
                     )
                 ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_1_cta_1_link'),
-                            FieldPanel('accordion_1_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_1_cta_2_link'),
-                            FieldPanel('accordion_1_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_1_cta_3_link'),
-                            FieldPanel('accordion_1_cta_3_title'),
-                        ]
-                    )
-                ])
             ]
         ),
         MultiFieldPanel(
@@ -2301,26 +2130,6 @@ class CountryGuidePage(BasePage):
                         ]
                     )
                 ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_2_cta_1_link'),
-                            FieldPanel('accordion_2_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_2_cta_2_link'),
-                            FieldPanel('accordion_2_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_2_cta_3_link'),
-                            FieldPanel('accordion_2_cta_3_title'),
-                        ]
-                    )
-                ])
             ]
         ),
         MultiFieldPanel(
@@ -2409,26 +2218,6 @@ class CountryGuidePage(BasePage):
                         ]
                     )
                 ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_3_cta_1_link'),
-                            FieldPanel('accordion_3_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_3_cta_2_link'),
-                            FieldPanel('accordion_3_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_3_cta_3_link'),
-                            FieldPanel('accordion_3_cta_3_title'),
-                        ]
-                    )
-                ])
             ]
         ),
         MultiFieldPanel(
@@ -2517,26 +2306,6 @@ class CountryGuidePage(BasePage):
                         ]
                     )
                 ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_4_cta_1_link'),
-                            FieldPanel('accordion_4_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_4_cta_2_link'),
-                            FieldPanel('accordion_4_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_4_cta_3_link'),
-                            FieldPanel('accordion_4_cta_3_title'),
-                        ]
-                    )
-                ])
             ]
         ),
         MultiFieldPanel(
@@ -2625,26 +2394,6 @@ class CountryGuidePage(BasePage):
                         ]
                     )
                 ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_5_cta_1_link'),
-                            FieldPanel('accordion_5_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_5_cta_2_link'),
-                            FieldPanel('accordion_5_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_5_cta_3_link'),
-                            FieldPanel('accordion_5_cta_3_title'),
-                        ]
-                    )
-                ])
             ]
         ),
         MultiFieldPanel(
@@ -2733,26 +2482,6 @@ class CountryGuidePage(BasePage):
                         ]
                     )
                 ]),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_6_cta_1_link'),
-                            FieldPanel('accordion_6_cta_1_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_6_cta_2_link'),
-                            FieldPanel('accordion_6_cta_2_title'),
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        [
-                            FieldPanel('accordion_6_cta_3_link'),
-                            FieldPanel('accordion_6_cta_3_title'),
-                        ]
-                    )
-                ])
             ]
         ),
         MultiFieldPanel(
@@ -2817,8 +2546,8 @@ class CountryGuidePage(BasePage):
     ]
 
 
-class MarketingPages(ExclusivePageMixin, BasePage):
-    service_name_value = cms.EXPORT_READINESS
+class MarketingPages(ExclusivePageMixin, BaseDomesticPage):
+
     slug_identity = cms.GREAT_MARKETING_PAGES_SLUG
     slug_override = 'campaigns'
 
@@ -2833,8 +2562,8 @@ class MarketingPages(ExclusivePageMixin, BasePage):
         return super().save(*args, **kwargs)
 
 
-class CampaignPage(BasePage):
-    service_name_value = cms.EXPORT_READINESS
+class CampaignPage(BaseDomesticPage):
+
     subpage_types = []
 
     campaign_heading = models.CharField(max_length=255)
@@ -3072,8 +2801,8 @@ class Tag(index.Indexed, models.Model):
         return super().save(force_insert, force_update, using, update_fields)
 
 
-class ArticlePage(BasePage):
-    service_name_value = cms.EXPORT_READINESS
+class ArticlePage(BaseDomesticPage):
+
     subpage_types = []
 
     article_title = models.CharField(max_length=255)
@@ -3149,8 +2878,7 @@ class ArticlePage(BasePage):
     ]
 
 
-class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
-    service_name_value = cms.EXPORT_READINESS
+class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
     slug_identity = 'export-readiness-app'
     parent_page_types = ['wagtailcore.Page']
 
@@ -3194,8 +2922,8 @@ class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         ]
 
 
-class InternationalLandingPage(ExclusivePageMixin, BasePage):
-    service_name_value = cms.EXPORT_READINESS
+class InternationalLandingPage(ExclusivePageMixin, BaseDomesticPage):
+
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
     # slug_override = 'international'
     subpage_types = [
@@ -3220,7 +2948,7 @@ class InternationalLandingPage(ExclusivePageMixin, BasePage):
 
 
 class EUExitInternationalFormPage(
-    ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
+    ExclusivePageMixin, BaseDomesticPage, metaclass=FormPageMetaClass
 ):
     # metaclass creates <fild_name>_label and <field_name>_help_text
     form_field_names = [
@@ -3234,7 +2962,6 @@ class EUExitInternationalFormPage(
         'comment',
     ]
 
-    service_name_value = cms.EXPORT_READINESS
     full_path_override = '/international/eu-exit-news/contact/'
     slug_identity = cms.GREAT_EUEXIT_INTERNATIONAL_FORM_SLUG
 
@@ -3267,7 +2994,7 @@ class EUExitInternationalFormPage(
 
 
 class EUExitDomesticFormPage(
-    ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
+    ExclusivePageMixin, BaseDomesticPage, metaclass=FormPageMetaClass
 ):
     # metaclass creates <fild_name>_label and <field_name>_help_text
     form_field_names = [
@@ -3279,7 +3006,6 @@ class EUExitDomesticFormPage(
         'comment',
     ]
 
-    service_name_value = cms.EXPORT_READINESS
     full_path_override = '/eu-exit-news/contact/'
     slug_identity = cms.GREAT_EUEXIT_DOMESTIC_FORM_SLUG
 
@@ -3311,8 +3037,7 @@ class EUExitDomesticFormPage(
     ]
 
 
-class EUExitFormSuccessPage(ExclusivePageMixin, BasePage):
-    service_name_value = cms.EXPORT_READINESS
+class EUExitFormSuccessPage(ExclusivePageMixin, BaseDomesticPage):
     full_path_override = '/eu-exit-news/contact/success/'
     slug_identity = cms.GREAT_EUEXIT_FORM_SUCCESS_SLUG
 
@@ -3359,9 +3084,8 @@ class EUExitFormSuccessPage(ExclusivePageMixin, BasePage):
     ]
 
 
-class EUExitFormPages(ExclusivePageMixin, BasePage):
+class EUExitFormPages(ExclusivePageMixin, BaseDomesticPage):
     # this is just a folder. it will not be requested by the client.
-    service_name_value = cms.EXPORT_READINESS
     slug_identity = 'eu-exit-form-pages'
     folder_page = True
 
@@ -3378,9 +3102,8 @@ class EUExitFormPages(ExclusivePageMixin, BasePage):
         return super().save(*args, **kwargs)
 
 
-class ContactUsGuidancePages(ExclusivePageMixin, BasePage):
+class ContactUsGuidancePages(ExclusivePageMixin, BaseDomesticPage):
     # this is just a folder. it will not be requested by the client.
-    service_name_value = cms.EXPORT_READINESS
     slug_identity = 'contact-us-guidance-pages'
     folder_page = True
 
@@ -3395,9 +3118,8 @@ class ContactUsGuidancePages(ExclusivePageMixin, BasePage):
         return super().save(*args, **kwargs)
 
 
-class ContactSuccessPages(ExclusivePageMixin, BasePage):
+class ContactSuccessPages(ExclusivePageMixin, BaseDomesticPage):
     # this is just a folder. it will not be requested by the client.
-    service_name_value = cms.EXPORT_READINESS
     slug_identity = 'contact-us-success-pages'
     folder_page = True
 
@@ -3412,9 +3134,7 @@ class ContactSuccessPages(ExclusivePageMixin, BasePage):
         return super().save(*args, **kwargs)
 
 
-class ContactUsGuidancePage(BasePage):
-
-    service_name_value = cms.EXPORT_READINESS
+class ContactUsGuidancePage(BaseDomesticPage):
 
     topic_mapping = {
         cms.GREAT_HELP_EXOPP_ALERTS_IRRELEVANT_SLUG: {
@@ -3512,9 +3232,7 @@ class ContactUsGuidancePage(BasePage):
         return super().save(*args, **kwargs)
 
 
-class ContactSuccessPage(BasePage):
-
-    service_name_value = cms.EXPORT_READINESS
+class ContactSuccessPage(BaseDomesticPage):
 
     topic_mapping = {
         cms.GREAT_CONTACT_US_FORM_SUCCESS_SLUG: {
@@ -3625,9 +3343,9 @@ class ContactSuccessPage(BasePage):
         return super().save(*args, **kwargs)
 
 
-class AllContactPagesPage(ExclusivePageMixin, BasePage):
+class AllContactPagesPage(ExclusivePageMixin, BaseDomesticPage):
     # this is just a folder. it will not be requested by the client.
-    service_name_value = cms.EXPORT_READINESS
+
     slug_identity = 'all-export-readiness-contact-pages'
     folder_page = True
 
