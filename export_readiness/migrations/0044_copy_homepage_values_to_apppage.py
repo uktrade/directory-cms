@@ -83,7 +83,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailcore', '0040_page_draft_title'),
-        ('export_readiness', '0042_add_homepage_fields_to_apppage'),
+        ('export_readiness', '0043_add_homepage_fields_to_apppage'),
     ]
 
     operations = [

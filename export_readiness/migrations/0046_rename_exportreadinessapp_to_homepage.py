@@ -8,7 +8,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('export_readiness', '0044_rename_homepage_to_homepageold'),
+        ('export_readiness', '0045_rename_homepage_to_homepageold'),
     ]
 
     operations = [
