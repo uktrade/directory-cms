@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from core import fields
+from great_international.models import CapitalInvestOpportunityPage
 
 
 class BasePageSerializer(serializers.Serializer):
@@ -67,13 +68,15 @@ class ParentPageSerializerHelper(serializers.Serializer):
         return serializer.data
 
 
-class PageRelatedPageOfSelfSerializerHelper(serializers.Serializer):
-    def get_page_with_related_page_of_self_data_for(
+class OpportunityPageWithRelatedSectorPageSerializerHelper(
+    serializers.Serializer
+):
+    def get_opportunity_page_with_self_as_related_sector_data_for(
             self,
             instance,
-            page_type,
             serializer
     ):
+        page_type = CapitalInvestOpportunityPage
         queryset = []
 
         all_opportunity_pages = page_type.objects.live().public()
