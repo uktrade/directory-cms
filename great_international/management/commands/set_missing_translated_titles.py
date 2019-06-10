@@ -6,7 +6,6 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from core import filters
-from great_international.models import InternationalHomePage
 
 
 class Command(BaseCommand):
@@ -44,25 +43,29 @@ class Command(BaseCommand):
             ))
             print('--------------------------------------------------------\n')
             for language_code, language_name in settings.LANGUAGES:
-                title_field_for_language = build_localized_fieldname('title', language_code)
+                title_field_for_language = build_localized_fieldname(
+                    'title', language_code)
                 try:
                     title_value = getattr(page, title_field_for_language)
                 except AttributeError:
                     continue
 
                 if title_value:
-                    print("{} title already set to: '{}'\n".format(language_name, title_value))
+                    print("{} title already set to: '{}'\n".format(
+                        language_name, title_value))
                     continue
 
                 print("Looking for {} title value...".format(language_name))
                 no_fields_found = True
                 for fieldname in self.preferred_source_fields:
-                    fieldname_for_language = build_localized_fieldname(fieldname, language_code)
+                    fieldname_for_language = build_localized_fieldname(
+                        fieldname, language_code)
                     try:
                         value = getattr(page, fieldname_for_language)
                         no_fields_found = False
                         if value:
-                            print("'{}' value looks usable: '{}'".format(fieldname_for_language, value))
+                            print("'{}' value looks usable: '{}'".format(
+                                fieldname_for_language, value))
                             title_value = value
                             setattr(page, title_field_for_language, value)
                             if not dryrun:
@@ -70,7 +73,8 @@ class Command(BaseCommand):
                                 print('Page saved')
                             break
                         else:
-                            print("'{}' value is blank :(".format(fieldname_for_language))
+                            print("'{}' value is blank :(".format(
+                                fieldname_for_language))
                     except AttributeError:
                         pass
                 if no_fields_found:
