@@ -3,6 +3,7 @@
 ## Pre-release
 
 **Implemented enhancements:**
+- XOT-763 - Serialize parent pages for use in breadcrumbs and GA360 page category/section
 - CMS-1561 - (follow up) Don't output intro CTA dictionary when link and/or title are empty
 - CMS-1561 - Removed CTA fields from accordions on country guide page. Added new CTAs to be displayed at the top of the page. Regenerated db template to speed up tests
 - CMS-1419 - Added Wagtail registration view for SSO users, group info management UI, and updated user edit view to mark users as approved
