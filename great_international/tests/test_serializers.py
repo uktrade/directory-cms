@@ -523,3 +523,34 @@ def test_international_sector_page_gets_opps_with_sector_as_related(rf):
         'opportunities'
     ]:
         assert page['meta']['slug'] == 'opp'
+
+
+@pytest.mark.django_db
+def test_international_sector_page_doesnt_get_unrelated_opps(rf):
+
+    guide_landing_page = InternationalGuideLandingPageFactory(
+        parent=None,
+        slug='page-slug',
+    )
+
+    sector = InternationalSectorPageFactory(
+        parent=guide_landing_page,
+        slug='sector'
+    )
+
+    related_sector = CapitalInvestRelatedSectors()
+
+    opportunity = CapitalInvestOpportunityPageFactory(
+        parent=None,
+        slug='opp',
+        related_sectors=[related_sector]
+    )
+
+    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
+        instance=opportunity,
+        context={'request': rf.get('/')}
+    )
+
+    for page in opportunity_serializer.data['related_sectors']:
+        assert page['related_sector'] == []
+
