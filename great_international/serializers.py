@@ -356,14 +356,14 @@ class RelatedOpportunitySerializer(serializers.Serializer):
 
     def get_opportunities(self, opportunity_pages):
 
-        serialized = []
-        for page in opportunity_pages:
-            if not page:
-                continue
-            serializer = RelatedCapitalInvestOpportunityPageSerializer(
-                page.specific)
-            serialized.append(serializer.data)
-        return serialized
+        serializer = RelatedCapitalInvestOpportunityPageSerializer(
+            opportunity_pages,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+
+        return serializer.data
 
 
 MODEL_TO_SERIALIZER_MAPPING = {
