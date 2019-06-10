@@ -90,7 +90,7 @@ def test_country_guide_page_serializer(root_page, rf):
 
 
 @pytest.mark.django_db
-def test_breadcrumbs_serializer(root_page, rf, django_assert_num_queries):
+def test_breadcrumbs_serializer(root_page, rf):
     app_page = ExportReadinessAppFactory(parent=root_page)
     markets_page = TopicLandingPageFactory(
         title_en_gb='topic',
