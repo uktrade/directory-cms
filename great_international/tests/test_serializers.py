@@ -526,7 +526,7 @@ def test_international_sector_page_gets_opps_with_sector_as_related(rf):
 
 
 @pytest.mark.django_db
-def test_international_sector_page_doesnt_get_unrelated_opps(rf):
+def test_opp_page_null_case_related_sector(rf):
 
     related_sector = CapitalInvestRelatedSectors()
 
@@ -543,3 +543,64 @@ def test_international_sector_page_doesnt_get_unrelated_opps(rf):
 
     for page in opportunity_serializer.data['related_sectors']:
         assert page['related_sector'] == []
+
+
+@pytest.mark.django_db
+def test_opp_page_null_case_related_sector2(rf):
+
+    opportunity = CapitalInvestOpportunityPageFactory(
+        parent=None,
+        slug='opp',
+        related_sectors=[]
+    )
+
+    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
+        instance=opportunity,
+        context={'request': rf.get('/')}
+    )
+
+    assert opportunity_serializer.data['related_sectors'] == []
+
+
+@pytest.mark.django_db
+def test_international_sector_opportunity_null_case(rf):
+
+    guide_landing_page = InternationalGuideLandingPageFactory(
+        parent=None,
+        slug='page-slug',
+    )
+
+    sector_a = InternationalSectorPageFactory(
+        parent=guide_landing_page,
+        slug='sectorA'
+    )
+
+    sector_b = InternationalSectorPageFactory(
+        parent=guide_landing_page,
+        slug='sectorB'
+    )
+
+    related_sector = CapitalInvestRelatedSectors(
+        related_sector=sector_a
+    )
+
+    opportunity = CapitalInvestOpportunityPageFactory(
+        parent=None,
+        slug='opp',
+        related_sectors=[related_sector]
+    )
+
+    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
+        instance=opportunity,
+        context={'request': rf.get('/')}
+    )
+
+    for page in opportunity_serializer.data['related_sectors']:
+        assert page['related_sector']['meta']['slug'] == 'sectorA'
+
+    sector_serializer = InternationalSectorPageSerializer(
+        instance=sector_b,
+        context={'request': rf.get('/')}
+    )
+    print('\n\n\n\n\n sector ', sector_serializer.data)
+    assert sector_serializer.data['related_opportunities'] == []
