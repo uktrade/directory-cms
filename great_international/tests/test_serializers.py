@@ -7,7 +7,7 @@ from great_international.serializers import (
     InternationalGuideLandingPageSerializer,
     CapitalInvestRegionPageSerializer,
     InternationalCapitalInvestLandingPageSerializer,
-    CapitalInvestRegionalSectorPageSerializer)
+    CapitalInvestOpportunityPageSerializer)
 from great_international.tests.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
@@ -15,14 +15,11 @@ from great_international.tests.factories import (
     InternationalGuideLandingPageFactory,
     CapitalInvestRegionPageFactory,
     InternationalCapitalInvestLandingPageFactory,
-    CapitalInvestRegionalSectorPageFactory,
-    CapitalInvestOpportunityPageFactory,
-    CapitalInvestOpportunityListingPageFactory)
+    CapitalInvestOpportunityPageFactory,)
 
-from great_international.models import SectorRelatedOpportunities, \
-    CapitalInvestRelatedRegions, \
+from great_international.models import CapitalInvestRelatedRegions, \
     CapitalInvestHomesInEnglandCardFieldsSummary, \
-    CapitalInvestRegionCardFieldsSummary
+    CapitalInvestRegionCardFieldsSummary, CapitalInvestRelatedSectors
 
 
 @pytest.mark.django_db
@@ -291,58 +288,6 @@ def test_capital_invest_region_page_has_statistics(rf):
 
 
 @pytest.mark.django_db
-def test_capital_invest_regional_sector_gets_added_opportunities(rf):
-    opportunity_listing_page = CapitalInvestOpportunityListingPageFactory(
-        parent=None,
-        slug='listing-opps'
-    )
-    opportunity = CapitalInvestOpportunityPageFactory(
-        parent=opportunity_listing_page,
-        slug='opp'
-    )
-
-    related_page = SectorRelatedOpportunities(
-        opportunity=opportunity
-    )
-    region_page = CapitalInvestRegionPageFactory(
-        parent=None,
-        slug='region'
-    )
-    sector_page = CapitalInvestRegionalSectorPageFactory(
-        parent=region_page,
-        slug='sector',
-        added_opportunities=[related_page]
-    )
-
-    serializer = CapitalInvestRegionalSectorPageSerializer(
-        instance=sector_page,
-        context={'request': rf.get('/')}
-    )
-
-    for page in serializer.data['added_opportunities']:
-        assert page['opportunity']['meta']['slug'] == 'opp'
-
-
-@pytest.mark.django_db
-def test_capital_invest_regional_sector_page_gets_parent(
-        root_page, rf
-):
-    page = CapitalInvestRegionPageFactory(
-        parent=root_page,
-        slug='page-slug',
-    )
-
-    sector = CapitalInvestRegionalSectorPageFactory(parent=page, slug='one')
-
-    serializer = CapitalInvestRegionalSectorPageSerializer(
-        instance=sector,
-        context={'request': rf.get('/')}
-    )
-
-    assert serializer.data['parent']['meta']['slug'] == 'page-slug'
-
-
-@pytest.mark.django_db
 def test_capital_invest_landing_page_gets_added_related_regions(rf):
 
     region = CapitalInvestRegionPageFactory(
@@ -449,3 +394,77 @@ def test_capital_invest_landing_page_has_how_we_help(rf):
     for statistic in serializer.data['how_we_help_icon_and_text']:
         assert 'text' in statistic
         assert 'icon' in statistic
+
+
+@pytest.mark.django_db
+def test_opportunity_page_can_add_sector_as_related(rf):
+
+    guide_landing_page = InternationalGuideLandingPageFactory(
+        parent=None,
+        slug='page-slug',
+    )
+
+    sector = InternationalSectorPageFactory(
+        parent=guide_landing_page,
+        slug='sector'
+    )
+
+    related_sector = CapitalInvestRelatedSectors(
+        related_sector=sector
+    )
+
+    opportunity = CapitalInvestOpportunityPageFactory(
+        parent=None,
+        slug='opp',
+        related_sectors=[related_sector]
+    )
+
+    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
+        instance=opportunity,
+        context={'request': rf.get('/')}
+    )
+
+    for page in opportunity_serializer.data['related_sectors']:
+        assert page['related_sector']['meta']['slug'] == 'sector'
+
+
+@pytest.mark.django_db
+def test_international_sector_page_gets_opps_with_sector_as_related(rf):
+
+    guide_landing_page = InternationalGuideLandingPageFactory(
+        parent=None,
+        slug='page-slug',
+    )
+
+    sector = InternationalSectorPageFactory(
+        parent=guide_landing_page,
+        slug='sector'
+    )
+
+    related_sector = CapitalInvestRelatedSectors(
+        related_sector=sector
+    )
+
+    opportunity = CapitalInvestOpportunityPageFactory(
+        parent=None,
+        slug='opp',
+        related_sectors=[related_sector]
+    )
+
+    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
+        instance=opportunity,
+        context={'request': rf.get('/')}
+    )
+
+    sector_serializer = InternationalSectorPageSerializer(
+        instance=sector,
+        context={'request': rf.get('/')}
+    )
+
+    for page in sector_serializer.data[
+        'related_opportunities'
+    ][
+        'opportunities'
+    ]:
+        assert page['meta']['slug'] == 'opp'
+
