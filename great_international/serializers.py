@@ -293,7 +293,7 @@ class RelatedCapitalInvestPageSerializer(BasePageSerializer):
     title = serializers.CharField(
         max_length=255, source='hero_title')
     image = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg',
+        'fill-640x360',
         source='hero_image')
     featured_description = serializers.CharField(max_length=255)
 
@@ -302,7 +302,7 @@ class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
     title = serializers.CharField(
         max_length=255, source='hero_title')
     hero_image = wagtail_fields.ImageRenditionField(
-        'fill-640x360|jpegquality-60|format-jpeg')
+        'fill-640x360')
     sector = serializers.CharField(
         max_length=255)
     scale = serializers.CharField(
