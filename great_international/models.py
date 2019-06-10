@@ -134,7 +134,7 @@ class InternationalSectorPage(BaseInternationalPage):
     section_two_heading = models.CharField(
         max_length=255,
         verbose_name='Spotlight',
-        blank = True
+        blank=True
     )
     section_two_teaser = models.TextField(
         verbose_name='Spotlight summary', blank=True
@@ -2463,8 +2463,7 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
     )
     hero_title = models.CharField(max_length=255)
 
-    opportunity_summary_intro = models.TextField(max_length=255, blank=True,
-                                                 help_text='This field is required for this section to show')
+    opportunity_summary_intro = models.TextField(max_length=255, blank=True)
     opportunity_summary_content = MarkdownField(blank=True)
     opportunity_summary_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -2601,8 +2600,7 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
             ],
         ),
         MultiFieldPanel(
-            heading="Opportunity summary (Required field Opportunity summary "
-                    "intro)",
+            heading="Opportunity summary",
             classname='collapsible',
             children=[
                 HelpPanel('Required fields for section to show: '
