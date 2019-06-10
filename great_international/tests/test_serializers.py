@@ -456,6 +456,9 @@ def test_international_sector_page_gets_opps_with_sector_as_related(rf):
         context={'request': rf.get('/')}
     )
 
+    for page in opportunity_serializer.data['related_sectors']:
+        assert page['related_sector']['meta']['slug'] == 'sector'
+
     sector_serializer = InternationalSectorPageSerializer(
         instance=sector,
         context={'request': rf.get('/')}
@@ -467,4 +470,3 @@ def test_international_sector_page_gets_opps_with_sector_as_related(rf):
         'opportunities'
     ]:
         assert page['meta']['slug'] == 'opp'
-
