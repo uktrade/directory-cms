@@ -602,5 +602,39 @@ def test_international_sector_opportunity_null_case(rf):
         instance=sector_b,
         context={'request': rf.get('/')}
     )
-    print('\n\n\n\n\n sector ', sector_serializer.data)
+
+    assert sector_serializer.data['related_opportunities'] == []
+
+
+@pytest.mark.django_db
+def test_international_sector_opportunity_null_case2(rf):
+
+    guide_landing_page = InternationalGuideLandingPageFactory(
+        parent=None,
+        slug='page-slug',
+    )
+
+    sector = InternationalSectorPageFactory(
+        parent=guide_landing_page,
+        slug='sector'
+    )
+
+    related_sector = CapitalInvestRelatedSectors()
+
+    opportunity = CapitalInvestOpportunityPageFactory(
+        parent=None,
+        slug='opp',
+        related_sectors=[related_sector]
+    )
+
+    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
+        instance=opportunity,
+        context={'request': rf.get('/')}
+    )
+
+    sector_serializer = InternationalSectorPageSerializer(
+        instance=sector,
+        context={'request': rf.get('/')}
+    )
+
     assert sector_serializer.data['related_opportunities'] == []
