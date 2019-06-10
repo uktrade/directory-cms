@@ -631,6 +631,9 @@ def test_international_sector_opportunity_null_case2(rf):
         instance=opportunity,
         context={'request': rf.get('/')}
     )
+    
+    for page in opportunity_serializer.data['related_sectors']:
+        assert page['related_sector'] == []
 
     sector_serializer = InternationalSectorPageSerializer(
         instance=sector,
