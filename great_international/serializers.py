@@ -5,8 +5,7 @@ from core import fields as core_fields
 from core.serializers import (
     BasePageSerializer,
     ChildPagesSerializerHelper,
-    FormPageSerializerMetaclass,
-    ParentPageSerializerHelper, PageRelatedPageOfSelfSerializerHelper)
+    FormPageSerializerMetaclass, PageRelatedPageOfSelfSerializerHelper)
 
 from .models import (
     InternationalArticlePage,

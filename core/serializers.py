@@ -94,4 +94,3 @@ class PageRelatedPageOfSelfSerializerHelper(serializers.Serializer):
             context=self.context
         )
         return serializer.data
-
