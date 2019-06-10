@@ -96,4 +96,4 @@ class OpportunityPageWithRelatedSectorPageSerializerHelper(
             allow_null=True,
             context=self.context
         )
-        return serializer.data
+        return serializer.data['opportunities']

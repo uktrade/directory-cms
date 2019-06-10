@@ -354,14 +354,14 @@ class RelatedSectorSerializer(serializers.Serializer):
 class RelatedOpportunitySerializer(serializers.Serializer):
     opportunities = serializers.SerializerMethodField()
 
-    def get_opportunities(self, obj):
+    def get_opportunities(self, opportunity_pages):
 
         serialized = []
-        for opp in obj:
-            if not opp:
+        for page in opportunity_pages:
+            if not page:
                 continue
             serializer = RelatedCapitalInvestOpportunityPageSerializer(
-                opp.specific)
+                page.specific)
             serialized.append(serializer.data)
         return serialized
 
