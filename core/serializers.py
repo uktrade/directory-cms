@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from core import fields
-from great_international.models import CapitalInvestOpportunityPage
 
 
 class BasePageSerializer(serializers.Serializer):
