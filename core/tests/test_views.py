@@ -1,5 +1,4 @@
 import pytest
-from unittest import mock
 
 from bs4 import BeautifulSoup
 from directory_constants.constants import cms
