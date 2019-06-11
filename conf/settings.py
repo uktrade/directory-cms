@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'wagtail_modeltranslation',
     'wagtail_modeltranslation.makemigrations',
     'wagtail_modeltranslation.migrate',
+    'django.contrib.admin',  # required by wagtail.contrib.modeladmin
     'django.contrib.auth',
     'django.contrib.staticfiles',
     'django.contrib.contenttypes',
@@ -60,7 +61,9 @@ INSTALLED_APPS = [
     'directory_components',
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
+    'groups.apps.GroupsConfig',
     'wagtail.contrib.forms',
+    'wagtail.contrib.modeladmin',
     'wagtail.contrib.settings',
     'wagtail.embeds',
     'wagtail.users',
@@ -275,11 +278,6 @@ if DEBUG:
                 'level': 'WARNING',
                 'propagate': False,
             },
-            '': {
-                'handlers': ['console'],
-                'level': 'DEBUG',
-                'propagate': False,
-            },
         }
     }
 else:
@@ -383,7 +381,7 @@ AWS_ACCESS_KEY_ID = env.str('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env.str('AWS_SECRET_ACCESS_KEY')
 AWS_S3_HOST = 's3-us-west-1.amazonaws.com'
 
-# Email
+# Email and notifications
 EMAIL_BACKED_CLASSES = {
     'default': 'django.core.mail.backends.smtp.EmailBackend',
     'console': 'django.core.mail.backends.console.EmailBackend'
@@ -397,19 +395,35 @@ EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL', '')
 
+# NOTE: Notify keys must be in a specfic format for the client to initialise,
+# so using an invalid default here to prevent breakages locally / in tests
+GOVNOTIFY_API_KEY = env.str(
+    'GOVNOTIFY_API_KEY',
+    'directory_cms_invalid-03185ee5-578c-4ffc-8774-2288e7b34e63-e82262ea-ae8c-4c6d-8570-c16afdc8347f' # noqa
+)
+GOVNOTIFY_REPLY_TO_EMAIL_ID = env.str('GOVNOTIFY_REPLY_TO_EMAIL_ID', '')
+GOVNOTIFY_USER_PENDING_APPROVAL_TEMPLATE_ID = env.str(
+    'GOVNOTIFY_USER_PENDING_APPROVAL_TEMPLATE_ID', '')
+GOVNOTIFY_USER_APPROVED_TEMPLATE_ID = env.str(
+    'GOVNOTIFY_USER_APPROVED_TEMPLATE_ID', '')
+
+# Translation
 MODELTRANSLATION_CUSTOM_FIELDS = ('RichTextField', )
 MODELTRANSLATION_FALLBACK_LANGUAGES = ()
 WAGTAILMODELTRANSLATION_TRANSLATE_SLUGS = False
 
+# Misc
 EU_EXIT_NEWS_LISTING_PAGE_SLUG = env.str(
     'EU_EXIT_NEWS_LISTING_PAGE_SLUG', 'eu-exit-news'
 )
 INTERNATIONAL_NEWS_MARKETING_FOLDER_PAGE_SLUG = env.str(
     'INTERNATIONAL_NEWS_MARKETING_FOLDER_PAGE_SLUG', 'news-and-events'
 )
+USERS_REQUEST_ACCESS_PREVENT_RESUBMISSION = env.bool(
+    'USERS_REQUEST_ACCESS_PREVENT_RESUBMISSION', True
+)
 
-# feature flags
-
+# Feature flags
 FEATURE_FLAGS = {
     'ENFORCE_STAFF_SSO_ON': env.bool('FEATURE_ENFORCE_STAFF_SSO_ENABLED',
                                      True),
@@ -428,12 +442,21 @@ if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
         'authbroker_client.backends.AuthbrokerBackend'
     ]
     LOGIN_URL = reverse_lazy('authbroker:login')
-    LOGIN_REDIRECT_URL = reverse_lazy('wagtail_homepage')
+    LOGIN_REDIRECT_URL = reverse_lazy('wagtailadmin_home')
 
     # authbroker config
-    AUTHBROKER_URL = env.url('STAFF_SSO_AUTHBROKER_URL')
+    AUTHBROKER_URL = env.str('STAFF_SSO_AUTHBROKER_URL')
     AUTHBROKER_CLIENT_ID = env.str('AUTHBROKER_CLIENT_ID')
     AUTHBROKER_CLIENT_SECRET = env.str('AUTHBROKER_CLIENT_SECRET')
+
+    MIDDLEWARE_CLASSES.append(
+        'users.middleware.SSORedirectUsersToRequestAccessViews'
+    )
+    # Disable password management in Wagtail admin
+    WAGTAIL_PASSWORD_MANAGEMENT_ENABLED = False
+    WAGTAIL_PASSWORD_RESET_ENABLED = False
+    WAGTAILUSERS_PASSWORD_ENABLED = False
+
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
@@ -449,7 +472,7 @@ if FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
         ['debug_toolbar.middleware.DebugToolbarMiddleware'] +
         MIDDLEWARE_CLASSES
     )
-    INTERNAL_IPS = '127.0.0.1'
+    INTERNAL_IPS = ['127.0.0.1', '10.0.2.2']
 
 ENVIRONMENT_CSS_THEME_FILE = env.str('ENVIRONMENT_CSS_THEME_FILE', '')
 

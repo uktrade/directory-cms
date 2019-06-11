@@ -1,0 +1,13 @@
+{% load i18n wagtailadmin_tags %}
+
+{% trans "Content roles in Wagtail" as title_str %}
+{% include "wagtailadmin/shared/header.html" with title=title_str %}
+
+<div class="nice-padding">
+    <dl class="dl-horizontal">
+        {% for group in queryset.all %}
+            <dt>{{ group.name_singular }}</dt>
+            <dd>{{ group.role_match_description}}</dd>
+        {% endfor %}
+    </dl>
+</div>

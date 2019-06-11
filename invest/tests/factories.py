@@ -36,13 +36,10 @@ class InvestHomePageFactory(wagtail_factories.PageFactory):
         wagtail_factories.ImageFactory
     )
     benefits_section_title = factory.fuzzy.FuzzyText(length=10)
-    capital_invest_section_title = factory.fuzzy.FuzzyText(length=10)
     sector_title = factory.fuzzy.FuzzyText(length=10)
     sector_button_text = factory.fuzzy.FuzzyText(length=10)
     sector_button_url = factory.fuzzy.FuzzyText(length=10)
     hpo_title = factory.fuzzy.FuzzyText(length=10)
-    setup_guide_title = factory.fuzzy.FuzzyText(length=10)
-    setup_guide_call_to_action_url = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_one_en_gb = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_two_en_gb = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_three_en_gb = factory.fuzzy.FuzzyText(length=10)

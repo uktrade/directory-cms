@@ -1,4 +1,4 @@
-#wagtail header,
+#wagtail .content > header,
 #wagtail .breadcrumb,
 #wagtail .tab-nav,
 #page-reorder-form .index {
@@ -16,8 +16,8 @@
     background: darkgray;
 }
 
-#wagtail header::before,
-#wagtail header::after {
+#wagtail .content > header::before,
+#wagtail .content > header::after {
     content: "This is not the production environment.";
     position: absolute;
     width: 100%;

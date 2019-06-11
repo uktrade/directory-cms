@@ -13,12 +13,18 @@ from core.model_fields import MarkdownField
 from core.models import (
     BasePage, ExclusivePageMixin, ServiceMixin, FormPageMetaClass
 )
-from core.mixins import ServiceHomepageMixin
+from core.mixins import ServiceHomepageMixin, ServiceNameUniqueSlugMixin
 from core.panels import SearchEngineOptimisationPanel
 
 
-class InvestApp(ExclusivePageMixin, ServiceMixin, BasePage):
+class BaseInvestPage(ServiceNameUniqueSlugMixin, BasePage):
     service_name_value = cms.INVEST
+
+    class Meta:
+        abstract = True
+
+
+class InvestApp(ExclusivePageMixin, ServiceMixin, BaseInvestPage):
     slug_identity = 'invest-app'
 
     @classmethod
@@ -28,8 +34,7 @@ class InvestApp(ExclusivePageMixin, ServiceMixin, BasePage):
 
 # Sector models
 
-class SectorLandingPage(ExclusivePageMixin, BasePage):
-    service_name_value = cms.INVEST
+class SectorLandingPage(ExclusivePageMixin, BaseInvestPage):
     subpage_types = ['invest.sectorPage']
     slug_identity = cms.INVEST_SECTOR_LANDING_PAGE_SLUG
     slug_override = 'industries'
@@ -67,8 +72,7 @@ class SectorLandingPage(ExclusivePageMixin, BasePage):
     )
 
 
-class RegionLandingPage(ExclusivePageMixin, BasePage):
-    service_name_value = cms.INVEST
+class RegionLandingPage(ExclusivePageMixin, BaseInvestPage):
     subpage_types = ['invest.sectorPage']
     slug_identity = cms.INVEST_UK_REGION_LANDING_PAGE_SLUG
     slug_override = 'uk-regions'
@@ -105,9 +109,8 @@ class RegionLandingPage(ExclusivePageMixin, BasePage):
     )
 
 
-class SectorPage(BasePage):
+class SectorPage(BaseInvestPage):
     # Related sector are implemented as subpages
-    service_name_value = cms.INVEST
     subpage_types = ['invest.SectorPage']
 
     featured = models.BooleanField(default=False)
@@ -301,8 +304,7 @@ class SectorPage(BasePage):
 
 # Setup guide models
 
-class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
-    service_name_value = cms.INVEST
+class SetupGuideLandingPage(ExclusivePageMixin, BaseInvestPage):
     subpage_types = ['invest.SetupGuidePage']
     slug_identity = cms.INVEST_GUIDE_LANDING_PAGE_SLUG
     # override the slug when generating the url
@@ -331,8 +333,7 @@ class SetupGuideLandingPage(ExclusivePageMixin, BasePage):
     )
 
 
-class SetupGuidePage(BasePage):
-    service_name_value = cms.INVEST
+class SetupGuidePage(BaseInvestPage):
     view_path = 'setup-guides/'
 
     description = models.TextField()  # appears in card on external pages
@@ -445,8 +446,7 @@ class SetupGuidePage(BasePage):
     )
 
 
-class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
-    service_name_value = cms.INVEST
+class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
     slug_identity = cms.INVEST_HOME_PAGE_SLUG
     view_path = ''
 
@@ -463,7 +463,7 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         related_name='+'
     )
 
-    benefits_section_title = models.CharField(max_length=255)
+    benefits_section_title = models.CharField(max_length=255, blank=True)
     benefits_section_intro = models.TextField(max_length=255, blank=True)
     benefits_section_content = MarkdownField(blank=True)
     benefits_section_img = models.ForeignKey(
@@ -473,20 +473,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+',
         verbose_name="Benefits section image"
-    )
-
-    capital_invest_section_title = models.CharField(
-        max_length=255
-    )
-    capital_invest_section_content = MarkdownField(
-        blank=True
-    )
-    capital_invest_section_image = models.ForeignKey(
-        'wagtailimages.Image',
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
     )
 
     eu_exit_section_title = models.CharField(
@@ -521,44 +507,29 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         verbose_name="EU exit section image"
     )
 
-    # subsections
-    subsection_title_one = models.CharField(max_length=255, blank=True)
-    subsection_content_one = MarkdownField(blank=True)
-
-    subsection_title_two = models.CharField(max_length=255, blank=True)
-    subsection_content_two = MarkdownField(blank=True)
-
-    subsection_title_three = models.CharField(max_length=255, blank=True)
-    subsection_content_three = MarkdownField(blank=True)
-
-    subsection_title_four = models.CharField(max_length=255, blank=True)
-    subsection_content_four = MarkdownField(blank=True)
-
-    subsection_title_five = models.CharField(max_length=255, blank=True)
-    subsection_content_five = MarkdownField(blank=True)
-
-    subsection_title_six = models.CharField(max_length=255, blank=True)
-    subsection_content_six = MarkdownField(blank=True)
-
-    subsection_title_seven = models.CharField(max_length=255, blank=True)
-    subsection_content_seven = MarkdownField(blank=True)
-
     sector_title = models.TextField(
         default="Discover UK Industries",
-        max_length=255)
+        max_length=255,
+        blank=True
+    )
 
     sector_button_text = models.TextField(
         default="See more industries",
-        max_length=255)
+        max_length=255,
+        blank=True
+    )
 
     sector_button_url = models.CharField(
-        max_length=255)
+        max_length=255,
+        blank=True
+    )
 
     sector_intro = models.TextField(max_length=255, blank=True)
 
     hpo_title = models.CharField(
         max_length=255,
-        verbose_name="High potential opportunity section title"
+        verbose_name="High potential opportunity section title",
+        blank=True
     )
     hpo_intro = models.TextField(
         max_length=255,
@@ -566,9 +537,24 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         verbose_name="High potential opportunity section intro"
     )
 
+    capital_invest_section_title = models.CharField(
+        max_length=255, blank=True
+    )
+    capital_invest_section_content = MarkdownField(
+        blank=True
+    )
+    capital_invest_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
     setup_guide_title = models.CharField(
         default='Set up an overseas business in the UK',
-        max_length=255)
+        max_length=255,
+        blank=True)
 
     setup_guide_lead_in = models.TextField(
         blank=True,
@@ -583,7 +569,10 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         related_name='+',
         verbose_name="Setup guide image"
     )
-    setup_guide_call_to_action_url = models.CharField(max_length=255)
+    setup_guide_call_to_action_url = models.CharField(
+        max_length=255,
+        blank=True
+    )
 
     isd_section_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -604,10 +593,55 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         verbose_name='Investment Support Directory section text'
     )
 
-    how_we_help_title = models.CharField(default='How we help', max_length=255)
+    featured_card_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    featured_card_one_title = models.CharField(blank=True, max_length=255)
+    featured_card_one_summary = MarkdownField(blank=True)
+    featured_card_one_cta_link = models.CharField(max_length=255, blank=True)
+
+    featured_card_two_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    featured_card_two_title = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    featured_card_two_summary = MarkdownField(
+        max_length=255,
+        blank=True,
+    )
+    featured_card_two_cta_link = models.CharField(max_length=255, blank=True)
+
+    featured_card_three_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    featured_card_three_title = models.CharField(
+        max_length=255, blank=True
+    )
+    featured_card_three_summary = MarkdownField(blank=True)
+    featured_card_three_cta_link = models.CharField(max_length=255, blank=True)
+
+    how_we_help_title = models.CharField(
+        default='How we help',
+        max_length=255,
+        blank=True
+    )
     how_we_help_lead_in = models.TextField(blank=True, null=True)
     # how we help
-    how_we_help_text_one = models.CharField(max_length=255)
+    how_we_help_text_one = models.CharField(max_length=255, blank=True)
     how_we_help_icon_one = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -615,7 +649,7 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    how_we_help_text_two = models.CharField(max_length=255)
+    how_we_help_text_two = models.CharField(max_length=255, blank=True)
     how_we_help_icon_two = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -623,7 +657,7 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    how_we_help_text_three = models.CharField(max_length=255)
+    how_we_help_text_three = models.CharField(max_length=255, blank=True)
     how_we_help_icon_three = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -631,7 +665,7 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    how_we_help_text_four = models.CharField(max_length=255)
+    how_we_help_text_four = models.CharField(max_length=255, blank=True)
     how_we_help_icon_four = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -639,7 +673,7 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    how_we_help_text_five = models.CharField(max_length=255)
+    how_we_help_text_five = models.CharField(max_length=255, blank=True)
     how_we_help_icon_five = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -649,10 +683,16 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
     )
     how_we_help_text_six = models.CharField(max_length=255, blank=True)
 
-    contact_section_title = models.CharField(max_length=255)
+    contact_section_title = models.CharField(max_length=255, blank=True)
     contact_section_content = models.TextField(max_length=255, blank=True)
-    contact_section_call_to_action_text = models.CharField(max_length=255)
-    contact_section_call_to_action_url = models.CharField(max_length=255)
+    contact_section_call_to_action_text = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    contact_section_call_to_action_url = models.CharField(
+        max_length=255,
+        blank=True
+    )
 
     image_panels = [
         ImageChooserPanel('hero_image'),
@@ -685,7 +725,7 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
 
         MultiFieldPanel(
             heading='EU Exit section',
-            classname='collapsible',
+            classname='collapsible collapsed',
             children=[
                 FieldPanel('eu_exit_section_title'),
                 FieldPanel('eu_exit_section_content'),
@@ -696,8 +736,8 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
 
         ),
         MultiFieldPanel(
-            heading='Featured card links ',
-            classname='collapsible',
+            heading='Old featured card links',
+            classname='collapsible collapsed',
             children=[
                 FieldRowPanel(
                     [
@@ -730,6 +770,40 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
             ],
         ),
         MultiFieldPanel(
+            heading='Featured card links ',
+            classname='collapsible',
+            children=[
+                FieldRowPanel(
+                    [
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel('featured_card_one_image'),
+                                FieldPanel('featured_card_one_title'),
+                                FieldPanel('featured_card_one_summary'),
+                                FieldPanel('featured_card_one_cta_link'),
+                            ],
+                        ),
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel('featured_card_two_image'),
+                                FieldPanel('featured_card_two_title'),
+                                FieldPanel('featured_card_two_summary'),
+                                FieldPanel('featured_card_two_cta_link'),
+                            ],
+                        ),
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel('featured_card_three_image'),
+                                FieldPanel('featured_card_three_title'),
+                                FieldPanel('featured_card_three_summary'),
+                                FieldPanel('featured_card_three_cta_link'),
+                            ]
+                        ),
+                    ]
+                ),
+            ],
+        ),
+        MultiFieldPanel(
             heading='Industries section',
             children=[
                 FieldPanel('sector_title'),
@@ -739,16 +813,13 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
             ],
 
         ),
-
         MultiFieldPanel(
             heading='High Potential Opportunities',
             children=[
                 FieldPanel('hpo_title'),
                 FieldPanel('hpo_intro')
             ],
-
         ),
-
         MultiFieldPanel(
             heading='How we help section',
             classname='collapsible',
@@ -776,7 +847,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
                             ],
                         ),
                     ],
-
                 ),
                 FieldRowPanel(
                     [
@@ -797,7 +867,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
                 ),
             ],
         ),
-
         MultiFieldPanel(
             heading='Contact Section',
             classname='collapsible',
@@ -807,7 +876,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
                 FieldPanel('contact_section_call_to_action_text'),
                 FieldPanel('contact_section_call_to_action_url'),
             ],
-
         ),
         SearchEngineOptimisationPanel()
     ]
@@ -826,12 +894,11 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BasePage):
     )
 
 
-class InfoPage(BasePage):
+class InfoPage(BaseInvestPage):
     """
     Markdown page - used for terms and conditions
     and privacy policy
     """
-    service_name_value = cms.INVEST
     view_path = 'info/'
     content = MarkdownField()
 
@@ -852,7 +919,7 @@ class InfoPage(BasePage):
 
 
 class HighPotentialOpportunityFormPage(
-    ExclusivePageMixin, BasePage, metaclass=FormPageMetaClass
+    ExclusivePageMixin, BaseInvestPage, metaclass=FormPageMetaClass
 ):
     # metaclass creates <fild_name>_label and <field_name>_help_text
     form_field_names = [
@@ -868,7 +935,6 @@ class HighPotentialOpportunityFormPage(
         'comment',
     ]
 
-    service_name_value = cms.INVEST
     slug_identity = cms.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SLUG
     full_path_override = 'high-potential-opportunities/rail/contact/'
 
@@ -894,8 +960,7 @@ class HighPotentialOpportunityFormPage(
     ]
 
 
-class HighPotentialOpportunityDetailPage(BasePage):
-    service_name_value = cms.INVEST
+class HighPotentialOpportunityDetailPage(BaseInvestPage):
     subpage_types = ['invest.HighPotentialOpportunityDetailPage']
     view_path = 'high-potential-opportunities/'
 
@@ -1318,8 +1383,7 @@ class HighPotentialOpportunityDetailPage(BasePage):
     )
 
 
-class HighPotentialOpportunityFormSuccessPage(BasePage):
-    service_name_value = cms.INVEST
+class HighPotentialOpportunityFormSuccessPage(BaseInvestPage):
     view_path = 'high-potential-opportunities/rail/contact/'
     slug_identity = cms.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SUCCESS_SLUG
 

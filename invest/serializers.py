@@ -52,6 +52,41 @@ class HowWeHelpProxyDataWrapper:
         )
 
 
+class FeaturedCardsDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def image(self):
+        return getattr(
+            self.instance,
+            f'featured_card_{self.position_number}_image'
+        )
+
+    @property
+    def title(self):
+        return getattr(
+            self.instance,
+            f'featured_card_{self.position_number}_title'
+        )
+
+    @property
+    def summary(self):
+        return getattr(
+            self.instance,
+            f'featured_card_{self.position_number}_summary'
+        )
+
+    @property
+    def cta_link(self):
+        return getattr(
+            self.instance,
+            f'featured_card_{self.position_number}_cta_link'
+        )
+
+
 class PulloutSerializer(serializers.Serializer):
     text = core_fields.MarkdownToHTMLField()
     stat = serializers.CharField(allow_null=True)
@@ -125,9 +160,7 @@ class SetupGuidePageSerializer(BasePageSerializer):
     children_setup_guides = serializers.SerializerMethodField()
 
     def get_children_setup_guides(self, instance):
-        queryset = instance.get_descendants().type(
-            SetupGuidePage
-        ).live().specific()
+        queryset = SetupGuidePage.objects.descendant_of(instance).live()
         serializer = SetupGuidePageSerializer(
             queryset,
             many=True,
@@ -154,10 +187,7 @@ class SetupGuideLandingPageSerializer(
     children_setup_guides = serializers.SerializerMethodField()
 
     def get_children_setup_guides(self, instance):
-        from .models import SetupGuidePage
-        queryset = instance.get_descendants().type(
-            SetupGuidePage
-        ).live().specific()
+        queryset = SetupGuidePage.objects.descendant_of(instance).live()
         serializer = SetupGuidePageSerializer(
             queryset,
             many=True,
@@ -175,6 +205,15 @@ class HowWeHelpSerializer(serializers.Serializer):
     )
 
 
+class FeaturedCardsSerializer(serializers.Serializer):
+    image = wagtail_fields.ImageRenditionField(
+        'fill-640x360'
+    )
+    title = serializers.CharField(max_length=255)
+    summary = core_fields.MarkdownToHTMLField(max_length=255)
+    cta_link = serializers.CharField(max_length=255)
+
+
 class InvestHomePageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField(max_length=50)
     heading = serializers.CharField(max_length=255)
@@ -186,22 +225,31 @@ class InvestHomePageSerializer(BasePageSerializer):
     benefits_section_intro = serializers.CharField(max_length=255)
     benefits_section_content = core_fields.MarkdownToHTMLField()
     benefits_section_img = wagtail_fields.ImageRenditionField('fill-640x360')
-    capital_invest_section_title = serializers.CharField(max_length=255)
-    capital_invest_section_content = core_fields.MarkdownToHTMLField()
-    capital_invest_section_image = wagtail_fields.ImageRenditionField(
-        'fill-640x360')
     eu_exit_section_title = serializers.CharField(max_length=255)
     eu_exit_section_content = core_fields.MarkdownToHTMLField()
     eu_exit_section_call_to_action_text = serializers.CharField(max_length=255)
     eu_exit_section_call_to_action_url = serializers.CharField(max_length=255)
     eu_exit_section_img = wagtail_fields.ImageRenditionField('original')
-    subsections = serializers.SerializerMethodField()
     sector_title = serializers.CharField(max_length=255)
     sector_intro = serializers.CharField(max_length=255)
     hpo_title = serializers.CharField(max_length=255)
     hpo_intro = serializers.CharField(max_length=255)
     sector_button_text = serializers.CharField(max_length=255)
     sector_button_url = serializers.CharField(max_length=255)
+    how_we_help_title = serializers.CharField(max_length=255)
+    how_we_help_lead_in = serializers.CharField(max_length=255)
+    how_we_help = serializers.SerializerMethodField()
+    contact_section_title = serializers.CharField(max_length=255)
+    contact_section_content = serializers.CharField(max_length=255)
+    contact_section_call_to_action_text = serializers.CharField(max_length=255)
+    contact_section_call_to_action_url = serializers.CharField(max_length=255)
+    sectors = serializers.SerializerMethodField()
+    high_potential_opportunities = serializers.SerializerMethodField()
+    guides = serializers.SerializerMethodField()
+    capital_invest_section_title = serializers.CharField(max_length=255)
+    capital_invest_section_content = core_fields.MarkdownToHTMLField()
+    capital_invest_section_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360')
     setup_guide_title = serializers.CharField(max_length=255)
     setup_guide_content = core_fields.MarkdownToHTMLField()
     setup_guide_img = wagtail_fields.ImageRenditionField('fill-640x360')
@@ -213,16 +261,7 @@ class InvestHomePageSerializer(BasePageSerializer):
     isd_section_image = wagtail_fields.ImageRenditionField('fill-640x360')
     isd_section_title = serializers.CharField(max_length=255)
     isd_section_text = core_fields.MarkdownToHTMLField(max_length=255)
-    how_we_help_title = serializers.CharField(max_length=255)
-    how_we_help_lead_in = serializers.CharField(max_length=255)
-    how_we_help = serializers.SerializerMethodField()
-    contact_section_title = serializers.CharField(max_length=255)
-    contact_section_content = serializers.CharField(max_length=255)
-    contact_section_call_to_action_text = serializers.CharField(max_length=255)
-    contact_section_call_to_action_url = serializers.CharField(max_length=255)
-    sectors = serializers.SerializerMethodField()
-    high_potential_opportunities = serializers.SerializerMethodField()
-    guides = serializers.SerializerMethodField()
+    featured_cards = serializers.SerializerMethodField()
 
     def get_how_we_help(self, instance):
         data = [
@@ -230,14 +269,6 @@ class InvestHomePageSerializer(BasePageSerializer):
             for num in ONE_TO_SIX_WORDS
         ]
         serializer = HowWeHelpSerializer(data, many=True)
-        return serializer.data
-
-    def get_subsections(self, instance):
-        data = [
-            SubsectionProxyDataWrapper(instance=instance, suffix=num)
-            for num in ONE_TO_SEVEN_WORDS
-        ]
-        serializer = SubsectionSerializer(data, many=True)
         return serializer.data
 
     def get_sectors(self, instance):
@@ -273,6 +304,17 @@ class InvestHomePageSerializer(BasePageSerializer):
             allow_null=True,
             context=self.context
         )
+        return serializer.data
+
+    def get_featured_cards(self, instance):
+        data = [
+            FeaturedCardsDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['one', 'two', 'three']
+        ]
+        serializer = FeaturedCardsSerializer(data, many=True)
         return serializer.data
 
 

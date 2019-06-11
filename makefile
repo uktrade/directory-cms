@@ -38,13 +38,14 @@ debug_db:
 	$(DEBUG_SET_ENV_VARS) && $(DEBUG_CREATE_DB)
 
 migrations:
-	$(DEBUG_SET_ENV_VARS) && ./manage.py makemigrations core export_readiness find_a_supplier invest components great_international
+	$(DEBUG_SET_ENV_VARS) && ./manage.py makemigrations core export_readiness find_a_supplier invest components great_international groups users
 
 
 DEBUG_SET_ENV_VARS := \
 	export PORT=8010; \
 	export SECRET_KEY=debug; \
 	export DEBUG=true;\
+	export DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT=10;\
 	export SESSION_COOKIE_SECURE=false; \
 	export UTM_COOKIE_DOMAIN=.great; \
 	export SECURE_HSTS_SECONDS=0; \
@@ -69,12 +70,13 @@ DEBUG_SET_ENV_VARS := \
 	export FEATURE_DEBUG_TOOLBAR_ENABLED=true; \
 	export REDIS_CACHE_URL=redis://localhost:6379; \
 	export REDIS_CELERY_URL=redis://localhost:6379/1; \
-	export API_CACHE_DISABLED=true; \
+	export API_CACHE_DISABLED=false; \
 	export ENVIRONMENT_CSS_THEME_FILE=core/css/environment_dev_theme.css; \
 	export CELERY_ALWAYS_EAGER=true; \
 	export ACTIVITY_STREAM_ACCESS_KEY_ID=123-id-key; \
 	export ACTIVITY_STREAM_SECRET_ACCESS_KEY=123-secret-key; \
-	export FEATURE_ENFORCE_STAFF_SSO_ENABLED=false
+	export FEATURE_ENFORCE_STAFF_SSO_ENABLED=false; \
+	export USERS_REQUEST_ACCESS_PREVENT_RESUBMISSION=false \
 
 
 TEST_SET_ENV_VARS := \
@@ -90,7 +92,10 @@ TEST_SET_ENV_VARS := \
 	export EMAIL_HOST_USER=debug; \
 	export EMAIL_HOST_PASSWORD=debug; \
 	export DEFAULT_FROM_EMAIL=debug; \
-	export FEATURE_ENFORCE_STAFF_SSO_ENABLED=false
+	export FEATURE_ENFORCE_STAFF_SSO_ENABLED=false; \
+	export USERS_REQUEST_ACCESS_PREVENT_RESUBMISSION=true; \
+	export GOVNOTIFY_USER_PENDING_APPROVAL_TEMPLATE_ID=pending-template-id; \
+	export GOVNOTIFY_USER_APPROVED_TEMPLATE_ID=approved-template-id
 
 debug_migrate:
 	$(DEBUG_SET_ENV_VARS) && ./manage.py migrate
@@ -135,7 +140,13 @@ upgrade_requirements:
 	pip-compile --upgrade requirements.in
 	pip-compile --upgrade requirements_test.in
 
-update_db_template: debug_migrate
-	pg_dump -O -f db_template.sql directory_cms_debug
+update_db_template: \
+	debug_migrate
+	pg_dump \
+		--no-owner \
+		--exclude-table=auth_user \
+		--exclude-table=users_userprofile \
+		--file=db_template.sql \
+		--dbname=directory_cms_debug
 
 .PHONY: clean test_requirements debug_webserver debug_test debug

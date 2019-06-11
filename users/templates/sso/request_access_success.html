@@ -1,0 +1,17 @@
+{% extends "sso/request_access.html" %}
+{% load i18n %}
+
+{% block header %}
+    {% trans "Welcome to Wagtail" as title %}
+    {% include "wagtailadmin/shared/header.html" with title=title subtitle=subtitle %}
+{% endblock %}
+
+{% block content_intro %}
+    <div class="intro">
+        <p><strong>{% trans "Your registration request was submitted successfully." %}</strong></p>
+        <p>{% trans "It is waiting to be reviewed by a team leader. You'll be notified via email as soon as this has happened." %}</p>
+        </p>
+    </div>
+{% endblock %}
+
+{% block content_form %}{% endblock %}

@@ -14,6 +14,7 @@ from django.views.generic import RedirectView
 import core.views
 import export_readiness.views
 from activitystream.views import ActivityStreamView
+from groups.views import GroupInfoModalView
 
 api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
@@ -101,8 +102,18 @@ urlpatterns = [
         login_required(csrf_exempt(core.views.PreloadPageView.as_view())),
         name='preload-add-page',
     ),
+    url(
+        r'^admin/group-info/$',
+        login_required(GroupInfoModalView.as_view()),
+        name='group-info',
+    ),
+
+    # Prevent users from changing their email address
+    url(r'^admin/account/change_email/$', RedirectView.as_view(url='/admin/')),
+
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
+    url(r'^auth/request-access/', include('users.urls_sso', namespace="sso")),
     url(
         r'^activity-stream/v1/',
         ActivityStreamView.as_view(),
