@@ -1,4 +1,3 @@
-from directory_constants.constants import cms
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ValidationError
 from rest_framework.renderers import JSONRenderer
