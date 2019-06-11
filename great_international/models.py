@@ -2815,9 +2815,7 @@ class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
 
     slug_identity = 'opportunities'
 
-    parent_page_types = [
-        'great_international.GreatInternationalApp'
-    ]
+    parent_page_types = ['great_international.InternationalHomePage']
 
     @classmethod
     def get_required_translatable_fields(cls):
