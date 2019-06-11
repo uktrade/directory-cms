@@ -5,8 +5,7 @@ from core import fields as core_fields
 from core.serializers import (
     BasePageSerializer,
     ChildPagesSerializerHelper,
-    FormPageSerializerMetaclass,
-    OpportunityPageWithRelatedSectorPageSerializerHelper)
+    FormPageSerializerMetaclass)
 from invest.models import HighPotentialOpportunityDetailPage
 
 from .models import (
@@ -396,8 +395,7 @@ class PageWithRelatedPagesSerializer(BasePageSerializer):
 
 
 class InternationalSectorPageSerializer(
-    PageWithRelatedPagesSerializer,
-    OpportunityPageWithRelatedSectorPageSerializerHelper
+    PageWithRelatedPagesSerializer
 ):
 
     heading = serializers.CharField(max_length=255)
@@ -518,11 +516,27 @@ class InternationalSectorPageSerializer(
 
     related_opportunities = serializers.SerializerMethodField()
 
-    def get_related_opportunities(self, obj):
-        return self.get_opportunity_page_with_self_as_related_sector_data_for(
-            obj,
-            RelatedOpportunitySerializer
+    def get_related_opportunities(self, instance):
+
+        queryset = []
+        all_opp_pages = CapitalInvestOpportunityPage.objects.live().public()
+
+        for page in all_opp_pages:
+            for related_sectors in page.related_sectors.all():
+                if not related_sectors.related_sector:
+                    continue
+                elif related_sectors.related_sector.title == instance.title:
+                    queryset.append(page)
+
+        if not queryset:
+            return []
+
+        serializer = RelatedOpportunitySerializer(
+            queryset,
+            allow_null=True,
+            context=self.context
         )
+        return serializer.data['opportunities']
 
 
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
