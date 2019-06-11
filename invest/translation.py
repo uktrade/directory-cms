@@ -18,42 +18,20 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'benefits_section_content',
         'benefits_section_img',
 
-        'capital_invest_section_title',
-        'capital_invest_section_content',
-        'capital_invest_section_image',
-
         'eu_exit_section_title',
         'eu_exit_section_content',
         'eu_exit_section_call_to_action_text',
         'eu_exit_section_call_to_action_url',
         'eu_exit_section_img',
 
-        # subsections
-        'subsection_title_one',
-        'subsection_content_one',
-
-        'subsection_title_two',
-        'subsection_content_two',
-
-        'subsection_title_three',
-        'subsection_content_three',
-
-        'subsection_title_four',
-        'subsection_content_four',
-
-        'subsection_title_five',
-        'subsection_content_five',
-
-        'subsection_title_six',
-        'subsection_content_six',
-
-        'subsection_title_seven',
-        'subsection_content_seven',
-
         'sector_title',
         'sector_intro',
         'hpo_title',
         'hpo_intro',
+
+        'capital_invest_section_title',
+        'capital_invest_section_content',
+        'capital_invest_section_image',
         'setup_guide_title',
         'setup_guide_content',
         'setup_guide_img',
@@ -62,6 +40,22 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'isd_section_image',
         'isd_section_title',
         'isd_section_text',
+
+        'featured_card_one_image',
+        'featured_card_one_title',
+        'featured_card_one_summary',
+        'featured_card_one_cta_link',
+
+        'featured_card_two_image',
+        'featured_card_two_title',
+        'featured_card_two_summary',
+        'featured_card_two_cta_link',
+
+        'featured_card_three_image',
+        'featured_card_three_title',
+        'featured_card_three_summary',
+        'featured_card_three_cta_link',
+
         'how_we_help_title',
         'how_we_help_lead_in',
         # how we help

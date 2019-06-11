@@ -3,13 +3,13 @@ import hashlib
 from urllib.parse import urlencode, urljoin
 
 from directory_constants.constants import choices
-from django.core.exceptions import ValidationError
+
 from modeltranslation import settings as modeltranslation_settings
-from modeltranslation.translator import translator
 from modeltranslation.utils import build_localized_fieldname
+from modeltranslation.translator import translator
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
-from wagtail.core.models import Page, PageBase
+from wagtail.core.models import Page, PageBase, Site
 
 from django.core import signing
 from django.conf import settings
@@ -18,8 +18,7 @@ from django.contrib.contenttypes.fields import (
 )
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import ArrayField
-from django.db import models
-from django.db import transaction
+from django.db import models, transaction
 from django.forms import MultipleChoiceField
 from django.shortcuts import redirect
 from django.utils import translation
@@ -133,32 +132,7 @@ class BasePage(Page):
     @transaction.atomic
     def save(self, *args, **kwargs):
         self.service_name = self.service_name_value
-        if not self._slug_is_available(
-            slug=self.slug,
-            parent=self.get_parent(),
-            page=self
-        ):
-            raise ValidationError({'slug': 'This slug is already in use'})
         return super().save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        """We need to override delete to use the Page's parent one.
-
-        Using the Page one would cause the original _slug_is_available method
-        to be called and that is not considering services
-        """
-        super(Page, self).delete(*args, **kwargs)
-
-    @staticmethod
-    def _slug_is_available(slug, parent, page=None):
-        from core import filters  # circular dependencies
-        queryset = filters.ServiceNameFilter().filter_service_name(
-            queryset=Page.objects.filter(slug=slug).exclude(pk=page.pk),
-            name=None,
-            value=page.service_name,
-        )
-        is_unique_in_service = (queryset.count() == 0)
-        return is_unique_in_service
 
     def get_draft_token(self):
         return self.signer.sign(self.pk)
@@ -182,6 +156,31 @@ class BasePage(Page):
         site = site or self.get_site()
         return self.url_path[len(site.root_page.url_path):]
 
+    def get_site(self):
+        """
+        Overrides Page.get_site() in order to fetch ``RoutingSettings``
+        in the same query (for tree-based-routing). Will also create a
+        ``RoutingSettings`` for the site if they haven't been created yet.
+        """
+        url_parts = self.get_url_parts()
+
+        if url_parts is None:
+            # page is not routable
+            return
+
+        site_id, root_url, page_path = url_parts
+
+        site = Site.objects.select_related('routingsettings').get(id=site_id)
+
+        # Ensure the site has routingsettings before returning
+        try:
+            # if select_related() above was successful, great!
+            site.routingsettings
+        except RoutingSettings.DoesNotExist:
+            # RoutingSettings need creating
+            site.routingsettings = RoutingSettings.objects.create(site=site)
+        return site
+
     def get_tree_based_url(self, include_site_url=False):
         """
         Returns the URL for this page based on it's position in the tree,
@@ -189,13 +188,8 @@ class BasePage(Page):
         Wagtail multisite must be set up in order for this to work.
         """
         site = self.get_site()
+        routing_settings = site.routingsettings
         page_path = self.get_non_prefixed_url(site)
-
-        # get routing settings for the site
-        try:
-            routing_settings = site.routingsettings
-        except RoutingSettings.DoesNotExist:
-            routing_settings = RoutingSettings.objects.create(site=site)
 
         # prefix path with prefix from routing settings
         prefix = routing_settings.root_path_prefix.rstrip('/')
@@ -241,9 +235,9 @@ class BasePage(Page):
         if not self.view_path:
             # starts from 2 to remove root page and app page
             path_components = [
-                page.specific.slug_override or page.specific.slug
+                page.specific_class.slug_override or page.slug
                 for page in self.get_ancestors()[2:]
-                if not page.specific.folder_page]
+                if not page.specific_class.folder_page]
 
         # need to also take into account the view_path if it's set
         else:
@@ -355,8 +349,12 @@ class BasePage(Page):
 
     @classmethod
     def can_exist_under(cls, parent):
+        """
+        Overrides Page.can_exist_under() so that pages cannot be created or
+        moved below a parent page whos specific page class has been removed.
+        """
         if not parent.specific_class:
-            return []
+            return False
         return super().can_exist_under(parent)
 
 
@@ -441,7 +439,6 @@ class BreadcrumbMixin(models.Model):
 
 
 class ServiceMixin(models.Model):
-    service_name_value = None
     base_form_class = forms.BaseAppAdminPageForm
     view_path = ''
     parent_page_types = ['wagtailcore.Page']
@@ -451,7 +448,7 @@ class ServiceMixin(models.Model):
 
     @classmethod
     def allowed_subpage_models(cls):
-        allowed_name = cls.service_name_value
+        allowed_name = getattr(cls, 'service_name_value', None)
         return [
             model for model in Page.allowed_subpage_models()
             if getattr(model, 'service_name_value', None) == allowed_name

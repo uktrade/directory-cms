@@ -1,0 +1,36 @@
+.nav-search,
+.nav-main {
+    display: none;
+}
+
+header h1 {
+    text-transform: none;
+}
+
+.intro {
+    color: #444444;
+    font-size: 1.3em;
+    line-height: 1.5em;
+    max-width: 520px;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.request-access-form .fields {
+    max-width: 520px;
+
+}
+
+.request-access-form .field label {
+    display: block;
+    font-weight: normal;
+    float: none;
+}
+
+.request-access-form .field > label {
+    font-weight: bold;
+}
+
+.request-access-form .field .help {
+    font-size: 1.1em;
+}

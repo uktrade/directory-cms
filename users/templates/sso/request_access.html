@@ -1,0 +1,51 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n static %}
+{% block titletag %}{% trans "Welcome to Wagtail!" %}{% endblock %}
+
+{% block extra_css %}
+    {% include "wagtailadmin/pages/_editor_css.html" %}
+    {{ form.media.css }}
+    <link rel="stylesheet" href="{% static 'wagtailadmin/sso/css/request_access.css' %}" type="text/css" />
+{% endblock %}
+
+{% block extra_js %}
+    {% include "wagtailadmin/pages/_editor_js.html" %}
+    {{ form.media.js }}
+    <script src="{% static 'wagtailadmin/sso/js/request_access.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    {% block header %}
+        {% trans "Welcome to Wagtail" as title %}
+        {% include "wagtailadmin/shared/header.html" with title=title %}
+    {% endblock %}
+
+    <section class="active nice-padding">
+        {% block content_intro %}
+        <div class="intro">
+            <p>
+                Wagtail is the Content Managment System used for great.gov.uk.
+                To request access, please answer the following questions:
+            </p>
+        </div>
+        {% endblock %}
+
+        {% block content_form %}
+            <form class="request-access-form" action="{% url 'sso:request_access' %}" method="POST" novalidate{% if form.is_multipart %}
+                enctype="multipart/form-data" {% endif %}>
+                    {% csrf_token %}
+                    <ul class="fields">
+                        {% block fields %}
+                            {% for field in form.visible_fields %}
+                                {% include "wagtailadmin/shared/field_as_li.html" %}
+                            {% endfor %}
+                        {% endblock %}
+                        <li><button class="button">{% trans "Request access" %}</button></li>
+                    </ul>
+                </div>
+            </form>
+        {% endblock %}
+    </div>
+
+{% endblock %}
