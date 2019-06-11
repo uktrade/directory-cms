@@ -19,7 +19,6 @@ class GreatInternationalConfig(AppConfig):
         cache.InternationalEUExitFormSuccessPageSubscriber.subscribe()
         cache.InternationalCapitalInvestLandingPageSubscriber.subscribe()
         cache.CapitalInvestRegionPageSubscriber.subscribe()
-        cache.CapitalInvestRegionalSectorPageSubscriber.subscribe()
         cache.CapitalInvestOpportunityPageSubscriber.subscribe()
         cache.InvestInternationalHomePageSubscriber.subscribe()
         cache.InvestHighPotentialOpportunityDetailPageSubscriber.subscribe()
