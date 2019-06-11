@@ -69,9 +69,6 @@ def test_models_hierarchy():
     assert models.InternationalEUExitFormSuccessPage.allowed_parent_page_models() == [  # NOQA
         models.InternationalEUExitFormPage,
     ]
-    assert models.CapitalInvestRegionPage.allowed_subpage_models() == [
-        models.CapitalInvestRegionalSectorPage,
-    ]
     assert models.CapitalInvestOpportunityListingPage.allowed_subpage_models() == [  # NOQA
         models.CapitalInvestOpportunityPage,
     ]

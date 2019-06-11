@@ -64,7 +64,8 @@ class InternationalSectorPageTranslationOptions(BaseTranslationOptions):
         'section_three_subsection_two_body',
         'related_page_one',
         'related_page_two',
-        'related_page_three'
+        'related_page_three',
+        'project_opportunities_title'
     )
 
 
@@ -383,28 +384,6 @@ class CapitalInvestRegionPageTranslationOptions(
     )
 
 
-@register(models.CapitalInvestRegionalSectorPage)
-class CapitalInvestRegionalSectorPageTranslationOptions(
-    BaseTranslationOptions
-):
-    fields = (
-        'breadcrumbs_label',
-        'hero_image',
-        'hero_title',
-        'featured_description',
-
-        'sector_summary_intro',
-        'sector_summary_content',
-        'sector_summary_image',
-
-        'investment_opportunities_title',
-
-        'contact_title',
-        'contact_text',
-
-    )
-
-
 @register(models.CapitalInvestOpportunityListingPage)
 class CapitalInvestOpportunityListingPageTranslationOptions(
         BaseTranslationOptions):
@@ -460,19 +439,20 @@ class CapitalInvestOpportunityPageTranslationOptions(
 
         'contact_title',
         'contact_text',
+
     )
 
 
-@register(models.SectorRelatedOpportunities)
-class SectorRelatedOpportunitiesSerializer(
+@register(models.CapitalInvestRelatedRegions)
+class RelatedRegionsSerializer(
         BaseTranslationOptions):
     fields = (
         'page',
     )
 
 
-@register(models.CapitalInvestRelatedRegions)
-class RelatedRegionsSerializer(
+@register(models.CapitalInvestRelatedSectors)
+class RelatedSectorsSerializer(
         BaseTranslationOptions):
     fields = (
         'page',

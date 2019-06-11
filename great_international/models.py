@@ -80,22 +80,23 @@ class InternationalSectorPage(BaseInternationalPage):
     sub_heading = models.TextField(blank=True)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
+        on_delete=models.PROTECT
     )
     heading_teaser = models.TextField(blank=True, verbose_name='Introduction')
 
     section_one_body = MarkdownField(
         null=True,
-        verbose_name='3 unique selling points markdown'
+        verbose_name='3 unique selling points markdown',
+        blank=True
     )
     section_one_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Image for unique selling points'
+        verbose_name='Image for unique selling points',
+        blank=True
     )
     section_one_image_caption = models.CharField(
         max_length=255,
@@ -106,12 +107,12 @@ class InternationalSectorPage(BaseInternationalPage):
         blank=True,
         verbose_name='Image caption attribution')
 
-    statistic_1_number = models.CharField(max_length=255)
-    statistic_1_heading = models.CharField(max_length=255)
+    statistic_1_number = models.CharField(max_length=255, blank=True)
+    statistic_1_heading = models.CharField(max_length=255, blank=True)
     statistic_1_smallprint = models.CharField(max_length=255, blank=True)
 
-    statistic_2_number = models.CharField(max_length=255)
-    statistic_2_heading = models.CharField(max_length=255)
+    statistic_2_number = models.CharField(max_length=255, blank=True)
+    statistic_2_heading = models.CharField(max_length=255, blank=True)
     statistic_2_smallprint = models.CharField(max_length=255, blank=True)
 
     statistic_3_number = models.CharField(max_length=255, blank=True)
@@ -132,10 +133,11 @@ class InternationalSectorPage(BaseInternationalPage):
 
     section_two_heading = models.CharField(
         max_length=255,
-        verbose_name='Spotlight'
+        verbose_name='Spotlight',
+        blank=True
     )
     section_two_teaser = models.TextField(
-        verbose_name='Spotlight summary'
+        verbose_name='Spotlight summary', blank=True
     )
 
     section_two_subsection_one_icon = models.ForeignKey(
@@ -148,10 +150,10 @@ class InternationalSectorPage(BaseInternationalPage):
     )
     section_two_subsection_one_heading = models.CharField(
         max_length=255,
-        verbose_name='Spotlight 1 heading'
+        verbose_name='Spotlight 1 heading', blank=True
     )
     section_two_subsection_one_body = models.TextField(
-        verbose_name='Spotlight 1 body'
+        verbose_name='Spotlight 1 body', blank=True
     )
 
     section_two_subsection_two_icon = models.ForeignKey(
@@ -164,10 +166,10 @@ class InternationalSectorPage(BaseInternationalPage):
     )
     section_two_subsection_two_heading = models.CharField(
         max_length=255,
-        verbose_name='Spotlight 2 heading'
+        verbose_name='Spotlight 2 heading', blank=True
     )
     section_two_subsection_two_body = models.TextField(
-        verbose_name='Spotlight 2 body'
+        verbose_name='Spotlight 2 body', blank=True
     )
 
     section_two_subsection_three_icon = models.ForeignKey(
@@ -180,10 +182,10 @@ class InternationalSectorPage(BaseInternationalPage):
     )
     section_two_subsection_three_heading = models.CharField(
         max_length=255,
-        verbose_name='Spotlight 3 heading'
+        verbose_name='Spotlight 3 heading', blank=True
     )
     section_two_subsection_three_body = models.TextField(
-        verbose_name='Spotlight 3 body'
+        verbose_name='Spotlight 3 body', blank=True
     )
 
     case_study_title = models.CharField(max_length=255, blank=True)
@@ -270,6 +272,8 @@ class InternationalSectorPage(BaseInternationalPage):
         related_name='+'
     )
 
+    project_opportunities_title = models.CharField(max_length=255, blank=True)
+
     content_panels = [
         MultiFieldPanel(
             heading='Heading',
@@ -285,7 +289,9 @@ class InternationalSectorPage(BaseInternationalPage):
             heading='Unique selling points',
             children=[
                 HelpPanel(
-                    'Use H2 (##) markdown for the three subheadings'),
+                    'Use H2 (##) markdown for the three subheadings.'
+                    ' Required fields for section to show: 3 Unique Selling '
+                    'Points Markdown'),
                 FieldRowPanel(
                     [
                         FieldPanel('section_one_body'),
@@ -356,6 +362,8 @@ class InternationalSectorPage(BaseInternationalPage):
             children=[
                 FieldPanel('section_two_heading'),
                 FieldPanel('section_two_teaser'),
+                HelpPanel(
+                    'Each icon needs a heading for it to show on the page.'),
                 FieldRowPanel(
                     [
                         MultiFieldPanel(
@@ -396,9 +404,14 @@ class InternationalSectorPage(BaseInternationalPage):
             heading='Case Study',
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Case Study Image, Case Study Title'),
+                ImageChooserPanel('case_study_image'),
                 FieldPanel('case_study_title'),
                 FieldPanel('case_study_description'),
                 FieldPanel('case_study_cta_text'),
+                HelpPanel('Cta\'s require both text and a link to show '
+                          'on page. '),
                 PageChooserPanel(
                     'case_study_cta_page',
                     [
@@ -471,6 +484,17 @@ class InternationalSectorPage(BaseInternationalPage):
                             'great_international.InternationalCampaignPage',
                         ]),
                 ])
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Project Opportunities',
+            classname='collapsible ',
+            children=[
+                FieldPanel('project_opportunities_title'),
+                HelpPanel('Prioritised opportunity pages that link to this '
+                          'sector will display here. Required fields for '
+                          'section to show: Project Opportunities Title, 1 '
+                          'Prioritised Opportunity Related to this sector'),
             ]
         ),
         SearchEngineOptimisationPanel()
@@ -1984,18 +2008,16 @@ class InternationalCapitalInvestLandingPage(
             heading="Reason to invest in the UK section",
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Reason to Invest Title, Reason to Invest Content'),
                 FieldPanel('reason_to_invest_section_title'),
                 FieldPanel('reason_to_invest_section_intro'),
                 FieldPanel('reason_to_invest_section_content'),
                 ImageChooserPanel('reason_to_invest_section_image'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading="How we help section",
-            classname='collapsible',
-            children=[
                 FieldPanel('how_we_help_title'),
                 FieldPanel('how_we_help_intro'),
+                HelpPanel('Each icon requires corresponding text to show '
+                          'on page'),
                 FieldRowPanel([
                     MultiFieldPanel([
                         ImageChooserPanel('how_we_help_one_icon'),
@@ -2022,6 +2044,8 @@ class InternationalCapitalInvestLandingPage(
             heading="Investment Opportunities by regions",
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Region Opportunity Title, 1 Related Region'),
                 FieldPanel('region_ops_section_title'),
                 FieldPanel('region_ops_section_intro'),
                 InlinePanel(
@@ -2054,9 +2078,12 @@ class InternationalCapitalInvestLandingPage(
             heading="Energy Sector",
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Energy Sector Title, Energy Sector Content'),
                 FieldPanel('energy_sector_title'),
                 FieldPanel('energy_sector_content'),
                 ImageChooserPanel('energy_sector_image'),
+                HelpPanel('CTA requires text and PDF to show on teh page.'),
                 FieldPanel('energy_sector_cta_text'),
                 DocumentChooserPanel('energy_sector_pdf_document'),
             ]
@@ -2065,6 +2092,9 @@ class InternationalCapitalInvestLandingPage(
             heading="Homes in England Section",
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Homes In England Section Title, Title and PDF '
+                          'for each card'),
                 FieldPanel('homes_in_england_section_title'),
                 InlinePanel(
                     'added_homes_in_england_card_fields',
@@ -2076,6 +2106,8 @@ class InternationalCapitalInvestLandingPage(
             heading="Contact Section",
             classname='collapsible collapsed',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Contact Title, Contact Text'),
                 FieldPanel('contact_section_title'),
                 FieldPanel('contact_section_text'),
                 FieldPanel('contact_section_cta_text')
@@ -2097,18 +2129,13 @@ class InternationalCapitalInvestLandingPage(
 
 class CapitalInvestRegionPage(BaseInternationalPage):
     parent_page_types = ['great_international.GreatInternationalApp']
-    subpage_types = [
-        'great_international.CapitalInvestRegionalSectorPage',
-    ]
 
     breadcrumbs_label = models.CharField(max_length=255)
     hero_title = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
         related_name='+',
-        blank=True
+        on_delete=models.PROTECT
     )
 
     featured_description = models.TextField(max_length=255, blank=True)
@@ -2247,6 +2274,8 @@ class CapitalInvestRegionPage(BaseInternationalPage):
         MultiFieldPanel(
             heading="Region summary",
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Region Summary Section Intro'),
                 ImageChooserPanel('region_summary_section_image'),
                 FieldPanel('region_summary_section_intro'),
                 FieldPanel('region_summary_section_content'),
@@ -2262,6 +2291,8 @@ class CapitalInvestRegionPage(BaseInternationalPage):
         MultiFieldPanel(
             heading="Economics Statistics",
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Economics Data Title'),
                 FieldPanel('economics_data_title'),
                 FieldRowPanel([
                     MultiFieldPanel([
@@ -2290,6 +2321,8 @@ class CapitalInvestRegionPage(BaseInternationalPage):
         MultiFieldPanel(
             heading="Location Statistics",
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Location Data Title'),
                 FieldPanel('location_data_title'),
                 FieldRowPanel([
                     MultiFieldPanel([
@@ -2318,6 +2351,9 @@ class CapitalInvestRegionPage(BaseInternationalPage):
         MultiFieldPanel(
             heading="Extra optional Property and Infrastructure section",
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Property and Infrastructure Section Title, '
+                          'Property and Infrastructure Section Content'),
                 ImageChooserPanel('property_and_infrastructure_section_image'),
                 FieldPanel('property_and_infrastructure_section_title'),
                 FieldPanel('property_and_infrastructure_section_content'),
@@ -2325,17 +2361,25 @@ class CapitalInvestRegionPage(BaseInternationalPage):
         ),
         MultiFieldPanel(
             heading="Case study",
+            classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Case Study Image, Case Study Title'),
                 ImageChooserPanel('case_study_image'),
                 FieldPanel('case_study_title'),
                 FieldPanel('case_study_text'),
+                HelpPanel('Cta\'s require both text and a link to show '
+                          'on page. '),
                 FieldPanel('case_study_cta_text'),
                 FieldPanel('case_study_cta_link'),
             ],
         ),
         MultiFieldPanel(
             heading="Contact",
+            classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Contact Title, Contact Text'),
                 FieldPanel('contact_title'),
                 FieldPanel('contact_text'),
             ],
@@ -2354,129 +2398,8 @@ class CapitalInvestRegionPage(BaseInternationalPage):
     )
 
 
-class RelatedOpportunity(models.Model):
-    opportunity = models.ForeignKey(
-        'great_international.CapitalInvestOpportunityPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    panels = [
-        PageChooserPanel(
-            'opportunity',
-            [
-                'great_international.'
-                'CapitalInvestOpportunityPage'
-            ])
-    ]
-
-    class Meta:
-        abstract = True
-
-
-class SectorRelatedOpportunities(Orderable, RelatedOpportunity):
-    page = ParentalKey(
-        'great_international.CapitalInvestRegionalSectorPage',
-        on_delete=models.CASCADE,
-        related_name='added_opportunities',
-        blank=True,
-        null=True,
-    )
-
-
-class CapitalInvestRegionalSectorPage(BaseInternationalPage):
-
-    parent_page_types = ['great_international.CapitalInvestRegionPage']
-
-    breadcrumbs_label = models.CharField(max_length=255)
-    hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    hero_title = models.CharField(max_length=255)
-    featured_description = models.TextField(
-        max_length=255,
-        blank=True,
-        help_text="This description is used when this page is featured "
-                  "on another page, i.e. the Capital Invest Region "
-                  "page"
-    )
-
-    sector_summary_intro = models.TextField(max_length=255, blank=True)
-    sector_summary_content = MarkdownField(blank=True)
-    sector_summary_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-
-    investment_opportunities_title = models.CharField(
-        max_length=255,
-        blank=True
-    )
-
-    contact_title = models.CharField(max_length=255, blank=True)
-    contact_text = MarkdownField(blank=True)
-
-    content_panels = [
-        FieldPanel('breadcrumbs_label'),
-        MultiFieldPanel(
-            heading="Hero",
-            children=[
-                ImageChooserPanel('hero_image'),
-                FieldPanel('hero_title'),
-            ],
-        ),
-        FieldPanel('featured_description'),
-        MultiFieldPanel(
-            heading="Sector summary",
-            children=[
-                FieldPanel('sector_summary_intro'),
-                FieldPanel('sector_summary_content'),
-                ImageChooserPanel('sector_summary_image'),
-            ],
-        ),
-        MultiFieldPanel(
-            heading="Investment opportunities",
-            children=[
-                FieldPanel('investment_opportunities_title'),
-                InlinePanel(
-                    'added_opportunities',
-                    label="Related Opportunities"
-                ),
-            ],
-        ),
-        MultiFieldPanel(
-            heading="Contact",
-            children=[
-                FieldPanel('contact_title'),
-                FieldPanel('contact_text'),
-            ],
-        ),
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
-    ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
-
-
-class CapitalInvestOpportunityListingPage(
-    WagtailAdminExclusivePageMixin, ServiceMixin, BaseInternationalPage
-):
+class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
+                                          BaseInternationalPage):
 
     slug_identity = 'opportunities'
 
@@ -2493,6 +2416,39 @@ class CapitalInvestOpportunityListingPage(
         return [CapitalInvestOpportunityPage]
 
 
+class RelatedSector(models.Model):
+    related_sector = models.ForeignKey(
+        'great_international.InternationalSectorPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    panels = [
+        PageChooserPanel(
+            'related_sector',
+            [
+                'great_international.'
+                'InternationalSectorPage'
+            ]
+        ),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class CapitalInvestRelatedSectors(Orderable, RelatedSector):
+    page = ParentalKey(
+        'great_international.CapitalInvestOpportunityPage',
+        on_delete=models.CASCADE,
+        related_name='related_sectors',
+        blank=True,
+        null=True,
+    )
+
+
 class CapitalInvestOpportunityPage(BaseInternationalPage):
 
     parent_page_types = [
@@ -2502,10 +2458,8 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
     breadcrumbs_label = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
         related_name='+',
-        blank=True
+        on_delete=models.PROTECT
     )
     hero_title = models.CharField(max_length=255)
 
@@ -2568,8 +2522,8 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
     )
     planning_status = models.CharField(max_length=255, blank=True)
 
-    project_background_title = models.CharField(max_length=255, blank=True)
-    project_background_intro = models.TextField(blank=True)
+    project_background_title = models.CharField(max_length=255)
+    project_background_intro = models.TextField()
     project_description_title = models.CharField(max_length=255, blank=True)
     project_description_content = MarkdownField(blank=True)
     project_promoter_title = models.CharField(max_length=255, blank=True)
@@ -2622,7 +2576,21 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
     contact_title = models.CharField(max_length=255, blank=True)
     contact_text = MarkdownField(blank=True)
 
+    prioritised_opportunity = models.BooleanField(
+        default=False,
+        verbose_name="Prioritise project?",
+        help_text='Mark this if this opportunity is a priority and should be '
+                  'promoted on the related sector page'
+    )
+
     content_panels = [
+        MultiFieldPanel(
+            heading="Related sector",
+            classname='collapsible collapsed',
+            children=[
+                InlinePanel('related_sectors', label="Related Sectors"),
+            ],
+        ),
         FieldPanel('breadcrumbs_label'),
         MultiFieldPanel(
             heading="Hero",
@@ -2633,7 +2601,10 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         ),
         MultiFieldPanel(
             heading="Opportunity summary",
+            classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Opportunity Summary Intro'),
                 FieldPanel('opportunity_summary_intro'),
                 FieldPanel('opportunity_summary_content'),
                 ImageChooserPanel('opportunity_summary_image'),
@@ -2641,7 +2612,10 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         ),
         MultiFieldPanel(
             heading="Opportunity Details",
+            classname='collapsible',
             children=[
+                HelpPanel('Icons require the corresponding text to show on '
+                          'page'),
                 FieldRowPanel([
                     MultiFieldPanel([
                         ImageChooserPanel('location_icon'),
@@ -2674,7 +2648,9 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         ),
         MultiFieldPanel(
             heading="Project Details",
+            classname='collapsible',
             children=[
+                HelpPanel('Title requires corresponding text to show on page'),
                 FieldPanel('project_background_title'),
                 FieldPanel('project_background_intro'),
                 FieldRowPanel([
@@ -2692,7 +2668,10 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         ),
         MultiFieldPanel(
             heading="Similar projects",
+            classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Similar Projects Title, 1 Related Page'),
                 FieldPanel('similar_projects_title'),
                 FieldRowPanel([
                     PageChooserPanel(
@@ -2714,24 +2693,33 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
                             'CapitalInvestOpportunityPage'
                         ]),
                 ]),
+                HelpPanel('Cta\'s require both text and a link to show '
+                          'on page. '),
                 FieldPanel('similar_projects_cta_text'),
                 FieldPanel('similar_projects_cta_link'),
             ],
         ),
         MultiFieldPanel(
             heading="Case study",
+            classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Case Study Image, Case Study Title'),
                 ImageChooserPanel('case_study_image'),
                 FieldPanel('case_study_title'),
                 FieldPanel('case_study_text'),
+                HelpPanel('Cta\'s require both text and a link to show '
+                          'on page. '),
                 FieldPanel('case_study_cta_text'),
                 FieldPanel('case_study_cta_link'),
             ],
         ),
-
         MultiFieldPanel(
             heading="Contact",
+            classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Contact Title, Contact Text'),
                 FieldPanel('contact_title'),
                 FieldPanel('contact_text'),
             ],
@@ -2741,6 +2729,7 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('prioritised_opportunity'),
         FieldPanel('uses_tree_based_routing'),
     ]
 
