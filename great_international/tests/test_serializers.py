@@ -517,11 +517,7 @@ def test_international_sector_page_gets_opps_with_sector_as_related(rf):
         context={'request': rf.get('/')}
     )
 
-    for page in sector_serializer.data[
-        'related_opportunities'
-    ][
-        'opportunities'
-    ]:
+    for page in sector_serializer.data['related_opportunities']:
         assert page['meta']['slug'] == 'opp'
 
 
