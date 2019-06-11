@@ -291,6 +291,9 @@ class InternationalCapitalInvestLandingPageFactory(
         model = models.InternationalCapitalInvestLandingPage
 
     hero_title = factory.fuzzy.FuzzyText(length=10)
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     last_published_at = timezone.now()
@@ -303,25 +306,15 @@ class CapitalInvestRegionPageFactory(wagtail_factories.PageFactory):
         model = models.CapitalInvestRegionPage
 
     hero_title = factory.fuzzy.FuzzyText(length=10)
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
     breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
     featured_description = factory.fuzzy.FuzzyText(length=10)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     last_published_at = timezone.now()
     parent = None
-
-
-class CapitalInvestRegionalSectorPageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.CapitalInvestRegionalSectorPage
-
-    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
-    hero_title = factory.fuzzy.FuzzyText(length=10)
-    featured_description = factory.fuzzy.FuzzyText(length=10)
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    last_published_at = timezone.now()
 
 
 class CapitalInvestOpportunityPageFactory(wagtail_factories.PageFactory):
@@ -331,6 +324,11 @@ class CapitalInvestOpportunityPageFactory(wagtail_factories.PageFactory):
 
     breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
     hero_title = factory.fuzzy.FuzzyText(length=10)
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    project_background_title = factory.fuzzy.FuzzyText(length=10)
+    project_background_intro = factory.fuzzy.FuzzyText(length=10)
     location = factory.fuzzy.FuzzyText(length=10)
     scale = factory.fuzzy.FuzzyText(length=10)
     investment_type = factory.fuzzy.FuzzyText(length=10)
