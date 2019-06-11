@@ -127,6 +127,12 @@ class InternationalHomePageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
+class InternationalHomePageOldFactory(InternationalHomePageFactory):
+
+    class Meta:
+        model = models.InternationalHomePageOld
+
+
 class InternationalArticleListingPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
