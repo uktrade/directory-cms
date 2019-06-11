@@ -80,8 +80,9 @@ class InternationalSectorPage(BaseInternationalPage):
     sub_heading = models.TextField(blank=True)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
-        related_name='+',
-        on_delete=models.PROTECT
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
     )
     heading_teaser = models.TextField(blank=True, verbose_name='Introduction')
 
@@ -2134,8 +2135,9 @@ class CapitalInvestRegionPage(BaseInternationalPage):
     hero_title = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
-        related_name='+',
-        on_delete=models.PROTECT
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
     )
 
     featured_description = models.TextField(max_length=255, blank=True)
@@ -2458,8 +2460,9 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
     breadcrumbs_label = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
-        related_name='+',
-        on_delete=models.PROTECT
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
     )
     hero_title = models.CharField(max_length=255)
 
