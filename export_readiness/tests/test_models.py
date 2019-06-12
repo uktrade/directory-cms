@@ -1,6 +1,5 @@
 import pytest
 
-import find_a_supplier.models
 from export_readiness import models
 from export_readiness.tests import factories
 
