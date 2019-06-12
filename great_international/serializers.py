@@ -1072,15 +1072,11 @@ class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
     planning_status = serializers.CharField(max_length=255)
 
     project_background_title = serializers.CharField(max_length=255)
-    project_background_intro = serializers.CharField(max_length=255)
+    project_background_intro = core_fields.MarkdownToHTMLField()
     project_description_title = serializers.CharField(max_length=255)
-    project_description_content = core_fields.MarkdownToHTMLField(
-        max_length=255
-    )
+    project_description_content = core_fields.MarkdownToHTMLField()
     project_promoter_title = serializers.CharField(max_length=255)
-    project_promoter_content = core_fields.MarkdownToHTMLField(
-        max_length=255
-    )
+    project_promoter_content = core_fields.MarkdownToHTMLField()
     project_image = wagtail_fields.ImageRenditionField(
         'original')
 
