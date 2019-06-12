@@ -567,6 +567,15 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
     section_two_teaser = serializers.CharField()
     section_two_subsections = serializers.SerializerMethodField()
 
+    def get_page_type(self, instance):
+        """
+        Overrides BasePageSerializer.get_page_type() so that `page_type`
+        is the same whether serialising an `InternationalHomePage` or
+        `InternationalHomePageOld` instance. This will prevent front-ends
+        from falling over while still requesting the old page.
+        """
+        return 'InternationalHomePage'
+
     def get_section_two_subsections(self, instance):
         data = [
             SectionTwoSubsectionProxyDataWrapper(
