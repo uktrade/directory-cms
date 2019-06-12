@@ -224,8 +224,14 @@ class BasePage(Page):
             Used by `full_path` and `get_tree_based_breadcrumbs`
             in BasePageSerializer.
             Starts at 2 to exclude the root page and the app page.
+            Ignores 'folder' pages.
         """
-        return self.get_ancestors()[2:]
+        ancestors = self.get_ancestors()[2:]
+
+        return [
+            page for page in ancestors
+            if not page.specific_class.folder_page
+        ]
 
     @property
     def full_path(self):
@@ -245,7 +251,7 @@ class BasePage(Page):
             path_components = [
                 page.specific_class.slug_override or page.slug
                 for page in self.ancestor_pages
-                if not page.specific_class.folder_page]
+            ]
 
         # need to also take into account the view_path if it's set
         else:
