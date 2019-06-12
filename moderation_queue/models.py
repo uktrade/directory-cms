@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -22,6 +23,11 @@ class Moderation(models.Model):
     publish_at = models.DateTimeField(null=True)
     comment = models.TextField(max_length=100, blank=True)
 
+    # When the lock of this Moderation ends.  A user opening this Moderation
+    # for review will set this field and update it while their browser is open
+    # on that page.
+    locked_until = models.DateTimeField(null=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     objects = ModerationQuerySet.as_manager()
@@ -31,6 +37,10 @@ class Moderation(models.Model):
 
     def is_2i_moderated(self):
         return self.reviews.filter(is_accepted=True).exists()
+
+    @property
+    def is_locked(self):
+        return self.locked_until > timezone.now()
 
     @property
     def latest_review(self):

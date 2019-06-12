@@ -1,11 +1,14 @@
+from datetime import timedelta
+
 import jwt
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_exempt
@@ -18,6 +21,27 @@ from wagtail.core.models import PageRevision
 from .forms import SubmitForm
 from .models import Moderation, ModeratorReview
 from .serializers import ModeratorReviewSerializer
+
+
+@method_decorator(login_required, name='dispatch')
+class ExtendModerationLock(View):
+    # TODO: should this check the Review token too?
+    http_method_names = ['post']
+
+    def post(self, request, *args, **kwargs):
+        """
+        Endpoint to update the given Moderation's lock time
+        """
+        lock_extension = timedelta(minutes=settings.MODERATION_LOCK_TIMEOUT)
+        new_lock_time = timezone.now() + lock_extension
+
+        try:
+            (Moderation.objects.filter(pk=self.kwargs['id'])
+                               .update(locked_until=new_lock_time))
+        except Moderation.DoesNotExist:
+            raise Http404
+
+        return HttpResponse('lock updated', status_code=200)
 
 
 # FIXME: replace with review.api.views.ReviewTokenMixin once merged with the
@@ -172,7 +196,11 @@ class ReviewModeration(ReviewTokenMixin, CreateAPIView):
         }
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
+
+        with transaction.atomic():
+            self.perform_create(serializer)
+            moderation.locked_until = None
+            moderation.save()
 
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
