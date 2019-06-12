@@ -2934,7 +2934,7 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
     planning_status = models.CharField(max_length=255, blank=True)
 
     project_background_title = models.CharField(max_length=255)
-    project_background_intro = models.TextField()
+    project_background_intro = MarkdownField()
     project_description_title = models.CharField(max_length=255, blank=True)
     project_description_content = MarkdownField(blank=True)
     project_promoter_title = models.CharField(max_length=255, blank=True)
