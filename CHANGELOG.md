@@ -7,6 +7,7 @@
 - CMS-1591 - Copy invest homepage and HPO pages in International app
 - CMS-1604 - Added `WagtailAdminExclusivePageMixin` (a less restrictive version of `ExclusivePageMixin`) and used for page types in great_international
 - CI-165 - Redesign of capital invest pages, added help panels to show which fields are required to get section to show on capital invest pages
+- CMS-1627 - Replace GreatInternationalApp with InternationalHomePage
 
 
 ## [2019.06.12](https://github.com/uktrade/directory-cms/releases/tag/2019.06.12)
