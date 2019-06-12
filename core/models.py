@@ -2,7 +2,7 @@ from functools import partial
 import hashlib
 from urllib.parse import urlencode, urljoin
 
-from directory_constants.constants import choices
+from directory_constants import choices
 
 from modeltranslation import settings as modeltranslation_settings
 from modeltranslation.utils import build_localized_fieldname

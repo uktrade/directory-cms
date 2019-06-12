@@ -1,4 +1,4 @@
-from directory_constants.constants import choices, cms
+from directory_constants import choices, cms
 from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList, InlinePanel

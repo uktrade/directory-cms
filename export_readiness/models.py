@@ -1,5 +1,5 @@
-from directory_constants.constants import cms
-from directory_constants.constants import urls
+from directory_constants import cms
+from directory_constants import urls
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel, HelpPanel)
