@@ -4,7 +4,7 @@ import factory
 import factory.fuzzy
 import wagtail_factories
 
-from directory_constants.constants import choices
+from directory_constants import choices
 
 from find_a_supplier import models
 

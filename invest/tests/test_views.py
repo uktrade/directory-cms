@@ -1,5 +1,5 @@
 import pytest
-from directory_constants.constants import cms
+from directory_constants import cms
 from rest_framework.reverse import reverse
 from wagtail.documents.models import Document
 from django.core.files.base import ContentFile

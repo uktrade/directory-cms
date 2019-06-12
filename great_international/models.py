@@ -1,6 +1,6 @@
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 
-from directory_constants.constants import cms
+from directory_constants import cms
 from django.forms import Textarea, CheckboxSelectMultiple
 from django.utils.text import slugify
 from modelcluster.fields import ParentalManyToManyField

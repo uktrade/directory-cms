@@ -1,4 +1,4 @@
-from directory_constants.constants import cms
+from directory_constants import cms
 from modeltranslation.utils import build_localized_fieldname
 from wagtail.core.models import Page
 

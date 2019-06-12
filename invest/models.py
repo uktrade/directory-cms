@@ -1,4 +1,4 @@
-from directory_constants.constants import cms
+from directory_constants import cms
 from wagtail.admin.edit_handlers import (
     FieldPanel, ObjectList, MultiFieldPanel, FieldRowPanel
 )

@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from directory_constants.constants import cms
+from directory_constants import cms
 
 APP_URLS = {
     cms.FIND_A_SUPPLIER: settings.APP_URL_FIND_A_SUPPLIER,
