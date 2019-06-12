@@ -32,6 +32,9 @@
 - CI-153 - Removed the cards pdf buttons on Capital Invest Landing page, region cards are now only displayed with markdown text
 - CMS-1638 - Prevent leaking user information on sql table dump
 - CMS-1603 - Introduced separate base page classes for each app so that unique slug enforcement can be relaxed in great_international
+- CMS-1604 - Added `WagtailAdminExclusivePageMixin` (a less restrictive version of `ExclusivePageMixin`) and used for page types in great_international
+- CI-165 - Redesign of capital invest pages, added help panels to show which fields are required to get section to show on capital invest pages
+- CI-125 - Changed field types and max_length for some fields in the capital invest opportunity pages
 
 ### Fixed bugs:
 
