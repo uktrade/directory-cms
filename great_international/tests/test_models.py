@@ -7,14 +7,13 @@ from export_readiness.tests import factories as exread_factories
 
 
 def test_models_hierarchy():
-    # app
-    assert models.GreatInternationalApp.allowed_subpage_models() == [
+    # homepage / app root
+    assert models.InternationalHomePage.allowed_subpage_models() == [
         models.InternationalArticleListingPage,
         models.InternationalTopicLandingPage,
         models.InternationalCuratedTopicLandingPage,
         models.InternationalGuideLandingPage,
         models.InternationalRegionPage,
-        models.InternationalHomePage,
         models.InternationalEUExitFormPage,
         models.InternationalEUExitFormSuccessPage,
         models.InternationalCapitalInvestLandingPage,
@@ -25,11 +24,9 @@ def test_models_hierarchy():
         models.InvestHighPotentialOpportunityFormPage,
         models.InvestHighPotentialOpportunityFormSuccessPage
     ]
-    assert models.GreatInternationalApp.allowed_parent_page_models() == [
+    assert models.InternationalHomePage.allowed_parent_page_models() == [
         Page,
     ]
-    # homepage
-    assert models.InternationalHomePage.allowed_subpage_models() == []
     # region page
     assert models.InternationalRegionPage.allowed_subpage_models() == [
         models.InternationalLocalisedFolderPage
@@ -75,28 +72,10 @@ def test_models_hierarchy():
 
 
 @pytest.mark.parametrize('model', [
-    models.GreatInternationalApp,
-])
-def test_app_required_translatable_fields(model):
-    assert model.get_required_translatable_fields() == []
-
-
-@pytest.mark.parametrize('model', [
     models.CapitalInvestOpportunityListingPage,
 ])
 def test_opp_listing_required_translatable_fields(model):
     assert model.get_required_translatable_fields() == []
-
-
-@pytest.mark.django_db
-def test_set_slug():
-    instance = models.GreatInternationalApp.objects.create(
-        title_en_gb='the app',
-        depth=2,
-        path='/thing',
-    )
-
-    assert instance.slug == models.GreatInternationalApp.slug_identity
 
 
 @pytest.mark.django_db
