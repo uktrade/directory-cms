@@ -219,7 +219,7 @@ class BasePage(Page):
         return url
 
     @property
-    def ancestor_pages(self):
+    def ancestors_in_app(self):
         """
             Used by `full_path` and `get_tree_based_breadcrumbs`
             in BasePageSerializer.
@@ -250,7 +250,7 @@ class BasePage(Page):
         if not self.view_path:
             path_components = [
                 page.specific_class.slug_override or page.slug
-                for page in self.ancestor_pages
+                for page in self.ancestors_in_app
             ]
 
         # need to also take into account the view_path if it's set
