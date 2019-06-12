@@ -4,11 +4,6 @@ from core.translation import BaseTranslationOptions
 from great_international import models
 
 
-@register(models.GreatInternationalApp)
-class GreatInternationalAppTranslationOptions(BaseTranslationOptions):
-    fields = []
-
-
 @register(models.InternationalSectorPage)
 class InternationalSectorPageTranslationOptions(BaseTranslationOptions):
     fields = (
@@ -121,6 +116,7 @@ class InternationalCampaignPageTranslationOptions(BaseTranslationOptions):
 
 
 @register(models.InternationalHomePage)
+@register(models.InternationalHomePageOld)
 class InternationalHomePageTranslationOptions(BaseTranslationOptions):
     fields = (
         'hero_title',
