@@ -9,6 +9,9 @@
 - CI-165 - Redesign of capital invest pages, added help panels to show which fields are required to get section to show on capital invest pages
 - CMS-1627 - Replace GreatInternationalApp with InternationalHomePage
 
+### Fixed Bugs
+- CI-217 - Fix Django security vulnerability by updating to new patch version.
+
 
 ## [2019.06.12](https://github.com/uktrade/directory-cms/releases/tag/2019.06.12)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.09...2019.06.12
