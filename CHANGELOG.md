@@ -4,7 +4,9 @@
 
 **Implemented enhancements:**
 
-- TBC
+- CMS-1591 - Copy invest homepage and HPO pages in International app
+- CMS-1604 - Added `WagtailAdminExclusivePageMixin` (a less restrictive version of `ExclusivePageMixin`) and used for page types in great_international
+- CI-165 - Redesign of capital invest pages, added help panels to show which fields are required to get section to show on capital invest pages
 
 
 ## [2019.06.12](https://github.com/uktrade/directory-cms/releases/tag/2019.06.12)
@@ -24,11 +26,8 @@
 - CI-128 - Changed required fields to be nullable and added new fields for featured cards on Invest home page
 - CI-152 - Changed `next steps` sections to be `contact` section on capital invest pages
 - CI-153 - Removed the cards pdf buttons on Capital Invest Landing page, region cards are now only displayed with markdown text
-- CMS-1591 - Copy invest homepage and HPO pages in International app
 - CMS-1638 - Prevent leaking user information on sql table dump
 - CMS-1603 - Introduced separate base page classes for each app so that unique slug enforcement can be relaxed in great_international
-- CMS-1604 - Added `WagtailAdminExclusivePageMixin` (a less restrictive version of `ExclusivePageMixin`) and used for page types in great_international
-- CI-165 - Redesign of capital invest pages, added help panels to show which fields are required to get section to show on capital invest pages
 
 ### Fixed bugs:
 
