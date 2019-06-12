@@ -23,7 +23,7 @@ class BasePageSerializer(serializers.Serializer):
 
     def get_tree_based_breadcrumbs(self, instance):
         breadcrumbs = [
-            page.specific for page in instance.specific.ancestor_pages]
+            page.specific for page in instance.specific.ancestors_in_app]
         breadcrumbs.append(instance)
         return PageTitleAndUrlSerializer(breadcrumbs, many=True).data
 
