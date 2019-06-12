@@ -5,7 +5,7 @@ from export_readiness.serializers import (
 )
 from export_readiness.tests.factories import (
     ArticlePageFactory, CountryGuidePageFactory, CampaignPageFactory,
-    HomePagFactory, HomePageOldFactory, TopicLandingPageFactory
+    HomePageFactory, HomePageOldFactory, TopicLandingPageFactory
 )
 
 

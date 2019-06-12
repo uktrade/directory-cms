@@ -20,7 +20,6 @@ from core.models import (
     BreadcrumbMixin,
     ExclusivePageMixin,
     FormPageMetaClass,
-    ServiceMixin,
 )
 from core.mixins import ServiceHomepageMixin, ServiceNameUniqueSlugMixin
 from core.panels import SearchEngineOptimisationPanel
