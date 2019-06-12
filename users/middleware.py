@@ -1,9 +1,10 @@
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.deprecation import MiddlewareMixin
 from .models import UserProfile
 
 
-class SSORedirectUsersToRequestAccessViews:
+class SSORedirectUsersToRequestAccessViews(MiddlewareMixin):
 
     admin_root_url = reverse_lazy('wagtailadmin_home')
     ignore_admin_urls = (
