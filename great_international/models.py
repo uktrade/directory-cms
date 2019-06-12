@@ -37,36 +37,6 @@ class BaseInternationalPage(BasePage):
         abstract = True
 
 
-class GreatInternationalApp(
-    ExclusivePageMixin, ServiceMixin, BaseInternationalPage
-):
-    slug_identity = 'great-international-app'
-
-    @classmethod
-    def get_required_translatable_fields(cls):
-        return []
-
-    @classmethod
-    def allowed_subpage_models(cls):
-        return [
-            InternationalArticleListingPage,
-            InternationalTopicLandingPage,
-            InternationalCuratedTopicLandingPage,
-            InternationalGuideLandingPage,
-            InternationalRegionPage,
-            InternationalHomePage,
-            InternationalEUExitFormPage,
-            InternationalEUExitFormSuccessPage,
-            InternationalCapitalInvestLandingPage,
-            CapitalInvestOpportunityListingPage,
-            CapitalInvestRegionPage,
-            InvestInternationalHomePage,
-            InvestHighPotentialOpportunityDetailPage,
-            InvestHighPotentialOpportunityFormPage,
-            InvestHighPotentialOpportunityFormSuccessPage
-        ]
-
-
 class InternationalSectorPage(BaseInternationalPage):
     class Meta:
         ordering = ['-heading']
@@ -517,6 +487,446 @@ class InternationalSectorPage(BaseInternationalPage):
 class InternationalHomePage(
     WagtailAdminExclusivePageMixin, ServiceHomepageMixin, BaseInternationalPage
 ):
+    slug_identity = 'great-international-app'
+
+    hero_title = models.CharField(max_length=255)
+    hero_subtitle = models.CharField(max_length=255, blank=True)
+    hero_cta_text = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    hero_cta_link = models.CharField(max_length=255, blank=True)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    invest_title = models.CharField(max_length=255)
+    invest_content = MarkdownField(blank=True)
+    invest_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    trade_title = models.CharField(max_length=255)
+    trade_content = MarkdownField(blank=True)
+    trade_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    # features highlight
+    section_two_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Features highlight title'
+    )
+    section_two_teaser = models.TextField(
+        blank=True,
+        verbose_name='Features highlight summary'
+    )
+
+    section_two_subsection_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Features highlight 1 icon'
+    )
+    section_two_subsection_one_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Features highlight 1 heading'
+    )
+    section_two_subsection_one_body = models.TextField(
+        blank=True,
+        verbose_name='Features highlight 1 body'
+    )
+
+    section_two_subsection_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Features highlight 2 icon'
+    )
+    section_two_subsection_two_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Features highlight 2 heading'
+    )
+    section_two_subsection_two_body = models.TextField(
+        blank=True,
+        verbose_name='Features highlight 2 body'
+    )
+
+    section_two_subsection_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Features highlight 3 icon'
+    )
+    section_two_subsection_three_heading = models.CharField(
+        blank=True,
+        max_length=255,
+        verbose_name='Features highlight 3 heading'
+    )
+    section_two_subsection_three_body = models.TextField(
+        blank=True,
+        verbose_name='Features highlight 3 body'
+    )
+
+    section_two_subsection_four_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Features highlight 4 icon'
+    )
+    section_two_subsection_four_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Features highlight 4 heading'
+    )
+    section_two_subsection_four_body = models.TextField(
+        blank=True,
+        verbose_name='Features highlight 4 body'
+    )
+
+    section_two_subsection_five_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Features highlight 5 icon'
+    )
+    section_two_subsection_five_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Features highlight 5 heading'
+    )
+    section_two_subsection_five_body = models.TextField(
+        blank=True,
+        verbose_name='Features highlight 5 body'
+    )
+
+    section_two_subsection_six_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Features highlight 6 icon'
+    )
+    section_two_subsection_six_heading = models.CharField(
+        blank=True,
+        max_length=255,
+        verbose_name='Features highlight 6 heading'
+    )
+    section_two_subsection_six_body = models.TextField(
+        blank=True,
+        verbose_name='Features highlight 6 body'
+    )
+
+    # tariffs
+    tariffs_title = models.CharField(max_length=255)
+    tariffs_description = MarkdownField()
+    tariffs_link = models.URLField()
+    tariffs_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    tariffs_call_to_action_text = models.CharField(max_length=255)
+
+    # featured links
+    featured_links_title = models.CharField(
+        blank=True,
+        max_length=255,
+    )
+    featured_links_summary = models.TextField(blank=True)
+
+    featured_link_one_heading = models.TextField(blank=True)
+    featured_link_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    featured_link_two_heading = models.TextField(blank=True)
+    featured_link_two_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    featured_link_three_heading = models.TextField(blank=True)
+    featured_link_three_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    # news
+    news_title = models.CharField(max_length=255)
+    related_page_one = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_two = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_three = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    study_in_uk_cta_text = models.CharField(max_length=255)
+    visit_uk_cta_text = models.CharField(max_length=255)
+
+    @classmethod
+    def allowed_subpage_models(cls):
+        return [
+            InternationalArticleListingPage,
+            InternationalTopicLandingPage,
+            InternationalCuratedTopicLandingPage,
+            InternationalGuideLandingPage,
+            InternationalRegionPage,
+            InternationalEUExitFormPage,
+            InternationalEUExitFormSuccessPage,
+            InternationalCapitalInvestLandingPage,
+            CapitalInvestOpportunityListingPage,
+            CapitalInvestRegionPage,
+            InvestInternationalHomePage,
+            InvestHighPotentialOpportunityDetailPage,
+            InvestHighPotentialOpportunityFormPage,
+            InvestHighPotentialOpportunityFormSuccessPage,
+        ]
+
+    content_panels = [
+        MultiFieldPanel(
+            heading="Hero Section",
+            children=[
+                FieldPanel('hero_title'),
+                FieldPanel('hero_subtitle'),
+                FieldPanel("hero_cta_text"),
+                FieldPanel("hero_cta_link"),
+                ImageChooserPanel("hero_image")
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Featured Cards",
+            children=[
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        heading='Invest Card',
+                        children=[
+                            FieldPanel('invest_title'),
+                            FieldPanel('invest_content'),
+                            ImageChooserPanel('invest_image')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        heading='Trade Card',
+                        children=[
+                            FieldPanel('trade_title'),
+                            FieldPanel('trade_content'),
+                            ImageChooserPanel('trade_image')
+                        ]
+                    ),
+                ]),
+            ]
+        ),
+
+        MultiFieldPanel(
+            heading='Features highlight',
+            children=[
+                FieldPanel('section_two_heading'),
+                FieldPanel('section_two_teaser'),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_one_icon'
+                            ),
+                            FieldPanel('section_two_subsection_one_heading'),
+                            FieldPanel('section_two_subsection_one_body')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_two_icon'
+                            ),
+                            FieldPanel('section_two_subsection_two_heading'),
+                            FieldPanel('section_two_subsection_two_body')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_three_icon'
+                            ),
+                            FieldPanel('section_two_subsection_three_heading'),
+                            FieldPanel('section_two_subsection_three_body')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_four_icon'
+                            ),
+                            FieldPanel('section_two_subsection_four_heading'),
+                            FieldPanel('section_two_subsection_four_body')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_five_icon'
+                            ),
+                            FieldPanel('section_two_subsection_five_heading'),
+                            FieldPanel('section_two_subsection_five_body')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            ImageChooserPanel(
+                                'section_two_subsection_six_icon'),
+                            FieldPanel('section_two_subsection_six_heading'
+                                       ),
+                            FieldPanel('section_two_subsection_six_body')
+                        ])
+                ])
+            ]),
+
+        MultiFieldPanel(
+            heading='Tariffs',
+            children=[
+                FieldPanel('tariffs_title'),
+                FieldPanel('tariffs_description'),
+                FieldPanel('tariffs_link'),
+                ImageChooserPanel('tariffs_image'),
+                FieldPanel('tariffs_call_to_action_text')
+            ]
+        ),
+
+        MultiFieldPanel(
+            heading='Featured links',
+            children=[
+                FieldPanel('featured_links_title'),
+                FieldPanel('featured_links_summary'),
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        children=[
+                            FieldPanel('featured_link_one_heading'),
+                            ImageChooserPanel('featured_link_one_image')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            FieldPanel('featured_link_two_heading'),
+                            ImageChooserPanel('featured_link_two_image')
+                        ]),
+                    MultiFieldPanel(
+                        children=[
+                            FieldPanel('featured_link_three_heading'),
+                            ImageChooserPanel('featured_link_three_image')
+                        ])
+                ])]
+        ),
+
+        MultiFieldPanel(
+            heading='News section',
+            children=[
+                FieldPanel('news_title'),
+                FieldRowPanel([
+                    PageChooserPanel(
+                        'related_page_one',
+                        [
+                            'great_international.InternationalArticlePage',
+                            'great_international.InternationalCampaignPage',
+                        ]),
+                    PageChooserPanel(
+                        'related_page_two',
+                        [
+                            'great_international.InternationalArticlePage',
+                            'great_international.InternationalCampaignPage',
+                        ]),
+                    PageChooserPanel(
+                        'related_page_three',
+                        [
+                            'great_international.InternationalArticlePage',
+                            'great_international.InternationalCampaignPage',
+                        ]),
+                ])
+            ]
+        ),
+
+        MultiFieldPanel(
+            heading='Featured CTA\'s',
+            children=[
+                FieldRowPanel([
+                    MultiFieldPanel(
+                        heading="Study in the UK",
+                        children=[
+                            FieldPanel('study_in_uk_cta_text')
+                        ]
+                    ),
+                    MultiFieldPanel(
+                        heading="Visit the UK",
+                        children=[
+                            FieldPanel('visit_uk_cta_text')
+                        ]
+                    ),
+                ]),
+            ]
+        ),
+
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+        FieldPanel('uses_tree_based_routing'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
+
+
+class InternationalHomePageOld(
+    ExclusivePageMixin, ServiceHomepageMixin, BaseInternationalPage
+):
     slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
     subpage_types = []
 
@@ -937,7 +1347,7 @@ class InternationalHomePage(
 
 
 class InternationalRegionPage(BaseInternationalPage):
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.InternationalLocalisedFolderPage'
     ]
@@ -1071,7 +1481,7 @@ class InternationalArticlePage(BaseInternationalPage):
 
 class InternationalArticleListingPage(BaseInternationalPage):
     parent_page_types = [
-        'great_international.GreatInternationalApp',
+        'great_international.InternationalHomePage',
         'great_international.InternationalTopicLandingPage'
     ]
     subpage_types = [
@@ -1366,7 +1776,7 @@ class InternationalCampaignPage(BaseInternationalPage):
 
 
 class InternationalTopicLandingPage(BaseInternationalPage):
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
@@ -1411,7 +1821,7 @@ class InternationalTopicLandingPage(BaseInternationalPage):
 
 
 class InternationalCuratedTopicLandingPage(BaseInternationalPage):
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = []
 
     display_title = models.CharField(max_length=255, blank=True, null=True)
@@ -1541,7 +1951,7 @@ class InternationalCuratedTopicLandingPage(BaseInternationalPage):
 
 
 class InternationalGuideLandingPage(BaseInternationalPage):
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = ['great_international.InternationalArticlePage']
 
     display_title = models.CharField(max_length=255)
@@ -1877,7 +2287,7 @@ class InternationalCapitalInvestLandingPage(
 ):
     slug_identity = 'capital-invest'
 
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
 
     hero_title = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
@@ -2129,7 +2539,7 @@ class InternationalCapitalInvestLandingPage(
 
 
 class CapitalInvestRegionPage(BaseInternationalPage):
-    parent_page_types = ['great_international.GreatInternationalApp']
+    parent_page_types = ['great_international.InternationalHomePage']
 
     breadcrumbs_label = models.CharField(max_length=255)
     hero_title = models.CharField(max_length=255)
@@ -2405,9 +2815,7 @@ class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
 
     slug_identity = 'opportunities'
 
-    parent_page_types = [
-        'great_international.GreatInternationalApp'
-    ]
+    parent_page_types = ['great_international.InternationalHomePage']
 
     @classmethod
     def get_required_translatable_fields(cls):

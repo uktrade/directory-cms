@@ -395,7 +395,7 @@ def test_lookup_by_path(root_page, page, admin_client):
 
 
 @pytest.mark.django_db
-def test_lookup_for_path_for_non_existent_page(client):
+def test_lookup_by_path_for_non_existent_page(client):
     site_id = 52
     path = 'xyz'
     response = client.get(reverse(
