@@ -138,7 +138,7 @@
                         {% if review.user == request.user %}
                         {% trans "You" %}
                         {% else %}
-                        {{ review.user.get_full_name|default:review.user.get_username }}
+                        {{ review.user.get_full_name }}
                         {% endif %}
                     </td>
 
