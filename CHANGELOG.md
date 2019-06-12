@@ -35,7 +35,6 @@
 - CMS-1638 - Prevent leaking user information on sql table dump
 - CMS-1603 - Introduced separate base page classes for each app so that unique slug enforcement can be relaxed in great_international
 
-
 ### Fixed bugs:
 
 - CMS-1556 - Fixed copy upstream not working for pages that have the same slug but exist under different apps
