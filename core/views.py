@@ -1,5 +1,4 @@
 from django_filters.rest_framework import DjangoFilterBackend
-
 from rest_framework.exceptions import ValidationError
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
@@ -191,6 +190,7 @@ class PageLookupBySlugAPIEndpoint(DetailViewEndpointBase):
 
         slug = self.kwargs['slug']
         service_name = self.request.GET['service_name']
+
         object_id = cache.PageIDCache.get_for_slug(
             slug=slug, service_name=service_name
         )
@@ -222,7 +222,9 @@ class PageLookupByPathAPIEndpoint(DetailViewEndpointBase):
             lookup_path = '/' + path.strip('/') + '/'
 
         # Query the cache for a matching `id`
-        object_id = cache.PageIDCache.get_for_path(lookup_path, site_id)
+        object_id = cache.PageIDCache.get_for_path(
+            site_id=site_id, path=lookup_path
+        )
         if object_id is None:
             raise Http404(
                 "No page could be found matching site_id '{}' and path '{}'"
