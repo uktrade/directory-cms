@@ -219,6 +219,21 @@ class BasePage(Page):
         return url
 
     @property
+    def ancestors_in_app(self):
+        """
+            Used by `full_path` and `get_tree_based_breadcrumbs`
+            in BasePageSerializer.
+            Starts at 2 to exclude the root page and the app page.
+            Ignores 'folder' pages.
+        """
+        ancestors = self.get_ancestors()[2:]
+
+        return [
+            page for page in ancestors
+            if not page.specific_class.folder_page
+        ]
+
+    @property
     def full_path(self):
         """Return the full path of a page, ignoring the root_page and
         the app page. Used by the lookup-by-url view in prototype mode
@@ -233,11 +248,10 @@ class BasePage(Page):
         path_components = []
 
         if not self.view_path:
-            # starts from 2 to remove root page and app page
             path_components = [
                 page.specific_class.slug_override or page.slug
-                for page in self.get_ancestors()[2:]
-                if not page.specific_class.folder_page]
+                for page in self.ancestors_in_app
+            ]
 
         # need to also take into account the view_path if it's set
         else:
