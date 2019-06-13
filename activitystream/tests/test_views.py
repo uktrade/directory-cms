@@ -8,6 +8,7 @@ from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient
 from django.conf import settings
+from django.utils import timezone
 
 from export_readiness.tests.factories import ArticlePageFactory
 
@@ -127,7 +128,7 @@ def test_if_61_seconds_in_past_401_returned(api_client):
     """If the Authorization header is generated 61 seconds in the past, then a
     401 is returned
     """
-    past = datetime.datetime.now() - datetime.timedelta(seconds=61)
+    past = timezone.now() - datetime.timedelta(seconds=61)
     with freeze_time(past):
         auth = auth_sender().request_header
     response = api_client.get(
@@ -154,7 +155,7 @@ def test_lists_live_articles_in_stream(api_client):
             article_title='Article A',
             article_teaser='Descriptive text',
             article_body_text='Body text',
-            last_published_at=datetime.datetime.now(),
+            last_published_at=timezone.now(),
             slug='article-a')
 
     with freeze_time('2012-01-14 12:00:02'):
@@ -162,7 +163,7 @@ def test_lists_live_articles_in_stream(api_client):
             article_title='Article B',
             article_teaser='Descriptive text',
             article_body_text='Body text',
-            last_published_at=datetime.datetime.now(),
+            last_published_at=timezone.now(),
             slug='article-b')
 
     with freeze_time('2012-01-14 12:00:01'):
@@ -170,7 +171,7 @@ def test_lists_live_articles_in_stream(api_client):
             article_title='Article C',
             article_teaser='Descriptive text',
             article_body_text='Body text',
-            last_published_at=datetime.datetime.now(),
+            last_published_at=timezone.now(),
             slug='article-c')
 
     with freeze_time('2012-01-14 12:00:01'):
@@ -178,7 +179,7 @@ def test_lists_live_articles_in_stream(api_client):
             article_title='Article D',
             article_teaser='Descriptive text',
             article_body_text='Body text',
-            last_published_at=datetime.datetime.now(),
+            last_published_at=timezone.now(),
             slug='article-d',
             live=False)
 
@@ -224,7 +225,7 @@ def test_pagination(api_client, django_assert_num_queries):
                 article_title='article_' + str(i),
                 article_teaser='Descriptive text',
                 article_body_text='Body text',
-                last_published_at=datetime.datetime.now(),
+                last_published_at=timezone.now(),
                 slug='article-' + str(i)
             )
 
@@ -234,7 +235,7 @@ def test_pagination(api_client, django_assert_num_queries):
                 article_title='article_' + str(i),
                 article_teaser='Descriptive text',
                 article_body_text='Body text',
-                last_published_at=datetime.datetime.now(),
+                last_published_at=timezone.now(),
                 slug='article-' + str(i)
             )
 

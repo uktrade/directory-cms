@@ -441,7 +441,7 @@ if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
         'django.contrib.auth.backends.ModelBackend',
         'authbroker_client.backends.AuthbrokerBackend'
     ]
-    LOGIN_URL = reverse_lazy('authbroker:login')
+    LOGIN_URL = reverse_lazy('authbroker_client:login')
     LOGIN_REDIRECT_URL = reverse_lazy('wagtailadmin_home')
 
     # authbroker config

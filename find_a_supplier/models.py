@@ -440,7 +440,7 @@ class IndustryArticlePage(BaseFASPage):
 class LandingPage(
     ExclusivePageMixin, ServiceHomepageMixin, BreadcrumbMixin, BaseFASPage
 ):
-    slug_identity = slugs.FIND_A_SUPPLIER_INDUSTRY_LANDING
+    slug_identity = slugs.FIND_A_SUPPLIER_LANDING
 
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
