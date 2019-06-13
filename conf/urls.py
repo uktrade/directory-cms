@@ -20,7 +20,7 @@ api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
 
 
-api_urls = [
+api_urls = ([
     url(r'^', api_router.urls),
     url(
         r'^pages/lookup-by-slug/(?P<slug>[\w-]+)/',
@@ -52,10 +52,10 @@ api_urls = [
         core.views.PageTypeView.as_view(),
         name='pages-types-list'
     )
-]
+], 'api')
 
 
-healthcheck_urls = [
+healthcheck_urls = ([
     url(
         r'^$',
         directory_healthcheck.views.HealthcheckView.as_view(),
@@ -66,19 +66,17 @@ healthcheck_urls = [
         directory_healthcheck.views.PingView.as_view(),
         name='ping'
     ),
-]
+], 'healthcheck')
 
 
 urlpatterns = [
     url(
         r'^api/',
-        include(api_urls, namespace='api', app_name='api')
+        include(api_urls)
     ),
     url(
         r'^healthcheck/',
-        include(
-            healthcheck_urls, namespace='healthcheck', app_name='healthcheck'
-        )
+        include((healthcheck_urls)
     ),
     url(
         r'^$',
@@ -113,7 +111,7 @@ urlpatterns = [
 
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
-    url(r'^auth/request-access/', include('users.urls_sso', namespace="sso")),
+    url(r'^auth/request-access/', include('users.urls_sso')),
     url(
         r'^activity-stream/v1/',
         ActivityStreamView.as_view(),
