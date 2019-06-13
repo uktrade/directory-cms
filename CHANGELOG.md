@@ -9,6 +9,10 @@
 - CI-165 - Redesign of capital invest pages, added help panels to show which fields are required to get section to show on capital invest pages
 - CMS-1627 - Replace GreatInternationalApp with InternationalHomePage
 
+### Fixed bugs:
+
+- CMS-1670 - Fix issue with international root page ending up with incorrect ContentType after applying migrations from CMS-1627
+
 
 ## [2019.06.12](https://github.com/uktrade/directory-cms/releases/tag/2019.06.12)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.09...2019.06.12
