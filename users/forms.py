@@ -65,7 +65,7 @@ class EntryPointAwareUserActionForm(forms.Form):
                 .distinct()
             )
             return Group.objects.filter(
-                page_permissions__page_id=entry_points_ids
+                page_permissions__page_id__in=entry_points_ids
             ).distinct()
 
 

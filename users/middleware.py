@@ -16,7 +16,7 @@ class SSORedirectUsersToRequestAccessViews(MiddlewareMixin):
 
         user = request.user
 
-        if not user.is_authenticated() or user.is_superuser:
+        if not user.is_authenticated or user.is_superuser:
             # allow the view to handle these
             return
 

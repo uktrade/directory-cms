@@ -20,7 +20,7 @@ api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
 
 
-api_urls = ([
+api_urls = [
     url(r'^', api_router.urls),
     url(
         r'^pages/lookup-by-slug/(?P<slug>[\w-]+)/',
@@ -52,10 +52,10 @@ api_urls = ([
         core.views.PageTypeView.as_view(),
         name='pages-types-list'
     )
-], 'api')
+]
 
 
-healthcheck_urls = ([
+healthcheck_urls = [
     url(
         r'^$',
         directory_healthcheck.views.HealthcheckView.as_view(),
@@ -66,17 +66,17 @@ healthcheck_urls = ([
         directory_healthcheck.views.PingView.as_view(),
         name='ping'
     ),
-], 'healthcheck')
+]
 
 
 urlpatterns = [
     url(
         r'^api/',
-        include(api_urls)
+        include((api_urls, 'api'))
     ),
     url(
         r'^healthcheck/',
-        include((healthcheck_urls)
+        include((healthcheck_urls, 'healthcheck'))
     ),
     url(
         r'^$',
@@ -128,9 +128,7 @@ urlpatterns = [
 
 if settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
     urlpatterns = [
-        url('^auth/', include('authbroker_client.urls',
-                              namespace='authbroker',
-                              app_name='authbroker_client')
+        url('^auth/', include('authbroker_client.urls')
             ),
         url(r'^admin/login/$',
             RedirectView.as_view(url='/auth/login/', query_string=True)),

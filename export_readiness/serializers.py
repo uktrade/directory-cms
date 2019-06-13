@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
-from directory_constants import cms
+from directory_constants import slugs
 
 from conf import settings
 from core import fields as core_fields
@@ -480,7 +480,7 @@ class HomePageSerializer(BasePageSerializer):
     def get_advice(self, obj):
         try:
             topic_landing_page = TopicLandingPage.objects.get(
-                slug=cms.GREAT_ADVICE_SLUG
+                slug=slugs.GREAT_ADVICE
             )
             queryset = (
                 ArticleListingPage.objects.descendant_of(topic_landing_page)
