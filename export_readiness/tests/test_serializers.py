@@ -108,7 +108,7 @@ def test_consistent_page_type_for_old_and_new_home_pages(root_page, rf):
 
 @pytest.mark.django_db
 def test_breadcrumbs_serializer(root_page, rf):
-    home_page = HomePageSerializer(parent=root_page)
+    home_page = HomePageFactory(parent=root_page)
     markets_page = TopicLandingPageFactory(
         title_en_gb='topic',
         slug='topic',
@@ -135,7 +135,7 @@ def test_breadcrumbs_serializer(root_page, rf):
 
 @pytest.mark.django_db
 def test_breadcrumbs_serializer_top_level_page(root_page, rf):
-    home_page = HomePageSerializer(parent=root_page)
+    home_page = HomePageFactory(parent=root_page)
     markets_page = TopicLandingPageFactory(
         title_en_gb='topic',
         slug='topic',
