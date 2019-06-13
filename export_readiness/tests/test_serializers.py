@@ -1,9 +1,10 @@
 import pytest
 from export_readiness.serializers import (
-    ArticlePageSerializer, CountryGuidePageSerializer, CampaignPageSerializer)
+    ArticlePageSerializer, CountryGuidePageSerializer, CampaignPageSerializer,
+    TopicLandingPageSerializer)
 from export_readiness.tests.factories import (
-    ArticlePageFactory, CountryGuidePageFactory, CampaignPageFactory,
-    TopicLandingPageFactory)
+    ExportReadinessAppFactory, ArticlePageFactory, CountryGuidePageFactory,
+    CampaignPageFactory, TopicLandingPageFactory)
 
 
 @pytest.mark.django_db
@@ -87,3 +88,50 @@ def test_country_guide_page_serializer(root_page, rf):
     )
 
     assert len(serializer.data['intro_ctas']) == 0
+
+
+@pytest.mark.django_db
+def test_breadcrumbs_serializer(root_page, rf):
+    app_page = ExportReadinessAppFactory(parent=root_page)
+    markets_page = TopicLandingPageFactory(
+        title_en_gb='topic',
+        slug='topic',
+        parent=app_page)
+    country_guide = CountryGuidePageFactory(
+        title_en_gb='country',
+        slug='country',
+        parent=markets_page)
+
+    serializer = CountryGuidePageSerializer(
+        instance=country_guide,
+        context={'request': rf.get('/')}
+    )
+
+    breadcrumbs = serializer.data['tree_based_breadcrumbs']
+
+    assert len(breadcrumbs) == 2
+    assert breadcrumbs[0]['title'] == 'topic'
+    assert breadcrumbs[1]['title'] == 'country'
+    assert breadcrumbs[0]['url'] == 'http://exred.trade.great:8007/topic/'
+    assert breadcrumbs[1]['url'] == (
+        'http://exred.trade.great:8007/topic/country/')
+
+
+@pytest.mark.django_db
+def test_breadcrumbs_serializer_top_level_page(root_page, rf):
+    app_page = ExportReadinessAppFactory(parent=root_page)
+    markets_page = TopicLandingPageFactory(
+        title_en_gb='topic',
+        slug='topic',
+        parent=app_page)
+
+    serializer = TopicLandingPageSerializer(
+        instance=markets_page,
+        context={'request': rf.get('/')}
+    )
+
+    breadcrumbs = serializer.data['tree_based_breadcrumbs']
+
+    assert len(breadcrumbs) == 1
+    assert breadcrumbs[0]['title'] == 'topic'
+    assert breadcrumbs[0]['url'] == 'http://exred.trade.great:8007/topic/'
