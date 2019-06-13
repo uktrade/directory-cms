@@ -13,7 +13,9 @@
 - CI-216 - Add icon headings to cms with default text that was old hardcoded text on Opportunity pages
 
 ### Fixed Bugs
+
 - CI-217 - Fix Django security vulnerability by updating to new patch version.
+- CMS-1670 - Fix issue with international root page ending up with incorrect ContentType after applying migrations from CMS-1627
 
 
 ## [2019.06.12](https://github.com/uktrade/directory-cms/releases/tag/2019.06.12)
