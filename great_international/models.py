@@ -21,7 +21,6 @@ from core.models import (
     ExclusivePageMixin,
     WagtailAdminExclusivePageMixin,
     FormPageMetaClass,
-    ServiceMixin,
 )
 from core.mixins import ServiceHomepageMixin
 from core.panels import SearchEngineOptimisationPanel
