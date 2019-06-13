@@ -41,6 +41,8 @@ class TopicLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
 class ArticleListingPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.ArticleListingPage
     subscriptions = [
+        models.TopicLandingPage,
+        models.CountryGuidePage,
         models.ArticlePage,
         models.Tag,
     ]
@@ -49,6 +51,12 @@ class ArticleListingPageSubscriber(AbstractDatabaseCacheSubscriber):
 class ArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.ArticlePage
     subscriptions = [
+        models.ArticlePage,
+        models.TopicLandingPage,
+        models.SuperregionPage,
+        models.CountryGuidePage,
+        models.CampaignPage,
+        models.ArticleListingPage,
         models.Tag,
     ]
 
@@ -111,6 +119,7 @@ class ContactUsGuidancePageSubscriber(AbstractDatabaseCacheSubscriber):
 class SuperregionPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.SuperregionPage
     subscriptions = [
+        models.TopicLandingPage,
         models.ArticleListingPage,
         models.CountryGuidePage,
     ]
@@ -120,4 +129,7 @@ class CountryGuidePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.CountryGuidePage
     subscriptions = [
         models.ArticlePage,
+        models.TopicLandingPage,
+        models.ArticleListingPage,
+        models.CampaignPage,
     ]
