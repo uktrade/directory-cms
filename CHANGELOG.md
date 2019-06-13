@@ -10,7 +10,7 @@
 - CI-165 - Redesign of capital invest pages, added help panels to show which fields are required to get section to show on capital invest pages
 - CMS-1627 - Replace GreatInternationalApp with InternationalHomePage
 - CI-125 - Changed field types and max_length for some fields in the capital invest opportunity pages
-- CI-216 - Add icon headings with default to old hardcoded text on Opportunity pages
+- CI-216 - Add icon headings to cms with default text that was old hardcoded text on Opportunity pages
 
 ### Fixed Bugs
 - CI-217 - Fix Django security vulnerability by updating to new patch version.
