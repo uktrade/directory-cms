@@ -9,34 +9,20 @@ def migrate_forwards(apps, schema_editor):
     ContentType = apps.get_model('contenttypes', 'ContentType')
     Page = apps.get_model('wagtailcore', 'Page')
 
-    homepage_ct = ContentType.objects.filter(app_label='export_readiness', model='homepage').first()
-    if homepage_ct:
-        exportreadinessapp_ct, _ = ContentType.objects.get_or_create(app_label='export_readiness', model='exportreadinessapp')
-        homepageold_ct, _ = ContentType.objects.get_or_create(app_label='export_readiness', model='homepageold')
+    homepage_ct, _ = ContentType.objects.get_or_create(app_label='export_readiness', model='homepage')
+    homepageold_ct, _ = ContentType.objects.get_or_create(app_label='export_readiness', model='homepageold')
 
-        Page.objects.filter(content_type=homepage_ct).update(content_type=homepageold_ct)
-        Page.objects.filter(content_type=exportreadinessapp_ct).update(content_type=homepage_ct)
-
-
-def migrate_backwards(apps, schema_editor):
-    ContentType = apps.get_model('contenttypes', 'ContentType')
-    Page = apps.get_model('wagtailcore', 'Page')
-
-    homepage_ct = ContentType.objects.filter(app_label='export_readiness', model='homepage').first()
-    if homepage_ct:
-        exportreadinessapp_ct, _ = ContentType.objects.get_or_create(app_label='export_readiness', model='exportreadinessapp')
-        homepageold_ct, _ = ContentType.objects.get_or_create(app_label='export_readiness', model='homepageold')
-
-        Page.objects.filter(content_type=homepage_ct).update(content_type=exportreadinessapp_ct)
-        Page.objects.filter(content_type=homepageold_ct).update(content_type=homepage_ct)
+    Page.objects.filter(url_path='/export-readiness-app/').update(content_type=homepage_ct)
+    Page.objects.filter(url_path='/export-readiness-app/home/').update(content_type=homepageold_ct)
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('contenttypes', '0002_remove_content_type_name'),
         ('export_readiness', '0046_rename_exportreadinessapp_to_homepage'),
     ]
 
     operations = [
-        migrations.RunPython(migrate_forwards, migrate_backwards),
+        migrations.RunPython(migrate_forwards, migrations.RunPython.noop),
     ]
