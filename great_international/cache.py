@@ -9,12 +9,20 @@ class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalSectorPage
     subscriptions = [
         models.InternationalArticlePage,
-        models.InternationalCampaignPage
+        models.InternationalCampaignPage,
+        models.CapitalInvestOpportunityPage
     ]
 
 
 class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalHomePage
+    subscriptions = [
+        models.InternationalArticlePage,
+    ]
+
+
+class InternationalHomePageOldSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.InternationalHomePageOld
     subscriptions = [
         models.InternationalArticlePage,
     ]
@@ -88,19 +96,7 @@ class InternationalCapitalInvestLandingPageSubscriber(
 
 class CapitalInvestRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.CapitalInvestRegionPage
-    subscriptions = [
-        models.CapitalInvestRegionalSectorPage
-    ]
-
-
-class CapitalInvestRegionalSectorPageSubscriber(
-    AbstractDatabaseCacheSubscriber
-):
-    model = models.CapitalInvestRegionalSectorPage
-    subscriptions = [
-        models.CapitalInvestOpportunityPage,
-        models.CapitalInvestRegionPage
-    ]
+    subscriptions = []
 
 
 class CapitalInvestOpportunityPageSubscriber(AbstractDatabaseCacheSubscriber):
@@ -115,3 +111,38 @@ class CapitalInvestOpportunityListingPageSubscriber(
 ):
     model = models.CapitalInvestOpportunityListingPage
     subscriptions = []
+
+
+class InvestInternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.InvestInternationalHomePage
+    subscriptions = [
+        models.InternationalSectorPage,
+        models.InvestHighPotentialOpportunityDetailPage
+    ]
+
+
+class InvestHighPotentialOpportunityFormPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = models.InvestHighPotentialOpportunityFormPage
+    subscriptions = [
+        models.InvestHighPotentialOpportunityDetailPage,
+    ]
+
+
+class InvestHighPotentialOpportunityDetailPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = models.InvestHighPotentialOpportunityDetailPage
+    subscriptions = [
+        models.InvestHighPotentialOpportunityDetailPage,
+    ]
+
+
+class InvestHighPotentialOpportunityFormSuccessPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = models.InvestHighPotentialOpportunityFormSuccessPage
+    subscriptions = [
+        models.InvestHighPotentialOpportunityDetailPage,
+    ]

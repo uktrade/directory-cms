@@ -252,7 +252,6 @@ def test_all_models_cached():
         components.models.ComponentsApp,
         find_a_supplier.models.FindASupplierApp,
         invest.models.InvestApp,
-        great_international.models.GreatInternationalApp,
         # "folders"
         export_readiness.models.MarketingPages,
         export_readiness.models.SitePolicyPages,
