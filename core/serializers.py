@@ -3,6 +3,11 @@ from rest_framework import serializers
 from core import fields
 
 
+class PageTitleAndUrlSerializer(serializers.Serializer):
+    title = serializers.CharField()
+    url = serializers.CharField()
+
+
 class BasePageSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     seo_title = serializers.CharField()
@@ -14,6 +19,13 @@ class BasePageSerializer(serializers.Serializer):
     last_published_at = serializers.DateTimeField()
     title = serializers.CharField()
     page_type = serializers.SerializerMethodField()
+    tree_based_breadcrumbs = serializers.SerializerMethodField()
+
+    def get_tree_based_breadcrumbs(self, instance):
+        breadcrumbs = [
+            page.specific for page in instance.specific.ancestors_in_app]
+        breadcrumbs.append(instance)
+        return PageTitleAndUrlSerializer(breadcrumbs, many=True).data
 
     def get_page_type(self, instance):
         return instance.__class__.__name__

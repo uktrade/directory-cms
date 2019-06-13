@@ -4,13 +4,17 @@
 
 **Implemented enhancements:**
 
+- XOT-763 - Serialize parent pages for use in breadcrumbs and GA360 page category/section
 - CMS-1591 - Copy invest homepage and HPO pages in International app
 - CMS-1604 - Added `WagtailAdminExclusivePageMixin` (a less restrictive version of `ExclusivePageMixin`) and used for page types in great_international
 - CI-165 - Redesign of capital invest pages, added help panels to show which fields are required to get section to show on capital invest pages
 - CMS-1627 - Replace GreatInternationalApp with InternationalHomePage
+- CI-125 - Changed field types and max_length for some fields in the capital invest opportunity pages
+- CI-216 - Add icon headings to cms with default text that was old hardcoded text on Opportunity pages
 
-### Fixed bugs:
+### Fixed Bugs
 
+- CI-217 - Fix Django security vulnerability by updating to new patch version.
 - CMS-1670 - Fix issue with international root page ending up with incorrect ContentType after applying migrations from CMS-1627
 
 

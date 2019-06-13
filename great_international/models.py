@@ -2891,6 +2891,11 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         related_name='+',
         blank=True
     )
+    location_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        default="Location"
+    )
     location = models.CharField(max_length=255, blank=True)
     project_promoter_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -2898,6 +2903,11 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         on_delete=models.SET_NULL,
         related_name='+',
         blank=True
+    )
+    project_promoter_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        default="Project promoter"
     )
     project_promoter = models.CharField(max_length=255, blank=True)
     scale_icon = models.ForeignKey(
@@ -2907,6 +2917,11 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         related_name='+',
         blank=True
     )
+    scale_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        default="Scale"
+    )
     scale = models.CharField(max_length=255, blank=True)
     sector_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -2914,6 +2929,11 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         on_delete=models.SET_NULL,
         related_name='+',
         blank=True
+    )
+    sector_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        default="Sector"
     )
     sector = models.CharField(max_length=255, blank=True)
     investment_type_icon = models.ForeignKey(
@@ -2923,6 +2943,11 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         related_name='+',
         blank=True
     )
+    investment_type_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        default="Investment type"
+    )
     investment_type = models.CharField(max_length=255, blank=True)
     planning_status_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -2931,10 +2956,15 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         related_name='+',
         blank=True
     )
+    planning_status_heading = models.CharField(
+        max_length=255,
+        blank=True,
+        default="Planning status"
+    )
     planning_status = models.CharField(max_length=255, blank=True)
 
     project_background_title = models.CharField(max_length=255)
-    project_background_intro = models.TextField()
+    project_background_intro = MarkdownField()
     project_description_title = models.CharField(max_length=255, blank=True)
     project_description_content = MarkdownField(blank=True)
     project_promoter_title = models.CharField(max_length=255, blank=True)
@@ -3030,28 +3060,34 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
                 FieldRowPanel([
                     MultiFieldPanel([
                         ImageChooserPanel('location_icon'),
+                        FieldPanel('location_heading'),
                         FieldPanel('location'),
                     ]),
                     MultiFieldPanel([
                         ImageChooserPanel('project_promoter_icon'),
+                        FieldPanel('project_promoter_heading'),
                         FieldPanel('project_promoter'),
                     ]),
                     MultiFieldPanel([
                         ImageChooserPanel('scale_icon'),
+                        FieldPanel('scale_heading'),
                         FieldPanel('scale'),
                     ]),
                 ]),
                 FieldRowPanel([
                     MultiFieldPanel([
                         ImageChooserPanel('sector_icon'),
+                        FieldPanel('sector_heading'),
                         FieldPanel('sector'),
                     ]),
                     MultiFieldPanel([
                         ImageChooserPanel('investment_type_icon'),
+                        FieldPanel('investment_type_heading'),
                         FieldPanel('investment_type'),
                     ]),
                     MultiFieldPanel([
                         ImageChooserPanel('planning_status_icon'),
+                        FieldPanel('planning_status_heading'),
                         FieldPanel('planning_status'),
                     ]),
                 ]),
