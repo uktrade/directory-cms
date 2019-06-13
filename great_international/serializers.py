@@ -1028,7 +1028,7 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer):
 
 
 class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
-    hero_title = serializers.Serializer(max_length=255)
+    hero_title = serializers.CharField(max_length=255)
 
 
 class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
