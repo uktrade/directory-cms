@@ -1045,42 +1045,44 @@ class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
         'original'
     )
     location = serializers.CharField(max_length=255)
+    location_heading = serializers.CharField(max_length=255)
 
     project_promoter_icon = wagtail_fields.ImageRenditionField(
         'original'
     )
     project_promoter = serializers.CharField(max_length=255)
+    project_promoter_heading = serializers.CharField(max_length=255)
 
     scale_icon = wagtail_fields.ImageRenditionField(
         'original'
     )
     scale = serializers.CharField(max_length=255)
+    scale_heading = serializers.CharField(max_length=255)
 
     sector_icon = wagtail_fields.ImageRenditionField(
         'original'
     )
     sector = serializers.CharField(max_length=255)
+    sector_heading = serializers.CharField(max_length=255)
 
     investment_type_icon = wagtail_fields.ImageRenditionField(
         'original'
     )
     investment_type = serializers.CharField(max_length=255)
+    investment_type_heading = serializers.CharField(max_length=255)
 
     planning_status_icon = wagtail_fields.ImageRenditionField(
         'original'
     )
     planning_status = serializers.CharField(max_length=255)
+    planning_status_heading = serializers.CharField(max_length=255)
 
     project_background_title = serializers.CharField(max_length=255)
-    project_background_intro = serializers.CharField(max_length=255)
+    project_background_intro = core_fields.MarkdownToHTMLField()
     project_description_title = serializers.CharField(max_length=255)
-    project_description_content = core_fields.MarkdownToHTMLField(
-        max_length=255
-    )
+    project_description_content = core_fields.MarkdownToHTMLField()
     project_promoter_title = serializers.CharField(max_length=255)
-    project_promoter_content = core_fields.MarkdownToHTMLField(
-        max_length=255
-    )
+    project_promoter_content = core_fields.MarkdownToHTMLField()
     project_image = wagtail_fields.ImageRenditionField(
         'original')
 
