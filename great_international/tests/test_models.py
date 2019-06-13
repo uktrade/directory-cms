@@ -75,7 +75,9 @@ def test_models_hierarchy():
     models.CapitalInvestOpportunityListingPage,
 ])
 def test_opp_listing_required_translatable_fields(model):
-    assert model.get_required_translatable_fields() == []
+    assert model.get_required_translatable_fields() == (
+        'hero_title'
+    )
 
 
 @pytest.mark.django_db
