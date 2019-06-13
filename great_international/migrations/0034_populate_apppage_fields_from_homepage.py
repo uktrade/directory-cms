@@ -55,7 +55,7 @@ def populate_apppage_fields_from_homepage(apps, schema_editor):
         # Don't copy these attributes from the home page
         ignore_attrs = (
             'id', 'owner_id', 'slug', 'live', 'url_path', 'path', 'depth',
-            'page_ptr_id', 'live_revision_id', 'first_published_at'
+            'page_ptr_id', 'live_revision_id', 'first_published_at',
             'content_type_id', 'numchild', 'locked',
             '_live_revision_cache', '_owner_cache', '_state'
         )
