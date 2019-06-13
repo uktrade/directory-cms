@@ -9,38 +9,22 @@ def migrate_forwards(apps, schema_editor):
     ContentType = apps.get_model('contenttypes', 'ContentType')
     Page = apps.get_model('wagtailcore', 'Page')
 
-    internationalhompepage_ct = ContentType.objects.filter(model='internationalhomepage').first()
-    greatinternationalapp_ct = ContentType.objects.filter(model='greatinternationalapp').first()
+    internationalhompepage_ct, _ = ContentType.objects.get_or_create(
+        app_label='great_international', model='internationalhomepage')
     internationalhompepageold_ct, _ = ContentType.objects.get_or_create(
-        app_label='great_international', model='internationalhomepageold'
-    )
+        app_label='great_international', model='internationalhomepageold')
 
-    if internationalhompepage_ct and greatinternationalapp_ct:
-        Page.objects.filter(content_type=internationalhompepage_ct).update(content_type=internationalhompepageold_ct)
-        Page.objects.filter(content_type=greatinternationalapp_ct).update(content_type=internationalhompepage_ct)
-
-
-def migrate_backwards(apps, schema_editor):
-    ContentType = apps.get_model('contenttypes', 'ContentType')
-    Page = apps.get_model('wagtailcore', 'Page')
-
-    internationalhompepage_ct = ContentType.objects.filter(model='internationalhomepage').first()
-
-    if internationalhompepage_ct:
-        greatinternationalapp_ct, _ = ContentType.objects.get_or_create(
-            app_label='great_international', model='greatinternationalapp')
-        internationalhompepageold_ct, _ = ContentType.objects.get_or_create(
-            app_label='great_international', model='internationalhomepageold')
-        Page.objects.filter(content_type=internationalhompepage_ct).update(content_type=greatinternationalapp_ct)
-        Page.objects.filter(content_type=internationalhompepageold_ct).update(content_type=internationalhompepage_ct)
+    Page.objects.filter(url_path='/great-international-app/').update(content_type=internationalhompepage_ct)
+    Page.objects.filter(url_path='/great-international-app/international/').update(content_type=internationalhompepageold_ct)
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('contenttypes', '0002_remove_content_type_name'),
         ('great_international', '0036_rename_greatinternationalapp_to_internationalhomepage'),
     ]
 
     operations = [
-        migrations.RunPython(migrate_forwards, migrate_backwards),
+        migrations.RunPython(migrate_forwards, migrations.RunPython.noop),
     ]
