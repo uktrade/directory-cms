@@ -15,14 +15,13 @@ botocore==1.9.23          # via boto3, s3transfer
 celery[redis]==4.2.1
 certifi==2018.11.29       # via requests
 chardet==3.0.4            # via requests
-contextlib2==0.5.5        # via raven
 directory-components==16.3.0
 directory-constants==17.1.0
 directory-healthcheck==1.1.1
 dj-database-url==0.5.0
 django-admin-ip-restrictor==1.0.0
 django-environ==0.4.5
-django-filter==1.0.4
+django-filter==2.1.0
 django-health-check==3.8.0  # via directory-healthcheck
 django-ipware==2.1.0      # via django-admin-ip-restrictor
 django-modelcluster==4.3  # via wagtail
@@ -32,7 +31,7 @@ django-redis==4.10.0
 django-staff-sso-client==0.3.0
 django-taggit==0.23.0     # via wagtail
 django-treebeard==4.3     # via wagtail
-django==2.0.13
+django==2.2.2
 django_storages==1.7.1
 djangorestframework==3.9.4
 docopt==0.6.2             # via notifications-python-client
@@ -60,13 +59,14 @@ pyrsistent==0.15.2        # via jsonschema
 python-dateutil==2.6.1    # via botocore
 pytube==9.2.2
 pytz==2018.7              # via celery, django, django-modelcluster, wagtail
-raven==5.19.0
+raven==6.10.0
 redis==2.10.6             # via celery, django-redis
 requests-oauthlib==1.2.0  # via django-staff-sso-client
 requests==2.21.0
 s3transfer==0.1.13        # via boto3
 sigauth==4.1.0
 six==1.12.0               # via bleach, html5lib, jsonschema, mohawk, pyrsistent, python-dateutil, w3lib, wagtail
+sqlparse==0.3.0           # via django
 unidecode==1.0.23         # via wagtail
 urllib3==1.24.2
 vine==1.1.4               # via amqp

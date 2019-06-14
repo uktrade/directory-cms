@@ -1,9 +1,9 @@
-django==2.0.13
+django==2.2.2
 djangorestframework==3.9.4
 django-environ==0.4.5
 gunicorn==19.5.0
 gevent==1.2.2
-raven==5.19.0
+raven==6.10.0
 django_storages==1.7.1
 whitenoise==4.1.2
 dj-database-url==0.5.0
@@ -19,7 +19,7 @@ html2text==2018.1.9
 wagtail==2.5.1
 wagtailmedia==0.3.1
 pytube==9.2.2
-django-filter==1.0.4
+django-filter==2.1.0
 django-redis==4.10.0
 celery[redis]
 kombu==4.2.1

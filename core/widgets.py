@@ -45,8 +45,8 @@ class Select2RenderWithOptionsMixin:
         super().__init__(*args, **kwargs)
         self.select2_options = select2_options
 
-    def render(self, name, value, attrs=None):
-        html = super().render(name, value, attrs)
+    def render(self, name, value, attrs=None, renderer=None):
+        html = super().render(name, value, attrs, renderer)
         extra = mark_safe('\n'.join((
             "<script>$(function () {",
             "   $('select[name=\"{field_name}\"]').select2({options});".format(
