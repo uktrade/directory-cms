@@ -1027,6 +1027,10 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer):
         return serializer.data
 
 
+class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
+    hero_title = serializers.CharField(max_length=255)
+
+
 class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
 
     breadcrumbs_label = serializers.CharField(max_length=255)

@@ -20,7 +20,6 @@ from core.models import (
     ExclusivePageMixin,
     WagtailAdminExclusivePageMixin,
     FormPageMetaClass,
-    ServiceMixin,
 )
 from core.mixins import ServiceHomepageMixin
 from core.panels import SearchEngineOptimisationPanel
@@ -2809,7 +2808,7 @@ class CapitalInvestRegionPage(BaseInternationalPage):
     )
 
 
-class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
+class CapitalInvestOpportunityListingPage(WagtailAdminExclusivePageMixin,
                                           BaseInternationalPage):
 
     slug_identity = 'opportunities'
@@ -2817,12 +2816,25 @@ class CapitalInvestOpportunityListingPage(ExclusivePageMixin, ServiceMixin,
     parent_page_types = ['great_international.InternationalHomePage']
 
     @classmethod
-    def get_required_translatable_fields(cls):
-        return []
-
-    @classmethod
     def allowed_subpage_models(cls):
         return [CapitalInvestOpportunityPage]
+
+    hero_title = models.CharField(max_length=255, default="Opportunities")
+
+    content_panels = [
+        FieldPanel('hero_title')
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+        FieldPanel('uses_tree_based_routing'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
 
 
 class RelatedSector(models.Model):

@@ -383,7 +383,9 @@ class CapitalInvestRegionPageTranslationOptions(
 @register(models.CapitalInvestOpportunityListingPage)
 class CapitalInvestOpportunityListingPageTranslationOptions(
         BaseTranslationOptions):
-    fields = []
+    fields = (
+        'hero_title',
+    )
 
 
 @register(models.CapitalInvestOpportunityPage)
