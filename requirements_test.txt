@@ -97,7 +97,7 @@ vine==1.1.4               # via amqp
 w3lib==1.20.0
 wagtail-factories==1.1.0
 wagtail-modeltranslation==0.10.2
-wagtail==2.3
+wagtail==2.4
 wagtailmedia==0.3.1
 webencodings==0.5.1       # via bleach, html5lib
 whitenoise==4.1.2
