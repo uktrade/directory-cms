@@ -17,7 +17,6 @@ celery[redis]==4.2.1
 certifi==2018.11.29       # via requests
 chardet==3.0.4            # via requests
 codecov==2.0.15
-contextlib2==0.5.5        # via raven
 coverage==4.5.2           # via codecov, pytest-cov
 directory-components==16.3.0
 directory-constants==17.1.0
@@ -26,7 +25,7 @@ dj-database-url==0.5.0
 django-admin-ip-restrictor==1.0.0
 django-debug-toolbar==1.11
 django-environ==0.4.5
-django-filter==1.0.4
+django-filter==2.1.0
 django-health-check==3.8.0  # via directory-healthcheck
 django-ipware==2.1.0      # via django-admin-ip-restrictor
 django-modelcluster==4.3  # via wagtail
@@ -36,7 +35,7 @@ django-redis==4.10.0
 django-staff-sso-client==0.3.0
 django-taggit==0.23.0     # via wagtail
 django-treebeard==4.3     # via wagtail
-django==2.0.13
+django==2.2.2
 django_storages==1.7.1
 djangorestframework==3.9.4
 docopt==0.6.2             # via notifications-python-client
@@ -80,7 +79,7 @@ pytest==4.0.2
 python-dateutil==2.6.1    # via botocore, faker, freezegun
 pytube==9.2.2
 pytz==2018.7              # via celery, django, django-modelcluster, wagtail
-raven==5.19.0
+raven==6.10.0
 redis==2.10.6             # via celery, django-redis
 requests-mock==1.5.2
 requests-oauthlib==1.2.0  # via django-staff-sso-client
@@ -88,7 +87,7 @@ requests==2.21.0
 s3transfer==0.1.13        # via boto3
 sigauth==4.1.0
 six==1.12.0               # via bleach, faker, freezegun, html5lib, jsonschema, mohawk, more-itertools, packaging, pyrsistent, pytest, python-dateutil, requests-mock, w3lib, wagtail
-sqlparse==0.2.4           # via django-debug-toolbar
+sqlparse==0.2.4           # via django, django-debug-toolbar
 termcolor==1.1.0          # via pytest-sugar
 text-unidecode==1.2       # via faker
 unidecode==1.0.23         # via wagtail
