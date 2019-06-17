@@ -9,6 +9,7 @@
 - CMS-1604 - Added `WagtailAdminExclusivePageMixin` (a less restrictive version of `ExclusivePageMixin`) and used for page types in great_international
 - CI-165 - Redesign of capital invest pages, added help panels to show which fields are required to get section to show on capital invest pages
 - CMS-1627 - Replace GreatInternationalApp with InternationalHomePage
+- CMS-1627 - Replace ExportReadinessApp with HomePage
 - CI-125 - Changed field types and max_length for some fields in the capital invest opportunity pages
 - CI-216 - Add icon headings to cms with default text that was old hardcoded text on Opportunity pages
 
