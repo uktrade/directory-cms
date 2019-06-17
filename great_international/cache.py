@@ -148,3 +148,19 @@ class InvestHighPotentialOpportunityFormSuccessPageSubscriber(
     subscriptions = [
         models.InvestHighPotentialOpportunityDetailPage,
     ]
+
+
+class InternationalTradeHomePageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.InternationalTradeHomePage
+    subscriptions = [
+        models.InternationalSectorPage
+    ]
+
+
+class InternationalTradeIndustryContactPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = models.InternationalTradeIndustryContactPage
+    subscriptions = [
+        models.InternationalSectorPage,
+    ]
