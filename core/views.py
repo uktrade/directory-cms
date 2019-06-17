@@ -295,11 +295,17 @@ class PreloadPageView(FormView):
     filter_class = filters.ServiceNameDRFFilter
     http_method_names = ['post']
 
-    def dispatch(self, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):
         self.page_content_type = self.get_page_content_type()
+        self.page_class = self.page_content_type.model_class()
         self.page = self.get_page()
+        self.edit_handler = self.page.get_edit_handler().bind_to(
+            request=request,
+            instance=self.page
+        )
+        self.parent_page = self.get_parent()
         try:
-            return super().dispatch(*args, **kwargs)
+            return super().dispatch(request, *args, **kwargs)
         except ValidationError as error:
             return HttpResponseBadRequest(error)
 
@@ -313,20 +319,33 @@ class PreloadPageView(FormView):
             raise Http404()
 
     def get_page(self):
-        page_class = self.page_content_type.model_class()
         try:
-            page = page_class.objects.get(
+            page = self.page_class.objects.get(
                 slug=self.request.POST.get('slug'),
                 service_name__iexact=self.kwargs['service_name']
             )
-        except page_class.DoesNotExist:
-            page = page_class()
+        except self.page_class.DoesNotExist:
+            page = self.page_class()
         page.owner = self.request.user
         return page
 
     def get_form_class(self):
-        page_class = self.page_content_type.model_class()
-        return page_class.get_edit_handler().get_form_class()
+        return self.edit_handler.get_form_class()
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['data'] = UpstreamModelSerializer.deserialize(
+            kwargs['data'],
+            request=self.request,
+            model_class=self.page_class,
+        )
+        kwargs['parent_page'] = self.parent_page
+        return kwargs
+
+    def get_form(self):
+        form = super().get_form()
+        self.edit_handler = self.edit_handler.bind_to(form=form)
+        return form
 
     def get_parent(self):
         queryset = filters.ServiceNameFilter().filter_service_name(
@@ -340,25 +359,12 @@ class PreloadPageView(FormView):
         ).specific
 
     def get_context_data(self, form):
-        page_class = self.page_content_type.model_class()
-        parent_page = self.get_parent()
-        edit_handler = page_class.get_edit_handler()
-        form_class = edit_handler.get_form_class()
-        form = form_class(
-            data=form.data,
-            instance=self.page,
-            parent_page=parent_page,
-        )
-        edit_handler = edit_handler.bind_to_instance(
-            instance=self.page,
-            form=form,
-            request=self.request
-        )
+        form = form or self.get_form()
         return {
             'content_type': self.page_content_type,
-            'page_class': page_class,
-            'parent_page': parent_page,
-            'edit_handler': edit_handler,
+            'page_class': self.page_class,
+            'parent_page': self.parent_page,
+            'edit_handler': self.edit_handler,
             'preview_modes': self.page.preview_modes,
             'form': form,
             'has_unsaved_changes': True,
@@ -366,14 +372,6 @@ class PreloadPageView(FormView):
             'page_for_status': self.page,
             **super().get_context_data(form=form),
         }
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        data = UpstreamModelSerializer.deserialize(
-            kwargs['data'], request=self.request
-        )
-        kwargs['data'] = data
-        return kwargs
 
     def form_valid(self, form):
         return TemplateResponse(

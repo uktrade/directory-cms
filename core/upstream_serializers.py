@@ -5,6 +5,7 @@ from wagtail.core.models import Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
 
+from django.core.exceptions import FieldDoesNotExist
 from django.forms import ValidationError
 from django.forms.models import model_to_dict
 from django.contrib import messages
@@ -147,12 +148,23 @@ class UpstreamModelSerializer:
             return cls.default_field_serializer
 
     @classmethod
-    def get_field_serializer_by_field_name(cls, name):
+    def get_field_serializer_by_field_name(cls, name, model_class=None):
+        if model_class:
+            try:
+                field = model_class._meta.get_field(name)
+                if(
+                    field.concrete and field.is_relation and
+                    not issubclass(field.related_model, Page) and
+                    field.related_model in cls.field_serializers
+                ):
+                    return cls.field_serializers[field.related_model]
+            except FieldDoesNotExist:
+                pass
+
         for serializer in cls.field_serializers.values():
             if serializer.FIELD_NAME_PREFIX in name:
                 return serializer
-        else:
-            return cls.default_field_serializer
+        return cls.default_field_serializer
 
     @classmethod
     def remove_empty(cls, data):
@@ -173,11 +185,12 @@ class UpstreamModelSerializer:
         return serialized
 
     @classmethod
-    def deserialize(cls, serialized_data, request):
+    def deserialize(cls, serialized_data, request, model_class=None):
         deserialized = {}
         for name, value in cls.remove_empty(serialized_data).items():
             value = serialized_data[name]
-            serializer = cls.get_field_serializer_by_field_name(name)
+            serializer = cls.get_field_serializer_by_field_name(
+                name, model_class)
             try:
                 name, value = serializer.deserialize(name=name, value=value)
             except ValidationError as e:
