@@ -384,7 +384,8 @@ class CapitalInvestRegionPageTranslationOptions(
 class CapitalInvestOpportunityListingPageTranslationOptions(
         BaseTranslationOptions):
     fields = (
-        'hero_title',
+        'breadcrumbs_label',
+        'search_results_title'
     )
 
 
