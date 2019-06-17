@@ -8,14 +8,14 @@ from django.db import migrations
 from django.utils import timezone
 
 
-def populate_apppage_fields_from_homepage(apps, schema_editor):
-    HomePage = apps.get_model('great_international', 'InternationalHomePage')
-    AppPage = apps.get_model('great_international', 'GreatInternationalApp')
+def migrate_forwards(apps, schema_editor):
+    HomePage = apps.get_model('export_readiness', 'HomePage')
+    AppPage = apps.get_model('export_readiness', 'ExportReadinessApp')
     app_page = AppPage.objects.all().first()
     home_page = HomePage.objects.all().first()
     if app_page and home_page:
 
-        new_title = 'Great International'
+        new_title = 'Great Domestic'
 
         # ------------------------------------------------------------------------
         # Create a revision to capture the changes
@@ -33,7 +33,7 @@ def populate_apppage_fields_from_homepage(apps, schema_editor):
         revision_content = json.loads(revision.content_json)
         for field_name in (
             'pk', 'slug', 'path', 'url_path', 'depth', 'numchild',
-            'live_revision', 'owner', 'locked'
+            'live_revision', 'owner', 'locked',
         ):
             val = getattr(app_page, field_name)
             if hasattr(val, 'pk'):
@@ -60,7 +60,7 @@ def populate_apppage_fields_from_homepage(apps, schema_editor):
             '_live_revision_cache', '_owner_cache', '_state'
         )
 
-        # update app_page values with home_page ones
+        # Update app_page values with home_page ones
         for key, val in home_page.__dict__.items():
             if key not in ignore_attrs:
                 setattr(app_page, key, val)
@@ -82,9 +82,10 @@ def populate_apppage_fields_from_homepage(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('great_international', '0033_add_homepage_fields_to_apppage'),
+        ('wagtailcore', '0040_page_draft_title'),
+        ('export_readiness', '0043_add_homepage_fields_to_apppage'),
     ]
 
     operations = [
-        migrations.RunPython(populate_apppage_fields_from_homepage, migrations.RunPython.noop)
+        migrations.RunPython(migrate_forwards, migrations.RunPython.noop)
     ]
