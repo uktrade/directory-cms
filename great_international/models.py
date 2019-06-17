@@ -21,7 +21,7 @@ from core.models import (
     ExclusivePageMixin,
     WagtailAdminExclusivePageMixin,
     FormPageMetaClass,
-)
+    BreadcrumbMixin)
 from core.mixins import ServiceHomepageMixin
 from core.panels import SearchEngineOptimisationPanel
 from export_readiness.models import Tag
@@ -4126,3 +4126,197 @@ class InvestHighPotentialOpportunityFormSuccessPage(BaseInternationalPage):
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
+
+
+# Find a supplier models
+
+class InternationalTradeHomePage(
+    ExclusivePageMixin,
+    ServiceHomepageMixin,
+    BreadcrumbMixin,
+    BaseInternationalPage
+):
+    slug_identity = cms.FIND_A_SUPPLIER_LANDING_SLUG
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    mobile_hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    hero_image_caption = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    breadcrumbs_label = models.CharField(max_length=50)
+    hero_text = MarkdownField(blank=False)
+    search_field_placeholder = models.CharField(max_length=500)
+    search_button_text = models.CharField(max_length=500)
+    proposition_text = MarkdownField(blank=False)
+    call_to_action_text = models.CharField(max_length=500)
+    industries_list_text = MarkdownField(blank=False)
+    industries_list_call_to_action_text = models.CharField(max_length=500)
+    services_list_text = MarkdownField(blank=False)
+    services_column_one = MarkdownField(blank=False)
+    services_column_two = MarkdownField(blank=False)
+    services_column_three = MarkdownField(blank=False)
+    services_column_four = MarkdownField(
+        blank=False,
+    )
+    services_column_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    services_column_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    services_column_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    services_column_four_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    image_panels = [
+        ImageChooserPanel('hero_image'),
+        ImageChooserPanel('mobile_hero_image'),
+    ]
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='Hero',
+            children=[
+                FieldPanel('breadcrumbs_label'),
+                FieldPanel('hero_text'),
+                FieldPanel('hero_image_caption'),
+                FieldPanel('search_field_placeholder'),
+                FieldPanel('search_button_text'),
+            ],
+            classname='collapsible',
+        ),
+        MultiFieldPanel(
+            heading='Contact us',
+            children=[
+                FieldPanel('proposition_text'),
+                FieldPanel('call_to_action_text'),
+            ],
+            classname='collapsible',
+        ),
+        MultiFieldPanel(
+            heading='Industries',
+            children=[
+                FieldPanel('industries_list_text'),
+                FieldPanel('industries_list_call_to_action_text'),
+            ],
+            classname='collapsible',
+        ),
+        MultiFieldPanel(
+            heading='Services',
+            children=[
+                FieldPanel('services_list_text'),
+                FieldRowPanel(
+                    classname='full field-row-panel',
+                    children=[
+                        MultiFieldPanel([
+                            ImageChooserPanel('services_column_one_icon'),
+                            FieldPanel('services_column_one'),
+                        ]),
+                        MultiFieldPanel([
+                            ImageChooserPanel('services_column_two_icon'),
+                            FieldPanel('services_column_two'),
+                        ]),
+                        MultiFieldPanel([
+                            ImageChooserPanel('services_column_three_icon'),
+                            FieldPanel('services_column_three'),
+                        ]),
+                        MultiFieldPanel([
+                            ImageChooserPanel('services_column_four_icon'),
+                            FieldPanel('services_column_four'),
+                        ]),
+                    ]
+                ),
+            ],
+            classname='collapsible',
+        ),
+        SearchEngineOptimisationPanel()
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels,
+        other_panels=[
+            ObjectList(image_panels, heading='Images'),
+        ]
+    )
+
+
+class InternationalTradeIndustryContactPage(
+    ExclusivePageMixin, BreadcrumbMixin, BaseInternationalPage
+):
+
+    view_path = 'industries/contact/'
+    slug_identity = cms.FIND_A_SUPPLIER_INDUSTRY_CONTACT_SLUG
+    # override the slug when generating the url
+    slug_override = ''
+
+    breadcrumbs_label = models.CharField(max_length=50)
+    introduction_text = MarkdownField(blank=True)
+    submit_button_text = models.CharField(max_length=100)
+    success_message_text = MarkdownField(blank=True)
+    success_back_link_text = models.CharField(max_length=100)
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='Contact form',
+            children=[
+                FieldPanel('breadcrumbs_label'),
+                FieldPanel('introduction_text'),
+                FieldPanel('submit_button_text'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Success page',
+            children=[
+                FieldPanel('success_message_text'),
+                FieldPanel('success_back_link_text'),
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels,
+    )
