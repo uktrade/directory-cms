@@ -679,7 +679,6 @@ def test_opportunity_listing_page_gets_opportunities(rf):
     )
 
     assert opportunity_serializer.data['meta']['slug'] == 'opportunity'
-    print('\n\n\n\n\n slug ', opportunity_listing_serializer.data['opportunity_list'])
     for opp in opportunity_listing_serializer.data['opportunity_list']:
         assert opp['meta']['slug'] == 'opportunity'
 
