@@ -76,7 +76,8 @@ def test_models_hierarchy():
 ])
 def test_opp_listing_required_translatable_fields(model):
     assert model.get_required_translatable_fields() == [
-        'hero_title'
+        'breadcrumbs_label',
+        'search_results_title'
     ]
 
 
