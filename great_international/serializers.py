@@ -1027,8 +1027,49 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer):
         return serializer.data
 
 
+class OpportunityListSerializer(BasePageSerializer):
+    title = serializers.CharField(
+        max_length=255, source='hero_title')
+    hero_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360')
+    sector = serializers.CharField(
+        max_length=255)
+    scale = serializers.CharField(
+        max_length=255)
+    prioritised_opportunity = serializers.BooleanField()
+
+    related_sectors = serializers.SerializerMethodField()
+
+    def get_related_sectors(self, instance):
+        serializer = RelatedSectorSerializer(
+            instance.related_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
+
 class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
-    hero_title = serializers.CharField(max_length=255)
+    breadcrumbs_label = serializers.CharField(max_length=255)
+    search_results_title = serializers.CharField(max_length=255)
+
+    opportunity_list = serializers.SerializerMethodField()
+
+    def get_opportunity_list(self, instance):
+
+        queryset = CapitalInvestOpportunityPage.objects.live().public()
+
+        if not queryset:
+            return []
+
+        serializer = OpportunityListSerializer(
+            queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
 
 
 class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):

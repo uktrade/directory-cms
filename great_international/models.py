@@ -2819,10 +2819,17 @@ class CapitalInvestOpportunityListingPage(WagtailAdminExclusivePageMixin,
     def allowed_subpage_models(cls):
         return [CapitalInvestOpportunityPage]
 
-    hero_title = models.CharField(max_length=255, default="Opportunities")
+    breadcrumbs_label = models.CharField(
+        max_length=255,
+        default="Opportunities"
+    )
+    search_results_title = models.CharField(
+        max_length=255
+    )
 
     content_panels = [
-        FieldPanel('hero_title')
+        FieldPanel('breadcrumbs_label'),
+        FieldPanel('search_results_title')
     ]
 
     settings_panels = [

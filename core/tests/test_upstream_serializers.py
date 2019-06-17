@@ -9,7 +9,7 @@ from core.upstream_serializers import UpstreamModelSerializer
 from export_readiness.tests.factories import (
     ArticlePageFactory, CountryGuidePageFactory,
     TopicLandingPageFactory, ArticleListingPageFactory,
-    ExportReadinessAppFactory,
+    HomePageFactory,
 )
 from django.http import HttpRequest
 
@@ -101,8 +101,8 @@ def test_related_page_field_serialize(country_guide_page):
 
 @pytest.mark.django_db
 def test_related_page_field_deserializer(rf, root_page, article_page):
-    domestic_root_page = ExportReadinessAppFactory(parent=root_page)
-    topic_page = TopicLandingPageFactory(parent=domestic_root_page)
+    domestic_homepage = HomePageFactory(parent=root_page)
+    topic_page = TopicLandingPageFactory(parent=domestic_homepage)
     article_list_page = ArticleListingPageFactory(parent=topic_page)
 
     article_page = ArticlePageFactory(
@@ -123,7 +123,7 @@ def test_related_page_field_deserializer(rf, root_page, article_page):
 
 @pytest.mark.django_db
 def test_related_page_field_deserializer_invalid_slug(rf, root_page):
-    ExportReadinessAppFactory(parent=root_page)
+    HomePageFactory(parent=root_page)
     missing_slug = 'some-missing-slug'
 
     serialized_data = {
