@@ -71,15 +71,6 @@ def test_models_hierarchy():
     ]
 
 
-@pytest.mark.parametrize('model', [
-    models.CapitalInvestOpportunityListingPage,
-])
-def test_opp_listing_required_translatable_fields(model):
-    assert model.get_required_translatable_fields() == [
-        'hero_title'
-    ]
-
-
 @pytest.mark.django_db
 def test_article_inherit_tags_from_parent(root_page):
     tag1 = exread_factories.TagFactory(name='foo')

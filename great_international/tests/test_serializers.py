@@ -8,7 +8,8 @@ from great_international.serializers import (
     CapitalInvestRegionPageSerializer,
     InternationalCapitalInvestLandingPageSerializer,
     InvestHighPotentialOpportunityFormPageSerializer,
-    CapitalInvestOpportunityPageSerializer)
+    CapitalInvestOpportunityPageSerializer,
+    CapitalInvestOpportunityListingSerializer)
 from great_international.tests.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
@@ -18,8 +19,8 @@ from great_international.tests.factories import (
     CapitalInvestRegionPageFactory,
     InternationalCapitalInvestLandingPageFactory,
     CapitalInvestOpportunityPageFactory,
-    InvestHighPotentialOpportunityFormPageFactory
-)
+    InvestHighPotentialOpportunityFormPageFactory,
+    CapitalInvestOpportunityListingPageFactory)
 
 from great_international.models import CapitalInvestRelatedRegions, \
     CapitalInvestHomesInEnglandCardFieldsSummary, \
@@ -652,3 +653,47 @@ def test_international_sector_opportunity_null_case2(rf):
         context={'request': rf.get('/')}
     )
     assert sector_serializer.data['related_opportunities'] == []
+
+
+@pytest.mark.django_db
+def test_opportunity_listing_page_gets_opportunities(rf):
+
+    opportunity_listing_page = CapitalInvestOpportunityListingPageFactory(
+        parent=None,
+        slug='opp-listing'
+    )
+
+    opportunity_page = CapitalInvestOpportunityPageFactory(
+        parent=opportunity_listing_page,
+        slug='opportunity'
+    )
+
+    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
+        instance=opportunity_page,
+        context={'request': rf.get('/')}
+    )
+
+    opportunity_listing_serializer = CapitalInvestOpportunityListingSerializer(
+        instance=opportunity_listing_page,
+        context={'request': rf.get('/')}
+    )
+
+    assert opportunity_serializer.data['meta']['slug'] == 'opportunity'
+    for opp in opportunity_listing_serializer.data['opportunity_list']:
+        assert opp['meta']['slug'] == 'opportunity'
+
+
+@pytest.mark.django_db
+def test_opportunity_listing_page_getting_opportunities_null_case(rf):
+
+    opportunity_listing_page = CapitalInvestOpportunityListingPageFactory(
+        parent=None,
+        slug='opp-listing'
+    )
+
+    opportunity_listing_serializer = CapitalInvestOpportunityListingSerializer(
+        instance=opportunity_listing_page,
+        context={'request': rf.get('/')}
+    )
+
+    assert opportunity_listing_serializer.data['opportunity_list'] == []
