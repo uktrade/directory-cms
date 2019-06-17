@@ -110,7 +110,9 @@ class CapitalInvestOpportunityListingPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
     model = models.CapitalInvestOpportunityListingPage
-    subscriptions = []
+    subscriptions = [
+        models.CapitalInvestOpportunityPage
+    ]
 
 
 class InvestInternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
