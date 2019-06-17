@@ -1,8 +1,8 @@
-from directory_constants import cms, slugs
-from directory_constants import urls
+from directory_constants import cms, slugs, urls
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel, HelpPanel)
+from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
@@ -19,7 +19,6 @@ from core.models import (
     BreadcrumbMixin,
     ExclusivePageMixin,
     FormPageMetaClass,
-    ServiceMixin,
 )
 from core.mixins import ServiceHomepageMixin, ServiceNameUniqueSlugMixin
 from core.panels import SearchEngineOptimisationPanel
@@ -35,14 +34,6 @@ class BaseDomesticPage(ServiceNameUniqueSlugMixin, BasePage):
 
     class Meta:
         abstract = True
-
-
-class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BaseDomesticPage):
-    slug_identity = 'export-readiness-app'
-
-    @classmethod
-    def get_required_translatable_fields(cls):
-        return []
 
 
 class TermsAndConditionsPage(ExclusivePageMixin, BaseDomesticPage):
@@ -2886,13 +2877,53 @@ class ArticlePage(BaseDomesticPage):
 
 
 class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
+    slug_identity = 'export-readiness-app'
+    parent_page_types = ['wagtailcore.Page']
 
-    slug_identity = slugs.GREAT_HOME
-    subpage_types = [
-        'export_readiness.TopicLandingPage',
-        'export_readiness.ArticleListingPage',
-        'export_readiness.ArticlePage'
+    banner_content = MarkdownField()
+    banner_label = models.CharField(max_length=50, null=True, blank=True)
+    news_title = models.CharField(max_length=255)
+    news_description = MarkdownField()
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='EU Exit banner',
+            children=[
+                FieldPanel('banner_label'),
+                FieldPanel('banner_content'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='EU exit news',
+            children=[
+                FieldPanel('news_title'),
+                FieldPanel('news_description')
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
     ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    @classmethod
+    def allowed_subpage_models(cls):
+        allowed_name = cls.service_name_value
+        return [
+            model for model in Page.allowed_subpage_models()
+            if(
+                getattr(model, 'service_name_value', None) == allowed_name
+                and model is not cls
+            )
+        ]
+
+
+class HomePageOld(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
+    slug_identity = slugs.GREAT_HOME
+    parent_page_types = []
+    subpage_types = []
 
     banner_content = MarkdownField()
     banner_label = models.CharField(max_length=50, null=True, blank=True)

@@ -497,6 +497,15 @@ class HomePageSerializer(BasePageSerializer):
         )
         return serializer.data
 
+    def get_page_type(self, obj):
+        """
+        Overrides BasePageSerializer.get_page_type() so that `page_type`
+        is the same whether serialising an `HomePage` or `HomePageOld`
+        instance. This will prevent front-ends from falling over while
+        still requesting the old page.
+        """
+        return 'HomePage'
+
 
 class TopicLandingPageSerializer(
     BasePageSerializer,
