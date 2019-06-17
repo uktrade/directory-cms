@@ -124,6 +124,25 @@ ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
 
 
 --
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    username character varying(150) NOT NULL,
+    first_name character varying(30) NOT NULL,
+    last_name character varying(30) NOT NULL,
+    email character varying(254) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL
+);
+
+
+--
 -- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -163,6 +182,13 @@ CREATE SEQUENCE public.auth_user_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.auth_user_id_seq OWNED BY public.auth_user.id;
 
 
 --
@@ -8686,6 +8712,21 @@ ALTER SEQUENCE public.taggit_taggeditem_id_seq OWNED BY public.taggit_taggeditem
 
 
 --
+-- Name: users_userprofile; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.users_userprofile (
+    id integer NOT NULL,
+    assignment_status character varying(30) NOT NULL,
+    user_id integer NOT NULL,
+    self_assigned_group_id integer,
+    team_leader_id integer,
+    approved_at timestamp with time zone,
+    approved_by_id integer
+);
+
+
+--
 -- Name: users_userprofile_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -8695,6 +8736,13 @@ CREATE SEQUENCE public.users_userprofile_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
+
+
+--
+-- Name: users_userprofile_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.users_userprofile_id_seq OWNED BY public.users_userprofile.id;
 
 
 --
@@ -9433,6 +9481,13 @@ ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
+-- Name: auth_user id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user ALTER COLUMN id SET DEFAULT nextval('public.auth_user_id_seq'::regclass);
+
+
+--
 -- Name: auth_user_groups id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -9633,6 +9688,13 @@ ALTER TABLE ONLY public.taggit_tag ALTER COLUMN id SET DEFAULT nextval('public.t
 --
 
 ALTER TABLE ONLY public.taggit_taggeditem ALTER COLUMN id SET DEFAULT nextval('public.taggit_taggeditem_id_seq'::regclass);
+
+
+--
+-- Name: users_userprofile id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users_userprofile ALTER COLUMN id SET DEFAULT nextval('public.users_userprofile_id_seq'::regclass);
 
 
 --
@@ -10155,6 +10217,14 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 335	Can add international trade industry contact page	109	add_internationaltradeindustrycontactpage
 336	Can change international trade industry contact page	109	change_internationaltradeindustrycontactpage
 337	Can delete international trade industry contact page	109	delete_internationaltradeindustrycontactpage
+\.
+
+
+--
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
 \.
 
 
@@ -11361,6 +11431,14 @@ COPY public.taggit_taggeditem (id, object_id, content_type_id, tag_id) FROM stdi
 
 
 --
+-- Data for Name: users_userprofile; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.users_userprofile (id, assignment_status, user_id, self_assigned_group_id, team_leader_id, approved_at, approved_by_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: wagtailcore_collection; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -11985,6 +12063,14 @@ ALTER TABLE ONLY public.auth_user_groups
 
 
 --
+-- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -11998,6 +12084,14 @@ ALTER TABLE ONLY public.auth_user_user_permissions
 
 ALTER TABLE ONLY public.auth_user_user_permissions
     ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_14a6b632_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_username_key UNIQUE (username);
 
 
 --
@@ -12897,6 +12991,22 @@ ALTER TABLE ONLY public.taggit_taggeditem
 
 
 --
+-- Name: users_userprofile users_userprofile_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users_userprofile
+    ADD CONSTRAINT users_userprofile_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_userprofile users_userprofile_user_id_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users_userprofile
+    ADD CONSTRAINT users_userprofile_user_id_key UNIQUE (user_id);
+
+
+--
 -- Name: wagtailcore_collection wagtailcore_collection_path_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -13206,6 +13316,13 @@ CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON public.auth_us
 --
 
 CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON public.auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_user_username_6821ab7c_like ON public.auth_user USING btree (username varchar_pattern_ops);
 
 
 --
@@ -26408,6 +26525,27 @@ CREATE INDEX taggit_taggeditem_object_id_e2d7d1df ON public.taggit_taggeditem US
 --
 
 CREATE INDEX taggit_taggeditem_tag_id_f4f5b767 ON public.taggit_taggeditem USING btree (tag_id);
+
+
+--
+-- Name: users_userprofile_approved_by_id_094f1d9f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX users_userprofile_approved_by_id_094f1d9f ON public.users_userprofile USING btree (approved_by_id);
+
+
+--
+-- Name: users_userprofile_self_assigned_group_id_dc9e9c50; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX users_userprofile_self_assigned_group_id_dc9e9c50 ON public.users_userprofile USING btree (self_assigned_group_id);
+
+
+--
+-- Name: users_userprofile_team_leader_id_8b48ec37; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX users_userprofile_team_leader_id_8b48ec37 ON public.users_userprofile USING btree (team_leader_id);
 
 
 --
@@ -41223,6 +41361,38 @@ ALTER TABLE ONLY public.taggit_taggeditem
 
 ALTER TABLE ONLY public.taggit_taggeditem
     ADD CONSTRAINT taggit_taggeditem_tag_id_f4f5b767_fk_taggit_tag_id FOREIGN KEY (tag_id) REFERENCES public.taggit_tag(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_userprofile users_userprofile_approved_by_id_094f1d9f_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users_userprofile
+    ADD CONSTRAINT users_userprofile_approved_by_id_094f1d9f_fk_auth_user_id FOREIGN KEY (approved_by_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_userprofile users_userprofile_self_assigned_group__dc9e9c50_fk_auth_grou; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users_userprofile
+    ADD CONSTRAINT users_userprofile_self_assigned_group__dc9e9c50_fk_auth_grou FOREIGN KEY (self_assigned_group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_userprofile users_userprofile_team_leader_id_8b48ec37_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users_userprofile
+    ADD CONSTRAINT users_userprofile_team_leader_id_8b48ec37_fk_auth_user_id FOREIGN KEY (team_leader_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_userprofile users_userprofile_user_id_87251ef1_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users_userprofile
+    ADD CONSTRAINT users_userprofile_user_id_87251ef1_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
