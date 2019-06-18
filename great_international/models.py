@@ -376,7 +376,6 @@ class InternationalSectorPage(BaseInternationalPage):
             children=[
                 HelpPanel('Required fields for section to show: '
                           'Case Study Image, Case Study Title'),
-                ImageChooserPanel('case_study_image'),
                 FieldPanel('case_study_title'),
                 FieldPanel('case_study_description'),
                 FieldPanel('case_study_cta_text'),
