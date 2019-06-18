@@ -13,6 +13,7 @@
 - CI-125 - Changed field types and max_length for some fields in the capital invest opportunity pages
 - CI-216 - Add icon headings to cms with default text that was old hardcoded text on Opportunity pages
 - CI-211 - Created basic opportunity listing page
+- CMS-1624 - Copy FAS homepage and industry contact pages in International app
 
 ### Fixed Bugs
 
