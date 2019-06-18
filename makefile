@@ -144,6 +144,7 @@ update_db_template: \
 	debug_migrate
 	pg_dump \
 		--no-owner \
+		--exclude-table-data \
 		--file=db_template.sql \
 		--dbname=directory_cms_debug
 
