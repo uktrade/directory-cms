@@ -149,12 +149,11 @@ class UpstreamModelSerializer:
 
     @classmethod
     def get_field_serializer_by_field_name(cls, name, model_class=None):
-        if model_class:
+        if model_class and name != 'page_ptr':
             try:
                 field = model_class._meta.get_field(name)
                 if(
                     field.concrete and field.is_relation and
-                    not issubclass(field.related_model, Page) and
                     field.related_model in cls.field_serializers
                 ):
                     return cls.field_serializers[field.related_model]
