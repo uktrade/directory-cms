@@ -1,4 +1,4 @@
-from directory_constants.constants import cms
+from directory_constants import cms
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
 
