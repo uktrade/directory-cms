@@ -11,7 +11,7 @@ from wagtail.admin.utils import send_notification
 from wagtail.core.models import PageRevision
 
 from .forms import SubmitForm
-from .models import Moderation, ModeratorReview
+from .models import ModerationRequest, ModeratorReview
 
 
 @method_decorator(login_required, name='dispatch')
@@ -20,11 +20,11 @@ class Review(ListView):
 
     def get_context_data(self, **kwargs):
         pending_reviews = ModeratorReview.objects.filter(
-            moderation__revision__user=self.request.user,
+            request__revision__user=self.request.user,
         ).order_by('created_at').select_related(
-            'moderation',
-            'moderation__revision',
-            'moderation__revision__user',
+            'request',
+            'request__revision',
+            'request__revision__user',
             'user',
         )
 
@@ -33,7 +33,7 @@ class Review(ListView):
         return context
 
     def get_queryset(self):
-        return (Moderation.objects.filter(revision__user=self.request.user)
+        return (ModerationRequest.objects.filter(revision__user=self.request.user)
                                   .accepted())
 
 
@@ -49,15 +49,15 @@ class ApproveModeration(View):
     http_method_names = ['post']
 
     def post(self, request, *args, **kwargs):
-        moderation = get_object_or_404(Moderation, id=self.kwargs['pk'])
-        page = moderation.revision.page
-        revision = moderation.revision
+        request = get_object_or_404(ModerationRequest, id=self.kwargs['pk'])
+        page = request.revision.page
+        revision = request.revision
 
         if not page.permissions_for_user(request.user).can_publish():
             raise PermissionDenied
 
         if not revision.submitted_for_moderation:
-            page_title = moderation.revision.page.get_admin_display_title()
+            page_title = request.revision.page.get_admin_display_title()
             messages.error(
                 request,
                 _(f"The page '{page_title}' is not currently awaiting moderation."),  # noqa: E501
@@ -66,7 +66,7 @@ class ApproveModeration(View):
 
         with transaction.atomic():
             revision.approve_moderation()
-            moderation.reviews.create(user=request.user, is_accepted=True)
+            request.reviews.create(user=request.user, is_accepted=True)
 
         admin_display_title = page.get_admin_display_title()
         message = _(f"Page '{admin_display_title}' published.")
@@ -95,7 +95,7 @@ class ApproveModeration(View):
 class ModerationQueue(ListView):
     ordering = '-publish_at'
     paginate_by = 20
-    queryset = Moderation.objects.pending()
+    queryset = ModerationRequest.objects.pending()
     template_name = 'moderation_queue/all.html'
 
 
@@ -112,12 +112,12 @@ class PreviewModeration(View):
     http_method_names = ['get']
 
     def get(self, request, *args, **kwargs):
-        moderation = get_object_or_404(Moderation, id=self.kwargs['pk'])
-        page = moderation.revision.page
+        request = get_object_or_404(ModerationRequest, id=self.kwargs['pk'])
+        page = request.revision.page
         if not page.permissions_for_user(request.user).can_publish():
             raise PermissionDenied
 
-        page = moderation.revision.as_page_object()
+        page = request.revision.as_page_object()
 
         # pass in the real user request rather than page.dummy_request(), so
         # that request.user and request.revision_id will be picked up by the
@@ -137,15 +137,15 @@ class RejectModeration(View):
     http_method_names = ['post']
 
     def post(self, request, *args, **kwargs):
-        moderation = get_object_or_404(Moderation, id=self.kwargs['pk'])
-        page = moderation.revision.page
-        revision = moderation.revision
+        request = get_object_or_404(ModerationRequest, id=self.kwargs['pk'])
+        page = request.revision.page
+        revision = request.revision
 
         if not page.permissions_for_user(request.user).can_publish():
             raise PermissionDenied
 
         if not revision.submitted_for_moderation:
-            page_title = moderation.revision.page.get_admin_display_title()
+            page_title = request.revision.page.get_admin_display_title()
             messages.error(
                 request,
                 _(f"The page '{page_title}' is not currently awaiting moderation."),  # noqa: E501
@@ -154,7 +154,7 @@ class RejectModeration(View):
 
         with transaction.atomic():
             revision.reject_moderation()
-            moderation.reviews.create(user=request.user, is_accepted=False)
+            request.reviews.create(user=request.user, is_accepted=False)
 
         page_title = page.get_admin_display_title()
         buttons = [
@@ -178,17 +178,17 @@ class RejectModeration(View):
 
 
 @method_decorator(login_required, name='dispatch')
-class SubmitModeration(CreateView):
+class SubmitModerationRequest(CreateView):
     form_class = SubmitForm
-    model = Moderation
+    model = ModerationRequest
     success_url = reverse_lazy('wagtailadmin_explore_root')
     template_name = 'moderation_queue/submit.html'
 
     def form_valid(self, form):
         revision = get_object_or_404(PageRevision, id=self.kwargs['pk'])
 
-        # TODO: should we remove exiting Moderation rows for the given page?
-        self.object = Moderation.objects.create(
+        # TODO: should we remove exiting ModerationRequest rows for the given page?
+        self.object = ModerationRequest.objects.create(
             revision=revision,
             publish_at=form.cleaned_data['publish_at'],
             comment=form.cleaned_data['comment'],

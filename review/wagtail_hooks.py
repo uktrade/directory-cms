@@ -4,7 +4,7 @@ from django.urls import reverse
 from wagtail.admin.menu import MenuItem
 from wagtail.core import hooks
 
-from .models import Moderation
+from .models import ModerationRequest
 
 
 @hooks.register('register_admin_menu_item')
@@ -25,7 +25,7 @@ class ModerationQueuePanel:
 
     def render(self):
         # TODO revision__user is not the person who requested the review
-        pending = Moderation.objects.pending().exclude(
+        pending = ModerationRequest.objects.pending().exclude(
             revision__user=self.request.user
         ).order_by('-publish_at')[:10]
 

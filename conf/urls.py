@@ -21,7 +21,7 @@ from review.views import (
     PreviewModeration,
     Review,
     RejectModeration,
-    SubmitModeration,
+    SubmitModerationRequest,
 )
 from review.api import urls as review_api_urls
 
@@ -146,7 +146,7 @@ urlpatterns = [
         ),
         url(
             r'^(?P<pk>\d+)/submit/$',
-            SubmitModeration.as_view(),
+            SubmitModerationRequest.as_view(),
             name='submit_moderation',
         ),
     ], namespace="moderation-queue")),

@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from wagtail.admin.utils import send_mail
 
-from .api.token import get_review_token
+from review.api.token import get_review_token
 
 
 class Reviewer(models.Model):
@@ -73,7 +73,7 @@ class CommentReply(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class ModerationQuerySet(models.QuerySet):
+class ModerationRequestQuerySet(models.QuerySet):
     def accepted(self):
         return self.filter(reviews__is_accepted=True)
 
@@ -83,7 +83,7 @@ class ModerationQuerySet(models.QuerySet):
                     .select_related('revision', 'revision__user'))
 
 
-class Moderation(models.Model):
+class ModerationRequest(models.Model):
     revision = models.ForeignKey(
         'wagtailcore.PageRevision',
         verbose_name=_('revision'),
@@ -92,14 +92,14 @@ class Moderation(models.Model):
     publish_at = models.DateTimeField(null=True)
     comment = models.TextField(max_length=100, blank=True)
 
-    # When the lock of this Moderation ends.  A user opening this Moderation
+    # When the lock of this ModerationRequest ends. A user opening this ModerationRequest
     # for review will set this field and update it while their browser is open
     # on that page.
     locked_until = models.DateTimeField(null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    objects = ModerationQuerySet.as_manager()
+    objects = ModerationRequestQuerySet.as_manager()
 
     def __str__(self):
         return f'{self.revision.user} requested moderation of "{self.revision.page}" at {self.created_at}'  # noqa: E501
@@ -122,9 +122,9 @@ class Moderation(models.Model):
 
 
 class ModeratorReview(models.Model):
-    moderation = models.ForeignKey(
-        'Moderation',
-        verbose_name=_('moderation'),
+    request = models.ForeignKey(
+        'ModerationRequest',
+        verbose_name=_('request'),
         on_delete=models.CASCADE,
         related_name="reviews",
     )
@@ -144,4 +144,4 @@ class ModeratorReview(models.Model):
 
     def __str__(self):
         state = 'accepted' if self.is_accepted else 'rejected'
-        return f'{self.user} {state} "{self.moderation.revision.page}" at {self.created_at}'  # noqa: E501
+        return f'{self.user} {state} "{self.request.revision.page}" at {self.created_at}'  # noqa: E501

@@ -35,8 +35,8 @@
                 </tr>
             </thead>
             <tbody>
-                {% for moderation in object_list %}
-                {% with page=moderation.revision.page %}
+                {% for moderation_request in object_list %}
+                {% with page=moderation_request.revision.page %}
                 <tr>
                     <td class="title" valign="top">
                         <h2>
@@ -55,7 +55,7 @@
                             </li>
 
                             <li>
-                                <a href="{% url 'moderation-queue:preview_moderation' moderation.id %}" class="button button-small button-secondary" target="_blank">
+                                <a href="{% url 'moderation-queue:preview_moderation' moderation_request.id %}" class="button button-small button-secondary" target="_blank">
                                     {% trans 'Preview' %}
                                 </a>
                             </li>
@@ -68,21 +68,21 @@
                     </td>
 
                     <td class="type" valign="top">
-                        {{ moderation.revision.user.get_full_name|default:moderation.revision.user.get_username }}
+                        {{ moderation_request.revision.user.get_full_name|default:moderation_request.revision.user.get_username }}
                     </td>
 
                     <td valign="top">
-                        <div class="human-readable-date" title="{{ moderation.created_at|date:"d M Y H:i" }}">
-                            {% blocktrans with time_period=moderation.created_at|timesince %}{{ time_period }} ago{% endblocktrans %}
+                        <div class="human-readable-date" title="{{ moderation_request.created_at|date:"d M Y H:i" }}">
+                            {% blocktrans with time_period=moderation_request.created_at|timesince %}{{ time_period }} ago{% endblocktrans %}
                         </div>
                     </td>
 
                     <td valign="top">
-                        <p>{{ moderation.latest_review.comment }}</p>
+                        <p>{{ moderation_request.latest_review.comment }}</p>
                     </td>
 
                     <td valign="top">
-                        {% if moderation.is_2i_moderated %}
+                        {% if moderation_request.is_2i_moderated %}
                         <p>Approved</p>
                         {% endif %}
 
@@ -119,7 +119,7 @@
             </thead>
             <tbody>
                 {% for review in pending_reviews %}
-                {% with page=review.moderation.revision.page %}
+                {% with page=review.request.revision.page %}
                 <tr>
                     <td class="title" valign="top">
                         <h2>

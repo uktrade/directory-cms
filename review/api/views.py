@@ -89,7 +89,7 @@ class ModerationMixin(ReviewTokenMixin):
         if not data.get('moderation_enabled', False):
             raise Http404
 
-        self.moderation = get_object_or_404(models.Moderation, revision_id=self.page_revision_id)
+        self.moderation_request = get_object_or_404(models.ModerationRequest, revision_id=self.page_revision_id)
 
 
 class ModerationLock(ModerationMixin, views.APIView):
@@ -98,14 +98,14 @@ class ModerationLock(ModerationMixin, views.APIView):
         new_lock_time = timezone.now() + lock_extension
 
         # TODO: Add "locked by" field to avoid race condition
-        self.moderation.locked_until = timezone.now() + lock_extension
-        self.moderation.save()
+        self.moderation_request.locked_until = timezone.now() + lock_extension
+        self.moderation_request.save()
 
         return Response()
 
     def delete(self, *args, **kwargs):
-        self.moderation.locked_until = None
-        self.moderation.save()
+        self.moderation_request.locked_until = None
+        self.moderation_request.save()
 
         return Response()
 
@@ -116,6 +116,6 @@ class ModerationRespond(ModerationMixin, generics.CreateAPIView):
 
     @transaction.atomic
     def perform_create(self, serializer):
-        serializer.save(moderation=self.moderation)
-        self.moderation.locked_until = None
-        self.moderation.save()
+        serializer.save(request=self.moderation_request)
+        self.moderation_request.locked_until = None
+        self.moderation_request.save()

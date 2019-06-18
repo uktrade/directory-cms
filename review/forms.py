@@ -1,7 +1,7 @@
 from django import forms
 from wagtail.admin.widgets import AdminDateInput
 
-from .models import Moderation
+from .models import ModerationRequest
 
 
 class SubmitForm(forms.ModelForm):
@@ -10,7 +10,7 @@ class SubmitForm(forms.ModelForm):
             'publish_at',
             'comment',
         ]
-        model = Moderation
+        model = ModerationRequest
         widgets = {
             'publish_at': AdminDateInput,
         }
