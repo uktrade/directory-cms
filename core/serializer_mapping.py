@@ -27,9 +27,7 @@ MODELS_SERIALIZERS_MAPPING = {
     export_readiness.models.HomePageOld: export_readiness.serializers.HomePageSerializer,  # NOQA
     export_readiness.models.ArticleListingPage: export_readiness.serializers.ArticleListingPageSerializer,  # NOQA
     export_readiness.models.TopicLandingPage: export_readiness.serializers.TopicLandingPageSerializer,  # NOQA
-    export_readiness.models.InternationalLandingPage: export_readiness.serializers.InternationalLandingPageSerializer,  # NOQA
     export_readiness.models.CampaignPage: export_readiness.serializers.CampaignPageSerializer,  # NOQA
-    export_readiness.models.EUExitInternationalFormPage: export_readiness.serializers.EUExitInternationalFormPageSerializer,  # NOQA
     export_readiness.models.EUExitDomesticFormPage: export_readiness.serializers.EUExitDomesticFormPageSerializer,  # NOQA
     export_readiness.models.EUExitFormSuccessPage: export_readiness.serializers.EUExitFormSuccessPageSerializer,  # NOQA
     export_readiness.models.ContactUsGuidancePage: export_readiness.serializers.ContactUsGuidancePageSerializer,  # NOQA

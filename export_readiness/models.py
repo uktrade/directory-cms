@@ -2955,77 +2955,6 @@ class HomePageOld(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
     ]
 
 
-class InternationalLandingPage(ExclusivePageMixin, BaseDomesticPage):
-
-    slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
-    # slug_override = 'international'
-    subpage_types = [
-        'export_readiness.ArticleListingPage',
-    ]
-
-    content_panels = [
-        SearchEngineOptimisationPanel()
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-    ]
-
-    @property
-    def articles_count(self):
-        return sum(
-            (listing_page.specific.articles_count for listing_page in
-             self.get_descendants().type(ArticleListingPage).live())
-        )
-
-
-class EUExitInternationalFormPage(
-    ExclusivePageMixin, BaseDomesticPage, metaclass=FormPageMetaClass
-):
-    # metaclass creates <fild_name>_label and <field_name>_help_text
-    form_field_names = [
-        'first_name',
-        'last_name',
-        'email',
-        'organisation_type',
-        'company_name',
-        'country',
-        'city',
-        'comment',
-    ]
-
-    full_path_override = '/international/eu-exit-news/contact/'
-    slug_identity = cms.GREAT_EUEXIT_INTERNATIONAL_FORM_SLUG
-
-    breadcrumbs_label = models.CharField(max_length=50)
-    heading = models.CharField(max_length=255)
-    body_text = MarkdownField()
-    submit_button_text = models.CharField(max_length=50)
-    disclaimer = models.TextField(max_length=500)
-
-    content_panels_before_form = [
-        MultiFieldPanel(
-            heading='Hero',
-            children=[
-                FieldPanel('breadcrumbs_label'),
-                FieldPanel('heading'),
-                FieldPanel('body_text'),
-            ]
-        ),
-    ]
-    content_panels_after_form = [
-        FieldPanel('disclaimer', widget=Textarea),
-        FieldPanel('submit_button_text'),
-        SearchEngineOptimisationPanel(),
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-    ]
-
-
 class EUExitDomesticFormPage(
     ExclusivePageMixin, BaseDomesticPage, metaclass=FormPageMetaClass
 ):
@@ -3123,7 +3052,6 @@ class EUExitFormPages(ExclusivePageMixin, BaseDomesticPage):
     folder_page = True
 
     subpage_types = [
-        'export_readiness.EUExitInternationalFormPage',
         'export_readiness.EUExitDomesticFormPage',
         'export_readiness.EUExitFormSuccessPage',
     ]
@@ -3221,12 +3149,6 @@ class ContactUsGuidancePage(BaseDomesticPage):
                 '/contact/triage/great-account/company-not-found/'
             ),
         },
-        cms.GREAT_HELP_EXPORTING_TO_UK_SLUG: {
-            'title': 'Guidance - Exporting to the UK',
-            'full_path_override': (
-                'contact/triage/international/exporting-to-the-uk/'
-            )
-        }
     }
 
     @property
@@ -3292,10 +3214,6 @@ class ContactSuccessPage(BaseDomesticPage):
         cms.GREAT_CONTACT_US_FORM_SUCCESS_FIND_COMPANIES_SLUG: {
             'title': 'Contact find UK companies form success',
             'full_path_override': '/contact/find-uk-companies/success/',
-        },
-        cms.GREAT_CONTACT_US_FORM_SUCCESS_INTERNATIONAL_SLUG: {
-            'title': 'Contact international form success',
-            'full_path_override': '/contact/international/success/',
         },
         cms.GREAT_CONTACT_US_FORM_SUCCESS_SOO_SLUG: {
             'title': 'Contact Selling Online Overseas form success',

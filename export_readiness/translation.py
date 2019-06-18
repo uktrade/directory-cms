@@ -75,11 +75,6 @@ class HomePageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
-@register(models.EUExitInternationalFormPage)
-class EUExitInternationalFormPageTranslationOptions(BaseTranslationOptions):
-    fields = []
-
-
 @register(models.EUExitDomesticFormPage)
 class EUExitDomesticFormPageTranslationOptions(BaseTranslationOptions):
     fields = []
@@ -92,11 +87,6 @@ class EUExitFormSuccessPageTranslationOptions(BaseTranslationOptions):
 
 @register(models.EUExitFormPages)
 class EUExitFormPagesTranslationOptions(BaseTranslationOptions):
-    fields = []
-
-
-@register(models.InternationalLandingPage)
-class InternationalLandingPageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 

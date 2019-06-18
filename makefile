@@ -100,6 +100,9 @@ TEST_SET_ENV_VARS := \
 debug_migrate:
 	$(DEBUG_SET_ENV_VARS) && ./manage.py migrate
 
+debug_migrate_tmp_db:
+	$(DEBUG_SET_ENV_VARS) && export DATABASE_URL=postgres://debug:debug@localhost:5432/cms_temporary_template && ./manage.py migrate
+
 debug_createsuperuser:
 	$(DEBUG_SET_ENV_VARS) && ./manage.py createsuperuser
 
@@ -141,10 +144,9 @@ upgrade_requirements:
 	pip-compile --upgrade requirements_test.in
 
 update_db_template:
-	createdb -h localhost cms_temporary_template
-	psql -h localhost -d cms_temporary_template -f db_template.sql
-	export DATABASE_URL=postgres://debug:debug@localhost:5432/cms_temporary_template
-	make debug_migrate
+	createdb -h localhost -U debug cms_temporary_template
+	psql -h localhost -U debug -d cms_temporary_template -f db_template.sql
+	make debug_migrate_tmp_db
 	pg_dump \
 		--no-owner \
 		--file=db_template.sql \

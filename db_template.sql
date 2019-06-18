@@ -990,38 +990,6 @@ CREATE TABLE public.export_readiness_euexitformsuccesspage (
 
 
 --
--- Name: export_readiness_euexitinternationalformpage; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.export_readiness_euexitinternationalformpage (
-    page_ptr_id integer NOT NULL,
-    service_name character varying(100),
-    breadcrumbs_label character varying(50) NOT NULL,
-    first_name_label character varying(200) NOT NULL,
-    first_name_help_text character varying(200),
-    last_name_label character varying(200) NOT NULL,
-    last_name_help_text character varying(200),
-    email_label character varying(200) NOT NULL,
-    email_help_text character varying(200),
-    organisation_type_label character varying(200) NOT NULL,
-    organisation_type_help_text character varying(200),
-    company_name_label character varying(200) NOT NULL,
-    company_name_help_text character varying(200),
-    country_label character varying(200) NOT NULL,
-    country_help_text character varying(200),
-    city_label character varying(200) NOT NULL,
-    city_help_text character varying(200),
-    comment_label character varying(200) NOT NULL,
-    comment_help_text character varying(200),
-    body_text text NOT NULL,
-    heading character varying(255) NOT NULL,
-    submit_button_text character varying(50) NOT NULL,
-    disclaimer text NOT NULL,
-    uses_tree_based_routing boolean NOT NULL
-);
-
-
---
 -- Name: export_readiness_getfinancepage; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1073,17 +1041,6 @@ CREATE TABLE public.export_readiness_homepageold (
     news_description text NOT NULL,
     banner_content text NOT NULL,
     banner_label character varying(50),
-    uses_tree_based_routing boolean NOT NULL
-);
-
-
---
--- Name: export_readiness_internationallandingpage; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.export_readiness_internationallandingpage (
-    page_ptr_id integer NOT NULL,
-    service_name character varying(100),
     uses_tree_based_routing boolean NOT NULL
 );
 
@@ -10727,6 +10684,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 314	export_readiness	0031_internationallandingpage_squashed_0050_auto_20190219_1633	2019-06-18 13:00:30.98933+01
 315	great_international	0001_squashed_0015_auto_20190306_1521	2019-06-18 13:00:30.99242+01
 316	invest	0014_auto_20180904_1113_squashed_0026_auto_20181002_1534	2019-06-18 13:00:30.99581+01
+317	export_readiness	0048_auto_20190618_1408	2019-06-18 15:14:06.550072+01
 \.
 
 
@@ -10843,14 +10801,6 @@ COPY public.export_readiness_euexitformsuccesspage (page_ptr_id, service_name, b
 
 
 --
--- Data for Name: export_readiness_euexitinternationalformpage; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.export_readiness_euexitinternationalformpage (page_ptr_id, service_name, breadcrumbs_label, first_name_label, first_name_help_text, last_name_label, last_name_help_text, email_label, email_help_text, organisation_type_label, organisation_type_help_text, company_name_label, company_name_help_text, country_label, country_help_text, city_label, city_help_text, comment_label, comment_help_text, body_text, heading, submit_button_text, disclaimer, uses_tree_based_routing) FROM stdin;
-\.
-
-
---
 -- Data for Name: export_readiness_getfinancepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -10871,14 +10821,6 @@ COPY public.export_readiness_homepage (page_ptr_id, service_name, uses_tree_base
 --
 
 COPY public.export_readiness_homepageold (page_ptr_id, service_name, news_title, news_description, banner_content, banner_label, uses_tree_based_routing) FROM stdin;
-\.
-
-
---
--- Data for Name: export_readiness_internationallandingpage; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.export_readiness_internationallandingpage (page_ptr_id, service_name, uses_tree_based_routing) FROM stdin;
 \.
 
 
@@ -11698,7 +11640,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 107, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 316, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 317, true);
 
 
 --
@@ -12309,14 +12251,6 @@ ALTER TABLE ONLY public.export_readiness_euexitformsuccesspage
 
 
 --
--- Name: export_readiness_euexitinternationalformpage export_readiness_euexitinternationalformpage_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.export_readiness_euexitinternationalformpage
-    ADD CONSTRAINT export_readiness_euexitinternationalformpage_pkey PRIMARY KEY (page_ptr_id);
-
-
---
 -- Name: export_readiness_homepage export_readiness_exportreadinessapp_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -12330,14 +12264,6 @@ ALTER TABLE ONLY public.export_readiness_homepage
 
 ALTER TABLE ONLY public.export_readiness_homepageold
     ADD CONSTRAINT export_readiness_homepage_pkey PRIMARY KEY (page_ptr_id);
-
-
---
--- Name: export_readiness_internationallandingpage export_readiness_internationallandingpage_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.export_readiness_internationallandingpage
-    ADD CONSTRAINT export_readiness_internationallandingpage_pkey PRIMARY KEY (page_ptr_id);
 
 
 --
@@ -13960,20 +13886,6 @@ CREATE INDEX export_readiness_euexitformsuccesspage_service_name_23f35296 ON pub
 
 
 --
--- Name: export_readiness_euexiti_service_name_655a884a_like; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX export_readiness_euexiti_service_name_655a884a_like ON public.export_readiness_euexitinternationalformpage USING btree (service_name varchar_pattern_ops);
-
-
---
--- Name: export_readiness_euexitint_service_name_655a884a; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX export_readiness_euexitint_service_name_655a884a ON public.export_readiness_euexitinternationalformpage USING btree (service_name);
-
-
---
 -- Name: export_readiness_exportreadinessapp_service_name_545f7fca; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -13999,20 +13911,6 @@ CREATE INDEX export_readiness_homepage_service_name_03ef7d15 ON public.export_re
 --
 
 CREATE INDEX export_readiness_homepage_service_name_03ef7d15_like ON public.export_readiness_homepageold USING btree (service_name varchar_pattern_ops);
-
-
---
--- Name: export_readiness_interna_service_name_804aa4f2_like; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX export_readiness_interna_service_name_804aa4f2_like ON public.export_readiness_internationallandingpage USING btree (service_name varchar_pattern_ops);
-
-
---
--- Name: export_readiness_internationallandingpage_service_name_804aa4f2; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX export_readiness_internationallandingpage_service_name_804aa4f2 ON public.export_readiness_internationallandingpage USING btree (service_name);
 
 
 --
@@ -27450,14 +27348,6 @@ ALTER TABLE ONLY public.export_readiness_euexitformsuccesspage
 
 
 --
--- Name: export_readiness_euexitinternationalformpage export_readiness_eue_page_ptr_id_96c5343f_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.export_readiness_euexitinternationalformpage
-    ADD CONSTRAINT export_readiness_eue_page_ptr_id_96c5343f_fk_wagtailco FOREIGN KEY (page_ptr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: export_readiness_homepage export_readiness_exp_page_ptr_id_37b95a6e_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -27471,14 +27361,6 @@ ALTER TABLE ONLY public.export_readiness_homepage
 
 ALTER TABLE ONLY public.export_readiness_homepageold
     ADD CONSTRAINT export_readiness_hom_page_ptr_id_45b4c145_fk_wagtailco FOREIGN KEY (page_ptr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: export_readiness_internationallandingpage export_readiness_int_page_ptr_id_b9d90e95_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.export_readiness_internationallandingpage
-    ADD CONSTRAINT export_readiness_int_page_ptr_id_b9d90e95_fk_wagtailco FOREIGN KEY (page_ptr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --

@@ -20,8 +20,6 @@ def test_app_models():
         models.MarketingPages,
         models.CampaignPage,
         models.ArticlePage,
-        models.InternationalLandingPage,
-        models.EUExitInternationalFormPage,
         models.EUExitDomesticFormPage,
         models.EUExitFormSuccessPage,
         models.EUExitFormPages,

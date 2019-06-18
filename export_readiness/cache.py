@@ -79,16 +79,6 @@ class HomePageOldSubscriber(AbstractDatabaseCacheSubscriber):
     ]
 
 
-class InternationalLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InternationalLandingPage
-    subscriptions = []
-
-
-class EUExitInternationalFormPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.EUExitInternationalFormPage
-    subscriptions = []
-
-
 class EUExitDomesticFormPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.EUExitDomesticFormPage
     subscriptions = []
