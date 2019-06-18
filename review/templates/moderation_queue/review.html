@@ -28,8 +28,8 @@
                 <tr>
                     <th class="title">{% trans "Page name" %}</th>
                     <th>{% trans "Parent page" %}</th>
-                    <th>{% trans "Created by" %}</th>
-                    <th>{% trans "Creation date" %}</th>
+                    <th>{% trans "Reviewed by" %}</th>
+                    <th>{% trans "Reviewed at" %}</th>
                     <th>{% trans "Review status reason" %}</th>
                     <th>{% trans "Review status" %}</th>
                 </tr>
@@ -111,8 +111,8 @@
                 <tr>
                     <th>{% trans "Page name" %}</th>
                     <th>{% trans "Parent page" %}</th>
-                    <th>{% trans "Created by" %}</th>
-                    <th>{% trans "Creation date" %}</th>
+                    <th>{% trans "Reviewed by" %}</th>
+                    <th>{% trans "Reviewed at" %}</th>
                     <th>{% trans "Review status reason" %}</th>
                     <th>{% trans "Review status" %}</th>
                 </tr>
@@ -135,10 +135,10 @@
                     </td>
 
                     <td class="type" valign="top">
-                        {% if response.user == request.user %}
-                        {% trans "You" %}
+                        {% if response.reviewer.user == request.user %}
+                            {% trans "You" %}
                         {% else %}
-                        {{ response.user.get_full_name }}
+                            {{ response.reviewer.get_name }}
                         {% endif %}
                     </td>
 

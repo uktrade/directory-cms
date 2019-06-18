@@ -128,12 +128,7 @@ class ModerationResponse(models.Model):
         on_delete=models.CASCADE,
         related_name='responses',
     )
-    user = models.ForeignKey(
-        get_user_model(),
-        verbose_name=_('user'),
-        on_delete=models.SET_NULL,
-        null=True,
-    )
+    reviewer = models.ForeignKey(Reviewer, on_delete=models.CASCADE, related_name='moderation_responses')
     is_accepted = models.BooleanField(
         verbose_name=_('accept page'),
         default=False,

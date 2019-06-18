@@ -116,6 +116,6 @@ class ModerationRespond(ModerationMixin, generics.CreateAPIView):
 
     @transaction.atomic
     def perform_create(self, serializer):
-        serializer.save(request=self.moderation_request)
+        serializer.save(reviewer_id=self.reviewer_id, request=self.moderation_request)
         self.moderation_request.locked_until = None
         self.moderation_request.save()

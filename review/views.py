@@ -25,7 +25,7 @@ class Review(ListView):
             'request',
             'request__revision',
             'request__revision__user',
-            'user',
+            'reviewer',
         )
 
         context = super().get_context_data(**kwargs)
