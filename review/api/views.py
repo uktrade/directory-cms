@@ -14,12 +14,15 @@ from . import serializers
 class ReviewTokenMixin:
     authentication_classes = []
 
+    def process_review_token(self, data):
+        self.reviewer_id = data['reviewer_id']
+        self.page_revision_id = data['page_revision_id']
+
     @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
         review_token = self.request.META.get('HTTP_X_REVIEW_TOKEN')
         data = jwt.decode(review_token, settings.SECRET_KEY, algorithms=['HS256'])
-        self.reviewer_id = data['reviewer_id']
-        self.page_revision_id = data['page_revision_id']
+        self.process_review_token(data)
 
         return super().dispatch(*args, **kwargs)
 

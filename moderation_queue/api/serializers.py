@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import ModeratorReview
+from ..models import ModeratorReview
 
 
 class ModeratorReviewSerializer(serializers.ModelSerializer):
@@ -9,5 +9,4 @@ class ModeratorReviewSerializer(serializers.ModelSerializer):
         fields = [
             'comment',
             'is_accepted',
-            'moderation',
         ]

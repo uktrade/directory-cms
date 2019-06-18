@@ -1,66 +1,17 @@
-from datetime import timedelta
-
-import jwt
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
-from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
-from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, ListView, View
-from rest_framework.generics import CreateAPIView
 from wagtail.admin import messages
 from wagtail.admin.utils import send_notification
 from wagtail.core.models import PageRevision
 
 from .forms import SubmitForm
 from .models import Moderation, ModeratorReview
-from .serializers import ModeratorReviewSerializer
-
-
-@method_decorator(login_required, name='dispatch')
-class ExtendModerationLock(View):
-    # TODO: should this check the Review token too?
-    http_method_names = ['post']
-
-    def post(self, request, *args, **kwargs):
-        """
-        Endpoint to update the given Moderation's lock time
-        """
-        lock_extension = timedelta(minutes=settings.MODERATION_LOCK_TIMEOUT)
-        new_lock_time = timezone.now() + lock_extension
-
-        try:
-            (Moderation.objects.filter(pk=self.kwargs['id'])
-                               .update(locked_until=new_lock_time))
-        except Moderation.DoesNotExist:
-            raise Http404
-
-        return HttpResponse('lock updated', status_code=200)
-
-
-# FIXME: replace with review.api.views.ReviewTokenMixin once merged with the
-# review-poc branch
-class ReviewTokenMixin:
-    authentication_classes = []
-
-    @method_decorator(csrf_exempt)
-    def dispatch(self, *args, **kwargs):
-        review_token = self.request.GET.get('review_token')
-        data = jwt.decode(
-            review_token,
-            settings.SECRET_KEY,
-            algorithms=['HS256'],
-        )
-        self.reviewer_id = data['reviewer_id']
-        self.page_revision_id = data['page_revision_id']
-
-        return super().dispatch(*args, **kwargs)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -172,48 +123,6 @@ class PreviewModeration(View):
         # that request.user and request.revision_id will be picked up by the
         # wagtail user bar
         return page.serve_preview(request, page.default_preview_mode)
-
-
-@method_decorator(csrf_exempt, name='post')
-class ReviewModeration(ReviewTokenMixin, CreateAPIView):
-    queryset = ModeratorReview.objects.all()
-    serializer_class = ModeratorReviewSerializer
-
-    def create(self, request, *args, **kwargs):
-        """
-
-        """
-        moderation = (Moderation.objects.filter(revision__page__pk=self.kwargs['pk'])  # noqa: E501
-                                        .order_by('-created_at')
-                                        .first())
-        if moderation is None:
-            raise Http404
-
-        data = {
-            'comment': request.data.get('comment'),
-            'is_accepted': request.data.get('is_accepted'),
-            'moderation': moderation.pk,
-        }
-        serializer = self.get_serializer(data=data)
-        serializer.is_valid(raise_exception=True)
-
-        with transaction.atomic():
-            self.perform_create(serializer)
-            moderation.locked_until = None
-            moderation.save()
-
-        return HttpResponseRedirect(request.META['HTTP_REFERER'])
-
-        # TODO: use JS on the frontend so we can handle errors and not ping a
-        # user between sites.
-        # headers = self.get_success_headers(serializer.data)
-        # from rest_framework import status
-        # from rest_framework.response import Response
-        # return Response(
-        #     serializer.data,
-        #     status=status.HTTP_201_CREATED,
-        #     headers=headers,
-        # )
 
 
 @method_decorator(login_required, name='dispatch')

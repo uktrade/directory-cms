@@ -21,10 +21,10 @@ from moderation_queue.views import (
     PreviewModeration,
     Review,
     RejectModeration,
-    ReviewModeration,
     SubmitModeration,
 )
 from review.api import urls as review_api_urls
+from moderation_queue.api import urls as moderation_api_urls
 
 api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
@@ -65,6 +65,10 @@ api_urls = [
     url(
         r'^review/',
         include(review_api_urls, namespace='review', app_name='review')
+    ),
+    url(
+        r'^review/',
+        include(moderation_api_urls, namespace='moderation', app_name='moderation')
     ),
 ]
 
@@ -144,11 +148,6 @@ urlpatterns = [
             r'^(?P<pk>\d+)/reject/$',
             RejectModeration.as_view(),
             name='reject_moderation',
-        ),
-        url(
-            r'^(?P<pk>\d+)/review/$',
-            ReviewModeration.as_view(),
-            name='review_moderation',
         ),
         url(
             r'^(?P<pk>\d+)/submit/$',

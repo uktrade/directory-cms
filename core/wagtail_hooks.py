@@ -36,7 +36,7 @@ def update_default_listing_buttons(page, page_perms, is_parent=False):
         for button in buttons:
             if helpers.get_button_url_name(button) == 'view_draft':
                 reviewer, created = Reviewer.objects.get_or_create(user=page_perms.user)
-                review_token = get_review_token(reviewer, page.get_latest_revision())
+                review_token = get_review_token(reviewer, page.get_latest_revision(), enable_moderation=True)
                 button.url = page.get_url(is_draft=True) + '&review_token=' + review_token.decode('utf-8')
 
     else:
