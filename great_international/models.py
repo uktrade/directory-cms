@@ -4134,7 +4134,7 @@ class InternationalTradeHomePage(
     BreadcrumbMixin,
     BaseInternationalPage
 ):
-    slug_identity = cms.FIND_A_SUPPLIER_LANDING_SLUG
+    slug_identity = slugs.FIND_A_SUPPLIER_LANDING
 
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -4281,7 +4281,7 @@ class InternationalTradeIndustryContactPage(
 ):
 
     view_path = 'industries/contact/'
-    slug_identity = cms.FIND_A_SUPPLIER_INDUSTRY_CONTACT_SLUG
+    slug_identity = slugs.FIND_A_SUPPLIER_INDUSTRY_CONTACT
     # override the slug when generating the url
     slug_override = ''
 
