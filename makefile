@@ -140,12 +140,15 @@ upgrade_requirements:
 	pip-compile --upgrade requirements.in
 	pip-compile --upgrade requirements_test.in
 
-update_db_template: \
-	debug_migrate
+update_db_template:
+	createdb -h localhost cms_temporary_template
+	psql -h localhost -d cms_temporary_template -f db_template.sql
+	export DATABASE_URL=postgres://debug:debug@localhost:5432/cms_temporary_template
+	make debug_migrate
 	pg_dump \
 		--no-owner \
-		--exclude-table-data \
 		--file=db_template.sql \
-		--dbname=directory_cms_debug
+		--dbname=cms_temporary_template
+	dropdb cms_temporary_template
 
 .PHONY: clean test_requirements debug_webserver debug_test debug
