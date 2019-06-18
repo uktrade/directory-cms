@@ -75,10 +75,10 @@ class CommentReply(models.Model):
 
 class ModerationRequestQuerySet(models.QuerySet):
     def accepted(self):
-        return self.filter(reviews__is_accepted=True)
+        return self.filter(responses__is_accepted=True)
 
     def pending(self):
-        return (self.filter(reviews__isnull=True)
+        return (self.filter(responses__isnull=True)
                     .order_by('-created_at')
                     .select_related('revision', 'revision__user'))
 
@@ -117,16 +117,16 @@ class ModerationRequest(models.Model):
         return self.locked_until > timezone.now()
 
     @property
-    def latest_review(self):
-        return self.reviews.latest('created_at')
+    def latest_response(self):
+        return self.responses.latest('created_at')
 
 
-class ModeratorReview(models.Model):
+class ModerationResponse(models.Model):
     request = models.ForeignKey(
         'ModerationRequest',
         verbose_name=_('request'),
         on_delete=models.CASCADE,
-        related_name="reviews",
+        related_name='responses',
     )
     user = models.ForeignKey(
         get_user_model(),

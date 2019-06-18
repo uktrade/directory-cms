@@ -11,7 +11,7 @@ from wagtail.admin.utils import send_notification
 from wagtail.core.models import PageRevision
 
 from .forms import SubmitForm
-from .models import ModerationRequest, ModeratorReview
+from .models import ModerationRequest, ModerationResponse
 
 
 @method_decorator(login_required, name='dispatch')
@@ -19,7 +19,7 @@ class Review(ListView):
     template_name = "moderation_queue/review.html"
 
     def get_context_data(self, **kwargs):
-        pending_reviews = ModeratorReview.objects.filter(
+        pending_responses = ModerationResponse.objects.filter(
             request__revision__user=self.request.user,
         ).order_by('created_at').select_related(
             'request',
@@ -29,7 +29,7 @@ class Review(ListView):
         )
 
         context = super().get_context_data(**kwargs)
-        context['pending_reviews'] = pending_reviews
+        context['pending_responses'] = pending_responses
         return context
 
     def get_queryset(self):
@@ -66,7 +66,7 @@ class ApproveModeration(View):
 
         with transaction.atomic():
             revision.approve_moderation()
-            request.reviews.create(user=request.user, is_accepted=True)
+            request.responses.create(user=request.user, is_accepted=True)
 
         admin_display_title = page.get_admin_display_title()
         message = _(f"Page '{admin_display_title}' published.")
@@ -154,7 +154,7 @@ class RejectModeration(View):
 
         with transaction.atomic():
             revision.reject_moderation()
-            request.reviews.create(user=request.user, is_accepted=False)
+            request.responses.create(user=request.user, is_accepted=False)
 
         page_title = page.get_admin_display_title()
         buttons = [

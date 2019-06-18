@@ -97,7 +97,7 @@
             </tbody>
         </table>
 
-        {% if pending_reviews %}
+        {% if pending_responses %}
         <h2>{% trans "Draft pages that need changes" %}</h2>
 
         <table class="listing">
@@ -118,8 +118,8 @@
                 </tr>
             </thead>
             <tbody>
-                {% for review in pending_reviews %}
-                {% with page=review.request.revision.page %}
+                {% for response in pending_responses %}
+                {% with page=response.request.revision.page %}
                 <tr>
                     <td class="title" valign="top">
                         <h2>
@@ -135,21 +135,21 @@
                     </td>
 
                     <td class="type" valign="top">
-                        {% if review.user == request.user %}
+                        {% if response.user == request.user %}
                         {% trans "You" %}
                         {% else %}
-                        {{ review.user.get_full_name }}
+                        {{ response.user.get_full_name }}
                         {% endif %}
                     </td>
 
                     <td valign="top">
-                        <div class="human-readable-date" title="{{ review.created_at|date:"d M Y H:i" }}">
-                            {% blocktrans with time_period=review.created_at|timesince %}{{ time_period }} ago{% endblocktrans %}
+                        <div class="human-readable-date" title="{{ response.created_at|date:"d M Y H:i" }}">
+                            {% blocktrans with time_period=response.created_at|timesince %}{{ time_period }} ago{% endblocktrans %}
                         </div>
                     </td>
 
                     <td valign="top">
-                        <p>{{ review.comment }}</p>
+                        <p>{{ response.comment }}</p>
                     </td>
 
                     <td valign="top">

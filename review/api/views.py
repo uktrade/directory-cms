@@ -111,8 +111,8 @@ class ModerationLock(ModerationMixin, views.APIView):
 
 
 class ModerationRespond(ModerationMixin, generics.CreateAPIView):
-    queryset = models.ModeratorReview.objects.all()
-    serializer_class = serializers.ModeratorReviewSerializer
+    queryset = models.ModerationResponse.objects.all()
+    serializer_class = serializers.ModerationResponseSerializer
 
     @transaction.atomic
     def perform_create(self, serializer):
