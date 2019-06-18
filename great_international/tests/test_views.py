@@ -273,9 +273,13 @@ def test_high_potential_opportunity_api(document, admin_client, root_page):
     assert 'other_opportunities' not in parsed['other_opportunities'][0]
 
 
-def test_landing_page_exposes_industries(admin_client, root_page):
-    industry = factories.InternationalSectorPageFactory(live=True)
-    factories.InternationalSectorPageFactory(live=False)
+def test_international_trade_home_page_exposes_industries(
+        admin_client,
+        root_page
+):
+    industry = factories.InternationalSectorPageFactory(parent=root_page,
+                                                        live=True)
+    factories.InternationalSectorPageFactory(parent=root_page, live=False)
     homepage = factories.InternationalTradeHomePageFactory(
         live=True, parent=root_page
     )
