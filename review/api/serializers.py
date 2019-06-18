@@ -33,3 +33,12 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Comment
         fields = ['id', 'author', 'quote', 'text', 'created_at', 'updated_at', 'is_resolved', 'replies', 'content_path', 'start_xpath', 'start_offset', 'end_xpath', 'end_offset']
+
+
+class ModeratorReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ModeratorReview
+        fields = [
+            'comment',
+            'is_accepted',
+        ]

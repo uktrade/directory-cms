@@ -15,7 +15,7 @@ import core.views
 import export_readiness.views
 from activitystream.views import ActivityStreamView
 from groups.views import GroupInfoModalView
-from moderation_queue.views import (
+from review.views import (
     ApproveModeration,
     ModerationQueue,
     PreviewModeration,
@@ -24,7 +24,6 @@ from moderation_queue.views import (
     SubmitModeration,
 )
 from review.api import urls as review_api_urls
-from moderation_queue.api import urls as moderation_api_urls
 
 api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
@@ -65,10 +64,6 @@ api_urls = [
     url(
         r'^review/',
         include(review_api_urls, namespace='review', app_name='review')
-    ),
-    url(
-        r'^review/',
-        include(moderation_api_urls, namespace='moderation', app_name='moderation')
     ),
 ]
 
