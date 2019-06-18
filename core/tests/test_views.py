@@ -251,10 +251,10 @@ def test_add_page_prepopulate(
     model_as_dict = {key: val for key, val in model_as_dict.items() if val}
     post_data = {
         **model_as_dict,
-        'hero_image': image.file.name,
-        'introduction_column_one_icon': image.file.name,
-        'introduction_column_two_icon': image.file.name,
-        'introduction_column_three_icon': image.file.name,
+        '(image)hero_image': image.file.name,
+        '(image)introduction_column_one_icon': image.file.name,
+        '(image)introduction_column_two_icon': image.file.name,
+        '(image)introduction_column_three_icon': image.file.name,
         **cluster_data,
     }
 
