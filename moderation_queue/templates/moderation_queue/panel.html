@@ -38,28 +38,8 @@
                         <ul class="actions">
 
                             <li>
-                                <form action="{% url 'moderation-queue:approve_moderation' pending_moderation.id %}" method="POST">
-                                    {% csrf_token %}
-                                    <input type="submit" class="button button-small button-secondary" value="{% trans 'Approve' %}">
-                                </form>
-                            </li>
-
-                            <li class="no-border">
-                                <form action="{% url 'moderation-queue:reject_moderation' pending_moderation.id %}" method="POST">
-                                    {% csrf_token %}
-                                    <input type="submit" class="button button-small button-secondary no" value="{% trans 'Reject' %}">
-                                </form>
-                            </li>
-
-                            <li>
-                                <a href="{% url 'wagtailadmin_pages:edit' page.id %}" class="button button-small button-secondary">
-                                    {% trans 'Edit' %}
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="{% url 'wagtailadmin_pages:preview_for_moderation' pending_moderation.revision.id %}" class="button button-small button-secondary" target="_blank">
-                                    {% trans 'Preview' %}
+                                <a href="{{ pending_moderation.review_url }}" class="button button-small button-secondary" target="_blank">
+                                    {% trans 'Review' %}
                                 </a>
                             </li>
 

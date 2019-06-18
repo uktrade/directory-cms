@@ -3,6 +3,9 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+from review.api.token import get_review_token
+from review.models import Reviewer
+
 
 class ModerationQuerySet(models.QuerySet):
     def accepted(self):
@@ -37,6 +40,11 @@ class Moderation(models.Model):
 
     def is_2i_moderated(self):
         return self.reviews.filter(is_accepted=True).exists()
+
+    def get_review_url(self, user):
+        reviewer, created = Reviewer.objects.get_or_create(user=user)
+        review_token = get_review_token(reviewer, self.revision, enable_moderation=True)
+        return self.revision.page.specific.get_url(is_draft=True) + '&review_token=' + review_token.decode('utf-8')
 
     @property
     def is_locked(self):

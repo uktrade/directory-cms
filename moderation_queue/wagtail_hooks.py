@@ -24,9 +24,16 @@ class ModerationQueuePanel:
         self.request = request
 
     def render(self):
+        # TODO revision__user is not the person who requested the review
         pending = Moderation.objects.pending().exclude(
             revision__user=self.request.user
         ).order_by('-publish_at')[:10]
+
+        # Append review URL to each object
+        pending = list(pending)
+        for moderation in pending:
+            moderation.review_url = moderation.get_review_url(self.request.user)
+
         return render_to_string(
             'moderation_queue/panel.html',
             context={'pending_moderations': pending},
