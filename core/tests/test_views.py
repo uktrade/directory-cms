@@ -1,7 +1,7 @@
 import pytest
 
 from bs4 import BeautifulSoup
-from directory_constants.constants import cms
+from directory_constants import cms
 from modeltranslation.utils import build_localized_fieldname
 from wagtail.core.models import Site
 
@@ -15,6 +15,7 @@ from find_a_supplier.tests.factories import (
     FindASupplierAppFactory, IndustryLandingPageFactory
 )
 from invest.tests.factories import InfoPageFactory
+from .helpers import clean_post_data
 
 
 @pytest.fixture
@@ -250,10 +251,10 @@ def test_add_page_prepopulate(
     model_as_dict = {key: val for key, val in model_as_dict.items() if val}
     post_data = {
         **model_as_dict,
-        'hero_image': image.file.name,
-        'introduction_column_one_icon': image.file.name,
-        'introduction_column_two_icon': image.file.name,
-        'introduction_column_three_icon': image.file.name,
+        '(image)hero_image': image.file.name,
+        '(image)introduction_column_one_icon': image.file.name,
+        '(image)introduction_column_two_icon': image.file.name,
+        '(image)introduction_column_three_icon': image.file.name,
         **cluster_data,
     }
 
@@ -270,7 +271,7 @@ def test_add_page_prepopulate(
             translated_fas_industry_page.slug
         )
 
-    response = admin_client.post(url, post_data)
+    response = admin_client.post(url, clean_post_data(post_data))
 
     assert response.template_name == [expected_template]
     assert response.status_code == 200
@@ -303,12 +304,13 @@ def test_add_page_prepopulate_missing_content_type(
         }
     )
 
-    data = model_to_dict(translated_fas_industry_page, exclude=[
-        'go_live_at',
-        'expire_at',
-        'hero_image',
-    ])
-    response = admin_client.post(url, {**data, **cluster_data})
+    post_data = model_to_dict(
+        translated_fas_industry_page,
+        exclude=['go_live_at', 'expire_at', 'hero_image']
+    )
+    post_data.update(cluster_data)
+
+    response = admin_client.post(url, clean_post_data(post_data))
 
     assert response.status_code == 404
 

@@ -2,7 +2,7 @@ import abc
 import hashlib
 from urllib.parse import urlencode
 
-from directory_constants.constants import cms
+from directory_constants import cms
 from rest_framework.renderers import JSONRenderer
 from wagtail.core.signals import page_published, page_unpublished
 from wagtail.core.models import Page, Site

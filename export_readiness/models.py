@@ -1,8 +1,8 @@
-from directory_constants.constants import cms
-from directory_constants.constants import urls
+from directory_constants import cms, slugs, urls
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel, HelpPanel)
+from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
@@ -19,7 +19,6 @@ from core.models import (
     BreadcrumbMixin,
     ExclusivePageMixin,
     FormPageMetaClass,
-    ServiceMixin,
 )
 from core.mixins import ServiceHomepageMixin, ServiceNameUniqueSlugMixin
 from core.panels import SearchEngineOptimisationPanel
@@ -37,17 +36,9 @@ class BaseDomesticPage(ServiceNameUniqueSlugMixin, BasePage):
         abstract = True
 
 
-class ExportReadinessApp(ExclusivePageMixin, ServiceMixin, BaseDomesticPage):
-    slug_identity = 'export-readiness-app'
-
-    @classmethod
-    def get_required_translatable_fields(cls):
-        return []
-
-
 class TermsAndConditionsPage(ExclusivePageMixin, BaseDomesticPage):
 
-    slug_identity = cms.GREAT_TERMS_AND_CONDITIONS_SLUG
+    slug_identity = slugs.GREAT_TERMS_AND_CONDITIONS
 
     body = MarkdownField(blank=False)
 
@@ -93,7 +84,7 @@ class PrivacyAndCookiesPage(BaseDomesticPage):
 
 class SitePolicyPages(ExclusivePageMixin, BaseDomesticPage):
     # a folder for T&C and privacy & cookies pages
-    slug_identity = cms.GREAT_SITE_POLICY_PAGES_SLUG
+    slug_identity = slugs.GREAT_SITE_POLICY_PAGES
     folder_page = True
 
     subpage_types = [
@@ -109,7 +100,7 @@ class SitePolicyPages(ExclusivePageMixin, BaseDomesticPage):
 
 
 class GetFinancePage(ExclusivePageMixin, BreadcrumbMixin, BaseDomesticPage):
-    slug_identity = cms.GREAT_GET_FINANCE_SLUG
+    slug_identity = slugs.GREAT_GET_FINANCE
 
     breadcrumbs_label = models.CharField(max_length=50)
     hero_text = MarkdownField()
@@ -274,20 +265,20 @@ class PerformanceDashboardPage(BaseDomesticPage):
 
     service_mapping = {
         urls.SERVICES_GREAT_DOMESTIC: {
-            'slug': cms.GREAT_PERFORMANCE_DASHBOARD_SLUG,
+            'slug': slugs.PERFORMANCE_DASHBOARD,
             'full_path_override': '/performance-dashboard/',
             'heading': 'Great.gov.uk',
             'landing_dashboard': True,
         },
         urls.SERVICES_SOO: {
-            'slug': cms.GREAT_PERFORMANCE_DASHBOARD_SOO_SLUG,
+            'slug': slugs.PERFORMANCE_DASHBOARD_SOO,
             'full_path_override': (
                 '/performance-dashboard/selling-online-overseas/'),
             'heading': 'Selling Online Overseas',
             'landing_dashboard': False,
         },
         urls.SERVICES_EXOPPS: {
-            'slug': cms.GREAT_PERFORMANCE_DASHBOARD_EXOPPS_SLUG,
+            'slug': slugs.PERFORMANCE_DASHBOARD_EXOPPS,
             'full_path_override': (
                 '/performance-dashboard/export-opportunities/'),
             'heading': 'Export Opportunities',
@@ -295,13 +286,13 @@ class PerformanceDashboardPage(BaseDomesticPage):
         },
         urls.SERVICES_FAB: {
             'slug': (
-                cms.GREAT_PERFORMANCE_DASHBOARD_TRADE_PROFILE_SLUG),
+                slugs.PERFORMANCE_DASHBOARD_TRADE_PROFILE),
             'full_path_override': '/performance-dashboard/trade-profiles/',
             'heading': 'Business Profiles',
             'landing_dashboard': False,
         },
         urls.SERVICES_INVEST: {
-            'slug': cms.GREAT_PERFORMANCE_DASHBOARD_INVEST_SLUG,
+            'slug': slugs.PERFORMANCE_DASHBOARD_INVEST,
             'full_path_override': '/performance-dashboard/invest/',
             'heading': 'Invest in Great Britain',
             'landing_dashboard': False,
@@ -382,7 +373,7 @@ class PerformanceDashboardPage(BaseDomesticPage):
 
 class PerformanceDashboardNotesPage(ExclusivePageMixin, BaseDomesticPage):
 
-    slug_identity = cms.GREAT_PERFORMANCE_DASHBOARD_NOTES_SLUG
+    slug_identity = slugs.PERFORMANCE_DASHBOARD_NOTES
     slug_override = 'guidance-notes'
 
     body = MarkdownField(
@@ -2555,7 +2546,7 @@ class CountryGuidePage(BaseDomesticPage):
 
 class MarketingPages(ExclusivePageMixin, BaseDomesticPage):
 
-    slug_identity = cms.GREAT_MARKETING_PAGES_SLUG
+    slug_identity = slugs.GREAT_MARKETING_PAGES
     slug_override = 'campaigns'
 
     subpage_types = [
@@ -2886,13 +2877,53 @@ class ArticlePage(BaseDomesticPage):
 
 
 class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
+    slug_identity = 'export-readiness-app'
+    parent_page_types = ['wagtailcore.Page']
 
-    slug_identity = cms.GREAT_HOME_SLUG
-    subpage_types = [
-        'export_readiness.TopicLandingPage',
-        'export_readiness.ArticleListingPage',
-        'export_readiness.ArticlePage'
+    banner_content = MarkdownField()
+    banner_label = models.CharField(max_length=50, null=True, blank=True)
+    news_title = models.CharField(max_length=255)
+    news_description = MarkdownField()
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='EU Exit banner',
+            children=[
+                FieldPanel('banner_label'),
+                FieldPanel('banner_content'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='EU exit news',
+            children=[
+                FieldPanel('news_title'),
+                FieldPanel('news_description')
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
     ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    @classmethod
+    def allowed_subpage_models(cls):
+        allowed_name = cls.service_name_value
+        return [
+            model for model in Page.allowed_subpage_models()
+            if(
+                getattr(model, 'service_name_value', None) == allowed_name
+                and model is not cls
+            )
+        ]
+
+
+class HomePageOld(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
+    slug_identity = slugs.GREAT_HOME
+    parent_page_types = []
+    subpage_types = []
 
     banner_content = MarkdownField()
     banner_label = models.CharField(max_length=50, null=True, blank=True)
@@ -2925,7 +2956,7 @@ class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
 
 class InternationalLandingPage(ExclusivePageMixin, BaseDomesticPage):
 
-    slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
+    slug_identity = slugs.GREAT_HOME_INTERNATIONAL
     # slug_override = 'international'
     subpage_types = [
         'export_readiness.ArticleListingPage',
@@ -2964,7 +2995,7 @@ class EUExitInternationalFormPage(
     ]
 
     full_path_override = '/international/eu-exit-news/contact/'
-    slug_identity = cms.GREAT_EUEXIT_INTERNATIONAL_FORM_SLUG
+    slug_identity = slugs.EUEXIT_INTERNATIONAL_FORM
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
@@ -3008,7 +3039,7 @@ class EUExitDomesticFormPage(
     ]
 
     full_path_override = '/eu-exit-news/contact/'
-    slug_identity = cms.GREAT_EUEXIT_DOMESTIC_FORM_SLUG
+    slug_identity = slugs.EUEXIT_DOMESTIC_FORM
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
@@ -3040,7 +3071,7 @@ class EUExitDomesticFormPage(
 
 class EUExitFormSuccessPage(ExclusivePageMixin, BaseDomesticPage):
     full_path_override = '/eu-exit-news/contact/success/'
-    slug_identity = cms.GREAT_EUEXIT_FORM_SUCCESS_SLUG
+    slug_identity = slugs.EUEXIT_FORM_SUCCESS
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(
@@ -3138,58 +3169,58 @@ class ContactSuccessPages(ExclusivePageMixin, BaseDomesticPage):
 class ContactUsGuidancePage(BaseDomesticPage):
 
     topic_mapping = {
-        cms.GREAT_HELP_EXOPP_ALERTS_IRRELEVANT_SLUG: {
+        slugs.HELP_EXOPP_ALERTS_IRRELEVANT: {
             'title': 'Guidance - Daily alerts are not relevant',
             'full_path_override': (
                 '/contact/triage/export-opportunities/alerts-not-relevant/'
             ),
         },
-        cms.GREAT_HELP_EXOPP_NO_RESPONSE: {
+        slugs.HELP_EXOPPS_NO_RESPONSE: {
             'title': 'Guidance - Export Opportunity application no response',
             'full_path_override': (
                 '/contact/triage/export-opportunities/opportunity-no-response/'
             ),
         },
-        cms.GREAT_HELP_MISSING_VERIFY_EMAIL_SLUG: {
+        slugs.HELP_MISSING_VERIFY_EMAIL: {
             'title': 'Guidance - Email verification missing',
             'full_path_override': (
                 '/contact/triage/great-account/no-verification-email/'),
         },
-        cms.GREAT_HELP_PASSWORD_RESET_SLUG: {
+        slugs.HELP_PASSWORD_RESET: {
             'title': 'Guidance - Missing password reset link',
             'full_path_override': (
                 '/contact/triage/great-account/password-reset/'),
         },
-        cms.GREAT_HELP_COMPANIES_HOUSE_LOGIN_SLUG: {
+        slugs.HELP_COMPANIES_HOUSE_LOGIN: {
             'title': 'Guidance - Companies House login not working',
             'full_path_override': (
                 '/contact/triage/great-account/companies-house-login/'),
         },
-        cms.GREAT_HELP_VERIFICATION_CODE_ENTER_SLUG: {
+        slugs.HELP_VERIFICATION_CODE_ENTER: {
             'title': 'Guidance - Where to enter letter verification code',
             'full_path_override': (
                 '/contact/triage/great-account/verification-letter-code/'
             ),
         },
-        cms.GREAT_HELP_VERIFICATION_CODE_LETTER_SLUG: {
+        slugs.HELP_VERIFICATION_CODE_LETTER: {
             'title': 'Guidance - Verification letter not delivered',
             'full_path_override': (
                 '/contact/triage/great-account/no-verification-letter/'
             ),
         },
-        cms.GREAT_HELP_VERIFICATION_CODE_MISSING_SLUG: {
+        slugs.HELP_VERIFICATION_CODE_MISSING: {
             'title': 'Guidance - Verification code not delivered',
             'full_path_override': (
                 '/contact/triage/great-account/verification-missing/'
             ),
         },
-        cms.GREAT_HELP_ACCOUNT_COMPANY_NOT_FOUND_SLUG: {
+        slugs.HELP_ACCOUNT_COMPANY_NOT_FOUND: {
             'title': 'Guidance - Company not found',
             'full_path_override': (
                 '/contact/triage/great-account/company-not-found/'
             ),
         },
-        cms.GREAT_HELP_EXPORTING_TO_UK_SLUG: {
+        slugs.HELP_EXPORTING_TO_UK: {
             'title': 'Guidance - Exporting to the UK',
             'full_path_override': (
                 'contact/triage/international/exporting-to-the-uk/'
@@ -3236,47 +3267,47 @@ class ContactUsGuidancePage(BaseDomesticPage):
 class ContactSuccessPage(BaseDomesticPage):
 
     topic_mapping = {
-        cms.GREAT_CONTACT_US_FORM_SUCCESS_SLUG: {
+        slugs.HELP_FORM_SUCCESS: {
             'title': 'Contact domestic form success',
             'full_path_override': '/contact/domestic/success/',
         },
-        cms.GREAT_CONTACT_US_FORM_SUCCESS_EVENTS_SLUG: {
+        slugs.HELP_FORM_SUCCESS_EVENTS: {
             'title': 'Contact Events form success',
             'full_path_override': '/contact/events/success/',
         },
-        cms.GREAT_CONTACT_US_FORM_SUCCESS_DSO_SLUG: {
+        slugs.HELP_FORM_SUCCESS_DSO: {
             'title': 'Contact Defence and Security Organisation form success',
             'full_path_override': (
                 '/contact/defence-and-security-organisation/success/'),
         },
-        cms.GREAT_CONTACT_US_FORM_SUCCESS_EXPORT_ADVICE_SLUG: {
+        slugs.HELP_FORM_SUCCESS_EXPORT_ADVICE: {
             'title': 'Contact exporting from the UK form success',
             'full_path_override': '/contact/export-advice/success/',
         },
-        cms.GREAT_CONTACT_US_FORM_SUCCESS_FEEDBACK_SLUG: {
+        slugs.HELP_FORM_SUCCESS_FEEDBACK: {
             'title': 'Contact feedback form success',
             'full_path_override': '/contact/feedback/success/',
         },
-        cms.GREAT_CONTACT_US_FORM_SUCCESS_FIND_COMPANIES_SLUG: {
+        slugs.HELP_FORM_SUCCESS_FIND_COMPANIES: {
             'title': 'Contact find UK companies form success',
             'full_path_override': '/contact/find-uk-companies/success/',
         },
-        cms.GREAT_CONTACT_US_FORM_SUCCESS_INTERNATIONAL_SLUG: {
+        slugs.HELP_FORM_SUCCESS_INTERNATIONAL: {
             'title': 'Contact international form success',
             'full_path_override': '/contact/international/success/',
         },
-        cms.GREAT_CONTACT_US_FORM_SUCCESS_SOO_SLUG: {
+        slugs.HELP_FORM_SUCCESS_SOO: {
             'title': 'Contact Selling Online Overseas form success',
             'full_path_override': '/contact/selling-online-overseas/success/',
         },
-        cms.GREAT_CONTACT_US_FORM_SUCCESS_BEIS_SLUG: {
+        slugs.HELP_FORM_SUCCESS_BEIS: {
             'title': 'Contact BEIS form success',
             'full_path_override': (
                 'contact/department-for-business-energy-'
                 'and-industrial-strategy/success/'
             )
         },
-        cms.GREAT_CONTACT_US_FORM_SUCCESS_DEFRA_SLUG: {
+        slugs.HELP_FORM_SUCCESS_DEFRA: {
             'title': 'Contact DEFRA form success',
             'full_path_override': (
                 'contact/department-for-environment-food-and-rural-affairs/'

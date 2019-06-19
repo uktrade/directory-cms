@@ -31,7 +31,9 @@ class GroupInfo(models.Model):
         (5, '5 (highest)'),
     ]
 
-    group = models.OneToOneField('auth.Group', related_name='info')
+    group = models.OneToOneField(
+        'auth.Group', related_name='info', on_delete=models.CASCADE
+    )
     name_singular = models.CharField(
         max_length=100,
         verbose_name='group name (singular)',

@@ -1,10 +1,12 @@
 import pytest
 from export_readiness.serializers import (
     ArticlePageSerializer, CountryGuidePageSerializer, CampaignPageSerializer,
-    TopicLandingPageSerializer)
+    HomePageSerializer, TopicLandingPageSerializer
+)
 from export_readiness.tests.factories import (
-    ExportReadinessAppFactory, ArticlePageFactory, CountryGuidePageFactory,
-    CampaignPageFactory, TopicLandingPageFactory)
+    ArticlePageFactory, CountryGuidePageFactory, CampaignPageFactory,
+    HomePageFactory, HomePageOldFactory, TopicLandingPageFactory
+)
 
 
 @pytest.mark.django_db
@@ -91,12 +93,26 @@ def test_country_guide_page_serializer(root_page, rf):
 
 
 @pytest.mark.django_db
+def test_consistent_page_type_for_old_and_new_home_pages(root_page, rf):
+    context = {'request': rf.get('/')}
+    expected_page_type = 'HomePage'
+
+    page1 = HomePageFactory(parent=root_page, slug='page1',)
+    page1_serializer = HomePageSerializer(instance=page1, context=context)
+    assert page1_serializer.data['page_type'] == expected_page_type
+
+    page2 = HomePageOldFactory(parent=root_page, slug='page2')
+    page2_serializer = HomePageSerializer(instance=page2, context=context)
+    assert page2_serializer.data['page_type'] == expected_page_type
+
+
+@pytest.mark.django_db
 def test_breadcrumbs_serializer(root_page, rf):
-    app_page = ExportReadinessAppFactory(parent=root_page)
+    home_page = HomePageFactory(parent=root_page)
     markets_page = TopicLandingPageFactory(
         title_en_gb='topic',
         slug='topic',
-        parent=app_page)
+        parent=home_page)
     country_guide = CountryGuidePageFactory(
         title_en_gb='country',
         slug='country',
@@ -119,11 +135,11 @@ def test_breadcrumbs_serializer(root_page, rf):
 
 @pytest.mark.django_db
 def test_breadcrumbs_serializer_top_level_page(root_page, rf):
-    app_page = ExportReadinessAppFactory(parent=root_page)
+    home_page = HomePageFactory(parent=root_page)
     markets_page = TopicLandingPageFactory(
         title_en_gb='topic',
         slug='topic',
-        parent=app_page)
+        parent=home_page)
 
     serializer = TopicLandingPageSerializer(
         instance=markets_page,

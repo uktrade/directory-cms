@@ -349,6 +349,8 @@ class CapitalInvestOpportunityListingPageFactory(
     class Meta:
         model = models.CapitalInvestOpportunityListingPage
 
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
+    search_results_title = factory.fuzzy.FuzzyText(length=10)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
@@ -503,5 +505,59 @@ class InvestHighPotentialOpportunityDetailPageFactory(
         wagtail_factories.ImageFactory
     )
     other_opportunities_title = factory.fuzzy.FuzzyText(length=50)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None
+
+
+class InternationalTradeHomePageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.InternationalTradeHomePage
+
+    hero_text_en_gb = factory.fuzzy.FuzzyText(length=255)
+    breadcrumbs_label_en_gb = factory.fuzzy.FuzzyText(length=50)
+    search_field_placeholder_en_gb = factory.fuzzy.FuzzyText(length=255)
+    search_button_text_en_gb = factory.fuzzy.FuzzyText(length=255)
+    proposition_text_en_gb = factory.fuzzy.FuzzyText(length=255)
+    call_to_action_text_en_gb = factory.fuzzy.FuzzyText(length=255)
+    industries_list_text_en_gb = factory.fuzzy.FuzzyText(length=255)
+    industries_list_call_to_action_text_en_gb = factory.fuzzy.FuzzyText(
+        length=255
+    )
+    services_list_text_en_gb = factory.fuzzy.FuzzyText(length=255)
+    services_column_one_en_gb = factory.fuzzy.FuzzyText(length=255)
+    services_column_two_en_gb = factory.fuzzy.FuzzyText(length=255)
+    services_column_three_en_gb = factory.fuzzy.FuzzyText(length=255)
+    services_column_four_en_gb = factory.fuzzy.FuzzyText(length=255)
+    services_column_one_icon_en_gb = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    services_column_two_icon_en_gb = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    services_column_three_icon_en_gb = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    services_column_four_icon_en_gb = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    search_description_en_gb = factory.fuzzy.FuzzyText(length=255)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None
+
+
+class InternationalTradeIndustryContactPageFactory(
+    wagtail_factories.PageFactory
+):
+
+    class Meta:
+        model = models.InternationalTradeIndustryContactPage
+
+    breadcrumbs_label_en_gb = factory.fuzzy.FuzzyText(length=50)
+    introduction_text_en_gb = factory.fuzzy.FuzzyText(length=255)
+    submit_button_text_en_gb = factory.fuzzy.FuzzyText(length=100)
+    success_message_text_en_gb = factory.fuzzy.FuzzyText(length=255)
+    success_back_link_text_en_gb = factory.fuzzy.FuzzyText(length=100)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None

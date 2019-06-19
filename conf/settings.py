@@ -90,7 +90,7 @@ INSTALLED_APPS = [
     'authbroker_client',
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'core.middleware.MaintenanceModeMiddleware',
     'core.middleware.StubSiteMiddleware',
     'directory_components.middleware.MaintenanceModeMiddleware',
@@ -441,7 +441,7 @@ if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
         'django.contrib.auth.backends.ModelBackend',
         'authbroker_client.backends.AuthbrokerBackend'
     ]
-    LOGIN_URL = reverse_lazy('authbroker:login')
+    LOGIN_URL = reverse_lazy('authbroker_client:login')
     LOGIN_REDIRECT_URL = reverse_lazy('wagtailadmin_home')
 
     # authbroker config
@@ -449,7 +449,7 @@ if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
     AUTHBROKER_CLIENT_ID = env.str('AUTHBROKER_CLIENT_ID')
     AUTHBROKER_CLIENT_SECRET = env.str('AUTHBROKER_CLIENT_SECRET')
 
-    MIDDLEWARE_CLASSES.append(
+    MIDDLEWARE.append(
         'users.middleware.SSORedirectUsersToRequestAccessViews'
     )
     # Disable password management in Wagtail admin
@@ -468,9 +468,9 @@ if FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
 
     INSTALLED_APPS += ['debug_toolbar']
 
-    MIDDLEWARE_CLASSES = (
+    MIDDLEWARE = (
         ['debug_toolbar.middleware.DebugToolbarMiddleware'] +
-        MIDDLEWARE_CLASSES
+        MIDDLEWARE
     )
     INTERNAL_IPS = ['127.0.0.1', '10.0.2.2']
 

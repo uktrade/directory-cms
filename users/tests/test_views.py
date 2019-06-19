@@ -3,7 +3,7 @@ import pytest
 from unittest.mock import patch
 from importlib import import_module, reload
 from django.conf import settings
-from django.core.urlresolvers import clear_url_caches
+from django.urls import clear_url_caches
 from django.urls import reverse
 from rest_framework import status
 
@@ -274,8 +274,8 @@ def test_force_staff_sso(client):
     settings.AUTHBROKER_URL = 'https://test.com'
     reload_urlconf()
 
-    assert reverse('authbroker:login') == '/auth/login/'
-    assert reverse('authbroker:callback') == '/auth/callback/'
+    assert reverse('authbroker_client:login') == '/auth/login/'
+    assert reverse('authbroker_client:callback') == '/auth/callback/'
     response = client.get('/admin/login/')
     assert response.status_code == 302
     assert response.url == '/auth/login/'

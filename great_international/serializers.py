@@ -1,3 +1,4 @@
+from directory_constants import cms
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
 
@@ -1027,8 +1028,49 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer):
         return serializer.data
 
 
+class OpportunityListSerializer(BasePageSerializer):
+    title = serializers.CharField(
+        max_length=255, source='hero_title')
+    hero_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360')
+    sector = serializers.CharField(
+        max_length=255)
+    scale = serializers.CharField(
+        max_length=255)
+    prioritised_opportunity = serializers.BooleanField()
+
+    related_sectors = serializers.SerializerMethodField()
+
+    def get_related_sectors(self, instance):
+        serializer = RelatedSectorSerializer(
+            instance.related_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
+
 class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
-    hero_title = serializers.CharField(max_length=255)
+    breadcrumbs_label = serializers.CharField(max_length=255)
+    search_results_title = serializers.CharField(max_length=255)
+
+    opportunity_list = serializers.SerializerMethodField()
+
+    def get_opportunity_list(self, instance):
+
+        queryset = CapitalInvestOpportunityPage.objects.live().public()
+
+        if not queryset:
+            return []
+
+        serializer = OpportunityListSerializer(
+            queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
 
 
 class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
@@ -1398,6 +1440,69 @@ class InvestHighPotentialOpportunityFormSuccessPageSerializer(
             .exclude(slug=instance.slug)
         )
         serializer = InvestHighPotentialOpportunityDetailPageSerializer(
+            queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
+
+# FAS serializers
+
+class InternationalTradeHomePageSerializer(BasePageSerializer):
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    mobile_hero_image = wagtail_fields.ImageRenditionField('original')
+    hero_image_caption = serializers.CharField()
+    breadcrumbs_label = serializers.CharField()
+    breadcrumbs = core_fields.BreadcrumbsField(
+        service_name=cms.FIND_A_SUPPLIER
+    )
+    hero_text = core_fields.MarkdownToHTMLField()
+    search_field_placeholder = serializers.CharField()
+    search_button_text = serializers.CharField()
+    proposition_text = core_fields.MarkdownToHTMLField()
+    call_to_action_text = serializers.CharField()
+    industries_list_text = core_fields.MarkdownToHTMLField()
+    industries_list_call_to_action_text = serializers.CharField()
+    services_list_text = core_fields.MarkdownToHTMLField()
+    services_column_one = core_fields.MarkdownToHTMLField()
+    services_column_two = core_fields.MarkdownToHTMLField()
+    services_column_three = core_fields.MarkdownToHTMLField()
+    services_column_four = core_fields.MarkdownToHTMLField()
+    services_column_one_icon = wagtail_fields.ImageRenditionField('original')
+    services_column_two_icon = wagtail_fields.ImageRenditionField('original')
+    services_column_three_icon = wagtail_fields.ImageRenditionField('original')
+    services_column_four_icon = wagtail_fields.ImageRenditionField('original')
+    industries = serializers.SerializerMethodField()
+
+    def get_industries(self, instance):
+        queryset = InternationalSectorPage.objects.filter(
+            live=True
+        ).order_by('slug')[:3]
+        serializer = InternationalSectorPageSerializer(
+            queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
+
+class InternationalTradeIndustryContactPageSerializer(BasePageSerializer):
+    breadcrumbs_label = serializers.CharField()
+    breadcrumbs = core_fields.BreadcrumbsField(
+        service_name=cms.FIND_A_SUPPLIER
+    )
+    introduction_text = core_fields.MarkdownToHTMLField()
+    submit_button_text = serializers.CharField()
+    success_message_text = core_fields.MarkdownToHTMLField()
+    success_back_link_text = serializers.CharField()
+    industry_options = serializers.SerializerMethodField()
+
+    def get_industry_options(self, instance):
+        queryset = InternationalSectorPage.objects.filter(live=True)
+        serializer = InternationalSectorPageSerializer(
             queryset,
             many=True,
             allow_null=True,
