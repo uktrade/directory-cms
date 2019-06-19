@@ -14,6 +14,7 @@
 - CI-216 - Add icon headings to cms with default text that was old hardcoded text on Opportunity pages
 - CI-211 - Created basic opportunity listing page
 - CMS-1624 - Copy FAS homepage and industry contact pages in International app
+- CMS 1507 - Upgraded to Django 2.2 and Wagtail 2.5
 
 ### Fixed Bugs
 
