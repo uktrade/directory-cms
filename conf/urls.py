@@ -72,13 +72,11 @@ healthcheck_urls = [
 urlpatterns = [
     url(
         r'^api/',
-        include(api_urls, namespace='api', app_name='api')
+        include((api_urls, 'api'))
     ),
     url(
         r'^healthcheck/',
-        include(
-            healthcheck_urls, namespace='healthcheck', app_name='healthcheck'
-        )
+        include((healthcheck_urls, 'healthcheck'))
     ),
     url(
         r'^$',
@@ -113,7 +111,7 @@ urlpatterns = [
 
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
-    url(r'^auth/request-access/', include('users.urls_sso', namespace="sso")),
+    url(r'^auth/request-access/', include('users.urls_sso')),
     url(
         r'^activity-stream/v1/',
         ActivityStreamView.as_view(),
@@ -130,9 +128,7 @@ urlpatterns = [
 
 if settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
     urlpatterns = [
-        url('^auth/', include('authbroker_client.urls',
-                              namespace='authbroker',
-                              app_name='authbroker_client')
+        url('^auth/', include('authbroker_client.urls')
             ),
         url(r'^admin/login/$',
             RedirectView.as_view(url='/auth/login/', query_string=True)),

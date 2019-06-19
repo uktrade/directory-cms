@@ -384,7 +384,8 @@ class CapitalInvestRegionPageTranslationOptions(
 class CapitalInvestOpportunityListingPageTranslationOptions(
         BaseTranslationOptions):
     fields = (
-        'hero_title',
+        'breadcrumbs_label',
+        'search_results_title'
     )
 
 
@@ -635,3 +636,40 @@ class HighPotentialOpportunityFormSuccessPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = []
+
+
+@register(models.InternationalTradeHomePage)
+class InternationalTradeHomePageTranslationOptions(BaseTranslationOptions):
+    fields = (
+        'breadcrumbs_label',
+        'hero_text',
+        'hero_image_caption',
+        'search_field_placeholder',
+        'search_button_text',
+        'proposition_text',
+        'call_to_action_text',
+        'industries_list_text',
+        'industries_list_call_to_action_text',
+        'services_list_text',
+        'services_column_one',
+        'services_column_two',
+        'services_column_three',
+        'services_column_four',
+        'services_column_one_icon',
+        'services_column_two_icon',
+        'services_column_three_icon',
+        'services_column_four_icon',
+    )
+
+
+@register(models.InternationalTradeIndustryContactPage)
+class InternationalTradeIndustryContactPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'introduction_text',
+        'submit_button_text',
+        'success_message_text',
+        'success_back_link_text',
+    )

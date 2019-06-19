@@ -24,6 +24,7 @@ MODELS_SERIALIZERS_MAPPING = {
     export_readiness.models.PerformanceDashboardNotesPage: export_readiness.serializers.GenericBodyOnlyPageSerializer,  # NOQA
     export_readiness.models.ArticlePage: export_readiness.serializers.ArticlePageSerializer,  # NOQA
     export_readiness.models.HomePage: export_readiness.serializers.HomePageSerializer,  # NOQA
+    export_readiness.models.HomePageOld: export_readiness.serializers.HomePageSerializer,  # NOQA
     export_readiness.models.ArticleListingPage: export_readiness.serializers.ArticleListingPageSerializer,  # NOQA
     export_readiness.models.TopicLandingPage: export_readiness.serializers.TopicLandingPageSerializer,  # NOQA
     export_readiness.models.InternationalLandingPage: export_readiness.serializers.InternationalLandingPageSerializer,  # NOQA
@@ -55,6 +56,8 @@ MODELS_SERIALIZERS_MAPPING = {
     great_international.models.InvestHighPotentialOpportunityFormSuccessPage: great_international.serializers.InvestHighPotentialOpportunityFormSuccessPageSerializer,  # NOQA
     great_international.models.InvestHighPotentialOpportunityFormPage: great_international.serializers.InvestHighPotentialOpportunityFormPageSerializer,  # NOQA
     great_international.models.InvestHighPotentialOpportunityDetailPage: great_international.serializers.InvestHighPotentialOpportunityDetailPageSerializer,   # NOQA
+    great_international.models.InternationalTradeHomePage: great_international.serializers.InternationalTradeHomePageSerializer,  # NOQA
+    great_international.models.InternationalTradeIndustryContactPage: great_international.serializers.InternationalTradeIndustryContactPageSerializer,  # NOQA
     # invest
     invest.models.SectorLandingPage: invest.serializers.SectorLandingPageGenericSerializer,  # NOQA
     invest.models.RegionLandingPage: invest.serializers.SectorLandingPageGenericSerializer,  # NOQA

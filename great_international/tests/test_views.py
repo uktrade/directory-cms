@@ -1,4 +1,4 @@
-from directory_constants.constants import cms
+from directory_constants import cms
 
 from rest_framework.reverse import reverse
 
@@ -271,3 +271,21 @@ def test_high_potential_opportunity_api(document, admin_client, root_page):
     parsed = response.json()
     assert 'other_opportunities' in parsed
     assert 'other_opportunities' not in parsed['other_opportunities'][0]
+
+
+def test_international_trade_home_page_exposes_industries(
+        admin_client,
+        root_page
+):
+    industry = factories.InternationalSectorPageFactory(parent=root_page,
+                                                        live=True)
+    factories.InternationalSectorPageFactory(parent=root_page, live=False)
+    homepage = factories.InternationalTradeHomePageFactory(
+        live=True, parent=root_page
+    )
+    url = reverse('api:api:pages:detail', kwargs={'pk': homepage.pk})
+    response = admin_client.get(url)
+
+    assert response.status_code == 200
+    assert len(response.json()['industries']) == 1
+    assert response.json()['industries'][0]['meta']['pk'] == industry.pk

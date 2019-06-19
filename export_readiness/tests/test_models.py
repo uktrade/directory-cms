@@ -1,13 +1,12 @@
 import pytest
 
-import find_a_supplier.models
 from export_readiness import models
 from export_readiness.tests import factories
 
 
 def test_app_models():
-    assert models.ExportReadinessApp.allowed_subpage_models() == [
-        models.ExportReadinessApp,
+    # using sets here because order shouldn't matter
+    assert set(models.HomePage.allowed_subpage_models()) == {
         models.TermsAndConditionsPage,
         models.PrivacyAndCookiesPage,
         models.SitePolicyPages,
@@ -21,7 +20,6 @@ def test_app_models():
         models.MarketingPages,
         models.CampaignPage,
         models.ArticlePage,
-        models.HomePage,
         models.InternationalLandingPage,
         models.EUExitInternationalFormPage,
         models.EUExitDomesticFormPage,
@@ -32,26 +30,22 @@ def test_app_models():
         models.ContactUsGuidancePage,
         models.ContactSuccessPage,
         models.AllContactPagesPage,
-    ]
-
-
-@pytest.mark.parametrize('model', [
-    models.ExportReadinessApp,
-    find_a_supplier.models.FindASupplierApp,
-])
-def test_app_required_translatable_fields(model):
-    assert model.get_required_translatable_fields() == []
+    }
 
 
 @pytest.mark.django_db
 def test_set_slug():
-    instance = models.ExportReadinessApp.objects.create(
+    instance = models.HomePage.objects.create(
         title_en_gb='the app',
         depth=2,
         path='/thing',
+        banner_content='blah',
+        banner_label='blah',
+        news_title='blah',
+        news_description='blah',
     )
 
-    assert instance.slug == models.ExportReadinessApp.slug_identity
+    assert instance.slug == models.HomePage.slug_identity
 
 
 @pytest.mark.parametrize('folder_page_class', [

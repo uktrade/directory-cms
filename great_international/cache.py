@@ -110,7 +110,9 @@ class CapitalInvestOpportunityListingPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
     model = models.CapitalInvestOpportunityListingPage
-    subscriptions = []
+    subscriptions = [
+        models.CapitalInvestOpportunityPage
+    ]
 
 
 class InvestInternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
@@ -145,4 +147,20 @@ class InvestHighPotentialOpportunityFormSuccessPageSubscriber(
     model = models.InvestHighPotentialOpportunityFormSuccessPage
     subscriptions = [
         models.InvestHighPotentialOpportunityDetailPage,
+    ]
+
+
+class InternationalTradeHomePageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.InternationalTradeHomePage
+    subscriptions = [
+        models.InternationalSectorPage
+    ]
+
+
+class InternationalTradeIndustryContactPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = models.InternationalTradeIndustryContactPage
+    subscriptions = [
+        models.InternationalSectorPage,
     ]
