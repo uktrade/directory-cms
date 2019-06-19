@@ -1,6 +1,5 @@
 from wagtail.documents.edit_handlers import DocumentChooserPanel
-
-from directory_constants.constants import cms
+from directory_constants import cms, slugs
 from django.forms import Textarea, CheckboxSelectMultiple
 from django.utils.text import slugify
 from modelcluster.fields import ParentalManyToManyField
@@ -925,7 +924,7 @@ class InternationalHomePage(
 class InternationalHomePageOld(
     ExclusivePageMixin, ServiceHomepageMixin, BaseInternationalPage
 ):
-    slug_identity = cms.GREAT_HOME_INTERNATIONAL_SLUG
+    slug_identity = slugs.GREAT_HOME_INTERNATIONAL
     subpage_types = []
 
     hero_title = models.CharField(max_length=255)
@@ -2088,7 +2087,7 @@ class InternationalEUExitFormPage(
     ]
 
     full_path_override = '/eu-exit-news/contact/'
-    slug_identity = cms.GREAT_EUEXIT_INTERNATIONAL_FORM_SLUG
+    slug_identity = slugs.EUEXIT_INTERNATIONAL_FORM
 
     subpage_types = [
         'great_international.InternationalEUExitFormSuccessPage']
@@ -2125,7 +2124,7 @@ class InternationalEUExitFormSuccessPage(
     WagtailAdminExclusivePageMixin, BaseInternationalPage
 ):
     full_path_override = '/eu-exit-news/contact/success/'
-    slug_identity = cms.GREAT_EUEXIT_FORM_SUCCESS_SLUG
+    slug_identity = slugs.EUEXIT_FORM_SUCCESS
 
     parent_page_types = ['great_international.InternationalEUExitFormPage']
 
@@ -3211,7 +3210,7 @@ class InvestInternationalHomePage(
     ServiceHomepageMixin,
     BaseInternationalPage
 ):
-    slug_identity = cms.INVEST_HOME_PAGE_SLUG
+    slug_identity = slugs.INVEST_HOME_PAGE
     view_path = ''
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -3616,7 +3615,7 @@ class InvestHighPotentialOpportunityFormPage(
         'comment',
     ]
 
-    slug_identity = cms.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SLUG
+    slug_identity = slugs.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM
     full_path_override = 'high-potential-opportunities/rail/contact/'
 
     heading = models.CharField(max_length=255)
@@ -4066,7 +4065,7 @@ class InvestHighPotentialOpportunityDetailPage(BaseInternationalPage):
 
 class InvestHighPotentialOpportunityFormSuccessPage(BaseInternationalPage):
     view_path = 'high-potential-opportunities/rail/contact/'
-    slug_identity = cms.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SUCCESS_SLUG
+    slug_identity = slugs.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SUCCESS
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(
@@ -4135,7 +4134,7 @@ class InternationalTradeHomePage(
     BreadcrumbMixin,
     BaseInternationalPage
 ):
-    slug_identity = cms.FIND_A_SUPPLIER_LANDING_SLUG
+    slug_identity = slugs.FIND_A_SUPPLIER_LANDING
 
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -4282,7 +4281,7 @@ class InternationalTradeIndustryContactPage(
 ):
 
     view_path = 'industries/contact/'
-    slug_identity = cms.FIND_A_SUPPLIER_INDUSTRY_CONTACT_SLUG
+    slug_identity = slugs.FIND_A_SUPPLIER_INDUSTRY_CONTACT
     # override the slug when generating the url
     slug_override = ''
 

@@ -2,6 +2,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.middleware.locale import LocaleMiddleware
 from django.utils import translation
+from django.utils.deprecation import MiddlewareMixin
 
 from core import helpers
 
@@ -25,7 +26,7 @@ class StubSiteMiddleware(LocaleMiddleware):
         request.site = None
 
 
-class MaintenanceModeMiddleware:
+class MaintenanceModeMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
         if settings.FEATURE_FLAGS['MAINTENANCE_MODE_ON']:
