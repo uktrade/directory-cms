@@ -3,7 +3,7 @@ from unittest import mock
 
 from django.contrib.messages.storage.fallback import FallbackStorage
 
-from directory_constants.constants import cms
+from directory_constants import cms
 
 from core.upstream_serializers import UpstreamModelSerializer
 from export_readiness.tests.factories import (

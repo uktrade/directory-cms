@@ -1,4 +1,4 @@
-from directory_constants.constants import cms
+from directory_constants import cms
 from rest_framework import serializers
 
 from core import fields as core_fields

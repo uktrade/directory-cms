@@ -1,4 +1,4 @@
-from directory_constants.constants import cms
+from directory_constants import cms, slugs
 from wagtail.admin.edit_handlers import (
     FieldPanel, ObjectList, MultiFieldPanel, FieldRowPanel
 )
@@ -37,7 +37,7 @@ class InvestApp(ExclusivePageMixin, ServiceMixin, BaseInvestPage):
 
 class SectorLandingPage(ExclusivePageMixin, BaseInvestPage):
     subpage_types = ['invest.sectorPage']
-    slug_identity = cms.INVEST_SECTOR_LANDING_PAGE_SLUG
+    slug_identity = slugs.INVEST_SECTOR_LANDING_PAGE
     slug_override = 'industries'
 
     # page fields
@@ -75,7 +75,7 @@ class SectorLandingPage(ExclusivePageMixin, BaseInvestPage):
 
 class RegionLandingPage(ExclusivePageMixin, BaseInvestPage):
     subpage_types = ['invest.sectorPage']
-    slug_identity = cms.INVEST_UK_REGION_LANDING_PAGE_SLUG
+    slug_identity = slugs.INVEST_UK_REGION_LANDING_PAGE
     slug_override = 'uk-regions'
 
     # page fields
@@ -307,7 +307,7 @@ class SectorPage(BaseInvestPage):
 
 class SetupGuideLandingPage(ExclusivePageMixin, BaseInvestPage):
     subpage_types = ['invest.SetupGuidePage']
-    slug_identity = cms.INVEST_GUIDE_LANDING_PAGE_SLUG
+    slug_identity = slugs.INVEST_GUIDE_LANDING_PAGE
     # override the slug when generating the url
     slug_override = 'uk-setup-guide'
 
@@ -448,7 +448,7 @@ class SetupGuidePage(BaseInvestPage):
 
 
 class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
-    slug_identity = cms.INVEST_HOME_PAGE_SLUG
+    slug_identity = slugs.INVEST_HOME_PAGE
     view_path = ''
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -952,7 +952,7 @@ class HighPotentialOpportunityFormPage(
         'comment',
     ]
 
-    slug_identity = cms.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SLUG
+    slug_identity = slugs.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM
     full_path_override = 'high-potential-opportunities/rail/contact/'
 
     heading = models.CharField(max_length=255)
@@ -1402,7 +1402,7 @@ class HighPotentialOpportunityDetailPage(BaseInvestPage):
 
 class HighPotentialOpportunityFormSuccessPage(BaseInvestPage):
     view_path = 'high-potential-opportunities/rail/contact/'
-    slug_identity = cms.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SUCCESS_SLUG
+    slug_identity = slugs.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SUCCESS
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(

@@ -8,7 +8,7 @@ flake8
 requests_mock
 freezegun
 codecov
-factory-boy
+factory-boy==2.8.1
 beautifulsoup4
-wagtail-factories==1.0.0
+wagtail-factories==1.1.0
 django-debug-toolbar

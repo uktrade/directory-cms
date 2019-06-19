@@ -1,5 +1,5 @@
 from django.db import models
-from directory_constants.constants import cms
+from directory_constants import cms
 from core.models import (
     BasePage,
     ExclusivePageMixin,
