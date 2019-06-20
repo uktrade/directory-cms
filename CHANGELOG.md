@@ -4,6 +4,16 @@
 
 **Implemented enhancements:**
 
+
+### Fixed Bugs
+
+
+
+## [2019.06.20](https://github.com/uktrade/directory-cms/releases/tag/2019.06.20)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.12...2019.06.20
+
+**Implemented enhancements:**
+
 - XOT-763 - Serialize parent pages for use in breadcrumbs and GA360 page category/section
 - CMS-1591 - Copy invest homepage and HPO pages in International app
 - CMS-1604 - Added `WagtailAdminExclusivePageMixin` (a less restrictive version of `ExclusivePageMixin`) and used for page types in great_international
