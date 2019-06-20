@@ -2,11 +2,14 @@ import os
 from unittest.mock import patch
 
 import pytest
+from six import b
+from wagtail.documents.models import Document
 from wagtail.images.models import Image
 from wagtail.core.models import Page, Site
 
 from django import db
 from django.core.cache import cache
+from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import call_command
@@ -88,6 +91,13 @@ def image(uploaded_file):
     )
     yield image
     default_storage.delete(image.file.name)
+
+
+@pytest.fixture
+def document():
+    fake_file = ContentFile(b('A boring example document'))
+    fake_file.name = 'test.pdf'
+    yield Document.objects.create(title='Test document', file=fake_file)
 
 
 @pytest.fixture(autouse=True)

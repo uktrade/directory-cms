@@ -39,11 +39,6 @@ class GetFinancePageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
-@register(models.ExportReadinessApp)
-class ExportReadinessAppTranslationOptions(BaseTranslationOptions):
-    fields = []
-
-
 @register(models.PerformanceDashboardPage)
 class PerformanceDashboardPageTranslationOptions(BaseTranslationOptions):
     fields = []
@@ -75,6 +70,7 @@ class ArticlePageTranslationOptions(BaseTranslationOptions):
 
 
 @register(models.HomePage)
+@register(models.HomePageOld)
 class HomePageTranslationOptions(BaseTranslationOptions):
     fields = []
 

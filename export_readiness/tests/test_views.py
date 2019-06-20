@@ -1,10 +1,10 @@
 import pytest
 from rest_framework.reverse import reverse
-from directory_constants.constants import cms
+from directory_constants import slugs
 
 from conf import settings
 from export_readiness.tests import factories
-from directory_constants.constants import urls
+from directory_constants import urls
 
 
 def test_performance_dashboard(admin_client, root_page):
@@ -126,7 +126,7 @@ def test_homepage(admin_client, root_page):
 
     # guidance
     topic_landing_page = factories.TopicLandingPageFactory(
-        slug=cms.GREAT_ADVICE_SLUG
+        slug=slugs.GREAT_ADVICE
     )
     for _ in range(5):
         factories.ArticleListingPageFactory.create(

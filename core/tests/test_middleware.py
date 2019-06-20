@@ -6,7 +6,7 @@ from core import middleware
 
 def test_locale_middleware_installed():
     expected = 'core.middleware.LocaleQuerystringMiddleware'
-    assert expected in settings.MIDDLEWARE_CLASSES
+    assert expected in settings.MIDDLEWARE
 
 
 def test_locale_middleware_sets_querystring_language(rf):
@@ -41,7 +41,7 @@ def test_locale_middleware_handles_missing_querystring_language(rf):
 
 def test_maintenance_mode_middleware_installed():
     expected = 'core.middleware.MaintenanceModeMiddleware'
-    assert expected in settings.MIDDLEWARE_CLASSES
+    assert expected in settings.MIDDLEWARE
 
 
 def test_maintenance_mode_middleware_feature_flag_on(rf, settings):

@@ -1,8 +1,9 @@
-from directory_constants.constants import cms
+from directory_constants import cms, slugs
 from wagtail.admin.edit_handlers import (
     FieldPanel, ObjectList, MultiFieldPanel, FieldRowPanel
 )
 from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtail.admin.edit_handlers import HelpPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
@@ -36,7 +37,7 @@ class InvestApp(ExclusivePageMixin, ServiceMixin, BaseInvestPage):
 
 class SectorLandingPage(ExclusivePageMixin, BaseInvestPage):
     subpage_types = ['invest.sectorPage']
-    slug_identity = cms.INVEST_SECTOR_LANDING_PAGE_SLUG
+    slug_identity = slugs.INVEST_SECTOR_LANDING_PAGE
     slug_override = 'industries'
 
     # page fields
@@ -74,7 +75,7 @@ class SectorLandingPage(ExclusivePageMixin, BaseInvestPage):
 
 class RegionLandingPage(ExclusivePageMixin, BaseInvestPage):
     subpage_types = ['invest.sectorPage']
-    slug_identity = cms.INVEST_UK_REGION_LANDING_PAGE_SLUG
+    slug_identity = slugs.INVEST_UK_REGION_LANDING_PAGE
     slug_override = 'uk-regions'
 
     # page fields
@@ -306,7 +307,7 @@ class SectorPage(BaseInvestPage):
 
 class SetupGuideLandingPage(ExclusivePageMixin, BaseInvestPage):
     subpage_types = ['invest.SetupGuidePage']
-    slug_identity = cms.INVEST_GUIDE_LANDING_PAGE_SLUG
+    slug_identity = slugs.INVEST_GUIDE_LANDING_PAGE
     # override the slug when generating the url
     slug_override = 'uk-setup-guide'
 
@@ -447,7 +448,7 @@ class SetupGuidePage(BaseInvestPage):
 
 
 class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
-    slug_identity = cms.INVEST_HOME_PAGE_SLUG
+    slug_identity = slugs.INVEST_HOME_PAGE
     view_path = ''
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -716,6 +717,8 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
             heading='Benefits section',
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Benefits Section Title, Benefits Section Content'),
                 FieldPanel('benefits_section_title'),
                 FieldPanel('benefits_section_intro'),
                 FieldPanel('benefits_section_content'),
@@ -773,6 +776,8 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
             heading='Featured card links ',
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'All images, titles and summaries'),
                 FieldRowPanel(
                     [
                         MultiFieldPanel(
@@ -806,6 +811,8 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
         MultiFieldPanel(
             heading='Industries section',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Sector Title, Sector Content'),
                 FieldPanel('sector_title'),
                 FieldPanel('sector_intro'),
                 FieldPanel('sector_button_text'),
@@ -816,6 +823,8 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
         MultiFieldPanel(
             heading='High Potential Opportunities',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'HPO title, 1 HPO in active language'),
                 FieldPanel('hpo_title'),
                 FieldPanel('hpo_intro')
             ],
@@ -824,8 +833,12 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
             heading='How we help section',
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'How We Help Title, How We Help Lead In'),
                 FieldPanel('how_we_help_title'),
                 FieldPanel('how_we_help_lead_in'),
+                HelpPanel('Each icon requires the corresponding text to '
+                          'show on the page'),
                 FieldRowPanel(
                     [
                         MultiFieldPanel(
@@ -871,8 +884,12 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
             heading='Contact Section',
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Contact Title, Contact Content'),
                 FieldPanel('contact_section_title'),
                 FieldPanel('contact_section_content'),
+                HelpPanel('Cta\'s require both text and a link to show '
+                          'on page. '),
                 FieldPanel('contact_section_call_to_action_text'),
                 FieldPanel('contact_section_call_to_action_url'),
             ],
@@ -935,7 +952,7 @@ class HighPotentialOpportunityFormPage(
         'comment',
     ]
 
-    slug_identity = cms.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SLUG
+    slug_identity = slugs.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM
     full_path_override = 'high-potential-opportunities/rail/contact/'
 
     heading = models.CharField(max_length=255)
@@ -1385,7 +1402,7 @@ class HighPotentialOpportunityDetailPage(BaseInvestPage):
 
 class HighPotentialOpportunityFormSuccessPage(BaseInvestPage):
     view_path = 'high-potential-opportunities/rail/contact/'
-    slug_identity = cms.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SUCCESS_SLUG
+    slug_identity = slugs.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SUCCESS
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(
