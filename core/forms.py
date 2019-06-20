@@ -19,12 +19,6 @@ class CopyToEnvironmentForm(forms.Form):
 
 class WagtailAdminPageForm(WagtailAdminPageForm):
 
-    @property
-    def media(self):
-        media = super().media
-        media.add_js(['core/js/sum_required_localised_fields.js'])
-        return media
-
     def __new__(cls, data=None, *args, **kwargs):
         form_class = super().__new__(cls)
         cls.set_required_for_language(form_class)
@@ -79,7 +73,10 @@ class WagtailAdminPageForm(WagtailAdminPageForm):
 class WagtailAdminPageExclusivePageForm(WagtailAdminPageForm):
 
     def __init__(self, *args, **kwargs):
-        if 'initial' not in kwargs:
+        if(
+            hasattr(self._meta.model, 'slug_identity')
+            and 'initial' not in kwargs
+        ):
             kwargs['initial'] = {
                 'slug': self._meta.model.slug_identity
             }

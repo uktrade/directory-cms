@@ -76,3 +76,11 @@ def global_admin_css():
         '<link rel="stylesheet" href="{}">',
         static('core/css/global.css')
     ) + env_stylesheet
+
+
+@hooks.register('insert_editor_js')
+def add_sum_required_fields_js():
+    return format_html(
+        '<script src="{0}"></script>',
+        static('core/js/sum_required_localised_fields.js')
+    )

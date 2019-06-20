@@ -6,14 +6,6 @@ from django.utils import timezone
 from export_readiness import models
 
 
-class ExportReadinessAppFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.ExportReadinessApp
-
-    title = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-
-
 class SitePolicyPagesFactory(wagtail_factories.PageFactory):
 
     class Meta:
@@ -157,6 +149,12 @@ class HomePageFactory(wagtail_factories.PageFactory):
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     last_published_at = timezone.now()
     parent = None
+
+
+class HomePageOldFactory(HomePageFactory):
+
+    class Meta:
+        model = models.HomePageOld
 
 
 class InternationaLandingPageFactory(wagtail_factories.PageFactory):

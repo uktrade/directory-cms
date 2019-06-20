@@ -1,13 +1,14 @@
 [run]
 omit =
-	.venv/*
-	conf/wsgi.py
-	conf/settings.py
-	manage.py
-	**/tests/*
-	conftest.py
-	**/migrations/*
-	*__init__*
+    .venv/*
+    conf/wsgi.py
+    conf/settings.py
+    manage.py
+    **/tests/*
+    conftest.py
+    **/migrations/*
+    *__init__*
+    great_international/management/commands/set_missing_translated_titles.py
 
 [report]
 exclude_lines =
