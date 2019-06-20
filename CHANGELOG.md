@@ -7,6 +7,7 @@
 
 ### Fixed Bugs
 
+- CMS-1678 - Fix SSO login bug by using a later version of django-staff-sso-client
 
 
 ## [2019.06.20](https://github.com/uktrade/directory-cms/releases/tag/2019.06.20)
@@ -31,7 +32,6 @@
 - CI-217 - Fix Django security vulnerability by updating to new patch version.
 - CMS-1670 - Fix issue with international root page ending up with incorrect ContentType after applying migrations from CMS-1627
 - NOTICKET - Removed duplicate `case_study_image` on sector page
-- CMS-1678 - Fix SSO login bug by using a later version of django-staff-sso-client
 
 
 ## [2019.06.12](https://github.com/uktrade/directory-cms/releases/tag/2019.06.12)
