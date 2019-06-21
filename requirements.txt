@@ -77,3 +77,6 @@ wagtailmedia==0.3.1
 webencodings==0.5.1       # via bleach, html5lib
 whitenoise==4.1.2
 willow==1.1               # via wagtail
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools==41.0.1        # via jsonschema
