@@ -11,5 +11,4 @@ codecov
 factory-boy==2.8.1
 beautifulsoup4
 wagtail-factories==1.1.0
-django-debug-toolbar
 django-debug-toolbar==2.0

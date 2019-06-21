@@ -28,19 +28,19 @@ django-environ==0.4.5
 django-filter==2.1.0
 django-health-check==3.8.0  # via directory-healthcheck
 django-ipware==2.1.0      # via django-admin-ip-restrictor
-django-modelcluster==4.3  # via wagtail
+django-modelcluster==4.3
 django-modeltranslation==0.13.1  # via wagtail-modeltranslation
 django-pglocks==1.0.2
 django-redis==4.10.0
 django-staff-sso-client==0.3.1
-django-taggit==0.23.0     # via wagtail
-django-treebeard==4.3     # via wagtail
+django-taggit==0.23.0
+django-treebeard==4.3
 django==2.2.2
 django_storages==1.7.1
 djangorestframework==3.9.4
 docopt==0.6.2             # via notifications-python-client
 docutils==0.14            # via botocore
-draftjs-exporter==2.1.5   # via wagtail
+draftjs-exporter==2.1.5
 factory-boy==2.8.1
 faker==1.0.1              # via factory-boy
 flake8==3.6.0
@@ -50,7 +50,7 @@ gevent==1.2.2
 greenlet==0.4.15          # via gevent
 gunicorn==19.5.0
 html2text==2018.1.9
-html5lib==1.0.1           # via wagtail
+html5lib==1.0.1
 idna==2.7                 # via requests
 jmespath==0.9.3           # via boto3, botocore
 jsonschema==3.0.1         # via directory-components
@@ -63,7 +63,7 @@ more-itertools==4.3.0     # via pytest
 notifications-python-client==5.3.0
 oauthlib==3.0.1           # via requests-oauthlib
 packaging==18.0           # via pytest-sugar
-pillow==5.3.0             # via wagtail
+pillow==5.3.0
 pluggy==0.8.0             # via pytest
 psycopg2==2.7.3.2
 py==1.7.0                 # via pytest
@@ -78,7 +78,7 @@ pytest-sugar==0.9.2
 pytest==4.0.2
 python-dateutil==2.6.1    # via botocore, faker, freezegun
 pytube==9.2.2
-pytz==2018.7              # via celery, django, django-modelcluster, wagtail
+pytz==2018.7              # via celery, django, django-modelcluster
 raven==6.10.0
 redis==2.10.6             # via celery, django-redis
 requests-mock==1.5.2
@@ -86,21 +86,18 @@ requests-oauthlib==1.2.0  # via django-staff-sso-client
 requests==2.21.0
 s3transfer==0.1.13        # via boto3
 sigauth==4.1.0
-six==1.12.0               # via bleach, faker, freezegun, html5lib, jsonschema, mohawk, more-itertools, packaging, pyrsistent, pytest, python-dateutil, requests-mock, w3lib, wagtail
+six==1.12.0               # via bleach, faker, freezegun, html5lib, jsonschema, mohawk, more-itertools, packaging, pyrsistent, pytest, python-dateutil, requests-mock, w3lib
 sqlparse==0.2.4           # via django, django-debug-toolbar
 termcolor==1.1.0          # via pytest-sugar
 text-unidecode==1.2       # via faker
-unidecode==1.0.23         # via wagtail
+unidecode==1.0.23
 urllib3==1.24.2
 vine==1.1.4               # via amqp
 w3lib==1.20.0
 wagtail-factories==1.1.0
 wagtail-modeltranslation==0.10.2
-wagtail==2.5.1
+https://releases.wagtail.io/nightly/wagtail-2.6.dev20190621-py3-none-any.whl
 wagtailmedia==0.3.1
 webencodings==0.5.1       # via bleach, html5lib
 whitenoise==4.1.2
-willow==1.1               # via wagtail
-
-# The following packages are considered to be unsafe in a requirements file:
-# setuptools==41.0.1        # via flake8, jsonschema, pytest
+willow==1.1
