@@ -6,9 +6,9 @@ from django.db import migrations
 from django.db.models import Value
 from django.db.models.functions import Replace
 
-OLD_SLUG = 'great-international-app'
+OLD_SLUG = 'export-readiness-app'
 OLD_URL_PATH = '/' + OLD_SLUG + '/'
-NEW_SLUG = 'great-international-home'
+NEW_SLUG = 'great-domestic-home'
 NEW_URL_PATH = '/' + NEW_SLUG + '/'
 
 
@@ -19,7 +19,6 @@ def clear_site_root_cache():
 
 def migrate_forwards(apps, schema_editor):
     Page = apps.get_model('wagtailcore', 'Page')
-
     for page in Page.objects.filter(slug=OLD_SLUG):
         page.slug = NEW_SLUG
         page.save()
@@ -31,7 +30,6 @@ def migrate_forwards(apps, schema_editor):
 
 def migrate_backwards(apps, schema_editor):
     Page = apps.get_model('wagtailcore', 'Page')
-
     for page in Page.objects.filter(slug=NEW_SLUG):
         page.slug = OLD_SLUG
         page.save()
@@ -44,7 +42,7 @@ def migrate_backwards(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('great_international', '0043_internationaltradehomepage_internationaltradeindustrycontactpage'),
+        ('export_readiness', '0047_correct_page_contenttypes'),
     ]
 
     operations = [
