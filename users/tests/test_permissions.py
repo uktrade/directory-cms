@@ -59,14 +59,13 @@ def test_branch_editors_cannot_access_pages_not_from_their_branch(root_page):
     assert resp_4.status_code == status.HTTP_302_FOUND
     assert resp_4.url == f'/admin/pages/{env.home_2.pk}/'
 
-    # Unfortunately on API level Wagtail allows users to list pages that
-    # belong to different branch
+    # At the API level, Wagtail doesn't list pages that belong to different
+    # branch either
     resp_6 = env.editor_1_client.get(
         f'/admin/api/v2beta/pages/?child_of={env.landing_2.pk}&for_explorer=1'  # NOQA
     )
     assert resp_6.status_code == status.HTTP_200_OK
-    assert resp_6.json()['meta']['total_count'] == 1
-    assert resp_6.json()['items'][0]['id'] == env.listing_2.pk
+    assert resp_6.json()['meta']['total_count'] == 0
 
 
 @pytest.mark.CMS_837
@@ -121,14 +120,13 @@ def test_moderators_cannot_access_pages_not_from_their_branch(root_page):
     assert resp_4.status_code == status.HTTP_302_FOUND
     assert resp_4.url == f'/admin/pages/{env.home_2.pk}/'
 
-    # Unfortunately on API level Wagtail allows users to list pages that
-    # belong to different branch
+    # At the API level, Wagtail doesn't list pages that belong to different
+    # branch either
     resp_6 = env.moderator_1_client.get(
         f'/admin/api/v2beta/pages/?child_of={env.landing_2.pk}&for_explorer=1'
     )
     assert resp_6.status_code == status.HTTP_200_OK
-    assert resp_6.json()['meta']['total_count'] == 1
-    assert resp_6.json()['items'][0]['id'] == env.listing_2.pk
+    assert resp_6.json()['meta']['total_count'] == 0
 
 
 @pytest.mark.django_db
