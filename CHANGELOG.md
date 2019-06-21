@@ -8,7 +8,8 @@
 ### Fixed Bugs
 
 - CMS-1678 - Fix SSO login bug by using a later version of django-staff-sso-client
-- no-ticket - Update `django-debug-toolbar` to fix django 2 incompatibility.
+- no ticket - Turn off Debug Toolbar locally by default, as it prevents some pages from being created (fix in Wagtail 2.6)
+- no-ticket - Update `django-debug-toolbar` to fix django 2 incompatibility
 
 
 ## [2019.06.20](https://github.com/uktrade/directory-cms/releases/tag/2019.06.20)
