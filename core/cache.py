@@ -2,14 +2,14 @@ import abc
 import hashlib
 from urllib.parse import urlencode
 
-from directory_constants import cms
+from directory_constants import cms, slugs
 from rest_framework.renderers import JSONRenderer
 from wagtail.core.signals import page_published, page_unpublished
 from wagtail.core.models import Page, Site
 
 from django.conf import settings
 from django.core.cache import cache
-from django.db.models.signals import post_delete, post_save
+from django.db.models.signals import post_delete, post_migrate, post_save
 from django.utils import translation
 from django.utils.http import quote_etag
 
@@ -18,8 +18,8 @@ from conf.celery import app
 
 
 ROOT_PATHS_TO_SERVICE_NAMES = {
-    'export-readiness-app': cms.EXPORT_READINESS,
-    'great-international-app': cms.GREAT_INTERNATIONAL,
+    slugs.GREAT_HOME: cms.EXPORT_READINESS,
+    slugs.GREAT_INTERNATIONAL_HOME: cms.GREAT_INTERNATIONAL,
     'find-a-supplier-app': cms.FIND_A_SUPPLIER,
     'invest-app': cms.INVEST,
     'components-app': cms.COMPONENTS,
@@ -354,3 +354,4 @@ class PageIDCache:
         post_delete.connect(receiver=cls.clear, sender=Page)
         post_save.connect(receiver=cls.clear, sender=Site)
         post_delete.connect(receiver=cls.clear, sender=Site)
+        post_migrate.connect(receiver=cls.clear)
