@@ -2877,7 +2877,7 @@ class ArticlePage(BaseDomesticPage):
 
 
 class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
-    slug_identity = 'export-readiness-app'
+    slug_identity = slugs.GREAT_HOME
     parent_page_types = ['wagtailcore.Page']
 
     banner_content = MarkdownField()
@@ -2921,7 +2921,7 @@ class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
 
 
 class HomePageOld(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
-    slug_identity = slugs.GREAT_HOME
+    slug_identity = slugs.GREAT_HOME_OLD
     parent_page_types = []
     subpage_types = []
 
