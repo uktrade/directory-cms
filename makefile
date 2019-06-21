@@ -67,7 +67,7 @@ DEBUG_SET_ENV_VARS := \
 	export APP_URL_GREAT_INTERNATIONAL=http://international.trade.great:8012/international/; \
 	export COPY_DESTINATION_URLS=https://directory-cms-dev.herokuapp.com,https://dev.cms.directory.uktrade.io,https://stage.cms.directory.uktrade.io,http://cms.trade.great:8010; \
 	export EMAIL_BACKEND_CLASS_NAME=console; \
-	export FEATURE_DEBUG_TOOLBAR_ENABLED=true; \
+	export FEATURE_DEBUG_TOOLBAR_ENABLED=false; \
 	export REDIS_CACHE_URL=redis://localhost:6379; \
 	export REDIS_CELERY_URL=redis://localhost:6379/1; \
 	export API_CACHE_DISABLED=false; \
@@ -140,13 +140,15 @@ upgrade_requirements:
 	pip-compile --upgrade requirements.in
 	pip-compile --upgrade requirements_test.in
 
-update_db_template: \
-	debug_migrate
+update_db_template:
+	createdb -h localhost cms_temporary_template
+	psql -h localhost -d cms_temporary_template -f db_template.sql
+	export DATABASE_URL=postgres://debug:debug@localhost:5432/cms_temporary_template
+	make debug_migrate
 	pg_dump \
 		--no-owner \
-		--exclude-table=auth_user \
-		--exclude-table=users_userprofile \
 		--file=db_template.sql \
-		--dbname=directory_cms_debug
+		--dbname=cms_temporary_template
+	dropdb cms_temporary_template
 
 .PHONY: clean test_requirements debug_webserver debug_test debug

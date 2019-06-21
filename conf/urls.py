@@ -64,7 +64,7 @@ api_urls = [
     ),
     url(
         r'^review/',
-        include(review_api_urls, namespace='review', app_name='review')
+        include(review_api_urls, namespace='review')
     ),
 ]
 
@@ -86,13 +86,11 @@ healthcheck_urls = [
 urlpatterns = [
     url(
         r'^api/',
-        include(api_urls, namespace='api', app_name='api')
+        include((api_urls, 'api'))
     ),
     url(
         r'^healthcheck/',
-        include(
-            healthcheck_urls, namespace='healthcheck', app_name='healthcheck'
-        )
+        include((healthcheck_urls, 'healthcheck'))
     ),
     url(
         r'^$',
@@ -123,7 +121,7 @@ urlpatterns = [
     ),
 
     # Bespoke moderation queue views
-    url(r'^admin/moderation-queue/', include([
+    url(r'^admin/moderation-queue/', include(([
         url(r'^$', Review.as_view(), name='pending'),
         url(
             r'^all/$',
@@ -150,16 +148,16 @@ urlpatterns = [
             SubmitModerationRequest.as_view(),
             name='submit_moderation',
         ),
-    ], namespace="moderation-queue")),
+    ], 'moderation-queue'), namespace="moderation-queue")),
 
-    url(r'^admin/api/review/', include(review_admin_api_urls, namespace='review_admin_api', app_name='review_admin_api')),
+    url(r'^admin/api/review/', include(review_admin_api_urls, namespace='review_admin_api')),
 
     # Prevent users from changing their email address
     url(r'^admin/account/change_email/$', RedirectView.as_view(url='/admin/')),
 
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
-    url(r'^auth/request-access/', include('users.urls_sso', namespace="sso")),
+    url(r'^auth/request-access/', include('users.urls_sso')),
     url(
         r'^activity-stream/v1/',
         ActivityStreamView.as_view(),
@@ -176,9 +174,7 @@ urlpatterns = [
 
 if settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
     urlpatterns = [
-        url('^auth/', include('authbroker_client.urls',
-                              namespace='authbroker',
-                              app_name='authbroker_client')
+        url('^auth/', include('authbroker_client.urls')
             ),
         url(r'^admin/login/$',
             RedirectView.as_view(url='/auth/login/', query_string=True)),
