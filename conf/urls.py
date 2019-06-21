@@ -24,6 +24,7 @@ from review.views import (
     SubmitModerationRequest,
 )
 from review.api import urls as review_api_urls
+from review.admin_api import urls as review_admin_api_urls
 
 api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
@@ -150,6 +151,8 @@ urlpatterns = [
             name='submit_moderation',
         ),
     ], namespace="moderation-queue")),
+
+    url(r'^admin/api/review/', include(review_admin_api_urls, namespace='review_admin_api', app_name='review_admin_api')),
 
     # Prevent users from changing their email address
     url(r'^admin/account/change_email/$', RedirectView.as_view(url='/admin/')),

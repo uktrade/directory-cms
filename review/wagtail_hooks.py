@@ -1,11 +1,12 @@
+from django.conf import settings
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils.html import format_html, format_html_join
 from wagtail.admin.menu import MenuItem
 from wagtail.core import hooks
 
 from .models import ModerationRequest
-
 
 @hooks.register('register_admin_menu_item')
 def add_moderation_queue_to_menu():
@@ -77,3 +78,14 @@ def add_page_to_moderation_queue(request, page):
         "moderation-queue:submit_moderation",
         pk=latest_revision.id,
     )
+
+
+@hooks.register('insert_editor_js')
+def editor_js():
+    js_files = [
+        'review/editor.js',
+    ]
+    js_includes = format_html_join('\n', '<script src="{0}{1}"></script>',
+        ((settings.STATIC_URL, filename) for filename in js_files)
+    )
+    return js_includes

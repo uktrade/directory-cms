@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 
@@ -29,24 +31,35 @@ class Reviewer(models.Model):
         else:
             return self.email
 
-    def send_request_email(self):
-        # FIXME
-        email_address = self.get_email_address()
 
-        context = {
-            'email': email_address,
-            'user': self.user,
-            'review': self.review,
-            'page': self.review.revision_as_page,
-            'submitter': self.review.submitter,
-            'respond_url': self.get_respond_url(absolute=True),
-            'view_url': self.get_view_url(absolute=True),
-        }
+class Share(models.Model):
+    page_revision = models.ForeignKey('wagtailcore.PageRevision', on_delete=models.CASCADE, related_name='shares')
+    reviewer = models.ForeignKey(Reviewer, on_delete=models.CASCADE, related_name='shares')
+    shared_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name='+')
+    shared_at = models.DateTimeField(auto_now_add=True)
+    first_accessed_at = models.DateTimeField(null=True)
+    last_accessed_at = models.DateTimeField(null=True)
 
-        email_subject = render_to_string('wagtail_review/email/request_review_subject.txt', context).strip()
-        email_content = render_to_string('wagtail_review/email/request_review.txt', context).strip()
+    def get_review_url(self):
+        review_token = get_review_token(self.reviewer, self.page_revision, share_id=self.id)
+        return self.page_revision.page.specific.get_url(is_draft=True) + '&review_token=' + review_token.decode('utf-8')
 
-        send_mail(email_subject, email_content, [email_address])
+    def send_share_email(self):
+        review_url = self.get_review_url()
+        email_address = self.reviewer.get_email_address()
+
+        email_body = render_to_string('review/emails/share.txt', {
+            'page': self.page_revision.page,
+            'review_url': review_url,
+        })
+
+        send_mail("A page has been shared with you", email_body, [email_address])
+
+    def get_expires_at(self):
+        return self.shared_at + timedelta(days=1)
+
+    def has_expired(self):
+        return timezone.now() > self.get_expires_at()
 
 
 class Comment(models.Model):
