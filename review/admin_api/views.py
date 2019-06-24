@@ -34,16 +34,14 @@ class AdminAPIViewMixin:
         return super().dispatch(*args, **kwargs)
 
 
-class PageShares(AdminAPIViewMixin, generics.ListAPIView):
+class PageShares(AdminAPIViewMixin, generics.ListCreateAPIView):
     serializer_class = serializers.ShareSerializer
 
     def get_queryset(self):
         page = get_object_or_404(Page, pk=self.kwargs['pk'])
         return models.Share.objects.filter(page_revision__page=page)
 
-
-class SharePage(AdminAPIViewMixin, views.APIView):
-    def post(self, *args, **kwargs):
+    def create(self, *args, **kwargs):
         page = get_object_or_404(Page, pk=kwargs['pk'])
 
         serializer = serializers.NewShareSerializer(None, self.request.data)
@@ -75,11 +73,3 @@ class SharePage(AdminAPIViewMixin, views.APIView):
         serializer = serializers.ShareSerializer(share)
 
         return Response(serializer.data, status=201)  # FIXME
-
-
-class RevokeShare(AdminAPIViewMixin, views.APIView):
-    def delete(self, *args, **kwargs):
-        page = get_object_or_404(Page, pk=kwargs['page_pk'])
-        share = get_object_or_404(models.Share, page_revision__page=page, pk=kwargs['pk'])
-        share.delete()  # FIXME Revoke, don't delete
-        return Response(status=200)

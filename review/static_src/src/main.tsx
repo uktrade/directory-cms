@@ -9,6 +9,8 @@ import { reducer, Share } from './state';
 import { initTabs } from './tabs';
 import { showShareModal, hideShareModal, putShare } from './actions';
 
+declare var window: any;
+
 document.addEventListener('DOMContentLoaded', () => {
     Modal.setAppElement('div.wrapper');
 
@@ -29,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     let store = createStore(reducer);
-    let api = new APIClient(446);
+    let api = new APIClient(window.wagtailPageId /* Injected by GuacamoleMenuItem in review/wagtail_hooks.py */);
 
     // Load initial shares
     api.getShares().then(shares => {

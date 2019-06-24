@@ -40,7 +40,7 @@ export default class APIClient {
     }
 
     async newShare(email: string): Promise<NewShareResponse> {
-        let response = await fetch(`/admin/api/review/page/${this.pageId}/share/`, {
+        let response = await fetch(`/admin/api/review/page/${this.pageId}/shares/`, {
             method: 'POST',
             credentials: 'same-origin',
             headers: {
@@ -64,14 +64,5 @@ export default class APIClient {
         } else {
             throw new Error(`share api returned unexpected status code: ${response.status}`);
         }
-    }
-
-    async revokeShare(shareId: number): Promise<boolean> {
-        let response = await fetch(`/admin/api/review/page/${this.pageId}/share/${shareId}/`, {
-            method: 'DELETE',
-            credentials: 'same-origin'
-        });
-
-        return response.status == 200 || response.status == 404;
     }
 }

@@ -3,6 +3,7 @@ from django.conf.urls import url
 from . import views
 
 
+app_name = 'review_api'
 urlpatterns = [
     url(r'^comments/$', views.CommentList.as_view(), name='comment_list'),
     url(r'^comments/(?P<pk>\d+)/$', views.Comment.as_view(), name='comment'),

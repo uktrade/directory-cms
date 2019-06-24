@@ -3,7 +3,7 @@ import * as Modal from 'react-modal';
 
 import APIClient, { NewShareValidationError } from '../../api';
 import { Store, State, Share } from '../../state';
-import { hideShareModal, putShare, deleteShare } from '../../actions';
+import { hideShareModal, putShare } from '../../actions';
 
 import './style.scss';
 import dateFormat = require('dateformat');
@@ -58,23 +58,12 @@ export default class ShareModal extends React.Component<ShareModalProps, ShareMo
         };
 
         let renderedShares = this.props.shares.map(share => {
-            let onClickRevoke = async (e: React.MouseEvent) => {
-                e.preventDefault();
-
-                let deleted = await this.props.api.revokeShare(share.id);
-
-                if (deleted) {
-                    this.props.store.dispatch(deleteShare(share.id));
-                }
-            };
-
             return (
                 <tr>
                     <td>{share.nameOrEmail}</td>
                     <td>{share.accessedAt == null ? 'Never' : dateFormat(share.accessedAt)}</td>
                     <td>{dateFormat(share.expiresAt)}</td>
                     <td>
-                        <button onClick={onClickRevoke}>Revoke</button>
                     </td>
                 </tr>
             );
