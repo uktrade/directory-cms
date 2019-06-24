@@ -4,6 +4,19 @@
 
 **Implemented enhancements:**
 
+
+### Fixed Bugs
+
+- CMS-1678 - Fix SSO login bug by using a later version of django-staff-sso-client
+- no ticket - Turn off Debug Toolbar locally by default, as it prevents some pages from being created (fix in Wagtail 2.6)
+- no-ticket - Update `django-debug-toolbar` to fix django 2 incompatibility
+
+
+## [2019.06.20](https://github.com/uktrade/directory-cms/releases/tag/2019.06.20)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.12...2019.06.20
+
+**Implemented enhancements:**
+
 - XOT-763 - Serialize parent pages for use in breadcrumbs and GA360 page category/section
 - CMS-1591 - Copy invest homepage and HPO pages in International app
 - CMS-1604 - Added `WagtailAdminExclusivePageMixin` (a less restrictive version of `ExclusivePageMixin`) and used for page types in great_international
@@ -14,13 +27,14 @@
 - CI-216 - Add icon headings to cms with default text that was old hardcoded text on Opportunity pages
 - CI-211 - Created basic opportunity listing page
 - CMS-1624 - Copy FAS homepage and industry contact pages in International app
-- CMS 1507 - Upgraded to Django 2.2 and Wagtail 2.5
+- CMS-1507 - Upgraded to Django 2.2 and Wagtail 2.5
 
 ### Fixed Bugs
 
 - CI-217 - Fix Django security vulnerability by updating to new patch version.
 - CMS-1670 - Fix issue with international root page ending up with incorrect ContentType after applying migrations from CMS-1627
 - NOTICKET - Removed duplicate `case_study_image` on sector page
+- CMS-1676 - Fix copy upstream
 
 
 ## [2019.06.12](https://github.com/uktrade/directory-cms/releases/tag/2019.06.12)
