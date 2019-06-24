@@ -3,11 +3,15 @@ function createTab(text: string, onClick: (e: MouseEvent) => void) {
 
     let aElement = liElement.appendChild(document.createElement('a'));
     aElement.href = '#';
-    aElement.addEventListener('click', e => {
-        e.preventDefault();
-        e.stopPropagation();
-        onClick(e);
-    }, {capture: true});
+    aElement.addEventListener(
+        'click',
+        e => {
+            e.preventDefault();
+            e.stopPropagation();
+            onClick(e);
+        },
+        { capture: true }
+    );
     aElement.appendChild(document.createTextNode(text));
 
     return liElement;

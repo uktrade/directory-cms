@@ -31,12 +31,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     let store = createStore(reducer);
-    let api = new APIClient(window.wagtailPageId /* Injected by GuacamoleMenuItem in review/wagtail_hooks.py */);
+    let api = new APIClient(
+        window.wagtailPageId /* Injected by GuacamoleMenuItem in review/wagtail_hooks.py */
+    );
 
     // Load initial shares
     api.getShares().then(shares => {
         for (let share of shares) {
-            store.dispatch(putShare(Share.fromApi(share)))
+            store.dispatch(putShare(Share.fromApi(share)));
         }
     });
 
@@ -46,11 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let render = () => {
         ReactDOM.render(
-            <ShareModal
-                api={api}
-                store={store}
-                {...store.getState()}
-            />,
+            <ShareModal api={api} store={store} {...store.getState()} />,
             container
         );
     };

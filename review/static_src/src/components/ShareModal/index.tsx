@@ -14,15 +14,18 @@ interface ShareModalProps extends State {
 }
 
 interface ShareModalState {
-    errors: NewShareValidationError | null,
+    errors: NewShareValidationError | null;
 }
 
-export default class ShareModal extends React.Component<ShareModalProps, ShareModalState> {
+export default class ShareModal extends React.Component<
+    ShareModalProps,
+    ShareModalState
+> {
     constructor(props: ShareModalProps) {
         super(props);
 
         this.state = {
-            errors: null,
+            errors: null
         };
     }
 
@@ -41,7 +44,7 @@ export default class ShareModal extends React.Component<ShareModalProps, ShareMo
                 if (target instanceof HTMLInputElement) {
                     let newEmail = target.value;
 
-                    this.setState({errors: null});
+                    this.setState({ errors: null });
 
                     let response = await this.props.api.newShare(newEmail);
 
@@ -51,7 +54,7 @@ export default class ShareModal extends React.Component<ShareModalProps, ShareMo
                             putShare(Share.fromApi(response.share))
                         );
                     } else {
-                        this.setState({errors: response});
+                        this.setState({ errors: response });
                     }
                 }
             }
@@ -61,19 +64,20 @@ export default class ShareModal extends React.Component<ShareModalProps, ShareMo
             return (
                 <tr>
                     <td>{share.nameOrEmail}</td>
-                    <td>{share.accessedAt == null ? 'Never' : dateFormat(share.accessedAt)}</td>
-                    <td>{dateFormat(share.expiresAt)}</td>
                     <td>
+                        {share.accessedAt == null
+                            ? 'Never'
+                            : dateFormat(share.accessedAt)}
                     </td>
+                    <td>{dateFormat(share.expiresAt)}</td>
+                    <td></td>
                 </tr>
             );
         });
 
         let error = <></>;
         if (this.state.errors && this.state.errors['email']) {
-            error = <div className="error">
-                {this.state.errors['email']}
-            </div>;
+            error = <div className="error">{this.state.errors['email']}</div>;
         }
 
         return (
@@ -83,12 +87,16 @@ export default class ShareModal extends React.Component<ShareModalProps, ShareMo
                 className="share-modal__dialog"
                 overlayClassName="share-modal"
                 onAfterOpen={() => {
-                    let backdrop = document.body.appendChild(document.createElement('div'));
+                    let backdrop = document.body.appendChild(
+                        document.createElement('div')
+                    );
                     backdrop.classList.add('modal-backdrop');
                     backdrop.classList.add('in');
                 }}
                 onAfterClose={() => {
-                    let backdrop = document.querySelector('body > div.modal-backdrop');
+                    let backdrop = document.querySelector(
+                        'body > div.modal-backdrop'
+                    );
 
                     if (backdrop instanceof HTMLElement) {
                         backdrop.remove();
@@ -96,13 +104,23 @@ export default class ShareModal extends React.Component<ShareModalProps, ShareMo
                 }}
             >
                 <div className="share-modal__content">
-                    <button type="button" className="button close icon text-replace icon-cross" data-dismiss="modal" aria-hidden="true" onClick={onClickClose}>×</button>
+                    <button
+                        type="button"
+                        className="button close icon text-replace icon-cross"
+                        data-dismiss="modal"
+                        aria-hidden="true"
+                        onClick={onClickClose}
+                    >
+                        ×
+                    </button>
                     <div className="share-modal__body">
                         <header className="merged tab-merged">
                             <div className="row nice-padding">
                                 <div className="left">
                                     <div className="col header-title">
-                                        <h1 className="icon icon-share">Share</h1>
+                                        <h1 className="icon icon-share">
+                                            Share
+                                        </h1>
                                     </div>
                                 </div>
                             </div>

@@ -22,7 +22,12 @@ export class Share {
     }
 
     static fromApi(data: ShareApi): Share {
-        return new Share(data.id, data.reviewer.name, Date.parse(data.last_accessed_at), Date.parse(data.expires_at));
+        return new Share(
+            data.id,
+            data.reviewer.name,
+            Date.parse(data.last_accessed_at),
+            Date.parse(data.expires_at)
+        );
     }
 }
 
