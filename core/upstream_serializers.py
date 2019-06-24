@@ -1,4 +1,5 @@
 import abc
+import json
 from datetime import date, datetime
 
 from wagtail.core.models import Page
@@ -175,8 +176,9 @@ class UpstreamModelSerializer:
     @classmethod
     def deserialize(cls, serialized_data, request):
         deserialized = {}
+        data = cls._normalise_data(serialized_data)
         for name, value in cls.remove_empty(serialized_data).items():
-            value = serialized_data[name]
+            value = data[name]
             serializer = cls.get_field_serializer_by_field_name(name)
             try:
                 name, value = serializer.deserialize(name=name, value=value)
@@ -185,3 +187,10 @@ class UpstreamModelSerializer:
             else:
                 deserialized[name] = value
         return deserialized
+
+    @staticmethod
+    def _normalise_data(serialized_data):
+        if isinstance(serialized_data, dict):
+            return serialized_data
+        else:
+            return json.loads(serialized_data)
