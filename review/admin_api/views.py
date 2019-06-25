@@ -39,7 +39,7 @@ class PageShares(AdminAPIViewMixin, generics.ListCreateAPIView):
 
     def get_queryset(self):
         page = get_object_or_404(Page, pk=self.kwargs['pk'])
-        return models.Share.objects.filter(page_revision__page=page)
+        return models.Share.objects.filter(page_revision__page=page).order_by('shared_at')
 
     def create(self, *args, **kwargs):
         page = get_object_or_404(Page, pk=kwargs['pk'])

@@ -6,6 +6,7 @@ import jwt
 
 from django.conf import settings
 from django.db import transaction
+from django.db.models import Case, F, Value, When
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.decorators import method_decorator
@@ -21,6 +22,7 @@ class ReviewTokenMixin:
     def process_review_token(self, data):
         self.reviewer_id = data['reviewer_id']
         self.page_revision_id = data['page_revision_id']
+        self.share_id = data['share_id']
 
     @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
@@ -33,6 +35,18 @@ class ReviewTokenMixin:
 
 class CommentList(ReviewTokenMixin, generics.ListCreateAPIView):
     serializer_class = serializers.CommentSerializer
+
+    def get(self, *args, **kwargs):
+        now = timezone.now()
+        models.Share.objects.filter(id=self.share_id).update(
+            first_accessed_at=Case(
+                When(first_accessed_at__isnull=True, then=Value(now)),
+                default=F('first_accessed_at'),
+            ),
+            last_accessed_at=now,
+        )
+
+        return super().get(*args, **kwargs)
 
     def get_queryset(self):
         return models.Comment.objects.filter(page_revision_id=self.page_revision_id)

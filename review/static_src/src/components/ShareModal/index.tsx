@@ -65,12 +65,11 @@ export default class ShareModal extends React.Component<
                 <tr>
                     <td>{share.nameOrEmail}</td>
                     <td>
-                        {share.accessedAt == null
+                        {!share.accessedAt
                             ? 'Never'
                             : dateFormat(share.accessedAt)}
                     </td>
                     <td>{dateFormat(share.expiresAt)}</td>
-                    <td></td>
                 </tr>
             );
         });
@@ -140,9 +139,8 @@ export default class ShareModal extends React.Component<
                                 <table>
                                     <thead>
                                         <th>Name/email</th>
-                                        <th>Last accessed</th>
-                                        <th>Expires at</th>
-                                        <th>Actions</th>
+                                        <th>Last opened</th>
+                                        <th>Link expires at</th>
                                     </thead>
                                     <tbody>{renderedShares}</tbody>
                                 </table>
