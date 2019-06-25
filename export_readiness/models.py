@@ -2876,7 +2876,7 @@ class ArticlePage(BaseDomesticPage):
     ]
 
 
-class MarketArticlePage(BaseDomesticPage):
+class MarketingArticlePage(BaseDomesticPage):
 
     subpage_types = []
 
