@@ -65,6 +65,7 @@ class ArticleListingPageTranslationOptions(BaseTranslationOptions):
 
 
 @register(models.ArticlePage)
+@register(models.MarketArticlePage)
 class ArticlePageTranslationOptions(BaseTranslationOptions):
     fields = []
 
