@@ -8,9 +8,16 @@
 
 ### Fixed Bugs
 
+
+## [2019.06.25](https://github.com/uktrade/directory-cms/releases/tag/2019.06.25)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.20...2019.06.25
+
+### Fixed Bugs
+
 - CMS-1678 - Fix SSO login bug by using a later version of django-staff-sso-client
 - no ticket - Turn off Debug Toolbar locally by default, as it prevents some pages from being created (fix in Wagtail 2.6)
 - no-ticket - Update `django-debug-toolbar` to fix django 2 incompatibility
+- CMS-1676 - Fix copy upstream
 
 
 ## [2019.06.20](https://github.com/uktrade/directory-cms/releases/tag/2019.06.20)
