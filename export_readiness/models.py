@@ -2987,6 +2987,10 @@ class MarketArticlePage(BaseDomesticPage):
         FieldPanel('tags', widget=CheckboxSelectMultiple),
     ]
 
+    class Meta:
+        verbose_name = 'Marketing Article Page'
+        verbose_name_plural = 'Marketing Article Pages'
+
 
 class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
     slug_identity = 'export-readiness-app'
