@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from rest_framework import generics, views
+from rest_framework import generics, status, views
 from rest_framework.response import Response
 import jwt
 
@@ -59,6 +59,20 @@ class CommentList(ReviewTokenMixin, generics.ListCreateAPIView):
 class Comment(ReviewTokenMixin, generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.CommentSerializer
 
+    def update(self, *args, **kwargs):
+        comment = self.get_object()
+        if comment.reviewer_id != self.reviewer_id:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        return super().update(*args, **kwargs)
+
+    def destroy(self, *args, **kwargs):
+        comment = self.get_object()
+        if comment.reviewer_id != self.reviewer_id:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        return super().destroy(*args, **kwargs)
+
     def get_queryset(self):
         return models.Comment.objects.filter(page_revision_id=self.page_revision_id)
 
@@ -90,6 +104,20 @@ class CommentReplyList(ReviewTokenMixin, generics.ListCreateAPIView):
 
 class CommentReply(ReviewTokenMixin, generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.CommentReplySerializer
+
+    def update(self, *args, **kwargs):
+        reply = self.get_object()
+        if reply.reviewer_id != self.reviewer_id:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        return super().update(*args, **kwargs)
+
+    def destroy(self, *args, **kwargs):
+        reply = self.get_object()
+        if reply.reviewer_id != self.reviewer_id:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        return super().destroy(*args, **kwargs)
 
     def get_queryset(self):
         return models.CommentReply.objects.filter(comment_id=self.kwargs['comment_pk'])

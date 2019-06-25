@@ -8,7 +8,7 @@ class ReviewerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.CommentReply
-        fields = ['name']
+        fields = ['id', 'name']
 
 
 class CommentReplySerializer(serializers.ModelSerializer):
