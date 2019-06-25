@@ -1,9 +1,10 @@
 import * as React from 'react';
-import * as Modal from 'react-modal';
 
 import APIClient, { NewShareValidationError } from '../../api';
 import { Store, State, Share } from '../../state';
 import { hideShareModal, putShare } from '../../actions';
+
+import WagtailReactModal from '../WagtailReactModal';
 
 import './style.scss';
 import dateFormat = require('dateformat');
@@ -30,9 +31,7 @@ export default class ShareModal extends React.Component<
     }
 
     render() {
-        let onClickClose = (e: React.MouseEvent) => {
-            e.preventDefault();
-
+        let onClickCloseButton = () => {
             this.props.store.dispatch(hideShareModal());
         };
 
@@ -80,11 +79,10 @@ export default class ShareModal extends React.Component<
         }
 
         return (
-            <Modal
+            <WagtailReactModal
                 isOpen={this.props.isShareModalOpen}
                 contentLabel="Share"
-                className="share-modal__dialog"
-                overlayClassName="share-modal"
+                onClickCloseButton={onClickCloseButton}
                 onAfterOpen={() => {
                     let backdrop = document.body.appendChild(
                         document.createElement('div')
@@ -102,53 +100,25 @@ export default class ShareModal extends React.Component<
                     }
                 }}
             >
-                <div className="share-modal__content">
-                    <button
-                        type="button"
-                        className="button close icon text-replace icon-cross"
-                        data-dismiss="modal"
-                        aria-hidden="true"
-                        onClick={onClickClose}
-                    >
-                        ×
-                    </button>
-                    <div className="share-modal__body">
-                        <header className="merged tab-merged">
-                            <div className="row nice-padding">
-                                <div className="left">
-                                    <div className="col header-title">
-                                        <h1 className="icon icon-share">
-                                            Share
-                                        </h1>
-                                    </div>
-                                </div>
-                            </div>
-                        </header>
+                <div className="nice-padding">
+                    <p></p>
+                    <input
+                        type="text"
+                        placeholder="Enter email address"
+                        onKeyDown={onKeyDownInEmailBox}
+                    ></input>
+                    {error}
 
-                        <div className="tab-content">
-                            <div className="nice-padding">
-                                <p></p>
-
-                                <input
-                                    type="text"
-                                    placeholder="Enter email address"
-                                    onKeyDown={onKeyDownInEmailBox}
-                                ></input>
-                                {error}
-
-                                <table>
-                                    <thead>
-                                        <th>Name/email</th>
-                                        <th>Last opened</th>
-                                        <th>Link expires at</th>
-                                    </thead>
-                                    <tbody>{renderedShares}</tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                    <table>
+                        <thead>
+                            <th>Name/email</th>
+                            <th>Last opened</th>
+                            <th>Link expires at</th>
+                        </thead>
+                        <tbody>{renderedShares}</tbody>
+                    </table>
                 </div>
-            </Modal>
+            </WagtailReactModal>
         );
     }
 }

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import * as Modal from 'react-modal';
 import { createStore } from 'redux';
 
 import ShareModal from './components/ShareModal';
@@ -12,8 +11,6 @@ import { showShareModal, hideShareModal, putShare } from './actions';
 declare var window: any;
 
 document.addEventListener('DOMContentLoaded', () => {
-    Modal.setAppElement('div.wrapper');
-
     initTabs([
         {
             text: 'Share',
