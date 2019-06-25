@@ -4,6 +4,8 @@
 
 **Implemented enhancements:**
 
+- CMS-1666 - Updated `slug_identity`, `slug` and `url_path` page values in accordance with directory-constants 18.0.0
+
 ### Fixed Bugs
 
 
