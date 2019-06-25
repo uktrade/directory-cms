@@ -33,8 +33,7 @@ class Review(ListView):
         return context
 
     def get_queryset(self):
-        return (ModerationRequest.objects.filter(revision__user=self.request.user)
-                                  .accepted())
+        return ModerationRequest.objects.filter(revision__user=self.request.user).accepted()
 
 
 @method_decorator(login_required, name='dispatch')

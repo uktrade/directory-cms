@@ -1,16 +1,10 @@
-from datetime import timedelta
-
-from rest_framework import generics, views, status
+from rest_framework import generics
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
-import jwt
 
-from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.db import transaction
 from django.shortcuts import get_object_or_404
-from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
@@ -58,8 +52,6 @@ class PageShares(AdminAPIViewMixin, generics.ListCreateAPIView):
             reviewer, created = models.Reviewer.objects.get_or_create(user=user)
         else:
             reviewer, created = models.Reviewer.objects.get_or_create(email=email)
-
-        page_revision = page.get_latest_revision()
 
         if models.Share.objects.filter(page_revision__page=page, reviewer=reviewer).exists():
             raise ValidationError({'email': "This page has already been shared with this email address"})

@@ -1,12 +1,13 @@
 from datetime import timedelta
 
-from rest_framework import generics, views, status
+from rest_framework import generics, views
 from rest_framework.response import Response
 import jwt
 
 from django.conf import settings
 from django.db import transaction
 from django.db.models import Case, F, Value, When
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.decorators import method_decorator
@@ -109,7 +110,6 @@ class ModerationMixin(ReviewTokenMixin):
 class ModerationLock(ModerationMixin, views.APIView):
     def put(self, *args, **kwargs):
         lock_extension = timedelta(minutes=settings.MODERATION_LOCK_TIMEOUT)
-        new_lock_time = timezone.now() + lock_extension
 
         # TODO: Add "locked by" field to avoid race condition
         self.moderation_request.locked_until = timezone.now() + lock_extension
