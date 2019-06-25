@@ -19,7 +19,7 @@ from conf.celery import app
 
 ROOT_PATHS_TO_SERVICE_NAMES = {
     slugs.GREAT_HOME: cms.EXPORT_READINESS,
-    slugs.GREAT_INTERNATIONAL_HOME: cms.GREAT_INTERNATIONAL,
+    slugs.GREAT_HOME_INTERNATIONAL: cms.GREAT_INTERNATIONAL,
     'find-a-supplier-app': cms.FIND_A_SUPPLIER,
     'invest-app': cms.INVEST,
     'components-app': cms.COMPONENTS,
