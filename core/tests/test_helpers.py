@@ -86,3 +86,17 @@ def test_render_markdown_table():
 def test_get_page_full_url(domain, full_path, expected_url):
     url = get_page_full_url(domain, full_path)
     assert url == expected_url
+
+
+@pytest.mark.parametrize('data,expected_result', [
+    (
+            {'test': 'foo'},
+            {'test': 'foo'}
+    ),
+    (
+            '{"test": "foo"}',
+            {'test': 'foo'}
+    )
+])
+def test_dictify_data(data, expected_result):
+    assert helpers.dictify_data(data) == expected_result
