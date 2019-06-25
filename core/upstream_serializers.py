@@ -1,5 +1,6 @@
 import abc
 from datetime import date, datetime
+import json
 
 from wagtail.core.models import Page
 from wagtail.documents.models import Document
@@ -91,21 +92,18 @@ class RelatedPageSerializer(AbstractFieldSerializer):
 
     @classmethod
     def serialize_value(cls, value):
-        return {
+        return json.dumps({
             'slug': value.slug,
             'service_name_value': value.specific.service_name_value
-        }
+        })
 
     @classmethod
     def deserialize_value(cls, value):
-        value = helpers.coerce_to_dict(value)
-        parent_app_slug = SERVICE_NAMES_TO_ROOT_PATHS[
-            value['service_name_value']]
-        app_pages = Page.objects.get(slug=parent_app_slug).get_descendants()
-
+        value = json.loads(value)
+        app_slug = SERVICE_NAMES_TO_ROOT_PATHS[value['service_name_value']]
+        app_pages = Page.objects.get(slug=app_slug).get_descendants()
         try:
             return app_pages.get(slug=value['slug'])
-
         except Page.DoesNotExist:
             raise ValidationError(
                 f"Related page with the slug {value['slug']} could not be "
@@ -176,9 +174,7 @@ class UpstreamModelSerializer:
     @classmethod
     def deserialize(cls, serialized_data, request):
         deserialized = {}
-        data = helpers.coerce_to_dict(serialized_data)
         for name, value in cls.remove_empty(serialized_data).items():
-            value = data[name]
             serializer = cls.get_field_serializer_by_field_name(name)
             try:
                 name, value = serializer.deserialize(name=name, value=value)
