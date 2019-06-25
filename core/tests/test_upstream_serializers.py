@@ -1,9 +1,11 @@
-import pytest
+import json
 from unittest import mock
 
-from django.contrib.messages.storage.fallback import FallbackStorage
-
 from directory_constants import cms
+import pytest
+
+from django.contrib.messages.storage.fallback import FallbackStorage
+from django.http import HttpRequest
 
 from core.upstream_serializers import UpstreamModelSerializer
 from export_readiness.tests.factories import (
@@ -11,7 +13,6 @@ from export_readiness.tests.factories import (
     TopicLandingPageFactory, ArticleListingPageFactory,
     HomePageFactory,
 )
-from django.http import HttpRequest
 
 
 class RequestWithMessages(HttpRequest):
@@ -90,7 +91,7 @@ def test_related_page_field_serialize(country_guide_page):
 
     data = UpstreamModelSerializer.serialize(country_guide_page)
 
-    assert data['(page)related_page_one'] == (
+    assert data['(page)related_page_one'] == json.dumps(
         {
             'slug': country_guide_page.related_page_one.slug,
             'service_name_value': (
@@ -110,10 +111,10 @@ def test_related_page_field_deserializer(rf, root_page, article_page):
         slug='related-slug')
 
     serialized_data = {
-        '(page)related_page_one': {
+        '(page)related_page_one': json.dumps({
             'slug': 'related-slug',
             'service_name_value': article_page.specific.service_name_value,
-        }
+        })
     }
 
     actual = UpstreamModelSerializer.deserialize(serialized_data, rf)
@@ -127,10 +128,10 @@ def test_related_page_field_deserializer_invalid_slug(rf, root_page):
     missing_slug = 'some-missing-slug'
 
     serialized_data = {
-        '(page)related_page_one': {
+        '(page)related_page_one': json.dumps({
             'slug': missing_slug,
             'service_name_value': cms.EXPORT_READINESS,
-        }
+        })
     }
 
     request = RequestWithMessages()
