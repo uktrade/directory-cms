@@ -1,4 +1,4 @@
-import { Share } from './state';
+import { Share } from '../state/share';
 
 export const SHOW_HIDE_SHARE_MODAL = 'show-hide-share-modal';
 export const PUT_SHARE = 'put-share';

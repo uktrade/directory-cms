@@ -16,6 +16,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 from wagtail.core.models import Page
 
+from ..api.serializers import CommentSerializer
+
 from .. import models
 from . import serializers
 
@@ -73,3 +75,11 @@ class PageShares(AdminAPIViewMixin, generics.ListCreateAPIView):
         serializer = serializers.ShareSerializer(share)
 
         return Response(serializer.data, status=201)  # FIXME
+
+
+class PageComments(AdminAPIViewMixin, generics.ListAPIView):
+    serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        page = get_object_or_404(Page, pk=self.kwargs['pk'])
+        return models.Comment.objects.filter(page_revision__page=page)

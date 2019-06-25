@@ -24,6 +24,29 @@ export interface NewShareValidationError {
 
 export type NewShareResponse = NewShareSuccess | NewShareValidationError;
 
+export interface ReviewerApi {
+    name: string;
+}
+
+export interface CommentReplyApi {
+    id: number;
+    author: ReviewerApi;
+    text: string;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface CommentApi {
+    id: number;
+    author: ReviewerApi;
+    quote: string;
+    text: string;
+    created_at: string;
+    updated_at: string;
+    is_resolved: boolean;
+    replies: CommentReplyApi[];
+}
+
 export default class APIClient {
     pageId: number;
 
@@ -72,5 +95,16 @@ export default class APIClient {
                 `share api returned unexpected status code: ${response.status}`
             );
         }
+    }
+
+    async getComments(): Promise<CommentApi[]> {
+        let response = await fetch(
+            `/admin/api/review/page/${this.pageId}/comments/`,
+            {
+                credentials: 'same-origin'
+            }
+        );
+
+        return response.json();
     }
 }

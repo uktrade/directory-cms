@@ -1,13 +1,13 @@
 import * as React from 'react';
+import * as dateFormat from 'dateformat';
 
 import APIClient, { NewShareValidationError } from '../../api';
-import { Store, State, Share } from '../../state';
-import { hideShareModal, putShare } from '../../actions';
+import { Store, State, Share } from '../../state/share';
+import { hideShareModal, putShare } from '../../actions/share';
 
 import WagtailReactModal from '../WagtailReactModal';
 
 import './style.scss';
-import dateFormat = require('dateformat');
 
 interface ShareModalProps extends State {
     api: APIClient;

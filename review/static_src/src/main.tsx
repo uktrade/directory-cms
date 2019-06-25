@@ -3,10 +3,13 @@ import * as ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 
 import ShareModal from './components/ShareModal';
+import Comments from './components/Comments';
 import APIClient from './api';
-import { reducer, Share } from './state';
+import { reducer as shareReducer, Share } from './state/share';
+import { Comment, reducer as commentsReducer } from './state/comments';
 import { initTabs } from './tabs';
-import { showShareModal, hideShareModal, putShare } from './actions';
+import { showShareModal, hideShareModal, putShare } from './actions/share';
+import { showComments, loadComments, hideComments } from './actions/comments';
 
 declare var window: any;
 
@@ -15,19 +18,31 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             text: 'Share',
             onClick() {
-                store.dispatch(showShareModal());
+                shareStore.dispatch(showShareModal());
+            }
+        },
+        {
+            text: 'Comments',
+            onClick() {
+                if (commentsStore.getState().isOpen) {
+                    commentsStore.dispatch(hideComments());
+                } else {
+                    commentsStore.dispatch(showComments());
+                }
             }
         }
     ]);
 
     document.addEventListener('keydown', (e: KeyboardEvent) => {
-        // Close share modal when esc is pressed
+        // Close share modal and comments when esc is pressed
         if (e.key == 'Escape') {
-            store.dispatch(hideShareModal());
+            shareStore.dispatch(hideShareModal());
+            commentsStore.dispatch(hideComments());
         }
     });
 
-    let store = createStore(reducer);
+    let shareStore = createStore(shareReducer);
+    let commentsStore = createStore(commentsReducer);
     let api = new APIClient(
         window.wagtailPageId /* Injected by GuacamoleMenuItem in review/wagtail_hooks.py */
     );
@@ -35,21 +50,48 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load initial shares
     api.getShares().then(shares => {
         for (let share of shares) {
-            store.dispatch(putShare(Share.fromApi(share)));
+            shareStore.dispatch(putShare(Share.fromApi(share)));
         }
     });
 
-    // Render UI
-    let container = document.createElement('div');
-    document.body.append(container);
+    // Load initial commebts
+    api.getComments().then(comments => {
+        commentsStore.dispatch(loadComments(comments.map(Comment.fromApi)));
+    });
 
-    let render = () => {
+    // Render share UI
+    let shareContainer = document.createElement('div');
+    document.body.append(shareContainer);
+
+    let renderShare = () => {
         ReactDOM.render(
-            <ShareModal api={api} store={store} {...store.getState()} />,
-            container
+            <ShareModal
+                api={api}
+                store={shareStore}
+                {...shareStore.getState()}
+            />,
+            shareContainer
         );
     };
 
-    render();
-    store.subscribe(render);
+    renderShare();
+    shareStore.subscribe(renderShare);
+
+    // Render comments UI
+    let commentsContainer = document.createElement('div');
+    document.body.append(commentsContainer);
+
+    let renderComments = () => {
+        ReactDOM.render(
+            <Comments
+                api={api}
+                store={commentsStore}
+                {...commentsStore.getState()}
+            />,
+            commentsContainer
+        );
+    };
+
+    renderComments();
+    commentsStore.subscribe(renderComments);
 });

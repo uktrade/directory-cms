@@ -1,7 +1,7 @@
 import { Store } from 'redux';
 
-import * as actions from './actions';
-import { ShareApi } from './api';
+import * as actions from '../actions/share';
+import { ShareApi } from '../api';
 
 export class Share {
     id: number;
