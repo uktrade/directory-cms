@@ -244,7 +244,7 @@ def get_page_full_url(domain, full_path):
     return url
 
 
-def dictify_data(data):
+def coerce_to_dict(data):
     if isinstance(data, dict):
         return data
     else:

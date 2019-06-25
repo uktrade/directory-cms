@@ -98,7 +98,7 @@ class RelatedPageSerializer(AbstractFieldSerializer):
 
     @classmethod
     def deserialize_value(cls, value):
-        value = helpers.dictify_data(value)
+        value = helpers.coerce_to_dict(value)
         parent_app_slug = SERVICE_NAMES_TO_ROOT_PATHS[
             value['service_name_value']]
         app_pages = Page.objects.get(slug=parent_app_slug).get_descendants()
@@ -176,7 +176,7 @@ class UpstreamModelSerializer:
     @classmethod
     def deserialize(cls, serialized_data, request):
         deserialized = {}
-        data = helpers.dictify_data(serialized_data)
+        data = helpers.coerce_to_dict(serialized_data)
         for name, value in cls.remove_empty(serialized_data).items():
             value = data[name]
             serializer = cls.get_field_serializer_by_field_name(name)

@@ -98,5 +98,5 @@ def test_get_page_full_url(domain, full_path, expected_url):
             {'test': 'foo'}
     )
 ])
-def test_dictify_data(data, expected_result):
-    assert helpers.dictify_data(data) == expected_result
+def test_coerce_to_dict(data, expected_result):
+    assert helpers.coerce_to_dict(data) == expected_result
