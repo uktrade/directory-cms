@@ -131,6 +131,13 @@ class ArticlePageSerializer(PageWithRelatedPagesSerializer):
     tags = core_fields.TagsListField()
 
 
+class MarketingArticlePageSerializer(ArticlePageSerializer):
+    cta_title = serializers.CharField(max_length=255)
+    cta_teaser = serializers.CharField()
+    cta_link_label = serializers.CharField(max_length=255)
+    cta_link = serializers.CharField(max_length=255)
+
+
 class ArticleListingPageSerializer(
     BasePageSerializer,
     ChildPagesSerializerHelper
