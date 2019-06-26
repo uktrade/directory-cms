@@ -2907,13 +2907,13 @@ class MarketingArticlePage(BaseDomesticPage):
         verbose_name='CTA teaser'
     )
     cta_link_label = models.CharField(
-        max_length=500,
+        max_length=255,
         blank=True,
         verbose_name='CTA link label'
     )
 
     cta_link = models.CharField(
-        max_length=500,
+        max_length=255,
         blank=True,
         verbose_name='CTA link'
     )

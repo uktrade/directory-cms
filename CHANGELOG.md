@@ -3,6 +3,7 @@
 ## Pre-release
 
 **Implemented enhancements:**
+- XOT-922 Added Marketing Article Page template
 
 ### Fixed Bugs
 
