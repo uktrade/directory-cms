@@ -2919,21 +2919,21 @@ class MarketingArticlePage(BaseDomesticPage):
     )
 
     related_page_one = models.ForeignKey(
-        'wagtailcore.Page',
+        'export_readiness.ArticlePage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
     )
     related_page_two = models.ForeignKey(
-        'wagtailcore.Page',
+        'export_readiness.ArticlePage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
     )
     related_page_three = models.ForeignKey(
-        'wagtailcore.Page',
+        'export_readiness.ArticlePage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -2968,13 +2968,13 @@ class MarketingArticlePage(BaseDomesticPage):
                 FieldRowPanel([
                     PageChooserPanel(
                         'related_page_one',
-                        'wagtailcore.Page'),
+                        'export_readiness.ArticlePage'),
                     PageChooserPanel(
                         'related_page_two',
-                        'wagtailcore.Page'),
+                        'export_readiness.ArticlePage'),
                     PageChooserPanel(
                         'related_page_three',
-                        'wagtailcore.Page'),
+                        'export_readiness.ArticlePage'),
                 ]),
             ]
         ),
