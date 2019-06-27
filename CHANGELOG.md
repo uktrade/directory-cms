@@ -4,12 +4,21 @@
 
 **Implemented enhancements:**
 
+- CMS-1666 - Updated `slug_identity`, `slug` and `url_path` page values in accordance with directory-constants 18.0.0
+- Upgraded `directory-components` to 20.0.0
+
+### Fixed Bugs
+
+
+## [2019.06.25](https://github.com/uktrade/directory-cms/releases/tag/2019.06.25)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.20...2019.06.25
 
 ### Fixed Bugs
 
 - CMS-1678 - Fix SSO login bug by using a later version of django-staff-sso-client
 - no ticket - Turn off Debug Toolbar locally by default, as it prevents some pages from being created (fix in Wagtail 2.6)
 - no-ticket - Update `django-debug-toolbar` to fix django 2 incompatibility
+- CMS-1676 - Fix copy upstream
 
 
 ## [2019.06.20](https://github.com/uktrade/directory-cms/releases/tag/2019.06.20)
@@ -34,7 +43,6 @@
 - CI-217 - Fix Django security vulnerability by updating to new patch version.
 - CMS-1670 - Fix issue with international root page ending up with incorrect ContentType after applying migrations from CMS-1627
 - NOTICKET - Removed duplicate `case_study_image` on sector page
-- CMS-1676 - Fix copy upstream
 
 
 ## [2019.06.12](https://github.com/uktrade/directory-cms/releases/tag/2019.06.12)
