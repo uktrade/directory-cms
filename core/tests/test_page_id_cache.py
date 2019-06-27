@@ -46,7 +46,7 @@ def test_population_and_value_getting(root_page, django_assert_num_queries):
             f'{site.id}:/topic/list/article/': article_page.id
         },
         'by-slug': {
-            'EXPORT_READINESS:export-readiness-app': domestic_homepage.id,
+            'EXPORT_READINESS:great-domestic-home': domestic_homepage.id,
             'EXPORT_READINESS:topic': topic_page.id,
             'EXPORT_READINESS:list': article_list_page.id,
             'EXPORT_READINESS:article': article_page.id,
