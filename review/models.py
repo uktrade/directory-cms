@@ -108,6 +108,7 @@ class ModerationRequest(models.Model):
     # for review will set this field and update it while their browser is open
     # on that page.
     locked_until = models.DateTimeField(null=True)
+    locked_by = models.ForeignKey(Reviewer, null=True, on_delete=models.SET_NULL, related_name='+')
 
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -126,7 +127,7 @@ class ModerationRequest(models.Model):
 
     @property
     def is_locked(self):
-        return self.locked_until > timezone.now()
+        return self.locked_until is not None and self.locked_until > timezone.now()
 
     @property
     def latest_response(self):

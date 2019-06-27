@@ -515,6 +515,3 @@ from corsheaders.defaults import default_headers
 CORS_ALLOW_HEADERS = default_headers + (
     'x-review-token',
 )
-
-# Moderation Review default lock timeout in seconds
-MODERATION_LOCK_TIMEOUT = 300  # 5 minutes in seconds

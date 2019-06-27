@@ -139,15 +139,17 @@ class ModerationMixin(ReviewTokenMixin):
 
 class ModerationLock(ModerationMixin, views.APIView):
     def put(self, *args, **kwargs):
-        lock_extension = timedelta(minutes=settings.MODERATION_LOCK_TIMEOUT)
+        if self.moderation_request.is_locked and self.moderation_request.locked_by_id != self.reviewer_id:
+            return Response(status=status.HTTP_423_LOCKED)
 
-        # TODO: Add "locked by" field to avoid race condition
-        self.moderation_request.locked_until = timezone.now() + lock_extension
+        self.moderation_request.locked_by_id = self.reviewer_id
+        self.moderation_request.locked_until = timezone.now() + timedelta(minutes=1)
         self.moderation_request.save()
 
         return Response()
 
     def delete(self, *args, **kwargs):
+        self.moderation_request.locked_by_id = None
         self.moderation_request.locked_until = None
         self.moderation_request.save()
 
@@ -160,6 +162,10 @@ class ModerationRespond(ModerationMixin, generics.CreateAPIView):
 
     @transaction.atomic
     def perform_create(self, serializer):
+        if self.moderation_request.is_locked and self.moderation_request.locked_by_id != self.reviewer_id:
+            return Response(status=status.HTTP_423_LOCKED)
+
         serializer.save(reviewer_id=self.reviewer_id, request=self.moderation_request)
+        self.moderation_request.locked_by_id = None
         self.moderation_request.locked_until = None
         self.moderation_request.save()
