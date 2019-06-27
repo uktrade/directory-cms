@@ -74,4 +74,4 @@ class PageComments(AdminAPIViewMixin, generics.ListAPIView):
 
     def get_queryset(self):
         page = get_object_or_404(Page, pk=self.kwargs['pk'])
-        return models.Comment.objects.filter(page_revision__page=page)
+        return models.Comment.objects.filter(page_revision__page=page).order_by('-created_at')

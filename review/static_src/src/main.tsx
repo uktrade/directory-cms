@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             text: 'Comments',
+            id: 'comments-button',
             onClick() {
                 if (commentsStore.getState().isOpen) {
                     commentsStore.dispatch(hideComments());
@@ -78,20 +79,40 @@ document.addEventListener('DOMContentLoaded', () => {
     shareStore.subscribe(renderShare);
 
     // Render comments UI
-    let commentsContainer = document.createElement('div');
-    document.body.append(commentsContainer);
+    let commentsButton = document.getElementById('comments-button');
+    if (commentsButton instanceof HTMLElement) {
+        let commentsContainer = document.createElement('div');
+        commentsButton.append(commentsContainer);
 
-    let renderComments = () => {
-        ReactDOM.render(
-            <Comments
-                api={api}
-                store={commentsStore}
-                {...commentsStore.getState()}
-            />,
-            commentsContainer
-        );
-    };
+        commentsContainer.style.position = 'relative';
 
-    renderComments();
-    commentsStore.subscribe(renderComments);
+        let commentsButtonATag = commentsButton.querySelector('a');
+
+        let renderComments = () => {
+            let state = commentsStore.getState();
+            ReactDOM.render(
+                <Comments
+                    api={api}
+                    store={commentsStore}
+                    {...state}
+                />,
+                commentsContainer
+            );
+
+            // Update number displayed on comments tab
+            if (commentsButtonATag instanceof HTMLElement) {
+                let numUnresolvedComments = state.comments.filter(comment => !comment.isResolved).length;
+
+                if (numUnresolvedComments > 0) {
+                    commentsButtonATag.classList.add('errors');
+                    commentsButtonATag.dataset.count = numUnresolvedComments.toString();
+                } else {
+                    commentsButtonATag.classList.remove('errors');
+                }
+            }
+        };
+
+        renderComments();
+        commentsStore.subscribe(renderComments);
+    }
 });

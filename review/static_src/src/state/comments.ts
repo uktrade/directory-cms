@@ -91,12 +91,14 @@ export class Comment {
 export interface State {
     isOpen: boolean;
     comments: Comment[];
+    showResolvedComments: boolean,
 }
 
 function initialState(): State {
     return {
         isOpen: false,
-        comments: []
+        comments: [],
+        showResolvedComments: false,
     };
 }
 
@@ -112,6 +114,10 @@ export function reducer(state: State | undefined, action: actions.Action) {
         }
         case actions.SHOW_HIDE_COMMENTS: {
             state = Object.assign({}, state, { isOpen: action.show });
+            break;
+        }
+        case actions.SHOW_HIDE_RESOLVED_COMMENTS: {
+            state = Object.assign({}, state, { showResolvedComments: action.show });
             break;
         }
     }

@@ -1,5 +1,9 @@
-function createTab(text: string, onClick: (e: MouseEvent) => void) {
+function createTab(text: string, id: string|undefined, onClick: (e: MouseEvent) => void) {
     let liElement = document.createElement('li');
+
+    if (id) {
+        liElement.id = id;
+    }
 
     let aElement = liElement.appendChild(document.createElement('a'));
     aElement.href = '#';
@@ -19,6 +23,7 @@ function createTab(text: string, onClick: (e: MouseEvent) => void) {
 
 interface TabConfig {
     text: string;
+    id?: string;
     onClick: () => void;
 }
 
@@ -35,7 +40,7 @@ export function initTabs(tabs: TabConfig[]) {
     container.style.right = '50px';
 
     for (let tab of tabs) {
-        container.appendChild(createTab(tab.text, tab.onClick));
+        container.appendChild(createTab(tab.text, tab.id, tab.onClick));
     }
 
     tabsElement.appendChild(container);
