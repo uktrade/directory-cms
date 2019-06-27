@@ -1,6 +1,5 @@
 import copy
 import os
-import json
 from urllib.parse import urljoin
 
 import bleach
@@ -242,10 +241,3 @@ def get_page_full_url(domain, full_path):
         full_path = full_path[1:]
     url = urljoin(domain, full_path)
     return url
-
-
-def coerce_to_dict(data):
-    if isinstance(data, dict):
-        return data
-    else:
-        return json.loads(data)

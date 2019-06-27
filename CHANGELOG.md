@@ -8,8 +8,13 @@
 ### Fixed Bugs
 
 
-## [2019.06.25](https://github.com/uktrade/directory-cms/releases/tag/2019.06.25)
-[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.20...2019.06.25
+## [2019.06.25](https://github.com/uktrade/directory-cms/releases/tag/2019.06.27)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.20...2019.06.27
+
+**Implemented enhancements:**
+
+- CMS-1666 - Updated `slug_identity`, `slug` and `url_path` page values in accordance with directory-constants 18.0.0
+- Upgraded `directory-components` to 20.0.0
 
 ### Fixed Bugs
 
