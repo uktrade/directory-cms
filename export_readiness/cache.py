@@ -62,7 +62,7 @@ class ArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
 
 
 class MarketingArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.ArticlePage
+    model = models.MarketingArticlePage
     subscriptions = [
         models.ArticlePage,
         models.TopicLandingPage,
