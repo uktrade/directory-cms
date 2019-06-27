@@ -11,7 +11,7 @@ from core.upstream_serializers import UpstreamModelSerializer
 from export_readiness.tests.factories import (
     ArticlePageFactory, CountryGuidePageFactory,
     TopicLandingPageFactory, ArticleListingPageFactory,
-    HomePageFactory,
+    HomePageFactory, TagFactory
 )
 
 
@@ -42,7 +42,7 @@ def country_guide_page(article_page):
 
 
 @pytest.mark.django_db
-def test_upstream_model_serializer(page):
+def test_list_serializer(page):
     data = UpstreamModelSerializer.serialize(page)
     assert data['(image)introduction_column_one_icon'] == (
         page.introduction_column_one_icon.file.name
@@ -52,7 +52,7 @@ def test_upstream_model_serializer(page):
 
 @pytest.mark.django_db
 @mock.patch('core.views.PreloadPageView.get_form_kwargs')
-def test_upstream_model_deserializer(mock_get_form_kwargs, rf, page):
+def test_list_deserializer(mock_get_form_kwargs, rf, page):
     serialized_data = {
         '(list)search_filter_sector': page.search_filter_sector[0],
     }
@@ -60,6 +60,37 @@ def test_upstream_model_deserializer(mock_get_form_kwargs, rf, page):
     actual = UpstreamModelSerializer.deserialize(serialized_data, rf)
 
     assert actual['search_filter_sector'] == page.search_filter_sector
+
+
+@pytest.mark.django_db
+def test_tag_serializer(root_page):
+    legal = TagFactory.create(name='Legal')
+    eagle = TagFactory.create(name='Eagle')
+
+    page = ArticlePageFactory(
+        parent=root_page,
+        slug='related-slug',
+        tags=[legal, eagle]
+    )
+
+    data = UpstreamModelSerializer.serialize(page)
+    assert data['(tag)tags'] == 'Legal,Eagle'
+
+
+@pytest.mark.django_db
+@mock.patch('core.views.PreloadPageView.get_form_kwargs')
+def test_tag_deserializer(mock_get_form_kwargs, rf, page):
+    legal = TagFactory.create(name='Legal')
+    eagle = TagFactory.create(name='Eagle')
+    serialized_data = {
+        '(tag)tags': 'Legal,Eagle'
+    }
+
+    actual = UpstreamModelSerializer.deserialize(serialized_data, rf)
+
+    assert len(actual['tags']) == 2
+    assert legal in actual['tags']
+    assert eagle in actual['tags']
 
 
 @pytest.mark.django_db
