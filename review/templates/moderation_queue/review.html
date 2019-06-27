@@ -45,22 +45,6 @@
                             {% include "wagtailadmin/pages/listing/_privacy_indicator.html" %}
                             {% include "wagtailadmin/pages/listing/_locked_indicator.html" %}
                         </h2>
-
-                        <ul class="actions">
-
-                            <li>
-                                <a href="{% url 'wagtailadmin_pages:edit' page.id %}" class="button button-small button-secondary">
-                                    {% trans 'Edit' %}
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="{% url 'moderation-queue:preview_moderation' moderation_request.id %}" class="button button-small button-secondary" target="_blank">
-                                    {% trans 'Preview' %}
-                                </a>
-                            </li>
-
-                        </ul>
                     </td>
 
                     <td valign="top">
@@ -123,7 +107,7 @@
                 <tr>
                     <td class="title" valign="top">
                         <h2>
-                            {{ page.get_admin_display_title }}
+                            <a href="{% url 'wagtailadmin_pages:edit' page.id %}" title="{% trans 'Edit this page' %}">{{ page.get_admin_display_title }}</a>
 
                             {% include "wagtailadmin/pages/listing/_privacy_indicator.html" %}
                             {% include "wagtailadmin/pages/listing/_locked_indicator.html" %}
