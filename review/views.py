@@ -180,9 +180,9 @@ class RejectModeration(View):
 class SubmitModerationRequest(CreateView):
     form_class = SubmitForm
     model = ModerationRequest
-    success_url = reverse_lazy('wagtailadmin_explore_root')
     template_name = 'moderation_queue/submit.html'
 
+    @transaction.atomic
     def form_valid(self, form):
         revision = get_object_or_404(PageRevision, id=self.kwargs['pk'])
 
@@ -193,4 +193,18 @@ class SubmitModerationRequest(CreateView):
             comment=form.cleaned_data['comment'],
         )
 
-        return redirect(self.get_success_url())
+        revision.submitted_for_moderation = True
+        revision.save(update_fields=['submitted_for_moderation'])
+
+        messages.success(
+            self.request,
+            _(f"Successfully submitted '{revision.page.get_admin_display_title()}' for moderation."),  # noqa: E501
+            buttons=[
+                messages.button(
+                    reverse('wagtailadmin_pages:edit', args=[revision.page_id]),
+                    _('Edit'),
+                ),
+            ]
+        )
+
+        return redirect(reverse('wagtailadmin_explore', args=[revision.page.get_parent().id]))

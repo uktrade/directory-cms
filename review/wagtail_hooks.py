@@ -56,31 +56,32 @@ def replace_moderation_panel(request, panels):
         panels[i] = ModerationQueuePanel(request)
 
 
+@hooks.register('before_create_page')
+@hooks.register('before_edit_page')
+def disable_wagtail_moderation(request, page):
+    """
+    When a user hits "submit for moderation" we want it to go through the new moderation workflow.
+    We remove 'action-submit' from the POST data so Wagtail doesn't send out any emails pointing to
+    the old workflow
+    """
+    if request.POST:
+        request.POST = request.POST.copy()
+        request.is_submitting = bool(request.POST.pop('action-submit', False))
+
+
 @hooks.register('after_create_page')
 @hooks.register('after_edit_page')
 def add_page_to_moderation_queue(request, page):
     """
-    Add a Moderation record for a Page submitted for moderation
-
-    By default a submission for moderation sets the relevant
-    PageRevision.submitted_for_moderation field to True.  However this project
-    needs to handle 2i moderation which we've modeled with the Moderation
-    object.  We need to ask the user for extra data to create that object so
-    this hook sends them to the submit interstitial after a page has been
-    created/edited and they clicked "submit for moderation".
+    If the user hit "submit for moderation" redirect them to the submit moderation view.
     """
-    # ignore if the user didn't click "Submit for moderation?"
-    is_submitting = bool(request.POST.get('action-submit'))
-    if not is_submitting:
-        return
+    if request.is_submitting:
+        latest_revision = page.revisions.order_by('-created_at', 'id').first()
 
-    # TODO: use latest() once Django is upgraded to 2.0+
-    latest_revision = page.revisions.order_by('-created_at', 'id').first()
-
-    return redirect(
-        "moderation-queue:submit_moderation",
-        pk=latest_revision.id,
-    )
+        return redirect(
+            'moderation-queue:submit_moderation',
+            pk=latest_revision.id,
+        )
 
 
 @hooks.register('insert_editor_js')

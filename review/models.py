@@ -118,7 +118,7 @@ class ModerationRequest(models.Model):
         return f'{self.revision.user} requested moderation of "{self.revision.page}" at {self.created_at}'  # noqa: E501
 
     def is_2i_moderated(self):
-        return self.reviews.filter(status=ModerationResponse.STATUS_APPROVED).exists()
+        return self.responses.filter(status=ModerationResponse.STATUS_APPROVED).exists()
 
     def get_review_url(self, user):
         reviewer, created = Reviewer.objects.get_or_create(user=user)
