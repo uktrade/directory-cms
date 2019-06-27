@@ -312,14 +312,14 @@ class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
 
 
 class RegionCardFieldSerializer(serializers.Serializer):
-    region_card_image = wagtail_fields.ImageRenditionField('original')
+    region_card_image = wagtail_fields.ImageRenditionField('fill-640x360')
     region_card_title = serializers.CharField(max_length=255)
     region_card_summary = core_fields.MarkdownToHTMLField()
 
 
 class HomesInEnglandCardFieldSerializer(serializers.Serializer):
     homes_in_england_card_image = wagtail_fields.ImageRenditionField(
-        'original'
+        'fill-640x360'
     )
     homes_in_england_card_title = serializers.CharField(max_length=255)
     homes_in_england_card_pdf_document = core_fields.DocumentURLField()
