@@ -40,5 +40,5 @@ class ModerationResponseSerializer(serializers.ModelSerializer):
         model = models.ModerationResponse
         fields = [
             'comment',
-            'is_accepted',
+            'status',
         ]

@@ -87,7 +87,7 @@ class CommentReply(models.Model):
 
 class ModerationRequestQuerySet(models.QuerySet):
     def accepted(self):
-        return self.filter(responses__is_accepted=True)
+        return self.filter(responses__status=ModerationResponse.STATUS_APPROVED)
 
     def pending(self):
         return (self.filter(responses__isnull=True)
@@ -117,7 +117,7 @@ class ModerationRequest(models.Model):
         return f'{self.revision.user} requested moderation of "{self.revision.page}" at {self.created_at}'  # noqa: E501
 
     def is_2i_moderated(self):
-        return self.reviews.filter(is_accepted=True).exists()
+        return self.reviews.filter(status=ModerationResponse.STATUS_APPROVED).exists()
 
     def get_review_url(self, user):
         reviewer, created = Reviewer.objects.get_or_create(user=user)
@@ -134,6 +134,13 @@ class ModerationRequest(models.Model):
 
 
 class ModerationResponse(models.Model):
+    STATUS_APPROVED = 'approved'
+    STATUS_NEEDS_CHANGES = 'needs-changes'
+    STATUS_CHOICES = [
+        (STATUS_APPROVED, _("approved")),
+        (STATUS_NEEDS_CHANGES, _("needs changes")),
+    ]
+
     request = models.ForeignKey(
         'ModerationRequest',
         verbose_name=_('request'),
@@ -141,14 +148,10 @@ class ModerationResponse(models.Model):
         related_name='responses',
     )
     reviewer = models.ForeignKey(Reviewer, on_delete=models.CASCADE, related_name='moderation_responses')
-    is_accepted = models.BooleanField(
-        verbose_name=_('accept page'),
-        default=False,
-    )
+    status = models.CharField(max_length=255, choices=STATUS_CHOICES)
     comment = models.TextField()
 
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        state = 'accepted' if self.is_accepted else 'rejected'
-        return f'{self.user} {state} "{self.request.revision.page}" at {self.created_at}'  # noqa: E501
+        return f'{self.user} {self.get_status_display()} "{self.request.revision.page}" at {self.created_at}'  # noqa: E501

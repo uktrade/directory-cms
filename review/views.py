@@ -65,7 +65,7 @@ class ApproveModeration(View):
 
         with transaction.atomic():
             revision.approve_moderation()
-            request.responses.create(user=request.user, is_accepted=True)
+            request.responses.create(user=request.user, status=ModerationResponse.STATUS_APPROVED)
 
         admin_display_title = page.get_admin_display_title()
         message = _(f"Page '{admin_display_title}' published.")
@@ -153,7 +153,7 @@ class RejectModeration(View):
 
         with transaction.atomic():
             revision.reject_moderation()
-            request.responses.create(user=request.user, is_accepted=False)
+            request.responses.create(user=request.user, status=ModerationResponse.STATUS_NEEDS_CHANGES)
 
         page_title = page.get_admin_display_title()
         buttons = [
