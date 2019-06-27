@@ -24,6 +24,35 @@ export default class WagtailReactModal extends React.Component<Props> {
 
         let props: Modal.Props = Object.assign(defaultProps, this.props);
 
+        let oldOnAfterOpen = props.onAfterOpen;
+        props.onAfterOpen = () => {
+            let backdrop = document.body.appendChild(
+                document.createElement('div')
+            );
+            backdrop.classList.add('js-wagtail-react-modal-backdrop');
+            backdrop.classList.add('modal-backdrop');
+            backdrop.classList.add('in');
+
+            if (oldOnAfterOpen) {
+                oldOnAfterOpen();
+            }
+        };
+
+        let oldOnAfterClose = props.onAfterClose;
+        props.onAfterClose = () => {
+            let backdrop = document.querySelector(
+                'body > div.js-wagtail-react-modal-backdrop'
+            );
+
+            if (backdrop instanceof HTMLElement) {
+                backdrop.remove();
+            }
+
+            if (oldOnAfterClose) {
+                oldOnAfterClose();
+            }
+        };
+
         return (
             <Modal {...props}>
                 <div className="react-modal__content">

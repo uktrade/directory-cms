@@ -83,22 +83,6 @@ export default class ShareModal extends React.Component<
                 isOpen={this.props.isShareModalOpen}
                 contentLabel="Share"
                 onClickCloseButton={onClickCloseButton}
-                onAfterOpen={() => {
-                    let backdrop = document.body.appendChild(
-                        document.createElement('div')
-                    );
-                    backdrop.classList.add('modal-backdrop');
-                    backdrop.classList.add('in');
-                }}
-                onAfterClose={() => {
-                    let backdrop = document.querySelector(
-                        'body > div.modal-backdrop'
-                    );
-
-                    if (backdrop instanceof HTMLElement) {
-                        backdrop.remove();
-                    }
-                }}
             >
                 <div className="nice-padding">
                     <p></p>
