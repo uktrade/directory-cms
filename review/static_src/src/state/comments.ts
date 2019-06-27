@@ -59,6 +59,7 @@ export class Comment {
     date: number;
     text: string;
     replies: CommentReply[];
+    frontendUrl: string;
 
     constructor(
         id: number,
@@ -66,7 +67,8 @@ export class Comment {
         author: Author,
         date: number,
         text: string,
-        replies: CommentReply[]
+        replies: CommentReply[],
+        frontendUrl: string,
     ) {
         this.id = id;
         this.isResolved = isResolved;
@@ -74,6 +76,7 @@ export class Comment {
         this.date = date;
         this.text = text;
         this.replies = replies;
+        this.frontendUrl = frontendUrl;
     }
 
     static fromApi(data: CommentApi): Comment {
@@ -83,7 +86,8 @@ export class Comment {
             new Author(data.author.name),
             Date.parse(data.created_at),
             data.text,
-            data.replies.map(CommentReply.fromApi)
+            data.replies.map(CommentReply.fromApi),
+            data.frontend_url,
         );
     }
 }

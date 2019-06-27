@@ -91,3 +91,12 @@
         padding-left: 5px;
     }
 }
+
+// Has to be separate so it overrides Wagtail
+a.comment__view-on-frontend {
+    display: inline-block;
+    font-size: 0.9em;
+    border-top: none;
+    line-height: initial;
+    margin-top: 0.5em;
+}

@@ -45,6 +45,7 @@ export interface CommentApi {
     updated_at: string;
     is_resolved: boolean;
     replies: CommentReplyApi[];
+    frontend_url: string;
 }
 
 export default class APIClient {

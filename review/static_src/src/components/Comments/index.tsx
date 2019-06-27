@@ -14,6 +14,13 @@ interface CommentsProps extends State {
 
 export default class Comments extends React.Component<CommentsProps> {
     renderComment(comment: Comment): React.ReactFragment {
+        let onClickLink = (e: React.MouseEvent<HTMLAnchorElement>) => {
+            e.preventDefault();
+            if (e.target instanceof HTMLAnchorElement) {
+                window.open(e.target.href, '_blank');
+            }
+        };
+
         return (
             <li key={comment.id} className="comment">
                 <div className="comment__header">
@@ -34,6 +41,7 @@ export default class Comments extends React.Component<CommentsProps> {
                     </div>
                 </div>
                 <p className="comment__text">{comment.text}</p>
+                <a href={comment.frontendUrl} onClick={onClickLink} className="comment__view-on-frontend" target="_blank">View on frontend</a>
             </li>
         );
     }
@@ -67,7 +75,6 @@ export default class Comments extends React.Component<CommentsProps> {
                 comments = comments.filter(comment => !comment.isResolved);
             }
         }
-
 
         let commentsRendered = comments.map(this.renderComment);
 

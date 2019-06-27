@@ -23,7 +23,7 @@ class ReviewTokenMixin:
     def process_review_token(self, data):
         self.reviewer_id = data['reviewer_id']
         self.page_revision_id = data['page_revision_id']
-        self.share_id = data['share_id']
+        self.share_id = data.get('share_id')
 
     @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
@@ -39,13 +39,15 @@ class CommentList(ReviewTokenMixin, generics.ListCreateAPIView):
 
     def get(self, *args, **kwargs):
         now = timezone.now()
-        models.Share.objects.filter(id=self.share_id).update(
-            first_accessed_at=Case(
-                When(first_accessed_at__isnull=True, then=Value(now)),
-                default=F('first_accessed_at'),
-            ),
-            last_accessed_at=now,
-        )
+
+        if self.share_id is not None:
+            models.Share.objects.filter(id=self.share_id).update(
+                first_accessed_at=Case(
+                    When(first_accessed_at__isnull=True, then=Value(now)),
+                    default=F('first_accessed_at'),
+                ),
+                last_accessed_at=now,
+            )
 
         return super().get(*args, **kwargs)
 

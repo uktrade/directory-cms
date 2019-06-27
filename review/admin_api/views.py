@@ -10,8 +10,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 from wagtail.core.models import Page
 
-from ..api.serializers import CommentSerializer
-
 from .. import models
 from . import serializers
 
@@ -70,7 +68,7 @@ class PageShares(AdminAPIViewMixin, generics.ListCreateAPIView):
 
 
 class PageComments(AdminAPIViewMixin, generics.ListAPIView):
-    serializer_class = CommentSerializer
+    serializer_class = serializers.CommentSerializerWithFrontendURL
 
     def get_queryset(self):
         page = get_object_or_404(Page, pk=self.kwargs['pk'])
