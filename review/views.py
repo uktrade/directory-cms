@@ -81,7 +81,7 @@ class SubmitModerationRequest(CreateView):
         # TODO: should we remove exiting ModerationRequest rows for the given page?
         self.object = ModerationRequest.objects.create(
             revision=revision,
-            publish_at=form.cleaned_data['publish_at'],
+            due_date=form.cleaned_data['due_date'],
             comment=form.cleaned_data['comment'],
         )
 

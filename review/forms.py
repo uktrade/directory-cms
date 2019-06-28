@@ -7,10 +7,10 @@ from .models import ModerationRequest
 class SubmitForm(forms.ModelForm):
     class Meta:
         fields = [
-            'publish_at',
+            'due_date',
             'comment',
         ]
         model = ModerationRequest
         widgets = {
-            'publish_at': AdminDateInput,
+            'due_date': AdminDateInput,
         }

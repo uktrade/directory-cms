@@ -31,7 +31,7 @@ class ModerationQueuePanel:
         # TODO revision__user is not the person who requested the review
         pending = ModerationRequest.objects.pending().exclude(
             revision__user=self.request.user
-        ).order_by('-publish_at')[:10]
+        ).order_by('-due_date')[:10]
 
         # Append review URL to each object
         pending = list(pending)

@@ -101,7 +101,7 @@ class ModerationRequest(models.Model):
         verbose_name=_('revision'),
         on_delete=models.CASCADE,
     )
-    publish_at = models.DateTimeField(null=True)
+    due_date = models.DateField(null=True)
     comment = models.TextField(max_length=100, blank=True)
     published = models.BooleanField(default=False)
 
