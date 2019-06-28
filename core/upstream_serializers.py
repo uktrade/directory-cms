@@ -1,5 +1,6 @@
 import abc
 from datetime import date, datetime
+import json
 
 from wagtail.core.models import Page
 from wagtail.documents.models import Document
@@ -11,6 +12,8 @@ from django.contrib import messages
 
 from core import helpers
 from core.cache import SERVICE_NAMES_TO_ROOT_PATHS
+
+from export_readiness.models import Tag
 
 
 class AbstractFieldSerializer(abc.ABC):
@@ -91,26 +94,38 @@ class RelatedPageSerializer(AbstractFieldSerializer):
 
     @classmethod
     def serialize_value(cls, value):
-        return {
+        return json.dumps({
             'slug': value.slug,
             'service_name_value': value.specific.service_name_value
-        }
+        })
 
     @classmethod
     def deserialize_value(cls, value):
-        parent_app_slug = SERVICE_NAMES_TO_ROOT_PATHS[
-            value['service_name_value']]
-        app_pages = Page.objects.get(slug=parent_app_slug).get_descendants()
-
+        value = json.loads(value)
+        app_slug = SERVICE_NAMES_TO_ROOT_PATHS[value['service_name_value']]
+        app_pages = Page.objects.get(slug=app_slug).get_descendants()
         try:
-            return app_pages.get(slug=value['slug'])
-
+            return app_pages.get(slug=value['slug']).specific
         except Page.DoesNotExist:
             raise ValidationError(
                 f"Related page with the slug {value['slug']} could not be "
                 "found in this environment. Please create it then "
                 "add it as one of this page's related pages."
             )
+
+
+class TagsSerializer(ListFieldSerializer):
+    FIELD_NAME_PREFIX = '(tag)'
+
+    @classmethod
+    def serialize_value(cls, value):
+        tag_names = [tag.name for tag in value.all()]
+        return super().serialize_value(tag_names)
+
+    @classmethod
+    def deserialize_value(cls, value):
+        tag_names = super().deserialize_value(value)
+        return Tag.objects.filter(name__in=tag_names)
 
 
 class NoOpFieldSerializer(AbstractFieldSerializer):
@@ -135,11 +150,14 @@ class UpstreamModelSerializer:
         list: ListFieldSerializer,
         date: DateFieldSerializer,
         Page: RelatedPageSerializer,
+        Tag: TagsSerializer,
     }
     default_field_serializer = NoOpFieldSerializer
 
     @classmethod
     def get_field_serializer_by_field_value(cls, value):
+        if 'RelatedManager' in value.__class__.__name__:
+            value = value.all().first()
         for field_class, serializer in cls.field_serializers.items():
             if isinstance(value, field_class):
                 return serializer
@@ -176,7 +194,6 @@ class UpstreamModelSerializer:
     def deserialize(cls, serialized_data, request):
         deserialized = {}
         for name, value in cls.remove_empty(serialized_data).items():
-            value = serialized_data[name]
             serializer = cls.get_field_serializer_by_field_name(name)
             try:
                 name, value = serializer.deserialize(name=name, value=value)
