@@ -67,12 +67,19 @@
 
                     <td valign="top">
                         {% if moderation_request.is_2i_moderated %}
-                        <p>Approved</p>
-                        {% endif %}
+                            <p>Approved</p>
 
-                        <a href="{% url 'wagtailadmin_pages:edit' page.id %}#tab-settings" class="button button-small button-secondary">
-                            {% trans "Schedule Publish" %}
-                        </a>
+                            {% if moderation_request.published %}
+                                <p>Published</p>
+                                <a href="{{ moderation_request.revision.page.specific.get_url }}" target="_blank" class="button button-small button-secondary">View live</button>
+                            {% else %}
+                                <p>Not published</p>
+                                <form action="{% url 'moderation-queue:publish' moderation_request.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="button button-small button-secondary">Publish</button>
+                                </form>
+                            {% endif %}
+                        {% endif %}
                     </td>
 
                 </tr>

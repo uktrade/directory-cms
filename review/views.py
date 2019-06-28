@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
+from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, ListView, View
 from wagtail.admin import messages
 from wagtail.core.models import PageRevision
@@ -32,6 +33,39 @@ class Review(ListView):
 
     def get_queryset(self):
         return ModerationRequest.objects.filter(revision__user=self.request.user).accepted()
+
+
+# TODO: Permission checks
+@login_required
+@require_POST
+@transaction.atomic
+def publish(request, moderation_request_id):
+    moderation_request = get_object_or_404(ModerationRequest, id=moderation_request_id)
+    if not moderation_request.is_2i_moderated or moderation_request.published:
+        raise PermissionDenied
+
+    revision = moderation_request.revision
+    revision.publish()
+
+    moderation_request.published = True
+    moderation_request.save()
+
+    messages.success(
+        request,
+        _(f"Published '{revision.page.get_admin_display_title()}'"),  # noqa: E501
+        buttons=[
+            messages.button(
+                reverse('wagtailadmin_pages:edit', args=[revision.page_id]),
+                _('Edit'),
+            ),
+            messages.button(
+                revision.page.specific.get_url(),
+                _('View live')
+            ),
+        ]
+    )
+
+    return redirect('moderation-queue:pending')
 
 
 @method_decorator(login_required, name='dispatch')

@@ -164,6 +164,7 @@ class AbstractDatabaseCacheSubscriber(abc.ABC):
 
     @classmethod
     def subscribe(cls):
+        return  # TEMPORARY: Disabled to improve publish performance during demo
         page_published.connect(
             receiver=cls.populate,
             sender=cls.model,

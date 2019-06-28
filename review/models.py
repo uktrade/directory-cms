@@ -103,6 +103,7 @@ class ModerationRequest(models.Model):
     )
     publish_at = models.DateTimeField(null=True)
     comment = models.TextField(max_length=100, blank=True)
+    published = models.BooleanField(default=False)
 
     # When the lock of this ModerationRequest ends. A user opening this ModerationRequest
     # for review will set this field and update it while their browser is open

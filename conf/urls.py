@@ -17,6 +17,7 @@ from activitystream.views import ActivityStreamView
 from groups.views import GroupInfoModalView
 from review.views import (
     Review,
+    publish,
     SubmitModerationRequest,
 )
 from review.api import urls as review_api_urls
@@ -119,6 +120,11 @@ urlpatterns = [
     # Bespoke moderation queue views
     url(r'^admin/moderation-queue/', include(([
         url(r'^$', Review.as_view(), name='pending'),
+        url(
+            r'^(\d+)/publish/$',
+            publish,
+            name='publish',
+        ),
         url(
             r'^(?P<pk>\d+)/submit/$',
             SubmitModerationRequest.as_view(),
