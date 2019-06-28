@@ -65,11 +65,6 @@ class MarketingArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.MarketingArticlePage
     subscriptions = [
         models.ArticlePage,
-        models.TopicLandingPage,
-        models.SuperregionPage,
-        models.CountryGuidePage,
-        models.CampaignPage,
-        models.ArticleListingPage,
         models.Tag,
     ]
 
