@@ -6,7 +6,7 @@
 - XOT-922 Added Marketing Article Page template
 
 ### Fixed Bugs
-
+- NOTICKET - Capital invest landing page image serializers use aspect ratio for card images
 
 ## [2019.06.25](https://github.com/uktrade/directory-cms/releases/tag/2019.06.27)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.20...2019.06.27
