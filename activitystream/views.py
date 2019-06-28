@@ -3,11 +3,12 @@ from django.utils.decorators import decorator_from_middleware
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.generics import ListAPIView
+from wagtail.core.models import Page
 
-from export_readiness.models import ArticlePage
+from export_readiness.models import ArticlePage, CountryGuidePage
 from activitystream.authentication import ActivityStreamAuthentication, \
     ActivityStreamHawkResponseMiddleware
-from activitystream.filters import ArticlePageFilter
+from activitystream.filters import ArticlePageFilter, PageFilter
 from activitystream.serializers import ArticlePageSerializer
 
 MAX_PER_PAGE = 25
@@ -35,12 +36,18 @@ class ActivityStreamView(ListAPIView):
     def list(self, request):
         """A single page of activities"""
 
-        article_filter = ArticlePageFilter(
+        # Consider https://stackoverflow.com/questions/18776221/django-querying-multiple-types-of-objects
+        # Or chaining multiple queries?
+
+        # Or inheriting from page and then doing a sub-search in serializer to get the actual details?
+
+        filter = PageFilter(
             request.GET,
-            queryset=ArticlePage.objects.live()
+            queryset=Page.objects.type((ArticlePage, CountryGuidePage))
         )
-        articles_qs = article_filter.qs. \
+        articles_qs = filter.qs.specific(). \
             order_by('last_published_at', 'id')[:MAX_PER_PAGE]
+
 
         items = {
             '@context': 'https://www.w3.org/ns/activitystreams',
