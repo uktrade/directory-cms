@@ -2891,6 +2891,14 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
     )
     hero_title = models.CharField(max_length=255)
 
+    related_region = models.ForeignKey(
+        'great_international.CapitalInvestRegionPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
     opportunity_summary_intro = models.TextField(max_length=255, blank=True)
     opportunity_summary_content = MarkdownField(blank=True)
     opportunity_summary_image = models.ForeignKey(
@@ -2940,6 +2948,14 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         default="Scale"
     )
     scale = models.CharField(max_length=255, blank=True)
+    scale_value = models.DecimalField(
+        default=0,
+        null=True,
+        blank=True,
+        help_text="(1 = 1 Million)",
+        max_digits=10,
+        decimal_places=2
+    )
     sector_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -3049,6 +3065,19 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
                 InlinePanel('related_sectors', label="Related Sectors"),
             ],
         ),
+        MultiFieldPanel(
+            heading="Related region",
+            classname='collapsible collapsed',
+            children=[
+                PageChooserPanel(
+                    'related_region',
+                    [
+                        'great_international.'
+                        'CapitalInvestRegionPage'
+                    ]
+                ),
+            ],
+        ),
         FieldPanel('breadcrumbs_label'),
         MultiFieldPanel(
             heading="Hero",
@@ -3089,6 +3118,7 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
                         ImageChooserPanel('scale_icon'),
                         FieldPanel('scale_heading'),
                         FieldPanel('scale'),
+                        FieldPanel('scale_value'),
                     ]),
                 ]),
                 FieldRowPanel([
