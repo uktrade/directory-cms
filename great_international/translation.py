@@ -397,6 +397,7 @@ class CapitalInvestOpportunityPageTranslationOptions(
         'breadcrumbs_label',
         'hero_image',
         'hero_title',
+        'related_region',
 
         'opportunity_summary_intro',
         'opportunity_summary_content',
@@ -410,6 +411,7 @@ class CapitalInvestOpportunityPageTranslationOptions(
         'project_promoter_heading',
         'scale_icon',
         'scale',
+        'scale_value',
         'scale_heading',
         'sector_icon',
         'sector',
