@@ -3,6 +3,7 @@
 ## Pre-release
 
 **Implemented enhancements:**
+- CI-304 - Gave opportunity page a related region page and a scale numerical value to use for filtering
 
 ### Fixed Bugs
 - NOTICKET - Capital invest landing page image serializers use aspect ratio for card images
