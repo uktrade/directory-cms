@@ -2952,9 +2952,9 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         default=0,
         null=True,
         blank=True,
-        help_text="(1 = 1 Million)",
         max_digits=10,
-        decimal_places=2
+        decimal_places=2,
+        verbose_name="Scale value (in millions)"
     )
     sector_icon = models.ForeignKey(
         'wagtailimages.Image',
