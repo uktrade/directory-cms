@@ -4,6 +4,8 @@
 
 **Implemented enhancements:**
 - XOT-922 Added Marketing Article Page template
+- CI-304 - Gave opportunity page a related region page and a scale numerical value to use for filtering
+- CI-267 - Added cta text and link for sector page for related opportunities section
 
 ### Fixed Bugs
 - NOTICKET - Capital invest landing page image serializers use aspect ratio for card images
