@@ -242,6 +242,14 @@ class InternationalSectorPage(BaseInternationalPage):
     )
 
     project_opportunities_title = models.CharField(max_length=255, blank=True)
+    related_opportunities_cta_text = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    related_opportunities_cta_link = models.CharField(
+        max_length=255,
+        blank=True
+    )
 
     content_panels = [
         MultiFieldPanel(
@@ -463,6 +471,8 @@ class InternationalSectorPage(BaseInternationalPage):
                           'sector will display here. Required fields for '
                           'section to show: Project Opportunities Title, 1 '
                           'Prioritised Opportunity Related to this sector'),
+                FieldPanel('related_opportunities_cta_text'),
+                FieldPanel('related_opportunities_cta_link')
             ]
         ),
         SearchEngineOptimisationPanel()
@@ -2891,6 +2901,14 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
     )
     hero_title = models.CharField(max_length=255)
 
+    related_region = models.ForeignKey(
+        'great_international.CapitalInvestRegionPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
     opportunity_summary_intro = models.TextField(max_length=255, blank=True)
     opportunity_summary_content = MarkdownField(blank=True)
     opportunity_summary_image = models.ForeignKey(
@@ -2940,6 +2958,14 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
         default="Scale"
     )
     scale = models.CharField(max_length=255, blank=True)
+    scale_value = models.DecimalField(
+        default=0,
+        null=True,
+        blank=True,
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Scale value (in millions)"
+    )
     sector_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -3049,6 +3075,19 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
                 InlinePanel('related_sectors', label="Related Sectors"),
             ],
         ),
+        MultiFieldPanel(
+            heading="Related region",
+            classname='collapsible collapsed',
+            children=[
+                PageChooserPanel(
+                    'related_region',
+                    [
+                        'great_international.'
+                        'CapitalInvestRegionPage'
+                    ]
+                ),
+            ],
+        ),
         FieldPanel('breadcrumbs_label'),
         MultiFieldPanel(
             heading="Hero",
@@ -3089,6 +3128,7 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
                         ImageChooserPanel('scale_icon'),
                         FieldPanel('scale_heading'),
                         FieldPanel('scale'),
+                        FieldPanel('scale_value'),
                     ]),
                 ]),
                 FieldRowPanel([
