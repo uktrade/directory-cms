@@ -242,8 +242,14 @@ class InternationalSectorPage(BaseInternationalPage):
     )
 
     project_opportunities_title = models.CharField(max_length=255, blank=True)
-    related_opportunities_cta_text = models.CharField(max_length=255, blank=True)
-    related_opportunities_cta_link = models.CharField(max_length=255, blank=True)
+    related_opportunities_cta_text = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    related_opportunities_cta_link = models.CharField(
+        max_length=255,
+        blank=True
+    )
 
     content_panels = [
         MultiFieldPanel(
