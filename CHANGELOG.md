@@ -5,6 +5,7 @@
 **Implemented enhancements:**
 - CI-304 - Gave opportunity page a related region page and a scale numerical value to use for filtering
 - CI-267 - Added cta text and link for sector page for related opportunities section
+- CI-269 - Categorise international articles by article type and sector
 
 ### Fixed Bugs
 - NOTICKET - Capital invest landing page image serializers use aspect ratio for card images

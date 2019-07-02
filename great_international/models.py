@@ -26,6 +26,8 @@ from core.panels import SearchEngineOptimisationPanel
 from export_readiness.models import Tag
 from wagtail.core.models import Orderable
 from modelcluster.fields import ParentalKey
+from wagtail.snippets.models import register_snippet
+from wagtail.search import index
 
 
 class BaseInternationalPage(BasePage):
@@ -1391,6 +1393,55 @@ class InternationalLocalisedFolderPage(BaseInternationalPage):
         return super().save(*args, **kwargs)
 
 
+@register_snippet
+class ArticleType(index.Indexed, models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.CharField(max_length=255, blank=True)
+
+    panels = [
+        FieldPanel('name')
+    ]
+
+    search_fields = [
+        index.SearchField('name', partial_match=True),
+    ]
+
+    def __str__(self):
+        return self.name
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.slug = slugify(self.name)
+        return super().save(force_insert, force_update, using, update_fields)
+
+
+class SectorPage(models.Model):
+    sector_page = models.ForeignKey(
+        'great_international.InternationalSectorPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    panels = [
+        PageChooserPanel('sector_page')
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class RelatedSectors(Orderable, SectorPage):
+    page = ParentalKey(
+        'great_international.InternationalArticlePage',
+        on_delete=models.CASCADE,
+        related_name='sector_pages',
+        blank=True,
+        null=True,
+    )
+
+
 class InternationalArticlePage(BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
@@ -1400,6 +1451,8 @@ class InternationalArticlePage(BaseInternationalPage):
         'great_international.InternationalGuideLandingPage',
     ]
     subpage_types = []
+
+    article_types = ParentalManyToManyField(ArticleType, blank=True)
 
     article_title = models.TextField()
     article_subheading = models.TextField(
@@ -1477,7 +1530,12 @@ class InternationalArticlePage(BaseInternationalPage):
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
         FieldPanel('uses_tree_based_routing'),
-        FieldPanel('tags', widget=CheckboxSelectMultiple)
+        FieldPanel('article_types', widget=CheckboxSelectMultiple),
+        FieldPanel('tags', widget=CheckboxSelectMultiple),
+        InlinePanel(
+            'sector_pages',
+            label="Related Sectors"
+        )
     ]
 
     edit_handler = make_translated_interface(
