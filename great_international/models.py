@@ -242,6 +242,8 @@ class InternationalSectorPage(BaseInternationalPage):
     )
 
     project_opportunities_title = models.CharField(max_length=255, blank=True)
+    related_opportunities_cta_text = models.CharField(max_length=255, blank=True)
+    related_opportunities_cta_link = models.CharField(max_length=255, blank=True)
 
     content_panels = [
         MultiFieldPanel(
@@ -463,6 +465,8 @@ class InternationalSectorPage(BaseInternationalPage):
                           'sector will display here. Required fields for '
                           'section to show: Project Opportunities Title, 1 '
                           'Prioritised Opportunity Related to this sector'),
+                FieldPanel('related_opportunities_cta_text'),
+                FieldPanel('related_opportunities_cta_link')
             ]
         ),
         SearchEngineOptimisationPanel()

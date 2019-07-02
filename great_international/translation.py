@@ -60,7 +60,9 @@ class InternationalSectorPageTranslationOptions(BaseTranslationOptions):
         'related_page_one',
         'related_page_two',
         'related_page_three',
-        'project_opportunities_title'
+        'project_opportunities_title',
+        'related_opportunities_cta_text',
+        'related_opportunities_cta_link'
     )
 
 
