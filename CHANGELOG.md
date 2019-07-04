@@ -2,16 +2,21 @@
 
 ## Pre-release
 
-**Implemented enhancements:**
+### Implemented enhancements
+- XOT-922 Added Marketing Article Page template
+- CI-304 - Gave opportunity page a related region page and a scale numerical value to use for filtering
+- CI-267 - Added cta text and link for sector page for related opportunities section
+
+### Fixed Bugs
+- NOTICKET - Capital invest landing page image serializers use aspect ratio for card images
+
+## [2019.06.27](https://github.com/uktrade/directory-cms/releases/tag/2019.06.27)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.20...2019.06.27
+
+### Implemented enhancements
 
 - CMS-1666 - Updated `slug_identity`, `slug` and `url_path` page values in accordance with directory-constants 18.0.0
 - Upgraded `directory-components` to 20.0.0
-
-### Fixed Bugs
-
-
-## [2019.06.25](https://github.com/uktrade/directory-cms/releases/tag/2019.06.25)
-[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.20...2019.06.25
 
 ### Fixed Bugs
 
