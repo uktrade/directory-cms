@@ -514,6 +514,8 @@ class InternationalSectorPageSerializer(
     section_three_subsection_two_body = core_fields.MarkdownToHTMLField()
 
     project_opportunities_title = serializers.CharField(max_length=255)
+    related_opportunities_cta_text = serializers.CharField(max_length=255)
+    related_opportunities_cta_link = serializers.CharField(max_length=255)
 
     related_opportunities = serializers.SerializerMethodField()
 
@@ -1028,17 +1030,18 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer):
         return serializer.data
 
 
-class OpportunityListSerializer(BasePageSerializer):
+class OpportunityListSerializer(BasePageSerializer, RelatedRegionSerializer):
     title = serializers.CharField(
         max_length=255, source='hero_title')
     hero_image = wagtail_fields.ImageRenditionField(
         'fill-640x360')
-    sector = serializers.CharField(
-        max_length=255)
-    scale = serializers.CharField(
-        max_length=255)
+    sector = serializers.CharField(max_length=255)
+    scale = serializers.CharField(max_length=255)
+    scale_value = serializers.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
     prioritised_opportunity = serializers.BooleanField()
-
     related_sectors = serializers.SerializerMethodField()
 
     def get_related_sectors(self, instance):
@@ -1073,7 +1076,10 @@ class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
         return serializer.data
 
 
-class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
+class CapitalInvestOpportunityPageSerializer(
+    PageWithRelatedPagesSerializer,
+    RelatedRegionSerializer
+):
 
     breadcrumbs_label = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField(
@@ -1104,6 +1110,10 @@ class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
     )
     scale = serializers.CharField(max_length=255)
     scale_heading = serializers.CharField(max_length=255)
+    scale_value = serializers.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
 
     sector_icon = wagtail_fields.ImageRenditionField(
         'original'
