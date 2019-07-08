@@ -2876,6 +2876,122 @@ class ArticlePage(BaseDomesticPage):
     ]
 
 
+class MarketingArticlePage(BaseDomesticPage):
+
+    subpage_types = []
+
+    article_title = models.CharField(max_length=255)
+
+    article_teaser = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+    article_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    article_body_text = MarkdownField()
+
+    cta_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title'
+    )
+
+    cta_teaser = models.TextField(
+        blank=True,
+        verbose_name='CTA teaser'
+    )
+    cta_link_label = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link label'
+    )
+
+    cta_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link'
+    )
+
+    related_page_one = models.ForeignKey(
+        'export_readiness.ArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_two = models.ForeignKey(
+        'export_readiness.ArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_three = models.ForeignKey(
+        'export_readiness.ArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    # settings fields
+    tags = ParentalManyToManyField(Tag, blank=True)
+
+    content_panels = [
+        FieldPanel('article_title'),
+        MultiFieldPanel(
+            heading='Article content',
+            children=[
+                FieldPanel('article_teaser'),
+                ImageChooserPanel('article_image'),
+                FieldPanel('article_body_text')
+            ]
+        ),
+        MultiFieldPanel(
+            heading='CTA fields',
+            children=[
+                FieldPanel('cta_title'),
+                FieldPanel('cta_teaser'),
+                FieldPanel('cta_link_label'),
+                FieldPanel('cta_link'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Related articles',
+            children=[
+                FieldRowPanel([
+                    PageChooserPanel(
+                        'related_page_one',
+                        'export_readiness.ArticlePage'),
+                    PageChooserPanel(
+                        'related_page_two',
+                        'export_readiness.ArticlePage'),
+                    PageChooserPanel(
+                        'related_page_three',
+                        'export_readiness.ArticlePage'),
+                ]),
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+        FieldPanel('tags', widget=CheckboxSelectMultiple),
+    ]
+
+    class Meta:
+        verbose_name = 'Marketing Article Page'
+        verbose_name_plural = 'Marketing Article Pages'
+
+
 class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
     slug_identity = slugs.GREAT_HOME
     parent_page_types = ['wagtailcore.Page']
