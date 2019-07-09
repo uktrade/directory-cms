@@ -340,7 +340,6 @@ class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
         max_length=255)
     scale = serializers.CharField(
         max_length=255)
-    prioritised_opportunity = serializers.BooleanField()
 
     related_sectors = serializers.SerializerMethodField()
 
@@ -1144,7 +1143,6 @@ class OpportunityListSerializer(BasePageSerializer, RelatedRegionSerializer):
         max_digits=10,
         decimal_places=2
     )
-    prioritised_opportunity = serializers.BooleanField()
     related_sectors = serializers.SerializerMethodField()
 
     def get_related_sectors(self, instance):
