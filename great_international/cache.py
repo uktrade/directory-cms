@@ -15,7 +15,8 @@ class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
         great_international.InternationalCampaignPage,
         capital_invest.CapitalInvestOpportunityPage,
         capital_invest.CapitalInvestOpportunityListingPage,
-        great_international.InternationalSubSectorPage
+        great_international.InternationalSubSectorPage,
+        great_international.InternationalCuratedTopicLandingPage
     ]
 
 
