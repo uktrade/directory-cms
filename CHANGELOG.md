@@ -6,7 +6,7 @@
 - XOT-922 Added Marketing Article Page template
 - CI-304 - Gave opportunity page a related region page and a scale numerical value to use for filtering
 - CI-267 - Added cta text and link for sector page for related opportunities section
-- CI-325 - Removed prioritised checkbox from capital invest opportunity page
+- CI-325 - Removed prioritised checkbox from capital invest opportunity page as it is now being randomised
 
 ### Fixed Bugs
 - NOTICKET - Capital invest landing page image serializers use aspect ratio for card images
