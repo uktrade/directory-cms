@@ -467,10 +467,9 @@ class InternationalSectorPage(BaseInternationalPage):
             classname='collapsible ',
             children=[
                 FieldPanel('project_opportunities_title'),
-                HelpPanel('Prioritised opportunity pages that link to this '
-                          'sector will display here. Required fields for '
-                          'section to show: Project Opportunities Title, 1 '
-                          'Prioritised Opportunity Related to this sector'),
+                HelpPanel('Required fields for ection to show: '
+                          'Project Opportunities Title, 1 Opportunity '
+                          'Related to this sector'),
                 FieldPanel('related_opportunities_cta_text'),
                 FieldPanel('related_opportunities_cta_link')
             ]
@@ -3060,13 +3059,6 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
     contact_title = models.CharField(max_length=255, blank=True)
     contact_text = MarkdownField(blank=True)
 
-    prioritised_opportunity = models.BooleanField(
-        default=False,
-        verbose_name="Prioritise project?",
-        help_text='Mark this if this opportunity is a priority and should be '
-                  'promoted on the related sector page'
-    )
-
     content_panels = [
         MultiFieldPanel(
             heading="Related sector",
@@ -3233,7 +3225,6 @@ class CapitalInvestOpportunityPage(BaseInternationalPage):
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('prioritised_opportunity'),
         FieldPanel('uses_tree_based_routing'),
     ]
 
