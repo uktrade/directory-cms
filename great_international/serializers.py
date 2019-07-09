@@ -20,7 +20,6 @@ from .models import (
     CapitalInvestOpportunityPage,
     InvestHighPotentialOpportunityFormPage,
     InvestHighPotentialOpportunityDetailPage,
-    InvestRegionLandingPage,
     InvestSectorPage
 )
 
@@ -1467,7 +1466,8 @@ class PulloutSerializer(serializers.Serializer):
     stat_text = serializers.CharField(allow_null=True)
 
 
-class InvestSectorPageSerializer(BasePageSerializer, ChildPagesSerializerHelper):
+class InvestSectorPageSerializer(BasePageSerializer,
+                                 ChildPagesSerializerHelper):
     featured = serializers.BooleanField()
     description = serializers.CharField()
     heading = serializers.CharField(max_length=255)
