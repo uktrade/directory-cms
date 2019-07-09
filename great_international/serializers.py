@@ -1291,7 +1291,6 @@ class CapitalInvestOpportunityPageSerializer(
     contact_title = serializers.CharField(max_length=255)
     contact_text = core_fields.MarkdownToHTMLField()
 
-    prioritised_opportunity = serializers.BooleanField()
     related_sectors = serializers.SerializerMethodField()
 
     def get_related_sectors(self, instance):
