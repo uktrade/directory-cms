@@ -10,6 +10,7 @@ from rest_framework.test import APIClient
 from django.conf import settings
 from django.utils import timezone
 
+from export_readiness.models import ArticlePage, CountryGuidePage
 from export_readiness.tests.factories import ArticlePageFactory, CountryGuidePageFactory
 
 URL = 'http://testserver' + reverse('activity-stream')
@@ -149,45 +150,49 @@ def test_if_61_seconds_in_past_401_returned(api_client):
 @pytest.mark.django_db
 def test_lists_live_articles_in_stream(api_client):
 
-# Create the articles
-#with freeze_time('2019-01-14 12:00:02'):
-    article_a = ArticlePageFactory(
-        article_title='Article A',
-        article_teaser='Descriptive text',
-        article_body_text='Body text',
-        last_published_at=timezone.now(),
-        slug='article-a')
+    ArticlePage.objects.all().delete()
+    CountryGuidePage.objects.all().delete()
 
-    article_b = ArticlePageFactory(
-        article_title='Article B',
-        article_teaser='Descriptive text',
-        article_body_text='Body text',
-        last_published_at=timezone.now(),
-        slug='article-b')
+    # Create the articles
+    with freeze_time('2019-01-14 12:00:01'):
+        article_a = ArticlePageFactory(
+            article_title='Article A',
+            article_teaser='Descriptive text',
+            article_body_text='Body text',
+            last_published_at=timezone.now(),
+            slug='article-a')
 
-#with freeze_time('2019-01-14 12:00:01'):
-    article_c = ArticlePageFactory(
-        article_title='Article C',
-        article_teaser='Descriptive text',
-        article_body_text='Body text',
-        last_published_at=timezone.now(),
-        slug='article-c')
+        article_b = ArticlePageFactory(
+            article_title='Article B',
+            article_teaser='Descriptive text',
+            article_body_text='Body text',
+            last_published_at=timezone.now(),
+            slug='article-b')
 
-    ArticlePageFactory(
-        article_title='Article D',
-        article_teaser='Descriptive text',
-        article_body_text='Body text',
-        last_published_at=timezone.now(),
-        slug='article-d',
-        live=False)
+    with freeze_time('2019-01-14 12:00:02'):
+        article_c = ArticlePageFactory(
+            article_title='Article C',
+            article_teaser='Descriptive text',
+            article_body_text='Body text',
+            last_published_at=timezone.now(),
+            slug='article-c')
 
-    # import pdb; pdb.set_trace();
-    article_e = CountryGuidePageFactory(
-        heading='Market Page E',
-        sub_heading='Descriptive text',
-        section_one_body='Body text',
-        last_published_at=timezone.now(),
-        slug='article-e')
+        ArticlePageFactory(
+            article_title='Article D',
+            article_teaser='Non-live Article',
+            article_body_text='Body text',
+            last_published_at=timezone.now(),
+            slug='article-d',
+            live=False)
+
+        # Note CountryGuidePageFactory creates an additional
+        # ArticlePage as a related page.
+        article_e = CountryGuidePageFactory(
+            heading='Market Page E',
+            sub_heading='Descriptive text',
+            section_one_body='Body text',
+            last_published_at=timezone.now(),
+            slug='article-e')
 
     sender = auth_sender()
     response = api_client.get(
@@ -200,27 +205,31 @@ def test_lists_live_articles_in_stream(api_client):
 
     id_prefix = 'dit:cms:Article:'
 
-    assert len(items) == 4
+    # import pdb; pdb.set_trace();
 
-    assert article_attribute(items[0], 'name') == 'Article C'
-    assert article_attribute(items[0], 'id') == id_prefix + str(article_c.id)
+    # Three ArticlePages defined above, plus CountryGuidePage,
+    # Plus the extra ArticlePage created by CountryGuidePageFactory
+    assert len(items) == 5
+
+    assert article_attribute(items[0], 'name') == 'Article A'
+    assert article_attribute(items[0], 'id') == id_prefix + str(article_a.id)
     assert article_attribute(items[0], 'summary') == 'Descriptive text'
     assert article_attribute(items[0], 'content') == 'Body text'
     assert article_attribute(items[0], 'url') == \
-        environ["APP_URL_EXPORT_READINESS"] + '/article-c/'
-    assert items[0]['published'] == '2012-01-14T12:00:01+00:00'
+        environ["APP_URL_EXPORT_READINESS"] + '/article-a/'
+    assert items[0]['published'] == '2019-01-14T12:00:01+00:00'
 
-    assert article_attribute(items[1], 'name') == 'Article A'
-    assert article_attribute(items[1], 'id') == id_prefix + str(article_a.id)
-    assert items[1]['published'] == '2012-01-14T12:00:02+00:00'
+    assert article_attribute(items[1], 'name') == 'Article B'
+    assert article_attribute(items[1], 'id') == id_prefix + str(article_b.id)
+    assert items[1]['published'] == '2019-01-14T12:00:01+00:00'
 
-    assert article_attribute(items[2], 'name') == 'Article B'
-    assert article_attribute(items[2], 'id') == id_prefix + str(article_b.id)
-    assert items[2]['published'] == '2012-01-14T12:00:02+00:00'
+    assert article_attribute(items[2], 'name') == 'Article C'
+    assert article_attribute(items[2], 'id') == id_prefix + str(article_c.id)
+    assert items[2]['published'] == '2019-01-14T12:00:02+00:00'
 
     assert article_attribute(items[3], 'name') == 'Market Page E'
-    assert article_attribute(items[3], 'id') == id_prefix + str(page_e.id)
-    assert items[3]['published'] == '2012-01-14T12:00:03+00:00'
+    assert article_attribute(items[3], 'id') == id_prefix + str(article_e.id)
+    assert items[3]['published'] == '2019-01-14T12:00:02+00:00'
 
 
 @pytest.mark.django_db
