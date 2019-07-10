@@ -38,8 +38,8 @@ class PageFilter(FilterSet):
         after_id = int(after_id_str)
 
         return queryset.filter(
-           Q(last_published_at=after_ts, id__gt=after_id) |
-           Q(last_published_at__gt=after_ts)
+            Q(last_published_at=after_ts, id__gt=after_id) |
+            Q(last_published_at__gt=after_ts)
         )
 
     class Meta:

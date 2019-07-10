@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.11
--- Dumped by pg_dump version 9.6.11
+-- Dumped from database version 10.5
+-- Dumped by pg_dump version 11.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -14,20 +14,6 @@ SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
 
 SET default_tablespace = '';
 
@@ -9857,13 +9843,6 @@ COPY public.auth_group (id, name) FROM stdin;
 
 
 --
--- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.auth_group_id_seq', 2, true);
-
-
---
 -- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -9889,13 +9868,6 @@ COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
 19	1	10
 20	2	10
 \.
-
-
---
--- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 20, true);
 
 
 --
@@ -10226,13 +10198,6 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 
 
 --
--- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 319, true);
-
-
---
 -- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -10249,32 +10214,11 @@ COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
 
 
 --
--- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
-
-
---
--- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.auth_user_id_seq', 1, false);
-
-
---
 -- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 \.
-
-
---
--- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
 
 
 --
@@ -10302,25 +10246,11 @@ COPY public.core_breadcrumb (id, service_name, object_id, content_type_id, label
 
 
 --
--- Name: core_breadcrumb_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.core_breadcrumb_id_seq', 1, false);
-
-
---
 -- Data for Name: core_documenthash; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.core_documenthash (id, content_hash, document_id) FROM stdin;
 \.
-
-
---
--- Name: core_documenthash_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.core_documenthash_id_seq', 1, false);
 
 
 --
@@ -10332,13 +10262,6 @@ COPY public.core_imagehash (id, content_hash, image_id) FROM stdin;
 
 
 --
--- Name: core_imagehash_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.core_imagehash_id_seq', 1, false);
-
-
---
 -- Data for Name: core_routingsettings; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -10347,25 +10270,11 @@ COPY public.core_routingsettings (id, root_path_prefix, include_port_in_urls, si
 
 
 --
--- Name: core_routingsettings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.core_routingsettings_id_seq', 1, false);
-
-
---
 -- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
 \.
-
-
---
--- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
 
 
 --
@@ -10481,13 +10390,6 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 106	components	bannercomponent
 107	components	componentsapp
 \.
-
-
---
--- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 107, true);
 
 
 --
@@ -10815,13 +10717,6 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 
 
 --
--- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 316, true);
-
-
---
 -- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -10859,13 +10754,6 @@ COPY public.export_readiness_articlepage (page_ptr_id, service_name, article_tit
 
 COPY public.export_readiness_articlepage_tags (id, articlepage_id, tag_id) FROM stdin;
 \.
-
-
---
--- Name: export_readiness_articlepage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.export_readiness_articlepage_tags_id_seq', 1, false);
 
 
 --
@@ -11037,13 +10925,6 @@ COPY public.export_readiness_tag (id, name, slug) FROM stdin;
 
 
 --
--- Name: export_readiness_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.export_readiness_tag_id_seq', 1, false);
-
-
---
 -- Data for Name: export_readiness_termsandconditionspage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -11108,13 +10989,6 @@ COPY public.find_a_supplier_industrypagearticlesummary (id, sort_order, industry
 
 
 --
--- Name: find_a_supplier_industrypagearticlesummary_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.find_a_supplier_industrypagearticlesummary_id_seq', 1, false);
-
-
---
 -- Data for Name: find_a_supplier_landingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -11128,20 +11002,6 @@ COPY public.find_a_supplier_landingpage (page_ptr_id, hero_text, hero_text_en_gb
 
 COPY public.find_a_supplier_landingpagearticlesummary (id, sort_order, industry_name, title, body, image_id, page_id, page_ar_id, page_de_id, page_en_gb_id, page_es_id, page_fr_id, page_ja_id, page_pt_id, page_zh_hans_id, video_media_id) FROM stdin;
 \.
-
-
---
--- Name: find_a_supplier_landingpagearticlesummary_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.find_a_supplier_landingpagearticlesummary_id_seq', 1, false);
-
-
---
--- Name: great_international_capitalinvesthomesinenglandcardfield_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.great_international_capitalinvesthomesinenglandcardfield_id_seq', 1, false);
 
 
 --
@@ -11177,13 +11037,6 @@ COPY public.great_international_capitalinvestregioncardfieldssummary (id, sort_o
 
 
 --
--- Name: great_international_capitalinvestregioncardfieldssummary_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.great_international_capitalinvestregioncardfieldssummary_id_seq', 1, false);
-
-
---
 -- Data for Name: great_international_capitalinvestregionpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -11200,25 +11053,11 @@ COPY public.great_international_capitalinvestrelatedregions (id, sort_order, pag
 
 
 --
--- Name: great_international_capitalinvestrelatedregions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.great_international_capitalinvestrelatedregions_id_seq', 1, false);
-
-
---
 -- Data for Name: great_international_capitalinvestrelatedsectors; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.great_international_capitalinvestrelatedsectors (id, sort_order, page_id, page_ar_id, page_de_id, page_en_gb_id, page_es_id, page_fr_id, page_ja_id, page_pt_id, page_zh_hans_id, related_sector_id) FROM stdin;
 \.
-
-
---
--- Name: great_international_capitalinvestrelatedsectors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.great_international_capitalinvestrelatedsectors_id_seq', 1, false);
 
 
 --
@@ -11238,13 +11077,6 @@ COPY public.great_international_internationalarticlelistingpage_tags (id, intern
 
 
 --
--- Name: great_international_internationalarticlelistingpage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.great_international_internationalarticlelistingpage_tags_id_seq', 1, false);
-
-
---
 -- Data for Name: great_international_internationalarticlepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -11258,13 +11090,6 @@ COPY public.great_international_internationalarticlepage (page_ptr_id, service_n
 
 COPY public.great_international_internationalarticlepage_tags (id, internationalarticlepage_id, tag_id) FROM stdin;
 \.
-
-
---
--- Name: great_international_internationalarticlepage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.great_international_internationalarticlepage_tags_id_seq', 1, false);
 
 
 --
@@ -11284,13 +11109,6 @@ COPY public.great_international_internationalcampaignpage_tags (id, internationa
 
 
 --
--- Name: great_international_internationalcampaignpage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.great_international_internationalcampaignpage_tags_id_seq', 1, false);
-
-
---
 -- Data for Name: great_international_internationalcapitalinvestlandingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -11304,13 +11122,6 @@ COPY public.great_international_internationalcapitalinvestlandingpage (page_ptr_
 
 COPY public.great_international_internationalcuratedtopiclandingpage (page_ptr_id, service_name, display_title, teaser, feature_section_heading, feature_one_heading, feature_one_content, feature_two_heading, feature_two_content, feature_one_image_id, feature_two_image_id, hero_image_id, feature_five_heading, feature_five_image_id, feature_five_url, feature_four_heading, feature_four_image_id, feature_four_url, feature_three_heading, feature_three_image_id, feature_three_url, display_title_ar, display_title_de, display_title_en_gb, display_title_es, display_title_fr, display_title_ja, display_title_pt, display_title_zh_hans, feature_five_heading_ar, feature_five_heading_de, feature_five_heading_en_gb, feature_five_heading_es, feature_five_heading_fr, feature_five_heading_ja, feature_five_heading_pt, feature_five_heading_zh_hans, feature_five_image_ar_id, feature_five_image_de_id, feature_five_image_en_gb_id, feature_five_image_es_id, feature_five_image_fr_id, feature_five_image_ja_id, feature_five_image_pt_id, feature_five_image_zh_hans_id, feature_five_url_ar, feature_five_url_de, feature_five_url_en_gb, feature_five_url_es, feature_five_url_fr, feature_five_url_ja, feature_five_url_pt, feature_five_url_zh_hans, feature_four_heading_ar, feature_four_heading_de, feature_four_heading_en_gb, feature_four_heading_es, feature_four_heading_fr, feature_four_heading_ja, feature_four_heading_pt, feature_four_heading_zh_hans, feature_four_image_ar_id, feature_four_image_de_id, feature_four_image_en_gb_id, feature_four_image_es_id, feature_four_image_fr_id, feature_four_image_ja_id, feature_four_image_pt_id, feature_four_image_zh_hans_id, feature_four_url_ar, feature_four_url_de, feature_four_url_en_gb, feature_four_url_es, feature_four_url_fr, feature_four_url_ja, feature_four_url_pt, feature_four_url_zh_hans, feature_one_content_ar, feature_one_content_de, feature_one_content_en_gb, feature_one_content_es, feature_one_content_fr, feature_one_content_ja, feature_one_content_pt, feature_one_content_zh_hans, feature_one_heading_ar, feature_one_heading_de, feature_one_heading_en_gb, feature_one_heading_es, feature_one_heading_fr, feature_one_heading_ja, feature_one_heading_pt, feature_one_heading_zh_hans, feature_one_image_ar_id, feature_one_image_de_id, feature_one_image_en_gb_id, feature_one_image_es_id, feature_one_image_fr_id, feature_one_image_ja_id, feature_one_image_pt_id, feature_one_image_zh_hans_id, feature_section_heading_ar, feature_section_heading_de, feature_section_heading_en_gb, feature_section_heading_es, feature_section_heading_fr, feature_section_heading_ja, feature_section_heading_pt, feature_section_heading_zh_hans, feature_three_heading_ar, feature_three_heading_de, feature_three_heading_en_gb, feature_three_heading_es, feature_three_heading_fr, feature_three_heading_ja, feature_three_heading_pt, feature_three_heading_zh_hans, feature_three_image_ar_id, feature_three_image_de_id, feature_three_image_en_gb_id, feature_three_image_es_id, feature_three_image_fr_id, feature_three_image_ja_id, feature_three_image_pt_id, feature_three_image_zh_hans_id, feature_three_url_ar, feature_three_url_de, feature_three_url_en_gb, feature_three_url_es, feature_three_url_fr, feature_three_url_ja, feature_three_url_pt, feature_three_url_zh_hans, feature_two_content_ar, feature_two_content_de, feature_two_content_en_gb, feature_two_content_es, feature_two_content_fr, feature_two_content_ja, feature_two_content_pt, feature_two_content_zh_hans, feature_two_heading_ar, feature_two_heading_de, feature_two_heading_en_gb, feature_two_heading_es, feature_two_heading_fr, feature_two_heading_ja, feature_two_heading_pt, feature_two_heading_zh_hans, feature_two_image_ar_id, feature_two_image_de_id, feature_two_image_en_gb_id, feature_two_image_es_id, feature_two_image_fr_id, feature_two_image_ja_id, feature_two_image_pt_id, feature_two_image_zh_hans_id, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, teaser_ar, teaser_de, teaser_en_gb, teaser_es, teaser_fr, teaser_ja, teaser_pt, teaser_zh_hans, uses_tree_based_routing) FROM stdin;
 \.
-
-
---
--- Name: great_international_internationalcuratedtopiclandingpage_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.great_international_internationalcuratedtopiclandingpage_id_seq', 1, false);
 
 
 --
@@ -11354,13 +11165,6 @@ COPY public.great_international_internationalguidelandingpage_tags (id, internat
 
 
 --
--- Name: great_international_internationalguidelandingpage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.great_international_internationalguidelandingpage_tags_id_seq', 1, false);
-
-
---
 -- Data for Name: great_international_internationalhomepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -11401,13 +11205,6 @@ COPY public.great_international_internationalregionpage_tags (id, internationalr
 
 
 --
--- Name: great_international_internationalregionpage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.great_international_internationalregionpage_tags_id_seq', 1, false);
-
-
---
 -- Data for Name: great_international_internationalsectorpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -11424,13 +11221,6 @@ COPY public.great_international_internationalsectorpage_tags (id, internationals
 
 
 --
--- Name: great_international_internationalsectorpage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.great_international_internationalsectorpage_tags_id_seq', 1, false);
-
-
---
 -- Data for Name: great_international_internationaltopiclandingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -11444,13 +11234,6 @@ COPY public.great_international_internationaltopiclandingpage (page_ptr_id, serv
 
 COPY public.great_international_internationaltopiclandingpage_tags (id, internationaltopiclandingpage_id, tag_id) FROM stdin;
 \.
-
-
---
--- Name: great_international_internationaltopiclandingpage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.great_international_internationaltopiclandingpage_tags_id_seq', 1, false);
 
 
 --
@@ -11512,25 +11295,11 @@ COPY public.groups_groupinfo (id, name_singular, permission_summary, role_match_
 
 
 --
--- Name: groups_groupinfo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.groups_groupinfo_id_seq', 2, true);
-
-
---
 -- Data for Name: health_check_db_testmodel; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.health_check_db_testmodel (id, title) FROM stdin;
 \.
-
-
---
--- Name: health_check_db_testmodel_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.health_check_db_testmodel_id_seq', 1, false);
 
 
 --
@@ -11630,25 +11399,11 @@ COPY public.taggit_tag (id, name, slug) FROM stdin;
 
 
 --
--- Name: taggit_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.taggit_tag_id_seq', 1, false);
-
-
---
 -- Data for Name: taggit_taggeditem; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.taggit_taggeditem (id, object_id, content_type_id, tag_id) FROM stdin;
 \.
-
-
---
--- Name: taggit_taggeditem_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.taggit_taggeditem_id_seq', 1, false);
 
 
 --
@@ -11660,26 +11415,12 @@ COPY public.users_userprofile (id, assignment_status, user_id, self_assigned_gro
 
 
 --
--- Name: users_userprofile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.users_userprofile_id_seq', 1, false);
-
-
---
 -- Data for Name: wagtailcore_collection; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.wagtailcore_collection (id, path, depth, numchild, name) FROM stdin;
 1	0001	1	0	Root
 \.
-
-
---
--- Name: wagtailcore_collection_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.wagtailcore_collection_id_seq', 1, true);
 
 
 --
@@ -11696,20 +11437,6 @@ COPY public.wagtailcore_collectionviewrestriction (id, restriction_type, passwor
 
 COPY public.wagtailcore_collectionviewrestriction_groups (id, collectionviewrestriction_id, group_id) FROM stdin;
 \.
-
-
---
--- Name: wagtailcore_collectionviewrestriction_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.wagtailcore_collectionviewrestriction_groups_id_seq', 1, false);
-
-
---
--- Name: wagtailcore_collectionviewrestriction_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.wagtailcore_collectionviewrestriction_id_seq', 1, false);
 
 
 --
@@ -11733,13 +11460,6 @@ COPY public.wagtailcore_groupcollectionpermission (id, collection_id, group_id, 
 
 
 --
--- Name: wagtailcore_groupcollectionpermission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.wagtailcore_groupcollectionpermission_id_seq', 12, true);
-
-
---
 -- Data for Name: wagtailcore_grouppagepermission; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -11754,13 +11474,6 @@ COPY public.wagtailcore_grouppagepermission (id, permission_type, group_id, page
 
 
 --
--- Name: wagtailcore_grouppagepermission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.wagtailcore_grouppagepermission_id_seq', 6, true);
-
-
---
 -- Data for Name: wagtailcore_page; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -11771,25 +11484,11 @@ COPY public.wagtailcore_page (id, path, depth, numchild, title, slug, live, has_
 
 
 --
--- Name: wagtailcore_page_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.wagtailcore_page_id_seq', 2, true);
-
-
---
 -- Data for Name: wagtailcore_pagerevision; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.wagtailcore_pagerevision (id, submitted_for_moderation, created_at, content_json, approved_go_live_at, page_id, user_id) FROM stdin;
 \.
-
-
---
--- Name: wagtailcore_pagerevision_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.wagtailcore_pagerevision_id_seq', 1, false);
 
 
 --
@@ -11809,6 +11508,382 @@ COPY public.wagtailcore_pageviewrestriction_groups (id, pageviewrestriction_id, 
 
 
 --
+-- Data for Name: wagtailcore_site; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.wagtailcore_site (id, hostname, port, is_default_site, root_page_id, site_name) FROM stdin;
+1	localhost	80	t	2	\N
+\.
+
+
+--
+-- Data for Name: wagtaildocs_document; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.wagtaildocs_document (id, title, file, created_at, uploaded_by_user_id, collection_id, file_size) FROM stdin;
+\.
+
+
+--
+-- Data for Name: wagtailembeds_embed; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.wagtailembeds_embed (id, url, max_width, type, html, title, author_name, provider_name, thumbnail_url, width, height, last_updated) FROM stdin;
+\.
+
+
+--
+-- Data for Name: wagtailforms_formsubmission; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.wagtailforms_formsubmission (id, form_data, submit_time, page_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: wagtailimages_image; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.wagtailimages_image (id, title, file, width, height, created_at, focal_point_x, focal_point_y, focal_point_width, focal_point_height, uploaded_by_user_id, file_size, collection_id, file_hash) FROM stdin;
+\.
+
+
+--
+-- Data for Name: wagtailimages_rendition; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.wagtailimages_rendition (id, file, width, height, focal_point_key, image_id, filter_spec) FROM stdin;
+\.
+
+
+--
+-- Data for Name: wagtailmedia_media; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.wagtailmedia_media (id, title, file, type, duration, width, height, thumbnail, created_at, collection_id, uploaded_by_user_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: wagtailsearch_editorspick; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.wagtailsearch_editorspick (id, sort_order, description, page_id, query_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: wagtailsearch_query; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.wagtailsearch_query (id, query_string) FROM stdin;
+\.
+
+
+--
+-- Data for Name: wagtailsearch_querydailyhits; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.wagtailsearch_querydailyhits (id, date, hits, query_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: wagtailusers_userprofile; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.wagtailusers_userprofile (id, submitted_notifications, approved_notifications, rejected_notifications, user_id, preferred_language, current_time_zone, avatar) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 2, true);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 20, true);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 319, true);
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_user_id_seq', 1, false);
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Name: core_breadcrumb_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.core_breadcrumb_id_seq', 1, false);
+
+
+--
+-- Name: core_documenthash_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.core_documenthash_id_seq', 1, false);
+
+
+--
+-- Name: core_imagehash_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.core_imagehash_id_seq', 1, false);
+
+
+--
+-- Name: core_routingsettings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.core_routingsettings_id_seq', 1, false);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 107, true);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 316, true);
+
+
+--
+-- Name: export_readiness_articlepage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.export_readiness_articlepage_tags_id_seq', 1, false);
+
+
+--
+-- Name: export_readiness_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.export_readiness_tag_id_seq', 1, false);
+
+
+--
+-- Name: find_a_supplier_industrypagearticlesummary_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.find_a_supplier_industrypagearticlesummary_id_seq', 1, false);
+
+
+--
+-- Name: find_a_supplier_landingpagearticlesummary_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.find_a_supplier_landingpagearticlesummary_id_seq', 1, false);
+
+
+--
+-- Name: great_international_capitalinvesthomesinenglandcardfield_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.great_international_capitalinvesthomesinenglandcardfield_id_seq', 1, false);
+
+
+--
+-- Name: great_international_capitalinvestregioncardfieldssummary_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.great_international_capitalinvestregioncardfieldssummary_id_seq', 1, false);
+
+
+--
+-- Name: great_international_capitalinvestrelatedregions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.great_international_capitalinvestrelatedregions_id_seq', 1, false);
+
+
+--
+-- Name: great_international_capitalinvestrelatedsectors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.great_international_capitalinvestrelatedsectors_id_seq', 1, false);
+
+
+--
+-- Name: great_international_internationalarticlelistingpage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.great_international_internationalarticlelistingpage_tags_id_seq', 1, false);
+
+
+--
+-- Name: great_international_internationalarticlepage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.great_international_internationalarticlepage_tags_id_seq', 1, false);
+
+
+--
+-- Name: great_international_internationalcampaignpage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.great_international_internationalcampaignpage_tags_id_seq', 1, false);
+
+
+--
+-- Name: great_international_internationalcuratedtopiclandingpage_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.great_international_internationalcuratedtopiclandingpage_id_seq', 1, false);
+
+
+--
+-- Name: great_international_internationalguidelandingpage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.great_international_internationalguidelandingpage_tags_id_seq', 1, false);
+
+
+--
+-- Name: great_international_internationalregionpage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.great_international_internationalregionpage_tags_id_seq', 1, false);
+
+
+--
+-- Name: great_international_internationalsectorpage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.great_international_internationalsectorpage_tags_id_seq', 1, false);
+
+
+--
+-- Name: great_international_internationaltopiclandingpage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.great_international_internationaltopiclandingpage_tags_id_seq', 1, false);
+
+
+--
+-- Name: groups_groupinfo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.groups_groupinfo_id_seq', 2, true);
+
+
+--
+-- Name: health_check_db_testmodel_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.health_check_db_testmodel_id_seq', 1, false);
+
+
+--
+-- Name: taggit_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.taggit_tag_id_seq', 1, false);
+
+
+--
+-- Name: taggit_taggeditem_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.taggit_taggeditem_id_seq', 1, false);
+
+
+--
+-- Name: users_userprofile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.users_userprofile_id_seq', 1, false);
+
+
+--
+-- Name: wagtailcore_collection_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.wagtailcore_collection_id_seq', 1, true);
+
+
+--
+-- Name: wagtailcore_collectionviewrestriction_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.wagtailcore_collectionviewrestriction_groups_id_seq', 1, false);
+
+
+--
+-- Name: wagtailcore_collectionviewrestriction_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.wagtailcore_collectionviewrestriction_id_seq', 1, false);
+
+
+--
+-- Name: wagtailcore_groupcollectionpermission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.wagtailcore_groupcollectionpermission_id_seq', 12, true);
+
+
+--
+-- Name: wagtailcore_grouppagepermission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.wagtailcore_grouppagepermission_id_seq', 6, true);
+
+
+--
+-- Name: wagtailcore_page_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.wagtailcore_page_id_seq', 2, true);
+
+
+--
+-- Name: wagtailcore_pagerevision_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.wagtailcore_pagerevision_id_seq', 1, false);
+
+
+--
 -- Name: wagtailcore_pageviewrestriction_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
@@ -11823,27 +11898,10 @@ SELECT pg_catalog.setval('public.wagtailcore_pageviewrestriction_id_seq', 1, fal
 
 
 --
--- Data for Name: wagtailcore_site; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.wagtailcore_site (id, hostname, port, is_default_site, root_page_id, site_name) FROM stdin;
-1	localhost	80	t	2	\N
-\.
-
-
---
 -- Name: wagtailcore_site_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.wagtailcore_site_id_seq', 1, true);
-
-
---
--- Data for Name: wagtaildocs_document; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.wagtaildocs_document (id, title, file, created_at, uploaded_by_user_id, collection_id, file_size) FROM stdin;
-\.
 
 
 --
@@ -11854,26 +11912,10 @@ SELECT pg_catalog.setval('public.wagtaildocs_document_id_seq', 1, false);
 
 
 --
--- Data for Name: wagtailembeds_embed; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.wagtailembeds_embed (id, url, max_width, type, html, title, author_name, provider_name, thumbnail_url, width, height, last_updated) FROM stdin;
-\.
-
-
---
 -- Name: wagtailembeds_embed_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.wagtailembeds_embed_id_seq', 1, false);
-
-
---
--- Data for Name: wagtailforms_formsubmission; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.wagtailforms_formsubmission (id, form_data, submit_time, page_id) FROM stdin;
-\.
 
 
 --
@@ -11884,26 +11926,10 @@ SELECT pg_catalog.setval('public.wagtailforms_formsubmission_id_seq', 1, false);
 
 
 --
--- Data for Name: wagtailimages_image; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.wagtailimages_image (id, title, file, width, height, created_at, focal_point_x, focal_point_y, focal_point_width, focal_point_height, uploaded_by_user_id, file_size, collection_id, file_hash) FROM stdin;
-\.
-
-
---
 -- Name: wagtailimages_image_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.wagtailimages_image_id_seq', 1, false);
-
-
---
--- Data for Name: wagtailimages_rendition; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.wagtailimages_rendition (id, file, width, height, focal_point_key, image_id, filter_spec) FROM stdin;
-\.
 
 
 --
@@ -11914,26 +11940,10 @@ SELECT pg_catalog.setval('public.wagtailimages_rendition_id_seq', 1, false);
 
 
 --
--- Data for Name: wagtailmedia_media; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.wagtailmedia_media (id, title, file, type, duration, width, height, thumbnail, created_at, collection_id, uploaded_by_user_id) FROM stdin;
-\.
-
-
---
 -- Name: wagtailmedia_media_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.wagtailmedia_media_id_seq', 1, false);
-
-
---
--- Data for Name: wagtailsearch_editorspick; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.wagtailsearch_editorspick (id, sort_order, description, page_id, query_id) FROM stdin;
-\.
 
 
 --
@@ -11944,14 +11954,6 @@ SELECT pg_catalog.setval('public.wagtailsearch_editorspick_id_seq', 1, false);
 
 
 --
--- Data for Name: wagtailsearch_query; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.wagtailsearch_query (id, query_string) FROM stdin;
-\.
-
-
---
 -- Name: wagtailsearch_query_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
@@ -11959,26 +11961,10 @@ SELECT pg_catalog.setval('public.wagtailsearch_query_id_seq', 1, false);
 
 
 --
--- Data for Name: wagtailsearch_querydailyhits; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.wagtailsearch_querydailyhits (id, date, hits, query_id) FROM stdin;
-\.
-
-
---
 -- Name: wagtailsearch_querydailyhits_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.wagtailsearch_querydailyhits_id_seq', 1, false);
-
-
---
--- Data for Name: wagtailusers_userprofile; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.wagtailusers_userprofile (id, submitted_notifications, approved_notifications, rejected_notifications, user_id, preferred_language, current_time_zone, avatar) FROM stdin;
-\.
 
 
 --

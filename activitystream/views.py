@@ -36,18 +36,14 @@ class ActivityStreamView(ListAPIView):
     def list(self, request):
         """A single page of activities"""
 
-        # Consider https://stackoverflow.com/questions/18776221/django-querying-multiple-types-of-objects
-        # Or chaining multiple queries?
-
-        # Or inheriting from page and then doing a sub-search in serializer to get the actual details?
-
         filter = PageFilter(
             request.GET,
-            queryset=Page.objects.type((ArticlePage, CountryGuidePage))
+            queryset=Page.objects.type(
+                (ArticlePage, CountryGuidePage)
+            ).filter(live=True)
         )
         articles_qs = filter.qs.specific(). \
             order_by('last_published_at', 'id')[:MAX_PER_PAGE]
-
 
         items = {
             '@context': 'https://www.w3.org/ns/activitystreams',
