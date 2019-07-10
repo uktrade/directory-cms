@@ -21,7 +21,7 @@ class ArticlePageSerializer(serializers.Serializer):
                     'url': obj.get_url()
                 },
             }
-        else: # CountryGuidePage
+        else:  # CountryGuidePage
             return {
                 'id': (
                     'dit:cms:Article:' + str(obj.id) +
