@@ -8,7 +8,7 @@ from wagtail.core.models import Page
 from export_readiness.models import ArticlePage, CountryGuidePage
 from activitystream.authentication import ActivityStreamAuthentication, \
     ActivityStreamHawkResponseMiddleware
-from activitystream.filters import ArticlePageFilter, PageFilter
+from activitystream.filters import PageFilter
 from activitystream.serializers import ArticlePageSerializer
 
 MAX_PER_PAGE = 25

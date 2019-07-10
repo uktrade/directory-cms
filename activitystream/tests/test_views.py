@@ -10,8 +10,8 @@ from rest_framework.test import APIClient
 from django.conf import settings
 from django.utils import timezone
 
-from export_readiness.models import ArticlePage, CountryGuidePage
-from export_readiness.tests.factories import ArticlePageFactory, CountryGuidePageFactory
+from export_readiness.tests.factories import ArticlePageFactory, \
+    CountryGuidePageFactory
 
 URL = 'http://testserver' + reverse('activity-stream')
 URL_INCORRECT_DOMAIN = 'http://incorrect' + reverse('activity-stream')
@@ -150,9 +150,6 @@ def test_if_61_seconds_in_past_401_returned(api_client):
 @pytest.mark.django_db
 def test_lists_live_articles_in_stream(api_client):
 
-    ArticlePage.objects.all().delete()
-    CountryGuidePage.objects.all().delete()
-
     # Create the articles
     with freeze_time('2019-01-14 12:00:01'):
         article_a = ArticlePageFactory(
@@ -204,8 +201,6 @@ def test_lists_live_articles_in_stream(api_client):
     items = response.json()['orderedItems']
 
     id_prefix = 'dit:cms:Article:'
-
-    # import pdb; pdb.set_trace();
 
     # Three ArticlePages defined above, plus CountryGuidePage,
     # Plus the extra ArticlePage created by CountryGuidePageFactory
