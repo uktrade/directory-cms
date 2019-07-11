@@ -11,7 +11,9 @@ from great_international.serializers import (
     InvestHighPotentialOpportunityFormPageSerializer,
     CapitalInvestOpportunityPageSerializer,
     CapitalInvestOpportunityListingSerializer,
-    InternationalSectorPageSerializer)
+    InternationalSectorPageSerializer,
+    AboutDitServicesPageSerializer
+)
 from great_international.tests.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
@@ -23,13 +25,21 @@ from great_international.tests.factories import (
     CapitalInvestOpportunityPageFactory,
     InvestHighPotentialOpportunityFormPageFactory,
     CapitalInvestOpportunityListingPageFactory,
-    InternationalSubSectorPageFactory, InternationalTopicLandingPageFactory)
+    InternationalSubSectorPageFactory,
+    InternationalTopicLandingPageFactory,
+    AboutDitServicesPageFactory
+)
 
 from great_international.models.capital_invest import (
     CapitalInvestRelatedRegions,
     CapitalInvestHomesInEnglandCardFieldsSummary,
-    CapitalInvestRegionCardFieldsSummary, CapitalInvestRelatedSectors,
-    CapitalInvestRelatedSubSectors)
+    CapitalInvestRegionCardFieldsSummary,
+    CapitalInvestRelatedSectors,
+    CapitalInvestRelatedSubSectors
+)
+from great_international.models.great_international import (
+    AboutDitServicesFields,
+)
 
 
 @pytest.mark.django_db
@@ -835,3 +845,25 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf):
     ]
 
     assert len(all_sub_sectors) == 3
+
+
+@pytest.mark.django_db
+def test_about_dit_services_page_gets_added_related_services_fields(rf):
+
+    services_fields = AboutDitServicesFields(
+        title="title"
+    )
+
+    about_dit_services_page = AboutDitServicesPageFactory(
+        parent=None,
+        slug='services',
+        about_dit_services_fields=[services_fields]
+    )
+
+    serializer = AboutDitServicesPageSerializer(
+        instance=about_dit_services_page,
+        context={'request': rf.get('/')}
+    )
+
+    for page in serializer.data['about_dit_services_fields']:
+        assert page['title'] == 'title'

@@ -677,3 +677,22 @@ class InternationalTradeIndustryContactPageFactory(
     success_back_link_text_en_gb = factory.fuzzy.FuzzyText(length=100)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     parent = None
+
+
+class AboutDitServicesPageFactory(
+    wagtail_factories.PageFactory
+):
+
+    class Meta:
+        model = models.AboutDitServicesPage
+
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=50)
+    breadcrumbs_label_en_gb = factory.fuzzy.FuzzyText(length=50)
+    hero_title = factory.fuzzy.FuzzyText(length=10)
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None

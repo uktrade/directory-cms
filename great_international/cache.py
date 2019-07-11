@@ -198,3 +198,17 @@ class InternationalTradeIndustryContactPageSubscriber(
     subscriptions = [
         great_international.InternationalSectorPage,
     ]
+
+
+class AboutDitLandingPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = models.AboutDitLandingPage
+    subscriptions = []
+
+
+class AboutDitServicesPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = models.AboutDitServicesPage
+    subscriptions = []
