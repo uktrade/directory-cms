@@ -194,3 +194,9 @@ def test_international_folder_page_append_parent_slug_only_on_creation():
 
     folder_page.save()
     assert folder_page.slug == 'test-canada'
+
+
+@pytest.mark.django_db
+def test_uses_tree_base_routing_always_true():
+    page = factories.InternationalArticlePageFactory()
+    assert page.uses_tree_based_routing is True
