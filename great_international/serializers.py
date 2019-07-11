@@ -1,3 +1,5 @@
+from collections import namedtuple
+
 from directory_constants import cms
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
@@ -310,6 +312,21 @@ class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
         max_length=255)
     prioritised_opportunity = serializers.BooleanField()
 
+    sub_sectors_list_with_formatted = serializers.SerializerMethodField()
+
+    def get_sub_sectors_list_with_formatted(self, instance):
+        serializer = RelatedSubSectorSerializer(
+            instance.related_sub_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        sub_sectors_list = [sub_sector['related_sub_sector']
+                            for sub_sector in serializer.data]
+        formatted_list = ", ".join(sub_sectors_list)
+
+        return {'list_all': sub_sectors_list, 'formatted_list': formatted_list}
+
 
 class RegionCardFieldSerializer(serializers.Serializer):
     region_card_image = wagtail_fields.ImageRenditionField('fill-640x360')
@@ -349,6 +366,19 @@ class RelatedSectorSerializer(serializers.Serializer):
         serializer = MinimalPageSerializer(
             sector.specific)
         return serializer.data
+
+
+class RelatedSubSectorSerializer(serializers.Serializer):
+    related_sub_sector = serializers.SerializerMethodField()
+
+    def get_related_sub_sector(self, obj):
+        sector = obj.related_sub_sector
+
+        if not sector:
+            return []
+        serializer = MinimalPageSerializer(
+            sector.specific)
+        return serializer.data['title']
 
 
 class RelatedOpportunitySerializer(serializers.Serializer):
@@ -1035,7 +1065,8 @@ class OpportunityListSerializer(BasePageSerializer, RelatedRegionSerializer):
         max_length=255, source='hero_title')
     hero_image = wagtail_fields.ImageRenditionField(
         'fill-640x360')
-    sector = serializers.CharField(max_length=255)
+    sector = serializers.CharField(
+        max_length=255)
     scale = serializers.CharField(max_length=255)
     scale_value = serializers.DecimalField(
         max_digits=10,
@@ -1052,6 +1083,21 @@ class OpportunityListSerializer(BasePageSerializer, RelatedRegionSerializer):
             context=self.context
         )
         return serializer.data
+
+    sub_sectors_list_with_formatted = serializers.SerializerMethodField()
+
+    def get_sub_sectors_list_with_formatted(self, instance):
+        serializer = RelatedSubSectorSerializer(
+            instance.related_sub_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        sub_sectors_list = [sub_sector['related_sub_sector']
+                            for sub_sector in serializer.data]
+        formatted_list = ", ".join(sub_sectors_list)
+
+        return {'list_all': sub_sectors_list, 'formatted_list': formatted_list}
 
 
 class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
@@ -1166,6 +1212,21 @@ class CapitalInvestOpportunityPageSerializer(
             context=self.context
         )
         return serializer.data
+
+    sub_sectors_list_with_formatted = serializers.SerializerMethodField()
+
+    def get_sub_sectors_list_with_formatted(self, instance):
+        serializer = RelatedSubSectorSerializer(
+            instance.related_sub_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        sub_sectors_list = [sub_sector['related_sub_sector']
+                            for sub_sector in serializer.data]
+        formatted_list = ", ".join(sub_sectors_list)
+
+        return {'list_all': sub_sectors_list, 'formatted_list': formatted_list}
 
 
 class MinimalPageSerializer(BasePageSerializer):

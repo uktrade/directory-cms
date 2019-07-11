@@ -522,7 +522,7 @@ class CapitalInvestOpportunityPageTranslationOptions(
 
 
 @register(models.CapitalInvestRelatedRegions)
-class RelatedRegionsSerializer(
+class RelatedRegionsTranslationOptions(
         BaseTranslationOptions):
     fields = (
         'page',
@@ -530,7 +530,7 @@ class RelatedRegionsSerializer(
 
 
 @register(models.CapitalInvestRelatedSectors)
-class RelatedSectorsSerializer(
+class RelatedSectorsTranslationOptions(
         BaseTranslationOptions):
     fields = (
         'page',
@@ -538,7 +538,7 @@ class RelatedSectorsSerializer(
 
 
 @register(models.CapitalInvestRegionCardFieldsSummary)
-class CapitalInvestRegionCardFieldSerializer(
+class CapitalInvestRegionCardFieldsSummaryTranslationOptions(
         BaseTranslationOptions):
     fields = (
         'page',
@@ -546,7 +546,15 @@ class CapitalInvestRegionCardFieldSerializer(
 
 
 @register(models.CapitalInvestHomesInEnglandCardFieldsSummary)
-class CapitalInvestHomesInEnglandCardFieldsSummarySerializer(
+class CapitalInvestHomesInEnglandCardFieldsSummaryTranslationOptions(
+        BaseTranslationOptions):
+    fields = (
+        'page',
+    )
+
+
+@register(models.CapitalInvestRelatedSubSectors)
+class CapitalInvestRelatedSubSectorsTranslationOptions(
         BaseTranslationOptions):
     fields = (
         'page',
