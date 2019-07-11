@@ -35,12 +35,9 @@ class BaseInternationalPage(BasePage):
         abstract = True
 
 
-class InternationalSectorPage(BaseInternationalPage):
+class AbstractInternationalSectorPage(BaseInternationalPage):
     class Meta:
-        ordering = ['-heading']
-
-    parent_page_types = ['great_international.InternationalTopicLandingPage']
-    subpage_types = []
+        abstract = True
 
     tags = ParentalManyToManyField(Tag, blank=True)
 
@@ -484,6 +481,36 @@ class InternationalSectorPage(BaseInternationalPage):
         FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
+
+
+class InternationalSectorPage(AbstractInternationalSectorPage):
+
+    class Meta:
+        ordering = ['-heading']
+
+    parent_page_types = ['great_international.InternationalTopicLandingPage']
+
+    @classmethod
+    def allowed_subpage_models(cls):
+        return [
+            InternationalSubSectorPage
+        ]
+
+    content_panels = AbstractInternationalSectorPage.content_panels
+    settings_panels = AbstractInternationalSectorPage.settings_panels
+
+
+class InternationalSubSectorPage(AbstractInternationalSectorPage):
+
+    parent_page_types = ['great_international.InternationalSectorPage']
+
+    content_panels = AbstractInternationalSectorPage.content_panels
+    settings_panels = AbstractInternationalSectorPage.settings_panels
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
