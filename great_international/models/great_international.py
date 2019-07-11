@@ -514,6 +514,7 @@ class InternationalHomePage(
             invest_models.InvestHighPotentialOpportunityDetailPage,
             invest_models.InvestHighPotentialOpportunityFormPage,
             invest_models.InvestHighPotentialOpportunityFormSuccessPage,
+            AboutDitLandingPage
         ]
 
 
@@ -1250,3 +1251,203 @@ class InternationalEUExitFormSuccessPage(
         max_length=255,
         verbose_name='Body text',
     )
+
+
+class AboutDitLandingPage(BaseInternationalPage):
+    parent_page_types = ['great_international.InternationalHomePage']
+    subpage_types = [
+        'great_international.AboutDitServicesPage'
+    ]
+
+    breadcrumbs_label = models.CharField(max_length=255)
+    hero_title = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading="Hero",
+            children=[
+                FieldPanel('hero_title'),
+                ImageChooserPanel('hero_image'),
+            ],
+        ),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+        FieldPanel('uses_tree_based_routing'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
+
+
+class AboutDitServiceField(models.Model):
+    icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    title = models.CharField(max_length=255, blank=True)
+    summary = models.TextField(max_length=255, blank=True)
+    link_text = models.CharField(max_length=255,
+                                 blank=True,
+                                 verbose_name='Link text')
+    link_url = models.CharField(max_length=255,
+                                blank=True,
+                                verbose_name='Link URL')
+
+    panels = [
+        MultiFieldPanel([
+            ImageChooserPanel('icon'),
+            FieldPanel('title'),
+            FieldPanel('summary'),
+            FieldPanel('link_text'),
+            FieldPanel('link_url'),
+        ]),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class AboutDitServicesFields(Orderable, AboutDitServiceField):
+    page = ParentalKey(
+        'great_international.AboutDitServicesPage',
+        on_delete=models.CASCADE,
+        related_name='about_dit_services_fields',
+        blank=True,
+        null=True,
+    )
+
+
+class AboutDitServicesPage(BaseInternationalPage):
+    parent_page_types = ['great_international.AboutDitLandingPage']
+
+    breadcrumbs_label = models.CharField(max_length=255)
+    hero_title = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    teaser = MarkdownField(
+        null=True,
+        verbose_name='',
+        blank=True
+    )
+    teaser_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    case_study_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    case_study_title = models.CharField(max_length=255, blank=True)
+    case_study_text = models.TextField(max_length=255, blank=True)
+    case_study_cta_text = models.CharField(max_length=255, blank=True)
+    case_study_cta_link = models.CharField(max_length=255, blank=True)
+
+    contact_us_section_title = models.CharField(max_length=255,
+                                                blank=True,
+                                                verbose_name='Title')
+    contact_us_section_summary = models.TextField(max_length=255,
+                                                  blank=True,
+                                                  verbose_name='Summary')
+    contact_us_section_cta_text = models.CharField(max_length=255,
+                                                   blank=True,
+                                                   verbose_name='CTA text')
+    contact_us_section_cta_link = models.CharField(max_length=255,
+                                                   blank=True,
+                                                   verbose_name='CTA URL')
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading="Hero",
+            children=[
+                FieldPanel('hero_title'),
+                ImageChooserPanel('hero_image'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Teaser",
+            children=[
+                HelpPanel('At least one field required for section to show'),
+                FieldPanel('teaser'),
+                ImageChooserPanel('teaser_image'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Services section",
+            classname='collapsible',
+            children=[
+                InlinePanel(
+                    'about_dit_services_fields',
+                    label="About DIT services"
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Case study",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required fields for section to show: '
+                          'Case Study Image, Case Study Title'),
+                ImageChooserPanel('case_study_image'),
+                FieldPanel('case_study_title'),
+                FieldPanel('case_study_text'),
+                HelpPanel('CTAs require both text and a link to show '
+                          'on page. '),
+                FieldPanel('case_study_cta_text'),
+                FieldPanel('case_study_cta_link'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Contact Section",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required fields for section to show: '
+                          'Title, Summary'),
+                FieldPanel('contact_us_section_title'),
+                FieldPanel('contact_us_section_summary'),
+                HelpPanel('CTAs require both text and a link to show '
+                          'on page. '),
+                FieldPanel('contact_us_section_cta_text'),
+                FieldPanel('contact_us_section_cta_link'),
+            ],
+        ),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+        FieldPanel('uses_tree_based_routing'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
+
