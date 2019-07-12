@@ -533,7 +533,7 @@ def test_international_sector_page_gets_opps_with_sector_as_related(rf):
         instance=opportunity,
         context={'request': rf.get('/')}
     )
-    print('\n\n\n\n\n\n opportunity serializer data ', opportunity_serializer.data)
+    print('\n\n\n\n\n\n opportunity serializer data ', opportunity_serializer.data)  # NOQA
 
     for page in opportunity_serializer.data['related_sectors']:
         assert page['related_sector']['meta']['slug'] == 'sector'
@@ -744,7 +744,7 @@ def test_opportunity_page_can_add_sub_sector_as_related(rf):
         instance=opportunity,
         context={'request': rf.get('/')}
     )
-    print('\n\n\n\n\n\n\n opportunity serializer data ', opportunity_serializer.data)
+    print('\n\n\n\n\n\n\n opportunity serializer data ', opportunity_serializer.data)  # NOQA
 
     assert len(opportunity_serializer.data['sub_sectors']) == 1
     for sub_sector in opportunity_serializer.data['sub_sectors']:
