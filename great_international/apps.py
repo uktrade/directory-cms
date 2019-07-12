@@ -6,7 +6,8 @@ class GreatInternationalConfig(AppConfig):
     name = 'great_international'
 
     def ready(self):
-        from great_international import cache, models, signals
+        from great_international import cache, signals
+        from great_international.models import great_international
         cache.InternationalSectorPageSubscriber.subscribe()
         cache.InternationalHomePageSubscriber.subscribe()
         cache.InternationalHomePageOldSubscriber.subscribe()
@@ -33,30 +34,31 @@ class GreatInternationalConfig(AppConfig):
         # tags inheritance signals
         post_save.connect(
             receiver=signals.inherit_tags_from_parent,
-            sender=models.InternationalSectorPage
+            sender=great_international.InternationalSectorPage
         )
         post_save.connect(
             receiver=signals.inherit_tags_from_parent,
-            sender=models.InternationalArticlePage
+            sender=great_international.InternationalArticlePage
         )
         post_save.connect(
             receiver=signals.inherit_tags_from_parent,
-            sender=models.InternationalCampaignPage
+            sender=great_international.InternationalCampaignPage
         )
         # tags propagation signals
         m2m_changed.connect(
             receiver=signals.tags_propagate_to_descendants,
-            sender=models.InternationalTopicLandingPage.tags.through
+            sender=(
+                great_international.InternationalTopicLandingPage.tags.through)
         )
         m2m_changed.connect(
             receiver=signals.tags_propagate_to_descendants,
-            sender=models.InternationalArticleListingPage.tags.through
+            sender=great_international.InternationalArticleListingPage.tags.through  # noqa
         )
         m2m_changed.connect(
             receiver=signals.tags_propagate_to_descendants,
-            sender=models.InternationalRegionPage.tags.through
+            sender=great_international.InternationalRegionPage.tags.through
         )
         m2m_changed.connect(
             receiver=signals.tags_propagate_to_descendants,
-            sender=models.InternationalCampaignPage.tags.through
+            sender=great_international.InternationalCampaignPage.tags.through
         )
