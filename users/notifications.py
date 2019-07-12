@@ -33,7 +33,9 @@ def notify_user_of_access_request_approval(
         'name': user_name,
         'reviewer_name': reviewer_name,
         'sign_in_url': request.build_absolute_uri(
-            settings.LOGIN_URL
+            str(settings.LOGIN_URL)  # requires casting because
+            # it's not a string
+            # it's <class 'django.utils.functional.lazy.<locals>.__proxy__'>
         ),
     }
     return notifications_client.send_email_notification(
