@@ -738,3 +738,23 @@ def test_opportunity_page_can_add_sub_sector_as_related(rf):
 
     for page in opportunity_serializer.data['related_sectors']:
         assert page['sub_sectors'] == 'sub_sector'
+
+
+@pytest.mark.django_db
+def test_opportunity_page_can_add_sub_sector_as_related_null_case(rf):
+
+    related_sub_sector = CapitalInvestRelatedSubSectors()
+
+    opportunity = CapitalInvestOpportunityPageFactory(
+        parent=None,
+        slug='opp',
+        related_sub_sectors=[related_sub_sector]
+    )
+
+    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
+        instance=opportunity,
+        context={'request': rf.get('/')}
+    )
+
+    for page in opportunity_serializer.data['related_sectors']:
+        assert page['sub_sectors'] == 'sub_sector'
