@@ -1275,7 +1275,7 @@ class InvestInternationalHomePageSerializer(BasePageSerializer):
         return serializer.data
 
     def get_sectors(self, instance):
-        from .models import InternationalSectorPage
+        from .models.great_international import InternationalSectorPage
         serializer = InternationalSectorPageSerializer(
             InternationalSectorPage.objects.live().order_by('heading'),
             many=True,
@@ -1285,7 +1285,7 @@ class InvestInternationalHomePageSerializer(BasePageSerializer):
         return serializer.data
 
     def get_high_potential_opportunities(self, instance):
-        from .models import InvestHighPotentialOpportunityDetailPage
+        from .models.invest import InvestHighPotentialOpportunityDetailPage
         queryset = InvestHighPotentialOpportunityDetailPage.objects.all(
             ).filter(
             featured=True
