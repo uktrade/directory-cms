@@ -7,9 +7,12 @@
 - CI-304 - Gave opportunity page a related region page and a scale numerical value to use for filtering
 - CI-267 - Added cta text and link for sector page for related opportunities section
 - XOT-932 - Add Country Guide pages to search
+- CMS-1727 - Move region pages from Invest to International
 
 ### Fixed Bugs
 - NOTICKET - Capital invest landing page image serializers use aspect ratio for card images
+- CMS-1737 - Fix 500 on user approval
+
 
 ## [2019.06.27](https://github.com/uktrade/directory-cms/releases/tag/2019.06.27)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.20...2019.06.27
