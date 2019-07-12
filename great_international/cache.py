@@ -163,6 +163,21 @@ class InvestHighPotentialOpportunityFormSuccessPageSubscriber(
     ]
 
 
+class InvestRegionLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.InvestRegionLandingPage
+    subscriptions = [
+        models.InvestSectorPage,
+    ]
+
+
+class InvestSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.InvestSectorPage
+    subscriptions = [
+        # not a typo: each sector page contains a list of other sector pages
+        models.InvestSectorPage,
+    ]
+
+
 class InternationalTradeHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.InternationalTradeHomePage
     subscriptions = [

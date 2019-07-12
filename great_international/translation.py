@@ -719,6 +719,52 @@ class HighPotentialOpportunityFormSuccessPageTranslationOptions(
     fields = []
 
 
+@register(models.InvestSectorPage)
+class InvestSectorPageTranslationOptions(BaseTranslationOptions):
+    fields = (
+        'description',
+        'heading',
+        'pullout_text',
+        'pullout_stat',
+        'pullout_stat_text',
+        # subsections
+        'subsection_title_one',
+        'subsection_content_one',
+        'subsection_map_one',
+
+        'subsection_title_two',
+        'subsection_content_two',
+        'subsection_map_two',
+
+        'subsection_title_three',
+        'subsection_content_three',
+        'subsection_map_three',
+
+        'subsection_title_four',
+        'subsection_content_four',
+        'subsection_map_four',
+
+        'subsection_title_five',
+        'subsection_content_five',
+        'subsection_map_five',
+
+        'subsection_title_six',
+        'subsection_content_six',
+        'subsection_map_six',
+
+        'subsection_title_seven',
+        'subsection_content_seven',
+        'subsection_map_seven'
+    )
+
+
+@register(models.InvestRegionLandingPage)
+class RegionLandingPageTranslationOptions(BaseTranslationOptions):
+    fields = (
+        'heading',
+    )
+
+
 @register(models.InternationalTradeHomePage)
 class InternationalTradeHomePageTranslationOptions(BaseTranslationOptions):
     fields = (
