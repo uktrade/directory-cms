@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- CMS-1664 - Update invest homepage model to use correct new url for tree based routing
 - No ticket - Split up model and admin panel code in great international app to make files much shorter and easier to work with
 - XOT-922 Added Marketing Article Page template
 - CI-304 - Gave opportunity page a related region page and a scale numerical value to use for filtering
