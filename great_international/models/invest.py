@@ -16,6 +16,7 @@ class InvestInternationalHomePage(
     BaseInternationalPage,
     panels.InvestInternationalHomePagePanels,
 ):
+    slug_identity = 'invest'
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
