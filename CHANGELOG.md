@@ -9,6 +9,8 @@
 
 ### Fixed Bugs
 - NOTICKET - Capital invest landing page image serializers use aspect ratio for card images
+- CMS-1737 - Fix 500 on user approval
+
 
 ## [2019.06.27](https://github.com/uktrade/directory-cms/releases/tag/2019.06.27)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.20...2019.06.27
