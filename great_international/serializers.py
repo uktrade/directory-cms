@@ -312,9 +312,9 @@ class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
         max_length=255)
     prioritised_opportunity = serializers.BooleanField()
 
-    sub_sectors_list_with_formatted = serializers.SerializerMethodField()
+    sub_sectors = serializers.SerializerMethodField()
 
-    def get_sub_sectors_list_with_formatted(self, instance):
+    def get_sub_sectors(self, instance):
         serializer = RelatedSubSectorSerializer(
             instance.related_sub_sectors.all(),
             many=True,
@@ -323,9 +323,7 @@ class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
         )
         sub_sectors_list = [sub_sector['related_sub_sector']
                             for sub_sector in serializer.data]
-        formatted_list = ", ".join(sub_sectors_list)
-
-        return {'list_all': sub_sectors_list, 'formatted_list': formatted_list}
+        return sub_sectors_list
 
 
 class RegionCardFieldSerializer(serializers.Serializer):
@@ -1084,9 +1082,9 @@ class OpportunityListSerializer(BasePageSerializer, RelatedRegionSerializer):
         )
         return serializer.data
 
-    sub_sectors_list_with_formatted = serializers.SerializerMethodField()
+    sub_sectors = serializers.SerializerMethodField()
 
-    def get_sub_sectors_list_with_formatted(self, instance):
+    def get_sub_sectors(self, instance):
         serializer = RelatedSubSectorSerializer(
             instance.related_sub_sectors.all(),
             many=True,
@@ -1095,9 +1093,7 @@ class OpportunityListSerializer(BasePageSerializer, RelatedRegionSerializer):
         )
         sub_sectors_list = [sub_sector['related_sub_sector']
                             for sub_sector in serializer.data]
-        formatted_list = ", ".join(sub_sectors_list)
-
-        return {'list_all': sub_sectors_list, 'formatted_list': formatted_list}
+        return sub_sectors_list
 
 
 class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
@@ -1213,9 +1209,9 @@ class CapitalInvestOpportunityPageSerializer(
         )
         return serializer.data
 
-    sub_sectors_list_with_formatted = serializers.SerializerMethodField()
+    sub_sectors = serializers.SerializerMethodField()
 
-    def get_sub_sectors_list_with_formatted(self, instance):
+    def get_sub_sectors(self, instance):
         serializer = RelatedSubSectorSerializer(
             instance.related_sub_sectors.all(),
             many=True,
@@ -1224,9 +1220,7 @@ class CapitalInvestOpportunityPageSerializer(
         )
         sub_sectors_list = [sub_sector['related_sub_sector']
                             for sub_sector in serializer.data]
-        formatted_list = ", ".join(sub_sectors_list)
-
-        return {'list_all': sub_sectors_list, 'formatted_list': formatted_list}
+        return sub_sectors_list
 
 
 class MinimalPageSerializer(BasePageSerializer):
