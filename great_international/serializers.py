@@ -9,7 +9,7 @@ from core.serializers import (
     FormPageSerializerMetaclass)
 from invest.models import HighPotentialOpportunityDetailPage
 
-from .models import (
+from .models.great_international import (
     InternationalArticlePage,
     InternationalArticleListingPage,
     InternationalLocalisedFolderPage,
@@ -17,11 +17,14 @@ from .models import (
     InternationalGuideLandingPage,
     InternationalSectorPage,
     InternationalEUExitFormPage,
-    CapitalInvestOpportunityPage,
+)
+from .models.invest import (
     InvestHighPotentialOpportunityFormPage,
     InvestHighPotentialOpportunityDetailPage,
     InvestSectorPage
 )
+
+from .models.capital_invest import CapitalInvestOpportunityPage
 
 
 ONE_TO_SIX_WORDS = ['one', 'two', 'three', 'four', 'five', 'six']
