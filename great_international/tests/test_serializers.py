@@ -728,7 +728,7 @@ def test_opportunity_page_can_add_sub_sector_as_related(rf):
     opportunity = CapitalInvestOpportunityPageFactory(
         parent=None,
         slug='opp',
-        sub_sectors=[related_sub_sector]
+        related_sub_sectors=[related_sub_sector]
     )
 
     opportunity_serializer = CapitalInvestOpportunityPageSerializer(
