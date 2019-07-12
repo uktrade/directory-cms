@@ -757,5 +757,4 @@ def test_opportunity_page_can_add_sub_sector_as_related_null_case2(rf):
         context={'request': rf.get('/')}
     )
 
-    assert len(opportunity_serializer.data['sub_sectors']) == 0
-    assert opportunity_serializer.data['sub_sectors'] == []
+    assert opportunity_serializer.data['sub_sectors'] == [[]]
