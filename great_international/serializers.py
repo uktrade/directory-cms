@@ -1,5 +1,3 @@
-from collections import namedtuple
-
 from directory_constants import cms
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields

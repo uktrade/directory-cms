@@ -70,7 +70,7 @@ def test_models_hierarchy():
         models.CapitalInvestOpportunityPage,
     ]
     assert models.InternationalSectorPage.allowed_subpage_models() == [
-        models.InternationalSectorPage,
+        models.InternationalSubSectorPage,
     ]
 
 

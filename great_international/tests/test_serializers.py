@@ -1,7 +1,8 @@
 import pytest
 
 from great_international.serializers import (
-    AbstractInternationalSectorPageSerializer, InternationalArticlePageSerializer,
+    AbstractInternationalSectorPageSerializer,
+    InternationalArticlePageSerializer,
     InternationalCampaignPageSerializer, InternationalHomePageSerializer,
     InternationalCuratedTopicLandingPageSerializer,
     InternationalGuideLandingPageSerializer,
