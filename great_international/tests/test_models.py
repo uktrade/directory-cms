@@ -69,6 +69,9 @@ def test_models_hierarchy():
     assert models.CapitalInvestOpportunityListingPage.allowed_subpage_models() == [  # NOQA
         models.CapitalInvestOpportunityPage,
     ]
+    assert models.InternationalSectorPage.allowed_subpage_models() == [
+        models.InternationalSectorPage,
+    ]
 
 
 @pytest.mark.django_db
