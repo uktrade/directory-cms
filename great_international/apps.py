@@ -27,6 +27,8 @@ class GreatInternationalConfig(AppConfig):
         cache.InvestHighPotentialOpportunityDetailPageSubscriber.subscribe()
         cache.InvestHighPotentialOpportunityFormPageSubscriber.subscribe()
         cache.InvestHighPotentialOpportunityFormSuccessPageSubscriber.subscribe()  # noqa
+        cache.InvestRegionLandingPageSubscriber.subscribe()
+        cache.InvestSectorPageSubscriber.subscribe()
         cache.InternationalTradeHomePageSubscriber.subscribe()
         cache.InternationalTradeIndustryContactPageSubscriber.subscribe()
         # tags inheritance signals

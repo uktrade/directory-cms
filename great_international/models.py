@@ -4228,6 +4228,238 @@ class InvestHighPotentialOpportunityFormSuccessPage(BaseInternationalPage):
     ]
 
 
+class InvestRegionLandingPage(
+    ExclusivePageMixin,
+    BaseInternationalPage
+):
+    subpage_types = ['great_international.InvestSectorPage']
+    slug_override = 'invest-uk-regions'
+
+    # page fields
+    heading = models.CharField(max_length=255)
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    image_panels = [
+        ImageChooserPanel('hero_image'),
+    ]
+    content_panels = [
+        FieldPanel('heading'),
+        SearchEngineOptimisationPanel()
+    ]
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels,
+        other_panels=[
+            ObjectList(image_panels, heading='Images'),
+        ]
+    )
+
+
+class InvestSectorPage(BaseInternationalPage):
+    # Related sector are implemented as subpages
+    subpage_types = ['great_international.InvestSectorPage']
+
+    featured = models.BooleanField(default=False)
+    description = models.TextField(
+        help_text="This is the description shown when the "
+                  "sector is featured on another page i.e. "
+                  "the Invest Home Page"
+    )  # appears in card on external pages
+
+    # page fields
+    heading = models.CharField(max_length=255)
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    pullout_text = MarkdownField(blank=True, null=True)
+    pullout_stat = models.CharField(max_length=255, blank=True, null=True)
+    pullout_stat_text = models.CharField(max_length=255, blank=True, null=True)
+
+    subsection_title_one = models.CharField(max_length=200)
+    subsection_content_one = MarkdownField()
+    subsection_map_one = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_two = models.CharField(max_length=200)
+    subsection_content_two = MarkdownField()
+    subsection_map_two = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_three = models.CharField(max_length=200, blank=True)
+    subsection_content_three = MarkdownField(blank=True)
+    subsection_map_three = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_four = models.CharField(max_length=200, blank=True)
+    subsection_content_four = MarkdownField(blank=True)
+    subsection_map_four = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_five = models.CharField(max_length=200, blank=True)
+    subsection_content_five = MarkdownField(blank=True)
+    subsection_map_five = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_six = models.CharField(max_length=200, blank=True)
+    subsection_content_six = MarkdownField(blank=True)
+    subsection_map_six = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_seven = models.CharField(max_length=200, blank=True)
+    subsection_content_seven = MarkdownField(blank=True)
+    subsection_map_seven = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    # subsections end
+
+    image_panels = [
+        ImageChooserPanel('hero_image'),
+    ]
+    content_panels = [
+        FieldPanel('heading'),
+        FieldPanel('description'),
+        MultiFieldPanel(
+            [
+                FieldPanel('pullout_text'),
+                FieldPanel('pullout_stat'),
+                FieldPanel('pullout_stat_text')
+            ],
+            heading='Pullout',
+            classname='collapsible'
+        ),
+        # subsections panels
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_one'),
+                FieldPanel('subsection_content_one'),
+                ImageChooserPanel('subsection_map_one')
+            ],
+            heading='subsections one',
+            classname='collapsible'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_two'),
+                FieldPanel('subsection_content_two'),
+                ImageChooserPanel('subsection_map_two')
+            ],
+            heading='subsections two',
+            classname='collapsible'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_three'),
+                FieldPanel('subsection_content_three'),
+                ImageChooserPanel('subsection_map_three')
+            ],
+            heading='subsections three',
+            classname='collapsible collapsed'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_four'),
+                FieldPanel('subsection_content_four'),
+                ImageChooserPanel('subsection_map_four')
+            ],
+            heading='subsections four',
+            classname='collapsible collapsed'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_five'),
+                FieldPanel('subsection_content_five'),
+                ImageChooserPanel('subsection_map_five')
+            ],
+            heading='subsections five',
+            classname='collapsible collapsed'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_six'),
+                FieldPanel('subsection_content_six'),
+                ImageChooserPanel('subsection_map_six')
+            ],
+            heading='subsections six',
+            classname='collapsible collapsed'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel('subsection_title_seven'),
+                FieldPanel('subsection_content_seven'),
+                ImageChooserPanel('subsection_map_seven')
+            ],
+            heading='Subsection seven',
+            classname='collapsible collapsed'
+        ),
+        SearchEngineOptimisationPanel()
+    ]
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+        FieldPanel('featured')
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels,
+        other_panels=[
+            ObjectList(image_panels, heading='Images'),
+        ]
+    )
+
+
 # Find a supplier models
 
 class InternationalTradeHomePage(
