@@ -22,7 +22,7 @@ from great_international.tests.factories import (
     CapitalInvestOpportunityPageFactory,
     InvestHighPotentialOpportunityFormPageFactory,
     CapitalInvestOpportunityListingPageFactory,
-    InternationalSubSectorPageFactory)
+    InternationalSubSectorPageFactory, InternationalTopicLandingPageFactory)
 
 from great_international.models import CapitalInvestRelatedRegions, \
     CapitalInvestHomesInEnglandCardFieldsSummary, \
@@ -505,7 +505,7 @@ def test_opportunity_page_can_add_sector_as_related(rf):
 @pytest.mark.django_db
 def test_international_sector_page_gets_opps_with_sector_as_related(rf):
 
-    guide_landing_page = InternationalGuideLandingPageFactory(
+    guide_landing_page = InternationalTopicLandingPageFactory(
         parent=None,
         slug='page-slug',
     )
@@ -705,7 +705,7 @@ def test_opportunity_listing_page_getting_opportunities_null_case(rf):
 @pytest.mark.django_db
 def test_opportunity_page_can_add_sub_sector_as_related(rf):
 
-    guide_landing_page = InternationalGuideLandingPageFactory(
+    guide_landing_page = InternationalTopicLandingPageFactory(
         parent=None,
         slug='page-slug',
     )
@@ -742,7 +742,7 @@ def test_opportunity_page_can_add_sub_sector_as_related(rf):
 
 
 @pytest.mark.django_db
-def test_opportunity_page_can_add_sub_sector_as_related_null_case2(rf):
+def test_opportunity_page_can_add_sub_sector_as_related_null_case(rf):
 
     related_sub_sector = CapitalInvestRelatedSubSectors()
 
