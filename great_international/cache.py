@@ -2,39 +2,42 @@ from core.cache import (
     AbstractDatabaseCacheSubscriber, RegionAwareCachePopulator
 )
 
-from great_international import models
+from great_international.models import great_international
+from great_international.models import invest
+from great_international.models import find_a_supplier
+from great_international.models import capital_invest
 
 
 class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InternationalSectorPage
+    model = great_international.InternationalSectorPage
     subscriptions = [
-        models.InternationalArticlePage,
-        models.InternationalCampaignPage,
-        models.CapitalInvestOpportunityPage
+        great_international.InternationalArticlePage,
+        great_international.InternationalCampaignPage,
+        capital_invest.CapitalInvestOpportunityPage
     ]
 
 
 class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InternationalHomePage
+    model = great_international.InternationalHomePage
     subscriptions = [
-        models.InternationalArticlePage,
+        great_international.InternationalArticlePage,
     ]
 
 
 class InternationalHomePageOldSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InternationalHomePageOld
+    model = great_international.InternationalHomePageOld
     subscriptions = [
-        models.InternationalArticlePage,
+        great_international.InternationalArticlePage,
     ]
 
 
 class InternationalArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InternationalArticlePage
+    model = great_international.InternationalArticlePage
     subscriptions = []
 
 
 class InternationalCampaignPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InternationalCampaignPage
+    model = great_international.InternationalCampaignPage
     subscriptions = []
 
 
@@ -42,140 +45,140 @@ class InternationalArticleListingPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
     cache_populator = RegionAwareCachePopulator
-    model = models.InternationalArticleListingPage
+    model = great_international.InternationalArticleListingPage
     subscriptions = [
-        models.InternationalArticlePage,
-        models.InternationalCampaignPage
+        great_international.InternationalArticlePage,
+        great_international.InternationalCampaignPage
     ]
 
 
 class InternationalTopicLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InternationalTopicLandingPage
+    model = great_international.InternationalTopicLandingPage
     subscriptions = [
-        models.InternationalArticlePage,
-        models.InternationalArticleListingPage,
-        models.InternationalSectorPage,
-        models.InternationalCampaignPage
+        great_international.InternationalArticlePage,
+        great_international.InternationalArticleListingPage,
+        great_international.InternationalSectorPage,
+        great_international.InternationalCampaignPage
     ]
 
 
 class InternationalCuratedTopicLandingPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
-    model = models.InternationalCuratedTopicLandingPage
+    model = great_international.InternationalCuratedTopicLandingPage
     subscriptions = []
 
 
 class InternationalGuideLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InternationalGuideLandingPage
-    subscriptions = [models.InternationalArticlePage]
+    model = great_international.InternationalGuideLandingPage
+    subscriptions = [great_international.InternationalArticlePage]
 
 
 class InternationalEUExitFormPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
-    model = models.InternationalEUExitFormPage
+    model = great_international.InternationalEUExitFormPage
     subscriptions = []
 
 
 class InternationalEUExitFormSuccessPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
-    model = models.InternationalEUExitFormSuccessPage
+    model = great_international.InternationalEUExitFormSuccessPage
     subscriptions = []
 
 
 class InternationalCapitalInvestLandingPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
-    model = models.InternationalCapitalInvestLandingPage
+    model = capital_invest.InternationalCapitalInvestLandingPage
     subscriptions = [
-        models.CapitalInvestRegionPage
+        capital_invest.CapitalInvestRegionPage
     ]
 
 
 class CapitalInvestRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.CapitalInvestRegionPage
+    model = capital_invest.CapitalInvestRegionPage
     subscriptions = []
 
 
 class CapitalInvestOpportunityPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.CapitalInvestOpportunityPage
+    model = capital_invest.CapitalInvestOpportunityPage
     subscriptions = [
-        models.CapitalInvestOpportunityPage
+        capital_invest.CapitalInvestOpportunityPage
     ]
 
 
 class CapitalInvestOpportunityListingPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
-    model = models.CapitalInvestOpportunityListingPage
+    model = capital_invest.CapitalInvestOpportunityListingPage
     subscriptions = [
-        models.CapitalInvestOpportunityPage
+        capital_invest.CapitalInvestOpportunityPage
     ]
 
 
 class InvestInternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InvestInternationalHomePage
+    model = invest.InvestInternationalHomePage
     subscriptions = [
-        models.InternationalSectorPage,
-        models.InvestHighPotentialOpportunityDetailPage
+        great_international.InternationalSectorPage,
+        invest.InvestHighPotentialOpportunityDetailPage
     ]
 
 
 class InvestHighPotentialOpportunityFormPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
-    model = models.InvestHighPotentialOpportunityFormPage
+    model = invest.InvestHighPotentialOpportunityFormPage
     subscriptions = [
-        models.InvestHighPotentialOpportunityDetailPage,
+        invest.InvestHighPotentialOpportunityDetailPage,
     ]
 
 
 class InvestHighPotentialOpportunityDetailPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
-    model = models.InvestHighPotentialOpportunityDetailPage
+    model = invest.InvestHighPotentialOpportunityDetailPage
     subscriptions = [
-        models.InvestHighPotentialOpportunityDetailPage,
+        invest.InvestHighPotentialOpportunityDetailPage,
     ]
 
 
 class InvestHighPotentialOpportunityFormSuccessPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
-    model = models.InvestHighPotentialOpportunityFormSuccessPage
+    model = invest.InvestHighPotentialOpportunityFormSuccessPage
     subscriptions = [
-        models.InvestHighPotentialOpportunityDetailPage,
+        invest.InvestHighPotentialOpportunityDetailPage,
     ]
 
 
 class InvestRegionLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InvestRegionLandingPage
+    model = invest.InvestRegionLandingPage
     subscriptions = [
-        models.InvestSectorPage,
+        invest.InvestSectorPage,
     ]
 
 
 class InvestSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InvestSectorPage
+    model = invest.InvestSectorPage
     subscriptions = [
         # not a typo: each sector page contains a list of other sector pages
-        models.InvestSectorPage,
+        invest.InvestSectorPage,
     ]
 
 
 class InternationalTradeHomePageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InternationalTradeHomePage
+    model = find_a_supplier.InternationalTradeHomePage
     subscriptions = [
-        models.InternationalSectorPage
+        great_international.InternationalSectorPage
     ]
 
 
 class InternationalTradeIndustryContactPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
-    model = models.InternationalTradeIndustryContactPage
+    model = find_a_supplier.InternationalTradeIndustryContactPage
     subscriptions = [
-        models.InternationalSectorPage,
+        great_international.InternationalSectorPage,
     ]
