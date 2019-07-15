@@ -12,6 +12,7 @@
 ### Fixed Bugs
 - NOTICKET - Capital invest landing page image serializers use aspect ratio for card images
 - CMS-1737 - Fix 500 on user approval
+- NOTICKET - Upgrade Django to 2.2.3 to fix vulnerability alert
 
 
 ## [2019.06.27](https://github.com/uktrade/directory-cms/releases/tag/2019.06.27)
