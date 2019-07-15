@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from export_readiness.models import ArticlePage
 
+
 class CountryGuidePageSerializer(serializers.Serializer):
 
     def to_representation(self, obj):
