@@ -9,7 +9,7 @@ from export_readiness.models import ArticlePage, CountryGuidePage
 from activitystream.authentication import ActivityStreamAuthentication, \
     ActivityStreamHawkResponseMiddleware
 from activitystream.filters import PageFilter
-from activitystream.serializers import ArticlePageSerializer
+from activitystream.serializers import PageSerializer
 
 MAX_PER_PAGE = 25
 
@@ -42,19 +42,19 @@ class ActivityStreamView(ListAPIView):
                 (ArticlePage, CountryGuidePage)
             ).filter(live=True)
         )
-        articles_qs = filter.qs.specific(). \
+        page_qs = filter.qs.specific(). \
             order_by('last_published_at', 'id')[:MAX_PER_PAGE]
 
         items = {
             '@context': 'https://www.w3.org/ns/activitystreams',
             'type': 'Collection',
-            'orderedItems': ArticlePageSerializer(articles_qs, many=True).data
+            'orderedItems': PageSerializer(page_qs, many=True).data
         }
 
-        if not articles_qs:
+        if not page_qs:
             next_page = {}
         else:
-            last_article = articles_qs[len(articles_qs)-1]
+            last_article = page_qs[len(page_qs)-1]
             next_page = {
                 'next': self._build_after(
                     request, last_article.last_published_at, last_article.id)
