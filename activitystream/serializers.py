@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from export_readiness.models import ArticlePage
 
 class CountryGuidePageSerializer(serializers.Serializer):
 
@@ -46,7 +46,7 @@ class ArticlePageSerializer(serializers.Serializer):
 class PageSerializer(serializers.Serializer):
 
     def to_representation(self, obj):
-        if obj.__class__.__name__ == 'ArticlePage':
+        if isinstance(obj, ArticlePage):
             return ArticlePageSerializer(obj).data
         else:  # CountryGuidePage
             return CountryGuidePageSerializer(obj).data
