@@ -172,7 +172,6 @@ class InvestInternationalHomePagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
     ]
 
     edit_handler = make_translated_interface(
