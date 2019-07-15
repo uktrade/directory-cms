@@ -21,7 +21,7 @@ class Command(BaseCommand):
         parser.add_argument(
             '--servicename',
             help='Select international or domestic',
-            choices=['international', 'domestic']
+            choices=SERVICES_MAPPING
         )
 
     @no_translations
