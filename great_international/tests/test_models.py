@@ -197,6 +197,8 @@ def test_international_folder_page_append_parent_slug_only_on_creation():
 
 
 @pytest.mark.django_db
-def test_uses_tree_base_routing_always_true():
-    page = factories.InternationalArticlePageFactory()
+def test_uses_tree_base_routing_always_true(root_page):
+    page = factories.InternationalArticleListingPageFactory(
+        parent=root_page
+    )
     assert page.uses_tree_based_routing is True
