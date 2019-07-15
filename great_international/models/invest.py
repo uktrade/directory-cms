@@ -5,7 +5,6 @@ from directory_constants import slugs
 from core.models import (
     ExclusivePageMixin, WagtailAdminExclusivePageMixin, FormPageMetaClass)
 from core.model_fields import MarkdownField
-from core.mixins import ServiceHomepageMixin
 
 import great_international.panels.invest as panels
 
@@ -14,12 +13,10 @@ from .base import BaseInternationalPage
 
 class InvestInternationalHomePage(
     WagtailAdminExclusivePageMixin,
-    ServiceHomepageMixin,
     BaseInternationalPage,
     panels.InvestInternationalHomePagePanels,
 ):
-    slug_identity = slugs.INVEST_HOME_PAGE
-    view_path = ''
+    slug_identity = 'invest'
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
