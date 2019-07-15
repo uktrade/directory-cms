@@ -4,6 +4,7 @@
 
 ### Implemented enhancements
 - XOT-922 - Added Marketing Article Page template
+- No ticket - Split up model and admin panel code in great international app to make files much shorter and easier to work with
 - CI-304 - Gave opportunity page a related region page and a scale numerical value to use for filtering
 - CI-267 - Added cta text and link for sector page for related opportunities section
 - XOT-932 - Add Country Guide pages to search
