@@ -1,6 +1,10 @@
+from collections import namedtuple
+
 from rest_framework import serializers
 
 from core import fields
+from great_international.models.capital_invest import \
+    CapitalInvestOpportunityPage
 
 
 class PageTitleAndUrlSerializer(serializers.Serializer):
@@ -77,3 +81,33 @@ class ParentPageSerializerHelper(serializers.Serializer):
             context=self.context
         )
         return serializer.data
+
+
+class SameSectorOpportunitiesHelper(serializers.Serializer):
+    def get_same_sector_opportunity_pages_data_for(
+            self, instance, serializer, related_sectors
+    ):
+        page_type = CapitalInvestOpportunityPage
+
+        all_opportunity_pages = page_type.objects.live().public()
+
+        sector_with_opps = {}
+        for sectors in related_sectors:
+            for sector in sectors.items():
+                sector_with_opps[sector[1]['title']] = []
+
+        print('\n\n\n\n\n the dict ', sector_with_opps)
+
+        for sector in sector_with_opps.keys():
+            print('\n\n\n\n\n key ', sector)
+            for opportunity_page in all_opportunity_pages:
+                for related_sector in opportunity_page.related_sectors.all():
+                    if related_sector.related_sector.title == sector:
+                        serialized = serializer(
+                            opportunity_page,
+                            allow_null=True,
+                            context=self.context
+                        )
+                        sector_with_opps[sector].append(serialized.data)
+
+        return sector_with_opps
