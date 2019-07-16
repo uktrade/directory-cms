@@ -372,7 +372,8 @@ class CapitalInvestOpportunityPagePanels:
                     MultiFieldPanel([
                         ImageChooserPanel('sector_icon'),
                         FieldPanel('sector_heading'),
-                        FieldPanel('sector'),
+                        InlinePanel('related_sub_sectors',
+                                    label="Related Sectors"),
                     ]),
                     MultiFieldPanel([
                         ImageChooserPanel('investment_type_icon'),
