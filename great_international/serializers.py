@@ -376,7 +376,7 @@ class RelatedSubSectorSerializer(serializers.Serializer):
             return []
         serializer = MinimalPageSerializer(
             sector.specific)
-        return serializer.data
+        return serializer.data['heading']
 
 
 class RelatedOpportunitySerializer(serializers.Serializer):
