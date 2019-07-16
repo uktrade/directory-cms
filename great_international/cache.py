@@ -13,20 +13,20 @@ class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
     subscriptions = [
         great_international.InternationalArticlePage,
         great_international.InternationalCampaignPage,
-        capital_invest.CapitalInvestOpportunityPage
+        capital_invest.CapitalInvestOpportunityPage,
         capital_invest.CapitalInvestOpportunityListingPage,
-        models.InternationalSubSectorPage
+        great_international.InternationalSubSectorPage
     ]
 
 
 class InternationalSubSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InternationalSubSectorPage
+    model = great_international.InternationalSubSectorPage
     subscriptions = [
-        models.InternationalArticlePage,
-        models.InternationalCampaignPage,
-        models.CapitalInvestOpportunityPage,
-        models.CapitalInvestOpportunityListingPage,
-        models.InternationalSectorPage
+        great_international.InternationalArticlePage,
+        great_international.InternationalCampaignPage,
+        capital_invest.CapitalInvestOpportunityPage,
+        capital_invest.CapitalInvestOpportunityListingPage,
+        great_international.InternationalSubSectorPage
     ]
 
 
