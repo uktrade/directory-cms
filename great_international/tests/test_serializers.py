@@ -1,7 +1,7 @@
 import pytest
 
 from great_international.serializers import (
-    AbstractInternationalSectorPageSerializer,
+    BaseInternationalSectorPageSerializer,
     InternationalArticlePageSerializer,
     InternationalCampaignPageSerializer, InternationalHomePageSerializer,
     InternationalCuratedTopicLandingPageSerializer,
@@ -38,7 +38,7 @@ def test_sector_page_has_section_three_subsections(root_page, rf):
         slug='article-slug'
     )
 
-    serializer = AbstractInternationalSectorPageSerializer(
+    serializer = BaseInternationalSectorPageSerializer(
         instance=article,
         context={'request': rf.get('/')}
     )
@@ -57,7 +57,7 @@ def test_sector_page_has_section_two_subsections(root_page, rf):
         slug='article-slug'
     )
 
-    serializer = AbstractInternationalSectorPageSerializer(
+    serializer = BaseInternationalSectorPageSerializer(
         instance=article,
         context={'request': rf.get('/')}
     )
@@ -76,7 +76,7 @@ def test_sector_page_has_statistics(root_page, rf):
         slug='article-slug'
     )
 
-    serializer = AbstractInternationalSectorPageSerializer(
+    serializer = BaseInternationalSectorPageSerializer(
         instance=article,
         context={'request': rf.get('/')}
     )
@@ -116,7 +116,7 @@ def test_sector_page_related_pages_serializer_has_pages(root_page, rf):
         case_study_cta_page=case_study_cta_page
     )
 
-    serializer = AbstractInternationalSectorPageSerializer(
+    serializer = BaseInternationalSectorPageSerializer(
         instance=article,
         context={'request': rf.get('/')}
     )
@@ -534,7 +534,7 @@ def test_international_sector_page_gets_opps_with_sector_as_related(rf):
     for page in opportunity_serializer.data['related_sectors']:
         assert page['related_sector']['meta']['slug'] == 'sector'
 
-    sector_serializer = AbstractInternationalSectorPageSerializer(
+    sector_serializer = BaseInternationalSectorPageSerializer(
         instance=sector,
         context={'request': rf.get('/')}
     )
@@ -616,7 +616,7 @@ def test_international_sector_opportunity_null_case(rf):
     for page in opportunity_serializer.data['related_sectors']:
         assert page['related_sector']['meta']['slug'] == 'sectorA'
 
-    sector_serializer = AbstractInternationalSectorPageSerializer(
+    sector_serializer = BaseInternationalSectorPageSerializer(
         instance=sector_b,
         context={'request': rf.get('/')}
     )
@@ -652,7 +652,7 @@ def test_international_sector_opportunity_null_case2(rf):
     for page in opportunity_serializer.data['related_sectors']:
         assert page['related_sector'] == []
 
-    sector_serializer = AbstractInternationalSectorPageSerializer(
+    sector_serializer = BaseInternationalSectorPageSerializer(
         instance=sector,
         context={'request': rf.get('/')}
     )

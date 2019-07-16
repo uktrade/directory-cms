@@ -426,7 +426,7 @@ class PageWithRelatedPagesSerializer(BasePageSerializer):
         return serialized
 
 
-class AbstractInternationalSectorPageSerializer(
+class BaseInternationalSectorPageSerializer(
     PageWithRelatedPagesSerializer
 ):
 
@@ -782,7 +782,7 @@ class InternationalTopicLandingPageSerializer(
         sectors = self.get_child_pages_data_for(
             obj,
             InternationalSectorPage,
-            AbstractInternationalSectorPageSerializer
+            BaseInternationalSectorPageSerializer
         )
         sectors = sorted(sectors, key=lambda x: x['heading'])
         return articles + campaigns + guides + sectors
@@ -1329,7 +1329,7 @@ class InvestInternationalHomePageSerializer(BasePageSerializer):
 
     def get_sectors(self, instance):
         from .models.great_international import InternationalSectorPage
-        serializer = AbstractInternationalSectorPageSerializer(
+        serializer = BaseInternationalSectorPageSerializer(
             InternationalSectorPage.objects.live().order_by('heading'),
             many=True,
             allow_null=True,
@@ -1604,7 +1604,7 @@ class InternationalTradeHomePageSerializer(BasePageSerializer):
         queryset = InternationalSectorPage.objects.filter(
             live=True
         ).order_by('slug')[:3]
-        serializer = AbstractInternationalSectorPageSerializer(
+        serializer = BaseInternationalSectorPageSerializer(
             queryset,
             many=True,
             allow_null=True,
@@ -1626,7 +1626,7 @@ class InternationalTradeIndustryContactPageSerializer(BasePageSerializer):
 
     def get_industry_options(self, instance):
         queryset = InternationalSectorPage.objects.filter(live=True)
-        serializer = AbstractInternationalSectorPageSerializer(
+        serializer = BaseInternationalSectorPageSerializer(
             queryset,
             many=True,
             allow_null=True,

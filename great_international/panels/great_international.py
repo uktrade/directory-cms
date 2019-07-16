@@ -391,7 +391,7 @@ class InternationalHomePageOldPanels:
     )
 
 
-class AbstractInternationalSectorPagePanels:
+class BaseInternationalSectorPagePanels:
 
     content_panels = [
         MultiFieldPanel(

@@ -23,9 +23,9 @@ from . import capital_invest as capital_invest_models
 from .base import BaseInternationalPage
 
 
-class AbstractInternationalSectorPage(
+class BaseInternationalSectorPage(
     BaseInternationalPage,
-    panels.AbstractInternationalSectorPagePanels,
+    panels.BaseInternationalSectorPagePanels,
 ):
     class Meta:
         abstract = True
@@ -243,7 +243,7 @@ class AbstractInternationalSectorPage(
     )
 
 
-class InternationalSectorPage(AbstractInternationalSectorPage):
+class InternationalSectorPage(BaseInternationalSectorPage):
 
     class Meta:
         ordering = ['-heading']
@@ -257,7 +257,7 @@ class InternationalSectorPage(AbstractInternationalSectorPage):
         ]
 
 
-class InternationalSubSectorPage(AbstractInternationalSectorPage):
+class InternationalSubSectorPage(BaseInternationalSectorPage):
 
     parent_page_types = ['great_international.InternationalSectorPage']
 
