@@ -6,7 +6,7 @@ from core import fields as core_fields
 from core.serializers import (
     BasePageSerializer,
     ChildPagesSerializerHelper,
-    FormPageSerializerMetaclass)
+    FormPageSerializerMetaclass, ParentPageSerializerHelper)
 from invest.models import HighPotentialOpportunityDetailPage
 
 from .models.great_international import (
@@ -17,7 +17,7 @@ from .models.great_international import (
     InternationalGuideLandingPage,
     InternationalSectorPage,
     InternationalEUExitFormPage,
-)
+    InternationalSubSectorPage)
 from .models.invest import (
     InvestHighPotentialOpportunityFormPage,
     InvestHighPotentialOpportunityDetailPage,
@@ -573,6 +573,20 @@ class BaseInternationalSectorPageSerializer(
         return serializer.data['opportunities']
 
 
+class InternationalSubSectorPageSerializer(
+    BaseInternationalSectorPageSerializer,
+    ParentPageSerializerHelper
+):
+    parent = serializers.SerializerMethodField()
+
+    def get_parent(self, obj):
+        sector_parent = self.get_parent_page_data_for(
+            obj,
+            MinimalPageSerializer
+        )
+        return sector_parent
+
+
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
     article_title = serializers.CharField()
     article_subheading = serializers.CharField()
@@ -1119,6 +1133,29 @@ class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
             context=self.context
         )
         return serializer.data
+
+    sub_sector_with_parent = serializers.SerializerMethodField()
+
+    def get_sub_sector_with_parent(self, instance):
+        sector_with_parent = {}
+        queryset = InternationalSubSectorPage.objects.live().public()
+
+        if not queryset:
+            return []
+
+        serializer = InternationalSubSectorPageSerializer(
+            queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+
+        for sub_sector in serializer.data:
+            sector_with_parent.update(
+                {sub_sector['heading']: sub_sector['parent']['heading']}
+            )
+
+        return sector_with_parent
 
 
 class CapitalInvestOpportunityPageSerializer(
