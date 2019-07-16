@@ -9,7 +9,7 @@
 - CI-304 - Gave opportunity page a related region page and a scale numerical value to use for filtering
 - CI-267 - Added cta text and link for sector page for related opportunities section
 - CMS-1727 - Move region pages from Invest to International
-- CI-324 - Made AbstractSector page and sector and sub-sector page inherit from this and opportunity listing page filters by sub sector
+- CI-324 - Made `BaseInternationalSectorPage` and sector and new sub-sector page inherit from this and opportunity listing page filters by sub sector
 
 ### Fixed Bugs
 - NOTICKET - Capital invest landing page image serializers use aspect ratio for card images
