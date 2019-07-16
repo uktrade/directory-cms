@@ -27,8 +27,8 @@ from great_international.tests.factories import (
 from great_international.models.capital_invest import (
     CapitalInvestRelatedRegions,
     CapitalInvestHomesInEnglandCardFieldsSummary,
-    CapitalInvestRegionCardFieldsSummary, CapitalInvestRelatedSectors
-)
+    CapitalInvestRegionCardFieldsSummary, CapitalInvestRelatedSectors,
+    CapitalInvestRelatedSubSectors)
 
 
 @pytest.mark.django_db
