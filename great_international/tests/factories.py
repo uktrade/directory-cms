@@ -10,7 +10,7 @@ from great_international import models
 class InternationalSectorPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.InternationalSectorPage
+        model = models.great_international.InternationalSectorPage
 
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
@@ -176,7 +176,7 @@ class InternationalSubSectorPageFactory(wagtail_factories.PageFactory):
 class InternationalHomePageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.InternationalHomePage
+        model = models.great_international.InternationalHomePage
 
     hero_title = factory.fuzzy.FuzzyText(length=10)
     invest_title = factory.fuzzy.FuzzyText(length=10)
@@ -213,13 +213,13 @@ class InternationalHomePageFactory(wagtail_factories.PageFactory):
 class InternationalHomePageOldFactory(InternationalHomePageFactory):
 
     class Meta:
-        model = models.InternationalHomePageOld
+        model = models.great_international.InternationalHomePageOld
 
 
 class InternationalArticleListingPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.InternationalArticleListingPage
+        model = models.great_international.InternationalArticleListingPage
 
     landing_page_title = factory.fuzzy.FuzzyText(length=10)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
@@ -231,7 +231,7 @@ class InternationalArticleListingPageFactory(wagtail_factories.PageFactory):
 class InternationalArticlePageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.InternationalArticlePage
+        model = models.great_international.InternationalArticlePage
 
     article_title = factory.fuzzy.FuzzyText(length=10)
     article_teaser = factory.fuzzy.FuzzyText(length=10)
@@ -245,7 +245,7 @@ class InternationalArticlePageFactory(wagtail_factories.PageFactory):
 class InternationalCampaignPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.InternationalCampaignPage
+        model = models.great_international.InternationalCampaignPage
 
     campaign_teaser = factory.fuzzy.FuzzyText(length=10)
     campaign_heading = factory.fuzzy.FuzzyText(length=10)
@@ -269,7 +269,7 @@ class InternationalCampaignPageFactory(wagtail_factories.PageFactory):
 class InternationalTopicLandingPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.InternationalTopicLandingPage
+        model = models.great_international.InternationalTopicLandingPage
 
     landing_page_title = factory.fuzzy.FuzzyText(length=10)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
@@ -297,7 +297,7 @@ class InternationalCuratedTopicLandingPageFactory(
 ):
 
     class Meta:
-        model = models.InternationalCuratedTopicLandingPage
+        model = models.great_international.InternationalCuratedTopicLandingPage
 
     display_title = factory.fuzzy.FuzzyText(length=10)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
@@ -330,7 +330,7 @@ class InternationalCuratedTopicLandingPageFactory(
 class InternationalGuideLandingPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.InternationalGuideLandingPage
+        model = models.great_international.InternationalGuideLandingPage
 
     display_title = factory.fuzzy.FuzzyText(length=10)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
@@ -355,7 +355,7 @@ class InternationalGuideLandingPageFactory(wagtail_factories.PageFactory):
 class InternationalRegionPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.InternationalRegionPage
+        model = models.great_international.InternationalRegionPage
 
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
@@ -365,7 +365,7 @@ class InternationalRegionPageFactory(wagtail_factories.PageFactory):
 class InternationalLocalisedFolderPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.InternationalLocalisedFolderPage
+        model = models.great_international.InternationalLocalisedFolderPage
 
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
@@ -377,7 +377,7 @@ class InternationalCapitalInvestLandingPageFactory(
 ):
 
     class Meta:
-        model = models.InternationalCapitalInvestLandingPage
+        model = models.capital_invest.InternationalCapitalInvestLandingPage
 
     hero_title = factory.fuzzy.FuzzyText(length=10)
     hero_image = factory.SubFactory(
@@ -392,7 +392,7 @@ class InternationalCapitalInvestLandingPageFactory(
 class CapitalInvestRegionPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.CapitalInvestRegionPage
+        model = models.capital_invest.CapitalInvestRegionPage
 
     hero_title = factory.fuzzy.FuzzyText(length=10)
     hero_image = factory.SubFactory(
@@ -409,7 +409,7 @@ class CapitalInvestRegionPageFactory(wagtail_factories.PageFactory):
 class CapitalInvestOpportunityPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.CapitalInvestOpportunityPage
+        model = models.capital_invest.CapitalInvestOpportunityPage
 
     breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
     hero_title = factory.fuzzy.FuzzyText(length=10)
@@ -430,7 +430,7 @@ class CapitalInvestOpportunityListingPageFactory(
     wagtail_factories.PageFactory
 ):
     class Meta:
-        model = models.CapitalInvestOpportunityListingPage
+        model = models.capital_invest.CapitalInvestOpportunityListingPage
 
     breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
     search_results_title = factory.fuzzy.FuzzyText(length=10)
@@ -442,7 +442,7 @@ class CapitalInvestOpportunityListingPageFactory(
 class InvestInternationalHomePageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.InvestInternationalHomePage
+        model = models.invest.InvestInternationalHomePage
 
     breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
     heading_en_gb = factory.fuzzy.FuzzyText(length=100)
@@ -474,7 +474,7 @@ class InvestHighPotentialOpportunityFormPageFactory(
     wagtail_factories.PageFactory
 ):
     class Meta:
-        model = models.InvestHighPotentialOpportunityFormPage
+        model = models.invest.InvestHighPotentialOpportunityFormPage
 
     breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
     heading = factory.fuzzy.FuzzyText(length=200)
@@ -507,7 +507,7 @@ class InvestHighPotentialOpportunityDetailPageFactory(
 ):
 
     class Meta:
-        model = models.InvestHighPotentialOpportunityDetailPage
+        model = models.invest.InvestHighPotentialOpportunityDetailPage
 
     breadcrumbs_label = factory.fuzzy.FuzzyText(length=50)
     heading = factory.fuzzy.FuzzyText(length=50)
@@ -595,7 +595,7 @@ class InvestHighPotentialOpportunityDetailPageFactory(
 class InvestSectorPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.InvestSectorPage
+        model = models.invest.InvestSectorPage
 
     description_en_gb = factory.fuzzy.FuzzyText(length=100)
     heading_en_gb = factory.fuzzy.FuzzyText(length=100)
@@ -617,7 +617,7 @@ class InvestSectorPageFactory(wagtail_factories.PageFactory):
 class InvestRegionLandingPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.InvestRegionLandingPage
+        model = models.invest.InvestRegionLandingPage
 
     heading_en_gb = factory.fuzzy.FuzzyText(length=100)
     hero_image = factory.SubFactory(
@@ -628,7 +628,7 @@ class InvestRegionLandingPageFactory(wagtail_factories.PageFactory):
 class InternationalTradeHomePageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.InternationalTradeHomePage
+        model = models.find_a_supplier.InternationalTradeHomePage
 
     hero_text_en_gb = factory.fuzzy.FuzzyText(length=255)
     breadcrumbs_label_en_gb = factory.fuzzy.FuzzyText(length=50)
@@ -668,7 +668,7 @@ class InternationalTradeIndustryContactPageFactory(
 ):
 
     class Meta:
-        model = models.InternationalTradeIndustryContactPage
+        model = models.find_a_supplier.InternationalTradeIndustryContactPage
 
     breadcrumbs_label_en_gb = factory.fuzzy.FuzzyText(length=50)
     introduction_text_en_gb = factory.fuzzy.FuzzyText(length=255)

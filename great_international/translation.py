@@ -1,7 +1,12 @@
 from modeltranslation.decorators import register
 
 from core.translation import BaseTranslationOptions
-from great_international import models
+from great_international.models import (
+    great_international,
+    invest,
+    capital_invest,
+    find_a_supplier,
+)
 
 
 @register(models.AbstractInternationalSectorPage)
@@ -11,7 +16,7 @@ class AbstractInternationalSectorPageTranslationOptions(
     fields = []
 
 
-@register(models.InternationalSectorPage)
+@register(great_international.InternationalSectorPage)
 class InternationalSectorPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'heading',
@@ -135,7 +140,7 @@ class InternationalSubSectorPageTranslationOptions(BaseTranslationOptions):
     )
 
 
-@register(models.InternationalArticlePage)
+@register(great_international.InternationalArticlePage)
 class InternationalArticlePageTranslationOptions(BaseTranslationOptions):
     fields = (
         'article_title',
@@ -149,7 +154,7 @@ class InternationalArticlePageTranslationOptions(BaseTranslationOptions):
     )
 
 
-@register(models.InternationalCampaignPage)
+@register(great_international.InternationalCampaignPage)
 class InternationalCampaignPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'campaign_subheading',
@@ -186,8 +191,8 @@ class InternationalCampaignPageTranslationOptions(BaseTranslationOptions):
     )
 
 
-@register(models.InternationalHomePage)
-@register(models.InternationalHomePageOld)
+@register(great_international.InternationalHomePage)
+@register(great_international.InternationalHomePageOld)
 class InternationalHomePageTranslationOptions(BaseTranslationOptions):
     fields = (
         'hero_title',
@@ -243,7 +248,7 @@ class InternationalHomePageTranslationOptions(BaseTranslationOptions):
     )
 
 
-@register(models.InternationalArticleListingPage)
+@register(great_international.InternationalArticleListingPage)
 class InternationalArticleListingPage(BaseTranslationOptions):
     fields = (
         'landing_page_title',
@@ -253,12 +258,12 @@ class InternationalArticleListingPage(BaseTranslationOptions):
     )
 
 
-@register(models.InternationalRegionPage)
+@register(great_international.InternationalRegionPage)
 class InternationalRegionPageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
-@register(models.InternationalTopicLandingPage)
+@register(great_international.InternationalTopicLandingPage)
 class InternationalTopicLandingPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'landing_page_title',
@@ -267,7 +272,7 @@ class InternationalTopicLandingPageTranslationOptions(BaseTranslationOptions):
     )
 
 
-@register(models.InternationalCuratedTopicLandingPage)
+@register(great_international.InternationalCuratedTopicLandingPage)
 class InternationalCuratedTopicLandingPageTranslationOptions(
     BaseTranslationOptions
 ):
@@ -294,7 +299,7 @@ class InternationalCuratedTopicLandingPageTranslationOptions(
     )
 
 
-@register(models.InternationalGuideLandingPage)
+@register(great_international.InternationalGuideLandingPage)
 class InternationalGuideLandingPageTranslationOptions(
     BaseTranslationOptions
 ):
@@ -318,26 +323,26 @@ class InternationalGuideLandingPageTranslationOptions(
     )
 
 
-@register(models.InternationalLocalisedFolderPage)
+@register(great_international.InternationalLocalisedFolderPage)
 class InternationalRegionalFolderPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = []
 
 
-@register(models.InternationalEUExitFormPage)
+@register(great_international.InternationalEUExitFormPage)
 class InternationalEUExitFormPageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
-@register(models.InternationalEUExitFormSuccessPage)
+@register(great_international.InternationalEUExitFormSuccessPage)
 class InternationalEUExitFormSuccessPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = []
 
 
-@register(models.InternationalCapitalInvestLandingPage)
+@register(capital_invest.InternationalCapitalInvestLandingPage)
 class InternationalCapitalInvestLandingPageTranslationOptions(
     BaseTranslationOptions
 ):
@@ -383,7 +388,7 @@ class InternationalCapitalInvestLandingPageTranslationOptions(
     )
 
 
-@register(models.CapitalInvestRegionPage)
+@register(capital_invest.CapitalInvestRegionPage)
 class CapitalInvestRegionPageTranslationOptions(
     BaseTranslationOptions
 ):
@@ -451,7 +456,7 @@ class CapitalInvestRegionPageTranslationOptions(
     )
 
 
-@register(models.CapitalInvestOpportunityListingPage)
+@register(capital_invest.CapitalInvestOpportunityListingPage)
 class CapitalInvestOpportunityListingPageTranslationOptions(
         BaseTranslationOptions):
     fields = (
@@ -460,7 +465,7 @@ class CapitalInvestOpportunityListingPageTranslationOptions(
     )
 
 
-@register(models.CapitalInvestOpportunityPage)
+@register(capital_invest.CapitalInvestOpportunityPage)
 class CapitalInvestOpportunityPageTranslationOptions(
     BaseTranslationOptions
 ):
@@ -521,32 +526,32 @@ class CapitalInvestOpportunityPageTranslationOptions(
     )
 
 
-@register(models.CapitalInvestRelatedRegions)
-class RelatedRegionsTranslationOptions(
+@register(capital_invest.CapitalInvestRelatedRegions)
+class RelatedRegionsSerializer(
         BaseTranslationOptions):
     fields = (
         'page',
     )
 
 
-@register(models.CapitalInvestRelatedSectors)
-class RelatedSectorsTranslationOptions(
+@register(capital_invest.CapitalInvestRelatedSectors)
+class RelatedSectorsSerializer(
         BaseTranslationOptions):
     fields = (
         'page',
     )
 
 
-@register(models.CapitalInvestRegionCardFieldsSummary)
-class CapitalInvestRegionCardFieldsSummaryTranslationOptions(
+@register(capital_invest.CapitalInvestRegionCardFieldsSummary)
+class CapitalInvestRegionCardFieldSerializer(
         BaseTranslationOptions):
     fields = (
         'page',
     )
 
 
-@register(models.CapitalInvestHomesInEnglandCardFieldsSummary)
-class CapitalInvestHomesInEnglandCardFieldsSummaryTranslationOptions(
+@register(capital_invest.CapitalInvestHomesInEnglandCardFieldsSummary)
+class CapitalInvestHomesInEnglandCardFieldsSummarySerializer(
         BaseTranslationOptions):
     fields = (
         'page',
@@ -561,7 +566,7 @@ class CapitalInvestRelatedSubSectorsTranslationOptions(
     )
 
 
-@register(models.InvestInternationalHomePage)
+@register(invest.InvestInternationalHomePage)
 class InvestHomePageTranslation(BaseTranslationOptions):
     fields = (
         'breadcrumbs_label',
@@ -647,14 +652,14 @@ class InvestHomePageTranslation(BaseTranslationOptions):
     )
 
 
-@register(models.InvestHighPotentialOpportunityFormPage)
+@register(invest.InvestHighPotentialOpportunityFormPage)
 class HighPotentialOpportunityFormPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = []
 
 
-@register(models.InvestHighPotentialOpportunityDetailPage)
+@register(invest.InvestHighPotentialOpportunityDetailPage)
 class HighPotentialOpportunityDetailPageTranslationOptions(
     BaseTranslationOptions
 ):
@@ -712,14 +717,14 @@ class HighPotentialOpportunityDetailPageTranslationOptions(
     )
 
 
-@register(models.InvestHighPotentialOpportunityFormSuccessPage)
+@register(invest.InvestHighPotentialOpportunityFormSuccessPage)
 class HighPotentialOpportunityFormSuccessPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = []
 
 
-@register(models.InvestSectorPage)
+@register(invest.InvestSectorPage)
 class InvestSectorPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'description',
@@ -758,14 +763,14 @@ class InvestSectorPageTranslationOptions(BaseTranslationOptions):
     )
 
 
-@register(models.InvestRegionLandingPage)
+@register(invest.InvestRegionLandingPage)
 class RegionLandingPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'heading',
     )
 
 
-@register(models.InternationalTradeHomePage)
+@register(find_a_supplier.InternationalTradeHomePage)
 class InternationalTradeHomePageTranslationOptions(BaseTranslationOptions):
     fields = (
         'breadcrumbs_label',
@@ -789,7 +794,7 @@ class InternationalTradeHomePageTranslationOptions(BaseTranslationOptions):
     )
 
 
-@register(models.InternationalTradeIndustryContactPage)
+@register(find_a_supplier.InternationalTradeIndustryContactPage)
 class InternationalTradeIndustryContactPageTranslationOptions(
     BaseTranslationOptions
 ):

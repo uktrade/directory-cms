@@ -3,6 +3,8 @@
 ## Pre-release
 
 ### Implemented enhancements
+- CMS-1664 - Update invest homepage model to use correct new url for tree based routing
+- No ticket - Split up model and admin panel code in great international app to make files much shorter and easier to work with
 - XOT-922 Added Marketing Article Page template
 - CI-304 - Gave opportunity page a related region page and a scale numerical value to use for filtering
 - CI-267 - Added cta text and link for sector page for related opportunities section
@@ -12,6 +14,7 @@
 ### Fixed Bugs
 - NOTICKET - Capital invest landing page image serializers use aspect ratio for card images
 - CMS-1737 - Fix 500 on user approval
+- NOTICKET - Upgrade Django to 2.2.3 to fix vulnerability alert
 
 
 ## [2019.06.27](https://github.com/uktrade/directory-cms/releases/tag/2019.06.27)

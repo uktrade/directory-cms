@@ -1,0 +1,642 @@
+from django.db import models
+
+from directory_constants import slugs
+
+from core.models import (
+    ExclusivePageMixin, WagtailAdminExclusivePageMixin, FormPageMetaClass)
+from core.model_fields import MarkdownField
+
+import great_international.panels.invest as panels
+
+from .base import BaseInternationalPage
+
+
+class InvestInternationalHomePage(
+    WagtailAdminExclusivePageMixin,
+    BaseInternationalPage,
+    panels.InvestInternationalHomePagePanels,
+):
+    slug_identity = 'invest'
+
+    breadcrumbs_label = models.CharField(max_length=50)
+    heading = models.CharField(max_length=255)
+    sub_heading = models.CharField(max_length=255)
+    hero_call_to_action_text = models.CharField(max_length=255, blank=True)
+    hero_call_to_action_url = models.CharField(max_length=255, blank=True)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    benefits_section_title = models.CharField(max_length=255)
+    benefits_section_intro = models.TextField(max_length=255, blank=True)
+    benefits_section_content = MarkdownField(blank=True)
+    benefits_section_img = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name="Benefits section image"
+    )
+
+    capital_invest_section_title = models.CharField(
+        max_length=255
+    )
+    capital_invest_section_content = MarkdownField(
+        blank=True
+    )
+    capital_invest_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    eu_exit_section_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="EU exit section title"
+    )
+
+    eu_exit_section_content = MarkdownField(
+        blank=True,
+        verbose_name="EU exit section content"
+    )
+
+    eu_exit_section_call_to_action_text = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="EU exit section button text"
+    )
+
+    eu_exit_section_call_to_action_url = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="EU exit section button url"
+    )
+
+    eu_exit_section_img = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name="EU exit section image"
+    )
+
+    # subsections
+    subsection_title_one = models.CharField(max_length=255, blank=True)
+    subsection_content_one = MarkdownField(blank=True)
+
+    subsection_title_two = models.CharField(max_length=255, blank=True)
+    subsection_content_two = MarkdownField(blank=True)
+
+    subsection_title_three = models.CharField(max_length=255, blank=True)
+    subsection_content_three = MarkdownField(blank=True)
+
+    subsection_title_four = models.CharField(max_length=255, blank=True)
+    subsection_content_four = MarkdownField(blank=True)
+
+    subsection_title_five = models.CharField(max_length=255, blank=True)
+    subsection_content_five = MarkdownField(blank=True)
+
+    subsection_title_six = models.CharField(max_length=255, blank=True)
+    subsection_content_six = MarkdownField(blank=True)
+
+    subsection_title_seven = models.CharField(max_length=255, blank=True)
+    subsection_content_seven = MarkdownField(blank=True)
+
+    sector_title = models.TextField(
+        default="Discover UK Industries",
+        max_length=255)
+
+    sector_button_text = models.TextField(
+        default="See more industries",
+        max_length=255)
+
+    sector_button_url = models.CharField(
+        max_length=255)
+
+    sector_intro = models.TextField(max_length=255, blank=True)
+
+    hpo_title = models.CharField(
+        max_length=255,
+        verbose_name="High potential opportunity section title"
+    )
+    hpo_intro = models.TextField(
+        max_length=255,
+        blank=True,
+        verbose_name="High potential opportunity section intro"
+    )
+
+    setup_guide_title = models.CharField(
+        default='Set up an overseas business in the UK',
+        max_length=255)
+
+    setup_guide_lead_in = models.TextField(
+        blank=True,
+        null=True)
+
+    setup_guide_content = MarkdownField(blank=True)
+    setup_guide_img = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name="Setup guide image"
+    )
+    setup_guide_call_to_action_url = models.CharField(max_length=255)
+
+    isd_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Investment Support Directory section image'
+    )
+    isd_section_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Investment Support Directory section title'
+    )
+    isd_section_text = MarkdownField(
+        max_length=255,
+        blank=True,
+        verbose_name='Investment Support Directory section text'
+    )
+
+    how_we_help_title = models.CharField(default='How we help', max_length=255)
+    how_we_help_lead_in = models.TextField(blank=True, null=True)
+    # how we help
+    how_we_help_text_one = models.CharField(max_length=255)
+    how_we_help_icon_one = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    how_we_help_text_two = models.CharField(max_length=255)
+    how_we_help_icon_two = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    how_we_help_text_three = models.CharField(max_length=255)
+    how_we_help_icon_three = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    how_we_help_text_four = models.CharField(max_length=255)
+    how_we_help_icon_four = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    how_we_help_text_five = models.CharField(max_length=255)
+    how_we_help_icon_five = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    how_we_help_text_six = models.CharField(max_length=255, blank=True)
+    how_we_help_icon_six = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    contact_section_title = models.CharField(max_length=255)
+    contact_section_content = models.TextField(max_length=255, blank=True)
+    contact_section_call_to_action_text = models.CharField(max_length=255)
+    contact_section_call_to_action_url = models.CharField(max_length=255)
+
+
+class InvestHighPotentialOpportunityFormPage(
+    WagtailAdminExclusivePageMixin,
+    BaseInternationalPage,
+    metaclass=FormPageMetaClass,
+):
+    # metaclass creates <field_name>_label and <field_name>_help_text
+    form_field_names = [
+        'full_name',
+        'role_in_company',
+        'email_address',
+        'phone_number',
+        'company_name',
+        'website_url',
+        'country',
+        'company_size',
+        'opportunities',
+        'comment',
+    ]
+
+    slug_identity = slugs.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM
+    full_path_override = 'high-potential-opportunities/rail/contact/'
+
+    heading = models.CharField(max_length=255)
+    sub_heading = models.CharField(max_length=255)
+    breadcrumbs_label = models.CharField(max_length=50)
+
+    content_panels_before_form = \
+        panels.InvestHighPotentialOpportunityFormPagePanels.content_panels_before_form  # noqa
+    content_panels_after_form = \
+        panels.InvestHighPotentialOpportunityFormPagePanels.content_panels_after_form  # noqa
+    settings_panels = \
+        panels.InvestHighPotentialOpportunityFormPagePanels.settings_panels
+
+
+class InvestHighPotentialOpportunityDetailPage(
+    BaseInternationalPage,
+    panels.InvestHighPotentialOpportunityDetailPagePanels,
+):
+    subpage_types = ['invest.HighPotentialOpportunityDetailPage']
+    view_path = 'high-potential-opportunities/'
+
+    breadcrumbs_label = models.CharField(max_length=50)
+    heading = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    featured = models.BooleanField(default=True)
+    description = models.TextField(
+        blank=True,
+        help_text="This is the description shown when the HPO "
+                  "is featured on another page i.e. the Invest Home Page"
+    )
+
+    contact_proposition = MarkdownField(
+        blank=False,
+        verbose_name='Body text',
+    )
+    contact_button = models.CharField(max_length=500)
+    proposition_one = MarkdownField(blank=False)
+    proposition_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    proposition_one_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    opportunity_list_title = models.CharField(max_length=300)
+    opportunity_list_item_one = MarkdownField()
+    opportunity_list_item_two = MarkdownField()
+    opportunity_list_item_three = MarkdownField(blank=True)
+    opportunity_list_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    proposition_two = MarkdownField(blank=False)
+    proposition_two_list_item_one = MarkdownField()
+    proposition_two_list_item_two = MarkdownField()
+    proposition_two_list_item_three = MarkdownField()
+    proposition_two_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    proposition_two_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    competitive_advantages_title = models.CharField(
+        max_length=300,
+        verbose_name='Body text',
+    )
+    competitive_advantages_list_item_one = MarkdownField()
+    competitive_advantages_list_item_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    competitive_advantages_list_item_two = MarkdownField()
+    competitive_advantages_list_item_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    competitive_advantages_list_item_three = MarkdownField()
+    competitive_advantages_list_item_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    testimonial = MarkdownField(blank=True)
+    testimonial_background = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Background image',
+    )
+    companies_list_text = MarkdownField()
+    companies_list_item_image_one = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    companies_list_item_image_two = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    companies_list_item_image_three = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    companies_list_item_image_four = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    companies_list_item_image_five = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    companies_list_item_image_six = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    companies_list_item_image_seven = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    companies_list_item_image_eight = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    case_study_list_title = models.CharField(max_length=300)
+    case_study_one_text = MarkdownField(blank=True)
+    case_study_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    case_study_two_text = MarkdownField(blank=True)
+    case_study_two_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    case_study_three_text = MarkdownField(blank=True)
+    case_study_three_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    case_study_four_text = MarkdownField(blank=True)
+    case_study_four_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    other_opportunities_title = models.CharField(
+        max_length=300,
+        verbose_name='Title'
+    )
+    pdf_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    summary_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text=(
+            'Image used on the opportunity listing page for this opportunity'
+        ),
+        verbose_name='Image',
+    )
+
+
+class InvestHighPotentialOpportunityFormSuccessPage(
+    BaseInternationalPage,
+    panels.InvestHighPotentialOpportunityFormSuccessPagePanels,
+):
+    view_path = 'high-potential-opportunities/rail/contact/'
+    slug_identity = slugs.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SUCCESS
+
+    breadcrumbs_label = models.CharField(max_length=50)
+    heading = models.CharField(
+        max_length=255,
+        verbose_name='section title'
+    )
+    sub_heading = models.CharField(
+        max_length=255,
+        verbose_name='section body',
+    )
+    next_steps_title = models.CharField(
+        max_length=255,
+        verbose_name='section title'
+    )
+    next_steps_body = models.CharField(
+        max_length=255,
+        verbose_name='section body',
+
+    )
+    documents_title = models.CharField(
+        max_length=255,
+        verbose_name='section title'
+    )
+    documents_body = models.CharField(
+        max_length=255,
+        verbose_name='section body',
+    )
+
+
+class InvestRegionLandingPage(
+    ExclusivePageMixin,
+    BaseInternationalPage,
+    panels.InvestRegionLandingPagePanels,
+):
+    subpage_types = ['great_international.InvestSectorPage']
+    slug_override = 'invest-uk-regions'
+
+    # page fields
+    heading = models.CharField(max_length=255)
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+
+class InvestSectorPage(
+    BaseInternationalPage,
+    panels.InvestSectorPagePanels,
+):
+    # Related sector are implemented as subpages
+    subpage_types = ['great_international.InvestSectorPage']
+
+    featured = models.BooleanField(default=False)
+    description = models.TextField(
+        help_text="This is the description shown when the "
+                  "sector is featured on another page i.e. "
+                  "the Invest Home Page"
+    )  # appears in card on external pages
+
+    # page fields
+    heading = models.CharField(max_length=255)
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    pullout_text = MarkdownField(blank=True, null=True)
+    pullout_stat = models.CharField(max_length=255, blank=True, null=True)
+    pullout_stat_text = models.CharField(max_length=255, blank=True, null=True)
+
+    subsection_title_one = models.CharField(max_length=200)
+    subsection_content_one = MarkdownField()
+    subsection_map_one = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_two = models.CharField(max_length=200)
+    subsection_content_two = MarkdownField()
+    subsection_map_two = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_three = models.CharField(max_length=200, blank=True)
+    subsection_content_three = MarkdownField(blank=True)
+    subsection_map_three = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_four = models.CharField(max_length=200, blank=True)
+    subsection_content_four = MarkdownField(blank=True)
+    subsection_map_four = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_five = models.CharField(max_length=200, blank=True)
+    subsection_content_five = MarkdownField(blank=True)
+    subsection_map_five = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_six = models.CharField(max_length=200, blank=True)
+    subsection_content_six = MarkdownField(blank=True)
+    subsection_map_six = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    subsection_title_seven = models.CharField(max_length=200, blank=True)
+    subsection_content_seven = MarkdownField(blank=True)
+    subsection_map_seven = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
