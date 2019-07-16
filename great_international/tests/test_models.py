@@ -79,6 +79,10 @@ def test_models_hierarchy():
         .allowed_subpage_models() == [
             capital_invest.CapitalInvestOpportunityPage,
         ]
+    assert great_international.InternationalSectorPage\
+        .allowed_subpage_models() == [
+            great_international.InternationalSubSectorPage,
+        ]
 
 
 @pytest.mark.django_db

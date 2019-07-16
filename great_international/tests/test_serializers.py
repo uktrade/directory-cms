@@ -1,7 +1,8 @@
 import pytest
 
 from great_international.serializers import (
-    InternationalSectorPageSerializer, InternationalArticlePageSerializer,
+    BaseInternationalSectorPageSerializer,
+    InternationalArticlePageSerializer,
     InternationalCampaignPageSerializer, InternationalHomePageSerializer,
     InternationalCuratedTopicLandingPageSerializer,
     InternationalGuideLandingPageSerializer,
@@ -20,13 +21,14 @@ from great_international.tests.factories import (
     InternationalCapitalInvestLandingPageFactory,
     CapitalInvestOpportunityPageFactory,
     InvestHighPotentialOpportunityFormPageFactory,
-    CapitalInvestOpportunityListingPageFactory)
+    CapitalInvestOpportunityListingPageFactory,
+    InternationalSubSectorPageFactory, InternationalTopicLandingPageFactory)
 
 from great_international.models.capital_invest import (
     CapitalInvestRelatedRegions,
     CapitalInvestHomesInEnglandCardFieldsSummary,
-    CapitalInvestRegionCardFieldsSummary, CapitalInvestRelatedSectors
-)
+    CapitalInvestRegionCardFieldsSummary, CapitalInvestRelatedSectors,
+    CapitalInvestRelatedSubSectors)
 
 
 @pytest.mark.django_db
@@ -36,7 +38,7 @@ def test_sector_page_has_section_three_subsections(root_page, rf):
         slug='article-slug'
     )
 
-    serializer = InternationalSectorPageSerializer(
+    serializer = BaseInternationalSectorPageSerializer(
         instance=article,
         context={'request': rf.get('/')}
     )
@@ -55,7 +57,7 @@ def test_sector_page_has_section_two_subsections(root_page, rf):
         slug='article-slug'
     )
 
-    serializer = InternationalSectorPageSerializer(
+    serializer = BaseInternationalSectorPageSerializer(
         instance=article,
         context={'request': rf.get('/')}
     )
@@ -74,7 +76,7 @@ def test_sector_page_has_statistics(root_page, rf):
         slug='article-slug'
     )
 
-    serializer = InternationalSectorPageSerializer(
+    serializer = BaseInternationalSectorPageSerializer(
         instance=article,
         context={'request': rf.get('/')}
     )
@@ -114,7 +116,7 @@ def test_sector_page_related_pages_serializer_has_pages(root_page, rf):
         case_study_cta_page=case_study_cta_page
     )
 
-    serializer = InternationalSectorPageSerializer(
+    serializer = BaseInternationalSectorPageSerializer(
         instance=article,
         context={'request': rf.get('/')}
     )
@@ -504,7 +506,7 @@ def test_opportunity_page_can_add_sector_as_related(rf):
 @pytest.mark.django_db
 def test_international_sector_page_gets_opps_with_sector_as_related(rf):
 
-    guide_landing_page = InternationalGuideLandingPageFactory(
+    guide_landing_page = InternationalTopicLandingPageFactory(
         parent=None,
         slug='page-slug',
     )
@@ -532,7 +534,7 @@ def test_international_sector_page_gets_opps_with_sector_as_related(rf):
     for page in opportunity_serializer.data['related_sectors']:
         assert page['related_sector']['meta']['slug'] == 'sector'
 
-    sector_serializer = InternationalSectorPageSerializer(
+    sector_serializer = BaseInternationalSectorPageSerializer(
         instance=sector,
         context={'request': rf.get('/')}
     )
@@ -614,7 +616,7 @@ def test_international_sector_opportunity_null_case(rf):
     for page in opportunity_serializer.data['related_sectors']:
         assert page['related_sector']['meta']['slug'] == 'sectorA'
 
-    sector_serializer = InternationalSectorPageSerializer(
+    sector_serializer = BaseInternationalSectorPageSerializer(
         instance=sector_b,
         context={'request': rf.get('/')}
     )
@@ -650,7 +652,7 @@ def test_international_sector_opportunity_null_case2(rf):
     for page in opportunity_serializer.data['related_sectors']:
         assert page['related_sector'] == []
 
-    sector_serializer = InternationalSectorPageSerializer(
+    sector_serializer = BaseInternationalSectorPageSerializer(
         instance=sector,
         context={'request': rf.get('/')}
     )
@@ -699,3 +701,60 @@ def test_opportunity_listing_page_getting_opportunities_null_case(rf):
     )
 
     assert opportunity_listing_serializer.data['opportunity_list'] == []
+
+
+@pytest.mark.django_db
+def test_opportunity_page_can_add_sub_sector_as_related(rf):
+
+    guide_landing_page = InternationalTopicLandingPageFactory(
+        parent=None,
+        slug='page-slug',
+    )
+
+    sector = InternationalSectorPageFactory(
+        parent=guide_landing_page,
+        slug='sector'
+    )
+
+    sub_sector = InternationalSubSectorPageFactory(
+        parent=sector,
+        heading='sub_sector_heading',
+        slug='sub_sector'
+    )
+
+    related_sub_sector = CapitalInvestRelatedSubSectors(
+        related_sub_sector=sub_sector
+    )
+
+    opportunity = CapitalInvestOpportunityPageFactory(
+        parent=None,
+        slug='opp',
+        related_sub_sectors=[related_sub_sector]
+    )
+
+    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
+        instance=opportunity,
+        context={'request': rf.get('/')}
+    )
+
+    for sub_sector in opportunity_serializer.data['sub_sectors']:
+        assert sub_sector == 'sub_sector_heading'
+
+
+@pytest.mark.django_db
+def test_opportunity_page_can_add_sub_sector_as_related_null_case(rf):
+
+    related_sub_sector = CapitalInvestRelatedSubSectors()
+
+    opportunity = CapitalInvestOpportunityPageFactory(
+        parent=None,
+        slug='opp',
+        related_sub_sectors=[related_sub_sector]
+    )
+
+    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
+        instance=opportunity,
+        context={'request': rf.get('/')}
+    )
+
+    assert opportunity_serializer.data['sub_sectors'] == [[]]
