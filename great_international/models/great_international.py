@@ -23,12 +23,12 @@ from . import capital_invest as capital_invest_models
 from .base import BaseInternationalPage
 
 
-class InternationalSectorPage(
+class AbstractInternationalSectorPage(
     BaseInternationalPage,
-    panels.InternationalSectorPagePanels,
+    panels.AbstractInternationalSectorPagePanels,
 ):
     class Meta:
-        ordering = ['-heading']
+        abstract = True
 
     parent_page_types = ['great_international.InternationalTopicLandingPage']
     subpage_types = []
@@ -241,6 +241,25 @@ class InternationalSectorPage(
         max_length=255,
         blank=True
     )
+
+
+class InternationalSectorPage(AbstractInternationalSectorPage):
+
+    class Meta:
+        ordering = ['-heading']
+
+    parent_page_types = ['great_international.InternationalTopicLandingPage']
+
+    @classmethod
+    def allowed_subpage_models(cls):
+        return [
+            InternationalSubSectorPage
+        ]
+
+
+class InternationalSubSectorPage(AbstractInternationalSectorPage):
+
+    parent_page_types = ['great_international.InternationalSectorPage']
 
 
 class InternationalHomePage(

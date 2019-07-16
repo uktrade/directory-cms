@@ -9,7 +9,7 @@ from great_international.models import (
 )
 
 
-@register(models.AbstractInternationalSectorPage)
+@register(great_international.AbstractInternationalSectorPage)
 class AbstractInternationalSectorPageTranslationOptions(
     BaseTranslationOptions
 ):
@@ -78,7 +78,7 @@ class InternationalSectorPageTranslationOptions(BaseTranslationOptions):
     )
 
 
-@register(models.InternationalSubSectorPage)
+@register(great_international.InternationalSubSectorPage)
 class InternationalSubSectorPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'heading',
@@ -558,7 +558,7 @@ class CapitalInvestHomesInEnglandCardFieldsSummarySerializer(
     )
 
 
-@register(models.CapitalInvestRelatedSubSectors)
+@register(capital_invest.CapitalInvestRelatedSubSectors)
 class CapitalInvestRelatedSubSectorsTranslationOptions(
         BaseTranslationOptions):
     fields = (
