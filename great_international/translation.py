@@ -9,8 +9,8 @@ from great_international.models import (
 )
 
 
-@register(great_international.AbstractInternationalSectorPage)
-class AbstractInternationalSectorPageTranslationOptions(
+@register(great_international.BaseInternationalSectorPage)
+class BaseInternationalSectorPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = []
