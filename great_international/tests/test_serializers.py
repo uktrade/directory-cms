@@ -510,31 +510,26 @@ def test_international_sector_page_gets_opps_with_sector_as_related(rf):
         parent=None,
         slug='page-slug',
     )
-    print('\n\n\n\n guide landing page ', guide_landing_page)
 
     sector = InternationalSectorPageFactory(
         parent=guide_landing_page,
         slug='sector'
     )
-    print('\n\n\n\n\n\n sector ', sector)
 
     related_sector = CapitalInvestRelatedSectors(
         related_sector=sector
     )
-    print('\n\n\n\n\n\n related sector ', related_sector)
 
     opportunity = CapitalInvestOpportunityPageFactory(
         parent=None,
         slug='opp',
         related_sectors=[related_sector]
     )
-    print('\n\n\n\n\n\n opportunity ', opportunity)
 
     opportunity_serializer = CapitalInvestOpportunityPageSerializer(
         instance=opportunity,
         context={'request': rf.get('/')}
     )
-    print('\n\n\n\n\n\n opportunity serializer data ', opportunity_serializer.data)  # NOQA
 
     for page in opportunity_serializer.data['related_sectors']:
         assert page['related_sector']['meta']['slug'] == 'sector'
@@ -543,8 +538,6 @@ def test_international_sector_page_gets_opps_with_sector_as_related(rf):
         instance=sector,
         context={'request': rf.get('/')}
     )
-
-    print('\n\n\n\n\n sector serializer ', sector_serializer.data)
 
     for page in sector_serializer.data['related_opportunities']:
         assert page['meta']['slug'] == 'opp'
@@ -725,7 +718,7 @@ def test_opportunity_page_can_add_sub_sector_as_related(rf):
 
     sub_sector = InternationalSubSectorPageFactory(
         parent=sector,
-        heading='sub_sector',
+        heading='sub_sector_heading',
         slug='sub_sector'
     )
 
@@ -744,8 +737,8 @@ def test_opportunity_page_can_add_sub_sector_as_related(rf):
         context={'request': rf.get('/')}
     )
 
-    for sector in opportunity_serializer.data['sub_sectors']:
-        assert sector['sub_sectors'] == 'sub_sector'
+    for sub_sector in opportunity_serializer.data['sub_sectors']:
+        assert sub_sector == 'sub_sector_heading'
 
 
 @pytest.mark.django_db
