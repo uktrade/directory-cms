@@ -712,43 +712,39 @@ def test_opportunity_listing_page_getting_opportunities_null_case(rf):
 @pytest.mark.django_db
 def test_opportunity_page_can_add_sub_sector_as_related(rf):
 
-    guide_landing_page = InternationalTopicLandingPageFactory(
+    guide_landing_page = InternationalGuideLandingPageFactory(
         parent=None,
+        slug='page-slug',
     )
-    print('\n\n\n\n guide landing page ', guide_landing_page)
 
     sector = InternationalSectorPageFactory(
         parent=guide_landing_page,
+        slug='sector'
     )
-    print('\n\n\n\n\n\n sector ', sector)
 
     sub_sector = InternationalSubSectorPageFactory(
         parent=sector,
         heading='sub_sector',
+        slug='sub_sector'
     )
-    print('\n\n\n\n\n\n sub sector ', sub_sector)
 
     related_sub_sector = CapitalInvestRelatedSubSectors(
         related_sub_sector=sub_sector
     )
-    print('\n\n\n\n\n\n related sub sector ', related_sub_sector)
 
     opportunity = CapitalInvestOpportunityPageFactory(
         parent=None,
         slug='opp',
         related_sub_sectors=[related_sub_sector]
     )
-    print('\n\n\n\n\n\n opportunity ', opportunity)
 
     opportunity_serializer = CapitalInvestOpportunityPageSerializer(
         instance=opportunity,
         context={'request': rf.get('/')}
     )
-    print('\n\n\n\n\n\n\n opportunity serializer data ', opportunity_serializer.data)  # NOQA
 
-    assert len(opportunity_serializer.data['sub_sectors']) == 1
-    for sub_sector in opportunity_serializer.data['sub_sectors']:
-        assert sub_sector == 'sub_sector'
+    for page in opportunity_serializer.data['related_sectors']:
+        assert page['sub_sectors'] == 'sub_sector'
 
 
 @pytest.mark.django_db
