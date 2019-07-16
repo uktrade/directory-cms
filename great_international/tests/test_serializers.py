@@ -712,7 +712,7 @@ def test_opportunity_listing_page_getting_opportunities_null_case(rf):
 @pytest.mark.django_db
 def test_opportunity_page_can_add_sub_sector_as_related(rf):
 
-    guide_landing_page = InternationalGuideLandingPageFactory(
+    guide_landing_page = InternationalTopicLandingPageFactory(
         parent=None,
         slug='page-slug',
     )
@@ -743,8 +743,8 @@ def test_opportunity_page_can_add_sub_sector_as_related(rf):
         context={'request': rf.get('/')}
     )
 
-    for page in opportunity_serializer.data['related_sectors']:
-        assert page['sub_sectors'] == 'sub_sector'
+    for sector in opportunity_serializer.data['sub_sectors']:
+        assert sector['sub_sectors'] == 'sub_sector'
 
 
 @pytest.mark.django_db
