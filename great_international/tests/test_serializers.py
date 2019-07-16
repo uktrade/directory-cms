@@ -24,10 +24,11 @@ from great_international.tests.factories import (
     CapitalInvestOpportunityListingPageFactory,
     InternationalSubSectorPageFactory, InternationalTopicLandingPageFactory)
 
-from great_international.models import CapitalInvestRelatedRegions, \
-    CapitalInvestHomesInEnglandCardFieldsSummary, \
-    CapitalInvestRegionCardFieldsSummary, CapitalInvestRelatedSectors, \
-    CapitalInvestRelatedSubSectors
+from great_international.models.capital_invest import (
+    CapitalInvestRelatedRegions,
+    CapitalInvestHomesInEnglandCardFieldsSummary,
+    CapitalInvestRegionCardFieldsSummary, CapitalInvestRelatedSectors
+)
 
 
 @pytest.mark.django_db

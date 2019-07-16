@@ -1,75 +1,85 @@
 import pytest
 from wagtail.core.models import Page
 
-from great_international import models
+from great_international.models import (
+    great_international, invest, capital_invest
+)
 from . import factories
 from export_readiness.tests import factories as exread_factories
 
 
 def test_models_hierarchy():
     # homepage / app root
-    assert models.InternationalHomePage.allowed_subpage_models() == [
-        models.InternationalArticleListingPage,
-        models.InternationalTopicLandingPage,
-        models.InternationalCuratedTopicLandingPage,
-        models.InternationalGuideLandingPage,
-        models.InternationalRegionPage,
-        models.InternationalEUExitFormPage,
-        models.InternationalEUExitFormSuccessPage,
-        models.InternationalCapitalInvestLandingPage,
-        models.CapitalInvestOpportunityListingPage,
-        models.CapitalInvestRegionPage,
-        models.InvestInternationalHomePage,
-        models.InvestHighPotentialOpportunityDetailPage,
-        models.InvestHighPotentialOpportunityFormPage,
-        models.InvestHighPotentialOpportunityFormSuccessPage
+    assert great_international.InternationalHomePage.allowed_subpage_models() \
+        == [
+        great_international.InternationalArticleListingPage,
+        great_international.InternationalTopicLandingPage,
+        great_international.InternationalCuratedTopicLandingPage,
+        great_international.InternationalGuideLandingPage,
+        great_international.InternationalRegionPage,
+        great_international.InternationalEUExitFormPage,
+        great_international.InternationalEUExitFormSuccessPage,
+        capital_invest.InternationalCapitalInvestLandingPage,
+        capital_invest.CapitalInvestOpportunityListingPage,
+        capital_invest.CapitalInvestRegionPage,
+        invest.InvestInternationalHomePage,
+        invest.InvestHighPotentialOpportunityDetailPage,
+        invest.InvestHighPotentialOpportunityFormPage,
+        invest.InvestHighPotentialOpportunityFormSuccessPage
     ]
-    assert models.InternationalHomePage.allowed_parent_page_models() == [
-        Page,
-    ]
+    assert great_international.InternationalHomePage \
+        .allowed_parent_page_models() == [Page]
     # region page
-    assert models.InternationalRegionPage.allowed_subpage_models() == [
-        models.InternationalLocalisedFolderPage
-    ]
+    assert great_international.InternationalRegionPage \
+        .allowed_subpage_models() == [
+            great_international.InternationalLocalisedFolderPage
+        ]
     # regional folder page
-    assert models.InternationalLocalisedFolderPage.allowed_subpage_models(
-    ) == [
-        models.InternationalArticlePage,
-        models.InternationalCampaignPage
-    ]
+    assert great_international.InternationalLocalisedFolderPage \
+        .allowed_subpage_models() == [
+            great_international.InternationalArticlePage,
+            great_international.InternationalCampaignPage
+        ]
     # topic landing
-    assert models.InternationalTopicLandingPage.allowed_subpage_models() == [
-        models.InternationalArticleListingPage,
-        models.InternationalCampaignPage,
-        models.InternationalSectorPage,
-    ]
+    assert great_international.InternationalTopicLandingPage \
+        .allowed_subpage_models() == [
+            great_international.InternationalArticleListingPage,
+            great_international.InternationalCampaignPage,
+            great_international.InternationalSectorPage,
+        ]
     # curated topic landing
-    assert models.InternationalCuratedTopicLandingPage \
+    assert great_international.InternationalCuratedTopicLandingPage \
         .allowed_subpage_models() == []
     # guide landing
-    assert models.InternationalGuideLandingPage.allowed_subpage_models() == [
-        models.InternationalArticlePage,
-    ]
+    assert great_international.InternationalGuideLandingPage \
+        .allowed_subpage_models() == [
+            great_international.InternationalArticlePage,
+        ]
     # article listing
-    assert models.InternationalArticleListingPage.allowed_subpage_models() == [
-        models.InternationalArticlePage,
-        models.InternationalCampaignPage
-    ]
+    assert great_international.InternationalArticleListingPage \
+        .allowed_subpage_models() == [
+            great_international.InternationalArticlePage,
+            great_international.InternationalCampaignPage
+        ]
     # campaign
-    assert models.InternationalCampaignPage.allowed_subpage_models() == [
-        models.InternationalArticlePage,
-    ]
+    assert great_international.InternationalCampaignPage \
+        .allowed_subpage_models() == [
+            great_international.InternationalArticlePage,
+        ]
     # EU Exit forms
-    assert models.InternationalEUExitFormPage.allowed_subpage_models() == [
-        models.InternationalEUExitFormSuccessPage,
-    ]
-    assert models.InternationalEUExitFormSuccessPage.allowed_parent_page_models() == [  # NOQA
-        models.InternationalEUExitFormPage,
-    ]
-    assert models.CapitalInvestOpportunityListingPage.allowed_subpage_models() == [  # NOQA
-        models.CapitalInvestOpportunityPage,
-    ]
-    assert models.InternationalSectorPage.allowed_subpage_models() == [
+    assert great_international.InternationalEUExitFormPage \
+        .allowed_subpage_models() == [
+            great_international.InternationalEUExitFormSuccessPage,
+        ]
+    assert great_international.InternationalEUExitFormSuccessPage \
+        .allowed_parent_page_models() == [
+            great_international.InternationalEUExitFormPage,
+        ]
+    assert capital_invest.CapitalInvestOpportunityListingPage \
+        .allowed_subpage_models() == [
+            capital_invest.CapitalInvestOpportunityPage,
+        ]
+    assert great_international.InternationalSectorPage.allowed_subpage_models() == [
         models.InternationalSubSectorPage,
     ]
 
