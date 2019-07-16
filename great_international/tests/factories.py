@@ -93,7 +93,7 @@ class InternationalSectorPageFactory(wagtail_factories.PageFactory):
 class InternationalSubSectorPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.InternationalSubSectorPage
+        model = models.great_international.InternationalSubSectorPage
 
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
