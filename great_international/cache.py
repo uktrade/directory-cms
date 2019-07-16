@@ -118,7 +118,10 @@ class CapitalInvestRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
 class CapitalInvestOpportunityPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = capital_invest.CapitalInvestOpportunityPage
     subscriptions = [
-        capital_invest.CapitalInvestOpportunityPage
+        capital_invest.CapitalInvestOpportunityPage,
+        great_international.InternationalSectorPage,
+        great_international.InternationalSubSectorPage,
+        capital_invest.CapitalInvestOpportunityListingPage,
     ]
 
 
