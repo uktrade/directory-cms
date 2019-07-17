@@ -43,9 +43,10 @@ from great_international.models.great_international import (
 
 
 @pytest.mark.django_db
-def test_sector_page_has_section_three_subsections(root_page, rf):
+def test_sector_page_has_section_three_subsections(international_root_page,
+                                                   rf):
     article = InternationalSectorPageFactory(
-        parent=root_page,
+        parent=internatonal_root_page,
         slug='article-slug'
     )
 
@@ -62,9 +63,9 @@ def test_sector_page_has_section_three_subsections(root_page, rf):
 
 
 @pytest.mark.django_db
-def test_sector_page_has_section_two_subsections(root_page, rf):
+def test_sector_page_has_section_two_subsections(international_root_page, rf):
     article = InternationalSectorPageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='article-slug'
     )
 
@@ -81,9 +82,9 @@ def test_sector_page_has_section_two_subsections(root_page, rf):
 
 
 @pytest.mark.django_db
-def test_sector_page_has_statistics(root_page, rf):
+def test_sector_page_has_statistics(international_root_page, rf):
     article = InternationalSectorPageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='article-slug'
     )
 
@@ -100,26 +101,28 @@ def test_sector_page_has_statistics(root_page, rf):
 
 
 @pytest.mark.django_db
-def test_sector_page_related_pages_serializer_has_pages(root_page, rf):
+def test_sector_page_related_pages_serializer_has_pages(
+        international_root_page, rf
+):
     related_page_one = InternationalArticlePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='one'
     )
 
     related_page_two = InternationalArticlePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='two'
     )
     related_page_three = InternationalArticlePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='three'
     )
     case_study_cta_page = InternationalArticlePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug="case_study"
     )
     article = InternationalSectorPageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='article-slug',
         related_page_one=related_page_one,
         related_page_two=related_page_two,
@@ -144,22 +147,22 @@ def test_sector_page_related_pages_serializer_has_pages(root_page, rf):
     (InternationalArticlePageFactory, InternationalArticlePageSerializer)
 ])
 def test_related_article_page_serializer_has_pages(
-        parent_page_class, serializer_class, root_page, rf
+        parent_page_class, serializer_class, international_root_page, rf
 ):
     related_page_one = InternationalArticlePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='one'
     )
     related_page_two = InternationalArticlePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='two'
     )
     related_page_three = InternationalArticlePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='three'
     )
     article = parent_page_class(
-        parent=root_page,
+        parent=international_root_page,
         slug='article-slug',
         related_page_one=related_page_one,
         related_page_two=related_page_two,
@@ -175,18 +178,18 @@ def test_related_article_page_serializer_has_pages(
 
 
 @pytest.mark.django_db
-def test_home_page_related_pages(root_page, rf):
+def test_home_page_related_pages(international_root_page, rf):
     related_page_one = InternationalArticlePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='one'
     )
     related_page_two = InternationalCampaignPageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='two'
     )
 
     home_page = InternationalHomePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='home-page',
         related_page_one=related_page_one,
         related_page_two=related_page_two,
