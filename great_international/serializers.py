@@ -6,7 +6,7 @@ from core import fields as core_fields
 from core.serializers import (
     BasePageSerializer,
     ChildPagesSerializerHelper,
-    FormPageSerializerMetaclass, ParentPageSerializerHelper)
+    FormPageSerializerMetaclass)
 from invest.models import HighPotentialOpportunityDetailPage
 
 from .models.great_international import (
