@@ -805,3 +805,45 @@ class InternationalTradeIndustryContactPageTranslationOptions(
         'success_message_text',
         'success_back_link_text',
     )
+
+
+@register(great_international.AboutDitLandingPage)
+class AboutDitLandingPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'hero_title',
+        'hero_image',
+    )
+
+
+@register(great_international.AboutDitServicesPage)
+class AboutDitServicesPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'hero_title',
+        'hero_image',
+        'teaser',
+        'teaser_image',
+        'case_study_image',
+        'case_study_title',
+        'case_study_text',
+        'case_study_cta_text',
+        'case_study_cta_link',
+        'contact_us_section_title',
+        'contact_us_section_summary',
+        'contact_us_section_cta_text',
+        'contact_us_section_cta_link',
+    )
+
+
+@register(great_international.AboutDitServicesFields)
+class AboutDitServicesFieldsSerializer(
+        BaseTranslationOptions
+):
+    fields = (
+        'page',
+    )

@@ -19,13 +19,14 @@ def test_models_hierarchy():
         great_international.InternationalRegionPage,
         great_international.InternationalEUExitFormPage,
         great_international.InternationalEUExitFormSuccessPage,
+        great_international.AboutDitLandingPage,
         capital_invest.InternationalCapitalInvestLandingPage,
         capital_invest.CapitalInvestOpportunityListingPage,
         capital_invest.CapitalInvestRegionPage,
         invest.InvestInternationalHomePage,
         invest.InvestHighPotentialOpportunityDetailPage,
         invest.InvestHighPotentialOpportunityFormPage,
-        invest.InvestHighPotentialOpportunityFormSuccessPage
+        invest.InvestHighPotentialOpportunityFormSuccessPage,
     ]
     assert great_international.InternationalHomePage \
         .allowed_parent_page_models() == [Page]
@@ -82,6 +83,10 @@ def test_models_hierarchy():
     assert great_international.InternationalSectorPage\
         .allowed_subpage_models() == [
             great_international.InternationalSubSectorPage,
+        ]
+    assert great_international.AboutDitLandingPage\
+        .allowed_subpage_models() == [
+            great_international.AboutDitServicesPage
         ]
 
 
