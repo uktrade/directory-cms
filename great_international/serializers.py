@@ -1258,16 +1258,10 @@ class CapitalInvestOpportunityPageSerializer(
     opportunities_in_same_sector = serializers.SerializerMethodField()
 
     def get_opportunities_in_same_sector(self, instance):
-        related_sector_serializer = RelatedSectorSerializer(
-            instance.related_sectors.all(),
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
         return self.get_same_sector_opportunity_pages_data_for(
             instance,
             RelatedCapitalInvestOpportunityPageSerializer,
-            related_sector_serializer.data
+            self.get_related_sectors(instance)
         )
 
 
