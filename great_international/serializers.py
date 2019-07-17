@@ -1150,7 +1150,8 @@ class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
             context=self.context
         ).data
 
-        return {sector['heading']: self.get_sub_sector_headings(sector) for sector in sectors}
+        return {sector['heading']: self.get_sub_sector_headings(sector)
+                for sector in sectors}
 
 
 class CapitalInvestOpportunityPageSerializer(
