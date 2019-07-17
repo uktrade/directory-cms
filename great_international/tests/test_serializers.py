@@ -744,10 +744,11 @@ def test_opportunity_listing_page_getting_opportunities_null_case(
 
 
 @pytest.mark.django_db
-def test_opportunity_page_can_add_sub_sector_as_related(rf):
+def test_opportunity_page_can_add_sub_sector_as_related(
+        rf, international_root_page):
 
     guide_landing_page = InternationalTopicLandingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='page-slug',
     )
 
@@ -782,12 +783,12 @@ def test_opportunity_page_can_add_sub_sector_as_related(rf):
 
 
 @pytest.mark.django_db
-def test_opportunity_page_can_add_sub_sector_as_related_null_case(rf):
+def test_opportunity_page_can_add_sub_sector_as_related_null_case(rf, international_root_page):
 
     related_sub_sector = CapitalInvestRelatedSubSectors()
 
     opportunity = CapitalInvestOpportunityPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='opp',
         related_sub_sectors=[related_sub_sector]
     )
@@ -801,9 +802,9 @@ def test_opportunity_page_can_add_sub_sector_as_related_null_case(rf):
 
 
 @pytest.mark.django_db
-def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf):
+def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf, international_root_page):
     topic_landing_page = InternationalTopicLandingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='page-slug',
     )
 
@@ -877,14 +878,14 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf):
 
 
 @pytest.mark.django_db
-def test_about_dit_services_page_gets_added_related_services_fields(rf):
+def test_about_dit_services_page_gets_added_related_services_fields(rf, international_root_page):
 
     services_fields = AboutDitServicesFields(
         title="title"
     )
 
     about_dit_services_page = AboutDitServicesPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='services',
         about_dit_services_fields=[services_fields]
     )

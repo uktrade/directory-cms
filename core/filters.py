@@ -16,8 +16,7 @@ class ServiceNameFilter(django_filters.FilterSet):
         # can use this class attribute to filter the queryset
         relevant_models = [
             model for model in PAGE_MODEL_CLASSES if (
-                not model._meta.abstract and
-                getattr(model, 'service_name_value', '') == value
+                not model._meta.abstract and getattr(model, 'service_name_value', '') == value
             )
         ]
         # ContentTypes use a cached manager, so this should not

@@ -74,8 +74,7 @@ class WagtailAdminPageExclusivePageForm(WagtailAdminPageForm):
 
     def __init__(self, *args, **kwargs):
         if(
-            hasattr(self._meta.model, 'slug_identity')
-            and 'initial' not in kwargs
+            hasattr(self._meta.model, 'slug_identity') and 'initial' not in kwargs
         ):
             kwargs['initial'] = {
                 'slug': self._meta.model.slug_identity
