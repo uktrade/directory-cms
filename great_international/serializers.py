@@ -573,15 +573,16 @@ class BaseInternationalSectorPageSerializer(
         return serializer.data['opportunities']
 
 
-class InternationalSubSectorPageSerializer(
+class InternationalSectorPageSerializer(
     BaseInternationalSectorPageSerializer,
-    ParentPageSerializerHelper
+    ChildPagesSerializerHelper
 ):
-    parent = serializers.SerializerMethodField()
+    child_sub_sectors = serializers.SerializerMethodField()
 
-    def get_parent(self, obj):
-        return self.get_parent_page_data_for(
+    def get_child_sub_sectors(self, obj):
+        return self.get_child_pages_data_for(
             obj,
+            InternationalSubSectorPage,
             MinimalPageSerializer
         )
 
@@ -1137,24 +1138,24 @@ class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
 
     def get_sector_with_sub_sectors(self, instance):
         sector_with_sub_sectors = {}
-        all_sub_sectors = InternationalSubSectorPage.objects.live().public()
         all_sectors = InternationalSectorPage.objects.live().public()
 
-        if not all_sub_sectors:
+        if not all_sectors:
             return sector_with_sub_sectors
 
-        serializer = InternationalSubSectorPageSerializer(
-            all_sub_sectors,
+        serialized_sectors = InternationalSectorPageSerializer(
+            all_sectors,
             many=True,
             allow_null=True,
             context=self.context
         )
-        for sector in all_sectors:
-            sector_with_sub_sectors[sector.heading] = []
-
-        for sub_sector in serializer.data:
-            key = sub_sector['parent']['heading']
-            sector_with_sub_sectors[key].append(sub_sector['heading'])
+        for sector in serialized_sectors.data:
+            if 'child_sub_sectors' in sector:
+                key = sector['heading']
+                sector_with_sub_sectors[key] = []
+                for sub_sector in sector['child_sub_sectors']:
+                    value = sub_sector['heading']
+                    sector_with_sub_sectors[key].append(value)
 
         return sector_with_sub_sectors
 
