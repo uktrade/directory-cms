@@ -1,5 +1,3 @@
-from collections import namedtuple
-
 from rest_framework import serializers
 
 from core import fields

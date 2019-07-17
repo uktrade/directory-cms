@@ -1269,11 +1269,6 @@ class CapitalInvestOpportunityPageSerializer(
             allow_null=True,
             context=self.context
         )
-        print('\n\n\n\n\n\n\n what is being returned ', self.get_same_sector_opportunity_pages_data_for(
-            instance,
-            RelatedCapitalInvestOpportunityPageSerializer,
-            related_sector_serializer.data
-        ))
         return self.get_same_sector_opportunity_pages_data_for(
             instance,
             RelatedCapitalInvestOpportunityPageSerializer,
