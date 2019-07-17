@@ -17,7 +17,7 @@ from .models.great_international import (
     InternationalGuideLandingPage,
     InternationalSectorPage,
     InternationalEUExitFormPage,
-)
+    InternationalSubSectorPage)
 from .models.invest import (
     InvestHighPotentialOpportunityFormPage,
     InvestHighPotentialOpportunityDetailPage,
@@ -573,6 +573,20 @@ class BaseInternationalSectorPageSerializer(
         return serializer.data['opportunities']
 
 
+class InternationalSectorPageSerializer(
+    BaseInternationalSectorPageSerializer,
+    ChildPagesSerializerHelper
+):
+    child_sub_sectors = serializers.SerializerMethodField()
+
+    def get_child_sub_sectors(self, obj):
+        return self.get_child_pages_data_for(
+            obj,
+            InternationalSubSectorPage,
+            MinimalPageSerializer
+        )
+
+
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
     article_title = serializers.CharField()
     article_subheading = serializers.CharField()
@@ -1119,6 +1133,25 @@ class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
             context=self.context
         )
         return serializer.data
+
+    sector_with_sub_sectors = serializers.SerializerMethodField()
+
+    def get_sub_sector_headings(self, sector):
+        return [sub_sector['heading'] for sub_sector
+                in sector['child_sub_sectors']]
+
+    def get_sector_with_sub_sectors(self, instance):
+
+        all_sectors = InternationalSectorPage.objects.live().public()
+        sectors = InternationalSectorPageSerializer(
+            all_sectors,
+            many=True,
+            allow_null=True,
+            context=self.context
+        ).data
+
+        return {sector['heading']: self.get_sub_sector_headings(sector)
+                for sector in sectors}
 
 
 class CapitalInvestOpportunityPageSerializer(
