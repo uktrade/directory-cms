@@ -1153,8 +1153,8 @@ class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
             sector_with_sub_sectors[sector.heading] = []
 
         for sub_sector in serializer.data:
-            sector_with_sub_sectors[sub_sector['parent']['heading']]\
-                .append(sub_sector['heading'])
+            key = sub_sector['parent']['heading']
+            sector_with_sub_sectors[key].append(sub_sector['heading'])
 
         return sector_with_sub_sectors
 
