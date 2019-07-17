@@ -684,7 +684,7 @@ class AboutDitServicesPageFactory(
 ):
 
     class Meta:
-        model = models.AboutDitServicesPage
+        model = models.great_international.AboutDitServicesPage
 
     breadcrumbs_label = factory.fuzzy.FuzzyText(length=50)
     breadcrumbs_label_en_gb = factory.fuzzy.FuzzyText(length=50)

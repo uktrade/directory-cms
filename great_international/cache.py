@@ -203,12 +203,12 @@ class InternationalTradeIndustryContactPageSubscriber(
 class AboutDitLandingPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
-    model = models.AboutDitLandingPage
+    model = great_international.AboutDitLandingPage
     subscriptions = []
 
 
 class AboutDitServicesPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
-    model = models.AboutDitServicesPage
+    model = great_international.AboutDitServicesPage
     subscriptions = []
