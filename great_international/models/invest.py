@@ -17,6 +17,9 @@ class InvestInternationalHomePage(
     panels.InvestInternationalHomePagePanels,
 ):
     slug_identity = 'invest'
+    subpage_types = [
+        'InvestHighPotentialOpportunitiesPage',
+    ]
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
@@ -230,6 +233,27 @@ class InvestInternationalHomePage(
     contact_section_call_to_action_url = models.CharField(max_length=255)
 
 
+class InvestHighPotentialOpportunitiesPage(
+    ExclusivePageMixin, BaseInternationalPage,
+    panels.InvestHighPotentialOpportunitiesPagePanels,
+):
+    """
+    An empty page in lieu of a landing page so we don't break the
+    tree based routing pattern.
+    This page's url will redirect to an existing page on the frontend.
+    """
+
+    slug_identity = 'high-potential-opportunities'
+
+    subpage_types = [
+        'InvestHighPotentialOpportunityDetailPage',
+    ]
+
+    def save(self, *args, **kwargs):
+        self.title = self.get_verbose_name()
+        return super().save(*args, **kwargs)
+
+
 class InvestHighPotentialOpportunityFormPage(
     WagtailAdminExclusivePageMixin,
     BaseInternationalPage,
@@ -249,7 +273,7 @@ class InvestHighPotentialOpportunityFormPage(
         'comment',
     ]
 
-    slug_identity = slugs.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM
+    slug_identity = 'contact'
     full_path_override = 'high-potential-opportunities/rail/contact/'
 
     heading = models.CharField(max_length=255)
@@ -269,7 +293,6 @@ class InvestHighPotentialOpportunityDetailPage(
     panels.InvestHighPotentialOpportunityDetailPagePanels,
 ):
     subpage_types = ['invest.HighPotentialOpportunityDetailPage']
-    view_path = 'high-potential-opportunities/'
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
@@ -301,6 +324,13 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    proposition_one_image_alt_text = MarkdownField(
+        blank=True,
+        help_text=(
+            'This image alt text can be multi-paragraph or contain tables '
+            'if the image shows complex data such as a chart.'
+        )
+    )
     proposition_one_video = models.ForeignKey(
         'wagtailmedia.Media',
         null=True,
@@ -308,6 +338,7 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    proposition_one_video_transcript = MarkdownField(blank=True)
     opportunity_list_title = models.CharField(max_length=300)
     opportunity_list_item_one = MarkdownField()
     opportunity_list_item_two = MarkdownField()
@@ -318,6 +349,13 @@ class InvestHighPotentialOpportunityDetailPage(
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
+    )
+    opportunity_list_image_alt_text = MarkdownField(
+        blank=True,
+        help_text=(
+            'This image alt text can be multi-paragraph or contain tables '
+            'if the image shows complex data such as a chart.'
+        )
     )
     proposition_two = MarkdownField(blank=False)
     proposition_two_list_item_one = MarkdownField()
@@ -330,6 +368,13 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    proposition_two_image_alt_text = MarkdownField(
+        blank=True,
+        help_text=(
+            'This image alt text can be multi-paragraph or contain tables '
+            'if the image shows complex data such as a chart.'
+        )
+    )
     proposition_two_video = models.ForeignKey(
         'wagtailmedia.Media',
         null=True,
@@ -337,6 +382,7 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    proposition_two_video_transcript = MarkdownField(blank=True)
     competitive_advantages_title = models.CharField(
         max_length=300,
         verbose_name='Body text',
@@ -382,6 +428,8 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    companies_list_item_image_one_alt_text = models.CharField(
+        null=True, blank=True, max_length=500)
     companies_list_item_image_two = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -389,6 +437,8 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    companies_list_item_image_two_alt_text = models.CharField(
+        null=True, blank=True, max_length=500)
     companies_list_item_image_three = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -396,6 +446,8 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    companies_list_item_image_three_alt_text = models.CharField(
+        null=True, blank=True, max_length=500)
     companies_list_item_image_four = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -403,6 +455,8 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    companies_list_item_image_four_alt_text = models.CharField(
+        null=True, blank=True, max_length=500)
     companies_list_item_image_five = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -410,6 +464,8 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    companies_list_item_image_five_alt_text = models.CharField(
+        null=True, blank=True, max_length=500)
     companies_list_item_image_six = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -417,6 +473,8 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    companies_list_item_image_six_alt_text = models.CharField(
+        null=True, blank=True, max_length=500)
     companies_list_item_image_seven = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -424,6 +482,8 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    companies_list_item_image_seven_alt_text = models.CharField(
+        null=True, blank=True, max_length=500)
     companies_list_item_image_eight = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -431,6 +491,8 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    companies_list_item_image_eight_alt_text = models.CharField(
+        null=True, blank=True, max_length=500)
     case_study_list_title = models.CharField(max_length=300)
     case_study_one_text = MarkdownField(blank=True)
     case_study_one_image = models.ForeignKey(
@@ -510,7 +572,6 @@ class InvestHighPotentialOpportunityFormSuccessPage(
     next_steps_body = models.CharField(
         max_length=255,
         verbose_name='section body',
-
     )
     documents_title = models.CharField(
         max_length=255,

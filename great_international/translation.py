@@ -263,6 +263,13 @@ class InternationalRegionPageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
+@register(invest.InvestHighPotentialOpportunitiesPage)
+class InvestHighPotentialOpportunitiesPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = []
+
+
 @register(great_international.InternationalTopicLandingPage)
 class InternationalTopicLandingPageTranslationOptions(BaseTranslationOptions):
     fields = (
@@ -673,18 +680,23 @@ class HighPotentialOpportunityDetailPageTranslationOptions(
         'contact_button',
         'proposition_one',
         'proposition_one_image',
+        'proposition_one_image_alt_text',
         'proposition_one_video',
+        'proposition_one_video_transcript',
         'opportunity_list_title',
         'opportunity_list_item_one',
         'opportunity_list_item_two',
         'opportunity_list_item_three',
         'opportunity_list_image',
+        'opportunity_list_image_alt_text',
         'proposition_two',
         'proposition_two_list_item_one',
         'proposition_two_list_item_two',
         'proposition_two_list_item_three',
         'proposition_two_image',
+        'proposition_two_image_alt_text',
         'proposition_two_video',
+        'proposition_two_video_transcript',
         'competitive_advantages_title',
         'competitive_advantages_list_item_one',
         'competitive_advantages_list_item_one_icon',
@@ -696,13 +708,21 @@ class HighPotentialOpportunityDetailPageTranslationOptions(
         'testimonial_background',
         'companies_list_text',
         'companies_list_item_image_one',
+        'companies_list_item_image_one_alt_text',
         'companies_list_item_image_two',
+        'companies_list_item_image_two_alt_text',
         'companies_list_item_image_three',
+        'companies_list_item_image_three_alt_text',
         'companies_list_item_image_four',
+        'companies_list_item_image_four_alt_text',
         'companies_list_item_image_five',
+        'companies_list_item_image_five_alt_text',
         'companies_list_item_image_six',
+        'companies_list_item_image_six_alt_text',
         'companies_list_item_image_seven',
+        'companies_list_item_image_seven_alt_text',
         'companies_list_item_image_eight',
+        'companies_list_item_image_eight_alt_text',
         'case_study_list_title',
         'case_study_one_text',
         'case_study_one_image',
