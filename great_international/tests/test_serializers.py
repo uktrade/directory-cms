@@ -772,7 +772,7 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf):
         parent=topic_landing_page,
         slug='automotive'
     )
-    automotive_serializer = BaseInternationalSectorPageSerializer(
+    BaseInternationalSectorPageSerializer(
         instance=automotive_sector,
         context={'request': rf.get('/')}
     )
@@ -781,7 +781,7 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf):
         parent=topic_landing_page,
         slug='real-estate'
     )
-    real_estate_serializer = BaseInternationalSectorPageSerializer(
+    BaseInternationalSectorPageSerializer(
         instance=real_estate_sector,
         context={'request': rf.get('/')}
     )
@@ -791,7 +791,7 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf):
         heading='Housing',
         slug='housing'
     )
-    housing_serializer = InternationalSubSectorPageSerializer(
+    InternationalSubSectorPageSerializer(
         instance=housing_sub_sector,
         context={'request': rf.get('/')}
     )
@@ -801,7 +801,7 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf):
         heading='Mixed Use',
         slug='mixed-use'
     )
-    mixed_use_serializer = InternationalSubSectorPageSerializer(
+    InternationalSubSectorPageSerializer(
         instance=mixed_use_sub_sector,
         context={'request': rf.get('/')}
     )
@@ -811,7 +811,7 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf):
         heading='Energy',
         slug='energy'
     )
-    energy_serializer = InternationalSubSectorPageSerializer(
+    InternationalSubSectorPageSerializer(
         instance=energy_sub_sector,
         context={'request': rf.get('/')}
     )
