@@ -11,7 +11,7 @@ from great_international.serializers import (
     InvestHighPotentialOpportunityFormPageSerializer,
     CapitalInvestOpportunityPageSerializer,
     CapitalInvestOpportunityListingSerializer,
-    InternationalSubSectorPageSerializer)
+    InternationalSectorPageSerializer)
 from great_international.tests.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
@@ -772,7 +772,7 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf):
         parent=topic_landing_page,
         slug='automotive'
     )
-    BaseInternationalSectorPageSerializer(
+    InternationalSectorPageSerializer(
         instance=automotive_sector,
         context={'request': rf.get('/')}
     )
@@ -781,7 +781,7 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf):
         parent=topic_landing_page,
         slug='real-estate'
     )
-    BaseInternationalSectorPageSerializer(
+    InternationalSectorPageSerializer(
         instance=real_estate_sector,
         context={'request': rf.get('/')}
     )
@@ -791,7 +791,7 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf):
         heading='Housing',
         slug='housing'
     )
-    InternationalSubSectorPageSerializer(
+    BaseInternationalSectorPageSerializer(
         instance=housing_sub_sector,
         context={'request': rf.get('/')}
     )
@@ -801,7 +801,7 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf):
         heading='Mixed Use',
         slug='mixed-use'
     )
-    InternationalSubSectorPageSerializer(
+    BaseInternationalSectorPageSerializer(
         instance=mixed_use_sub_sector,
         context={'request': rf.get('/')}
     )
@@ -811,7 +811,7 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf):
         heading='Energy',
         slug='energy'
     )
-    InternationalSubSectorPageSerializer(
+    BaseInternationalSectorPageSerializer(
         instance=energy_sub_sector,
         context={'request': rf.get('/')}
     )
