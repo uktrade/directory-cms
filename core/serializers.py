@@ -91,8 +91,9 @@ class SameSectorOpportunitiesHelper(serializers.Serializer):
 
         sector_with_opps = {}
         for sectors in related_sectors:
-            for sector in sectors.items():
-                sector_with_opps[sector[1]['title']] = []
+            for sector in sectors.values():
+                if sector:
+                    sector_with_opps[sector['title']] = []
 
         for sector in sector_with_opps.keys():
             for opportunity in all_opportunity_pages:
