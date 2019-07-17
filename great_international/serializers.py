@@ -1136,28 +1136,21 @@ class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
 
     sector_with_sub_sectors = serializers.SerializerMethodField()
 
+    def get_sub_sector_headings(self, sector):
+        return [sub_sector['heading'] for sub_sector
+                in sector['child_sub_sectors']]
+
     def get_sector_with_sub_sectors(self, instance):
-        sector_with_sub_sectors = {}
+
         all_sectors = InternationalSectorPage.objects.live().public()
-
-        if not all_sectors:
-            return sector_with_sub_sectors
-
-        serialized_sectors = InternationalSectorPageSerializer(
+        sectors = InternationalSectorPageSerializer(
             all_sectors,
             many=True,
             allow_null=True,
             context=self.context
-        )
-        for sector in serialized_sectors.data:
-            if 'child_sub_sectors' in sector:
-                key = sector['heading']
-                sector_with_sub_sectors[key] = []
-                for sub_sector in sector['child_sub_sectors']:
-                    value = sub_sector['heading']
-                    sector_with_sub_sectors[key].append(value)
+        ).data
 
-        return sector_with_sub_sectors
+        return {sector['heading']: self.get_sub_sector_headings(sector) for sector in sectors}
 
 
 class CapitalInvestOpportunityPageSerializer(
