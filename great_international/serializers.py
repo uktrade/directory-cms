@@ -1142,7 +1142,7 @@ class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
         all_sectors = InternationalSectorPage.objects.live().public()
 
         if not all_sub_sectors:
-            return []
+            return sector_with_sub_sectors
 
         serializer = InternationalSubSectorPageSerializer(
             all_sub_sectors,
