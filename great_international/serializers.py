@@ -580,11 +580,10 @@ class InternationalSubSectorPageSerializer(
     parent = serializers.SerializerMethodField()
 
     def get_parent(self, obj):
-        sector_parent = self.get_parent_page_data_for(
+        return self.get_parent_page_data_for(
             obj,
             MinimalPageSerializer
         )
-        return sector_parent
 
 
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
