@@ -63,7 +63,7 @@ def test_delete_same_slug_different_services(root_page):
 
 
 @pytest.mark.django_db
-def test_page_paths(root_page):
+def test_page_paths(root_page, international_root_page):
     invest_app = InvestAppFactory(parent=root_page)
     invest_page_one = SectorLandingPageFactory(parent=invest_app)
     invest_page_two = SectorPageFactory(slug='foo', parent=invest_page_one)
@@ -105,16 +105,15 @@ def test_page_paths(root_page):
     assert domestic_cookies_one.full_path == '/privacy/'
     assert domestic_cookies_two.full_path == '/privacy/cookies/'
 
-    international_homepage = InternationalHomePageFactory(parent=root_page)
     international_page_one = InternationalTopicLandingPageFactory(
-        parent=international_homepage, slug='topic')
+        parent=international_root_page, slug='topic')
     international_page_two = InternationalArticleListingPageFactory(
         parent=international_page_one, slug='list')
     international_page_three = InternationalArticlePageFactory(
         parent=international_page_two, slug='article')
 
-    assert international_page_two.full_path == '/topic/list/'
-    assert international_page_three.full_path == '/topic/list/article/'
+    assert international_page_two.full_path == 'topic/list/'
+    assert international_page_three.full_path == 'topic/list/article/'
 
 
 @pytest.mark.django_db
