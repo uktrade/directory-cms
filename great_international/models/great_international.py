@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils.text import slugify
 
-from modelcluster.fields import ParentalManyToManyField
+from modelcluster.fields import ParentalManyToManyField, ParentalKey
+from wagtail.core.models import Orderable
 
 from directory_constants import slugs
 
@@ -507,14 +508,14 @@ class InternationalHomePage(
             InternationalRegionPage,
             InternationalEUExitFormPage,
             InternationalEUExitFormSuccessPage,
+            AboutDitLandingPage,
             capital_invest_models.InternationalCapitalInvestLandingPage,
             capital_invest_models.CapitalInvestOpportunityListingPage,
             capital_invest_models.CapitalInvestRegionPage,
             invest_models.InvestInternationalHomePage,
             invest_models.InvestHighPotentialOpportunityDetailPage,
             invest_models.InvestHighPotentialOpportunityFormPage,
-            invest_models.InvestHighPotentialOpportunityFormSuccessPage,
-            AboutDitLandingPage
+            invest_models.InvestHighPotentialOpportunityFormSuccessPage
         ]
 
 
@@ -1253,7 +1254,10 @@ class InternationalEUExitFormSuccessPage(
     )
 
 
-class AboutDitLandingPage(BaseInternationalPage):
+class AboutDitLandingPage(
+    BaseInternationalPage,
+    panels.AboutDitLandingPagePanels
+):
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.AboutDitServicesPage'
@@ -1268,30 +1272,8 @@ class AboutDitLandingPage(BaseInternationalPage):
         related_name='+'
     )
 
-    content_panels = [
-        FieldPanel('breadcrumbs_label'),
-        MultiFieldPanel(
-            heading="Hero",
-            children=[
-                FieldPanel('hero_title'),
-                ImageChooserPanel('hero_image'),
-            ],
-        ),
-    ]
 
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
-    ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
-
-
-class AboutDitServiceField(models.Model):
+class AboutDitServiceField(models.Model, panels.AboutDitServiceFieldPanels):
     icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1308,16 +1290,6 @@ class AboutDitServiceField(models.Model):
                                 blank=True,
                                 verbose_name='Link URL')
 
-    panels = [
-        MultiFieldPanel([
-            ImageChooserPanel('icon'),
-            FieldPanel('title'),
-            FieldPanel('summary'),
-            FieldPanel('link_text'),
-            FieldPanel('link_url'),
-        ]),
-    ]
-
     class Meta:
         abstract = True
 
@@ -1332,7 +1304,10 @@ class AboutDitServicesFields(Orderable, AboutDitServiceField):
     )
 
 
-class AboutDitServicesPage(BaseInternationalPage):
+class AboutDitServicesPage(
+    BaseInternationalPage,
+    panels.AboutDitServicesPagePanels
+):
     parent_page_types = ['great_international.AboutDitLandingPage']
 
     breadcrumbs_label = models.CharField(max_length=255)
@@ -1381,73 +1356,3 @@ class AboutDitServicesPage(BaseInternationalPage):
     contact_us_section_cta_link = models.CharField(max_length=255,
                                                    blank=True,
                                                    verbose_name='CTA URL')
-
-    content_panels = [
-        FieldPanel('breadcrumbs_label'),
-        MultiFieldPanel(
-            heading="Hero",
-            children=[
-                FieldPanel('hero_title'),
-                ImageChooserPanel('hero_image'),
-            ],
-        ),
-        MultiFieldPanel(
-            heading="Teaser",
-            children=[
-                HelpPanel('At least one field required for section to show'),
-                FieldPanel('teaser'),
-                ImageChooserPanel('teaser_image'),
-            ],
-        ),
-        MultiFieldPanel(
-            heading="Services section",
-            classname='collapsible',
-            children=[
-                InlinePanel(
-                    'about_dit_services_fields',
-                    label="About DIT services"
-                )
-            ]
-        ),
-        MultiFieldPanel(
-            heading="Case study",
-            classname='collapsible',
-            children=[
-                HelpPanel('Required fields for section to show: '
-                          'Case Study Image, Case Study Title'),
-                ImageChooserPanel('case_study_image'),
-                FieldPanel('case_study_title'),
-                FieldPanel('case_study_text'),
-                HelpPanel('CTAs require both text and a link to show '
-                          'on page. '),
-                FieldPanel('case_study_cta_text'),
-                FieldPanel('case_study_cta_link'),
-            ],
-        ),
-        MultiFieldPanel(
-            heading="Contact Section",
-            classname='collapsible',
-            children=[
-                HelpPanel('Required fields for section to show: '
-                          'Title, Summary'),
-                FieldPanel('contact_us_section_title'),
-                FieldPanel('contact_us_section_summary'),
-                HelpPanel('CTAs require both text and a link to show '
-                          'on page. '),
-                FieldPanel('contact_us_section_cta_text'),
-                FieldPanel('contact_us_section_cta_link'),
-            ],
-        ),
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
-    ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
-

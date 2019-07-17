@@ -807,7 +807,7 @@ class InternationalTradeIndustryContactPageTranslationOptions(
     )
 
 
-@register(models.AboutDitLandingPage)
+@register(great_international.AboutDitLandingPage)
 class AboutDitLandingPageTranslationOptions(
     BaseTranslationOptions
 ):
@@ -818,7 +818,7 @@ class AboutDitLandingPageTranslationOptions(
     )
 
 
-@register(models.AboutDitServicesPage)
+@register(great_international.AboutDitServicesPage)
 class AboutDitServicesPageTranslationOptions(
     BaseTranslationOptions
 ):
@@ -840,7 +840,7 @@ class AboutDitServicesPageTranslationOptions(
     )
 
 
-@register(models.AboutDitServicesFields)
+@register(great_international.AboutDitServicesFields)
 class AboutDitServicesFieldsSerializer(
         BaseTranslationOptions
 ):
