@@ -23,13 +23,9 @@ class ActivityStreamView(ListAPIView):
     @staticmethod
     def _build_after(request, after_ts, after_id):
         return (
-            request.build_absolute_uri(
-                reverse('activity-stream')
-            ) +
-            '?after={}_{}'.format(
-                str(after_ts.timestamp()),
-                str(after_id)
-            )
+                request.build_absolute_uri(
+                    reverse('activity-stream')
+                ) + '?after={}_{}'.format(str(after_ts.timestamp()), str(after_id))
         )
 
     @decorator_from_middleware(ActivityStreamHawkResponseMiddleware)

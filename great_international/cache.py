@@ -13,7 +13,20 @@ class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
     subscriptions = [
         great_international.InternationalArticlePage,
         great_international.InternationalCampaignPage,
-        capital_invest.CapitalInvestOpportunityPage
+        capital_invest.CapitalInvestOpportunityPage,
+        capital_invest.CapitalInvestOpportunityListingPage,
+        great_international.InternationalSubSectorPage
+    ]
+
+
+class InternationalSubSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = great_international.InternationalSubSectorPage
+    subscriptions = [
+        great_international.InternationalArticlePage,
+        great_international.InternationalCampaignPage,
+        capital_invest.CapitalInvestOpportunityPage,
+        capital_invest.CapitalInvestOpportunityListingPage,
+        great_international.InternationalSubSectorPage
     ]
 
 
@@ -105,7 +118,10 @@ class CapitalInvestRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
 class CapitalInvestOpportunityPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = capital_invest.CapitalInvestOpportunityPage
     subscriptions = [
-        capital_invest.CapitalInvestOpportunityPage
+        capital_invest.CapitalInvestOpportunityPage,
+        great_international.InternationalSectorPage,
+        great_international.InternationalSubSectorPage,
+        capital_invest.CapitalInvestOpportunityListingPage,
     ]
 
 
@@ -182,3 +198,17 @@ class InternationalTradeIndustryContactPageSubscriber(
     subscriptions = [
         great_international.InternationalSectorPage,
     ]
+
+
+class AboutDitLandingPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = great_international.AboutDitLandingPage
+    subscriptions = []
+
+
+class AboutDitServicesPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = great_international.AboutDitServicesPage
+    subscriptions = []

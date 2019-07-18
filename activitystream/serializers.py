@@ -27,10 +27,7 @@ class ArticlePageSerializer(serializers.Serializer):
 
     def to_representation(self, obj):
         return {
-            'id': (
-                'dit:cms:Article:' + str(obj.id) +
-                ':Update'
-            ),
+            'id': ('dit:cms:Article:' + str(obj.id) + ':Update'),
             'type': 'Update',
             'published': obj.last_published_at.isoformat('T'),
             'object': {

@@ -125,8 +125,10 @@ def test_cache_populator(translated_page):
 
 
 @pytest.mark.django_db
-def test_region_aware_cache_populator():
-    page = InternationalArticleListingPageFactory()
+def test_region_aware_cache_populator(international_root_page):
+    page = InternationalArticleListingPageFactory(
+        parent=international_root_page
+    )
 
     cache.RegionAwareCachePopulator.populate(page.pk)
     for language_code in page.translated_languages:
@@ -139,8 +141,10 @@ def test_region_aware_cache_populator():
 
 
 @pytest.mark.django_db
-def test_region_aware_cache_populator_async():
-    page = InternationalArticleListingPageFactory()
+def test_region_aware_cache_populator_async(international_root_page):
+    page = InternationalArticleListingPageFactory(
+        parent=international_root_page
+    )
 
     cache.RegionAwareCachePopulator.populate_async(page)
     for language_code in page.translated_languages:
