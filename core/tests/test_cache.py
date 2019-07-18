@@ -258,8 +258,8 @@ def test_all_models_cached():
         export_readiness.models.ContactSuccessPages,
         export_readiness.models.EUExitFormPages,
         export_readiness.models.AllContactPagesPage,
-        great_international.models.InternationalRegionPage,
-        great_international.models.InternationalLocalisedFolderPage,
+        great_international.models.great_international.InternationalRegionPage,
+        great_international.models.great_international.InternationalLocalisedFolderPage,  # noqa
         # Page is added by TestSubscriber in other tests.
         Page,
     }

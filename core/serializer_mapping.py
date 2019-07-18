@@ -23,6 +23,7 @@ MODELS_SERIALIZERS_MAPPING = {
     export_readiness.models.PerformanceDashboardPage: export_readiness.serializers.PerformanceDashboardPageSerializer,  # NOQA
     export_readiness.models.PerformanceDashboardNotesPage: export_readiness.serializers.GenericBodyOnlyPageSerializer,  # NOQA
     export_readiness.models.ArticlePage: export_readiness.serializers.ArticlePageSerializer,  # NOQA
+    export_readiness.models.MarketingArticlePage: export_readiness.serializers.MarketingArticlePageSerializer,  # NOQA
     export_readiness.models.HomePage: export_readiness.serializers.HomePageSerializer,  # NOQA
     export_readiness.models.HomePageOld: export_readiness.serializers.HomePageSerializer,  # NOQA
     export_readiness.models.ArticleListingPage: export_readiness.serializers.ArticleListingPageSerializer,  # NOQA
@@ -37,27 +38,28 @@ MODELS_SERIALIZERS_MAPPING = {
     export_readiness.models.SuperregionPage: export_readiness.serializers.SuperregionPageSerializer,  # NOQA
     export_readiness.models.CountryGuidePage: export_readiness.serializers.CountryGuidePageSerializer,  # NOQA
     # great international
-    great_international.models.InternationalSectorPage: great_international.serializers.InternationalSectorPageSerializer,  # NOQA
-    great_international.models.InternationalHomePage: great_international.serializers.InternationalHomePageSerializer,  # NOQA
-    great_international.models.InternationalHomePageOld: great_international.serializers.InternationalHomePageSerializer,  # NOQA
-    great_international.models.InternationalArticlePage: great_international.serializers.InternationalArticlePageSerializer,  # NOQA
-    great_international.models.InternationalCampaignPage: great_international.serializers.InternationalCampaignPageSerializer,  # NOQA
-    great_international.models.InternationalArticleListingPage: great_international.serializers.InternationalArticleListingPageSerializer,  # NOQA
-    great_international.models.InternationalTopicLandingPage: great_international.serializers.InternationalTopicLandingPageSerializer,  # NOQA
-    great_international.models.InternationalCuratedTopicLandingPage: great_international.serializers.InternationalCuratedTopicLandingPageSerializer,  # NOQA
-    great_international.models.InternationalGuideLandingPage: great_international.serializers.InternationalGuideLandingPageSerializer,  # NOQA
-    great_international.models.InternationalEUExitFormPage: great_international.serializers.InternationalEUExitFormPageSerializer,  # NOQA
-    great_international.models.InternationalEUExitFormSuccessPage: great_international.serializers.InternationalEUExitFormSuccessPageSerializer,  # NOQA
-    great_international.models.InternationalCapitalInvestLandingPage: great_international.serializers.InternationalCapitalInvestLandingPageSerializer,  # NOQA
-    great_international.models.CapitalInvestRegionPage: great_international.serializers.CapitalInvestRegionPageSerializer,  # NOQA
-    great_international.models.CapitalInvestOpportunityListingPage: great_international.serializers.CapitalInvestOpportunityListingSerializer,  # NOQA
-    great_international.models.CapitalInvestOpportunityPage: great_international.serializers.CapitalInvestOpportunityPageSerializer,  # NOQA
-    great_international.models.InvestInternationalHomePage: great_international.serializers.InvestInternationalHomePageSerializer,  # NOQA
-    great_international.models.InvestHighPotentialOpportunityFormSuccessPage: great_international.serializers.InvestHighPotentialOpportunityFormSuccessPageSerializer,  # NOQA
-    great_international.models.InvestHighPotentialOpportunityFormPage: great_international.serializers.InvestHighPotentialOpportunityFormPageSerializer,  # NOQA
-    great_international.models.InvestHighPotentialOpportunityDetailPage: great_international.serializers.InvestHighPotentialOpportunityDetailPageSerializer,   # NOQA
-    great_international.models.InternationalTradeHomePage: great_international.serializers.InternationalTradeHomePageSerializer,  # NOQA
-    great_international.models.InternationalTradeIndustryContactPage: great_international.serializers.InternationalTradeIndustryContactPageSerializer,  # NOQA
+    great_international.models.great_international.InternationalSectorPage: great_international.serializers.InternationalSectorPageSerializer,  # NOQA
+    great_international.models.great_international.InternationalHomePage: great_international.serializers.InternationalHomePageSerializer,  # NOQA
+    great_international.models.great_international.InternationalHomePageOld: great_international.serializers.InternationalHomePageSerializer,  # NOQA
+    great_international.models.great_international.InternationalArticlePage: great_international.serializers.InternationalArticlePageSerializer,  # NOQA
+    great_international.models.great_international.InternationalCampaignPage: great_international.serializers.InternationalCampaignPageSerializer,  # NOQA
+    great_international.models.great_international.InternationalArticleListingPage: great_international.serializers.InternationalArticleListingPageSerializer,  # NOQA
+    great_international.models.great_international.InternationalTopicLandingPage: great_international.serializers.InternationalTopicLandingPageSerializer,  # NOQA
+    great_international.models.great_international.InternationalCuratedTopicLandingPage: great_international.serializers.InternationalCuratedTopicLandingPageSerializer,  # NOQA
+    great_international.models.great_international.InternationalGuideLandingPage: great_international.serializers.InternationalGuideLandingPageSerializer,  # NOQA
+    great_international.models.great_international.InternationalEUExitFormPage: great_international.serializers.InternationalEUExitFormPageSerializer,  # NOQA
+    great_international.models.great_international.InternationalEUExitFormSuccessPage: great_international.serializers.InternationalEUExitFormSuccessPageSerializer,  # NOQA
+    great_international.models.capital_invest.InternationalCapitalInvestLandingPage: great_international.serializers.InternationalCapitalInvestLandingPageSerializer,  # NOQA
+    great_international.models.capital_invest.CapitalInvestOpportunityListingPage: great_international.serializers.CapitalInvestOpportunityListingSerializer,  # NOQA
+    great_international.models.capital_invest.CapitalInvestOpportunityPage: great_international.serializers.CapitalInvestOpportunityPageSerializer,  # NOQA
+    great_international.models.invest.InvestInternationalHomePage: great_international.serializers.InvestInternationalHomePageSerializer,  # NOQA
+    great_international.models.invest.InvestHighPotentialOpportunityFormSuccessPage: great_international.serializers.InvestHighPotentialOpportunityFormSuccessPageSerializer,  # NOQA
+    great_international.models.invest.InvestHighPotentialOpportunityFormPage: great_international.serializers.InvestHighPotentialOpportunityFormPageSerializer,  # NOQA
+    great_international.models.invest.InvestHighPotentialOpportunityDetailPage: great_international.serializers.InvestHighPotentialOpportunityDetailPageSerializer,   # NOQA
+    great_international.models.find_a_supplier.InternationalTradeHomePage: great_international.serializers.InternationalTradeHomePageSerializer,  # NOQA
+    great_international.models.find_a_supplier.InternationalTradeIndustryContactPage: great_international.serializers.InternationalTradeIndustryContactPageSerializer,  # NOQA
+    great_international.models.invest.InvestSectorPage: great_international.serializers.InvestSectorPageSerializer,  # NOQA
+    great_international.models.invest.InvestRegionLandingPage: great_international.serializers.InvestRegionalLandingPageSerializer,  # NOQA
     # invest
     invest.models.SectorLandingPage: invest.serializers.SectorLandingPageGenericSerializer,  # NOQA
     invest.models.RegionLandingPage: invest.serializers.SectorLandingPageGenericSerializer,  # NOQA

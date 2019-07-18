@@ -3,7 +3,9 @@ import pytest
 
 from modeltranslation.utils import build_localized_fieldname
 
-from great_international.models import InternationalHomePage
+from great_international.models.great_international import (
+    InternationalHomePage
+)
 from core import forms
 
 
