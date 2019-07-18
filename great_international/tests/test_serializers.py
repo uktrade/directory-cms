@@ -983,5 +983,5 @@ def test_opportunity_page_null_case_gets_opportunities_with_same_sector(
         context={'request': rf.get('/')}
     )
 
-    for value in birmingham_curzon_serializer.data['opportunities_in_same_sector'].values():
+    for value in birmingham_curzon_serializer.data['related_sector_with_opportunities'].values():
         assert value == []
