@@ -13,6 +13,7 @@
 
 ### Implemented enhancements
 - XOT-922 - Added Marketing Article Page template
+- CMS-1692 - Update HPO pages to work with tree based routing. Added hero thumbnail image rendition to use with card frontend component. Changed slug for contact pages.
 - CMS-1664 - Update invest homepage model to use correct new url for tree based routing
 - No ticket - Split up model and admin panel code in great international app to make files much shorter and easier to work with
 - CI-304 - Gave opportunity page a related region page and a scale numerical value to use for filtering
