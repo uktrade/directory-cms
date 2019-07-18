@@ -878,25 +878,49 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf, internationa
 
 
 @pytest.mark.django_db
-def test_about_dit_services_page_gets_added_related_services_fields(rf, international_root_page):
-
-    services_fields = AboutDitServicesFields(
-        title="title"
+def test_opportunity_page_gets_opportunities_with_same_sector(rf):
+    topic_landing_page = InternationalGuideLandingPageFactory(
+        parent=None,
+        slug='page-slug',
     )
 
-    about_dit_services_page = AboutDitServicesPageFactory(
-        parent=international_root_page,
-        slug='services',
-        about_dit_services_fields=[services_fields]
+    sector = InternationalSectorPageFactory(
+        parent=topic_landing_page,
+        slug='sector',
+        title='sector_title'
     )
 
-    serializer = AboutDitServicesPageSerializer(
-        instance=about_dit_services_page,
+    CapitalInvestOpportunityPageFactory(
+        parent=None,
+        slug='ashton-green',
+        title_en_gb='Ashton Green',
+        related_sectors=[
+            CapitalInvestRelatedSectors(
+                related_sector=sector
+            )
+        ]
+    )
+
+    birmingham_opportuntiy = CapitalInvestOpportunityPageFactory(
+        parent=None,
+        slug='birimingham-curzon',
+        title_en_gb='Birmingham Curzon',
+        related_sectors=[
+            CapitalInvestRelatedSectors(
+                related_sector=sector
+            )
+        ]
+    )
+
+    birmingham_serializer = CapitalInvestOpportunityPageSerializer(
+        instance=birmingham_opportuntiy,
         context={'request': rf.get('/')}
     )
 
-    for page in serializer.data['about_dit_services_fields']:
-        assert page['title'] == 'title'
+    assert len(birmingham_serializer.data['related_sector_with_opportunities'].keys()) == 1
+    for sectors in birmingham_serializer.data['related_sector_with_opportunities'].values():
+        for sector in sectors:
+            assert sector['meta']['slug'] == 'ashton-green'
 
 
 @pytest.mark.django_db
