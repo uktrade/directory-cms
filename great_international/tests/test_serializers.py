@@ -768,7 +768,7 @@ def test_opportunity_page_can_add_sub_sector_as_related(
     )
 
     opportunity = CapitalInvestOpportunityPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='opp',
         related_sub_sectors=[related_sub_sector]
     )
@@ -857,7 +857,7 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf, internationa
     )
 
     opportunity_listing_page = CapitalInvestOpportunityListingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='opp-listing'
     )
 
