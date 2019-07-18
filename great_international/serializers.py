@@ -316,6 +316,17 @@ class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
         max_length=255)
     prioritised_opportunity = serializers.BooleanField()
 
+    related_sectors = serializers.SerializerMethodField()
+
+    def get_related_sectors(self, instance):
+        serializer = RelatedSectorSerializer(
+            instance.related_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
     sub_sectors = serializers.SerializerMethodField()
 
     def get_sub_sectors(self, instance):
