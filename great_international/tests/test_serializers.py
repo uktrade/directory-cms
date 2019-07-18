@@ -783,7 +783,9 @@ def test_opportunity_page_can_add_sub_sector_as_related(
 
 
 @pytest.mark.django_db
-def test_opportunity_page_can_add_sub_sector_as_related_null_case(rf, international_root_page):
+def test_opportunity_page_can_add_sub_sector_as_related_null_case(
+        rf, international_root_page
+):
 
     related_sub_sector = CapitalInvestRelatedSubSectors()
 
@@ -802,7 +804,9 @@ def test_opportunity_page_can_add_sub_sector_as_related_null_case(rf, internatio
 
 
 @pytest.mark.django_db
-def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf, international_root_page):
+def test_opportunity_listing_page_gets_sectors_with_sub_sectors(
+        rf, international_root_page
+):
     topic_landing_page = InternationalTopicLandingPageFactory(
         parent=international_root_page,
         slug='page-slug',
@@ -878,8 +882,9 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf, internationa
 
 
 @pytest.mark.django_db
-def test_about_dit_services_page_gets_added_related_services_fields(rf,
-        international_root_page):
+def test_about_dit_services_page_gets_added_related_services_fields(
+        rf, international_root_page
+):
     services_fields = AboutDitServicesFields(
         title="title"
     )
@@ -900,9 +905,11 @@ def test_about_dit_services_page_gets_added_related_services_fields(rf,
 
 
 @pytest.mark.django_db
-def test_opportunity_page_gets_opportunities_with_same_sector(rf):
+def test_opportunity_page_gets_opportunities_with_same_sector(
+        rf, international_root_page
+):
     topic_landing_page = InternationalGuideLandingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='page-slug',
     )
 
@@ -913,7 +920,7 @@ def test_opportunity_page_gets_opportunities_with_same_sector(rf):
     )
 
     CapitalInvestOpportunityPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='ashton-green',
         title_en_gb='Ashton Green',
         related_sectors=[
@@ -924,7 +931,7 @@ def test_opportunity_page_gets_opportunities_with_same_sector(rf):
     )
 
     birmingham_opportuntiy = CapitalInvestOpportunityPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='birimingham-curzon',
         title_en_gb='Birmingham Curzon',
         related_sectors=[
@@ -946,55 +953,11 @@ def test_opportunity_page_gets_opportunities_with_same_sector(rf):
 
 
 @pytest.mark.django_db
-def test_opportunity_page_gets_opportunities_with_same_sector(rf):
+def test_opportunity_page_null_case_gets_opportunities_with_same_sector(
+        rf, international_root_page
+):
     topic_landing_page = InternationalGuideLandingPageFactory(
-        parent=None,
-        slug='page-slug',
-    )
-
-    sector = InternationalSectorPageFactory(
-        parent=topic_landing_page,
-        slug='sector',
-        title='sector_title'
-    )
-
-    CapitalInvestOpportunityPageFactory(
-        parent=None,
-        slug='ashton-green',
-        title_en_gb='Ashton Green',
-        related_sectors=[
-            CapitalInvestRelatedSectors(
-                related_sector=sector
-            )
-        ]
-    )
-
-    birmingham_opportuntiy = CapitalInvestOpportunityPageFactory(
-        parent=None,
-        slug='birimingham-curzon',
-        title_en_gb='Birmingham Curzon',
-        related_sectors=[
-            CapitalInvestRelatedSectors(
-                related_sector=sector
-            )
-        ]
-    )
-
-    birmingham_serializer = CapitalInvestOpportunityPageSerializer(
-        instance=birmingham_opportuntiy,
-        context={'request': rf.get('/')}
-    )
-
-    assert len(birmingham_serializer.data['related_sector_with_opportunities'].keys()) == 1
-    for sectors in birmingham_serializer.data['related_sector_with_opportunities'].values():
-        for sector in sectors:
-            assert sector['meta']['slug'] == 'ashton-green'
-
-
-@pytest.mark.django_db
-def test_opportunity_page_null_case_gets_opportunities_with_same_sector(rf):
-    topic_landing_page = InternationalGuideLandingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='page-slug',
     )
 
@@ -1009,7 +972,7 @@ def test_opportunity_page_null_case_gets_opportunities_with_same_sector(rf):
     )
 
     birmingham_curzon = CapitalInvestOpportunityPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='birimingham-curzon',
         title_en_gb='Birmingham Curzon',
         related_sectors=[related_sector]
