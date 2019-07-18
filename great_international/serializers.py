@@ -1666,7 +1666,7 @@ class InternationalTradeIndustryContactPageSerializer(BasePageSerializer):
         return serializer.data
 
 
-class AboutDitLandingPage(BasePageSerializer):
+class AboutDitLandingPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('original')
