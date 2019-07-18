@@ -610,10 +610,8 @@ class BaseInternationalSectorPagePanels:
             classname='collapsible ',
             children=[
                 FieldPanel('project_opportunities_title'),
-                HelpPanel('Prioritised opportunity pages that link to this '
-                          'sector will display here. Required fields for '
-                          'section to show: Project Opportunities Title, 1 '
-                          'Prioritised Opportunity Related to this sector'),
+                HelpPanel('Up to 3 random opportunities that are related '
+                          'to this sector will appear here.'),
                 FieldPanel('related_opportunities_cta_text'),
                 FieldPanel('related_opportunities_cta_link')
             ]
