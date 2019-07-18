@@ -1677,3 +1677,46 @@ class InternationalTradeIndustryContactPageSerializer(BasePageSerializer):
             context=self.context
         )
         return serializer.data
+
+
+class AboutDitLandingPage(BasePageSerializer):
+    breadcrumbs_label = serializers.CharField()
+    hero_title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('original')
+
+
+class AboutDitServiceFieldSerializer(serializers.Serializer):
+    icon = wagtail_fields.ImageRenditionField(
+        'original'
+    )
+    title = serializers.CharField()
+    summary = serializers.CharField()
+    link_text = serializers.CharField()
+    link_url = serializers.CharField()
+
+
+class AboutDitServicesPageSerializer(BasePageSerializer):
+    breadcrumbs_label = serializers.CharField()
+    hero_title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    teaser = core_fields.MarkdownToHTMLField()
+    teaser_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    case_study_image = wagtail_fields.ImageRenditionField('original')
+    case_study_title = serializers.CharField()
+    case_study_text = serializers.CharField()
+    case_study_cta_text = serializers.CharField()
+    case_study_cta_link = serializers.CharField()
+    contact_us_section_title = serializers.CharField()
+    contact_us_section_summary = serializers.CharField()
+    contact_us_section_cta_text = serializers.CharField()
+    contact_us_section_cta_link = serializers.CharField()
+    about_dit_services_fields = serializers.SerializerMethodField()
+
+    def get_about_dit_services_fields(self, instance):
+        serializer = AboutDitServiceFieldSerializer(
+            instance.about_dit_services_fields.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
