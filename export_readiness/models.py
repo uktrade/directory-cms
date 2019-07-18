@@ -3029,10 +3029,7 @@ class HomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
         allowed_name = cls.service_name_value
         return [
             model for model in Page.allowed_subpage_models()
-            if(
-                getattr(model, 'service_name_value', None) == allowed_name
-                and model is not cls
-            )
+            if (getattr(model, 'service_name_value', None) == allowed_name and model is not cls)
         ]
 
 
