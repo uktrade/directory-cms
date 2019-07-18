@@ -9,7 +9,7 @@ from core.serializers import (
     FormPageSerializerMetaclass)
 from invest.models import HighPotentialOpportunityDetailPage
 
-from .models import (
+from .models.great_international import (
     InternationalArticlePage,
     InternationalArticleListingPage,
     InternationalLocalisedFolderPage,
@@ -17,9 +17,14 @@ from .models import (
     InternationalGuideLandingPage,
     InternationalSectorPage,
     InternationalEUExitFormPage,
-    CapitalInvestOpportunityPage,
+)
+from .models.invest import (
     InvestHighPotentialOpportunityFormPage,
-    InvestHighPotentialOpportunityDetailPage)
+    InvestHighPotentialOpportunityDetailPage,
+    InvestSectorPage
+)
+
+from .models.capital_invest import CapitalInvestOpportunityPage
 
 
 ONE_TO_SIX_WORDS = ['one', 'two', 'three', 'four', 'five', 'six']
@@ -312,14 +317,14 @@ class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
 
 
 class RegionCardFieldSerializer(serializers.Serializer):
-    region_card_image = wagtail_fields.ImageRenditionField('original')
+    region_card_image = wagtail_fields.ImageRenditionField('fill-640x360')
     region_card_title = serializers.CharField(max_length=255)
     region_card_summary = core_fields.MarkdownToHTMLField()
 
 
 class HomesInEnglandCardFieldSerializer(serializers.Serializer):
     homes_in_england_card_image = wagtail_fields.ImageRenditionField(
-        'original'
+        'fill-640x360'
     )
     homes_in_england_card_title = serializers.CharField(max_length=255)
     homes_in_england_card_pdf_document = core_fields.DocumentURLField()
@@ -514,6 +519,8 @@ class InternationalSectorPageSerializer(
     section_three_subsection_two_body = core_fields.MarkdownToHTMLField()
 
     project_opportunities_title = serializers.CharField(max_length=255)
+    related_opportunities_cta_text = serializers.CharField(max_length=255)
+    related_opportunities_cta_link = serializers.CharField(max_length=255)
 
     related_opportunities = serializers.SerializerMethodField()
 
@@ -1028,17 +1035,18 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer):
         return serializer.data
 
 
-class OpportunityListSerializer(BasePageSerializer):
+class OpportunityListSerializer(BasePageSerializer, RelatedRegionSerializer):
     title = serializers.CharField(
         max_length=255, source='hero_title')
     hero_image = wagtail_fields.ImageRenditionField(
         'fill-640x360')
-    sector = serializers.CharField(
-        max_length=255)
-    scale = serializers.CharField(
-        max_length=255)
+    sector = serializers.CharField(max_length=255)
+    scale = serializers.CharField(max_length=255)
+    scale_value = serializers.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
     prioritised_opportunity = serializers.BooleanField()
-
     related_sectors = serializers.SerializerMethodField()
 
     def get_related_sectors(self, instance):
@@ -1073,7 +1081,10 @@ class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
         return serializer.data
 
 
-class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
+class CapitalInvestOpportunityPageSerializer(
+    PageWithRelatedPagesSerializer,
+    RelatedRegionSerializer
+):
 
     breadcrumbs_label = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField(
@@ -1104,6 +1115,10 @@ class CapitalInvestOpportunityPageSerializer(PageWithRelatedPagesSerializer):
     )
     scale = serializers.CharField(max_length=255)
     scale_heading = serializers.CharField(max_length=255)
+    scale_value = serializers.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
 
     sector_icon = wagtail_fields.ImageRenditionField(
         'original'
@@ -1260,7 +1275,7 @@ class InvestInternationalHomePageSerializer(BasePageSerializer):
         return serializer.data
 
     def get_sectors(self, instance):
-        from .models import InternationalSectorPage
+        from .models.great_international import InternationalSectorPage
         serializer = InternationalSectorPageSerializer(
             InternationalSectorPage.objects.live().order_by('heading'),
             many=True,
@@ -1270,7 +1285,7 @@ class InvestInternationalHomePageSerializer(BasePageSerializer):
         return serializer.data
 
     def get_high_potential_opportunities(self, instance):
-        from .models import InvestHighPotentialOpportunityDetailPage
+        from .models.invest import InvestHighPotentialOpportunityDetailPage
         queryset = InvestHighPotentialOpportunityDetailPage.objects.all(
             ).filter(
             featured=True
@@ -1446,6 +1461,62 @@ class InvestHighPotentialOpportunityFormSuccessPageSerializer(
             context=self.context
         )
         return serializer.data
+
+
+class PulloutSerializer(serializers.Serializer):
+    text = core_fields.MarkdownToHTMLField()
+    stat = serializers.CharField(allow_null=True)
+    stat_text = serializers.CharField(allow_null=True)
+
+
+class InvestSectorPageSerializer(BasePageSerializer,
+                                 ChildPagesSerializerHelper):
+    featured = serializers.BooleanField()
+    description = serializers.CharField()
+    heading = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    pullout = serializers.SerializerMethodField()
+    subsections = serializers.SerializerMethodField()
+    children_sectors = serializers.SerializerMethodField()
+
+    def get_pullout(self, instance):
+        return PulloutSerializer(
+            {
+                'text': instance.pullout_text,
+                'stat': instance.pullout_stat,
+                'stat_text': instance.pullout_stat_text
+            }
+        ).data
+
+    def get_subsections(self, instance):
+        data = [
+            SubsectionProxyDataWrapper(instance=instance, suffix=num)
+            for num in ONE_TO_SEVEN_WORDS
+        ]
+        serializer = SubsectionSerializer(data, many=True)
+        return serializer.data
+
+    def get_children_sectors(self, instance):
+        return self.get_child_pages_data_for(
+            instance,
+            InvestSectorPage,
+            InvestSectorPageSerializer
+        )
+
+
+class InvestRegionalLandingPageSerializer(
+    BasePageSerializer, ChildPagesSerializerHelper
+):
+    heading = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    children_sectors = serializers.SerializerMethodField()
+
+    def get_children_sectors(self, instance):
+        return self.get_child_pages_data_for(
+            instance,
+            InvestSectorPage,
+            InvestSectorPageSerializer
+        )
 
 
 # FAS serializers
