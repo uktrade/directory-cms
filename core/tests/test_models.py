@@ -23,8 +23,9 @@ from export_readiness.tests.factories import (
     PrivacyAndCookiesPageFactory, SitePolicyPagesFactory,
 )
 from great_international.tests.factories import (
-    InternationalHomePageFactory, InternationalTopicLandingPageFactory,
-    InternationalArticleListingPageFactory, InternationalArticlePageFactory,
+    InternationalTopicLandingPageFactory,
+    InternationalArticleListingPageFactory,
+    InternationalArticlePageFactory,
 )
 from invest.models import InvestApp
 
