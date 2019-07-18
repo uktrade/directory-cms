@@ -10,7 +10,10 @@ from export_readiness.tests.factories import (
 
 
 @pytest.mark.django_db
-def test_population_and_value_getting(root_page, django_assert_num_queries):
+def test_population_and_value_getting(
+        root_page,
+        international_root_page,
+        django_assert_num_queries):
     domestic_homepage = HomePageFactory(parent=root_page)
     topic_page = TopicLandingPageFactory(
         parent=domestic_homepage, slug='topic')
@@ -50,6 +53,7 @@ def test_population_and_value_getting(root_page, django_assert_num_queries):
             'EXPORT_READINESS:topic': topic_page.id,
             'EXPORT_READINESS:list': article_list_page.id,
             'EXPORT_READINESS:article': article_page.id,
+            'GREAT_INTERNATIONAL:home': international_root_page.id
         },
     }
 

@@ -22,13 +22,9 @@ class ActivityStreamView(ListAPIView):
     @staticmethod
     def _build_after(request, after_ts, after_id):
         return (
-            request.build_absolute_uri(
-                reverse('activity-stream')
-            ) +
-            '?after={}_{}'.format(
-                str(after_ts.timestamp()),
-                str(after_id)
-            )
+                request.build_absolute_uri(
+                    reverse('activity-stream')
+                ) + '?after={}_{}'.format(str(after_ts.timestamp()), str(after_id))
         )
 
     @decorator_from_middleware(ActivityStreamHawkResponseMiddleware)
@@ -39,8 +35,7 @@ class ActivityStreamView(ListAPIView):
             request.GET,
             queryset=ArticlePage.objects.live()
         )
-        articles_qs = article_filter.qs. \
-            order_by('last_published_at', 'id')[:MAX_PER_PAGE]
+        articles_qs = article_filter.qs.order_by('last_published_at', 'id')[:MAX_PER_PAGE]
 
         items = {
             '@context': 'https://www.w3.org/ns/activitystreams',
@@ -51,7 +46,7 @@ class ActivityStreamView(ListAPIView):
         if not articles_qs:
             next_page = {}
         else:
-            last_article = articles_qs[len(articles_qs)-1]
+            last_article = articles_qs[len(articles_qs) - 1]
             next_page = {
                 'next': self._build_after(
                     request, last_article.last_published_at, last_article.id)
