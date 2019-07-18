@@ -85,7 +85,8 @@ class SameSectorOpportunitiesHelper(serializers.Serializer):
     def get_same_sector_opportunity_pages_data_for(
             self, instance, serializer, related_sectors
     ):
-        all_opportunity_pages = CapitalInvestOpportunityPage.objects.live().public()
+        page_type = CapitalInvestOpportunityPage
+        all_opportunity_pages = page_type.objects.live().public()
 
         sector_with_opps = {sector['title']: [] for sectors in related_sectors
                             for sector in sectors.values() if sector}
