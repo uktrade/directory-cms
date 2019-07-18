@@ -5,9 +5,9 @@ from rest_framework.reverse import reverse
 from great_international.tests import factories
 
 
-def test_international_sector_page(admin_client, root_page):
+def test_international_sector_page(admin_client, international_root_page):
     sector_page = factories.InternationalSectorPageFactory.create(
-        parent=root_page
+        parent=international_root_page
     )
     url = reverse('api:api:pages:detail', kwargs={'pk': sector_page.pk})
     response = admin_client.get(url)
@@ -27,19 +27,19 @@ def test_international_homepage(admin_client, root_page):
     assert list(featured_links.keys()) == ['image', 'heading']
 
 
-def test_international_campaign_page(admin_client, root_page):
+def test_international_campaign_page(admin_client, international_root_page):
 
     campaign_page = factories.InternationalCampaignPageFactory(
-        parent=root_page
+        parent=international_root_page
     )
     url = reverse('api:api:pages:detail', kwargs={'pk': campaign_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
 
 
-def test_international_article_listing_page_view(admin_client, root_page):
+def test_international_article_listing_page_view(admin_client, international_root_page):
     article_listing_page = factories.InternationalArticleListingPageFactory.create(  # NOQA
-        parent=root_page,
+        parent=international_root_page,
         live=True
     )
     article = factories.InternationalArticlePageFactory.create(
@@ -64,9 +64,9 @@ def test_international_article_listing_page_view(admin_client, root_page):
     assert 'meta' in response.json()['child_pages'][0]
 
 
-def test_international_topic_landing_page_view(admin_client, root_page):
+def test_international_topic_landing_page_view(admin_client, international_root_page):
     topic_landing_page = factories.InternationalTopicLandingPageFactory.create(
-        parent=root_page,
+        parent=international_root_page,
         live=True
     )
     campaign_page = factories.InternationalCampaignPageFactory(
@@ -89,9 +89,9 @@ def test_international_topic_landing_page_view(admin_client, root_page):
 
 
 def test_international_topic_landing_page_view_sectors_alphabetical_order(
-        admin_client, root_page):
+        admin_client, international_root_page):
     landing_page = factories.InternationalTopicLandingPageFactory.create(
-        parent=root_page
+        parent=international_root_page
     )
     sector_page1 = factories.InternationalSectorPageFactory.create(
         parent=landing_page,
@@ -111,9 +111,9 @@ def test_international_topic_landing_page_view_sectors_alphabetical_order(
     ]
 
 
-def test_article_listingpage_with_localised_content(admin_client, root_page):
+def test_article_listingpage_with_localised_content(admin_client, international_root_page):
     article_listing_page = factories.InternationalArticleListingPageFactory.create(  # NOQA
-        parent=root_page,
+        parent=international_root_page,
         live=True,
         slug='setup-uk'
     )
@@ -122,7 +122,7 @@ def test_article_listingpage_with_localised_content(admin_client, root_page):
         live=True
     )
     region_page = factories.InternationalRegionPageFactory(
-        parent=root_page,
+        parent=international_root_page,
         live=True,
         slug='germany'
     )
@@ -153,10 +153,10 @@ def test_article_listingpage_with_localised_content(admin_client, root_page):
 
 
 def test_article_listingpage_without_localised_content(
-        admin_client, root_page
+        admin_client, international_root_page
 ):
     article_listing_page = factories.InternationalArticleListingPageFactory.create( # NOQA
-        parent=root_page,
+        parent=international_root_page,
         live=True,
         slug='setup-uk'
     )
@@ -165,7 +165,7 @@ def test_article_listingpage_without_localised_content(
         live=True
     )
     region_page = factories.InternationalRegionPageFactory(
-        parent=root_page,
+        parent=international_root_page,
         live=True,
         slug='germany'
     )
@@ -193,9 +193,9 @@ def test_article_listingpage_without_localised_content(
     assert response.json()['localised_child_pages'] == []
 
 
-def test_client_not_passing_region(admin_client, root_page):
+def test_client_not_passing_region(admin_client, international_root_page):
     article_listing_page = factories.InternationalArticleListingPageFactory.create(  # NOQA
-        parent=root_page,
+        parent=international_root_page,
         live=True
     )
 
@@ -209,8 +209,8 @@ def test_client_not_passing_region(admin_client, root_page):
     assert response.json()['localised_child_pages'] == []
 
 
-def test_invest_home_page(document, admin_client, root_page):
-    page = factories.InvestInternationalHomePageFactory(live=True)
+def test_invest_home_page(document, admin_client, international_root_page):
+    page = factories.InvestInternationalHomePageFactory(live=True, parent=international_root_page)
     sector_one = factories.InternationalSectorPageFactory(
         live=True, parent=page
     )
@@ -247,9 +247,9 @@ def test_invest_home_page(document, admin_client, root_page):
     assert high_potential_ops[0]['title'] == 'Featured'
 
 
-def test_invest_sector_page(admin_client, root_page):
+def test_invest_sector_page(admin_client, international_root_page):
     page = factories.InvestSectorPageFactory(
-        live=True, featured=True, parent=root_page
+        live=True, featured=True, parent=international_root_page
     )
     factories.InvestSectorPageFactory(live=True, parent=page)
     factories.InvestSectorPageFactory(
@@ -264,9 +264,9 @@ def test_invest_sector_page(admin_client, root_page):
     assert len(response.json()['children_sectors']) == 1
 
 
-def test_invest_region_landing_page(admin_client, root_page):
+def test_invest_region_landing_page(admin_client, international_root_page):
     page = factories.InvestRegionLandingPageFactory(
-        live=True, parent=root_page
+        live=True, parent=international_root_page
     )
     factories.InvestSectorPageFactory(live=True, parent=page)
 
@@ -277,14 +277,14 @@ def test_invest_region_landing_page(admin_client, root_page):
     assert len(response.json()['children_sectors']) == 1
 
 
-def test_high_potential_opportunity_api(document, admin_client, root_page):
+def test_high_potential_opportunity_api(document, admin_client, international_root_page):
     factories.InvestHighPotentialOpportunityDetailPageFactory(
-        parent=root_page,
+        parent=international_root_page,
         live=True,
         pdf_document=document,
     )
     page = factories.InvestHighPotentialOpportunityDetailPageFactory(
-        parent=root_page,
+        parent=international_root_page,
         live=True,
         pdf_document=document,
         slug='some-nice-slug',
@@ -305,13 +305,13 @@ def test_high_potential_opportunity_api(document, admin_client, root_page):
 
 def test_international_trade_home_page_exposes_industries(
         admin_client,
-        root_page
+        international_root_page
 ):
-    industry = factories.InternationalSectorPageFactory(parent=root_page,
+    industry = factories.InternationalSectorPageFactory(parent=international_root_page,
                                                         live=True)
-    factories.InternationalSectorPageFactory(parent=root_page, live=False)
+    factories.InternationalSectorPageFactory(parent=international_root_page, live=False)
     homepage = factories.InternationalTradeHomePageFactory(
-        live=True, parent=root_page
+        live=True, parent=international_root_page
     )
     url = reverse('api:api:pages:detail', kwargs={'pk': homepage.pk})
     response = admin_client.get(url)
