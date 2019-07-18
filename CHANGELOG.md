@@ -5,7 +5,7 @@
 ### Implemented enhancements
 - XOT-932 - Add Country Guide pages to search
 - CI-342 - `CapitalInvestOpportunityPage` gets all projects that have the same related sector as self so they can be randomised
-- CI-344 - `Similar projects` title and `related_page_one/teo/three `CapitalInvestOpportunityPage` are no longer used, only been removed from panels for now
+- CI-344 - `Similar projects` title and `related_page_one/teo/three `CapitalInvestOpportunityPage` are no longer used, only removed from panels for now
 
 
 ### Fixed Bugs
