@@ -355,8 +355,7 @@ class BasePage(Page):
         if len(self.translated_languages) > 1:
             names = [
                 label for code, label, _ in settings.LANGUAGES_DETAILS
-                if code in self.translated_languages
-                and code != settings.LANGUAGE_CODE
+                if code in self.translated_languages and code != settings.LANGUAGE_CODE
             ]
             return 'Translated to {}'.format(', '.join(names))
         return ''
@@ -509,9 +508,7 @@ class FormPageMetaClass(PageBase):
             ) for name in form_field_names
         ]
         attrs['content_panels'] = (
-            attrs['content_panels_before_form'] +
-            form_panels +
-            attrs['content_panels_after_form']
+            attrs['content_panels_before_form'] + form_panels + attrs['content_panels_after_form']
         )
 
         return super().__new__(mcls, name, bases, attrs)
