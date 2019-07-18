@@ -652,6 +652,13 @@ class InvestHomePageTranslation(BaseTranslationOptions):
     )
 
 
+@register(invest.InvestHighPotentialOpportunitiesPage)
+class InvestHighPotentialOpportunitiesPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = []
+
+
 @register(invest.InvestHighPotentialOpportunityFormPage)
 class HighPotentialOpportunityFormPageTranslationOptions(
     BaseTranslationOptions

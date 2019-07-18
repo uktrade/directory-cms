@@ -1,7 +1,5 @@
 from django.db import models
 
-from directory_constants import slugs
-
 from core.models import (
     ExclusivePageMixin, WagtailAdminExclusivePageMixin, FormPageMetaClass)
 from core.model_fields import MarkdownField
@@ -17,6 +15,9 @@ class InvestInternationalHomePage(
     panels.InvestInternationalHomePagePanels,
 ):
     slug_identity = 'invest'
+    subpage_types = [
+        'InvestHighPotentialOpportunitiesPage',
+    ]
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
@@ -230,6 +231,28 @@ class InvestInternationalHomePage(
     contact_section_call_to_action_url = models.CharField(max_length=255)
 
 
+class InvestHighPotentialOpportunitiesPage(
+    ExclusivePageMixin, BaseInternationalPage,
+    panels.InvestHighPotentialOpportunitiesPagePanels,
+):
+    """
+    An empty page in lieu of a landing page so we don't break the
+    tree based routing pattern.
+    This page's url will redirect to an existing page on the frontend.
+    """
+
+    slug_identity = 'high-potential-opportunities'
+
+    subpage_types = [
+        'InvestHighPotentialOpportunityDetailPage',
+        'InvestHighPotentialOpportunityFormPage',
+    ]
+
+    def save(self, *args, **kwargs):
+        self.title = self.get_verbose_name()
+        return super().save(*args, **kwargs)
+
+
 class InvestHighPotentialOpportunityFormPage(
     WagtailAdminExclusivePageMixin,
     BaseInternationalPage,
@@ -249,8 +272,8 @@ class InvestHighPotentialOpportunityFormPage(
         'comment',
     ]
 
-    slug_identity = slugs.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM
-    full_path_override = 'high-potential-opportunities/rail/contact/'
+    slug_identity = 'contact'
+    subpage_types = ['InvestHighPotentialOpportunityFormSuccessPage']
 
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
@@ -268,9 +291,6 @@ class InvestHighPotentialOpportunityDetailPage(
     BaseInternationalPage,
     panels.InvestHighPotentialOpportunityDetailPagePanels,
 ):
-    subpage_types = ['invest.HighPotentialOpportunityDetailPage']
-    view_path = 'high-potential-opportunities/'
-
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
@@ -491,8 +511,7 @@ class InvestHighPotentialOpportunityFormSuccessPage(
     BaseInternationalPage,
     panels.InvestHighPotentialOpportunityFormSuccessPagePanels,
 ):
-    view_path = 'high-potential-opportunities/rail/contact/'
-    slug_identity = slugs.INVEST_HIGH_POTENTIAL_OPPORTUNITY_FORM_SUCCESS
+    slug_identity = 'success'
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(
@@ -510,7 +529,6 @@ class InvestHighPotentialOpportunityFormSuccessPage(
     next_steps_body = models.CharField(
         max_length=255,
         verbose_name='section body',
-
     )
     documents_title = models.CharField(
         max_length=255,

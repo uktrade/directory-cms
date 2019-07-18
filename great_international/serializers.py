@@ -1396,6 +1396,9 @@ class InvestHighPotentialOpportunityDetailPageBaseSerializer(
     breadcrumbs_label = serializers.CharField(max_length=50)
     heading = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
+        'fill-640x360',
+        source='hero_image')
     description = serializers.CharField(max_length=255)
     featured = serializers.BooleanField()
     contact_proposition = core_fields.MarkdownToHTMLField()
