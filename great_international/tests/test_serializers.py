@@ -878,6 +878,28 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf, internationa
 
 
 @pytest.mark.django_db
+def test_about_dit_services_page_gets_added_related_services_fields(rf,
+        international_root_page):
+    services_fields = AboutDitServicesFields(
+        title="title"
+    )
+
+    about_dit_services_page = AboutDitServicesPageFactory(
+        parent=international_root_page,
+        slug='services',
+        about_dit_services_fields=[services_fields]
+    )
+
+    serializer = AboutDitServicesPageSerializer(
+        instance=about_dit_services_page,
+        context={'request': rf.get('/')}
+    )
+
+    for page in serializer.data['about_dit_services_fields']:
+        assert page['title'] == 'title'
+
+
+@pytest.mark.django_db
 def test_opportunity_page_gets_opportunities_with_same_sector(rf):
     topic_landing_page = InternationalGuideLandingPageFactory(
         parent=None,
