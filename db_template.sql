@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.5
--- Dumped by pg_dump version 11.1
+-- Dumped from database version 9.6.9
+-- Dumped by pg_dump version 10.4
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -15,6 +15,20 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -25,7 +39,7 @@ SET default_with_oids = false;
 
 CREATE TABLE public.auth_group (
     id integer NOT NULL,
-    name character varying(150) NOT NULL
+    name character varying(80) NOT NULL
 );
 
 
@@ -120,7 +134,7 @@ CREATE TABLE public.auth_user (
     is_superuser boolean NOT NULL,
     username character varying(150) NOT NULL,
     first_name character varying(30) NOT NULL,
-    last_name character varying(150) NOT NULL,
+    last_name character varying(30) NOT NULL,
     email character varying(254) NOT NULL,
     is_staff boolean NOT NULL,
     is_active boolean NOT NULL,
@@ -1072,58 +1086,6 @@ CREATE TABLE public.export_readiness_internationallandingpage (
     service_name character varying(100),
     uses_tree_based_routing boolean NOT NULL
 );
-
-
---
--- Name: export_readiness_marketingarticlepage; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.export_readiness_marketingarticlepage (
-    page_ptr_id integer NOT NULL,
-    service_name character varying(100),
-    uses_tree_based_routing boolean NOT NULL,
-    article_title character varying(255) NOT NULL,
-    article_teaser character varying(255),
-    article_body_text text NOT NULL,
-    cta_title character varying(255) NOT NULL,
-    cta_teaser text NOT NULL,
-    cta_link_label character varying(255) NOT NULL,
-    cta_link character varying(255) NOT NULL,
-    article_image_id integer,
-    related_page_one_id integer,
-    related_page_three_id integer,
-    related_page_two_id integer
-);
-
-
---
--- Name: export_readiness_marketingarticlepage_tags; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.export_readiness_marketingarticlepage_tags (
-    id integer NOT NULL,
-    marketingarticlepage_id integer NOT NULL,
-    tag_id integer NOT NULL
-);
-
-
---
--- Name: export_readiness_marketingarticlepage_tags_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.export_readiness_marketingarticlepage_tags_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: export_readiness_marketingarticlepage_tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.export_readiness_marketingarticlepage_tags_id_seq OWNED BY public.export_readiness_marketingarticlepage_tags.id;
 
 
 --
@@ -2372,25 +2334,7 @@ CREATE TABLE public.great_international_capitalinvestopportunitypage (
     sector_heading_fr character varying(255),
     sector_heading_ja character varying(255),
     sector_heading_pt character varying(255),
-    sector_heading_zh_hans character varying(255),
-    related_region_id integer,
-    related_region_ar_id integer,
-    related_region_de_id integer,
-    related_region_en_gb_id integer,
-    related_region_es_id integer,
-    related_region_fr_id integer,
-    related_region_ja_id integer,
-    related_region_pt_id integer,
-    related_region_zh_hans_id integer,
-    scale_value numeric(10,2),
-    scale_value_ar numeric(10,2),
-    scale_value_de numeric(10,2),
-    scale_value_en_gb numeric(10,2),
-    scale_value_es numeric(10,2),
-    scale_value_fr numeric(10,2),
-    scale_value_ja numeric(10,2),
-    scale_value_pt numeric(10,2),
-    scale_value_zh_hans numeric(10,2)
+    sector_heading_zh_hans character varying(255)
 );
 
 
@@ -5643,25 +5587,7 @@ CREATE TABLE public.great_international_internationalsectorpage (
     project_opportunities_title_fr character varying(255),
     project_opportunities_title_ja character varying(255),
     project_opportunities_title_pt character varying(255),
-    project_opportunities_title_zh_hans character varying(255),
-    related_opportunities_cta_link character varying(255) NOT NULL,
-    related_opportunities_cta_link_ar character varying(255),
-    related_opportunities_cta_link_de character varying(255),
-    related_opportunities_cta_link_en_gb character varying(255),
-    related_opportunities_cta_link_es character varying(255),
-    related_opportunities_cta_link_fr character varying(255),
-    related_opportunities_cta_link_ja character varying(255),
-    related_opportunities_cta_link_pt character varying(255),
-    related_opportunities_cta_link_zh_hans character varying(255),
-    related_opportunities_cta_text character varying(255) NOT NULL,
-    related_opportunities_cta_text_ar character varying(255),
-    related_opportunities_cta_text_de character varying(255),
-    related_opportunities_cta_text_en_gb character varying(255),
-    related_opportunities_cta_text_es character varying(255),
-    related_opportunities_cta_text_fr character varying(255),
-    related_opportunities_cta_text_ja character varying(255),
-    related_opportunities_cta_text_pt character varying(255),
-    related_opportunities_cta_text_zh_hans character varying(255)
+    project_opportunities_title_zh_hans character varying(255)
 );
 
 
@@ -9201,7 +9127,6 @@ CREATE TABLE public.wagtaildocs_document (
     uploaded_by_user_id integer,
     collection_id integer NOT NULL,
     file_size integer,
-    file_hash character varying(40) NOT NULL,
     CONSTRAINT wagtaildocs_document_file_size_check CHECK ((file_size >= 0))
 );
 
@@ -9238,7 +9163,7 @@ CREATE TABLE public.wagtailembeds_embed (
     title text NOT NULL,
     author_name text NOT NULL,
     provider_name text NOT NULL,
-    thumbnail_url character varying(255),
+    thumbnail_url character varying(200),
     width integer,
     height integer,
     last_updated timestamp with time zone NOT NULL
@@ -9642,13 +9567,6 @@ ALTER TABLE ONLY public.export_readiness_articlepage_tags ALTER COLUMN id SET DE
 
 
 --
--- Name: export_readiness_marketingarticlepage_tags id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.export_readiness_marketingarticlepage_tags ALTER COLUMN id SET DEFAULT nextval('public.export_readiness_marketingarticlepage_tags_id_seq'::regclass);
-
-
---
 -- Name: export_readiness_tag id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -9933,8 +9851,8 @@ ALTER TABLE ONLY public.wagtailusers_userprofile ALTER COLUMN id SET DEFAULT nex
 --
 
 COPY public.auth_group (id, name) FROM stdin;
-1	Moderators
-2	Editors
+1 Moderators
+2 Editors
 \.
 
 
@@ -9943,26 +9861,26 @@ COPY public.auth_group (id, name) FROM stdin;
 --
 
 COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
-1	1	1
-2	1	2
-3	1	3
-4	2	1
-5	2	2
-6	2	3
-7	1	4
-8	1	5
-9	1	6
-10	2	4
-11	2	5
-12	2	6
-13	1	8
-14	1	9
-15	1	7
-16	2	8
-17	2	9
-18	2	7
-19	1	10
-20	2	10
+1 1 1
+2 1 2
+3 1 3
+4 2 1
+5 2 2
+6 2 3
+7 1 4
+8 1 5
+9 1 6
+10  2 4
+11  2 5
+12  2 6
+13  1 8
+14  1 9
+15  1 7
+16  2 8
+17  2 9
+18  2 7
+19  1 10
+20  2 10
 \.
 
 
@@ -9971,435 +9889,325 @@ COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
 --
 
 COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
-1	Can add document	2	add_document
-2	Can change document	2	change_document
-3	Can delete document	2	delete_document
-4	Can add media	3	add_media
-5	Can change media	3	change_media
-6	Can delete media	3	delete_media
-7	Can add image	4	add_image
-8	Can change image	4	change_image
-9	Can delete image	4	delete_image
-10	Can access Wagtail admin	9	access_admin
-11	Can add log entry	10	add_logentry
-12	Can change log entry	10	change_logentry
-13	Can delete log entry	10	delete_logentry
-14	Can add permission	11	add_permission
-15	Can change permission	11	change_permission
-16	Can delete permission	11	delete_permission
-17	Can add group	12	add_group
-18	Can change group	12	change_group
-19	Can delete group	12	delete_group
-20	Can add user	13	add_user
-21	Can change user	13	change_user
-22	Can delete user	13	delete_user
-23	Can add content type	14	add_contenttype
-24	Can change content type	14	change_contenttype
-25	Can delete content type	14	delete_contenttype
-26	Can add session	15	add_session
-27	Can change session	15	change_session
-28	Can delete session	15	delete_session
-29	Can add test model	16	add_testmodel
-30	Can change test model	16	change_testmodel
-31	Can delete test model	16	delete_testmodel
-32	Can add image hash	17	add_imagehash
-33	Can change image hash	17	change_imagehash
-34	Can delete image hash	17	delete_imagehash
-35	Can add breadcrumb	18	add_breadcrumb
-36	Can change breadcrumb	18	change_breadcrumb
-37	Can delete breadcrumb	18	delete_breadcrumb
-38	Can add document hash	19	add_documenthash
-39	Can change document hash	19	change_documenthash
-40	Can delete document hash	19	delete_documenthash
-41	Can add routing settings	20	add_routingsettings
-42	Can change routing settings	20	change_routingsettings
-43	Can delete routing settings	20	delete_routingsettings
-44	Can add user profile	21	add_userprofile
-45	Can change user profile	21	change_userprofile
-46	Can delete user profile	21	delete_userprofile
-47	Can add group info	22	add_groupinfo
-48	Can change group info	22	change_groupinfo
-49	Can delete group info	22	delete_groupinfo
-50	Can add form submission	23	add_formsubmission
-51	Can change form submission	23	change_formsubmission
-52	Can delete form submission	23	delete_formsubmission
-53	Can add embed	24	add_embed
-54	Can change embed	24	change_embed
-55	Can delete embed	24	delete_embed
-56	Can add user profile	25	add_userprofile
-57	Can change user profile	25	change_userprofile
-58	Can delete user profile	25	delete_userprofile
-59	Can add rendition	26	add_rendition
-60	Can change rendition	26	change_rendition
-61	Can delete rendition	26	delete_rendition
-62	Can add query	27	add_query
-63	Can change query	27	change_query
-64	Can delete query	27	delete_query
-65	Can add Query Daily Hits	28	add_querydailyhits
-66	Can change Query Daily Hits	28	change_querydailyhits
-67	Can delete Query Daily Hits	28	delete_querydailyhits
-68	Can add page	1	add_page
-69	Can change page	1	change_page
-70	Can delete page	1	delete_page
-71	Can add group page permission	29	add_grouppagepermission
-72	Can change group page permission	29	change_grouppagepermission
-73	Can delete group page permission	29	delete_grouppagepermission
-74	Can add page revision	30	add_pagerevision
-75	Can change page revision	30	change_pagerevision
-76	Can delete page revision	30	delete_pagerevision
-77	Can add page view restriction	31	add_pageviewrestriction
-78	Can change page view restriction	31	change_pageviewrestriction
-79	Can delete page view restriction	31	delete_pageviewrestriction
-80	Can add site	32	add_site
-81	Can change site	32	change_site
-82	Can delete site	32	delete_site
-83	Can add collection	33	add_collection
-84	Can change collection	33	change_collection
-85	Can delete collection	33	delete_collection
-86	Can add group collection permission	34	add_groupcollectionpermission
-87	Can change group collection permission	34	change_groupcollectionpermission
-88	Can delete group collection permission	34	delete_groupcollectionpermission
-89	Can add collection view restriction	35	add_collectionviewrestriction
-90	Can change collection view restriction	35	change_collectionviewrestriction
-91	Can delete collection view restriction	35	delete_collectionviewrestriction
-92	Can add Tag	36	add_tag
-93	Can change Tag	36	change_tag
-94	Can delete Tag	36	delete_tag
-95	Can add Tagged Item	37	add_taggeditem
-96	Can change Tagged Item	37	change_taggeditem
-97	Can delete Tagged Item	37	delete_taggeditem
-98	Can add industry page	38	add_industrypage
-99	Can change industry page	38	change_industrypage
-100	Can delete industry page	38	delete_industrypage
-101	Can add industry article page	39	add_industryarticlepage
-102	Can change industry article page	39	change_industryarticlepage
-103	Can delete industry article page	39	delete_industryarticlepage
-104	Can add industry landing page	40	add_industrylandingpage
-105	Can change industry landing page	40	change_industrylandingpage
-106	Can delete industry landing page	40	delete_industrylandingpage
-107	Can add landing page	41	add_landingpage
-108	Can change landing page	41	change_landingpage
-109	Can delete landing page	41	delete_landingpage
-110	Can add industry contact page	42	add_industrycontactpage
-111	Can change industry contact page	42	change_industrycontactpage
-112	Can delete industry contact page	42	delete_industrycontactpage
-113	Can add find a supplier app	43	add_findasupplierapp
-114	Can change find a supplier app	43	change_findasupplierapp
-115	Can delete find a supplier app	43	delete_findasupplierapp
-116	Can add industry page article summary	44	add_industrypagearticlesummary
-117	Can change industry page article summary	44	change_industrypagearticlesummary
-118	Can delete industry page article summary	44	delete_industrypagearticlesummary
-119	Can add landing page article summary	45	add_landingpagearticlesummary
-120	Can change landing page article summary	45	change_landingpagearticlesummary
-121	Can delete landing page article summary	45	delete_landingpagearticlesummary
-122	Can add terms and conditions page	46	add_termsandconditionspage
-123	Can change terms and conditions page	46	change_termsandconditionspage
-124	Can delete terms and conditions page	46	delete_termsandconditionspage
-125	Can add privacy and cookies page	47	add_privacyandcookiespage
-126	Can change privacy and cookies page	47	change_privacyandcookiespage
-127	Can delete privacy and cookies page	47	delete_privacyandcookiespage
-128	Can add performance dashboard page	48	add_performancedashboardpage
-129	Can change performance dashboard page	48	change_performancedashboardpage
-130	Can delete performance dashboard page	48	delete_performancedashboardpage
-131	Can add performance dashboard notes page	49	add_performancedashboardnotespage
-132	Can change performance dashboard notes page	49	change_performancedashboardnotespage
-133	Can delete performance dashboard notes page	49	delete_performancedashboardnotespage
-134	Can add article listing page	50	add_articlelistingpage
-135	Can change article listing page	50	change_articlelistingpage
-136	Can delete article listing page	50	delete_articlelistingpage
-137	Can add article page	51	add_articlepage
-138	Can change article page	51	change_articlepage
-139	Can delete article page	51	delete_articlepage
-140	Can add topic landing page	52	add_topiclandingpage
-141	Can change topic landing page	52	change_topiclandingpage
-142	Can delete topic landing page	52	delete_topiclandingpage
-143	Can add eu exit international form page	53	add_euexitinternationalformpage
-144	Can change eu exit international form page	53	change_euexitinternationalformpage
-145	Can delete eu exit international form page	53	delete_euexitinternationalformpage
-146	Can add tag	54	add_tag
-147	Can change tag	54	change_tag
-148	Can delete tag	54	delete_tag
-149	Can add eu exit domestic form page	55	add_euexitdomesticformpage
-150	Can change eu exit domestic form page	55	change_euexitdomesticformpage
-151	Can delete eu exit domestic form page	55	delete_euexitdomesticformpage
-152	Can add eu exit form success page	56	add_euexitformsuccesspage
-153	Can change eu exit form success page	56	change_euexitformsuccesspage
-154	Can delete eu exit form success page	56	delete_euexitformsuccesspage
-155	Can add international landing page	57	add_internationallandingpage
-156	Can change international landing page	57	change_internationallandingpage
-157	Can delete international landing page	57	delete_internationallandingpage
-158	Can add contact us guidance page	58	add_contactusguidancepage
-159	Can change contact us guidance page	58	change_contactusguidancepage
-160	Can delete contact us guidance page	58	delete_contactusguidancepage
-161	Can add contact success page	59	add_contactsuccesspage
-162	Can change contact success page	59	change_contactsuccesspage
-163	Can delete contact success page	59	delete_contactsuccesspage
-164	Can add get finance page	60	add_getfinancepage
-165	Can change get finance page	60	change_getfinancepage
-166	Can delete get finance page	60	delete_getfinancepage
-167	Can add campaign page	61	add_campaignpage
-168	Can change campaign page	61	change_campaignpage
-169	Can delete campaign page	61	delete_campaignpage
-170	Can add marketing pages	62	add_marketingpages
-171	Can change marketing pages	62	change_marketingpages
-172	Can delete marketing pages	62	delete_marketingpages
-173	Can add contact success pages	63	add_contactsuccesspages
-174	Can change contact success pages	63	change_contactsuccesspages
-175	Can delete contact success pages	63	delete_contactsuccesspages
-176	Can add contact us guidance pages	64	add_contactusguidancepages
-177	Can change contact us guidance pages	64	change_contactusguidancepages
-178	Can delete contact us guidance pages	64	delete_contactusguidancepages
-179	Can add country guide page	65	add_countryguidepage
-180	Can change country guide page	65	change_countryguidepage
-181	Can delete country guide page	65	delete_countryguidepage
-182	Can add superregion page	66	add_superregionpage
-183	Can change superregion page	66	change_superregionpage
-184	Can delete superregion page	66	delete_superregionpage
-185	Can add site policy pages	67	add_sitepolicypages
-186	Can change site policy pages	67	change_sitepolicypages
-187	Can delete site policy pages	67	delete_sitepolicypages
-188	Can add eu exit form pages	68	add_euexitformpages
-189	Can change eu exit form pages	68	change_euexitformpages
-190	Can delete eu exit form pages	68	delete_euexitformpages
-191	Can add Forms	69	add_allcontactpagespage
-192	Can change Forms	69	change_allcontactpagespage
-193	Can delete Forms	69	delete_allcontactpagespage
-194	Can add home page old	6	add_homepageold
-195	Can change home page old	6	change_homepageold
-196	Can delete home page old	6	delete_homepageold
-197	Can add home page	5	add_homepage
-198	Can change home page	5	change_homepage
-199	Can delete home page	5	delete_homepage
-200	Can add international article page	70	add_internationalarticlepage
-201	Can change international article page	70	change_internationalarticlepage
-202	Can delete international article page	70	delete_internationalarticlepage
-203	Can add international campaign page	71	add_internationalcampaignpage
-204	Can change international campaign page	71	change_internationalcampaignpage
-205	Can delete international campaign page	71	delete_internationalcampaignpage
-206	Can add international article listing page	72	add_internationalarticlelistingpage
-207	Can change international article listing page	72	change_internationalarticlelistingpage
-208	Can delete international article listing page	72	delete_internationalarticlelistingpage
-209	Can add international topic landing page	73	add_internationaltopiclandingpage
-210	Can change international topic landing page	73	change_internationaltopiclandingpage
-211	Can delete international topic landing page	73	delete_internationaltopiclandingpage
-212	Can add international region page	74	add_internationalregionpage
-213	Can change international region page	74	change_internationalregionpage
-214	Can delete international region page	74	delete_internationalregionpage
-215	Can add international localised folder page	75	add_internationallocalisedfolderpage
-216	Can change international localised folder page	75	change_internationallocalisedfolderpage
-217	Can delete international localised folder page	75	delete_internationallocalisedfolderpage
-218	Can add international sector page	76	add_internationalsectorpage
-219	Can change international sector page	76	change_internationalsectorpage
-220	Can delete international sector page	76	delete_internationalsectorpage
-221	Can add international curated topic landing page	77	add_internationalcuratedtopiclandingpage
-222	Can change international curated topic landing page	77	change_internationalcuratedtopiclandingpage
-223	Can delete international curated topic landing page	77	delete_internationalcuratedtopiclandingpage
-224	Can add international guide landing page	78	add_internationalguidelandingpage
-225	Can change international guide landing page	78	change_internationalguidelandingpage
-226	Can delete international guide landing page	78	delete_internationalguidelandingpage
-227	Can add international eu exit form page	79	add_internationaleuexitformpage
-228	Can change international eu exit form page	79	change_internationaleuexitformpage
-229	Can delete international eu exit form page	79	delete_internationaleuexitformpage
-230	Can add international eu exit form success page	80	add_internationaleuexitformsuccesspage
-231	Can change international eu exit form success page	80	change_internationaleuexitformsuccesspage
-232	Can delete international eu exit form success page	80	delete_internationaleuexitformsuccesspage
-233	Can add capital invest opportunity listing page	81	add_capitalinvestopportunitylistingpage
-234	Can change capital invest opportunity listing page	81	change_capitalinvestopportunitylistingpage
-235	Can delete capital invest opportunity listing page	81	delete_capitalinvestopportunitylistingpage
-236	Can add capital invest opportunity page	82	add_capitalinvestopportunitypage
-237	Can change capital invest opportunity page	82	change_capitalinvestopportunitypage
-238	Can delete capital invest opportunity page	82	delete_capitalinvestopportunitypage
-239	Can add capital invest region page	83	add_capitalinvestregionpage
-240	Can change capital invest region page	83	change_capitalinvestregionpage
-241	Can delete capital invest region page	83	delete_capitalinvestregionpage
-242	Can add international capital invest landing page	84	add_internationalcapitalinvestlandingpage
-243	Can change international capital invest landing page	84	change_internationalcapitalinvestlandingpage
-244	Can delete international capital invest landing page	84	delete_internationalcapitalinvestlandingpage
-245	Can add capital invest homes in england card fields summary	85	add_capitalinvesthomesinenglandcardfieldssummary
-246	Can change capital invest homes in england card fields summary	85	change_capitalinvesthomesinenglandcardfieldssummary
-247	Can delete capital invest homes in england card fields summary	85	delete_capitalinvesthomesinenglandcardfieldssummary
-248	Can add capital invest region card fields summary	86	add_capitalinvestregioncardfieldssummary
-249	Can change capital invest region card fields summary	86	change_capitalinvestregioncardfieldssummary
-250	Can delete capital invest region card fields summary	86	delete_capitalinvestregioncardfieldssummary
-251	Can add capital invest related regions	87	add_capitalinvestrelatedregions
-252	Can change capital invest related regions	87	change_capitalinvestrelatedregions
-253	Can delete capital invest related regions	87	delete_capitalinvestrelatedregions
-254	Can add invest high potential opportunity detail page	88	add_investhighpotentialopportunitydetailpage
-255	Can change invest high potential opportunity detail page	88	change_investhighpotentialopportunitydetailpage
-256	Can delete invest high potential opportunity detail page	88	delete_investhighpotentialopportunitydetailpage
-257	Can add invest high potential opportunity form page	89	add_investhighpotentialopportunityformpage
-258	Can change invest high potential opportunity form page	89	change_investhighpotentialopportunityformpage
-259	Can delete invest high potential opportunity form page	89	delete_investhighpotentialopportunityformpage
-260	Can add invest high potential opportunity form success page	90	add_investhighpotentialopportunityformsuccesspage
-261	Can change invest high potential opportunity form success page	90	change_investhighpotentialopportunityformsuccesspage
-262	Can delete invest high potential opportunity form success page	90	delete_investhighpotentialopportunityformsuccesspage
-263	Can add invest international home page	91	add_investinternationalhomepage
-264	Can change invest international home page	91	change_investinternationalhomepage
-265	Can delete invest international home page	91	delete_investinternationalhomepage
-266	Can add international home page old	8	add_internationalhomepageold
-267	Can change international home page old	8	change_internationalhomepageold
-268	Can delete international home page old	8	delete_internationalhomepageold
-269	Can add international home page	7	add_internationalhomepage
-270	Can change international home page	7	change_internationalhomepage
-271	Can delete international home page	7	delete_internationalhomepage
-272	Can add capital invest related sectors	92	add_capitalinvestrelatedsectors
-273	Can change capital invest related sectors	92	change_capitalinvestrelatedsectors
-274	Can delete capital invest related sectors	92	delete_capitalinvestrelatedsectors
-275	Can add international trade home page	93	add_internationaltradehomepage
-276	Can change international trade home page	93	change_internationaltradehomepage
-277	Can delete international trade home page	93	delete_internationaltradehomepage
-278	Can add international trade industry contact page	94	add_internationaltradeindustrycontactpage
-279	Can change international trade industry contact page	94	change_internationaltradeindustrycontactpage
-280	Can delete international trade industry contact page	94	delete_internationaltradeindustrycontactpage
-281	Can add info page	95	add_infopage
-282	Can change info page	95	change_infopage
-283	Can delete info page	95	delete_infopage
-284	Can add invest app	96	add_investapp
-285	Can change invest app	96	change_investapp
-286	Can delete invest app	96	delete_investapp
-287	Can add invest home page	97	add_investhomepage
-288	Can change invest home page	97	change_investhomepage
-289	Can delete invest home page	97	delete_investhomepage
-290	Can add sector landing page	98	add_sectorlandingpage
-291	Can change sector landing page	98	change_sectorlandingpage
-292	Can delete sector landing page	98	delete_sectorlandingpage
-293	Can add sector page	99	add_sectorpage
-294	Can change sector page	99	change_sectorpage
-295	Can delete sector page	99	delete_sectorpage
-296	Can add setup guide landing page	100	add_setupguidelandingpage
-297	Can change setup guide landing page	100	change_setupguidelandingpage
-298	Can delete setup guide landing page	100	delete_setupguidelandingpage
-299	Can add setup guide page	101	add_setupguidepage
-300	Can change setup guide page	101	change_setupguidepage
-301	Can delete setup guide page	101	delete_setupguidepage
-302	Can add region landing page	102	add_regionlandingpage
-303	Can change region landing page	102	change_regionlandingpage
-304	Can delete region landing page	102	delete_regionlandingpage
-305	Can add high potential opportunity detail page	103	add_highpotentialopportunitydetailpage
-306	Can change high potential opportunity detail page	103	change_highpotentialopportunitydetailpage
-307	Can delete high potential opportunity detail page	103	delete_highpotentialopportunitydetailpage
-308	Can add high potential opportunity form page	104	add_highpotentialopportunityformpage
-309	Can change high potential opportunity form page	104	change_highpotentialopportunityformpage
-310	Can delete high potential opportunity form page	104	delete_highpotentialopportunityformpage
-311	Can add high potential opportunity form success page	105	add_highpotentialopportunityformsuccesspage
-312	Can change high potential opportunity form success page	105	change_highpotentialopportunityformsuccesspage
-313	Can delete high potential opportunity form success page	105	delete_highpotentialopportunityformsuccesspage
-314	Can add banner component	106	add_bannercomponent
-315	Can change banner component	106	change_bannercomponent
-316	Can delete banner component	106	delete_bannercomponent
-317	Can add components app	107	add_componentsapp
-318	Can change components app	107	change_componentsapp
-319	Can delete components app	107	delete_componentsapp
-320	Can view log entry	10	view_logentry
-321	Can view permission	11	view_permission
-322	Can view group	12	view_group
-323	Can view user	13	view_user
-324	Can view content type	14	view_contenttype
-325	Can view session	15	view_session
-326	Can view test model	16	view_testmodel
-327	Can view image hash	17	view_imagehash
-328	Can view breadcrumb	18	view_breadcrumb
-329	Can view document hash	19	view_documenthash
-330	Can view routing settings	20	view_routingsettings
-331	Can view user profile	21	view_userprofile
-332	Can view group info	22	view_groupinfo
-333	Can view form submission	23	view_formsubmission
-334	Can view embed	24	view_embed
-335	Can view user profile	25	view_userprofile
-336	Can view document	2	view_document
-337	Can view image	4	view_image
-338	Can view rendition	26	view_rendition
-339	Can view query	27	view_query
-340	Can view Query Daily Hits	28	view_querydailyhits
-341	Can view page	1	view_page
-342	Can view group page permission	29	view_grouppagepermission
-343	Can view page revision	30	view_pagerevision
-344	Can view page view restriction	31	view_pageviewrestriction
-345	Can view site	32	view_site
-346	Can view collection	33	view_collection
-347	Can view group collection permission	34	view_groupcollectionpermission
-348	Can view collection view restriction	35	view_collectionviewrestriction
-349	Can view Tag	36	view_tag
-350	Can view Tagged Item	37	view_taggeditem
-351	Can view media	3	view_media
-352	Can view industry page	38	view_industrypage
-353	Can view industry article page	39	view_industryarticlepage
-354	Can view industry landing page	40	view_industrylandingpage
-355	Can view landing page	41	view_landingpage
-356	Can view industry contact page	42	view_industrycontactpage
-357	Can view find a supplier app	43	view_findasupplierapp
-358	Can view industry page article summary	44	view_industrypagearticlesummary
-359	Can view landing page article summary	45	view_landingpagearticlesummary
-360	Can view terms and conditions page	46	view_termsandconditionspage
-361	Can view privacy and cookies page	47	view_privacyandcookiespage
-362	Can view performance dashboard page	48	view_performancedashboardpage
-363	Can view performance dashboard notes page	49	view_performancedashboardnotespage
-364	Can view article listing page	50	view_articlelistingpage
-365	Can view article page	51	view_articlepage
-366	Can view topic landing page	52	view_topiclandingpage
-367	Can view eu exit international form page	53	view_euexitinternationalformpage
-368	Can view tag	54	view_tag
-369	Can view eu exit domestic form page	55	view_euexitdomesticformpage
-370	Can view eu exit form success page	56	view_euexitformsuccesspage
-371	Can view international landing page	57	view_internationallandingpage
-372	Can view contact us guidance page	58	view_contactusguidancepage
-373	Can view contact success page	59	view_contactsuccesspage
-374	Can view get finance page	60	view_getfinancepage
-375	Can view campaign page	61	view_campaignpage
-376	Can view marketing pages	62	view_marketingpages
-377	Can view contact success pages	63	view_contactsuccesspages
-378	Can view contact us guidance pages	64	view_contactusguidancepages
-379	Can view country guide page	65	view_countryguidepage
-380	Can view superregion page	66	view_superregionpage
-381	Can view site policy pages	67	view_sitepolicypages
-382	Can view eu exit form pages	68	view_euexitformpages
-383	Can view Forms	69	view_allcontactpagespage
-384	Can view home page old	6	view_homepageold
-385	Can view home page	5	view_homepage
-386	Can add Marketing Article Page	108	add_marketingarticlepage
-387	Can change Marketing Article Page	108	change_marketingarticlepage
-388	Can delete Marketing Article Page	108	delete_marketingarticlepage
-389	Can view Marketing Article Page	108	view_marketingarticlepage
-390	Can view international article page	70	view_internationalarticlepage
-391	Can view international campaign page	71	view_internationalcampaignpage
-392	Can view international article listing page	72	view_internationalarticlelistingpage
-393	Can view international topic landing page	73	view_internationaltopiclandingpage
-394	Can view international region page	74	view_internationalregionpage
-395	Can view international localised folder page	75	view_internationallocalisedfolderpage
-396	Can view international sector page	76	view_internationalsectorpage
-397	Can view international curated topic landing page	77	view_internationalcuratedtopiclandingpage
-398	Can view international guide landing page	78	view_internationalguidelandingpage
-399	Can view international eu exit form page	79	view_internationaleuexitformpage
-400	Can view international eu exit form success page	80	view_internationaleuexitformsuccesspage
-401	Can view capital invest opportunity listing page	81	view_capitalinvestopportunitylistingpage
-402	Can view capital invest opportunity page	82	view_capitalinvestopportunitypage
-403	Can view capital invest region page	83	view_capitalinvestregionpage
-404	Can view international capital invest landing page	84	view_internationalcapitalinvestlandingpage
-405	Can view capital invest homes in england card fields summary	85	view_capitalinvesthomesinenglandcardfieldssummary
-406	Can view capital invest region card fields summary	86	view_capitalinvestregioncardfieldssummary
-407	Can view capital invest related regions	87	view_capitalinvestrelatedregions
-408	Can view invest high potential opportunity detail page	88	view_investhighpotentialopportunitydetailpage
-409	Can view invest high potential opportunity form page	89	view_investhighpotentialopportunityformpage
-410	Can view invest high potential opportunity form success page	90	view_investhighpotentialopportunityformsuccesspage
-411	Can view invest international home page	91	view_investinternationalhomepage
-412	Can view international home page old	8	view_internationalhomepageold
-413	Can view international home page	7	view_internationalhomepage
-414	Can view capital invest related sectors	92	view_capitalinvestrelatedsectors
-415	Can view international trade home page	93	view_internationaltradehomepage
-416	Can view international trade industry contact page	94	view_internationaltradeindustrycontactpage
-417	Can view info page	95	view_infopage
-418	Can view invest app	96	view_investapp
-419	Can view invest home page	97	view_investhomepage
-420	Can view sector landing page	98	view_sectorlandingpage
-421	Can view sector page	99	view_sectorpage
-422	Can view setup guide landing page	100	view_setupguidelandingpage
-423	Can view setup guide page	101	view_setupguidepage
-424	Can view region landing page	102	view_regionlandingpage
-425	Can view high potential opportunity detail page	103	view_highpotentialopportunitydetailpage
-426	Can view high potential opportunity form page	104	view_highpotentialopportunityformpage
-427	Can view high potential opportunity form success page	105	view_highpotentialopportunityformsuccesspage
-428	Can view banner component	106	view_bannercomponent
-429	Can view components app	107	view_componentsapp
+1 Can add document  2 add_document
+2 Can change document 2 change_document
+3 Can delete document 2 delete_document
+4 Can add media 3 add_media
+5 Can change media  3 change_media
+6 Can delete media  3 delete_media
+7 Can add image 4 add_image
+8 Can change image  4 change_image
+9 Can delete image  4 delete_image
+10  Can access Wagtail admin  9 access_admin
+11  Can add log entry 10  add_logentry
+12  Can change log entry  10  change_logentry
+13  Can delete log entry  10  delete_logentry
+14  Can add permission  11  add_permission
+15  Can change permission 11  change_permission
+16  Can delete permission 11  delete_permission
+17  Can add group 12  add_group
+18  Can change group  12  change_group
+19  Can delete group  12  delete_group
+20  Can add user  13  add_user
+21  Can change user 13  change_user
+22  Can delete user 13  delete_user
+23  Can add content type  14  add_contenttype
+24  Can change content type 14  change_contenttype
+25  Can delete content type 14  delete_contenttype
+26  Can add session 15  add_session
+27  Can change session  15  change_session
+28  Can delete session  15  delete_session
+29  Can add test model  16  add_testmodel
+30  Can change test model 16  change_testmodel
+31  Can delete test model 16  delete_testmodel
+32  Can add image hash  17  add_imagehash
+33  Can change image hash 17  change_imagehash
+34  Can delete image hash 17  delete_imagehash
+35  Can add breadcrumb  18  add_breadcrumb
+36  Can change breadcrumb 18  change_breadcrumb
+37  Can delete breadcrumb 18  delete_breadcrumb
+38  Can add document hash 19  add_documenthash
+39  Can change document hash  19  change_documenthash
+40  Can delete document hash  19  delete_documenthash
+41  Can add routing settings  20  add_routingsettings
+42  Can change routing settings 20  change_routingsettings
+43  Can delete routing settings 20  delete_routingsettings
+44  Can add user profile  21  add_userprofile
+45  Can change user profile 21  change_userprofile
+46  Can delete user profile 21  delete_userprofile
+47  Can add group info  22  add_groupinfo
+48  Can change group info 22  change_groupinfo
+49  Can delete group info 22  delete_groupinfo
+50  Can add form submission 23  add_formsubmission
+51  Can change form submission  23  change_formsubmission
+52  Can delete form submission  23  delete_formsubmission
+53  Can add embed 24  add_embed
+54  Can change embed  24  change_embed
+55  Can delete embed  24  delete_embed
+56  Can add user profile  25  add_userprofile
+57  Can change user profile 25  change_userprofile
+58  Can delete user profile 25  delete_userprofile
+59  Can add rendition 26  add_rendition
+60  Can change rendition  26  change_rendition
+61  Can delete rendition  26  delete_rendition
+62  Can add query 27  add_query
+63  Can change query  27  change_query
+64  Can delete query  27  delete_query
+65  Can add Query Daily Hits  28  add_querydailyhits
+66  Can change Query Daily Hits 28  change_querydailyhits
+67  Can delete Query Daily Hits 28  delete_querydailyhits
+68  Can add page  1 add_page
+69  Can change page 1 change_page
+70  Can delete page 1 delete_page
+71  Can add group page permission 29  add_grouppagepermission
+72  Can change group page permission  29  change_grouppagepermission
+73  Can delete group page permission  29  delete_grouppagepermission
+74  Can add page revision 30  add_pagerevision
+75  Can change page revision  30  change_pagerevision
+76  Can delete page revision  30  delete_pagerevision
+77  Can add page view restriction 31  add_pageviewrestriction
+78  Can change page view restriction  31  change_pageviewrestriction
+79  Can delete page view restriction  31  delete_pageviewrestriction
+80  Can add site  32  add_site
+81  Can change site 32  change_site
+82  Can delete site 32  delete_site
+83  Can add collection  33  add_collection
+84  Can change collection 33  change_collection
+85  Can delete collection 33  delete_collection
+86  Can add group collection permission 34  add_groupcollectionpermission
+87  Can change group collection permission  34  change_groupcollectionpermission
+88  Can delete group collection permission  34  delete_groupcollectionpermission
+89  Can add collection view restriction 35  add_collectionviewrestriction
+90  Can change collection view restriction  35  change_collectionviewrestriction
+91  Can delete collection view restriction  35  delete_collectionviewrestriction
+92  Can add Tag 36  add_tag
+93  Can change Tag  36  change_tag
+94  Can delete Tag  36  delete_tag
+95  Can add Tagged Item 37  add_taggeditem
+96  Can change Tagged Item  37  change_taggeditem
+97  Can delete Tagged Item  37  delete_taggeditem
+98  Can add industry page 38  add_industrypage
+99  Can change industry page  38  change_industrypage
+100 Can delete industry page  38  delete_industrypage
+101 Can add industry article page 39  add_industryarticlepage
+102 Can change industry article page  39  change_industryarticlepage
+103 Can delete industry article page  39  delete_industryarticlepage
+104 Can add industry landing page 40  add_industrylandingpage
+105 Can change industry landing page  40  change_industrylandingpage
+106 Can delete industry landing page  40  delete_industrylandingpage
+107 Can add landing page  41  add_landingpage
+108 Can change landing page 41  change_landingpage
+109 Can delete landing page 41  delete_landingpage
+110 Can add industry contact page 42  add_industrycontactpage
+111 Can change industry contact page  42  change_industrycontactpage
+112 Can delete industry contact page  42  delete_industrycontactpage
+113 Can add find a supplier app 43  add_findasupplierapp
+114 Can change find a supplier app  43  change_findasupplierapp
+115 Can delete find a supplier app  43  delete_findasupplierapp
+116 Can add industry page article summary 44  add_industrypagearticlesummary
+117 Can change industry page article summary  44  change_industrypagearticlesummary
+118 Can delete industry page article summary  44  delete_industrypagearticlesummary
+119 Can add landing page article summary  45  add_landingpagearticlesummary
+120 Can change landing page article summary 45  change_landingpagearticlesummary
+121 Can delete landing page article summary 45  delete_landingpagearticlesummary
+122 Can add terms and conditions page 46  add_termsandconditionspage
+123 Can change terms and conditions page  46  change_termsandconditionspage
+124 Can delete terms and conditions page  46  delete_termsandconditionspage
+125 Can add privacy and cookies page  47  add_privacyandcookiespage
+126 Can change privacy and cookies page 47  change_privacyandcookiespage
+127 Can delete privacy and cookies page 47  delete_privacyandcookiespage
+128 Can add performance dashboard page  48  add_performancedashboardpage
+129 Can change performance dashboard page 48  change_performancedashboardpage
+130 Can delete performance dashboard page 48  delete_performancedashboardpage
+131 Can add performance dashboard notes page  49  add_performancedashboardnotespage
+132 Can change performance dashboard notes page 49  change_performancedashboardnotespage
+133 Can delete performance dashboard notes page 49  delete_performancedashboardnotespage
+134 Can add article listing page  50  add_articlelistingpage
+135 Can change article listing page 50  change_articlelistingpage
+136 Can delete article listing page 50  delete_articlelistingpage
+137 Can add article page  51  add_articlepage
+138 Can change article page 51  change_articlepage
+139 Can delete article page 51  delete_articlepage
+140 Can add topic landing page  52  add_topiclandingpage
+141 Can change topic landing page 52  change_topiclandingpage
+142 Can delete topic landing page 52  delete_topiclandingpage
+143 Can add eu exit international form page 53  add_euexitinternationalformpage
+144 Can change eu exit international form page  53  change_euexitinternationalformpage
+145 Can delete eu exit international form page  53  delete_euexitinternationalformpage
+146 Can add tag 54  add_tag
+147 Can change tag  54  change_tag
+148 Can delete tag  54  delete_tag
+149 Can add eu exit domestic form page  55  add_euexitdomesticformpage
+150 Can change eu exit domestic form page 55  change_euexitdomesticformpage
+151 Can delete eu exit domestic form page 55  delete_euexitdomesticformpage
+152 Can add eu exit form success page 56  add_euexitformsuccesspage
+153 Can change eu exit form success page  56  change_euexitformsuccesspage
+154 Can delete eu exit form success page  56  delete_euexitformsuccesspage
+155 Can add international landing page  57  add_internationallandingpage
+156 Can change international landing page 57  change_internationallandingpage
+157 Can delete international landing page 57  delete_internationallandingpage
+158 Can add contact us guidance page  58  add_contactusguidancepage
+159 Can change contact us guidance page 58  change_contactusguidancepage
+160 Can delete contact us guidance page 58  delete_contactusguidancepage
+161 Can add contact success page  59  add_contactsuccesspage
+162 Can change contact success page 59  change_contactsuccesspage
+163 Can delete contact success page 59  delete_contactsuccesspage
+164 Can add get finance page  60  add_getfinancepage
+165 Can change get finance page 60  change_getfinancepage
+166 Can delete get finance page 60  delete_getfinancepage
+167 Can add campaign page 61  add_campaignpage
+168 Can change campaign page  61  change_campaignpage
+169 Can delete campaign page  61  delete_campaignpage
+170 Can add marketing pages 62  add_marketingpages
+171 Can change marketing pages  62  change_marketingpages
+172 Can delete marketing pages  62  delete_marketingpages
+173 Can add contact success pages 63  add_contactsuccesspages
+174 Can change contact success pages  63  change_contactsuccesspages
+175 Can delete contact success pages  63  delete_contactsuccesspages
+176 Can add contact us guidance pages 64  add_contactusguidancepages
+177 Can change contact us guidance pages  64  change_contactusguidancepages
+178 Can delete contact us guidance pages  64  delete_contactusguidancepages
+179 Can add country guide page  65  add_countryguidepage
+180 Can change country guide page 65  change_countryguidepage
+181 Can delete country guide page 65  delete_countryguidepage
+182 Can add superregion page  66  add_superregionpage
+183 Can change superregion page 66  change_superregionpage
+184 Can delete superregion page 66  delete_superregionpage
+185 Can add site policy pages 67  add_sitepolicypages
+186 Can change site policy pages  67  change_sitepolicypages
+187 Can delete site policy pages  67  delete_sitepolicypages
+188 Can add eu exit form pages  68  add_euexitformpages
+189 Can change eu exit form pages 68  change_euexitformpages
+190 Can delete eu exit form pages 68  delete_euexitformpages
+191 Can add Forms 69  add_allcontactpagespage
+192 Can change Forms  69  change_allcontactpagespage
+193 Can delete Forms  69  delete_allcontactpagespage
+194 Can add home page old 6 add_homepageold
+195 Can change home page old  6 change_homepageold
+196 Can delete home page old  6 delete_homepageold
+197 Can add home page 5 add_homepage
+198 Can change home page  5 change_homepage
+199 Can delete home page  5 delete_homepage
+200 Can add international article page  70  add_internationalarticlepage
+201 Can change international article page 70  change_internationalarticlepage
+202 Can delete international article page 70  delete_internationalarticlepage
+203 Can add international campaign page 71  add_internationalcampaignpage
+204 Can change international campaign page  71  change_internationalcampaignpage
+205 Can delete international campaign page  71  delete_internationalcampaignpage
+206 Can add international article listing page  72  add_internationalarticlelistingpage
+207 Can change international article listing page 72  change_internationalarticlelistingpage
+208 Can delete international article listing page 72  delete_internationalarticlelistingpage
+209 Can add international topic landing page  73  add_internationaltopiclandingpage
+210 Can change international topic landing page 73  change_internationaltopiclandingpage
+211 Can delete international topic landing page 73  delete_internationaltopiclandingpage
+212 Can add international region page 74  add_internationalregionpage
+213 Can change international region page  74  change_internationalregionpage
+214 Can delete international region page  74  delete_internationalregionpage
+215 Can add international localised folder page 75  add_internationallocalisedfolderpage
+216 Can change international localised folder page  75  change_internationallocalisedfolderpage
+217 Can delete international localised folder page  75  delete_internationallocalisedfolderpage
+218 Can add international sector page 76  add_internationalsectorpage
+219 Can change international sector page  76  change_internationalsectorpage
+220 Can delete international sector page  76  delete_internationalsectorpage
+221 Can add international curated topic landing page  77  add_internationalcuratedtopiclandingpage
+222 Can change international curated topic landing page 77  change_internationalcuratedtopiclandingpage
+223 Can delete international curated topic landing page 77  delete_internationalcuratedtopiclandingpage
+224 Can add international guide landing page  78  add_internationalguidelandingpage
+225 Can change international guide landing page 78  change_internationalguidelandingpage
+226 Can delete international guide landing page 78  delete_internationalguidelandingpage
+227 Can add international eu exit form page 79  add_internationaleuexitformpage
+228 Can change international eu exit form page  79  change_internationaleuexitformpage
+229 Can delete international eu exit form page  79  delete_internationaleuexitformpage
+230 Can add international eu exit form success page 80  add_internationaleuexitformsuccesspage
+231 Can change international eu exit form success page  80  change_internationaleuexitformsuccesspage
+232 Can delete international eu exit form success page  80  delete_internationaleuexitformsuccesspage
+233 Can add capital invest opportunity listing page 81  add_capitalinvestopportunitylistingpage
+234 Can change capital invest opportunity listing page  81  change_capitalinvestopportunitylistingpage
+235 Can delete capital invest opportunity listing page  81  delete_capitalinvestopportunitylistingpage
+236 Can add capital invest opportunity page 82  add_capitalinvestopportunitypage
+237 Can change capital invest opportunity page  82  change_capitalinvestopportunitypage
+238 Can delete capital invest opportunity page  82  delete_capitalinvestopportunitypage
+239 Can add capital invest region page  83  add_capitalinvestregionpage
+240 Can change capital invest region page 83  change_capitalinvestregionpage
+241 Can delete capital invest region page 83  delete_capitalinvestregionpage
+242 Can add international capital invest landing page 84  add_internationalcapitalinvestlandingpage
+243 Can change international capital invest landing page  84  change_internationalcapitalinvestlandingpage
+244 Can delete international capital invest landing page  84  delete_internationalcapitalinvestlandingpage
+245 Can add capital invest homes in england card fields summary 85  add_capitalinvesthomesinenglandcardfieldssummary
+246 Can change capital invest homes in england card fields summary  85  change_capitalinvesthomesinenglandcardfieldssummary
+247 Can delete capital invest homes in england card fields summary  85  delete_capitalinvesthomesinenglandcardfieldssummary
+248 Can add capital invest region card fields summary 86  add_capitalinvestregioncardfieldssummary
+249 Can change capital invest region card fields summary  86  change_capitalinvestregioncardfieldssummary
+250 Can delete capital invest region card fields summary  86  delete_capitalinvestregioncardfieldssummary
+251 Can add capital invest related regions  87  add_capitalinvestrelatedregions
+252 Can change capital invest related regions 87  change_capitalinvestrelatedregions
+253 Can delete capital invest related regions 87  delete_capitalinvestrelatedregions
+254 Can add invest high potential opportunity detail page 88  add_investhighpotentialopportunitydetailpage
+255 Can change invest high potential opportunity detail page  88  change_investhighpotentialopportunitydetailpage
+256 Can delete invest high potential opportunity detail page  88  delete_investhighpotentialopportunitydetailpage
+257 Can add invest high potential opportunity form page 89  add_investhighpotentialopportunityformpage
+258 Can change invest high potential opportunity form page  89  change_investhighpotentialopportunityformpage
+259 Can delete invest high potential opportunity form page  89  delete_investhighpotentialopportunityformpage
+260 Can add invest high potential opportunity form success page 90  add_investhighpotentialopportunityformsuccesspage
+261 Can change invest high potential opportunity form success page  90  change_investhighpotentialopportunityformsuccesspage
+262 Can delete invest high potential opportunity form success page  90  delete_investhighpotentialopportunityformsuccesspage
+263 Can add invest international home page  91  add_investinternationalhomepage
+264 Can change invest international home page 91  change_investinternationalhomepage
+265 Can delete invest international home page 91  delete_investinternationalhomepage
+266 Can add international home page old 8 add_internationalhomepageold
+267 Can change international home page old  8 change_internationalhomepageold
+268 Can delete international home page old  8 delete_internationalhomepageold
+269 Can add international home page 7 add_internationalhomepage
+270 Can change international home page  7 change_internationalhomepage
+271 Can delete international home page  7 delete_internationalhomepage
+272 Can add capital invest related sectors  92  add_capitalinvestrelatedsectors
+273 Can change capital invest related sectors 92  change_capitalinvestrelatedsectors
+274 Can delete capital invest related sectors 92  delete_capitalinvestrelatedsectors
+275 Can add international trade home page 93  add_internationaltradehomepage
+276 Can change international trade home page  93  change_internationaltradehomepage
+277 Can delete international trade home page  93  delete_internationaltradehomepage
+278 Can add international trade industry contact page 94  add_internationaltradeindustrycontactpage
+279 Can change international trade industry contact page  94  change_internationaltradeindustrycontactpage
+280 Can delete international trade industry contact page  94  delete_internationaltradeindustrycontactpage
+281 Can add info page 95  add_infopage
+282 Can change info page  95  change_infopage
+283 Can delete info page  95  delete_infopage
+284 Can add invest app  96  add_investapp
+285 Can change invest app 96  change_investapp
+286 Can delete invest app 96  delete_investapp
+287 Can add invest home page  97  add_investhomepage
+288 Can change invest home page 97  change_investhomepage
+289 Can delete invest home page 97  delete_investhomepage
+290 Can add sector landing page 98  add_sectorlandingpage
+291 Can change sector landing page  98  change_sectorlandingpage
+292 Can delete sector landing page  98  delete_sectorlandingpage
+293 Can add sector page 99  add_sectorpage
+294 Can change sector page  99  change_sectorpage
+295 Can delete sector page  99  delete_sectorpage
+296 Can add setup guide landing page  100 add_setupguidelandingpage
+297 Can change setup guide landing page 100 change_setupguidelandingpage
+298 Can delete setup guide landing page 100 delete_setupguidelandingpage
+299 Can add setup guide page  101 add_setupguidepage
+300 Can change setup guide page 101 change_setupguidepage
+301 Can delete setup guide page 101 delete_setupguidepage
+302 Can add region landing page 102 add_regionlandingpage
+303 Can change region landing page  102 change_regionlandingpage
+304 Can delete region landing page  102 delete_regionlandingpage
+305 Can add high potential opportunity detail page  103 add_highpotentialopportunitydetailpage
+306 Can change high potential opportunity detail page 103 change_highpotentialopportunitydetailpage
+307 Can delete high potential opportunity detail page 103 delete_highpotentialopportunitydetailpage
+308 Can add high potential opportunity form page  104 add_highpotentialopportunityformpage
+309 Can change high potential opportunity form page 104 change_highpotentialopportunityformpage
+310 Can delete high potential opportunity form page 104 delete_highpotentialopportunityformpage
+311 Can add high potential opportunity form success page  105 add_highpotentialopportunityformsuccesspage
+312 Can change high potential opportunity form success page 105 change_highpotentialopportunityformsuccesspage
+313 Can delete high potential opportunity form success page 105 delete_highpotentialopportunityformsuccesspage
+314 Can add banner component  106 add_bannercomponent
+315 Can change banner component 106 change_bannercomponent
+316 Can delete banner component 106 delete_bannercomponent
+317 Can add components app  107 add_componentsapp
+318 Can change components app 107 change_componentsapp
+319 Can delete components app 107 delete_componentsapp
 \.
 
 
@@ -10488,114 +10296,113 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 --
 
 COPY public.django_content_type (id, app_label, model) FROM stdin;
-1	wagtailcore	page
-2	wagtaildocs	document
-3	wagtailmedia	media
-4	wagtailimages	image
-5	export_readiness	homepage
-6	export_readiness	homepageold
-7	great_international	internationalhomepage
-8	great_international	internationalhomepageold
-9	wagtailadmin	admin
-10	admin	logentry
-11	auth	permission
-12	auth	group
-13	auth	user
-14	contenttypes	contenttype
-15	sessions	session
-16	db	testmodel
-17	core	imagehash
-18	core	breadcrumb
-19	core	documenthash
-20	core	routingsettings
-21	users	userprofile
-22	groups	groupinfo
-23	wagtailforms	formsubmission
-24	wagtailembeds	embed
-25	wagtailusers	userprofile
-26	wagtailimages	rendition
-27	wagtailsearch	query
-28	wagtailsearch	querydailyhits
-29	wagtailcore	grouppagepermission
-30	wagtailcore	pagerevision
-31	wagtailcore	pageviewrestriction
-32	wagtailcore	site
-33	wagtailcore	collection
-34	wagtailcore	groupcollectionpermission
-35	wagtailcore	collectionviewrestriction
-36	taggit	tag
-37	taggit	taggeditem
-38	find_a_supplier	industrypage
-39	find_a_supplier	industryarticlepage
-40	find_a_supplier	industrylandingpage
-41	find_a_supplier	landingpage
-42	find_a_supplier	industrycontactpage
-43	find_a_supplier	findasupplierapp
-44	find_a_supplier	industrypagearticlesummary
-45	find_a_supplier	landingpagearticlesummary
-46	export_readiness	termsandconditionspage
-47	export_readiness	privacyandcookiespage
-48	export_readiness	performancedashboardpage
-49	export_readiness	performancedashboardnotespage
-50	export_readiness	articlelistingpage
-51	export_readiness	articlepage
-52	export_readiness	topiclandingpage
-53	export_readiness	euexitinternationalformpage
-54	export_readiness	tag
-55	export_readiness	euexitdomesticformpage
-56	export_readiness	euexitformsuccesspage
-57	export_readiness	internationallandingpage
-58	export_readiness	contactusguidancepage
-59	export_readiness	contactsuccesspage
-60	export_readiness	getfinancepage
-61	export_readiness	campaignpage
-62	export_readiness	marketingpages
-63	export_readiness	contactsuccesspages
-64	export_readiness	contactusguidancepages
-65	export_readiness	countryguidepage
-66	export_readiness	superregionpage
-67	export_readiness	sitepolicypages
-68	export_readiness	euexitformpages
-69	export_readiness	allcontactpagespage
-70	great_international	internationalarticlepage
-71	great_international	internationalcampaignpage
-72	great_international	internationalarticlelistingpage
-73	great_international	internationaltopiclandingpage
-74	great_international	internationalregionpage
-75	great_international	internationallocalisedfolderpage
-76	great_international	internationalsectorpage
-77	great_international	internationalcuratedtopiclandingpage
-78	great_international	internationalguidelandingpage
-79	great_international	internationaleuexitformpage
-80	great_international	internationaleuexitformsuccesspage
-81	great_international	capitalinvestopportunitylistingpage
-82	great_international	capitalinvestopportunitypage
-83	great_international	capitalinvestregionpage
-84	great_international	internationalcapitalinvestlandingpage
-85	great_international	capitalinvesthomesinenglandcardfieldssummary
-86	great_international	capitalinvestregioncardfieldssummary
-87	great_international	capitalinvestrelatedregions
-88	great_international	investhighpotentialopportunitydetailpage
-89	great_international	investhighpotentialopportunityformpage
-90	great_international	investhighpotentialopportunityformsuccesspage
-91	great_international	investinternationalhomepage
-92	great_international	capitalinvestrelatedsectors
-93	great_international	internationaltradehomepage
-94	great_international	internationaltradeindustrycontactpage
-95	invest	infopage
-96	invest	investapp
-97	invest	investhomepage
-98	invest	sectorlandingpage
-99	invest	sectorpage
-100	invest	setupguidelandingpage
-101	invest	setupguidepage
-102	invest	regionlandingpage
-103	invest	highpotentialopportunitydetailpage
-104	invest	highpotentialopportunityformpage
-105	invest	highpotentialopportunityformsuccesspage
-106	components	bannercomponent
-107	components	componentsapp
-108	export_readiness	marketingarticlepage
+1 wagtailcore page
+2 wagtaildocs document
+3 wagtailmedia  media
+4 wagtailimages image
+5 export_readiness  homepage
+6 export_readiness  homepageold
+7 great_international internationalhomepage
+8 great_international internationalhomepageold
+9 wagtailadmin  admin
+10  admin logentry
+11  auth  permission
+12  auth  group
+13  auth  user
+14  contenttypes  contenttype
+15  sessions  session
+16  db  testmodel
+17  core  imagehash
+18  core  breadcrumb
+19  core  documenthash
+20  core  routingsettings
+21  users userprofile
+22  groups  groupinfo
+23  wagtailforms  formsubmission
+24  wagtailembeds embed
+25  wagtailusers  userprofile
+26  wagtailimages rendition
+27  wagtailsearch query
+28  wagtailsearch querydailyhits
+29  wagtailcore grouppagepermission
+30  wagtailcore pagerevision
+31  wagtailcore pageviewrestriction
+32  wagtailcore site
+33  wagtailcore collection
+34  wagtailcore groupcollectionpermission
+35  wagtailcore collectionviewrestriction
+36  taggit  tag
+37  taggit  taggeditem
+38  find_a_supplier industrypage
+39  find_a_supplier industryarticlepage
+40  find_a_supplier industrylandingpage
+41  find_a_supplier landingpage
+42  find_a_supplier industrycontactpage
+43  find_a_supplier findasupplierapp
+44  find_a_supplier industrypagearticlesummary
+45  find_a_supplier landingpagearticlesummary
+46  export_readiness  termsandconditionspage
+47  export_readiness  privacyandcookiespage
+48  export_readiness  performancedashboardpage
+49  export_readiness  performancedashboardnotespage
+50  export_readiness  articlelistingpage
+51  export_readiness  articlepage
+52  export_readiness  topiclandingpage
+53  export_readiness  euexitinternationalformpage
+54  export_readiness  tag
+55  export_readiness  euexitdomesticformpage
+56  export_readiness  euexitformsuccesspage
+57  export_readiness  internationallandingpage
+58  export_readiness  contactusguidancepage
+59  export_readiness  contactsuccesspage
+60  export_readiness  getfinancepage
+61  export_readiness  campaignpage
+62  export_readiness  marketingpages
+63  export_readiness  contactsuccesspages
+64  export_readiness  contactusguidancepages
+65  export_readiness  countryguidepage
+66  export_readiness  superregionpage
+67  export_readiness  sitepolicypages
+68  export_readiness  euexitformpages
+69  export_readiness  allcontactpagespage
+70  great_international internationalarticlepage
+71  great_international internationalcampaignpage
+72  great_international internationalarticlelistingpage
+73  great_international internationaltopiclandingpage
+74  great_international internationalregionpage
+75  great_international internationallocalisedfolderpage
+76  great_international internationalsectorpage
+77  great_international internationalcuratedtopiclandingpage
+78  great_international internationalguidelandingpage
+79  great_international internationaleuexitformpage
+80  great_international internationaleuexitformsuccesspage
+81  great_international capitalinvestopportunitylistingpage
+82  great_international capitalinvestopportunitypage
+83  great_international capitalinvestregionpage
+84  great_international internationalcapitalinvestlandingpage
+85  great_international capitalinvesthomesinenglandcardfieldssummary
+86  great_international capitalinvestregioncardfieldssummary
+87  great_international capitalinvestrelatedregions
+88  great_international investhighpotentialopportunitydetailpage
+89  great_international investhighpotentialopportunityformpage
+90  great_international investhighpotentialopportunityformsuccesspage
+91  great_international investinternationalhomepage
+92  great_international capitalinvestrelatedsectors
+93  great_international internationaltradehomepage
+94  great_international internationaltradeindustrycontactpage
+95  invest  infopage
+96  invest  investapp
+97  invest  investhomepage
+98  invest  sectorlandingpage
+99  invest  sectorpage
+100 invest  setupguidelandingpage
+101 invest  setupguidepage
+102 invest  regionlandingpage
+103 invest  highpotentialopportunitydetailpage
+104 invest  highpotentialopportunityformpage
+105 invest  highpotentialopportunityformsuccesspage
+106 components  bannercomponent
+107 components  componentsapp
 \.
 
 
@@ -10604,342 +10411,322 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
-1	contenttypes	0001_initial	2019-06-18 11:49:14.878483+01
-2	auth	0001_initial	2019-06-18 11:49:14.942859+01
-3	admin	0001_initial	2019-06-18 11:49:15.059133+01
-4	admin	0002_logentry_remove_auto_add	2019-06-18 11:49:15.073715+01
-5	contenttypes	0002_remove_content_type_name	2019-06-18 11:49:15.101594+01
-6	auth	0002_alter_permission_name_max_length	2019-06-18 11:49:15.109175+01
-7	auth	0003_alter_user_email_max_length	2019-06-18 11:49:15.12197+01
-8	auth	0004_alter_user_username_opts	2019-06-18 11:49:15.134407+01
-9	auth	0005_alter_user_last_login_null	2019-06-18 11:49:15.146662+01
-10	auth	0006_require_contenttypes_0002	2019-06-18 11:49:15.1486+01
-11	auth	0007_alter_validators_add_error_messages	2019-06-18 11:49:15.159975+01
-12	auth	0008_alter_user_username_max_length	2019-06-18 11:49:15.175924+01
-13	wagtailcore	0001_initial	2019-06-18 11:49:15.458468+01
-14	wagtailcore	0002_initial_data	2019-06-18 11:49:15.460434+01
-15	wagtailcore	0003_add_uniqueness_constraint_on_group_page_permission	2019-06-18 11:49:15.462099+01
-16	wagtailcore	0004_page_locked	2019-06-18 11:49:15.463846+01
-17	wagtailcore	0005_add_page_lock_permission_to_moderators	2019-06-18 11:49:15.465454+01
-18	wagtailcore	0006_add_lock_page_permission	2019-06-18 11:49:15.467207+01
-19	wagtailcore	0007_page_latest_revision_created_at	2019-06-18 11:49:15.469066+01
-20	wagtailcore	0008_populate_latest_revision_created_at	2019-06-18 11:49:15.470805+01
-21	wagtailcore	0009_remove_auto_now_add_from_pagerevision_created_at	2019-06-18 11:49:15.47235+01
-22	wagtailcore	0010_change_page_owner_to_null_on_delete	2019-06-18 11:49:15.473818+01
-23	wagtailcore	0011_page_first_published_at	2019-06-18 11:49:15.475464+01
-24	wagtailcore	0012_extend_page_slug_field	2019-06-18 11:49:15.477135+01
-25	wagtailcore	0013_update_golive_expire_help_text	2019-06-18 11:49:15.479029+01
-26	wagtailcore	0014_add_verbose_name	2019-06-18 11:49:15.480724+01
-27	wagtailcore	0015_add_more_verbose_names	2019-06-18 11:49:15.482413+01
-28	wagtailcore	0016_change_page_url_path_to_text_field	2019-06-18 11:49:15.484031+01
-29	wagtailcore	0017_change_edit_page_permission_description	2019-06-18 11:49:15.501446+01
-30	wagtailcore	0018_pagerevision_submitted_for_moderation_index	2019-06-18 11:49:15.526226+01
-31	wagtailcore	0019_verbose_names_cleanup	2019-06-18 11:49:15.602615+01
-32	wagtailcore	0020_add_index_on_page_first_published_at	2019-06-18 11:49:15.624005+01
-33	wagtailcore	0021_capitalizeverbose	2019-06-18 11:49:16.159891+01
-34	wagtailcore	0022_add_site_name	2019-06-18 11:49:16.17749+01
-35	wagtailcore	0023_alter_page_revision_on_delete_behaviour	2019-06-18 11:49:16.204216+01
-36	wagtailcore	0024_collection	2019-06-18 11:49:16.214989+01
-37	wagtailcore	0025_collection_initial_data	2019-06-18 11:49:16.23488+01
-38	wagtailcore	0026_group_collection_permission	2019-06-18 11:49:16.281884+01
-39	wagtailcore	0027_fix_collection_path_collation	2019-06-18 11:49:16.308087+01
-40	wagtailcore	0024_alter_page_content_type_on_delete_behaviour	2019-06-18 11:49:16.335828+01
-41	wagtailcore	0028_merge	2019-06-18 11:49:16.337677+01
-42	wagtailcore	0029_unicode_slugfield_dj19	2019-06-18 11:49:16.359418+01
-43	wagtailcore	0030_index_on_pagerevision_created_at	2019-06-18 11:49:16.37906+01
-44	wagtailcore	0031_add_page_view_restriction_types	2019-06-18 11:49:16.447133+01
-45	wagtailcore	0032_add_bulk_delete_page_permission	2019-06-18 11:49:16.466539+01
-46	wagtailcore	0033_remove_golive_expiry_help_text	2019-06-18 11:49:16.505243+01
-47	wagtailcore	0034_page_live_revision	2019-06-18 11:49:16.533158+01
-48	wagtailcore	0035_page_last_published_at	2019-06-18 11:49:16.55588+01
-49	wagtailcore	0036_populate_page_last_published_at	2019-06-18 11:49:16.583037+01
-50	wagtailcore	0037_set_page_owner_editable	2019-06-18 11:49:16.609367+01
-51	wagtailcore	0038_make_first_published_at_editable	2019-06-18 11:49:16.62945+01
-52	wagtailcore	0039_collectionviewrestriction	2019-06-18 11:49:16.700582+01
-53	wagtailcore	0040_page_draft_title	2019-06-18 11:49:16.757767+01
-54	components	0001_initial	2019-06-18 11:49:16.81854+01
-55	components	0002_auto_20190206_1355	2019-06-18 11:49:16.863198+01
-56	components	0003_auto_20190417_0825	2019-06-18 11:49:16.915267+01
-57	components	0004_auto_20190417_1024	2019-06-18 11:49:16.995847+01
-58	taggit	0001_initial	2019-06-18 11:49:17.044201+01
-59	wagtaildocs	0001_initial	2019-06-18 11:49:17.081219+01
-60	wagtaildocs	0002_initial_data	2019-06-18 11:49:17.137804+01
-61	wagtaildocs	0003_add_verbose_names	2019-06-18 11:49:17.200662+01
-62	wagtaildocs	0004_capitalizeverbose	2019-06-18 11:49:17.303298+01
-63	wagtaildocs	0005_document_collection	2019-06-18 11:49:17.343373+01
-64	wagtaildocs	0006_copy_document_permissions_to_collections	2019-06-18 11:49:17.391593+01
-65	wagtaildocs	0005_alter_uploaded_by_user_on_delete_action	2019-06-18 11:49:17.427656+01
-66	wagtaildocs	0007_merge	2019-06-18 11:49:17.429617+01
-67	wagtaildocs	0008_document_file_size	2019-06-18 11:49:17.455011+01
-68	taggit	0002_auto_20150616_2121	2019-06-18 11:49:17.470725+01
-69	wagtailmedia	0001_initial	2019-06-18 11:49:17.510926+01
-70	wagtailmedia	0002_initial_data	2019-06-18 11:49:17.560988+01
-71	wagtailmedia	0003_copy_media_permissions_to_collections	2019-06-18 11:49:17.606917+01
-72	wagtailimages	0001_initial	2019-06-18 11:49:17.688328+01
-73	wagtailimages	0002_initial_data	2019-06-18 11:49:17.738015+01
-74	wagtailimages	0003_fix_focal_point_fields	2019-06-18 11:49:17.953983+01
-75	wagtailimages	0004_make_focal_point_key_not_nullable	2019-06-18 11:49:18.012624+01
-76	wagtailimages	0005_make_filter_spec_unique	2019-06-18 11:49:18.028217+01
-77	wagtailimages	0006_add_verbose_names	2019-06-18 11:49:18.105703+01
-78	wagtailimages	0007_image_file_size	2019-06-18 11:49:18.127815+01
-79	wagtailimages	0008_image_created_at_index	2019-06-18 11:49:18.151127+01
-80	wagtailimages	0009_capitalizeverbose	2019-06-18 11:49:18.298644+01
-81	wagtailimages	0010_change_on_delete_behaviour	2019-06-18 11:49:18.327533+01
-82	wagtailimages	0011_image_collection	2019-06-18 11:49:18.370609+01
-83	wagtailimages	0012_copy_image_permissions_to_collections	2019-06-18 11:49:18.419599+01
-84	wagtailimages	0013_make_rendition_upload_callable	2019-06-18 11:49:18.433929+01
-85	wagtailimages	0014_add_filter_spec_field	2019-06-18 11:49:18.489717+01
-86	wagtailimages	0015_fill_filter_spec_field	2019-06-18 11:49:18.528839+01
-87	wagtailimages	0016_deprecate_rendition_filter_relation	2019-06-18 11:49:18.583609+01
-88	wagtailimages	0017_reduce_focal_point_key_max_length	2019-06-18 11:49:18.606373+01
-89	wagtailimages	0018_remove_rendition_filter	2019-06-18 11:49:18.63692+01
-90	wagtailimages	0019_delete_filter	2019-06-18 11:49:18.643849+01
-91	wagtailimages	0020_add-verbose-name	2019-06-18 11:49:18.672363+01
-92	wagtailimages	0021_image_file_hash	2019-06-18 11:49:18.708374+01
-93	invest	0001_squashed_0006_auto_20180719_1302	2019-06-18 11:50:17.907289+01
-94	invest	0007_auto_20180719_1414	2019-06-18 11:50:19.390873+01
-95	invest	0008_auto_20180817_1630	2019-06-18 11:50:20.402215+01
-96	invest	0009_investapp_service_name	2019-06-18 11:50:20.521586+01
-97	invest	0009_highpotentialofferformpage	2019-06-18 11:50:20.659305+01
-98	wagtailforms	0001_initial	2019-06-18 11:50:20.787435+01
-99	wagtailforms	0002_add_verbose_names	2019-06-18 11:50:21.035365+01
-100	wagtailforms	0003_capitalizeverbose	2019-06-18 11:50:21.261377+01
-101	find_a_supplier	0001_squashed_0050_auto_20180425_1107	2019-06-18 11:51:00.023038+01
-102	find_a_supplier	0051_auto_20180501_1706	2019-06-18 11:51:40.362151+01
-103	find_a_supplier	0052_html_to_markdown	2019-06-18 11:51:40.58365+01
-104	find_a_supplier	0053_industrypage_show_on_industries_showcase_page	2019-06-18 11:51:40.74921+01
-105	find_a_supplier	0054_auto_20180510_0902	2019-06-18 11:51:44.289238+01
-106	find_a_supplier	0055_industrycontactpage_industry_options	2019-06-18 11:51:44.442367+01
-107	find_a_supplier	0056_auto_20180515_1552	2019-06-18 11:51:44.64337+01
-108	find_a_supplier	0057_remove_industrycontactpage_industry_options	2019-06-18 11:51:44.795535+01
-109	find_a_supplier	0058_auto_20180521_1628	2019-06-18 11:52:12.48744+01
-110	find_a_supplier	0059_auto_20180601_1412	2019-06-18 11:52:12.782646+01
-111	find_a_supplier	0060_auto_20180604_1058	2019-06-18 11:52:12.994566+01
-112	find_a_supplier	0061_auto_20180604_1344	2019-06-18 11:52:13.47094+01
-113	find_a_supplier	0062_auto_20180817_1630_squashed_0065_auto_20180829_1027	2019-06-18 11:52:14.353321+01
-114	export_readiness	0001_squashed_0009_performancedashboardpage_guidance_notes	2019-06-18 11:52:15.396811+01
-115	export_readiness	0010_performancedashboardnotespage	2019-06-18 11:52:15.567267+01
-116	export_readiness	0011_auto_20180817_1630	2019-06-18 11:52:16.290165+01
-117	export_readiness	0012_auto_20180821_0810	2019-06-18 11:52:17.265909+01
-118	core	0001_create	2019-06-18 11:52:17.432914+01
-119	core	0002_auto_20180307_1748	2019-06-18 11:52:17.61186+01
-120	core	0003_auto_20180423_1122	2019-06-18 11:52:17.958572+01
-121	core	0004_auto_20180423_1619	2019-06-18 11:52:18.265026+01
-122	core	0005_auto_20180423_1803	2019-06-18 11:52:18.839905+01
-123	core	0006_auto_20180508_1331	2019-06-18 11:52:18.842294+01
-124	core	0007_auto_20180809_1215	2019-06-18 11:52:19.191814+01
-125	core	0008_auto_20180809_1215	2019-06-18 11:52:19.419332+01
-126	core	0009_auto_20180813_1746	2019-06-18 11:52:19.641115+01
-127	core	0010_auto_20180815_1304	2019-06-18 11:52:19.966912+01
-128	core	0011_auto_20180817_1631	2019-06-18 11:52:20.419074+01
-129	core	0012_auto_20180821_1634	2019-06-18 11:52:20.741538+01
-130	core	0013_auto_20180821_1637	2019-06-18 11:52:20.95603+01
-131	core	0014_auto_20180822_0915	2019-06-18 11:52:21.282548+01
-132	core	0015_breadcrumb	2019-06-18 11:52:21.456077+01
-133	core	0016_auto_20180823_2014	2019-06-18 11:52:21.588759+01
-134	core	0017_auto_20180823_1545	2019-06-18 11:52:22.025462+01
-135	export_readiness	0013_exportreadinessapp_service_name	2019-06-18 11:52:22.05176+01
-136	core	0015_auto_20180822_1456	2019-06-18 11:52:22.478448+01
-137	core	0018_merge_20180829_0828	2019-06-18 11:52:22.48252+01
-138	core	0018_auto_20180824_1622	2019-06-18 11:52:22.513009+01
-139	core	0019_merge_20180829_0939	2019-06-18 11:52:22.515605+01
-140	invest	0010_merge_20180829_0939_squashed_0013_auto_20180830_0632	2019-06-18 11:52:30.980212+01
-141	invest	0014_auto_20180904_1113	2019-06-18 11:52:32.643002+01
-142	invest	0015_auto_20180911_1049	2019-06-18 11:52:32.645574+01
-143	invest	0016_auto_20180911_1506	2019-06-18 11:52:32.647703+01
-144	invest	0017_auto_20180911_1513	2019-06-18 11:52:32.649756+01
-145	invest	0018_auto_20180913_1445	2019-06-18 11:52:32.651922+01
-146	invest	0019_auto_20180917_0838	2019-06-18 11:52:32.654127+01
-147	invest	0020_auto_20180917_1326	2019-06-18 11:52:32.656073+01
-148	invest	0021_auto_20180917_1404	2019-06-18 11:52:32.658145+01
-149	invest	0022_auto_20180917_1622	2019-06-18 11:52:32.660513+01
-150	invest	0023_auto_20180918_0805	2019-06-18 11:52:32.662671+01
-151	invest	0024_highpotentialopportunitydetailpage_testimonial_background	2019-06-18 11:52:32.664618+01
-152	invest	0025_auto_20180920_0941	2019-06-18 11:52:32.666542+01
-153	invest	0026_auto_20181002_1534	2019-06-18 11:52:32.668719+01
-154	find_a_supplier	0066_auto_20180830_0632	2019-06-18 11:52:32.912789+01
-155	export_readiness	0014_auto_20180829_1027_squashed_0018_getfinancepage	2019-06-18 11:52:33.642679+01
-156	export_readiness	0019_auto_20180905_1350	2019-06-18 11:52:34.450844+01
-157	core	0020_auto_20180830_1737	2019-06-18 11:52:34.682873+01
-158	core	0021_auto_20180904_1511	2019-06-18 11:52:35.066248+01
-159	core	0022_auto_20180906_1344	2019-06-18 11:52:35.280889+01
-160	core	0023_auto_20180912_0758	2019-06-18 11:52:35.519132+01
-161	core	0024_auto_20180913_1321	2019-06-18 11:52:35.726148+01
-162	core	0025_documenthash	2019-06-18 11:52:35.916575+01
-163	core	0026_auto_20181024_1112	2019-06-18 11:52:35.934502+01
-164	core	0027_auto_20190206_1355	2019-06-18 11:52:35.950133+01
-165	core	0028_routingsettings	2019-06-18 11:52:35.986182+01
-166	core	0029_auto_20190417_1024	2019-06-18 11:52:36.019262+01
-167	health_check_db	0001_initial	2019-06-18 11:52:36.029138+01
-168	export_readiness	0020_articlelistingpage_articlepage_topiclandingpage_squashed_0030_auto_20181005_1449	2019-06-18 11:52:40.312687+01
-169	export_readiness	0031_internationallandingpage	2019-06-18 11:52:57.588055+01
-170	export_readiness	0032_auto_20181012_1507	2019-06-18 11:52:57.590518+01
-171	export_readiness	0033_auto_20181023_1600	2019-06-18 11:52:57.592652+01
-172	export_readiness	0034_auto_20181024_1112	2019-06-18 11:52:57.595286+01
-173	export_readiness	0035_contactusguidance	2019-06-18 11:52:57.597699+01
-174	export_readiness	0036_auto_20181105_1258	2019-06-18 11:52:57.599876+01
-175	export_readiness	0037_auto_20181106_0952	2019-06-18 11:52:57.601982+01
-176	export_readiness	0038_auto_20181106_0953	2019-06-18 11:52:57.604078+01
-177	export_readiness	0039_contactsuccesspage_topic	2019-06-18 11:52:57.606485+01
-178	export_readiness	0040_auto_20181121_1643	2019-06-18 11:52:57.608845+01
-179	export_readiness	0041_campaignpage_marketingpages	2019-06-18 11:52:57.611739+01
-180	export_readiness	0042_contactsuccesspages_contactusguidancepages	2019-06-18 11:52:57.614199+01
-181	export_readiness	0043_auto_20181205_1413	2019-06-18 11:52:57.616253+01
-182	export_readiness	0044_auto_20181214_1605	2019-06-18 11:52:57.618559+01
-183	export_readiness	0045_auto_20190115_1058	2019-06-18 11:52:57.62127+01
-184	export_readiness	0046_euexitformpages	2019-06-18 11:52:57.625867+01
-185	export_readiness	0047_allcontactpagespage	2019-06-18 11:52:57.629863+01
-186	export_readiness	0048_auto_20190206_1355	2019-06-18 11:52:57.633947+01
-187	export_readiness	0049_auto_20190207_0924	2019-06-18 11:52:57.636677+01
-188	export_readiness	0050_auto_20190219_1633	2019-06-18 11:52:57.638991+01
-189	export_readiness	0032_auto_20190307_1512	2019-06-18 11:52:57.848461+01
-190	export_readiness	0033_auto_20190312_1557	2019-06-18 11:53:56.956024+01
-191	export_readiness	0034_auto_20190314_1250	2019-06-18 11:54:20.476689+01
-192	export_readiness	0035_remove_countryguidepage_help_market_guide_cta_title	2019-06-18 11:54:20.699278+01
-193	export_readiness	0036_topiclandingpage_teaser	2019-06-18 11:54:20.926448+01
-194	export_readiness	0037_auto_20190321_0728	2019-06-18 11:54:29.978518+01
-195	export_readiness	0038_auto_20190402_1221	2019-06-18 11:54:30.191651+01
-196	export_readiness	0039_auto_20190411_1206	2019-06-18 11:54:30.411761+01
-197	export_readiness	0040_auto_20190411_1228	2019-06-18 11:54:30.811972+01
-198	export_readiness	0041_auto_20190417_0825	2019-06-18 11:54:36.783908+01
-199	export_readiness	0042_auto_20190604_1325	2019-06-18 11:54:48.543608+01
-200	export_readiness	0043_add_homepage_fields_to_apppage	2019-06-18 11:54:49.508047+01
-201	export_readiness	0044_copy_homepage_values_to_apppage	2019-06-18 11:54:49.807634+01
-202	export_readiness	0045_rename_homepage_to_homepageold	2019-06-18 11:54:50.365152+01
-203	export_readiness	0046_rename_exportreadinessapp_to_homepage	2019-06-18 11:54:51.238133+01
-204	export_readiness	0047_correct_page_contenttypes	2019-06-18 11:54:51.505847+01
-205	find_a_supplier	0067_auto_20181012_1507	2019-06-18 11:54:53.498626+01
-206	find_a_supplier	0068_auto_20181024_1112	2019-06-18 11:54:55.337287+01
-207	find_a_supplier	0069_auto_20190206_1355	2019-06-18 11:54:57.145217+01
-208	find_a_supplier	0070_auto_20190417_0825	2019-06-18 11:54:58.908066+01
-209	find_a_supplier	0071_auto_20190417_1024	2019-06-18 11:55:27.030654+01
-210	great_international	0001_initial	2019-06-18 11:55:32.144389+01
-211	great_international	0002_auto_20190206_1146	2019-06-18 11:55:32.146978+01
-212	great_international	0003_internationalarticlelistingpage	2019-06-18 11:55:32.149515+01
-213	great_international	0003_auto_20190211_1202	2019-06-18 11:55:32.151972+01
-214	great_international	0004_merge_20190212_1003	2019-06-18 11:55:32.154318+01
-215	great_international	0005_internationalukhqpages	2019-06-18 11:55:32.156665+01
-216	great_international	0006_internationaltopiclandingpage	2019-06-18 11:55:32.15906+01
-217	great_international	0007_auto_20190219_1114	2019-06-18 11:55:32.161365+01
-218	great_international	0008_auto_20190222_1554	2019-06-18 11:55:32.163767+01
-219	great_international	0008_auto_20190222_1230	2019-06-18 11:55:32.167865+01
-220	great_international	0009_merge_20190225_1214	2019-06-18 11:55:32.171561+01
-221	great_international	0010_auto_20190228_0819	2019-06-18 11:55:32.176043+01
-222	great_international	0011_auto_20190228_1051	2019-06-18 11:55:32.179463+01
-223	great_international	0012_internationalsectorpage	2019-06-18 11:55:32.182328+01
-224	great_international	0013_auto_20190301_1227	2019-06-18 11:55:32.184865+01
-225	great_international	0014_auto_20190304_1215	2019-06-18 11:55:32.18725+01
-226	great_international	0015_auto_20190306_1521	2019-06-18 11:55:32.18951+01
-227	great_international	0002_internationalcuratedtopiclandingpage	2019-06-18 11:55:32.494746+01
-228	great_international	0003_auto_20190313_0855	2019-06-18 11:55:37.982086+01
-229	great_international	0004_internationalguidelandingpage	2019-06-18 11:55:38.291481+01
-230	great_international	0005_auto_20190320_1750	2019-06-18 11:55:43.921574+01
-231	great_international	0006_auto_20190325_0945	2019-06-18 11:55:48.655766+01
-232	great_international	0007_auto_20190402_1221	2019-06-18 11:55:48.935613+01
-233	great_international	0008_auto_20190404_1320	2019-06-18 11:58:49.662317+01
-234	great_international	0009_auto_20190404_1320	2019-06-18 11:59:20.105379+01
-235	great_international	0010_auto_20190404_1320	2019-06-18 12:01:24.704184+01
-236	great_international	0011_auto_20190404_1321	2019-06-18 12:02:55.660219+01
-237	great_international	0012_auto_20190404_1321	2019-06-18 12:03:26.877377+01
-238	great_international	0013_auto_20190404_1321	2019-06-18 12:04:56.684703+01
-239	great_international	0014_auto_20190404_1322	2019-06-18 12:05:56.272184+01
-240	great_international	0015_auto_20190404_1712	2019-06-18 12:06:01.294029+01
-241	great_international	0016_auto_20190408_1640	2019-06-18 12:06:11.700283+01
-242	great_international	0007_internationalhomepage_hero_cta_link	2019-06-18 12:06:12.174913+01
-243	great_international	0017_merge_20190411_1027	2019-06-18 12:06:12.17865+01
-244	great_international	0018_auto_20190411_1028	2019-06-18 12:06:17.362781+01
-245	great_international	0019_auto_20190417_0825	2019-06-18 12:06:23.515546+01
-246	great_international	0020_auto_20190417_1024	2019-06-18 12:08:52.304708+01
-247	great_international	0021_auto_20190423_1423	2019-06-18 12:10:58.696861+01
-248	great_international	0022_auto_20190508_1300	2019-06-18 12:11:16.850456+01
-249	great_international	0023_internationaleuexitformpage_internationaleuexitformsuccesspage	2019-06-18 12:11:17.669405+01
-250	great_international	0024_capitalinvestopportunitylistingpage_capitalinvestopportunitypage_capitalinvestregionalsectorpage_cap	2019-06-18 12:11:24.105031+01
-251	great_international	0025_auto_20190523_1445	2019-06-18 12:11:32.270457+01
-252	great_international	0026_auto_20190528_0826	2019-06-18 12:16:16.220504+01
-253	great_international	0027_auto_20190529_1033	2019-06-18 12:16:21.928621+01
-254	great_international	0028_auto_20190530_1147	2019-06-18 12:18:01.654454+01
-255	great_international	0029_auto_20190530_1344	2019-06-18 12:18:02.797348+01
-256	great_international	0030_auto_20190531_1049	2019-06-18 12:18:22.30081+01
-257	great_international	0031_investhighpotentialopportunitydetailpage_investhighpotentialopportunityformpage_investhighpotentialo	2019-06-18 12:18:26.7878+01
-258	great_international	0032_investinternationalhomepage_how_we_help_icon_six	2019-06-18 12:18:27.386117+01
-259	great_international	0033_add_homepage_fields_to_apppage	2019-06-18 12:23:50.713465+01
-260	great_international	0034_populate_apppage_fields_from_homepage	2019-06-18 12:23:51.502867+01
-261	great_international	0035_rename_internationalhomepage_to_internationalhomepageold	2019-06-18 12:23:53.282434+01
-262	great_international	0036_rename_greatinternationalapp_to_internationalhomepage	2019-06-18 12:23:54.632674+01
-263	great_international	0037_correct_page_contenttypes	2019-06-18 12:23:55.30326+01
-264	great_international	0033_auto_20190611_1057	2019-06-18 12:26:47.362215+01
-265	great_international	0038_merge_20190611_1253	2019-06-18 12:26:47.366308+01
-266	great_international	0039_auto_20190612_1513	2019-06-18 12:26:54.515257+01
-267	great_international	0040_auto_20190612_1521	2019-06-18 12:27:45.507457+01
-268	great_international	0041_auto_20190613_1346	2019-06-18 12:27:53.268614+01
-269	great_international	0042_auto_20190617_1133	2019-06-18 12:28:08.049658+01
-270	great_international	0043_internationaltradehomepage_internationaltradeindustrycontactpage	2019-06-18 12:28:10.243244+01
-271	groups	0001_initial	2019-06-18 12:28:11.062372+01
-272	groups	0002_create_groupinfo_for_existing_groups	2019-06-18 12:28:12.257008+01
-273	groups	0003_groupinfo_is_team_leaders_group	2019-06-18 12:28:12.303061+01
-274	invest	0015_auto_20181012_1507	2019-06-18 12:28:16.094776+01
-275	invest	0016_auto_20181025_1226	2019-06-18 12:28:25.530048+01
-276	invest	0017_auto_20190206_1355	2019-06-18 12:28:34.314124+01
-277	invest	0018_auto_20190314_1507	2019-06-18 12:29:10.680478+01
-278	invest	0019_auto_20190320_1347	2019-06-18 12:33:09.839334+01
-279	invest	0020_auto_20190402_1018	2019-06-18 12:33:52.029765+01
-280	invest	0021_auto_20190409_1246	2019-06-18 12:35:42.688121+01
-281	invest	0022_auto_20190411_1449	2019-06-18 12:43:58.830137+01
-282	invest	0023_auto_20190417_0825	2019-06-18 12:44:10.204572+01
-283	invest	0024_auto_20190417_1024	2019-06-18 12:49:26.381002+01
-284	invest	0025_auto_20190424_1501	2019-06-18 12:49:52.517253+01
-285	invest	0026_auto_20190425_1524	2019-06-18 12:50:27.383884+01
-286	invest	0027_auto_20190503_0844	2019-06-18 12:50:45.257582+01
-287	invest	0028_auto_20190503_0949	2019-06-18 12:51:01.875415+01
-288	invest	0029_auto_20190529_1039	2019-06-18 12:53:12.723957+01
-289	invest	0030_auto_20190529_1040	2019-06-18 12:54:49.746242+01
-290	invest	0031_auto_20190529_1259	2019-06-18 12:58:43.720663+01
-291	invest	0032_auto_20190605_1141	2019-06-18 13:00:24.516162+01
-292	sessions	0001_initial	2019-06-18 13:00:24.549497+01
-293	users	0001_initial	2019-06-18 13:00:26.088232+01
-294	users	0002_create_profile_existing_users	2019-06-18 13:00:26.974739+01
-295	users	0003_auto_20190507_1448	2019-06-18 13:00:29.062531+01
-296	users	0004_auto_20190508_1336	2019-06-18 13:00:29.153351+01
-297	wagtailadmin	0001_create_admin_access_permissions	2019-06-18 13:00:29.951793+01
-298	wagtailembeds	0001_initial	2019-06-18 13:00:29.997896+01
-299	wagtailembeds	0002_add_verbose_names	2019-06-18 13:00:30.022408+01
-300	wagtailembeds	0003_capitalizeverbose	2019-06-18 13:00:30.047245+01
-301	wagtailsearch	0001_initial	2019-06-18 13:00:30.215401+01
-302	wagtailsearch	0002_add_verbose_names	2019-06-18 13:00:30.362831+01
-303	wagtailsearch	0003_remove_editors_pick	2019-06-18 13:00:30.418343+01
-304	wagtailusers	0001_initial	2019-06-18 13:00:30.474964+01
-305	wagtailusers	0002_add_verbose_name_on_userprofile	2019-06-18 13:00:30.59039+01
-306	wagtailusers	0003_add_verbose_names	2019-06-18 13:00:30.629351+01
-307	wagtailusers	0004_capitalizeverbose	2019-06-18 13:00:30.785111+01
-308	wagtailusers	0005_make_related_name_wagtail_specific	2019-06-18 13:00:30.844369+01
-309	wagtailusers	0006_userprofile_prefered_language	2019-06-18 13:00:30.886667+01
-310	wagtailusers	0007_userprofile_current_time_zone	2019-06-18 13:00:30.930984+01
-311	wagtailusers	0008_userprofile_avatar	2019-06-18 13:00:30.974403+01
-312	db	0001_initial	2019-06-18 13:00:30.982847+01
-313	wagtailcore	0001_squashed_0016_change_page_url_path_to_text_field	2019-06-18 13:00:30.986255+01
-314	export_readiness	0031_internationallandingpage_squashed_0050_auto_20190219_1633	2019-06-18 13:00:30.98933+01
-315	great_international	0001_squashed_0015_auto_20190306_1521	2019-06-18 13:00:30.99242+01
-316	invest	0014_auto_20180904_1113_squashed_0026_auto_20181002_1534	2019-06-18 13:00:30.99581+01
-317	admin	0003_logentry_add_action_flag_choices	2019-07-11 14:23:34.443496+01
-318	auth	0009_alter_user_last_name_max_length	2019-07-11 14:23:34.666972+01
-319	auth	0010_alter_group_name_max_length	2019-07-11 14:23:34.720785+01
-320	auth	0011_update_proxy_permissions	2019-07-11 14:23:35.595855+01
-321	export_readiness	0048_update_homepage_slug	2019-07-11 14:23:36.639329+01
-322	wagtailcore	0041_group_collection_permissions_verbose_name_plural	2019-07-11 14:23:36.676548+01
-323	export_readiness	0048_marketingarticlepage	2019-07-11 14:23:37.647441+01
-324	export_readiness	0049_merge_20190627_1236	2019-07-11 14:23:37.679261+01
-325	export_readiness	0050_auto_20190627_1422	2019-07-11 14:23:40.600725+01
-326	export_readiness	0051_auto_20190627_1424	2019-07-11 14:23:43.225985+01
-327	great_international	0044_update_homepage_slug	2019-07-11 14:23:44.181683+01
-328	great_international	0045_auto_20190701_1613	2019-07-11 14:24:01.235083+01
-329	great_international	0046_auto_20190702_0938	2019-07-11 14:24:17.352582+01
-330	wagtaildocs	0009_document_verbose_name_plural	2019-07-11 14:24:17.561465+01
-331	wagtaildocs	0010_document_file_hash	2019-07-11 14:24:17.733545+01
-332	wagtailembeds	0004_embed_verbose_name_plural	2019-07-11 14:24:17.77387+01
-333	wagtailembeds	0005_specify_thumbnail_url_max_length	2019-07-11 14:24:17.797868+01
-334	wagtailsearch	0004_querydailyhits_verbose_name_plural	2019-07-11 14:24:17.823545+01
-335	wagtailusers	0009_userprofile_verbose_name_plural	2019-07-11 14:24:17.858629+01
-336	wagtailimages	0001_squashed_0021	2019-07-11 14:24:17.865285+01
+1 contenttypes  0001_initial  2019-06-18 11:49:14.878483+01
+2 auth  0001_initial  2019-06-18 11:49:14.942859+01
+3 admin 0001_initial  2019-06-18 11:49:15.059133+01
+4 admin 0002_logentry_remove_auto_add 2019-06-18 11:49:15.073715+01
+5 contenttypes  0002_remove_content_type_name 2019-06-18 11:49:15.101594+01
+6 auth  0002_alter_permission_name_max_length 2019-06-18 11:49:15.109175+01
+7 auth  0003_alter_user_email_max_length  2019-06-18 11:49:15.12197+01
+8 auth  0004_alter_user_username_opts 2019-06-18 11:49:15.134407+01
+9 auth  0005_alter_user_last_login_null 2019-06-18 11:49:15.146662+01
+10  auth  0006_require_contenttypes_0002  2019-06-18 11:49:15.1486+01
+11  auth  0007_alter_validators_add_error_messages  2019-06-18 11:49:15.159975+01
+12  auth  0008_alter_user_username_max_length 2019-06-18 11:49:15.175924+01
+13  wagtailcore 0001_initial  2019-06-18 11:49:15.458468+01
+14  wagtailcore 0002_initial_data 2019-06-18 11:49:15.460434+01
+15  wagtailcore 0003_add_uniqueness_constraint_on_group_page_permission 2019-06-18 11:49:15.462099+01
+16  wagtailcore 0004_page_locked  2019-06-18 11:49:15.463846+01
+17  wagtailcore 0005_add_page_lock_permission_to_moderators 2019-06-18 11:49:15.465454+01
+18  wagtailcore 0006_add_lock_page_permission 2019-06-18 11:49:15.467207+01
+19  wagtailcore 0007_page_latest_revision_created_at  2019-06-18 11:49:15.469066+01
+20  wagtailcore 0008_populate_latest_revision_created_at  2019-06-18 11:49:15.470805+01
+21  wagtailcore 0009_remove_auto_now_add_from_pagerevision_created_at 2019-06-18 11:49:15.47235+01
+22  wagtailcore 0010_change_page_owner_to_null_on_delete  2019-06-18 11:49:15.473818+01
+23  wagtailcore 0011_page_first_published_at  2019-06-18 11:49:15.475464+01
+24  wagtailcore 0012_extend_page_slug_field 2019-06-18 11:49:15.477135+01
+25  wagtailcore 0013_update_golive_expire_help_text 2019-06-18 11:49:15.479029+01
+26  wagtailcore 0014_add_verbose_name 2019-06-18 11:49:15.480724+01
+27  wagtailcore 0015_add_more_verbose_names 2019-06-18 11:49:15.482413+01
+28  wagtailcore 0016_change_page_url_path_to_text_field 2019-06-18 11:49:15.484031+01
+29  wagtailcore 0017_change_edit_page_permission_description  2019-06-18 11:49:15.501446+01
+30  wagtailcore 0018_pagerevision_submitted_for_moderation_index  2019-06-18 11:49:15.526226+01
+31  wagtailcore 0019_verbose_names_cleanup  2019-06-18 11:49:15.602615+01
+32  wagtailcore 0020_add_index_on_page_first_published_at 2019-06-18 11:49:15.624005+01
+33  wagtailcore 0021_capitalizeverbose  2019-06-18 11:49:16.159891+01
+34  wagtailcore 0022_add_site_name  2019-06-18 11:49:16.17749+01
+35  wagtailcore 0023_alter_page_revision_on_delete_behaviour  2019-06-18 11:49:16.204216+01
+36  wagtailcore 0024_collection 2019-06-18 11:49:16.214989+01
+37  wagtailcore 0025_collection_initial_data  2019-06-18 11:49:16.23488+01
+38  wagtailcore 0026_group_collection_permission  2019-06-18 11:49:16.281884+01
+39  wagtailcore 0027_fix_collection_path_collation  2019-06-18 11:49:16.308087+01
+40  wagtailcore 0024_alter_page_content_type_on_delete_behaviour  2019-06-18 11:49:16.335828+01
+41  wagtailcore 0028_merge  2019-06-18 11:49:16.337677+01
+42  wagtailcore 0029_unicode_slugfield_dj19 2019-06-18 11:49:16.359418+01
+43  wagtailcore 0030_index_on_pagerevision_created_at 2019-06-18 11:49:16.37906+01
+44  wagtailcore 0031_add_page_view_restriction_types  2019-06-18 11:49:16.447133+01
+45  wagtailcore 0032_add_bulk_delete_page_permission  2019-06-18 11:49:16.466539+01
+46  wagtailcore 0033_remove_golive_expiry_help_text 2019-06-18 11:49:16.505243+01
+47  wagtailcore 0034_page_live_revision 2019-06-18 11:49:16.533158+01
+48  wagtailcore 0035_page_last_published_at 2019-06-18 11:49:16.55588+01
+49  wagtailcore 0036_populate_page_last_published_at  2019-06-18 11:49:16.583037+01
+50  wagtailcore 0037_set_page_owner_editable  2019-06-18 11:49:16.609367+01
+51  wagtailcore 0038_make_first_published_at_editable 2019-06-18 11:49:16.62945+01
+52  wagtailcore 0039_collectionviewrestriction  2019-06-18 11:49:16.700582+01
+53  wagtailcore 0040_page_draft_title 2019-06-18 11:49:16.757767+01
+54  components  0001_initial  2019-06-18 11:49:16.81854+01
+55  components  0002_auto_20190206_1355 2019-06-18 11:49:16.863198+01
+56  components  0003_auto_20190417_0825 2019-06-18 11:49:16.915267+01
+57  components  0004_auto_20190417_1024 2019-06-18 11:49:16.995847+01
+58  taggit  0001_initial  2019-06-18 11:49:17.044201+01
+59  wagtaildocs 0001_initial  2019-06-18 11:49:17.081219+01
+60  wagtaildocs 0002_initial_data 2019-06-18 11:49:17.137804+01
+61  wagtaildocs 0003_add_verbose_names  2019-06-18 11:49:17.200662+01
+62  wagtaildocs 0004_capitalizeverbose  2019-06-18 11:49:17.303298+01
+63  wagtaildocs 0005_document_collection  2019-06-18 11:49:17.343373+01
+64  wagtaildocs 0006_copy_document_permissions_to_collections 2019-06-18 11:49:17.391593+01
+65  wagtaildocs 0005_alter_uploaded_by_user_on_delete_action  2019-06-18 11:49:17.427656+01
+66  wagtaildocs 0007_merge  2019-06-18 11:49:17.429617+01
+67  wagtaildocs 0008_document_file_size 2019-06-18 11:49:17.455011+01
+68  taggit  0002_auto_20150616_2121 2019-06-18 11:49:17.470725+01
+69  wagtailmedia  0001_initial  2019-06-18 11:49:17.510926+01
+70  wagtailmedia  0002_initial_data 2019-06-18 11:49:17.560988+01
+71  wagtailmedia  0003_copy_media_permissions_to_collections  2019-06-18 11:49:17.606917+01
+72  wagtailimages 0001_initial  2019-06-18 11:49:17.688328+01
+73  wagtailimages 0002_initial_data 2019-06-18 11:49:17.738015+01
+74  wagtailimages 0003_fix_focal_point_fields 2019-06-18 11:49:17.953983+01
+75  wagtailimages 0004_make_focal_point_key_not_nullable  2019-06-18 11:49:18.012624+01
+76  wagtailimages 0005_make_filter_spec_unique  2019-06-18 11:49:18.028217+01
+77  wagtailimages 0006_add_verbose_names  2019-06-18 11:49:18.105703+01
+78  wagtailimages 0007_image_file_size  2019-06-18 11:49:18.127815+01
+79  wagtailimages 0008_image_created_at_index 2019-06-18 11:49:18.151127+01
+80  wagtailimages 0009_capitalizeverbose  2019-06-18 11:49:18.298644+01
+81  wagtailimages 0010_change_on_delete_behaviour 2019-06-18 11:49:18.327533+01
+82  wagtailimages 0011_image_collection 2019-06-18 11:49:18.370609+01
+83  wagtailimages 0012_copy_image_permissions_to_collections  2019-06-18 11:49:18.419599+01
+84  wagtailimages 0013_make_rendition_upload_callable 2019-06-18 11:49:18.433929+01
+85  wagtailimages 0014_add_filter_spec_field  2019-06-18 11:49:18.489717+01
+86  wagtailimages 0015_fill_filter_spec_field 2019-06-18 11:49:18.528839+01
+87  wagtailimages 0016_deprecate_rendition_filter_relation  2019-06-18 11:49:18.583609+01
+88  wagtailimages 0017_reduce_focal_point_key_max_length  2019-06-18 11:49:18.606373+01
+89  wagtailimages 0018_remove_rendition_filter  2019-06-18 11:49:18.63692+01
+90  wagtailimages 0019_delete_filter  2019-06-18 11:49:18.643849+01
+91  wagtailimages 0020_add-verbose-name 2019-06-18 11:49:18.672363+01
+92  wagtailimages 0021_image_file_hash  2019-06-18 11:49:18.708374+01
+93  invest  0001_squashed_0006_auto_20180719_1302 2019-06-18 11:50:17.907289+01
+94  invest  0007_auto_20180719_1414 2019-06-18 11:50:19.390873+01
+95  invest  0008_auto_20180817_1630 2019-06-18 11:50:20.402215+01
+96  invest  0009_investapp_service_name 2019-06-18 11:50:20.521586+01
+97  invest  0009_highpotentialofferformpage 2019-06-18 11:50:20.659305+01
+98  wagtailforms  0001_initial  2019-06-18 11:50:20.787435+01
+99  wagtailforms  0002_add_verbose_names  2019-06-18 11:50:21.035365+01
+100 wagtailforms  0003_capitalizeverbose  2019-06-18 11:50:21.261377+01
+101 find_a_supplier 0001_squashed_0050_auto_20180425_1107 2019-06-18 11:51:00.023038+01
+102 find_a_supplier 0051_auto_20180501_1706 2019-06-18 11:51:40.362151+01
+103 find_a_supplier 0052_html_to_markdown 2019-06-18 11:51:40.58365+01
+104 find_a_supplier 0053_industrypage_show_on_industries_showcase_page  2019-06-18 11:51:40.74921+01
+105 find_a_supplier 0054_auto_20180510_0902 2019-06-18 11:51:44.289238+01
+106 find_a_supplier 0055_industrycontactpage_industry_options 2019-06-18 11:51:44.442367+01
+107 find_a_supplier 0056_auto_20180515_1552 2019-06-18 11:51:44.64337+01
+108 find_a_supplier 0057_remove_industrycontactpage_industry_options  2019-06-18 11:51:44.795535+01
+109 find_a_supplier 0058_auto_20180521_1628 2019-06-18 11:52:12.48744+01
+110 find_a_supplier 0059_auto_20180601_1412 2019-06-18 11:52:12.782646+01
+111 find_a_supplier 0060_auto_20180604_1058 2019-06-18 11:52:12.994566+01
+112 find_a_supplier 0061_auto_20180604_1344 2019-06-18 11:52:13.47094+01
+113 find_a_supplier 0062_auto_20180817_1630_squashed_0065_auto_20180829_1027  2019-06-18 11:52:14.353321+01
+114 export_readiness  0001_squashed_0009_performancedashboardpage_guidance_notes  2019-06-18 11:52:15.396811+01
+115 export_readiness  0010_performancedashboardnotespage  2019-06-18 11:52:15.567267+01
+116 export_readiness  0011_auto_20180817_1630 2019-06-18 11:52:16.290165+01
+117 export_readiness  0012_auto_20180821_0810 2019-06-18 11:52:17.265909+01
+118 core  0001_create 2019-06-18 11:52:17.432914+01
+119 core  0002_auto_20180307_1748 2019-06-18 11:52:17.61186+01
+120 core  0003_auto_20180423_1122 2019-06-18 11:52:17.958572+01
+121 core  0004_auto_20180423_1619 2019-06-18 11:52:18.265026+01
+122 core  0005_auto_20180423_1803 2019-06-18 11:52:18.839905+01
+123 core  0006_auto_20180508_1331 2019-06-18 11:52:18.842294+01
+124 core  0007_auto_20180809_1215 2019-06-18 11:52:19.191814+01
+125 core  0008_auto_20180809_1215 2019-06-18 11:52:19.419332+01
+126 core  0009_auto_20180813_1746 2019-06-18 11:52:19.641115+01
+127 core  0010_auto_20180815_1304 2019-06-18 11:52:19.966912+01
+128 core  0011_auto_20180817_1631 2019-06-18 11:52:20.419074+01
+129 core  0012_auto_20180821_1634 2019-06-18 11:52:20.741538+01
+130 core  0013_auto_20180821_1637 2019-06-18 11:52:20.95603+01
+131 core  0014_auto_20180822_0915 2019-06-18 11:52:21.282548+01
+132 core  0015_breadcrumb 2019-06-18 11:52:21.456077+01
+133 core  0016_auto_20180823_2014 2019-06-18 11:52:21.588759+01
+134 core  0017_auto_20180823_1545 2019-06-18 11:52:22.025462+01
+135 export_readiness  0013_exportreadinessapp_service_name  2019-06-18 11:52:22.05176+01
+136 core  0015_auto_20180822_1456 2019-06-18 11:52:22.478448+01
+137 core  0018_merge_20180829_0828  2019-06-18 11:52:22.48252+01
+138 core  0018_auto_20180824_1622 2019-06-18 11:52:22.513009+01
+139 core  0019_merge_20180829_0939  2019-06-18 11:52:22.515605+01
+140 invest  0010_merge_20180829_0939_squashed_0013_auto_20180830_0632 2019-06-18 11:52:30.980212+01
+141 invest  0014_auto_20180904_1113 2019-06-18 11:52:32.643002+01
+142 invest  0015_auto_20180911_1049 2019-06-18 11:52:32.645574+01
+143 invest  0016_auto_20180911_1506 2019-06-18 11:52:32.647703+01
+144 invest  0017_auto_20180911_1513 2019-06-18 11:52:32.649756+01
+145 invest  0018_auto_20180913_1445 2019-06-18 11:52:32.651922+01
+146 invest  0019_auto_20180917_0838 2019-06-18 11:52:32.654127+01
+147 invest  0020_auto_20180917_1326 2019-06-18 11:52:32.656073+01
+148 invest  0021_auto_20180917_1404 2019-06-18 11:52:32.658145+01
+149 invest  0022_auto_20180917_1622 2019-06-18 11:52:32.660513+01
+150 invest  0023_auto_20180918_0805 2019-06-18 11:52:32.662671+01
+151 invest  0024_highpotentialopportunitydetailpage_testimonial_background  2019-06-18 11:52:32.664618+01
+152 invest  0025_auto_20180920_0941 2019-06-18 11:52:32.666542+01
+153 invest  0026_auto_20181002_1534 2019-06-18 11:52:32.668719+01
+154 find_a_supplier 0066_auto_20180830_0632 2019-06-18 11:52:32.912789+01
+155 export_readiness  0014_auto_20180829_1027_squashed_0018_getfinancepage  2019-06-18 11:52:33.642679+01
+156 export_readiness  0019_auto_20180905_1350 2019-06-18 11:52:34.450844+01
+157 core  0020_auto_20180830_1737 2019-06-18 11:52:34.682873+01
+158 core  0021_auto_20180904_1511 2019-06-18 11:52:35.066248+01
+159 core  0022_auto_20180906_1344 2019-06-18 11:52:35.280889+01
+160 core  0023_auto_20180912_0758 2019-06-18 11:52:35.519132+01
+161 core  0024_auto_20180913_1321 2019-06-18 11:52:35.726148+01
+162 core  0025_documenthash 2019-06-18 11:52:35.916575+01
+163 core  0026_auto_20181024_1112 2019-06-18 11:52:35.934502+01
+164 core  0027_auto_20190206_1355 2019-06-18 11:52:35.950133+01
+165 core  0028_routingsettings  2019-06-18 11:52:35.986182+01
+166 core  0029_auto_20190417_1024 2019-06-18 11:52:36.019262+01
+167 health_check_db 0001_initial  2019-06-18 11:52:36.029138+01
+168 export_readiness  0020_articlelistingpage_articlepage_topiclandingpage_squashed_0030_auto_20181005_1449 2019-06-18 11:52:40.312687+01
+169 export_readiness  0031_internationallandingpage 2019-06-18 11:52:57.588055+01
+170 export_readiness  0032_auto_20181012_1507 2019-06-18 11:52:57.590518+01
+171 export_readiness  0033_auto_20181023_1600 2019-06-18 11:52:57.592652+01
+172 export_readiness  0034_auto_20181024_1112 2019-06-18 11:52:57.595286+01
+173 export_readiness  0035_contactusguidance  2019-06-18 11:52:57.597699+01
+174 export_readiness  0036_auto_20181105_1258 2019-06-18 11:52:57.599876+01
+175 export_readiness  0037_auto_20181106_0952 2019-06-18 11:52:57.601982+01
+176 export_readiness  0038_auto_20181106_0953 2019-06-18 11:52:57.604078+01
+177 export_readiness  0039_contactsuccesspage_topic 2019-06-18 11:52:57.606485+01
+178 export_readiness  0040_auto_20181121_1643 2019-06-18 11:52:57.608845+01
+179 export_readiness  0041_campaignpage_marketingpages  2019-06-18 11:52:57.611739+01
+180 export_readiness  0042_contactsuccesspages_contactusguidancepages 2019-06-18 11:52:57.614199+01
+181 export_readiness  0043_auto_20181205_1413 2019-06-18 11:52:57.616253+01
+182 export_readiness  0044_auto_20181214_1605 2019-06-18 11:52:57.618559+01
+183 export_readiness  0045_auto_20190115_1058 2019-06-18 11:52:57.62127+01
+184 export_readiness  0046_euexitformpages  2019-06-18 11:52:57.625867+01
+185 export_readiness  0047_allcontactpagespage  2019-06-18 11:52:57.629863+01
+186 export_readiness  0048_auto_20190206_1355 2019-06-18 11:52:57.633947+01
+187 export_readiness  0049_auto_20190207_0924 2019-06-18 11:52:57.636677+01
+188 export_readiness  0050_auto_20190219_1633 2019-06-18 11:52:57.638991+01
+189 export_readiness  0032_auto_20190307_1512 2019-06-18 11:52:57.848461+01
+190 export_readiness  0033_auto_20190312_1557 2019-06-18 11:53:56.956024+01
+191 export_readiness  0034_auto_20190314_1250 2019-06-18 11:54:20.476689+01
+192 export_readiness  0035_remove_countryguidepage_help_market_guide_cta_title  2019-06-18 11:54:20.699278+01
+193 export_readiness  0036_topiclandingpage_teaser  2019-06-18 11:54:20.926448+01
+194 export_readiness  0037_auto_20190321_0728 2019-06-18 11:54:29.978518+01
+195 export_readiness  0038_auto_20190402_1221 2019-06-18 11:54:30.191651+01
+196 export_readiness  0039_auto_20190411_1206 2019-06-18 11:54:30.411761+01
+197 export_readiness  0040_auto_20190411_1228 2019-06-18 11:54:30.811972+01
+198 export_readiness  0041_auto_20190417_0825 2019-06-18 11:54:36.783908+01
+199 export_readiness  0042_auto_20190604_1325 2019-06-18 11:54:48.543608+01
+200 export_readiness  0043_add_homepage_fields_to_apppage 2019-06-18 11:54:49.508047+01
+201 export_readiness  0044_copy_homepage_values_to_apppage  2019-06-18 11:54:49.807634+01
+202 export_readiness  0045_rename_homepage_to_homepageold 2019-06-18 11:54:50.365152+01
+203 export_readiness  0046_rename_exportreadinessapp_to_homepage  2019-06-18 11:54:51.238133+01
+204 export_readiness  0047_correct_page_contenttypes  2019-06-18 11:54:51.505847+01
+205 find_a_supplier 0067_auto_20181012_1507 2019-06-18 11:54:53.498626+01
+206 find_a_supplier 0068_auto_20181024_1112 2019-06-18 11:54:55.337287+01
+207 find_a_supplier 0069_auto_20190206_1355 2019-06-18 11:54:57.145217+01
+208 find_a_supplier 0070_auto_20190417_0825 2019-06-18 11:54:58.908066+01
+209 find_a_supplier 0071_auto_20190417_1024 2019-06-18 11:55:27.030654+01
+210 great_international 0001_initial  2019-06-18 11:55:32.144389+01
+211 great_international 0002_auto_20190206_1146 2019-06-18 11:55:32.146978+01
+212 great_international 0003_internationalarticlelistingpage  2019-06-18 11:55:32.149515+01
+213 great_international 0003_auto_20190211_1202 2019-06-18 11:55:32.151972+01
+214 great_international 0004_merge_20190212_1003  2019-06-18 11:55:32.154318+01
+215 great_international 0005_internationalukhqpages 2019-06-18 11:55:32.156665+01
+216 great_international 0006_internationaltopiclandingpage  2019-06-18 11:55:32.15906+01
+217 great_international 0007_auto_20190219_1114 2019-06-18 11:55:32.161365+01
+218 great_international 0008_auto_20190222_1554 2019-06-18 11:55:32.163767+01
+219 great_international 0008_auto_20190222_1230 2019-06-18 11:55:32.167865+01
+220 great_international 0009_merge_20190225_1214  2019-06-18 11:55:32.171561+01
+221 great_international 0010_auto_20190228_0819 2019-06-18 11:55:32.176043+01
+222 great_international 0011_auto_20190228_1051 2019-06-18 11:55:32.179463+01
+223 great_international 0012_internationalsectorpage  2019-06-18 11:55:32.182328+01
+224 great_international 0013_auto_20190301_1227 2019-06-18 11:55:32.184865+01
+225 great_international 0014_auto_20190304_1215 2019-06-18 11:55:32.18725+01
+226 great_international 0015_auto_20190306_1521 2019-06-18 11:55:32.18951+01
+227 great_international 0002_internationalcuratedtopiclandingpage 2019-06-18 11:55:32.494746+01
+228 great_international 0003_auto_20190313_0855 2019-06-18 11:55:37.982086+01
+229 great_international 0004_internationalguidelandingpage  2019-06-18 11:55:38.291481+01
+230 great_international 0005_auto_20190320_1750 2019-06-18 11:55:43.921574+01
+231 great_international 0006_auto_20190325_0945 2019-06-18 11:55:48.655766+01
+232 great_international 0007_auto_20190402_1221 2019-06-18 11:55:48.935613+01
+233 great_international 0008_auto_20190404_1320 2019-06-18 11:58:49.662317+01
+234 great_international 0009_auto_20190404_1320 2019-06-18 11:59:20.105379+01
+235 great_international 0010_auto_20190404_1320 2019-06-18 12:01:24.704184+01
+236 great_international 0011_auto_20190404_1321 2019-06-18 12:02:55.660219+01
+237 great_international 0012_auto_20190404_1321 2019-06-18 12:03:26.877377+01
+238 great_international 0013_auto_20190404_1321 2019-06-18 12:04:56.684703+01
+239 great_international 0014_auto_20190404_1322 2019-06-18 12:05:56.272184+01
+240 great_international 0015_auto_20190404_1712 2019-06-18 12:06:01.294029+01
+241 great_international 0016_auto_20190408_1640 2019-06-18 12:06:11.700283+01
+242 great_international 0007_internationalhomepage_hero_cta_link  2019-06-18 12:06:12.174913+01
+243 great_international 0017_merge_20190411_1027  2019-06-18 12:06:12.17865+01
+244 great_international 0018_auto_20190411_1028 2019-06-18 12:06:17.362781+01
+245 great_international 0019_auto_20190417_0825 2019-06-18 12:06:23.515546+01
+246 great_international 0020_auto_20190417_1024 2019-06-18 12:08:52.304708+01
+247 great_international 0021_auto_20190423_1423 2019-06-18 12:10:58.696861+01
+248 great_international 0022_auto_20190508_1300 2019-06-18 12:11:16.850456+01
+249 great_international 0023_internationaleuexitformpage_internationaleuexitformsuccesspage 2019-06-18 12:11:17.669405+01
+250 great_international 0024_capitalinvestopportunitylistingpage_capitalinvestopportunitypage_capitalinvestregionalsectorpage_cap 2019-06-18 12:11:24.105031+01
+251 great_international 0025_auto_20190523_1445 2019-06-18 12:11:32.270457+01
+252 great_international 0026_auto_20190528_0826 2019-06-18 12:16:16.220504+01
+253 great_international 0027_auto_20190529_1033 2019-06-18 12:16:21.928621+01
+254 great_international 0028_auto_20190530_1147 2019-06-18 12:18:01.654454+01
+255 great_international 0029_auto_20190530_1344 2019-06-18 12:18:02.797348+01
+256 great_international 0030_auto_20190531_1049 2019-06-18 12:18:22.30081+01
+257 great_international 0031_investhighpotentialopportunitydetailpage_investhighpotentialopportunityformpage_investhighpotentialo 2019-06-18 12:18:26.7878+01
+258 great_international 0032_investinternationalhomepage_how_we_help_icon_six 2019-06-18 12:18:27.386117+01
+259 great_international 0033_add_homepage_fields_to_apppage 2019-06-18 12:23:50.713465+01
+260 great_international 0034_populate_apppage_fields_from_homepage  2019-06-18 12:23:51.502867+01
+261 great_international 0035_rename_internationalhomepage_to_internationalhomepageold 2019-06-18 12:23:53.282434+01
+262 great_international 0036_rename_greatinternationalapp_to_internationalhomepage  2019-06-18 12:23:54.632674+01
+263 great_international 0037_correct_page_contenttypes  2019-06-18 12:23:55.30326+01
+264 great_international 0033_auto_20190611_1057 2019-06-18 12:26:47.362215+01
+265 great_international 0038_merge_20190611_1253  2019-06-18 12:26:47.366308+01
+266 great_international 0039_auto_20190612_1513 2019-06-18 12:26:54.515257+01
+267 great_international 0040_auto_20190612_1521 2019-06-18 12:27:45.507457+01
+268 great_international 0041_auto_20190613_1346 2019-06-18 12:27:53.268614+01
+269 great_international 0042_auto_20190617_1133 2019-06-18 12:28:08.049658+01
+270 great_international 0043_internationaltradehomepage_internationaltradeindustrycontactpage 2019-06-18 12:28:10.243244+01
+271 groups  0001_initial  2019-06-18 12:28:11.062372+01
+272 groups  0002_create_groupinfo_for_existing_groups 2019-06-18 12:28:12.257008+01
+273 groups  0003_groupinfo_is_team_leaders_group  2019-06-18 12:28:12.303061+01
+274 invest  0015_auto_20181012_1507 2019-06-18 12:28:16.094776+01
+275 invest  0016_auto_20181025_1226 2019-06-18 12:28:25.530048+01
+276 invest  0017_auto_20190206_1355 2019-06-18 12:28:34.314124+01
+277 invest  0018_auto_20190314_1507 2019-06-18 12:29:10.680478+01
+278 invest  0019_auto_20190320_1347 2019-06-18 12:33:09.839334+01
+279 invest  0020_auto_20190402_1018 2019-06-18 12:33:52.029765+01
+280 invest  0021_auto_20190409_1246 2019-06-18 12:35:42.688121+01
+281 invest  0022_auto_20190411_1449 2019-06-18 12:43:58.830137+01
+282 invest  0023_auto_20190417_0825 2019-06-18 12:44:10.204572+01
+283 invest  0024_auto_20190417_1024 2019-06-18 12:49:26.381002+01
+284 invest  0025_auto_20190424_1501 2019-06-18 12:49:52.517253+01
+285 invest  0026_auto_20190425_1524 2019-06-18 12:50:27.383884+01
+286 invest  0027_auto_20190503_0844 2019-06-18 12:50:45.257582+01
+287 invest  0028_auto_20190503_0949 2019-06-18 12:51:01.875415+01
+288 invest  0029_auto_20190529_1039 2019-06-18 12:53:12.723957+01
+289 invest  0030_auto_20190529_1040 2019-06-18 12:54:49.746242+01
+290 invest  0031_auto_20190529_1259 2019-06-18 12:58:43.720663+01
+291 invest  0032_auto_20190605_1141 2019-06-18 13:00:24.516162+01
+292 sessions  0001_initial  2019-06-18 13:00:24.549497+01
+293 users 0001_initial  2019-06-18 13:00:26.088232+01
+294 users 0002_create_profile_existing_users  2019-06-18 13:00:26.974739+01
+295 users 0003_auto_20190507_1448 2019-06-18 13:00:29.062531+01
+296 users 0004_auto_20190508_1336 2019-06-18 13:00:29.153351+01
+297 wagtailadmin  0001_create_admin_access_permissions  2019-06-18 13:00:29.951793+01
+298 wagtailembeds 0001_initial  2019-06-18 13:00:29.997896+01
+299 wagtailembeds 0002_add_verbose_names  2019-06-18 13:00:30.022408+01
+300 wagtailembeds 0003_capitalizeverbose  2019-06-18 13:00:30.047245+01
+301 wagtailsearch 0001_initial  2019-06-18 13:00:30.215401+01
+302 wagtailsearch 0002_add_verbose_names  2019-06-18 13:00:30.362831+01
+303 wagtailsearch 0003_remove_editors_pick  2019-06-18 13:00:30.418343+01
+304 wagtailusers  0001_initial  2019-06-18 13:00:30.474964+01
+305 wagtailusers  0002_add_verbose_name_on_userprofile  2019-06-18 13:00:30.59039+01
+306 wagtailusers  0003_add_verbose_names  2019-06-18 13:00:30.629351+01
+307 wagtailusers  0004_capitalizeverbose  2019-06-18 13:00:30.785111+01
+308 wagtailusers  0005_make_related_name_wagtail_specific 2019-06-18 13:00:30.844369+01
+309 wagtailusers  0006_userprofile_prefered_language  2019-06-18 13:00:30.886667+01
+310 wagtailusers  0007_userprofile_current_time_zone  2019-06-18 13:00:30.930984+01
+311 wagtailusers  0008_userprofile_avatar 2019-06-18 13:00:30.974403+01
+312 db  0001_initial  2019-06-18 13:00:30.982847+01
+313 wagtailcore 0001_squashed_0016_change_page_url_path_to_text_field 2019-06-18 13:00:30.986255+01
+314 export_readiness  0031_internationallandingpage_squashed_0050_auto_20190219_1633  2019-06-18 13:00:30.98933+01
+315 great_international 0001_squashed_0015_auto_20190306_1521 2019-06-18 13:00:30.99242+01
+316 invest  0014_auto_20180904_1113_squashed_0026_auto_20181002_1534  2019-06-18 13:00:30.99581+01
 \.
 
 
@@ -11092,22 +10879,6 @@ COPY public.export_readiness_homepageold (page_ptr_id, service_name, news_title,
 --
 
 COPY public.export_readiness_internationallandingpage (page_ptr_id, service_name, uses_tree_based_routing) FROM stdin;
-\.
-
-
---
--- Data for Name: export_readiness_marketingarticlepage; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.export_readiness_marketingarticlepage (page_ptr_id, service_name, uses_tree_based_routing, article_title, article_teaser, article_body_text, cta_title, cta_teaser, cta_link_label, cta_link, article_image_id, related_page_one_id, related_page_three_id, related_page_two_id) FROM stdin;
-\.
-
-
---
--- Data for Name: export_readiness_marketingarticlepage_tags; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.export_readiness_marketingarticlepage_tags (id, marketingarticlepage_id, tag_id) FROM stdin;
 \.
 
 
@@ -11267,7 +11038,7 @@ COPY public.great_international_capitalinvestopportunitylistingpage (page_ptr_id
 -- Data for Name: great_international_capitalinvestopportunitypage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_capitalinvestopportunitypage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, hero_title, hero_title_en_gb, hero_title_de, hero_title_ja, hero_title_zh_hans, hero_title_fr, hero_title_es, hero_title_pt, hero_title_ar, opportunity_summary_intro, opportunity_summary_intro_en_gb, opportunity_summary_intro_de, opportunity_summary_intro_ja, opportunity_summary_intro_zh_hans, opportunity_summary_intro_fr, opportunity_summary_intro_es, opportunity_summary_intro_pt, opportunity_summary_intro_ar, opportunity_summary_content, opportunity_summary_content_en_gb, opportunity_summary_content_de, opportunity_summary_content_ja, opportunity_summary_content_zh_hans, opportunity_summary_content_fr, opportunity_summary_content_es, opportunity_summary_content_pt, opportunity_summary_content_ar, location, location_en_gb, location_de, location_ja, location_zh_hans, location_fr, location_es, location_pt, location_ar, project_promoter, project_promoter_en_gb, project_promoter_de, project_promoter_ja, project_promoter_zh_hans, project_promoter_fr, project_promoter_es, project_promoter_pt, project_promoter_ar, scale, scale_en_gb, scale_de, scale_ja, scale_zh_hans, scale_fr, scale_es, scale_pt, scale_ar, sector, sector_en_gb, sector_de, sector_ja, sector_zh_hans, sector_fr, sector_es, sector_pt, sector_ar, investment_type, investment_type_en_gb, investment_type_de, investment_type_ja, investment_type_zh_hans, investment_type_fr, investment_type_es, investment_type_pt, investment_type_ar, planning_status, planning_status_en_gb, planning_status_de, planning_status_ja, planning_status_zh_hans, planning_status_fr, planning_status_es, planning_status_pt, planning_status_ar, project_background_title, project_background_title_en_gb, project_background_title_de, project_background_title_ja, project_background_title_zh_hans, project_background_title_fr, project_background_title_es, project_background_title_pt, project_background_title_ar, project_background_intro, project_background_intro_en_gb, project_background_intro_de, project_background_intro_ja, project_background_intro_zh_hans, project_background_intro_fr, project_background_intro_es, project_background_intro_pt, project_background_intro_ar, project_description_title, project_description_title_en_gb, project_description_title_de, project_description_title_ja, project_description_title_zh_hans, project_description_title_fr, project_description_title_es, project_description_title_pt, project_description_title_ar, project_description_content, project_description_content_en_gb, project_description_content_de, project_description_content_ja, project_description_content_zh_hans, project_description_content_fr, project_description_content_es, project_description_content_pt, project_description_content_ar, project_promoter_title, project_promoter_title_en_gb, project_promoter_title_de, project_promoter_title_ja, project_promoter_title_zh_hans, project_promoter_title_fr, project_promoter_title_es, project_promoter_title_pt, project_promoter_title_ar, project_promoter_content, project_promoter_content_en_gb, project_promoter_content_de, project_promoter_content_ja, project_promoter_content_zh_hans, project_promoter_content_fr, project_promoter_content_es, project_promoter_content_pt, project_promoter_content_ar, case_study_title, case_study_title_en_gb, case_study_title_de, case_study_title_ja, case_study_title_zh_hans, case_study_title_fr, case_study_title_es, case_study_title_pt, case_study_title_ar, case_study_text, case_study_text_en_gb, case_study_text_de, case_study_text_ja, case_study_text_zh_hans, case_study_text_fr, case_study_text_es, case_study_text_pt, case_study_text_ar, case_study_cta_text, case_study_cta_text_en_gb, case_study_cta_text_de, case_study_cta_text_ja, case_study_cta_text_zh_hans, case_study_cta_text_fr, case_study_cta_text_es, case_study_cta_text_pt, case_study_cta_text_ar, case_study_cta_link, case_study_cta_link_en_gb, case_study_cta_link_de, case_study_cta_link_ja, case_study_cta_link_zh_hans, case_study_cta_link_fr, case_study_cta_link_es, case_study_cta_link_pt, case_study_cta_link_ar, similar_projects_title, similar_projects_title_en_gb, similar_projects_title_de, similar_projects_title_ja, similar_projects_title_zh_hans, similar_projects_title_fr, similar_projects_title_es, similar_projects_title_pt, similar_projects_title_ar, similar_projects_cta_text, similar_projects_cta_text_en_gb, similar_projects_cta_text_de, similar_projects_cta_text_ja, similar_projects_cta_text_zh_hans, similar_projects_cta_text_fr, similar_projects_cta_text_es, similar_projects_cta_text_pt, similar_projects_cta_text_ar, similar_projects_cta_link, similar_projects_cta_link_en_gb, similar_projects_cta_link_de, similar_projects_cta_link_ja, similar_projects_cta_link_zh_hans, similar_projects_cta_link_fr, similar_projects_cta_link_es, similar_projects_cta_link_pt, similar_projects_cta_link_ar, case_study_image_id, case_study_image_ar_id, case_study_image_de_id, case_study_image_en_gb_id, case_study_image_es_id, case_study_image_fr_id, case_study_image_ja_id, case_study_image_pt_id, case_study_image_zh_hans_id, hero_image_id, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, investment_type_icon_id, investment_type_icon_ar_id, investment_type_icon_de_id, investment_type_icon_en_gb_id, investment_type_icon_es_id, investment_type_icon_fr_id, investment_type_icon_ja_id, investment_type_icon_pt_id, investment_type_icon_zh_hans_id, location_icon_id, location_icon_ar_id, location_icon_de_id, location_icon_en_gb_id, location_icon_es_id, location_icon_fr_id, location_icon_ja_id, location_icon_pt_id, location_icon_zh_hans_id, opportunity_summary_image_id, opportunity_summary_image_ar_id, opportunity_summary_image_de_id, opportunity_summary_image_en_gb_id, opportunity_summary_image_es_id, opportunity_summary_image_fr_id, opportunity_summary_image_ja_id, opportunity_summary_image_pt_id, opportunity_summary_image_zh_hans_id, planning_status_icon_id, planning_status_icon_ar_id, planning_status_icon_de_id, planning_status_icon_en_gb_id, planning_status_icon_es_id, planning_status_icon_fr_id, planning_status_icon_ja_id, planning_status_icon_pt_id, planning_status_icon_zh_hans_id, project_image_id, project_image_ar_id, project_image_de_id, project_image_en_gb_id, project_image_es_id, project_image_fr_id, project_image_ja_id, project_image_pt_id, project_image_zh_hans_id, project_promoter_icon_id, project_promoter_icon_ar_id, project_promoter_icon_de_id, project_promoter_icon_en_gb_id, project_promoter_icon_es_id, project_promoter_icon_fr_id, project_promoter_icon_ja_id, project_promoter_icon_pt_id, project_promoter_icon_zh_hans_id, related_page_one_id, related_page_one_ar_id, related_page_one_de_id, related_page_one_en_gb_id, related_page_one_es_id, related_page_one_fr_id, related_page_one_ja_id, related_page_one_pt_id, related_page_one_zh_hans_id, related_page_three_id, related_page_three_ar_id, related_page_three_de_id, related_page_three_en_gb_id, related_page_three_es_id, related_page_three_fr_id, related_page_three_ja_id, related_page_three_pt_id, related_page_three_zh_hans_id, related_page_two_id, related_page_two_ar_id, related_page_two_de_id, related_page_two_en_gb_id, related_page_two_es_id, related_page_two_fr_id, related_page_two_ja_id, related_page_two_pt_id, related_page_two_zh_hans_id, scale_icon_id, scale_icon_ar_id, scale_icon_de_id, scale_icon_en_gb_id, scale_icon_es_id, scale_icon_fr_id, scale_icon_ja_id, scale_icon_pt_id, scale_icon_zh_hans_id, sector_icon_id, sector_icon_ar_id, sector_icon_de_id, sector_icon_en_gb_id, sector_icon_es_id, sector_icon_fr_id, sector_icon_ja_id, sector_icon_pt_id, sector_icon_zh_hans_id, contact_text, contact_text_ar, contact_text_de, contact_text_en_gb, contact_text_es, contact_text_fr, contact_text_ja, contact_text_pt, contact_text_zh_hans, contact_title, contact_title_ar, contact_title_de, contact_title_en_gb, contact_title_es, contact_title_fr, contact_title_ja, contact_title_pt, contact_title_zh_hans, prioritised_opportunity, investment_type_heading, investment_type_heading_ar, investment_type_heading_de, investment_type_heading_en_gb, investment_type_heading_es, investment_type_heading_fr, investment_type_heading_ja, investment_type_heading_pt, investment_type_heading_zh_hans, location_heading, location_heading_ar, location_heading_de, location_heading_en_gb, location_heading_es, location_heading_fr, location_heading_ja, location_heading_pt, location_heading_zh_hans, planning_status_heading, planning_status_heading_ar, planning_status_heading_de, planning_status_heading_en_gb, planning_status_heading_es, planning_status_heading_fr, planning_status_heading_ja, planning_status_heading_pt, planning_status_heading_zh_hans, project_promoter_heading, project_promoter_heading_ar, project_promoter_heading_de, project_promoter_heading_en_gb, project_promoter_heading_es, project_promoter_heading_fr, project_promoter_heading_ja, project_promoter_heading_pt, project_promoter_heading_zh_hans, scale_heading, scale_heading_ar, scale_heading_de, scale_heading_en_gb, scale_heading_es, scale_heading_fr, scale_heading_ja, scale_heading_pt, scale_heading_zh_hans, sector_heading, sector_heading_ar, sector_heading_de, sector_heading_en_gb, sector_heading_es, sector_heading_fr, sector_heading_ja, sector_heading_pt, sector_heading_zh_hans, related_region_id, related_region_ar_id, related_region_de_id, related_region_en_gb_id, related_region_es_id, related_region_fr_id, related_region_ja_id, related_region_pt_id, related_region_zh_hans_id, scale_value, scale_value_ar, scale_value_de, scale_value_en_gb, scale_value_es, scale_value_fr, scale_value_ja, scale_value_pt, scale_value_zh_hans) FROM stdin;
+COPY public.great_international_capitalinvestopportunitypage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, hero_title, hero_title_en_gb, hero_title_de, hero_title_ja, hero_title_zh_hans, hero_title_fr, hero_title_es, hero_title_pt, hero_title_ar, opportunity_summary_intro, opportunity_summary_intro_en_gb, opportunity_summary_intro_de, opportunity_summary_intro_ja, opportunity_summary_intro_zh_hans, opportunity_summary_intro_fr, opportunity_summary_intro_es, opportunity_summary_intro_pt, opportunity_summary_intro_ar, opportunity_summary_content, opportunity_summary_content_en_gb, opportunity_summary_content_de, opportunity_summary_content_ja, opportunity_summary_content_zh_hans, opportunity_summary_content_fr, opportunity_summary_content_es, opportunity_summary_content_pt, opportunity_summary_content_ar, location, location_en_gb, location_de, location_ja, location_zh_hans, location_fr, location_es, location_pt, location_ar, project_promoter, project_promoter_en_gb, project_promoter_de, project_promoter_ja, project_promoter_zh_hans, project_promoter_fr, project_promoter_es, project_promoter_pt, project_promoter_ar, scale, scale_en_gb, scale_de, scale_ja, scale_zh_hans, scale_fr, scale_es, scale_pt, scale_ar, sector, sector_en_gb, sector_de, sector_ja, sector_zh_hans, sector_fr, sector_es, sector_pt, sector_ar, investment_type, investment_type_en_gb, investment_type_de, investment_type_ja, investment_type_zh_hans, investment_type_fr, investment_type_es, investment_type_pt, investment_type_ar, planning_status, planning_status_en_gb, planning_status_de, planning_status_ja, planning_status_zh_hans, planning_status_fr, planning_status_es, planning_status_pt, planning_status_ar, project_background_title, project_background_title_en_gb, project_background_title_de, project_background_title_ja, project_background_title_zh_hans, project_background_title_fr, project_background_title_es, project_background_title_pt, project_background_title_ar, project_background_intro, project_background_intro_en_gb, project_background_intro_de, project_background_intro_ja, project_background_intro_zh_hans, project_background_intro_fr, project_background_intro_es, project_background_intro_pt, project_background_intro_ar, project_description_title, project_description_title_en_gb, project_description_title_de, project_description_title_ja, project_description_title_zh_hans, project_description_title_fr, project_description_title_es, project_description_title_pt, project_description_title_ar, project_description_content, project_description_content_en_gb, project_description_content_de, project_description_content_ja, project_description_content_zh_hans, project_description_content_fr, project_description_content_es, project_description_content_pt, project_description_content_ar, project_promoter_title, project_promoter_title_en_gb, project_promoter_title_de, project_promoter_title_ja, project_promoter_title_zh_hans, project_promoter_title_fr, project_promoter_title_es, project_promoter_title_pt, project_promoter_title_ar, project_promoter_content, project_promoter_content_en_gb, project_promoter_content_de, project_promoter_content_ja, project_promoter_content_zh_hans, project_promoter_content_fr, project_promoter_content_es, project_promoter_content_pt, project_promoter_content_ar, case_study_title, case_study_title_en_gb, case_study_title_de, case_study_title_ja, case_study_title_zh_hans, case_study_title_fr, case_study_title_es, case_study_title_pt, case_study_title_ar, case_study_text, case_study_text_en_gb, case_study_text_de, case_study_text_ja, case_study_text_zh_hans, case_study_text_fr, case_study_text_es, case_study_text_pt, case_study_text_ar, case_study_cta_text, case_study_cta_text_en_gb, case_study_cta_text_de, case_study_cta_text_ja, case_study_cta_text_zh_hans, case_study_cta_text_fr, case_study_cta_text_es, case_study_cta_text_pt, case_study_cta_text_ar, case_study_cta_link, case_study_cta_link_en_gb, case_study_cta_link_de, case_study_cta_link_ja, case_study_cta_link_zh_hans, case_study_cta_link_fr, case_study_cta_link_es, case_study_cta_link_pt, case_study_cta_link_ar, similar_projects_title, similar_projects_title_en_gb, similar_projects_title_de, similar_projects_title_ja, similar_projects_title_zh_hans, similar_projects_title_fr, similar_projects_title_es, similar_projects_title_pt, similar_projects_title_ar, similar_projects_cta_text, similar_projects_cta_text_en_gb, similar_projects_cta_text_de, similar_projects_cta_text_ja, similar_projects_cta_text_zh_hans, similar_projects_cta_text_fr, similar_projects_cta_text_es, similar_projects_cta_text_pt, similar_projects_cta_text_ar, similar_projects_cta_link, similar_projects_cta_link_en_gb, similar_projects_cta_link_de, similar_projects_cta_link_ja, similar_projects_cta_link_zh_hans, similar_projects_cta_link_fr, similar_projects_cta_link_es, similar_projects_cta_link_pt, similar_projects_cta_link_ar, case_study_image_id, case_study_image_ar_id, case_study_image_de_id, case_study_image_en_gb_id, case_study_image_es_id, case_study_image_fr_id, case_study_image_ja_id, case_study_image_pt_id, case_study_image_zh_hans_id, hero_image_id, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, investment_type_icon_id, investment_type_icon_ar_id, investment_type_icon_de_id, investment_type_icon_en_gb_id, investment_type_icon_es_id, investment_type_icon_fr_id, investment_type_icon_ja_id, investment_type_icon_pt_id, investment_type_icon_zh_hans_id, location_icon_id, location_icon_ar_id, location_icon_de_id, location_icon_en_gb_id, location_icon_es_id, location_icon_fr_id, location_icon_ja_id, location_icon_pt_id, location_icon_zh_hans_id, opportunity_summary_image_id, opportunity_summary_image_ar_id, opportunity_summary_image_de_id, opportunity_summary_image_en_gb_id, opportunity_summary_image_es_id, opportunity_summary_image_fr_id, opportunity_summary_image_ja_id, opportunity_summary_image_pt_id, opportunity_summary_image_zh_hans_id, planning_status_icon_id, planning_status_icon_ar_id, planning_status_icon_de_id, planning_status_icon_en_gb_id, planning_status_icon_es_id, planning_status_icon_fr_id, planning_status_icon_ja_id, planning_status_icon_pt_id, planning_status_icon_zh_hans_id, project_image_id, project_image_ar_id, project_image_de_id, project_image_en_gb_id, project_image_es_id, project_image_fr_id, project_image_ja_id, project_image_pt_id, project_image_zh_hans_id, project_promoter_icon_id, project_promoter_icon_ar_id, project_promoter_icon_de_id, project_promoter_icon_en_gb_id, project_promoter_icon_es_id, project_promoter_icon_fr_id, project_promoter_icon_ja_id, project_promoter_icon_pt_id, project_promoter_icon_zh_hans_id, related_page_one_id, related_page_one_ar_id, related_page_one_de_id, related_page_one_en_gb_id, related_page_one_es_id, related_page_one_fr_id, related_page_one_ja_id, related_page_one_pt_id, related_page_one_zh_hans_id, related_page_three_id, related_page_three_ar_id, related_page_three_de_id, related_page_three_en_gb_id, related_page_three_es_id, related_page_three_fr_id, related_page_three_ja_id, related_page_three_pt_id, related_page_three_zh_hans_id, related_page_two_id, related_page_two_ar_id, related_page_two_de_id, related_page_two_en_gb_id, related_page_two_es_id, related_page_two_fr_id, related_page_two_ja_id, related_page_two_pt_id, related_page_two_zh_hans_id, scale_icon_id, scale_icon_ar_id, scale_icon_de_id, scale_icon_en_gb_id, scale_icon_es_id, scale_icon_fr_id, scale_icon_ja_id, scale_icon_pt_id, scale_icon_zh_hans_id, sector_icon_id, sector_icon_ar_id, sector_icon_de_id, sector_icon_en_gb_id, sector_icon_es_id, sector_icon_fr_id, sector_icon_ja_id, sector_icon_pt_id, sector_icon_zh_hans_id, contact_text, contact_text_ar, contact_text_de, contact_text_en_gb, contact_text_es, contact_text_fr, contact_text_ja, contact_text_pt, contact_text_zh_hans, contact_title, contact_title_ar, contact_title_de, contact_title_en_gb, contact_title_es, contact_title_fr, contact_title_ja, contact_title_pt, contact_title_zh_hans, prioritised_opportunity, investment_type_heading, investment_type_heading_ar, investment_type_heading_de, investment_type_heading_en_gb, investment_type_heading_es, investment_type_heading_fr, investment_type_heading_ja, investment_type_heading_pt, investment_type_heading_zh_hans, location_heading, location_heading_ar, location_heading_de, location_heading_en_gb, location_heading_es, location_heading_fr, location_heading_ja, location_heading_pt, location_heading_zh_hans, planning_status_heading, planning_status_heading_ar, planning_status_heading_de, planning_status_heading_en_gb, planning_status_heading_es, planning_status_heading_fr, planning_status_heading_ja, planning_status_heading_pt, planning_status_heading_zh_hans, project_promoter_heading, project_promoter_heading_ar, project_promoter_heading_de, project_promoter_heading_en_gb, project_promoter_heading_es, project_promoter_heading_fr, project_promoter_heading_ja, project_promoter_heading_pt, project_promoter_heading_zh_hans, scale_heading, scale_heading_ar, scale_heading_de, scale_heading_en_gb, scale_heading_es, scale_heading_fr, scale_heading_ja, scale_heading_pt, scale_heading_zh_hans, sector_heading, sector_heading_ar, sector_heading_de, sector_heading_en_gb, sector_heading_es, sector_heading_fr, sector_heading_ja, sector_heading_pt, sector_heading_zh_hans) FROM stdin;
 \.
 
 
@@ -11451,7 +11222,7 @@ COPY public.great_international_internationalregionpage_tags (id, internationalr
 -- Data for Name: great_international_internationalsectorpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_internationalsectorpage (page_ptr_id, service_name, heading, sub_heading, heading_teaser, section_one_body, statistic_1_number, statistic_1_heading, statistic_1_smallprint, statistic_2_number, statistic_2_heading, statistic_2_smallprint, statistic_3_number, statistic_3_heading, statistic_3_smallprint, statistic_4_number, statistic_4_heading, statistic_4_smallprint, statistic_5_number, statistic_5_heading, statistic_5_smallprint, statistic_6_number, statistic_6_heading, statistic_6_smallprint, section_two_heading, section_two_teaser, section_two_subsection_one_heading, section_two_subsection_one_body, section_two_subsection_two_heading, section_two_subsection_two_body, section_two_subsection_three_heading, section_two_subsection_three_body, case_study_title, case_study_description, case_study_cta_text, section_three_heading, section_three_teaser, section_three_subsection_one_heading, section_three_subsection_one_teaser, section_three_subsection_one_body, section_three_subsection_two_heading, section_three_subsection_two_teaser, section_three_subsection_two_body, case_study_image_id, hero_image_id, related_page_one_id, related_page_three_id, related_page_two_id, section_one_image_id, section_two_subsection_one_icon_id, section_two_subsection_three_icon_id, section_two_subsection_two_icon_id, case_study_cta_page_id, section_one_image_caption, section_one_image_caption_company, case_study_cta_page_ar_id, case_study_cta_page_de_id, case_study_cta_page_en_gb_id, case_study_cta_page_es_id, case_study_cta_page_fr_id, case_study_cta_page_ja_id, case_study_cta_page_pt_id, case_study_cta_page_zh_hans_id, case_study_cta_text_ar, case_study_cta_text_de, case_study_cta_text_en_gb, case_study_cta_text_es, case_study_cta_text_fr, case_study_cta_text_ja, case_study_cta_text_pt, case_study_cta_text_zh_hans, case_study_description_ar, case_study_description_de, case_study_description_en_gb, case_study_description_es, case_study_description_fr, case_study_description_ja, case_study_description_pt, case_study_description_zh_hans, case_study_image_ar_id, case_study_image_de_id, case_study_image_en_gb_id, case_study_image_es_id, case_study_image_fr_id, case_study_image_ja_id, case_study_image_pt_id, case_study_image_zh_hans_id, case_study_title_ar, case_study_title_de, case_study_title_en_gb, case_study_title_es, case_study_title_fr, case_study_title_ja, case_study_title_pt, case_study_title_zh_hans, heading_ar, heading_de, heading_en_gb, heading_es, heading_fr, heading_ja, heading_pt, heading_teaser_ar, heading_teaser_de, heading_teaser_en_gb, heading_teaser_es, heading_teaser_fr, heading_teaser_ja, heading_teaser_pt, heading_teaser_zh_hans, heading_zh_hans, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, related_page_one_ar_id, related_page_one_de_id, related_page_one_en_gb_id, related_page_one_es_id, related_page_one_fr_id, related_page_one_ja_id, related_page_one_pt_id, related_page_one_zh_hans_id, related_page_three_ar_id, related_page_three_de_id, related_page_three_en_gb_id, related_page_three_es_id, related_page_three_fr_id, related_page_three_ja_id, related_page_three_pt_id, related_page_three_zh_hans_id, related_page_two_ar_id, related_page_two_de_id, related_page_two_en_gb_id, related_page_two_es_id, related_page_two_fr_id, related_page_two_ja_id, related_page_two_pt_id, related_page_two_zh_hans_id, section_one_body_ar, section_one_body_de, section_one_body_en_gb, section_one_body_es, section_one_body_fr, section_one_body_ja, section_one_body_pt, section_one_body_zh_hans, section_one_image_ar_id, section_one_image_caption_ar, section_one_image_caption_company_ar, section_one_image_caption_company_de, section_one_image_caption_company_en_gb, section_one_image_caption_company_es, section_one_image_caption_company_fr, section_one_image_caption_company_ja, section_one_image_caption_company_pt, section_one_image_caption_company_zh_hans, section_one_image_caption_de, section_one_image_caption_en_gb, section_one_image_caption_es, section_one_image_caption_fr, section_one_image_caption_ja, section_one_image_caption_pt, section_one_image_caption_zh_hans, section_one_image_de_id, section_one_image_en_gb_id, section_one_image_es_id, section_one_image_fr_id, section_one_image_ja_id, section_one_image_pt_id, section_one_image_zh_hans_id, section_three_heading_ar, section_three_heading_de, section_three_heading_en_gb, section_three_heading_es, section_three_heading_fr, section_three_heading_ja, section_three_heading_pt, section_three_heading_zh_hans, section_three_subsection_one_body_ar, section_three_subsection_one_body_de, section_three_subsection_one_body_en_gb, section_three_subsection_one_body_es, section_three_subsection_one_body_fr, section_three_subsection_one_body_ja, section_three_subsection_one_body_pt, section_three_subsection_one_body_zh_hans, section_three_subsection_one_heading_ar, section_three_subsection_one_heading_de, section_three_subsection_one_heading_en_gb, section_three_subsection_one_heading_es, section_three_subsection_one_heading_fr, section_three_subsection_one_heading_ja, section_three_subsection_one_heading_pt, section_three_subsection_one_heading_zh_hans, section_three_subsection_one_teaser_ar, section_three_subsection_one_teaser_de, section_three_subsection_one_teaser_en_gb, section_three_subsection_one_teaser_es, section_three_subsection_one_teaser_fr, section_three_subsection_one_teaser_ja, section_three_subsection_one_teaser_pt, section_three_subsection_one_teaser_zh_hans, section_three_subsection_two_body_ar, section_three_subsection_two_body_de, section_three_subsection_two_body_en_gb, section_three_subsection_two_body_es, section_three_subsection_two_body_fr, section_three_subsection_two_body_ja, section_three_subsection_two_body_pt, section_three_subsection_two_body_zh_hans, section_three_subsection_two_heading_ar, section_three_subsection_two_heading_de, section_three_subsection_two_heading_en_gb, section_three_subsection_two_heading_es, section_three_subsection_two_heading_fr, section_three_subsection_two_heading_ja, section_three_subsection_two_heading_pt, section_three_subsection_two_heading_zh_hans, section_three_subsection_two_teaser_ar, section_three_subsection_two_teaser_de, section_three_subsection_two_teaser_en_gb, section_three_subsection_two_teaser_es, section_three_subsection_two_teaser_fr, section_three_subsection_two_teaser_ja, section_three_subsection_two_teaser_pt, section_three_subsection_two_teaser_zh_hans, section_three_teaser_ar, section_three_teaser_de, section_three_teaser_en_gb, section_three_teaser_es, section_three_teaser_fr, section_three_teaser_ja, section_three_teaser_pt, section_three_teaser_zh_hans, section_two_heading_ar, section_two_heading_de, section_two_heading_en_gb, section_two_heading_es, section_two_heading_fr, section_two_heading_ja, section_two_heading_pt, section_two_heading_zh_hans, section_two_subsection_one_body_ar, section_two_subsection_one_body_de, section_two_subsection_one_body_en_gb, section_two_subsection_one_body_es, section_two_subsection_one_body_fr, section_two_subsection_one_body_ja, section_two_subsection_one_body_pt, section_two_subsection_one_body_zh_hans, section_two_subsection_one_heading_ar, section_two_subsection_one_heading_de, section_two_subsection_one_heading_en_gb, section_two_subsection_one_heading_es, section_two_subsection_one_heading_fr, section_two_subsection_one_heading_ja, section_two_subsection_one_heading_pt, section_two_subsection_one_heading_zh_hans, section_two_subsection_one_icon_ar_id, section_two_subsection_one_icon_de_id, section_two_subsection_one_icon_en_gb_id, section_two_subsection_one_icon_es_id, section_two_subsection_one_icon_fr_id, section_two_subsection_one_icon_ja_id, section_two_subsection_one_icon_pt_id, section_two_subsection_one_icon_zh_hans_id, section_two_subsection_three_body_ar, section_two_subsection_three_body_de, section_two_subsection_three_body_en_gb, section_two_subsection_three_body_es, section_two_subsection_three_body_fr, section_two_subsection_three_body_ja, section_two_subsection_three_body_pt, section_two_subsection_three_body_zh_hans, section_two_subsection_three_heading_ar, section_two_subsection_three_heading_de, section_two_subsection_three_heading_en_gb, section_two_subsection_three_heading_es, section_two_subsection_three_heading_fr, section_two_subsection_three_heading_ja, section_two_subsection_three_heading_pt, section_two_subsection_three_heading_zh_hans, section_two_subsection_three_icon_ar_id, section_two_subsection_three_icon_de_id, section_two_subsection_three_icon_en_gb_id, section_two_subsection_three_icon_es_id, section_two_subsection_three_icon_fr_id, section_two_subsection_three_icon_ja_id, section_two_subsection_three_icon_pt_id, section_two_subsection_three_icon_zh_hans_id, section_two_subsection_two_body_ar, section_two_subsection_two_body_de, section_two_subsection_two_body_en_gb, section_two_subsection_two_body_es, section_two_subsection_two_body_fr, section_two_subsection_two_body_ja, section_two_subsection_two_body_pt, section_two_subsection_two_body_zh_hans, section_two_subsection_two_heading_ar, section_two_subsection_two_heading_de, section_two_subsection_two_heading_en_gb, section_two_subsection_two_heading_es, section_two_subsection_two_heading_fr, section_two_subsection_two_heading_ja, section_two_subsection_two_heading_pt, section_two_subsection_two_heading_zh_hans, section_two_subsection_two_icon_ar_id, section_two_subsection_two_icon_de_id, section_two_subsection_two_icon_en_gb_id, section_two_subsection_two_icon_es_id, section_two_subsection_two_icon_fr_id, section_two_subsection_two_icon_ja_id, section_two_subsection_two_icon_pt_id, section_two_subsection_two_icon_zh_hans_id, section_two_teaser_ar, section_two_teaser_de, section_two_teaser_en_gb, section_two_teaser_es, section_two_teaser_fr, section_two_teaser_ja, section_two_teaser_pt, section_two_teaser_zh_hans, statistic_1_heading_ar, statistic_1_heading_de, statistic_1_heading_en_gb, statistic_1_heading_es, statistic_1_heading_fr, statistic_1_heading_ja, statistic_1_heading_pt, statistic_1_heading_zh_hans, statistic_1_number_ar, statistic_1_number_de, statistic_1_number_en_gb, statistic_1_number_es, statistic_1_number_fr, statistic_1_number_ja, statistic_1_number_pt, statistic_1_number_zh_hans, statistic_1_smallprint_ar, statistic_1_smallprint_de, statistic_1_smallprint_en_gb, statistic_1_smallprint_es, statistic_1_smallprint_fr, statistic_1_smallprint_ja, statistic_1_smallprint_pt, statistic_1_smallprint_zh_hans, statistic_2_heading_ar, statistic_2_heading_de, statistic_2_heading_en_gb, statistic_2_heading_es, statistic_2_heading_fr, statistic_2_heading_ja, statistic_2_heading_pt, statistic_2_heading_zh_hans, statistic_2_number_ar, statistic_2_number_de, statistic_2_number_en_gb, statistic_2_number_es, statistic_2_number_fr, statistic_2_number_ja, statistic_2_number_pt, statistic_2_number_zh_hans, statistic_2_smallprint_ar, statistic_2_smallprint_de, statistic_2_smallprint_en_gb, statistic_2_smallprint_es, statistic_2_smallprint_fr, statistic_2_smallprint_ja, statistic_2_smallprint_pt, statistic_2_smallprint_zh_hans, statistic_3_heading_ar, statistic_3_heading_de, statistic_3_heading_en_gb, statistic_3_heading_es, statistic_3_heading_fr, statistic_3_heading_ja, statistic_3_heading_pt, statistic_3_heading_zh_hans, statistic_3_number_ar, statistic_3_number_de, statistic_3_number_en_gb, statistic_3_number_es, statistic_3_number_fr, statistic_3_number_ja, statistic_3_number_pt, statistic_3_number_zh_hans, statistic_3_smallprint_ar, statistic_3_smallprint_de, statistic_3_smallprint_en_gb, statistic_3_smallprint_es, statistic_3_smallprint_fr, statistic_3_smallprint_ja, statistic_3_smallprint_pt, statistic_3_smallprint_zh_hans, statistic_4_heading_ar, statistic_4_heading_de, statistic_4_heading_en_gb, statistic_4_heading_es, statistic_4_heading_fr, statistic_4_heading_ja, statistic_4_heading_pt, statistic_4_heading_zh_hans, statistic_4_number_ar, statistic_4_number_de, statistic_4_number_en_gb, statistic_4_number_es, statistic_4_number_fr, statistic_4_number_ja, statistic_4_number_pt, statistic_4_number_zh_hans, statistic_4_smallprint_ar, statistic_4_smallprint_de, statistic_4_smallprint_en_gb, statistic_4_smallprint_es, statistic_4_smallprint_fr, statistic_4_smallprint_ja, statistic_4_smallprint_pt, statistic_4_smallprint_zh_hans, statistic_5_heading_ar, statistic_5_heading_de, statistic_5_heading_en_gb, statistic_5_heading_es, statistic_5_heading_fr, statistic_5_heading_ja, statistic_5_heading_pt, statistic_5_heading_zh_hans, statistic_5_number_ar, statistic_5_number_de, statistic_5_number_en_gb, statistic_5_number_es, statistic_5_number_fr, statistic_5_number_ja, statistic_5_number_pt, statistic_5_number_zh_hans, statistic_5_smallprint_ar, statistic_5_smallprint_de, statistic_5_smallprint_en_gb, statistic_5_smallprint_es, statistic_5_smallprint_fr, statistic_5_smallprint_ja, statistic_5_smallprint_pt, statistic_5_smallprint_zh_hans, statistic_6_heading_ar, statistic_6_heading_de, statistic_6_heading_en_gb, statistic_6_heading_es, statistic_6_heading_fr, statistic_6_heading_ja, statistic_6_heading_pt, statistic_6_heading_zh_hans, statistic_6_number_ar, statistic_6_number_de, statistic_6_number_en_gb, statistic_6_number_es, statistic_6_number_fr, statistic_6_number_ja, statistic_6_number_pt, statistic_6_number_zh_hans, statistic_6_smallprint_ar, statistic_6_smallprint_de, statistic_6_smallprint_en_gb, statistic_6_smallprint_es, statistic_6_smallprint_fr, statistic_6_smallprint_ja, statistic_6_smallprint_pt, statistic_6_smallprint_zh_hans, sub_heading_ar, sub_heading_de, sub_heading_en_gb, sub_heading_es, sub_heading_fr, sub_heading_ja, sub_heading_pt, sub_heading_zh_hans, uses_tree_based_routing, project_opportunities_title, project_opportunities_title_ar, project_opportunities_title_de, project_opportunities_title_en_gb, project_opportunities_title_es, project_opportunities_title_fr, project_opportunities_title_ja, project_opportunities_title_pt, project_opportunities_title_zh_hans, related_opportunities_cta_link, related_opportunities_cta_link_ar, related_opportunities_cta_link_de, related_opportunities_cta_link_en_gb, related_opportunities_cta_link_es, related_opportunities_cta_link_fr, related_opportunities_cta_link_ja, related_opportunities_cta_link_pt, related_opportunities_cta_link_zh_hans, related_opportunities_cta_text, related_opportunities_cta_text_ar, related_opportunities_cta_text_de, related_opportunities_cta_text_en_gb, related_opportunities_cta_text_es, related_opportunities_cta_text_fr, related_opportunities_cta_text_ja, related_opportunities_cta_text_pt, related_opportunities_cta_text_zh_hans) FROM stdin;
+COPY public.great_international_internationalsectorpage (page_ptr_id, service_name, heading, sub_heading, heading_teaser, section_one_body, statistic_1_number, statistic_1_heading, statistic_1_smallprint, statistic_2_number, statistic_2_heading, statistic_2_smallprint, statistic_3_number, statistic_3_heading, statistic_3_smallprint, statistic_4_number, statistic_4_heading, statistic_4_smallprint, statistic_5_number, statistic_5_heading, statistic_5_smallprint, statistic_6_number, statistic_6_heading, statistic_6_smallprint, section_two_heading, section_two_teaser, section_two_subsection_one_heading, section_two_subsection_one_body, section_two_subsection_two_heading, section_two_subsection_two_body, section_two_subsection_three_heading, section_two_subsection_three_body, case_study_title, case_study_description, case_study_cta_text, section_three_heading, section_three_teaser, section_three_subsection_one_heading, section_three_subsection_one_teaser, section_three_subsection_one_body, section_three_subsection_two_heading, section_three_subsection_two_teaser, section_three_subsection_two_body, case_study_image_id, hero_image_id, related_page_one_id, related_page_three_id, related_page_two_id, section_one_image_id, section_two_subsection_one_icon_id, section_two_subsection_three_icon_id, section_two_subsection_two_icon_id, case_study_cta_page_id, section_one_image_caption, section_one_image_caption_company, case_study_cta_page_ar_id, case_study_cta_page_de_id, case_study_cta_page_en_gb_id, case_study_cta_page_es_id, case_study_cta_page_fr_id, case_study_cta_page_ja_id, case_study_cta_page_pt_id, case_study_cta_page_zh_hans_id, case_study_cta_text_ar, case_study_cta_text_de, case_study_cta_text_en_gb, case_study_cta_text_es, case_study_cta_text_fr, case_study_cta_text_ja, case_study_cta_text_pt, case_study_cta_text_zh_hans, case_study_description_ar, case_study_description_de, case_study_description_en_gb, case_study_description_es, case_study_description_fr, case_study_description_ja, case_study_description_pt, case_study_description_zh_hans, case_study_image_ar_id, case_study_image_de_id, case_study_image_en_gb_id, case_study_image_es_id, case_study_image_fr_id, case_study_image_ja_id, case_study_image_pt_id, case_study_image_zh_hans_id, case_study_title_ar, case_study_title_de, case_study_title_en_gb, case_study_title_es, case_study_title_fr, case_study_title_ja, case_study_title_pt, case_study_title_zh_hans, heading_ar, heading_de, heading_en_gb, heading_es, heading_fr, heading_ja, heading_pt, heading_teaser_ar, heading_teaser_de, heading_teaser_en_gb, heading_teaser_es, heading_teaser_fr, heading_teaser_ja, heading_teaser_pt, heading_teaser_zh_hans, heading_zh_hans, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, related_page_one_ar_id, related_page_one_de_id, related_page_one_en_gb_id, related_page_one_es_id, related_page_one_fr_id, related_page_one_ja_id, related_page_one_pt_id, related_page_one_zh_hans_id, related_page_three_ar_id, related_page_three_de_id, related_page_three_en_gb_id, related_page_three_es_id, related_page_three_fr_id, related_page_three_ja_id, related_page_three_pt_id, related_page_three_zh_hans_id, related_page_two_ar_id, related_page_two_de_id, related_page_two_en_gb_id, related_page_two_es_id, related_page_two_fr_id, related_page_two_ja_id, related_page_two_pt_id, related_page_two_zh_hans_id, section_one_body_ar, section_one_body_de, section_one_body_en_gb, section_one_body_es, section_one_body_fr, section_one_body_ja, section_one_body_pt, section_one_body_zh_hans, section_one_image_ar_id, section_one_image_caption_ar, section_one_image_caption_company_ar, section_one_image_caption_company_de, section_one_image_caption_company_en_gb, section_one_image_caption_company_es, section_one_image_caption_company_fr, section_one_image_caption_company_ja, section_one_image_caption_company_pt, section_one_image_caption_company_zh_hans, section_one_image_caption_de, section_one_image_caption_en_gb, section_one_image_caption_es, section_one_image_caption_fr, section_one_image_caption_ja, section_one_image_caption_pt, section_one_image_caption_zh_hans, section_one_image_de_id, section_one_image_en_gb_id, section_one_image_es_id, section_one_image_fr_id, section_one_image_ja_id, section_one_image_pt_id, section_one_image_zh_hans_id, section_three_heading_ar, section_three_heading_de, section_three_heading_en_gb, section_three_heading_es, section_three_heading_fr, section_three_heading_ja, section_three_heading_pt, section_three_heading_zh_hans, section_three_subsection_one_body_ar, section_three_subsection_one_body_de, section_three_subsection_one_body_en_gb, section_three_subsection_one_body_es, section_three_subsection_one_body_fr, section_three_subsection_one_body_ja, section_three_subsection_one_body_pt, section_three_subsection_one_body_zh_hans, section_three_subsection_one_heading_ar, section_three_subsection_one_heading_de, section_three_subsection_one_heading_en_gb, section_three_subsection_one_heading_es, section_three_subsection_one_heading_fr, section_three_subsection_one_heading_ja, section_three_subsection_one_heading_pt, section_three_subsection_one_heading_zh_hans, section_three_subsection_one_teaser_ar, section_three_subsection_one_teaser_de, section_three_subsection_one_teaser_en_gb, section_three_subsection_one_teaser_es, section_three_subsection_one_teaser_fr, section_three_subsection_one_teaser_ja, section_three_subsection_one_teaser_pt, section_three_subsection_one_teaser_zh_hans, section_three_subsection_two_body_ar, section_three_subsection_two_body_de, section_three_subsection_two_body_en_gb, section_three_subsection_two_body_es, section_three_subsection_two_body_fr, section_three_subsection_two_body_ja, section_three_subsection_two_body_pt, section_three_subsection_two_body_zh_hans, section_three_subsection_two_heading_ar, section_three_subsection_two_heading_de, section_three_subsection_two_heading_en_gb, section_three_subsection_two_heading_es, section_three_subsection_two_heading_fr, section_three_subsection_two_heading_ja, section_three_subsection_two_heading_pt, section_three_subsection_two_heading_zh_hans, section_three_subsection_two_teaser_ar, section_three_subsection_two_teaser_de, section_three_subsection_two_teaser_en_gb, section_three_subsection_two_teaser_es, section_three_subsection_two_teaser_fr, section_three_subsection_two_teaser_ja, section_three_subsection_two_teaser_pt, section_three_subsection_two_teaser_zh_hans, section_three_teaser_ar, section_three_teaser_de, section_three_teaser_en_gb, section_three_teaser_es, section_three_teaser_fr, section_three_teaser_ja, section_three_teaser_pt, section_three_teaser_zh_hans, section_two_heading_ar, section_two_heading_de, section_two_heading_en_gb, section_two_heading_es, section_two_heading_fr, section_two_heading_ja, section_two_heading_pt, section_two_heading_zh_hans, section_two_subsection_one_body_ar, section_two_subsection_one_body_de, section_two_subsection_one_body_en_gb, section_two_subsection_one_body_es, section_two_subsection_one_body_fr, section_two_subsection_one_body_ja, section_two_subsection_one_body_pt, section_two_subsection_one_body_zh_hans, section_two_subsection_one_heading_ar, section_two_subsection_one_heading_de, section_two_subsection_one_heading_en_gb, section_two_subsection_one_heading_es, section_two_subsection_one_heading_fr, section_two_subsection_one_heading_ja, section_two_subsection_one_heading_pt, section_two_subsection_one_heading_zh_hans, section_two_subsection_one_icon_ar_id, section_two_subsection_one_icon_de_id, section_two_subsection_one_icon_en_gb_id, section_two_subsection_one_icon_es_id, section_two_subsection_one_icon_fr_id, section_two_subsection_one_icon_ja_id, section_two_subsection_one_icon_pt_id, section_two_subsection_one_icon_zh_hans_id, section_two_subsection_three_body_ar, section_two_subsection_three_body_de, section_two_subsection_three_body_en_gb, section_two_subsection_three_body_es, section_two_subsection_three_body_fr, section_two_subsection_three_body_ja, section_two_subsection_three_body_pt, section_two_subsection_three_body_zh_hans, section_two_subsection_three_heading_ar, section_two_subsection_three_heading_de, section_two_subsection_three_heading_en_gb, section_two_subsection_three_heading_es, section_two_subsection_three_heading_fr, section_two_subsection_three_heading_ja, section_two_subsection_three_heading_pt, section_two_subsection_three_heading_zh_hans, section_two_subsection_three_icon_ar_id, section_two_subsection_three_icon_de_id, section_two_subsection_three_icon_en_gb_id, section_two_subsection_three_icon_es_id, section_two_subsection_three_icon_fr_id, section_two_subsection_three_icon_ja_id, section_two_subsection_three_icon_pt_id, section_two_subsection_three_icon_zh_hans_id, section_two_subsection_two_body_ar, section_two_subsection_two_body_de, section_two_subsection_two_body_en_gb, section_two_subsection_two_body_es, section_two_subsection_two_body_fr, section_two_subsection_two_body_ja, section_two_subsection_two_body_pt, section_two_subsection_two_body_zh_hans, section_two_subsection_two_heading_ar, section_two_subsection_two_heading_de, section_two_subsection_two_heading_en_gb, section_two_subsection_two_heading_es, section_two_subsection_two_heading_fr, section_two_subsection_two_heading_ja, section_two_subsection_two_heading_pt, section_two_subsection_two_heading_zh_hans, section_two_subsection_two_icon_ar_id, section_two_subsection_two_icon_de_id, section_two_subsection_two_icon_en_gb_id, section_two_subsection_two_icon_es_id, section_two_subsection_two_icon_fr_id, section_two_subsection_two_icon_ja_id, section_two_subsection_two_icon_pt_id, section_two_subsection_two_icon_zh_hans_id, section_two_teaser_ar, section_two_teaser_de, section_two_teaser_en_gb, section_two_teaser_es, section_two_teaser_fr, section_two_teaser_ja, section_two_teaser_pt, section_two_teaser_zh_hans, statistic_1_heading_ar, statistic_1_heading_de, statistic_1_heading_en_gb, statistic_1_heading_es, statistic_1_heading_fr, statistic_1_heading_ja, statistic_1_heading_pt, statistic_1_heading_zh_hans, statistic_1_number_ar, statistic_1_number_de, statistic_1_number_en_gb, statistic_1_number_es, statistic_1_number_fr, statistic_1_number_ja, statistic_1_number_pt, statistic_1_number_zh_hans, statistic_1_smallprint_ar, statistic_1_smallprint_de, statistic_1_smallprint_en_gb, statistic_1_smallprint_es, statistic_1_smallprint_fr, statistic_1_smallprint_ja, statistic_1_smallprint_pt, statistic_1_smallprint_zh_hans, statistic_2_heading_ar, statistic_2_heading_de, statistic_2_heading_en_gb, statistic_2_heading_es, statistic_2_heading_fr, statistic_2_heading_ja, statistic_2_heading_pt, statistic_2_heading_zh_hans, statistic_2_number_ar, statistic_2_number_de, statistic_2_number_en_gb, statistic_2_number_es, statistic_2_number_fr, statistic_2_number_ja, statistic_2_number_pt, statistic_2_number_zh_hans, statistic_2_smallprint_ar, statistic_2_smallprint_de, statistic_2_smallprint_en_gb, statistic_2_smallprint_es, statistic_2_smallprint_fr, statistic_2_smallprint_ja, statistic_2_smallprint_pt, statistic_2_smallprint_zh_hans, statistic_3_heading_ar, statistic_3_heading_de, statistic_3_heading_en_gb, statistic_3_heading_es, statistic_3_heading_fr, statistic_3_heading_ja, statistic_3_heading_pt, statistic_3_heading_zh_hans, statistic_3_number_ar, statistic_3_number_de, statistic_3_number_en_gb, statistic_3_number_es, statistic_3_number_fr, statistic_3_number_ja, statistic_3_number_pt, statistic_3_number_zh_hans, statistic_3_smallprint_ar, statistic_3_smallprint_de, statistic_3_smallprint_en_gb, statistic_3_smallprint_es, statistic_3_smallprint_fr, statistic_3_smallprint_ja, statistic_3_smallprint_pt, statistic_3_smallprint_zh_hans, statistic_4_heading_ar, statistic_4_heading_de, statistic_4_heading_en_gb, statistic_4_heading_es, statistic_4_heading_fr, statistic_4_heading_ja, statistic_4_heading_pt, statistic_4_heading_zh_hans, statistic_4_number_ar, statistic_4_number_de, statistic_4_number_en_gb, statistic_4_number_es, statistic_4_number_fr, statistic_4_number_ja, statistic_4_number_pt, statistic_4_number_zh_hans, statistic_4_smallprint_ar, statistic_4_smallprint_de, statistic_4_smallprint_en_gb, statistic_4_smallprint_es, statistic_4_smallprint_fr, statistic_4_smallprint_ja, statistic_4_smallprint_pt, statistic_4_smallprint_zh_hans, statistic_5_heading_ar, statistic_5_heading_de, statistic_5_heading_en_gb, statistic_5_heading_es, statistic_5_heading_fr, statistic_5_heading_ja, statistic_5_heading_pt, statistic_5_heading_zh_hans, statistic_5_number_ar, statistic_5_number_de, statistic_5_number_en_gb, statistic_5_number_es, statistic_5_number_fr, statistic_5_number_ja, statistic_5_number_pt, statistic_5_number_zh_hans, statistic_5_smallprint_ar, statistic_5_smallprint_de, statistic_5_smallprint_en_gb, statistic_5_smallprint_es, statistic_5_smallprint_fr, statistic_5_smallprint_ja, statistic_5_smallprint_pt, statistic_5_smallprint_zh_hans, statistic_6_heading_ar, statistic_6_heading_de, statistic_6_heading_en_gb, statistic_6_heading_es, statistic_6_heading_fr, statistic_6_heading_ja, statistic_6_heading_pt, statistic_6_heading_zh_hans, statistic_6_number_ar, statistic_6_number_de, statistic_6_number_en_gb, statistic_6_number_es, statistic_6_number_fr, statistic_6_number_ja, statistic_6_number_pt, statistic_6_number_zh_hans, statistic_6_smallprint_ar, statistic_6_smallprint_de, statistic_6_smallprint_en_gb, statistic_6_smallprint_es, statistic_6_smallprint_fr, statistic_6_smallprint_ja, statistic_6_smallprint_pt, statistic_6_smallprint_zh_hans, sub_heading_ar, sub_heading_de, sub_heading_en_gb, sub_heading_es, sub_heading_fr, sub_heading_ja, sub_heading_pt, sub_heading_zh_hans, uses_tree_based_routing, project_opportunities_title, project_opportunities_title_ar, project_opportunities_title_de, project_opportunities_title_en_gb, project_opportunities_title_es, project_opportunities_title_fr, project_opportunities_title_ja, project_opportunities_title_pt, project_opportunities_title_zh_hans) FROM stdin;
 \.
 
 
@@ -11532,8 +11303,8 @@ COPY public.great_international_investinternationalhomepage (page_ptr_id, servic
 --
 
 COPY public.groups_groupinfo (id, name_singular, permission_summary, role_match_description, visibility, seniority_level, group_id, is_team_leaders_group) FROM stdin;
-1	Moderators			2	5	1	f
-2	Editors			2	5	2	f
+1 Moderators      2 5 1 f
+2 Editors     2 5 2 f
 \.
 
 
@@ -11662,7 +11433,7 @@ COPY public.users_userprofile (id, assignment_status, user_id, self_assigned_gro
 --
 
 COPY public.wagtailcore_collection (id, path, depth, numchild, name) FROM stdin;
-1	0001	1	0	Root
+1 0001  1 0 Root
 \.
 
 
@@ -11687,18 +11458,18 @@ COPY public.wagtailcore_collectionviewrestriction_groups (id, collectionviewrest
 --
 
 COPY public.wagtailcore_groupcollectionpermission (id, collection_id, group_id, permission_id) FROM stdin;
-1	1	1	1
-2	1	2	1
-3	1	1	2
-4	1	2	2
-5	1	1	4
-6	1	2	4
-7	1	1	5
-8	1	2	5
-9	1	1	7
-10	1	2	7
-11	1	1	8
-12	1	2	8
+1 1 1 1
+2 1 2 1
+3 1 1 2
+4 1 2 2
+5 1 1 4
+6 1 2 4
+7 1 1 5
+8 1 2 5
+9 1 1 7
+10  1 2 7
+11  1 1 8
+12  1 2 8
 \.
 
 
@@ -11707,12 +11478,12 @@ COPY public.wagtailcore_groupcollectionpermission (id, collection_id, group_id, 
 --
 
 COPY public.wagtailcore_grouppagepermission (id, permission_type, group_id, page_id) FROM stdin;
-1	add	1	1
-2	edit	1	1
-3	publish	1	1
-4	add	2	1
-5	edit	2	1
-6	lock	1	1
+1 add 1 1
+2 edit  1 1
+3 publish 1 1
+4 add 2 1
+5 edit  2 1
+6 lock  1 1
 \.
 
 
@@ -11721,8 +11492,8 @@ COPY public.wagtailcore_grouppagepermission (id, permission_type, group_id, page
 --
 
 COPY public.wagtailcore_page (id, path, depth, numchild, title, slug, live, has_unpublished_changes, url_path, seo_title, show_in_menus, search_description, go_live_at, expire_at, expired, content_type_id, owner_id, locked, latest_revision_created_at, first_published_at, live_revision_id, last_published_at, draft_title, search_description_en_gb, search_description_de, search_description_ja, search_description_zh_hans, search_description_fr, search_description_es, search_description_pt, search_description_ar, title_en_gb, title_de, title_ja, title_zh_hans, title_fr, title_es, title_pt, title_ar, seo_title_en_gb, seo_title_de, seo_title_ja, seo_title_zh_hans, seo_title_fr, seo_title_es, seo_title_pt, seo_title_ar) FROM stdin;
-1	0001	1	1	Root	root	t	f	/		f		\N	\N	f	1	\N	f	\N	\N	\N	\N	Root	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
-2	00010001	2	0	Welcome to your new Wagtail site!	home	t	f	/home/		f		\N	\N	f	1	\N	f	\N	\N	\N	\N	Welcome to your new Wagtail site!	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
+1 0001  1 1 Root  root  t f /   f   \N  \N  f 1 \N  f \N  \N  \N  \N  Root  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N
+2 00010001  2 0 Welcome to your new Wagtail site! home  t f /home/    f   \N  \N  f 1 \N  f \N  \N  \N  \N  Welcome to your new Wagtail site! \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N  \N
 \.
 
 
@@ -11755,7 +11526,7 @@ COPY public.wagtailcore_pageviewrestriction_groups (id, pageviewrestriction_id, 
 --
 
 COPY public.wagtailcore_site (id, hostname, port, is_default_site, root_page_id, site_name) FROM stdin;
-1	localhost	80	t	2	\N
+1 localhost 80  t 2 \N
 \.
 
 
@@ -11763,7 +11534,7 @@ COPY public.wagtailcore_site (id, hostname, port, is_default_site, root_page_id,
 -- Data for Name: wagtaildocs_document; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.wagtaildocs_document (id, title, file, created_at, uploaded_by_user_id, collection_id, file_size, file_hash) FROM stdin;
+COPY public.wagtaildocs_document (id, title, file, created_at, uploaded_by_user_id, collection_id, file_size) FROM stdin;
 \.
 
 
@@ -11857,7 +11628,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 20, true);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 429, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 319, true);
 
 
 --
@@ -11920,14 +11691,14 @@ SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 108, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 107, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 336, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 316, true);
 
 
 --
@@ -11935,13 +11706,6 @@ SELECT pg_catalog.setval('public.django_migrations_id_seq', 336, true);
 --
 
 SELECT pg_catalog.setval('public.export_readiness_articlepage_tags_id_seq', 1, false);
-
-
---
--- Name: export_readiness_marketingarticlepage_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.export_readiness_marketingarticlepage_tags_id_seq', 1, false);
 
 
 --
@@ -12574,30 +12338,6 @@ ALTER TABLE ONLY public.export_readiness_homepageold
 
 ALTER TABLE ONLY public.export_readiness_internationallandingpage
     ADD CONSTRAINT export_readiness_internationallandingpage_pkey PRIMARY KEY (page_ptr_id);
-
-
---
--- Name: export_readiness_marketingarticlepage_tags export_readiness_marketi_marketingarticlepage_id__53efdf94_uniq; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.export_readiness_marketingarticlepage_tags
-    ADD CONSTRAINT export_readiness_marketi_marketingarticlepage_id__53efdf94_uniq UNIQUE (marketingarticlepage_id, tag_id);
-
-
---
--- Name: export_readiness_marketingarticlepage export_readiness_marketingarticlepage_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.export_readiness_marketingarticlepage
-    ADD CONSTRAINT export_readiness_marketingarticlepage_pkey PRIMARY KEY (page_ptr_id);
-
-
---
--- Name: export_readiness_marketingarticlepage_tags export_readiness_marketingarticlepage_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.export_readiness_marketingarticlepage_tags
-    ADD CONSTRAINT export_readiness_marketingarticlepage_tags_pkey PRIMARY KEY (id);
 
 
 --
@@ -14273,62 +14013,6 @@ CREATE INDEX export_readiness_interna_service_name_804aa4f2_like ON public.expor
 --
 
 CREATE INDEX export_readiness_internationallandingpage_service_name_804aa4f2 ON public.export_readiness_internationallandingpage USING btree (service_name);
-
-
---
--- Name: export_readiness_marketi_service_name_d5b4a4b6_like; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX export_readiness_marketi_service_name_d5b4a4b6_like ON public.export_readiness_marketingarticlepage USING btree (service_name varchar_pattern_ops);
-
-
---
--- Name: export_readiness_marketing_marketingarticlepage_id_3cb9c2fb; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX export_readiness_marketing_marketingarticlepage_id_3cb9c2fb ON public.export_readiness_marketingarticlepage_tags USING btree (marketingarticlepage_id);
-
-
---
--- Name: export_readiness_marketing_related_page_one_id_20b46a40; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX export_readiness_marketing_related_page_one_id_20b46a40 ON public.export_readiness_marketingarticlepage USING btree (related_page_one_id);
-
-
---
--- Name: export_readiness_marketing_related_page_three_id_0a614ca8; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX export_readiness_marketing_related_page_three_id_0a614ca8 ON public.export_readiness_marketingarticlepage USING btree (related_page_three_id);
-
-
---
--- Name: export_readiness_marketing_related_page_two_id_21915ccb; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX export_readiness_marketing_related_page_two_id_21915ccb ON public.export_readiness_marketingarticlepage USING btree (related_page_two_id);
-
-
---
--- Name: export_readiness_marketingarticlepage_article_image_id_145aee67; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX export_readiness_marketingarticlepage_article_image_id_145aee67 ON public.export_readiness_marketingarticlepage USING btree (article_image_id);
-
-
---
--- Name: export_readiness_marketingarticlepage_service_name_d5b4a4b6; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX export_readiness_marketingarticlepage_service_name_d5b4a4b6 ON public.export_readiness_marketingarticlepage USING btree (service_name);
-
-
---
--- Name: export_readiness_marketingarticlepage_tags_tag_id_1d62911c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX export_readiness_marketingarticlepage_tags_tag_id_1d62911c ON public.export_readiness_marketingarticlepage_tags USING btree (tag_id);
 
 
 --
@@ -16299,73 +15983,10 @@ CREATE INDEX great_international_capita_related_page_two_zh_hans_i_477dedf6 ON p
 
 
 --
--- Name: great_international_capita_related_region_ar_id_e4e6bd22; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_capita_related_region_ar_id_e4e6bd22 ON public.great_international_capitalinvestopportunitypage USING btree (related_region_ar_id);
-
-
---
--- Name: great_international_capita_related_region_de_id_236d599c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_capita_related_region_de_id_236d599c ON public.great_international_capitalinvestopportunitypage USING btree (related_region_de_id);
-
-
---
--- Name: great_international_capita_related_region_en_gb_id_10ed4aee; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_capita_related_region_en_gb_id_10ed4aee ON public.great_international_capitalinvestopportunitypage USING btree (related_region_en_gb_id);
-
-
---
--- Name: great_international_capita_related_region_es_id_59ee3df7; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_capita_related_region_es_id_59ee3df7 ON public.great_international_capitalinvestopportunitypage USING btree (related_region_es_id);
-
-
---
--- Name: great_international_capita_related_region_fr_id_c11c7e99; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_capita_related_region_fr_id_c11c7e99 ON public.great_international_capitalinvestopportunitypage USING btree (related_region_fr_id);
-
-
---
--- Name: great_international_capita_related_region_id_230f4c20; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_capita_related_region_id_230f4c20 ON public.great_international_capitalinvestopportunitypage USING btree (related_region_id);
-
-
---
 -- Name: great_international_capita_related_region_id_b71ff9cc; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_capita_related_region_id_b71ff9cc ON public.great_international_capitalinvestrelatedregions USING btree (related_region_id);
-
-
---
--- Name: great_international_capita_related_region_ja_id_f166c4e7; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_capita_related_region_ja_id_f166c4e7 ON public.great_international_capitalinvestopportunitypage USING btree (related_region_ja_id);
-
-
---
--- Name: great_international_capita_related_region_pt_id_5234ec78; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_capita_related_region_pt_id_5234ec78 ON public.great_international_capitalinvestopportunitypage USING btree (related_region_pt_id);
-
-
---
--- Name: great_international_capita_related_region_zh_hans_id_daf590fb; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_capita_related_region_zh_hans_id_daf590fb ON public.great_international_capitalinvestopportunitypage USING btree (related_region_zh_hans_id);
 
 
 --
@@ -27861,67 +27482,11 @@ ALTER TABLE ONLY public.export_readiness_internationallandingpage
 
 
 --
--- Name: export_readiness_marketingarticlepage export_readiness_mar_article_image_id_145aee67_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.export_readiness_marketingarticlepage
-    ADD CONSTRAINT export_readiness_mar_article_image_id_145aee67_fk_wagtailim FOREIGN KEY (article_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: export_readiness_marketingarticlepage_tags export_readiness_mar_marketingarticlepage_3cb9c2fb_fk_export_re; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.export_readiness_marketingarticlepage_tags
-    ADD CONSTRAINT export_readiness_mar_marketingarticlepage_3cb9c2fb_fk_export_re FOREIGN KEY (marketingarticlepage_id) REFERENCES public.export_readiness_marketingarticlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: export_readiness_marketingpages export_readiness_mar_page_ptr_id_48d50166_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.export_readiness_marketingpages
     ADD CONSTRAINT export_readiness_mar_page_ptr_id_48d50166_fk_wagtailco FOREIGN KEY (page_ptr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: export_readiness_marketingarticlepage export_readiness_mar_page_ptr_id_f8ba8df4_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.export_readiness_marketingarticlepage
-    ADD CONSTRAINT export_readiness_mar_page_ptr_id_f8ba8df4_fk_wagtailco FOREIGN KEY (page_ptr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: export_readiness_marketingarticlepage export_readiness_mar_related_page_one_id_20b46a40_fk_export_re; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.export_readiness_marketingarticlepage
-    ADD CONSTRAINT export_readiness_mar_related_page_one_id_20b46a40_fk_export_re FOREIGN KEY (related_page_one_id) REFERENCES public.export_readiness_articlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: export_readiness_marketingarticlepage export_readiness_mar_related_page_three_i_0a614ca8_fk_export_re; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.export_readiness_marketingarticlepage
-    ADD CONSTRAINT export_readiness_mar_related_page_three_i_0a614ca8_fk_export_re FOREIGN KEY (related_page_three_id) REFERENCES public.export_readiness_articlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: export_readiness_marketingarticlepage export_readiness_mar_related_page_two_id_21915ccb_fk_export_re; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.export_readiness_marketingarticlepage
-    ADD CONSTRAINT export_readiness_mar_related_page_two_id_21915ccb_fk_export_re FOREIGN KEY (related_page_two_id) REFERENCES public.export_readiness_articlepage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: export_readiness_marketingarticlepage_tags export_readiness_mar_tag_id_1d62911c_fk_export_re; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.export_readiness_marketingarticlepage_tags
-    ADD CONSTRAINT export_readiness_mar_tag_id_1d62911c_fk_export_re FOREIGN KEY (tag_id) REFERENCES public.export_readiness_tag(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -35869,83 +35434,11 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_ar_id_e4e6bd22_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_ar_id_e4e6bd22_fk_great_int FOREIGN KEY (related_region_ar_id) REFERENCES public.great_international_capitalinvestregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_de_id_236d599c_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_de_id_236d599c_fk_great_int FOREIGN KEY (related_region_de_id) REFERENCES public.great_international_capitalinvestregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_en_gb_10ed4aee_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_en_gb_10ed4aee_fk_great_int FOREIGN KEY (related_region_en_gb_id) REFERENCES public.great_international_capitalinvestregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_es_id_59ee3df7_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_es_id_59ee3df7_fk_great_int FOREIGN KEY (related_region_es_id) REFERENCES public.great_international_capitalinvestregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_fr_id_c11c7e99_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_fr_id_c11c7e99_fk_great_int FOREIGN KEY (related_region_fr_id) REFERENCES public.great_international_capitalinvestregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_id_230f4c20_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_id_230f4c20_fk_great_int FOREIGN KEY (related_region_id) REFERENCES public.great_international_capitalinvestregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_capitalinvestrelatedregions great_international__related_region_id_b71ff9cc_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_capitalinvestrelatedregions
     ADD CONSTRAINT great_international__related_region_id_b71ff9cc_fk_great_int FOREIGN KEY (related_region_id) REFERENCES public.great_international_capitalinvestregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_ja_id_f166c4e7_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_ja_id_f166c4e7_fk_great_int FOREIGN KEY (related_region_ja_id) REFERENCES public.great_international_capitalinvestregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_pt_id_5234ec78_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_pt_id_5234ec78_fk_great_int FOREIGN KEY (related_region_pt_id) REFERENCES public.great_international_capitalinvestregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_zh_ha_daf590fb_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_zh_ha_daf590fb_fk_great_int FOREIGN KEY (related_region_zh_hans_id) REFERENCES public.great_international_capitalinvestregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
