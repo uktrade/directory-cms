@@ -18,10 +18,10 @@ URL_INCORRECT_DOMAIN = 'http://incorrect' + reverse('activity-stream')
 URL_INCORRECT_PATH = 'http://testserver' + \
     reverse('activity-stream') + 'incorrect/'
 EMPTY_COLLECTION = {
-        '@context': 'https://www.w3.org/ns/activitystreams',
-        'type': 'Collection',
-        'orderedItems': [],
-    }
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    'type': 'Collection',
+    'orderedItems': [],
+}
 
 # --- Helper Functions ---
 

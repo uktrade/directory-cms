@@ -17,7 +17,7 @@ from .models.great_international import (
     InternationalGuideLandingPage,
     InternationalSectorPage,
     InternationalEUExitFormPage,
-)
+    InternationalSubSectorPage)
 from .models.invest import (
     InvestHighPotentialOpportunityFormPage,
     InvestHighPotentialOpportunityDetailPage,
@@ -315,6 +315,19 @@ class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
         max_length=255)
     prioritised_opportunity = serializers.BooleanField()
 
+    sub_sectors = serializers.SerializerMethodField()
+
+    def get_sub_sectors(self, instance):
+        serializer = RelatedSubSectorSerializer(
+            instance.related_sub_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        sub_sectors_list = [sub_sector['related_sub_sector']
+                            for sub_sector in serializer.data]
+        return sub_sectors_list
+
 
 class RegionCardFieldSerializer(serializers.Serializer):
     region_card_image = wagtail_fields.ImageRenditionField('fill-640x360')
@@ -356,6 +369,19 @@ class RelatedSectorSerializer(serializers.Serializer):
         return serializer.data
 
 
+class RelatedSubSectorSerializer(serializers.Serializer):
+    related_sub_sector = serializers.SerializerMethodField()
+
+    def get_related_sub_sector(self, obj):
+        sector = obj.related_sub_sector
+
+        if not sector:
+            return []
+        serializer = MinimalPageSerializer(
+            sector.specific)
+        return serializer.data['heading']
+
+
 class RelatedOpportunitySerializer(serializers.Serializer):
     opportunities = serializers.SerializerMethodField()
 
@@ -372,11 +398,11 @@ class RelatedOpportunitySerializer(serializers.Serializer):
 
 
 MODEL_TO_SERIALIZER_MAPPING = {
-        InternationalArticlePage: RelatedArticlePageSerializer,
-        InternationalCampaignPage: RelatedCampaignPageSerializer,
-        CapitalInvestOpportunityPage:
-        RelatedCapitalInvestOpportunityPageSerializer,
-    }
+    InternationalArticlePage: RelatedArticlePageSerializer,
+    InternationalCampaignPage: RelatedCampaignPageSerializer,
+    CapitalInvestOpportunityPage:
+    RelatedCapitalInvestOpportunityPageSerializer,
+}
 
 
 class PageWithRelatedPagesSerializer(BasePageSerializer):
@@ -400,7 +426,7 @@ class PageWithRelatedPagesSerializer(BasePageSerializer):
         return serialized
 
 
-class InternationalSectorPageSerializer(
+class BaseInternationalSectorPageSerializer(
     PageWithRelatedPagesSerializer
 ):
 
@@ -545,6 +571,20 @@ class InternationalSectorPageSerializer(
             context=self.context
         )
         return serializer.data['opportunities']
+
+
+class InternationalSectorPageSerializer(
+    BaseInternationalSectorPageSerializer,
+    ChildPagesSerializerHelper
+):
+    child_sub_sectors = serializers.SerializerMethodField()
+
+    def get_child_sub_sectors(self, obj):
+        return self.get_child_pages_data_for(
+            obj,
+            InternationalSubSectorPage,
+            MinimalPageSerializer
+        )
 
 
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
@@ -756,7 +796,7 @@ class InternationalTopicLandingPageSerializer(
         sectors = self.get_child_pages_data_for(
             obj,
             InternationalSectorPage,
-            InternationalSectorPageSerializer
+            BaseInternationalSectorPageSerializer
         )
         sectors = sorted(sectors, key=lambda x: x['heading'])
         return articles + campaigns + guides + sectors
@@ -865,12 +905,7 @@ class InternationalGuideLandingPageSerializer(BasePageSerializer):
     section_three_cta_link = serializers.CharField(max_length=255)
 
     def get_guides(self, obj):
-        article_list = (
-               InternationalArticlePage.objects
-               .descendant_of(obj)
-               .live()
-               .order_by('-first_published_at')
-           )[:9]
+        article_list = (InternationalArticlePage.objects.descendant_of(obj).live().order_by('-first_published_at'))[:9]
         serializer = RelatedArticlePageSerializer(article_list, many=True)
         return serializer.data
 
@@ -1040,7 +1075,8 @@ class OpportunityListSerializer(BasePageSerializer, RelatedRegionSerializer):
         max_length=255, source='hero_title')
     hero_image = wagtail_fields.ImageRenditionField(
         'fill-640x360')
-    sector = serializers.CharField(max_length=255)
+    sector = serializers.CharField(
+        max_length=255)
     scale = serializers.CharField(max_length=255)
     scale_value = serializers.DecimalField(
         max_digits=10,
@@ -1057,6 +1093,19 @@ class OpportunityListSerializer(BasePageSerializer, RelatedRegionSerializer):
             context=self.context
         )
         return serializer.data
+
+    sub_sectors = serializers.SerializerMethodField()
+
+    def get_sub_sectors(self, instance):
+        serializer = RelatedSubSectorSerializer(
+            instance.related_sub_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        sub_sectors_list = [sub_sector['related_sub_sector']
+                            for sub_sector in serializer.data]
+        return sub_sectors_list
 
 
 class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
@@ -1079,6 +1128,25 @@ class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
             context=self.context
         )
         return serializer.data
+
+    sector_with_sub_sectors = serializers.SerializerMethodField()
+
+    def get_sub_sector_headings(self, sector):
+        return [sub_sector['heading'] for sub_sector
+                in sector['child_sub_sectors']]
+
+    def get_sector_with_sub_sectors(self, instance):
+
+        all_sectors = InternationalSectorPage.objects.live().public()
+        sectors = InternationalSectorPageSerializer(
+            all_sectors,
+            many=True,
+            allow_null=True,
+            context=self.context
+        ).data
+
+        return {sector['heading']: self.get_sub_sector_headings(sector)
+                for sector in sectors}
 
 
 class CapitalInvestOpportunityPageSerializer(
@@ -1171,6 +1239,19 @@ class CapitalInvestOpportunityPageSerializer(
             context=self.context
         )
         return serializer.data
+
+    sub_sectors = serializers.SerializerMethodField()
+
+    def get_sub_sectors(self, instance):
+        serializer = RelatedSubSectorSerializer(
+            instance.related_sub_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        sub_sectors_list = [sub_sector['related_sub_sector']
+                            for sub_sector in serializer.data]
+        return sub_sectors_list
 
 
 class MinimalPageSerializer(BasePageSerializer):
@@ -1276,7 +1357,7 @@ class InvestInternationalHomePageSerializer(BasePageSerializer):
 
     def get_sectors(self, instance):
         from .models.great_international import InternationalSectorPage
-        serializer = InternationalSectorPageSerializer(
+        serializer = BaseInternationalSectorPageSerializer(
             InternationalSectorPage.objects.live().order_by('heading'),
             many=True,
             allow_null=True,
@@ -1551,7 +1632,7 @@ class InternationalTradeHomePageSerializer(BasePageSerializer):
         queryset = InternationalSectorPage.objects.filter(
             live=True
         ).order_by('slug')[:3]
-        serializer = InternationalSectorPageSerializer(
+        serializer = BaseInternationalSectorPageSerializer(
             queryset,
             many=True,
             allow_null=True,
@@ -1573,8 +1654,51 @@ class InternationalTradeIndustryContactPageSerializer(BasePageSerializer):
 
     def get_industry_options(self, instance):
         queryset = InternationalSectorPage.objects.filter(live=True)
-        serializer = InternationalSectorPageSerializer(
+        serializer = BaseInternationalSectorPageSerializer(
             queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
+
+class AboutDitLandingPage(BasePageSerializer):
+    breadcrumbs_label = serializers.CharField()
+    hero_title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('original')
+
+
+class AboutDitServiceFieldSerializer(serializers.Serializer):
+    icon = wagtail_fields.ImageRenditionField(
+        'original'
+    )
+    title = serializers.CharField()
+    summary = serializers.CharField()
+    link_text = serializers.CharField()
+    link_url = serializers.CharField()
+
+
+class AboutDitServicesPageSerializer(BasePageSerializer):
+    breadcrumbs_label = serializers.CharField()
+    hero_title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    teaser = core_fields.MarkdownToHTMLField()
+    teaser_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    case_study_image = wagtail_fields.ImageRenditionField('original')
+    case_study_title = serializers.CharField()
+    case_study_text = serializers.CharField()
+    case_study_cta_text = serializers.CharField()
+    case_study_cta_link = serializers.CharField()
+    contact_us_section_title = serializers.CharField()
+    contact_us_section_summary = serializers.CharField()
+    contact_us_section_cta_text = serializers.CharField()
+    contact_us_section_cta_link = serializers.CharField()
+    about_dit_services_fields = serializers.SerializerMethodField()
+
+    def get_about_dit_services_fields(self, instance):
+        serializer = AboutDitServiceFieldSerializer(
+            instance.about_dit_services_fields.all(),
             many=True,
             allow_null=True,
             context=self.context

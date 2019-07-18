@@ -19,13 +19,14 @@ def test_models_hierarchy():
         great_international.InternationalRegionPage,
         great_international.InternationalEUExitFormPage,
         great_international.InternationalEUExitFormSuccessPage,
+        great_international.AboutDitLandingPage,
         capital_invest.InternationalCapitalInvestLandingPage,
         capital_invest.CapitalInvestOpportunityListingPage,
         capital_invest.CapitalInvestRegionPage,
         invest.InvestInternationalHomePage,
         invest.InvestHighPotentialOpportunityDetailPage,
         invest.InvestHighPotentialOpportunityFormPage,
-        invest.InvestHighPotentialOpportunityFormSuccessPage
+        invest.InvestHighPotentialOpportunityFormSuccessPage,
     ]
     assert great_international.InternationalHomePage \
         .allowed_parent_page_models() == [Page]
@@ -79,15 +80,23 @@ def test_models_hierarchy():
         .allowed_subpage_models() == [
             capital_invest.CapitalInvestOpportunityPage,
         ]
+    assert great_international.InternationalSectorPage\
+        .allowed_subpage_models() == [
+            great_international.InternationalSubSectorPage,
+        ]
+    assert great_international.AboutDitLandingPage\
+        .allowed_subpage_models() == [
+            great_international.AboutDitServicesPage
+        ]
 
 
 @pytest.mark.django_db
-def test_article_inherit_tags_from_parent(root_page):
+def test_article_inherit_tags_from_parent(international_root_page):
     tag1 = exread_factories.TagFactory(name='foo')
     tag2 = exread_factories.TagFactory(name='bar')
     tag3 = exread_factories.TagFactory(name='xyz')
     article_listing_page = factories.InternationalArticleListingPageFactory(
-        parent=root_page
+        parent=international_root_page
     )
     article_listing_page.tags = [tag1, tag2]
     article_listing_page.save()
@@ -104,12 +113,12 @@ def test_article_inherit_tags_from_parent(root_page):
 
 
 @pytest.mark.django_db
-def test_campaign_inherit_tags_from_parent(root_page):
+def test_campaign_inherit_tags_from_parent(international_root_page):
     tag1 = exread_factories.TagFactory(name='foo')
     tag2 = exread_factories.TagFactory(name='bar')
     tag3 = exread_factories.TagFactory(name='xyz')
     marketing_page = factories.InternationalArticleListingPageFactory(
-        parent=root_page
+        parent=international_root_page
     )
     marketing_page.tags = [tag1, tag2]
     marketing_page.save()
@@ -126,11 +135,13 @@ def test_campaign_inherit_tags_from_parent(root_page):
 
 
 @pytest.mark.django_db
-def test_adding_new_tag_to_parent_propagate_to_descendants(root_page):
+def test_adding_new_tag_to_parent_propagate_to_descendants(
+        international_root_page
+):
     tag1 = exread_factories.TagFactory(name='foo')
     tag2 = exread_factories.TagFactory(name='bar')
     article_listing_page = factories.InternationalArticleListingPageFactory(
-        parent=root_page
+        parent=international_root_page
     )
     article_listing_page.tags.add(tag1)
     article_listing_page.save()
@@ -161,9 +172,10 @@ def test_adding_new_tag_to_parent_propagate_to_descendants(root_page):
 
 
 @pytest.mark.django_db
-def test_international_folder_page_append_parent_slug():
+def test_international_folder_page_append_parent_slug(international_root_page):
     region = factories.InternationalRegionPageFactory(
-        slug='canada'
+        slug='canada',
+        parent=international_root_page
     )
     folder_page = factories.InternationalLocalisedFolderPageFactory(
         parent=region,
@@ -173,9 +185,12 @@ def test_international_folder_page_append_parent_slug():
 
 
 @pytest.mark.django_db
-def test_international_folder_page_append_parent_slug_only_on_creation():
+def test_international_folder_page_append_parent_slug_only_on_creation(
+    international_root_page
+):
     region = factories.InternationalRegionPageFactory(
-        slug='canada'
+        slug='canada',
+        parent=international_root_page
     )
     folder_page = factories.InternationalLocalisedFolderPageFactory(
         parent=region,
@@ -185,3 +200,11 @@ def test_international_folder_page_append_parent_slug_only_on_creation():
 
     folder_page.save()
     assert folder_page.slug == 'test-canada'
+
+
+@pytest.mark.django_db
+def test_uses_tree_base_routing_always_true(international_root_page):
+    page = factories.InternationalArticleListingPageFactory(
+        parent=international_root_page
+    )
+    assert page.uses_tree_based_routing is True

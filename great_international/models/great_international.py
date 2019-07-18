@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils.text import slugify
 
-from modelcluster.fields import ParentalManyToManyField
+from modelcluster.fields import ParentalManyToManyField, ParentalKey
+from wagtail.core.models import Orderable
 
 from directory_constants import slugs
 
@@ -23,12 +24,12 @@ from . import capital_invest as capital_invest_models
 from .base import BaseInternationalPage
 
 
-class InternationalSectorPage(
+class BaseInternationalSectorPage(
     BaseInternationalPage,
-    panels.InternationalSectorPagePanels,
+    panels.BaseInternationalSectorPagePanels,
 ):
     class Meta:
-        ordering = ['-heading']
+        abstract = True
 
     parent_page_types = ['great_international.InternationalTopicLandingPage']
     subpage_types = []
@@ -241,6 +242,25 @@ class InternationalSectorPage(
         max_length=255,
         blank=True
     )
+
+
+class InternationalSectorPage(BaseInternationalSectorPage):
+
+    class Meta:
+        ordering = ['-heading']
+
+    parent_page_types = ['great_international.InternationalTopicLandingPage']
+
+    @classmethod
+    def allowed_subpage_models(cls):
+        return [
+            InternationalSubSectorPage
+        ]
+
+
+class InternationalSubSectorPage(BaseInternationalSectorPage):
+
+    parent_page_types = ['great_international.InternationalSectorPage']
 
 
 class InternationalHomePage(
@@ -488,13 +508,14 @@ class InternationalHomePage(
             InternationalRegionPage,
             InternationalEUExitFormPage,
             InternationalEUExitFormSuccessPage,
+            AboutDitLandingPage,
             capital_invest_models.InternationalCapitalInvestLandingPage,
             capital_invest_models.CapitalInvestOpportunityListingPage,
             capital_invest_models.CapitalInvestRegionPage,
             invest_models.InvestInternationalHomePage,
             invest_models.InvestHighPotentialOpportunityDetailPage,
             invest_models.InvestHighPotentialOpportunityFormPage,
-            invest_models.InvestHighPotentialOpportunityFormSuccessPage,
+            invest_models.InvestHighPotentialOpportunityFormSuccessPage
         ]
 
 
@@ -1231,3 +1252,107 @@ class InternationalEUExitFormSuccessPage(
         max_length=255,
         verbose_name='Body text',
     )
+
+
+class AboutDitLandingPage(
+    BaseInternationalPage,
+    panels.AboutDitLandingPagePanels
+):
+    parent_page_types = ['great_international.InternationalHomePage']
+    subpage_types = [
+        'great_international.AboutDitServicesPage'
+    ]
+
+    breadcrumbs_label = models.CharField(max_length=255)
+    hero_title = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+
+class AboutDitServiceField(models.Model, panels.AboutDitServiceFieldPanels):
+    icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    title = models.CharField(max_length=255, blank=True)
+    summary = models.TextField(max_length=255, blank=True)
+    link_text = models.CharField(max_length=255,
+                                 blank=True,
+                                 verbose_name='Link text')
+    link_url = models.CharField(max_length=255,
+                                blank=True,
+                                verbose_name='Link URL')
+
+    class Meta:
+        abstract = True
+
+
+class AboutDitServicesFields(Orderable, AboutDitServiceField):
+    page = ParentalKey(
+        'great_international.AboutDitServicesPage',
+        on_delete=models.CASCADE,
+        related_name='about_dit_services_fields',
+        blank=True,
+        null=True,
+    )
+
+
+class AboutDitServicesPage(
+    BaseInternationalPage,
+    panels.AboutDitServicesPagePanels
+):
+    parent_page_types = ['great_international.AboutDitLandingPage']
+
+    breadcrumbs_label = models.CharField(max_length=255)
+    hero_title = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    teaser = MarkdownField(
+        null=True,
+        verbose_name='',
+        blank=True
+    )
+    teaser_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    case_study_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    case_study_title = models.CharField(max_length=255, blank=True)
+    case_study_text = models.TextField(max_length=255, blank=True)
+    case_study_cta_text = models.CharField(max_length=255, blank=True)
+    case_study_cta_link = models.CharField(max_length=255, blank=True)
+
+    contact_us_section_title = models.CharField(max_length=255,
+                                                blank=True,
+                                                verbose_name='Title')
+    contact_us_section_summary = models.TextField(max_length=255,
+                                                  blank=True,
+                                                  verbose_name='Summary')
+    contact_us_section_cta_text = models.CharField(max_length=255,
+                                                   blank=True,
+                                                   verbose_name='CTA text')
+    contact_us_section_cta_link = models.CharField(max_length=255,
+                                                   blank=True,
+                                                   verbose_name='CTA URL')
