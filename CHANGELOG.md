@@ -3,12 +3,20 @@
 ## Pre-release
 
 ### Implemented enhancements
+- XOT-932 - Add Country Guide pages to search
+
+### Fixed Bugs
+
+
+## [2019.07.18](https://github.com/uktrade/directory-cms/releases/tag/2019.07.18]
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.06.27...2019.07.18
+
+### Implemented enhancements
 - XOT-922 - Added Marketing Article Page template
 - CMS-1664 - Update invest homepage model to use correct new url for tree based routing
 - No ticket - Split up model and admin panel code in great international app to make files much shorter and easier to work with
 - CI-304 - Gave opportunity page a related region page and a scale numerical value to use for filtering
-- CI-267 - Added cta text and link for sector page for related opportunities section
-- XOT-932 - Add Country Guide pages to search
+- CI-267 - Added cta text and link for sector page for related opportunities sectio
 - CMS-1727 - Move region pages from Invest to International
 - CI-324 - Made `BaseInternationalSectorPage` and sector and new sub-sector page inherit from this and opportunity listing page filters by sub sector
 - CI-322 - Added "About DIT" placeholder landing page
