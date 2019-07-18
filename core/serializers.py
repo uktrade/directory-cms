@@ -87,25 +87,21 @@ class SameSectorOpportunitiesHelper(serializers.Serializer):
     ):
         all_opportunity_pages = CapitalInvestOpportunityPage.objects.live().public()
 
-        serialized_opps = serializer(
-            all_opportunity_pages.all(),
-            many=True,
-            allow_null=True,
-            context=self.context
-        ).data
+        sector_with_opps = {sector['title']: [] for sectors in related_sectors
+                            for sector in sectors.values() if sector}
 
-        sector_with_opps = {}
-        for sectors in related_sectors:
-            for sector in sectors.values():
-                if sector:
-                    sector_with_opps[sector['title']] = []
-
-        for opportunity in serialized_opps:
+        for opportunity in all_opportunity_pages:
             for sector in sector_with_opps.keys():
-                for related_sector in opportunity['related_sectors']:
-                    if related_sector['related_sector'] \
-                            and related_sector['related_sector']['title'] == sector \
-                            and opportunity['meta']['slug'] != instance.slug:
-                        sector_with_opps[sector].append(opportunity)
+                for related_sector in opportunity.related_sectors.all():
+                    if related_sector.related_sector \
+                            and related_sector.related_sector.title == sector \
+                            and opportunity.slug != instance.slug:
+                        serialized_opp = serializer(
+                            opportunity,
+                            allow_null=True,
+                            context=self.context
+                        ).data
+                        sector_with_opps[sector].append(serialized_opp)
 
         return sector_with_opps
+
