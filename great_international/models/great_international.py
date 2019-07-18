@@ -515,7 +515,8 @@ class InternationalHomePage(
             invest_models.InvestInternationalHomePage,
             invest_models.InvestHighPotentialOpportunityDetailPage,
             invest_models.InvestHighPotentialOpportunityFormPage,
-            invest_models.InvestHighPotentialOpportunityFormSuccessPage
+            invest_models.InvestHighPotentialOpportunityFormSuccessPage,
+            invest_models.InvestRegionLandingPage
         ]
 
 

@@ -27,6 +27,7 @@ def test_models_hierarchy():
         invest.InvestHighPotentialOpportunityDetailPage,
         invest.InvestHighPotentialOpportunityFormPage,
         invest.InvestHighPotentialOpportunityFormSuccessPage,
+        invest.InvestRegionLandingPage
     ]
     assert great_international.InternationalHomePage \
         .allowed_parent_page_models() == [Page]

@@ -4,6 +4,7 @@
 
 ### Implemented enhancements
 - XOT-932 - Add Country Guide pages to search
+- CMS-1740 - InvestRegionLandingPage to the allowed sub pages of InternationalHomepage
 
 ### Fixed Bugs
 
