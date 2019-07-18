@@ -104,4 +104,3 @@ class SameSectorOpportunitiesHelper(serializers.Serializer):
                         sector_with_opps[sector].append(serialized_opp)
 
         return sector_with_opps
-
