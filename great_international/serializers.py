@@ -410,11 +410,11 @@ class RelatedOpportunitySerializer(serializers.Serializer):
 
 
 MODEL_TO_SERIALIZER_MAPPING = {
-        InternationalArticlePage: RelatedArticlePageSerializer,
-        InternationalCampaignPage: RelatedCampaignPageSerializer,
-        CapitalInvestOpportunityPage:
-        RelatedCapitalInvestOpportunityPageSerializer,
-    }
+    InternationalArticlePage: RelatedArticlePageSerializer,
+    InternationalCampaignPage: RelatedCampaignPageSerializer,
+    CapitalInvestOpportunityPage:
+    RelatedCapitalInvestOpportunityPageSerializer,
+}
 
 
 class PageWithRelatedPagesSerializer(BasePageSerializer):
@@ -917,12 +917,7 @@ class InternationalGuideLandingPageSerializer(BasePageSerializer):
     section_three_cta_link = serializers.CharField(max_length=255)
 
     def get_guides(self, obj):
-        article_list = (
-               InternationalArticlePage.objects
-               .descendant_of(obj)
-               .live()
-               .order_by('-first_published_at')
-           )[:9]
+        article_list = (InternationalArticlePage.objects.descendant_of(obj).live().order_by('-first_published_at'))[:9]
         serializer = RelatedArticlePageSerializer(article_list, many=True)
         return serializer.data
 
@@ -1683,6 +1678,49 @@ class InternationalTradeIndustryContactPageSerializer(BasePageSerializer):
         queryset = InternationalSectorPage.objects.filter(live=True)
         serializer = BaseInternationalSectorPageSerializer(
             queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
+
+class AboutDitLandingPage(BasePageSerializer):
+    breadcrumbs_label = serializers.CharField()
+    hero_title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('original')
+
+
+class AboutDitServiceFieldSerializer(serializers.Serializer):
+    icon = wagtail_fields.ImageRenditionField(
+        'original'
+    )
+    title = serializers.CharField()
+    summary = serializers.CharField()
+    link_text = serializers.CharField()
+    link_url = serializers.CharField()
+
+
+class AboutDitServicesPageSerializer(BasePageSerializer):
+    breadcrumbs_label = serializers.CharField()
+    hero_title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    teaser = core_fields.MarkdownToHTMLField()
+    teaser_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    case_study_image = wagtail_fields.ImageRenditionField('original')
+    case_study_title = serializers.CharField()
+    case_study_text = serializers.CharField()
+    case_study_cta_text = serializers.CharField()
+    case_study_cta_link = serializers.CharField()
+    contact_us_section_title = serializers.CharField()
+    contact_us_section_summary = serializers.CharField()
+    contact_us_section_cta_text = serializers.CharField()
+    contact_us_section_cta_link = serializers.CharField()
+    about_dit_services_fields = serializers.SerializerMethodField()
+
+    def get_about_dit_services_fields(self, instance):
+        serializer = AboutDitServiceFieldSerializer(
+            instance.about_dit_services_fields.all(),
             many=True,
             allow_null=True,
             context=self.context

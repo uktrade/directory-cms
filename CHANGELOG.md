@@ -10,6 +10,9 @@
 - CI-267 - Added cta text and link for sector page for related opportunities section
 - CMS-1727 - Move region pages from Invest to International
 - CI-324 - Made `BaseInternationalSectorPage` and sector and new sub-sector page inherit from this and opportunity listing page filters by sub sector
+- CI-322 - Added "About DIT" placeholder landing page
+- CI-322 - Added "About DIT" services pages
+- CMS-1648 - Added tree-based routing helpers
 - CI-342 - `CapitalInvestOpportunityPage` gets all projects that have the same related sector as self so they can be randomised
 - CI-344 - `Similar projects` title and `related_page_one/teo/three `CapitalInvestOpportunityPage` are no longer used, only been removed from panels for now
 

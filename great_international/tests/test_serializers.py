@@ -11,7 +11,9 @@ from great_international.serializers import (
     InvestHighPotentialOpportunityFormPageSerializer,
     CapitalInvestOpportunityPageSerializer,
     CapitalInvestOpportunityListingSerializer,
-    InternationalSectorPageSerializer)
+    InternationalSectorPageSerializer,
+    AboutDitServicesPageSerializer
+)
 from great_international.tests.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
@@ -23,19 +25,28 @@ from great_international.tests.factories import (
     CapitalInvestOpportunityPageFactory,
     InvestHighPotentialOpportunityFormPageFactory,
     CapitalInvestOpportunityListingPageFactory,
-    InternationalSubSectorPageFactory, InternationalTopicLandingPageFactory)
+    InternationalSubSectorPageFactory,
+    InternationalTopicLandingPageFactory,
+    AboutDitServicesPageFactory
+)
 
 from great_international.models.capital_invest import (
     CapitalInvestRelatedRegions,
     CapitalInvestHomesInEnglandCardFieldsSummary,
-    CapitalInvestRegionCardFieldsSummary, CapitalInvestRelatedSectors,
-    CapitalInvestRelatedSubSectors)
+    CapitalInvestRegionCardFieldsSummary,
+    CapitalInvestRelatedSectors,
+    CapitalInvestRelatedSubSectors
+)
+from great_international.models.great_international import (
+    AboutDitServicesFields,
+)
 
 
 @pytest.mark.django_db
-def test_sector_page_has_section_three_subsections(root_page, rf):
+def test_sector_page_has_section_three_subsections(international_root_page,
+                                                   rf):
     article = InternationalSectorPageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='article-slug'
     )
 
@@ -52,9 +63,9 @@ def test_sector_page_has_section_three_subsections(root_page, rf):
 
 
 @pytest.mark.django_db
-def test_sector_page_has_section_two_subsections(root_page, rf):
+def test_sector_page_has_section_two_subsections(international_root_page, rf):
     article = InternationalSectorPageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='article-slug'
     )
 
@@ -71,9 +82,9 @@ def test_sector_page_has_section_two_subsections(root_page, rf):
 
 
 @pytest.mark.django_db
-def test_sector_page_has_statistics(root_page, rf):
+def test_sector_page_has_statistics(international_root_page, rf):
     article = InternationalSectorPageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='article-slug'
     )
 
@@ -90,26 +101,28 @@ def test_sector_page_has_statistics(root_page, rf):
 
 
 @pytest.mark.django_db
-def test_sector_page_related_pages_serializer_has_pages(root_page, rf):
+def test_sector_page_related_pages_serializer_has_pages(
+        international_root_page, rf
+):
     related_page_one = InternationalArticlePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='one'
     )
 
     related_page_two = InternationalArticlePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='two'
     )
     related_page_three = InternationalArticlePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='three'
     )
     case_study_cta_page = InternationalArticlePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug="case_study"
     )
     article = InternationalSectorPageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='article-slug',
         related_page_one=related_page_one,
         related_page_two=related_page_two,
@@ -134,22 +147,22 @@ def test_sector_page_related_pages_serializer_has_pages(root_page, rf):
     (InternationalArticlePageFactory, InternationalArticlePageSerializer)
 ])
 def test_related_article_page_serializer_has_pages(
-        parent_page_class, serializer_class, root_page, rf
+        parent_page_class, serializer_class, international_root_page, rf
 ):
     related_page_one = InternationalArticlePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='one'
     )
     related_page_two = InternationalArticlePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='two'
     )
     related_page_three = InternationalArticlePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='three'
     )
     article = parent_page_class(
-        parent=root_page,
+        parent=international_root_page,
         slug='article-slug',
         related_page_one=related_page_one,
         related_page_two=related_page_two,
@@ -165,18 +178,18 @@ def test_related_article_page_serializer_has_pages(
 
 
 @pytest.mark.django_db
-def test_home_page_related_pages(root_page, rf):
+def test_home_page_related_pages(international_root_page, rf):
     related_page_one = InternationalArticlePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='one'
     )
     related_page_two = InternationalCampaignPageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='two'
     )
 
     home_page = InternationalHomePageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='home-page',
         related_page_one=related_page_one,
         related_page_two=related_page_two,
@@ -216,10 +229,10 @@ def test_consistent_page_type_for_old_and_new_home_pages(root_page, rf):
     (InternationalCampaignPageFactory, InternationalCampaignPageSerializer),
 ))
 def test_related_article_page_serializer_no_pages(
-    parent_page_class, serializer_class, root_page, rf
+    parent_page_class, serializer_class, international_root_page, rf
 ):
     article = parent_page_class(
-        parent=root_page,
+        parent=international_root_page,
         slug='article-slug',
         related_page_one=None,
         related_page_two=None,
@@ -235,9 +248,9 @@ def test_related_article_page_serializer_no_pages(
 
 
 @pytest.mark.django_db
-def test_curated_topic_landing_page_has_features(root_page, rf):
+def test_curated_topic_landing_page_has_features(international_root_page, rf):
     page = InternationalCuratedTopicLandingPageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='page-slug'
     )
 
@@ -260,13 +273,14 @@ def test_curated_topic_landing_page_has_features(root_page, rf):
 
 
 @pytest.mark.django_db
-def test_guide_landing_page_serializer_guide_list(root_page, image, rf):
+def test_guide_landing_page_serializer_guide_list(international_root_page,
+                                                  image, rf):
     """
     The serializer for InternationalGuideLandingPage should include a list
     of decendants of type InternationalArticlePage only
     """
     page = InternationalGuideLandingPageFactory(
-        parent=root_page,
+        parent=international_root_page,
         slug='page-slug',
         section_one_image=image,
         section_two_image=image,
@@ -290,10 +304,10 @@ def test_guide_landing_page_serializer_guide_list(root_page, image, rf):
 
 
 @pytest.mark.django_db
-def test_capital_invest_region_page_has_statistics(rf):
+def test_capital_invest_region_page_has_statistics(international_root_page, rf):
     region = CapitalInvestRegionPageFactory(
         slug='region-slug',
-        parent=None
+        parent=international_root_page
     )
 
     serializer = CapitalInvestRegionPageSerializer(
@@ -314,10 +328,12 @@ def test_capital_invest_region_page_has_statistics(rf):
 
 
 @pytest.mark.django_db
-def test_capital_invest_landing_page_gets_added_related_regions(rf):
+def test_capital_invest_landing_page_gets_added_related_regions(
+        rf, international_root_page
+):
 
     region = CapitalInvestRegionPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='region'
     )
 
@@ -325,7 +341,7 @@ def test_capital_invest_landing_page_gets_added_related_regions(rf):
         related_region=region
     )
     capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='sector',
         added_regions=[related_page]
     )
@@ -340,14 +356,15 @@ def test_capital_invest_landing_page_gets_added_related_regions(rf):
 
 
 @pytest.mark.django_db
-def test_capital_invest_landing_page_gets_added_related_region_card_fields(rf):
+def test_capital_invest_landing_page_gets_added_related_region_card_fields(
+        rf, international_root_page):
 
     region_fields = CapitalInvestRegionCardFieldsSummary(
         region_card_title="title"
     )
 
     capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='sector',
         added_region_card_fields=[region_fields]
     )
@@ -363,7 +380,7 @@ def test_capital_invest_landing_page_gets_added_related_region_card_fields(rf):
 
 @pytest.mark.django_db
 def test_capital_invest_landing_page_gets_added_homes_in_england_card_fields(
-        rf
+        rf, international_root_page
 ):
 
     homes_in_england_fields = CapitalInvestHomesInEnglandCardFieldsSummary(
@@ -371,7 +388,7 @@ def test_capital_invest_landing_page_gets_added_homes_in_england_card_fields(
     )
 
     capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='sector',
         added_homes_in_england_card_fields=[homes_in_england_fields]
     )
@@ -386,12 +403,13 @@ def test_capital_invest_landing_page_gets_added_homes_in_england_card_fields(
 
 
 @pytest.mark.django_db
-def test_capital_invest_landing_page_returns_empty_when_no_related_regions(rf):
+def test_capital_invest_landing_page_returns_empty_when_no_related_regions(
+        rf, international_root_page):
 
     related_page = CapitalInvestRelatedRegions()
 
     capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='sector',
         added_regions=[related_page]
     )
@@ -405,8 +423,12 @@ def test_capital_invest_landing_page_returns_empty_when_no_related_regions(rf):
 
 
 @pytest.mark.django_db
-def test_high_potential_opportunity_form_page_serializer():
-    instance = InvestHighPotentialOpportunityFormPageFactory()
+def test_high_potential_opportunity_form_page_serializer(
+    international_root_page
+):
+    instance = InvestHighPotentialOpportunityFormPageFactory(
+        parent=international_root_page
+    )
 
     serializer = InvestHighPotentialOpportunityFormPageSerializer(
         instance
@@ -455,10 +477,12 @@ def test_high_potential_opportunity_form_page_serializer():
 
 
 @pytest.mark.django_db
-def test_capital_invest_landing_page_has_how_we_help(rf):
+def test_capital_invest_landing_page_has_how_we_help(
+        rf, international_root_page
+):
     region = InternationalCapitalInvestLandingPageFactory(
         slug='region-slug',
-        parent=None
+        parent=international_root_page
     )
 
     serializer = InternationalCapitalInvestLandingPageSerializer(
@@ -473,10 +497,11 @@ def test_capital_invest_landing_page_has_how_we_help(rf):
 
 
 @pytest.mark.django_db
-def test_opportunity_page_can_add_sector_as_related(rf):
+def test_opportunity_page_can_add_sector_as_related(rf,
+                                                    international_root_page):
 
     guide_landing_page = InternationalGuideLandingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='page-slug',
     )
 
@@ -490,7 +515,7 @@ def test_opportunity_page_can_add_sector_as_related(rf):
     )
 
     opportunity = CapitalInvestOpportunityPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='opp',
         related_sectors=[related_sector]
     )
@@ -505,10 +530,12 @@ def test_opportunity_page_can_add_sector_as_related(rf):
 
 
 @pytest.mark.django_db
-def test_international_sector_page_gets_opps_with_sector_as_related(rf):
+def test_international_sector_page_gets_opps_with_sector_as_related(
+        rf, international_root_page
+):
 
-    guide_landing_page = InternationalTopicLandingPageFactory(
-        parent=None,
+    guide_landing_page = InternationalGuideLandingPageFactory(
+        parent=international_root_page,
         slug='page-slug',
     )
 
@@ -522,7 +549,7 @@ def test_international_sector_page_gets_opps_with_sector_as_related(rf):
     )
 
     opportunity = CapitalInvestOpportunityPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='opp',
         related_sectors=[related_sector]
     )
@@ -545,12 +572,14 @@ def test_international_sector_page_gets_opps_with_sector_as_related(rf):
 
 
 @pytest.mark.django_db
-def test_opp_page_null_case_related_sector(rf):
+def test_opp_page_null_case_related_sector(
+        rf, international_root_page
+):
 
     related_sector = CapitalInvestRelatedSectors()
 
     opportunity = CapitalInvestOpportunityPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='opp',
         related_sectors=[related_sector]
     )
@@ -565,10 +594,12 @@ def test_opp_page_null_case_related_sector(rf):
 
 
 @pytest.mark.django_db
-def test_opp_page_null_case_related_sector2(rf):
+def test_opp_page_null_case_related_sector2(
+        rf, international_root_page
+):
 
     opportunity = CapitalInvestOpportunityPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='opp',
         related_sectors=[]
     )
@@ -582,10 +613,12 @@ def test_opp_page_null_case_related_sector2(rf):
 
 
 @pytest.mark.django_db
-def test_international_sector_opportunity_null_case(rf):
+def test_international_sector_opportunity_null_case(
+        rf, international_root_page
+):
 
     guide_landing_page = InternationalGuideLandingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='page-slug',
     )
 
@@ -604,7 +637,7 @@ def test_international_sector_opportunity_null_case(rf):
     )
 
     opportunity = CapitalInvestOpportunityPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='opp',
         related_sectors=[related_sector]
     )
@@ -626,10 +659,12 @@ def test_international_sector_opportunity_null_case(rf):
 
 
 @pytest.mark.django_db
-def test_international_sector_opportunity_null_case2(rf):
+def test_international_sector_opportunity_null_case2(
+        rf, international_root_page
+):
 
     guide_landing_page = InternationalGuideLandingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='page-slug',
     )
 
@@ -641,7 +676,7 @@ def test_international_sector_opportunity_null_case2(rf):
     related_sector = CapitalInvestRelatedSectors()
 
     opportunity = CapitalInvestOpportunityPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='opp',
         related_sectors=[related_sector]
     )
@@ -661,10 +696,12 @@ def test_international_sector_opportunity_null_case2(rf):
 
 
 @pytest.mark.django_db
-def test_opportunity_listing_page_gets_opportunities(rf):
+def test_opportunity_listing_page_gets_opportunities(
+        rf, international_root_page
+):
 
     opportunity_listing_page = CapitalInvestOpportunityListingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='opp-listing'
     )
 
@@ -689,10 +726,12 @@ def test_opportunity_listing_page_gets_opportunities(rf):
 
 
 @pytest.mark.django_db
-def test_opportunity_listing_page_getting_opportunities_null_case(rf):
+def test_opportunity_listing_page_getting_opportunities_null_case(
+        rf, international_root_page
+):
 
     opportunity_listing_page = CapitalInvestOpportunityListingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='opp-listing'
     )
 
@@ -705,10 +744,11 @@ def test_opportunity_listing_page_getting_opportunities_null_case(rf):
 
 
 @pytest.mark.django_db
-def test_opportunity_page_can_add_sub_sector_as_related(rf):
+def test_opportunity_page_can_add_sub_sector_as_related(
+        rf, international_root_page):
 
     guide_landing_page = InternationalTopicLandingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='page-slug',
     )
 
@@ -728,7 +768,7 @@ def test_opportunity_page_can_add_sub_sector_as_related(rf):
     )
 
     opportunity = CapitalInvestOpportunityPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='opp',
         related_sub_sectors=[related_sub_sector]
     )
@@ -743,12 +783,12 @@ def test_opportunity_page_can_add_sub_sector_as_related(rf):
 
 
 @pytest.mark.django_db
-def test_opportunity_page_can_add_sub_sector_as_related_null_case(rf):
+def test_opportunity_page_can_add_sub_sector_as_related_null_case(rf, international_root_page):
 
     related_sub_sector = CapitalInvestRelatedSubSectors()
 
     opportunity = CapitalInvestOpportunityPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='opp',
         related_sub_sectors=[related_sub_sector]
     )
@@ -762,9 +802,9 @@ def test_opportunity_page_can_add_sub_sector_as_related_null_case(rf):
 
 
 @pytest.mark.django_db
-def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf):
+def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf, international_root_page):
     topic_landing_page = InternationalTopicLandingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='page-slug',
     )
 
@@ -817,7 +857,7 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf):
     )
 
     opportunity_listing_page = CapitalInvestOpportunityListingPageFactory(
-        parent=None,
+        parent=international_root_page,
         slug='opp-listing'
     )
 
