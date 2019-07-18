@@ -835,3 +835,50 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf):
     ]
 
     assert len(all_sub_sectors) == 3
+
+
+@pytest.mark.django_db
+def test_opportunity_page_gets_opportunities_with_same_sector(rf):
+    topic_landing_page = InternationalGuideLandingPageFactory(
+        parent=None,
+        slug='page-slug',
+    )
+
+    sector = InternationalSectorPageFactory(
+        parent=topic_landing_page,
+        slug='sector',
+        title='sector_title'
+    )
+
+    related_sector = CapitalInvestRelatedSectors(
+        related_sector=sector
+    )
+
+    ashton_green = CapitalInvestOpportunityPageFactory(
+        parent=None,
+        slug='ashton-green',
+        title_en_gb='Ashton Green',
+        related_sectors=[related_sector]
+    )
+    CapitalInvestOpportunityPageSerializer(
+        instance=ashton_green,
+        context={'request': rf.get('/')}
+    )
+
+    birmingham_curzon = CapitalInvestOpportunityPageFactory(
+        parent=None,
+        slug='birimingham-curzon',
+        title_en_gb='Birmingham Curzon',
+        related_sectors=[related_sector]
+    )
+
+    birmingham_curzon_serializer = CapitalInvestOpportunityPageSerializer(
+        instance=birmingham_curzon,
+        context={'request': rf.get('/')}
+    )
+
+    for value in birmingham_curzon_serializer.data['opportunities_in_same_sector'].values():
+        for v in value:
+            assert v['meta']['slug'] == 'ashton-green'
+
+    assert len(birmingham_curzon_serializer.data['opportunities_in_same_sector'].values()) == 1
