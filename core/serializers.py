@@ -94,7 +94,7 @@ class SameSectorOpportunitiesHelper(serializers.Serializer):
         }
 
         for opportunity in all_opportunity_pages:
-            for sector in related_sectors_with_opps.keys():
+            for sector in related_sectors_with_opps:
                 for related_sector in opportunity.related_sectors.all():
                     if related_sector.related_sector \
                             and related_sector.related_sector.title == sector \
