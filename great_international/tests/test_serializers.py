@@ -917,8 +917,8 @@ def test_opportunity_page_gets_opportunities_with_same_sector(rf):
         context={'request': rf.get('/')}
     )
 
-    assert len(birmingham_serializer.data['opportunities_in_same_sector'].keys()) == 1
-    for sectors in birmingham_serializer.data['opportunities_in_same_sector'].values():
+    assert len(birmingham_serializer.data['related_sector_with_opportunities'].keys()) == 1
+    for sectors in birmingham_serializer.data['related_sector_with_opportunities'].values():
         for sector in sectors:
             assert sector['meta']['slug'] == 'ashton-green'
 
