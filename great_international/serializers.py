@@ -6,7 +6,8 @@ from core import fields as core_fields
 from core.serializers import (
     BasePageSerializer,
     ChildPagesSerializerHelper,
-    FormPageSerializerMetaclass)
+    FormPageSerializerMetaclass,
+    SameSectorOpportunitiesHelper)
 from invest.models import HighPotentialOpportunityDetailPage
 
 from .models.great_international import (
@@ -314,6 +315,17 @@ class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
     scale = serializers.CharField(
         max_length=255)
     prioritised_opportunity = serializers.BooleanField()
+
+    related_sectors = serializers.SerializerMethodField()
+
+    def get_related_sectors(self, instance):
+        serializer = RelatedSectorSerializer(
+            instance.related_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
 
     sub_sectors = serializers.SerializerMethodField()
 
@@ -1151,7 +1163,8 @@ class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
 
 class CapitalInvestOpportunityPageSerializer(
     PageWithRelatedPagesSerializer,
-    RelatedRegionSerializer
+    RelatedRegionSerializer,
+    SameSectorOpportunitiesHelper
 ):
 
     breadcrumbs_label = serializers.CharField(max_length=255)
@@ -1252,6 +1265,15 @@ class CapitalInvestOpportunityPageSerializer(
         sub_sectors_list = [sub_sector['related_sub_sector']
                             for sub_sector in serializer.data]
         return sub_sectors_list
+
+    related_sector_with_opportunities = serializers.SerializerMethodField()
+
+    def get_related_sector_with_opportunities(self, instance):
+        return self.get_same_sector_opportunity_pages_data_for(
+            instance,
+            RelatedCapitalInvestOpportunityPageSerializer,
+            self.get_related_sectors(instance)
+        )
 
 
 class MinimalPageSerializer(BasePageSerializer):
