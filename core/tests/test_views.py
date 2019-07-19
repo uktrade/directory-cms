@@ -455,6 +455,7 @@ def test_lookup_by_slug_missing_page(admin_client):
     assert response.json() == {'message': expected_msg}
 
 
+@pytest.mark.django_db
 def test_cache_etags_match(admin_client, root_page):
     service_name = cms.INVEST
 

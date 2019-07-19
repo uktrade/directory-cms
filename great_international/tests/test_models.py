@@ -24,6 +24,10 @@ def test_models_hierarchy():
         capital_invest.CapitalInvestOpportunityListingPage,
         capital_invest.CapitalInvestRegionPage,
         invest.InvestInternationalHomePage,
+        invest.InvestHighPotentialOpportunityDetailPage,
+        invest.InvestHighPotentialOpportunityFormPage,
+        invest.InvestHighPotentialOpportunityFormSuccessPage,
+        invest.InvestRegionLandingPage
     ]
     assert invest.InvestInternationalHomePage.allowed_subpage_models() == [
         invest.InvestHighPotentialOpportunitiesPage,

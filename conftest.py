@@ -25,11 +25,12 @@ from users.tests.factories import UserFactory
 
 
 @pytest.fixture()
-def root_page():
+def root_page(request):
     """
     On start Wagtail provides one page with ID=1 and it's called "Root page"
     """
-    return Page.objects.get(pk=1)
+    if request.node.get_marker('django_db'):
+        return Page.objects.get(pk=1)
 
 
 @pytest.fixture
@@ -197,36 +198,38 @@ def user_awaiting_approval(groups_with_info):
 
 
 @pytest.fixture()
-def international_root_page(root_page):
-    return InternationalHomePageFactory.create(
-        parent=root_page,
-        slug='home',
-        title_en_gb='home',
-        hero_title_en_gb='foo',
-        invest_title_en_gb='foo',
-        trade_title_en_gb='foo',
-        tariffs_title_en_gb='foo',
-        tariffs_description_en_gb='foo',
-        tariffs_link_en_gb='http://foo.com',
-        tariffs_call_to_action_text_en_gb='foo',
-        news_title_en_gb='foo',
-        study_in_uk_cta_text_en_gb='foo',
-        visit_uk_cta_text_en_gb='foo'
-    )
+def international_root_page(root_page, request):
+    if request.node.get_marker('django_db'):
+        return InternationalHomePageFactory.create(
+            parent=root_page,
+            slug='home',
+            title_en_gb='home',
+            hero_title_en_gb='foo',
+            invest_title_en_gb='foo',
+            trade_title_en_gb='foo',
+            tariffs_title_en_gb='foo',
+            tariffs_description_en_gb='foo',
+            tariffs_link_en_gb='http://foo.com',
+            tariffs_call_to_action_text_en_gb='foo',
+            news_title_en_gb='foo',
+            study_in_uk_cta_text_en_gb='foo',
+            visit_uk_cta_text_en_gb='foo'
+        )
 
 
 @pytest.fixture(autouse=True)
-def international_site(international_root_page):
-    site, created = Site.objects.get_or_create(
-        port=80,
-        hostname='great.gov.uk',
-        defaults={
-            'root_page': international_root_page,
-            'site_name': 'international'
-        }
-    )
-    RoutingSettings.objects.get_or_create(
-        site=site,
-        defaults={'root_path_prefix': '/international/content/'}
-    )
-    return site
+def international_site(international_root_page, request):
+    if request.node.get_marker('django_db'):
+        site, created = Site.objects.get_or_create(
+            port=80,
+            hostname='great.gov.uk',
+            defaults={
+                'root_page': international_root_page,
+                'site_name': 'international'
+            }
+        )
+        RoutingSettings.objects.get_or_create(
+            site=site,
+            defaults={'root_path_prefix': '/international/content/'}
+        )
+        return site
