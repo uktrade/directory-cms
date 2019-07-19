@@ -412,29 +412,6 @@ class CapitalInvestOpportunityPagePanels:
             heading="Similar projects",
             classname='collapsible',
             children=[
-                HelpPanel('Required fields for section to show: '
-                          'Similar Projects Title, 1 Related Page'),
-                FieldPanel('similar_projects_title'),
-                FieldRowPanel([
-                    PageChooserPanel(
-                        'related_page_one',
-                        [
-                            'great_international.'
-                            'CapitalInvestOpportunityPage'
-                        ]),
-                    PageChooserPanel(
-                        'related_page_two',
-                        [
-                            'great_international.'
-                            'CapitalInvestOpportunityPage'
-                        ]),
-                    PageChooserPanel(
-                        'related_page_three',
-                        [
-                            'great_international.'
-                            'CapitalInvestOpportunityPage'
-                        ]),
-                ]),
                 HelpPanel('Cta\'s require both text and a link to show '
                           'on page. '),
                 FieldPanel('similar_projects_cta_text'),
