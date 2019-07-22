@@ -37,11 +37,11 @@ class Command(BaseCommand):
             value=cms.GREAT_INTERNATIONAL,
         )
         for page in queryset.specific():
-            print('--------------------------------------------------------')
-            print("{}: {} (ID:{})".format(
+            self.stdout.write('--------------------------------------------------------')  # NOQA
+            self.stdout.write('{}: {} (ID:{})'.format(
                  page.__class__.__name__, page, page.id
             ))
-            print('--------------------------------------------------------\n')
+            self.stdout.write('--------------------------------------------------------\n')  # NOQA
             for language_code, language_name in settings.LANGUAGES:
                 title_field_for_language = build_localized_fieldname(
                     'title', language_code)
@@ -51,11 +51,11 @@ class Command(BaseCommand):
                     continue
 
                 if title_value:
-                    print("{} title already set to: '{}'\n".format(
+                    self.stdout.write("{} title already set to: '{}'\n".format(
                         language_name, title_value))
                     continue
 
-                print("Looking for {} title value...".format(language_name))
+                self.stdout.write("Looking for {} title value...".format(language_name))  # NOQA
                 no_fields_found = True
                 for fieldname in self.preferred_source_fields:
                     fieldname_for_language = build_localized_fieldname(
@@ -64,19 +64,19 @@ class Command(BaseCommand):
                         value = getattr(page, fieldname_for_language)
                         no_fields_found = False
                         if value:
-                            print("'{}' value looks usable: '{}'".format(
+                            self.stdout.write("'{}' value looks usable: '{}'".format(  # NOQA
                                 fieldname_for_language, value))
                             title_value = value
                             setattr(page, title_field_for_language, value)
                             if not dryrun:
                                 page.save()
-                                print('Page saved')
+                                self.stdout.write('Page saved')
                             break
                         else:
-                            print("'{}' value is blank :(".format(
+                            self.stdout.write("'{}' value is blank :(".format(
                                 fieldname_for_language))
                     except AttributeError:
                         pass
                 if no_fields_found:
-                    print('No suitable fields could be found')
+                    self.stdout.write('No suitable fields could be found')
                 print()

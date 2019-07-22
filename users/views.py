@@ -180,7 +180,7 @@ class SSORequestAccessView(EditView):
             # Toggling behaviour here to aid local testing
             if self.object.assignment_status == UserProfile.STATUS_APPROVED:
                 return redirect('wagtailadmin_home')
-            if self.object.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL: # noqa
+            if self.object.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL:  # noqa
                 return redirect(self.success_url)
         return super().dispatch(request)
 

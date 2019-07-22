@@ -437,6 +437,39 @@ class CapitalInvestRelatedSectors(Orderable, RelatedSector):
     )
 
 
+class RelatedSubSector(models.Model):
+    related_sub_sector = models.ForeignKey(
+        'great_international.InternationalSubSectorPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    panels = [
+        PageChooserPanel(
+            'related_sub_sector',
+            [
+                'great_international.'
+                'InternationalSubSectorPage'
+            ]
+        ),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class CapitalInvestRelatedSubSectors(Orderable, RelatedSubSector):
+    page = ParentalKey(
+        'great_international.CapitalInvestOpportunityPage',
+        on_delete=models.CASCADE,
+        related_name='related_sub_sectors',
+        blank=True,
+        null=True,
+    )
+
+
 class CapitalInvestOpportunityPage(
     BaseInternationalPage, panels.CapitalInvestOpportunityPagePanels
 ):

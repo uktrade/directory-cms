@@ -3,10 +3,10 @@ from datetime import datetime
 from django.db.models import Q
 from django_filters import FilterSet, CharFilter
 
-from export_readiness.models import ArticlePage
+from wagtail.core.models import Page
 
 
-class ArticlePageFilter(FilterSet):
+class PageFilter(FilterSet):
 
     after = CharFilter(method='filter_time_id')
 
@@ -17,10 +17,10 @@ class ArticlePageFilter(FilterSet):
         after_id = int(after_id_str)
 
         return queryset.filter(
-           Q(last_published_at=after_ts, id__gt=after_id) |
-           Q(last_published_at__gt=after_ts)
+            Q(last_published_at=after_ts, id__gt=after_id) |
+            Q(last_published_at__gt=after_ts)
         )
 
     class Meta:
-        model = ArticlePage
+        model = Page
         fields = ['after']
