@@ -34,6 +34,8 @@ class GreatInternationalConfig(AppConfig):
         cache.InternationalTradeIndustryContactPageSubscriber.subscribe()
         cache.AboutDitLandingPageSubscriber.subscribe()
         cache.AboutDitServicesPageSubscriber.subscribe()
+        cache.AboutUkLandingPageSubscriber.subscribe()
+        cache.AboutUkWhyChooseTheUkPageSubscriber.subscribe()
         # tags inheritance signals
         post_save.connect(
             receiver=signals.inherit_tags_from_parent,
