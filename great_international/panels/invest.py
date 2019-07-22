@@ -183,6 +183,12 @@ class InvestInternationalHomePagePanels:
     )
 
 
+class InvestHighPotentialOpportunitiesPagePanels:
+    settings_panels = [
+        FieldPanel('slug'),
+    ]
+
+
 class InvestHighPotentialOpportunityDetailPagePanels:
 
     content_panels = [

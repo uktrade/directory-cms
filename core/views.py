@@ -175,9 +175,7 @@ class PageLookupBySlugAPIEndpoint(DetailViewEndpointBase):
     def check_parameter_validity(self):
         # Check 'service_name' was provided
         if 'service_name' not in self.request.GET:
-            raise ValidationError(detail={
-                'service_name':  "This parameter is required"
-            })
+            raise ValidationError(detail={'service_name':  "This parameter is required"})
         super().check_parameter_validity()
 
     def get_object_id(self):

@@ -90,6 +90,89 @@ class InternationalSectorPageFactory(wagtail_factories.PageFactory):
     section_three_subsection_two_body = factory.fuzzy.FuzzyText(length=10)
 
 
+class InternationalSubSectorPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.great_international.InternationalSubSectorPage
+
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None
+
+    heading = factory.fuzzy.FuzzyText(length=10)
+    sub_heading = factory.fuzzy.FuzzyText(length=10)
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    heading_teaser = factory.fuzzy.FuzzyText(length=10)
+
+    section_one_body = factory.fuzzy.FuzzyText(length=10)
+    section_one_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    section_one_image_caption = factory.fuzzy.FuzzyText(length=10)
+    section_one_image_caption_company = factory.fuzzy.FuzzyText(length=10)
+
+    statistic_1_number = factory.fuzzy.FuzzyText(length=10)
+    statistic_1_heading = factory.fuzzy.FuzzyText(length=10)
+    statistic_1_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    statistic_2_number = factory.fuzzy.FuzzyText(length=10)
+    statistic_2_heading = factory.fuzzy.FuzzyText(length=10)
+    statistic_2_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    statistic_3_number = factory.fuzzy.FuzzyText(length=10)
+    statistic_3_heading = factory.fuzzy.FuzzyText(length=10)
+    statistic_3_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    statistic_4_number = factory.fuzzy.FuzzyText(length=10)
+    statistic_4_heading = factory.fuzzy.FuzzyText(length=10)
+    statistic_4_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    statistic_5_number = factory.fuzzy.FuzzyText(length=10)
+    statistic_5_heading = factory.fuzzy.FuzzyText(length=10)
+    statistic_5_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    statistic_6_number = factory.fuzzy.FuzzyText(length=10)
+    statistic_6_heading = factory.fuzzy.FuzzyText(length=10)
+    statistic_6_smallprint = factory.fuzzy.FuzzyText(length=10)
+
+    section_two_heading = factory.fuzzy.FuzzyText(length=10)
+    section_two_teaser = factory.fuzzy.FuzzyText(length=10)
+    section_two_subsection_one_icon = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    section_two_subsection_one_heading = factory.fuzzy.FuzzyText(length=10)
+    section_two_subsection_one_body = factory.fuzzy.FuzzyText(length=10)
+    section_two_subsection_two_icon = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    section_two_subsection_two_heading = factory.fuzzy.FuzzyText(length=10)
+    section_two_subsection_two_body = factory.fuzzy.FuzzyText(length=10)
+    section_two_subsection_three_icon = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    section_two_subsection_three_heading = factory.fuzzy.FuzzyText(length=10)
+    section_two_subsection_three_body = factory.fuzzy.FuzzyText(length=10)
+
+    case_study_title = factory.fuzzy.FuzzyText(length=10)
+    case_study_description = factory.fuzzy.FuzzyText(length=10)
+    case_study_cta_text = factory.fuzzy.FuzzyText(length=10)
+    case_study_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+
+    section_three_heading = factory.fuzzy.FuzzyText(length=10)
+    section_three_teaser = factory.fuzzy.FuzzyText(length=10)
+    section_three_subsection_one_heading = factory.fuzzy.FuzzyText(length=10)
+    section_three_subsection_one_teaser = factory.fuzzy.FuzzyText(length=10)
+    section_three_subsection_one_body = factory.fuzzy.FuzzyText(length=10)
+    section_three_subsection_two_heading = factory.fuzzy.FuzzyText(length=10)
+    section_three_subsection_two_teaser = factory.fuzzy.FuzzyText(length=10)
+    section_three_subsection_two_body = factory.fuzzy.FuzzyText(length=10)
+
+
 class InternationalHomePageFactory(wagtail_factories.PageFactory):
 
     class Meta:
@@ -387,6 +470,13 @@ class InvestInternationalHomePageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
+class InvestHighPotentialOpportunitiesPageFactory(wagtail_factories.PageFactory):
+    class Meta:
+        model = models.invest.InvestHighPotentialOpportunitiesPage
+
+    parent = None
+
+
 class InvestHighPotentialOpportunityFormPageFactory(
     wagtail_factories.PageFactory
 ):
@@ -593,4 +683,23 @@ class InternationalTradeIndustryContactPageFactory(
     success_message_text_en_gb = factory.fuzzy.FuzzyText(length=255)
     success_back_link_text_en_gb = factory.fuzzy.FuzzyText(length=100)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None
+
+
+class AboutDitServicesPageFactory(
+    wagtail_factories.PageFactory
+):
+
+    class Meta:
+        model = models.great_international.AboutDitServicesPage
+
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=50)
+    breadcrumbs_label_en_gb = factory.fuzzy.FuzzyText(length=50)
+    hero_title = factory.fuzzy.FuzzyText(length=10)
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
     parent = None

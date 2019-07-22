@@ -10,17 +10,18 @@ from rest_framework.test import APIClient
 from django.conf import settings
 from django.utils import timezone
 
-from export_readiness.tests.factories import ArticlePageFactory
+from export_readiness.tests.factories import ArticlePageFactory, \
+    CountryGuidePageFactory
 
 URL = 'http://testserver' + reverse('activity-stream')
 URL_INCORRECT_DOMAIN = 'http://incorrect' + reverse('activity-stream')
 URL_INCORRECT_PATH = 'http://testserver' + \
     reverse('activity-stream') + 'incorrect/'
 EMPTY_COLLECTION = {
-        '@context': 'https://www.w3.org/ns/activitystreams',
-        'type': 'Collection',
-        'orderedItems': [],
-    }
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    'type': 'Collection',
+    'orderedItems': [],
+}
 
 # --- Helper Functions ---
 
@@ -150,7 +151,7 @@ def test_if_61_seconds_in_past_401_returned(api_client):
 def test_lists_live_articles_in_stream(api_client):
 
     # Create the articles
-    with freeze_time('2012-01-14 12:00:02'):
+    with freeze_time('2019-01-14 12:00:01'):
         article_a = ArticlePageFactory(
             article_title='Article A',
             article_teaser='Descriptive text',
@@ -158,7 +159,6 @@ def test_lists_live_articles_in_stream(api_client):
             last_published_at=timezone.now(),
             slug='article-a')
 
-    with freeze_time('2012-01-14 12:00:02'):
         article_b = ArticlePageFactory(
             article_title='Article B',
             article_teaser='Descriptive text',
@@ -166,7 +166,7 @@ def test_lists_live_articles_in_stream(api_client):
             last_published_at=timezone.now(),
             slug='article-b')
 
-    with freeze_time('2012-01-14 12:00:01'):
+    with freeze_time('2019-01-14 12:00:02'):
         article_c = ArticlePageFactory(
             article_title='Article C',
             article_teaser='Descriptive text',
@@ -174,14 +174,22 @@ def test_lists_live_articles_in_stream(api_client):
             last_published_at=timezone.now(),
             slug='article-c')
 
-    with freeze_time('2012-01-14 12:00:01'):
         ArticlePageFactory(
             article_title='Article D',
-            article_teaser='Descriptive text',
+            article_teaser='Non-live Article',
             article_body_text='Body text',
             last_published_at=timezone.now(),
             slug='article-d',
             live=False)
+
+        # Note CountryGuidePageFactory creates an additional
+        # ArticlePage as a related page.
+        article_e = CountryGuidePageFactory(
+            heading='Market Page E',
+            sub_heading='Descriptive text',
+            section_one_body='Body text',
+            last_published_at=timezone.now(),
+            slug='article-e')
 
     sender = auth_sender()
     response = api_client.get(
@@ -194,23 +202,29 @@ def test_lists_live_articles_in_stream(api_client):
 
     id_prefix = 'dit:cms:Article:'
 
-    assert len(items) == 3
+    # Three ArticlePages defined above, plus CountryGuidePage,
+    # Plus the extra ArticlePage created by CountryGuidePageFactory
+    assert len(items) == 5
 
-    assert article_attribute(items[0], 'name') == 'Article C'
-    assert article_attribute(items[0], 'id') == id_prefix + str(article_c.id)
+    assert article_attribute(items[0], 'name') == 'Article A'
+    assert article_attribute(items[0], 'id') == id_prefix + str(article_a.id)
     assert article_attribute(items[0], 'summary') == 'Descriptive text'
     assert article_attribute(items[0], 'content') == 'Body text'
     assert article_attribute(items[0], 'url') == \
-        environ["APP_URL_EXPORT_READINESS"] + '/article-c/'
-    assert items[0]['published'] == '2012-01-14T12:00:01+00:00'
+        environ["APP_URL_EXPORT_READINESS"] + '/article-a/'
+    assert items[0]['published'] == '2019-01-14T12:00:01+00:00'
 
-    assert article_attribute(items[1], 'name') == 'Article A'
-    assert article_attribute(items[1], 'id') == id_prefix + str(article_a.id)
-    assert items[1]['published'] == '2012-01-14T12:00:02+00:00'
+    assert article_attribute(items[1], 'name') == 'Article B'
+    assert article_attribute(items[1], 'id') == id_prefix + str(article_b.id)
+    assert items[1]['published'] == '2019-01-14T12:00:01+00:00'
 
-    assert article_attribute(items[2], 'name') == 'Article B'
-    assert article_attribute(items[2], 'id') == id_prefix + str(article_b.id)
-    assert items[2]['published'] == '2012-01-14T12:00:02+00:00'
+    assert article_attribute(items[2], 'name') == 'Article C'
+    assert article_attribute(items[2], 'id') == id_prefix + str(article_c.id)
+    assert items[2]['published'] == '2019-01-14T12:00:02+00:00'
+
+    assert article_attribute(items[3], 'name') == 'Market Page E'
+    assert article_attribute(items[3], 'id') == id_prefix + str(article_e.id)
+    assert items[3]['published'] == '2019-01-14T12:00:02+00:00'
 
 
 @pytest.mark.django_db
@@ -250,7 +264,7 @@ def test_pagination(api_client, django_assert_num_queries):
     # TODO: Improve performance of page.url, full_url, full_path
     # Since page.url needs to get the slugs of the article's parent
     # pages it is doing a TON of queries each time this endpoint is hit
-    with django_assert_num_queries(53):
+    with django_assert_num_queries(55):
         while next_url:
             num_pages += 1
             sender = auth_sender(url=next_url)

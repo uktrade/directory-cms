@@ -50,8 +50,8 @@ class Select2RenderWithOptionsMixin:
         extra = mark_safe('\n'.join((
             "<script>$(function () {",
             "   $('select[name=\"{field_name}\"]').select2({options});".format(
-                    field_name=name, options=json.dumps(self.select2_options)
-                ),
+                field_name=name, options=json.dumps(self.select2_options)
+            ),
             "});</script>"
         )))
         return html + extra
