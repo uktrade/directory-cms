@@ -911,30 +911,6 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
     )
 
 
-class InfoPage(BaseInvestPage):
-    """
-    Markdown page - used for terms and conditions
-    and privacy policy
-    """
-    view_path = 'info/'
-    content = MarkdownField()
-
-    content_panels = [
-        FieldPanel('content'),
-        SearchEngineOptimisationPanel()
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug')
-    ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels,
-    )
-
-
 class HighPotentialOpportunityFormPage(
     ExclusivePageMixin, BaseInvestPage, metaclass=FormPageMetaClass
 ):

@@ -49,11 +49,6 @@ class InvestHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     ]
 
 
-class InfoPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InfoPage
-    subscriptions = []
-
-
 class HighPotentialOpportunityFormPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):

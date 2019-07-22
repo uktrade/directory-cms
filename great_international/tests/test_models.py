@@ -16,7 +16,6 @@ def test_models_hierarchy():
         great_international.InternationalTopicLandingPage,
         great_international.InternationalCuratedTopicLandingPage,
         great_international.InternationalGuideLandingPage,
-        great_international.InternationalRegionPage,
         great_international.InternationalEUExitFormPage,
         great_international.InternationalEUExitFormSuccessPage,
         great_international.AboutDitLandingPage,
@@ -28,6 +27,7 @@ def test_models_hierarchy():
     ]
     assert invest.InvestInternationalHomePage.allowed_subpage_models() == [
         invest.InvestHighPotentialOpportunitiesPage,
+        invest.InvestRegionPage,
     ]
     assert invest.InvestHighPotentialOpportunitiesPage.allowed_subpage_models() == [
         invest.InvestHighPotentialOpportunityDetailPage,
@@ -37,20 +37,12 @@ def test_models_hierarchy():
         invest.InvestHighPotentialOpportunityFormSuccessPage,
     ]
     assert great_international.InternationalHomePage.allowed_parent_page_models() == [Page]
-    # region page
-    assert great_international.InternationalRegionPage.allowed_subpage_models() == [
-        great_international.InternationalLocalisedFolderPage
-    ]
-    # regional folder page
-    assert great_international.InternationalLocalisedFolderPage.allowed_subpage_models() == [
-            great_international.InternationalArticlePage,
-            great_international.InternationalCampaignPage
-        ]
     # topic landing
     assert great_international.InternationalTopicLandingPage.allowed_subpage_models() == [
             great_international.InternationalArticleListingPage,
             great_international.InternationalCampaignPage,
             great_international.InternationalSectorPage,
+            invest.InvestRegionPage,
         ]
     # curated topic landing
     assert great_international.InternationalCuratedTopicLandingPage.allowed_subpage_models() == []
@@ -167,37 +159,6 @@ def test_adding_new_tag_to_parent_propagate_to_descendants(
     assert list(
         article2.tags.values_list('pk', flat=True)
     ) == [tag1.pk, tag2.pk]
-
-
-@pytest.mark.django_db
-def test_international_folder_page_append_parent_slug(international_root_page):
-    region = factories.InternationalRegionPageFactory(
-        slug='canada',
-        parent=international_root_page
-    )
-    folder_page = factories.InternationalLocalisedFolderPageFactory(
-        parent=region,
-        slug='test'
-    )
-    assert folder_page.slug == 'test-canada'
-
-
-@pytest.mark.django_db
-def test_international_folder_page_append_parent_slug_only_on_creation(
-    international_root_page
-):
-    region = factories.InternationalRegionPageFactory(
-        slug='canada',
-        parent=international_root_page
-    )
-    folder_page = factories.InternationalLocalisedFolderPageFactory(
-        parent=region,
-        slug='test'
-    )
-    assert folder_page.slug == 'test-canada'
-
-    folder_page.save()
-    assert folder_page.slug == 'test-canada'
 
 
 @pytest.mark.django_db

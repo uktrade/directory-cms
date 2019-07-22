@@ -137,13 +137,6 @@ class RegionLandingPageTranslation(BaseTranslationOptions):
     )
 
 
-@register(models.InfoPage)
-class InfoPageTranslation(BaseTranslationOptions):
-    fields = (
-        'content',
-    )
-
-
 @register(models.SetupGuidePage)
 class SetupGuidePageTranslation(BaseTranslationOptions):
     fields = (

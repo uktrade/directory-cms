@@ -12,7 +12,6 @@ class InvestConfig(AppConfig):
         cache.SetupGuideLandingPageSubscriber.subscribe()
         cache.SetupGuidePageSubscriber.subscribe()
         cache.InvestHomePageSubscriber.subscribe()
-        cache.InfoPageSubscriber.subscribe()
         cache.HighPotentialOpportunityFormPageSubscriber.subscribe()
         cache.HighPotentialOpportunityDetailPageSubscriber.subscribe()
         cache.HighPotentialOpportunityFormSuccessPageSubscriber.subscribe()

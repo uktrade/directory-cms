@@ -318,10 +318,6 @@ class InvestHomePageSerializer(BasePageSerializer):
         return serializer.data
 
 
-class InfoPageSerializer(BasePageSerializer):
-    content = core_fields.MarkdownToHTMLField()
-
-
 class HighPotentialOpportunityDetailPageBaseSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField(max_length=50)
     heading = serializers.CharField(max_length=255)

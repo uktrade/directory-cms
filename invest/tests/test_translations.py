@@ -45,17 +45,6 @@ def test_required_fields_invest_sector_landing_page():
 
 
 @pytest.mark.django_db
-def test_required_fields_invest_info_page():
-    options = translator.get_options_for_model(models.InfoPage)
-    assert options.required_languages == {
-        'en-gb': [
-            'title',
-            'content',
-        ]
-    }
-
-
-@pytest.mark.django_db
 def test_required_fields_invest_setup_guide_page():
     options = translator.get_options_for_model(models.SetupGuidePage)
     assert options.required_languages == {

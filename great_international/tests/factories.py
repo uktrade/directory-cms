@@ -352,26 +352,6 @@ class InternationalGuideLandingPageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
-class InternationalRegionPageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.great_international.InternationalRegionPage
-
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    parent = None
-
-
-class InternationalLocalisedFolderPageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.great_international.InternationalLocalisedFolderPage
-
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    parent = factory.SubFactory(InternationalRegionPageFactory)
-
-
 class InternationalCapitalInvestLandingPageFactory(
     wagtail_factories.PageFactory
 ):
@@ -458,6 +438,22 @@ class InvestInternationalHomePageFactory(wagtail_factories.PageFactory):
     hpo_title = factory.fuzzy.FuzzyText(length=10)
     setup_guide_title = factory.fuzzy.FuzzyText(length=10)
     setup_guide_call_to_action_url = factory.fuzzy.FuzzyText(length=10)
+
+    featured_card_one_image = factory.SubFactory(wagtail_factories.ImageFactory)
+    featured_card_one_title = factory.fuzzy.FuzzyText(length=10)
+    featured_card_one_summary = factory.fuzzy.FuzzyText(length=10)
+    featured_card_one_cta_link = factory.fuzzy.FuzzyText(length=10)
+
+    featured_card_two_image = factory.SubFactory(wagtail_factories.ImageFactory)
+    featured_card_two_title = factory.fuzzy.FuzzyText(length=10)
+    featured_card_two_summary = factory.fuzzy.FuzzyText(length=10)
+    featured_card_two_cta_link = factory.fuzzy.FuzzyText(length=10)
+
+    featured_card_three_image = factory.SubFactory(wagtail_factories.ImageFactory)
+    featured_card_three_title = factory.fuzzy.FuzzyText(length=10)
+    featured_card_three_summary = factory.fuzzy.FuzzyText(length=10)
+    featured_card_three_cta_link = factory.fuzzy.FuzzyText(length=10)
+
     how_we_help_text_one_en_gb = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_two_en_gb = factory.fuzzy.FuzzyText(length=10)
     how_we_help_text_three_en_gb = factory.fuzzy.FuzzyText(length=10)
@@ -599,10 +595,10 @@ class InvestHighPotentialOpportunityDetailPageFactory(
     parent = None
 
 
-class InvestSectorPageFactory(wagtail_factories.PageFactory):
+class InvestRegionPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.invest.InvestSectorPage
+        model = models.invest.InvestRegionPage
 
     description_en_gb = factory.fuzzy.FuzzyText(length=100)
     heading_en_gb = factory.fuzzy.FuzzyText(length=100)

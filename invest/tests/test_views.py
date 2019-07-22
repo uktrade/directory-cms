@@ -60,16 +60,6 @@ def test_invest_home_page(admin_client):
 
 
 @pytest.mark.django_db
-def test_invest_info_page(admin_client, root_page):
-    page = factories.InfoPageFactory(live=True, parent=root_page)
-
-    url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
-
-    response = admin_client.get(url)
-    assert response.status_code == 200
-
-
-@pytest.mark.django_db
 def test_invest_sector_page(admin_client, root_page):
     page = factories.SectorPageFactory(
         live=True, featured=True, parent=root_page

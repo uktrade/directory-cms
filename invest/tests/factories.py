@@ -13,17 +13,6 @@ class InvestAppFactory(wagtail_factories.PageFactory):
     title = factory.Sequence(lambda n: '123-555-{0}'.format(n))
 
 
-class InfoPageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.InfoPage
-
-    content_en_gb = factory.fuzzy.FuzzyText(length=10)
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    parent = None
-
-
 class InvestHomePageFactory(wagtail_factories.PageFactory):
 
     class Meta:

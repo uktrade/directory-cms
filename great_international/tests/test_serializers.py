@@ -46,8 +46,7 @@ from great_international.models.great_international import (
 
 
 @pytest.mark.django_db
-def test_sector_page_has_section_three_subsections(international_root_page,
-                                                   rf):
+def test_sector_page_has_section_three_subsections(international_root_page, rf):
     article = InternationalSectorPageFactory(
         parent=international_root_page,
         slug='article-slug'
@@ -786,9 +785,7 @@ def test_opportunity_page_can_add_sub_sector_as_related(
 
 
 @pytest.mark.django_db
-def test_opportunity_page_can_add_sub_sector_as_related_null_case(
-        rf, international_root_page
-):
+def test_opportunity_page_can_add_sub_sector_as_related_null_case(rf, international_root_page):
 
     related_sub_sector = CapitalInvestRelatedSubSectors()
 
@@ -807,9 +804,7 @@ def test_opportunity_page_can_add_sub_sector_as_related_null_case(
 
 
 @pytest.mark.django_db
-def test_opportunity_listing_page_gets_sectors_with_sub_sectors(
-        rf, international_root_page
-):
+def test_opportunity_listing_page_gets_sectors_with_sub_sectors(rf, international_root_page):
     topic_landing_page = InternationalTopicLandingPageFactory(
         parent=international_root_page,
         slug='page-slug',
@@ -885,9 +880,8 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(
 
 
 @pytest.mark.django_db
-def test_about_dit_services_page_gets_added_related_services_fields(
-        rf, international_root_page
-):
+def test_about_dit_services_page_gets_added_related_services_fields(rf, international_root_page):
+
     services_fields = AboutDitServicesFields(
         title="title"
     )

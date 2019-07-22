@@ -14,7 +14,7 @@ from conf.signature import SignatureCheckPermission
 from find_a_supplier.tests.factories import (
     FindASupplierAppFactory, IndustryLandingPageFactory
 )
-from invest.tests.factories import InfoPageFactory
+from invest.tests.factories import SectorPageFactory
 from .helpers import clean_post_data
 
 
@@ -459,7 +459,7 @@ def test_cache_etags_match(admin_client, root_page):
     service_name = cms.INVEST
 
     # given there exists a page that is cached
-    page = InfoPageFactory.create(parent=root_page, live=True)
+    page = SectorPageFactory.create(parent=root_page, live=True)
     url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
     admin_client.get(url, {'service_name': service_name})
 
@@ -479,7 +479,7 @@ def test_cache_etags_match(admin_client, root_page):
 def test_cache_etags_mismatch(admin_client, root_page):
     service_name = cms.INVEST
     # given there exists a page that is cached
-    page = InfoPageFactory.create(parent=root_page, live=True)
+    page = SectorPageFactory.create(parent=root_page, live=True)
 
     # when the page is retrieved
     url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})

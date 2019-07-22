@@ -27,9 +27,9 @@ class GreatInternationalConfig(AppConfig):
         cache.InvestInternationalHomePageSubscriber.subscribe()
         cache.InvestHighPotentialOpportunityDetailPageSubscriber.subscribe()
         cache.InvestHighPotentialOpportunityFormPageSubscriber.subscribe()
-        cache.InvestHighPotentialOpportunityFormSuccessPageSubscriber.subscribe()  # noqa
+        cache.InvestHighPotentialOpportunityFormSuccessPageSubscriber.subscribe()
         cache.InvestRegionLandingPageSubscriber.subscribe()
-        cache.InvestSectorPageSubscriber.subscribe()
+        cache.InvestRegionPageSubscriber.subscribe()
         cache.InternationalTradeHomePageSubscriber.subscribe()
         cache.InternationalTradeIndustryContactPageSubscriber.subscribe()
         cache.AboutDitLandingPageSubscriber.subscribe()
@@ -58,10 +58,6 @@ class GreatInternationalConfig(AppConfig):
         m2m_changed.connect(
             receiver=signals.tags_propagate_to_descendants,
             sender=great_international.InternationalArticleListingPage.tags.through  # noqa
-        )
-        m2m_changed.connect(
-            receiver=signals.tags_propagate_to_descendants,
-            sender=great_international.InternationalRegionPage.tags.through
         )
         m2m_changed.connect(
             receiver=signals.tags_propagate_to_descendants,

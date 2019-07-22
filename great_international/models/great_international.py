@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.text import slugify
 
 from modelcluster.fields import ParentalManyToManyField, ParentalKey
 from wagtail.core.models import Orderable
@@ -33,6 +32,8 @@ class BaseInternationalSectorPage(
 
     parent_page_types = ['great_international.InternationalTopicLandingPage']
     subpage_types = []
+
+    featured = models.BooleanField(default=True)
 
     tags = ParentalManyToManyField(Tag, blank=True)
 
@@ -505,7 +506,6 @@ class InternationalHomePage(
             InternationalTopicLandingPage,
             InternationalCuratedTopicLandingPage,
             InternationalGuideLandingPage,
-            InternationalRegionPage,
             InternationalEUExitFormPage,
             InternationalEUExitFormSuccessPage,
             AboutDitLandingPage,
@@ -754,37 +754,6 @@ class InternationalHomePageOld(
     visit_uk_cta_text = models.CharField(max_length=255)
 
 
-class InternationalRegionPage(
-    BaseInternationalPage,
-    panels.InternationalRegionPagePanels,
-):
-    parent_page_types = ['great_international.InternationalHomePage']
-    subpage_types = [
-        'great_international.InternationalLocalisedFolderPage'
-    ]
-
-    tags = ParentalManyToManyField(Tag, blank=True)
-
-    def save(self, *args, **kwargs):
-        return super().save(*args, **kwargs)
-
-
-class InternationalLocalisedFolderPage(
-    BaseInternationalPage,
-    panels.InternationalLocalisedFolderPagePanels,
-):
-    parent_page_types = ['great_international.InternationalRegionPage']
-    subpage_types = [
-        'great_international.InternationalArticlePage',
-        'great_international.InternationalCampaignPage'
-    ]
-
-    def save(self, *args, **kwargs):
-        if self.pk is None:
-            self.slug = slugify(f'{self.slug}-{self.get_parent().slug}')
-        return super().save(*args, **kwargs)
-
-
 class InternationalArticlePage(
     BaseInternationalPage,
     panels.InternationalArticlePagePanels,
@@ -792,7 +761,6 @@ class InternationalArticlePage(
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
-        'great_international.InternationalLocalisedFolderPage',
         'great_international.InternationalCuratedTopicLandingPage',
         'great_international.InternationalGuideLandingPage',
     ]
@@ -880,7 +848,6 @@ class InternationalCampaignPage(
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalTopicLandingPage',
-        'great_international.InternationalLocalisedFolderPage'
     ]
     subpage_types = [
         'great_international.InternationalArticlePage'
@@ -1020,11 +987,15 @@ class InternationalTopicLandingPage(
     BaseInternationalPage,
     panels.InternationalTopicLandingPagePanels,
 ):
-    parent_page_types = ['great_international.InternationalHomePage']
+    parent_page_types = [
+        'great_international.InternationalHomePage',
+        'great_international.InvestInternationalHomePage',
+    ]
     subpage_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
         'great_international.InternationalSectorPage',
+        'great_international.InvestRegionPage',
     ]
 
     landing_page_title = models.CharField(max_length=255)
