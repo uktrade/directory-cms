@@ -918,7 +918,7 @@ def test_about_uk_why_choose_the_uk_page_gets_added_related_articles_fields(
     about_uk_why_choose_the_uk_page = AboutUkWhyChooseTheUkPageFactory(
         parent=international_root_page,
         slug='services',
-        about_dit_services_fields=[services_fields]
+        about_uk_articles_fields=[services_fields]
     )
 
     serializer = AboutUkWhyChooseTheUkPageSerializer(
