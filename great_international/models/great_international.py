@@ -1342,18 +1342,26 @@ class AboutDitServicesPage(
     case_study_cta_text = models.CharField(max_length=255, blank=True)
     case_study_cta_link = models.CharField(max_length=255, blank=True)
 
-    contact_us_section_title = models.CharField(max_length=255,
-                                                blank=True,
-                                                verbose_name='Title')
-    contact_us_section_summary = models.TextField(max_length=255,
-                                                  blank=True,
-                                                  verbose_name='Summary')
-    contact_us_section_cta_text = models.CharField(max_length=255,
-                                                   blank=True,
-                                                   verbose_name='CTA text')
-    contact_us_section_cta_link = models.CharField(max_length=255,
-                                                   blank=True,
-                                                   verbose_name='CTA URL')
+    contact_us_section_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Title'
+    )
+    contact_us_section_summary = MarkdownField(
+        null=True,
+        blank=True,
+        verbose_name='Summary'
+    )
+    contact_us_section_cta_text = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA text'
+    )
+    contact_us_section_cta_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA URL'
+    )
 
 
 class AboutUkLandingPage(
