@@ -1132,3 +1132,160 @@ class AboutDitServicesPagePanels:
         content_panels=content_panels,
         settings_panels=settings_panels
     )
+
+
+class AboutUkLandingPagePanels:
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading="Hero",
+            children=[
+                FieldPanel('hero_title'),
+                ImageChooserPanel('hero_image'),
+            ],
+        ),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+        FieldPanel('uses_tree_based_routing'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
+
+
+class AboutUkArticleFieldPanels:
+
+    panels = [
+        MultiFieldPanel([
+            ImageChooserPanel('image'),
+            FieldPanel('title'),
+            FieldPanel('summary'),
+            HelpPanel('Both link text and link URL required for link to show'),
+            FieldPanel('link_text'),
+            FieldPanel('link_url'),
+        ]),
+    ]
+
+
+class AboutUkWhyChooseTheUkPagePanels:
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading="Hero",
+            children=[
+                FieldPanel('hero_title'),
+                ImageChooserPanel('hero_image'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Teaser",
+            children=[
+                FieldPanel('teaser'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Section 1",
+            classname='collapsible',
+            children=[
+                HelpPanel('At least one field required for section to show'),
+                FieldRowPanel([
+                    FieldPanel('section_one_body'),
+                    ImageChooserPanel('section_one_image'),
+                ])
+            ],
+        ),
+        MultiFieldPanel(
+            heading='Statistics',
+            classname='collapsible',
+            children=[
+                FieldRowPanel(
+                    [
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_1_heading'),
+                                FieldPanel('statistic_1_number'),
+                                FieldPanel('statistic_1_smallprint')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_2_heading'),
+                                FieldPanel('statistic_2_number'),
+                                FieldPanel('statistic_2_smallprint')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_3_heading'),
+                                FieldPanel('statistic_3_number'),
+                                FieldPanel('statistic_3_smallprint')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_4_heading'),
+                                FieldPanel('statistic_4_number'),
+                                FieldPanel('statistic_4_smallprint')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_5_heading'),
+                                FieldPanel('statistic_5_number'),
+                                FieldPanel('statistic_5_smallprint')
+                            ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('statistic_6_heading'),
+                                FieldPanel('statistic_6_number'),
+                                FieldPanel('statistic_6_smallprint')
+                            ]
+                        ),
+                    ]
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Articles section",
+            classname='collapsible',
+            children=[
+                InlinePanel(
+                    'about_uk_articles_fields',
+                    label="About UK articles"
+                )
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Contact Section",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required fields for section to show: '
+                          'Title, Summary'),
+                FieldPanel('contact_us_section_title'),
+                FieldPanel('contact_us_section_summary'),
+                HelpPanel('CTAs require both text and a link to show '
+                          'on page. '),
+                FieldPanel('contact_us_section_cta_text'),
+                FieldPanel('contact_us_section_cta_link'),
+            ],
+        ),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+        FieldPanel('uses_tree_based_routing'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
