@@ -433,11 +433,6 @@ class InvestHighPotentialOpportunityDetailPagePanels:
         DocumentChooserPanel('pdf_document'),
     ]
 
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
-
 
 class InvestHighPotentialOpportunityFormPagePanels:
 
