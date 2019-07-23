@@ -175,17 +175,6 @@ class HomePageOldFactory(HomePageFactory):
         model = models.HomePageOld
 
 
-class InternationaLandingPageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.InternationalLandingPage
-
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    last_published_at = timezone.now()
-    parent = None
-
-
 class ContactUsGuidancePageFactory(wagtail_factories.PageFactory):
 
     class Meta:
