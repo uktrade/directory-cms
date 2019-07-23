@@ -1716,7 +1716,7 @@ class AboutDitServicesPageSerializer(BasePageSerializer):
     case_study_cta_text = serializers.CharField()
     case_study_cta_link = serializers.CharField()
     contact_us_section_title = serializers.CharField()
-    contact_us_section_summary = serializers.CharField()
+    contact_us_section_summary = core_fields.MarkdownToHTMLField()
     contact_us_section_cta_text = serializers.CharField()
     contact_us_section_cta_link = serializers.CharField()
     about_dit_services_fields = serializers.SerializerMethodField()
