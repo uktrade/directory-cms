@@ -168,17 +168,6 @@ def test_homepage_no_advice(admin_client, root_page):
     assert len(response.json()['advice']) == 0
 
 
-def test_international_landing_age(admin_client, root_page):
-
-    page = factories.InternationaLandingPageFactory.create(
-        parent=root_page
-    )
-    url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
-    response = admin_client.get(url)
-    assert response.status_code == 200
-    assert 'articles_count' in response.json()
-
-
 @pytest.mark.django_db
 def test_lookup_by_tag_slug(admin_client, root_page):
     tag = factories.TagFactory(name='foo')

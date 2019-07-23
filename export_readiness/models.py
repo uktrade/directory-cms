@@ -3067,77 +3067,6 @@ class HomePageOld(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
     ]
 
 
-class InternationalLandingPage(ExclusivePageMixin, BaseDomesticPage):
-
-    slug_identity = slugs.GREAT_HOME_INTERNATIONAL
-    # slug_override = 'international'
-    subpage_types = [
-        'export_readiness.ArticleListingPage',
-    ]
-
-    content_panels = [
-        SearchEngineOptimisationPanel()
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-    ]
-
-    @property
-    def articles_count(self):
-        return sum(
-            (listing_page.specific.articles_count for listing_page in
-             self.get_descendants().type(ArticleListingPage).live())
-        )
-
-
-class EUExitInternationalFormPage(
-    ExclusivePageMixin, BaseDomesticPage, metaclass=FormPageMetaClass
-):
-    # metaclass creates <fild_name>_label and <field_name>_help_text
-    form_field_names = [
-        'first_name',
-        'last_name',
-        'email',
-        'organisation_type',
-        'company_name',
-        'country',
-        'city',
-        'comment',
-    ]
-
-    full_path_override = '/international/eu-exit-news/contact/'
-    slug_identity = slugs.EUEXIT_INTERNATIONAL_FORM
-
-    breadcrumbs_label = models.CharField(max_length=50)
-    heading = models.CharField(max_length=255)
-    body_text = MarkdownField()
-    submit_button_text = models.CharField(max_length=50)
-    disclaimer = models.TextField(max_length=500)
-
-    content_panels_before_form = [
-        MultiFieldPanel(
-            heading='Hero',
-            children=[
-                FieldPanel('breadcrumbs_label'),
-                FieldPanel('heading'),
-                FieldPanel('body_text'),
-            ]
-        ),
-    ]
-    content_panels_after_form = [
-        FieldPanel('disclaimer', widget=Textarea),
-        FieldPanel('submit_button_text'),
-        SearchEngineOptimisationPanel(),
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-    ]
-
-
 class EUExitDomesticFormPage(
     ExclusivePageMixin, BaseDomesticPage, metaclass=FormPageMetaClass
 ):
@@ -3235,7 +3164,6 @@ class EUExitFormPages(ExclusivePageMixin, BaseDomesticPage):
     folder_page = True
 
     subpage_types = [
-        'export_readiness.EUExitInternationalFormPage',
         'export_readiness.EUExitDomesticFormPage',
         'export_readiness.EUExitFormSuccessPage',
     ]

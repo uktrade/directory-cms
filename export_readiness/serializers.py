@@ -12,8 +12,7 @@ from great_international.serializers import StatisticProxyDataWrapper, \
 
 from .models import (
     ArticleListingPage, ArticlePage, TopicLandingPage, CampaignPage,
-    SuperregionPage, EUExitInternationalFormPage, EUExitDomesticFormPage,
-    CountryGuidePage
+    SuperregionPage, EUExitDomesticFormPage, CountryGuidePage
 )
 
 
@@ -572,10 +571,6 @@ class SuperregionPageSerializer(TopicLandingPageSerializer):
     """
 
 
-class InternationalLandingPageSerializer(BasePageSerializer):
-    articles_count = serializers.IntegerField()
-
-
 class TagSerializer(serializers.Serializer):
     """This is not a Page model."""
     name = serializers.CharField()
@@ -641,14 +636,6 @@ class EUExitGenericFormPageSerializer(BasePageSerializer):
     body_text = core_fields.MarkdownToHTMLField()
     submit_button_text = serializers.CharField()
     disclaimer = core_fields.MarkdownToHTMLField()
-
-
-class EUExitInternationalFormPageSerializer(
-    EUExitGenericFormPageSerializer,
-    metaclass=FormPageSerializerMetaclass
-):
-    class Meta:
-        model_class = EUExitInternationalFormPage
 
 
 class EUExitDomesticFormPageSerializer(
