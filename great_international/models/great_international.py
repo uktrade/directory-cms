@@ -33,8 +33,6 @@ class BaseInternationalSectorPage(
     parent_page_types = ['great_international.InternationalTopicLandingPage']
     subpage_types = []
 
-    featured = models.BooleanField(default=True)
-
     tags = ParentalManyToManyField(Tag, blank=True)
 
     heading = models.CharField(max_length=255, verbose_name='Sector name')
