@@ -212,3 +212,17 @@ class AboutDitServicesPageSubscriber(
 ):
     model = great_international.AboutDitServicesPage
     subscriptions = []
+
+
+class AboutUkLandingPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = great_international.AboutUkLandingPage
+    subscriptions = []
+
+
+class AboutUkWhyChooseTheUkPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = great_international.AboutUkWhyChooseTheUkPage
+    subscriptions = []
