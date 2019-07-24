@@ -2457,7 +2457,61 @@ CREATE TABLE public.great_international_aboutukwhychoosetheukpage (
     section_one_image_fr_id integer,
     section_one_image_ja_id integer,
     section_one_image_pt_id integer,
-    section_one_image_zh_hans_id integer
+    section_one_image_zh_hans_id integer,
+    ebook_section_body text,
+    ebook_section_body_ar text,
+    ebook_section_body_de text,
+    ebook_section_body_en_gb text,
+    ebook_section_body_es text,
+    ebook_section_body_fr text,
+    ebook_section_body_ja text,
+    ebook_section_body_pt text,
+    ebook_section_body_zh_hans text,
+    ebook_section_cta_link character varying(255) NOT NULL,
+    ebook_section_cta_link_ar character varying(255),
+    ebook_section_cta_link_de character varying(255),
+    ebook_section_cta_link_en_gb character varying(255),
+    ebook_section_cta_link_es character varying(255),
+    ebook_section_cta_link_fr character varying(255),
+    ebook_section_cta_link_ja character varying(255),
+    ebook_section_cta_link_pt character varying(255),
+    ebook_section_cta_link_zh_hans character varying(255),
+    ebook_section_cta_text character varying(255) NOT NULL,
+    ebook_section_cta_text_ar character varying(255),
+    ebook_section_cta_text_de character varying(255),
+    ebook_section_cta_text_en_gb character varying(255),
+    ebook_section_cta_text_es character varying(255),
+    ebook_section_cta_text_fr character varying(255),
+    ebook_section_cta_text_ja character varying(255),
+    ebook_section_cta_text_pt character varying(255),
+    ebook_section_cta_text_zh_hans character varying(255),
+    ebook_section_image_id integer,
+    ebook_section_image_alt_text character varying(255) NOT NULL,
+    ebook_section_image_alt_text_ar character varying(255),
+    ebook_section_image_alt_text_de character varying(255),
+    ebook_section_image_alt_text_en_gb character varying(255),
+    ebook_section_image_alt_text_es character varying(255),
+    ebook_section_image_alt_text_fr character varying(255),
+    ebook_section_image_alt_text_ja character varying(255),
+    ebook_section_image_alt_text_pt character varying(255),
+    ebook_section_image_alt_text_zh_hans character varying(255),
+    ebook_section_image_ar_id integer,
+    ebook_section_image_de_id integer,
+    ebook_section_image_en_gb_id integer,
+    ebook_section_image_es_id integer,
+    ebook_section_image_fr_id integer,
+    ebook_section_image_ja_id integer,
+    ebook_section_image_pt_id integer,
+    ebook_section_image_zh_hans_id integer,
+    ebook_section_title character varying(255) NOT NULL,
+    ebook_section_title_ar character varying(255),
+    ebook_section_title_de character varying(255),
+    ebook_section_title_en_gb character varying(255),
+    ebook_section_title_es character varying(255),
+    ebook_section_title_fr character varying(255),
+    ebook_section_title_ja character varying(255),
+    ebook_section_title_pt character varying(255),
+    ebook_section_title_zh_hans character varying(255)
 );
 
 
@@ -12663,6 +12717,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 341	great_international	0051_aboutukarticlesfields_aboutuklandingpage_aboutukwhychoosetheukpage	2019-07-23 18:31:48.386892+01
 342	great_international	0052_auto_20190723_1147	2019-07-23 18:32:00.344077+01
 343	great_international	0053_auto_20190724_0950	2019-07-24 13:31:40.696945+01
+344	great_international	0054_auto_20190724_1205	2019-07-24 14:32:10.677249+01
 \.
 
 
@@ -13014,7 +13069,7 @@ COPY public.great_international_aboutuklandingpage (page_ptr_id, service_name, u
 -- Data for Name: great_international_aboutukwhychoosetheukpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_aboutukwhychoosetheukpage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, hero_title, hero_title_en_gb, hero_title_de, hero_title_ja, hero_title_zh_hans, hero_title_fr, hero_title_es, hero_title_pt, hero_title_ar, teaser, teaser_en_gb, teaser_de, teaser_ja, teaser_zh_hans, teaser_fr, teaser_es, teaser_pt, teaser_ar, section_one_body, section_one_body_en_gb, section_one_body_de, section_one_body_ja, section_one_body_zh_hans, section_one_body_fr, section_one_body_es, section_one_body_pt, section_one_body_ar, statistic_1_number, statistic_1_number_en_gb, statistic_1_number_de, statistic_1_number_ja, statistic_1_number_zh_hans, statistic_1_number_fr, statistic_1_number_es, statistic_1_number_pt, statistic_1_number_ar, statistic_1_heading, statistic_1_heading_en_gb, statistic_1_heading_de, statistic_1_heading_ja, statistic_1_heading_zh_hans, statistic_1_heading_fr, statistic_1_heading_es, statistic_1_heading_pt, statistic_1_heading_ar, statistic_1_smallprint, statistic_1_smallprint_en_gb, statistic_1_smallprint_de, statistic_1_smallprint_ja, statistic_1_smallprint_zh_hans, statistic_1_smallprint_fr, statistic_1_smallprint_es, statistic_1_smallprint_pt, statistic_1_smallprint_ar, statistic_2_number, statistic_2_number_en_gb, statistic_2_number_de, statistic_2_number_ja, statistic_2_number_zh_hans, statistic_2_number_fr, statistic_2_number_es, statistic_2_number_pt, statistic_2_number_ar, statistic_2_heading, statistic_2_heading_en_gb, statistic_2_heading_de, statistic_2_heading_ja, statistic_2_heading_zh_hans, statistic_2_heading_fr, statistic_2_heading_es, statistic_2_heading_pt, statistic_2_heading_ar, statistic_2_smallprint, statistic_2_smallprint_en_gb, statistic_2_smallprint_de, statistic_2_smallprint_ja, statistic_2_smallprint_zh_hans, statistic_2_smallprint_fr, statistic_2_smallprint_es, statistic_2_smallprint_pt, statistic_2_smallprint_ar, statistic_3_number, statistic_3_number_en_gb, statistic_3_number_de, statistic_3_number_ja, statistic_3_number_zh_hans, statistic_3_number_fr, statistic_3_number_es, statistic_3_number_pt, statistic_3_number_ar, statistic_3_heading, statistic_3_heading_en_gb, statistic_3_heading_de, statistic_3_heading_ja, statistic_3_heading_zh_hans, statistic_3_heading_fr, statistic_3_heading_es, statistic_3_heading_pt, statistic_3_heading_ar, statistic_3_smallprint, statistic_3_smallprint_en_gb, statistic_3_smallprint_de, statistic_3_smallprint_ja, statistic_3_smallprint_zh_hans, statistic_3_smallprint_fr, statistic_3_smallprint_es, statistic_3_smallprint_pt, statistic_3_smallprint_ar, statistic_4_number, statistic_4_number_en_gb, statistic_4_number_de, statistic_4_number_ja, statistic_4_number_zh_hans, statistic_4_number_fr, statistic_4_number_es, statistic_4_number_pt, statistic_4_number_ar, statistic_4_heading, statistic_4_heading_en_gb, statistic_4_heading_de, statistic_4_heading_ja, statistic_4_heading_zh_hans, statistic_4_heading_fr, statistic_4_heading_es, statistic_4_heading_pt, statistic_4_heading_ar, statistic_4_smallprint, statistic_4_smallprint_en_gb, statistic_4_smallprint_de, statistic_4_smallprint_ja, statistic_4_smallprint_zh_hans, statistic_4_smallprint_fr, statistic_4_smallprint_es, statistic_4_smallprint_pt, statistic_4_smallprint_ar, statistic_5_number, statistic_5_number_en_gb, statistic_5_number_de, statistic_5_number_ja, statistic_5_number_zh_hans, statistic_5_number_fr, statistic_5_number_es, statistic_5_number_pt, statistic_5_number_ar, statistic_5_heading, statistic_5_heading_en_gb, statistic_5_heading_de, statistic_5_heading_ja, statistic_5_heading_zh_hans, statistic_5_heading_fr, statistic_5_heading_es, statistic_5_heading_pt, statistic_5_heading_ar, statistic_5_smallprint, statistic_5_smallprint_en_gb, statistic_5_smallprint_de, statistic_5_smallprint_ja, statistic_5_smallprint_zh_hans, statistic_5_smallprint_fr, statistic_5_smallprint_es, statistic_5_smallprint_pt, statistic_5_smallprint_ar, statistic_6_number, statistic_6_number_en_gb, statistic_6_number_de, statistic_6_number_ja, statistic_6_number_zh_hans, statistic_6_number_fr, statistic_6_number_es, statistic_6_number_pt, statistic_6_number_ar, statistic_6_heading, statistic_6_heading_en_gb, statistic_6_heading_de, statistic_6_heading_ja, statistic_6_heading_zh_hans, statistic_6_heading_fr, statistic_6_heading_es, statistic_6_heading_pt, statistic_6_heading_ar, statistic_6_smallprint, statistic_6_smallprint_en_gb, statistic_6_smallprint_de, statistic_6_smallprint_ja, statistic_6_smallprint_zh_hans, statistic_6_smallprint_fr, statistic_6_smallprint_es, statistic_6_smallprint_pt, statistic_6_smallprint_ar, contact_us_section_title, contact_us_section_title_en_gb, contact_us_section_title_de, contact_us_section_title_ja, contact_us_section_title_zh_hans, contact_us_section_title_fr, contact_us_section_title_es, contact_us_section_title_pt, contact_us_section_title_ar, contact_us_section_summary, contact_us_section_summary_en_gb, contact_us_section_summary_de, contact_us_section_summary_ja, contact_us_section_summary_zh_hans, contact_us_section_summary_fr, contact_us_section_summary_es, contact_us_section_summary_pt, contact_us_section_summary_ar, contact_us_section_cta_text, contact_us_section_cta_text_en_gb, contact_us_section_cta_text_de, contact_us_section_cta_text_ja, contact_us_section_cta_text_zh_hans, contact_us_section_cta_text_fr, contact_us_section_cta_text_es, contact_us_section_cta_text_pt, contact_us_section_cta_text_ar, contact_us_section_cta_link, contact_us_section_cta_link_en_gb, contact_us_section_cta_link_de, contact_us_section_cta_link_ja, contact_us_section_cta_link_zh_hans, contact_us_section_cta_link_fr, contact_us_section_cta_link_es, contact_us_section_cta_link_pt, contact_us_section_cta_link_ar, hero_image_id, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, section_one_image_id, section_one_image_ar_id, section_one_image_de_id, section_one_image_en_gb_id, section_one_image_es_id, section_one_image_fr_id, section_one_image_ja_id, section_one_image_pt_id, section_one_image_zh_hans_id) FROM stdin;
+COPY public.great_international_aboutukwhychoosetheukpage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, hero_title, hero_title_en_gb, hero_title_de, hero_title_ja, hero_title_zh_hans, hero_title_fr, hero_title_es, hero_title_pt, hero_title_ar, teaser, teaser_en_gb, teaser_de, teaser_ja, teaser_zh_hans, teaser_fr, teaser_es, teaser_pt, teaser_ar, section_one_body, section_one_body_en_gb, section_one_body_de, section_one_body_ja, section_one_body_zh_hans, section_one_body_fr, section_one_body_es, section_one_body_pt, section_one_body_ar, statistic_1_number, statistic_1_number_en_gb, statistic_1_number_de, statistic_1_number_ja, statistic_1_number_zh_hans, statistic_1_number_fr, statistic_1_number_es, statistic_1_number_pt, statistic_1_number_ar, statistic_1_heading, statistic_1_heading_en_gb, statistic_1_heading_de, statistic_1_heading_ja, statistic_1_heading_zh_hans, statistic_1_heading_fr, statistic_1_heading_es, statistic_1_heading_pt, statistic_1_heading_ar, statistic_1_smallprint, statistic_1_smallprint_en_gb, statistic_1_smallprint_de, statistic_1_smallprint_ja, statistic_1_smallprint_zh_hans, statistic_1_smallprint_fr, statistic_1_smallprint_es, statistic_1_smallprint_pt, statistic_1_smallprint_ar, statistic_2_number, statistic_2_number_en_gb, statistic_2_number_de, statistic_2_number_ja, statistic_2_number_zh_hans, statistic_2_number_fr, statistic_2_number_es, statistic_2_number_pt, statistic_2_number_ar, statistic_2_heading, statistic_2_heading_en_gb, statistic_2_heading_de, statistic_2_heading_ja, statistic_2_heading_zh_hans, statistic_2_heading_fr, statistic_2_heading_es, statistic_2_heading_pt, statistic_2_heading_ar, statistic_2_smallprint, statistic_2_smallprint_en_gb, statistic_2_smallprint_de, statistic_2_smallprint_ja, statistic_2_smallprint_zh_hans, statistic_2_smallprint_fr, statistic_2_smallprint_es, statistic_2_smallprint_pt, statistic_2_smallprint_ar, statistic_3_number, statistic_3_number_en_gb, statistic_3_number_de, statistic_3_number_ja, statistic_3_number_zh_hans, statistic_3_number_fr, statistic_3_number_es, statistic_3_number_pt, statistic_3_number_ar, statistic_3_heading, statistic_3_heading_en_gb, statistic_3_heading_de, statistic_3_heading_ja, statistic_3_heading_zh_hans, statistic_3_heading_fr, statistic_3_heading_es, statistic_3_heading_pt, statistic_3_heading_ar, statistic_3_smallprint, statistic_3_smallprint_en_gb, statistic_3_smallprint_de, statistic_3_smallprint_ja, statistic_3_smallprint_zh_hans, statistic_3_smallprint_fr, statistic_3_smallprint_es, statistic_3_smallprint_pt, statistic_3_smallprint_ar, statistic_4_number, statistic_4_number_en_gb, statistic_4_number_de, statistic_4_number_ja, statistic_4_number_zh_hans, statistic_4_number_fr, statistic_4_number_es, statistic_4_number_pt, statistic_4_number_ar, statistic_4_heading, statistic_4_heading_en_gb, statistic_4_heading_de, statistic_4_heading_ja, statistic_4_heading_zh_hans, statistic_4_heading_fr, statistic_4_heading_es, statistic_4_heading_pt, statistic_4_heading_ar, statistic_4_smallprint, statistic_4_smallprint_en_gb, statistic_4_smallprint_de, statistic_4_smallprint_ja, statistic_4_smallprint_zh_hans, statistic_4_smallprint_fr, statistic_4_smallprint_es, statistic_4_smallprint_pt, statistic_4_smallprint_ar, statistic_5_number, statistic_5_number_en_gb, statistic_5_number_de, statistic_5_number_ja, statistic_5_number_zh_hans, statistic_5_number_fr, statistic_5_number_es, statistic_5_number_pt, statistic_5_number_ar, statistic_5_heading, statistic_5_heading_en_gb, statistic_5_heading_de, statistic_5_heading_ja, statistic_5_heading_zh_hans, statistic_5_heading_fr, statistic_5_heading_es, statistic_5_heading_pt, statistic_5_heading_ar, statistic_5_smallprint, statistic_5_smallprint_en_gb, statistic_5_smallprint_de, statistic_5_smallprint_ja, statistic_5_smallprint_zh_hans, statistic_5_smallprint_fr, statistic_5_smallprint_es, statistic_5_smallprint_pt, statistic_5_smallprint_ar, statistic_6_number, statistic_6_number_en_gb, statistic_6_number_de, statistic_6_number_ja, statistic_6_number_zh_hans, statistic_6_number_fr, statistic_6_number_es, statistic_6_number_pt, statistic_6_number_ar, statistic_6_heading, statistic_6_heading_en_gb, statistic_6_heading_de, statistic_6_heading_ja, statistic_6_heading_zh_hans, statistic_6_heading_fr, statistic_6_heading_es, statistic_6_heading_pt, statistic_6_heading_ar, statistic_6_smallprint, statistic_6_smallprint_en_gb, statistic_6_smallprint_de, statistic_6_smallprint_ja, statistic_6_smallprint_zh_hans, statistic_6_smallprint_fr, statistic_6_smallprint_es, statistic_6_smallprint_pt, statistic_6_smallprint_ar, contact_us_section_title, contact_us_section_title_en_gb, contact_us_section_title_de, contact_us_section_title_ja, contact_us_section_title_zh_hans, contact_us_section_title_fr, contact_us_section_title_es, contact_us_section_title_pt, contact_us_section_title_ar, contact_us_section_summary, contact_us_section_summary_en_gb, contact_us_section_summary_de, contact_us_section_summary_ja, contact_us_section_summary_zh_hans, contact_us_section_summary_fr, contact_us_section_summary_es, contact_us_section_summary_pt, contact_us_section_summary_ar, contact_us_section_cta_text, contact_us_section_cta_text_en_gb, contact_us_section_cta_text_de, contact_us_section_cta_text_ja, contact_us_section_cta_text_zh_hans, contact_us_section_cta_text_fr, contact_us_section_cta_text_es, contact_us_section_cta_text_pt, contact_us_section_cta_text_ar, contact_us_section_cta_link, contact_us_section_cta_link_en_gb, contact_us_section_cta_link_de, contact_us_section_cta_link_ja, contact_us_section_cta_link_zh_hans, contact_us_section_cta_link_fr, contact_us_section_cta_link_es, contact_us_section_cta_link_pt, contact_us_section_cta_link_ar, hero_image_id, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, section_one_image_id, section_one_image_ar_id, section_one_image_de_id, section_one_image_en_gb_id, section_one_image_es_id, section_one_image_fr_id, section_one_image_ja_id, section_one_image_pt_id, section_one_image_zh_hans_id, ebook_section_body, ebook_section_body_ar, ebook_section_body_de, ebook_section_body_en_gb, ebook_section_body_es, ebook_section_body_fr, ebook_section_body_ja, ebook_section_body_pt, ebook_section_body_zh_hans, ebook_section_cta_link, ebook_section_cta_link_ar, ebook_section_cta_link_de, ebook_section_cta_link_en_gb, ebook_section_cta_link_es, ebook_section_cta_link_fr, ebook_section_cta_link_ja, ebook_section_cta_link_pt, ebook_section_cta_link_zh_hans, ebook_section_cta_text, ebook_section_cta_text_ar, ebook_section_cta_text_de, ebook_section_cta_text_en_gb, ebook_section_cta_text_es, ebook_section_cta_text_fr, ebook_section_cta_text_ja, ebook_section_cta_text_pt, ebook_section_cta_text_zh_hans, ebook_section_image_id, ebook_section_image_alt_text, ebook_section_image_alt_text_ar, ebook_section_image_alt_text_de, ebook_section_image_alt_text_en_gb, ebook_section_image_alt_text_es, ebook_section_image_alt_text_fr, ebook_section_image_alt_text_ja, ebook_section_image_alt_text_pt, ebook_section_image_alt_text_zh_hans, ebook_section_image_ar_id, ebook_section_image_de_id, ebook_section_image_en_gb_id, ebook_section_image_es_id, ebook_section_image_fr_id, ebook_section_image_ja_id, ebook_section_image_pt_id, ebook_section_image_zh_hans_id, ebook_section_title, ebook_section_title_ar, ebook_section_title_de, ebook_section_title_en_gb, ebook_section_title_es, ebook_section_title_fr, ebook_section_title_ja, ebook_section_title_pt, ebook_section_title_zh_hans) FROM stdin;
 \.
 
 
@@ -13746,7 +13801,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 119, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 343, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 344, true);
 
 
 --
@@ -17372,6 +17427,69 @@ CREATE INDEX great_international_aboutditservicespage_hero_image_id_75b0a7ca ON 
 --
 
 CREATE INDEX great_international_aboutditservicespage_service_name_c3716e85 ON public.great_international_aboutditservicespage USING btree (service_name);
+
+
+--
+-- Name: great_international_aboutu_ebook_section_image_ar_id_deb1c4a9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_ebook_section_image_ar_id_deb1c4a9 ON public.great_international_aboutukwhychoosetheukpage USING btree (ebook_section_image_ar_id);
+
+
+--
+-- Name: great_international_aboutu_ebook_section_image_de_id_28790aa2; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_ebook_section_image_de_id_28790aa2 ON public.great_international_aboutukwhychoosetheukpage USING btree (ebook_section_image_de_id);
+
+
+--
+-- Name: great_international_aboutu_ebook_section_image_en_gb__d64f0690; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_ebook_section_image_en_gb__d64f0690 ON public.great_international_aboutukwhychoosetheukpage USING btree (ebook_section_image_en_gb_id);
+
+
+--
+-- Name: great_international_aboutu_ebook_section_image_es_id_007bea7e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_ebook_section_image_es_id_007bea7e ON public.great_international_aboutukwhychoosetheukpage USING btree (ebook_section_image_es_id);
+
+
+--
+-- Name: great_international_aboutu_ebook_section_image_fr_id_74b1adc3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_ebook_section_image_fr_id_74b1adc3 ON public.great_international_aboutukwhychoosetheukpage USING btree (ebook_section_image_fr_id);
+
+
+--
+-- Name: great_international_aboutu_ebook_section_image_id_861fd1aa; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_ebook_section_image_id_861fd1aa ON public.great_international_aboutukwhychoosetheukpage USING btree (ebook_section_image_id);
+
+
+--
+-- Name: great_international_aboutu_ebook_section_image_ja_id_1ddaae2c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_ebook_section_image_ja_id_1ddaae2c ON public.great_international_aboutukwhychoosetheukpage USING btree (ebook_section_image_ja_id);
+
+
+--
+-- Name: great_international_aboutu_ebook_section_image_pt_id_d404daf7; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_ebook_section_image_pt_id_d404daf7 ON public.great_international_aboutukwhychoosetheukpage USING btree (ebook_section_image_pt_id);
+
+
+--
+-- Name: great_international_aboutu_ebook_section_image_zh_han_697d8954; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_ebook_section_image_zh_han_697d8954 ON public.great_international_aboutukwhychoosetheukpage USING btree (ebook_section_image_zh_hans_id);
 
 
 --
@@ -34508,6 +34626,78 @@ ALTER TABLE ONLY public.great_international_investhighpotentialopportunitydetail
 
 ALTER TABLE ONLY public.great_international_investhighpotentialopportunitydetailpage
     ADD CONSTRAINT great_international__competitive_advantag_ed0b369e_fk_wagtailim FOREIGN KEY (competitive_advantages_list_item_one_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutukwhychoosetheukpage great_international__ebook_section_image__007bea7e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutukwhychoosetheukpage
+    ADD CONSTRAINT great_international__ebook_section_image__007bea7e_fk_wagtailim FOREIGN KEY (ebook_section_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutukwhychoosetheukpage great_international__ebook_section_image__1ddaae2c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutukwhychoosetheukpage
+    ADD CONSTRAINT great_international__ebook_section_image__1ddaae2c_fk_wagtailim FOREIGN KEY (ebook_section_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutukwhychoosetheukpage great_international__ebook_section_image__28790aa2_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutukwhychoosetheukpage
+    ADD CONSTRAINT great_international__ebook_section_image__28790aa2_fk_wagtailim FOREIGN KEY (ebook_section_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutukwhychoosetheukpage great_international__ebook_section_image__697d8954_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutukwhychoosetheukpage
+    ADD CONSTRAINT great_international__ebook_section_image__697d8954_fk_wagtailim FOREIGN KEY (ebook_section_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutukwhychoosetheukpage great_international__ebook_section_image__74b1adc3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutukwhychoosetheukpage
+    ADD CONSTRAINT great_international__ebook_section_image__74b1adc3_fk_wagtailim FOREIGN KEY (ebook_section_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutukwhychoosetheukpage great_international__ebook_section_image__861fd1aa_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutukwhychoosetheukpage
+    ADD CONSTRAINT great_international__ebook_section_image__861fd1aa_fk_wagtailim FOREIGN KEY (ebook_section_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutukwhychoosetheukpage great_international__ebook_section_image__d404daf7_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutukwhychoosetheukpage
+    ADD CONSTRAINT great_international__ebook_section_image__d404daf7_fk_wagtailim FOREIGN KEY (ebook_section_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutukwhychoosetheukpage great_international__ebook_section_image__d64f0690_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutukwhychoosetheukpage
+    ADD CONSTRAINT great_international__ebook_section_image__d64f0690_fk_wagtailim FOREIGN KEY (ebook_section_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutukwhychoosetheukpage great_international__ebook_section_image__deb1c4a9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutukwhychoosetheukpage
+    ADD CONSTRAINT great_international__ebook_section_image__deb1c4a9_fk_wagtailim FOREIGN KEY (ebook_section_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
