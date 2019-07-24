@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- No ticket - Update db template after new migrations added
 - CMS-1692 - More small tweaks to Invest HPO pages
 - CI-323 - Added "About the UK" section pages - landing page and "why choose the UK" page
 - CI-365 - Changed the "Contact Us" section on the services page in "About DIT" to have its body be markdown
