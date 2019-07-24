@@ -456,6 +456,8 @@ class CapitalInvestRegionPageTranslationOptions(
         'location_stat_6_heading',
         'location_stat_6_smallprint',
 
+        'subsections_title',
+
         'sub_section_one_title',
         'sub_section_one_icon',
         'sub_section_one_content',

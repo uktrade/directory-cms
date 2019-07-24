@@ -1068,6 +1068,7 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer):
     economics_stats = serializers.SerializerMethodField()
     location_stats = serializers.SerializerMethodField()
 
+    subsections_title = serializers.CharField(max_length=255)
     subsections = serializers.SerializerMethodField()
 
     property_and_infrastructure_section_title = serializers.CharField(
