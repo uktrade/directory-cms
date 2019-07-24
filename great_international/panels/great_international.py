@@ -1271,6 +1271,8 @@ class AboutUkWhyChooseTheUkPagePanels:
                           'title, body'),
                 FieldRowPanel([
                     ImageChooserPanel('ebook_section_image'),
+                    HelpPanel('Description of image for screenreaders'),
+                    FieldPanel('ebook_section_image_alt_text'),
                     MultiFieldPanel([
                         FieldPanel('ebook_section_title'),
                         FieldPanel('ebook_section_body'),
