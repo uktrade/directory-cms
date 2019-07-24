@@ -423,6 +423,14 @@ class CapitalInvestRegionPageTranslationOptions(
         'economics_stat_4_heading',
         'economics_stat_4_smallprint',
 
+        'economics_stat_5_number',
+        'economics_stat_5_heading',
+        'economics_stat_5_smallprint',
+
+        'economics_stat_6_number',
+        'economics_stat_6_heading',
+        'economics_stat_6_smallprint',
+
         'location_data_title',
         'location_stat_1_number',
         'location_stat_1_heading',
@@ -440,6 +448,28 @@ class CapitalInvestRegionPageTranslationOptions(
         'location_stat_4_heading',
         'location_stat_4_smallprint',
 
+        'location_stat_5_number',
+        'location_stat_5_heading',
+        'location_stat_5_smallprint',
+
+        'location_stat_6_number',
+        'location_stat_6_heading',
+        'location_stat_6_smallprint',
+
+        'subsections_title',
+
+        'sub_section_one_title',
+        'sub_section_one_icon',
+        'sub_section_one_content',
+
+        'sub_section_two_title',
+        'sub_section_two_icon',
+        'sub_section_two_content',
+
+        'sub_section_three_title',
+        'sub_section_three_icon',
+        'sub_section_three_content',
+
         'property_and_infrastructure_section_title',
         'property_and_infrastructure_section_image',
         'property_and_infrastructure_section_content',
@@ -452,6 +482,8 @@ class CapitalInvestRegionPageTranslationOptions(
 
         'contact_title',
         'contact_text',
+        'contact_cta_link',
+        'contact_cta_text',
 
     )
 
@@ -896,6 +928,12 @@ class AboutUkWhyChooseTheUkPageTranslationOptions(
         'statistic_6_number',
         'statistic_6_heading',
         'statistic_6_smallprint',
+        'ebook_section_image',
+        'ebook_section_image_alt_text',
+        'ebook_section_title',
+        'ebook_section_body',
+        'ebook_section_cta_text',
+        'ebook_section_cta_link',
         'contact_us_section_title',
         'contact_us_section_summary',
         'contact_us_section_cta_text',
