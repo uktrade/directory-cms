@@ -13,9 +13,13 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'hero_call_to_action_text',
         'hero_call_to_action_url',
 
+        'teaser',
+
         'benefits_section_title',
         'benefits_section_intro',
         'benefits_section_content',
+        'benefits_section_cta_text',
+        'benefits_section_cta_url',
         'benefits_section_img',
 
         'eu_exit_section_title',

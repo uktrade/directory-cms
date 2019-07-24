@@ -464,9 +464,13 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
         related_name='+'
     )
 
+    teaser = models.TextField(blank=True)
+
     benefits_section_title = models.CharField(max_length=255, blank=True)
     benefits_section_intro = models.TextField(max_length=255, blank=True)
     benefits_section_content = MarkdownField(blank=True)
+    benefits_section_cta_text = models.CharField(max_length=255, blank=True)
+    benefits_section_cta_url = models.CharField(max_length=255, blank=True)
     benefits_section_img = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
@@ -714,6 +718,14 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
         ),
 
         MultiFieldPanel(
+            heading='Teaser',
+            classname='collapsible',
+            children=[
+                FieldPanel('teaser')
+            ]
+        ),
+
+        MultiFieldPanel(
             heading='Benefits section',
             classname='collapsible',
             children=[
@@ -722,6 +734,9 @@ class InvestHomePage(ExclusivePageMixin, ServiceHomepageMixin, BaseInvestPage):
                 FieldPanel('benefits_section_title'),
                 FieldPanel('benefits_section_intro'),
                 FieldPanel('benefits_section_content'),
+                HelpPanel('CTAs require both text and a link to show on page'),
+                FieldPanel('benefits_section_cta_text'),
+                FieldPanel('benefits_section_cta_url'),
                 ImageChooserPanel('benefits_section_img'),
             ],
         ),
