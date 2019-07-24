@@ -9,8 +9,77 @@ from great_international.models import (
 )
 
 
+@register(great_international.BaseInternationalSectorPage)
+class BaseInternationalSectorPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = []
+
+
 @register(great_international.InternationalSectorPage)
 class InternationalSectorPageTranslationOptions(BaseTranslationOptions):
+    fields = (
+        'heading',
+        'sub_heading',
+        'hero_image',
+        'heading_teaser',
+        'section_one_body',
+        'section_one_image',
+        'section_one_image_caption',
+        'section_one_image_caption_company',
+        'statistic_1_number',
+        'statistic_1_heading',
+        'statistic_1_smallprint',
+        'statistic_2_number',
+        'statistic_2_heading',
+        'statistic_2_smallprint',
+        'statistic_3_number',
+        'statistic_3_heading',
+        'statistic_3_smallprint',
+        'statistic_4_number',
+        'statistic_4_heading',
+        'statistic_4_smallprint',
+        'statistic_5_number',
+        'statistic_5_heading',
+        'statistic_5_smallprint',
+        'statistic_6_number',
+        'statistic_6_heading',
+        'statistic_6_smallprint',
+        'section_two_heading',
+        'section_two_teaser',
+        'section_two_subsection_one_icon',
+        'section_two_subsection_one_heading',
+        'section_two_subsection_one_body',
+        'section_two_subsection_two_icon',
+        'section_two_subsection_two_heading',
+        'section_two_subsection_two_body',
+        'section_two_subsection_three_icon',
+        'section_two_subsection_three_heading',
+        'section_two_subsection_three_body',
+        'case_study_title',
+        'case_study_description',
+        'case_study_cta_text',
+        'case_study_cta_page',
+        'case_study_image',
+        'section_three_heading',
+        'section_three_teaser',
+        'section_three_subsection_one_heading',
+        'section_three_subsection_one_teaser',
+        'section_three_subsection_one_body',
+        'section_three_subsection_two_heading',
+        'section_three_subsection_two_teaser',
+        'section_three_subsection_two_body',
+        'related_page_one',
+        'related_page_two',
+        'related_page_three',
+        'project_opportunities_title',
+        'related_opportunities_cta_text',
+        'related_opportunities_cta_link'
+    )
+
+
+@register(great_international.InternationalSubSectorPage)
+class InternationalSubSectorPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'heading',
         'sub_heading',
@@ -489,6 +558,14 @@ class CapitalInvestHomesInEnglandCardFieldsSummarySerializer(
     )
 
 
+@register(capital_invest.CapitalInvestRelatedSubSectors)
+class CapitalInvestRelatedSubSectorsTranslationOptions(
+        BaseTranslationOptions):
+    fields = (
+        'page',
+    )
+
+
 @register(invest.InvestInternationalHomePage)
 class InvestHomePageTranslation(BaseTranslationOptions):
     fields = (
@@ -573,6 +650,13 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'contact_section_call_to_action_text',
         'contact_section_call_to_action_url'
     )
+
+
+@register(invest.InvestHighPotentialOpportunitiesPage)
+class InvestHighPotentialOpportunitiesPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = []
 
 
 @register(invest.InvestHighPotentialOpportunityFormPage)
@@ -727,4 +811,46 @@ class InternationalTradeIndustryContactPageTranslationOptions(
         'submit_button_text',
         'success_message_text',
         'success_back_link_text',
+    )
+
+
+@register(great_international.AboutDitLandingPage)
+class AboutDitLandingPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'hero_title',
+        'hero_image',
+    )
+
+
+@register(great_international.AboutDitServicesPage)
+class AboutDitServicesPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'hero_title',
+        'hero_image',
+        'teaser',
+        'teaser_image',
+        'case_study_image',
+        'case_study_title',
+        'case_study_text',
+        'case_study_cta_text',
+        'case_study_cta_link',
+        'contact_us_section_title',
+        'contact_us_section_summary',
+        'contact_us_section_cta_text',
+        'contact_us_section_cta_link',
+    )
+
+
+@register(great_international.AboutDitServicesFields)
+class AboutDitServicesFieldsSerializer(
+        BaseTranslationOptions
+):
+    fields = (
+        'page',
     )

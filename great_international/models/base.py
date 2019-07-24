@@ -8,3 +8,7 @@ class BaseInternationalPage(BasePage):
 
     class Meta:
         abstract = True
+
+    def save(self, *args, **kwargs):
+        self.uses_tree_based_routing = True
+        return super().save(*args, **kwargs)

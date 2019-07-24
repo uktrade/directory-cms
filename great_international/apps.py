@@ -9,6 +9,7 @@ class GreatInternationalConfig(AppConfig):
         from great_international import cache, signals
         from great_international.models import great_international
         cache.InternationalSectorPageSubscriber.subscribe()
+        cache.InternationalSubSectorPageSubscriber.subscribe()
         cache.InternationalHomePageSubscriber.subscribe()
         cache.InternationalHomePageOldSubscriber.subscribe()
         cache.InternationalArticlePageSubscriber.subscribe()
@@ -31,6 +32,8 @@ class GreatInternationalConfig(AppConfig):
         cache.InvestSectorPageSubscriber.subscribe()
         cache.InternationalTradeHomePageSubscriber.subscribe()
         cache.InternationalTradeIndustryContactPageSubscriber.subscribe()
+        cache.AboutDitLandingPageSubscriber.subscribe()
+        cache.AboutDitServicesPageSubscriber.subscribe()
         # tags inheritance signals
         post_save.connect(
             receiver=signals.inherit_tags_from_parent,
