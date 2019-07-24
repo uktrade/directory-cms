@@ -3410,7 +3410,214 @@ CREATE TABLE public.great_international_capitalinvestregionpage (
     contact_title_fr character varying(255),
     contact_title_ja character varying(255),
     contact_title_pt character varying(255),
-    contact_title_zh_hans character varying(255)
+    contact_title_zh_hans character varying(255),
+    contact_cta_link character varying(255) NOT NULL,
+    contact_cta_link_ar character varying(255),
+    contact_cta_link_de character varying(255),
+    contact_cta_link_en_gb character varying(255),
+    contact_cta_link_es character varying(255),
+    contact_cta_link_fr character varying(255),
+    contact_cta_link_ja character varying(255),
+    contact_cta_link_pt character varying(255),
+    contact_cta_link_zh_hans character varying(255),
+    contact_cta_text character varying(255) NOT NULL,
+    contact_cta_text_ar character varying(255),
+    contact_cta_text_de character varying(255),
+    contact_cta_text_en_gb character varying(255),
+    contact_cta_text_es character varying(255),
+    contact_cta_text_fr character varying(255),
+    contact_cta_text_ja character varying(255),
+    contact_cta_text_pt character varying(255),
+    contact_cta_text_zh_hans character varying(255),
+    economics_stat_5_heading character varying(255) NOT NULL,
+    economics_stat_5_heading_ar character varying(255),
+    economics_stat_5_heading_de character varying(255),
+    economics_stat_5_heading_en_gb character varying(255),
+    economics_stat_5_heading_es character varying(255),
+    economics_stat_5_heading_fr character varying(255),
+    economics_stat_5_heading_ja character varying(255),
+    economics_stat_5_heading_pt character varying(255),
+    economics_stat_5_heading_zh_hans character varying(255),
+    economics_stat_5_number character varying(255) NOT NULL,
+    economics_stat_5_number_ar character varying(255),
+    economics_stat_5_number_de character varying(255),
+    economics_stat_5_number_en_gb character varying(255),
+    economics_stat_5_number_es character varying(255),
+    economics_stat_5_number_fr character varying(255),
+    economics_stat_5_number_ja character varying(255),
+    economics_stat_5_number_pt character varying(255),
+    economics_stat_5_number_zh_hans character varying(255),
+    economics_stat_5_smallprint character varying(255) NOT NULL,
+    economics_stat_5_smallprint_ar character varying(255),
+    economics_stat_5_smallprint_de character varying(255),
+    economics_stat_5_smallprint_en_gb character varying(255),
+    economics_stat_5_smallprint_es character varying(255),
+    economics_stat_5_smallprint_fr character varying(255),
+    economics_stat_5_smallprint_ja character varying(255),
+    economics_stat_5_smallprint_pt character varying(255),
+    economics_stat_5_smallprint_zh_hans character varying(255),
+    economics_stat_6_heading character varying(255) NOT NULL,
+    economics_stat_6_heading_ar character varying(255),
+    economics_stat_6_heading_de character varying(255),
+    economics_stat_6_heading_en_gb character varying(255),
+    economics_stat_6_heading_es character varying(255),
+    economics_stat_6_heading_fr character varying(255),
+    economics_stat_6_heading_ja character varying(255),
+    economics_stat_6_heading_pt character varying(255),
+    economics_stat_6_heading_zh_hans character varying(255),
+    economics_stat_6_number character varying(255) NOT NULL,
+    economics_stat_6_number_ar character varying(255),
+    economics_stat_6_number_de character varying(255),
+    economics_stat_6_number_en_gb character varying(255),
+    economics_stat_6_number_es character varying(255),
+    economics_stat_6_number_fr character varying(255),
+    economics_stat_6_number_ja character varying(255),
+    economics_stat_6_number_pt character varying(255),
+    economics_stat_6_number_zh_hans character varying(255),
+    economics_stat_6_smallprint character varying(255) NOT NULL,
+    economics_stat_6_smallprint_ar character varying(255),
+    economics_stat_6_smallprint_de character varying(255),
+    economics_stat_6_smallprint_en_gb character varying(255),
+    economics_stat_6_smallprint_es character varying(255),
+    economics_stat_6_smallprint_fr character varying(255),
+    economics_stat_6_smallprint_ja character varying(255),
+    economics_stat_6_smallprint_pt character varying(255),
+    economics_stat_6_smallprint_zh_hans character varying(255),
+    location_stat_5_heading character varying(255) NOT NULL,
+    location_stat_5_heading_ar character varying(255),
+    location_stat_5_heading_de character varying(255),
+    location_stat_5_heading_en_gb character varying(255),
+    location_stat_5_heading_es character varying(255),
+    location_stat_5_heading_fr character varying(255),
+    location_stat_5_heading_ja character varying(255),
+    location_stat_5_heading_pt character varying(255),
+    location_stat_5_heading_zh_hans character varying(255),
+    location_stat_5_number character varying(255) NOT NULL,
+    location_stat_5_number_ar character varying(255),
+    location_stat_5_number_de character varying(255),
+    location_stat_5_number_en_gb character varying(255),
+    location_stat_5_number_es character varying(255),
+    location_stat_5_number_fr character varying(255),
+    location_stat_5_number_ja character varying(255),
+    location_stat_5_number_pt character varying(255),
+    location_stat_5_number_zh_hans character varying(255),
+    location_stat_5_smallprint character varying(255) NOT NULL,
+    location_stat_5_smallprint_ar character varying(255),
+    location_stat_5_smallprint_de character varying(255),
+    location_stat_5_smallprint_en_gb character varying(255),
+    location_stat_5_smallprint_es character varying(255),
+    location_stat_5_smallprint_fr character varying(255),
+    location_stat_5_smallprint_ja character varying(255),
+    location_stat_5_smallprint_pt character varying(255),
+    location_stat_5_smallprint_zh_hans character varying(255),
+    location_stat_6_heading character varying(255) NOT NULL,
+    location_stat_6_heading_ar character varying(255),
+    location_stat_6_heading_de character varying(255),
+    location_stat_6_heading_en_gb character varying(255),
+    location_stat_6_heading_es character varying(255),
+    location_stat_6_heading_fr character varying(255),
+    location_stat_6_heading_ja character varying(255),
+    location_stat_6_heading_pt character varying(255),
+    location_stat_6_heading_zh_hans character varying(255),
+    location_stat_6_number character varying(255) NOT NULL,
+    location_stat_6_number_ar character varying(255),
+    location_stat_6_number_de character varying(255),
+    location_stat_6_number_en_gb character varying(255),
+    location_stat_6_number_es character varying(255),
+    location_stat_6_number_fr character varying(255),
+    location_stat_6_number_ja character varying(255),
+    location_stat_6_number_pt character varying(255),
+    location_stat_6_number_zh_hans character varying(255),
+    location_stat_6_smallprint character varying(255) NOT NULL,
+    location_stat_6_smallprint_ar character varying(255),
+    location_stat_6_smallprint_de character varying(255),
+    location_stat_6_smallprint_en_gb character varying(255),
+    location_stat_6_smallprint_es character varying(255),
+    location_stat_6_smallprint_fr character varying(255),
+    location_stat_6_smallprint_ja character varying(255),
+    location_stat_6_smallprint_pt character varying(255),
+    location_stat_6_smallprint_zh_hans character varying(255),
+    sub_section_one_content text NOT NULL,
+    sub_section_one_content_ar text,
+    sub_section_one_content_de text,
+    sub_section_one_content_en_gb text,
+    sub_section_one_content_es text,
+    sub_section_one_content_fr text,
+    sub_section_one_content_ja text,
+    sub_section_one_content_pt text,
+    sub_section_one_content_zh_hans text,
+    sub_section_one_icon_id integer,
+    sub_section_one_icon_ar_id integer,
+    sub_section_one_icon_de_id integer,
+    sub_section_one_icon_en_gb_id integer,
+    sub_section_one_icon_es_id integer,
+    sub_section_one_icon_fr_id integer,
+    sub_section_one_icon_ja_id integer,
+    sub_section_one_icon_pt_id integer,
+    sub_section_one_icon_zh_hans_id integer,
+    sub_section_one_title character varying(255) NOT NULL,
+    sub_section_one_title_ar character varying(255),
+    sub_section_one_title_de character varying(255),
+    sub_section_one_title_en_gb character varying(255),
+    sub_section_one_title_es character varying(255),
+    sub_section_one_title_fr character varying(255),
+    sub_section_one_title_ja character varying(255),
+    sub_section_one_title_pt character varying(255),
+    sub_section_one_title_zh_hans character varying(255),
+    sub_section_three_content text NOT NULL,
+    sub_section_three_content_ar text,
+    sub_section_three_content_de text,
+    sub_section_three_content_en_gb text,
+    sub_section_three_content_es text,
+    sub_section_three_content_fr text,
+    sub_section_three_content_ja text,
+    sub_section_three_content_pt text,
+    sub_section_three_content_zh_hans text,
+    sub_section_three_icon_id integer,
+    sub_section_three_icon_ar_id integer,
+    sub_section_three_icon_de_id integer,
+    sub_section_three_icon_en_gb_id integer,
+    sub_section_three_icon_es_id integer,
+    sub_section_three_icon_fr_id integer,
+    sub_section_three_icon_ja_id integer,
+    sub_section_three_icon_pt_id integer,
+    sub_section_three_icon_zh_hans_id integer,
+    sub_section_three_title character varying(255) NOT NULL,
+    sub_section_three_title_ar character varying(255),
+    sub_section_three_title_de character varying(255),
+    sub_section_three_title_en_gb character varying(255),
+    sub_section_three_title_es character varying(255),
+    sub_section_three_title_fr character varying(255),
+    sub_section_three_title_ja character varying(255),
+    sub_section_three_title_pt character varying(255),
+    sub_section_three_title_zh_hans character varying(255),
+    sub_section_two_content text NOT NULL,
+    sub_section_two_content_ar text,
+    sub_section_two_content_de text,
+    sub_section_two_content_en_gb text,
+    sub_section_two_content_es text,
+    sub_section_two_content_fr text,
+    sub_section_two_content_ja text,
+    sub_section_two_content_pt text,
+    sub_section_two_content_zh_hans text,
+    sub_section_two_icon_id integer,
+    sub_section_two_icon_ar_id integer,
+    sub_section_two_icon_de_id integer,
+    sub_section_two_icon_en_gb_id integer,
+    sub_section_two_icon_es_id integer,
+    sub_section_two_icon_fr_id integer,
+    sub_section_two_icon_ja_id integer,
+    sub_section_two_icon_pt_id integer,
+    sub_section_two_icon_zh_hans_id integer,
+    sub_section_two_title character varying(255) NOT NULL,
+    sub_section_two_title_ar character varying(255),
+    sub_section_two_title_de character varying(255),
+    sub_section_two_title_en_gb character varying(255),
+    sub_section_two_title_es character varying(255),
+    sub_section_two_title_fr character varying(255),
+    sub_section_two_title_ja character varying(255),
+    sub_section_two_title_pt character varying(255),
+    sub_section_two_title_zh_hans character varying(255)
 );
 
 
@@ -12455,6 +12662,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 340	great_international	0050_investhighpotentialopportunitiespage	2019-07-18 12:57:27.832995+01
 341	great_international	0051_aboutukarticlesfields_aboutuklandingpage_aboutukwhychoosetheukpage	2019-07-23 18:31:48.386892+01
 342	great_international	0052_auto_20190723_1147	2019-07-23 18:32:00.344077+01
+343	great_international	0053_auto_20190724_0950	2019-07-24 13:31:40.696945+01
 \.
 
 
@@ -12846,7 +13054,7 @@ COPY public.great_international_capitalinvestregioncardfieldssummary (id, sort_o
 -- Data for Name: great_international_capitalinvestregionpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_capitalinvestregionpage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, hero_title, hero_title_en_gb, hero_title_de, hero_title_ja, hero_title_zh_hans, hero_title_fr, hero_title_es, hero_title_pt, hero_title_ar, featured_description, featured_description_en_gb, featured_description_de, featured_description_ja, featured_description_zh_hans, featured_description_fr, featured_description_es, featured_description_pt, featured_description_ar, region_summary_section_intro, region_summary_section_intro_en_gb, region_summary_section_intro_de, region_summary_section_intro_ja, region_summary_section_intro_zh_hans, region_summary_section_intro_fr, region_summary_section_intro_es, region_summary_section_intro_pt, region_summary_section_intro_ar, region_summary_section_content, region_summary_section_content_en_gb, region_summary_section_content_de, region_summary_section_content_ja, region_summary_section_content_zh_hans, region_summary_section_content_fr, region_summary_section_content_es, region_summary_section_content_pt, region_summary_section_content_ar, investment_opps_title, investment_opps_title_en_gb, investment_opps_title_de, investment_opps_title_ja, investment_opps_title_zh_hans, investment_opps_title_fr, investment_opps_title_es, investment_opps_title_pt, investment_opps_title_ar, investment_opps_intro, investment_opps_intro_en_gb, investment_opps_intro_de, investment_opps_intro_ja, investment_opps_intro_zh_hans, investment_opps_intro_fr, investment_opps_intro_es, investment_opps_intro_pt, investment_opps_intro_ar, economics_data_title, economics_data_title_en_gb, economics_data_title_de, economics_data_title_ja, economics_data_title_zh_hans, economics_data_title_fr, economics_data_title_es, economics_data_title_pt, economics_data_title_ar, economics_stat_1_number, economics_stat_1_number_en_gb, economics_stat_1_number_de, economics_stat_1_number_ja, economics_stat_1_number_zh_hans, economics_stat_1_number_fr, economics_stat_1_number_es, economics_stat_1_number_pt, economics_stat_1_number_ar, economics_stat_1_heading, economics_stat_1_heading_en_gb, economics_stat_1_heading_de, economics_stat_1_heading_ja, economics_stat_1_heading_zh_hans, economics_stat_1_heading_fr, economics_stat_1_heading_es, economics_stat_1_heading_pt, economics_stat_1_heading_ar, economics_stat_1_smallprint, economics_stat_1_smallprint_en_gb, economics_stat_1_smallprint_de, economics_stat_1_smallprint_ja, economics_stat_1_smallprint_zh_hans, economics_stat_1_smallprint_fr, economics_stat_1_smallprint_es, economics_stat_1_smallprint_pt, economics_stat_1_smallprint_ar, economics_stat_2_number, economics_stat_2_number_en_gb, economics_stat_2_number_de, economics_stat_2_number_ja, economics_stat_2_number_zh_hans, economics_stat_2_number_fr, economics_stat_2_number_es, economics_stat_2_number_pt, economics_stat_2_number_ar, economics_stat_2_heading, economics_stat_2_heading_en_gb, economics_stat_2_heading_de, economics_stat_2_heading_ja, economics_stat_2_heading_zh_hans, economics_stat_2_heading_fr, economics_stat_2_heading_es, economics_stat_2_heading_pt, economics_stat_2_heading_ar, economics_stat_2_smallprint, economics_stat_2_smallprint_en_gb, economics_stat_2_smallprint_de, economics_stat_2_smallprint_ja, economics_stat_2_smallprint_zh_hans, economics_stat_2_smallprint_fr, economics_stat_2_smallprint_es, economics_stat_2_smallprint_pt, economics_stat_2_smallprint_ar, economics_stat_3_number, economics_stat_3_number_en_gb, economics_stat_3_number_de, economics_stat_3_number_ja, economics_stat_3_number_zh_hans, economics_stat_3_number_fr, economics_stat_3_number_es, economics_stat_3_number_pt, economics_stat_3_number_ar, economics_stat_3_heading, economics_stat_3_heading_en_gb, economics_stat_3_heading_de, economics_stat_3_heading_ja, economics_stat_3_heading_zh_hans, economics_stat_3_heading_fr, economics_stat_3_heading_es, economics_stat_3_heading_pt, economics_stat_3_heading_ar, economics_stat_3_smallprint, economics_stat_3_smallprint_en_gb, economics_stat_3_smallprint_de, economics_stat_3_smallprint_ja, economics_stat_3_smallprint_zh_hans, economics_stat_3_smallprint_fr, economics_stat_3_smallprint_es, economics_stat_3_smallprint_pt, economics_stat_3_smallprint_ar, economics_stat_4_number, economics_stat_4_number_en_gb, economics_stat_4_number_de, economics_stat_4_number_ja, economics_stat_4_number_zh_hans, economics_stat_4_number_fr, economics_stat_4_number_es, economics_stat_4_number_pt, economics_stat_4_number_ar, economics_stat_4_heading, economics_stat_4_heading_en_gb, economics_stat_4_heading_de, economics_stat_4_heading_ja, economics_stat_4_heading_zh_hans, economics_stat_4_heading_fr, economics_stat_4_heading_es, economics_stat_4_heading_pt, economics_stat_4_heading_ar, economics_stat_4_smallprint, economics_stat_4_smallprint_en_gb, economics_stat_4_smallprint_de, economics_stat_4_smallprint_ja, economics_stat_4_smallprint_zh_hans, economics_stat_4_smallprint_fr, economics_stat_4_smallprint_es, economics_stat_4_smallprint_pt, economics_stat_4_smallprint_ar, location_data_title, location_data_title_en_gb, location_data_title_de, location_data_title_ja, location_data_title_zh_hans, location_data_title_fr, location_data_title_es, location_data_title_pt, location_data_title_ar, location_stat_1_number, location_stat_1_number_en_gb, location_stat_1_number_de, location_stat_1_number_ja, location_stat_1_number_zh_hans, location_stat_1_number_fr, location_stat_1_number_es, location_stat_1_number_pt, location_stat_1_number_ar, location_stat_1_heading, location_stat_1_heading_en_gb, location_stat_1_heading_de, location_stat_1_heading_ja, location_stat_1_heading_zh_hans, location_stat_1_heading_fr, location_stat_1_heading_es, location_stat_1_heading_pt, location_stat_1_heading_ar, location_stat_1_smallprint, location_stat_1_smallprint_en_gb, location_stat_1_smallprint_de, location_stat_1_smallprint_ja, location_stat_1_smallprint_zh_hans, location_stat_1_smallprint_fr, location_stat_1_smallprint_es, location_stat_1_smallprint_pt, location_stat_1_smallprint_ar, location_stat_2_number, location_stat_2_number_en_gb, location_stat_2_number_de, location_stat_2_number_ja, location_stat_2_number_zh_hans, location_stat_2_number_fr, location_stat_2_number_es, location_stat_2_number_pt, location_stat_2_number_ar, location_stat_2_heading, location_stat_2_heading_en_gb, location_stat_2_heading_de, location_stat_2_heading_ja, location_stat_2_heading_zh_hans, location_stat_2_heading_fr, location_stat_2_heading_es, location_stat_2_heading_pt, location_stat_2_heading_ar, location_stat_2_smallprint, location_stat_2_smallprint_en_gb, location_stat_2_smallprint_de, location_stat_2_smallprint_ja, location_stat_2_smallprint_zh_hans, location_stat_2_smallprint_fr, location_stat_2_smallprint_es, location_stat_2_smallprint_pt, location_stat_2_smallprint_ar, location_stat_3_number, location_stat_3_number_en_gb, location_stat_3_number_de, location_stat_3_number_ja, location_stat_3_number_zh_hans, location_stat_3_number_fr, location_stat_3_number_es, location_stat_3_number_pt, location_stat_3_number_ar, location_stat_3_heading, location_stat_3_heading_en_gb, location_stat_3_heading_de, location_stat_3_heading_ja, location_stat_3_heading_zh_hans, location_stat_3_heading_fr, location_stat_3_heading_es, location_stat_3_heading_pt, location_stat_3_heading_ar, location_stat_3_smallprint, location_stat_3_smallprint_en_gb, location_stat_3_smallprint_de, location_stat_3_smallprint_ja, location_stat_3_smallprint_zh_hans, location_stat_3_smallprint_fr, location_stat_3_smallprint_es, location_stat_3_smallprint_pt, location_stat_3_smallprint_ar, location_stat_4_number, location_stat_4_number_en_gb, location_stat_4_number_de, location_stat_4_number_ja, location_stat_4_number_zh_hans, location_stat_4_number_fr, location_stat_4_number_es, location_stat_4_number_pt, location_stat_4_number_ar, location_stat_4_heading, location_stat_4_heading_en_gb, location_stat_4_heading_de, location_stat_4_heading_ja, location_stat_4_heading_zh_hans, location_stat_4_heading_fr, location_stat_4_heading_es, location_stat_4_heading_pt, location_stat_4_heading_ar, location_stat_4_smallprint, location_stat_4_smallprint_en_gb, location_stat_4_smallprint_de, location_stat_4_smallprint_ja, location_stat_4_smallprint_zh_hans, location_stat_4_smallprint_fr, location_stat_4_smallprint_es, location_stat_4_smallprint_pt, location_stat_4_smallprint_ar, property_and_infrastructure_section_title, property_and_infrastructure_section_title_en_gb, property_and_infrastructure_section_title_de, property_and_infrastructure_section_title_ja, property_and_infrastructure_section_title_zh_hans, property_and_infrastructure_section_title_fr, property_and_infrastructure_section_title_es, property_and_infrastructure_section_title_pt, property_and_infrastructure_section_title_ar, property_and_infrastructure_section_content, property_and_infrastructure_section_content_en_gb, property_and_infrastructure_section_content_de, property_and_infrastructure_section_content_ja, property_and_infrastructure_section_content_zh_hans, property_and_infrastructure_section_content_fr, property_and_infrastructure_section_content_es, property_and_infrastructure_section_content_pt, property_and_infrastructure_section_content_ar, case_study_title, case_study_title_en_gb, case_study_title_de, case_study_title_ja, case_study_title_zh_hans, case_study_title_fr, case_study_title_es, case_study_title_pt, case_study_title_ar, case_study_text, case_study_text_en_gb, case_study_text_de, case_study_text_ja, case_study_text_zh_hans, case_study_text_fr, case_study_text_es, case_study_text_pt, case_study_text_ar, case_study_cta_text, case_study_cta_text_en_gb, case_study_cta_text_de, case_study_cta_text_ja, case_study_cta_text_zh_hans, case_study_cta_text_fr, case_study_cta_text_es, case_study_cta_text_pt, case_study_cta_text_ar, case_study_cta_link, case_study_cta_link_en_gb, case_study_cta_link_de, case_study_cta_link_ja, case_study_cta_link_zh_hans, case_study_cta_link_fr, case_study_cta_link_es, case_study_cta_link_pt, case_study_cta_link_ar, case_study_image_id, case_study_image_ar_id, case_study_image_de_id, case_study_image_en_gb_id, case_study_image_es_id, case_study_image_fr_id, case_study_image_ja_id, case_study_image_pt_id, case_study_image_zh_hans_id, hero_image_id, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, property_and_infrastructure_section_image_id, property_and_infrastructure_section_image_ar_id, property_and_infrastructure_section_image_de_id, property_and_infrastructure_section_image_en_gb_id, property_and_infrastructure_section_image_es_id, property_and_infrastructure_section_image_fr_id, property_and_infrastructure_section_image_ja_id, property_and_infrastructure_section_image_pt_id, property_and_infrastructure_section_image_zh_hans_id, region_summary_section_image_id, region_summary_section_image_ar_id, region_summary_section_image_de_id, region_summary_section_image_en_gb_id, region_summary_section_image_es_id, region_summary_section_image_fr_id, region_summary_section_image_ja_id, region_summary_section_image_pt_id, region_summary_section_image_zh_hans_id, contact_text, contact_text_ar, contact_text_de, contact_text_en_gb, contact_text_es, contact_text_fr, contact_text_ja, contact_text_pt, contact_text_zh_hans, contact_title, contact_title_ar, contact_title_de, contact_title_en_gb, contact_title_es, contact_title_fr, contact_title_ja, contact_title_pt, contact_title_zh_hans) FROM stdin;
+COPY public.great_international_capitalinvestregionpage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, hero_title, hero_title_en_gb, hero_title_de, hero_title_ja, hero_title_zh_hans, hero_title_fr, hero_title_es, hero_title_pt, hero_title_ar, featured_description, featured_description_en_gb, featured_description_de, featured_description_ja, featured_description_zh_hans, featured_description_fr, featured_description_es, featured_description_pt, featured_description_ar, region_summary_section_intro, region_summary_section_intro_en_gb, region_summary_section_intro_de, region_summary_section_intro_ja, region_summary_section_intro_zh_hans, region_summary_section_intro_fr, region_summary_section_intro_es, region_summary_section_intro_pt, region_summary_section_intro_ar, region_summary_section_content, region_summary_section_content_en_gb, region_summary_section_content_de, region_summary_section_content_ja, region_summary_section_content_zh_hans, region_summary_section_content_fr, region_summary_section_content_es, region_summary_section_content_pt, region_summary_section_content_ar, investment_opps_title, investment_opps_title_en_gb, investment_opps_title_de, investment_opps_title_ja, investment_opps_title_zh_hans, investment_opps_title_fr, investment_opps_title_es, investment_opps_title_pt, investment_opps_title_ar, investment_opps_intro, investment_opps_intro_en_gb, investment_opps_intro_de, investment_opps_intro_ja, investment_opps_intro_zh_hans, investment_opps_intro_fr, investment_opps_intro_es, investment_opps_intro_pt, investment_opps_intro_ar, economics_data_title, economics_data_title_en_gb, economics_data_title_de, economics_data_title_ja, economics_data_title_zh_hans, economics_data_title_fr, economics_data_title_es, economics_data_title_pt, economics_data_title_ar, economics_stat_1_number, economics_stat_1_number_en_gb, economics_stat_1_number_de, economics_stat_1_number_ja, economics_stat_1_number_zh_hans, economics_stat_1_number_fr, economics_stat_1_number_es, economics_stat_1_number_pt, economics_stat_1_number_ar, economics_stat_1_heading, economics_stat_1_heading_en_gb, economics_stat_1_heading_de, economics_stat_1_heading_ja, economics_stat_1_heading_zh_hans, economics_stat_1_heading_fr, economics_stat_1_heading_es, economics_stat_1_heading_pt, economics_stat_1_heading_ar, economics_stat_1_smallprint, economics_stat_1_smallprint_en_gb, economics_stat_1_smallprint_de, economics_stat_1_smallprint_ja, economics_stat_1_smallprint_zh_hans, economics_stat_1_smallprint_fr, economics_stat_1_smallprint_es, economics_stat_1_smallprint_pt, economics_stat_1_smallprint_ar, economics_stat_2_number, economics_stat_2_number_en_gb, economics_stat_2_number_de, economics_stat_2_number_ja, economics_stat_2_number_zh_hans, economics_stat_2_number_fr, economics_stat_2_number_es, economics_stat_2_number_pt, economics_stat_2_number_ar, economics_stat_2_heading, economics_stat_2_heading_en_gb, economics_stat_2_heading_de, economics_stat_2_heading_ja, economics_stat_2_heading_zh_hans, economics_stat_2_heading_fr, economics_stat_2_heading_es, economics_stat_2_heading_pt, economics_stat_2_heading_ar, economics_stat_2_smallprint, economics_stat_2_smallprint_en_gb, economics_stat_2_smallprint_de, economics_stat_2_smallprint_ja, economics_stat_2_smallprint_zh_hans, economics_stat_2_smallprint_fr, economics_stat_2_smallprint_es, economics_stat_2_smallprint_pt, economics_stat_2_smallprint_ar, economics_stat_3_number, economics_stat_3_number_en_gb, economics_stat_3_number_de, economics_stat_3_number_ja, economics_stat_3_number_zh_hans, economics_stat_3_number_fr, economics_stat_3_number_es, economics_stat_3_number_pt, economics_stat_3_number_ar, economics_stat_3_heading, economics_stat_3_heading_en_gb, economics_stat_3_heading_de, economics_stat_3_heading_ja, economics_stat_3_heading_zh_hans, economics_stat_3_heading_fr, economics_stat_3_heading_es, economics_stat_3_heading_pt, economics_stat_3_heading_ar, economics_stat_3_smallprint, economics_stat_3_smallprint_en_gb, economics_stat_3_smallprint_de, economics_stat_3_smallprint_ja, economics_stat_3_smallprint_zh_hans, economics_stat_3_smallprint_fr, economics_stat_3_smallprint_es, economics_stat_3_smallprint_pt, economics_stat_3_smallprint_ar, economics_stat_4_number, economics_stat_4_number_en_gb, economics_stat_4_number_de, economics_stat_4_number_ja, economics_stat_4_number_zh_hans, economics_stat_4_number_fr, economics_stat_4_number_es, economics_stat_4_number_pt, economics_stat_4_number_ar, economics_stat_4_heading, economics_stat_4_heading_en_gb, economics_stat_4_heading_de, economics_stat_4_heading_ja, economics_stat_4_heading_zh_hans, economics_stat_4_heading_fr, economics_stat_4_heading_es, economics_stat_4_heading_pt, economics_stat_4_heading_ar, economics_stat_4_smallprint, economics_stat_4_smallprint_en_gb, economics_stat_4_smallprint_de, economics_stat_4_smallprint_ja, economics_stat_4_smallprint_zh_hans, economics_stat_4_smallprint_fr, economics_stat_4_smallprint_es, economics_stat_4_smallprint_pt, economics_stat_4_smallprint_ar, location_data_title, location_data_title_en_gb, location_data_title_de, location_data_title_ja, location_data_title_zh_hans, location_data_title_fr, location_data_title_es, location_data_title_pt, location_data_title_ar, location_stat_1_number, location_stat_1_number_en_gb, location_stat_1_number_de, location_stat_1_number_ja, location_stat_1_number_zh_hans, location_stat_1_number_fr, location_stat_1_number_es, location_stat_1_number_pt, location_stat_1_number_ar, location_stat_1_heading, location_stat_1_heading_en_gb, location_stat_1_heading_de, location_stat_1_heading_ja, location_stat_1_heading_zh_hans, location_stat_1_heading_fr, location_stat_1_heading_es, location_stat_1_heading_pt, location_stat_1_heading_ar, location_stat_1_smallprint, location_stat_1_smallprint_en_gb, location_stat_1_smallprint_de, location_stat_1_smallprint_ja, location_stat_1_smallprint_zh_hans, location_stat_1_smallprint_fr, location_stat_1_smallprint_es, location_stat_1_smallprint_pt, location_stat_1_smallprint_ar, location_stat_2_number, location_stat_2_number_en_gb, location_stat_2_number_de, location_stat_2_number_ja, location_stat_2_number_zh_hans, location_stat_2_number_fr, location_stat_2_number_es, location_stat_2_number_pt, location_stat_2_number_ar, location_stat_2_heading, location_stat_2_heading_en_gb, location_stat_2_heading_de, location_stat_2_heading_ja, location_stat_2_heading_zh_hans, location_stat_2_heading_fr, location_stat_2_heading_es, location_stat_2_heading_pt, location_stat_2_heading_ar, location_stat_2_smallprint, location_stat_2_smallprint_en_gb, location_stat_2_smallprint_de, location_stat_2_smallprint_ja, location_stat_2_smallprint_zh_hans, location_stat_2_smallprint_fr, location_stat_2_smallprint_es, location_stat_2_smallprint_pt, location_stat_2_smallprint_ar, location_stat_3_number, location_stat_3_number_en_gb, location_stat_3_number_de, location_stat_3_number_ja, location_stat_3_number_zh_hans, location_stat_3_number_fr, location_stat_3_number_es, location_stat_3_number_pt, location_stat_3_number_ar, location_stat_3_heading, location_stat_3_heading_en_gb, location_stat_3_heading_de, location_stat_3_heading_ja, location_stat_3_heading_zh_hans, location_stat_3_heading_fr, location_stat_3_heading_es, location_stat_3_heading_pt, location_stat_3_heading_ar, location_stat_3_smallprint, location_stat_3_smallprint_en_gb, location_stat_3_smallprint_de, location_stat_3_smallprint_ja, location_stat_3_smallprint_zh_hans, location_stat_3_smallprint_fr, location_stat_3_smallprint_es, location_stat_3_smallprint_pt, location_stat_3_smallprint_ar, location_stat_4_number, location_stat_4_number_en_gb, location_stat_4_number_de, location_stat_4_number_ja, location_stat_4_number_zh_hans, location_stat_4_number_fr, location_stat_4_number_es, location_stat_4_number_pt, location_stat_4_number_ar, location_stat_4_heading, location_stat_4_heading_en_gb, location_stat_4_heading_de, location_stat_4_heading_ja, location_stat_4_heading_zh_hans, location_stat_4_heading_fr, location_stat_4_heading_es, location_stat_4_heading_pt, location_stat_4_heading_ar, location_stat_4_smallprint, location_stat_4_smallprint_en_gb, location_stat_4_smallprint_de, location_stat_4_smallprint_ja, location_stat_4_smallprint_zh_hans, location_stat_4_smallprint_fr, location_stat_4_smallprint_es, location_stat_4_smallprint_pt, location_stat_4_smallprint_ar, property_and_infrastructure_section_title, property_and_infrastructure_section_title_en_gb, property_and_infrastructure_section_title_de, property_and_infrastructure_section_title_ja, property_and_infrastructure_section_title_zh_hans, property_and_infrastructure_section_title_fr, property_and_infrastructure_section_title_es, property_and_infrastructure_section_title_pt, property_and_infrastructure_section_title_ar, property_and_infrastructure_section_content, property_and_infrastructure_section_content_en_gb, property_and_infrastructure_section_content_de, property_and_infrastructure_section_content_ja, property_and_infrastructure_section_content_zh_hans, property_and_infrastructure_section_content_fr, property_and_infrastructure_section_content_es, property_and_infrastructure_section_content_pt, property_and_infrastructure_section_content_ar, case_study_title, case_study_title_en_gb, case_study_title_de, case_study_title_ja, case_study_title_zh_hans, case_study_title_fr, case_study_title_es, case_study_title_pt, case_study_title_ar, case_study_text, case_study_text_en_gb, case_study_text_de, case_study_text_ja, case_study_text_zh_hans, case_study_text_fr, case_study_text_es, case_study_text_pt, case_study_text_ar, case_study_cta_text, case_study_cta_text_en_gb, case_study_cta_text_de, case_study_cta_text_ja, case_study_cta_text_zh_hans, case_study_cta_text_fr, case_study_cta_text_es, case_study_cta_text_pt, case_study_cta_text_ar, case_study_cta_link, case_study_cta_link_en_gb, case_study_cta_link_de, case_study_cta_link_ja, case_study_cta_link_zh_hans, case_study_cta_link_fr, case_study_cta_link_es, case_study_cta_link_pt, case_study_cta_link_ar, case_study_image_id, case_study_image_ar_id, case_study_image_de_id, case_study_image_en_gb_id, case_study_image_es_id, case_study_image_fr_id, case_study_image_ja_id, case_study_image_pt_id, case_study_image_zh_hans_id, hero_image_id, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, property_and_infrastructure_section_image_id, property_and_infrastructure_section_image_ar_id, property_and_infrastructure_section_image_de_id, property_and_infrastructure_section_image_en_gb_id, property_and_infrastructure_section_image_es_id, property_and_infrastructure_section_image_fr_id, property_and_infrastructure_section_image_ja_id, property_and_infrastructure_section_image_pt_id, property_and_infrastructure_section_image_zh_hans_id, region_summary_section_image_id, region_summary_section_image_ar_id, region_summary_section_image_de_id, region_summary_section_image_en_gb_id, region_summary_section_image_es_id, region_summary_section_image_fr_id, region_summary_section_image_ja_id, region_summary_section_image_pt_id, region_summary_section_image_zh_hans_id, contact_text, contact_text_ar, contact_text_de, contact_text_en_gb, contact_text_es, contact_text_fr, contact_text_ja, contact_text_pt, contact_text_zh_hans, contact_title, contact_title_ar, contact_title_de, contact_title_en_gb, contact_title_es, contact_title_fr, contact_title_ja, contact_title_pt, contact_title_zh_hans, contact_cta_link, contact_cta_link_ar, contact_cta_link_de, contact_cta_link_en_gb, contact_cta_link_es, contact_cta_link_fr, contact_cta_link_ja, contact_cta_link_pt, contact_cta_link_zh_hans, contact_cta_text, contact_cta_text_ar, contact_cta_text_de, contact_cta_text_en_gb, contact_cta_text_es, contact_cta_text_fr, contact_cta_text_ja, contact_cta_text_pt, contact_cta_text_zh_hans, economics_stat_5_heading, economics_stat_5_heading_ar, economics_stat_5_heading_de, economics_stat_5_heading_en_gb, economics_stat_5_heading_es, economics_stat_5_heading_fr, economics_stat_5_heading_ja, economics_stat_5_heading_pt, economics_stat_5_heading_zh_hans, economics_stat_5_number, economics_stat_5_number_ar, economics_stat_5_number_de, economics_stat_5_number_en_gb, economics_stat_5_number_es, economics_stat_5_number_fr, economics_stat_5_number_ja, economics_stat_5_number_pt, economics_stat_5_number_zh_hans, economics_stat_5_smallprint, economics_stat_5_smallprint_ar, economics_stat_5_smallprint_de, economics_stat_5_smallprint_en_gb, economics_stat_5_smallprint_es, economics_stat_5_smallprint_fr, economics_stat_5_smallprint_ja, economics_stat_5_smallprint_pt, economics_stat_5_smallprint_zh_hans, economics_stat_6_heading, economics_stat_6_heading_ar, economics_stat_6_heading_de, economics_stat_6_heading_en_gb, economics_stat_6_heading_es, economics_stat_6_heading_fr, economics_stat_6_heading_ja, economics_stat_6_heading_pt, economics_stat_6_heading_zh_hans, economics_stat_6_number, economics_stat_6_number_ar, economics_stat_6_number_de, economics_stat_6_number_en_gb, economics_stat_6_number_es, economics_stat_6_number_fr, economics_stat_6_number_ja, economics_stat_6_number_pt, economics_stat_6_number_zh_hans, economics_stat_6_smallprint, economics_stat_6_smallprint_ar, economics_stat_6_smallprint_de, economics_stat_6_smallprint_en_gb, economics_stat_6_smallprint_es, economics_stat_6_smallprint_fr, economics_stat_6_smallprint_ja, economics_stat_6_smallprint_pt, economics_stat_6_smallprint_zh_hans, location_stat_5_heading, location_stat_5_heading_ar, location_stat_5_heading_de, location_stat_5_heading_en_gb, location_stat_5_heading_es, location_stat_5_heading_fr, location_stat_5_heading_ja, location_stat_5_heading_pt, location_stat_5_heading_zh_hans, location_stat_5_number, location_stat_5_number_ar, location_stat_5_number_de, location_stat_5_number_en_gb, location_stat_5_number_es, location_stat_5_number_fr, location_stat_5_number_ja, location_stat_5_number_pt, location_stat_5_number_zh_hans, location_stat_5_smallprint, location_stat_5_smallprint_ar, location_stat_5_smallprint_de, location_stat_5_smallprint_en_gb, location_stat_5_smallprint_es, location_stat_5_smallprint_fr, location_stat_5_smallprint_ja, location_stat_5_smallprint_pt, location_stat_5_smallprint_zh_hans, location_stat_6_heading, location_stat_6_heading_ar, location_stat_6_heading_de, location_stat_6_heading_en_gb, location_stat_6_heading_es, location_stat_6_heading_fr, location_stat_6_heading_ja, location_stat_6_heading_pt, location_stat_6_heading_zh_hans, location_stat_6_number, location_stat_6_number_ar, location_stat_6_number_de, location_stat_6_number_en_gb, location_stat_6_number_es, location_stat_6_number_fr, location_stat_6_number_ja, location_stat_6_number_pt, location_stat_6_number_zh_hans, location_stat_6_smallprint, location_stat_6_smallprint_ar, location_stat_6_smallprint_de, location_stat_6_smallprint_en_gb, location_stat_6_smallprint_es, location_stat_6_smallprint_fr, location_stat_6_smallprint_ja, location_stat_6_smallprint_pt, location_stat_6_smallprint_zh_hans, sub_section_one_content, sub_section_one_content_ar, sub_section_one_content_de, sub_section_one_content_en_gb, sub_section_one_content_es, sub_section_one_content_fr, sub_section_one_content_ja, sub_section_one_content_pt, sub_section_one_content_zh_hans, sub_section_one_icon_id, sub_section_one_icon_ar_id, sub_section_one_icon_de_id, sub_section_one_icon_en_gb_id, sub_section_one_icon_es_id, sub_section_one_icon_fr_id, sub_section_one_icon_ja_id, sub_section_one_icon_pt_id, sub_section_one_icon_zh_hans_id, sub_section_one_title, sub_section_one_title_ar, sub_section_one_title_de, sub_section_one_title_en_gb, sub_section_one_title_es, sub_section_one_title_fr, sub_section_one_title_ja, sub_section_one_title_pt, sub_section_one_title_zh_hans, sub_section_three_content, sub_section_three_content_ar, sub_section_three_content_de, sub_section_three_content_en_gb, sub_section_three_content_es, sub_section_three_content_fr, sub_section_three_content_ja, sub_section_three_content_pt, sub_section_three_content_zh_hans, sub_section_three_icon_id, sub_section_three_icon_ar_id, sub_section_three_icon_de_id, sub_section_three_icon_en_gb_id, sub_section_three_icon_es_id, sub_section_three_icon_fr_id, sub_section_three_icon_ja_id, sub_section_three_icon_pt_id, sub_section_three_icon_zh_hans_id, sub_section_three_title, sub_section_three_title_ar, sub_section_three_title_de, sub_section_three_title_en_gb, sub_section_three_title_es, sub_section_three_title_fr, sub_section_three_title_ja, sub_section_three_title_pt, sub_section_three_title_zh_hans, sub_section_two_content, sub_section_two_content_ar, sub_section_two_content_de, sub_section_two_content_en_gb, sub_section_two_content_es, sub_section_two_content_fr, sub_section_two_content_ja, sub_section_two_content_pt, sub_section_two_content_zh_hans, sub_section_two_icon_id, sub_section_two_icon_ar_id, sub_section_two_icon_de_id, sub_section_two_icon_en_gb_id, sub_section_two_icon_es_id, sub_section_two_icon_fr_id, sub_section_two_icon_ja_id, sub_section_two_icon_pt_id, sub_section_two_icon_zh_hans_id, sub_section_two_title, sub_section_two_title_ar, sub_section_two_title_de, sub_section_two_title_en_gb, sub_section_two_title_es, sub_section_two_title_fr, sub_section_two_title_ja, sub_section_two_title_pt, sub_section_two_title_zh_hans) FROM stdin;
 \.
 
 
@@ -13538,7 +13746,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 119, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 342, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 343, true);
 
 
 --
@@ -18970,6 +19178,195 @@ CREATE INDEX great_international_capita_service_name_f74a9439 ON public.great_in
 --
 
 CREATE INDEX great_international_capita_service_name_fc5ce507 ON public.great_international_capitalinvestopportunitypage USING btree (service_name);
+
+
+--
+-- Name: great_international_capita_sub_section_one_icon_ar_id_e51535a5; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_one_icon_ar_id_e51535a5 ON public.great_international_capitalinvestregionpage USING btree (sub_section_one_icon_ar_id);
+
+
+--
+-- Name: great_international_capita_sub_section_one_icon_de_id_d7b97460; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_one_icon_de_id_d7b97460 ON public.great_international_capitalinvestregionpage USING btree (sub_section_one_icon_de_id);
+
+
+--
+-- Name: great_international_capita_sub_section_one_icon_en_gb_e215a792; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_one_icon_en_gb_e215a792 ON public.great_international_capitalinvestregionpage USING btree (sub_section_one_icon_en_gb_id);
+
+
+--
+-- Name: great_international_capita_sub_section_one_icon_es_id_99a7c7a6; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_one_icon_es_id_99a7c7a6 ON public.great_international_capitalinvestregionpage USING btree (sub_section_one_icon_es_id);
+
+
+--
+-- Name: great_international_capita_sub_section_one_icon_fr_id_a72e4d60; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_one_icon_fr_id_a72e4d60 ON public.great_international_capitalinvestregionpage USING btree (sub_section_one_icon_fr_id);
+
+
+--
+-- Name: great_international_capita_sub_section_one_icon_id_ce80e862; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_one_icon_id_ce80e862 ON public.great_international_capitalinvestregionpage USING btree (sub_section_one_icon_id);
+
+
+--
+-- Name: great_international_capita_sub_section_one_icon_ja_id_1bf71505; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_one_icon_ja_id_1bf71505 ON public.great_international_capitalinvestregionpage USING btree (sub_section_one_icon_ja_id);
+
+
+--
+-- Name: great_international_capita_sub_section_one_icon_pt_id_509d7313; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_one_icon_pt_id_509d7313 ON public.great_international_capitalinvestregionpage USING btree (sub_section_one_icon_pt_id);
+
+
+--
+-- Name: great_international_capita_sub_section_one_icon_zh_ha_c772161e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_one_icon_zh_ha_c772161e ON public.great_international_capitalinvestregionpage USING btree (sub_section_one_icon_zh_hans_id);
+
+
+--
+-- Name: great_international_capita_sub_section_three_icon_ar__77b15f11; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_three_icon_ar__77b15f11 ON public.great_international_capitalinvestregionpage USING btree (sub_section_three_icon_ar_id);
+
+
+--
+-- Name: great_international_capita_sub_section_three_icon_de__4457faa0; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_three_icon_de__4457faa0 ON public.great_international_capitalinvestregionpage USING btree (sub_section_three_icon_de_id);
+
+
+--
+-- Name: great_international_capita_sub_section_three_icon_en__747e2458; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_three_icon_en__747e2458 ON public.great_international_capitalinvestregionpage USING btree (sub_section_three_icon_en_gb_id);
+
+
+--
+-- Name: great_international_capita_sub_section_three_icon_es__334754ba; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_three_icon_es__334754ba ON public.great_international_capitalinvestregionpage USING btree (sub_section_three_icon_es_id);
+
+
+--
+-- Name: great_international_capita_sub_section_three_icon_fr__798ec809; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_three_icon_fr__798ec809 ON public.great_international_capitalinvestregionpage USING btree (sub_section_three_icon_fr_id);
+
+
+--
+-- Name: great_international_capita_sub_section_three_icon_id_f6777bca; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_three_icon_id_f6777bca ON public.great_international_capitalinvestregionpage USING btree (sub_section_three_icon_id);
+
+
+--
+-- Name: great_international_capita_sub_section_three_icon_ja__2b3c9616; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_three_icon_ja__2b3c9616 ON public.great_international_capitalinvestregionpage USING btree (sub_section_three_icon_ja_id);
+
+
+--
+-- Name: great_international_capita_sub_section_three_icon_pt__5ec62ae4; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_three_icon_pt__5ec62ae4 ON public.great_international_capitalinvestregionpage USING btree (sub_section_three_icon_pt_id);
+
+
+--
+-- Name: great_international_capita_sub_section_three_icon_zh__2a449a81; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_three_icon_zh__2a449a81 ON public.great_international_capitalinvestregionpage USING btree (sub_section_three_icon_zh_hans_id);
+
+
+--
+-- Name: great_international_capita_sub_section_two_icon_ar_id_3fab8bf0; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_two_icon_ar_id_3fab8bf0 ON public.great_international_capitalinvestregionpage USING btree (sub_section_two_icon_ar_id);
+
+
+--
+-- Name: great_international_capita_sub_section_two_icon_de_id_47cb4550; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_two_icon_de_id_47cb4550 ON public.great_international_capitalinvestregionpage USING btree (sub_section_two_icon_de_id);
+
+
+--
+-- Name: great_international_capita_sub_section_two_icon_en_gb_635c90da; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_two_icon_en_gb_635c90da ON public.great_international_capitalinvestregionpage USING btree (sub_section_two_icon_en_gb_id);
+
+
+--
+-- Name: great_international_capita_sub_section_two_icon_es_id_47e5e9fe; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_two_icon_es_id_47e5e9fe ON public.great_international_capitalinvestregionpage USING btree (sub_section_two_icon_es_id);
+
+
+--
+-- Name: great_international_capita_sub_section_two_icon_fr_id_d28c408f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_two_icon_fr_id_d28c408f ON public.great_international_capitalinvestregionpage USING btree (sub_section_two_icon_fr_id);
+
+
+--
+-- Name: great_international_capita_sub_section_two_icon_id_69334260; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_two_icon_id_69334260 ON public.great_international_capitalinvestregionpage USING btree (sub_section_two_icon_id);
+
+
+--
+-- Name: great_international_capita_sub_section_two_icon_ja_id_5123c441; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_two_icon_ja_id_5123c441 ON public.great_international_capitalinvestregionpage USING btree (sub_section_two_icon_ja_id);
+
+
+--
+-- Name: great_international_capita_sub_section_two_icon_pt_id_3bc4dbd1; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_two_icon_pt_id_3bc4dbd1 ON public.great_international_capitalinvestregionpage USING btree (sub_section_two_icon_pt_id);
+
+
+--
+-- Name: great_international_capita_sub_section_two_icon_zh_ha_7fc8bf78; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_sub_section_two_icon_zh_ha_7fc8bf78 ON public.great_international_capitalinvestregionpage USING btree (sub_section_two_icon_zh_hans_id);
 
 
 --
@@ -43199,6 +43596,222 @@ ALTER TABLE ONLY public.great_international_investinternationalhomepage
 
 ALTER TABLE ONLY public.great_international_investinternationalhomepage
     ADD CONSTRAINT great_international__setup_guide_img_zh_h_9ddeb1cf_fk_wagtailim FOREIGN KEY (setup_guide_img_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_one_icon_1bf71505_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_one_icon_1bf71505_fk_wagtailim FOREIGN KEY (sub_section_one_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_one_icon_509d7313_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_one_icon_509d7313_fk_wagtailim FOREIGN KEY (sub_section_one_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_one_icon_99a7c7a6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_one_icon_99a7c7a6_fk_wagtailim FOREIGN KEY (sub_section_one_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_one_icon_a72e4d60_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_one_icon_a72e4d60_fk_wagtailim FOREIGN KEY (sub_section_one_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_one_icon_c772161e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_one_icon_c772161e_fk_wagtailim FOREIGN KEY (sub_section_one_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_one_icon_ce80e862_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_one_icon_ce80e862_fk_wagtailim FOREIGN KEY (sub_section_one_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_one_icon_d7b97460_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_one_icon_d7b97460_fk_wagtailim FOREIGN KEY (sub_section_one_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_one_icon_e215a792_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_one_icon_e215a792_fk_wagtailim FOREIGN KEY (sub_section_one_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_one_icon_e51535a5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_one_icon_e51535a5_fk_wagtailim FOREIGN KEY (sub_section_one_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_three_ic_2a449a81_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_three_ic_2a449a81_fk_wagtailim FOREIGN KEY (sub_section_three_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_three_ic_2b3c9616_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_three_ic_2b3c9616_fk_wagtailim FOREIGN KEY (sub_section_three_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_three_ic_334754ba_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_three_ic_334754ba_fk_wagtailim FOREIGN KEY (sub_section_three_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_three_ic_4457faa0_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_three_ic_4457faa0_fk_wagtailim FOREIGN KEY (sub_section_three_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_three_ic_5ec62ae4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_three_ic_5ec62ae4_fk_wagtailim FOREIGN KEY (sub_section_three_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_three_ic_747e2458_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_three_ic_747e2458_fk_wagtailim FOREIGN KEY (sub_section_three_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_three_ic_77b15f11_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_three_ic_77b15f11_fk_wagtailim FOREIGN KEY (sub_section_three_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_three_ic_798ec809_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_three_ic_798ec809_fk_wagtailim FOREIGN KEY (sub_section_three_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_three_ic_f6777bca_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_three_ic_f6777bca_fk_wagtailim FOREIGN KEY (sub_section_three_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_two_icon_3bc4dbd1_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_two_icon_3bc4dbd1_fk_wagtailim FOREIGN KEY (sub_section_two_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_two_icon_3fab8bf0_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_two_icon_3fab8bf0_fk_wagtailim FOREIGN KEY (sub_section_two_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_two_icon_47cb4550_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_two_icon_47cb4550_fk_wagtailim FOREIGN KEY (sub_section_two_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_two_icon_47e5e9fe_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_two_icon_47e5e9fe_fk_wagtailim FOREIGN KEY (sub_section_two_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_two_icon_5123c441_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_two_icon_5123c441_fk_wagtailim FOREIGN KEY (sub_section_two_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_two_icon_635c90da_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_two_icon_635c90da_fk_wagtailim FOREIGN KEY (sub_section_two_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_two_icon_69334260_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_two_icon_69334260_fk_wagtailim FOREIGN KEY (sub_section_two_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_two_icon_7fc8bf78_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_two_icon_7fc8bf78_fk_wagtailim FOREIGN KEY (sub_section_two_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestregionpage great_international__sub_section_two_icon_d28c408f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestregionpage
+    ADD CONSTRAINT great_international__sub_section_two_icon_d28c408f_fk_wagtailim FOREIGN KEY (sub_section_two_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
