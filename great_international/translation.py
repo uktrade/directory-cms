@@ -423,6 +423,14 @@ class CapitalInvestRegionPageTranslationOptions(
         'economics_stat_4_heading',
         'economics_stat_4_smallprint',
 
+        'economics_stat_5_number',
+        'economics_stat_5_heading',
+        'economics_stat_5_smallprint',
+
+        'economics_stat_6_number',
+        'economics_stat_6_heading',
+        'economics_stat_6_smallprint',
+
         'location_data_title',
         'location_stat_1_number',
         'location_stat_1_heading',
@@ -440,6 +448,26 @@ class CapitalInvestRegionPageTranslationOptions(
         'location_stat_4_heading',
         'location_stat_4_smallprint',
 
+        'location_stat_5_number',
+        'location_stat_5_heading',
+        'location_stat_5_smallprint',
+
+        'location_stat_6_number',
+        'location_stat_6_heading',
+        'location_stat_6_smallprint',
+
+        'sub_section_one_title',
+        'sub_section_one_icon',
+        'sub_section_one_content',
+
+        'sub_section_two_title',
+        'sub_section_two_icon',
+        'sub_section_two_content',
+
+        'sub_section_three_title',
+        'sub_section_three_icon',
+        'sub_section_three_content',
+
         'property_and_infrastructure_section_title',
         'property_and_infrastructure_section_image',
         'property_and_infrastructure_section_content',
@@ -452,6 +480,8 @@ class CapitalInvestRegionPageTranslationOptions(
 
         'contact_title',
         'contact_text',
+        'contact_cta_link',
+        'contact_cta_text',
 
     )
 
