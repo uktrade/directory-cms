@@ -148,6 +148,8 @@ class InvestHighPotentialOpportunityFormPageSubscriber(
     model = invest.InvestHighPotentialOpportunityFormPage
     subscriptions = [
         invest.InvestHighPotentialOpportunityDetailPage,
+        invest.InvestHighPotentialOpportunityFormPage,
+        invest.InvestHighPotentialOpportunityFormSuccessPage,
     ]
 
 
@@ -157,6 +159,8 @@ class InvestHighPotentialOpportunityDetailPageSubscriber(
     model = invest.InvestHighPotentialOpportunityDetailPage
     subscriptions = [
         invest.InvestHighPotentialOpportunityDetailPage,
+        invest.InvestHighPotentialOpportunityFormPage,
+        invest.InvestHighPotentialOpportunityFormSuccessPage,
     ]
 
 
@@ -166,6 +170,7 @@ class InvestHighPotentialOpportunityFormSuccessPageSubscriber(
     model = invest.InvestHighPotentialOpportunityFormSuccessPage
     subscriptions = [
         invest.InvestHighPotentialOpportunityDetailPage,
+        invest.InvestHighPotentialOpportunityFormPage,
     ]
 
 
