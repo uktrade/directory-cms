@@ -192,6 +192,33 @@ class LocationStatisticProxyDataWrapper:
         )
 
 
+class RegionSubsectionProxyDataWrapper:
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def title(self):
+        return getattr(
+            self.instance,
+            f'sub_section_{self.position_number}_title'
+        )
+
+    @property
+    def icon(self):
+        return getattr(
+            self.instance,
+            f'sub_section_{self.position_number}_icon'
+        )
+
+    @property
+    def content(self):
+        return getattr(
+            self.instance,
+            f'sub_section_{self.position_number}_content'
+        )
+
+
 class InvestHowWeHelpProxyDataWrapper:
 
     def __init__(self, instance, position_number):
@@ -1041,6 +1068,9 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer):
     investment_opps_intro = serializers.CharField(max_length=255)
     economics_stats = serializers.SerializerMethodField()
     location_stats = serializers.SerializerMethodField()
+
+    subsections = serializers.SerializerMethodField()
+
     property_and_infrastructure_section_title = serializers.CharField(
         max_length=255
     )
@@ -1058,6 +1088,8 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer):
 
     contact_title = serializers.CharField(max_length=255)
     contact_text = core_fields.MarkdownToHTMLField()
+    contact_cta_link = serializers.CharField(max_length=255)
+    contact_cta_text = serializers.CharField(max_length=255)
 
     def get_economics_stats(self, instance):
         data = [
@@ -1065,7 +1097,7 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer):
                 instance=instance,
                 position_number=num
             )
-            for num in ['1', '2', '3', '4']
+            for num in ['1', '2', '3', '4', '5', '6']
         ]
         serializer = EconomicStatSerializer(data, many=True)
         return serializer.data
@@ -1076,9 +1108,20 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer):
                 instance=instance,
                 position_number=num
             )
-            for num in ['1', '2', '3', '4']
+            for num in ['1', '2', '3', '4', '5', '6']
         ]
         serializer = LocationStatSerializer(data, many=True)
+        return serializer.data
+
+    def get_subsections(self, instance):
+        data = [
+            RegionSubsectionProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['one', 'two', 'three']
+        ]
+        serializer = RegionSubsectionSerializer(data, many=True)
         return serializer.data
 
 
@@ -1305,6 +1348,15 @@ class SubsectionSerializer(serializers.Serializer):
     title = serializers.CharField(max_length=255)
     content = core_fields.MarkdownToHTMLField()
     map = wagtail_fields.ImageRenditionField(
+        'original',
+        allow_null=True
+    )
+
+
+class RegionSubsectionSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=255)
+    content = core_fields.MarkdownToHTMLField()
+    icon = wagtail_fields.ImageRenditionField(
         'original',
         allow_null=True
     )
