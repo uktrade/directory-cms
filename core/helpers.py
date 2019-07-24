@@ -183,7 +183,7 @@ def get_button_url_name(button):
 
 def render_markdown(text, context=None):
     allowed_table_tags = ['table', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td']
-    allowed_tags = markdown_tags+allowed_table_tags
+    allowed_tags = markdown_tags + allowed_table_tags
     html = markdown.markdown(
         text,
         extensions=[
