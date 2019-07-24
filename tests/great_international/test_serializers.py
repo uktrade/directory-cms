@@ -318,8 +318,8 @@ def test_capital_invest_region_page_has_statistics(international_root_page, rf):
         context={'request': rf.get('/')}
     )
 
-    assert len(serializer.data['location_stats']) == 4
-    assert len(serializer.data['economics_stats']) == 4
+    assert len(serializer.data['location_stats']) == 6
+    assert len(serializer.data['economics_stats']) == 6
     for statistic in serializer.data['location_stats']:
         assert 'number' in statistic
         assert 'heading' in statistic

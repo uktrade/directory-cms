@@ -38,14 +38,9 @@ def test_models_hierarchy():
     ]
     assert great_international.InternationalHomePage.allowed_parent_page_models() == [Page]
     # region page
-    assert great_international.InternationalRegionPage.allowed_subpage_models() == [
-        great_international.InternationalLocalisedFolderPage
-    ]
+    assert great_international.InternationalRegionPage.allowed_subpage_models() == []
     # regional folder page
-    assert great_international.InternationalLocalisedFolderPage.allowed_subpage_models() == [
-            great_international.InternationalArticlePage,
-            great_international.InternationalCampaignPage
-        ]
+    assert great_international.InternationalLocalisedFolderPage.allowed_subpage_models() == []
     # topic landing
     assert great_international.InternationalTopicLandingPage.allowed_subpage_models() == [
             great_international.InternationalArticleListingPage,
@@ -220,4 +215,4 @@ def test_hpo_folder_page(international_root_page):
         parent=invest_home
     )
 
-    assert invest_hpo_folder.title == invest_hpo_folder.get_verbose_name()
+    assert invest_hpo_folder.title == 'High potential opportunities'

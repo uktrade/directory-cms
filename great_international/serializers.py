@@ -8,7 +8,6 @@ from core.serializers import (
     ChildPagesSerializerHelper,
     FormPageSerializerMetaclass,
     SameSectorOpportunitiesHelper)
-from invest.models import HighPotentialOpportunityDetailPage
 
 from .models.great_international import (
     InternationalArticlePage,
@@ -189,6 +188,33 @@ class LocationStatisticProxyDataWrapper:
         return getattr(
             self.instance,
             f'location_stat_{self.position_number}_smallprint'
+        )
+
+
+class RegionSubsectionProxyDataWrapper:
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def title(self):
+        return getattr(
+            self.instance,
+            f'sub_section_{self.position_number}_title'
+        )
+
+    @property
+    def icon(self):
+        return getattr(
+            self.instance,
+            f'sub_section_{self.position_number}_icon'
+        )
+
+    @property
+    def content(self):
+        return getattr(
+            self.instance,
+            f'sub_section_{self.position_number}_content'
         )
 
 
@@ -1041,6 +1067,10 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer):
     investment_opps_intro = serializers.CharField(max_length=255)
     economics_stats = serializers.SerializerMethodField()
     location_stats = serializers.SerializerMethodField()
+
+    subsections_title = serializers.CharField(max_length=255)
+    subsections = serializers.SerializerMethodField()
+
     property_and_infrastructure_section_title = serializers.CharField(
         max_length=255
     )
@@ -1058,6 +1088,8 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer):
 
     contact_title = serializers.CharField(max_length=255)
     contact_text = core_fields.MarkdownToHTMLField()
+    contact_cta_link = serializers.CharField(max_length=255)
+    contact_cta_text = serializers.CharField(max_length=255)
 
     def get_economics_stats(self, instance):
         data = [
@@ -1065,7 +1097,7 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer):
                 instance=instance,
                 position_number=num
             )
-            for num in ['1', '2', '3', '4']
+            for num in ['1', '2', '3', '4', '5', '6']
         ]
         serializer = EconomicStatSerializer(data, many=True)
         return serializer.data
@@ -1076,9 +1108,20 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer):
                 instance=instance,
                 position_number=num
             )
-            for num in ['1', '2', '3', '4']
+            for num in ['1', '2', '3', '4', '5', '6']
         ]
         serializer = LocationStatSerializer(data, many=True)
+        return serializer.data
+
+    def get_subsections(self, instance):
+        data = [
+            RegionSubsectionProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['one', 'two', 'three']
+        ]
+        serializer = RegionSubsectionSerializer(data, many=True)
         return serializer.data
 
 
@@ -1310,6 +1353,15 @@ class SubsectionSerializer(serializers.Serializer):
     )
 
 
+class RegionSubsectionSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=255)
+    content = core_fields.MarkdownToHTMLField()
+    icon = wagtail_fields.ImageRenditionField(
+        'original',
+        allow_null=True
+    )
+
+
 class InvestInternationalHomePageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField(max_length=50)
     heading = serializers.CharField(max_length=255)
@@ -1511,6 +1563,11 @@ class InvestHighPotentialOpportunityDetailPageSerializer(
         return serializer.data
 
 
+class InvestHighPotentialOpportunityListItemSerializer(BasePageSerializer):
+    pdf_document = core_fields.DocumentURLField()
+    heading = serializers.CharField(max_length=255)
+
+
 class InvestHighPotentialOpportunityFormPageSerializer(
     BasePageSerializer,
     metaclass=FormPageSerializerMetaclass
@@ -1526,12 +1583,12 @@ class InvestHighPotentialOpportunityFormPageSerializer(
 
     def get_opportunity_list(self, instance):
         queryset = (
-            HighPotentialOpportunityDetailPage.objects.all()
+            InvestHighPotentialOpportunityDetailPage.objects.all()
             .live()
             .order_by('heading')
             .exclude(slug=instance.slug)
         )
-        serializer = InvestHighPotentialOpportunityDetailPageSerializer(
+        serializer = InvestHighPotentialOpportunityListItemSerializer(
             queryset,
             many=True,
             allow_null=True,
@@ -1799,6 +1856,13 @@ class AboutUkWhyChooseTheUkPageSerializer(BasePageSerializer):
             context=self.context
         )
         return serializer.data
+
+    ebook_section_image = wagtail_fields.ImageRenditionField('fill-299x423')
+    ebook_section_image_alt_text = serializers.CharField()
+    ebook_section_title = serializers.CharField()
+    ebook_section_body = core_fields.MarkdownToHTMLField()
+    ebook_section_cta_text = serializers.CharField()
+    ebook_section_cta_link = serializers.CharField()
 
     contact_us_section_title = serializers.CharField()
     contact_us_section_summary = core_fields.MarkdownToHTMLField()
