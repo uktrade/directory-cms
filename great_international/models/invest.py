@@ -249,12 +249,13 @@ class InvestHighPotentialOpportunitiesPage(
     ]
 
     def save(self, *args, **kwargs):
-        self.title = self.get_verbose_name()
+        # title is used for tree_based_breadcrumbs that are displayed in the UI
+        self.title = 'High potential opportunities'
         return super().save(*args, **kwargs)
 
 
 class InvestHighPotentialOpportunityFormPage(
-    WagtailAdminExclusivePageMixin,
+    ExclusivePageMixin,
     BaseInternationalPage,
     metaclass=FormPageMetaClass,
 ):
@@ -508,8 +509,9 @@ class InvestHighPotentialOpportunityDetailPage(
 
 
 class InvestHighPotentialOpportunityFormSuccessPage(
-    BaseInternationalPage,
     panels.InvestHighPotentialOpportunityFormSuccessPagePanels,
+    ExclusivePageMixin,
+    BaseInternationalPage,
 ):
     slug_identity = 'success'
 

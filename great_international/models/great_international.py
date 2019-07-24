@@ -754,14 +754,13 @@ class InternationalHomePageOld(
     visit_uk_cta_text = models.CharField(max_length=255)
 
 
+# !!! TO BE REMOVED !!!
 class InternationalRegionPage(
     BaseInternationalPage,
     panels.InternationalRegionPagePanels,
 ):
     parent_page_types = ['great_international.InternationalHomePage']
-    subpage_types = [
-        'great_international.InternationalLocalisedFolderPage'
-    ]
+    subpage_types = []
 
     tags = ParentalManyToManyField(Tag, blank=True)
 
@@ -769,11 +768,11 @@ class InternationalRegionPage(
         return super().save(*args, **kwargs)
 
 
+# !!! TO BE REMOVED !!!
 class InternationalLocalisedFolderPage(
     BaseInternationalPage,
     panels.InternationalLocalisedFolderPagePanels,
 ):
-    parent_page_types = ['great_international.InternationalRegionPage']
     subpage_types = [
         'great_international.InternationalArticlePage',
         'great_international.InternationalCampaignPage'
@@ -792,7 +791,6 @@ class InternationalArticlePage(
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
-        'great_international.InternationalLocalisedFolderPage',
         'great_international.InternationalCuratedTopicLandingPage',
         'great_international.InternationalGuideLandingPage',
     ]
@@ -880,7 +878,6 @@ class InternationalCampaignPage(
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalTopicLandingPage',
-        'great_international.InternationalLocalisedFolderPage'
     ]
     subpage_types = [
         'great_international.InternationalArticlePage'
