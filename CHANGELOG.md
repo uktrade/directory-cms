@@ -7,6 +7,7 @@
 - CI-323 - Added "About the UK" section pages - landing page and "why choose the UK" page
 - CI-365 - Changed the "Contact Us" section on the services page in "About DIT" to have its body be markdown
 - CI-368 - Add ebooks promotional section on "why choose the UK" page
+- CI-367 - Update `CapitalInvestRegionPage`
 
 
 ### Fixed Bugs

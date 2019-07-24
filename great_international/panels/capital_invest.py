@@ -158,9 +158,10 @@ class CapitalInvestRegionPagePanels:
         FieldPanel('featured_description'),
         MultiFieldPanel(
             heading="Region summary",
+            classname='collapsible',
             children=[
                 HelpPanel('Required fields for section to show: '
-                          'Region Summary Section Intro'),
+                          'Region Summary Section Content'),
                 ImageChooserPanel('region_summary_section_image'),
                 FieldPanel('region_summary_section_intro'),
                 FieldPanel('region_summary_section_content'),
@@ -168,6 +169,7 @@ class CapitalInvestRegionPagePanels:
         ),
         MultiFieldPanel(
             heading="Investment opportunities",
+            classname='collapsible collapsed',
             children=[
                 FieldPanel('investment_opps_title'),
                 FieldPanel('investment_opps_intro'),
@@ -175,66 +177,90 @@ class CapitalInvestRegionPagePanels:
         ),
         MultiFieldPanel(
             heading="Economics Statistics",
+            classname='collapsible',
             children=[
-                HelpPanel('Required fields for section to show: '
-                          'Economics Data Title'),
-                FieldPanel('economics_data_title'),
+                HelpPanel('Required: at least 4 statistics for the section to show'),
                 FieldRowPanel([
                     MultiFieldPanel([
-                        FieldPanel('economics_stat_1_number'),
                         FieldPanel('economics_stat_1_heading'),
+                        FieldPanel('economics_stat_1_number'),
                         FieldPanel('economics_stat_1_smallprint'),
                     ]),
                     MultiFieldPanel([
-                        FieldPanel('economics_stat_2_number'),
                         FieldPanel('economics_stat_2_heading'),
+                        FieldPanel('economics_stat_2_number'),
                         FieldPanel('economics_stat_2_smallprint'),
                     ]),
                     MultiFieldPanel([
-                        FieldPanel('economics_stat_3_number'),
                         FieldPanel('economics_stat_3_heading'),
+                        FieldPanel('economics_stat_3_number'),
                         FieldPanel('economics_stat_3_smallprint'),
                     ]),
+                ]),
+                FieldRowPanel([
                     MultiFieldPanel([
-                        FieldPanel('economics_stat_4_number'),
                         FieldPanel('economics_stat_4_heading'),
+                        FieldPanel('economics_stat_4_number'),
                         FieldPanel('economics_stat_4_smallprint'),
                     ]),
+                    MultiFieldPanel([
+                        FieldPanel('economics_stat_5_heading'),
+                        FieldPanel('economics_stat_5_number'),
+                        FieldPanel('economics_stat_5_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('economics_stat_6_heading'),
+                        FieldPanel('economics_stat_6_number'),
+                        FieldPanel('economics_stat_6_smallprint'),
+                    ]),
                 ]),
+
             ],
         ),
         MultiFieldPanel(
             heading="Location Statistics",
+            classname='collapsible',
             children=[
-                HelpPanel('Required fields for section to show: '
-                          'Location Data Title'),
-                FieldPanel('location_data_title'),
+                HelpPanel('Required: at least 4 statistics for the section to show'),
                 FieldRowPanel([
                     MultiFieldPanel([
-                        FieldPanel('location_stat_1_number'),
                         FieldPanel('location_stat_1_heading'),
+                        FieldPanel('location_stat_1_number'),
                         FieldPanel('location_stat_1_smallprint'),
                     ]),
                     MultiFieldPanel([
-                        FieldPanel('location_stat_2_number'),
                         FieldPanel('location_stat_2_heading'),
+                        FieldPanel('location_stat_2_number'),
                         FieldPanel('location_stat_2_smallprint'),
                     ]),
                     MultiFieldPanel([
-                        FieldPanel('location_stat_3_number'),
                         FieldPanel('location_stat_3_heading'),
+                        FieldPanel('location_stat_3_number'),
                         FieldPanel('location_stat_3_smallprint'),
                     ]),
+                ]),
+                FieldRowPanel([
                     MultiFieldPanel([
-                        FieldPanel('location_stat_4_number'),
                         FieldPanel('location_stat_4_heading'),
+                        FieldPanel('location_stat_4_number'),
                         FieldPanel('location_stat_4_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('location_stat_5_heading'),
+                        FieldPanel('location_stat_5_number'),
+                        FieldPanel('location_stat_5_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('location_stat_6_heading'),
+                        FieldPanel('location_stat_6_number'),
+                        FieldPanel('location_stat_6_smallprint'),
                     ]),
                 ]),
             ],
         ),
         MultiFieldPanel(
             heading="Extra optional Property and Infrastructure section",
+            classname='collapsible',
             children=[
                 HelpPanel('Required fields for section to show: '
                           'Property and Infrastructure Section Title, '
@@ -243,6 +269,30 @@ class CapitalInvestRegionPagePanels:
                 FieldPanel('property_and_infrastructure_section_title'),
                 FieldPanel('property_and_infrastructure_section_content'),
             ],
+        ),
+        MultiFieldPanel(
+            heading="Accordions subsections",
+            classname='collapsible collapsed',
+            children=[
+                HelpPanel('Required: title and content for each accordion to show'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('sub_section_one_title'),
+                        ImageChooserPanel('sub_section_one_icon'),
+                        FieldPanel('sub_section_one_content')
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('sub_section_two_title'),
+                        ImageChooserPanel('sub_section_two_icon'),
+                        FieldPanel('sub_section_two_content')
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('sub_section_three_title'),
+                        ImageChooserPanel('sub_section_three_icon'),
+                        FieldPanel('sub_section_three_content')
+                    ]),
+                ]),
+            ]
         ),
         MultiFieldPanel(
             heading="Case study",
@@ -267,6 +317,8 @@ class CapitalInvestRegionPagePanels:
                           'Contact Title, Contact Text'),
                 FieldPanel('contact_title'),
                 FieldPanel('contact_text'),
+                FieldPanel('contact_cta_text'),
+                FieldPanel('contact_cta_link'),
             ],
         ),
     ]
