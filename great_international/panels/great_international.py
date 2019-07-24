@@ -1264,6 +1264,27 @@ class AboutUkWhyChooseTheUkPagePanels:
             ]
         ),
         MultiFieldPanel(
+            heading="EBook section",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required fields for section to show: '
+                          'title, body'),
+                FieldRowPanel([
+                    ImageChooserPanel('ebook_section_image'),
+                    HelpPanel('Description of image for screenreaders'),
+                    FieldPanel('ebook_section_image_alt_text'),
+                    MultiFieldPanel([
+                        FieldPanel('ebook_section_title'),
+                        FieldPanel('ebook_section_body'),
+                        HelpPanel('CTAs require both text and a link to show '
+                                  'on page. '),
+                        FieldPanel('ebook_section_cta_text'),
+                        FieldPanel('ebook_section_cta_link'),
+                    ])
+                ])
+            ]
+        ),
+        MultiFieldPanel(
             heading="Contact Section",
             classname='collapsible',
             children=[
