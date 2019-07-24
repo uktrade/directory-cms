@@ -3,9 +3,6 @@
 ## Pre-release
 
 ### Implemented enhancements
-- XOT-932 - Add Country Guide pages to search
-- CI-342 - `CapitalInvestOpportunityPage` gets all projects that have the same related sector as self so they can be randomised
-- CI-344 - `Similar projects` title and `related_page_one/teo/three `CapitalInvestOpportunityPage` are no longer used, only removed from panels for now
 - CI-323 - Added "About the UK" section pages - landing page and "why choose the UK" page
 - CI-365 - Changed the "Contact Us" section on the services page in "About DIT" to have its body be markdown
 
@@ -13,7 +10,16 @@
 ### Fixed Bugs
 
 
-## [2019.07.18](https://github.com/uktrade/directory-cms/releases/tag/2019.07.18]
+## [2019.07.24](https://github.com/uktrade/directory-cms/releases/tag/2019.07.24)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.07.18...2019.07.24
+
+- XOT-932 - Add Country Guide pages to search
+- CI-342 - CapitalInvestOpportunityPage gets all projects that have the same related sector as self so they can be randomised
+- CI-344 - Similar projects title and related_page_one/teo/three CapitalInvestOpportunityPage` are no longer used, only removed from panels for now
+- CMS-1648 - Added tree-based routing helpers
+
+
+## [2019.07.18](https://github.com/uktrade/directory-cms/releases/tag/2019.07.18)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.06.27...2019.07.18
 
 ### Implemented enhancements
@@ -27,7 +33,6 @@
 - CI-324 - Made `BaseInternationalSectorPage` and sector and new sub-sector page inherit from this and opportunity listing page filters by sub sector
 - CI-322 - Added "About DIT" placeholder landing page
 - CI-322 - Added "About DIT" services pages
-- CMS-1648 - Added tree-based routing helpers
 
 ### Fixed Bugs
 - NOTICKET - Capital invest landing page image serializers use aspect ratio for card images
