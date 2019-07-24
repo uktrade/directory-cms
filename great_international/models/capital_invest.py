@@ -387,6 +387,7 @@ class CapitalInvestRegionPage(
         blank=True
     )
 
+    subsections_title = models.CharField(max_length=255, blank=True)
     sub_section_one_title = models.CharField(max_length=255, blank=True)
     sub_section_one_icon = models.ForeignKey(
         'wagtailimages.Image',
