@@ -297,6 +297,14 @@ class CapitalInvestRegionPage(
     economics_stat_4_heading = models.CharField(max_length=255, blank=True)
     economics_stat_4_smallprint = models.CharField(max_length=255, blank=True)
 
+    economics_stat_5_number = models.CharField(max_length=255, blank=True)
+    economics_stat_5_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_5_smallprint = models.CharField(max_length=255, blank=True)
+
+    economics_stat_6_number = models.CharField(max_length=255, blank=True)
+    economics_stat_6_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_6_smallprint = models.CharField(max_length=255, blank=True)
+
     location_data_title = models.CharField(
         max_length=255,
         blank=True
@@ -353,6 +361,62 @@ class CapitalInvestRegionPage(
         blank=True
     )
 
+    location_stat_5_number = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_5_heading = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_5_smallprint = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    location_stat_6_number = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_6_heading = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_6_smallprint = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    sub_section_one_title = models.CharField(max_length=255, blank=True)
+    sub_section_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    sub_section_one_content = MarkdownField(blank=True)
+
+    sub_section_two_title = models.CharField(max_length=255, blank=True)
+    sub_section_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    sub_section_two_content = MarkdownField(blank=True)
+
+    sub_section_three_title = models.CharField(max_length=255, blank=True)
+    sub_section_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    sub_section_three_content = MarkdownField(blank=True)
+
     property_and_infrastructure_section_title = models.CharField(
         max_length=255,
         blank=True
@@ -380,6 +444,8 @@ class CapitalInvestRegionPage(
 
     contact_title = models.CharField(max_length=255, blank=True)
     contact_text = MarkdownField(blank=True)
+    contact_cta_link = models.CharField(max_length=255, blank=True)
+    contact_cta_text = models.CharField(max_length=255, blank=True)
 
 
 class CapitalInvestOpportunityListingPage(
