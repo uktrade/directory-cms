@@ -274,7 +274,8 @@ class CapitalInvestRegionPagePanels:
             heading="Accordions subsections",
             classname='collapsible collapsed',
             children=[
-                HelpPanel('Required: title and content for each accordion to show'),
+                HelpPanel('Required: subsections title and at least one title and content for an accordion to show'),
+                FieldPanel('subsections_title'),
                 FieldRowPanel([
                     MultiFieldPanel([
                         FieldPanel('sub_section_one_title'),
