@@ -1478,6 +1478,7 @@ class AboutUkWhyChooseTheUkPage(
         related_name='+',
         blank=True
     )
+    ebook_section_image_alt_text = models.CharField(max_length=255, blank=True)
     ebook_section_title = models.CharField(max_length=255, blank=True)
     ebook_section_body = MarkdownField(null=True, blank=True)
     ebook_section_cta_text = models.CharField(max_length=255, blank=True)

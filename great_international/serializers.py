@@ -1801,6 +1801,7 @@ class AboutUkWhyChooseTheUkPageSerializer(BasePageSerializer):
         return serializer.data
 
     ebook_section_image = wagtail_fields.ImageRenditionField('fill-299x423')
+    ebook_section_image_alt_text = serializers.CharField()
     ebook_section_title = serializers.CharField()
     ebook_section_body = core_fields.MarkdownToHTMLField()
     ebook_section_cta_text = serializers.CharField()

@@ -897,6 +897,7 @@ class AboutUkWhyChooseTheUkPageTranslationOptions(
         'statistic_6_heading',
         'statistic_6_smallprint',
         'ebook_section_image',
+        'ebook_section_image_alt_text',
         'ebook_section_title',
         'ebook_section_body',
         'ebook_section_cta_text',
