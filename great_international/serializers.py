@@ -8,7 +8,6 @@ from core.serializers import (
     ChildPagesSerializerHelper,
     FormPageSerializerMetaclass,
     SameSectorOpportunitiesHelper)
-from invest.models import HighPotentialOpportunityDetailPage
 
 from .models.great_international import (
     InternationalArticlePage,
@@ -1563,6 +1562,11 @@ class InvestHighPotentialOpportunityDetailPageSerializer(
         return serializer.data
 
 
+class InvestHighPotentialOpportunityListItemSerializer(BasePageSerializer):
+    pdf_document = core_fields.DocumentURLField()
+    heading = serializers.CharField(max_length=255)
+
+
 class InvestHighPotentialOpportunityFormPageSerializer(
     BasePageSerializer,
     metaclass=FormPageSerializerMetaclass
@@ -1578,12 +1582,12 @@ class InvestHighPotentialOpportunityFormPageSerializer(
 
     def get_opportunity_list(self, instance):
         queryset = (
-            HighPotentialOpportunityDetailPage.objects.all()
+            InvestHighPotentialOpportunityDetailPage.objects.all()
             .live()
             .order_by('heading')
             .exclude(slug=instance.slug)
         )
-        serializer = InvestHighPotentialOpportunityDetailPageSerializer(
+        serializer = InvestHighPotentialOpportunityListItemSerializer(
             queryset,
             many=True,
             allow_null=True,
