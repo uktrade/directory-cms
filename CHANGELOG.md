@@ -11,7 +11,7 @@
 
 
 ## [2019.07.24](https://github.com/uktrade/directory-cms/releases/tag/2019.07.24)
-[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.07.18...2019.07.24
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.07.18...2019.07.24)
 
 - XOT-932 - Add Country Guide pages to search
 - CI-342 - CapitalInvestOpportunityPage gets all projects that have the same related sector as self so they can be randomised
@@ -20,7 +20,7 @@
 
 
 ## [2019.07.18](https://github.com/uktrade/directory-cms/releases/tag/2019.07.18)
-[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.06.27...2019.07.18
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.06.27...2019.07.18)
 
 ### Implemented enhancements
 - XOT-922 - Added Marketing Article Page template
@@ -41,7 +41,7 @@
 
 
 ## [2019.06.27](https://github.com/uktrade/directory-cms/releases/tag/2019.06.27)
-[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.20...2019.06.27
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.20...2019.06.27)
 
 ### Implemented enhancements
 
@@ -57,7 +57,7 @@
 
 
 ## [2019.06.20](https://github.com/uktrade/directory-cms/releases/tag/2019.06.20)
-[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.12...2019.06.20
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.12...2019.06.20)
 
 **Implemented enhancements:**
 
@@ -81,7 +81,7 @@
 
 
 ## [2019.06.12](https://github.com/uktrade/directory-cms/releases/tag/2019.06.12)
-[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.09...2019.06.12
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.05.09...2019.06.12)
 
 **Implemented enhancements:**
 
