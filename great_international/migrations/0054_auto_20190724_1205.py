@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailimages', '0001_squashed_0021'),
-        ('great_international', '0052_auto_20190723_1147'),
+        ('great_international', '0053_auto_20190724_0950'),
     ]
 
     operations = [
