@@ -220,4 +220,4 @@ def test_hpo_folder_page(international_root_page):
         parent=invest_home
     )
 
-    assert invest_hpo_folder.title == invest_hpo_folder.get_verbose_name()
+    assert invest_hpo_folder.title == 'High potential opportunities'
