@@ -9,7 +9,7 @@ from directory_constants import slugs
 from core.model_fields import MarkdownField
 
 from core.models import (
-    ExclusivePageMi xin,
+    ExclusivePageMixin,
     WagtailAdminExclusivePageMixin,
     FormPageMetaClass,
 )
