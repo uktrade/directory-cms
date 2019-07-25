@@ -1268,10 +1268,9 @@ class AboutUkWhyChooseTheUkPagePanels:
             classname='collapsible',
             children=[
                 HelpPanel('Required fields for section to show: title, body'),
-                ImageChooserPanel('ebook_section_image'),
-                MultiFieldPanel([
-                    HelpPanel('Description of image for screenreaders'),
-                    FieldPanel('ebook_section_image_alt_text'),
+                FieldRowPanel([
+                    ImageChooserPanel('ebook_section_image'),
+                    FieldPanel('ebook_section_image_alt_text')
                 ]),
                 MultiFieldPanel([
                     FieldPanel('ebook_section_title'),
