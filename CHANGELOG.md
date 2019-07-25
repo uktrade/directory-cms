@@ -12,8 +12,8 @@
 - CI-367 - Update `CapitalInvestRegionPage`
 - CI-366 - Add CTA to UK benefits section of invest home page
 
-
 ### Fixed Bugs
+- CI-373 - Fix panels on why choose UK page
 
 
 ## [2019.07.24](https://github.com/uktrade/directory-cms/releases/tag/2019.07.24)
