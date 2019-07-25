@@ -9,8 +9,8 @@
 - CI-368 - Add ebooks promotional section on "why choose the UK" page
 - CI-367 - Update `CapitalInvestRegionPage`
 
-
 ### Fixed Bugs
+- CI-373 - Fix panels on why choose UK page
 
 
 ## [2019.07.24](https://github.com/uktrade/directory-cms/releases/tag/2019.07.24)
