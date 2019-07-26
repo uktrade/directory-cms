@@ -854,6 +854,32 @@ class AboutDitLandingPageTranslationOptions(
         'breadcrumbs_label',
         'hero_title',
         'hero_image',
+        'intro',
+        'section_one_content',
+        'section_one_image',
+
+        'how_dit_help_title',
+
+        'related_page_one_image',
+        'related_page_one_title',
+        'related_page_one_description',
+        'related_page_one_url',
+
+        'related_page_two_image',
+        'related_page_two_title',
+        'related_page_two_description',
+        'related_page_two_url',
+
+        'related_page_three_image',
+        'related_page_three_title',
+        'related_page_three_description',
+        'related_page_three_url',
+
+        'case_study_image',
+        'case_study_title',
+        'case_study_text',
+        'case_study_cta_text',
+        'case_study_cta_link',
     )
 
 
