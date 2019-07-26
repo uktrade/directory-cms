@@ -260,6 +260,41 @@ class HowWeHelpProxyDataWrapper:
         )
 
 
+class RelatedPagesCardsProxyDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def title(self):
+        return getattr(
+            self.instance,
+            f'related_page_{self.position_number}_title'
+        )
+
+    @property
+    def image(self):
+        return getattr(
+            self.instance,
+            f'related_page_{self.position_number}_image'
+        )
+
+    @property
+    def description(self):
+        return getattr(
+            self.instance,
+            f'related_page_{self.position_number}_description'
+        )
+
+    @property
+    def url(self):
+        return getattr(
+            self.instance,
+            f'related_page_{self.position_number}_url'
+        )
+
+
 class SectionThreeSubsectionSerializer(serializers.Serializer):
     heading = serializers.CharField(max_length=255)
     teaser = serializers.CharField()
@@ -1745,10 +1780,37 @@ class InternationalTradeIndustryContactPageSerializer(BasePageSerializer):
         return serializer.data
 
 
+class RelatedPageCardsSerializer(serializers.Serializer):
+    image = wagtail_fields.ImageRenditionField('fill-640x360')
+    title = serializers.CharField(max_length=255)
+    description = serializers.CharField(max_length=255)
+    url = serializers.CharField(max_length=255)
+
+
 class AboutDitLandingPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('original')
+
+    intro = serializers.CharField(max_length=255)
+    section_one_content = core_fields.MarkdownToHTMLField()
+    section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
+
+    how_dit_help_title = serializers.CharField(max_length=255)
+
+    case_study_image = wagtail_fields.ImageRenditionField('original')
+    case_study_title = serializers.CharField(max_length=255)
+    case_study_text = serializers.CharField(max_length=255)
+    case_study_cta_text = serializers.CharField(max_length=255)
+    case_study_cta_link = serializers.CharField(max_length=255)
+
+    related_pages = serializers.SerializerMethodField()
+
+    def get_related_pages(self, instance):
+        data = [RelatedPagesCardsProxyDataWrapper(instance=instance, position_number=num)
+                for num in ['one', 'two', 'three']]
+        serializer = RelatedPageCardsSerializer(data, many=True)
+        return serializer.data
 
 
 class AboutDitServiceFieldSerializer(serializers.Serializer):

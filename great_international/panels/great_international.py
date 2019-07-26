@@ -1035,6 +1035,65 @@ class AboutDitLandingPagePanels:
                 ImageChooserPanel('hero_image'),
             ],
         ),
+        MultiFieldPanel(
+            heading="Intro",
+            classname='collapsible',
+            children=[
+                FieldPanel('intro')
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Section one",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required for section to show: Section one content'),
+                FieldPanel('section_one_content'),
+                ImageChooserPanel('section_one_image'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Related pages",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required for section to show: title and at least on related page'),
+                FieldPanel('how_dit_help_title'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                       ImageChooserPanel('related_page_one_image'),
+                       FieldPanel('related_page_one_title'),
+                       FieldPanel('related_page_one_description'),
+                       FieldPanel('related_page_one_url'),
+                    ]),
+                    MultiFieldPanel([
+                       ImageChooserPanel('related_page_two_image'),
+                       FieldPanel('related_page_two_title'),
+                       FieldPanel('related_page_two_description'),
+                       FieldPanel('related_page_two_url'),
+                    ]),
+                    MultiFieldPanel([
+                       ImageChooserPanel('related_page_three_image'),
+                       FieldPanel('related_page_three_title'),
+                       FieldPanel('related_page_three_description'),
+                       FieldPanel('related_page_three_url'),
+                    ]),
+                ]),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Case study",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required fields for section to show: '
+                          'Case Study Image, Case Study Title'),
+                ImageChooserPanel('case_study_image'),
+                FieldPanel('case_study_title'),
+                FieldPanel('case_study_text'),
+                HelpPanel('CTAs require both text and a link to show '
+                          'on page. '),
+                FieldPanel('case_study_cta_text'),
+                FieldPanel('case_study_cta_link'),
+            ],
+        ),
     ]
 
     settings_panels = [

@@ -1267,6 +1267,63 @@ class AboutDitLandingPage(
         related_name='+'
     )
 
+    intro = models.TextField(max_length=255, blank=True)
+    section_one_content = MarkdownField(blank=True)
+    section_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    how_dit_help_title = models.CharField(max_length=255, blank=True)
+
+    related_page_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    related_page_one_title = models.CharField(max_length=255, blank=True)
+    related_page_one_description = MarkdownField(blank=True)
+    related_page_one_url = models.CharField(max_length=255, blank=True)
+
+    related_page_two_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    related_page_two_title = models.CharField(max_length=255, blank=True)
+    related_page_two_description = MarkdownField(blank=True)
+    related_page_two_url = models.CharField(max_length=255, blank=True)
+
+    related_page_three_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    related_page_three_title = models.CharField(max_length=255, blank=True)
+    related_page_three_description = MarkdownField(blank=True)
+    related_page_three_url = models.CharField(max_length=255, blank=True)
+
+    case_study_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    case_study_title = models.CharField(max_length=255, blank=True)
+    case_study_text = models.TextField(max_length=255, blank=True)
+    case_study_cta_text = models.CharField(max_length=255, blank=True)
+    case_study_cta_link = models.CharField(max_length=255, blank=True)
+
 
 class AboutDitServiceField(models.Model, panels.AboutDitServiceFieldPanels):
     icon = models.ForeignKey(
