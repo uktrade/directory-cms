@@ -15,7 +15,7 @@ from core.models import (
 )
 from core.mixins import ServiceHomepageMixin
 
-from export_readiness.models import Tag
+from export_readiness import snippets
 
 from great_international.panels import great_international as panels
 
@@ -34,7 +34,7 @@ class BaseInternationalSectorPage(
     parent_page_types = ['great_international.InternationalTopicLandingPage']
     subpage_types = []
 
-    tags = ParentalManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
     heading = models.CharField(max_length=255, verbose_name='Sector name')
     sub_heading = models.TextField(blank=True)
@@ -762,7 +762,7 @@ class InternationalRegionPage(
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = []
 
-    tags = ParentalManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
     def save(self, *args, **kwargs):
         return super().save(*args, **kwargs)
@@ -836,7 +836,7 @@ class InternationalArticlePage(
         on_delete=models.SET_NULL,
         related_name='+',
     )
-    tags = ParentalManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
 class InternationalArticleListingPage(
@@ -862,7 +862,7 @@ class InternationalArticleListingPage(
     )
     hero_teaser = models.CharField(max_length=255, null=True, blank=True)
     list_teaser = MarkdownField(null=True, blank=True)
-    tags = ParentalManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
     @property
     def articles_count(self):
@@ -1010,7 +1010,7 @@ class InternationalCampaignPage(
     cta_box_button_url = models.CharField(max_length=255)
     cta_box_button_text = models.CharField(max_length=255)
 
-    tags = ParentalManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
 class InternationalTopicLandingPage(
@@ -1034,7 +1034,7 @@ class InternationalTopicLandingPage(
         related_name='+'
     )
     hero_teaser = models.CharField(max_length=255, null=True, blank=True)
-    tags = ParentalManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
 class InternationalCuratedTopicLandingPage(
@@ -1113,7 +1113,7 @@ class InternationalCuratedTopicLandingPage(
     )
     feature_five_url = models.URLField(verbose_name="URL")
 
-    tags = ParentalManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
 class InternationalGuideLandingPage(
@@ -1181,7 +1181,7 @@ class InternationalGuideLandingPage(
     section_three_cta_text = models.CharField(max_length=255, blank=True)
     section_three_cta_link = models.CharField(max_length=255, blank=True)
 
-    tags = ParentalManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
 class InternationalEUExitFormPage(
