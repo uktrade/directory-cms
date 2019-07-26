@@ -1045,6 +1045,7 @@ class MarketingPages(ExclusivePageMixin, BaseDomesticPage):
 
     settings_panels = []
 
+    @staticmethod
     def get_verbose_name():
         return 'Marketing campaign pages'
 
@@ -1298,6 +1299,7 @@ class HomePage(
     news_title = models.CharField(max_length=255)
     news_description = MarkdownField()
 
+    @staticmethod
     def get_verbose_name():
         return 'Great domestic home page'
 
