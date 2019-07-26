@@ -121,8 +121,7 @@ class CapitalInvestRelatedRegions(Orderable, RelatedRegion):
 
 
 class InternationalCapitalInvestLandingPage(
-    WagtailAdminExclusivePageMixin, BaseInternationalPage,
-    panels.InternationalCapitalInvestLandingPagePanels
+    panels.InternationalCapitalInvestLandingPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage
 ):
     slug_identity = 'capital-invest'
 
@@ -244,9 +243,7 @@ class InternationalCapitalInvestLandingPage(
     contact_section_cta_text = models.CharField(max_length=255, blank=True)
 
 
-class CapitalInvestRegionPage(
-    BaseInternationalPage, panels.CapitalInvestRegionPagePanels,
-):
+class CapitalInvestRegionPage(panels.CapitalInvestRegionPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
 
     breadcrumbs_label = models.CharField(max_length=255)
@@ -450,8 +447,7 @@ class CapitalInvestRegionPage(
 
 
 class CapitalInvestOpportunityListingPage(
-    WagtailAdminExclusivePageMixin, BaseInternationalPage,
-    panels.CapitalInvestOpportunityListingPagePanels,
+    panels.CapitalInvestOpportunityListingPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage,
 ):
 
     slug_identity = 'opportunities'
@@ -538,7 +534,7 @@ class CapitalInvestRelatedSubSectors(Orderable, RelatedSubSector):
 
 
 class CapitalInvestOpportunityPage(
-    BaseInternationalPage, panels.CapitalInvestOpportunityPagePanels
+    panels.CapitalInvestOpportunityPagePanels, BaseInternationalPage
 ):
 
     parent_page_types = [

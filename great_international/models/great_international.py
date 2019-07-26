@@ -24,10 +24,7 @@ from . import capital_invest as capital_invest_models
 from .base import BaseInternationalPage
 
 
-class BaseInternationalSectorPage(
-    BaseInternationalPage,
-    panels.BaseInternationalSectorPagePanels,
-):
+class BaseInternationalSectorPage(panels.BaseInternationalSectorPagePanels, BaseInternationalPage):
     class Meta:
         abstract = True
 
@@ -264,10 +261,8 @@ class InternationalSubSectorPage(BaseInternationalSectorPage):
 
 
 class InternationalHomePage(
-    WagtailAdminExclusivePageMixin,
-    ServiceHomepageMixin,
+    panels.InternationalHomePagePanels, WagtailAdminExclusivePageMixin, ServiceHomepageMixin,
     BaseInternationalPage,
-    panels.InternationalHomePagePanels,
 ):
     slug_identity = slugs.GREAT_HOME_INTERNATIONAL
 
@@ -518,10 +513,8 @@ class InternationalHomePage(
 
 
 class InternationalHomePageOld(
-    ExclusivePageMixin,
-    ServiceHomepageMixin,
+    panels.InternationalHomePageOldPanels, ExclusivePageMixin, ServiceHomepageMixin,
     BaseInternationalPage,
-    panels.InternationalHomePageOldPanels,
 ):
     slug_identity = slugs.GREAT_HOME_INTERNATIONAL_OLD
     subpage_types = []
@@ -755,10 +748,7 @@ class InternationalHomePageOld(
 
 
 # !!! TO BE REMOVED !!!
-class InternationalRegionPage(
-    BaseInternationalPage,
-    panels.InternationalRegionPagePanels,
-):
+class InternationalRegionPage(panels.InternationalRegionPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = []
 
@@ -769,10 +759,7 @@ class InternationalRegionPage(
 
 
 # !!! TO BE REMOVED !!!
-class InternationalLocalisedFolderPage(
-    BaseInternationalPage,
-    panels.InternationalLocalisedFolderPagePanels,
-):
+class InternationalLocalisedFolderPage(panels.InternationalLocalisedFolderPagePanels, BaseInternationalPage):
     subpage_types = [
         'great_international.InternationalArticlePage',
         'great_international.InternationalCampaignPage'
@@ -784,10 +771,7 @@ class InternationalLocalisedFolderPage(
         return super().save(*args, **kwargs)
 
 
-class InternationalArticlePage(
-    BaseInternationalPage,
-    panels.InternationalArticlePagePanels,
-):
+class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
@@ -839,10 +823,7 @@ class InternationalArticlePage(
     tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
-class InternationalArticleListingPage(
-    BaseInternationalPage,
-    panels.InternationalArticleListingPagePanels
-):
+class InternationalArticleListingPage(panels.InternationalArticleListingPagePanels, BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalHomePage',
         'great_international.InternationalTopicLandingPage'
@@ -871,10 +852,7 @@ class InternationalArticleListingPage(
         ).live().count()
 
 
-class InternationalCampaignPage(
-    BaseInternationalPage,
-    panels.InternationalCampaignPagePanels,
-):
+class InternationalCampaignPage(panels.InternationalCampaignPagePanels, BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalTopicLandingPage',
@@ -1013,10 +991,7 @@ class InternationalCampaignPage(
     tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
-class InternationalTopicLandingPage(
-    BaseInternationalPage,
-    panels.InternationalTopicLandingPagePanels,
-):
+class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.InternationalArticleListingPage',
@@ -1037,10 +1012,7 @@ class InternationalTopicLandingPage(
     tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
-class InternationalCuratedTopicLandingPage(
-    BaseInternationalPage,
-    panels.InternationalCuratedTopicLandingPagePanels,
-):
+class InternationalCuratedTopicLandingPage(panels.InternationalCuratedTopicLandingPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = []
 
@@ -1116,10 +1088,7 @@ class InternationalCuratedTopicLandingPage(
     tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
-class InternationalGuideLandingPage(
-    BaseInternationalPage,
-    panels.InternationalGuideLandingPagePanels
-):
+class InternationalGuideLandingPage(panels.InternationalGuideLandingPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = ['great_international.InternationalArticlePage']
 
@@ -1187,7 +1156,6 @@ class InternationalGuideLandingPage(
 class InternationalEUExitFormPage(
     WagtailAdminExclusivePageMixin,
     BaseInternationalPage,
-    panels.InternationalEUExitFormPagePanels,
     metaclass=FormPageMetaClass
 ):
     # metaclass creates <fild_name>_label and <field_name>_help_text
@@ -1222,8 +1190,7 @@ class InternationalEUExitFormPage(
 
 
 class InternationalEUExitFormSuccessPage(
-    WagtailAdminExclusivePageMixin, BaseInternationalPage,
-    panels.InternationalEUExitFormSuccessPagePanels,
+    panels.InternationalEUExitFormSuccessPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage,
 ):
     full_path_override = '/eu-exit-news/contact/success/'
     slug_identity = slugs.EUEXIT_FORM_SUCCESS
@@ -1249,10 +1216,7 @@ class InternationalEUExitFormSuccessPage(
     )
 
 
-class AboutDitLandingPage(
-    BaseInternationalPage,
-    panels.AboutDitLandingPagePanels
-):
+class AboutDitLandingPage(panels.AboutDitLandingPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.AboutDitServicesPage'
@@ -1268,7 +1232,7 @@ class AboutDitLandingPage(
     )
 
 
-class AboutDitServiceField(models.Model, panels.AboutDitServiceFieldPanels):
+class AboutDitServiceField(panels.AboutDitServiceFieldPanels, models.Model):
     icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1299,10 +1263,7 @@ class AboutDitServicesFields(Orderable, AboutDitServiceField):
     )
 
 
-class AboutDitServicesPage(
-    BaseInternationalPage,
-    panels.AboutDitServicesPagePanels
-):
+class AboutDitServicesPage(panels.AboutDitServicesPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.AboutDitLandingPage']
 
     breadcrumbs_label = models.CharField(max_length=255)
@@ -1361,10 +1322,7 @@ class AboutDitServicesPage(
     )
 
 
-class AboutUkLandingPage(
-    BaseInternationalPage,
-    panels.AboutUkLandingPagePanels
-):
+class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.AboutUkWhyChooseTheUkPage'
@@ -1380,7 +1338,7 @@ class AboutUkLandingPage(
     )
 
 
-class AboutUkArticleField(models.Model, panels.AboutUkArticleFieldPanels):
+class AboutUkArticleField(panels.AboutUkArticleFieldPanels, models.Model):
     image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1411,10 +1369,7 @@ class AboutUkArticlesFields(Orderable, AboutUkArticleField):
     )
 
 
-class AboutUkWhyChooseTheUkPage(
-    BaseInternationalPage,
-    panels.AboutUkWhyChooseTheUkPagePanels
-):
+class AboutUkWhyChooseTheUkPage(panels.AboutUkWhyChooseTheUkPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.AboutUkLandingPage']
 
     breadcrumbs_label = models.CharField(max_length=255)
