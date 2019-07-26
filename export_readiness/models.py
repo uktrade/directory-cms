@@ -26,13 +26,13 @@ class BaseDomesticPage(ServiceNameUniqueSlugMixin, BasePage):
 
 
 class TermsAndConditionsPage(
-    ExclusivePageMixin, BaseDomesticPage, panels.TermsAndConditionsPagePanels
+    panels.TermsAndConditionsPagePanels, ExclusivePageMixin, BaseDomesticPage
 ):
     slug_identity = slugs.GREAT_TERMS_AND_CONDITIONS
     body = MarkdownField(blank=False)
 
 
-class PrivacyAndCookiesPage(BaseDomesticPage, panels.PrivacyAndCookiesPagePanels):
+class PrivacyAndCookiesPage(panels.PrivacyAndCookiesPagePanels, BaseDomesticPage):
     subpage_types = ['export_readiness.PrivacyAndCookiesPage']
     body = MarkdownField(blank=False)
 
@@ -54,9 +54,7 @@ class SitePolicyPages(ExclusivePageMixin, BaseDomesticPage):
         return super().save(*args, **kwargs)
 
 
-class GetFinancePage(
-    ExclusivePageMixin, BreadcrumbMixin, BaseDomesticPage, panels.GetFinancePagePanels
-):
+class GetFinancePage(panels.GetFinancePagePanels, ExclusivePageMixin, BreadcrumbMixin, BaseDomesticPage):
     slug_identity = slugs.GREAT_GET_FINANCE
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -113,7 +111,7 @@ class GetFinancePage(
     )
 
 
-class PerformanceDashboardPage(BaseDomesticPage, panels.PerformanceDashboardPagePanels):
+class PerformanceDashboardPage(panels.PerformanceDashboardPagePanels, BaseDomesticPage):
     subpage_types = [
         'export_readiness.PerformanceDashboardPage',
         'export_readiness.PerformanceDashboardNotesPage',
@@ -213,7 +211,7 @@ class PerformanceDashboardPage(BaseDomesticPage, panels.PerformanceDashboardPage
         return super().save(*args, **kwargs)
 
 
-class PerformanceDashboardNotesPage(ExclusivePageMixin, BaseDomesticPage, panels.PerformanceDashboardNotesPagePanels):
+class PerformanceDashboardNotesPage(panels.PerformanceDashboardNotesPagePanels, ExclusivePageMixin, BaseDomesticPage):
 
     slug_identity = slugs.PERFORMANCE_DASHBOARD_NOTES
     slug_override = 'guidance-notes'
@@ -224,7 +222,7 @@ class PerformanceDashboardNotesPage(ExclusivePageMixin, BaseDomesticPage, panels
         blank=False)
 
 
-class TopicLandingPage(BaseDomesticPage, panels.TopicLandingPagePanels):
+class TopicLandingPage(panels.TopicLandingPagePanels, BaseDomesticPage):
     subpage_types = [
         'export_readiness.ArticleListingPage',
         'export_readiness.SuperregionPage',
@@ -255,7 +253,7 @@ class SuperregionPage(TopicLandingPage):
         return self.get_descendants().live().count()
 
 
-class ArticleListingPage(BaseDomesticPage, panels.ArticleListingPagePanels):
+class ArticleListingPage(panels.ArticleListingPagePanels, BaseDomesticPage):
 
     subpage_types = [
         'export_readiness.ArticlePage',
@@ -279,7 +277,7 @@ class ArticleListingPage(BaseDomesticPage, panels.ArticleListingPagePanels):
         return self.get_descendants().type(ArticlePage).live().count()
 
 
-class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
+class CountryGuidePage(panels.CountryGuidePagePanels, BaseDomesticPage):
     """Make a cup of tea, this model is BIG!"""
 
     class Meta:
@@ -291,46 +289,16 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         'export_readiness.CampaignPage'
     ]
 
-    heading = models.CharField(
-        max_length=255,
-        verbose_name='Country name',
-        help_text='Only enter the country name'
-    )
+    heading = models.CharField(max_length=255, verbose_name='Country name', help_text='Only enter the country name')
     sub_heading = models.CharField(max_length=255, blank=True)
-    hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    heading_teaser = models.TextField(
-        blank=True,
-        verbose_name='Introduction'
-    )
-    intro_cta_one_title = models.CharField(
-        max_length=500,
-        blank=True,
-        verbose_name='CTA 1 title')
-    intro_cta_one_link = models.CharField(
-        max_length=500,
-        blank=True,
-        verbose_name='CTA 1 link')
-    intro_cta_two_title = models.CharField(
-        max_length=500,
-        blank=True,
-        verbose_name='CTA 2 title')
-    intro_cta_two_link = models.CharField(
-        max_length=500,
-        blank=True,
-        verbose_name='CTA 2 link')
-    intro_cta_three_title = models.CharField(
-        max_length=500,
-        blank=True,
-        verbose_name='CTA 3 title')
-    intro_cta_three_link = models.CharField(
-        max_length=500,
-        blank=True,
-        verbose_name='CTA 3 link')
+    hero_image = models.ForeignKey('wagtailimages.Image', null=True, on_delete=models.SET_NULL, related_name='+')
+    heading_teaser = models.TextField(blank=True, verbose_name='Introduction')
+    intro_cta_one_title = models.CharField(max_length=500, blank=True, verbose_name='CTA 1 title')
+    intro_cta_one_link = models.CharField(max_length=500, blank=True, verbose_name='CTA 1 link')
+    intro_cta_two_title = models.CharField(max_length=500, blank=True, verbose_name='CTA 2 title')
+    intro_cta_two_link = models.CharField(max_length=500, blank=True, verbose_name='CTA 2 link')
+    intro_cta_three_title = models.CharField(max_length=500, blank=True, verbose_name='CTA 3 title')
+    intro_cta_three_link = models.CharField(max_length=500, blank=True, verbose_name='CTA 3 link')
 
     section_one_body = MarkdownField(
         null=True,
@@ -344,10 +312,7 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         related_name='+',
         verbose_name='Image for unique selling points'
     )
-    section_one_image_caption = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Bullets image caption')
+    section_one_image_caption = models.CharField(max_length=255, blank=True, verbose_name='Bullets image caption')
     section_one_image_caption_company = models.CharField(
         max_length=255,
         blank=True,
@@ -377,13 +342,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
     statistic_6_heading = models.CharField(max_length=255, blank=True)
     statistic_6_smallprint = models.CharField(max_length=255, blank=True)
 
-    section_two_heading = models.CharField(
-        max_length=255,
-        verbose_name='High potential industries for UK businesses'
-    )
-    section_two_teaser = models.TextField(
-        verbose_name='Summary of the industry opportunities'
-    )
+    section_two_heading = models.CharField(max_length=255, verbose_name='High potential industries for UK businesses')
+    section_two_teaser = models.TextField(verbose_name='Summary of the industry opportunities')
 
     # accordion 1
     accordion_1_icon = models.ForeignKey(
@@ -394,15 +354,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         related_name='+',
         verbose_name='Industry Icon'
     )
-    accordion_1_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Industry title'
-    )
-    accordion_1_teaser = models.TextField(
-        blank=True,
-        verbose_name='Industry teaser'
-    )
+    accordion_1_title = models.CharField(max_length=255, blank=True, verbose_name='Industry title')
+    accordion_1_teaser = models.TextField(blank=True, verbose_name='Industry teaser')
     accordion_1_subsection_1_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -412,14 +365,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 1 icon'
     )
     accordion_1_subsection_1_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 1 heading'
-    )
-    accordion_1_subsection_1_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 1 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 1 heading')
+    accordion_1_subsection_1_body = models.TextField(blank=True, verbose_name='Subsection 1 body')
 
     accordion_1_subsection_2_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -430,14 +377,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 2 icon'
     )
     accordion_1_subsection_2_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 2 heading'
-    )
-    accordion_1_subsection_2_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 2 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 2 heading')
+    accordion_1_subsection_2_body = models.TextField(blank=True, verbose_name='Subsection 2 body')
 
     accordion_1_subsection_3_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -448,14 +389,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 2 icon'
     )
     accordion_1_subsection_3_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 2 heading'
-    )
-    accordion_1_subsection_3_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 2 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 2 heading')
+    accordion_1_subsection_3_body = models.TextField(blank=True, verbose_name='Subsection 2 body')
     accordion_1_case_study_hero_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -465,121 +400,55 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Case study hero'
     )
     accordion_1_case_study_button_text = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study button text'
-    )
+        max_length=255, blank=True, verbose_name='Case study button text')
     accordion_1_case_study_button_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study button link'
-    )
+        max_length=255, blank=True, verbose_name='Case study button link')
     accordion_1_case_study_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study title'
-    )
+        max_length=255, blank=True, verbose_name='Case study title')
     accordion_1_case_study_description = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study description'
-    )
+        max_length=255, blank=True, verbose_name='Case study description')
 
     accordion_1_statistic_1_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 number')
     accordion_1_statistic_1_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 heading')
     accordion_1_statistic_1_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 smallprint')
 
     accordion_1_statistic_2_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 number')
     accordion_1_statistic_2_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 heading')
     accordion_1_statistic_2_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 smallprint')
 
     accordion_1_statistic_3_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 number')
     accordion_1_statistic_3_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 heading')
     accordion_1_statistic_3_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 smallprint')
 
     accordion_1_statistic_4_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 number')
     accordion_1_statistic_4_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 heading')
     accordion_1_statistic_4_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 smallprint')
 
     accordion_1_statistic_5_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 number')
     accordion_1_statistic_5_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 heading')
     accordion_1_statistic_5_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 smallprint')
 
     accordion_1_statistic_6_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 number')
     accordion_1_statistic_6_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 heading')
     accordion_1_statistic_6_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 smallprint')
 
     # accordion 2
     accordion_2_icon = models.ForeignKey(
@@ -590,15 +459,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         related_name='+',
         verbose_name='Industry Icon'
     )
-    accordion_2_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Industry title'
-    )
-    accordion_2_teaser = models.TextField(
-        blank=True,
-        verbose_name='Industry teaser'
-    )
+    accordion_2_title = models.CharField(max_length=255, blank=True, verbose_name='Industry title')
+    accordion_2_teaser = models.TextField(blank=True, verbose_name='Industry teaser')
     accordion_2_subsection_1_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -608,14 +470,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 1 icon'
     )
     accordion_2_subsection_1_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 1 heading'
-    )
-    accordion_2_subsection_1_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 1 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 1 heading')
+    accordion_2_subsection_1_body = models.TextField(blank=True, verbose_name='Subsection 1 body')
     accordion_2_subsection_2_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -625,14 +481,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 2 icon'
     )
     accordion_2_subsection_2_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 2 heading'
-    )
-    accordion_2_subsection_2_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 2 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 2 heading')
+    accordion_2_subsection_2_body = models.TextField(blank=True, verbose_name='Subsection 2 body')
     accordion_2_subsection_3_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -642,14 +492,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 2 icon'
     )
     accordion_2_subsection_3_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 2 heading'
-    )
-    accordion_2_subsection_3_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 2 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 2 heading')
+    accordion_2_subsection_3_body = models.TextField(blank=True, verbose_name='Subsection 2 body')
 
     accordion_2_case_study_hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -660,121 +504,55 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Case study hero'
     )
     accordion_2_case_study_button_text = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study button text'
-    )
+        max_length=255, blank=True, verbose_name='Case study button text')
     accordion_2_case_study_button_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study button link'
-    )
+        max_length=255, blank=True, verbose_name='Case study button link')
     accordion_2_case_study_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study title'
-    )
+        max_length=255, blank=True, verbose_name='Case study title')
     accordion_2_case_study_description = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study description'
-    )
+        max_length=255, blank=True, verbose_name='Case study description')
 
     accordion_2_statistic_1_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 number')
     accordion_2_statistic_1_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 heading')
     accordion_2_statistic_1_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 smallprint')
 
     accordion_2_statistic_2_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 number')
     accordion_2_statistic_2_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 heading')
     accordion_2_statistic_2_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 smallprint')
 
     accordion_2_statistic_3_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 number')
     accordion_2_statistic_3_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 heading')
     accordion_2_statistic_3_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 smallprint')
 
     accordion_2_statistic_4_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 number')
     accordion_2_statistic_4_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 heading')
     accordion_2_statistic_4_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 smallprint')
 
     accordion_2_statistic_5_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 number')
     accordion_2_statistic_5_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 heading')
     accordion_2_statistic_5_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 smallprint')
 
     accordion_2_statistic_6_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 number')
     accordion_2_statistic_6_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 heading')
     accordion_2_statistic_6_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 smallprint')
 
     # accordion 3
     accordion_3_icon = models.ForeignKey(
@@ -785,15 +563,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         related_name='+',
         verbose_name='Industry Icon'
     )
-    accordion_3_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Industry title'
-    )
-    accordion_3_teaser = models.TextField(
-        blank=True,
-        verbose_name='Industry teaser'
-    )
+    accordion_3_title = models.CharField(max_length=255, blank=True, verbose_name='Industry title')
+    accordion_3_teaser = models.TextField(blank=True, verbose_name='Industry teaser')
     accordion_3_subsection_1_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -803,14 +574,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 1 icon'
     )
     accordion_3_subsection_1_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 1 heading'
-    )
-    accordion_3_subsection_1_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 1 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 1 heading')
+    accordion_3_subsection_1_body = models.TextField(blank=True, verbose_name='Subsection 1 body')
 
     accordion_3_subsection_2_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -821,14 +586,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 2 icon'
     )
     accordion_3_subsection_2_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 2 heading'
-    )
-    accordion_3_subsection_2_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 2 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 2 heading')
+    accordion_3_subsection_2_body = models.TextField(blank=True, verbose_name='Subsection 2 body')
 
     accordion_3_subsection_3_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -839,14 +598,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 2 icon'
     )
     accordion_3_subsection_3_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 2 heading'
-    )
-    accordion_3_subsection_3_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 2 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 2 heading')
+    accordion_3_subsection_3_body = models.TextField(blank=True, verbose_name='Subsection 2 body')
 
     accordion_3_case_study_hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -857,121 +610,55 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Case study hero'
     )
     accordion_3_case_study_button_text = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study button text'
-    )
+        max_length=255, blank=True, verbose_name='Case study button text')
     accordion_3_case_study_button_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study button link'
-    )
+        max_length=255, blank=True, verbose_name='Case study button link')
     accordion_3_case_study_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study title'
-    )
+        max_length=255, blank=True, verbose_name='Case study title')
     accordion_3_case_study_description = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study description'
-    )
+        max_length=255, blank=True, verbose_name='Case study description')
 
     accordion_3_statistic_1_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 number')
     accordion_3_statistic_1_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 heading')
     accordion_3_statistic_1_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 smallprint')
 
     accordion_3_statistic_2_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 number')
     accordion_3_statistic_2_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 heading')
     accordion_3_statistic_2_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 smallprint')
 
     accordion_3_statistic_3_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 number')
     accordion_3_statistic_3_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 heading')
     accordion_3_statistic_3_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 smallprint')
 
     accordion_3_statistic_4_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 number')
     accordion_3_statistic_4_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 heading')
     accordion_3_statistic_4_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 smallprint')
 
     accordion_3_statistic_5_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 number')
     accordion_3_statistic_5_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 heading')
     accordion_3_statistic_5_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 smallprint')
 
     accordion_3_statistic_6_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 number')
     accordion_3_statistic_6_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 heading')
     accordion_3_statistic_6_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 smallprint')
 
     # accordion 4
     accordion_4_icon = models.ForeignKey(
@@ -983,14 +670,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Industry Icon'
     )
     accordion_4_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Industry title'
-    )
-    accordion_4_teaser = models.TextField(
-        blank=True,
-        verbose_name='Industry teaser'
-    )
+        max_length=255, blank=True, verbose_name='Industry title')
+    accordion_4_teaser = models.TextField(blank=True, verbose_name='Industry teaser')
     accordion_4_subsection_1_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1000,14 +681,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 1 icon'
     )
     accordion_4_subsection_1_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 1 heading'
-    )
-    accordion_4_subsection_1_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 1 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 1 heading')
+    accordion_4_subsection_1_body = models.TextField(blank=True, verbose_name='Subsection 1 body')
 
     accordion_4_subsection_2_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -1018,14 +693,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 2 icon'
     )
     accordion_4_subsection_2_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 2 heading'
-    )
-    accordion_4_subsection_2_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 2 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 2 heading')
+    accordion_4_subsection_2_body = models.TextField(blank=True, verbose_name='Subsection 2 body')
 
     accordion_4_subsection_3_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -1036,14 +705,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 2 icon'
     )
     accordion_4_subsection_3_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 2 heading'
-    )
-    accordion_4_subsection_3_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 2 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 2 heading')
+    accordion_4_subsection_3_body = models.TextField(blank=True, verbose_name='Subsection 2 body')
 
     accordion_4_case_study_hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -1054,121 +717,55 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Case study hero'
     )
     accordion_4_case_study_button_text = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study button text'
-    )
+        max_length=255, blank=True, verbose_name='Case study button text')
     accordion_4_case_study_button_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study button link'
-    )
+        max_length=255, blank=True, verbose_name='Case study button link')
     accordion_4_case_study_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study title'
-    )
+        max_length=255, blank=True, verbose_name='Case study title')
     accordion_4_case_study_description = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study description'
-    )
+        max_length=255, blank=True, verbose_name='Case study description')
 
     accordion_4_statistic_1_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 number')
     accordion_4_statistic_1_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 heading')
     accordion_4_statistic_1_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 smallprint')
 
     accordion_4_statistic_2_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 number')
     accordion_4_statistic_2_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 heading')
     accordion_4_statistic_2_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 smallprint')
 
     accordion_4_statistic_3_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 number')
     accordion_4_statistic_3_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 heading')
     accordion_4_statistic_3_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 smallprint')
 
     accordion_4_statistic_4_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 number')
     accordion_4_statistic_4_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 heading')
     accordion_4_statistic_4_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 smallprint')
 
     accordion_4_statistic_5_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 number')
     accordion_4_statistic_5_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 heading')
     accordion_4_statistic_5_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 smallprint')
 
     accordion_4_statistic_6_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 number')
     accordion_4_statistic_6_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 heading')
     accordion_4_statistic_6_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 smallprint')
 
     # accordion 5
     accordion_5_icon = models.ForeignKey(
@@ -1180,14 +777,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Industry Icon'
     )
     accordion_5_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Industry title'
-    )
-    accordion_5_teaser = models.TextField(
-        blank=True,
-        verbose_name='Industry teaser'
-    )
+        max_length=255, blank=True, verbose_name='Industry title')
+    accordion_5_teaser = models.TextField(blank=True, verbose_name='Industry teaser')
     accordion_5_subsection_1_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1197,14 +788,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 1 icon'
     )
     accordion_5_subsection_1_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 1 heading'
-    )
-    accordion_5_subsection_1_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 1 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 1 heading')
+    accordion_5_subsection_1_body = models.TextField(blank=True, verbose_name='Subsection 1 body')
 
     accordion_5_subsection_2_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -1215,14 +800,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 2 icon'
     )
     accordion_5_subsection_2_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 2 heading'
-    )
-    accordion_5_subsection_2_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 2 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 2 heading')
+    accordion_5_subsection_2_body = models.TextField(blank=True, verbose_name='Subsection 2 body')
 
     accordion_5_subsection_3_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -1233,14 +812,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 2 icon'
     )
     accordion_5_subsection_3_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 2 heading'
-    )
-    accordion_5_subsection_3_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 2 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 2 heading')
+    accordion_5_subsection_3_body = models.TextField(blank=True, verbose_name='Subsection 2 body')
 
     accordion_5_case_study_hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -1251,121 +824,55 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Case study hero'
     )
     accordion_5_case_study_button_text = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study button text'
-    )
+        max_length=255, blank=True, verbose_name='Case study button text')
     accordion_5_case_study_button_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study button link'
-    )
+        max_length=255, blank=True, verbose_name='Case study button link')
     accordion_5_case_study_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study title'
-    )
+        max_length=255, blank=True, verbose_name='Case study title')
     accordion_5_case_study_description = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study description'
-    )
+        max_length=255, blank=True, verbose_name='Case study description')
 
     accordion_5_statistic_1_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 number')
     accordion_5_statistic_1_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 heading')
     accordion_5_statistic_1_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 smallprint')
 
     accordion_5_statistic_2_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 number')
     accordion_5_statistic_2_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 heading')
     accordion_5_statistic_2_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 smallprint')
 
     accordion_5_statistic_3_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 number')
     accordion_5_statistic_3_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 heading')
     accordion_5_statistic_3_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 smallprint')
 
     accordion_5_statistic_4_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 number')
     accordion_5_statistic_4_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 heading')
     accordion_5_statistic_4_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 smallprint')
 
     accordion_5_statistic_5_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 number')
     accordion_5_statistic_5_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 heading')
     accordion_5_statistic_5_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 smallprint')
 
     accordion_5_statistic_6_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 number')
     accordion_5_statistic_6_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 heading')
     accordion_5_statistic_6_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 smallprint')
 
     # accordion 6
     accordion_6_icon = models.ForeignKey(
@@ -1377,14 +884,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Industry Icon'
     )
     accordion_6_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Industry title'
-    )
-    accordion_6_teaser = models.TextField(
-        blank=True,
-        verbose_name='Industry teaser'
-    )
+        max_length=255, blank=True, verbose_name='Industry title')
+    accordion_6_teaser = models.TextField(blank=True, verbose_name='Industry teaser')
     accordion_6_subsection_1_icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1394,14 +895,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 1 icon'
     )
     accordion_6_subsection_1_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 1 heading'
-    )
-    accordion_6_subsection_1_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 1 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 1 heading')
+    accordion_6_subsection_1_body = models.TextField(blank=True, verbose_name='Subsection 1 body')
 
     accordion_6_subsection_2_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -1412,14 +907,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 2 icon'
     )
     accordion_6_subsection_2_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 2 heading'
-    )
-    accordion_6_subsection_2_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 2 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 2 heading')
+    accordion_6_subsection_2_body = models.TextField(blank=True, verbose_name='Subsection 2 body')
 
     accordion_6_subsection_3_icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -1430,14 +919,8 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Subsection 2 icon'
     )
     accordion_6_subsection_3_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Subsection 2 heading'
-    )
-    accordion_6_subsection_3_body = models.TextField(
-        blank=True,
-        verbose_name='Subsection 2 body'
-    )
+        max_length=255, blank=True, verbose_name='Subsection 2 heading')
+    accordion_6_subsection_3_body = models.TextField(blank=True, verbose_name='Subsection 2 body')
 
     accordion_6_case_study_hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -1448,144 +931,65 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
         verbose_name='Case study hero'
     )
     accordion_6_case_study_button_text = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study button text'
-    )
+        max_length=255, blank=True, verbose_name='Case study button text')
     accordion_6_case_study_button_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study button link'
-    )
+        max_length=255, blank=True, verbose_name='Case study button link')
     accordion_6_case_study_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study title'
-    )
+        max_length=255, blank=True, verbose_name='Case study title')
     accordion_6_case_study_description = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Case study description'
-    )
+        max_length=255, blank=True, verbose_name='Case study description')
 
     accordion_6_statistic_1_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 number')
     accordion_6_statistic_1_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 heading')
     accordion_6_statistic_1_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 1 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 1 smallprint')
 
     accordion_6_statistic_2_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 number')
     accordion_6_statistic_2_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 heading')
     accordion_6_statistic_2_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 2 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 2 smallprint')
 
     accordion_6_statistic_3_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 number')
     accordion_6_statistic_3_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 heading')
     accordion_6_statistic_3_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 3 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 3 smallprint')
 
     accordion_6_statistic_4_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 number')
     accordion_6_statistic_4_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 4 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 heading')
     accordion_6_statistic_4_smallprint = models.CharField(
-        max_length=255,
-
-        blank=True,
-        verbose_name='Stat 4 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 4 smallprint')
 
     accordion_6_statistic_5_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 number')
     accordion_6_statistic_5_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 heading')
     accordion_6_statistic_5_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 5 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 5 smallprint')
 
     accordion_6_statistic_6_number = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 number'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 number')
     accordion_6_statistic_6_heading = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 heading'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 heading')
     accordion_6_statistic_6_smallprint = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Stat 6 smallprint'
-    )
+        max_length=255, blank=True, verbose_name='Stat 6 smallprint')
 
     # fact sheet
     fact_sheet_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name="Title for 'Doing business in' section"
-    )
+        max_length=255, blank=True, verbose_name="Title for 'Doing business in' section")
     fact_sheet_teaser = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name="Summary for 'Doing business in' section"
-    )
+        max_length=255, blank=True, verbose_name="Summary for 'Doing business in' section")
     fact_sheet_column_1_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name="Title for 'Tax and customs'"
-    )
+        max_length=255, blank=True, verbose_name="Title for 'Tax and customs'")
     fact_sheet_column_1_teaser = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name="Summary for 'Tax and customs'"
-    )
+        max_length=255, blank=True, verbose_name="Summary for 'Tax and customs'")
     fact_sheet_column_1_body = MarkdownField(
         blank=True,
         verbose_name="Detailed text for 'Tax and customs'",
@@ -1593,15 +997,9 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
                   'Maximum five sub categories. Aim for 50 words each.'
     )
     fact_sheet_column_2_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name="Title for 'Protecting your business'"
-    )
+        max_length=255, blank=True, verbose_name="Title for 'Protecting your business'")
     fact_sheet_column_2_teaser = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name="Summary for 'Protecting your business'"
-    )
+        max_length=255, blank=True, verbose_name="Summary for 'Protecting your business'")
     fact_sheet_column_2_body = MarkdownField(
         blank=True,
         verbose_name="Detailed text for 'Protecting your business'",
@@ -1611,10 +1009,7 @@ class CountryGuidePage(BaseDomesticPage, panels.CountryGuidePagePanels):
 
     # need help
     help_market_guide_cta_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='GOV.UK country guide URL'
-    )
+        max_length=255, blank=True, verbose_name='GOV.UK country guide URL')
 
     # related pages
     related_page_one = models.ForeignKey(
@@ -1650,7 +1045,7 @@ class MarketingPages(ExclusivePageMixin, BaseDomesticPage):
 
     settings_panels = []
 
-    def get_verbose_name(self):
+    def get_verbose_name():
         return 'Marketing campaign pages'
 
     def save(self, *args, **kwargs):
@@ -1658,7 +1053,7 @@ class MarketingPages(ExclusivePageMixin, BaseDomesticPage):
         return super().save(*args, **kwargs)
 
 
-class CampaignPage(BaseDomesticPage, panels.CampaignPagePanels):
+class CampaignPage(panels.CampaignPagePanels, BaseDomesticPage):
 
     subpage_types = []
 
@@ -1782,7 +1177,7 @@ class CampaignPage(BaseDomesticPage, panels.CampaignPagePanels):
     cta_box_button_text = models.CharField(max_length=255)
 
 
-class ArticlePage(BaseDomesticPage, panels.ArticlePagePanels):
+class ArticlePage(panels.ArticlePagePanels, BaseDomesticPage):
 
     subpage_types = []
 
@@ -1822,7 +1217,7 @@ class ArticlePage(BaseDomesticPage, panels.ArticlePagePanels):
     tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
-class MarketingArticlePage(BaseDomesticPage, panels.MarketingArticlePagePanels):
+class MarketingArticlePage(panels.MarketingArticlePagePanels, BaseDomesticPage):
 
     subpage_types = []
 
@@ -1893,7 +1288,7 @@ class MarketingArticlePage(BaseDomesticPage, panels.MarketingArticlePagePanels):
 
 
 class HomePage(
-    ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage, panels.HomePagePanels
+    panels.HomePagePanels, ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage
 ):
     slug_identity = slugs.GREAT_HOME
     parent_page_types = ['wagtailcore.Page']
@@ -1902,6 +1297,9 @@ class HomePage(
     banner_label = models.CharField(max_length=50, null=True, blank=True)
     news_title = models.CharField(max_length=255)
     news_description = MarkdownField()
+
+    def get_verbose_name():
+        return 'Great domestic home page'
 
     @classmethod
     def allowed_subpage_models(cls):
@@ -1912,7 +1310,7 @@ class HomePage(
         ]
 
 
-class HomePageOld(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage, panels.HomePageOldPanels):
+class HomePageOld(panels.HomePageOldPanels, ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
     slug_identity = slugs.GREAT_HOME_OLD
     parent_page_types = []
     subpage_types = []
@@ -1923,7 +1321,7 @@ class HomePageOld(ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage, pa
     news_description = MarkdownField()
 
 
-class InternationalLandingPage(ExclusivePageMixin, BaseDomesticPage, panels.InternationalLandingPagePanels):
+class InternationalLandingPage(panels.InternationalLandingPagePanels, ExclusivePageMixin, BaseDomesticPage):
 
     slug_identity = slugs.GREAT_HOME_INTERNATIONAL
     # slug_override = 'international'
@@ -1991,7 +1389,7 @@ class EUExitDomesticFormPage(ExclusivePageMixin, BaseDomesticPage, metaclass=For
     settings_panels = panels.EUExitDomesticFormPagePanels.settings_panels
 
 
-class EUExitFormSuccessPage(ExclusivePageMixin, BaseDomesticPage, panels.EUExitFormSuccessPagePanels):
+class EUExitFormSuccessPage(panels.EUExitFormSuccessPagePanels, ExclusivePageMixin, BaseDomesticPage):
     full_path_override = '/eu-exit-news/contact/success/'
     slug_identity = slugs.EUEXIT_FORM_SUCCESS
 
@@ -2064,7 +1462,7 @@ class ContactSuccessPages(ExclusivePageMixin, BaseDomesticPage):
         return super().save(*args, **kwargs)
 
 
-class ContactUsGuidancePage(BaseDomesticPage, panels.ContactUsGuidancePagePanels):
+class ContactUsGuidancePage(panels.ContactUsGuidancePagePanels, BaseDomesticPage):
 
     topic_mapping = {
         slugs.HELP_EXOPP_ALERTS_IRRELEVANT: {
@@ -2144,7 +1542,7 @@ class ContactUsGuidancePage(BaseDomesticPage, panels.ContactUsGuidancePagePanels
         return super().save(*args, **kwargs)
 
 
-class ContactSuccessPage(BaseDomesticPage, panels.ContactSuccessPagePanels):
+class ContactSuccessPage(panels.ContactSuccessPagePanels, BaseDomesticPage):
 
     topic_mapping = {
         slugs.HELP_FORM_SUCCESS: {
