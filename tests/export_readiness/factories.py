@@ -3,7 +3,7 @@ import factory.fuzzy
 import wagtail_factories
 from django.utils import timezone
 
-from export_readiness import models
+from export_readiness import models, snippets
 
 
 class SitePolicyPagesFactory(wagtail_factories.PageFactory):
@@ -149,7 +149,7 @@ class MarketingArticlePageFactory(wagtail_factories.PageFactory):
 class TagFactory(factory.django.DjangoModelFactory):
 
     class Meta:
-        model = models.Tag
+        model = snippets.Tag
 
     name = factory.fuzzy.FuzzyText(length=10)
 

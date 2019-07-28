@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- No ticket - Split up code in great domestic to make files smaller
 - No ticket - Update db template after new migrations added
 - CMS-1692 - More small tweaks to Invest HPO pages
 - CI-323 - Added "About the UK" section pages - landing page and "why choose the UK" page
