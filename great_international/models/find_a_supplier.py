@@ -11,11 +11,8 @@ import great_international.panels.find_a_supplier as panels
 
 
 class InternationalTradeHomePage(
-    ExclusivePageMixin,
-    ServiceHomepageMixin,
-    BreadcrumbMixin,
-    BaseInternationalPage,
-    panels.InternationalTradeHomePagePanels
+    panels.InternationalTradeHomePagePanels, ExclusivePageMixin, ServiceHomepageMixin,
+    BreadcrumbMixin, BaseInternationalPage,
 ):
     slug_identity = slugs.FIND_A_SUPPLIER_LANDING
 
@@ -83,10 +80,8 @@ class InternationalTradeHomePage(
 
 
 class InternationalTradeIndustryContactPage(
-    ExclusivePageMixin,
-    BreadcrumbMixin,
+    panels.InternationalTradeIndustryContactPagePanels, ExclusivePageMixin, BreadcrumbMixin,
     BaseInternationalPage,
-    panels.InternationalTradeIndustryContactPagePanels,
 ):
 
     view_path = 'industries/contact/'
