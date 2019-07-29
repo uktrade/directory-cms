@@ -860,20 +860,9 @@ class AboutDitLandingPageTranslationOptions(
 
         'how_dit_help_title',
 
-        'related_page_one_image',
-        'related_page_one_title',
-        'related_page_one_description',
-        'related_page_one_url',
-
-        'related_page_two_image',
-        'related_page_two_title',
-        'related_page_two_description',
-        'related_page_two_url',
-
-        'related_page_three_image',
-        'related_page_three_title',
-        'related_page_three_description',
-        'related_page_three_url',
+        'related_page_one',
+        'related_page_two',
+        'related_page_three',
 
         'case_study_image',
         'case_study_title',

@@ -1243,38 +1243,29 @@ class AboutDitLandingPage(panels.AboutDitLandingPagePanels, BaseInternationalPag
 
     how_dit_help_title = models.CharField(max_length=255, blank=True)
 
-    related_page_one_image = models.ForeignKey(
-        'wagtailimages.Image',
+    related_page_one = models.ForeignKey(
+        'great_international.AboutDitServicesPage',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        blank=True
     )
-    related_page_one_title = models.CharField(max_length=255, blank=True)
-    related_page_one_description = MarkdownField(blank=True)
-    related_page_one_url = models.CharField(max_length=255, blank=True)
 
-    related_page_two_image = models.ForeignKey(
-        'wagtailimages.Image',
+    related_page_two = models.ForeignKey(
+        'great_international.AboutDitServicesPage',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        blank=True
     )
-    related_page_two_title = models.CharField(max_length=255, blank=True)
-    related_page_two_description = MarkdownField(blank=True)
-    related_page_two_url = models.CharField(max_length=255, blank=True)
 
-    related_page_three_image = models.ForeignKey(
-        'wagtailimages.Image',
+    related_page_three = models.ForeignKey(
+        'great_international.AboutDitServicesPage',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        blank=True
     )
-    related_page_three_title = models.CharField(max_length=255, blank=True)
-    related_page_three_description = MarkdownField(blank=True)
-    related_page_three_url = models.CharField(max_length=255, blank=True)
 
     case_study_image = models.ForeignKey(
         'wagtailimages.Image',
