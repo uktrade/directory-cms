@@ -1780,7 +1780,7 @@ class AboutDitServiceFieldSerializer(serializers.Serializer):
     link_url = serializers.CharField()
 
 
-class AboutDitServicesPageSerializer(BasePageSerializer, ParentPageSerializerHelper):
+class AboutDitServicesPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('original')
@@ -1796,7 +1796,6 @@ class AboutDitServicesPageSerializer(BasePageSerializer, ParentPageSerializerHel
     contact_us_section_cta_text = serializers.CharField()
     contact_us_section_cta_link = serializers.CharField()
     about_dit_services_fields = serializers.SerializerMethodField()
-    parent_page = serializers.SerializerMethodField()
 
     def get_about_dit_services_fields(self, instance):
         serializer = AboutDitServiceFieldSerializer(
@@ -1806,13 +1805,6 @@ class AboutDitServicesPageSerializer(BasePageSerializer, ParentPageSerializerHel
             context=self.context
         )
         return serializer.data
-
-    def get_parent_page(self, obj):
-        parent = self.get_parent_page_data_for(
-            obj,
-            AboutDitLandingPageSerializer
-        )
-        return parent
 
 
 class AboutUkLandingPageSerializer(BasePageSerializer):
