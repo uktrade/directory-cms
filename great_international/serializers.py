@@ -7,7 +7,7 @@ from core.serializers import (
     BasePageSerializer,
     ChildPagesSerializerHelper,
     FormPageSerializerMetaclass,
-    SameSectorOpportunitiesHelper, ParentPageSerializerHelper)
+    SameSectorOpportunitiesHelper)
 
 from .models.great_international import (
     InternationalArticlePage,
