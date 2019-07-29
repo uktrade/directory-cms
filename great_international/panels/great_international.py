@@ -1055,7 +1055,7 @@ class AboutDitLandingPagePanels:
             heading="Related pages",
             classname='collapsible',
             children=[
-                HelpPanel('Required for section to show: title and at least on related page'),
+                HelpPanel('Required for section to show: title and at least one related page'),
                 FieldPanel('how_dit_help_title'),
                 FieldRowPanel([
                     MultiFieldPanel([
