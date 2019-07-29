@@ -1059,22 +1059,22 @@ class AboutDitLandingPagePanels:
                 FieldPanel('how_dit_help_title'),
                 FieldRowPanel([
                     MultiFieldPanel([
-                       ImageChooserPanel('related_page_one_image'),
-                       FieldPanel('related_page_one_title'),
-                       FieldPanel('related_page_one_description'),
-                       FieldPanel('related_page_one_url'),
+                        PageChooserPanel(
+                            'related_page_one',
+                            'great_international.AboutDitServicesPage'
+                        ),
                     ]),
                     MultiFieldPanel([
-                       ImageChooserPanel('related_page_two_image'),
-                       FieldPanel('related_page_two_title'),
-                       FieldPanel('related_page_two_description'),
-                       FieldPanel('related_page_two_url'),
+                        PageChooserPanel(
+                            'related_page_two',
+                            'great_international.AboutDitServicesPage'
+                        ),
                     ]),
                     MultiFieldPanel([
-                       ImageChooserPanel('related_page_three_image'),
-                       FieldPanel('related_page_three_title'),
-                       FieldPanel('related_page_three_description'),
-                       FieldPanel('related_page_three_url'),
+                       PageChooserPanel(
+                           'related_page_three',
+                           'great_international.AboutDitServicesPage'
+                       ),
                     ]),
                 ]),
             ],

@@ -7,7 +7,7 @@ from core.serializers import (
     BasePageSerializer,
     ChildPagesSerializerHelper,
     FormPageSerializerMetaclass,
-    SameSectorOpportunitiesHelper)
+    SameSectorOpportunitiesHelper, ParentPageSerializerHelper)
 
 from .models.great_international import (
     InternationalArticlePage,
@@ -17,7 +17,7 @@ from .models.great_international import (
     InternationalGuideLandingPage,
     InternationalSectorPage,
     InternationalEUExitFormPage,
-    InternationalSubSectorPage)
+    InternationalSubSectorPage, AboutDitServicesPage)
 from .models.invest import (
     InvestHighPotentialOpportunityFormPage,
     InvestHighPotentialOpportunityDetailPage,
@@ -260,41 +260,6 @@ class HowWeHelpProxyDataWrapper:
         )
 
 
-class RelatedPagesCardsProxyDataWrapper:
-
-    def __init__(self, instance, position_number):
-        self.position_number = position_number
-        self.instance = instance
-
-    @property
-    def title(self):
-        return getattr(
-            self.instance,
-            f'related_page_{self.position_number}_title'
-        )
-
-    @property
-    def image(self):
-        return getattr(
-            self.instance,
-            f'related_page_{self.position_number}_image'
-        )
-
-    @property
-    def description(self):
-        return getattr(
-            self.instance,
-            f'related_page_{self.position_number}_description'
-        )
-
-    @property
-    def url(self):
-        return getattr(
-            self.instance,
-            f'related_page_{self.position_number}_url'
-        )
-
-
 class SectionThreeSubsectionSerializer(serializers.Serializer):
     heading = serializers.CharField(max_length=255)
     teaser = serializers.CharField()
@@ -470,11 +435,18 @@ class RelatedOpportunitySerializer(serializers.Serializer):
         return serializer.data
 
 
+class RelatedDitServicesPageSerializer(BasePageSerializer):
+    hero_title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    teaser = core_fields.MarkdownToHTMLField()
+
+
 MODEL_TO_SERIALIZER_MAPPING = {
     InternationalArticlePage: RelatedArticlePageSerializer,
     InternationalCampaignPage: RelatedCampaignPageSerializer,
     CapitalInvestOpportunityPage:
     RelatedCapitalInvestOpportunityPageSerializer,
+    AboutDitServicesPage: RelatedDitServicesPageSerializer,
 }
 
 
@@ -1780,14 +1752,7 @@ class InternationalTradeIndustryContactPageSerializer(BasePageSerializer):
         return serializer.data
 
 
-class RelatedPageCardsSerializer(serializers.Serializer):
-    image = wagtail_fields.ImageRenditionField('fill-640x360')
-    title = serializers.CharField(max_length=255)
-    description = serializers.CharField(max_length=255)
-    url = serializers.CharField(max_length=255)
-
-
-class AboutDitLandingPageSerializer(BasePageSerializer):
+class AboutDitLandingPageSerializer(PageWithRelatedPagesSerializer, BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('original')
@@ -1804,14 +1769,6 @@ class AboutDitLandingPageSerializer(BasePageSerializer):
     case_study_cta_text = serializers.CharField(max_length=255)
     case_study_cta_link = serializers.CharField(max_length=255)
 
-    related_pages = serializers.SerializerMethodField()
-
-    def get_related_pages(self, instance):
-        data = [RelatedPagesCardsProxyDataWrapper(instance=instance, position_number=num)
-                for num in ['one', 'two', 'three']]
-        serializer = RelatedPageCardsSerializer(data, many=True)
-        return serializer.data
-
 
 class AboutDitServiceFieldSerializer(serializers.Serializer):
     icon = wagtail_fields.ImageRenditionField(
@@ -1823,7 +1780,7 @@ class AboutDitServiceFieldSerializer(serializers.Serializer):
     link_url = serializers.CharField()
 
 
-class AboutDitServicesPageSerializer(BasePageSerializer):
+class AboutDitServicesPageSerializer(BasePageSerializer, ParentPageSerializerHelper):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('original')
@@ -1839,6 +1796,7 @@ class AboutDitServicesPageSerializer(BasePageSerializer):
     contact_us_section_cta_text = serializers.CharField()
     contact_us_section_cta_link = serializers.CharField()
     about_dit_services_fields = serializers.SerializerMethodField()
+    parent_page = serializers.SerializerMethodField()
 
     def get_about_dit_services_fields(self, instance):
         serializer = AboutDitServiceFieldSerializer(
@@ -1848,6 +1806,13 @@ class AboutDitServicesPageSerializer(BasePageSerializer):
             context=self.context
         )
         return serializer.data
+
+    def get_parent_page(self, obj):
+        parent = self.get_parent_page_data_for(
+            obj,
+            AboutDitLandingPageSerializer
+        )
+        return parent
 
 
 class AboutUkLandingPageSerializer(BasePageSerializer):
