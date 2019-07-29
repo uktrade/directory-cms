@@ -90,28 +90,6 @@ class InvestInternationalHomePage(
         verbose_name="EU exit section image"
     )
 
-    # subsections
-    subsection_title_one = models.CharField(max_length=255, blank=True)
-    subsection_content_one = MarkdownField(blank=True)
-
-    subsection_title_two = models.CharField(max_length=255, blank=True)
-    subsection_content_two = MarkdownField(blank=True)
-
-    subsection_title_three = models.CharField(max_length=255, blank=True)
-    subsection_content_three = MarkdownField(blank=True)
-
-    subsection_title_four = models.CharField(max_length=255, blank=True)
-    subsection_content_four = MarkdownField(blank=True)
-
-    subsection_title_five = models.CharField(max_length=255, blank=True)
-    subsection_content_five = MarkdownField(blank=True)
-
-    subsection_title_six = models.CharField(max_length=255, blank=True)
-    subsection_content_six = MarkdownField(blank=True)
-
-    subsection_title_seven = models.CharField(max_length=255, blank=True)
-    subsection_content_seven = MarkdownField(blank=True)
-
     sector_title = models.TextField(
         default="Discover UK Industries",
         max_length=255)
