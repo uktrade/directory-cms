@@ -1,6 +1,6 @@
 from core.cache import AbstractDatabaseCacheSubscriber
 
-from export_readiness import models
+from export_readiness import models, snippets
 
 
 class TermsAndConditionsPageSubscriber(AbstractDatabaseCacheSubscriber):
@@ -44,7 +44,7 @@ class ArticleListingPageSubscriber(AbstractDatabaseCacheSubscriber):
         models.TopicLandingPage,
         models.CountryGuidePage,
         models.ArticlePage,
-        models.Tag,
+        snippets.Tag,
     ]
 
 
@@ -57,7 +57,7 @@ class ArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
         models.CountryGuidePage,
         models.CampaignPage,
         models.ArticleListingPage,
-        models.Tag,
+        snippets.Tag,
     ]
 
 
@@ -65,7 +65,7 @@ class MarketingArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.MarketingArticlePage
     subscriptions = [
         models.ArticlePage,
-        models.Tag,
+        snippets.Tag,
     ]
 
 
