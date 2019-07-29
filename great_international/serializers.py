@@ -17,7 +17,7 @@ from .models.great_international import (
     InternationalGuideLandingPage,
     InternationalSectorPage,
     InternationalEUExitFormPage,
-    InternationalSubSectorPage)
+    InternationalSubSectorPage, AboutDitServicesPage)
 from .models.invest import (
     InvestHighPotentialOpportunityFormPage,
     InvestHighPotentialOpportunityDetailPage,
@@ -435,11 +435,18 @@ class RelatedOpportunitySerializer(serializers.Serializer):
         return serializer.data
 
 
+class RelatedDitServicesPageSerializer(BasePageSerializer):
+    hero_title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    teaser = core_fields.MarkdownToHTMLField()
+
+
 MODEL_TO_SERIALIZER_MAPPING = {
     InternationalArticlePage: RelatedArticlePageSerializer,
     InternationalCampaignPage: RelatedCampaignPageSerializer,
     CapitalInvestOpportunityPage:
     RelatedCapitalInvestOpportunityPageSerializer,
+    AboutDitServicesPage: RelatedDitServicesPageSerializer,
 }
 
 
@@ -1795,10 +1802,22 @@ class InternationalTradeIndustryContactPageSerializer(BasePageSerializer):
         return serializer.data
 
 
-class AboutDitLandingPageSerializer(BasePageSerializer):
+class AboutDitLandingPageSerializer(PageWithRelatedPagesSerializer, BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('original')
+
+    intro = serializers.CharField(max_length=255)
+    section_one_content = core_fields.MarkdownToHTMLField()
+    section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
+
+    how_dit_help_title = serializers.CharField(max_length=255)
+
+    case_study_image = wagtail_fields.ImageRenditionField('original')
+    case_study_title = serializers.CharField(max_length=255)
+    case_study_text = serializers.CharField(max_length=255)
+    case_study_cta_text = serializers.CharField(max_length=255)
+    case_study_cta_link = serializers.CharField(max_length=255)
 
 
 class AboutDitServiceFieldSerializer(serializers.Serializer):
