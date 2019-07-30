@@ -16,6 +16,7 @@
 - CI-366 - Add CTA to UK benefits section of invest home page
 - CI-383 - Populated About DIT landing page
 - CI-325 - Removed prioritised checkbox from capital invest opportunity page as it is now being randomised
+- CI-328 - Removed unused fields for capital invest opportunity page
 
 ### Fixed Bugs
 - CI-373 - Fix panels on why choose UK page
