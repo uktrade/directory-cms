@@ -13,6 +13,7 @@
 - CI-367 - Update `CapitalInvestRegionPage`
 - CI-366 - Add CTA to UK benefits section of invest home page
 - CI-383 - Populated About DIT landing page
+- CI-325 - Removed prioritised checkbox from capital invest opportunity page as it is now being randomised
 
 ### Fixed Bugs
 - CI-373 - Fix panels on why choose UK page
@@ -41,8 +42,6 @@
 - CI-324 - Made `BaseInternationalSectorPage` and sector and new sub-sector page inherit from this and opportunity listing page filters by sub sector
 - CI-322 - Added "About DIT" placeholder landing page
 - CI-322 - Added "About DIT" services pages
-- CI-325 - Removed prioritised checkbox from capital invest opportunity page
-- CI-325 - Removed prioritised checkbox from capital invest opportunity page as it is now being randomised
 
 ### Fixed Bugs
 - NOTICKET - Capital invest landing page image serializers use aspect ratio for card images
