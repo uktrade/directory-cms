@@ -545,10 +545,6 @@ class CapitalInvestOpportunityPageTranslationOptions(
         'case_study_cta_text',
         'case_study_cta_link',
 
-        'similar_projects_title',
-        'related_page_one',
-        'related_page_two',
-        'related_page_three',
         'similar_projects_cta_text',
         'similar_projects_cta_link',
 
