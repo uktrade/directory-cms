@@ -3,6 +3,8 @@
 ## Pre-release
 
 ### Implemented enhancements
+- CMS-1664 (Follow-up) - Update admin panels on international invest homepage
+- CMS-1664 (Follow-up) - Update fields on international invest homepage to match those in invest/models
 - No ticket - Split up code in great domestic to make files smaller
 - No ticket - Update db template after new migrations added
 - CMS-1692 - More small tweaks to Invest HPO pages
@@ -12,6 +14,7 @@
 - CI-368 - Add ebooks promotional section on "why choose the UK" page
 - CI-367 - Update `CapitalInvestRegionPage`
 - CI-366 - Add CTA to UK benefits section of invest home page
+- CI-383 - Populated About DIT landing page
 - No-ticket - Fix models hierarchy
 
 
