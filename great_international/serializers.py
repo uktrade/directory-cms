@@ -1210,7 +1210,6 @@ class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
 
 
 class CapitalInvestOpportunityPageSerializer(
-    PageWithRelatedPagesSerializer,
     RelatedRegionSerializer,
     SameSectorOpportunitiesHelper
 ):
@@ -1282,7 +1281,6 @@ class CapitalInvestOpportunityPageSerializer(
     case_study_cta_text = serializers.CharField(max_length=255)
     case_study_cta_link = serializers.CharField(max_length=255)
 
-    similar_projects_title = serializers.CharField(max_length=255)
     similar_projects_cta_text = serializers.CharField(max_length=255)
     similar_projects_cta_link = serializers.CharField(max_length=255)
 

@@ -680,29 +680,7 @@ class CapitalInvestOpportunityPage(
         related_name='+',
         blank=True
     )
-
-    similar_projects_title = models.CharField(max_length=255, blank=True)
-    related_page_one = models.ForeignKey(
-        'great_international.CapitalInvestOpportunityPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    related_page_two = models.ForeignKey(
-        'great_international.CapitalInvestOpportunityPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    related_page_three = models.ForeignKey(
-        'great_international.CapitalInvestOpportunityPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
+    
     similar_projects_cta_text = models.CharField(max_length=255, blank=True)
     similar_projects_cta_link = models.CharField(max_length=255, blank=True)
 
