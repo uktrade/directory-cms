@@ -1231,7 +1231,7 @@ class AboutDitLandingPage(panels.AboutDitLandingPagePanels, BaseInternationalPag
         related_name='+'
     )
 
-    intro = models.TextField(max_length=255, blank=True)
+    intro = models.TextField(blank=True)
     section_one_content = MarkdownField(blank=True)
     section_one_image = models.ForeignKey(
         'wagtailimages.Image',
