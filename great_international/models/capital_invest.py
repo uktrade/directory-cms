@@ -680,7 +680,7 @@ class CapitalInvestOpportunityPage(
         related_name='+',
         blank=True
     )
-    
+
     similar_projects_cta_text = models.CharField(max_length=255, blank=True)
     similar_projects_cta_link = models.CharField(max_length=255, blank=True)
 
