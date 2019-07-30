@@ -763,8 +763,8 @@ class HighPotentialOpportunityFormSuccessPageTranslationOptions(
     fields = []
 
 
-@register(invest.InvestSectorPage)
-class InvestSectorPageTranslationOptions(BaseTranslationOptions):
+@register(invest.InvestRegionPage)
+class InvestRegionPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'description',
         'heading',

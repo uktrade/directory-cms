@@ -16,6 +16,7 @@ class InternationalTradeHomePage(
 ):
     slug_identity = slugs.FIND_A_SUPPLIER_LANDING
     parent_page_types = ['great_international.InternationalHomePage']
+    subpage_types = ['InternationalTradeIndustryContactPage']
 
     hero_image = models.ForeignKey(
         'wagtailimages.Image',

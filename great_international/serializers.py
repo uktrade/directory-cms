@@ -21,7 +21,7 @@ from .models.great_international import (
 from .models.invest import (
     InvestHighPotentialOpportunityFormPage,
     InvestHighPotentialOpportunityDetailPage,
-    InvestSectorPage
+    InvestRegionPage
 )
 
 from .models.capital_invest import CapitalInvestOpportunityPage
@@ -1632,7 +1632,7 @@ class PulloutSerializer(serializers.Serializer):
     stat_text = serializers.CharField(allow_null=True)
 
 
-class InvestSectorPageSerializer(BasePageSerializer,
+class InvestRegionPageSerializer(BasePageSerializer,
                                  ChildPagesSerializerHelper):
     featured = serializers.BooleanField()
     description = serializers.CharField()
@@ -1659,26 +1659,19 @@ class InvestSectorPageSerializer(BasePageSerializer,
         serializer = SubsectionSerializer(data, many=True)
         return serializer.data
 
-    def get_children_sectors(self, instance):
-        return self.get_child_pages_data_for(
-            instance,
-            InvestSectorPage,
-            InvestSectorPageSerializer
-        )
 
-
-class InvestRegionalLandingPageSerializer(
+class InvestRegionLandingPageSerializer(
     BasePageSerializer, ChildPagesSerializerHelper
 ):
     heading = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
-    children_sectors = serializers.SerializerMethodField()
+    regions = serializers.SerializerMethodField()
 
-    def get_children_sectors(self, instance):
+    def get_regions(self, instance):
         return self.get_child_pages_data_for(
             instance,
-            InvestSectorPage,
-            InvestSectorPageSerializer
+            InvestRegionPage,
+            InvestRegionPageSerializer
         )
 
 

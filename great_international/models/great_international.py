@@ -21,6 +21,7 @@ from great_international.panels import great_international as panels
 
 from . import invest as invest_models
 from . import capital_invest as capital_invest_models
+from . import find_a_supplier as fas_models
 from .base import BaseInternationalPage
 
 
@@ -509,6 +510,7 @@ class InternationalHomePage(
             capital_invest_models.CapitalInvestOpportunityListingPage,
             capital_invest_models.CapitalInvestRegionPage,
             invest_models.InvestInternationalHomePage,
+            fas_models.InternationalTradeHomePage
         ]
 
 
