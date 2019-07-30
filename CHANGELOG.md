@@ -12,6 +12,8 @@
 - CI-368 - Add ebooks promotional section on "why choose the UK" page
 - CI-367 - Update `CapitalInvestRegionPage`
 - CI-366 - Add CTA to UK benefits section of invest home page
+- No-ticket - Fix models hierarchy
+
 
 ### Fixed Bugs
 - CI-373 - Fix panels on why choose UK page
