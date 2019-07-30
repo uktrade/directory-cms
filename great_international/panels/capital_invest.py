@@ -465,7 +465,8 @@ class CapitalInvestOpportunityPagePanels:
             heading="Similar projects",
             classname='collapsible',
             children=[
-                HelpPanel('Cta\'s require both text and a link to show '
+                HelpPanel('Section shows if there are opportunities with the same related sector. '
+                          'They are chosen randomly. Cta\'s require both text and a link to show '
                           'on page. '),
                 FieldPanel('similar_projects_cta_text'),
                 FieldPanel('similar_projects_cta_link'),
