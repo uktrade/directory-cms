@@ -8070,132 +8070,6 @@ CREATE TABLE public.great_international_investinternationalhomepage (
     eu_exit_section_call_to_action_url_es character varying(255),
     eu_exit_section_call_to_action_url_pt character varying(255),
     eu_exit_section_call_to_action_url_ar character varying(255),
-    subsection_title_one character varying(255) NOT NULL,
-    subsection_title_one_en_gb character varying(255),
-    subsection_title_one_de character varying(255),
-    subsection_title_one_ja character varying(255),
-    subsection_title_one_zh_hans character varying(255),
-    subsection_title_one_fr character varying(255),
-    subsection_title_one_es character varying(255),
-    subsection_title_one_pt character varying(255),
-    subsection_title_one_ar character varying(255),
-    subsection_content_one text NOT NULL,
-    subsection_content_one_en_gb text,
-    subsection_content_one_de text,
-    subsection_content_one_ja text,
-    subsection_content_one_zh_hans text,
-    subsection_content_one_fr text,
-    subsection_content_one_es text,
-    subsection_content_one_pt text,
-    subsection_content_one_ar text,
-    subsection_title_two character varying(255) NOT NULL,
-    subsection_title_two_en_gb character varying(255),
-    subsection_title_two_de character varying(255),
-    subsection_title_two_ja character varying(255),
-    subsection_title_two_zh_hans character varying(255),
-    subsection_title_two_fr character varying(255),
-    subsection_title_two_es character varying(255),
-    subsection_title_two_pt character varying(255),
-    subsection_title_two_ar character varying(255),
-    subsection_content_two text NOT NULL,
-    subsection_content_two_en_gb text,
-    subsection_content_two_de text,
-    subsection_content_two_ja text,
-    subsection_content_two_zh_hans text,
-    subsection_content_two_fr text,
-    subsection_content_two_es text,
-    subsection_content_two_pt text,
-    subsection_content_two_ar text,
-    subsection_title_three character varying(255) NOT NULL,
-    subsection_title_three_en_gb character varying(255),
-    subsection_title_three_de character varying(255),
-    subsection_title_three_ja character varying(255),
-    subsection_title_three_zh_hans character varying(255),
-    subsection_title_three_fr character varying(255),
-    subsection_title_three_es character varying(255),
-    subsection_title_three_pt character varying(255),
-    subsection_title_three_ar character varying(255),
-    subsection_content_three text NOT NULL,
-    subsection_content_three_en_gb text,
-    subsection_content_three_de text,
-    subsection_content_three_ja text,
-    subsection_content_three_zh_hans text,
-    subsection_content_three_fr text,
-    subsection_content_three_es text,
-    subsection_content_three_pt text,
-    subsection_content_three_ar text,
-    subsection_title_four character varying(255) NOT NULL,
-    subsection_title_four_en_gb character varying(255),
-    subsection_title_four_de character varying(255),
-    subsection_title_four_ja character varying(255),
-    subsection_title_four_zh_hans character varying(255),
-    subsection_title_four_fr character varying(255),
-    subsection_title_four_es character varying(255),
-    subsection_title_four_pt character varying(255),
-    subsection_title_four_ar character varying(255),
-    subsection_content_four text NOT NULL,
-    subsection_content_four_en_gb text,
-    subsection_content_four_de text,
-    subsection_content_four_ja text,
-    subsection_content_four_zh_hans text,
-    subsection_content_four_fr text,
-    subsection_content_four_es text,
-    subsection_content_four_pt text,
-    subsection_content_four_ar text,
-    subsection_title_five character varying(255) NOT NULL,
-    subsection_title_five_en_gb character varying(255),
-    subsection_title_five_de character varying(255),
-    subsection_title_five_ja character varying(255),
-    subsection_title_five_zh_hans character varying(255),
-    subsection_title_five_fr character varying(255),
-    subsection_title_five_es character varying(255),
-    subsection_title_five_pt character varying(255),
-    subsection_title_five_ar character varying(255),
-    subsection_content_five text NOT NULL,
-    subsection_content_five_en_gb text,
-    subsection_content_five_de text,
-    subsection_content_five_ja text,
-    subsection_content_five_zh_hans text,
-    subsection_content_five_fr text,
-    subsection_content_five_es text,
-    subsection_content_five_pt text,
-    subsection_content_five_ar text,
-    subsection_title_six character varying(255) NOT NULL,
-    subsection_title_six_en_gb character varying(255),
-    subsection_title_six_de character varying(255),
-    subsection_title_six_ja character varying(255),
-    subsection_title_six_zh_hans character varying(255),
-    subsection_title_six_fr character varying(255),
-    subsection_title_six_es character varying(255),
-    subsection_title_six_pt character varying(255),
-    subsection_title_six_ar character varying(255),
-    subsection_content_six text NOT NULL,
-    subsection_content_six_en_gb text,
-    subsection_content_six_de text,
-    subsection_content_six_ja text,
-    subsection_content_six_zh_hans text,
-    subsection_content_six_fr text,
-    subsection_content_six_es text,
-    subsection_content_six_pt text,
-    subsection_content_six_ar text,
-    subsection_title_seven character varying(255) NOT NULL,
-    subsection_title_seven_en_gb character varying(255),
-    subsection_title_seven_de character varying(255),
-    subsection_title_seven_ja character varying(255),
-    subsection_title_seven_zh_hans character varying(255),
-    subsection_title_seven_fr character varying(255),
-    subsection_title_seven_es character varying(255),
-    subsection_title_seven_pt character varying(255),
-    subsection_title_seven_ar character varying(255),
-    subsection_content_seven text NOT NULL,
-    subsection_content_seven_en_gb text,
-    subsection_content_seven_de text,
-    subsection_content_seven_ja text,
-    subsection_content_seven_zh_hans text,
-    subsection_content_seven_fr text,
-    subsection_content_seven_es text,
-    subsection_content_seven_pt text,
-    subsection_content_seven_ar text,
     sector_title text NOT NULL,
     sector_title_en_gb text,
     sector_title_de text,
@@ -8503,7 +8377,142 @@ CREATE TABLE public.great_international_investinternationalhomepage (
     setup_guide_img_ja_id integer,
     setup_guide_img_pt_id integer,
     setup_guide_img_zh_hans_id integer,
-    how_we_help_icon_six_id integer
+    how_we_help_icon_six_id integer,
+    benefits_section_cta_text character varying(255) NOT NULL,
+    benefits_section_cta_text_ar character varying(255),
+    benefits_section_cta_text_de character varying(255),
+    benefits_section_cta_text_en_gb character varying(255),
+    benefits_section_cta_text_es character varying(255),
+    benefits_section_cta_text_fr character varying(255),
+    benefits_section_cta_text_ja character varying(255),
+    benefits_section_cta_text_pt character varying(255),
+    benefits_section_cta_text_zh_hans character varying(255),
+    benefits_section_cta_url character varying(255) NOT NULL,
+    benefits_section_cta_url_ar character varying(255),
+    benefits_section_cta_url_de character varying(255),
+    benefits_section_cta_url_en_gb character varying(255),
+    benefits_section_cta_url_es character varying(255),
+    benefits_section_cta_url_fr character varying(255),
+    benefits_section_cta_url_ja character varying(255),
+    benefits_section_cta_url_pt character varying(255),
+    benefits_section_cta_url_zh_hans character varying(255),
+    featured_card_one_cta_link character varying(255) NOT NULL,
+    featured_card_one_cta_link_ar character varying(255),
+    featured_card_one_cta_link_de character varying(255),
+    featured_card_one_cta_link_en_gb character varying(255),
+    featured_card_one_cta_link_es character varying(255),
+    featured_card_one_cta_link_fr character varying(255),
+    featured_card_one_cta_link_ja character varying(255),
+    featured_card_one_cta_link_pt character varying(255),
+    featured_card_one_cta_link_zh_hans character varying(255),
+    featured_card_one_image_id integer,
+    featured_card_one_image_ar_id integer,
+    featured_card_one_image_de_id integer,
+    featured_card_one_image_en_gb_id integer,
+    featured_card_one_image_es_id integer,
+    featured_card_one_image_fr_id integer,
+    featured_card_one_image_ja_id integer,
+    featured_card_one_image_pt_id integer,
+    featured_card_one_image_zh_hans_id integer,
+    featured_card_one_summary text NOT NULL,
+    featured_card_one_summary_ar text,
+    featured_card_one_summary_de text,
+    featured_card_one_summary_en_gb text,
+    featured_card_one_summary_es text,
+    featured_card_one_summary_fr text,
+    featured_card_one_summary_ja text,
+    featured_card_one_summary_pt text,
+    featured_card_one_summary_zh_hans text,
+    featured_card_one_title character varying(255) NOT NULL,
+    featured_card_one_title_ar character varying(255),
+    featured_card_one_title_de character varying(255),
+    featured_card_one_title_en_gb character varying(255),
+    featured_card_one_title_es character varying(255),
+    featured_card_one_title_fr character varying(255),
+    featured_card_one_title_ja character varying(255),
+    featured_card_one_title_pt character varying(255),
+    featured_card_one_title_zh_hans character varying(255),
+    featured_card_three_cta_link character varying(255) NOT NULL,
+    featured_card_three_cta_link_ar character varying(255),
+    featured_card_three_cta_link_de character varying(255),
+    featured_card_three_cta_link_en_gb character varying(255),
+    featured_card_three_cta_link_es character varying(255),
+    featured_card_three_cta_link_fr character varying(255),
+    featured_card_three_cta_link_ja character varying(255),
+    featured_card_three_cta_link_pt character varying(255),
+    featured_card_three_cta_link_zh_hans character varying(255),
+    featured_card_three_image_id integer,
+    featured_card_three_image_ar_id integer,
+    featured_card_three_image_de_id integer,
+    featured_card_three_image_en_gb_id integer,
+    featured_card_three_image_es_id integer,
+    featured_card_three_image_fr_id integer,
+    featured_card_three_image_ja_id integer,
+    featured_card_three_image_pt_id integer,
+    featured_card_three_image_zh_hans_id integer,
+    featured_card_three_summary text NOT NULL,
+    featured_card_three_summary_ar text,
+    featured_card_three_summary_de text,
+    featured_card_three_summary_en_gb text,
+    featured_card_three_summary_es text,
+    featured_card_three_summary_fr text,
+    featured_card_three_summary_ja text,
+    featured_card_three_summary_pt text,
+    featured_card_three_summary_zh_hans text,
+    featured_card_three_title character varying(255) NOT NULL,
+    featured_card_three_title_ar character varying(255),
+    featured_card_three_title_de character varying(255),
+    featured_card_three_title_en_gb character varying(255),
+    featured_card_three_title_es character varying(255),
+    featured_card_three_title_fr character varying(255),
+    featured_card_three_title_ja character varying(255),
+    featured_card_three_title_pt character varying(255),
+    featured_card_three_title_zh_hans character varying(255),
+    featured_card_two_cta_link character varying(255) NOT NULL,
+    featured_card_two_cta_link_ar character varying(255),
+    featured_card_two_cta_link_de character varying(255),
+    featured_card_two_cta_link_en_gb character varying(255),
+    featured_card_two_cta_link_es character varying(255),
+    featured_card_two_cta_link_fr character varying(255),
+    featured_card_two_cta_link_ja character varying(255),
+    featured_card_two_cta_link_pt character varying(255),
+    featured_card_two_cta_link_zh_hans character varying(255),
+    featured_card_two_image_id integer,
+    featured_card_two_image_ar_id integer,
+    featured_card_two_image_de_id integer,
+    featured_card_two_image_en_gb_id integer,
+    featured_card_two_image_es_id integer,
+    featured_card_two_image_fr_id integer,
+    featured_card_two_image_ja_id integer,
+    featured_card_two_image_pt_id integer,
+    featured_card_two_image_zh_hans_id integer,
+    featured_card_two_summary text NOT NULL,
+    featured_card_two_summary_ar text,
+    featured_card_two_summary_de text,
+    featured_card_two_summary_en_gb text,
+    featured_card_two_summary_es text,
+    featured_card_two_summary_fr text,
+    featured_card_two_summary_ja text,
+    featured_card_two_summary_pt text,
+    featured_card_two_summary_zh_hans text,
+    featured_card_two_title character varying(255) NOT NULL,
+    featured_card_two_title_ar character varying(255),
+    featured_card_two_title_de character varying(255),
+    featured_card_two_title_en_gb character varying(255),
+    featured_card_two_title_es character varying(255),
+    featured_card_two_title_fr character varying(255),
+    featured_card_two_title_ja character varying(255),
+    featured_card_two_title_pt character varying(255),
+    featured_card_two_title_zh_hans character varying(255),
+    teaser text NOT NULL,
+    teaser_ar text,
+    teaser_de text,
+    teaser_en_gb text,
+    teaser_es text,
+    teaser_fr text,
+    teaser_ja text,
+    teaser_pt text,
+    teaser_zh_hans text
 );
 
 
@@ -9934,7 +9943,34 @@ CREATE TABLE public.invest_investhomepage (
     setup_guide_title_fr character varying(255),
     setup_guide_title_ja character varying(255),
     setup_guide_title_pt character varying(255),
-    setup_guide_title_zh_hans character varying(255)
+    setup_guide_title_zh_hans character varying(255),
+    benefits_section_cta_text character varying(255) NOT NULL,
+    benefits_section_cta_text_ar character varying(255),
+    benefits_section_cta_text_de character varying(255),
+    benefits_section_cta_text_en_gb character varying(255),
+    benefits_section_cta_text_es character varying(255),
+    benefits_section_cta_text_fr character varying(255),
+    benefits_section_cta_text_ja character varying(255),
+    benefits_section_cta_text_pt character varying(255),
+    benefits_section_cta_text_zh_hans character varying(255),
+    benefits_section_cta_url character varying(255) NOT NULL,
+    benefits_section_cta_url_ar character varying(255),
+    benefits_section_cta_url_de character varying(255),
+    benefits_section_cta_url_en_gb character varying(255),
+    benefits_section_cta_url_es character varying(255),
+    benefits_section_cta_url_fr character varying(255),
+    benefits_section_cta_url_ja character varying(255),
+    benefits_section_cta_url_pt character varying(255),
+    benefits_section_cta_url_zh_hans character varying(255),
+    teaser text NOT NULL,
+    teaser_ar text,
+    teaser_de text,
+    teaser_en_gb text,
+    teaser_es text,
+    teaser_fr text,
+    teaser_ja text,
+    teaser_pt text,
+    teaser_zh_hans text
 );
 
 
@@ -12728,6 +12764,10 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 343	great_international	0053_auto_20190724_0950	2019-07-24 13:31:40.696945+01
 344	great_international	0054_auto_20190724_1205	2019-07-24 14:32:10.677249+01
 345	great_international	0055_auto_20190724_1306	2019-07-24 15:16:53.315924+01
+346	great_international	0056_auto_20190725_1613	2019-07-29 11:48:11.207369+01
+347	great_international	0057_auto_20190729_1026	2019-07-29 11:50:39.678432+01
+348	great_international	0058_auto_20190729_1043	2019-07-29 11:56:54.866354+01
+349	invest	0033_auto_20190724_1607	2019-07-29 11:57:30.122832+01
 \.
 
 
@@ -13391,7 +13431,7 @@ COPY public.great_international_investhighpotentialopportunityformsucceaab7 (pag
 -- Data for Name: great_international_investinternationalhomepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_investinternationalhomepage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, heading, heading_en_gb, heading_de, heading_ja, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_ar, sub_heading, sub_heading_en_gb, sub_heading_de, sub_heading_ja, sub_heading_zh_hans, sub_heading_fr, sub_heading_es, sub_heading_pt, sub_heading_ar, hero_call_to_action_text, hero_call_to_action_text_en_gb, hero_call_to_action_text_de, hero_call_to_action_text_ja, hero_call_to_action_text_zh_hans, hero_call_to_action_text_fr, hero_call_to_action_text_es, hero_call_to_action_text_pt, hero_call_to_action_text_ar, hero_call_to_action_url, hero_call_to_action_url_en_gb, hero_call_to_action_url_de, hero_call_to_action_url_ja, hero_call_to_action_url_zh_hans, hero_call_to_action_url_fr, hero_call_to_action_url_es, hero_call_to_action_url_pt, hero_call_to_action_url_ar, benefits_section_title, benefits_section_title_en_gb, benefits_section_title_de, benefits_section_title_ja, benefits_section_title_zh_hans, benefits_section_title_fr, benefits_section_title_es, benefits_section_title_pt, benefits_section_title_ar, benefits_section_intro, benefits_section_intro_en_gb, benefits_section_intro_de, benefits_section_intro_ja, benefits_section_intro_zh_hans, benefits_section_intro_fr, benefits_section_intro_es, benefits_section_intro_pt, benefits_section_intro_ar, benefits_section_content, benefits_section_content_en_gb, benefits_section_content_de, benefits_section_content_ja, benefits_section_content_zh_hans, benefits_section_content_fr, benefits_section_content_es, benefits_section_content_pt, benefits_section_content_ar, capital_invest_section_title, capital_invest_section_title_en_gb, capital_invest_section_title_de, capital_invest_section_title_ja, capital_invest_section_title_zh_hans, capital_invest_section_title_fr, capital_invest_section_title_es, capital_invest_section_title_pt, capital_invest_section_title_ar, capital_invest_section_content, capital_invest_section_content_en_gb, capital_invest_section_content_de, capital_invest_section_content_ja, capital_invest_section_content_zh_hans, capital_invest_section_content_fr, capital_invest_section_content_es, capital_invest_section_content_pt, capital_invest_section_content_ar, eu_exit_section_title, eu_exit_section_title_en_gb, eu_exit_section_title_de, eu_exit_section_title_ja, eu_exit_section_title_zh_hans, eu_exit_section_title_fr, eu_exit_section_title_es, eu_exit_section_title_pt, eu_exit_section_title_ar, eu_exit_section_content, eu_exit_section_content_en_gb, eu_exit_section_content_de, eu_exit_section_content_ja, eu_exit_section_content_zh_hans, eu_exit_section_content_fr, eu_exit_section_content_es, eu_exit_section_content_pt, eu_exit_section_content_ar, eu_exit_section_call_to_action_text, eu_exit_section_call_to_action_text_en_gb, eu_exit_section_call_to_action_text_de, eu_exit_section_call_to_action_text_ja, eu_exit_section_call_to_action_text_zh_hans, eu_exit_section_call_to_action_text_fr, eu_exit_section_call_to_action_text_es, eu_exit_section_call_to_action_text_pt, eu_exit_section_call_to_action_text_ar, eu_exit_section_call_to_action_url, eu_exit_section_call_to_action_url_en_gb, eu_exit_section_call_to_action_url_de, eu_exit_section_call_to_action_url_ja, eu_exit_section_call_to_action_url_zh_hans, eu_exit_section_call_to_action_url_fr, eu_exit_section_call_to_action_url_es, eu_exit_section_call_to_action_url_pt, eu_exit_section_call_to_action_url_ar, subsection_title_one, subsection_title_one_en_gb, subsection_title_one_de, subsection_title_one_ja, subsection_title_one_zh_hans, subsection_title_one_fr, subsection_title_one_es, subsection_title_one_pt, subsection_title_one_ar, subsection_content_one, subsection_content_one_en_gb, subsection_content_one_de, subsection_content_one_ja, subsection_content_one_zh_hans, subsection_content_one_fr, subsection_content_one_es, subsection_content_one_pt, subsection_content_one_ar, subsection_title_two, subsection_title_two_en_gb, subsection_title_two_de, subsection_title_two_ja, subsection_title_two_zh_hans, subsection_title_two_fr, subsection_title_two_es, subsection_title_two_pt, subsection_title_two_ar, subsection_content_two, subsection_content_two_en_gb, subsection_content_two_de, subsection_content_two_ja, subsection_content_two_zh_hans, subsection_content_two_fr, subsection_content_two_es, subsection_content_two_pt, subsection_content_two_ar, subsection_title_three, subsection_title_three_en_gb, subsection_title_three_de, subsection_title_three_ja, subsection_title_three_zh_hans, subsection_title_three_fr, subsection_title_three_es, subsection_title_three_pt, subsection_title_three_ar, subsection_content_three, subsection_content_three_en_gb, subsection_content_three_de, subsection_content_three_ja, subsection_content_three_zh_hans, subsection_content_three_fr, subsection_content_three_es, subsection_content_three_pt, subsection_content_three_ar, subsection_title_four, subsection_title_four_en_gb, subsection_title_four_de, subsection_title_four_ja, subsection_title_four_zh_hans, subsection_title_four_fr, subsection_title_four_es, subsection_title_four_pt, subsection_title_four_ar, subsection_content_four, subsection_content_four_en_gb, subsection_content_four_de, subsection_content_four_ja, subsection_content_four_zh_hans, subsection_content_four_fr, subsection_content_four_es, subsection_content_four_pt, subsection_content_four_ar, subsection_title_five, subsection_title_five_en_gb, subsection_title_five_de, subsection_title_five_ja, subsection_title_five_zh_hans, subsection_title_five_fr, subsection_title_five_es, subsection_title_five_pt, subsection_title_five_ar, subsection_content_five, subsection_content_five_en_gb, subsection_content_five_de, subsection_content_five_ja, subsection_content_five_zh_hans, subsection_content_five_fr, subsection_content_five_es, subsection_content_five_pt, subsection_content_five_ar, subsection_title_six, subsection_title_six_en_gb, subsection_title_six_de, subsection_title_six_ja, subsection_title_six_zh_hans, subsection_title_six_fr, subsection_title_six_es, subsection_title_six_pt, subsection_title_six_ar, subsection_content_six, subsection_content_six_en_gb, subsection_content_six_de, subsection_content_six_ja, subsection_content_six_zh_hans, subsection_content_six_fr, subsection_content_six_es, subsection_content_six_pt, subsection_content_six_ar, subsection_title_seven, subsection_title_seven_en_gb, subsection_title_seven_de, subsection_title_seven_ja, subsection_title_seven_zh_hans, subsection_title_seven_fr, subsection_title_seven_es, subsection_title_seven_pt, subsection_title_seven_ar, subsection_content_seven, subsection_content_seven_en_gb, subsection_content_seven_de, subsection_content_seven_ja, subsection_content_seven_zh_hans, subsection_content_seven_fr, subsection_content_seven_es, subsection_content_seven_pt, subsection_content_seven_ar, sector_title, sector_title_en_gb, sector_title_de, sector_title_ja, sector_title_zh_hans, sector_title_fr, sector_title_es, sector_title_pt, sector_title_ar, sector_button_text, sector_button_text_en_gb, sector_button_text_de, sector_button_text_ja, sector_button_text_zh_hans, sector_button_text_fr, sector_button_text_es, sector_button_text_pt, sector_button_text_ar, sector_button_url, sector_button_url_en_gb, sector_button_url_de, sector_button_url_ja, sector_button_url_zh_hans, sector_button_url_fr, sector_button_url_es, sector_button_url_pt, sector_button_url_ar, sector_intro, sector_intro_en_gb, sector_intro_de, sector_intro_ja, sector_intro_zh_hans, sector_intro_fr, sector_intro_es, sector_intro_pt, sector_intro_ar, hpo_title, hpo_title_en_gb, hpo_title_de, hpo_title_ja, hpo_title_zh_hans, hpo_title_fr, hpo_title_es, hpo_title_pt, hpo_title_ar, hpo_intro, hpo_intro_en_gb, hpo_intro_de, hpo_intro_ja, hpo_intro_zh_hans, hpo_intro_fr, hpo_intro_es, hpo_intro_pt, hpo_intro_ar, setup_guide_title, setup_guide_title_en_gb, setup_guide_title_de, setup_guide_title_ja, setup_guide_title_zh_hans, setup_guide_title_fr, setup_guide_title_es, setup_guide_title_pt, setup_guide_title_ar, setup_guide_lead_in, setup_guide_lead_in_en_gb, setup_guide_lead_in_de, setup_guide_lead_in_ja, setup_guide_lead_in_zh_hans, setup_guide_lead_in_fr, setup_guide_lead_in_es, setup_guide_lead_in_pt, setup_guide_lead_in_ar, setup_guide_content, setup_guide_content_en_gb, setup_guide_content_de, setup_guide_content_ja, setup_guide_content_zh_hans, setup_guide_content_fr, setup_guide_content_es, setup_guide_content_pt, setup_guide_content_ar, setup_guide_call_to_action_url, setup_guide_call_to_action_url_en_gb, setup_guide_call_to_action_url_de, setup_guide_call_to_action_url_ja, setup_guide_call_to_action_url_zh_hans, setup_guide_call_to_action_url_fr, setup_guide_call_to_action_url_es, setup_guide_call_to_action_url_pt, setup_guide_call_to_action_url_ar, isd_section_title, isd_section_title_en_gb, isd_section_title_de, isd_section_title_ja, isd_section_title_zh_hans, isd_section_title_fr, isd_section_title_es, isd_section_title_pt, isd_section_title_ar, isd_section_text, isd_section_text_en_gb, isd_section_text_de, isd_section_text_ja, isd_section_text_zh_hans, isd_section_text_fr, isd_section_text_es, isd_section_text_pt, isd_section_text_ar, how_we_help_title, how_we_help_title_en_gb, how_we_help_title_de, how_we_help_title_ja, how_we_help_title_zh_hans, how_we_help_title_fr, how_we_help_title_es, how_we_help_title_pt, how_we_help_title_ar, how_we_help_lead_in, how_we_help_lead_in_en_gb, how_we_help_lead_in_de, how_we_help_lead_in_ja, how_we_help_lead_in_zh_hans, how_we_help_lead_in_fr, how_we_help_lead_in_es, how_we_help_lead_in_pt, how_we_help_lead_in_ar, how_we_help_text_one, how_we_help_text_one_en_gb, how_we_help_text_one_de, how_we_help_text_one_ja, how_we_help_text_one_zh_hans, how_we_help_text_one_fr, how_we_help_text_one_es, how_we_help_text_one_pt, how_we_help_text_one_ar, how_we_help_text_two, how_we_help_text_two_en_gb, how_we_help_text_two_de, how_we_help_text_two_ja, how_we_help_text_two_zh_hans, how_we_help_text_two_fr, how_we_help_text_two_es, how_we_help_text_two_pt, how_we_help_text_two_ar, how_we_help_text_three, how_we_help_text_three_en_gb, how_we_help_text_three_de, how_we_help_text_three_ja, how_we_help_text_three_zh_hans, how_we_help_text_three_fr, how_we_help_text_three_es, how_we_help_text_three_pt, how_we_help_text_three_ar, how_we_help_text_four, how_we_help_text_four_en_gb, how_we_help_text_four_de, how_we_help_text_four_ja, how_we_help_text_four_zh_hans, how_we_help_text_four_fr, how_we_help_text_four_es, how_we_help_text_four_pt, how_we_help_text_four_ar, how_we_help_text_five, how_we_help_text_five_en_gb, how_we_help_text_five_de, how_we_help_text_five_ja, how_we_help_text_five_zh_hans, how_we_help_text_five_fr, how_we_help_text_five_es, how_we_help_text_five_pt, how_we_help_text_five_ar, how_we_help_text_six, how_we_help_text_six_en_gb, how_we_help_text_six_de, how_we_help_text_six_ja, how_we_help_text_six_zh_hans, how_we_help_text_six_fr, how_we_help_text_six_es, how_we_help_text_six_pt, how_we_help_text_six_ar, contact_section_title, contact_section_title_en_gb, contact_section_title_de, contact_section_title_ja, contact_section_title_zh_hans, contact_section_title_fr, contact_section_title_es, contact_section_title_pt, contact_section_title_ar, contact_section_content, contact_section_content_en_gb, contact_section_content_de, contact_section_content_ja, contact_section_content_zh_hans, contact_section_content_fr, contact_section_content_es, contact_section_content_pt, contact_section_content_ar, contact_section_call_to_action_text, contact_section_call_to_action_text_en_gb, contact_section_call_to_action_text_de, contact_section_call_to_action_text_ja, contact_section_call_to_action_text_zh_hans, contact_section_call_to_action_text_fr, contact_section_call_to_action_text_es, contact_section_call_to_action_text_pt, contact_section_call_to_action_text_ar, contact_section_call_to_action_url, contact_section_call_to_action_url_en_gb, contact_section_call_to_action_url_de, contact_section_call_to_action_url_ja, contact_section_call_to_action_url_zh_hans, contact_section_call_to_action_url_fr, contact_section_call_to_action_url_es, contact_section_call_to_action_url_pt, contact_section_call_to_action_url_ar, benefits_section_img_id, benefits_section_img_ar_id, benefits_section_img_de_id, benefits_section_img_en_gb_id, benefits_section_img_es_id, benefits_section_img_fr_id, benefits_section_img_ja_id, benefits_section_img_pt_id, benefits_section_img_zh_hans_id, capital_invest_section_image_id, capital_invest_section_image_ar_id, capital_invest_section_image_de_id, capital_invest_section_image_en_gb_id, capital_invest_section_image_es_id, capital_invest_section_image_fr_id, capital_invest_section_image_ja_id, capital_invest_section_image_pt_id, capital_invest_section_image_zh_hans_id, eu_exit_section_img_id, eu_exit_section_img_ar_id, eu_exit_section_img_de_id, eu_exit_section_img_en_gb_id, eu_exit_section_img_es_id, eu_exit_section_img_fr_id, eu_exit_section_img_ja_id, eu_exit_section_img_pt_id, eu_exit_section_img_zh_hans_id, hero_image_id, how_we_help_icon_five_id, how_we_help_icon_five_ar_id, how_we_help_icon_five_de_id, how_we_help_icon_five_en_gb_id, how_we_help_icon_five_es_id, how_we_help_icon_five_fr_id, how_we_help_icon_five_ja_id, how_we_help_icon_five_pt_id, how_we_help_icon_five_zh_hans_id, how_we_help_icon_four_id, how_we_help_icon_four_ar_id, how_we_help_icon_four_de_id, how_we_help_icon_four_en_gb_id, how_we_help_icon_four_es_id, how_we_help_icon_four_fr_id, how_we_help_icon_four_ja_id, how_we_help_icon_four_pt_id, how_we_help_icon_four_zh_hans_id, how_we_help_icon_one_id, how_we_help_icon_one_ar_id, how_we_help_icon_one_de_id, how_we_help_icon_one_en_gb_id, how_we_help_icon_one_es_id, how_we_help_icon_one_fr_id, how_we_help_icon_one_ja_id, how_we_help_icon_one_pt_id, how_we_help_icon_one_zh_hans_id, how_we_help_icon_three_id, how_we_help_icon_three_ar_id, how_we_help_icon_three_de_id, how_we_help_icon_three_en_gb_id, how_we_help_icon_three_es_id, how_we_help_icon_three_fr_id, how_we_help_icon_three_ja_id, how_we_help_icon_three_pt_id, how_we_help_icon_three_zh_hans_id, how_we_help_icon_two_id, how_we_help_icon_two_ar_id, how_we_help_icon_two_de_id, how_we_help_icon_two_en_gb_id, how_we_help_icon_two_es_id, how_we_help_icon_two_fr_id, how_we_help_icon_two_ja_id, how_we_help_icon_two_pt_id, how_we_help_icon_two_zh_hans_id, isd_section_image_id, isd_section_image_ar_id, isd_section_image_de_id, isd_section_image_en_gb_id, isd_section_image_es_id, isd_section_image_fr_id, isd_section_image_ja_id, isd_section_image_pt_id, isd_section_image_zh_hans_id, setup_guide_img_id, setup_guide_img_ar_id, setup_guide_img_de_id, setup_guide_img_en_gb_id, setup_guide_img_es_id, setup_guide_img_fr_id, setup_guide_img_ja_id, setup_guide_img_pt_id, setup_guide_img_zh_hans_id, how_we_help_icon_six_id) FROM stdin;
+COPY public.great_international_investinternationalhomepage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, heading, heading_en_gb, heading_de, heading_ja, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_ar, sub_heading, sub_heading_en_gb, sub_heading_de, sub_heading_ja, sub_heading_zh_hans, sub_heading_fr, sub_heading_es, sub_heading_pt, sub_heading_ar, hero_call_to_action_text, hero_call_to_action_text_en_gb, hero_call_to_action_text_de, hero_call_to_action_text_ja, hero_call_to_action_text_zh_hans, hero_call_to_action_text_fr, hero_call_to_action_text_es, hero_call_to_action_text_pt, hero_call_to_action_text_ar, hero_call_to_action_url, hero_call_to_action_url_en_gb, hero_call_to_action_url_de, hero_call_to_action_url_ja, hero_call_to_action_url_zh_hans, hero_call_to_action_url_fr, hero_call_to_action_url_es, hero_call_to_action_url_pt, hero_call_to_action_url_ar, benefits_section_title, benefits_section_title_en_gb, benefits_section_title_de, benefits_section_title_ja, benefits_section_title_zh_hans, benefits_section_title_fr, benefits_section_title_es, benefits_section_title_pt, benefits_section_title_ar, benefits_section_intro, benefits_section_intro_en_gb, benefits_section_intro_de, benefits_section_intro_ja, benefits_section_intro_zh_hans, benefits_section_intro_fr, benefits_section_intro_es, benefits_section_intro_pt, benefits_section_intro_ar, benefits_section_content, benefits_section_content_en_gb, benefits_section_content_de, benefits_section_content_ja, benefits_section_content_zh_hans, benefits_section_content_fr, benefits_section_content_es, benefits_section_content_pt, benefits_section_content_ar, capital_invest_section_title, capital_invest_section_title_en_gb, capital_invest_section_title_de, capital_invest_section_title_ja, capital_invest_section_title_zh_hans, capital_invest_section_title_fr, capital_invest_section_title_es, capital_invest_section_title_pt, capital_invest_section_title_ar, capital_invest_section_content, capital_invest_section_content_en_gb, capital_invest_section_content_de, capital_invest_section_content_ja, capital_invest_section_content_zh_hans, capital_invest_section_content_fr, capital_invest_section_content_es, capital_invest_section_content_pt, capital_invest_section_content_ar, eu_exit_section_title, eu_exit_section_title_en_gb, eu_exit_section_title_de, eu_exit_section_title_ja, eu_exit_section_title_zh_hans, eu_exit_section_title_fr, eu_exit_section_title_es, eu_exit_section_title_pt, eu_exit_section_title_ar, eu_exit_section_content, eu_exit_section_content_en_gb, eu_exit_section_content_de, eu_exit_section_content_ja, eu_exit_section_content_zh_hans, eu_exit_section_content_fr, eu_exit_section_content_es, eu_exit_section_content_pt, eu_exit_section_content_ar, eu_exit_section_call_to_action_text, eu_exit_section_call_to_action_text_en_gb, eu_exit_section_call_to_action_text_de, eu_exit_section_call_to_action_text_ja, eu_exit_section_call_to_action_text_zh_hans, eu_exit_section_call_to_action_text_fr, eu_exit_section_call_to_action_text_es, eu_exit_section_call_to_action_text_pt, eu_exit_section_call_to_action_text_ar, eu_exit_section_call_to_action_url, eu_exit_section_call_to_action_url_en_gb, eu_exit_section_call_to_action_url_de, eu_exit_section_call_to_action_url_ja, eu_exit_section_call_to_action_url_zh_hans, eu_exit_section_call_to_action_url_fr, eu_exit_section_call_to_action_url_es, eu_exit_section_call_to_action_url_pt, eu_exit_section_call_to_action_url_ar, sector_title, sector_title_en_gb, sector_title_de, sector_title_ja, sector_title_zh_hans, sector_title_fr, sector_title_es, sector_title_pt, sector_title_ar, sector_button_text, sector_button_text_en_gb, sector_button_text_de, sector_button_text_ja, sector_button_text_zh_hans, sector_button_text_fr, sector_button_text_es, sector_button_text_pt, sector_button_text_ar, sector_button_url, sector_button_url_en_gb, sector_button_url_de, sector_button_url_ja, sector_button_url_zh_hans, sector_button_url_fr, sector_button_url_es, sector_button_url_pt, sector_button_url_ar, sector_intro, sector_intro_en_gb, sector_intro_de, sector_intro_ja, sector_intro_zh_hans, sector_intro_fr, sector_intro_es, sector_intro_pt, sector_intro_ar, hpo_title, hpo_title_en_gb, hpo_title_de, hpo_title_ja, hpo_title_zh_hans, hpo_title_fr, hpo_title_es, hpo_title_pt, hpo_title_ar, hpo_intro, hpo_intro_en_gb, hpo_intro_de, hpo_intro_ja, hpo_intro_zh_hans, hpo_intro_fr, hpo_intro_es, hpo_intro_pt, hpo_intro_ar, setup_guide_title, setup_guide_title_en_gb, setup_guide_title_de, setup_guide_title_ja, setup_guide_title_zh_hans, setup_guide_title_fr, setup_guide_title_es, setup_guide_title_pt, setup_guide_title_ar, setup_guide_lead_in, setup_guide_lead_in_en_gb, setup_guide_lead_in_de, setup_guide_lead_in_ja, setup_guide_lead_in_zh_hans, setup_guide_lead_in_fr, setup_guide_lead_in_es, setup_guide_lead_in_pt, setup_guide_lead_in_ar, setup_guide_content, setup_guide_content_en_gb, setup_guide_content_de, setup_guide_content_ja, setup_guide_content_zh_hans, setup_guide_content_fr, setup_guide_content_es, setup_guide_content_pt, setup_guide_content_ar, setup_guide_call_to_action_url, setup_guide_call_to_action_url_en_gb, setup_guide_call_to_action_url_de, setup_guide_call_to_action_url_ja, setup_guide_call_to_action_url_zh_hans, setup_guide_call_to_action_url_fr, setup_guide_call_to_action_url_es, setup_guide_call_to_action_url_pt, setup_guide_call_to_action_url_ar, isd_section_title, isd_section_title_en_gb, isd_section_title_de, isd_section_title_ja, isd_section_title_zh_hans, isd_section_title_fr, isd_section_title_es, isd_section_title_pt, isd_section_title_ar, isd_section_text, isd_section_text_en_gb, isd_section_text_de, isd_section_text_ja, isd_section_text_zh_hans, isd_section_text_fr, isd_section_text_es, isd_section_text_pt, isd_section_text_ar, how_we_help_title, how_we_help_title_en_gb, how_we_help_title_de, how_we_help_title_ja, how_we_help_title_zh_hans, how_we_help_title_fr, how_we_help_title_es, how_we_help_title_pt, how_we_help_title_ar, how_we_help_lead_in, how_we_help_lead_in_en_gb, how_we_help_lead_in_de, how_we_help_lead_in_ja, how_we_help_lead_in_zh_hans, how_we_help_lead_in_fr, how_we_help_lead_in_es, how_we_help_lead_in_pt, how_we_help_lead_in_ar, how_we_help_text_one, how_we_help_text_one_en_gb, how_we_help_text_one_de, how_we_help_text_one_ja, how_we_help_text_one_zh_hans, how_we_help_text_one_fr, how_we_help_text_one_es, how_we_help_text_one_pt, how_we_help_text_one_ar, how_we_help_text_two, how_we_help_text_two_en_gb, how_we_help_text_two_de, how_we_help_text_two_ja, how_we_help_text_two_zh_hans, how_we_help_text_two_fr, how_we_help_text_two_es, how_we_help_text_two_pt, how_we_help_text_two_ar, how_we_help_text_three, how_we_help_text_three_en_gb, how_we_help_text_three_de, how_we_help_text_three_ja, how_we_help_text_three_zh_hans, how_we_help_text_three_fr, how_we_help_text_three_es, how_we_help_text_three_pt, how_we_help_text_three_ar, how_we_help_text_four, how_we_help_text_four_en_gb, how_we_help_text_four_de, how_we_help_text_four_ja, how_we_help_text_four_zh_hans, how_we_help_text_four_fr, how_we_help_text_four_es, how_we_help_text_four_pt, how_we_help_text_four_ar, how_we_help_text_five, how_we_help_text_five_en_gb, how_we_help_text_five_de, how_we_help_text_five_ja, how_we_help_text_five_zh_hans, how_we_help_text_five_fr, how_we_help_text_five_es, how_we_help_text_five_pt, how_we_help_text_five_ar, how_we_help_text_six, how_we_help_text_six_en_gb, how_we_help_text_six_de, how_we_help_text_six_ja, how_we_help_text_six_zh_hans, how_we_help_text_six_fr, how_we_help_text_six_es, how_we_help_text_six_pt, how_we_help_text_six_ar, contact_section_title, contact_section_title_en_gb, contact_section_title_de, contact_section_title_ja, contact_section_title_zh_hans, contact_section_title_fr, contact_section_title_es, contact_section_title_pt, contact_section_title_ar, contact_section_content, contact_section_content_en_gb, contact_section_content_de, contact_section_content_ja, contact_section_content_zh_hans, contact_section_content_fr, contact_section_content_es, contact_section_content_pt, contact_section_content_ar, contact_section_call_to_action_text, contact_section_call_to_action_text_en_gb, contact_section_call_to_action_text_de, contact_section_call_to_action_text_ja, contact_section_call_to_action_text_zh_hans, contact_section_call_to_action_text_fr, contact_section_call_to_action_text_es, contact_section_call_to_action_text_pt, contact_section_call_to_action_text_ar, contact_section_call_to_action_url, contact_section_call_to_action_url_en_gb, contact_section_call_to_action_url_de, contact_section_call_to_action_url_ja, contact_section_call_to_action_url_zh_hans, contact_section_call_to_action_url_fr, contact_section_call_to_action_url_es, contact_section_call_to_action_url_pt, contact_section_call_to_action_url_ar, benefits_section_img_id, benefits_section_img_ar_id, benefits_section_img_de_id, benefits_section_img_en_gb_id, benefits_section_img_es_id, benefits_section_img_fr_id, benefits_section_img_ja_id, benefits_section_img_pt_id, benefits_section_img_zh_hans_id, capital_invest_section_image_id, capital_invest_section_image_ar_id, capital_invest_section_image_de_id, capital_invest_section_image_en_gb_id, capital_invest_section_image_es_id, capital_invest_section_image_fr_id, capital_invest_section_image_ja_id, capital_invest_section_image_pt_id, capital_invest_section_image_zh_hans_id, eu_exit_section_img_id, eu_exit_section_img_ar_id, eu_exit_section_img_de_id, eu_exit_section_img_en_gb_id, eu_exit_section_img_es_id, eu_exit_section_img_fr_id, eu_exit_section_img_ja_id, eu_exit_section_img_pt_id, eu_exit_section_img_zh_hans_id, hero_image_id, how_we_help_icon_five_id, how_we_help_icon_five_ar_id, how_we_help_icon_five_de_id, how_we_help_icon_five_en_gb_id, how_we_help_icon_five_es_id, how_we_help_icon_five_fr_id, how_we_help_icon_five_ja_id, how_we_help_icon_five_pt_id, how_we_help_icon_five_zh_hans_id, how_we_help_icon_four_id, how_we_help_icon_four_ar_id, how_we_help_icon_four_de_id, how_we_help_icon_four_en_gb_id, how_we_help_icon_four_es_id, how_we_help_icon_four_fr_id, how_we_help_icon_four_ja_id, how_we_help_icon_four_pt_id, how_we_help_icon_four_zh_hans_id, how_we_help_icon_one_id, how_we_help_icon_one_ar_id, how_we_help_icon_one_de_id, how_we_help_icon_one_en_gb_id, how_we_help_icon_one_es_id, how_we_help_icon_one_fr_id, how_we_help_icon_one_ja_id, how_we_help_icon_one_pt_id, how_we_help_icon_one_zh_hans_id, how_we_help_icon_three_id, how_we_help_icon_three_ar_id, how_we_help_icon_three_de_id, how_we_help_icon_three_en_gb_id, how_we_help_icon_three_es_id, how_we_help_icon_three_fr_id, how_we_help_icon_three_ja_id, how_we_help_icon_three_pt_id, how_we_help_icon_three_zh_hans_id, how_we_help_icon_two_id, how_we_help_icon_two_ar_id, how_we_help_icon_two_de_id, how_we_help_icon_two_en_gb_id, how_we_help_icon_two_es_id, how_we_help_icon_two_fr_id, how_we_help_icon_two_ja_id, how_we_help_icon_two_pt_id, how_we_help_icon_two_zh_hans_id, isd_section_image_id, isd_section_image_ar_id, isd_section_image_de_id, isd_section_image_en_gb_id, isd_section_image_es_id, isd_section_image_fr_id, isd_section_image_ja_id, isd_section_image_pt_id, isd_section_image_zh_hans_id, setup_guide_img_id, setup_guide_img_ar_id, setup_guide_img_de_id, setup_guide_img_en_gb_id, setup_guide_img_es_id, setup_guide_img_fr_id, setup_guide_img_ja_id, setup_guide_img_pt_id, setup_guide_img_zh_hans_id, how_we_help_icon_six_id, benefits_section_cta_text, benefits_section_cta_text_ar, benefits_section_cta_text_de, benefits_section_cta_text_en_gb, benefits_section_cta_text_es, benefits_section_cta_text_fr, benefits_section_cta_text_ja, benefits_section_cta_text_pt, benefits_section_cta_text_zh_hans, benefits_section_cta_url, benefits_section_cta_url_ar, benefits_section_cta_url_de, benefits_section_cta_url_en_gb, benefits_section_cta_url_es, benefits_section_cta_url_fr, benefits_section_cta_url_ja, benefits_section_cta_url_pt, benefits_section_cta_url_zh_hans, featured_card_one_cta_link, featured_card_one_cta_link_ar, featured_card_one_cta_link_de, featured_card_one_cta_link_en_gb, featured_card_one_cta_link_es, featured_card_one_cta_link_fr, featured_card_one_cta_link_ja, featured_card_one_cta_link_pt, featured_card_one_cta_link_zh_hans, featured_card_one_image_id, featured_card_one_image_ar_id, featured_card_one_image_de_id, featured_card_one_image_en_gb_id, featured_card_one_image_es_id, featured_card_one_image_fr_id, featured_card_one_image_ja_id, featured_card_one_image_pt_id, featured_card_one_image_zh_hans_id, featured_card_one_summary, featured_card_one_summary_ar, featured_card_one_summary_de, featured_card_one_summary_en_gb, featured_card_one_summary_es, featured_card_one_summary_fr, featured_card_one_summary_ja, featured_card_one_summary_pt, featured_card_one_summary_zh_hans, featured_card_one_title, featured_card_one_title_ar, featured_card_one_title_de, featured_card_one_title_en_gb, featured_card_one_title_es, featured_card_one_title_fr, featured_card_one_title_ja, featured_card_one_title_pt, featured_card_one_title_zh_hans, featured_card_three_cta_link, featured_card_three_cta_link_ar, featured_card_three_cta_link_de, featured_card_three_cta_link_en_gb, featured_card_three_cta_link_es, featured_card_three_cta_link_fr, featured_card_three_cta_link_ja, featured_card_three_cta_link_pt, featured_card_three_cta_link_zh_hans, featured_card_three_image_id, featured_card_three_image_ar_id, featured_card_three_image_de_id, featured_card_three_image_en_gb_id, featured_card_three_image_es_id, featured_card_three_image_fr_id, featured_card_three_image_ja_id, featured_card_three_image_pt_id, featured_card_three_image_zh_hans_id, featured_card_three_summary, featured_card_three_summary_ar, featured_card_three_summary_de, featured_card_three_summary_en_gb, featured_card_three_summary_es, featured_card_three_summary_fr, featured_card_three_summary_ja, featured_card_three_summary_pt, featured_card_three_summary_zh_hans, featured_card_three_title, featured_card_three_title_ar, featured_card_three_title_de, featured_card_three_title_en_gb, featured_card_three_title_es, featured_card_three_title_fr, featured_card_three_title_ja, featured_card_three_title_pt, featured_card_three_title_zh_hans, featured_card_two_cta_link, featured_card_two_cta_link_ar, featured_card_two_cta_link_de, featured_card_two_cta_link_en_gb, featured_card_two_cta_link_es, featured_card_two_cta_link_fr, featured_card_two_cta_link_ja, featured_card_two_cta_link_pt, featured_card_two_cta_link_zh_hans, featured_card_two_image_id, featured_card_two_image_ar_id, featured_card_two_image_de_id, featured_card_two_image_en_gb_id, featured_card_two_image_es_id, featured_card_two_image_fr_id, featured_card_two_image_ja_id, featured_card_two_image_pt_id, featured_card_two_image_zh_hans_id, featured_card_two_summary, featured_card_two_summary_ar, featured_card_two_summary_de, featured_card_two_summary_en_gb, featured_card_two_summary_es, featured_card_two_summary_fr, featured_card_two_summary_ja, featured_card_two_summary_pt, featured_card_two_summary_zh_hans, featured_card_two_title, featured_card_two_title_ar, featured_card_two_title_de, featured_card_two_title_en_gb, featured_card_two_title_es, featured_card_two_title_fr, featured_card_two_title_ja, featured_card_two_title_pt, featured_card_two_title_zh_hans, teaser, teaser_ar, teaser_de, teaser_en_gb, teaser_es, teaser_fr, teaser_ja, teaser_pt, teaser_zh_hans) FROM stdin;
 \.
 
 
@@ -13473,7 +13513,7 @@ COPY public.invest_investapp (page_ptr_id, service_name, uses_tree_based_routing
 -- Data for Name: invest_investhomepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.invest_investhomepage (page_ptr_id, heading, heading_en_gb, heading_de, heading_ja, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_ar, sub_heading, sub_heading_en_gb, sub_heading_de, sub_heading_ja, sub_heading_zh_hans, sub_heading_fr, sub_heading_es, sub_heading_pt, sub_heading_ar, sector_title, sector_title_en_gb, sector_title_de, sector_title_ja, sector_title_zh_hans, sector_title_fr, sector_title_es, sector_title_pt, sector_title_ar, sector_button_text, sector_button_text_en_gb, sector_button_text_de, sector_button_text_ja, sector_button_text_zh_hans, sector_button_text_fr, sector_button_text_es, sector_button_text_pt, sector_button_text_ar, how_we_help_title, how_we_help_title_en_gb, how_we_help_title_de, how_we_help_title_ja, how_we_help_title_zh_hans, how_we_help_title_fr, how_we_help_title_es, how_we_help_title_pt, how_we_help_title_ar, how_we_help_lead_in, how_we_help_lead_in_en_gb, how_we_help_lead_in_de, how_we_help_lead_in_ja, how_we_help_lead_in_zh_hans, how_we_help_lead_in_fr, how_we_help_lead_in_es, how_we_help_lead_in_pt, how_we_help_lead_in_ar, hero_image_id, how_we_help_icon_five_id, how_we_help_icon_five_ar_id, how_we_help_icon_five_de_id, how_we_help_icon_five_en_gb_id, how_we_help_icon_five_es_id, how_we_help_icon_five_fr_id, how_we_help_icon_five_ja_id, how_we_help_icon_five_pt_id, how_we_help_icon_five_zh_hans_id, how_we_help_icon_four_id, how_we_help_icon_four_ar_id, how_we_help_icon_four_de_id, how_we_help_icon_four_en_gb_id, how_we_help_icon_four_es_id, how_we_help_icon_four_fr_id, how_we_help_icon_four_ja_id, how_we_help_icon_four_pt_id, how_we_help_icon_four_zh_hans_id, how_we_help_icon_one_id, how_we_help_icon_one_ar_id, how_we_help_icon_one_de_id, how_we_help_icon_one_en_gb_id, how_we_help_icon_one_es_id, how_we_help_icon_one_fr_id, how_we_help_icon_one_ja_id, how_we_help_icon_one_pt_id, how_we_help_icon_one_zh_hans_id, how_we_help_icon_three_id, how_we_help_icon_three_ar_id, how_we_help_icon_three_de_id, how_we_help_icon_three_en_gb_id, how_we_help_icon_three_es_id, how_we_help_icon_three_fr_id, how_we_help_icon_three_ja_id, how_we_help_icon_three_pt_id, how_we_help_icon_three_zh_hans_id, how_we_help_icon_two_id, how_we_help_icon_two_ar_id, how_we_help_icon_two_de_id, how_we_help_icon_two_en_gb_id, how_we_help_icon_two_es_id, how_we_help_icon_two_fr_id, how_we_help_icon_two_ja_id, how_we_help_icon_two_pt_id, how_we_help_icon_two_zh_hans_id, how_we_help_text_five, how_we_help_text_five_ar, how_we_help_text_five_de, how_we_help_text_five_en_gb, how_we_help_text_five_es, how_we_help_text_five_fr, how_we_help_text_five_ja, how_we_help_text_five_pt, how_we_help_text_five_zh_hans, how_we_help_text_four, how_we_help_text_four_ar, how_we_help_text_four_de, how_we_help_text_four_en_gb, how_we_help_text_four_es, how_we_help_text_four_fr, how_we_help_text_four_ja, how_we_help_text_four_pt, how_we_help_text_four_zh_hans, how_we_help_text_one, how_we_help_text_one_ar, how_we_help_text_one_de, how_we_help_text_one_en_gb, how_we_help_text_one_es, how_we_help_text_one_fr, how_we_help_text_one_ja, how_we_help_text_one_pt, how_we_help_text_one_zh_hans, how_we_help_text_six, how_we_help_text_six_ar, how_we_help_text_six_de, how_we_help_text_six_en_gb, how_we_help_text_six_es, how_we_help_text_six_fr, how_we_help_text_six_ja, how_we_help_text_six_pt, how_we_help_text_six_zh_hans, how_we_help_text_three, how_we_help_text_three_ar, how_we_help_text_three_de, how_we_help_text_three_en_gb, how_we_help_text_three_es, how_we_help_text_three_fr, how_we_help_text_three_ja, how_we_help_text_three_pt, how_we_help_text_three_zh_hans, how_we_help_text_two, how_we_help_text_two_ar, how_we_help_text_two_de, how_we_help_text_two_en_gb, how_we_help_text_two_es, how_we_help_text_two_fr, how_we_help_text_two_ja, how_we_help_text_two_pt, how_we_help_text_two_zh_hans, service_name, benefits_section_content, benefits_section_content_ar, benefits_section_content_de, benefits_section_content_en_gb, benefits_section_content_es, benefits_section_content_fr, benefits_section_content_ja, benefits_section_content_pt, benefits_section_content_zh_hans, benefits_section_img_id, benefits_section_img_ar_id, benefits_section_img_de_id, benefits_section_img_en_gb_id, benefits_section_img_es_id, benefits_section_img_fr_id, benefits_section_img_ja_id, benefits_section_img_pt_id, benefits_section_img_zh_hans_id, benefits_section_intro, benefits_section_intro_ar, benefits_section_intro_de, benefits_section_intro_en_gb, benefits_section_intro_es, benefits_section_intro_fr, benefits_section_intro_ja, benefits_section_intro_pt, benefits_section_intro_zh_hans, benefits_section_title, benefits_section_title_ar, benefits_section_title_de, benefits_section_title_en_gb, benefits_section_title_es, benefits_section_title_fr, benefits_section_title_ja, benefits_section_title_pt, benefits_section_title_zh_hans, breadcrumbs_label, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_zh_hans, contact_section_call_to_action_text, contact_section_call_to_action_text_ar, contact_section_call_to_action_text_de, contact_section_call_to_action_text_en_gb, contact_section_call_to_action_text_es, contact_section_call_to_action_text_fr, contact_section_call_to_action_text_ja, contact_section_call_to_action_text_pt, contact_section_call_to_action_text_zh_hans, contact_section_content, contact_section_content_ar, contact_section_content_de, contact_section_content_en_gb, contact_section_content_es, contact_section_content_fr, contact_section_content_ja, contact_section_content_pt, contact_section_content_zh_hans, contact_section_title, contact_section_title_ar, contact_section_title_de, contact_section_title_en_gb, contact_section_title_es, contact_section_title_fr, contact_section_title_ja, contact_section_title_pt, contact_section_title_zh_hans, eu_exit_section_call_to_action_text, eu_exit_section_call_to_action_text_ar, eu_exit_section_call_to_action_text_de, eu_exit_section_call_to_action_text_en_gb, eu_exit_section_call_to_action_text_es, eu_exit_section_call_to_action_text_fr, eu_exit_section_call_to_action_text_ja, eu_exit_section_call_to_action_text_pt, eu_exit_section_call_to_action_text_zh_hans, eu_exit_section_content, eu_exit_section_content_ar, eu_exit_section_content_de, eu_exit_section_content_en_gb, eu_exit_section_content_es, eu_exit_section_content_fr, eu_exit_section_content_ja, eu_exit_section_content_pt, eu_exit_section_content_zh_hans, eu_exit_section_img_id, eu_exit_section_img_ar_id, eu_exit_section_img_de_id, eu_exit_section_img_en_gb_id, eu_exit_section_img_es_id, eu_exit_section_img_fr_id, eu_exit_section_img_ja_id, eu_exit_section_img_pt_id, eu_exit_section_img_zh_hans_id, eu_exit_section_title, eu_exit_section_title_ar, eu_exit_section_title_de, eu_exit_section_title_en_gb, eu_exit_section_title_es, eu_exit_section_title_fr, eu_exit_section_title_ja, eu_exit_section_title_pt, eu_exit_section_title_zh_hans, hero_call_to_action_text, hero_call_to_action_text_ar, hero_call_to_action_text_de, hero_call_to_action_text_en_gb, hero_call_to_action_text_es, hero_call_to_action_text_fr, hero_call_to_action_text_ja, hero_call_to_action_text_pt, hero_call_to_action_text_zh_hans, hpo_intro, hpo_intro_ar, hpo_intro_de, hpo_intro_en_gb, hpo_intro_es, hpo_intro_fr, hpo_intro_ja, hpo_intro_pt, hpo_intro_zh_hans, hpo_title, hpo_title_ar, hpo_title_de, hpo_title_en_gb, hpo_title_es, hpo_title_fr, hpo_title_ja, hpo_title_pt, hpo_title_zh_hans, sector_intro, sector_intro_ar, sector_intro_de, sector_intro_en_gb, sector_intro_es, sector_intro_fr, sector_intro_ja, sector_intro_pt, sector_intro_zh_hans, contact_section_call_to_action_url, contact_section_call_to_action_url_ar, contact_section_call_to_action_url_de, contact_section_call_to_action_url_en_gb, contact_section_call_to_action_url_es, contact_section_call_to_action_url_fr, contact_section_call_to_action_url_ja, contact_section_call_to_action_url_pt, contact_section_call_to_action_url_zh_hans, eu_exit_section_call_to_action_url, eu_exit_section_call_to_action_url_ar, eu_exit_section_call_to_action_url_de, eu_exit_section_call_to_action_url_en_gb, eu_exit_section_call_to_action_url_es, eu_exit_section_call_to_action_url_fr, eu_exit_section_call_to_action_url_ja, eu_exit_section_call_to_action_url_pt, eu_exit_section_call_to_action_url_zh_hans, hero_call_to_action_url, hero_call_to_action_url_ar, hero_call_to_action_url_de, hero_call_to_action_url_en_gb, hero_call_to_action_url_es, hero_call_to_action_url_fr, hero_call_to_action_url_ja, hero_call_to_action_url_pt, hero_call_to_action_url_zh_hans, sector_button_url, sector_button_url_ar, sector_button_url_de, sector_button_url_en_gb, sector_button_url_es, sector_button_url_fr, sector_button_url_ja, sector_button_url_pt, sector_button_url_zh_hans, uses_tree_based_routing, featured_card_one_cta_link, featured_card_one_cta_link_ar, featured_card_one_cta_link_de, featured_card_one_cta_link_en_gb, featured_card_one_cta_link_es, featured_card_one_cta_link_fr, featured_card_one_cta_link_ja, featured_card_one_cta_link_pt, featured_card_one_cta_link_zh_hans, featured_card_one_image_id, featured_card_one_image_ar_id, featured_card_one_image_de_id, featured_card_one_image_en_gb_id, featured_card_one_image_es_id, featured_card_one_image_fr_id, featured_card_one_image_ja_id, featured_card_one_image_pt_id, featured_card_one_image_zh_hans_id, featured_card_one_summary, featured_card_one_summary_ar, featured_card_one_summary_de, featured_card_one_summary_en_gb, featured_card_one_summary_es, featured_card_one_summary_fr, featured_card_one_summary_ja, featured_card_one_summary_pt, featured_card_one_summary_zh_hans, featured_card_one_title, featured_card_one_title_ar, featured_card_one_title_de, featured_card_one_title_en_gb, featured_card_one_title_es, featured_card_one_title_fr, featured_card_one_title_ja, featured_card_one_title_pt, featured_card_one_title_zh_hans, featured_card_three_cta_link, featured_card_three_cta_link_ar, featured_card_three_cta_link_de, featured_card_three_cta_link_en_gb, featured_card_three_cta_link_es, featured_card_three_cta_link_fr, featured_card_three_cta_link_ja, featured_card_three_cta_link_pt, featured_card_three_cta_link_zh_hans, featured_card_three_image_id, featured_card_three_image_ar_id, featured_card_three_image_de_id, featured_card_three_image_en_gb_id, featured_card_three_image_es_id, featured_card_three_image_fr_id, featured_card_three_image_ja_id, featured_card_three_image_pt_id, featured_card_three_image_zh_hans_id, featured_card_three_summary, featured_card_three_summary_ar, featured_card_three_summary_de, featured_card_three_summary_en_gb, featured_card_three_summary_es, featured_card_three_summary_fr, featured_card_three_summary_ja, featured_card_three_summary_pt, featured_card_three_summary_zh_hans, featured_card_three_title, featured_card_three_title_ar, featured_card_three_title_de, featured_card_three_title_en_gb, featured_card_three_title_es, featured_card_three_title_fr, featured_card_three_title_ja, featured_card_three_title_pt, featured_card_three_title_zh_hans, featured_card_two_cta_link, featured_card_two_cta_link_ar, featured_card_two_cta_link_de, featured_card_two_cta_link_en_gb, featured_card_two_cta_link_es, featured_card_two_cta_link_fr, featured_card_two_cta_link_ja, featured_card_two_cta_link_pt, featured_card_two_cta_link_zh_hans, featured_card_two_image_id, featured_card_two_image_ar_id, featured_card_two_image_de_id, featured_card_two_image_en_gb_id, featured_card_two_image_es_id, featured_card_two_image_fr_id, featured_card_two_image_ja_id, featured_card_two_image_pt_id, featured_card_two_image_zh_hans_id, featured_card_two_summary, featured_card_two_summary_ar, featured_card_two_summary_de, featured_card_two_summary_en_gb, featured_card_two_summary_es, featured_card_two_summary_fr, featured_card_two_summary_ja, featured_card_two_summary_pt, featured_card_two_summary_zh_hans, featured_card_two_title, featured_card_two_title_ar, featured_card_two_title_de, featured_card_two_title_en_gb, featured_card_two_title_es, featured_card_two_title_fr, featured_card_two_title_ja, featured_card_two_title_pt, featured_card_two_title_zh_hans, capital_invest_section_content, capital_invest_section_content_ar, capital_invest_section_content_de, capital_invest_section_content_en_gb, capital_invest_section_content_es, capital_invest_section_content_fr, capital_invest_section_content_ja, capital_invest_section_content_pt, capital_invest_section_content_zh_hans, capital_invest_section_image_id, capital_invest_section_image_ar_id, capital_invest_section_image_de_id, capital_invest_section_image_en_gb_id, capital_invest_section_image_es_id, capital_invest_section_image_fr_id, capital_invest_section_image_ja_id, capital_invest_section_image_pt_id, capital_invest_section_image_zh_hans_id, capital_invest_section_title, capital_invest_section_title_ar, capital_invest_section_title_de, capital_invest_section_title_en_gb, capital_invest_section_title_es, capital_invest_section_title_fr, capital_invest_section_title_ja, capital_invest_section_title_pt, capital_invest_section_title_zh_hans, isd_section_image_id, isd_section_image_ar_id, isd_section_image_de_id, isd_section_image_en_gb_id, isd_section_image_es_id, isd_section_image_fr_id, isd_section_image_ja_id, isd_section_image_pt_id, isd_section_image_zh_hans_id, isd_section_text, isd_section_text_ar, isd_section_text_de, isd_section_text_en_gb, isd_section_text_es, isd_section_text_fr, isd_section_text_ja, isd_section_text_pt, isd_section_text_zh_hans, isd_section_title, isd_section_title_ar, isd_section_title_de, isd_section_title_en_gb, isd_section_title_es, isd_section_title_fr, isd_section_title_ja, isd_section_title_pt, isd_section_title_zh_hans, setup_guide_call_to_action_url, setup_guide_call_to_action_url_ar, setup_guide_call_to_action_url_de, setup_guide_call_to_action_url_en_gb, setup_guide_call_to_action_url_es, setup_guide_call_to_action_url_fr, setup_guide_call_to_action_url_ja, setup_guide_call_to_action_url_pt, setup_guide_call_to_action_url_zh_hans, setup_guide_content, setup_guide_content_ar, setup_guide_content_de, setup_guide_content_en_gb, setup_guide_content_es, setup_guide_content_fr, setup_guide_content_ja, setup_guide_content_pt, setup_guide_content_zh_hans, setup_guide_img_id, setup_guide_img_ar_id, setup_guide_img_de_id, setup_guide_img_en_gb_id, setup_guide_img_es_id, setup_guide_img_fr_id, setup_guide_img_ja_id, setup_guide_img_pt_id, setup_guide_img_zh_hans_id, setup_guide_lead_in, setup_guide_lead_in_ar, setup_guide_lead_in_de, setup_guide_lead_in_en_gb, setup_guide_lead_in_es, setup_guide_lead_in_fr, setup_guide_lead_in_ja, setup_guide_lead_in_pt, setup_guide_lead_in_zh_hans, setup_guide_title, setup_guide_title_ar, setup_guide_title_de, setup_guide_title_en_gb, setup_guide_title_es, setup_guide_title_fr, setup_guide_title_ja, setup_guide_title_pt, setup_guide_title_zh_hans) FROM stdin;
+COPY public.invest_investhomepage (page_ptr_id, heading, heading_en_gb, heading_de, heading_ja, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_ar, sub_heading, sub_heading_en_gb, sub_heading_de, sub_heading_ja, sub_heading_zh_hans, sub_heading_fr, sub_heading_es, sub_heading_pt, sub_heading_ar, sector_title, sector_title_en_gb, sector_title_de, sector_title_ja, sector_title_zh_hans, sector_title_fr, sector_title_es, sector_title_pt, sector_title_ar, sector_button_text, sector_button_text_en_gb, sector_button_text_de, sector_button_text_ja, sector_button_text_zh_hans, sector_button_text_fr, sector_button_text_es, sector_button_text_pt, sector_button_text_ar, how_we_help_title, how_we_help_title_en_gb, how_we_help_title_de, how_we_help_title_ja, how_we_help_title_zh_hans, how_we_help_title_fr, how_we_help_title_es, how_we_help_title_pt, how_we_help_title_ar, how_we_help_lead_in, how_we_help_lead_in_en_gb, how_we_help_lead_in_de, how_we_help_lead_in_ja, how_we_help_lead_in_zh_hans, how_we_help_lead_in_fr, how_we_help_lead_in_es, how_we_help_lead_in_pt, how_we_help_lead_in_ar, hero_image_id, how_we_help_icon_five_id, how_we_help_icon_five_ar_id, how_we_help_icon_five_de_id, how_we_help_icon_five_en_gb_id, how_we_help_icon_five_es_id, how_we_help_icon_five_fr_id, how_we_help_icon_five_ja_id, how_we_help_icon_five_pt_id, how_we_help_icon_five_zh_hans_id, how_we_help_icon_four_id, how_we_help_icon_four_ar_id, how_we_help_icon_four_de_id, how_we_help_icon_four_en_gb_id, how_we_help_icon_four_es_id, how_we_help_icon_four_fr_id, how_we_help_icon_four_ja_id, how_we_help_icon_four_pt_id, how_we_help_icon_four_zh_hans_id, how_we_help_icon_one_id, how_we_help_icon_one_ar_id, how_we_help_icon_one_de_id, how_we_help_icon_one_en_gb_id, how_we_help_icon_one_es_id, how_we_help_icon_one_fr_id, how_we_help_icon_one_ja_id, how_we_help_icon_one_pt_id, how_we_help_icon_one_zh_hans_id, how_we_help_icon_three_id, how_we_help_icon_three_ar_id, how_we_help_icon_three_de_id, how_we_help_icon_three_en_gb_id, how_we_help_icon_three_es_id, how_we_help_icon_three_fr_id, how_we_help_icon_three_ja_id, how_we_help_icon_three_pt_id, how_we_help_icon_three_zh_hans_id, how_we_help_icon_two_id, how_we_help_icon_two_ar_id, how_we_help_icon_two_de_id, how_we_help_icon_two_en_gb_id, how_we_help_icon_two_es_id, how_we_help_icon_two_fr_id, how_we_help_icon_two_ja_id, how_we_help_icon_two_pt_id, how_we_help_icon_two_zh_hans_id, how_we_help_text_five, how_we_help_text_five_ar, how_we_help_text_five_de, how_we_help_text_five_en_gb, how_we_help_text_five_es, how_we_help_text_five_fr, how_we_help_text_five_ja, how_we_help_text_five_pt, how_we_help_text_five_zh_hans, how_we_help_text_four, how_we_help_text_four_ar, how_we_help_text_four_de, how_we_help_text_four_en_gb, how_we_help_text_four_es, how_we_help_text_four_fr, how_we_help_text_four_ja, how_we_help_text_four_pt, how_we_help_text_four_zh_hans, how_we_help_text_one, how_we_help_text_one_ar, how_we_help_text_one_de, how_we_help_text_one_en_gb, how_we_help_text_one_es, how_we_help_text_one_fr, how_we_help_text_one_ja, how_we_help_text_one_pt, how_we_help_text_one_zh_hans, how_we_help_text_six, how_we_help_text_six_ar, how_we_help_text_six_de, how_we_help_text_six_en_gb, how_we_help_text_six_es, how_we_help_text_six_fr, how_we_help_text_six_ja, how_we_help_text_six_pt, how_we_help_text_six_zh_hans, how_we_help_text_three, how_we_help_text_three_ar, how_we_help_text_three_de, how_we_help_text_three_en_gb, how_we_help_text_three_es, how_we_help_text_three_fr, how_we_help_text_three_ja, how_we_help_text_three_pt, how_we_help_text_three_zh_hans, how_we_help_text_two, how_we_help_text_two_ar, how_we_help_text_two_de, how_we_help_text_two_en_gb, how_we_help_text_two_es, how_we_help_text_two_fr, how_we_help_text_two_ja, how_we_help_text_two_pt, how_we_help_text_two_zh_hans, service_name, benefits_section_content, benefits_section_content_ar, benefits_section_content_de, benefits_section_content_en_gb, benefits_section_content_es, benefits_section_content_fr, benefits_section_content_ja, benefits_section_content_pt, benefits_section_content_zh_hans, benefits_section_img_id, benefits_section_img_ar_id, benefits_section_img_de_id, benefits_section_img_en_gb_id, benefits_section_img_es_id, benefits_section_img_fr_id, benefits_section_img_ja_id, benefits_section_img_pt_id, benefits_section_img_zh_hans_id, benefits_section_intro, benefits_section_intro_ar, benefits_section_intro_de, benefits_section_intro_en_gb, benefits_section_intro_es, benefits_section_intro_fr, benefits_section_intro_ja, benefits_section_intro_pt, benefits_section_intro_zh_hans, benefits_section_title, benefits_section_title_ar, benefits_section_title_de, benefits_section_title_en_gb, benefits_section_title_es, benefits_section_title_fr, benefits_section_title_ja, benefits_section_title_pt, benefits_section_title_zh_hans, breadcrumbs_label, breadcrumbs_label_ar, breadcrumbs_label_de, breadcrumbs_label_en_gb, breadcrumbs_label_es, breadcrumbs_label_fr, breadcrumbs_label_ja, breadcrumbs_label_pt, breadcrumbs_label_zh_hans, contact_section_call_to_action_text, contact_section_call_to_action_text_ar, contact_section_call_to_action_text_de, contact_section_call_to_action_text_en_gb, contact_section_call_to_action_text_es, contact_section_call_to_action_text_fr, contact_section_call_to_action_text_ja, contact_section_call_to_action_text_pt, contact_section_call_to_action_text_zh_hans, contact_section_content, contact_section_content_ar, contact_section_content_de, contact_section_content_en_gb, contact_section_content_es, contact_section_content_fr, contact_section_content_ja, contact_section_content_pt, contact_section_content_zh_hans, contact_section_title, contact_section_title_ar, contact_section_title_de, contact_section_title_en_gb, contact_section_title_es, contact_section_title_fr, contact_section_title_ja, contact_section_title_pt, contact_section_title_zh_hans, eu_exit_section_call_to_action_text, eu_exit_section_call_to_action_text_ar, eu_exit_section_call_to_action_text_de, eu_exit_section_call_to_action_text_en_gb, eu_exit_section_call_to_action_text_es, eu_exit_section_call_to_action_text_fr, eu_exit_section_call_to_action_text_ja, eu_exit_section_call_to_action_text_pt, eu_exit_section_call_to_action_text_zh_hans, eu_exit_section_content, eu_exit_section_content_ar, eu_exit_section_content_de, eu_exit_section_content_en_gb, eu_exit_section_content_es, eu_exit_section_content_fr, eu_exit_section_content_ja, eu_exit_section_content_pt, eu_exit_section_content_zh_hans, eu_exit_section_img_id, eu_exit_section_img_ar_id, eu_exit_section_img_de_id, eu_exit_section_img_en_gb_id, eu_exit_section_img_es_id, eu_exit_section_img_fr_id, eu_exit_section_img_ja_id, eu_exit_section_img_pt_id, eu_exit_section_img_zh_hans_id, eu_exit_section_title, eu_exit_section_title_ar, eu_exit_section_title_de, eu_exit_section_title_en_gb, eu_exit_section_title_es, eu_exit_section_title_fr, eu_exit_section_title_ja, eu_exit_section_title_pt, eu_exit_section_title_zh_hans, hero_call_to_action_text, hero_call_to_action_text_ar, hero_call_to_action_text_de, hero_call_to_action_text_en_gb, hero_call_to_action_text_es, hero_call_to_action_text_fr, hero_call_to_action_text_ja, hero_call_to_action_text_pt, hero_call_to_action_text_zh_hans, hpo_intro, hpo_intro_ar, hpo_intro_de, hpo_intro_en_gb, hpo_intro_es, hpo_intro_fr, hpo_intro_ja, hpo_intro_pt, hpo_intro_zh_hans, hpo_title, hpo_title_ar, hpo_title_de, hpo_title_en_gb, hpo_title_es, hpo_title_fr, hpo_title_ja, hpo_title_pt, hpo_title_zh_hans, sector_intro, sector_intro_ar, sector_intro_de, sector_intro_en_gb, sector_intro_es, sector_intro_fr, sector_intro_ja, sector_intro_pt, sector_intro_zh_hans, contact_section_call_to_action_url, contact_section_call_to_action_url_ar, contact_section_call_to_action_url_de, contact_section_call_to_action_url_en_gb, contact_section_call_to_action_url_es, contact_section_call_to_action_url_fr, contact_section_call_to_action_url_ja, contact_section_call_to_action_url_pt, contact_section_call_to_action_url_zh_hans, eu_exit_section_call_to_action_url, eu_exit_section_call_to_action_url_ar, eu_exit_section_call_to_action_url_de, eu_exit_section_call_to_action_url_en_gb, eu_exit_section_call_to_action_url_es, eu_exit_section_call_to_action_url_fr, eu_exit_section_call_to_action_url_ja, eu_exit_section_call_to_action_url_pt, eu_exit_section_call_to_action_url_zh_hans, hero_call_to_action_url, hero_call_to_action_url_ar, hero_call_to_action_url_de, hero_call_to_action_url_en_gb, hero_call_to_action_url_es, hero_call_to_action_url_fr, hero_call_to_action_url_ja, hero_call_to_action_url_pt, hero_call_to_action_url_zh_hans, sector_button_url, sector_button_url_ar, sector_button_url_de, sector_button_url_en_gb, sector_button_url_es, sector_button_url_fr, sector_button_url_ja, sector_button_url_pt, sector_button_url_zh_hans, uses_tree_based_routing, featured_card_one_cta_link, featured_card_one_cta_link_ar, featured_card_one_cta_link_de, featured_card_one_cta_link_en_gb, featured_card_one_cta_link_es, featured_card_one_cta_link_fr, featured_card_one_cta_link_ja, featured_card_one_cta_link_pt, featured_card_one_cta_link_zh_hans, featured_card_one_image_id, featured_card_one_image_ar_id, featured_card_one_image_de_id, featured_card_one_image_en_gb_id, featured_card_one_image_es_id, featured_card_one_image_fr_id, featured_card_one_image_ja_id, featured_card_one_image_pt_id, featured_card_one_image_zh_hans_id, featured_card_one_summary, featured_card_one_summary_ar, featured_card_one_summary_de, featured_card_one_summary_en_gb, featured_card_one_summary_es, featured_card_one_summary_fr, featured_card_one_summary_ja, featured_card_one_summary_pt, featured_card_one_summary_zh_hans, featured_card_one_title, featured_card_one_title_ar, featured_card_one_title_de, featured_card_one_title_en_gb, featured_card_one_title_es, featured_card_one_title_fr, featured_card_one_title_ja, featured_card_one_title_pt, featured_card_one_title_zh_hans, featured_card_three_cta_link, featured_card_three_cta_link_ar, featured_card_three_cta_link_de, featured_card_three_cta_link_en_gb, featured_card_three_cta_link_es, featured_card_three_cta_link_fr, featured_card_three_cta_link_ja, featured_card_three_cta_link_pt, featured_card_three_cta_link_zh_hans, featured_card_three_image_id, featured_card_three_image_ar_id, featured_card_three_image_de_id, featured_card_three_image_en_gb_id, featured_card_three_image_es_id, featured_card_three_image_fr_id, featured_card_three_image_ja_id, featured_card_three_image_pt_id, featured_card_three_image_zh_hans_id, featured_card_three_summary, featured_card_three_summary_ar, featured_card_three_summary_de, featured_card_three_summary_en_gb, featured_card_three_summary_es, featured_card_three_summary_fr, featured_card_three_summary_ja, featured_card_three_summary_pt, featured_card_three_summary_zh_hans, featured_card_three_title, featured_card_three_title_ar, featured_card_three_title_de, featured_card_three_title_en_gb, featured_card_three_title_es, featured_card_three_title_fr, featured_card_three_title_ja, featured_card_three_title_pt, featured_card_three_title_zh_hans, featured_card_two_cta_link, featured_card_two_cta_link_ar, featured_card_two_cta_link_de, featured_card_two_cta_link_en_gb, featured_card_two_cta_link_es, featured_card_two_cta_link_fr, featured_card_two_cta_link_ja, featured_card_two_cta_link_pt, featured_card_two_cta_link_zh_hans, featured_card_two_image_id, featured_card_two_image_ar_id, featured_card_two_image_de_id, featured_card_two_image_en_gb_id, featured_card_two_image_es_id, featured_card_two_image_fr_id, featured_card_two_image_ja_id, featured_card_two_image_pt_id, featured_card_two_image_zh_hans_id, featured_card_two_summary, featured_card_two_summary_ar, featured_card_two_summary_de, featured_card_two_summary_en_gb, featured_card_two_summary_es, featured_card_two_summary_fr, featured_card_two_summary_ja, featured_card_two_summary_pt, featured_card_two_summary_zh_hans, featured_card_two_title, featured_card_two_title_ar, featured_card_two_title_de, featured_card_two_title_en_gb, featured_card_two_title_es, featured_card_two_title_fr, featured_card_two_title_ja, featured_card_two_title_pt, featured_card_two_title_zh_hans, capital_invest_section_content, capital_invest_section_content_ar, capital_invest_section_content_de, capital_invest_section_content_en_gb, capital_invest_section_content_es, capital_invest_section_content_fr, capital_invest_section_content_ja, capital_invest_section_content_pt, capital_invest_section_content_zh_hans, capital_invest_section_image_id, capital_invest_section_image_ar_id, capital_invest_section_image_de_id, capital_invest_section_image_en_gb_id, capital_invest_section_image_es_id, capital_invest_section_image_fr_id, capital_invest_section_image_ja_id, capital_invest_section_image_pt_id, capital_invest_section_image_zh_hans_id, capital_invest_section_title, capital_invest_section_title_ar, capital_invest_section_title_de, capital_invest_section_title_en_gb, capital_invest_section_title_es, capital_invest_section_title_fr, capital_invest_section_title_ja, capital_invest_section_title_pt, capital_invest_section_title_zh_hans, isd_section_image_id, isd_section_image_ar_id, isd_section_image_de_id, isd_section_image_en_gb_id, isd_section_image_es_id, isd_section_image_fr_id, isd_section_image_ja_id, isd_section_image_pt_id, isd_section_image_zh_hans_id, isd_section_text, isd_section_text_ar, isd_section_text_de, isd_section_text_en_gb, isd_section_text_es, isd_section_text_fr, isd_section_text_ja, isd_section_text_pt, isd_section_text_zh_hans, isd_section_title, isd_section_title_ar, isd_section_title_de, isd_section_title_en_gb, isd_section_title_es, isd_section_title_fr, isd_section_title_ja, isd_section_title_pt, isd_section_title_zh_hans, setup_guide_call_to_action_url, setup_guide_call_to_action_url_ar, setup_guide_call_to_action_url_de, setup_guide_call_to_action_url_en_gb, setup_guide_call_to_action_url_es, setup_guide_call_to_action_url_fr, setup_guide_call_to_action_url_ja, setup_guide_call_to_action_url_pt, setup_guide_call_to_action_url_zh_hans, setup_guide_content, setup_guide_content_ar, setup_guide_content_de, setup_guide_content_en_gb, setup_guide_content_es, setup_guide_content_fr, setup_guide_content_ja, setup_guide_content_pt, setup_guide_content_zh_hans, setup_guide_img_id, setup_guide_img_ar_id, setup_guide_img_de_id, setup_guide_img_en_gb_id, setup_guide_img_es_id, setup_guide_img_fr_id, setup_guide_img_ja_id, setup_guide_img_pt_id, setup_guide_img_zh_hans_id, setup_guide_lead_in, setup_guide_lead_in_ar, setup_guide_lead_in_de, setup_guide_lead_in_en_gb, setup_guide_lead_in_es, setup_guide_lead_in_fr, setup_guide_lead_in_ja, setup_guide_lead_in_pt, setup_guide_lead_in_zh_hans, setup_guide_title, setup_guide_title_ar, setup_guide_title_de, setup_guide_title_en_gb, setup_guide_title_es, setup_guide_title_fr, setup_guide_title_ja, setup_guide_title_pt, setup_guide_title_zh_hans, benefits_section_cta_text, benefits_section_cta_text_ar, benefits_section_cta_text_de, benefits_section_cta_text_en_gb, benefits_section_cta_text_es, benefits_section_cta_text_fr, benefits_section_cta_text_ja, benefits_section_cta_text_pt, benefits_section_cta_text_zh_hans, benefits_section_cta_url, benefits_section_cta_url_ar, benefits_section_cta_url_de, benefits_section_cta_url_en_gb, benefits_section_cta_url_es, benefits_section_cta_url_fr, benefits_section_cta_url_ja, benefits_section_cta_url_pt, benefits_section_cta_url_zh_hans, teaser, teaser_ar, teaser_de, teaser_en_gb, teaser_es, teaser_fr, teaser_ja, teaser_pt, teaser_zh_hans) FROM stdin;
 \.
 
 
@@ -13811,7 +13851,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 119, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 345, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 349, true);
 
 
 --
@@ -26603,6 +26643,195 @@ CREATE INDEX great_international_invest_eu_exit_section_img_zh_han_9eebef5d ON p
 
 
 --
+-- Name: great_international_invest_featured_card_one_image_ar_5303244c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_one_image_ar_5303244c ON public.great_international_investinternationalhomepage USING btree (featured_card_one_image_ar_id);
+
+
+--
+-- Name: great_international_invest_featured_card_one_image_de_798c12b3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_one_image_de_798c12b3 ON public.great_international_investinternationalhomepage USING btree (featured_card_one_image_de_id);
+
+
+--
+-- Name: great_international_invest_featured_card_one_image_en_7780cc2e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_one_image_en_7780cc2e ON public.great_international_investinternationalhomepage USING btree (featured_card_one_image_en_gb_id);
+
+
+--
+-- Name: great_international_invest_featured_card_one_image_es_930b6181; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_one_image_es_930b6181 ON public.great_international_investinternationalhomepage USING btree (featured_card_one_image_es_id);
+
+
+--
+-- Name: great_international_invest_featured_card_one_image_fr_1bf61274; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_one_image_fr_1bf61274 ON public.great_international_investinternationalhomepage USING btree (featured_card_one_image_fr_id);
+
+
+--
+-- Name: great_international_invest_featured_card_one_image_id_914fb97b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_one_image_id_914fb97b ON public.great_international_investinternationalhomepage USING btree (featured_card_one_image_id);
+
+
+--
+-- Name: great_international_invest_featured_card_one_image_ja_7198a6c4; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_one_image_ja_7198a6c4 ON public.great_international_investinternationalhomepage USING btree (featured_card_one_image_ja_id);
+
+
+--
+-- Name: great_international_invest_featured_card_one_image_pt_b5a62051; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_one_image_pt_b5a62051 ON public.great_international_investinternationalhomepage USING btree (featured_card_one_image_pt_id);
+
+
+--
+-- Name: great_international_invest_featured_card_one_image_zh_78f04f0d; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_one_image_zh_78f04f0d ON public.great_international_investinternationalhomepage USING btree (featured_card_one_image_zh_hans_id);
+
+
+--
+-- Name: great_international_invest_featured_card_three_image__164bb732; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_three_image__164bb732 ON public.great_international_investinternationalhomepage USING btree (featured_card_three_image_de_id);
+
+
+--
+-- Name: great_international_invest_featured_card_three_image__19239315; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_three_image__19239315 ON public.great_international_investinternationalhomepage USING btree (featured_card_three_image_es_id);
+
+
+--
+-- Name: great_international_invest_featured_card_three_image__467cee8f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_three_image__467cee8f ON public.great_international_investinternationalhomepage USING btree (featured_card_three_image_ja_id);
+
+
+--
+-- Name: great_international_invest_featured_card_three_image__59294234; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_three_image__59294234 ON public.great_international_investinternationalhomepage USING btree (featured_card_three_image_fr_id);
+
+
+--
+-- Name: great_international_invest_featured_card_three_image__5ddc551d; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_three_image__5ddc551d ON public.great_international_investinternationalhomepage USING btree (featured_card_three_image_ar_id);
+
+
+--
+-- Name: great_international_invest_featured_card_three_image__a065552f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_three_image__a065552f ON public.great_international_investinternationalhomepage USING btree (featured_card_three_image_zh_hans_id);
+
+
+--
+-- Name: great_international_invest_featured_card_three_image__a218e1a5; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_three_image__a218e1a5 ON public.great_international_investinternationalhomepage USING btree (featured_card_three_image_id);
+
+
+--
+-- Name: great_international_invest_featured_card_three_image__e3e2487e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_three_image__e3e2487e ON public.great_international_investinternationalhomepage USING btree (featured_card_three_image_en_gb_id);
+
+
+--
+-- Name: great_international_invest_featured_card_three_image__fc0e8840; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_three_image__fc0e8840 ON public.great_international_investinternationalhomepage USING btree (featured_card_three_image_pt_id);
+
+
+--
+-- Name: great_international_invest_featured_card_two_image_ar_f683baea; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_two_image_ar_f683baea ON public.great_international_investinternationalhomepage USING btree (featured_card_two_image_ar_id);
+
+
+--
+-- Name: great_international_invest_featured_card_two_image_de_83fc45ef; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_two_image_de_83fc45ef ON public.great_international_investinternationalhomepage USING btree (featured_card_two_image_de_id);
+
+
+--
+-- Name: great_international_invest_featured_card_two_image_en_6062af77; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_two_image_en_6062af77 ON public.great_international_investinternationalhomepage USING btree (featured_card_two_image_en_gb_id);
+
+
+--
+-- Name: great_international_invest_featured_card_two_image_es_02561f6a; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_two_image_es_02561f6a ON public.great_international_investinternationalhomepage USING btree (featured_card_two_image_es_id);
+
+
+--
+-- Name: great_international_invest_featured_card_two_image_fr_2691dbc7; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_two_image_fr_2691dbc7 ON public.great_international_investinternationalhomepage USING btree (featured_card_two_image_fr_id);
+
+
+--
+-- Name: great_international_invest_featured_card_two_image_id_c8245d3a; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_two_image_id_c8245d3a ON public.great_international_investinternationalhomepage USING btree (featured_card_two_image_id);
+
+
+--
+-- Name: great_international_invest_featured_card_two_image_ja_b57287a7; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_two_image_ja_b57287a7 ON public.great_international_investinternationalhomepage USING btree (featured_card_two_image_ja_id);
+
+
+--
+-- Name: great_international_invest_featured_card_two_image_pt_a152b755; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_two_image_pt_a152b755 ON public.great_international_investinternationalhomepage USING btree (featured_card_two_image_pt_id);
+
+
+--
+-- Name: great_international_invest_featured_card_two_image_zh_07f5ad34; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_invest_featured_card_two_image_zh_07f5ad34 ON public.great_international_investinternationalhomepage USING btree (featured_card_two_image_zh_hans_id);
+
+
+--
 -- Name: great_international_invest_hero_image_ar_id_81a03be1; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -35284,6 +35513,222 @@ ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
 
 ALTER TABLE ONLY public.great_international_internationalcuratedtopiclandingpage
     ADD CONSTRAINT great_international__feature_two_image_zh_8a169803_fk_wagtailim FOREIGN KEY (feature_two_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_one_im_1bf61274_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_one_im_1bf61274_fk_wagtailim FOREIGN KEY (featured_card_one_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_one_im_5303244c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_one_im_5303244c_fk_wagtailim FOREIGN KEY (featured_card_one_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_one_im_7198a6c4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_one_im_7198a6c4_fk_wagtailim FOREIGN KEY (featured_card_one_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_one_im_7780cc2e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_one_im_7780cc2e_fk_wagtailim FOREIGN KEY (featured_card_one_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_one_im_78f04f0d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_one_im_78f04f0d_fk_wagtailim FOREIGN KEY (featured_card_one_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_one_im_798c12b3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_one_im_798c12b3_fk_wagtailim FOREIGN KEY (featured_card_one_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_one_im_914fb97b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_one_im_914fb97b_fk_wagtailim FOREIGN KEY (featured_card_one_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_one_im_930b6181_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_one_im_930b6181_fk_wagtailim FOREIGN KEY (featured_card_one_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_one_im_b5a62051_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_one_im_b5a62051_fk_wagtailim FOREIGN KEY (featured_card_one_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_three__164bb732_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_three__164bb732_fk_wagtailim FOREIGN KEY (featured_card_three_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_three__19239315_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_three__19239315_fk_wagtailim FOREIGN KEY (featured_card_three_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_three__467cee8f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_three__467cee8f_fk_wagtailim FOREIGN KEY (featured_card_three_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_three__59294234_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_three__59294234_fk_wagtailim FOREIGN KEY (featured_card_three_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_three__5ddc551d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_three__5ddc551d_fk_wagtailim FOREIGN KEY (featured_card_three_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_three__a065552f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_three__a065552f_fk_wagtailim FOREIGN KEY (featured_card_three_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_three__a218e1a5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_three__a218e1a5_fk_wagtailim FOREIGN KEY (featured_card_three_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_three__e3e2487e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_three__e3e2487e_fk_wagtailim FOREIGN KEY (featured_card_three_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_three__fc0e8840_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_three__fc0e8840_fk_wagtailim FOREIGN KEY (featured_card_three_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_two_im_02561f6a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_two_im_02561f6a_fk_wagtailim FOREIGN KEY (featured_card_two_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_two_im_07f5ad34_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_two_im_07f5ad34_fk_wagtailim FOREIGN KEY (featured_card_two_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_two_im_2691dbc7_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_two_im_2691dbc7_fk_wagtailim FOREIGN KEY (featured_card_two_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_two_im_6062af77_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_two_im_6062af77_fk_wagtailim FOREIGN KEY (featured_card_two_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_two_im_83fc45ef_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_two_im_83fc45ef_fk_wagtailim FOREIGN KEY (featured_card_two_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_two_im_a152b755_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_two_im_a152b755_fk_wagtailim FOREIGN KEY (featured_card_two_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_two_im_b57287a7_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_two_im_b57287a7_fk_wagtailim FOREIGN KEY (featured_card_two_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_two_im_c8245d3a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_two_im_c8245d3a_fk_wagtailim FOREIGN KEY (featured_card_two_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_investinternationalhomepage great_international__featured_card_two_im_f683baea_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_investinternationalhomepage
+    ADD CONSTRAINT great_international__featured_card_two_im_f683baea_fk_wagtailim FOREIGN KEY (featured_card_two_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
