@@ -1211,7 +1211,8 @@ class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
 
 class CapitalInvestOpportunityPageSerializer(
     RelatedRegionSerializer,
-    SameSectorOpportunitiesHelper
+    SameSectorOpportunitiesHelper,
+    BasePageSerializer
 ):
 
     breadcrumbs_label = serializers.CharField(max_length=255)
@@ -1802,7 +1803,7 @@ class AboutDitLandingPageSerializer(PageWithRelatedPagesSerializer, BasePageSeri
     hero_title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('original')
 
-    intro = serializers.CharField(max_length=255)
+    intro = serializers.CharField()
     section_one_content = core_fields.MarkdownToHTMLField()
     section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
 
