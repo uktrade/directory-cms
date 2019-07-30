@@ -708,10 +708,3 @@ class CapitalInvestOpportunityPage(
 
     contact_title = models.CharField(max_length=255, blank=True)
     contact_text = MarkdownField(blank=True)
-
-    prioritised_opportunity = models.BooleanField(
-        default=False,
-        verbose_name="Prioritise project?",
-        help_text='Mark this if this opportunity is a priority and should be '
-                  'promoted on the related sector page'
-    )

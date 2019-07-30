@@ -501,7 +501,6 @@ class CapitalInvestOpportunityPagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('prioritised_opportunity'),
         FieldPanel('uses_tree_based_routing'),
     ]
 
