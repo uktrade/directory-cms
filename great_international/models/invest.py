@@ -554,7 +554,7 @@ class InvestRegionLandingPage(
 ):
 
     parent_page_types = ['InvestInternationalHomePage']
-    subpage_types = ['InvestSectorPage']
+    subpage_types = ['InvestRegionPage']
     slug_override = 'invest-uk-regions'
 
     # page fields
@@ -569,12 +569,12 @@ class InvestRegionLandingPage(
     )
 
 
-class InvestSectorPage(
+class InvestRegionPage(
     BaseInternationalPage,
-    panels.InvestSectorPagePanels,
+    panels.InvestRegionPagePanels,
 ):
 
-    parent_page_types = ['InvestInternationalHomePage']
+    parent_page_types = ['InvestRegionLandingPage']
 
     featured = models.BooleanField(default=False)
     description = models.TextField(

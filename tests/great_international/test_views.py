@@ -248,13 +248,13 @@ def test_invest_home_page(document, admin_client, international_root_page):
 
 
 def test_invest_sector_page(admin_client, international_root_page):
-    page = factories.InvestSectorPageFactory(
+    page = factories.InvestRegionPageFactory(
         live=True, featured=True, parent=international_root_page
     )
-    factories.InvestSectorPageFactory(live=True, parent=page)
-    factories.InvestSectorPageFactory(
+    factories.InvestRegionPageFactory(live=True, parent=page)
+    factories.InvestRegionPageFactory(
         live=True,
-        parent=factories.InvestSectorPageFactory()
+        parent=factories.InvestRegionPageFactory()
     )
 
     url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
@@ -268,7 +268,7 @@ def test_invest_region_landing_page(admin_client, international_root_page):
     page = factories.InvestRegionLandingPageFactory(
         live=True, parent=international_root_page
     )
-    factories.InvestSectorPageFactory(live=True, parent=page)
+    factories.InvestRegionPageFactory(live=True, parent=page)
 
     url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
 
