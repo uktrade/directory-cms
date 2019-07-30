@@ -1035,6 +1035,65 @@ class AboutDitLandingPagePanels:
                 ImageChooserPanel('hero_image'),
             ],
         ),
+        MultiFieldPanel(
+            heading="Intro",
+            classname='collapsible',
+            children=[
+                FieldPanel('intro')
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Section one",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required for section to show: Section one content'),
+                FieldPanel('section_one_content'),
+                ImageChooserPanel('section_one_image'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Related pages",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required for section to show: title and at least one related page'),
+                FieldPanel('how_dit_help_title'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        PageChooserPanel(
+                            'related_page_one',
+                            'great_international.AboutDitServicesPage'
+                        ),
+                    ]),
+                    MultiFieldPanel([
+                        PageChooserPanel(
+                            'related_page_two',
+                            'great_international.AboutDitServicesPage'
+                        ),
+                    ]),
+                    MultiFieldPanel([
+                       PageChooserPanel(
+                           'related_page_three',
+                           'great_international.AboutDitServicesPage'
+                       ),
+                    ]),
+                ]),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Case study",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required fields for section to show: '
+                          'Case Study Image, Case Study Title'),
+                ImageChooserPanel('case_study_image'),
+                FieldPanel('case_study_title'),
+                FieldPanel('case_study_text'),
+                HelpPanel('CTAs require both text and a link to show '
+                          'on page. '),
+                FieldPanel('case_study_cta_text'),
+                FieldPanel('case_study_cta_link'),
+            ],
+        ),
     ]
 
     settings_panels = [

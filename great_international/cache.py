@@ -209,14 +209,18 @@ class AboutDitLandingPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
     model = great_international.AboutDitLandingPage
-    subscriptions = []
+    subscriptions = [
+        great_international.AboutDitServicesPage
+    ]
 
 
 class AboutDitServicesPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
     model = great_international.AboutDitServicesPage
-    subscriptions = []
+    subscriptions = [
+        great_international.AboutDitLandingPage
+    ]
 
 
 class AboutUkLandingPageSubscriber(
