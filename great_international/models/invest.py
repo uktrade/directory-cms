@@ -321,7 +321,7 @@ class InvestHighPotentialOpportunityFormPage(
 
     slug_identity = 'contact'
     subpage_types = ['InvestHighPotentialOpportunityFormSuccessPage']
-    parent_page_types = ['InvestInternationalHomePage']
+    parent_page_types = ['InvestHighPotentialOpportunitiesPage']
 
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
@@ -339,7 +339,7 @@ class InvestHighPotentialOpportunityDetailPage(
     BaseInternationalPage,
     panels.InvestHighPotentialOpportunityDetailPagePanels,
 ):
-    parent_page_types = ['InvestInternationalHomePage']
+    parent_page_types = ['InvestHighPotentialOpportunitiesPage']
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
@@ -562,7 +562,7 @@ class InvestHighPotentialOpportunityFormSuccessPage(
     BaseInternationalPage,
 ):
     slug_identity = 'success'
-    parent_page_types = ['InvestInternationalHomePage']
+    parent_page_types = ['InvestHighPotentialOpportunityFormPage']
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(
