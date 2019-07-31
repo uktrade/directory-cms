@@ -121,8 +121,7 @@ class CapitalInvestRelatedRegions(Orderable, RelatedRegion):
 
 
 class InternationalCapitalInvestLandingPage(
-    WagtailAdminExclusivePageMixin, BaseInternationalPage,
-    panels.InternationalCapitalInvestLandingPagePanels
+    panels.InternationalCapitalInvestLandingPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage
 ):
     slug_identity = 'capital-invest'
 
@@ -244,9 +243,7 @@ class InternationalCapitalInvestLandingPage(
     contact_section_cta_text = models.CharField(max_length=255, blank=True)
 
 
-class CapitalInvestRegionPage(
-    BaseInternationalPage, panels.CapitalInvestRegionPagePanels,
-):
+class CapitalInvestRegionPage(panels.CapitalInvestRegionPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
 
     breadcrumbs_label = models.CharField(max_length=255)
@@ -296,6 +293,14 @@ class CapitalInvestRegionPage(
     economics_stat_4_number = models.CharField(max_length=255, blank=True)
     economics_stat_4_heading = models.CharField(max_length=255, blank=True)
     economics_stat_4_smallprint = models.CharField(max_length=255, blank=True)
+
+    economics_stat_5_number = models.CharField(max_length=255, blank=True)
+    economics_stat_5_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_5_smallprint = models.CharField(max_length=255, blank=True)
+
+    economics_stat_6_number = models.CharField(max_length=255, blank=True)
+    economics_stat_6_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_6_smallprint = models.CharField(max_length=255, blank=True)
 
     location_data_title = models.CharField(
         max_length=255,
@@ -353,6 +358,63 @@ class CapitalInvestRegionPage(
         blank=True
     )
 
+    location_stat_5_number = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_5_heading = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_5_smallprint = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    location_stat_6_number = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_6_heading = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_6_smallprint = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    subsections_title = models.CharField(max_length=255, blank=True)
+    sub_section_one_title = models.CharField(max_length=255, blank=True)
+    sub_section_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    sub_section_one_content = MarkdownField(blank=True)
+
+    sub_section_two_title = models.CharField(max_length=255, blank=True)
+    sub_section_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    sub_section_two_content = MarkdownField(blank=True)
+
+    sub_section_three_title = models.CharField(max_length=255, blank=True)
+    sub_section_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    sub_section_three_content = MarkdownField(blank=True)
+
     property_and_infrastructure_section_title = models.CharField(
         max_length=255,
         blank=True
@@ -380,11 +442,12 @@ class CapitalInvestRegionPage(
 
     contact_title = models.CharField(max_length=255, blank=True)
     contact_text = MarkdownField(blank=True)
+    contact_cta_link = models.CharField(max_length=255, blank=True)
+    contact_cta_text = models.CharField(max_length=255, blank=True)
 
 
 class CapitalInvestOpportunityListingPage(
-    WagtailAdminExclusivePageMixin, BaseInternationalPage,
-    panels.CapitalInvestOpportunityListingPagePanels,
+    panels.CapitalInvestOpportunityListingPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage,
 ):
 
     slug_identity = 'opportunities'
@@ -471,7 +534,7 @@ class CapitalInvestRelatedSubSectors(Orderable, RelatedSubSector):
 
 
 class CapitalInvestOpportunityPage(
-    BaseInternationalPage, panels.CapitalInvestOpportunityPagePanels
+    panels.CapitalInvestOpportunityPagePanels, BaseInternationalPage
 ):
 
     parent_page_types = [
@@ -618,37 +681,8 @@ class CapitalInvestOpportunityPage(
         blank=True
     )
 
-    similar_projects_title = models.CharField(max_length=255, blank=True)
-    related_page_one = models.ForeignKey(
-        'great_international.CapitalInvestOpportunityPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    related_page_two = models.ForeignKey(
-        'great_international.CapitalInvestOpportunityPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    related_page_three = models.ForeignKey(
-        'great_international.CapitalInvestOpportunityPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
     similar_projects_cta_text = models.CharField(max_length=255, blank=True)
     similar_projects_cta_link = models.CharField(max_length=255, blank=True)
 
     contact_title = models.CharField(max_length=255, blank=True)
     contact_text = MarkdownField(blank=True)
-
-    prioritised_opportunity = models.BooleanField(
-        default=False,
-        verbose_name="Prioritise project?",
-        help_text='Mark this if this opportunity is a priority and should be '
-                  'promoted on the related sector page'
-    )

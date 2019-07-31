@@ -423,6 +423,14 @@ class CapitalInvestRegionPageTranslationOptions(
         'economics_stat_4_heading',
         'economics_stat_4_smallprint',
 
+        'economics_stat_5_number',
+        'economics_stat_5_heading',
+        'economics_stat_5_smallprint',
+
+        'economics_stat_6_number',
+        'economics_stat_6_heading',
+        'economics_stat_6_smallprint',
+
         'location_data_title',
         'location_stat_1_number',
         'location_stat_1_heading',
@@ -440,6 +448,28 @@ class CapitalInvestRegionPageTranslationOptions(
         'location_stat_4_heading',
         'location_stat_4_smallprint',
 
+        'location_stat_5_number',
+        'location_stat_5_heading',
+        'location_stat_5_smallprint',
+
+        'location_stat_6_number',
+        'location_stat_6_heading',
+        'location_stat_6_smallprint',
+
+        'subsections_title',
+
+        'sub_section_one_title',
+        'sub_section_one_icon',
+        'sub_section_one_content',
+
+        'sub_section_two_title',
+        'sub_section_two_icon',
+        'sub_section_two_content',
+
+        'sub_section_three_title',
+        'sub_section_three_icon',
+        'sub_section_three_content',
+
         'property_and_infrastructure_section_title',
         'property_and_infrastructure_section_image',
         'property_and_infrastructure_section_content',
@@ -452,6 +482,8 @@ class CapitalInvestRegionPageTranslationOptions(
 
         'contact_title',
         'contact_text',
+        'contact_cta_link',
+        'contact_cta_text',
 
     )
 
@@ -513,10 +545,6 @@ class CapitalInvestOpportunityPageTranslationOptions(
         'case_study_cta_text',
         'case_study_cta_link',
 
-        'similar_projects_title',
-        'related_page_one',
-        'related_page_two',
-        'related_page_three',
         'similar_projects_cta_text',
         'similar_projects_cta_link',
 
@@ -575,14 +603,14 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'hero_call_to_action_text',
         'hero_call_to_action_url',
 
+        'teaser',
+
         'benefits_section_title',
         'benefits_section_intro',
         'benefits_section_content',
+        'benefits_section_cta_text',
+        'benefits_section_cta_url',
         'benefits_section_img',
-
-        'capital_invest_section_title',
-        'capital_invest_section_content',
-        'capital_invest_section_image',
 
         'eu_exit_section_title',
         'eu_exit_section_content',
@@ -590,32 +618,14 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'eu_exit_section_call_to_action_url',
         'eu_exit_section_img',
 
-        # subsections
-        'subsection_title_one',
-        'subsection_content_one',
-
-        'subsection_title_two',
-        'subsection_content_two',
-
-        'subsection_title_three',
-        'subsection_content_three',
-
-        'subsection_title_four',
-        'subsection_content_four',
-
-        'subsection_title_five',
-        'subsection_content_five',
-
-        'subsection_title_six',
-        'subsection_content_six',
-
-        'subsection_title_seven',
-        'subsection_content_seven',
-
         'sector_title',
         'sector_intro',
         'hpo_title',
         'hpo_intro',
+
+        'capital_invest_section_title',
+        'capital_invest_section_content',
+        'capital_invest_section_image',
         'setup_guide_title',
         'setup_guide_content',
         'setup_guide_img',
@@ -624,6 +634,22 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'isd_section_image',
         'isd_section_title',
         'isd_section_text',
+
+        'featured_card_one_image',
+        'featured_card_one_title',
+        'featured_card_one_summary',
+        'featured_card_one_cta_link',
+
+        'featured_card_two_image',
+        'featured_card_two_title',
+        'featured_card_two_summary',
+        'featured_card_two_cta_link',
+
+        'featured_card_three_image',
+        'featured_card_three_title',
+        'featured_card_three_summary',
+        'featured_card_three_cta_link',
+
         'how_we_help_title',
         'how_we_help_lead_in',
         # how we help
@@ -731,8 +757,8 @@ class HighPotentialOpportunityFormSuccessPageTranslationOptions(
     fields = []
 
 
-@register(invest.InvestSectorPage)
-class InvestSectorPageTranslationOptions(BaseTranslationOptions):
+@register(invest.InvestRegionPage)
+class InvestRegionPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'description',
         'heading',
@@ -822,6 +848,21 @@ class AboutDitLandingPageTranslationOptions(
         'breadcrumbs_label',
         'hero_title',
         'hero_image',
+        'intro',
+        'section_one_content',
+        'section_one_image',
+
+        'how_dit_help_title',
+
+        'related_page_one',
+        'related_page_two',
+        'related_page_three',
+
+        'case_study_image',
+        'case_study_title',
+        'case_study_text',
+        'case_study_cta_text',
+        'case_study_cta_link',
     )
 
 
@@ -849,6 +890,68 @@ class AboutDitServicesPageTranslationOptions(
 
 @register(great_international.AboutDitServicesFields)
 class AboutDitServicesFieldsSerializer(
+        BaseTranslationOptions
+):
+    fields = (
+        'page',
+    )
+
+
+@register(great_international.AboutUkLandingPage)
+class AboutUkLandingPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'hero_title',
+        'hero_image',
+    )
+
+
+@register(great_international.AboutUkWhyChooseTheUkPage)
+class AboutUkWhyChooseTheUkPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'hero_title',
+        'hero_image',
+        'teaser',
+        'section_one_body',
+        'section_one_image',
+        'statistic_1_number',
+        'statistic_1_heading',
+        'statistic_1_smallprint',
+        'statistic_2_number',
+        'statistic_2_heading',
+        'statistic_2_smallprint',
+        'statistic_3_number',
+        'statistic_3_heading',
+        'statistic_3_smallprint',
+        'statistic_4_number',
+        'statistic_4_heading',
+        'statistic_4_smallprint',
+        'statistic_5_number',
+        'statistic_5_heading',
+        'statistic_5_smallprint',
+        'statistic_6_number',
+        'statistic_6_heading',
+        'statistic_6_smallprint',
+        'ebook_section_image',
+        'ebook_section_image_alt_text',
+        'ebook_section_title',
+        'ebook_section_body',
+        'ebook_section_cta_text',
+        'ebook_section_cta_link',
+        'contact_us_section_title',
+        'contact_us_section_summary',
+        'contact_us_section_cta_text',
+        'contact_us_section_cta_link',
+    )
+
+
+@register(great_international.AboutUkArticlesFields)
+class AboutUkArticlesFieldsSerializer(
         BaseTranslationOptions
 ):
     fields = (
