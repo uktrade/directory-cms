@@ -2,7 +2,7 @@ import pytest
 from wagtail.core.models import Page
 
 from great_international.models import (
-    great_international, invest, capital_invest
+    great_international, invest, capital_invest, find_a_supplier
 )
 from . import factories
 from tests.export_readiness import factories as exread_factories
@@ -25,6 +25,7 @@ def test_models_hierarchy():
         capital_invest.CapitalInvestOpportunityListingPage,
         capital_invest.CapitalInvestRegionPage,
         invest.InvestInternationalHomePage,
+        find_a_supplier.InternationalTradeHomePage
     ]
     assert invest.InvestInternationalHomePage.allowed_subpage_models() == [
         invest.InvestHighPotentialOpportunitiesPage,

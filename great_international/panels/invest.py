@@ -527,7 +527,7 @@ class InvestRegionLandingPagePanels:
     )
 
 
-class InvestSectorPagePanels:
+class InvestRegionPagePanels:
 
     image_panels = [
         ImageChooserPanel('hero_image'),

@@ -65,8 +65,8 @@ MODELS_SERIALIZERS_MAPPING = {
     great_international.models.invest.InvestHighPotentialOpportunityDetailPage: great_international.serializers.InvestHighPotentialOpportunityDetailPageSerializer,   # NOQA
     great_international.models.find_a_supplier.InternationalTradeHomePage: great_international.serializers.InternationalTradeHomePageSerializer,  # NOQA
     great_international.models.find_a_supplier.InternationalTradeIndustryContactPage: great_international.serializers.InternationalTradeIndustryContactPageSerializer,  # NOQA
-    great_international.models.invest.InvestSectorPage: great_international.serializers.InvestSectorPageSerializer,  # NOQA
-    great_international.models.invest.InvestRegionLandingPage: great_international.serializers.InvestRegionalLandingPageSerializer,  # NOQA
+    great_international.models.invest.InvestRegionPage: great_international.serializers.InvestRegionPageSerializer,  # NOQA
+    great_international.models.invest.InvestRegionLandingPage: great_international.serializers.InvestRegionLandingPageSerializer,  # NOQA
     # invest
     invest.models.SectorLandingPage: invest.serializers.SectorLandingPageGenericSerializer,  # NOQA
     invest.models.RegionLandingPage: invest.serializers.SectorLandingPageGenericSerializer,  # NOQA

@@ -29,7 +29,7 @@ class GreatInternationalConfig(AppConfig):
         cache.InvestHighPotentialOpportunityFormPageSubscriber.subscribe()
         cache.InvestHighPotentialOpportunityFormSuccessPageSubscriber.subscribe()  # noqa
         cache.InvestRegionLandingPageSubscriber.subscribe()
-        cache.InvestSectorPageSubscriber.subscribe()
+        cache.InvestRegionPageSubscriber.subscribe()
         cache.InternationalTradeHomePageSubscriber.subscribe()
         cache.InternationalTradeIndustryContactPageSubscriber.subscribe()
         cache.AboutDitLandingPageSubscriber.subscribe()

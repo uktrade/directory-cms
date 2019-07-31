@@ -17,6 +17,8 @@
 - CI-383 - Populated About DIT landing page
 - CI-325 - Removed prioritised checkbox from capital invest opportunity page as it is now being randomised
 - CI-328 - Removed unused fields for capital invest opportunity page
+- No-ticket - Fix models hierarchy
+
 
 ### Fixed Bugs
 - CI-373 - Fix panels on why choose UK page
