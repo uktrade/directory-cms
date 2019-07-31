@@ -1697,7 +1697,6 @@ class InvestRegionPageSerializer(BasePageSerializer,
     hero_image = wagtail_fields.ImageRenditionField('original')
     pullout = serializers.SerializerMethodField()
     subsections = serializers.SerializerMethodField()
-    children_sectors = serializers.SerializerMethodField()
 
     def get_pullout(self, instance):
         return PulloutSerializer(
