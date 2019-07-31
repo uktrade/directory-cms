@@ -599,10 +599,10 @@ class InvestHighPotentialOpportunityDetailPageFactory(
     parent = None
 
 
-class InvestSectorPageFactory(wagtail_factories.PageFactory):
+class InvestRegionPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
-        model = models.invest.InvestSectorPage
+        model = models.invest.InvestRegionPage
 
     description_en_gb = factory.fuzzy.FuzzyText(length=100)
     heading_en_gb = factory.fuzzy.FuzzyText(length=100)

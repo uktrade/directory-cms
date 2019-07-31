@@ -15,6 +15,7 @@ class InvestInternationalHomePage(
     panels.InvestInternationalHomePagePanels,
 ):
     slug_identity = 'invest'
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'InvestHighPotentialOpportunitiesPage',
     ]
@@ -287,6 +288,7 @@ class InvestHighPotentialOpportunitiesPage(
 
     slug_identity = 'high-potential-opportunities'
 
+    parent_page_types = ['InvestInternationalHomePage']
     subpage_types = [
         'InvestHighPotentialOpportunityDetailPage',
         'InvestHighPotentialOpportunityFormPage',
@@ -319,6 +321,7 @@ class InvestHighPotentialOpportunityFormPage(
 
     slug_identity = 'contact'
     subpage_types = ['InvestHighPotentialOpportunityFormSuccessPage']
+    parent_page_types = ['InvestHighPotentialOpportunitiesPage']
 
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
@@ -336,6 +339,7 @@ class InvestHighPotentialOpportunityDetailPage(
     BaseInternationalPage,
     panels.InvestHighPotentialOpportunityDetailPagePanels,
 ):
+    parent_page_types = ['InvestHighPotentialOpportunitiesPage']
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
@@ -558,6 +562,7 @@ class InvestHighPotentialOpportunityFormSuccessPage(
     BaseInternationalPage,
 ):
     slug_identity = 'success'
+    parent_page_types = ['InvestHighPotentialOpportunityFormPage']
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(
@@ -591,7 +596,9 @@ class InvestRegionLandingPage(
     BaseInternationalPage,
     panels.InvestRegionLandingPagePanels,
 ):
-    subpage_types = ['great_international.InvestSectorPage']
+
+    parent_page_types = ['InvestInternationalHomePage']
+    subpage_types = ['InvestRegionPage']
     slug_override = 'invest-uk-regions'
 
     # page fields
@@ -606,12 +613,12 @@ class InvestRegionLandingPage(
     )
 
 
-class InvestSectorPage(
+class InvestRegionPage(
     BaseInternationalPage,
-    panels.InvestSectorPagePanels,
+    panels.InvestRegionPagePanels,
 ):
-    # Related sector are implemented as subpages
-    subpage_types = ['great_international.InvestSectorPage']
+
+    parent_page_types = ['InvestRegionLandingPage']
 
     featured = models.BooleanField(default=False)
     description = models.TextField(

@@ -15,6 +15,8 @@ class InternationalTradeHomePage(
     BreadcrumbMixin, BaseInternationalPage,
 ):
     slug_identity = slugs.FIND_A_SUPPLIER_LANDING
+    parent_page_types = ['great_international.InternationalHomePage']
+    subpage_types = ['InternationalTradeIndustryContactPage']
 
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -83,7 +85,7 @@ class InternationalTradeIndustryContactPage(
     panels.InternationalTradeIndustryContactPagePanels, ExclusivePageMixin, BreadcrumbMixin,
     BaseInternationalPage,
 ):
-
+    parent_page_types = ['InternationalTradeHomePage']
     view_path = 'industries/contact/'
     slug_identity = slugs.FIND_A_SUPPLIER_INDUSTRY_CONTACT
     # override the slug when generating the url
