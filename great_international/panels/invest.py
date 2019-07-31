@@ -1,5 +1,5 @@
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList
+    FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList, HelpPanel
 )
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -30,19 +30,32 @@ class InvestInternationalHomePagePanels:
         ),
 
         MultiFieldPanel(
+            heading='Teaser',
+            classname='collapsible',
+            children=[
+                FieldPanel('teaser')
+            ]
+        ),
+
+        MultiFieldPanel(
             heading='Benefits section',
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Benefits Section Title, Benefits Section Content'),
                 FieldPanel('benefits_section_title'),
                 FieldPanel('benefits_section_intro'),
                 FieldPanel('benefits_section_content'),
+                HelpPanel('CTAs require both text and a link to show on page'),
+                FieldPanel('benefits_section_cta_text'),
+                FieldPanel('benefits_section_cta_url'),
                 ImageChooserPanel('benefits_section_img'),
             ],
         ),
 
         MultiFieldPanel(
             heading='EU Exit section',
-            classname='collapsible',
+            classname='collapsible collapsed',
             children=[
                 FieldPanel('eu_exit_section_title'),
                 FieldPanel('eu_exit_section_content'),
@@ -53,8 +66,8 @@ class InvestInternationalHomePagePanels:
 
         ),
         MultiFieldPanel(
-            heading='Featured card links ',
-            classname='collapsible',
+            heading='Old featured card links',
+            classname='collapsible collapsed',
             children=[
                 FieldRowPanel(
                     [
@@ -87,8 +100,46 @@ class InvestInternationalHomePagePanels:
             ],
         ),
         MultiFieldPanel(
+            heading='Featured card links ',
+            classname='collapsible',
+            children=[
+                HelpPanel('Required fields for section to show: '
+                          'All images, titles and summaries'),
+                FieldRowPanel(
+                    [
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel('featured_card_one_image'),
+                                FieldPanel('featured_card_one_title'),
+                                FieldPanel('featured_card_one_summary'),
+                                FieldPanel('featured_card_one_cta_link'),
+                            ],
+                        ),
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel('featured_card_two_image'),
+                                FieldPanel('featured_card_two_title'),
+                                FieldPanel('featured_card_two_summary'),
+                                FieldPanel('featured_card_two_cta_link'),
+                            ],
+                        ),
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel('featured_card_three_image'),
+                                FieldPanel('featured_card_three_title'),
+                                FieldPanel('featured_card_three_summary'),
+                                FieldPanel('featured_card_three_cta_link'),
+                            ]
+                        ),
+                    ]
+                ),
+            ],
+        ),
+        MultiFieldPanel(
             heading='Industries section',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Sector Title, Sector Content'),
                 FieldPanel('sector_title'),
                 FieldPanel('sector_intro'),
                 FieldPanel('sector_button_text'),
@@ -96,22 +147,25 @@ class InvestInternationalHomePagePanels:
             ],
 
         ),
-
         MultiFieldPanel(
             heading='High Potential Opportunities',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'HPO title, 1 HPO in active language'),
                 FieldPanel('hpo_title'),
                 FieldPanel('hpo_intro')
             ],
-
         ),
-
         MultiFieldPanel(
             heading='How we help section',
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'How We Help Title, How We Help Lead In'),
                 FieldPanel('how_we_help_title'),
                 FieldPanel('how_we_help_lead_in'),
+                HelpPanel('Each icon requires the corresponding text to '
+                          'show on the page'),
                 FieldRowPanel(
                     [
                         MultiFieldPanel(
@@ -133,7 +187,6 @@ class InvestInternationalHomePagePanels:
                             ],
                         ),
                     ],
-
                 ),
                 FieldRowPanel(
                     [
@@ -154,17 +207,19 @@ class InvestInternationalHomePagePanels:
                 ),
             ],
         ),
-
         MultiFieldPanel(
             heading='Contact Section',
             classname='collapsible',
             children=[
+                HelpPanel('Required fields for section to show: '
+                          'Contact Title, Contact Content'),
                 FieldPanel('contact_section_title'),
                 FieldPanel('contact_section_content'),
+                HelpPanel('Cta\'s require both text and a link to show '
+                          'on page. '),
                 FieldPanel('contact_section_call_to_action_text'),
                 FieldPanel('contact_section_call_to_action_url'),
             ],
-
         ),
         SearchEngineOptimisationPanel()
     ]
@@ -472,7 +527,7 @@ class InvestRegionLandingPagePanels:
     )
 
 
-class InvestSectorPagePanels:
+class InvestRegionPagePanels:
 
     image_panels = [
         ImageChooserPanel('hero_image'),

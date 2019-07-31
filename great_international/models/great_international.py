@@ -15,26 +15,24 @@ from core.models import (
 )
 from core.mixins import ServiceHomepageMixin
 
-from export_readiness.models import Tag
+from export_readiness import snippets
 
 from great_international.panels import great_international as panels
 
 from . import invest as invest_models
 from . import capital_invest as capital_invest_models
+from . import find_a_supplier as fas_models
 from .base import BaseInternationalPage
 
 
-class BaseInternationalSectorPage(
-    BaseInternationalPage,
-    panels.BaseInternationalSectorPagePanels,
-):
+class BaseInternationalSectorPage(panels.BaseInternationalSectorPagePanels, BaseInternationalPage):
     class Meta:
         abstract = True
 
     parent_page_types = ['great_international.InternationalTopicLandingPage']
     subpage_types = []
 
-    tags = ParentalManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
     heading = models.CharField(max_length=255, verbose_name='Sector name')
     sub_heading = models.TextField(blank=True)
@@ -264,10 +262,8 @@ class InternationalSubSectorPage(BaseInternationalSectorPage):
 
 
 class InternationalHomePage(
-    WagtailAdminExclusivePageMixin,
-    ServiceHomepageMixin,
+    panels.InternationalHomePagePanels, WagtailAdminExclusivePageMixin, ServiceHomepageMixin,
     BaseInternationalPage,
-    panels.InternationalHomePagePanels,
 ):
     slug_identity = slugs.GREAT_HOME_INTERNATIONAL
 
@@ -509,18 +505,18 @@ class InternationalHomePage(
             InternationalEUExitFormPage,
             InternationalEUExitFormSuccessPage,
             AboutDitLandingPage,
+            AboutUkLandingPage,
             capital_invest_models.InternationalCapitalInvestLandingPage,
             capital_invest_models.CapitalInvestOpportunityListingPage,
             capital_invest_models.CapitalInvestRegionPage,
             invest_models.InvestInternationalHomePage,
+            fas_models.InternationalTradeHomePage
         ]
 
 
 class InternationalHomePageOld(
-    ExclusivePageMixin,
-    ServiceHomepageMixin,
+    panels.InternationalHomePageOldPanels, ExclusivePageMixin, ServiceHomepageMixin,
     BaseInternationalPage,
-    panels.InternationalHomePageOldPanels,
 ):
     slug_identity = slugs.GREAT_HOME_INTERNATIONAL_OLD
     subpage_types = []
@@ -753,26 +749,19 @@ class InternationalHomePageOld(
     visit_uk_cta_text = models.CharField(max_length=255)
 
 
-class InternationalRegionPage(
-    BaseInternationalPage,
-    panels.InternationalRegionPagePanels,
-):
+# !!! TO BE REMOVED !!!
+class InternationalRegionPage(panels.InternationalRegionPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
-    subpage_types = [
-        'great_international.InternationalLocalisedFolderPage'
-    ]
+    subpage_types = []
 
-    tags = ParentalManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
     def save(self, *args, **kwargs):
         return super().save(*args, **kwargs)
 
 
-class InternationalLocalisedFolderPage(
-    BaseInternationalPage,
-    panels.InternationalLocalisedFolderPagePanels,
-):
-    parent_page_types = ['great_international.InternationalRegionPage']
+# !!! TO BE REMOVED !!!
+class InternationalLocalisedFolderPage(panels.InternationalLocalisedFolderPagePanels, BaseInternationalPage):
     subpage_types = [
         'great_international.InternationalArticlePage',
         'great_international.InternationalCampaignPage'
@@ -784,14 +773,10 @@ class InternationalLocalisedFolderPage(
         return super().save(*args, **kwargs)
 
 
-class InternationalArticlePage(
-    BaseInternationalPage,
-    panels.InternationalArticlePagePanels,
-):
+class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
-        'great_international.InternationalLocalisedFolderPage',
         'great_international.InternationalCuratedTopicLandingPage',
         'great_international.InternationalGuideLandingPage',
     ]
@@ -837,13 +822,10 @@ class InternationalArticlePage(
         on_delete=models.SET_NULL,
         related_name='+',
     )
-    tags = ParentalManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
-class InternationalArticleListingPage(
-    BaseInternationalPage,
-    panels.InternationalArticleListingPagePanels
-):
+class InternationalArticleListingPage(panels.InternationalArticleListingPagePanels, BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalHomePage',
         'great_international.InternationalTopicLandingPage'
@@ -863,7 +845,7 @@ class InternationalArticleListingPage(
     )
     hero_teaser = models.CharField(max_length=255, null=True, blank=True)
     list_teaser = MarkdownField(null=True, blank=True)
-    tags = ParentalManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
     @property
     def articles_count(self):
@@ -872,14 +854,10 @@ class InternationalArticleListingPage(
         ).live().count()
 
 
-class InternationalCampaignPage(
-    BaseInternationalPage,
-    panels.InternationalCampaignPagePanels,
-):
+class InternationalCampaignPage(panels.InternationalCampaignPagePanels, BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalTopicLandingPage',
-        'great_international.InternationalLocalisedFolderPage'
     ]
     subpage_types = [
         'great_international.InternationalArticlePage'
@@ -1012,13 +990,10 @@ class InternationalCampaignPage(
     cta_box_button_url = models.CharField(max_length=255)
     cta_box_button_text = models.CharField(max_length=255)
 
-    tags = ParentalManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
-class InternationalTopicLandingPage(
-    BaseInternationalPage,
-    panels.InternationalTopicLandingPagePanels,
-):
+class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.InternationalArticleListingPage',
@@ -1036,13 +1011,10 @@ class InternationalTopicLandingPage(
         related_name='+'
     )
     hero_teaser = models.CharField(max_length=255, null=True, blank=True)
-    tags = ParentalManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
-class InternationalCuratedTopicLandingPage(
-    BaseInternationalPage,
-    panels.InternationalCuratedTopicLandingPagePanels,
-):
+class InternationalCuratedTopicLandingPage(panels.InternationalCuratedTopicLandingPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = []
 
@@ -1115,13 +1087,10 @@ class InternationalCuratedTopicLandingPage(
     )
     feature_five_url = models.URLField(verbose_name="URL")
 
-    tags = ParentalManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
-class InternationalGuideLandingPage(
-    BaseInternationalPage,
-    panels.InternationalGuideLandingPagePanels
-):
+class InternationalGuideLandingPage(panels.InternationalGuideLandingPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = ['great_international.InternationalArticlePage']
 
@@ -1183,13 +1152,12 @@ class InternationalGuideLandingPage(
     section_three_cta_text = models.CharField(max_length=255, blank=True)
     section_three_cta_link = models.CharField(max_length=255, blank=True)
 
-    tags = ParentalManyToManyField(Tag, blank=True)
+    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
 class InternationalEUExitFormPage(
     WagtailAdminExclusivePageMixin,
     BaseInternationalPage,
-    panels.InternationalEUExitFormPagePanels,
     metaclass=FormPageMetaClass
 ):
     # metaclass creates <fild_name>_label and <field_name>_help_text
@@ -1224,8 +1192,7 @@ class InternationalEUExitFormPage(
 
 
 class InternationalEUExitFormSuccessPage(
-    WagtailAdminExclusivePageMixin, BaseInternationalPage,
-    panels.InternationalEUExitFormSuccessPagePanels,
+    panels.InternationalEUExitFormSuccessPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage,
 ):
     full_path_override = '/eu-exit-news/contact/success/'
     slug_identity = slugs.EUEXIT_FORM_SUCCESS
@@ -1251,10 +1218,7 @@ class InternationalEUExitFormSuccessPage(
     )
 
 
-class AboutDitLandingPage(
-    BaseInternationalPage,
-    panels.AboutDitLandingPagePanels
-):
+class AboutDitLandingPage(panels.AboutDitLandingPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.AboutDitServicesPage'
@@ -1269,8 +1233,56 @@ class AboutDitLandingPage(
         related_name='+'
     )
 
+    intro = models.TextField(blank=True)
+    section_one_content = MarkdownField(blank=True)
+    section_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
 
-class AboutDitServiceField(models.Model, panels.AboutDitServiceFieldPanels):
+    how_dit_help_title = models.CharField(max_length=255, blank=True)
+
+    related_page_one = models.ForeignKey(
+        'great_international.AboutDitServicesPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    related_page_two = models.ForeignKey(
+        'great_international.AboutDitServicesPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    related_page_three = models.ForeignKey(
+        'great_international.AboutDitServicesPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    case_study_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    case_study_title = models.CharField(max_length=255, blank=True)
+    case_study_text = models.TextField(max_length=255, blank=True)
+    case_study_cta_text = models.CharField(max_length=255, blank=True)
+    case_study_cta_link = models.CharField(max_length=255, blank=True)
+
+
+class AboutDitServiceField(panels.AboutDitServiceFieldPanels, models.Model):
     icon = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1301,10 +1313,7 @@ class AboutDitServicesFields(Orderable, AboutDitServiceField):
     )
 
 
-class AboutDitServicesPage(
-    BaseInternationalPage,
-    panels.AboutDitServicesPagePanels
-):
+class AboutDitServicesPage(panels.AboutDitServicesPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.AboutDitLandingPage']
 
     breadcrumbs_label = models.CharField(max_length=255)
@@ -1341,15 +1350,163 @@ class AboutDitServicesPage(
     case_study_cta_text = models.CharField(max_length=255, blank=True)
     case_study_cta_link = models.CharField(max_length=255, blank=True)
 
-    contact_us_section_title = models.CharField(max_length=255,
-                                                blank=True,
-                                                verbose_name='Title')
-    contact_us_section_summary = models.TextField(max_length=255,
-                                                  blank=True,
-                                                  verbose_name='Summary')
-    contact_us_section_cta_text = models.CharField(max_length=255,
-                                                   blank=True,
-                                                   verbose_name='CTA text')
-    contact_us_section_cta_link = models.CharField(max_length=255,
-                                                   blank=True,
-                                                   verbose_name='CTA URL')
+    contact_us_section_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Title'
+    )
+    contact_us_section_summary = MarkdownField(
+        null=True,
+        blank=True,
+        verbose_name='Summary'
+    )
+    contact_us_section_cta_text = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA text'
+    )
+    contact_us_section_cta_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA URL'
+    )
+
+
+class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage):
+    parent_page_types = ['great_international.InternationalHomePage']
+    subpage_types = [
+        'great_international.AboutUkWhyChooseTheUkPage'
+    ]
+
+    breadcrumbs_label = models.CharField(max_length=255)
+    hero_title = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+
+class AboutUkArticleField(panels.AboutUkArticleFieldPanels, models.Model):
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    title = models.CharField(max_length=255, blank=True)
+    summary = models.TextField(blank=True)
+    link_text = models.CharField(max_length=255,
+                                 blank=True,
+                                 verbose_name='Link text')
+    link_url = models.CharField(max_length=255,
+                                blank=True,
+                                verbose_name='Link URL')
+
+    class Meta:
+        abstract = True
+
+
+class AboutUkArticlesFields(Orderable, AboutUkArticleField):
+    page = ParentalKey(
+        'great_international.AboutUkWhyChooseTheUkPage',
+        on_delete=models.CASCADE,
+        related_name='about_uk_articles_fields',
+        blank=True,
+        null=True,
+    )
+
+
+class AboutUkWhyChooseTheUkPage(panels.AboutUkWhyChooseTheUkPagePanels, BaseInternationalPage):
+    parent_page_types = ['great_international.AboutUkLandingPage']
+
+    breadcrumbs_label = models.CharField(max_length=255)
+    hero_title = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    teaser = MarkdownField(
+        null=True,
+        verbose_name='',
+        blank=True
+    )
+
+    section_one_body = MarkdownField(
+        null=True,
+        blank=True
+    )
+    section_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    statistic_1_heading = models.CharField(max_length=255, blank=True)
+    statistic_1_number = models.CharField(max_length=255, blank=True)
+    statistic_1_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_2_heading = models.CharField(max_length=255, blank=True)
+    statistic_2_number = models.CharField(max_length=255, blank=True)
+    statistic_2_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_3_heading = models.CharField(max_length=255, blank=True)
+    statistic_3_number = models.CharField(max_length=255, blank=True)
+    statistic_3_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_4_heading = models.CharField(max_length=255, blank=True)
+    statistic_4_number = models.CharField(max_length=255, blank=True)
+    statistic_4_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_5_heading = models.CharField(max_length=255, blank=True)
+    statistic_5_number = models.CharField(max_length=255, blank=True)
+    statistic_5_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_6_heading = models.CharField(max_length=255, blank=True)
+    statistic_6_number = models.CharField(max_length=255, blank=True)
+    statistic_6_smallprint = models.CharField(max_length=255, blank=True)
+
+    ebook_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    ebook_section_image_alt_text = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Description of image for screenreaders"
+    )
+    ebook_section_title = models.CharField(max_length=255, blank=True)
+    ebook_section_body = MarkdownField(null=True, blank=True)
+    ebook_section_cta_text = models.CharField(max_length=255, blank=True)
+    ebook_section_cta_link = models.CharField(max_length=255, blank=True)
+
+    contact_us_section_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Title'
+    )
+    contact_us_section_summary = MarkdownField(
+        null=True,
+        blank=True,
+        verbose_name='Summary'
+    )
+    contact_us_section_cta_text = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA text'
+    )
+    contact_us_section_cta_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA URL'
+    )

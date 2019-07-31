@@ -13,7 +13,7 @@ from django.contrib import messages
 from core import helpers
 from core.cache import SERVICE_NAMES_TO_ROOT_PATHS
 
-from export_readiness.models import Tag
+from export_readiness.snippets import Tag
 
 
 class AbstractFieldSerializer(abc.ABC):
