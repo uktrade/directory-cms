@@ -340,7 +340,6 @@ class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
         max_length=255)
     scale = serializers.CharField(
         max_length=255)
-    prioritised_opportunity = serializers.BooleanField()
 
     related_sectors = serializers.SerializerMethodField()
 
@@ -1144,7 +1143,6 @@ class OpportunityListSerializer(BasePageSerializer, RelatedRegionSerializer):
         max_digits=10,
         decimal_places=2
     )
-    prioritised_opportunity = serializers.BooleanField()
     related_sectors = serializers.SerializerMethodField()
 
     def get_related_sectors(self, instance):
@@ -1212,9 +1210,9 @@ class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
 
 
 class CapitalInvestOpportunityPageSerializer(
-    PageWithRelatedPagesSerializer,
     RelatedRegionSerializer,
-    SameSectorOpportunitiesHelper
+    SameSectorOpportunitiesHelper,
+    BasePageSerializer
 ):
 
     breadcrumbs_label = serializers.CharField(max_length=255)
@@ -1284,14 +1282,12 @@ class CapitalInvestOpportunityPageSerializer(
     case_study_cta_text = serializers.CharField(max_length=255)
     case_study_cta_link = serializers.CharField(max_length=255)
 
-    similar_projects_title = serializers.CharField(max_length=255)
     similar_projects_cta_text = serializers.CharField(max_length=255)
     similar_projects_cta_link = serializers.CharField(max_length=255)
 
     contact_title = serializers.CharField(max_length=255)
     contact_text = core_fields.MarkdownToHTMLField()
 
-    prioritised_opportunity = serializers.BooleanField()
     related_sectors = serializers.SerializerMethodField()
 
     def get_related_sectors(self, instance):
@@ -1799,7 +1795,7 @@ class AboutDitLandingPageSerializer(PageWithRelatedPagesSerializer, BasePageSeri
     hero_title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('original')
 
-    intro = serializers.CharField(max_length=255)
+    intro = serializers.CharField()
     section_one_content = core_fields.MarkdownToHTMLField()
     section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
 
