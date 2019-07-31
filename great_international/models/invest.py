@@ -49,20 +49,6 @@ class InvestInternationalHomePage(
         verbose_name="Benefits section image"
     )
 
-    capital_invest_section_title = models.CharField(
-        max_length=255, blank=True
-    )
-    capital_invest_section_content = MarkdownField(
-        blank=True
-    )
-    capital_invest_section_image = models.ForeignKey(
-        'wagtailimages.Image',
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
     eu_exit_section_title = models.CharField(
         max_length=255,
         blank=True,
@@ -123,48 +109,6 @@ class InvestInternationalHomePage(
         max_length=255,
         blank=True,
         verbose_name="High potential opportunity section intro"
-    )
-
-    setup_guide_title = models.CharField(
-        default='Set up an overseas business in the UK',
-        max_length=255,
-        blank=True)
-
-    setup_guide_lead_in = models.TextField(
-        blank=True,
-        null=True)
-
-    setup_guide_content = MarkdownField(blank=True)
-    setup_guide_img = models.ForeignKey(
-        'wagtailimages.Image',
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        verbose_name="Setup guide image"
-    )
-    setup_guide_call_to_action_url = models.CharField(
-        max_length=255,
-        blank=True
-    )
-
-    isd_section_image = models.ForeignKey(
-        'wagtailimages.Image',
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        verbose_name='Investment Support Directory section image'
-    )
-    isd_section_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Investment Support Directory section title'
-    )
-    isd_section_text = MarkdownField(
-        max_length=255,
-        blank=True,
-        verbose_name='Investment Support Directory section text'
     )
 
     featured_card_one_image = models.ForeignKey(
