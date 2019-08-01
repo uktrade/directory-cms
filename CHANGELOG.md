@@ -18,6 +18,7 @@
 - CI-325 - Removed prioritised checkbox from capital invest opportunity page as it is now being randomised
 - CI-328 - Removed unused fields for capital invest opportunity page
 - No-ticket - Fix models hierarchy
+- CI-404 - Clean up new Invest International home page fields that are no longer used
 
 
 ### Fixed Bugs

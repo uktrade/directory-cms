@@ -401,7 +401,8 @@ class BaseInternationalSectorPagePanels:
                 FieldPanel('heading'),
                 FieldPanel('sub_heading'),
                 ImageChooserPanel('hero_image'),
-                FieldPanel('heading_teaser')
+                FieldPanel('heading_teaser'),
+                FieldPanel('featured_description')
             ]
 
         ),

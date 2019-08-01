@@ -43,6 +43,11 @@ class BaseInternationalSectorPage(panels.BaseInternationalSectorPagePanels, Base
         related_name='+'
     )
     heading_teaser = models.TextField(blank=True, verbose_name='Introduction')
+    featured_description = models.TextField(
+        blank=True,
+        help_text="This is the description shown when the sector "
+                  "is featured on another page i.e. the Invest Home Page"
+    )
 
     section_one_body = MarkdownField(
         null=True,
