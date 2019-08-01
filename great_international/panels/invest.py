@@ -66,40 +66,6 @@ class InvestInternationalHomePagePanels:
 
         ),
         MultiFieldPanel(
-            heading='Old featured card links',
-            classname='collapsible collapsed',
-            children=[
-                FieldRowPanel(
-                    [
-                        MultiFieldPanel(
-                            [
-                                ImageChooserPanel('setup_guide_img'),
-                                FieldPanel('setup_guide_title'),
-                                FieldPanel('setup_guide_content'),
-                                FieldPanel('setup_guide_call_to_action_url'),
-                            ],
-                        ),
-                        MultiFieldPanel(
-                            [
-                                ImageChooserPanel('isd_section_image'),
-                                FieldPanel('isd_section_title'),
-                                FieldPanel('isd_section_text')
-                            ],
-                        ),
-                        MultiFieldPanel(
-                            [
-                                ImageChooserPanel(
-                                    'capital_invest_section_image'
-                                ),
-                                FieldPanel('capital_invest_section_title'),
-                                FieldPanel('capital_invest_section_content'),
-                            ]
-                        ),
-                    ]
-                ),
-            ],
-        ),
-        MultiFieldPanel(
             heading='Featured card links ',
             classname='collapsible',
             children=[
