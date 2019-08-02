@@ -1,9 +1,6 @@
 from django.db import models
 
-from directory_constants import slugs
-
 from core.models import ExclusivePageMixin, BreadcrumbMixin
-from core.mixins import ServiceHomepageMixin
 from core.model_fields import MarkdownField
 
 from .base import BaseInternationalPage
@@ -11,10 +8,10 @@ import great_international.panels.find_a_supplier as panels
 
 
 class InternationalTradeHomePage(
-    panels.InternationalTradeHomePagePanels, ExclusivePageMixin, ServiceHomepageMixin,
+    panels.InternationalTradeHomePagePanels, ExclusivePageMixin,
     BreadcrumbMixin, BaseInternationalPage,
 ):
-    slug_identity = slugs.FIND_A_SUPPLIER_LANDING
+    slug_identity = 'trade'
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = ['InternationalTradeIndustryContactPage']
 
@@ -86,10 +83,7 @@ class InternationalTradeIndustryContactPage(
     BaseInternationalPage,
 ):
     parent_page_types = ['InternationalTradeHomePage']
-    view_path = 'industries/contact/'
-    slug_identity = slugs.FIND_A_SUPPLIER_INDUSTRY_CONTACT
-    # override the slug when generating the url
-    slug_override = ''
+    slug_identity = 'contact'
 
     breadcrumbs_label = models.CharField(max_length=50)
     introduction_text = MarkdownField(blank=True)
