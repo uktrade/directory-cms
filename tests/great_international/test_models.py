@@ -29,6 +29,7 @@ def test_models_hierarchy():
     ]
     assert invest.InvestInternationalHomePage.allowed_subpage_models() == [
         invest.InvestHighPotentialOpportunitiesPage,
+        invest.InvestRegionLandingPage,
     ]
     assert invest.InvestHighPotentialOpportunitiesPage.allowed_subpage_models() == [
         invest.InvestHighPotentialOpportunityDetailPage,
