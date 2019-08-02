@@ -480,6 +480,7 @@ class BaseInternationalSectorPageSerializer(
     hero_image_thumbnail = wagtail_fields.ImageRenditionField(
         'fill-640x360', source='hero_image')
     heading_teaser = serializers.CharField()
+    featured_description = serializers.CharField()
 
     section_one_body = core_fields.MarkdownToHTMLField()
     section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
@@ -1444,21 +1445,7 @@ class InvestInternationalHomePageSerializer(BasePageSerializer):
     sectors = serializers.SerializerMethodField()
     high_potential_opportunities = serializers.SerializerMethodField()
     guides = serializers.SerializerMethodField()
-    capital_invest_section_title = serializers.CharField(max_length=255)
-    capital_invest_section_content = core_fields.MarkdownToHTMLField()
-    capital_invest_section_image = wagtail_fields.ImageRenditionField(
-        'fill-640x360')
-    setup_guide_title = serializers.CharField(max_length=255)
-    setup_guide_content = core_fields.MarkdownToHTMLField()
-    setup_guide_img = wagtail_fields.ImageRenditionField('fill-640x360')
-    setup_guide_call_to_action_url = serializers.CharField(max_length=255)
-    setup_guide_lead_in = serializers.CharField(
-        max_length=255,
-        allow_null=True
-    )
-    isd_section_image = wagtail_fields.ImageRenditionField('fill-640x360')
-    isd_section_title = serializers.CharField(max_length=255)
-    isd_section_text = core_fields.MarkdownToHTMLField(max_length=255)
+
     featured_cards = serializers.SerializerMethodField()
 
     def get_how_we_help(self, instance):
