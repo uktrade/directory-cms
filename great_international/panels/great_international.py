@@ -192,7 +192,6 @@ class InternationalHomePagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
     ]
 
     edit_handler = make_translated_interface(
@@ -383,7 +382,6 @@ class InternationalHomePageOldPanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
     ]
 
     edit_handler = make_translated_interface(
@@ -623,7 +621,6 @@ class BaseInternationalSectorPagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
@@ -638,7 +635,6 @@ class InternationalRegionPagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
@@ -648,7 +644,6 @@ class InternationalLocalisedFolderPagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
     ]
 
 
@@ -687,7 +682,6 @@ class InternationalArticlePagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
@@ -715,7 +709,6 @@ class InternationalArticleListingPagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
@@ -820,7 +813,6 @@ class InternationalCampaignPagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
@@ -847,7 +839,6 @@ class InternationalTopicLandingPagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
@@ -904,7 +895,6 @@ class InternationalCuratedTopicLandingPagePanels:
         FieldPanel('title_en_gb'),
         SearchEngineOptimisationPanel(),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
@@ -964,7 +954,6 @@ class InternationalGuideLandingPagePanels:
         FieldPanel('title_en_gb'),
         SearchEngineOptimisationPanel(),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
@@ -1100,7 +1089,6 @@ class AboutDitLandingPagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
     ]
 
     edit_handler = make_translated_interface(
@@ -1185,7 +1173,6 @@ class AboutDitServicesPagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
     ]
 
     edit_handler = make_translated_interface(
@@ -1210,7 +1197,6 @@ class AboutUkLandingPagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
     ]
 
     edit_handler = make_translated_interface(
@@ -1361,7 +1347,6 @@ class AboutUkWhyChooseTheUkPagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
     ]
 
     edit_handler = make_translated_interface(
