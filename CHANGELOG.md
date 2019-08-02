@@ -22,6 +22,7 @@
 
 
 ### Fixed Bugs
+- No ticket - Fix not being able to create invest region landing page under homepage
 - CI-373 - Fix panels on why choose UK page
 
 
