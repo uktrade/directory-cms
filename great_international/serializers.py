@@ -1921,6 +1921,18 @@ class AboutUkLandingPageSerializer(BasePageSerializer):
     contact_cta_text = serializers.CharField()
     contact_cta_link = serializers.CharField()
 
+    all_sectors = serializers.SerializerMethodField()
+
+    def get_all_sectors(self, instance):
+        queryset = InternationalSectorPage.objects.live().public().all()
+        serialized = InternationalSectorPageSerializer(
+            queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        ).data
+        return serialized
+
 
 class AboutUkArticlesFieldSerializer(serializers.Serializer):
     image = wagtail_fields.ImageRenditionField(
