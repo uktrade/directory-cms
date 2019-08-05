@@ -18,6 +18,7 @@ class InvestInternationalHomePage(
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'InvestHighPotentialOpportunitiesPage',
+        'InvestRegionLandingPage',
     ]
 
     breadcrumbs_label = models.CharField(max_length=50)
