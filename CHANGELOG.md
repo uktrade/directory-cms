@@ -19,7 +19,7 @@
 - CI-328 - Removed unused fields for capital invest opportunity page
 - No-ticket - Fix models hierarchy
 - CI-404 - Clean up new Invest International home page fields that are no longer used
-
+- CI-321 - About UK landing page
 
 ### Fixed Bugs
 - CI-373 - Fix panels on why choose UK page
