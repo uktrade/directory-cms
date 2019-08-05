@@ -546,7 +546,7 @@ class InvestRegionLandingPage(
 
     parent_page_types = ['InvestInternationalHomePage']
     subpage_types = ['InvestRegionPage']
-    slug_override = 'invest-uk-regions'
+    slug_identity = slugs.INVEST_INTERNATIONAL_REGION_LANDING_PAGE
 
     # page fields
     heading = models.CharField(max_length=255)
