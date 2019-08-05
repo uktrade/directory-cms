@@ -937,7 +937,7 @@ class AboutUkLandingPageTranslationOptions(
         'how_we_help_six_text',
         'how_we_help_cta_text',
         'how_we_help_cta_link',
-        
+
         'ebook_section_image',
         'ebook_section_image_alt_text',
         'ebook_section_title',
