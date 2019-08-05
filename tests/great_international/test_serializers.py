@@ -1043,11 +1043,6 @@ def test_about_uk_landing_page_has_all_sectors(
         slug='sector-one',
     )
 
-    BaseInternationalSectorPageSerializer(
-        instance=sector,
-        context={'request': rf.get('/')}
-    )
-
     about_uk = AboutUkLandingPageFactory(
         slug='about-uk',
         parent=international_root_page
