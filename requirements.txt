@@ -16,7 +16,7 @@ celery[redis]==4.2.1
 certifi==2018.11.29       # via requests
 chardet==3.0.4            # via requests
 directory-components==20.0.0
-directory-constants==18.5.0
+directory-constants==18.6.0
 directory-healthcheck==1.1.1
 dj-database-url==0.5.0
 django-admin-ip-restrictor==1.0.0
