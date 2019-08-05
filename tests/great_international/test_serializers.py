@@ -1038,7 +1038,7 @@ def test_about_uk_landing_page_has_how_we_help(
 def test_about_uk_landing_page_has_all_sectors(
         rf, international_root_page
 ):
-    sector = InternationalSectorPageFactory(
+    InternationalSectorPageFactory(
         parent=international_root_page,
         slug='sector-one',
     )
