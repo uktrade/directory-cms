@@ -229,7 +229,9 @@ class AboutUkLandingPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
     model = great_international.AboutUkLandingPage
-    subscriptions = []
+    subscriptions = [
+        great_international.InternationalSectorPage
+    ]
 
 
 class AboutUkWhyChooseTheUkPageSubscriber(
