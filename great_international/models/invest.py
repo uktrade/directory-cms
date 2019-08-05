@@ -1,5 +1,7 @@
 from django.db import models
 
+from directory_constants import slugs
+
 from core.models import (
     ExclusivePageMixin, WagtailAdminExclusivePageMixin, FormPageMetaClass)
 from core.model_fields import MarkdownField
@@ -14,7 +16,7 @@ class InvestInternationalHomePage(
     BaseInternationalPage,
     panels.InvestInternationalHomePagePanels,
 ):
-    slug_identity = 'invest'
+    slug_identity = slugs.INVEST_INTERNATIONAL_HOME_PAGE
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'InvestHighPotentialOpportunitiesPage',
@@ -231,7 +233,7 @@ class InvestHighPotentialOpportunitiesPage(
     This page's url will redirect to an existing page on the frontend.
     """
 
-    slug_identity = 'high-potential-opportunities'
+    slug_identity = slugs.INVEST_INTERNATIONAL_HIGH_POTENTIAL_OPPORTUNITIES
 
     parent_page_types = ['InvestInternationalHomePage']
     subpage_types = [
@@ -264,7 +266,7 @@ class InvestHighPotentialOpportunityFormPage(
         'comment',
     ]
 
-    slug_identity = 'contact'
+    slug_identity = slugs.CONTACT_FORM_SLUG
     subpage_types = ['InvestHighPotentialOpportunityFormSuccessPage']
     parent_page_types = ['InvestHighPotentialOpportunitiesPage']
 
@@ -506,7 +508,7 @@ class InvestHighPotentialOpportunityFormSuccessPage(
     ExclusivePageMixin,
     BaseInternationalPage,
 ):
-    slug_identity = 'success'
+    slug_identity = slugs.FORM_SUCCESS_SLUG
     parent_page_types = ['InvestHighPotentialOpportunityFormPage']
 
     breadcrumbs_label = models.CharField(max_length=50)
