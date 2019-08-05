@@ -1,5 +1,7 @@
 from django.db import models
 
+from directory_constants import slugs
+
 from core.models import ExclusivePageMixin, BreadcrumbMixin
 from core.model_fields import MarkdownField
 
@@ -11,7 +13,7 @@ class InternationalTradeHomePage(
     panels.InternationalTradeHomePagePanels, ExclusivePageMixin,
     BreadcrumbMixin, BaseInternationalPage,
 ):
-    slug_identity = 'trade'
+    slug_identity = slugs.FAS_INTERNATIONAL_HOME_PAGE
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = ['InternationalTradeIndustryContactPage']
 
@@ -83,7 +85,7 @@ class InternationalTradeIndustryContactPage(
     BaseInternationalPage,
 ):
     parent_page_types = ['InternationalTradeHomePage']
-    slug_identity = 'contact'
+    slug_identity = slugs.CONTACT_FORM_SLUG
 
     breadcrumbs_label = models.CharField(max_length=50)
     introduction_text = MarkdownField(blank=True)
