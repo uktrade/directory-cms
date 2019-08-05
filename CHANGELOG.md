@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- CMS-1596 - Use correct slugs for new FAS pages under great international for tree based routing. Hide "uses tree-based routing" checkbox from admin panels
 - CMS-1664 (Follow-up) - Update admin panels on international invest homepage
 - CMS-1664 (Follow-up) - Update fields on international invest homepage to match those in invest/models
 - No ticket - Split up code in great domestic to make files smaller
