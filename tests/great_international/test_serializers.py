@@ -13,8 +13,8 @@ from great_international.serializers import (
     CapitalInvestOpportunityListingSerializer,
     InternationalSectorPageSerializer,
     AboutDitServicesPageSerializer,
-    AboutUkWhyChooseTheUkPageSerializer
-)
+    AboutUkWhyChooseTheUkPageSerializer,
+    AboutUkLandingPageSerializer)
 from tests.great_international.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
@@ -29,8 +29,8 @@ from tests.great_international.factories import (
     InternationalSubSectorPageFactory,
     InternationalTopicLandingPageFactory,
     AboutDitServicesPageFactory,
-    AboutUkWhyChooseTheUkPageFactory
-)
+    AboutUkWhyChooseTheUkPageFactory,
+    AboutUkLandingPageFactory)
 
 from great_international.models.capital_invest import (
     CapitalInvestRelatedRegions,
@@ -1011,3 +1011,47 @@ def test_opportunity_page_null_case_gets_opportunities_with_same_sector(
 
     for value in birmingham_curzon_serializer.data['related_sector_with_opportunities'].values():
         assert value == []
+
+
+@pytest.mark.django_db
+def test_about_uk_landing_page_has_how_we_help(
+        rf, international_root_page
+):
+    about_uk = AboutUkLandingPageFactory(
+        slug='about-uk',
+        parent=international_root_page
+    )
+
+    serializer = AboutUkLandingPageSerializer(
+        instance=about_uk,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['how_we_help']) == 6
+    for how_we_help in serializer.data['how_we_help']:
+        assert 'text' in how_we_help
+        assert 'icon' in how_we_help
+        assert 'title' in how_we_help
+
+
+@pytest.mark.django_db
+def test_about_uk_landing_page_has_all_sectors(
+        rf, international_root_page
+):
+    InternationalSectorPageFactory(
+        parent=international_root_page,
+        slug='sector-one',
+    )
+
+    about_uk = AboutUkLandingPageFactory(
+        slug='about-uk',
+        parent=international_root_page
+    )
+
+    serializer = AboutUkLandingPageSerializer(
+        instance=about_uk,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['all_sectors']) == 1
+    assert serializer.data['all_sectors'][0]['meta']['slug'] == 'sector-one'
