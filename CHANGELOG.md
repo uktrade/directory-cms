@@ -3,6 +3,13 @@
 ## Pre-release
 
 ### Implemented enhancements
+
+### Fixed Bugs
+
+
+## [2019.08.08](https://github.com/uktrade/directory-cms/releases/tag/2019.08.06)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.07.24...2019.08.06)
+
 - CMS-1774 - Use correct slug for Invest region landing page for tree based routing
 - CMS-1596 - Use correct slugs for new FAS pages under great international for tree based routing. Hide "uses tree-based routing" checkbox from admin panels
 - CMS-1664 (Follow-up) - Update admin panels on international invest homepage
