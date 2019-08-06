@@ -894,13 +894,11 @@ class AboutUkLandingPageTranslationOptions(
     fields = (
         'breadcrumbs_label',
         'hero_title',
-        'hero_image',
 
         'intro',
 
         'why_choose_uk_title',
         'why_choose_uk_content',
-        'why_choose_uk_image',
         'why_choose_uk_cta_text',
         'why_choose_uk_cta_link',
 
@@ -911,34 +909,26 @@ class AboutUkLandingPageTranslationOptions(
 
         'regions_section_title',
         'regions_section_content',
-        'regions_section_image',
         'regions_section_cta_text',
         'regions_section_cta_link',
 
         'how_we_help_title',
         'how_we_help_intro',
-        'how_we_help_one_icon',
         'how_we_help_one_title',
         'how_we_help_one_text',
-        'how_we_help_two_icon',
         'how_we_help_two_title',
         'how_we_help_two_text',
-        'how_we_help_three_icon',
         'how_we_help_three_title',
         'how_we_help_three_text',
-        'how_we_help_four_icon',
         'how_we_help_four_title',
         'how_we_help_four_text',
-        'how_we_help_five_icon',
         'how_we_help_five_title',
         'how_we_help_five_text',
-        'how_we_help_six_icon',
         'how_we_help_six_title',
         'how_we_help_six_text',
         'how_we_help_cta_text',
         'how_we_help_cta_link',
 
-        'ebook_section_image',
         'ebook_section_image_alt_text',
         'ebook_section_title',
         'ebook_section_body',
