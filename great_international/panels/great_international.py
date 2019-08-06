@@ -2,7 +2,7 @@ from django.forms import Textarea, CheckboxSelectMultiple
 
 from wagtail.admin.edit_handlers import (
     InlinePanel, HelpPanel, FieldPanel, FieldRowPanel, MultiFieldPanel,
-    PageChooserPanel
+    PageChooserPanel, ObjectList
 )
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.documents.edit_handlers import DocumentChooserPanel
@@ -1184,13 +1184,27 @@ class AboutDitServicesPagePanels:
 
 class AboutUkLandingPagePanels:
 
+    image_panels = [
+        ImageChooserPanel('hero_image'),
+        ImageChooserPanel('why_choose_uk_image'),
+        ImageChooserPanel('regions_section_image'),
+        MultiFieldPanel([
+            ImageChooserPanel('how_we_help_one_icon'),
+            ImageChooserPanel('how_we_help_two_icon'),
+            ImageChooserPanel('how_we_help_three_icon'),
+            ImageChooserPanel('how_we_help_four_icon'),
+            ImageChooserPanel('how_we_help_five_icon'),
+            ImageChooserPanel('how_we_help_six_icon'),
+        ]),
+        ImageChooserPanel('ebook_section_image'),
+    ]
+
     content_panels = [
         FieldPanel('breadcrumbs_label'),
         MultiFieldPanel(
             heading="Hero",
             children=[
                 FieldPanel('hero_title'),
-                ImageChooserPanel('hero_image'),
             ],
         ),
         FieldPanel('intro'),
@@ -1200,7 +1214,6 @@ class AboutUkLandingPagePanels:
             children=[
                 FieldPanel('why_choose_uk_title'),
                 FieldPanel('why_choose_uk_content'),
-                ImageChooserPanel('why_choose_uk_image'),
                 FieldPanel('why_choose_uk_cta_text'),
                 FieldPanel('why_choose_uk_cta_link'),
             ]
@@ -1221,7 +1234,6 @@ class AboutUkLandingPagePanels:
             children=[
                 FieldPanel('regions_section_title'),
                 FieldPanel('regions_section_content'),
-                ImageChooserPanel('regions_section_image'),
                 FieldPanel('regions_section_cta_text'),
                 FieldPanel('regions_section_cta_link'),
             ]
@@ -1234,34 +1246,28 @@ class AboutUkLandingPagePanels:
                 FieldPanel('how_we_help_intro'),
                 FieldRowPanel([
                     MultiFieldPanel([
-                        ImageChooserPanel('how_we_help_one_icon'),
                         FieldPanel('how_we_help_one_title'),
                         FieldPanel('how_we_help_one_text')
                     ]),
                     MultiFieldPanel([
-                        ImageChooserPanel('how_we_help_two_icon'),
                         FieldPanel('how_we_help_two_title'),
                         FieldPanel('how_we_help_two_text')
                     ]),
                     MultiFieldPanel([
-                        ImageChooserPanel('how_we_help_three_icon'),
                         FieldPanel('how_we_help_three_title'),
                         FieldPanel('how_we_help_three_text')
                     ]),
                 ]),
                 FieldRowPanel([
                     MultiFieldPanel([
-                        ImageChooserPanel('how_we_help_four_icon'),
                         FieldPanel('how_we_help_four_title'),
                         FieldPanel('how_we_help_four_text')
                     ]),
                     MultiFieldPanel([
-                        ImageChooserPanel('how_we_help_five_icon'),
                         FieldPanel('how_we_help_five_title'),
                         FieldPanel('how_we_help_five_text')
                     ]),
                     MultiFieldPanel([
-                        ImageChooserPanel('how_we_help_six_icon'),
                         FieldPanel('how_we_help_six_title'),
                         FieldPanel('how_we_help_six_text')
                     ]),
@@ -1276,7 +1282,6 @@ class AboutUkLandingPagePanels:
             children=[
                 HelpPanel('Required fields for section to show: title, body'),
                 FieldRowPanel([
-                    ImageChooserPanel('ebook_section_image'),
                     FieldPanel('ebook_section_image_alt_text')
                 ]),
                 MultiFieldPanel([
@@ -1308,7 +1313,10 @@ class AboutUkLandingPagePanels:
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
-        settings_panels=settings_panels
+        settings_panels=settings_panels,
+        other_panels=[
+            ObjectList(image_panels, heading='Images'),
+        ]
     )
 
 
@@ -1459,4 +1467,5 @@ class AboutUkWhyChooseTheUkPagePanels:
     edit_handler = make_translated_interface(
         content_panels=content_panels,
         settings_panels=settings_panels
+
     )
