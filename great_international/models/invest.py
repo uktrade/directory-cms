@@ -15,8 +15,10 @@ class InvestInternationalHomePage(
     panels.InvestInternationalHomePagePanels,
 ):
     slug_identity = 'invest'
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'InvestHighPotentialOpportunitiesPage',
+        'InvestRegionLandingPage',
     ]
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -32,9 +34,13 @@ class InvestInternationalHomePage(
         related_name='+'
     )
 
-    benefits_section_title = models.CharField(max_length=255)
+    teaser = models.TextField(blank=True)
+
+    benefits_section_title = models.CharField(max_length=255, blank=True)
     benefits_section_intro = models.TextField(max_length=255, blank=True)
     benefits_section_content = MarkdownField(blank=True)
+    benefits_section_cta_text = models.CharField(max_length=255, blank=True)
+    benefits_section_cta_url = models.CharField(max_length=255, blank=True)
     benefits_section_img = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
@@ -42,20 +48,6 @@ class InvestInternationalHomePage(
         on_delete=models.SET_NULL,
         related_name='+',
         verbose_name="Benefits section image"
-    )
-
-    capital_invest_section_title = models.CharField(
-        max_length=255
-    )
-    capital_invest_section_content = MarkdownField(
-        blank=True
-    )
-    capital_invest_section_image = models.ForeignKey(
-        'wagtailimages.Image',
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
     )
 
     eu_exit_section_title = models.CharField(
@@ -90,44 +82,29 @@ class InvestInternationalHomePage(
         verbose_name="EU exit section image"
     )
 
-    # subsections
-    subsection_title_one = models.CharField(max_length=255, blank=True)
-    subsection_content_one = MarkdownField(blank=True)
-
-    subsection_title_two = models.CharField(max_length=255, blank=True)
-    subsection_content_two = MarkdownField(blank=True)
-
-    subsection_title_three = models.CharField(max_length=255, blank=True)
-    subsection_content_three = MarkdownField(blank=True)
-
-    subsection_title_four = models.CharField(max_length=255, blank=True)
-    subsection_content_four = MarkdownField(blank=True)
-
-    subsection_title_five = models.CharField(max_length=255, blank=True)
-    subsection_content_five = MarkdownField(blank=True)
-
-    subsection_title_six = models.CharField(max_length=255, blank=True)
-    subsection_content_six = MarkdownField(blank=True)
-
-    subsection_title_seven = models.CharField(max_length=255, blank=True)
-    subsection_content_seven = MarkdownField(blank=True)
-
     sector_title = models.TextField(
         default="Discover UK Industries",
-        max_length=255)
+        max_length=255,
+        blank=True
+    )
 
     sector_button_text = models.TextField(
         default="See more industries",
-        max_length=255)
+        max_length=255,
+        blank=True
+    )
 
     sector_button_url = models.CharField(
-        max_length=255)
+        max_length=255,
+        blank=True
+    )
 
     sector_intro = models.TextField(max_length=255, blank=True)
 
     hpo_title = models.CharField(
         max_length=255,
-        verbose_name="High potential opportunity section title"
+        verbose_name="High potential opportunity section title",
+        blank=True
     )
     hpo_intro = models.TextField(
         max_length=255,
@@ -135,48 +112,55 @@ class InvestInternationalHomePage(
         verbose_name="High potential opportunity section intro"
     )
 
-    setup_guide_title = models.CharField(
-        default='Set up an overseas business in the UK',
-        max_length=255)
-
-    setup_guide_lead_in = models.TextField(
-        blank=True,
-        null=True)
-
-    setup_guide_content = MarkdownField(blank=True)
-    setup_guide_img = models.ForeignKey(
+    featured_card_one_image = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name="Setup guide image"
     )
-    setup_guide_call_to_action_url = models.CharField(max_length=255)
+    featured_card_one_title = models.CharField(blank=True, max_length=255)
+    featured_card_one_summary = MarkdownField(blank=True)
+    featured_card_one_cta_link = models.CharField(max_length=255, blank=True)
 
-    isd_section_image = models.ForeignKey(
+    featured_card_two_image = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name='Investment Support Directory section image'
     )
-    isd_section_title = models.CharField(
+    featured_card_two_title = models.CharField(
         max_length=255,
         blank=True,
-        verbose_name='Investment Support Directory section title'
     )
-    isd_section_text = MarkdownField(
+    featured_card_two_summary = MarkdownField(
         max_length=255,
         blank=True,
-        verbose_name='Investment Support Directory section text'
     )
+    featured_card_two_cta_link = models.CharField(max_length=255, blank=True)
 
-    how_we_help_title = models.CharField(default='How we help', max_length=255)
-    how_we_help_lead_in = models.TextField(blank=True, null=True)
+    featured_card_three_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    featured_card_three_title = models.CharField(
+        max_length=255, blank=True
+    )
+    featured_card_three_summary = MarkdownField(blank=True)
+    featured_card_three_cta_link = models.CharField(max_length=255, blank=True)
+
     # how we help
-    how_we_help_text_one = models.CharField(max_length=255)
+    how_we_help_title = models.CharField(
+        default='How we help',
+        max_length=255,
+        blank=True
+    )
+    how_we_help_lead_in = models.TextField(blank=True, null=True)
+    how_we_help_text_one = models.CharField(max_length=255, blank=True)
     how_we_help_icon_one = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -184,7 +168,7 @@ class InvestInternationalHomePage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    how_we_help_text_two = models.CharField(max_length=255)
+    how_we_help_text_two = models.CharField(max_length=255, blank=True)
     how_we_help_icon_two = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -192,7 +176,7 @@ class InvestInternationalHomePage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    how_we_help_text_three = models.CharField(max_length=255)
+    how_we_help_text_three = models.CharField(max_length=255, blank=True)
     how_we_help_icon_three = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -200,7 +184,7 @@ class InvestInternationalHomePage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    how_we_help_text_four = models.CharField(max_length=255)
+    how_we_help_text_four = models.CharField(max_length=255, blank=True)
     how_we_help_icon_four = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -208,7 +192,7 @@ class InvestInternationalHomePage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    how_we_help_text_five = models.CharField(max_length=255)
+    how_we_help_text_five = models.CharField(max_length=255, blank=True)
     how_we_help_icon_five = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -219,16 +203,22 @@ class InvestInternationalHomePage(
     how_we_help_text_six = models.CharField(max_length=255, blank=True)
     how_we_help_icon_six = models.ForeignKey(
         'wagtailimages.Image',
-        null=True,
         blank=True,
+        null=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
     )
 
-    contact_section_title = models.CharField(max_length=255)
+    contact_section_title = models.CharField(max_length=255, blank=True)
     contact_section_content = models.TextField(max_length=255, blank=True)
-    contact_section_call_to_action_text = models.CharField(max_length=255)
-    contact_section_call_to_action_url = models.CharField(max_length=255)
+    contact_section_call_to_action_text = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    contact_section_call_to_action_url = models.CharField(
+        max_length=255,
+        blank=True
+    )
 
 
 class InvestHighPotentialOpportunitiesPage(
@@ -243,18 +233,20 @@ class InvestHighPotentialOpportunitiesPage(
 
     slug_identity = 'high-potential-opportunities'
 
+    parent_page_types = ['InvestInternationalHomePage']
     subpage_types = [
         'InvestHighPotentialOpportunityDetailPage',
         'InvestHighPotentialOpportunityFormPage',
     ]
 
     def save(self, *args, **kwargs):
-        self.title = self.get_verbose_name()
+        # title is used for tree_based_breadcrumbs that are displayed in the UI
+        self.title = 'High potential opportunities'
         return super().save(*args, **kwargs)
 
 
 class InvestHighPotentialOpportunityFormPage(
-    WagtailAdminExclusivePageMixin,
+    ExclusivePageMixin,
     BaseInternationalPage,
     metaclass=FormPageMetaClass,
 ):
@@ -274,6 +266,7 @@ class InvestHighPotentialOpportunityFormPage(
 
     slug_identity = 'contact'
     subpage_types = ['InvestHighPotentialOpportunityFormSuccessPage']
+    parent_page_types = ['InvestHighPotentialOpportunitiesPage']
 
     heading = models.CharField(max_length=255)
     sub_heading = models.CharField(max_length=255)
@@ -291,6 +284,7 @@ class InvestHighPotentialOpportunityDetailPage(
     BaseInternationalPage,
     panels.InvestHighPotentialOpportunityDetailPagePanels,
 ):
+    parent_page_types = ['InvestHighPotentialOpportunitiesPage']
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
@@ -508,10 +502,12 @@ class InvestHighPotentialOpportunityDetailPage(
 
 
 class InvestHighPotentialOpportunityFormSuccessPage(
-    BaseInternationalPage,
     panels.InvestHighPotentialOpportunityFormSuccessPagePanels,
+    ExclusivePageMixin,
+    BaseInternationalPage,
 ):
     slug_identity = 'success'
+    parent_page_types = ['InvestHighPotentialOpportunityFormPage']
 
     breadcrumbs_label = models.CharField(max_length=50)
     heading = models.CharField(
@@ -545,7 +541,9 @@ class InvestRegionLandingPage(
     BaseInternationalPage,
     panels.InvestRegionLandingPagePanels,
 ):
-    subpage_types = ['great_international.InvestSectorPage']
+
+    parent_page_types = ['InvestInternationalHomePage']
+    subpage_types = ['InvestRegionPage']
     slug_override = 'invest-uk-regions'
 
     # page fields
@@ -560,12 +558,12 @@ class InvestRegionLandingPage(
     )
 
 
-class InvestSectorPage(
+class InvestRegionPage(
     BaseInternationalPage,
-    panels.InvestSectorPagePanels,
+    panels.InvestRegionPagePanels,
 ):
-    # Related sector are implemented as subpages
-    subpage_types = ['great_international.InvestSectorPage']
+
+    parent_page_types = ['InvestRegionLandingPage']
 
     featured = models.BooleanField(default=False)
     description = models.TextField(

@@ -15,7 +15,8 @@ class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
         great_international.InternationalCampaignPage,
         capital_invest.CapitalInvestOpportunityPage,
         capital_invest.CapitalInvestOpportunityListingPage,
-        great_international.InternationalSubSectorPage
+        great_international.InternationalSubSectorPage,
+        great_international.InternationalCuratedTopicLandingPage
     ]
 
 
@@ -148,6 +149,8 @@ class InvestHighPotentialOpportunityFormPageSubscriber(
     model = invest.InvestHighPotentialOpportunityFormPage
     subscriptions = [
         invest.InvestHighPotentialOpportunityDetailPage,
+        invest.InvestHighPotentialOpportunityFormPage,
+        invest.InvestHighPotentialOpportunityFormSuccessPage,
     ]
 
 
@@ -157,6 +160,8 @@ class InvestHighPotentialOpportunityDetailPageSubscriber(
     model = invest.InvestHighPotentialOpportunityDetailPage
     subscriptions = [
         invest.InvestHighPotentialOpportunityDetailPage,
+        invest.InvestHighPotentialOpportunityFormPage,
+        invest.InvestHighPotentialOpportunityFormSuccessPage,
     ]
 
 
@@ -166,21 +171,22 @@ class InvestHighPotentialOpportunityFormSuccessPageSubscriber(
     model = invest.InvestHighPotentialOpportunityFormSuccessPage
     subscriptions = [
         invest.InvestHighPotentialOpportunityDetailPage,
+        invest.InvestHighPotentialOpportunityFormPage,
     ]
 
 
 class InvestRegionLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = invest.InvestRegionLandingPage
     subscriptions = [
-        invest.InvestSectorPage,
+        invest.InvestRegionPage,
     ]
 
 
-class InvestSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = invest.InvestSectorPage
+class InvestRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = invest.InvestRegionPage
     subscriptions = [
         # not a typo: each sector page contains a list of other sector pages
-        invest.InvestSectorPage,
+        invest.InvestRegionPage,
     ]
 
 
@@ -204,11 +210,29 @@ class AboutDitLandingPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
     model = great_international.AboutDitLandingPage
-    subscriptions = []
+    subscriptions = [
+        great_international.AboutDitServicesPage
+    ]
 
 
 class AboutDitServicesPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
     model = great_international.AboutDitServicesPage
+    subscriptions = [
+        great_international.AboutDitLandingPage
+    ]
+
+
+class AboutUkLandingPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = great_international.AboutUkLandingPage
+    subscriptions = []
+
+
+class AboutUkWhyChooseTheUkPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = great_international.AboutUkWhyChooseTheUkPage
     subscriptions = []
