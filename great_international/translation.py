@@ -557,7 +557,7 @@ class CapitalInvestOpportunityPageTranslationOptions(
 
 
 @register(capital_invest.CapitalInvestRelatedRegions)
-class RelatedRegionsSerializer(
+class RelatedRegionsTranslationOptions(
         BaseTranslationOptions):
     fields = (
         'page',
@@ -565,7 +565,7 @@ class RelatedRegionsSerializer(
 
 
 @register(capital_invest.CapitalInvestRelatedSectors)
-class RelatedSectorsSerializer(
+class RelatedSectorsTranslationOptions(
         BaseTranslationOptions):
     fields = (
         'page',
@@ -573,7 +573,7 @@ class RelatedSectorsSerializer(
 
 
 @register(capital_invest.CapitalInvestRegionCardFieldsSummary)
-class CapitalInvestRegionCardFieldSerializer(
+class CapitalInvestRegionCardFieldTranslationOptions(
         BaseTranslationOptions):
     fields = (
         'page',
@@ -581,7 +581,7 @@ class CapitalInvestRegionCardFieldSerializer(
 
 
 @register(capital_invest.CapitalInvestHomesInEnglandCardFieldsSummary)
-class CapitalInvestHomesInEnglandCardFieldsSummarySerializer(
+class CapitalInvestHomesInEnglandCardFieldsSummaryTranslationOptions(
         BaseTranslationOptions):
     fields = (
         'page',
@@ -879,7 +879,7 @@ class AboutDitServicesPageTranslationOptions(
 
 
 @register(great_international.AboutDitServicesFields)
-class AboutDitServicesFieldsSerializer(
+class AboutDitServicesFieldsTranslationOptions(
         BaseTranslationOptions
 ):
     fields = (
@@ -986,9 +986,21 @@ class AboutUkWhyChooseTheUkPageTranslationOptions(
 
 
 @register(great_international.AboutUkArticlesFields)
-class AboutUkArticlesFieldsSerializer(
+class AboutUkArticlesFieldsTranslationOptions(
         BaseTranslationOptions
 ):
     fields = (
         'page',
+    )
+
+
+@register(capital_invest.CapitalInvestContactFormPage)
+class CapitalInvestContactFormPageTranslationOptions(
+        BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'heading',
+        'intro',
+        'cta_text',
     )

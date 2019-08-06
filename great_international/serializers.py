@@ -2018,3 +2018,10 @@ class AboutUkWhyChooseTheUkPageSerializer(BasePageSerializer):
     contact_us_section_summary = core_fields.MarkdownToHTMLField()
     contact_us_section_cta_text = serializers.CharField()
     contact_us_section_cta_link = serializers.CharField()
+
+
+class CapitalInvestContactFormPageSerializer(BasePageSerializer):
+    breadcrumbs_label = serializers.CharField()
+    heading = serializers.CharField()
+    intro = core_fields.MarkdownToHTMLField()
+    cta_text = serializers.CharField()

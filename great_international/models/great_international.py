@@ -514,6 +514,7 @@ class InternationalHomePage(
             capital_invest_models.InternationalCapitalInvestLandingPage,
             capital_invest_models.CapitalInvestOpportunityListingPage,
             capital_invest_models.CapitalInvestRegionPage,
+            capital_invest_models.CapitalInvestContactFormPage,
             invest_models.InvestInternationalHomePage,
             fas_models.InternationalTradeHomePage
         ]
