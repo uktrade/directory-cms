@@ -24,6 +24,7 @@ def test_models_hierarchy():
         capital_invest.InternationalCapitalInvestLandingPage,
         capital_invest.CapitalInvestOpportunityListingPage,
         capital_invest.CapitalInvestRegionPage,
+        capital_invest.CapitalInvestContactFormPage,
         invest.InvestInternationalHomePage,
         find_a_supplier.InternationalTradeHomePage
     ]
@@ -74,6 +75,7 @@ def test_models_hierarchy():
     assert capital_invest.CapitalInvestOpportunityListingPage.allowed_subpage_models() == [
             capital_invest.CapitalInvestOpportunityPage,
         ]
+    assert capital_invest.CapitalInvestContactFormPage.allowed_subpage_models() == []
     assert great_international.InternationalSectorPage.allowed_subpage_models() == [
             great_international.InternationalSubSectorPage,
         ]

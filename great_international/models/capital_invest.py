@@ -127,6 +127,12 @@ class InternationalCapitalInvestLandingPage(
 
     parent_page_types = ['great_international.InternationalHomePage']
 
+    @classmethod
+    def allowed_subpage_models(cls):
+        return [
+            CapitalInvestContactFormPage
+        ]
+
     hero_title = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -686,3 +692,15 @@ class CapitalInvestOpportunityPage(
 
     contact_title = models.CharField(max_length=255, blank=True)
     contact_text = MarkdownField(blank=True)
+
+
+class CapitalInvestContactFormPage(
+    panels.CapitalInvestContactFormPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage
+):
+    slug_identity = 'contact'
+    parent_page_types = ['great_international.InternationalCapitalInvestLandingPage']
+
+    breadcrumbs_label = models.CharField(max_length=255)
+    heading = models.CharField(max_length=255)
+    intro = MarkdownField(blank=True)
+    cta_text = models.CharField(max_length=255, blank=True)
