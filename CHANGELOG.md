@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- CI-321 - About UK landing page
 
 ### Fixed Bugs
 
@@ -28,7 +29,6 @@
 - CI-328 - Removed unused fields for capital invest opportunity page
 - No-ticket - Fix models hierarchy
 - CI-404 - Clean up new Invest International home page fields that are no longer used
-- CI-321 - About UK landing page
 
 ### Fixed Bugs
 - No ticket - Fix not being able to create invest region landing page under homepage
