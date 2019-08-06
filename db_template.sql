@@ -2308,14 +2308,6 @@ CREATE TABLE public.great_international_aboutuklandingpage (
     hero_title_pt character varying(255),
     hero_title_ar character varying(255),
     hero_image_id integer,
-    hero_image_ar_id integer,
-    hero_image_de_id integer,
-    hero_image_en_gb_id integer,
-    hero_image_es_id integer,
-    hero_image_fr_id integer,
-    hero_image_ja_id integer,
-    hero_image_pt_id integer,
-    hero_image_zh_hans_id integer,
     contact_cta_link character varying(255) NOT NULL,
     contact_cta_link_ar character varying(255),
     contact_cta_link_de character varying(255),
@@ -2389,14 +2381,6 @@ CREATE TABLE public.great_international_aboutuklandingpage (
     ebook_section_image_alt_text_ja character varying(255),
     ebook_section_image_alt_text_pt character varying(255),
     ebook_section_image_alt_text_zh_hans character varying(255),
-    ebook_section_image_ar_id integer,
-    ebook_section_image_de_id integer,
-    ebook_section_image_en_gb_id integer,
-    ebook_section_image_es_id integer,
-    ebook_section_image_fr_id integer,
-    ebook_section_image_ja_id integer,
-    ebook_section_image_pt_id integer,
-    ebook_section_image_zh_hans_id integer,
     ebook_section_title character varying(255) NOT NULL,
     ebook_section_title_ar character varying(255),
     ebook_section_title_de character varying(255),
@@ -2425,14 +2409,6 @@ CREATE TABLE public.great_international_aboutuklandingpage (
     how_we_help_cta_text_pt character varying(255),
     how_we_help_cta_text_zh_hans character varying(255),
     how_we_help_five_icon_id integer,
-    how_we_help_five_icon_ar_id integer,
-    how_we_help_five_icon_de_id integer,
-    how_we_help_five_icon_en_gb_id integer,
-    how_we_help_five_icon_es_id integer,
-    how_we_help_five_icon_fr_id integer,
-    how_we_help_five_icon_ja_id integer,
-    how_we_help_five_icon_pt_id integer,
-    how_we_help_five_icon_zh_hans_id integer,
     how_we_help_five_text text NOT NULL,
     how_we_help_five_text_ar text,
     how_we_help_five_text_de text,
@@ -2452,14 +2428,6 @@ CREATE TABLE public.great_international_aboutuklandingpage (
     how_we_help_five_title_pt character varying(255),
     how_we_help_five_title_zh_hans character varying(255),
     how_we_help_four_icon_id integer,
-    how_we_help_four_icon_ar_id integer,
-    how_we_help_four_icon_de_id integer,
-    how_we_help_four_icon_en_gb_id integer,
-    how_we_help_four_icon_es_id integer,
-    how_we_help_four_icon_fr_id integer,
-    how_we_help_four_icon_ja_id integer,
-    how_we_help_four_icon_pt_id integer,
-    how_we_help_four_icon_zh_hans_id integer,
     how_we_help_four_text text NOT NULL,
     how_we_help_four_text_ar text,
     how_we_help_four_text_de text,
@@ -2488,14 +2456,6 @@ CREATE TABLE public.great_international_aboutuklandingpage (
     how_we_help_intro_pt text,
     how_we_help_intro_zh_hans text,
     how_we_help_one_icon_id integer,
-    how_we_help_one_icon_ar_id integer,
-    how_we_help_one_icon_de_id integer,
-    how_we_help_one_icon_en_gb_id integer,
-    how_we_help_one_icon_es_id integer,
-    how_we_help_one_icon_fr_id integer,
-    how_we_help_one_icon_ja_id integer,
-    how_we_help_one_icon_pt_id integer,
-    how_we_help_one_icon_zh_hans_id integer,
     how_we_help_one_text text NOT NULL,
     how_we_help_one_text_ar text,
     how_we_help_one_text_de text,
@@ -2515,14 +2475,6 @@ CREATE TABLE public.great_international_aboutuklandingpage (
     how_we_help_one_title_pt character varying(255),
     how_we_help_one_title_zh_hans character varying(255),
     how_we_help_six_icon_id integer,
-    how_we_help_six_icon_ar_id integer,
-    how_we_help_six_icon_de_id integer,
-    how_we_help_six_icon_en_gb_id integer,
-    how_we_help_six_icon_es_id integer,
-    how_we_help_six_icon_fr_id integer,
-    how_we_help_six_icon_ja_id integer,
-    how_we_help_six_icon_pt_id integer,
-    how_we_help_six_icon_zh_hans_id integer,
     how_we_help_six_text text NOT NULL,
     how_we_help_six_text_ar text,
     how_we_help_six_text_de text,
@@ -2542,14 +2494,6 @@ CREATE TABLE public.great_international_aboutuklandingpage (
     how_we_help_six_title_pt character varying(255),
     how_we_help_six_title_zh_hans character varying(255),
     how_we_help_three_icon_id integer,
-    how_we_help_three_icon_ar_id integer,
-    how_we_help_three_icon_de_id integer,
-    how_we_help_three_icon_en_gb_id integer,
-    how_we_help_three_icon_es_id integer,
-    how_we_help_three_icon_fr_id integer,
-    how_we_help_three_icon_ja_id integer,
-    how_we_help_three_icon_pt_id integer,
-    how_we_help_three_icon_zh_hans_id integer,
     how_we_help_three_text text NOT NULL,
     how_we_help_three_text_ar text,
     how_we_help_three_text_de text,
@@ -2578,14 +2522,6 @@ CREATE TABLE public.great_international_aboutuklandingpage (
     how_we_help_title_pt character varying(255),
     how_we_help_title_zh_hans character varying(255),
     how_we_help_two_icon_id integer,
-    how_we_help_two_icon_ar_id integer,
-    how_we_help_two_icon_de_id integer,
-    how_we_help_two_icon_en_gb_id integer,
-    how_we_help_two_icon_es_id integer,
-    how_we_help_two_icon_fr_id integer,
-    how_we_help_two_icon_ja_id integer,
-    how_we_help_two_icon_pt_id integer,
-    how_we_help_two_icon_zh_hans_id integer,
     how_we_help_two_text text NOT NULL,
     how_we_help_two_text_ar text,
     how_we_help_two_text_de text,
@@ -2677,14 +2613,6 @@ CREATE TABLE public.great_international_aboutuklandingpage (
     regions_section_cta_text_pt character varying(255),
     regions_section_cta_text_zh_hans character varying(255),
     regions_section_image_id integer,
-    regions_section_image_ar_id integer,
-    regions_section_image_de_id integer,
-    regions_section_image_en_gb_id integer,
-    regions_section_image_es_id integer,
-    regions_section_image_fr_id integer,
-    regions_section_image_ja_id integer,
-    regions_section_image_pt_id integer,
-    regions_section_image_zh_hans_id integer,
     regions_section_title character varying(255) NOT NULL,
     regions_section_title_ar character varying(255),
     regions_section_title_de character varying(255),
@@ -2722,14 +2650,6 @@ CREATE TABLE public.great_international_aboutuklandingpage (
     why_choose_uk_cta_text_pt character varying(255),
     why_choose_uk_cta_text_zh_hans character varying(255),
     why_choose_uk_image_id integer,
-    why_choose_uk_image_ar_id integer,
-    why_choose_uk_image_de_id integer,
-    why_choose_uk_image_en_gb_id integer,
-    why_choose_uk_image_es_id integer,
-    why_choose_uk_image_fr_id integer,
-    why_choose_uk_image_ja_id integer,
-    why_choose_uk_image_pt_id integer,
-    why_choose_uk_image_zh_hans_id integer,
     why_choose_uk_title character varying(255) NOT NULL,
     why_choose_uk_title_ar character varying(255),
     why_choose_uk_title_de character varying(255),
@@ -13204,7 +13124,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 353	great_international	0057_auto_20190730_1356	2019-08-01 10:18:00.512017+01
 354	great_international	0061_merge_20190731_1124	2019-08-01 10:18:00.522795+01
 355	great_international	0062_auto_20190731_1236	2019-08-01 10:19:58.284573+01
-356	great_international	0063_auto_20190802_1507	2019-08-05 12:22:33.3557+01
+356	great_international	0063_auto_20190806_1416	2019-08-06 16:16:51.357186+01
 \.
 
 
@@ -13548,7 +13468,7 @@ COPY public.great_international_aboutukarticlesfields (id, sort_order, title, su
 -- Data for Name: great_international_aboutuklandingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_aboutuklandingpage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, hero_title, hero_title_en_gb, hero_title_de, hero_title_ja, hero_title_zh_hans, hero_title_fr, hero_title_es, hero_title_pt, hero_title_ar, hero_image_id, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, contact_cta_link, contact_cta_link_ar, contact_cta_link_de, contact_cta_link_en_gb, contact_cta_link_es, contact_cta_link_fr, contact_cta_link_ja, contact_cta_link_pt, contact_cta_link_zh_hans, contact_cta_text, contact_cta_text_ar, contact_cta_text_de, contact_cta_text_en_gb, contact_cta_text_es, contact_cta_text_fr, contact_cta_text_ja, contact_cta_text_pt, contact_cta_text_zh_hans, contact_text, contact_text_ar, contact_text_de, contact_text_en_gb, contact_text_es, contact_text_fr, contact_text_ja, contact_text_pt, contact_text_zh_hans, contact_title, contact_title_ar, contact_title_de, contact_title_en_gb, contact_title_es, contact_title_fr, contact_title_ja, contact_title_pt, contact_title_zh_hans, ebook_section_body, ebook_section_body_ar, ebook_section_body_de, ebook_section_body_en_gb, ebook_section_body_es, ebook_section_body_fr, ebook_section_body_ja, ebook_section_body_pt, ebook_section_body_zh_hans, ebook_section_cta_link_id, ebook_section_cta_link_ar_id, ebook_section_cta_link_de_id, ebook_section_cta_link_en_gb_id, ebook_section_cta_link_es_id, ebook_section_cta_link_fr_id, ebook_section_cta_link_ja_id, ebook_section_cta_link_pt_id, ebook_section_cta_link_zh_hans_id, ebook_section_cta_text, ebook_section_cta_text_ar, ebook_section_cta_text_de, ebook_section_cta_text_en_gb, ebook_section_cta_text_es, ebook_section_cta_text_fr, ebook_section_cta_text_ja, ebook_section_cta_text_pt, ebook_section_cta_text_zh_hans, ebook_section_image_id, ebook_section_image_alt_text, ebook_section_image_alt_text_ar, ebook_section_image_alt_text_de, ebook_section_image_alt_text_en_gb, ebook_section_image_alt_text_es, ebook_section_image_alt_text_fr, ebook_section_image_alt_text_ja, ebook_section_image_alt_text_pt, ebook_section_image_alt_text_zh_hans, ebook_section_image_ar_id, ebook_section_image_de_id, ebook_section_image_en_gb_id, ebook_section_image_es_id, ebook_section_image_fr_id, ebook_section_image_ja_id, ebook_section_image_pt_id, ebook_section_image_zh_hans_id, ebook_section_title, ebook_section_title_ar, ebook_section_title_de, ebook_section_title_en_gb, ebook_section_title_es, ebook_section_title_fr, ebook_section_title_ja, ebook_section_title_pt, ebook_section_title_zh_hans, how_we_help_cta_link, how_we_help_cta_link_ar, how_we_help_cta_link_de, how_we_help_cta_link_en_gb, how_we_help_cta_link_es, how_we_help_cta_link_fr, how_we_help_cta_link_ja, how_we_help_cta_link_pt, how_we_help_cta_link_zh_hans, how_we_help_cta_text, how_we_help_cta_text_ar, how_we_help_cta_text_de, how_we_help_cta_text_en_gb, how_we_help_cta_text_es, how_we_help_cta_text_fr, how_we_help_cta_text_ja, how_we_help_cta_text_pt, how_we_help_cta_text_zh_hans, how_we_help_five_icon_id, how_we_help_five_icon_ar_id, how_we_help_five_icon_de_id, how_we_help_five_icon_en_gb_id, how_we_help_five_icon_es_id, how_we_help_five_icon_fr_id, how_we_help_five_icon_ja_id, how_we_help_five_icon_pt_id, how_we_help_five_icon_zh_hans_id, how_we_help_five_text, how_we_help_five_text_ar, how_we_help_five_text_de, how_we_help_five_text_en_gb, how_we_help_five_text_es, how_we_help_five_text_fr, how_we_help_five_text_ja, how_we_help_five_text_pt, how_we_help_five_text_zh_hans, how_we_help_five_title, how_we_help_five_title_ar, how_we_help_five_title_de, how_we_help_five_title_en_gb, how_we_help_five_title_es, how_we_help_five_title_fr, how_we_help_five_title_ja, how_we_help_five_title_pt, how_we_help_five_title_zh_hans, how_we_help_four_icon_id, how_we_help_four_icon_ar_id, how_we_help_four_icon_de_id, how_we_help_four_icon_en_gb_id, how_we_help_four_icon_es_id, how_we_help_four_icon_fr_id, how_we_help_four_icon_ja_id, how_we_help_four_icon_pt_id, how_we_help_four_icon_zh_hans_id, how_we_help_four_text, how_we_help_four_text_ar, how_we_help_four_text_de, how_we_help_four_text_en_gb, how_we_help_four_text_es, how_we_help_four_text_fr, how_we_help_four_text_ja, how_we_help_four_text_pt, how_we_help_four_text_zh_hans, how_we_help_four_title, how_we_help_four_title_ar, how_we_help_four_title_de, how_we_help_four_title_en_gb, how_we_help_four_title_es, how_we_help_four_title_fr, how_we_help_four_title_ja, how_we_help_four_title_pt, how_we_help_four_title_zh_hans, how_we_help_intro, how_we_help_intro_ar, how_we_help_intro_de, how_we_help_intro_en_gb, how_we_help_intro_es, how_we_help_intro_fr, how_we_help_intro_ja, how_we_help_intro_pt, how_we_help_intro_zh_hans, how_we_help_one_icon_id, how_we_help_one_icon_ar_id, how_we_help_one_icon_de_id, how_we_help_one_icon_en_gb_id, how_we_help_one_icon_es_id, how_we_help_one_icon_fr_id, how_we_help_one_icon_ja_id, how_we_help_one_icon_pt_id, how_we_help_one_icon_zh_hans_id, how_we_help_one_text, how_we_help_one_text_ar, how_we_help_one_text_de, how_we_help_one_text_en_gb, how_we_help_one_text_es, how_we_help_one_text_fr, how_we_help_one_text_ja, how_we_help_one_text_pt, how_we_help_one_text_zh_hans, how_we_help_one_title, how_we_help_one_title_ar, how_we_help_one_title_de, how_we_help_one_title_en_gb, how_we_help_one_title_es, how_we_help_one_title_fr, how_we_help_one_title_ja, how_we_help_one_title_pt, how_we_help_one_title_zh_hans, how_we_help_six_icon_id, how_we_help_six_icon_ar_id, how_we_help_six_icon_de_id, how_we_help_six_icon_en_gb_id, how_we_help_six_icon_es_id, how_we_help_six_icon_fr_id, how_we_help_six_icon_ja_id, how_we_help_six_icon_pt_id, how_we_help_six_icon_zh_hans_id, how_we_help_six_text, how_we_help_six_text_ar, how_we_help_six_text_de, how_we_help_six_text_en_gb, how_we_help_six_text_es, how_we_help_six_text_fr, how_we_help_six_text_ja, how_we_help_six_text_pt, how_we_help_six_text_zh_hans, how_we_help_six_title, how_we_help_six_title_ar, how_we_help_six_title_de, how_we_help_six_title_en_gb, how_we_help_six_title_es, how_we_help_six_title_fr, how_we_help_six_title_ja, how_we_help_six_title_pt, how_we_help_six_title_zh_hans, how_we_help_three_icon_id, how_we_help_three_icon_ar_id, how_we_help_three_icon_de_id, how_we_help_three_icon_en_gb_id, how_we_help_three_icon_es_id, how_we_help_three_icon_fr_id, how_we_help_three_icon_ja_id, how_we_help_three_icon_pt_id, how_we_help_three_icon_zh_hans_id, how_we_help_three_text, how_we_help_three_text_ar, how_we_help_three_text_de, how_we_help_three_text_en_gb, how_we_help_three_text_es, how_we_help_three_text_fr, how_we_help_three_text_ja, how_we_help_three_text_pt, how_we_help_three_text_zh_hans, how_we_help_three_title, how_we_help_three_title_ar, how_we_help_three_title_de, how_we_help_three_title_en_gb, how_we_help_three_title_es, how_we_help_three_title_fr, how_we_help_three_title_ja, how_we_help_three_title_pt, how_we_help_three_title_zh_hans, how_we_help_title, how_we_help_title_ar, how_we_help_title_de, how_we_help_title_en_gb, how_we_help_title_es, how_we_help_title_fr, how_we_help_title_ja, how_we_help_title_pt, how_we_help_title_zh_hans, how_we_help_two_icon_id, how_we_help_two_icon_ar_id, how_we_help_two_icon_de_id, how_we_help_two_icon_en_gb_id, how_we_help_two_icon_es_id, how_we_help_two_icon_fr_id, how_we_help_two_icon_ja_id, how_we_help_two_icon_pt_id, how_we_help_two_icon_zh_hans_id, how_we_help_two_text, how_we_help_two_text_ar, how_we_help_two_text_de, how_we_help_two_text_en_gb, how_we_help_two_text_es, how_we_help_two_text_fr, how_we_help_two_text_ja, how_we_help_two_text_pt, how_we_help_two_text_zh_hans, how_we_help_two_title, how_we_help_two_title_ar, how_we_help_two_title_de, how_we_help_two_title_en_gb, how_we_help_two_title_es, how_we_help_two_title_fr, how_we_help_two_title_ja, how_we_help_two_title_pt, how_we_help_two_title_zh_hans, industries_section_cta_link, industries_section_cta_link_ar, industries_section_cta_link_de, industries_section_cta_link_en_gb, industries_section_cta_link_es, industries_section_cta_link_fr, industries_section_cta_link_ja, industries_section_cta_link_pt, industries_section_cta_link_zh_hans, industries_section_cta_text, industries_section_cta_text_ar, industries_section_cta_text_de, industries_section_cta_text_en_gb, industries_section_cta_text_es, industries_section_cta_text_fr, industries_section_cta_text_ja, industries_section_cta_text_pt, industries_section_cta_text_zh_hans, industries_section_intro, industries_section_intro_ar, industries_section_intro_de, industries_section_intro_en_gb, industries_section_intro_es, industries_section_intro_fr, industries_section_intro_ja, industries_section_intro_pt, industries_section_intro_zh_hans, industries_section_title, industries_section_title_ar, industries_section_title_de, industries_section_title_en_gb, industries_section_title_es, industries_section_title_fr, industries_section_title_ja, industries_section_title_pt, industries_section_title_zh_hans, intro, intro_ar, intro_de, intro_en_gb, intro_es, intro_fr, intro_ja, intro_pt, intro_zh_hans, regions_section_content, regions_section_content_ar, regions_section_content_de, regions_section_content_en_gb, regions_section_content_es, regions_section_content_fr, regions_section_content_ja, regions_section_content_pt, regions_section_content_zh_hans, regions_section_cta_link, regions_section_cta_link_ar, regions_section_cta_link_de, regions_section_cta_link_en_gb, regions_section_cta_link_es, regions_section_cta_link_fr, regions_section_cta_link_ja, regions_section_cta_link_pt, regions_section_cta_link_zh_hans, regions_section_cta_text, regions_section_cta_text_ar, regions_section_cta_text_de, regions_section_cta_text_en_gb, regions_section_cta_text_es, regions_section_cta_text_fr, regions_section_cta_text_ja, regions_section_cta_text_pt, regions_section_cta_text_zh_hans, regions_section_image_id, regions_section_image_ar_id, regions_section_image_de_id, regions_section_image_en_gb_id, regions_section_image_es_id, regions_section_image_fr_id, regions_section_image_ja_id, regions_section_image_pt_id, regions_section_image_zh_hans_id, regions_section_title, regions_section_title_ar, regions_section_title_de, regions_section_title_en_gb, regions_section_title_es, regions_section_title_fr, regions_section_title_ja, regions_section_title_pt, regions_section_title_zh_hans, why_choose_uk_content, why_choose_uk_content_ar, why_choose_uk_content_de, why_choose_uk_content_en_gb, why_choose_uk_content_es, why_choose_uk_content_fr, why_choose_uk_content_ja, why_choose_uk_content_pt, why_choose_uk_content_zh_hans, why_choose_uk_cta_link, why_choose_uk_cta_link_ar, why_choose_uk_cta_link_de, why_choose_uk_cta_link_en_gb, why_choose_uk_cta_link_es, why_choose_uk_cta_link_fr, why_choose_uk_cta_link_ja, why_choose_uk_cta_link_pt, why_choose_uk_cta_link_zh_hans, why_choose_uk_cta_text, why_choose_uk_cta_text_ar, why_choose_uk_cta_text_de, why_choose_uk_cta_text_en_gb, why_choose_uk_cta_text_es, why_choose_uk_cta_text_fr, why_choose_uk_cta_text_ja, why_choose_uk_cta_text_pt, why_choose_uk_cta_text_zh_hans, why_choose_uk_image_id, why_choose_uk_image_ar_id, why_choose_uk_image_de_id, why_choose_uk_image_en_gb_id, why_choose_uk_image_es_id, why_choose_uk_image_fr_id, why_choose_uk_image_ja_id, why_choose_uk_image_pt_id, why_choose_uk_image_zh_hans_id, why_choose_uk_title, why_choose_uk_title_ar, why_choose_uk_title_de, why_choose_uk_title_en_gb, why_choose_uk_title_es, why_choose_uk_title_fr, why_choose_uk_title_ja, why_choose_uk_title_pt, why_choose_uk_title_zh_hans) FROM stdin;
+COPY public.great_international_aboutuklandingpage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, hero_title, hero_title_en_gb, hero_title_de, hero_title_ja, hero_title_zh_hans, hero_title_fr, hero_title_es, hero_title_pt, hero_title_ar, hero_image_id, contact_cta_link, contact_cta_link_ar, contact_cta_link_de, contact_cta_link_en_gb, contact_cta_link_es, contact_cta_link_fr, contact_cta_link_ja, contact_cta_link_pt, contact_cta_link_zh_hans, contact_cta_text, contact_cta_text_ar, contact_cta_text_de, contact_cta_text_en_gb, contact_cta_text_es, contact_cta_text_fr, contact_cta_text_ja, contact_cta_text_pt, contact_cta_text_zh_hans, contact_text, contact_text_ar, contact_text_de, contact_text_en_gb, contact_text_es, contact_text_fr, contact_text_ja, contact_text_pt, contact_text_zh_hans, contact_title, contact_title_ar, contact_title_de, contact_title_en_gb, contact_title_es, contact_title_fr, contact_title_ja, contact_title_pt, contact_title_zh_hans, ebook_section_body, ebook_section_body_ar, ebook_section_body_de, ebook_section_body_en_gb, ebook_section_body_es, ebook_section_body_fr, ebook_section_body_ja, ebook_section_body_pt, ebook_section_body_zh_hans, ebook_section_cta_link_id, ebook_section_cta_link_ar_id, ebook_section_cta_link_de_id, ebook_section_cta_link_en_gb_id, ebook_section_cta_link_es_id, ebook_section_cta_link_fr_id, ebook_section_cta_link_ja_id, ebook_section_cta_link_pt_id, ebook_section_cta_link_zh_hans_id, ebook_section_cta_text, ebook_section_cta_text_ar, ebook_section_cta_text_de, ebook_section_cta_text_en_gb, ebook_section_cta_text_es, ebook_section_cta_text_fr, ebook_section_cta_text_ja, ebook_section_cta_text_pt, ebook_section_cta_text_zh_hans, ebook_section_image_id, ebook_section_image_alt_text, ebook_section_image_alt_text_ar, ebook_section_image_alt_text_de, ebook_section_image_alt_text_en_gb, ebook_section_image_alt_text_es, ebook_section_image_alt_text_fr, ebook_section_image_alt_text_ja, ebook_section_image_alt_text_pt, ebook_section_image_alt_text_zh_hans, ebook_section_title, ebook_section_title_ar, ebook_section_title_de, ebook_section_title_en_gb, ebook_section_title_es, ebook_section_title_fr, ebook_section_title_ja, ebook_section_title_pt, ebook_section_title_zh_hans, how_we_help_cta_link, how_we_help_cta_link_ar, how_we_help_cta_link_de, how_we_help_cta_link_en_gb, how_we_help_cta_link_es, how_we_help_cta_link_fr, how_we_help_cta_link_ja, how_we_help_cta_link_pt, how_we_help_cta_link_zh_hans, how_we_help_cta_text, how_we_help_cta_text_ar, how_we_help_cta_text_de, how_we_help_cta_text_en_gb, how_we_help_cta_text_es, how_we_help_cta_text_fr, how_we_help_cta_text_ja, how_we_help_cta_text_pt, how_we_help_cta_text_zh_hans, how_we_help_five_icon_id, how_we_help_five_text, how_we_help_five_text_ar, how_we_help_five_text_de, how_we_help_five_text_en_gb, how_we_help_five_text_es, how_we_help_five_text_fr, how_we_help_five_text_ja, how_we_help_five_text_pt, how_we_help_five_text_zh_hans, how_we_help_five_title, how_we_help_five_title_ar, how_we_help_five_title_de, how_we_help_five_title_en_gb, how_we_help_five_title_es, how_we_help_five_title_fr, how_we_help_five_title_ja, how_we_help_five_title_pt, how_we_help_five_title_zh_hans, how_we_help_four_icon_id, how_we_help_four_text, how_we_help_four_text_ar, how_we_help_four_text_de, how_we_help_four_text_en_gb, how_we_help_four_text_es, how_we_help_four_text_fr, how_we_help_four_text_ja, how_we_help_four_text_pt, how_we_help_four_text_zh_hans, how_we_help_four_title, how_we_help_four_title_ar, how_we_help_four_title_de, how_we_help_four_title_en_gb, how_we_help_four_title_es, how_we_help_four_title_fr, how_we_help_four_title_ja, how_we_help_four_title_pt, how_we_help_four_title_zh_hans, how_we_help_intro, how_we_help_intro_ar, how_we_help_intro_de, how_we_help_intro_en_gb, how_we_help_intro_es, how_we_help_intro_fr, how_we_help_intro_ja, how_we_help_intro_pt, how_we_help_intro_zh_hans, how_we_help_one_icon_id, how_we_help_one_text, how_we_help_one_text_ar, how_we_help_one_text_de, how_we_help_one_text_en_gb, how_we_help_one_text_es, how_we_help_one_text_fr, how_we_help_one_text_ja, how_we_help_one_text_pt, how_we_help_one_text_zh_hans, how_we_help_one_title, how_we_help_one_title_ar, how_we_help_one_title_de, how_we_help_one_title_en_gb, how_we_help_one_title_es, how_we_help_one_title_fr, how_we_help_one_title_ja, how_we_help_one_title_pt, how_we_help_one_title_zh_hans, how_we_help_six_icon_id, how_we_help_six_text, how_we_help_six_text_ar, how_we_help_six_text_de, how_we_help_six_text_en_gb, how_we_help_six_text_es, how_we_help_six_text_fr, how_we_help_six_text_ja, how_we_help_six_text_pt, how_we_help_six_text_zh_hans, how_we_help_six_title, how_we_help_six_title_ar, how_we_help_six_title_de, how_we_help_six_title_en_gb, how_we_help_six_title_es, how_we_help_six_title_fr, how_we_help_six_title_ja, how_we_help_six_title_pt, how_we_help_six_title_zh_hans, how_we_help_three_icon_id, how_we_help_three_text, how_we_help_three_text_ar, how_we_help_three_text_de, how_we_help_three_text_en_gb, how_we_help_three_text_es, how_we_help_three_text_fr, how_we_help_three_text_ja, how_we_help_three_text_pt, how_we_help_three_text_zh_hans, how_we_help_three_title, how_we_help_three_title_ar, how_we_help_three_title_de, how_we_help_three_title_en_gb, how_we_help_three_title_es, how_we_help_three_title_fr, how_we_help_three_title_ja, how_we_help_three_title_pt, how_we_help_three_title_zh_hans, how_we_help_title, how_we_help_title_ar, how_we_help_title_de, how_we_help_title_en_gb, how_we_help_title_es, how_we_help_title_fr, how_we_help_title_ja, how_we_help_title_pt, how_we_help_title_zh_hans, how_we_help_two_icon_id, how_we_help_two_text, how_we_help_two_text_ar, how_we_help_two_text_de, how_we_help_two_text_en_gb, how_we_help_two_text_es, how_we_help_two_text_fr, how_we_help_two_text_ja, how_we_help_two_text_pt, how_we_help_two_text_zh_hans, how_we_help_two_title, how_we_help_two_title_ar, how_we_help_two_title_de, how_we_help_two_title_en_gb, how_we_help_two_title_es, how_we_help_two_title_fr, how_we_help_two_title_ja, how_we_help_two_title_pt, how_we_help_two_title_zh_hans, industries_section_cta_link, industries_section_cta_link_ar, industries_section_cta_link_de, industries_section_cta_link_en_gb, industries_section_cta_link_es, industries_section_cta_link_fr, industries_section_cta_link_ja, industries_section_cta_link_pt, industries_section_cta_link_zh_hans, industries_section_cta_text, industries_section_cta_text_ar, industries_section_cta_text_de, industries_section_cta_text_en_gb, industries_section_cta_text_es, industries_section_cta_text_fr, industries_section_cta_text_ja, industries_section_cta_text_pt, industries_section_cta_text_zh_hans, industries_section_intro, industries_section_intro_ar, industries_section_intro_de, industries_section_intro_en_gb, industries_section_intro_es, industries_section_intro_fr, industries_section_intro_ja, industries_section_intro_pt, industries_section_intro_zh_hans, industries_section_title, industries_section_title_ar, industries_section_title_de, industries_section_title_en_gb, industries_section_title_es, industries_section_title_fr, industries_section_title_ja, industries_section_title_pt, industries_section_title_zh_hans, intro, intro_ar, intro_de, intro_en_gb, intro_es, intro_fr, intro_ja, intro_pt, intro_zh_hans, regions_section_content, regions_section_content_ar, regions_section_content_de, regions_section_content_en_gb, regions_section_content_es, regions_section_content_fr, regions_section_content_ja, regions_section_content_pt, regions_section_content_zh_hans, regions_section_cta_link, regions_section_cta_link_ar, regions_section_cta_link_de, regions_section_cta_link_en_gb, regions_section_cta_link_es, regions_section_cta_link_fr, regions_section_cta_link_ja, regions_section_cta_link_pt, regions_section_cta_link_zh_hans, regions_section_cta_text, regions_section_cta_text_ar, regions_section_cta_text_de, regions_section_cta_text_en_gb, regions_section_cta_text_es, regions_section_cta_text_fr, regions_section_cta_text_ja, regions_section_cta_text_pt, regions_section_cta_text_zh_hans, regions_section_image_id, regions_section_title, regions_section_title_ar, regions_section_title_de, regions_section_title_en_gb, regions_section_title_es, regions_section_title_fr, regions_section_title_ja, regions_section_title_pt, regions_section_title_zh_hans, why_choose_uk_content, why_choose_uk_content_ar, why_choose_uk_content_de, why_choose_uk_content_en_gb, why_choose_uk_content_es, why_choose_uk_content_fr, why_choose_uk_content_ja, why_choose_uk_content_pt, why_choose_uk_content_zh_hans, why_choose_uk_cta_link, why_choose_uk_cta_link_ar, why_choose_uk_cta_link_de, why_choose_uk_cta_link_en_gb, why_choose_uk_cta_link_es, why_choose_uk_cta_link_fr, why_choose_uk_cta_link_ja, why_choose_uk_cta_link_pt, why_choose_uk_cta_link_zh_hans, why_choose_uk_cta_text, why_choose_uk_cta_text_ar, why_choose_uk_cta_text_de, why_choose_uk_cta_text_en_gb, why_choose_uk_cta_text_es, why_choose_uk_cta_text_fr, why_choose_uk_cta_text_ja, why_choose_uk_cta_text_pt, why_choose_uk_cta_text_zh_hans, why_choose_uk_image_id, why_choose_uk_title, why_choose_uk_title_ar, why_choose_uk_title_de, why_choose_uk_title_en_gb, why_choose_uk_title_es, why_choose_uk_title_fr, why_choose_uk_title_ja, why_choose_uk_title_pt, why_choose_uk_title_zh_hans) FROM stdin;
 \.
 
 
@@ -18295,13 +18215,6 @@ CREATE INDEX great_international_aboutu_ebook_section_cta_link_zh__34f7cd9c ON p
 
 
 --
--- Name: great_international_aboutu_ebook_section_image_ar_id_783f5fbc; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_ebook_section_image_ar_id_783f5fbc ON public.great_international_aboutuklandingpage USING btree (ebook_section_image_ar_id);
-
-
---
 -- Name: great_international_aboutu_ebook_section_image_ar_id_deb1c4a9; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -18316,13 +18229,6 @@ CREATE INDEX great_international_aboutu_ebook_section_image_de_id_28790aa2 ON pu
 
 
 --
--- Name: great_international_aboutu_ebook_section_image_de_id_f3620764; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_ebook_section_image_de_id_f3620764 ON public.great_international_aboutuklandingpage USING btree (ebook_section_image_de_id);
-
-
---
 -- Name: great_international_aboutu_ebook_section_image_en_gb__d64f0690; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -18330,31 +18236,10 @@ CREATE INDEX great_international_aboutu_ebook_section_image_en_gb__d64f0690 ON p
 
 
 --
--- Name: great_international_aboutu_ebook_section_image_en_gb__d7cce261; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_ebook_section_image_en_gb__d7cce261 ON public.great_international_aboutuklandingpage USING btree (ebook_section_image_en_gb_id);
-
-
---
 -- Name: great_international_aboutu_ebook_section_image_es_id_007bea7e; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_aboutu_ebook_section_image_es_id_007bea7e ON public.great_international_aboutukwhychoosetheukpage USING btree (ebook_section_image_es_id);
-
-
---
--- Name: great_international_aboutu_ebook_section_image_es_id_462b9fa7; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_ebook_section_image_es_id_462b9fa7 ON public.great_international_aboutuklandingpage USING btree (ebook_section_image_es_id);
-
-
---
--- Name: great_international_aboutu_ebook_section_image_fr_id_5414d88d; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_ebook_section_image_fr_id_5414d88d ON public.great_international_aboutuklandingpage USING btree (ebook_section_image_fr_id);
 
 
 --
@@ -18386,20 +18271,6 @@ CREATE INDEX great_international_aboutu_ebook_section_image_ja_id_1ddaae2c ON pu
 
 
 --
--- Name: great_international_aboutu_ebook_section_image_ja_id_df582769; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_ebook_section_image_ja_id_df582769 ON public.great_international_aboutuklandingpage USING btree (ebook_section_image_ja_id);
-
-
---
--- Name: great_international_aboutu_ebook_section_image_pt_id_a9773e99; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_ebook_section_image_pt_id_a9773e99 ON public.great_international_aboutuklandingpage USING btree (ebook_section_image_pt_id);
-
-
---
 -- Name: great_international_aboutu_ebook_section_image_pt_id_d404daf7; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -18414,24 +18285,10 @@ CREATE INDEX great_international_aboutu_ebook_section_image_zh_han_697d8954 ON p
 
 
 --
--- Name: great_international_aboutu_ebook_section_image_zh_han_7251ce4c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_ebook_section_image_zh_han_7251ce4c ON public.great_international_aboutuklandingpage USING btree (ebook_section_image_zh_hans_id);
-
-
---
 -- Name: great_international_aboutu_hero_image_ar_id_2a0e288d; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_aboutu_hero_image_ar_id_2a0e288d ON public.great_international_aboutukwhychoosetheukpage USING btree (hero_image_ar_id);
-
-
---
--- Name: great_international_aboutu_hero_image_ar_id_fca61ffb; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_hero_image_ar_id_fca61ffb ON public.great_international_aboutuklandingpage USING btree (hero_image_ar_id);
 
 
 --
@@ -18442,20 +18299,6 @@ CREATE INDEX great_international_aboutu_hero_image_de_id_3076d66f ON public.grea
 
 
 --
--- Name: great_international_aboutu_hero_image_de_id_58a013f2; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_hero_image_de_id_58a013f2 ON public.great_international_aboutuklandingpage USING btree (hero_image_de_id);
-
-
---
--- Name: great_international_aboutu_hero_image_en_gb_id_91cd9e0d; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_hero_image_en_gb_id_91cd9e0d ON public.great_international_aboutuklandingpage USING btree (hero_image_en_gb_id);
-
-
---
 -- Name: great_international_aboutu_hero_image_en_gb_id_b95d9768; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -18463,24 +18306,10 @@ CREATE INDEX great_international_aboutu_hero_image_en_gb_id_b95d9768 ON public.g
 
 
 --
--- Name: great_international_aboutu_hero_image_es_id_6e6483d5; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_hero_image_es_id_6e6483d5 ON public.great_international_aboutuklandingpage USING btree (hero_image_es_id);
-
-
---
 -- Name: great_international_aboutu_hero_image_es_id_dcabea4d; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_aboutu_hero_image_es_id_dcabea4d ON public.great_international_aboutukwhychoosetheukpage USING btree (hero_image_es_id);
-
-
---
--- Name: great_international_aboutu_hero_image_fr_id_01f0ea50; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_hero_image_fr_id_01f0ea50 ON public.great_international_aboutuklandingpage USING btree (hero_image_fr_id);
 
 
 --
@@ -18505,20 +18334,6 @@ CREATE INDEX great_international_aboutu_hero_image_ja_id_1b0223a9 ON public.grea
 
 
 --
--- Name: great_international_aboutu_hero_image_ja_id_ce0b2f6d; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_hero_image_ja_id_ce0b2f6d ON public.great_international_aboutuklandingpage USING btree (hero_image_ja_id);
-
-
---
--- Name: great_international_aboutu_hero_image_pt_id_af0d641c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_hero_image_pt_id_af0d641c ON public.great_international_aboutuklandingpage USING btree (hero_image_pt_id);
-
-
---
 -- Name: great_international_aboutu_hero_image_pt_id_d30fc251; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -18533,108 +18348,10 @@ CREATE INDEX great_international_aboutu_hero_image_zh_hans_id_be31ab5b ON public
 
 
 --
--- Name: great_international_aboutu_hero_image_zh_hans_id_feae8c64; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_hero_image_zh_hans_id_feae8c64 ON public.great_international_aboutuklandingpage USING btree (hero_image_zh_hans_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_five_icon_ar_i_30ab6bca; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_five_icon_ar_i_30ab6bca ON public.great_international_aboutuklandingpage USING btree (how_we_help_five_icon_ar_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_five_icon_de_i_660f3442; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_five_icon_de_i_660f3442 ON public.great_international_aboutuklandingpage USING btree (how_we_help_five_icon_de_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_five_icon_en_g_5dfa34d6; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_five_icon_en_g_5dfa34d6 ON public.great_international_aboutuklandingpage USING btree (how_we_help_five_icon_en_gb_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_five_icon_es_i_c596b1e1; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_five_icon_es_i_c596b1e1 ON public.great_international_aboutuklandingpage USING btree (how_we_help_five_icon_es_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_five_icon_fr_i_591e7024; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_five_icon_fr_i_591e7024 ON public.great_international_aboutuklandingpage USING btree (how_we_help_five_icon_fr_id);
-
-
---
 -- Name: great_international_aboutu_how_we_help_five_icon_id_85accb81; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_aboutu_how_we_help_five_icon_id_85accb81 ON public.great_international_aboutuklandingpage USING btree (how_we_help_five_icon_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_five_icon_ja_i_627b9bdb; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_five_icon_ja_i_627b9bdb ON public.great_international_aboutuklandingpage USING btree (how_we_help_five_icon_ja_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_five_icon_pt_i_7510e31c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_five_icon_pt_i_7510e31c ON public.great_international_aboutuklandingpage USING btree (how_we_help_five_icon_pt_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_five_icon_zh_h_035d0fad; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_five_icon_zh_h_035d0fad ON public.great_international_aboutuklandingpage USING btree (how_we_help_five_icon_zh_hans_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_four_icon_ar_i_bd36db44; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_four_icon_ar_i_bd36db44 ON public.great_international_aboutuklandingpage USING btree (how_we_help_four_icon_ar_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_four_icon_de_i_ce33c9e4; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_four_icon_de_i_ce33c9e4 ON public.great_international_aboutuklandingpage USING btree (how_we_help_four_icon_de_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_four_icon_en_g_33ffdc80; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_four_icon_en_g_33ffdc80 ON public.great_international_aboutuklandingpage USING btree (how_we_help_four_icon_en_gb_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_four_icon_es_i_bedaaf27; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_four_icon_es_i_bedaaf27 ON public.great_international_aboutuklandingpage USING btree (how_we_help_four_icon_es_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_four_icon_fr_i_332884d6; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_four_icon_fr_i_332884d6 ON public.great_international_aboutuklandingpage USING btree (how_we_help_four_icon_fr_id);
 
 
 --
@@ -18645,122 +18362,10 @@ CREATE INDEX great_international_aboutu_how_we_help_four_icon_id_cba04eba ON pub
 
 
 --
--- Name: great_international_aboutu_how_we_help_four_icon_ja_i_c2cd5c45; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_four_icon_ja_i_c2cd5c45 ON public.great_international_aboutuklandingpage USING btree (how_we_help_four_icon_ja_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_four_icon_pt_i_4d9dff74; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_four_icon_pt_i_4d9dff74 ON public.great_international_aboutuklandingpage USING btree (how_we_help_four_icon_pt_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_four_icon_zh_h_f49a1c9e; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_four_icon_zh_h_f49a1c9e ON public.great_international_aboutuklandingpage USING btree (how_we_help_four_icon_zh_hans_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_one_icon_ar_id_2469ceac; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_one_icon_ar_id_2469ceac ON public.great_international_aboutuklandingpage USING btree (how_we_help_one_icon_ar_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_one_icon_de_id_ccff2e05; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_one_icon_de_id_ccff2e05 ON public.great_international_aboutuklandingpage USING btree (how_we_help_one_icon_de_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_one_icon_en_gb_5a2b5e28; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_one_icon_en_gb_5a2b5e28 ON public.great_international_aboutuklandingpage USING btree (how_we_help_one_icon_en_gb_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_one_icon_es_id_e4cb760e; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_one_icon_es_id_e4cb760e ON public.great_international_aboutuklandingpage USING btree (how_we_help_one_icon_es_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_one_icon_fr_id_3b0ec0bf; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_one_icon_fr_id_3b0ec0bf ON public.great_international_aboutuklandingpage USING btree (how_we_help_one_icon_fr_id);
-
-
---
 -- Name: great_international_aboutu_how_we_help_one_icon_id_c3cfb81e; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_aboutu_how_we_help_one_icon_id_c3cfb81e ON public.great_international_aboutuklandingpage USING btree (how_we_help_one_icon_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_one_icon_ja_id_49a5f8d3; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_one_icon_ja_id_49a5f8d3 ON public.great_international_aboutuklandingpage USING btree (how_we_help_one_icon_ja_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_one_icon_pt_id_5301d9a2; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_one_icon_pt_id_5301d9a2 ON public.great_international_aboutuklandingpage USING btree (how_we_help_one_icon_pt_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_one_icon_zh_ha_60bdba47; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_one_icon_zh_ha_60bdba47 ON public.great_international_aboutuklandingpage USING btree (how_we_help_one_icon_zh_hans_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_six_icon_ar_id_29c89362; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_six_icon_ar_id_29c89362 ON public.great_international_aboutuklandingpage USING btree (how_we_help_six_icon_ar_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_six_icon_de_id_4d9491e0; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_six_icon_de_id_4d9491e0 ON public.great_international_aboutuklandingpage USING btree (how_we_help_six_icon_de_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_six_icon_en_gb_285a999a; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_six_icon_en_gb_285a999a ON public.great_international_aboutuklandingpage USING btree (how_we_help_six_icon_en_gb_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_six_icon_es_id_0f90ff5b; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_six_icon_es_id_0f90ff5b ON public.great_international_aboutuklandingpage USING btree (how_we_help_six_icon_es_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_six_icon_fr_id_de0fafe1; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_six_icon_fr_id_de0fafe1 ON public.great_international_aboutuklandingpage USING btree (how_we_help_six_icon_fr_id);
 
 
 --
@@ -18771,62 +18376,6 @@ CREATE INDEX great_international_aboutu_how_we_help_six_icon_id_249c6a68 ON publ
 
 
 --
--- Name: great_international_aboutu_how_we_help_six_icon_ja_id_8f75c38d; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_six_icon_ja_id_8f75c38d ON public.great_international_aboutuklandingpage USING btree (how_we_help_six_icon_ja_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_six_icon_pt_id_1d3e1b6d; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_six_icon_pt_id_1d3e1b6d ON public.great_international_aboutuklandingpage USING btree (how_we_help_six_icon_pt_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_six_icon_zh_ha_07825ade; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_six_icon_zh_ha_07825ade ON public.great_international_aboutuklandingpage USING btree (how_we_help_six_icon_zh_hans_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_three_icon_ar__ba3d2afc; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_three_icon_ar__ba3d2afc ON public.great_international_aboutuklandingpage USING btree (how_we_help_three_icon_ar_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_three_icon_de__c3de0dfe; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_three_icon_de__c3de0dfe ON public.great_international_aboutuklandingpage USING btree (how_we_help_three_icon_de_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_three_icon_en__e9b9558b; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_three_icon_en__e9b9558b ON public.great_international_aboutuklandingpage USING btree (how_we_help_three_icon_en_gb_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_three_icon_es__6da3b434; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_three_icon_es__6da3b434 ON public.great_international_aboutuklandingpage USING btree (how_we_help_three_icon_es_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_three_icon_fr__771773f1; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_three_icon_fr__771773f1 ON public.great_international_aboutuklandingpage USING btree (how_we_help_three_icon_fr_id);
-
-
---
 -- Name: great_international_aboutu_how_we_help_three_icon_id_9d113858; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -18834,87 +18383,10 @@ CREATE INDEX great_international_aboutu_how_we_help_three_icon_id_9d113858 ON pu
 
 
 --
--- Name: great_international_aboutu_how_we_help_three_icon_ja__60c04692; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_three_icon_ja__60c04692 ON public.great_international_aboutuklandingpage USING btree (how_we_help_three_icon_ja_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_three_icon_pt__92e4590f; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_three_icon_pt__92e4590f ON public.great_international_aboutuklandingpage USING btree (how_we_help_three_icon_pt_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_three_icon_zh__ef28670d; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_three_icon_zh__ef28670d ON public.great_international_aboutuklandingpage USING btree (how_we_help_three_icon_zh_hans_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_two_icon_ar_id_4dc3f546; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_two_icon_ar_id_4dc3f546 ON public.great_international_aboutuklandingpage USING btree (how_we_help_two_icon_ar_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_two_icon_de_id_05c3a70d; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_two_icon_de_id_05c3a70d ON public.great_international_aboutuklandingpage USING btree (how_we_help_two_icon_de_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_two_icon_en_gb_d87ccb1e; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_two_icon_en_gb_d87ccb1e ON public.great_international_aboutuklandingpage USING btree (how_we_help_two_icon_en_gb_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_two_icon_es_id_5d596159; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_two_icon_es_id_5d596159 ON public.great_international_aboutuklandingpage USING btree (how_we_help_two_icon_es_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_two_icon_fr_id_e6d0c8b6; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_two_icon_fr_id_e6d0c8b6 ON public.great_international_aboutuklandingpage USING btree (how_we_help_two_icon_fr_id);
-
-
---
 -- Name: great_international_aboutu_how_we_help_two_icon_id_1f9a2606; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_aboutu_how_we_help_two_icon_id_1f9a2606 ON public.great_international_aboutuklandingpage USING btree (how_we_help_two_icon_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_two_icon_ja_id_37fec5dc; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_two_icon_ja_id_37fec5dc ON public.great_international_aboutuklandingpage USING btree (how_we_help_two_icon_ja_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_two_icon_pt_id_3cf4e1ff; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_two_icon_pt_id_3cf4e1ff ON public.great_international_aboutuklandingpage USING btree (how_we_help_two_icon_pt_id);
-
-
---
--- Name: great_international_aboutu_how_we_help_two_icon_zh_ha_4138f6d2; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_how_we_help_two_icon_zh_ha_4138f6d2 ON public.great_international_aboutuklandingpage USING btree (how_we_help_two_icon_zh_hans_id);
 
 
 --
@@ -18932,66 +18404,10 @@ CREATE INDEX great_international_aboutu_page_zh_hans_id_18617903 ON public.great
 
 
 --
--- Name: great_international_aboutu_regions_section_image_ar_i_fc48cf0f; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_regions_section_image_ar_i_fc48cf0f ON public.great_international_aboutuklandingpage USING btree (regions_section_image_ar_id);
-
-
---
--- Name: great_international_aboutu_regions_section_image_de_i_08ee371b; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_regions_section_image_de_i_08ee371b ON public.great_international_aboutuklandingpage USING btree (regions_section_image_de_id);
-
-
---
--- Name: great_international_aboutu_regions_section_image_en_g_8f2f08c0; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_regions_section_image_en_g_8f2f08c0 ON public.great_international_aboutuklandingpage USING btree (regions_section_image_en_gb_id);
-
-
---
--- Name: great_international_aboutu_regions_section_image_es_i_15f8bff1; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_regions_section_image_es_i_15f8bff1 ON public.great_international_aboutuklandingpage USING btree (regions_section_image_es_id);
-
-
---
--- Name: great_international_aboutu_regions_section_image_fr_i_de693962; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_regions_section_image_fr_i_de693962 ON public.great_international_aboutuklandingpage USING btree (regions_section_image_fr_id);
-
-
---
 -- Name: great_international_aboutu_regions_section_image_id_6ae3c9c6; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_aboutu_regions_section_image_id_6ae3c9c6 ON public.great_international_aboutuklandingpage USING btree (regions_section_image_id);
-
-
---
--- Name: great_international_aboutu_regions_section_image_ja_i_7c5b9ad8; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_regions_section_image_ja_i_7c5b9ad8 ON public.great_international_aboutuklandingpage USING btree (regions_section_image_ja_id);
-
-
---
--- Name: great_international_aboutu_regions_section_image_pt_i_03b43d8d; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_regions_section_image_pt_i_03b43d8d ON public.great_international_aboutuklandingpage USING btree (regions_section_image_pt_id);
-
-
---
--- Name: great_international_aboutu_regions_section_image_zh_h_c1c3ca55; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_regions_section_image_zh_h_c1c3ca55 ON public.great_international_aboutuklandingpage USING btree (regions_section_image_zh_hans_id);
 
 
 --
@@ -19065,66 +18481,10 @@ CREATE INDEX great_international_aboutu_service_name_2d1ba2c9 ON public.great_in
 
 
 --
--- Name: great_international_aboutu_why_choose_uk_image_ar_id_90a78421; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_why_choose_uk_image_ar_id_90a78421 ON public.great_international_aboutuklandingpage USING btree (why_choose_uk_image_ar_id);
-
-
---
--- Name: great_international_aboutu_why_choose_uk_image_de_id_84955596; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_why_choose_uk_image_de_id_84955596 ON public.great_international_aboutuklandingpage USING btree (why_choose_uk_image_de_id);
-
-
---
--- Name: great_international_aboutu_why_choose_uk_image_en_gb__7b63c623; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_why_choose_uk_image_en_gb__7b63c623 ON public.great_international_aboutuklandingpage USING btree (why_choose_uk_image_en_gb_id);
-
-
---
--- Name: great_international_aboutu_why_choose_uk_image_es_id_e0f965fa; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_why_choose_uk_image_es_id_e0f965fa ON public.great_international_aboutuklandingpage USING btree (why_choose_uk_image_es_id);
-
-
---
--- Name: great_international_aboutu_why_choose_uk_image_fr_id_1c555f9c; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_why_choose_uk_image_fr_id_1c555f9c ON public.great_international_aboutuklandingpage USING btree (why_choose_uk_image_fr_id);
-
-
---
 -- Name: great_international_aboutu_why_choose_uk_image_id_5fca62bc; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_aboutu_why_choose_uk_image_id_5fca62bc ON public.great_international_aboutuklandingpage USING btree (why_choose_uk_image_id);
-
-
---
--- Name: great_international_aboutu_why_choose_uk_image_ja_id_6cdeb61f; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_why_choose_uk_image_ja_id_6cdeb61f ON public.great_international_aboutuklandingpage USING btree (why_choose_uk_image_ja_id);
-
-
---
--- Name: great_international_aboutu_why_choose_uk_image_pt_id_5d68bb22; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_why_choose_uk_image_pt_id_5d68bb22 ON public.great_international_aboutuklandingpage USING btree (why_choose_uk_image_pt_id);
-
-
---
--- Name: great_international_aboutu_why_choose_uk_image_zh_han_daf6b355; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_aboutu_why_choose_uk_image_zh_han_daf6b355 ON public.great_international_aboutuklandingpage USING btree (why_choose_uk_image_zh_hans_id);
 
 
 --
@@ -35968,35 +35328,11 @@ ALTER TABLE ONLY public.great_international_aboutukwhychoosetheukpage
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__ebook_section_image__462b9fa7_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__ebook_section_image__462b9fa7_fk_wagtailim FOREIGN KEY (ebook_section_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__ebook_section_image__5414d88d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__ebook_section_image__5414d88d_fk_wagtailim FOREIGN KEY (ebook_section_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_aboutukwhychoosetheukpage great_international__ebook_section_image__697d8954_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutukwhychoosetheukpage
     ADD CONSTRAINT great_international__ebook_section_image__697d8954_fk_wagtailim FOREIGN KEY (ebook_section_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__ebook_section_image__7251ce4c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__ebook_section_image__7251ce4c_fk_wagtailim FOREIGN KEY (ebook_section_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -36008,27 +35344,11 @@ ALTER TABLE ONLY public.great_international_aboutukwhychoosetheukpage
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__ebook_section_image__783f5fbc_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__ebook_section_image__783f5fbc_fk_wagtailim FOREIGN KEY (ebook_section_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_aboutukwhychoosetheukpage great_international__ebook_section_image__861fd1aa_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutukwhychoosetheukpage
     ADD CONSTRAINT great_international__ebook_section_image__861fd1aa_fk_wagtailim FOREIGN KEY (ebook_section_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__ebook_section_image__a9773e99_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__ebook_section_image__a9773e99_fk_wagtailim FOREIGN KEY (ebook_section_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -36056,35 +35376,11 @@ ALTER TABLE ONLY public.great_international_aboutukwhychoosetheukpage
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__ebook_section_image__d7cce261_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__ebook_section_image__d7cce261_fk_wagtailim FOREIGN KEY (ebook_section_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_aboutukwhychoosetheukpage great_international__ebook_section_image__deb1c4a9_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutukwhychoosetheukpage
     ADD CONSTRAINT great_international__ebook_section_image__deb1c4a9_fk_wagtailim FOREIGN KEY (ebook_section_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__ebook_section_image__df582769_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__ebook_section_image__df582769_fk_wagtailim FOREIGN KEY (ebook_section_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__ebook_section_image__f3620764_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__ebook_section_image__f3620764_fk_wagtailim FOREIGN KEY (ebook_section_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -37424,14 +36720,6 @@ ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpag
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__hero_image_ar_id_fca61ffb_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__hero_image_ar_id_fca61ffb_fk_wagtailim FOREIGN KEY (hero_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_aboutditservicespage great_international__hero_image_ar_id_ff1c3871_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -37469,14 +36757,6 @@ ALTER TABLE ONLY public.great_international_internationalhomepage
 
 ALTER TABLE ONLY public.great_international_aboutditlandingpage
     ADD CONSTRAINT great_international__hero_image_de_id_5185a37a_fk_wagtailim FOREIGN KEY (hero_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__hero_image_de_id_58a013f2_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__hero_image_de_id_58a013f2_fk_wagtailim FOREIGN KEY (hero_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -37616,14 +36896,6 @@ ALTER TABLE ONLY public.great_international_internationalarticlelistingpage
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__hero_image_en_gb_id_91cd9e0d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__hero_image_en_gb_id_91cd9e0d_fk_wagtailim FOREIGN KEY (hero_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalguidelandingpage great_international__hero_image_en_gb_id_9b876a6d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -37752,14 +37024,6 @@ ALTER TABLE ONLY public.great_international_internationalarticlelistingpage
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__hero_image_es_id_6e6483d5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__hero_image_es_id_6e6483d5_fk_wagtailim FOREIGN KEY (hero_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_investhighpotentialopportunitydetailpage great_international__hero_image_es_id_b6696e14_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -37821,14 +37085,6 @@ ALTER TABLE ONLY public.great_international_aboutditservicespage
 
 ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
     ADD CONSTRAINT great_international__hero_image_es_id_f3af0e9b_fk_wagtailim FOREIGN KEY (hero_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__hero_image_fr_id_01f0ea50_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__hero_image_fr_id_01f0ea50_fk_wagtailim FOREIGN KEY (hero_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -38192,14 +37448,6 @@ ALTER TABLE ONLY public.great_international_internationalsubsectorpage
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__hero_image_ja_id_ce0b2f6d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__hero_image_ja_id_ce0b2f6d_fk_wagtailim FOREIGN KEY (hero_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalhomepageold great_international__hero_image_ja_id_d3ea4ed6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -38293,14 +37541,6 @@ ALTER TABLE ONLY public.great_international_internationalarticlelistingpage
 
 ALTER TABLE ONLY public.great_international_internationalhomepageold
     ADD CONSTRAINT great_international__hero_image_pt_id_8f9d77cb_fk_wagtailim FOREIGN KEY (hero_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__hero_image_pt_id_af0d641c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__hero_image_pt_id_af0d641c_fk_wagtailim FOREIGN KEY (hero_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -38488,14 +37728,6 @@ ALTER TABLE ONLY public.great_international_internationaltopiclandingpage
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__hero_image_zh_hans_i_feae8c64_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__hero_image_zh_hans_i_feae8c64_fk_wagtailim FOREIGN KEY (hero_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_capitalinvesthomesinenglandcardfieldssu8d44 great_international__homes_in_england_car_330b4350_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -38512,62 +37744,6 @@ ALTER TABLE ONLY public.great_international_capitalinvesthomesinenglandcardfield
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__how_we_help_five_ico_035d0fad_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_five_ico_035d0fad_fk_wagtailim FOREIGN KEY (how_we_help_five_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_five_ico_30ab6bca_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_five_ico_30ab6bca_fk_wagtailim FOREIGN KEY (how_we_help_five_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_five_ico_591e7024_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_five_ico_591e7024_fk_wagtailim FOREIGN KEY (how_we_help_five_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_five_ico_5dfa34d6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_five_ico_5dfa34d6_fk_wagtailim FOREIGN KEY (how_we_help_five_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_five_ico_627b9bdb_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_five_ico_627b9bdb_fk_wagtailim FOREIGN KEY (how_we_help_five_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_five_ico_660f3442_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_five_ico_660f3442_fk_wagtailim FOREIGN KEY (how_we_help_five_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_five_ico_7510e31c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_five_ico_7510e31c_fk_wagtailim FOREIGN KEY (how_we_help_five_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_aboutuklandingpage great_international__how_we_help_five_ico_85accb81_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -38576,43 +37752,11 @@ ALTER TABLE ONLY public.great_international_aboutuklandingpage
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__how_we_help_five_ico_c596b1e1_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_five_ico_c596b1e1_fk_wagtailim FOREIGN KEY (how_we_help_five_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_four_ico_332884d6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_four_ico_332884d6_fk_wagtailim FOREIGN KEY (how_we_help_four_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_four_ico_33ffdc80_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_four_ico_33ffdc80_fk_wagtailim FOREIGN KEY (how_we_help_four_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcapitalinvestlandingpage great_international__how_we_help_four_ico_38be0d86_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpage
     ADD CONSTRAINT great_international__how_we_help_four_ico_38be0d86_fk_wagtailim FOREIGN KEY (how_we_help_four_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_four_ico_4d9dff74_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_four_ico_4d9dff74_fk_wagtailim FOREIGN KEY (how_we_help_four_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -38656,30 +37800,6 @@ ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpag
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__how_we_help_four_ico_bd36db44_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_four_ico_bd36db44_fk_wagtailim FOREIGN KEY (how_we_help_four_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_four_ico_bedaaf27_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_four_ico_bedaaf27_fk_wagtailim FOREIGN KEY (how_we_help_four_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_four_ico_c2cd5c45_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_four_ico_c2cd5c45_fk_wagtailim FOREIGN KEY (how_we_help_four_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_aboutuklandingpage great_international__how_we_help_four_ico_cba04eba_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -38688,27 +37808,11 @@ ALTER TABLE ONLY public.great_international_aboutuklandingpage
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__how_we_help_four_ico_ce33c9e4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_four_ico_ce33c9e4_fk_wagtailim FOREIGN KEY (how_we_help_four_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcapitalinvestlandingpage great_international__how_we_help_four_ico_e9b16803_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpage
     ADD CONSTRAINT great_international__how_we_help_four_ico_e9b16803_fk_wagtailim FOREIGN KEY (how_we_help_four_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_four_ico_f49a1c9e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_four_ico_f49a1c9e_fk_wagtailim FOREIGN KEY (how_we_help_four_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -39104,14 +38208,6 @@ ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpag
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__how_we_help_one_icon_2469ceac_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_one_icon_2469ceac_fk_wagtailim FOREIGN KEY (how_we_help_one_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcapitalinvestlandingpage great_international__how_we_help_one_icon_25527e03_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -39141,46 +38237,6 @@ ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpag
 
 ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpage
     ADD CONSTRAINT great_international__how_we_help_one_icon_30510e45_fk_wagtailim FOREIGN KEY (how_we_help_one_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_one_icon_3b0ec0bf_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_one_icon_3b0ec0bf_fk_wagtailim FOREIGN KEY (how_we_help_one_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_one_icon_49a5f8d3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_one_icon_49a5f8d3_fk_wagtailim FOREIGN KEY (how_we_help_one_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_one_icon_5301d9a2_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_one_icon_5301d9a2_fk_wagtailim FOREIGN KEY (how_we_help_one_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_one_icon_5a2b5e28_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_one_icon_5a2b5e28_fk_wagtailim FOREIGN KEY (how_we_help_one_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_one_icon_60bdba47_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_one_icon_60bdba47_fk_wagtailim FOREIGN KEY (how_we_help_one_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -39216,22 +38272,6 @@ ALTER TABLE ONLY public.great_international_aboutuklandingpage
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__how_we_help_one_icon_ccff2e05_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_one_icon_ccff2e05_fk_wagtailim FOREIGN KEY (how_we_help_one_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_one_icon_e4cb760e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_one_icon_e4cb760e_fk_wagtailim FOREIGN KEY (how_we_help_one_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcapitalinvestlandingpage great_international__how_we_help_one_icon_fcc41f64_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -39240,75 +38280,11 @@ ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpag
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__how_we_help_six_icon_07825ade_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_six_icon_07825ade_fk_wagtailim FOREIGN KEY (how_we_help_six_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_six_icon_0f90ff5b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_six_icon_0f90ff5b_fk_wagtailim FOREIGN KEY (how_we_help_six_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_six_icon_1d3e1b6d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_six_icon_1d3e1b6d_fk_wagtailim FOREIGN KEY (how_we_help_six_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_aboutuklandingpage great_international__how_we_help_six_icon_249c6a68_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
     ADD CONSTRAINT great_international__how_we_help_six_icon_249c6a68_fk_wagtailim FOREIGN KEY (how_we_help_six_icon_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_six_icon_285a999a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_six_icon_285a999a_fk_wagtailim FOREIGN KEY (how_we_help_six_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_six_icon_29c89362_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_six_icon_29c89362_fk_wagtailim FOREIGN KEY (how_we_help_six_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_six_icon_4d9491e0_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_six_icon_4d9491e0_fk_wagtailim FOREIGN KEY (how_we_help_six_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_six_icon_8f75c38d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_six_icon_8f75c38d_fk_wagtailim FOREIGN KEY (how_we_help_six_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_six_icon_de0fafe1_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_six_icon_de0fafe1_fk_wagtailim FOREIGN KEY (how_we_help_six_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -39344,43 +38320,11 @@ ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpag
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__how_we_help_three_ic_60c04692_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_three_ic_60c04692_fk_wagtailim FOREIGN KEY (how_we_help_three_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcapitalinvestlandingpage great_international__how_we_help_three_ic_62043cec_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpage
     ADD CONSTRAINT great_international__how_we_help_three_ic_62043cec_fk_wagtailim FOREIGN KEY (how_we_help_three_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_three_ic_6da3b434_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_three_ic_6da3b434_fk_wagtailim FOREIGN KEY (how_we_help_three_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_three_ic_771773f1_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_three_ic_771773f1_fk_wagtailim FOREIGN KEY (how_we_help_three_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_three_ic_92e4590f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_three_ic_92e4590f_fk_wagtailim FOREIGN KEY (how_we_help_three_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -39408,14 +38352,6 @@ ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpag
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__how_we_help_three_ic_ba3d2afc_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_three_ic_ba3d2afc_fk_wagtailim FOREIGN KEY (how_we_help_three_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcapitalinvestlandingpage great_international__how_we_help_three_ic_be1459d7_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -39424,43 +38360,11 @@ ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpag
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__how_we_help_three_ic_c3de0dfe_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_three_ic_c3de0dfe_fk_wagtailim FOREIGN KEY (how_we_help_three_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcapitalinvestlandingpage great_international__how_we_help_three_ic_c54c516f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpage
     ADD CONSTRAINT great_international__how_we_help_three_ic_c54c516f_fk_wagtailim FOREIGN KEY (how_we_help_three_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_three_ic_e9b9558b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_three_ic_e9b9558b_fk_wagtailim FOREIGN KEY (how_we_help_three_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_three_ic_ef28670d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_three_ic_ef28670d_fk_wagtailim FOREIGN KEY (how_we_help_three_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_two_icon_05c3a70d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_two_icon_05c3a70d_fk_wagtailim FOREIGN KEY (how_we_help_two_icon_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -39488,30 +38392,6 @@ ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpag
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__how_we_help_two_icon_37fec5dc_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_two_icon_37fec5dc_fk_wagtailim FOREIGN KEY (how_we_help_two_icon_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_two_icon_3cf4e1ff_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_two_icon_3cf4e1ff_fk_wagtailim FOREIGN KEY (how_we_help_two_icon_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_two_icon_4138f6d2_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_two_icon_4138f6d2_fk_wagtailim FOREIGN KEY (how_we_help_two_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalcapitalinvestlandingpage great_international__how_we_help_two_icon_49eb7dc5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -39525,22 +38405,6 @@ ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpag
 
 ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpage
     ADD CONSTRAINT great_international__how_we_help_two_icon_4a65eacc_fk_wagtailim FOREIGN KEY (how_we_help_two_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_two_icon_4dc3f546_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_two_icon_4dc3f546_fk_wagtailim FOREIGN KEY (how_we_help_two_icon_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_two_icon_5d596159_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_two_icon_5d596159_fk_wagtailim FOREIGN KEY (how_we_help_two_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -39581,22 +38445,6 @@ ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpag
 
 ALTER TABLE ONLY public.great_international_internationalcapitalinvestlandingpage
     ADD CONSTRAINT great_international__how_we_help_two_icon_c93e9d4a_fk_wagtailim FOREIGN KEY (how_we_help_two_icon_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_two_icon_d87ccb1e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_two_icon_d87ccb1e_fk_wagtailim FOREIGN KEY (how_we_help_two_icon_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__how_we_help_two_icon_e6d0c8b6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__how_we_help_two_icon_e6d0c8b6_fk_wagtailim FOREIGN KEY (how_we_help_two_icon_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -41624,75 +40472,11 @@ ALTER TABLE ONLY public.great_international_capitalinvestregionpage
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__regions_section_imag_03b43d8d_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__regions_section_imag_03b43d8d_fk_wagtailim FOREIGN KEY (regions_section_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__regions_section_imag_08ee371b_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__regions_section_imag_08ee371b_fk_wagtailim FOREIGN KEY (regions_section_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__regions_section_imag_15f8bff1_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__regions_section_imag_15f8bff1_fk_wagtailim FOREIGN KEY (regions_section_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_aboutuklandingpage great_international__regions_section_imag_6ae3c9c6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
     ADD CONSTRAINT great_international__regions_section_imag_6ae3c9c6_fk_wagtailim FOREIGN KEY (regions_section_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__regions_section_imag_7c5b9ad8_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__regions_section_imag_7c5b9ad8_fk_wagtailim FOREIGN KEY (regions_section_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__regions_section_imag_8f2f08c0_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__regions_section_imag_8f2f08c0_fk_wagtailim FOREIGN KEY (regions_section_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__regions_section_imag_c1c3ca55_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__regions_section_imag_c1c3ca55_fk_wagtailim FOREIGN KEY (regions_section_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__regions_section_imag_de693962_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__regions_section_imag_de693962_fk_wagtailim FOREIGN KEY (regions_section_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__regions_section_imag_fc48cf0f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__regions_section_imag_fc48cf0f_fk_wagtailim FOREIGN KEY (regions_section_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -47120,75 +45904,11 @@ ALTER TABLE ONLY public.great_international_internationalhomepageold
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__why_choose_uk_image__1c555f9c_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__why_choose_uk_image__1c555f9c_fk_wagtailim FOREIGN KEY (why_choose_uk_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__why_choose_uk_image__5d68bb22_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__why_choose_uk_image__5d68bb22_fk_wagtailim FOREIGN KEY (why_choose_uk_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_aboutuklandingpage great_international__why_choose_uk_image__5fca62bc_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
     ADD CONSTRAINT great_international__why_choose_uk_image__5fca62bc_fk_wagtailim FOREIGN KEY (why_choose_uk_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__why_choose_uk_image__6cdeb61f_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__why_choose_uk_image__6cdeb61f_fk_wagtailim FOREIGN KEY (why_choose_uk_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__why_choose_uk_image__7b63c623_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__why_choose_uk_image__7b63c623_fk_wagtailim FOREIGN KEY (why_choose_uk_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__why_choose_uk_image__84955596_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__why_choose_uk_image__84955596_fk_wagtailim FOREIGN KEY (why_choose_uk_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__why_choose_uk_image__90a78421_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__why_choose_uk_image__90a78421_fk_wagtailim FOREIGN KEY (why_choose_uk_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__why_choose_uk_image__daf6b355_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__why_choose_uk_image__daf6b355_fk_wagtailim FOREIGN KEY (why_choose_uk_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__why_choose_uk_image__e0f965fa_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__why_choose_uk_image__e0f965fa_fk_wagtailim FOREIGN KEY (why_choose_uk_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
