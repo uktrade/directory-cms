@@ -135,7 +135,6 @@ class InternationalCapitalInvestLandingPagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
     ]
 
     edit_handler = make_translated_interface(
@@ -327,7 +326,6 @@ class CapitalInvestRegionPagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
     ]
 
     edit_handler = make_translated_interface(
@@ -346,7 +344,6 @@ class CapitalInvestOpportunityListingPagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
     ]
 
     edit_handler = make_translated_interface(
@@ -502,7 +499,6 @@ class CapitalInvestOpportunityPagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('uses_tree_based_routing'),
     ]
 
     edit_handler = make_translated_interface(
