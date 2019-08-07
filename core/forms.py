@@ -22,26 +22,7 @@ class WagtailAdminPageForm(WagtailAdminPageForm):
     def __new__(cls, data=None, *args, **kwargs):
         form_class = super().__new__(cls)
         cls.set_required_for_language(form_class)
-        cls.set_read_only(form_class)
         return form_class
-
-    def __init__(self, *args, **kwargs):
-        """Set slug to read only if editing an existing page."""
-        instance = kwargs.get('instance')
-        if instance and instance.pk:
-            field = self.base_fields.get('slug')  # App pages don't have slug
-            if field:
-                field.disabled = True
-                field.required = False
-        super().__init__(*args, **kwargs)
-
-    @staticmethod
-    def set_read_only(form_class):
-        for field_name in form_class._meta.model.read_only_fields:
-            if field_name in form_class.base_fields:
-                field = form_class.base_fields[field_name]
-                field.disabled = True
-                field.required = False
 
     @staticmethod
     def set_required_for_language(form_class):
