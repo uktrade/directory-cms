@@ -4,6 +4,7 @@
 
 ### Implemented enhancements
 - CI-321 - About UK landing page
+- No ticket - remove slug protection after saving a page
 
 ### Fixed Bugs
 
