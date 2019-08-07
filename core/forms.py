@@ -22,7 +22,16 @@ class WagtailAdminPageForm(WagtailAdminPageForm):
     def __new__(cls, data=None, *args, **kwargs):
         form_class = super().__new__(cls)
         cls.set_required_for_language(form_class)
+        cls.set_read_only(form_class)
         return form_class
+
+    @staticmethod
+    def set_read_only(form_class):
+        for field_name in form_class._meta.model.read_only_fields:
+            if field_name in form_class.base_fields:
+                field = form_class.base_fields[field_name]
+                field.disabled = True
+                field.required = False
 
     @staticmethod
     def set_required_for_language(form_class):
