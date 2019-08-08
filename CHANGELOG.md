@@ -7,6 +7,7 @@
 - CI-321 - About UK landing page
 
 ### Fixed Bugs
+- CI-426 - Added pdf document upload to why choose uk page for ebook section
 
 
 ## [2019.08.08](https://github.com/uktrade/directory-cms/releases/tag/2019.08.06)

@@ -1188,14 +1188,16 @@ class AboutUkLandingPagePanels:
         ImageChooserPanel('hero_image'),
         ImageChooserPanel('why_choose_uk_image'),
         ImageChooserPanel('regions_section_image'),
-        MultiFieldPanel([
-            ImageChooserPanel('how_we_help_one_icon'),
-            ImageChooserPanel('how_we_help_two_icon'),
-            ImageChooserPanel('how_we_help_three_icon'),
-            ImageChooserPanel('how_we_help_four_icon'),
-            ImageChooserPanel('how_we_help_five_icon'),
-            ImageChooserPanel('how_we_help_six_icon'),
-        ]),
+        MultiFieldPanel(
+            heading="How we help images",
+            children=[
+                ImageChooserPanel('how_we_help_one_icon'),
+                ImageChooserPanel('how_we_help_two_icon'),
+                ImageChooserPanel('how_we_help_three_icon'),
+                ImageChooserPanel('how_we_help_four_icon'),
+                ImageChooserPanel('how_we_help_five_icon'),
+                ImageChooserPanel('how_we_help_six_icon'),
+            ]),
         ImageChooserPanel('ebook_section_image'),
     ]
 
@@ -1439,7 +1441,7 @@ class AboutUkWhyChooseTheUkPagePanels:
                     HelpPanel('CTAs require both text and a link to show '
                               'on page. '),
                     FieldPanel('ebook_section_cta_text'),
-                    FieldPanel('ebook_section_cta_link'),
+                    DocumentChooserPanel('ebook_section_pdf_link'),
                 ]),
             ]
         ),

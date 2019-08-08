@@ -977,6 +977,7 @@ class AboutUkWhyChooseTheUkPageTranslationOptions(
         'ebook_section_body',
         'ebook_section_cta_text',
         'ebook_section_cta_link',
+        'ebook_section_pdf_link',
         'contact_us_section_title',
         'contact_us_section_summary',
         'contact_us_section_cta_text',
