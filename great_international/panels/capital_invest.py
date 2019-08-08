@@ -524,3 +524,20 @@ class CapitalInvestContactFormPagePanels:
         content_panels=content_panels,
         settings_panels=settings_panels,
     )
+
+
+class CapitalInvestContactFormSuccessPagePanels:
+    content_panels = [
+        FieldPanel('large_text'),
+        FieldPanel('small_text'),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels,
+    )

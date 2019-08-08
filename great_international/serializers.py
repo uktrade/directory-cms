@@ -2025,3 +2025,8 @@ class CapitalInvestContactFormPageSerializer(BasePageSerializer):
     heading = serializers.CharField()
     intro = core_fields.MarkdownToHTMLField()
     cta_text = serializers.CharField()
+
+
+class CapitalInvestContactFormSuccessPageSerializer(BasePageSerializer):
+    large_text = serializers.CharField()
+    small_text = core_fields.MarkdownToHTMLField()
