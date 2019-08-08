@@ -1004,3 +1004,13 @@ class CapitalInvestContactFormPageTranslationOptions(
         'intro',
         'cta_text',
     )
+
+
+@register(capital_invest.CapitalInvestContactFormSuccessPage)
+class CapitalInvestContactFormSuccessPageTranslationOptions(
+        BaseTranslationOptions
+):
+    fields = (
+        'large_text',
+        'small_text',
+    )

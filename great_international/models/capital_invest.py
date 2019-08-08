@@ -703,4 +703,20 @@ class CapitalInvestContactFormPage(
     breadcrumbs_label = models.CharField(max_length=255, blank=True)
     heading = models.CharField(max_length=255)
     intro = MarkdownField(blank=True)
-    cta_text = models.CharField(max_length=255, blank=True)
+    cta_text = models.CharField(max_length=255)
+
+    @classmethod
+    def allowed_subpage_models(cls):
+        return [
+            CapitalInvestContactFormSuccessPage
+        ]
+
+
+class CapitalInvestContactFormSuccessPage(
+    panels.CapitalInvestContactFormSuccessPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage
+):
+    parent_page_types = ['great_international.CapitalInvestContactFormPage']
+    slug_identity = 'success'
+
+    large_text = models.CharField(max_length=255)
+    small_text = MarkdownField(blank=True)
