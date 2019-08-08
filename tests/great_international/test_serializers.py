@@ -14,7 +14,9 @@ from great_international.serializers import (
     InternationalSectorPageSerializer,
     AboutDitServicesPageSerializer,
     AboutUkWhyChooseTheUkPageSerializer,
-    AboutUkLandingPageSerializer)
+    AboutUkLandingPageSerializer,
+    InvestInternationalHomePageSerializer,
+)
 from tests.great_international.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
@@ -30,7 +32,9 @@ from tests.great_international.factories import (
     InternationalTopicLandingPageFactory,
     AboutDitServicesPageFactory,
     AboutUkWhyChooseTheUkPageFactory,
-    AboutUkLandingPageFactory)
+    AboutUkLandingPageFactory,
+    InvestInternationalHomePageFactory,
+)
 
 from great_international.models.capital_invest import (
     CapitalInvestRelatedRegions,
@@ -1055,3 +1059,38 @@ def test_about_uk_landing_page_has_all_sectors(
 
     assert len(serializer.data['all_sectors']) == 1
     assert serializer.data['all_sectors'][0]['meta']['slug'] == 'sector-one'
+
+
+@pytest.mark.django_db
+def test_invest_international_homepage_featured_industries(international_root_page, rf):
+    featured_industry_one = InternationalSectorPageFactory(
+        parent=international_root_page,
+        slug='one'
+    )
+    featured_industry_two = InternationalSectorPageFactory(
+        parent=international_root_page,
+        slug='two'
+    )
+    featured_industry_three = InternationalSectorPageFactory(
+        parent=international_root_page,
+        slug='three'
+    )
+    homepage = InvestInternationalHomePageFactory(
+        parent=international_root_page,
+        slug='invest',
+        featured_industry_one=featured_industry_one,
+        featured_industry_two=featured_industry_two,
+        featured_industry_three=featured_industry_three,
+    )
+
+    serializer = InvestInternationalHomePageSerializer(
+        instance=homepage,
+        context={'request': rf.get('/')}
+    )
+
+    serialized_pages = serializer.data['sectors']
+
+    assert len(serialized_pages) == 3
+    assert serialized_pages[0]['meta']['slug'] == 'one'
+    assert serialized_pages[1]['meta']['slug'] == 'two'
+    assert serialized_pages[2]['meta']['slug'] == 'three'
