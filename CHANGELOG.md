@@ -6,6 +6,7 @@
 - CI-321 - About UK landing page
 
 ### Fixed Bugs
+- CI-426 - Added pdf document upload to why choose uk page for ebook section
 
 
 ## [2019.08.08](https://github.com/uktrade/directory-cms/releases/tag/2019.08.06)
@@ -33,7 +34,6 @@
 ### Fixed Bugs
 - No ticket - Fix not being able to create invest region landing page under homepage
 - CI-373 - Fix panels on why choose UK page
-- CI-426 - Added pdf document upload to why choose uk page for ebook section
 
 
 ## [2019.07.24](https://github.com/uktrade/directory-cms/releases/tag/2019.07.24)
