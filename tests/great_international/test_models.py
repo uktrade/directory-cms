@@ -24,6 +24,8 @@ def test_models_hierarchy():
         capital_invest.InternationalCapitalInvestLandingPage,
         capital_invest.CapitalInvestOpportunityListingPage,
         capital_invest.CapitalInvestRegionPage,
+        capital_invest.CapitalInvestContactFormPage,
+        capital_invest.CapitalInvestContactFormSuccessPage,
         invest.InvestInternationalHomePage,
         find_a_supplier.InternationalTradeHomePage
     ]
