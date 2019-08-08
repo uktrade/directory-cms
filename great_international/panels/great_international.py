@@ -2,9 +2,10 @@ from django.forms import Textarea, CheckboxSelectMultiple
 
 from wagtail.admin.edit_handlers import (
     InlinePanel, HelpPanel, FieldPanel, FieldRowPanel, MultiFieldPanel,
-    PageChooserPanel
+    PageChooserPanel, ObjectList
 )
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.documents.edit_handlers import DocumentChooserPanel
 
 from core.helpers import make_translated_interface
 from core.panels import SearchEngineOptimisationPanel
@@ -1183,14 +1184,127 @@ class AboutDitServicesPagePanels:
 
 class AboutUkLandingPagePanels:
 
+    image_panels = [
+        ImageChooserPanel('hero_image'),
+        ImageChooserPanel('why_choose_uk_image'),
+        ImageChooserPanel('regions_section_image'),
+        MultiFieldPanel(
+            heading="How we help images",
+            children=[
+                ImageChooserPanel('how_we_help_one_icon'),
+                ImageChooserPanel('how_we_help_two_icon'),
+                ImageChooserPanel('how_we_help_three_icon'),
+                ImageChooserPanel('how_we_help_four_icon'),
+                ImageChooserPanel('how_we_help_five_icon'),
+                ImageChooserPanel('how_we_help_six_icon'),
+            ]),
+        ImageChooserPanel('ebook_section_image'),
+    ]
+
     content_panels = [
         FieldPanel('breadcrumbs_label'),
         MultiFieldPanel(
             heading="Hero",
             children=[
                 FieldPanel('hero_title'),
-                ImageChooserPanel('hero_image'),
             ],
+        ),
+        FieldPanel('intro'),
+        MultiFieldPanel(
+            heading="Why choose the UK section",
+            classname="collapsible",
+            children=[
+                FieldPanel('why_choose_uk_title'),
+                FieldPanel('why_choose_uk_content'),
+                FieldPanel('why_choose_uk_cta_text'),
+                FieldPanel('why_choose_uk_cta_link'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Key Industries section",
+            classname="collapsible",
+            children=[
+                FieldPanel('industries_section_title'),
+                FieldPanel('industries_section_intro'),
+                FieldPanel('industries_section_cta_text'),
+                FieldPanel('industries_section_cta_link')
+            ]
+        ),
+        MultiFieldPanel(
+            heading="UK's regions section",
+            classname="collapsible",
+            children=[
+                FieldPanel('regions_section_title'),
+                FieldPanel('regions_section_content'),
+                FieldPanel('regions_section_cta_text'),
+                FieldPanel('regions_section_cta_link'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="How we help section",
+            classname="collapsible",
+            children=[
+                FieldPanel('how_we_help_title'),
+                FieldPanel('how_we_help_intro'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('how_we_help_one_title'),
+                        FieldPanel('how_we_help_one_text')
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('how_we_help_two_title'),
+                        FieldPanel('how_we_help_two_text')
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('how_we_help_three_title'),
+                        FieldPanel('how_we_help_three_text')
+                    ]),
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('how_we_help_four_title'),
+                        FieldPanel('how_we_help_four_text')
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('how_we_help_five_title'),
+                        FieldPanel('how_we_help_five_text')
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('how_we_help_six_title'),
+                        FieldPanel('how_we_help_six_text')
+                    ]),
+                ]),
+                FieldPanel('how_we_help_cta_text'),
+                FieldPanel('how_we_help_cta_link')
+            ]
+        ),
+        MultiFieldPanel(
+            heading="EBook section",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required fields for section to show: title, body'),
+                FieldRowPanel([
+                    FieldPanel('ebook_section_image_alt_text')
+                ]),
+                MultiFieldPanel([
+                    FieldPanel('ebook_section_title'),
+                    FieldPanel('ebook_section_body'),
+                    HelpPanel('CTAs require both text and a link to show '
+                              'on page. '),
+                    FieldPanel('ebook_section_cta_text'),
+                    DocumentChooserPanel('ebook_section_cta_link'),
+                ]),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Contact us section",
+            classname="collapsible",
+            children=[
+                FieldPanel('contact_title'),
+                FieldPanel('contact_text'),
+                FieldPanel('contact_cta_text'),
+                FieldPanel('contact_cta_link'),
+            ]
         ),
     ]
 
@@ -1201,7 +1315,10 @@ class AboutUkLandingPagePanels:
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
-        settings_panels=settings_panels
+        settings_panels=settings_panels,
+        other_panels=[
+            ObjectList(image_panels, heading='Images'),
+        ]
     )
 
 
@@ -1324,7 +1441,7 @@ class AboutUkWhyChooseTheUkPagePanels:
                     HelpPanel('CTAs require both text and a link to show '
                               'on page. '),
                     FieldPanel('ebook_section_cta_text'),
-                    FieldPanel('ebook_section_cta_link'),
+                    DocumentChooserPanel('ebook_section_pdf_link'),
                 ]),
             ]
         ),
@@ -1352,4 +1469,5 @@ class AboutUkWhyChooseTheUkPagePanels:
     edit_handler = make_translated_interface(
         content_panels=content_panels,
         settings_panels=settings_panels
+
     )

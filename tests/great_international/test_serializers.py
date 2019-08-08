@@ -13,7 +13,9 @@ from great_international.serializers import (
     CapitalInvestOpportunityListingSerializer,
     InternationalSectorPageSerializer,
     AboutDitServicesPageSerializer,
-    AboutUkWhyChooseTheUkPageSerializer
+    AboutUkWhyChooseTheUkPageSerializer,
+    AboutUkLandingPageSerializer,
+    InvestInternationalHomePageSerializer,
 )
 from tests.great_international.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
@@ -29,7 +31,9 @@ from tests.great_international.factories import (
     InternationalSubSectorPageFactory,
     InternationalTopicLandingPageFactory,
     AboutDitServicesPageFactory,
-    AboutUkWhyChooseTheUkPageFactory
+    AboutUkWhyChooseTheUkPageFactory,
+    AboutUkLandingPageFactory,
+    InvestInternationalHomePageFactory,
 )
 
 from great_international.models.capital_invest import (
@@ -1011,3 +1015,82 @@ def test_opportunity_page_null_case_gets_opportunities_with_same_sector(
 
     for value in birmingham_curzon_serializer.data['related_sector_with_opportunities'].values():
         assert value == []
+
+
+@pytest.mark.django_db
+def test_about_uk_landing_page_has_how_we_help(
+        rf, international_root_page
+):
+    about_uk = AboutUkLandingPageFactory(
+        slug='about-uk',
+        parent=international_root_page
+    )
+
+    serializer = AboutUkLandingPageSerializer(
+        instance=about_uk,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['how_we_help']) == 6
+    for how_we_help in serializer.data['how_we_help']:
+        assert 'text' in how_we_help
+        assert 'icon' in how_we_help
+        assert 'title' in how_we_help
+
+
+@pytest.mark.django_db
+def test_about_uk_landing_page_has_all_sectors(
+        rf, international_root_page
+):
+    InternationalSectorPageFactory(
+        parent=international_root_page,
+        slug='sector-one',
+    )
+
+    about_uk = AboutUkLandingPageFactory(
+        slug='about-uk',
+        parent=international_root_page
+    )
+
+    serializer = AboutUkLandingPageSerializer(
+        instance=about_uk,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['all_sectors']) == 1
+    assert serializer.data['all_sectors'][0]['meta']['slug'] == 'sector-one'
+
+
+@pytest.mark.django_db
+def test_invest_international_homepage_featured_industries(international_root_page, rf):
+    featured_industry_one = InternationalSectorPageFactory(
+        parent=international_root_page,
+        slug='one'
+    )
+    featured_industry_two = InternationalSectorPageFactory(
+        parent=international_root_page,
+        slug='two'
+    )
+    featured_industry_three = InternationalSectorPageFactory(
+        parent=international_root_page,
+        slug='three'
+    )
+    homepage = InvestInternationalHomePageFactory(
+        parent=international_root_page,
+        slug='invest',
+        featured_industry_one=featured_industry_one,
+        featured_industry_two=featured_industry_two,
+        featured_industry_three=featured_industry_three,
+    )
+
+    serializer = InvestInternationalHomePageSerializer(
+        instance=homepage,
+        context={'request': rf.get('/')}
+    )
+
+    serialized_pages = serializer.data['sectors']
+
+    assert len(serialized_pages) == 3
+    assert serialized_pages[0]['meta']['slug'] == 'one'
+    assert serialized_pages[1]['meta']['slug'] == 'two'
+    assert serialized_pages[2]['meta']['slug'] == 'three'

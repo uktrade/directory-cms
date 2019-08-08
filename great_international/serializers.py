@@ -260,6 +260,34 @@ class HowWeHelpProxyDataWrapper:
         )
 
 
+class HowWeHelpWithTitleProxyDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def title(self):
+        return getattr(
+            self.instance,
+            f'how_we_help_{self.position_number}_title'
+        )
+
+    @property
+    def icon(self):
+        return getattr(
+            self.instance,
+            f'how_we_help_{self.position_number}_icon'
+        )
+
+    @property
+    def text(self):
+        return getattr(
+            self.instance,
+            f'how_we_help_{self.position_number}_text'
+        )
+
+
 class SectionThreeSubsectionSerializer(serializers.Serializer):
     heading = serializers.CharField(max_length=255)
     teaser = serializers.CharField()
@@ -298,6 +326,12 @@ class LocationStatSerializer(serializers.Serializer):
 class HowWeHelpSerializer(serializers.Serializer):
     text = serializers.CharField(max_length=255)
     icon = wagtail_fields.ImageRenditionField('original')
+
+
+class HowWeHelpWithTitleSerializer(serializers.Serializer):
+    icon = wagtail_fields.ImageRenditionField('original')
+    title = serializers.CharField(max_length=255)
+    text = serializers.CharField(max_length=255)
 
 
 class RelatedArticlePageSerializer(BasePageSerializer):
@@ -1410,6 +1444,12 @@ class FeaturedCardsSerializer(serializers.Serializer):
     cta_link = serializers.CharField(max_length=255)
 
 
+class FeaturedInternationalSectorPageSerializer(BasePageSerializer):
+    heading = serializers.CharField(max_length=255)
+    featured_description = serializers.CharField(max_length=255)
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
+
+
 class InvestInternationalHomePageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField(max_length=50)
     heading = serializers.CharField(max_length=255)
@@ -1459,14 +1499,18 @@ class InvestInternationalHomePageSerializer(BasePageSerializer):
         return serializer.data
 
     def get_sectors(self, instance):
-        from .models.great_international import InternationalSectorPage
-        serializer = BaseInternationalSectorPageSerializer(
-            InternationalSectorPage.objects.live().order_by('heading'),
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-        return serializer.data
+        serialized = []
+        items = [
+            instance.featured_industry_one,
+            instance.featured_industry_two,
+            instance.featured_industry_three,
+        ]
+        for related_page in items:
+            if not related_page:
+                continue
+            serialized.append(
+                FeaturedInternationalSectorPageSerializer(related_page.specific).data)
+        return serialized
 
     def get_high_potential_opportunities(self, instance):
         from .models.invest import InvestHighPotentialOpportunityDetailPage
@@ -1837,6 +1881,68 @@ class AboutUkLandingPageSerializer(BasePageSerializer):
     hero_title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('original')
 
+    intro = core_fields.MarkdownToHTMLField()
+
+    why_choose_uk_title = serializers.CharField()
+    why_choose_uk_content = core_fields.MarkdownToHTMLField()
+    why_choose_uk_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    why_choose_uk_cta_text = serializers.CharField()
+    why_choose_uk_cta_link = serializers.CharField()
+
+    industries_section_title = serializers.CharField()
+    industries_section_intro = core_fields.MarkdownToHTMLField()
+    industries_section_cta_text = serializers.CharField()
+    industries_section_cta_link = serializers.CharField()
+
+    regions_section_title = serializers.CharField()
+    regions_section_content = core_fields.MarkdownToHTMLField()
+    regions_section_image = wagtail_fields.ImageRenditionField('original')
+    regions_section_cta_text = serializers.CharField()
+    regions_section_cta_link = serializers.CharField()
+
+    how_we_help_title = serializers.CharField()
+    how_we_help_intro = core_fields.MarkdownToHTMLField()
+
+    how_we_help = serializers.SerializerMethodField()
+
+    def get_how_we_help(self, instance):
+        data = [
+            HowWeHelpWithTitleProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['one', 'two', 'three', 'four', 'five', 'six']
+        ]
+        serializer = HowWeHelpWithTitleSerializer(data, many=True)
+        return serializer.data
+
+    how_we_help_cta_text = serializers.CharField()
+    how_we_help_cta_link = serializers.CharField()
+
+    ebook_section_image = wagtail_fields.ImageRenditionField('fill-299x423')
+    ebook_section_image_alt_text = serializers.CharField()
+    ebook_section_title = serializers.CharField()
+    ebook_section_body = core_fields.MarkdownToHTMLField()
+    ebook_section_cta_text = serializers.CharField()
+    ebook_section_cta_link = core_fields.DocumentURLField()
+
+    contact_title = serializers.CharField()
+    contact_text = core_fields.MarkdownToHTMLField()
+    contact_cta_text = serializers.CharField()
+    contact_cta_link = serializers.CharField()
+
+    all_sectors = serializers.SerializerMethodField()
+
+    def get_all_sectors(self, instance):
+        queryset = InternationalSectorPage.objects.live().public().all()
+        serialized = InternationalSectorPageSerializer(
+            queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        ).data
+        return serialized
+
 
 class AboutUkArticlesFieldSerializer(serializers.Serializer):
     image = wagtail_fields.ImageRenditionField(
@@ -1906,7 +2012,7 @@ class AboutUkWhyChooseTheUkPageSerializer(BasePageSerializer):
     ebook_section_title = serializers.CharField()
     ebook_section_body = core_fields.MarkdownToHTMLField()
     ebook_section_cta_text = serializers.CharField()
-    ebook_section_cta_link = serializers.CharField()
+    ebook_section_pdf_link = core_fields.DocumentURLField()
 
     contact_us_section_title = serializers.CharField()
     contact_us_section_summary = core_fields.MarkdownToHTMLField()
