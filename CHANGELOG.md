@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- No ticket - Add featured industries to Invest home page
 - CI-321 - About UK landing page
 
 ### Fixed Bugs
