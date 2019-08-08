@@ -2002,7 +2002,7 @@ class AboutUkWhyChooseTheUkPageSerializer(BasePageSerializer):
     ebook_section_title = serializers.CharField()
     ebook_section_body = core_fields.MarkdownToHTMLField()
     ebook_section_cta_text = serializers.CharField()
-    ebook_section_cta_link = serializers.CharField()
+    ebook_section_pdf_link = core_fields.DocumentURLField()
 
     contact_us_section_title = serializers.CharField()
     contact_us_section_summary = core_fields.MarkdownToHTMLField()
