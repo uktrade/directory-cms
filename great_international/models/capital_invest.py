@@ -697,10 +697,10 @@ class CapitalInvestOpportunityPage(
 class CapitalInvestContactFormPage(
     panels.CapitalInvestContactFormPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage
 ):
-    slug_identity = 'contact'
     parent_page_types = ['great_international.InternationalCapitalInvestLandingPage']
+    slug_identity = 'contact'
 
-    breadcrumbs_label = models.CharField(max_length=255)
+    breadcrumbs_label = models.CharField(max_length=255, blank=True)
     heading = models.CharField(max_length=255)
     intro = MarkdownField(blank=True)
     cta_text = models.CharField(max_length=255, blank=True)
