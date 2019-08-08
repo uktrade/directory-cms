@@ -1392,6 +1392,126 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
         related_name='+'
     )
 
+    intro = MarkdownField(blank=True)
+
+    why_choose_uk_title = models.CharField(max_length=255, blank=True)
+    why_choose_uk_content = MarkdownField(blank=True)
+    why_choose_uk_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    why_choose_uk_cta_text = models.CharField(max_length=255, blank=True)
+    why_choose_uk_cta_link = models.CharField(max_length=255, blank=True)
+
+    industries_section_title = models.CharField(max_length=255, blank=True)
+    industries_section_intro = MarkdownField(blank=True)
+    industries_section_cta_text = models.CharField(max_length=255, blank=True)
+    industries_section_cta_link = models.CharField(max_length=255, blank=True)
+
+    regions_section_title = models.CharField(max_length=255, blank=True)
+    regions_section_content = MarkdownField(blank=True)
+    regions_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    regions_section_cta_text = models.CharField(max_length=255, blank=True)
+    regions_section_cta_link = models.CharField(max_length=255, blank=True)
+
+    how_we_help_title = models.CharField(max_length=255, blank=True)
+    how_we_help_intro = MarkdownField(blank=True)
+
+    how_we_help_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    how_we_help_one_title = models.CharField(max_length=255, blank=True)
+    how_we_help_one_text = models.TextField(max_length=255, blank=True)
+    how_we_help_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    how_we_help_two_title = models.CharField(max_length=255, blank=True)
+    how_we_help_two_text = models.TextField(max_length=255, blank=True)
+    how_we_help_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    how_we_help_three_title = models.CharField(max_length=255, blank=True)
+    how_we_help_three_text = models.TextField(max_length=255, blank=True)
+    how_we_help_four_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    how_we_help_four_title = models.CharField(max_length=255, blank=True)
+    how_we_help_four_text = models.TextField(max_length=255, blank=True)
+    how_we_help_five_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    how_we_help_five_title = models.CharField(max_length=255, blank=True)
+    how_we_help_five_text = models.TextField(max_length=255, blank=True)
+    how_we_help_six_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    how_we_help_six_title = models.CharField(max_length=255, blank=True)
+    how_we_help_six_text = models.TextField(max_length=255, blank=True)
+
+    how_we_help_cta_text = models.CharField(max_length=255, blank=True)
+    how_we_help_cta_link = models.CharField(max_length=255, blank=True)
+
+    ebook_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    ebook_section_image_alt_text = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Description of image for screenreaders"
+    )
+    ebook_section_title = models.CharField(max_length=255, blank=True)
+    ebook_section_body = MarkdownField(null=True, blank=True)
+    ebook_section_cta_text = models.CharField(max_length=255, blank=True)
+    ebook_section_cta_link = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    contact_title = models.CharField(max_length=255, blank=True)
+    contact_text = MarkdownField(blank=True)
+    contact_cta_text = models.CharField(max_length=255, blank=True)
+    contact_cta_link = models.CharField(max_length=255, blank=True)
+
 
 class AboutUkArticleField(panels.AboutUkArticleFieldPanels, models.Model):
     image = models.ForeignKey(
@@ -1494,6 +1614,13 @@ class AboutUkWhyChooseTheUkPage(panels.AboutUkWhyChooseTheUkPagePanels, BaseInte
     ebook_section_body = MarkdownField(null=True, blank=True)
     ebook_section_cta_text = models.CharField(max_length=255, blank=True)
     ebook_section_cta_link = models.CharField(max_length=255, blank=True)
+    ebook_section_pdf_link = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
 
     contact_us_section_title = models.CharField(
         max_length=255,
