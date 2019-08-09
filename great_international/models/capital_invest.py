@@ -699,7 +699,7 @@ class CapitalInvestContactFormPage(
     panels.CapitalInvestContactFormPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage
 ):
     parent_page_types = ['great_international.InternationalCapitalInvestLandingPage']
-    slug_identity = 'contact'
+    slug_identity = slugs.CONTACT_FORM_SLUG
 
     breadcrumbs_label = models.CharField(max_length=255, blank=True)
     heading = models.CharField(max_length=255)
