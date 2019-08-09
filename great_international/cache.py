@@ -245,11 +245,16 @@ class CapitalInvestContactFormPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
     model = capital_invest.CapitalInvestContactFormPage
-    subscriptions = []
+    subscriptions = [
+        capital_invest.InternationalCapitalInvestLandingPage
+    ]
 
 
 class CapitalInvestContactFormSuccessPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
     model = capital_invest.CapitalInvestContactFormSuccessPage
-    subscriptions = []
+    subscriptions = [
+        capital_invest.InternationalCapitalInvestLandingPage,
+        capital_invest.CapitalInvestContactFormPage
+    ]
