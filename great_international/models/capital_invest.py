@@ -14,6 +14,7 @@ from core.model_fields import MarkdownField
 
 from great_international.models.base import BaseInternationalPage
 import great_international.panels.capital_invest as panels
+from directory_constants import slugs
 
 
 class RegionCardField(models.Model):
@@ -716,7 +717,7 @@ class CapitalInvestContactFormSuccessPage(
     panels.CapitalInvestContactFormSuccessPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage
 ):
     parent_page_types = ['great_international.CapitalInvestContactFormPage']
-    slug_identity = 'success'
+    slug_identity = slugs.FORM_SUCCESS_SLUG
 
     large_text = models.CharField(max_length=255)
     small_text = MarkdownField(blank=True)
