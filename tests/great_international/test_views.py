@@ -311,8 +311,8 @@ def test_international_trade_home_page_exposes_industries(
 
 def test_sector_page_exposes_articles_child_sub_pages(admin_client, international_root_page):
     sector_page = factories.InternationalSectorPageFactory(parent=international_root_page, slug='sector-one')
-    article_page = factories.InternationalArticlePageFactory(parent=sector_page)
-    article_page2 = factories.InternationalArticlePageFactory(parent=sector_page)
+    factories.InternationalArticlePageFactory(parent=sector_page)
+    factories.InternationalArticlePageFactory(parent=sector_page)
     url = reverse('api:api:pages:detail', kwargs={'pk': sector_page.pk})
     response = admin_client.get(url)
 
