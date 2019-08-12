@@ -83,6 +83,7 @@ def test_models_hierarchy():
     assert capital_invest.CapitalInvestContactFormSuccessPage.allowed_subpage_models() == []
     assert great_international.InternationalSectorPage.allowed_subpage_models() == [
             great_international.InternationalSubSectorPage,
+            great_international.InternationalArticlePage
         ]
     assert great_international.AboutDitLandingPage.allowed_subpage_models() == [
             great_international.AboutDitServicesPage
