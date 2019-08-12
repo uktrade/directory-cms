@@ -257,7 +257,8 @@ class InternationalSectorPage(BaseInternationalSectorPage):
     @classmethod
     def allowed_subpage_models(cls):
         return [
-            InternationalSubSectorPage
+            InternationalSubSectorPage,
+            InternationalArticlePage
         ]
 
 
@@ -784,6 +785,7 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
         'great_international.InternationalCampaignPage',
         'great_international.InternationalCuratedTopicLandingPage',
         'great_international.InternationalGuideLandingPage',
+        'great_international.InternationalSectorPage'
     ]
     subpage_types = []
 

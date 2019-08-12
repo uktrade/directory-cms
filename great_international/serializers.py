@@ -657,12 +657,20 @@ class InternationalSectorPageSerializer(
     ChildPagesSerializerHelper
 ):
     child_sub_sectors = serializers.SerializerMethodField()
+    child_articles = serializers.SerializerMethodField()
 
     def get_child_sub_sectors(self, obj):
         return self.get_child_pages_data_for(
             obj,
             InternationalSubSectorPage,
             MinimalPageSerializer
+        )
+
+    def get_child_articles(self, obj):
+        return self.get_child_pages_data_for(
+            obj,
+            InternationalArticlePage,
+            RelatedArticlePageSerializer
         )
 
 
