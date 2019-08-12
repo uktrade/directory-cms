@@ -48,7 +48,9 @@ class InternationalHomePageOldSubscriber(AbstractDatabaseCacheSubscriber):
 
 class InternationalArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = great_international.InternationalArticlePage
-    subscriptions = []
+    subscriptions = [
+        great_international.InternationalSectorPage
+    ]
 
 
 class InternationalCampaignPageSubscriber(AbstractDatabaseCacheSubscriber):
