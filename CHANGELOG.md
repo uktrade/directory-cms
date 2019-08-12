@@ -5,6 +5,7 @@
 ### Implemented enhancements
 - No ticket - Add featured industries to Invest home page
 - CI-321 - About UK landing page
+- CI-276 - Added `CapitalInvestContactFormPage` and `CapitalInvestContactFormSuccessPage`
 
 ### Fixed Bugs
 - CI-426 - Added pdf document upload to why choose uk page for ebook section
