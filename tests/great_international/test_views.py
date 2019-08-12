@@ -317,4 +317,4 @@ def test_sector_page_exposes_articles_child_sub_pages(admin_client, internationa
     response = admin_client.get(url)
 
     assert response.status_code == 200
-    assert len(response.json()['child_sub_articles']) == 2
+    assert len(response.json()['child_articles']) == 2
