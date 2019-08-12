@@ -221,6 +221,27 @@ class InvestInternationalHomePage(
         max_length=255,
         blank=True
     )
+    featured_industry_one = models.ForeignKey(
+        'great_international.InternationalSectorPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    featured_industry_two = models.ForeignKey(
+        'great_international.InternationalSectorPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    featured_industry_three = models.ForeignKey(
+        'great_international.InternationalSectorPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
 
 class InvestHighPotentialOpportunitiesPage(

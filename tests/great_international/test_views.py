@@ -211,19 +211,13 @@ def test_client_not_passing_region(admin_client, international_root_page):
 
 def test_invest_home_page(document, admin_client, international_root_page):
     page = factories.InvestInternationalHomePageFactory(live=True, parent=international_root_page)
-    sector_one = factories.InternationalSectorPageFactory(
-        live=True, parent=page
-    )
-    sector_two = factories.InternationalSectorPageFactory(
-        live=True, parent=page
-    )
 
     factories.InvestHighPotentialOpportunityDetailPageFactory(
         title='Featured',
         live=True,
         pdf_document=document,
         featured=True,
-        parent=sector_one,
+        parent=international_root_page,
     )
 
     factories.InvestHighPotentialOpportunityDetailPageFactory(
@@ -231,7 +225,7 @@ def test_invest_home_page(document, admin_client, international_root_page):
         live=True,
         pdf_document=document,
         featured=False,
-        parent=sector_two,
+        parent=international_root_page,
     )
 
     url = reverse(
@@ -241,7 +235,6 @@ def test_invest_home_page(document, admin_client, international_root_page):
 
     response = admin_client.get(url, {'service_name': cms.GREAT_INTERNATIONAL})
     assert response.status_code == 200
-    assert len(response.json()['sectors']) == 2
     high_potential_ops = response.json()['high_potential_opportunities']
     assert len(high_potential_ops) == 1
     assert high_potential_ops[0]['title'] == 'Featured'

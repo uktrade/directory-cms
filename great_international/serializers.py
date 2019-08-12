@@ -1452,6 +1452,12 @@ class FeaturedCardsSerializer(serializers.Serializer):
     cta_link = serializers.CharField(max_length=255)
 
 
+class FeaturedInternationalSectorPageSerializer(BasePageSerializer):
+    heading = serializers.CharField(max_length=255)
+    featured_description = serializers.CharField(max_length=255)
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
+
+
 class InvestInternationalHomePageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField(max_length=50)
     heading = serializers.CharField(max_length=255)
@@ -1501,14 +1507,18 @@ class InvestInternationalHomePageSerializer(BasePageSerializer):
         return serializer.data
 
     def get_sectors(self, instance):
-        from .models.great_international import InternationalSectorPage
-        serializer = BaseInternationalSectorPageSerializer(
-            InternationalSectorPage.objects.live().order_by('heading'),
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-        return serializer.data
+        serialized = []
+        items = [
+            instance.featured_industry_one,
+            instance.featured_industry_two,
+            instance.featured_industry_three,
+        ]
+        for related_page in items:
+            if not related_page:
+                continue
+            serialized.append(
+                FeaturedInternationalSectorPageSerializer(related_page.specific).data)
+        return serialized
 
     def get_high_potential_opportunities(self, instance):
         from .models.invest import InvestHighPotentialOpportunityDetailPage
@@ -2010,7 +2020,7 @@ class AboutUkWhyChooseTheUkPageSerializer(BasePageSerializer):
     ebook_section_title = serializers.CharField()
     ebook_section_body = core_fields.MarkdownToHTMLField()
     ebook_section_cta_text = serializers.CharField()
-    ebook_section_cta_link = serializers.CharField()
+    ebook_section_pdf_link = core_fields.DocumentURLField()
 
     contact_us_section_title = serializers.CharField()
     contact_us_section_summary = core_fields.MarkdownToHTMLField()
