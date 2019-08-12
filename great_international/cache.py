@@ -241,3 +241,22 @@ class AboutUkWhyChooseTheUkPageSubscriber(
 ):
     model = great_international.AboutUkWhyChooseTheUkPage
     subscriptions = []
+
+
+class CapitalInvestContactFormPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = capital_invest.CapitalInvestContactFormPage
+    subscriptions = [
+        capital_invest.InternationalCapitalInvestLandingPage
+    ]
+
+
+class CapitalInvestContactFormSuccessPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = capital_invest.CapitalInvestContactFormSuccessPage
+    subscriptions = [
+        capital_invest.InternationalCapitalInvestLandingPage,
+        capital_invest.CapitalInvestContactFormPage
+    ]
