@@ -14,6 +14,7 @@ from core.model_fields import MarkdownField
 
 from great_international.models.base import BaseInternationalPage
 import great_international.panels.capital_invest as panels
+from directory_constants import slugs
 
 
 class RegionCardField(models.Model):
@@ -126,6 +127,12 @@ class InternationalCapitalInvestLandingPage(
     slug_identity = 'capital-invest'
 
     parent_page_types = ['great_international.InternationalHomePage']
+
+    @classmethod
+    def allowed_subpage_models(cls):
+        return [
+            CapitalInvestContactFormPage
+        ]
 
     hero_title = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
@@ -686,3 +693,31 @@ class CapitalInvestOpportunityPage(
 
     contact_title = models.CharField(max_length=255, blank=True)
     contact_text = MarkdownField(blank=True)
+
+
+class CapitalInvestContactFormPage(
+    panels.CapitalInvestContactFormPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage
+):
+    parent_page_types = ['great_international.InternationalCapitalInvestLandingPage']
+    slug_identity = slugs.CONTACT_FORM_SLUG
+
+    breadcrumbs_label = models.CharField(max_length=255, blank=True)
+    heading = models.CharField(max_length=255)
+    intro = MarkdownField(blank=True)
+    cta_text = models.CharField(max_length=255)
+
+    @classmethod
+    def allowed_subpage_models(cls):
+        return [
+            CapitalInvestContactFormSuccessPage
+        ]
+
+
+class CapitalInvestContactFormSuccessPage(
+    panels.CapitalInvestContactFormSuccessPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage
+):
+    parent_page_types = ['great_international.CapitalInvestContactFormPage']
+    slug_identity = slugs.FORM_SUCCESS_SLUG
+
+    large_text = models.CharField(max_length=255)
+    small_text = MarkdownField(blank=True)
