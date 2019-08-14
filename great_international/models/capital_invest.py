@@ -250,7 +250,7 @@ class InternationalCapitalInvestLandingPage(
     contact_section_cta_text = models.CharField(max_length=255, blank=True)
 
 
-# `CapitalInvestRegionPage` is to be replaced with `AboutUkRegionPage`, can be deleted when CI-431 has been released
+# `CapitalInvestRegionPage` is to be replaced with `AboutUkRegionPage`, can be deleted when CI-431 has been released in great-international-ui  # NOQA
 class CapitalInvestRegionPage(panels.CapitalInvestRegionPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
 
