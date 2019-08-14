@@ -796,6 +796,7 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
                   "below the main title on the article page"
     )
     article_teaser = models.TextField(
+        blank=True,
         help_text="This is a subheading that displays when the article "
                   "is featured on another page"
     )
