@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- No ticket - Make teaser field optional in international articles
 - No ticket - Add featured industries to Invest home page
 - CI-321 - About UK landing page
 - CI-276 - Added `CapitalInvestContactFormPage` and `CapitalInvestContactFormSuccessPage`
