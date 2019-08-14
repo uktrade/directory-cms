@@ -10,6 +10,11 @@ class PageTitleAndUrlSerializer(serializers.Serializer):
     url = serializers.CharField()
 
 
+class PageBreadcrumbsAndUrlSerializer(serializers.Serializer):
+    title = serializers.CharField(source='breadcrumbs_label')
+    url = serializers.CharField()
+
+
 class BasePageSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     seo_title = serializers.CharField()
@@ -27,7 +32,15 @@ class BasePageSerializer(serializers.Serializer):
         breadcrumbs = [
             page.specific for page in instance.specific.ancestors_in_app]
         breadcrumbs.append(instance)
-        return PageTitleAndUrlSerializer(breadcrumbs, many=True).data
+        serialized = []
+
+        for crumb in breadcrumbs:
+            if hasattr(crumb, 'breadcrumbs_label'):
+                serialized.append(PageBreadcrumbsAndUrlSerializer(crumb).data)
+            else:
+                serialized.append(PageTitleAndUrlSerializer(crumb).data)
+
+        return serialized
 
     def get_page_type(self, instance):
         return instance.__class__.__name__

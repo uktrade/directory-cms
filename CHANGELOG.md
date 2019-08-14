@@ -7,6 +7,7 @@
 - No ticket - Add featured industries to Invest home page
 - CI-321 - About UK landing page
 - CI-276 - Added `CapitalInvestContactFormPage` and `CapitalInvestContactFormSuccessPage`
+- CI-429 - Tree based breadcrumbs can now use `breadcrumbs_label` if available 
 
 ### Fixed Bugs
 - CI-426 - Added pdf document upload to why choose uk page for ebook section
