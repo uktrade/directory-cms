@@ -35,6 +35,8 @@ class GreatInternationalConfig(AppConfig):
         cache.AboutDitLandingPageSubscriber.subscribe()
         cache.AboutDitServicesPageSubscriber.subscribe()
         cache.AboutUkLandingPageSubscriber.subscribe()
+        cache.AboutUkRegionListingPageSubscriber.subscribe()
+        cache.AboutUkRegionPageSubscriber.subscribe()
         cache.AboutUkWhyChooseTheUkPageSubscriber.subscribe()
         cache.CapitalInvestContactFormPageSubscriber.subscribe()
         cache.CapitalInvestContactFormSuccessPageSubscriber.subscribe()

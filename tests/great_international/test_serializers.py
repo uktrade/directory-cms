@@ -6,7 +6,7 @@ from great_international.serializers import (
     InternationalCampaignPageSerializer, InternationalHomePageSerializer,
     InternationalCuratedTopicLandingPageSerializer,
     InternationalGuideLandingPageSerializer,
-    CapitalInvestRegionPageSerializer,
+    AboutUkRegionPageSerializer,
     InternationalCapitalInvestLandingPageSerializer,
     InvestHighPotentialOpportunityFormPageSerializer,
     CapitalInvestOpportunityPageSerializer,
@@ -16,14 +16,14 @@ from great_international.serializers import (
     AboutUkWhyChooseTheUkPageSerializer,
     AboutUkLandingPageSerializer,
     InvestInternationalHomePageSerializer,
-)
+    CapitalInvestRegionPageSerializer)
 from tests.great_international.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
     InternationalHomePageOldFactory,
     InternationalCuratedTopicLandingPageFactory,
     InternationalGuideLandingPageFactory,
-    CapitalInvestRegionPageFactory,
+    AboutUkRegionPageFactory,
     InternationalCapitalInvestLandingPageFactory,
     CapitalInvestOpportunityPageFactory,
     InvestHighPotentialOpportunityFormPageFactory,
@@ -34,7 +34,7 @@ from tests.great_international.factories import (
     AboutUkWhyChooseTheUkPageFactory,
     AboutUkLandingPageFactory,
     InvestInternationalHomePageFactory,
-)
+    CapitalInvestRegionPageFactory)
 
 from great_international.models.capital_invest import (
     CapitalInvestRelatedRegions,
@@ -335,11 +335,35 @@ def test_capital_invest_region_page_has_statistics(international_root_page, rf):
 
 
 @pytest.mark.django_db
+def test_about_uk_region_page_has_statistics(international_root_page, rf):
+    region = AboutUkRegionPageFactory(
+        slug='region-slug',
+        parent=international_root_page
+    )
+
+    serializer = AboutUkRegionPageSerializer(
+        instance=region,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['location_stats']) == 6
+    assert len(serializer.data['economics_stats']) == 6
+    for statistic in serializer.data['location_stats']:
+        assert 'number' in statistic
+        assert 'heading' in statistic
+        assert 'smallprint' in statistic
+    for statistic in serializer.data['economics_stats']:
+        assert 'number' in statistic
+        assert 'heading' in statistic
+        assert 'smallprint' in statistic
+
+
+@pytest.mark.django_db
 def test_capital_invest_landing_page_gets_added_related_regions(
         rf, international_root_page
 ):
 
-    region = CapitalInvestRegionPageFactory(
+    region = AboutUkRegionPageFactory(
         parent=international_root_page,
         slug='region'
     )
