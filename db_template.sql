@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
--- Dumped by pg_dump version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
+-- Dumped from database version 9.6.14
+-- Dumped by pg_dump version 11.3
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,22 +12,9 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
 
 SET default_tablespace = '';
 
@@ -13227,6 +13214,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 358	great_international	0064_merge_20190808_0928	2019-08-08 10:30:16.542222+01
 359	great_international	0065_auto_20190808_1032	2019-08-08 11:37:15.180475+01
 360	great_international	0066_capitalinvestcontactformpage_capitalinvestcontactformsuccesspage	2019-08-09 09:15:15.500538+01
+361	great_international	0067_auto_20190814_0940	2019-08-14 10:42:44.256149+01
 \.
 
 
@@ -14326,7 +14314,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 121, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 360, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 361, true);
 
 
 --
