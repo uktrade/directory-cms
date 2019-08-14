@@ -370,7 +370,7 @@ class CapitalInvestOpportunityPagePanels:
                     'related_region',
                     [
                         'great_international.'
-                        'CapitalInvestRegionPage'
+                        'AboutUkRegionPage'
                     ]
                 ),
             ],
