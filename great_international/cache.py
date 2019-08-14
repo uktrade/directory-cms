@@ -110,7 +110,8 @@ class InternationalCapitalInvestLandingPageSubscriber(
 ):
     model = capital_invest.InternationalCapitalInvestLandingPage
     subscriptions = [
-        capital_invest.CapitalInvestRegionPage
+        capital_invest.CapitalInvestRegionPage,
+        great_international.AboutUkRegionPage
     ]
 
 
@@ -233,6 +234,21 @@ class AboutUkLandingPageSubscriber(
     model = great_international.AboutUkLandingPage
     subscriptions = [
         great_international.InternationalSectorPage
+    ]
+
+
+class AboutUkRegionListingPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = great_international.AboutUkRegionListingPage
+    subscriptions = [
+        great_international.AboutUkLandingPage
+    ]
+
+
+class AboutUkRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = great_international.AboutUkRegionPage
+    subscriptions = [
+        great_international.AboutUkLandingPage,
+        great_international.AboutUkRegionListingPage
     ]
 
 

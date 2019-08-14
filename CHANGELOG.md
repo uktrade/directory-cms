@@ -7,6 +7,7 @@
 - CI-321 - About UK landing page
 - CI-276 - Added `CapitalInvestContactFormPage` and `CapitalInvestContactFormSuccessPage`
 - CI-429 - Tree based breadcrumbs can now use `breadcrumbs_label` if available 
+- CI-431 - Added `AboutUkRegionListingPage` and `AboutUkRegionPage` which will replace `CapitalInvestRegionPage`
 
 ### Fixed Bugs
 - CI-426 - Added pdf document upload to why choose uk page for ebook section

@@ -1382,7 +1382,8 @@ class AboutDitServicesPage(panels.AboutDitServicesPagePanels, BaseInternationalP
 class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
-        'great_international.AboutUkWhyChooseTheUkPage'
+        'great_international.AboutUkWhyChooseTheUkPage',
+        'great_international.AboutUkRegionListingPage',
     ]
 
     breadcrumbs_label = models.CharField(max_length=255)
@@ -1513,6 +1514,233 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
     contact_text = MarkdownField(blank=True)
     contact_cta_text = models.CharField(max_length=255, blank=True)
     contact_cta_link = models.CharField(max_length=255, blank=True)
+
+
+class AboutUkRegionListingPage(
+    panels.AboutUkRegionListingPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage
+):
+
+    slug_identity = 'regions'
+
+    parent_page_types = ['great_international.AboutUkLandingPage']
+    subpage_types = [
+        'great_international.AboutUkRegionPage',
+    ]
+
+    breadcrumbs_label = models.CharField(max_length=255)
+    hero_title = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    intro = MarkdownField(blank=True)
+
+
+class AboutUkRegionPage(panels.AboutUkRegionPagePanels, BaseInternationalPage):
+    parent_page_types = ['great_international.AboutUkRegionListingPage']
+
+    breadcrumbs_label = models.CharField(max_length=255)
+    hero_title = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    featured_description = models.TextField(max_length=255, blank=True)
+
+    region_summary_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    region_summary_section_intro = models.TextField(max_length=255, blank=True)
+    region_summary_section_content = MarkdownField(blank=True)
+
+    investment_opps_title = models.CharField(
+        max_length=255,
+        verbose_name="Investment opportunities title", blank=True
+    )
+    investment_opps_intro = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Investment opportunities intro"
+    )
+
+    economics_data_title = models.CharField(max_length=255, blank=True)
+    economics_stat_1_number = models.CharField(max_length=255, blank=True)
+    economics_stat_1_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_1_smallprint = models.CharField(max_length=255, blank=True)
+
+    economics_stat_2_number = models.CharField(max_length=255, blank=True)
+    economics_stat_2_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_2_smallprint = models.CharField(max_length=255, blank=True)
+
+    economics_stat_3_number = models.CharField(max_length=255, blank=True)
+    economics_stat_3_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_3_smallprint = models.CharField(max_length=255, blank=True)
+
+    economics_stat_4_number = models.CharField(max_length=255, blank=True)
+    economics_stat_4_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_4_smallprint = models.CharField(max_length=255, blank=True)
+
+    economics_stat_5_number = models.CharField(max_length=255, blank=True)
+    economics_stat_5_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_5_smallprint = models.CharField(max_length=255, blank=True)
+
+    economics_stat_6_number = models.CharField(max_length=255, blank=True)
+    economics_stat_6_heading = models.CharField(max_length=255, blank=True)
+    economics_stat_6_smallprint = models.CharField(max_length=255, blank=True)
+
+    location_data_title = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_1_number = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_1_heading = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_1_smallprint = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    location_stat_2_number = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_2_heading = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_2_smallprint = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    location_stat_3_number = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_3_heading = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_3_smallprint = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    location_stat_4_number = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_4_heading = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_4_smallprint = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    location_stat_5_number = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_5_heading = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_5_smallprint = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    location_stat_6_number = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_6_heading = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    location_stat_6_smallprint = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    subsections_title = models.CharField(max_length=255, blank=True)
+    sub_section_one_title = models.CharField(max_length=255, blank=True)
+    sub_section_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    sub_section_one_content = MarkdownField(blank=True)
+
+    sub_section_two_title = models.CharField(max_length=255, blank=True)
+    sub_section_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    sub_section_two_content = MarkdownField(blank=True)
+
+    sub_section_three_title = models.CharField(max_length=255, blank=True)
+    sub_section_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    sub_section_three_content = MarkdownField(blank=True)
+
+    property_and_infrastructure_section_title = models.CharField(
+        max_length=255,
+        blank=True
+    )
+    property_and_infrastructure_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    property_and_infrastructure_section_content = MarkdownField(blank=True)
+
+    case_study_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    case_study_title = models.CharField(max_length=255, blank=True)
+    case_study_text = models.TextField(max_length=255, blank=True)
+    case_study_cta_text = models.CharField(max_length=255, blank=True)
+    case_study_cta_link = models.CharField(max_length=255, blank=True)
+
+    contact_title = models.CharField(max_length=255, blank=True)
+    contact_text = MarkdownField(blank=True)
+    contact_cta_link = models.CharField(max_length=255, blank=True)
+    contact_cta_text = models.CharField(max_length=255, blank=True)
 
 
 class AboutUkArticleField(panels.AboutUkArticleFieldPanels, models.Model):

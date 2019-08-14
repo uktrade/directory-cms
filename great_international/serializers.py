@@ -1952,6 +1952,91 @@ class AboutUkLandingPageSerializer(BasePageSerializer):
         return serialized
 
 
+class AboutUkRegionListingPageSerializer(BasePageSerializer):
+    breadcrumbs_label = serializers.CharField()
+    hero_title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('original')
+
+    intro = core_fields.MarkdownToHTMLField()
+
+
+class AboutUkRegionPageSerializer(BasePageSerializer):
+
+    hero_title = serializers.CharField(max_length=255)
+    breadcrumbs_label = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+
+    featured_description = serializers.CharField(max_length=255)
+
+    region_summary_section_image = wagtail_fields.ImageRenditionField(
+        'original')
+    region_summary_section_intro = serializers.CharField(max_length=255)
+    region_summary_section_content = core_fields.MarkdownToHTMLField(
+        max_length=255
+    )
+
+    investment_opps_title = serializers.CharField(max_length=255)
+    investment_opps_intro = serializers.CharField(max_length=255)
+    economics_stats = serializers.SerializerMethodField()
+    location_stats = serializers.SerializerMethodField()
+
+    subsections_title = serializers.CharField(max_length=255)
+    subsections = serializers.SerializerMethodField()
+
+    property_and_infrastructure_section_title = serializers.CharField(
+        max_length=255
+    )
+    property_and_infrastructure_section_image = \
+        wagtail_fields.ImageRenditionField('original')
+    property_and_infrastructure_section_content = \
+        core_fields.MarkdownToHTMLField(max_length=255)
+
+    case_study_image = wagtail_fields.ImageRenditionField('original')
+    case_study_title = serializers.CharField(max_length=255)
+    case_study_text = serializers.CharField(max_length=255)
+    case_study_cta_text = serializers.CharField(max_length=255)
+
+    case_study_cta_link = serializers.CharField(max_length=255)
+
+    contact_title = serializers.CharField(max_length=255)
+    contact_text = core_fields.MarkdownToHTMLField()
+    contact_cta_link = serializers.CharField(max_length=255)
+    contact_cta_text = serializers.CharField(max_length=255)
+
+    def get_economics_stats(self, instance):
+        data = [
+            EconomicsStatisticProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['1', '2', '3', '4', '5', '6']
+        ]
+        serializer = EconomicStatSerializer(data, many=True)
+        return serializer.data
+
+    def get_location_stats(self, instance):
+        data = [
+            LocationStatisticProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['1', '2', '3', '4', '5', '6']
+        ]
+        serializer = LocationStatSerializer(data, many=True)
+        return serializer.data
+
+    def get_subsections(self, instance):
+        data = [
+            RegionSubsectionProxyDataWrapper(
+                instance=instance,
+                position_number=num
+            )
+            for num in ['one', 'two', 'three']
+        ]
+        serializer = RegionSubsectionSerializer(data, many=True)
+        return serializer.data
+
+
 class AboutUkArticlesFieldSerializer(serializers.Serializer):
     image = wagtail_fields.ImageRenditionField(
         'fill-640x360'
