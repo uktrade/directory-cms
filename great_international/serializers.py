@@ -447,7 +447,7 @@ class RelatedSubSectorSerializer(serializers.Serializer):
         sector = obj.related_sub_sector
 
         if not sector:
-            return []
+            return ''
         serializer = MinimalPageSerializer(
             sector.specific)
         return serializer.data['heading']
