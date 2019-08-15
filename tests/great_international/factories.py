@@ -738,3 +738,33 @@ class AboutUkWhyChooseTheUkPageFactory(
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     last_published_at = timezone.now()
     parent = None
+
+
+class CapitalInvestContactFormPageFactory(
+    wagtail_factories.PageFactory
+):
+
+    class Meta:
+        model = models.capital_invest.CapitalInvestContactFormPage
+
+    heading = factory.fuzzy.FuzzyText(length=50)
+    intro = factory.fuzzy.FuzzyText(length=50)
+    cta_text = factory.fuzzy.FuzzyText(length=50)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None
+
+
+class CapitalInvestContactFormSuccessPageFactory(
+    wagtail_factories.PageFactory
+):
+
+    class Meta:
+        model = models.capital_invest.CapitalInvestContactFormSuccessPage
+
+    large_text = factory.fuzzy.FuzzyText(length=50)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None

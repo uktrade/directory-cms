@@ -71,11 +71,19 @@ def test_models_hierarchy():
     assert great_international.InternationalEUExitFormSuccessPage.allowed_parent_page_models() == [
             great_international.InternationalEUExitFormPage,
         ]
+    assert capital_invest.InternationalCapitalInvestLandingPage.allowed_subpage_models() == [
+            capital_invest.CapitalInvestContactFormPage,
+        ]
     assert capital_invest.CapitalInvestOpportunityListingPage.allowed_subpage_models() == [
             capital_invest.CapitalInvestOpportunityPage,
         ]
+    assert capital_invest.CapitalInvestContactFormPage.allowed_subpage_models() == [
+            capital_invest.CapitalInvestContactFormSuccessPage
+        ]
+    assert capital_invest.CapitalInvestContactFormSuccessPage.allowed_subpage_models() == []
     assert great_international.InternationalSectorPage.allowed_subpage_models() == [
             great_international.InternationalSubSectorPage,
+            great_international.InternationalArticlePage
         ]
     assert great_international.AboutDitLandingPage.allowed_subpage_models() == [
             great_international.AboutDitServicesPage
