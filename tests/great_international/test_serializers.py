@@ -831,7 +831,7 @@ def test_opportunity_page_can_add_sub_sector_as_related_null_case(
         context={'request': rf.get('/')}
     )
 
-    assert opportunity_serializer.data['sub_sectors'] == [[]]
+    assert opportunity_serializer.data['sub_sectors'] == ['']
 
 
 @pytest.mark.django_db
