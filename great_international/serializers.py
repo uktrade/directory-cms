@@ -657,12 +657,20 @@ class InternationalSectorPageSerializer(
     ChildPagesSerializerHelper
 ):
     child_sub_sectors = serializers.SerializerMethodField()
+    child_articles = serializers.SerializerMethodField()
 
     def get_child_sub_sectors(self, obj):
         return self.get_child_pages_data_for(
             obj,
             InternationalSubSectorPage,
             MinimalPageSerializer
+        )
+
+    def get_child_articles(self, obj):
+        return self.get_child_pages_data_for(
+            obj,
+            InternationalArticlePage,
+            RelatedArticlePageSerializer
         )
 
 
@@ -2018,3 +2026,15 @@ class AboutUkWhyChooseTheUkPageSerializer(BasePageSerializer):
     contact_us_section_summary = core_fields.MarkdownToHTMLField()
     contact_us_section_cta_text = serializers.CharField()
     contact_us_section_cta_link = serializers.CharField()
+
+
+class CapitalInvestContactFormPageSerializer(BasePageSerializer):
+    breadcrumbs_label = serializers.CharField()
+    heading = serializers.CharField()
+    intro = core_fields.MarkdownToHTMLField()
+    cta_text = serializers.CharField()
+
+
+class CapitalInvestContactFormSuccessPageSerializer(BasePageSerializer):
+    large_text = serializers.CharField()
+    small_text = core_fields.MarkdownToHTMLField()

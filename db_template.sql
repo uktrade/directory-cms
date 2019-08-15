@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
--- Dumped by pg_dump version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
+-- Dumped from database version 9.6.14
+-- Dumped by pg_dump version 11.3
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,22 +12,9 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
 
 SET default_tablespace = '';
 
@@ -2985,6 +2972,82 @@ CREATE TABLE public.great_international_aboutukwhychoosetheukpage (
     ebook_section_pdf_link_ja_id integer,
     ebook_section_pdf_link_pt_id integer,
     ebook_section_pdf_link_zh_hans_id integer
+);
+
+
+--
+-- Name: great_international_capitalinvestcontactformpage; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.great_international_capitalinvestcontactformpage (
+    page_ptr_id integer NOT NULL,
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL,
+    breadcrumbs_label character varying(255) NOT NULL,
+    breadcrumbs_label_en_gb character varying(255),
+    breadcrumbs_label_de character varying(255),
+    breadcrumbs_label_ja character varying(255),
+    breadcrumbs_label_zh_hans character varying(255),
+    breadcrumbs_label_fr character varying(255),
+    breadcrumbs_label_es character varying(255),
+    breadcrumbs_label_pt character varying(255),
+    breadcrumbs_label_ar character varying(255),
+    heading character varying(255) NOT NULL,
+    heading_en_gb character varying(255),
+    heading_de character varying(255),
+    heading_ja character varying(255),
+    heading_zh_hans character varying(255),
+    heading_fr character varying(255),
+    heading_es character varying(255),
+    heading_pt character varying(255),
+    heading_ar character varying(255),
+    intro text NOT NULL,
+    intro_en_gb text,
+    intro_de text,
+    intro_ja text,
+    intro_zh_hans text,
+    intro_fr text,
+    intro_es text,
+    intro_pt text,
+    intro_ar text,
+    cta_text character varying(255) NOT NULL,
+    cta_text_en_gb character varying(255),
+    cta_text_de character varying(255),
+    cta_text_ja character varying(255),
+    cta_text_zh_hans character varying(255),
+    cta_text_fr character varying(255),
+    cta_text_es character varying(255),
+    cta_text_pt character varying(255),
+    cta_text_ar character varying(255)
+);
+
+
+--
+-- Name: great_international_capitalinvestcontactformsuccesspage; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.great_international_capitalinvestcontactformsuccesspage (
+    page_ptr_id integer NOT NULL,
+    service_name character varying(100),
+    uses_tree_based_routing boolean NOT NULL,
+    large_text character varying(255) NOT NULL,
+    large_text_en_gb character varying(255),
+    large_text_de character varying(255),
+    large_text_ja character varying(255),
+    large_text_zh_hans character varying(255),
+    large_text_fr character varying(255),
+    large_text_es character varying(255),
+    large_text_pt character varying(255),
+    large_text_ar character varying(255),
+    small_text text NOT NULL,
+    small_text_en_gb text,
+    small_text_de text,
+    small_text_ja text,
+    small_text_zh_hans text,
+    small_text_fr text,
+    small_text_es text,
+    small_text_pt text,
+    small_text_ar text
 );
 
 
@@ -12566,6 +12629,14 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 475	Can change invest region page	112	change_investregionpage
 476	Can delete invest region page	112	delete_investregionpage
 477	Can view invest region page	112	view_investregionpage
+478	Can add capital invest contact form page	120	add_capitalinvestcontactformpage
+479	Can change capital invest contact form page	120	change_capitalinvestcontactformpage
+480	Can delete capital invest contact form page	120	delete_capitalinvestcontactformpage
+481	Can view capital invest contact form page	120	view_capitalinvestcontactformpage
+482	Can add capital invest contact form success page	121	add_capitalinvestcontactformsuccesspage
+483	Can change capital invest contact form success page	121	change_capitalinvestcontactformsuccesspage
+484	Can delete capital invest contact form success page	121	delete_capitalinvestcontactformsuccesspage
+485	Can view capital invest contact form success page	121	view_capitalinvestcontactformsuccesspage
 \.
 
 
@@ -12773,6 +12844,8 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 118	great_international	aboutuklandingpage
 119	great_international	aboutukarticlesfields
 112	great_international	investregionpage
+120	great_international	capitalinvestcontactformpage
+121	great_international	capitalinvestcontactformsuccesspage
 \.
 
 
@@ -13140,6 +13213,8 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 357	great_international	0063_auto_20190807_1504	2019-08-08 10:30:16.491643+01
 358	great_international	0064_merge_20190808_0928	2019-08-08 10:30:16.542222+01
 359	great_international	0065_auto_20190808_1032	2019-08-08 11:37:15.180475+01
+360	great_international	0066_capitalinvestcontactformpage_capitalinvestcontactformsuccesspage	2019-08-09 09:15:15.500538+01
+361	great_international	0067_auto_20190814_0940	2019-08-14 10:42:44.256149+01
 \.
 
 
@@ -13492,6 +13567,22 @@ COPY public.great_international_aboutuklandingpage (page_ptr_id, service_name, u
 --
 
 COPY public.great_international_aboutukwhychoosetheukpage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, hero_title, hero_title_en_gb, hero_title_de, hero_title_ja, hero_title_zh_hans, hero_title_fr, hero_title_es, hero_title_pt, hero_title_ar, teaser, teaser_en_gb, teaser_de, teaser_ja, teaser_zh_hans, teaser_fr, teaser_es, teaser_pt, teaser_ar, section_one_body, section_one_body_en_gb, section_one_body_de, section_one_body_ja, section_one_body_zh_hans, section_one_body_fr, section_one_body_es, section_one_body_pt, section_one_body_ar, statistic_1_number, statistic_1_number_en_gb, statistic_1_number_de, statistic_1_number_ja, statistic_1_number_zh_hans, statistic_1_number_fr, statistic_1_number_es, statistic_1_number_pt, statistic_1_number_ar, statistic_1_heading, statistic_1_heading_en_gb, statistic_1_heading_de, statistic_1_heading_ja, statistic_1_heading_zh_hans, statistic_1_heading_fr, statistic_1_heading_es, statistic_1_heading_pt, statistic_1_heading_ar, statistic_1_smallprint, statistic_1_smallprint_en_gb, statistic_1_smallprint_de, statistic_1_smallprint_ja, statistic_1_smallprint_zh_hans, statistic_1_smallprint_fr, statistic_1_smallprint_es, statistic_1_smallprint_pt, statistic_1_smallprint_ar, statistic_2_number, statistic_2_number_en_gb, statistic_2_number_de, statistic_2_number_ja, statistic_2_number_zh_hans, statistic_2_number_fr, statistic_2_number_es, statistic_2_number_pt, statistic_2_number_ar, statistic_2_heading, statistic_2_heading_en_gb, statistic_2_heading_de, statistic_2_heading_ja, statistic_2_heading_zh_hans, statistic_2_heading_fr, statistic_2_heading_es, statistic_2_heading_pt, statistic_2_heading_ar, statistic_2_smallprint, statistic_2_smallprint_en_gb, statistic_2_smallprint_de, statistic_2_smallprint_ja, statistic_2_smallprint_zh_hans, statistic_2_smallprint_fr, statistic_2_smallprint_es, statistic_2_smallprint_pt, statistic_2_smallprint_ar, statistic_3_number, statistic_3_number_en_gb, statistic_3_number_de, statistic_3_number_ja, statistic_3_number_zh_hans, statistic_3_number_fr, statistic_3_number_es, statistic_3_number_pt, statistic_3_number_ar, statistic_3_heading, statistic_3_heading_en_gb, statistic_3_heading_de, statistic_3_heading_ja, statistic_3_heading_zh_hans, statistic_3_heading_fr, statistic_3_heading_es, statistic_3_heading_pt, statistic_3_heading_ar, statistic_3_smallprint, statistic_3_smallprint_en_gb, statistic_3_smallprint_de, statistic_3_smallprint_ja, statistic_3_smallprint_zh_hans, statistic_3_smallprint_fr, statistic_3_smallprint_es, statistic_3_smallprint_pt, statistic_3_smallprint_ar, statistic_4_number, statistic_4_number_en_gb, statistic_4_number_de, statistic_4_number_ja, statistic_4_number_zh_hans, statistic_4_number_fr, statistic_4_number_es, statistic_4_number_pt, statistic_4_number_ar, statistic_4_heading, statistic_4_heading_en_gb, statistic_4_heading_de, statistic_4_heading_ja, statistic_4_heading_zh_hans, statistic_4_heading_fr, statistic_4_heading_es, statistic_4_heading_pt, statistic_4_heading_ar, statistic_4_smallprint, statistic_4_smallprint_en_gb, statistic_4_smallprint_de, statistic_4_smallprint_ja, statistic_4_smallprint_zh_hans, statistic_4_smallprint_fr, statistic_4_smallprint_es, statistic_4_smallprint_pt, statistic_4_smallprint_ar, statistic_5_number, statistic_5_number_en_gb, statistic_5_number_de, statistic_5_number_ja, statistic_5_number_zh_hans, statistic_5_number_fr, statistic_5_number_es, statistic_5_number_pt, statistic_5_number_ar, statistic_5_heading, statistic_5_heading_en_gb, statistic_5_heading_de, statistic_5_heading_ja, statistic_5_heading_zh_hans, statistic_5_heading_fr, statistic_5_heading_es, statistic_5_heading_pt, statistic_5_heading_ar, statistic_5_smallprint, statistic_5_smallprint_en_gb, statistic_5_smallprint_de, statistic_5_smallprint_ja, statistic_5_smallprint_zh_hans, statistic_5_smallprint_fr, statistic_5_smallprint_es, statistic_5_smallprint_pt, statistic_5_smallprint_ar, statistic_6_number, statistic_6_number_en_gb, statistic_6_number_de, statistic_6_number_ja, statistic_6_number_zh_hans, statistic_6_number_fr, statistic_6_number_es, statistic_6_number_pt, statistic_6_number_ar, statistic_6_heading, statistic_6_heading_en_gb, statistic_6_heading_de, statistic_6_heading_ja, statistic_6_heading_zh_hans, statistic_6_heading_fr, statistic_6_heading_es, statistic_6_heading_pt, statistic_6_heading_ar, statistic_6_smallprint, statistic_6_smallprint_en_gb, statistic_6_smallprint_de, statistic_6_smallprint_ja, statistic_6_smallprint_zh_hans, statistic_6_smallprint_fr, statistic_6_smallprint_es, statistic_6_smallprint_pt, statistic_6_smallprint_ar, contact_us_section_title, contact_us_section_title_en_gb, contact_us_section_title_de, contact_us_section_title_ja, contact_us_section_title_zh_hans, contact_us_section_title_fr, contact_us_section_title_es, contact_us_section_title_pt, contact_us_section_title_ar, contact_us_section_summary, contact_us_section_summary_en_gb, contact_us_section_summary_de, contact_us_section_summary_ja, contact_us_section_summary_zh_hans, contact_us_section_summary_fr, contact_us_section_summary_es, contact_us_section_summary_pt, contact_us_section_summary_ar, contact_us_section_cta_text, contact_us_section_cta_text_en_gb, contact_us_section_cta_text_de, contact_us_section_cta_text_ja, contact_us_section_cta_text_zh_hans, contact_us_section_cta_text_fr, contact_us_section_cta_text_es, contact_us_section_cta_text_pt, contact_us_section_cta_text_ar, contact_us_section_cta_link, contact_us_section_cta_link_en_gb, contact_us_section_cta_link_de, contact_us_section_cta_link_ja, contact_us_section_cta_link_zh_hans, contact_us_section_cta_link_fr, contact_us_section_cta_link_es, contact_us_section_cta_link_pt, contact_us_section_cta_link_ar, hero_image_id, hero_image_ar_id, hero_image_de_id, hero_image_en_gb_id, hero_image_es_id, hero_image_fr_id, hero_image_ja_id, hero_image_pt_id, hero_image_zh_hans_id, section_one_image_id, section_one_image_ar_id, section_one_image_de_id, section_one_image_en_gb_id, section_one_image_es_id, section_one_image_fr_id, section_one_image_ja_id, section_one_image_pt_id, section_one_image_zh_hans_id, ebook_section_body, ebook_section_body_ar, ebook_section_body_de, ebook_section_body_en_gb, ebook_section_body_es, ebook_section_body_fr, ebook_section_body_ja, ebook_section_body_pt, ebook_section_body_zh_hans, ebook_section_cta_link, ebook_section_cta_link_ar, ebook_section_cta_link_de, ebook_section_cta_link_en_gb, ebook_section_cta_link_es, ebook_section_cta_link_fr, ebook_section_cta_link_ja, ebook_section_cta_link_pt, ebook_section_cta_link_zh_hans, ebook_section_cta_text, ebook_section_cta_text_ar, ebook_section_cta_text_de, ebook_section_cta_text_en_gb, ebook_section_cta_text_es, ebook_section_cta_text_fr, ebook_section_cta_text_ja, ebook_section_cta_text_pt, ebook_section_cta_text_zh_hans, ebook_section_image_id, ebook_section_image_alt_text, ebook_section_image_alt_text_ar, ebook_section_image_alt_text_de, ebook_section_image_alt_text_en_gb, ebook_section_image_alt_text_es, ebook_section_image_alt_text_fr, ebook_section_image_alt_text_ja, ebook_section_image_alt_text_pt, ebook_section_image_alt_text_zh_hans, ebook_section_image_ar_id, ebook_section_image_de_id, ebook_section_image_en_gb_id, ebook_section_image_es_id, ebook_section_image_fr_id, ebook_section_image_ja_id, ebook_section_image_pt_id, ebook_section_image_zh_hans_id, ebook_section_title, ebook_section_title_ar, ebook_section_title_de, ebook_section_title_en_gb, ebook_section_title_es, ebook_section_title_fr, ebook_section_title_ja, ebook_section_title_pt, ebook_section_title_zh_hans, ebook_section_pdf_link_id, ebook_section_pdf_link_ar_id, ebook_section_pdf_link_de_id, ebook_section_pdf_link_en_gb_id, ebook_section_pdf_link_es_id, ebook_section_pdf_link_fr_id, ebook_section_pdf_link_ja_id, ebook_section_pdf_link_pt_id, ebook_section_pdf_link_zh_hans_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: great_international_capitalinvestcontactformpage; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.great_international_capitalinvestcontactformpage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, heading, heading_en_gb, heading_de, heading_ja, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_ar, intro, intro_en_gb, intro_de, intro_ja, intro_zh_hans, intro_fr, intro_es, intro_pt, intro_ar, cta_text, cta_text_en_gb, cta_text_de, cta_text_ja, cta_text_zh_hans, cta_text_fr, cta_text_es, cta_text_pt, cta_text_ar) FROM stdin;
+\.
+
+
+--
+-- Data for Name: great_international_capitalinvestcontactformsuccesspage; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.great_international_capitalinvestcontactformsuccesspage (page_ptr_id, service_name, uses_tree_based_routing, large_text, large_text_en_gb, large_text_de, large_text_ja, large_text_zh_hans, large_text_fr, large_text_es, large_text_pt, large_text_ar, small_text, small_text_en_gb, small_text_de, small_text_ja, small_text_zh_hans, small_text_fr, small_text_es, small_text_pt, small_text_ar) FROM stdin;
 \.
 
 
@@ -14153,7 +14244,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 20, true);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 477, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 485, true);
 
 
 --
@@ -14216,14 +14307,14 @@ SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 119, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 121, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 359, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 361, true);
 
 
 --
@@ -15122,6 +15213,22 @@ ALTER TABLE ONLY public.great_international_aboutuklandingpage
 
 ALTER TABLE ONLY public.great_international_aboutukwhychoosetheukpage
     ADD CONSTRAINT great_international_aboutukwhychoosetheukpage_pkey PRIMARY KEY (page_ptr_id);
+
+
+--
+-- Name: great_international_capitalinvestcontactformpage great_international_capitalinvestcontactformpage_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestcontactformpage
+    ADD CONSTRAINT great_international_capitalinvestcontactformpage_pkey PRIMARY KEY (page_ptr_id);
+
+
+--
+-- Name: great_international_capitalinvestcontactformsuccesspage great_international_capitalinvestcontactformsuccesspage_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestcontactformsuccesspage
+    ADD CONSTRAINT great_international_capitalinvestcontactformsuccesspage_pkey PRIMARY KEY (page_ptr_id);
 
 
 --
@@ -18636,6 +18743,20 @@ CREATE INDEX great_international_aboutuklandingpage_service_name_441d14f1 ON pub
 
 
 --
+-- Name: great_international_capi_service_name_04b98f69_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capi_service_name_04b98f69_like ON public.great_international_capitalinvestcontactformsuccesspage USING btree (service_name varchar_pattern_ops);
+
+
+--
+-- Name: great_international_capi_service_name_0867015e_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capi_service_name_0867015e_like ON public.great_international_capitalinvestcontactformpage USING btree (service_name varchar_pattern_ops);
+
+
+--
 -- Name: great_international_capi_service_name_a0c9c921_like; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -19956,6 +20077,20 @@ CREATE INDEX great_international_capita_sector_icon_pt_id_bf4f43c2 ON public.gre
 --
 
 CREATE INDEX great_international_capita_sector_icon_zh_hans_id_65d6dab1 ON public.great_international_capitalinvestopportunitypage USING btree (sector_icon_zh_hans_id);
+
+
+--
+-- Name: great_international_capita_service_name_04b98f69; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_service_name_04b98f69 ON public.great_international_capitalinvestcontactformsuccesspage USING btree (service_name);
+
+
+--
+-- Name: great_international_capita_service_name_0867015e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_capita_service_name_0867015e ON public.great_international_capitalinvestcontactformpage USING btree (service_name);
 
 
 --
@@ -39691,6 +39826,14 @@ ALTER TABLE ONLY public.great_international_investhighpotentialopportunityformsu
 
 
 --
+-- Name: great_international_capitalinvestcontactformpage great_international__page_ptr_id_4f703dde_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestcontactformpage
+    ADD CONSTRAINT great_international__page_ptr_id_4f703dde_fk_wagtailco FOREIGN KEY (page_ptr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: great_international_internationaleuexitformpage great_international__page_ptr_id_6d7c3ad3_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -39864,6 +40007,14 @@ ALTER TABLE ONLY public.great_international_internationaleuexitformsuccesspage
 
 ALTER TABLE ONLY public.great_international_internationalhomepage
     ADD CONSTRAINT great_international__page_ptr_id_e94f663f_fk_wagtailco FOREIGN KEY (page_ptr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestcontactformsuccesspage great_international__page_ptr_id_f96df5cc_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestcontactformsuccesspage
+    ADD CONSTRAINT great_international__page_ptr_id_f96df5cc_fk_wagtailco FOREIGN KEY (page_ptr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
