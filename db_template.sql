@@ -13909,8 +13909,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 359	great_international	0065_auto_20190808_1032	2019-08-08 11:37:15.180475+01
 360	great_international	0066_capitalinvestcontactformpage_capitalinvestcontactformsuccesspage	2019-08-09 09:15:15.500538+01
 361	great_international	0067_auto_20190814_0940	2019-08-14 10:42:44.256149+01
-362	great_international	0067_auto_20190814_1123	2019-08-14 14:30:08.877746+01
-363	great_international	0068_merge_20190814_1327	2019-08-14 14:30:09.493563+01
+362	great_international	0068_auto_20190815_1210	2019-08-15 13:30:29.543576+01
 \.
 
 
@@ -15026,7 +15025,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 123, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 363, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 362, true);
 
 
 --
@@ -43854,51 +43853,51 @@ ALTER TABLE ONLY public.great_international_internationalsectorpage
 
 
 --
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_ar_id_e4e6bd22_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_capitalinvestopportunitypage great_international__related_region_ar_id_e4e6bd22_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_ar_id_e4e6bd22_fk_great_int FOREIGN KEY (related_region_ar_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__related_region_ar_id_e4e6bd22_fk_wagtailco FOREIGN KEY (related_region_ar_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_de_id_236d599c_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_de_id_236d599c_fk_great_int FOREIGN KEY (related_region_de_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_en_gb_10ed4aee_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_capitalinvestopportunitypage great_international__related_region_de_id_236d599c_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_en_gb_10ed4aee_fk_great_int FOREIGN KEY (related_region_en_gb_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__related_region_de_id_236d599c_fk_wagtailco FOREIGN KEY (related_region_de_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_es_id_59ee3df7_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_es_id_59ee3df7_fk_great_int FOREIGN KEY (related_region_es_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_fr_id_c11c7e99_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_capitalinvestopportunitypage great_international__related_region_en_gb_10ed4aee_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_fr_id_c11c7e99_fk_great_int FOREIGN KEY (related_region_fr_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__related_region_en_gb_10ed4aee_fk_wagtailco FOREIGN KEY (related_region_en_gb_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_id_230f4c20_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_capitalinvestopportunitypage great_international__related_region_es_id_59ee3df7_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_id_230f4c20_fk_great_int FOREIGN KEY (related_region_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__related_region_es_id_59ee3df7_fk_wagtailco FOREIGN KEY (related_region_es_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestopportunitypage great_international__related_region_fr_id_c11c7e99_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
+    ADD CONSTRAINT great_international__related_region_fr_id_c11c7e99_fk_wagtailco FOREIGN KEY (related_region_fr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestopportunitypage great_international__related_region_id_230f4c20_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
+    ADD CONSTRAINT great_international__related_region_id_230f4c20_fk_wagtailco FOREIGN KEY (related_region_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -43910,27 +43909,27 @@ ALTER TABLE ONLY public.great_international_capitalinvestrelatedregions
 
 
 --
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_ja_id_f166c4e7_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_capitalinvestopportunitypage great_international__related_region_ja_id_f166c4e7_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_ja_id_f166c4e7_fk_great_int FOREIGN KEY (related_region_ja_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__related_region_ja_id_f166c4e7_fk_wagtailco FOREIGN KEY (related_region_ja_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_pt_id_5234ec78_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_pt_id_5234ec78_fk_great_int FOREIGN KEY (related_region_pt_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_capitalinvestopportunitypage great_international__related_region_zh_ha_daf590fb_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_capitalinvestopportunitypage great_international__related_region_pt_id_5234ec78_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
-    ADD CONSTRAINT great_international__related_region_zh_ha_daf590fb_fk_great_int FOREIGN KEY (related_region_zh_hans_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__related_region_pt_id_5234ec78_fk_wagtailco FOREIGN KEY (related_region_pt_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_capitalinvestopportunitypage great_international__related_region_zh_ha_daf590fb_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
+    ADD CONSTRAINT great_international__related_region_zh_ha_daf590fb_fk_wagtailco FOREIGN KEY (related_region_zh_hans_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
