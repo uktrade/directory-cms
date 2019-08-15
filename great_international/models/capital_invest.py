@@ -93,7 +93,7 @@ class CapitalInvestHomesInEnglandCardFieldsSummary(
 
 class RelatedRegion(models.Model):
     related_region = models.ForeignKey(
-        'great_international.CapitalInvestRegionPage',
+        'great_international.AboutUkRegionPage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -103,7 +103,7 @@ class RelatedRegion(models.Model):
     panels = [
         PageChooserPanel(
             'related_region',
-            ['great_international.CapitalInvestRegionPage']
+            ['great_international.AboutUkRegionPage']
         ),
     ]
 
@@ -250,6 +250,7 @@ class InternationalCapitalInvestLandingPage(
     contact_section_cta_text = models.CharField(max_length=255, blank=True)
 
 
+# `CapitalInvestRegionPage` is to be replaced with `AboutUkRegionPage`, can be deleted when CI-431 has been released in great-international-ui  # NOQA
 class CapitalInvestRegionPage(panels.CapitalInvestRegionPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
 
@@ -558,7 +559,7 @@ class CapitalInvestOpportunityPage(
     hero_title = models.CharField(max_length=255)
 
     related_region = models.ForeignKey(
-        'great_international.CapitalInvestRegionPage',
+        'great_international.AboutUkRegionPage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
