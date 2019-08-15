@@ -559,7 +559,7 @@ class CapitalInvestOpportunityPage(
     hero_title = models.CharField(max_length=255)
 
     related_region = models.ForeignKey(
-        'great_international.AboutUkRegionPage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
