@@ -1959,6 +1959,11 @@ class AboutUkRegionListingPageSerializer(BasePageSerializer):
 
     intro = core_fields.MarkdownToHTMLField()
 
+    contact_title = serializers.CharField()
+    contact_text = core_fields.MarkdownToHTMLField()
+    contact_cta_text = serializers.CharField()
+    contact_cta_link = serializers.CharField()
+
 
 class AboutUkRegionPageSerializer(BasePageSerializer):
 

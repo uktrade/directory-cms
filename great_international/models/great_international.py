@@ -1540,6 +1540,11 @@ class AboutUkRegionListingPage(
 
     intro = MarkdownField(blank=True)
 
+    contact_title = models.CharField(max_length=255, blank=True)
+    contact_text = MarkdownField(blank=True)
+    contact_cta_text = models.CharField(max_length=255, blank=True)
+    contact_cta_link = models.CharField(max_length=255, blank=True)
+
 
 class AboutUkRegionPage(panels.AboutUkRegionPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.AboutUkRegionListingPage']
