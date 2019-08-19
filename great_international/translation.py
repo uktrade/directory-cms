@@ -637,7 +637,7 @@ class ExpandLandingPageTranslation(BaseTranslationOptions):
         'contact_section_content',
         'contact_section_cta_text',
         'contact_section_cta_link',
-        
+
         'isd_section_title',
         'isd_section_text',
         'isd_section_cta_text',
