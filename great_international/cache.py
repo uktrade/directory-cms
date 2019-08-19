@@ -6,6 +6,7 @@ from great_international.models import great_international
 from great_international.models import invest
 from great_international.models import find_a_supplier
 from great_international.models import capital_invest
+from great_international.models import expand
 
 
 class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
@@ -18,7 +19,8 @@ class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
         great_international.InternationalSubSectorPage,
         great_international.InternationalTopicLandingPage,
         great_international.InternationalCuratedTopicLandingPage,
-        great_international.AboutUkLandingPage
+        great_international.AboutUkLandingPage,
+        expand.ExpandInternationalLandingPage
     ]
 
 
@@ -150,6 +152,14 @@ class InvestInternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     ]
 
 
+class ExpandInternationalLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = expand.ExpandInternationalLandingPage
+    subscriptions = [
+        great_international.InternationalSectorPage,
+        invest.InvestHighPotentialOpportunityDetailPage
+    ]
+
+
 class InvestHighPotentialOpportunityFormPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
@@ -169,6 +179,7 @@ class InvestHighPotentialOpportunityDetailPageSubscriber(
         invest.InvestHighPotentialOpportunityDetailPage,
         invest.InvestHighPotentialOpportunityFormPage,
         invest.InvestHighPotentialOpportunityFormSuccessPage,
+        expand.ExpandInternationalLandingPage
     ]
 
 

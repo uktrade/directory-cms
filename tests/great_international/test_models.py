@@ -2,8 +2,8 @@ import pytest
 from wagtail.core.models import Page
 
 from great_international.models import (
-    great_international, invest, capital_invest, find_a_supplier
-)
+    great_international, invest, capital_invest, find_a_supplier,
+    expand)
 from . import factories
 from tests.export_readiness import factories as exread_factories
 
@@ -24,6 +24,7 @@ def test_models_hierarchy():
         capital_invest.InternationalCapitalInvestLandingPage,
         capital_invest.CapitalInvestOpportunityListingPage,
         capital_invest.CapitalInvestRegionPage,
+        expand.ExpandInternationalLandingPage,
         invest.InvestInternationalHomePage,
         find_a_supplier.InternationalTradeHomePage
     ]
@@ -96,6 +97,7 @@ def test_models_hierarchy():
             great_international.AboutUkRegionPage
         ]
     assert great_international.AboutUkRegionPage.allowed_subpage_models() == []
+    assert expand.ExpandInternationalLandingPage.allowed_subpage_models() == []
 
 
 @pytest.mark.django_db
