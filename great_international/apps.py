@@ -24,6 +24,7 @@ class GreatInternationalConfig(AppConfig):
         cache.CapitalInvestRegionPageSubscriber.subscribe()
         cache.CapitalInvestOpportunityPageSubscriber.subscribe()
         cache.CapitalInvestOpportunityListingPageSubscriber.subscribe()
+        cache.ExpandInternationalLandingPageSubscriber.subscribe()
         cache.InvestInternationalHomePageSubscriber.subscribe()
         cache.InvestHighPotentialOpportunityDetailPageSubscriber.subscribe()
         cache.InvestHighPotentialOpportunityFormPageSubscriber.subscribe()

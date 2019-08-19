@@ -239,6 +239,27 @@ class InvestHowWeHelpProxyDataWrapper:
         )
 
 
+class ExpandHowToExpandProxyDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def title(self):
+        return getattr(
+            self.instance,
+            f'how_to_expand_title_{self.position_number}'
+        )
+
+    @property
+    def text(self):
+        return getattr(
+            self.instance,
+            f'how_to_expand_text_{self.position_number}'
+        )
+
+
 class HowWeHelpProxyDataWrapper:
 
     def __init__(self, instance, position_number):
@@ -332,6 +353,11 @@ class HowWeHelpWithTitleSerializer(serializers.Serializer):
     icon = wagtail_fields.ImageRenditionField('original')
     title = serializers.CharField(max_length=255)
     text = serializers.CharField(max_length=255)
+
+
+class HowToExpandSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=255)
+    text = core_fields.MarkdownToHTMLField()
 
 
 class RelatedArticlePageSerializer(BasePageSerializer):
@@ -1369,7 +1395,104 @@ class MinimalPageSerializer(BasePageSerializer):
     heading = serializers.CharField(max_length=255)
 
 
-# Invest seralizers
+class ExpandInternationalLandingPageSerializer(BasePageSerializer):
+
+    breadcrumbs_label = serializers.CharField(max_length=50)
+    hero_title = serializers.CharField(max_length=255)
+    sub_heading = serializers.CharField(max_length=255)
+    hero_cta_text = serializers.CharField(max_length=255)
+    hero_cta_link = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+
+    benefits_section_title = serializers.CharField(max_length=255)
+    benefits_section_intro = serializers.CharField(max_length=255)
+    benefits_section_text = core_fields.MarkdownToHTMLField()
+    benefits_section_cta_text = serializers.CharField(max_length=255)
+    benefits_section_cta_link = serializers.CharField(max_length=255)
+    benefits_section_img = wagtail_fields.ImageRenditionField('fill-640x360')
+
+    how_to_expand_title = serializers.CharField(max_length=255)
+    how_to_expand_image = wagtail_fields.ImageRenditionField('original')
+    how_to_expand_intro = core_fields.MarkdownToHTMLField()
+    how_to_expand = serializers.SerializerMethodField()
+
+    how_we_help_title = serializers.CharField(max_length=255)
+    how_we_help_intro = core_fields.MarkdownToHTMLField(max_length=255)
+    how_we_help = serializers.SerializerMethodField()
+
+    contact_section_title = serializers.CharField(max_length=255)
+    contact_section_content = serializers.CharField(max_length=255)
+    contact_section_cta_text = serializers.CharField(max_length=255)
+    contact_section_cta_link = serializers.CharField(max_length=255)
+
+    isd_section_title = serializers.CharField(max_length=255)
+    isd_section_text = core_fields.MarkdownToHTMLField()
+    isd_section_cta_text = serializers.CharField(max_length=255)
+    isd_section_cta_link = serializers.CharField(max_length=255)
+
+    hpo_title = serializers.CharField(max_length=255)
+    hpo_intro = serializers.CharField(max_length=255)
+
+    industries_title = serializers.CharField(max_length=255)
+    industries_intro = serializers.CharField(max_length=255)
+
+    industries_cta_text = serializers.CharField(max_length=255)
+    industries_cta_link = serializers.CharField(max_length=255)
+
+    sectors = serializers.SerializerMethodField()
+
+    high_potential_opportunities = serializers.SerializerMethodField()
+
+    def get_how_to_expand(self, instance):
+        data = [
+            ExpandHowToExpandProxyDataWrapper(
+                instance=instance, position_number=position_number
+            )
+            for position_number in ['one', 'two', 'three', 'four']
+        ]
+        serializer = HowToExpandSerializer(data, many=True)
+        return serializer.data
+
+    def get_how_we_help(self, instance):
+        data = [
+            InvestHowWeHelpProxyDataWrapper(
+                instance=instance, position_number=position_number
+            )
+            for position_number in ['one', 'two', 'three', 'four', 'five']
+        ]
+        serializer = HowWeHelpSerializer(data, many=True)
+        return serializer.data
+
+    def get_high_potential_opportunities(self, instance):
+        from .models.invest import InvestHighPotentialOpportunityDetailPage
+        queryset = InvestHighPotentialOpportunityDetailPage.objects.all(
+            ).filter(
+            featured=True
+        ).live().order_by('heading')
+        serializer = InvestHighPotentialOpportunityDetailPageSerializer(
+            queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
+    def get_sectors(self, instance):
+        serialized = []
+        items = [
+            instance.featured_industry_one,
+            instance.featured_industry_two,
+            instance.featured_industry_three,
+        ]
+        for related_page in items:
+            if not related_page:
+                continue
+            serialized.append(
+                FeaturedInternationalSectorPageSerializer(related_page.specific).data)
+        return serialized
+
+
+# Invest serializers
 
 class SubsectionProxyDataWrapper:
 

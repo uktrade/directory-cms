@@ -6,6 +6,7 @@ from great_international.models import (
     invest,
     capital_invest,
     find_a_supplier,
+    expand
 )
 
 
@@ -593,6 +594,62 @@ class CapitalInvestRelatedSubSectorsTranslationOptions(
         BaseTranslationOptions):
     fields = (
         'page',
+    )
+
+
+@register(expand.ExpandInternationalLandingPage)
+class ExpandLandingPageTranslation(BaseTranslationOptions):
+    fields = (
+        'breadcrumbs_label',
+        'hero_title',
+        'sub_heading',
+        'hero_cta_text',
+        'hero_cta_link',
+
+        'benefits_section_title',
+        'benefits_section_intro',
+        'benefits_section_text',
+        'benefits_section_cta_text',
+        'benefits_section_cta_link',
+
+        'how_to_expand_title',
+        'how_to_expand_intro',
+
+        'how_to_expand_title_one',
+        'how_to_expand_text_one',
+        'how_to_expand_title_two',
+        'how_to_expand_text_two',
+        'how_to_expand_title_three',
+        'how_to_expand_text_three',
+        'how_to_expand_title_four',
+        'how_to_expand_text_four',
+
+        'how_we_help_title',
+        'how_we_help_intro',
+
+        'how_we_help_text_one',
+        'how_we_help_text_two',
+        'how_we_help_text_three',
+        'how_we_help_text_four',
+        'how_we_help_text_five',
+
+        'contact_section_title',
+        'contact_section_content',
+        'contact_section_cta_text',
+        'contact_section_cta_link',
+        
+        'isd_section_title',
+        'isd_section_text',
+        'isd_section_cta_text',
+        'isd_section_cta_link',
+
+        'hpo_title',
+        'hpo_intro',
+
+        'industries_title',
+        'industries_intro',
+        'industries_cta_text',
+        'industries_cta_link',
     )
 
 
