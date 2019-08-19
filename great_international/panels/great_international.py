@@ -1336,6 +1336,16 @@ class AboutUkRegionListingPagePanels:
             ],
         ),
         FieldPanel('intro'),
+        MultiFieldPanel(
+            heading="Contact us section",
+            classname="collapsible",
+            children=[
+                FieldPanel('contact_title'),
+                FieldPanel('contact_text'),
+                FieldPanel('contact_cta_text'),
+                FieldPanel('contact_cta_link'),
+            ]
+        ),
     ]
 
     settings_panels = [

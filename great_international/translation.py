@@ -951,6 +951,11 @@ class AboutUkRegionListingPageTranslationOptions(
         'hero_title',
 
         'intro',
+
+        'contact_title',
+        'contact_text',
+        'contact_cta_text',
+        'contact_cta_link',
     )
 
 
