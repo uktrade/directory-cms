@@ -28,6 +28,8 @@ class ExpandInternationalLandingPagePanels:
                 FieldPanel('breadcrumbs_label'),
                 FieldPanel('hero_title'),
                 FieldPanel('sub_heading'),
+                HelpPanel('Cta\'s require both text and a link to show '
+                          'on page. '),
                 FieldPanel('hero_cta_text'),
                 FieldPanel('hero_cta_link'),
             ],
@@ -36,7 +38,7 @@ class ExpandInternationalLandingPagePanels:
             heading='Benefits section',
             classname='collapsible',
             children=[
-                HelpPanel('Required fields for section to show: '),
+                HelpPanel('Required fields for section to show: Benefits section title and text'),
                 FieldPanel('benefits_section_title'),
                 FieldPanel('benefits_section_intro'),
                 FieldPanel('benefits_section_text'),
@@ -49,7 +51,8 @@ class ExpandInternationalLandingPagePanels:
             heading='How to Expand section',
             classname='collapsible',
             children=[
-                HelpPanel('Required fields for section to show: '),
+                HelpPanel('Required fields for section to show: How to expand title, image and '
+                          'at least one item with title and text'),
                 FieldPanel('how_to_expand_title'),
                 FieldPanel('how_to_expand_intro'),
                 FieldRowPanel(
@@ -151,7 +154,7 @@ class ExpandInternationalLandingPagePanels:
             classname='collapsible',
             children=[
                 HelpPanel('Required fields for section to show: '
-                          'ISD Title, ISD text'),
+                          'ISD section title and text'),
                 FieldPanel('isd_section_title'),
                 FieldPanel('isd_section_text'),
                 HelpPanel('Cta\'s require both text and a link to show '
@@ -173,7 +176,8 @@ class ExpandInternationalLandingPagePanels:
             heading='Industries section',
             children=[
                 HelpPanel('Required fields for section to show: '
-                          'Industries Title and at least one featured industry'),
+                          'Industries Title and at least one featured industry '
+                          '(choose in \'featured industries\' tab)'),
                 FieldPanel('industries_title'),
                 FieldPanel('industries_intro'),
                 FieldPanel('industries_cta_text'),
