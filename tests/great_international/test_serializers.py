@@ -16,7 +16,7 @@ from great_international.serializers import (
     AboutUkWhyChooseTheUkPageSerializer,
     AboutUkLandingPageSerializer,
     InvestInternationalHomePageSerializer,
-    CapitalInvestRegionPageSerializer)
+    CapitalInvestRegionPageSerializer, ExpandInternationalLandingPageSerializer)
 from tests.great_international.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
@@ -34,7 +34,8 @@ from tests.great_international.factories import (
     AboutUkWhyChooseTheUkPageFactory,
     AboutUkLandingPageFactory,
     InvestInternationalHomePageFactory,
-    CapitalInvestRegionPageFactory)
+    CapitalInvestRegionPageFactory, ExpandInternationalLandingPageFactory,
+    InvestHighPotentialOpportunityDetailPageFactory)
 
 from great_international.models.capital_invest import (
     CapitalInvestRelatedRegions,
@@ -1118,3 +1119,96 @@ def test_invest_international_homepage_featured_industries(international_root_pa
     assert serialized_pages[0]['meta']['slug'] == 'one'
     assert serialized_pages[1]['meta']['slug'] == 'two'
     assert serialized_pages[2]['meta']['slug'] == 'three'
+
+
+@pytest.mark.django_db
+def test_expand_international_landing_page_featured_industries(international_root_page, rf):
+    featured_industry_one = InternationalSectorPageFactory(
+        parent=international_root_page,
+        slug='one'
+    )
+    featured_industry_two = InternationalSectorPageFactory(
+        parent=international_root_page,
+        slug='two'
+    )
+    featured_industry_three = InternationalSectorPageFactory(
+        parent=international_root_page,
+        slug='three'
+    )
+    homepage = ExpandInternationalLandingPageFactory(
+        parent=international_root_page,
+        slug='expand',
+        featured_industry_one=featured_industry_one,
+        featured_industry_two=featured_industry_two,
+        featured_industry_three=featured_industry_three,
+    )
+
+    serializer = ExpandInternationalLandingPageSerializer(
+        instance=homepage,
+        context={'request': rf.get('/')}
+    )
+
+    serialized_pages = serializer.data['sectors']
+
+    assert len(serialized_pages) == 3
+    assert serialized_pages[0]['meta']['slug'] == 'one'
+    assert serialized_pages[1]['meta']['slug'] == 'two'
+    assert serialized_pages[2]['meta']['slug'] == 'three'
+
+
+@pytest.mark.django_db
+def test_expand_international_landing_page_gets_hpos(document, international_root_page, rf):
+    InvestHighPotentialOpportunityDetailPageFactory(
+        parent=international_root_page,
+        featured=True,
+        pdf_document=document,
+        slug='one'
+    )
+    InvestHighPotentialOpportunityDetailPageFactory(
+        parent=international_root_page,
+        pdf_document=document,
+        featured=False,
+        slug='two'
+    )
+    InvestHighPotentialOpportunityDetailPageFactory(
+        parent=international_root_page,
+        pdf_document=document,
+        featured=True,
+        slug='three'
+    )
+    homepage = ExpandInternationalLandingPageFactory(
+        parent=international_root_page,
+        slug='expand',
+    )
+
+    serializer = ExpandInternationalLandingPageSerializer(
+        instance=homepage,
+        context={'request': rf.get('/')}
+    )
+
+    serialized_pages = serializer.data['high_potential_opportunities']
+
+    assert len(serialized_pages) == 2
+    assert serialized_pages[0]['meta']['slug'] == 'one'
+    assert serialized_pages[1]['meta']['slug'] == 'three'
+
+
+@pytest.mark.django_db
+def test_expand_international_landing_page_how_to_expand(international_root_page, rf):
+
+    homepage = ExpandInternationalLandingPageFactory(
+        parent=international_root_page,
+        slug='expand',
+    )
+
+    serializer = ExpandInternationalLandingPageSerializer(
+        instance=homepage,
+        context={'request': rf.get('/')}
+    )
+
+    serialized_pages = serializer.data
+
+    assert len(serialized_pages['how_to_expand']) == 4
+    for how_to in serialized_pages['how_to_expand']:
+        assert 'title' in how_to
+        assert 'text' in how_to
