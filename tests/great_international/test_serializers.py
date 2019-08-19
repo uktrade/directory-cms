@@ -1188,9 +1188,12 @@ def test_expand_international_landing_page_gets_hpos(document, international_roo
 
     serialized_pages = serializer.data['high_potential_opportunities']
 
+    slugs = [hpo['meta']['slug'] for hpo in serialized_pages]
+
     assert len(serialized_pages) == 2
-    assert serialized_pages[0]['meta']['slug'] == 'one'
-    assert serialized_pages[1]['meta']['slug'] == 'three'
+    assert 'one' in slugs
+    assert 'two' not in slugs
+    assert 'three' in slugs
 
 
 @pytest.mark.django_db
