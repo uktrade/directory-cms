@@ -2697,7 +2697,43 @@ CREATE TABLE public.great_international_aboutukregionlistingpage (
     intro_es text,
     intro_pt text,
     intro_ar text,
-    hero_image_id integer
+    hero_image_id integer,
+    contact_cta_link character varying(255) NOT NULL,
+    contact_cta_link_ar character varying(255),
+    contact_cta_link_de character varying(255),
+    contact_cta_link_en_gb character varying(255),
+    contact_cta_link_es character varying(255),
+    contact_cta_link_fr character varying(255),
+    contact_cta_link_ja character varying(255),
+    contact_cta_link_pt character varying(255),
+    contact_cta_link_zh_hans character varying(255),
+    contact_cta_text character varying(255) NOT NULL,
+    contact_cta_text_ar character varying(255),
+    contact_cta_text_de character varying(255),
+    contact_cta_text_en_gb character varying(255),
+    contact_cta_text_es character varying(255),
+    contact_cta_text_fr character varying(255),
+    contact_cta_text_ja character varying(255),
+    contact_cta_text_pt character varying(255),
+    contact_cta_text_zh_hans character varying(255),
+    contact_text text NOT NULL,
+    contact_text_ar text,
+    contact_text_de text,
+    contact_text_en_gb text,
+    contact_text_es text,
+    contact_text_fr text,
+    contact_text_ja text,
+    contact_text_pt text,
+    contact_text_zh_hans text,
+    contact_title character varying(255) NOT NULL,
+    contact_title_ar character varying(255),
+    contact_title_de character varying(255),
+    contact_title_en_gb character varying(255),
+    contact_title_es character varying(255),
+    contact_title_fr character varying(255),
+    contact_title_ja character varying(255),
+    contact_title_pt character varying(255),
+    contact_title_zh_hans character varying(255)
 );
 
 
@@ -13910,6 +13946,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 360	great_international	0066_capitalinvestcontactformpage_capitalinvestcontactformsuccesspage	2019-08-09 09:15:15.500538+01
 361	great_international	0067_auto_20190814_0940	2019-08-14 10:42:44.256149+01
 362	great_international	0068_auto_20190815_1210	2019-08-15 13:30:29.543576+01
+363	great_international	0069_auto_20190816_1117	2019-08-16 12:27:52.579288+01
 \.
 
 
@@ -14261,7 +14298,7 @@ COPY public.great_international_aboutuklandingpage (page_ptr_id, service_name, u
 -- Data for Name: great_international_aboutukregionlistingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_aboutukregionlistingpage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, hero_title, hero_title_en_gb, hero_title_de, hero_title_ja, hero_title_zh_hans, hero_title_fr, hero_title_es, hero_title_pt, hero_title_ar, intro, intro_en_gb, intro_de, intro_ja, intro_zh_hans, intro_fr, intro_es, intro_pt, intro_ar, hero_image_id) FROM stdin;
+COPY public.great_international_aboutukregionlistingpage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, hero_title, hero_title_en_gb, hero_title_de, hero_title_ja, hero_title_zh_hans, hero_title_fr, hero_title_es, hero_title_pt, hero_title_ar, intro, intro_en_gb, intro_de, intro_ja, intro_zh_hans, intro_fr, intro_es, intro_pt, intro_ar, hero_image_id, contact_cta_link, contact_cta_link_ar, contact_cta_link_de, contact_cta_link_en_gb, contact_cta_link_es, contact_cta_link_fr, contact_cta_link_ja, contact_cta_link_pt, contact_cta_link_zh_hans, contact_cta_text, contact_cta_text_ar, contact_cta_text_de, contact_cta_text_en_gb, contact_cta_text_es, contact_cta_text_fr, contact_cta_text_ja, contact_cta_text_pt, contact_cta_text_zh_hans, contact_text, contact_text_ar, contact_text_de, contact_text_en_gb, contact_text_es, contact_text_fr, contact_text_ja, contact_text_pt, contact_text_zh_hans, contact_title, contact_title_ar, contact_title_de, contact_title_en_gb, contact_title_es, contact_title_fr, contact_title_ja, contact_title_pt, contact_title_zh_hans) FROM stdin;
 \.
 
 
@@ -15025,7 +15062,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 123, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 362, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 363, true);
 
 
 --
