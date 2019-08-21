@@ -143,7 +143,7 @@ class InvestInternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = invest.InvestInternationalHomePage
     subscriptions = [
         great_international.InternationalSectorPage,
-        invest.InvestHighPotentialOpportunityDetailPage,
+        invest.InvestHighPotentialOpportunityDetailPage
     ]
 
 
@@ -165,7 +165,7 @@ class InvestHighPotentialOpportunityDetailPageSubscriber(
     subscriptions = [
         invest.InvestHighPotentialOpportunityDetailPage,
         invest.InvestHighPotentialOpportunityFormPage,
-        invest.InvestHighPotentialOpportunityFormSuccessPage
+        invest.InvestHighPotentialOpportunityFormSuccessPage,
     ]
 
 
