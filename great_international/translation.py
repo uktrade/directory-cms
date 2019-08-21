@@ -5,7 +5,7 @@ from great_international.models import (
     great_international,
     invest,
     capital_invest,
-    find_a_supplier
+    find_a_supplier,
 )
 
 

@@ -31,7 +31,6 @@ class InvestInternationalHomePagePanels:
             ],
 
         ),
-
         MultiFieldPanel(
             heading='Teaser',
             classname='collapsible',

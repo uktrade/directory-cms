@@ -3,7 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
-- CI-439 - Added `ExpandInternationalLandingPage` as new FDI landing page
+- CI-439 - Added new fields to `InvestInternationalHomePage` 
 
 ### Fixed Bugs
 

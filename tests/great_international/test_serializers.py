@@ -16,7 +16,7 @@ from great_international.serializers import (
     AboutUkWhyChooseTheUkPageSerializer,
     AboutUkLandingPageSerializer,
     InvestInternationalHomePageSerializer,
-    CapitalInvestRegionPageSerializer, ExpandInternationalLandingPageSerializer)
+    CapitalInvestRegionPageSerializer)
 from tests.great_international.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
@@ -34,7 +34,7 @@ from tests.great_international.factories import (
     AboutUkWhyChooseTheUkPageFactory,
     AboutUkLandingPageFactory,
     InvestInternationalHomePageFactory,
-    CapitalInvestRegionPageFactory, ExpandInternationalLandingPageFactory,
+    CapitalInvestRegionPageFactory,
     InvestHighPotentialOpportunityDetailPageFactory)
 
 from great_international.models.capital_invest import (
@@ -1135,7 +1135,7 @@ def test_expand_international_landing_page_featured_industries(international_roo
         parent=international_root_page,
         slug='three'
     )
-    homepage = ExpandInternationalLandingPageFactory(
+    homepage = InvestInternationalHomePageFactory(
         parent=international_root_page,
         slug='expand',
         featured_industry_one=featured_industry_one,
@@ -1143,7 +1143,7 @@ def test_expand_international_landing_page_featured_industries(international_roo
         featured_industry_three=featured_industry_three,
     )
 
-    serializer = ExpandInternationalLandingPageSerializer(
+    serializer = InvestInternationalHomePageSerializer(
         instance=homepage,
         context={'request': rf.get('/')}
     )
@@ -1176,12 +1176,12 @@ def test_expand_international_landing_page_gets_hpos(document, international_roo
         featured=True,
         slug='three'
     )
-    homepage = ExpandInternationalLandingPageFactory(
+    homepage = InvestInternationalHomePageFactory(
         parent=international_root_page,
         slug='expand',
     )
 
-    serializer = ExpandInternationalLandingPageSerializer(
+    serializer = InvestInternationalHomePageSerializer(
         instance=homepage,
         context={'request': rf.get('/')}
     )
@@ -1199,12 +1199,12 @@ def test_expand_international_landing_page_gets_hpos(document, international_roo
 @pytest.mark.django_db
 def test_expand_international_landing_page_how_to_expand(international_root_page, rf):
 
-    homepage = ExpandInternationalLandingPageFactory(
+    homepage = InvestInternationalHomePageFactory(
         parent=international_root_page,
         slug='expand',
     )
 
-    serializer = ExpandInternationalLandingPageSerializer(
+    serializer = InvestInternationalHomePageSerializer(
         instance=homepage,
         context={'request': rf.get('/')}
     )

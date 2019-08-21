@@ -785,22 +785,3 @@ class CapitalInvestContactFormSuccessPageFactory(
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     last_published_at = timezone.now()
     parent = None
-
-
-class ExpandInternationalLandingPageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.expand.ExpandInternationalLandingPage
-
-    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
-    hero_title_en_gb = factory.fuzzy.FuzzyText(length=100)
-    sub_heading = factory.fuzzy.FuzzyText(length=100)
-    hero_image = factory.SubFactory(
-        wagtail_factories.ImageFactory
-    )
-    benefits_section_title = factory.fuzzy.FuzzyText(length=10)
-    contact_section_title = factory.fuzzy.FuzzyText(length=10)
-    contact_section_cta_text = factory.fuzzy.FuzzyText(length=10)
-    contact_section_cta_link = factory.fuzzy.FuzzyText(length=10)
-    slug = 'invest-home'
-    parent = None
