@@ -677,7 +677,7 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'contact_section_content',
         'contact_section_call_to_action_text',
         'contact_section_call_to_action_url',
-        
+
         'isd_section_title',
         'isd_section_text',
         'isd_section_cta_text',
