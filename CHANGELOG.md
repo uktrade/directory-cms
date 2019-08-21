@@ -5,6 +5,7 @@
 ### Implemented enhancements
 
 ### Fixed Bugs
+- CMS-1830 - Move title field into translated admin panels to fix bug with untranslated tree_based_breadcrumbs
 
 
 ## [2019.08.15](https://github.com/uktrade/directory-cms/releases/tag/2019.08.15)
