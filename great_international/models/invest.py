@@ -84,6 +84,31 @@ class InvestInternationalHomePage(
         verbose_name="EU exit section image"
     )
 
+    # How to expand section
+    how_to_expand_title = models.CharField(max_length=255, blank=True)
+    how_to_expand_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name="Benefits section image"
+    )
+
+    how_to_expand_intro = models.TextField(blank=True)
+
+    how_to_expand_title_one = models.CharField(max_length=255, blank=True)
+    how_to_expand_text_one = MarkdownField(blank=True)
+
+    how_to_expand_title_two = models.CharField(max_length=255, blank=True)
+    how_to_expand_text_two = MarkdownField(blank=True)
+
+    how_to_expand_title_three = models.CharField(max_length=255, blank=True)
+    how_to_expand_text_three = MarkdownField(blank=True)
+
+    how_to_expand_title_four = models.CharField(max_length=255, blank=True)
+    how_to_expand_text_four = MarkdownField(blank=True)
+
     sector_title = models.TextField(
         default="Discover UK Industries",
         max_length=255,
@@ -241,6 +266,27 @@ class InvestInternationalHomePage(
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
+    )
+
+    # ISD section
+    isd_section_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Investment Support Directory section title"
+    )
+    isd_section_text = MarkdownField(
+        blank=True,
+        verbose_name="Investment Support Directory section text"
+    )
+    isd_section_cta_text = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Investment Support Directory section cta text"
+    )
+    isd_section_cta_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Investment Support Directory section cta link"
     )
 
 

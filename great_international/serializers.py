@@ -1395,103 +1395,6 @@ class MinimalPageSerializer(BasePageSerializer):
     heading = serializers.CharField(max_length=255)
 
 
-class ExpandInternationalLandingPageSerializer(BasePageSerializer):
-
-    breadcrumbs_label = serializers.CharField(max_length=50)
-    hero_title = serializers.CharField(max_length=255)
-    sub_heading = serializers.CharField(max_length=255)
-    hero_cta_text = serializers.CharField(max_length=255)
-    hero_cta_link = serializers.CharField(max_length=255)
-    hero_image = wagtail_fields.ImageRenditionField('original')
-
-    benefits_section_title = serializers.CharField(max_length=255)
-    benefits_section_intro = serializers.CharField(max_length=255)
-    benefits_section_text = core_fields.MarkdownToHTMLField()
-    benefits_section_cta_text = serializers.CharField(max_length=255)
-    benefits_section_cta_link = serializers.CharField(max_length=255)
-    benefits_section_img = wagtail_fields.ImageRenditionField('fill-640x360')
-
-    how_to_expand_title = serializers.CharField(max_length=255)
-    how_to_expand_image = wagtail_fields.ImageRenditionField('original')
-    how_to_expand_intro = core_fields.MarkdownToHTMLField()
-    how_to_expand = serializers.SerializerMethodField()
-
-    how_we_help_title = serializers.CharField(max_length=255)
-    how_we_help_intro = core_fields.MarkdownToHTMLField(max_length=255)
-    how_we_help = serializers.SerializerMethodField()
-
-    contact_section_title = serializers.CharField(max_length=255)
-    contact_section_content = serializers.CharField(max_length=255)
-    contact_section_cta_text = serializers.CharField(max_length=255)
-    contact_section_cta_link = serializers.CharField(max_length=255)
-
-    isd_section_title = serializers.CharField(max_length=255)
-    isd_section_text = core_fields.MarkdownToHTMLField()
-    isd_section_cta_text = serializers.CharField(max_length=255)
-    isd_section_cta_link = serializers.CharField(max_length=255)
-
-    hpo_title = serializers.CharField(max_length=255)
-    hpo_intro = serializers.CharField(max_length=255)
-
-    industries_title = serializers.CharField(max_length=255)
-    industries_intro = serializers.CharField(max_length=255)
-
-    industries_cta_text = serializers.CharField(max_length=255)
-    industries_cta_link = serializers.CharField(max_length=255)
-
-    sectors = serializers.SerializerMethodField()
-
-    high_potential_opportunities = serializers.SerializerMethodField()
-
-    def get_how_to_expand(self, instance):
-        data = [
-            ExpandHowToExpandProxyDataWrapper(
-                instance=instance, position_number=position_number
-            )
-            for position_number in ['one', 'two', 'three', 'four']
-        ]
-        serializer = HowToExpandSerializer(data, many=True)
-        return serializer.data
-
-    def get_how_we_help(self, instance):
-        data = [
-            InvestHowWeHelpProxyDataWrapper(
-                instance=instance, position_number=position_number
-            )
-            for position_number in ['one', 'two', 'three', 'four', 'five']
-        ]
-        serializer = HowWeHelpSerializer(data, many=True)
-        return serializer.data
-
-    def get_high_potential_opportunities(self, instance):
-        from .models.invest import InvestHighPotentialOpportunityDetailPage
-        queryset = InvestHighPotentialOpportunityDetailPage.objects.all(
-            ).filter(
-            featured=True
-        ).live().order_by('heading')
-        serializer = InvestHighPotentialOpportunityDetailPageSerializer(
-            queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-        return serializer.data
-
-    def get_sectors(self, instance):
-        serialized = []
-        items = [
-            instance.featured_industry_one,
-            instance.featured_industry_two,
-            instance.featured_industry_three,
-        ]
-        for related_page in items:
-            if not related_page:
-                continue
-            serialized.append(
-                FeaturedInternationalSectorPageSerializer(related_page.specific).data)
-        return serialized
-
-
 # Invest serializers
 
 class SubsectionProxyDataWrapper:
@@ -1582,42 +1485,73 @@ class FeaturedInternationalSectorPageSerializer(BasePageSerializer):
 
 
 class InvestInternationalHomePageSerializer(BasePageSerializer):
+
     breadcrumbs_label = serializers.CharField(max_length=50)
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
     hero_call_to_action_text = serializers.CharField(max_length=255)
     hero_call_to_action_url = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
+
     teaser = serializers.CharField()
+
     benefits_section_title = serializers.CharField(max_length=255)
     benefits_section_intro = serializers.CharField(max_length=255)
     benefits_section_content = core_fields.MarkdownToHTMLField()
     benefits_section_cta_text = serializers.CharField(max_length=255)
     benefits_section_cta_url = serializers.CharField(max_length=255)
     benefits_section_img = wagtail_fields.ImageRenditionField('fill-640x360')
+
+    how_to_expand_title = serializers.CharField(max_length=255)
+    how_to_expand_image = wagtail_fields.ImageRenditionField('original')
+    how_to_expand_intro = core_fields.MarkdownToHTMLField()
+    how_to_expand = serializers.SerializerMethodField()
+
     eu_exit_section_title = serializers.CharField(max_length=255)
     eu_exit_section_content = core_fields.MarkdownToHTMLField()
     eu_exit_section_call_to_action_text = serializers.CharField(max_length=255)
     eu_exit_section_call_to_action_url = serializers.CharField(max_length=255)
     eu_exit_section_img = wagtail_fields.ImageRenditionField('original')
+
     sector_title = serializers.CharField(max_length=255)
     sector_intro = serializers.CharField(max_length=255)
-    hpo_title = serializers.CharField(max_length=255)
-    hpo_intro = serializers.CharField(max_length=255)
     sector_button_text = serializers.CharField(max_length=255)
     sector_button_url = serializers.CharField(max_length=255)
+
+    hpo_title = serializers.CharField(max_length=255)
+    hpo_intro = serializers.CharField(max_length=255)
+
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_lead_in = serializers.CharField(max_length=255)
     how_we_help = serializers.SerializerMethodField()
+
     contact_section_title = serializers.CharField(max_length=255)
     contact_section_content = serializers.CharField(max_length=255)
     contact_section_call_to_action_text = serializers.CharField(max_length=255)
     contact_section_call_to_action_url = serializers.CharField(max_length=255)
+
+    isd_section_title = serializers.CharField(max_length=255)
+    isd_section_text = core_fields.MarkdownToHTMLField()
+    isd_section_cta_text = serializers.CharField(max_length=255)
+    isd_section_cta_link = serializers.CharField(max_length=255)
+
     sectors = serializers.SerializerMethodField()
+
     high_potential_opportunities = serializers.SerializerMethodField()
+
     guides = serializers.SerializerMethodField()
 
     featured_cards = serializers.SerializerMethodField()
+
+    def get_how_to_expand(self, instance):
+        data = [
+            ExpandHowToExpandProxyDataWrapper(
+                instance=instance, position_number=position_number
+            )
+            for position_number in ['one', 'two', 'three', 'four']
+        ]
+        serializer = HowToExpandSerializer(data, many=True)
+        return serializer.data
 
     def get_how_we_help(self, instance):
         data = [
