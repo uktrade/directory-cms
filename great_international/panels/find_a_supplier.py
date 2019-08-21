@@ -15,6 +15,7 @@ class InternationalTradeHomePagePanels:
     ]
 
     content_panels = [
+        FieldPanel('title'),
         MultiFieldPanel(
             heading='Hero',
             children=[
@@ -74,7 +75,6 @@ class InternationalTradeHomePagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -90,6 +90,7 @@ class InternationalTradeHomePagePanels:
 class InternationalTradeIndustryContactPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         MultiFieldPanel(
             heading='Contact form',
             children=[
@@ -109,7 +110,6 @@ class InternationalTradeIndustryContactPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
     edit_handler = make_translated_interface(
