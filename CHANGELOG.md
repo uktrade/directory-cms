@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- CMS-1832 - Update django
 
 ### Fixed Bugs
 
