@@ -109,7 +109,7 @@ def test_meta_field_draft(page, rf):
 
 
 @pytest.mark.django_db
-def test_markdown_to_html_field(page, rf):
+def test_markdown_to_html_field_without_slug_hyperlinks(page, rf):
     page.hero_text_en_gb = (
         '[hyperlink](slug:{slug})'.format(slug=page.slug)
     )
@@ -124,8 +124,7 @@ def test_markdown_to_html_field(page, rf):
 
     assert serializer.data == {
         'hero_text_en_gb': (
-            '<p><a href="http://supplier.trade.great:8005/'
-            'the-slug/">hyperlink</a></p>'
+            '<p><a>hyperlink</a></p>'
         )
     }
 
