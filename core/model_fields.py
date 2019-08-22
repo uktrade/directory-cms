@@ -1,6 +1,6 @@
 from django.db.models import TextField
 
-from core import validators as core_validators, widgets
+from core import widgets
 
 
 class MarkdownField(TextField):
