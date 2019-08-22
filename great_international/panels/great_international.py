@@ -14,6 +14,7 @@ from core.panels import SearchEngineOptimisationPanel
 class InternationalHomePagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         MultiFieldPanel(
             heading="Hero Section",
             children=[
@@ -191,7 +192,6 @@ class InternationalHomePagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -204,6 +204,7 @@ class InternationalHomePagePanels:
 class InternationalHomePageOldPanels:
 
     content_panels = [
+        FieldPanel('title'),
         MultiFieldPanel(
             heading="Hero Section",
             children=[
@@ -381,7 +382,6 @@ class InternationalHomePageOldPanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -394,6 +394,7 @@ class InternationalHomePageOldPanels:
 class BaseInternationalSectorPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         MultiFieldPanel(
             heading='Heading',
             children=[
@@ -620,7 +621,6 @@ class BaseInternationalSectorPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
@@ -651,6 +651,7 @@ class InternationalLocalisedFolderPagePanels:
 class InternationalArticlePagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('article_title'),
         MultiFieldPanel(
             heading='Article content',
@@ -695,6 +696,7 @@ class InternationalArticlePagePanels:
 class InternationalArticleListingPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('landing_page_title'),
         MultiFieldPanel(
             heading='Hero',
@@ -708,7 +710,6 @@ class InternationalArticleListingPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
@@ -722,6 +723,7 @@ class InternationalArticleListingPagePanels:
 class InternationalCampaignPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         MultiFieldPanel(
             heading='Hero section',
             children=[
@@ -812,7 +814,6 @@ class InternationalCampaignPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
@@ -826,6 +827,7 @@ class InternationalCampaignPagePanels:
 class InternationalTopicLandingPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('landing_page_title'),
         MultiFieldPanel(
             heading='Hero',
@@ -838,7 +840,6 @@ class InternationalTopicLandingPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
@@ -852,6 +853,7 @@ class InternationalTopicLandingPagePanels:
 class InternationalCuratedTopicLandingPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('display_title'),
         ImageChooserPanel('hero_image'),
         FieldPanel('teaser'),
@@ -893,7 +895,6 @@ class InternationalCuratedTopicLandingPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         SearchEngineOptimisationPanel(),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
@@ -908,6 +909,7 @@ class InternationalCuratedTopicLandingPagePanels:
 class InternationalGuideLandingPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('display_title'),
         ImageChooserPanel('hero_image'),
         FieldPanel('teaser'),
@@ -952,7 +954,6 @@ class InternationalGuideLandingPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         SearchEngineOptimisationPanel(),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
@@ -1022,6 +1023,7 @@ class AboutDitLandingPagePanels:
         MultiFieldPanel(
             heading="Hero",
             children=[
+                FieldPanel('title'),
                 FieldPanel('hero_title'),
                 ImageChooserPanel('hero_image'),
             ],
@@ -1088,7 +1090,6 @@ class AboutDitLandingPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -1114,6 +1115,7 @@ class AboutDitServiceFieldPanels:
 class AboutDitServicesPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('breadcrumbs_label'),
         MultiFieldPanel(
             heading="Hero",
@@ -1172,7 +1174,6 @@ class AboutDitServicesPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -1185,6 +1186,7 @@ class AboutDitServicesPagePanels:
 class AboutUkLandingPagePanels:
 
     image_panels = [
+        FieldPanel('title'),
         ImageChooserPanel('hero_image'),
         ImageChooserPanel('why_choose_uk_image'),
         ImageChooserPanel('regions_section_image'),
@@ -1309,7 +1311,6 @@ class AboutUkLandingPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -1328,6 +1329,7 @@ class AboutUkRegionListingPagePanels:
     ]
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('breadcrumbs_label'),
         MultiFieldPanel(
             heading="Hero",
@@ -1349,7 +1351,6 @@ class AboutUkRegionListingPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -1365,6 +1366,7 @@ class AboutUkRegionListingPagePanels:
 class AboutUkRegionPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('breadcrumbs_label'),
         MultiFieldPanel(
             heading="Hero",
@@ -1543,7 +1545,6 @@ class AboutUkRegionPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -1570,6 +1571,7 @@ class AboutUkArticleFieldPanels:
 class AboutUkWhyChooseTheUkPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('breadcrumbs_label'),
         MultiFieldPanel(
             heading="Hero",
@@ -1693,7 +1695,6 @@ class AboutUkWhyChooseTheUkPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
