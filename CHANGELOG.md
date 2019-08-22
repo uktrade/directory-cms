@@ -3,6 +3,8 @@
 ## Pre-release
 
 ### Implemented enhancements
+- CMS-1832 - Update django
+- CMS-1753 - Remove slug links from markdown fields
 
 ### Fixed Bugs
 - CMS-1830 - Move title field into translated admin panels to fix bug with untranslated tree_based_breadcrumbs
