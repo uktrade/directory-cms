@@ -1522,7 +1522,7 @@ class InvestInternationalHomePageSerializer(BasePageSerializer):
     hpo_intro = serializers.CharField(max_length=255)
 
     how_we_help_title = serializers.CharField(max_length=255)
-    how_we_help_lead_in = serializers.CharField(max_length=255)
+    how_we_help_lead_in = core_fields.MarkdownToHTMLField(max_length=255)
     how_we_help = serializers.SerializerMethodField()
 
     contact_section_title = serializers.CharField(max_length=255)

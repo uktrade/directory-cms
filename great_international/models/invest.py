@@ -95,7 +95,7 @@ class InvestInternationalHomePage(
         verbose_name="Benefits section image"
     )
 
-    how_to_expand_intro = models.TextField(blank=True)
+    how_to_expand_intro = MarkdownField(blank=True)
 
     how_to_expand_title_one = models.CharField(max_length=255, blank=True)
     how_to_expand_text_one = MarkdownField(blank=True)
@@ -115,7 +115,7 @@ class InvestInternationalHomePage(
         blank=True
     )
 
-    sector_button_text = models.TextField(
+    sector_button_text = models.CharField(
         default="See more industries",
         max_length=255,
         blank=True
@@ -186,7 +186,7 @@ class InvestInternationalHomePage(
         max_length=255,
         blank=True
     )
-    how_we_help_lead_in = models.TextField(blank=True, null=True)
+    how_we_help_lead_in = MarkdownField(blank=True, null=True)
     how_we_help_text_one = models.CharField(max_length=255, blank=True)
     how_we_help_icon_one = models.ForeignKey(
         'wagtailimages.Image',
