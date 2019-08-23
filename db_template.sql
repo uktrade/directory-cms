@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
--- Dumped by pg_dump version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
+-- Dumped from database version 9.6.14
+-- Dumped by pg_dump version 11.3
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,22 +12,9 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
 
 SET default_tablespace = '';
 
@@ -13947,6 +13934,11 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 361	great_international	0067_auto_20190814_0940	2019-08-14 10:42:44.256149+01
 362	great_international	0068_auto_20190815_1210	2019-08-15 13:30:29.543576+01
 363	great_international	0069_auto_20190816_1117	2019-08-16 12:27:52.579288+01
+364	components	0005_auto_20190823_1036	2019-08-23 11:39:03.801204+01
+365	export_readiness	0052_auto_20190823_1036	2019-08-23 11:39:51.394767+01
+366	find_a_supplier	0072_auto_20190823_1036	2019-08-23 11:42:52.801729+01
+367	great_international	0070_auto_20190823_1036	2019-08-23 12:02:13.721937+01
+368	invest	0034_auto_20190823_1036	2019-08-23 12:10:12.739233+01
 \.
 
 
@@ -15062,7 +15054,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 123, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 363, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 368, true);
 
 
 --
