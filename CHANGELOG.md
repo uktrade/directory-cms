@@ -5,6 +5,7 @@
 ### Implemented enhancements
 - CMS-1832 - Update django
 - CMS-1753 - Remove slug links from markdown fields
+- CI-431 - Added `AboutUkRegionListingPage` and `AboutUkRegionPage` which will replace `CapitalInvestRegionPage`
 
 ### Fixed Bugs
 - CMS-1830 - Move title field into translated admin panels to fix bug with untranslated tree_based_breadcrumbs
@@ -19,7 +20,6 @@
 - CI-321 - About UK landing page
 - CI-276 - Added `CapitalInvestContactFormPage` and `CapitalInvestContactFormSuccessPage`
 - CI-429 - Tree based breadcrumbs can now use `breadcrumbs_label` if available
-- CI-431 - Added `AboutUkRegionListingPage` and `AboutUkRegionPage` which will replace `CapitalInvestRegionPage`
 
 ### Fixed Bugs
 - CI-426 - Added pdf document upload to why choose uk page for ebook section
