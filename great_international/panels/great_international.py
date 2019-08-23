@@ -1186,7 +1186,6 @@ class AboutDitServicesPagePanels:
 class AboutUkLandingPagePanels:
 
     image_panels = [
-        FieldPanel('title'),
         ImageChooserPanel('hero_image'),
         ImageChooserPanel('why_choose_uk_image'),
         ImageChooserPanel('regions_section_image'),
@@ -1204,6 +1203,7 @@ class AboutUkLandingPagePanels:
     ]
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('breadcrumbs_label'),
         MultiFieldPanel(
             heading="Hero",
