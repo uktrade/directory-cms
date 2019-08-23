@@ -721,6 +721,22 @@ class AboutUkLandingPageFactory(
     parent = None
 
 
+class AboutUkRegionListingPageFactory(wagtail_factories.PageFactory):
+
+    class Meta:
+        model = models.great_international.AboutUkRegionListingPage
+
+    hero_title = factory.fuzzy.FuzzyText(length=10)
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None
+
+
 class AboutUkRegionPageFactory(wagtail_factories.PageFactory):
 
     class Meta:

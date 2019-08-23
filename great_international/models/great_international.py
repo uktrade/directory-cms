@@ -1416,14 +1416,62 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
     industries_section_cta_link = models.CharField(max_length=255, blank=True)
 
     regions_section_title = models.CharField(max_length=255, blank=True)
-    regions_section_content = MarkdownField(blank=True)
-    regions_section_image = models.ForeignKey(
-        'wagtailimages.Image',
+    regions_section_intro = MarkdownField(blank=True)
+
+    scotland = models.ForeignKey(
+        'great_international.AboutUkRegionPage',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        blank=True
     )
+    scotland_text = models.CharField(max_length=255, blank=True)
+
+    northern_ireland = models.ForeignKey(
+        'great_international.AboutUkRegionPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    northern_ireland_text = models.CharField(max_length=255, blank=True)
+
+    north_england = models.ForeignKey(
+        'great_international.AboutUkRegionPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    north_england_text = models.CharField(max_length=255, blank=True)
+
+    wales = models.ForeignKey(
+        'great_international.AboutUkRegionPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    wales_text = models.CharField(max_length=255, blank=True)
+
+    midlands = models.ForeignKey(
+        'great_international.AboutUkRegionPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    midlands_text = models.CharField(max_length=255, blank=True)
+
+    south_england = models.ForeignKey(
+        'great_international.AboutUkRegionPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    south_england_text = models.CharField(max_length=255, blank=True)
+
     regions_section_cta_text = models.CharField(max_length=255, blank=True)
     regions_section_cta_link = models.CharField(max_length=255, blank=True)
 

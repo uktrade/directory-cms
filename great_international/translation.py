@@ -908,7 +908,21 @@ class AboutUkLandingPageTranslationOptions(
         'industries_section_cta_link',
 
         'regions_section_title',
-        'regions_section_content',
+        'regions_section_intro',
+
+        'scotland_text',
+        'northern_ireland_text',
+        'north_england_text',
+        'wales_text',
+        'midlands_text',
+        'south_england_text',
+        'scotland',
+        'northern_ireland',
+        'north_england',
+        'wales',
+        'midlands',
+        'south_england',
+
         'regions_section_cta_text',
         'regions_section_cta_link',
 
