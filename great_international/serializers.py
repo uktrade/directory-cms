@@ -365,23 +365,10 @@ class AboutUkRegionSerializer(serializers.Serializer):
         if not region:
             return []
 
+        print('\n\n\n\n do i get here?')
         serializer = MinimalPageWithHeroTitleSerializer(
             region.specific)
 
-        return serializer.data
-
-
-class MappedRegionsSerializer(serializers.Serializer):
-    region = serializers.SerializerMethodField()
-    text = serializers.CharField(max_length=255)
-
-    def get_region(self, obj):
-        region = obj.related_region
-
-        if not region:
-            return []
-        serializer = MinimalPageSerializer(
-            region.specific)
         return serializer.data
 
 
