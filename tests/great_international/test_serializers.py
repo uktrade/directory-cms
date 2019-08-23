@@ -1145,6 +1145,10 @@ def test_about_uk_landing_page_has_regions(
 def test_about_uk_region_listing_page_has_regions(
         rf, international_root_page
 ):
+    AboutUkLandingPageFactory(
+        slug='about-uk',
+        parent=international_root_page
+    )
 
     regions = AboutUkRegionListingPageFactory(
         slug='regions',
@@ -1160,6 +1164,24 @@ def test_about_uk_region_listing_page_has_regions(
     for field in serializer.data['mapped_regions']:
         assert 'region' in field
         assert 'text' in field
+
+
+@pytest.mark.django_db
+def test_about_uk_region_listing_page_has_empty_regions_if_no_parent(
+        rf, international_root_page
+):
+
+    regions = AboutUkRegionListingPageFactory(
+        slug='regions',
+        parent=international_root_page
+    )
+
+    serializer = AboutUkRegionListingPageSerializer(
+        instance=regions,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['mapped_regions']) == []
 
 
 
