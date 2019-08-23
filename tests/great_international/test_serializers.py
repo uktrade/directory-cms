@@ -16,7 +16,7 @@ from great_international.serializers import (
     AboutUkWhyChooseTheUkPageSerializer,
     AboutUkLandingPageSerializer,
     InvestInternationalHomePageSerializer,
-    CapitalInvestRegionPageSerializer)
+    CapitalInvestRegionPageSerializer, AboutUkRegionListingPageSerializer)
 from tests.great_international.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
@@ -34,7 +34,7 @@ from tests.great_international.factories import (
     AboutUkWhyChooseTheUkPageFactory,
     AboutUkLandingPageFactory,
     InvestInternationalHomePageFactory,
-    CapitalInvestRegionPageFactory)
+    CapitalInvestRegionPageFactory, AboutUkRegionListingPageFactory)
 
 from great_international.models.capital_invest import (
     CapitalInvestRelatedRegions,
@@ -1118,3 +1118,63 @@ def test_invest_international_homepage_featured_industries(international_root_pa
     assert serialized_pages[0]['meta']['slug'] == 'one'
     assert serialized_pages[1]['meta']['slug'] == 'two'
     assert serialized_pages[2]['meta']['slug'] == 'three'
+
+
+@pytest.mark.django_db
+def test_about_uk_landing_page_has_regions(
+        rf, international_root_page
+):
+
+    about_uk = AboutUkLandingPageFactory(
+        slug='about-uk',
+        parent=international_root_page
+    )
+
+    serializer = AboutUkLandingPageSerializer(
+        instance=about_uk,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['regions']) == 6
+    for field in serializer.data['regions']:
+        assert 'region' in field
+        assert 'text' in field
+
+
+@pytest.mark.django_db
+def test_about_uk_region_listing_page_has_regions(
+        rf, international_root_page
+):
+
+    regions = AboutUkRegionListingPageFactory(
+        slug='regions',
+        parent=international_root_page
+    )
+
+    serializer = AboutUkRegionListingPageSerializer(
+        instance=regions,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['mapped_regions']) == 6
+    for field in serializer.data['mapped_regions']:
+        assert 'region' in field
+        assert 'text' in field
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
