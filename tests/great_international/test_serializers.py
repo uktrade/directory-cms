@@ -1181,22 +1181,4 @@ def test_about_uk_region_listing_page_has_empty_regions_if_no_parent(
         context={'request': rf.get('/')}
     )
 
-    assert len(serializer.data['mapped_regions']) == []
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    assert serializer.data['mapped_regions'] == []
