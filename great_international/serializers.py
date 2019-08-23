@@ -2035,15 +2035,17 @@ class AboutUkRegionListingPageSerializer(BasePageSerializer):
 
     def get_mapped_regions(self, instance):
         queryset = AboutUkLandingPage.objects.live().public().first()
-        data = [
-            AboutUkRegionsProxyDataWrapper(
-                instance=queryset,
-                region_title=region
-            )
-            for region in ['scotland', 'northern_ireland', 'north_england', 'wales', 'midlands', 'south_england']
-        ]
-        serializer = AboutUkRegionSerializer(data, many=True)
-        return serializer.data
+        if queryset:
+            data = [
+                AboutUkRegionsProxyDataWrapper(
+                    instance=queryset,
+                    region_title=region
+                )
+                for region in ['scotland', 'northern_ireland', 'north_england', 'wales', 'midlands', 'south_england']
+            ]
+            serializer = AboutUkRegionSerializer(data, many=True)
+            return serializer.data
+        return []
 
 
 class AboutUkRegionPageSerializer(BasePageSerializer):
