@@ -189,7 +189,6 @@ def render_markdown(text, context=None):
         extensions=[
             'tables',
             'smarty',
-            LinkerExtension()
         ],
         output_format='html5'
     )

@@ -14,6 +14,7 @@ from core.panels import SearchEngineOptimisationPanel
 class InternationalHomePagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         MultiFieldPanel(
             heading="Hero Section",
             children=[
@@ -191,7 +192,6 @@ class InternationalHomePagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -204,6 +204,7 @@ class InternationalHomePagePanels:
 class InternationalHomePageOldPanels:
 
     content_panels = [
+        FieldPanel('title'),
         MultiFieldPanel(
             heading="Hero Section",
             children=[
@@ -381,7 +382,6 @@ class InternationalHomePageOldPanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -394,6 +394,7 @@ class InternationalHomePageOldPanels:
 class BaseInternationalSectorPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         MultiFieldPanel(
             heading='Heading',
             children=[
@@ -620,7 +621,6 @@ class BaseInternationalSectorPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
@@ -651,6 +651,7 @@ class InternationalLocalisedFolderPagePanels:
 class InternationalArticlePagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('article_title'),
         MultiFieldPanel(
             heading='Article content',
@@ -695,6 +696,7 @@ class InternationalArticlePagePanels:
 class InternationalArticleListingPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('landing_page_title'),
         MultiFieldPanel(
             heading='Hero',
@@ -708,7 +710,6 @@ class InternationalArticleListingPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
@@ -722,6 +723,7 @@ class InternationalArticleListingPagePanels:
 class InternationalCampaignPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         MultiFieldPanel(
             heading='Hero section',
             children=[
@@ -812,7 +814,6 @@ class InternationalCampaignPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
@@ -826,6 +827,7 @@ class InternationalCampaignPagePanels:
 class InternationalTopicLandingPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('landing_page_title'),
         MultiFieldPanel(
             heading='Hero',
@@ -838,7 +840,6 @@ class InternationalTopicLandingPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
@@ -852,6 +853,7 @@ class InternationalTopicLandingPagePanels:
 class InternationalCuratedTopicLandingPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('display_title'),
         ImageChooserPanel('hero_image'),
         FieldPanel('teaser'),
@@ -893,7 +895,6 @@ class InternationalCuratedTopicLandingPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         SearchEngineOptimisationPanel(),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
@@ -908,6 +909,7 @@ class InternationalCuratedTopicLandingPagePanels:
 class InternationalGuideLandingPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('display_title'),
         ImageChooserPanel('hero_image'),
         FieldPanel('teaser'),
@@ -952,7 +954,6 @@ class InternationalGuideLandingPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         SearchEngineOptimisationPanel(),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
@@ -1022,6 +1023,7 @@ class AboutDitLandingPagePanels:
         MultiFieldPanel(
             heading="Hero",
             children=[
+                FieldPanel('title'),
                 FieldPanel('hero_title'),
                 ImageChooserPanel('hero_image'),
             ],
@@ -1088,7 +1090,6 @@ class AboutDitLandingPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -1114,6 +1115,7 @@ class AboutDitServiceFieldPanels:
 class AboutDitServicesPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('breadcrumbs_label'),
         MultiFieldPanel(
             heading="Hero",
@@ -1172,7 +1174,6 @@ class AboutDitServicesPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -1202,6 +1203,7 @@ class AboutUkLandingPagePanels:
     ]
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('breadcrumbs_label'),
         MultiFieldPanel(
             heading="Hero",
@@ -1309,7 +1311,6 @@ class AboutUkLandingPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -1319,6 +1320,237 @@ class AboutUkLandingPagePanels:
         other_panels=[
             ObjectList(image_panels, heading='Images'),
         ]
+    )
+
+
+class AboutUkRegionListingPagePanels:
+    image_panels = [
+        ImageChooserPanel('hero_image'),
+    ]
+
+    content_panels = [
+        FieldPanel('title'),
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading="Hero",
+            children=[
+                FieldPanel('hero_title'),
+            ],
+        ),
+        FieldPanel('intro'),
+        MultiFieldPanel(
+            heading="Contact us section",
+            classname="collapsible",
+            children=[
+                FieldPanel('contact_title'),
+                FieldPanel('contact_text'),
+                FieldPanel('contact_cta_text'),
+                FieldPanel('contact_cta_link'),
+            ]
+        ),
+    ]
+
+    settings_panels = [
+        FieldPanel('slug'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels,
+        other_panels=[
+            ObjectList(image_panels, heading='Images'),
+        ]
+    )
+
+
+class AboutUkRegionPagePanels:
+
+    content_panels = [
+        FieldPanel('title'),
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading="Hero",
+            children=[
+                FieldPanel('hero_title'),
+                ImageChooserPanel('hero_image'),
+            ],
+        ),
+        FieldPanel('featured_description'),
+        MultiFieldPanel(
+            heading="Region summary",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required fields for section to show: '
+                          'Region Summary Section Content'),
+                ImageChooserPanel('region_summary_section_image'),
+                FieldPanel('region_summary_section_intro'),
+                FieldPanel('region_summary_section_content'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Investment opportunities",
+            classname='collapsible collapsed',
+            children=[
+                FieldPanel('investment_opps_title'),
+                FieldPanel('investment_opps_intro'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Economics Statistics",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required: at least 4 statistics for the section to show'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('economics_stat_1_heading'),
+                        FieldPanel('economics_stat_1_number'),
+                        FieldPanel('economics_stat_1_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('economics_stat_2_heading'),
+                        FieldPanel('economics_stat_2_number'),
+                        FieldPanel('economics_stat_2_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('economics_stat_3_heading'),
+                        FieldPanel('economics_stat_3_number'),
+                        FieldPanel('economics_stat_3_smallprint'),
+                    ]),
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('economics_stat_4_heading'),
+                        FieldPanel('economics_stat_4_number'),
+                        FieldPanel('economics_stat_4_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('economics_stat_5_heading'),
+                        FieldPanel('economics_stat_5_number'),
+                        FieldPanel('economics_stat_5_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('economics_stat_6_heading'),
+                        FieldPanel('economics_stat_6_number'),
+                        FieldPanel('economics_stat_6_smallprint'),
+                    ]),
+                ]),
+
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Location Statistics",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required: at least 4 statistics for the section to show'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('location_stat_1_heading'),
+                        FieldPanel('location_stat_1_number'),
+                        FieldPanel('location_stat_1_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('location_stat_2_heading'),
+                        FieldPanel('location_stat_2_number'),
+                        FieldPanel('location_stat_2_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('location_stat_3_heading'),
+                        FieldPanel('location_stat_3_number'),
+                        FieldPanel('location_stat_3_smallprint'),
+                    ]),
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('location_stat_4_heading'),
+                        FieldPanel('location_stat_4_number'),
+                        FieldPanel('location_stat_4_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('location_stat_5_heading'),
+                        FieldPanel('location_stat_5_number'),
+                        FieldPanel('location_stat_5_smallprint'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('location_stat_6_heading'),
+                        FieldPanel('location_stat_6_number'),
+                        FieldPanel('location_stat_6_smallprint'),
+                    ]),
+                ]),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Extra optional Property and Infrastructure section",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required fields for section to show: '
+                          'Property and Infrastructure Section Title, '
+                          'Property and Infrastructure Section Content'),
+                ImageChooserPanel('property_and_infrastructure_section_image'),
+                FieldPanel('property_and_infrastructure_section_title'),
+                FieldPanel('property_and_infrastructure_section_content'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Accordions subsections",
+            classname='collapsible collapsed',
+            children=[
+                HelpPanel('Required: subsections title and at least one title and content for an accordion to show'),
+                FieldPanel('subsections_title'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('sub_section_one_title'),
+                        ImageChooserPanel('sub_section_one_icon'),
+                        FieldPanel('sub_section_one_content')
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('sub_section_two_title'),
+                        ImageChooserPanel('sub_section_two_icon'),
+                        FieldPanel('sub_section_two_content')
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('sub_section_three_title'),
+                        ImageChooserPanel('sub_section_three_icon'),
+                        FieldPanel('sub_section_three_content')
+                    ]),
+                ]),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Case study",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required fields for section to show: '
+                          'Case Study Image, Case Study Title'),
+                ImageChooserPanel('case_study_image'),
+                FieldPanel('case_study_title'),
+                FieldPanel('case_study_text'),
+                HelpPanel('Cta\'s require both text and a link to show '
+                          'on page. '),
+                FieldPanel('case_study_cta_text'),
+                FieldPanel('case_study_cta_link'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Contact",
+            classname='collapsible',
+            children=[
+                HelpPanel('Required fields for section to show: '
+                          'Contact Title, Contact Text'),
+                FieldPanel('contact_title'),
+                FieldPanel('contact_text'),
+                FieldPanel('contact_cta_text'),
+                FieldPanel('contact_cta_link'),
+            ],
+        ),
+    ]
+
+    settings_panels = [
+        FieldPanel('slug'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
     )
 
 
@@ -1339,6 +1571,7 @@ class AboutUkArticleFieldPanels:
 class AboutUkWhyChooseTheUkPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('breadcrumbs_label'),
         MultiFieldPanel(
             heading="Hero",
@@ -1462,7 +1695,6 @@ class AboutUkWhyChooseTheUkPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 

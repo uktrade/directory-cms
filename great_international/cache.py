@@ -16,6 +16,7 @@ class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
         capital_invest.CapitalInvestOpportunityPage,
         capital_invest.CapitalInvestOpportunityListingPage,
         great_international.InternationalSubSectorPage,
+        great_international.InternationalTopicLandingPage,
         great_international.InternationalCuratedTopicLandingPage,
         great_international.AboutUkLandingPage
     ]
@@ -28,6 +29,7 @@ class InternationalSubSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
         great_international.InternationalCampaignPage,
         capital_invest.CapitalInvestOpportunityPage,
         capital_invest.CapitalInvestOpportunityListingPage,
+        great_international.InternationalTopicLandingPage,
         great_international.InternationalSubSectorPage
     ]
 
@@ -49,7 +51,8 @@ class InternationalHomePageOldSubscriber(AbstractDatabaseCacheSubscriber):
 class InternationalArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = great_international.InternationalArticlePage
     subscriptions = [
-        great_international.InternationalSectorPage
+        great_international.InternationalTopicLandingPage,
+        great_international.InternationalSectorPage,
     ]
 
 
@@ -110,7 +113,8 @@ class InternationalCapitalInvestLandingPageSubscriber(
 ):
     model = capital_invest.InternationalCapitalInvestLandingPage
     subscriptions = [
-        capital_invest.CapitalInvestRegionPage
+        capital_invest.CapitalInvestRegionPage,
+        great_international.AboutUkRegionPage
     ]
 
 
@@ -233,6 +237,21 @@ class AboutUkLandingPageSubscriber(
     model = great_international.AboutUkLandingPage
     subscriptions = [
         great_international.InternationalSectorPage
+    ]
+
+
+class AboutUkRegionListingPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = great_international.AboutUkRegionListingPage
+    subscriptions = [
+        great_international.AboutUkLandingPage
+    ]
+
+
+class AboutUkRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = great_international.AboutUkRegionPage
+    subscriptions = [
+        great_international.AboutUkLandingPage,
+        great_international.AboutUkRegionListingPage
     ]
 
 
