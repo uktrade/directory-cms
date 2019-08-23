@@ -3,18 +3,30 @@
 ## Pre-release
 
 ### Implemented enhancements
+- CMS-1832 - Update django
+- CMS-1753 - Remove slug links from markdown fields
+- CI-431 - Added `AboutUkRegionListingPage` and `AboutUkRegionPage` which will replace `CapitalInvestRegionPage`
+
+### Fixed Bugs
+- CMS-1830 - Move title field into translated admin panels to fix bug with untranslated tree_based_breadcrumbs
+
+
+## [2019.08.15](https://github.com/uktrade/directory-cms/releases/tag/2019.08.15)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.08.08...2019.08.15)
+
+### Implemented enhancements
 - No ticket - Make teaser field optional in international articles
 - No ticket - Add featured industries to Invest home page
 - CI-321 - About UK landing page
 - CI-276 - Added `CapitalInvestContactFormPage` and `CapitalInvestContactFormSuccessPage`
-- CI-429 - Tree based breadcrumbs can now use `breadcrumbs_label` if available 
+- CI-429 - Tree based breadcrumbs can now use `breadcrumbs_label` if available
 
 ### Fixed Bugs
 - CI-426 - Added pdf document upload to why choose uk page for ebook section
 
 
-## [2019.08.08](https://github.com/uktrade/directory-cms/releases/tag/2019.08.06)
-[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.07.24...2019.08.06)
+## [2019.08.08](https://github.com/uktrade/directory-cms/releases/tag/2019.08.08)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.07.24...2019.08.08)
 
 - CMS-1774 - Use correct slug for Invest region landing page for tree based routing
 - CMS-1596 - Use correct slugs for new FAS pages under great international for tree based routing. Hide "uses tree-based routing" checkbox from admin panels
