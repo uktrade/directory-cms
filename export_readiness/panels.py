@@ -1033,9 +1033,18 @@ class ArticlePagePanels:
         MultiFieldPanel(
             heading='Article content',
             children=[
+                FieldPanel('article_subheading'),
                 FieldPanel('article_teaser'),
-                ImageChooserPanel('article_image'),
                 FieldPanel('article_body_text')
+            ]
+        ),
+        MultiFieldPanel(
+            heading='CTA fields',
+            children=[
+                FieldPanel('cta_title'),
+                FieldPanel('cta_teaser'),
+                FieldPanel('cta_link_label'),
+                FieldPanel('cta_link'),
             ]
         ),
         MultiFieldPanel(
@@ -1057,10 +1066,16 @@ class ArticlePagePanels:
         SearchEngineOptimisationPanel(),
     ]
 
+    image_panels = [
+        ImageChooserPanel('article_image'),
+        FieldPanel('article_video', widget=AdminMediaChooser),
+    ]
+
     settings_panels = [
         FieldPanel('title_en_gb'),
+        FieldPanel('type_of_article', widget=Select),
         FieldPanel('slug'),
-        FieldPanel('tags', widget=CheckboxSelectMultiple),
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
 
