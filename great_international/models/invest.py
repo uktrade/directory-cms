@@ -91,8 +91,7 @@ class InvestInternationalHomePage(
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        related_name='+',
-        verbose_name="Benefits section image"
+        related_name='+'
     )
 
     how_to_expand_intro = MarkdownField(blank=True)
