@@ -11,6 +11,7 @@ from core.helpers import make_translated_interface
 class InternationalCapitalInvestLandingPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         MultiFieldPanel(
             heading="Hero",
             children=[
@@ -133,7 +134,6 @@ class InternationalCapitalInvestLandingPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -146,6 +146,7 @@ class InternationalCapitalInvestLandingPagePanels:
 class CapitalInvestRegionPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('breadcrumbs_label'),
         MultiFieldPanel(
             heading="Hero",
@@ -324,7 +325,6 @@ class CapitalInvestRegionPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -337,12 +337,12 @@ class CapitalInvestRegionPagePanels:
 class CapitalInvestOpportunityListingPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('breadcrumbs_label'),
         FieldPanel('search_results_title')
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -355,6 +355,7 @@ class CapitalInvestOpportunityListingPagePanels:
 class CapitalInvestOpportunityPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         MultiFieldPanel(
             heading="Related sector",
             classname='collapsible collapsed',
@@ -370,7 +371,7 @@ class CapitalInvestOpportunityPagePanels:
                     'related_region',
                     [
                         'great_international.'
-                        'CapitalInvestRegionPage'
+                        'AboutUkRegionPage'
                     ]
                 ),
             ],
@@ -497,7 +498,6 @@ class CapitalInvestOpportunityPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -509,6 +509,7 @@ class CapitalInvestOpportunityPagePanels:
 
 class CapitalInvestContactFormPagePanels:
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('breadcrumbs_label'),
         FieldPanel('heading'),
         FieldPanel('intro'),
@@ -516,7 +517,6 @@ class CapitalInvestContactFormPagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -528,12 +528,12 @@ class CapitalInvestContactFormPagePanels:
 
 class CapitalInvestContactFormSuccessPagePanels:
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('large_text'),
         FieldPanel('small_text'),
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 

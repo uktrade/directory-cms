@@ -89,8 +89,13 @@ def test_models_hierarchy():
             great_international.AboutDitServicesPage
         ]
     assert great_international.AboutUkLandingPage.allowed_subpage_models() == [
-            great_international.AboutUkWhyChooseTheUkPage
+            great_international.AboutUkWhyChooseTheUkPage,
+            great_international.AboutUkRegionListingPage
         ]
+    assert great_international.AboutUkRegionListingPage.allowed_subpage_models() == [
+            great_international.AboutUkRegionPage
+        ]
+    assert great_international.AboutUkRegionPage.allowed_subpage_models() == []
 
 
 @pytest.mark.django_db

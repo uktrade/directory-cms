@@ -16,6 +16,7 @@ class InvestInternationalHomePagePanels:
     ]
 
     content_panels = [
+        FieldPanel('title'),
         MultiFieldPanel(
             heading='Hero',
             classname='collapsible',
@@ -191,7 +192,6 @@ class InvestInternationalHomePagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -224,6 +224,7 @@ class InvestHighPotentialOpportunitiesPagePanels:
 class InvestHighPotentialOpportunityDetailPagePanels:
 
     content_panels = [
+        FieldPanel('title'),
         MultiFieldPanel(
             heading='Hero',
             children=[
@@ -415,7 +416,6 @@ class InvestHighPotentialOpportunityDetailPagePanels:
         SearchEngineOptimisationPanel(),
     ]
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
         FieldPanel('featured'),
         DocumentChooserPanel('pdf_document'),
@@ -487,11 +487,11 @@ class InvestRegionLandingPagePanels:
         ImageChooserPanel('hero_image'),
     ]
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('heading'),
         SearchEngineOptimisationPanel()
     ]
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
 
@@ -510,6 +510,7 @@ class InvestRegionPagePanels:
         ImageChooserPanel('hero_image'),
     ]
     content_panels = [
+        FieldPanel('title'),
         FieldPanel('heading'),
         FieldPanel('description'),
         MultiFieldPanel(
@@ -588,7 +589,6 @@ class InvestRegionPagePanels:
         SearchEngineOptimisationPanel()
     ]
     settings_panels = [
-        FieldPanel('title_en_gb'),
         FieldPanel('slug'),
         FieldPanel('featured')
     ]
