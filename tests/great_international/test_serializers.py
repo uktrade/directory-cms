@@ -1124,10 +1124,16 @@ def test_invest_international_homepage_featured_industries(international_root_pa
 def test_about_uk_landing_page_has_regions(
         rf, international_root_page
 ):
+    scotland = AboutUkRegionPageFactory(
+        slug="scotland",
+        parent=international_root_page
+    )
 
     about_uk = AboutUkLandingPageFactory(
         slug='about-uk',
-        parent=international_root_page
+        parent=international_root_page,
+        scotland=scotland,
+        scotland_text="Lorem ipsum"
     )
 
     serializer = AboutUkLandingPageSerializer(
@@ -1139,15 +1145,24 @@ def test_about_uk_landing_page_has_regions(
     for field in serializer.data['regions']:
         assert 'region' in field
         assert 'text' in field
+    assert serializer.data['regions'][0]['text'] == 'Lorem ipsum'
+    assert serializer.data['regions'][0]['region']['meta']['slug'] == 'scotland'
 
 
 @pytest.mark.django_db
 def test_about_uk_region_listing_page_has_regions(
         rf, international_root_page
 ):
+    scotland = AboutUkRegionPageFactory(
+        slug="scotland",
+        parent=international_root_page
+    )
+
     AboutUkLandingPageFactory(
         slug='about-uk',
-        parent=international_root_page
+        parent=international_root_page,
+        scotland=scotland,
+        scotland_text="Lorem ipsum"
     )
 
     regions = AboutUkRegionListingPageFactory(
@@ -1164,61 +1179,6 @@ def test_about_uk_region_listing_page_has_regions(
     for field in serializer.data['mapped_regions']:
         assert 'region' in field
         assert 'text' in field
-
-
-@pytest.mark.django_db
-def test_about_uk_landing_page_has_regions2(
-        rf, international_root_page
-):
-    scotland = AboutUkRegionPageFactory(
-        slug="scotland",
-        parent=international_root_page
-    )
-
-    about_uk = AboutUkLandingPageFactory(
-        slug='about-uk',
-        parent=international_root_page,
-        scotland=scotland,
-        scotland_text="Lorem ipsum"
-    )
-
-    serializer = AboutUkLandingPageSerializer(
-        instance=about_uk,
-        context={'request': rf.get('/')}
-    )
-
-    assert len(serializer.data['regions']) == 6
-    assert serializer.data['regions'][0]['text'] == 'Lorem ipsum'
-    assert serializer.data['regions'][0]['region']['meta']['slug'] == 'scotland'
-
-
-@pytest.mark.django_db
-def test_about_uk_region_listing_page_has_regions2(
-        rf, international_root_page
-):
-    scotland = AboutUkRegionPageFactory(
-        slug="scotland",
-        parent=international_root_page
-    )
-
-    AboutUkLandingPageFactory(
-        slug='about-uk',
-        parent=international_root_page,
-        scotland=scotland,
-        scotland_text="Lorem ipsum"
-    )
-
-    regions = AboutUkRegionListingPageFactory(
-        slug='regions',
-        parent=international_root_page
-    )
-
-    serializer = AboutUkRegionListingPageSerializer(
-        instance=regions,
-        context={'request': rf.get('/')}
-    )
-
-    assert len(serializer.data['mapped_regions']) == 6
     assert serializer.data['mapped_regions'][0]['text'] == 'Lorem ipsum'
     assert serializer.data['mapped_regions'][0]['region']['meta']['slug'] == 'scotland'
 
