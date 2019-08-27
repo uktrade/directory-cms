@@ -713,14 +713,25 @@ class InternationalSectorPageSerializer(
 
 
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
-    article_title = serializers.CharField()
-    article_subheading = serializers.CharField()
+    type_of_article = serializers.CharField()
+
     display_title = serializers.CharField(source='article_title')
+    article_title = serializers.CharField()
     article_teaser = serializers.CharField()
+    article_subheading = serializers.CharField()
+
     article_image = wagtail_fields.ImageRenditionField('original')
-    article_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360', source='article_image')
+    article_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='article_image')
+    article_video = core_fields.VideoField()
+
     article_body_text = core_fields.MarkdownToHTMLField()
+
+    cta_title = serializers.CharField()
+    cta_teaser = serializers.CharField()
+    cta_link_label = serializers.CharField()
+    cta_link = serializers.CharField()
+
+    tags = core_fields.TagsListField()
 
 
 class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
