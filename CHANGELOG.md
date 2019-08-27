@@ -2,6 +2,9 @@
 
 ## Pre-release
 
+### Hotfix
+- no ticket - Management command that lists pages containing slug-base hyperlinking
+
 ### Implemented enhancements
 - CMS-1832 - Update django
 - CMS-1753 - Remove slug links from markdown fields
