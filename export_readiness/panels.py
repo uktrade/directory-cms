@@ -1035,6 +1035,8 @@ class ArticlePagePanels:
             children=[
                 FieldPanel('article_subheading'),
                 FieldPanel('article_teaser'),
+                ImageChooserPanel('article_image'),
+                FieldPanel('article_video', widget=AdminMediaChooser),
                 FieldPanel('article_body_text')
             ]
         ),
@@ -1064,11 +1066,6 @@ class ArticlePagePanels:
             ]
         ),
         SearchEngineOptimisationPanel(),
-    ]
-
-    image_panels = [
-        ImageChooserPanel('article_image'),
-        FieldPanel('article_video', widget=AdminMediaChooser),
     ]
 
     settings_panels = [
