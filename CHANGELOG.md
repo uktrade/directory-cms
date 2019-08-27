@@ -2,6 +2,9 @@
 
 ## Pre-release
 
+### Hotfix
+- no ticket - Management command that lists pages containing slug-base hyperlinking
+
 ### Implemented enhancements
 - No ticket - Make teaser field optional in international articles
 - No ticket - Add featured industries to Invest home page
