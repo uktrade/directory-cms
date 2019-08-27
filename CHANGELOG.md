@@ -6,9 +6,6 @@
 - CMS-1832 - Update django
 - CMS-1753 - Remove slug links from markdown fields
 - CI-431 - Added `AboutUkRegionListingPage` and `AboutUkRegionPage` which will replace `CapitalInvestRegionPage`
-- CI-439 - Added `ExpandInternationalLandingPage` new FDI landing page
-- CI-439 - Added `ExpandInternationalLandingPage` as new FDI landing page
-- CI-439 - Added new fields to `InvestInternationalHomePage` 
 - CI-400 - Added related regions and text on About Uk pages for map 
 - CI-439 - Added new fields to `InvestInternationalHomePage` 
 

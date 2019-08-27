@@ -34,9 +34,7 @@ from tests.great_international.factories import (
     AboutUkWhyChooseTheUkPageFactory,
     AboutUkLandingPageFactory,
     InvestInternationalHomePageFactory,
-    InvestHighPotentialOpportunityDetailPageFactory,
-    AboutUkRegionListingPageFactory)
-    CapitalInvestRegionPageFactory, AboutUkRegionListingPageFactory)
+    AboutUkRegionListingPageFactory,
     CapitalInvestRegionPageFactory,
     InvestHighPotentialOpportunityDetailPageFactory)
 
