@@ -1,4 +1,4 @@
-from django.forms import Textarea, CheckboxSelectMultiple
+from django.forms import Textarea, CheckboxSelectMultiple, Select
 
 from wagtail.admin.edit_handlers import (
     InlinePanel, HelpPanel, FieldPanel, FieldRowPanel, MultiFieldPanel,
@@ -6,6 +6,7 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtailmedia.widgets import AdminMediaChooser
 
 from core.helpers import make_translated_interface
 from core.panels import SearchEngineOptimisationPanel
@@ -658,8 +659,16 @@ class InternationalArticlePagePanels:
             children=[
                 FieldPanel('article_subheading'),
                 FieldPanel('article_teaser'),
-                ImageChooserPanel('article_image'),
                 FieldPanel('article_body_text')
+            ]
+        ),
+        MultiFieldPanel(
+            heading='CTA fields',
+            children=[
+                FieldPanel('cta_title'),
+                FieldPanel('cta_teaser'),
+                FieldPanel('cta_link_label'),
+                FieldPanel('cta_link'),
             ]
         ),
         MultiFieldPanel(
@@ -681,15 +690,23 @@ class InternationalArticlePagePanels:
         SearchEngineOptimisationPanel(),
     ]
 
+    image_panels = [
+        ImageChooserPanel('article_image'),
+        FieldPanel('article_video', widget=AdminMediaChooser),
+    ]
+
     settings_panels = [
-        FieldPanel('title_en_gb'),
+        FieldPanel('type_of_article', widget=Select),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
-        settings_panels=settings_panels
+        settings_panels=settings_panels,
+        other_panels=[
+            ObjectList(image_panels, heading='Images')
+        ],
     )
 
 
