@@ -1926,6 +1926,18 @@ class AboutDitServicesPageSerializer(BasePageSerializer):
         return serializer.data
 
 
+def get_mapped_regions(instance):
+    data = [
+        AboutUkRegionsProxyDataWrapper(
+            instance=instance,
+            region_title=region
+        )
+        for region in REGIONS
+    ]
+    serializer = AboutUkRegionSerializer(data, many=True)
+    return serializer.data
+
+
 class AboutUkLandingPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
@@ -1995,15 +2007,7 @@ class AboutUkLandingPageSerializer(BasePageSerializer):
     regions = serializers.SerializerMethodField()
 
     def get_regions(self, instance):
-        data = [
-            AboutUkRegionsProxyDataWrapper(
-                instance=instance,
-                region_title=region
-            )
-            for region in REGIONS
-        ]
-        serializer = AboutUkRegionSerializer(data, many=True)
-        return serializer.data
+        return get_mapped_regions(instance)
 
 
 class AboutUkRegionListingPageSerializer(BasePageSerializer):
@@ -2026,15 +2030,7 @@ class AboutUkRegionListingPageSerializer(BasePageSerializer):
         if not queryset:
             return []
 
-        data = [
-            AboutUkRegionsProxyDataWrapper(
-                instance=queryset,
-                region_title=region
-            )
-            for region in REGIONS
-        ]
-        serializer = AboutUkRegionSerializer(data, many=True)
-        return serializer.data
+        return get_mapped_regions(queryset)
 
 
 class AboutUkRegionPageSerializer(BasePageSerializer):
