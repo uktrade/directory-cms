@@ -365,7 +365,6 @@ class AboutUkRegionSerializer(serializers.Serializer):
         if not region:
             return []
 
-        print('\n\n\n\n do i get here?')
         serializer = MinimalPageWithHeroTitleSerializer(
             region.specific)
 
