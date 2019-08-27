@@ -17,7 +17,7 @@ from .models.great_international import (
     InternationalGuideLandingPage,
     InternationalSectorPage,
     InternationalEUExitFormPage,
-    InternationalSubSectorPage, AboutDitServicesPage)
+    InternationalSubSectorPage, AboutDitServicesPage, AboutUkLandingPage)
 from .models.invest import (
     InvestHighPotentialOpportunityFormPage,
     InvestHighPotentialOpportunityDetailPage,
@@ -29,6 +29,7 @@ from .models.capital_invest import CapitalInvestOpportunityPage
 
 ONE_TO_SIX_WORDS = ['one', 'two', 'three', 'four', 'five', 'six']
 ONE_TO_SEVEN_WORDS = ONE_TO_SIX_WORDS + ['seven']
+REGIONS = ['scotland', 'northern_ireland', 'north_england', 'wales', 'midlands', 'south_england']
 
 
 class SectionThreeSubsectionProxyDataWrapper:
@@ -288,6 +289,27 @@ class HowWeHelpWithTitleProxyDataWrapper:
         )
 
 
+class AboutUkRegionsProxyDataWrapper:
+
+    def __init__(self, instance, region_title):
+        self.region_title = region_title
+        self.instance = instance
+
+    @property
+    def region(self):
+        return getattr(
+            self.instance,
+            f'{self.region_title}'
+        )
+
+    @property
+    def text(self):
+        return getattr(
+            self.instance,
+            f'{self.region_title}_text'
+        )
+
+
 class SectionThreeSubsectionSerializer(serializers.Serializer):
     heading = serializers.CharField(max_length=255)
     teaser = serializers.CharField()
@@ -332,6 +354,22 @@ class HowWeHelpWithTitleSerializer(serializers.Serializer):
     icon = wagtail_fields.ImageRenditionField('original')
     title = serializers.CharField(max_length=255)
     text = serializers.CharField(max_length=255)
+
+
+class AboutUkRegionSerializer(serializers.Serializer):
+    region = serializers.SerializerMethodField()
+    text = serializers.CharField(max_length=255)
+
+    def get_region(self, obj):
+        region = obj.region
+
+        if not region:
+            return []
+
+        serializer = MinimalPageWithHeroTitleSerializer(
+            region.specific)
+
+        return serializer.data
 
 
 class RelatedArticlePageSerializer(BasePageSerializer):
@@ -1369,6 +1407,10 @@ class MinimalPageSerializer(BasePageSerializer):
     heading = serializers.CharField(max_length=255)
 
 
+class MinimalPageWithHeroTitleSerializer(BasePageSerializer):
+    hero_title = serializers.CharField(max_length=255)
+
+
 # Invest seralizers
 
 class SubsectionProxyDataWrapper:
@@ -1884,6 +1926,18 @@ class AboutDitServicesPageSerializer(BasePageSerializer):
         return serializer.data
 
 
+def get_mapped_regions(instance):
+    data = [
+        AboutUkRegionsProxyDataWrapper(
+            instance=instance,
+            region_title=region
+        )
+        for region in REGIONS
+    ]
+    serializer = AboutUkRegionSerializer(data, many=True)
+    return serializer.data
+
+
 class AboutUkLandingPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
@@ -1903,8 +1957,7 @@ class AboutUkLandingPageSerializer(BasePageSerializer):
     industries_section_cta_link = serializers.CharField()
 
     regions_section_title = serializers.CharField()
-    regions_section_content = core_fields.MarkdownToHTMLField()
-    regions_section_image = wagtail_fields.ImageRenditionField('original')
+    regions_section_intro = core_fields.MarkdownToHTMLField()
     regions_section_cta_text = serializers.CharField()
     regions_section_cta_link = serializers.CharField()
 
@@ -1951,6 +2004,11 @@ class AboutUkLandingPageSerializer(BasePageSerializer):
         ).data
         return serialized
 
+    regions = serializers.SerializerMethodField()
+
+    def get_regions(self, instance):
+        return get_mapped_regions(instance)
+
 
 class AboutUkRegionListingPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
@@ -1963,6 +2021,16 @@ class AboutUkRegionListingPageSerializer(BasePageSerializer):
     contact_text = core_fields.MarkdownToHTMLField()
     contact_cta_text = serializers.CharField()
     contact_cta_link = serializers.CharField()
+
+    mapped_regions = serializers.SerializerMethodField()
+
+    def get_mapped_regions(self, instance):
+        queryset = AboutUkLandingPage.objects.live().public().first()
+
+        if not queryset:
+            return []
+
+        return get_mapped_regions(queryset)
 
 
 class AboutUkRegionPageSerializer(BasePageSerializer):

@@ -1188,7 +1188,6 @@ class AboutUkLandingPagePanels:
     image_panels = [
         ImageChooserPanel('hero_image'),
         ImageChooserPanel('why_choose_uk_image'),
-        ImageChooserPanel('regions_section_image'),
         MultiFieldPanel(
             heading="How we help images",
             children=[
@@ -1237,7 +1236,35 @@ class AboutUkLandingPagePanels:
             classname="collapsible",
             children=[
                 FieldPanel('regions_section_title'),
-                FieldPanel('regions_section_content'),
+                FieldPanel('regions_section_intro'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        PageChooserPanel('scotland', 'great_international.AboutUkRegionPage'),
+                        FieldPanel('scotland_text')
+                    ]),
+                    MultiFieldPanel([
+                        PageChooserPanel('northern_ireland', 'great_international.AboutUkRegionPage'),
+                        FieldPanel('northern_ireland_text')
+                    ]),
+                    MultiFieldPanel([
+                        PageChooserPanel('north_england', 'great_international.AboutUkRegionPage'),
+                        FieldPanel('north_england_text')
+                    ]),
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        PageChooserPanel('wales', 'great_international.AboutUkRegionPage'),
+                        FieldPanel('wales_text')
+                    ]),
+                    MultiFieldPanel([
+                        PageChooserPanel('midlands', 'great_international.AboutUkRegionPage'),
+                        FieldPanel('midlands_text')
+                    ]),
+                    MultiFieldPanel([
+                        PageChooserPanel('south_england', 'great_international.AboutUkRegionPage'),
+                        FieldPanel('south_england_text')
+                    ]),
+                ]),
                 FieldPanel('regions_section_cta_text'),
                 FieldPanel('regions_section_cta_link'),
             ]
