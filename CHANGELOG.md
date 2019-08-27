@@ -9,6 +9,7 @@
 - CI-439 - Added `ExpandInternationalLandingPage` new FDI landing page
 - CI-439 - Added `ExpandInternationalLandingPage` as new FDI landing page
 - CI-439 - Added new fields to `InvestInternationalHomePage` 
+- CI-400 - Added related regions and text on About Uk pages for map 
 
 ### Fixed Bugs
 - CMS-1830 - Move title field into translated admin panels to fix bug with untranslated tree_based_breadcrumbs
