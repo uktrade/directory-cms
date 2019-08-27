@@ -29,6 +29,7 @@ from .models.capital_invest import CapitalInvestOpportunityPage
 
 ONE_TO_SIX_WORDS = ['one', 'two', 'three', 'four', 'five', 'six']
 ONE_TO_SEVEN_WORDS = ONE_TO_SIX_WORDS + ['seven']
+REGIONS = ['scotland', 'northern_ireland', 'north_england', 'wales', 'midlands', 'south_england']
 
 
 class SectionThreeSubsectionProxyDataWrapper:
@@ -1999,7 +2000,7 @@ class AboutUkLandingPageSerializer(BasePageSerializer):
                 instance=instance,
                 region_title=region
             )
-            for region in ['scotland', 'northern_ireland', 'north_england', 'wales', 'midlands', 'south_england']
+            for region in REGIONS
         ]
         serializer = AboutUkRegionSerializer(data, many=True)
         return serializer.data
@@ -2021,17 +2022,19 @@ class AboutUkRegionListingPageSerializer(BasePageSerializer):
 
     def get_mapped_regions(self, instance):
         queryset = AboutUkLandingPage.objects.live().public().first()
-        if queryset:
-            data = [
-                AboutUkRegionsProxyDataWrapper(
-                    instance=queryset,
-                    region_title=region
-                )
-                for region in ['scotland', 'northern_ireland', 'north_england', 'wales', 'midlands', 'south_england']
-            ]
-            serializer = AboutUkRegionSerializer(data, many=True)
-            return serializer.data
-        return []
+
+        if not queryset:
+            return []
+
+        data = [
+            AboutUkRegionsProxyDataWrapper(
+                instance=queryset,
+                region_title=region
+            )
+            for region in REGIONS
+        ]
+        serializer = AboutUkRegionSerializer(data, many=True)
+        return serializer.data
 
 
 class AboutUkRegionPageSerializer(BasePageSerializer):
