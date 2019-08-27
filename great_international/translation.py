@@ -10,9 +10,7 @@ from great_international.models import (
 
 
 @register(great_international.BaseInternationalSectorPage)
-class BaseInternationalSectorPageTranslationOptions(
-    BaseTranslationOptions
-):
+class BaseInternationalSectorPageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
@@ -148,8 +146,11 @@ class InternationalArticlePageTranslationOptions(BaseTranslationOptions):
         'article_title',
         'article_subheading',
         'article_teaser',
-        'article_image',
         'article_body_text',
+        'cta_title',
+        'cta_teaser',
+        'cta_link_label',
+        'cta_link',
         'related_page_one',
         'related_page_two',
         'related_page_three',

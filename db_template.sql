@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
--- Dumped by pg_dump version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
+-- Dumped from database version 9.6.14
+-- Dumped by pg_dump version 11.3
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,22 +12,9 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
 
 SET default_tablespace = '';
 
@@ -535,14 +522,21 @@ CREATE TABLE public.export_readiness_articlelistingpage (
 CREATE TABLE public.export_readiness_articlepage (
     page_ptr_id integer NOT NULL,
     service_name character varying(100),
-    article_title character varying(255) NOT NULL,
-    article_teaser character varying(255),
+    article_title text NOT NULL,
+    article_teaser text,
     article_body_text text NOT NULL,
     article_image_id integer,
     related_page_one_id integer,
     related_page_three_id integer,
     related_page_two_id integer,
-    uses_tree_based_routing boolean NOT NULL
+    uses_tree_based_routing boolean NOT NULL,
+    article_subheading text NOT NULL,
+    article_video_id integer,
+    cta_link character varying(255) NOT NULL,
+    cta_link_label character varying(255) NOT NULL,
+    cta_teaser text NOT NULL,
+    cta_title character varying(255) NOT NULL,
+    type_of_article text
 );
 
 
@@ -5227,14 +5221,6 @@ CREATE TABLE public.great_international_internationalarticlepage (
     article_body_text_ja text,
     article_body_text_pt text,
     article_body_text_zh_hans text,
-    article_image_ar_id integer,
-    article_image_de_id integer,
-    article_image_en_gb_id integer,
-    article_image_es_id integer,
-    article_image_fr_id integer,
-    article_image_ja_id integer,
-    article_image_pt_id integer,
-    article_image_zh_hans_id integer,
     article_subheading_ar text,
     article_subheading_de text,
     article_subheading_en_gb text,
@@ -5283,7 +5269,45 @@ CREATE TABLE public.great_international_internationalarticlepage (
     related_page_two_ja_id integer,
     related_page_two_pt_id integer,
     related_page_two_zh_hans_id integer,
-    uses_tree_based_routing boolean NOT NULL
+    uses_tree_based_routing boolean NOT NULL,
+    article_video_id integer,
+    cta_link character varying(255) NOT NULL,
+    cta_link_ar character varying(255),
+    cta_link_de character varying(255),
+    cta_link_en_gb character varying(255),
+    cta_link_es character varying(255),
+    cta_link_fr character varying(255),
+    cta_link_ja character varying(255),
+    cta_link_label character varying(255) NOT NULL,
+    cta_link_label_ar character varying(255),
+    cta_link_label_de character varying(255),
+    cta_link_label_en_gb character varying(255),
+    cta_link_label_es character varying(255),
+    cta_link_label_fr character varying(255),
+    cta_link_label_ja character varying(255),
+    cta_link_label_pt character varying(255),
+    cta_link_label_zh_hans character varying(255),
+    cta_link_pt character varying(255),
+    cta_link_zh_hans character varying(255),
+    cta_teaser text NOT NULL,
+    cta_teaser_ar text,
+    cta_teaser_de text,
+    cta_teaser_en_gb text,
+    cta_teaser_es text,
+    cta_teaser_fr text,
+    cta_teaser_ja text,
+    cta_teaser_pt text,
+    cta_teaser_zh_hans text,
+    cta_title character varying(255) NOT NULL,
+    cta_title_ar character varying(255),
+    cta_title_de character varying(255),
+    cta_title_en_gb character varying(255),
+    cta_title_es character varying(255),
+    cta_title_fr character varying(255),
+    cta_title_ja character varying(255),
+    cta_title_pt character varying(255),
+    cta_title_zh_hans character varying(255),
+    type_of_article text
 );
 
 
@@ -14060,6 +14084,8 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 367	great_international	0070_auto_20190823_1036	2019-08-23 12:02:13.721937+01
 368	invest	0034_auto_20190823_1036	2019-08-23 12:10:12.739233+01
 369	great_international	0071_auto_20190823_1525	2019-08-23 16:33:01.592257+01
+370	export_readiness	0053_auto_20190827_1051	2019-08-27 13:46:40.148358+01
+371	great_international	0072_auto_20190827_1237	2019-08-27 13:47:47.04719+01
 \.
 
 
@@ -14091,7 +14117,7 @@ COPY public.export_readiness_articlelistingpage (page_ptr_id, service_name, land
 -- Data for Name: export_readiness_articlepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_articlepage (page_ptr_id, service_name, article_title, article_teaser, article_body_text, article_image_id, related_page_one_id, related_page_three_id, related_page_two_id, uses_tree_based_routing) FROM stdin;
+COPY public.export_readiness_articlepage (page_ptr_id, service_name, article_title, article_teaser, article_body_text, article_image_id, related_page_one_id, related_page_three_id, related_page_two_id, uses_tree_based_routing, article_subheading, article_video_id, cta_link, cta_link_label, cta_teaser, cta_title, type_of_article) FROM stdin;
 \.
 
 
@@ -14531,7 +14557,7 @@ COPY public.great_international_internationalarticlelistingpage_tags (id, intern
 -- Data for Name: great_international_internationalarticlepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_internationalarticlepage (page_ptr_id, service_name, article_title, article_teaser, article_body_text, article_image_id, related_page_one_id, related_page_three_id, related_page_two_id, article_subheading, article_body_text_ar, article_body_text_de, article_body_text_en_gb, article_body_text_es, article_body_text_fr, article_body_text_ja, article_body_text_pt, article_body_text_zh_hans, article_image_ar_id, article_image_de_id, article_image_en_gb_id, article_image_es_id, article_image_fr_id, article_image_ja_id, article_image_pt_id, article_image_zh_hans_id, article_subheading_ar, article_subheading_de, article_subheading_en_gb, article_subheading_es, article_subheading_fr, article_subheading_ja, article_subheading_pt, article_subheading_zh_hans, article_teaser_ar, article_teaser_de, article_teaser_en_gb, article_teaser_es, article_teaser_fr, article_teaser_ja, article_teaser_pt, article_teaser_zh_hans, article_title_ar, article_title_de, article_title_en_gb, article_title_es, article_title_fr, article_title_ja, article_title_pt, article_title_zh_hans, related_page_one_ar_id, related_page_one_de_id, related_page_one_en_gb_id, related_page_one_es_id, related_page_one_fr_id, related_page_one_ja_id, related_page_one_pt_id, related_page_one_zh_hans_id, related_page_three_ar_id, related_page_three_de_id, related_page_three_en_gb_id, related_page_three_es_id, related_page_three_fr_id, related_page_three_ja_id, related_page_three_pt_id, related_page_three_zh_hans_id, related_page_two_ar_id, related_page_two_de_id, related_page_two_en_gb_id, related_page_two_es_id, related_page_two_fr_id, related_page_two_ja_id, related_page_two_pt_id, related_page_two_zh_hans_id, uses_tree_based_routing) FROM stdin;
+COPY public.great_international_internationalarticlepage (page_ptr_id, service_name, article_title, article_teaser, article_body_text, article_image_id, related_page_one_id, related_page_three_id, related_page_two_id, article_subheading, article_body_text_ar, article_body_text_de, article_body_text_en_gb, article_body_text_es, article_body_text_fr, article_body_text_ja, article_body_text_pt, article_body_text_zh_hans, article_subheading_ar, article_subheading_de, article_subheading_en_gb, article_subheading_es, article_subheading_fr, article_subheading_ja, article_subheading_pt, article_subheading_zh_hans, article_teaser_ar, article_teaser_de, article_teaser_en_gb, article_teaser_es, article_teaser_fr, article_teaser_ja, article_teaser_pt, article_teaser_zh_hans, article_title_ar, article_title_de, article_title_en_gb, article_title_es, article_title_fr, article_title_ja, article_title_pt, article_title_zh_hans, related_page_one_ar_id, related_page_one_de_id, related_page_one_en_gb_id, related_page_one_es_id, related_page_one_fr_id, related_page_one_ja_id, related_page_one_pt_id, related_page_one_zh_hans_id, related_page_three_ar_id, related_page_three_de_id, related_page_three_en_gb_id, related_page_three_es_id, related_page_three_fr_id, related_page_three_ja_id, related_page_three_pt_id, related_page_three_zh_hans_id, related_page_two_ar_id, related_page_two_de_id, related_page_two_en_gb_id, related_page_two_es_id, related_page_two_fr_id, related_page_two_ja_id, related_page_two_pt_id, related_page_two_zh_hans_id, uses_tree_based_routing, article_video_id, cta_link, cta_link_ar, cta_link_de, cta_link_en_gb, cta_link_es, cta_link_fr, cta_link_ja, cta_link_label, cta_link_label_ar, cta_link_label_de, cta_link_label_en_gb, cta_link_label_es, cta_link_label_fr, cta_link_label_ja, cta_link_label_pt, cta_link_label_zh_hans, cta_link_pt, cta_link_zh_hans, cta_teaser, cta_teaser_ar, cta_teaser_de, cta_teaser_en_gb, cta_teaser_es, cta_teaser_fr, cta_teaser_ja, cta_teaser_pt, cta_teaser_zh_hans, cta_title, cta_title_ar, cta_title_de, cta_title_en_gb, cta_title_es, cta_title_fr, cta_title_ja, cta_title_pt, cta_title_zh_hans, type_of_article) FROM stdin;
 \.
 
 
@@ -15175,7 +15201,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 123, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 369, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 371, true);
 
 
 --
@@ -17132,6 +17158,13 @@ CREATE INDEX export_readiness_articlelistingpage_service_name_03f3affd_like ON p
 --
 
 CREATE INDEX export_readiness_articlepage_article_image_id_89070cd3 ON public.export_readiness_articlepage USING btree (article_image_id);
+
+
+--
+-- Name: export_readiness_articlepage_article_video_id_0a7568c7; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX export_readiness_articlepage_article_video_id_0a7568c7 ON public.export_readiness_articlepage USING btree (article_video_id);
 
 
 --
@@ -23162,41 +23195,6 @@ CREATE INDEX great_international_inte_service_name_bf9e2f01_like ON public.great
 
 
 --
--- Name: great_international_intern_article_image_ar_id_45ae21e4; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_article_image_ar_id_45ae21e4 ON public.great_international_internationalarticlepage USING btree (article_image_ar_id);
-
-
---
--- Name: great_international_intern_article_image_de_id_ba22feb5; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_article_image_de_id_ba22feb5 ON public.great_international_internationalarticlepage USING btree (article_image_de_id);
-
-
---
--- Name: great_international_intern_article_image_en_gb_id_af5af2ec; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_article_image_en_gb_id_af5af2ec ON public.great_international_internationalarticlepage USING btree (article_image_en_gb_id);
-
-
---
--- Name: great_international_intern_article_image_es_id_4e512618; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_article_image_es_id_4e512618 ON public.great_international_internationalarticlepage USING btree (article_image_es_id);
-
-
---
--- Name: great_international_intern_article_image_fr_id_ec641043; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_article_image_fr_id_ec641043 ON public.great_international_internationalarticlepage USING btree (article_image_fr_id);
-
-
---
 -- Name: great_international_intern_article_image_id_aa9240b3; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -23204,24 +23202,10 @@ CREATE INDEX great_international_intern_article_image_id_aa9240b3 ON public.grea
 
 
 --
--- Name: great_international_intern_article_image_ja_id_db501d73; Type: INDEX; Schema: public; Owner: -
+-- Name: great_international_intern_article_video_id_cb536424; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX great_international_intern_article_image_ja_id_db501d73 ON public.great_international_internationalarticlepage USING btree (article_image_ja_id);
-
-
---
--- Name: great_international_intern_article_image_pt_id_fd60b36a; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_article_image_pt_id_fd60b36a ON public.great_international_internationalarticlepage USING btree (article_image_pt_id);
-
-
---
--- Name: great_international_intern_article_image_zh_hans_id_02bf9c26; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_article_image_zh_hans_id_02bf9c26 ON public.great_international_internationalarticlepage USING btree (article_image_zh_hans_id);
+CREATE INDEX great_international_intern_article_video_id_cb536424 ON public.great_international_internationalarticlepage USING btree (article_video_id);
 
 
 --
@@ -34022,6 +34006,14 @@ ALTER TABLE ONLY public.export_readiness_articlepage
 
 
 --
+-- Name: export_readiness_articlepage export_readiness_art_article_video_id_0a7568c7_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.export_readiness_articlepage
+    ADD CONSTRAINT export_readiness_art_article_video_id_0a7568c7_fk_wagtailme FOREIGN KEY (article_video_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: export_readiness_articlepage_tags export_readiness_art_articlepage_id_f030e54b_fk_export_re; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -35318,46 +35310,6 @@ ALTER TABLE ONLY public.find_a_supplier_landingpagearticlesummary
 
 
 --
--- Name: great_international_internationalarticlepage great_international__article_image_ar_id_45ae21e4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_ar_id_45ae21e4_fk_wagtailim FOREIGN KEY (article_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__article_image_de_id_ba22feb5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_de_id_ba22feb5_fk_wagtailim FOREIGN KEY (article_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__article_image_en_gb__af5af2ec_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_en_gb__af5af2ec_fk_wagtailim FOREIGN KEY (article_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__article_image_es_id_4e512618_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_es_id_4e512618_fk_wagtailim FOREIGN KEY (article_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__article_image_fr_id_ec641043_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_fr_id_ec641043_fk_wagtailim FOREIGN KEY (article_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalarticlepage great_international__article_image_id_aa9240b3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -35366,27 +35318,11 @@ ALTER TABLE ONLY public.great_international_internationalarticlepage
 
 
 --
--- Name: great_international_internationalarticlepage great_international__article_image_ja_id_db501d73_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_internationalarticlepage great_international__article_video_id_cb536424_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_ja_id_db501d73_fk_wagtailim FOREIGN KEY (article_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__article_image_pt_id_fd60b36a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_pt_id_fd60b36a_fk_wagtailim FOREIGN KEY (article_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__article_image_zh_han_02bf9c26_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_zh_han_02bf9c26_fk_wagtailim FOREIGN KEY (article_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__article_video_id_cb536424_fk_wagtailme FOREIGN KEY (article_video_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --

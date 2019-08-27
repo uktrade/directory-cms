@@ -13,6 +13,7 @@ from core.models import (
     ExclusivePageMixin,
     FormPageMetaClass,
 )
+from core.constants import ARTICLE_TYPES
 from core.mixins import ServiceHomepageMixin, ServiceNameUniqueSlugMixin
 
 from . import panels, snippets
@@ -1054,6 +1055,7 @@ class MarketingPages(ExclusivePageMixin, BaseDomesticPage):
         return super().save(*args, **kwargs)
 
 
+# !!! TO BE REPLACED BY `ArticlePage` !!!
 class CampaignPage(panels.CampaignPagePanels, BaseDomesticPage):
 
     subpage_types = []
@@ -1182,9 +1184,20 @@ class ArticlePage(panels.ArticlePagePanels, BaseDomesticPage):
 
     subpage_types = []
 
-    article_title = models.CharField(max_length=255)
+    type_of_article = models.TextField(choices=ARTICLE_TYPES, null=True)
 
-    article_teaser = models.CharField(max_length=255, blank=True, null=True)
+    article_title = models.TextField()
+    article_subheading = models.TextField(
+        blank=True,
+        help_text="This is a subheading that displays "
+                  "below the main title on the article page"
+    )
+    article_teaser = models.TextField(
+        blank=True,
+        null=True,
+        help_text="This is a subheading that displays when the article "
+                  "is featured on another page"
+    )
     article_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1192,7 +1205,35 @@ class ArticlePage(panels.ArticlePagePanels, BaseDomesticPage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    article_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     article_body_text = MarkdownField()
+
+    cta_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title'
+    )
+    cta_teaser = models.TextField(
+        blank=True,
+        verbose_name='CTA teaser'
+    )
+
+    cta_link_label = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link label'
+    )
+    cta_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link'
+    )
 
     related_page_one = models.ForeignKey(
         'export_readiness.ArticlePage',
@@ -1218,6 +1259,7 @@ class ArticlePage(panels.ArticlePagePanels, BaseDomesticPage):
     tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
+# !!! TO BE REPLACED BY `ArticlePage` !!!
 class MarketingArticlePage(panels.MarketingArticlePagePanels, BaseDomesticPage):
 
     subpage_types = []
