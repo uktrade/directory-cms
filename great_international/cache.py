@@ -236,7 +236,9 @@ class AboutUkLandingPageSubscriber(
 ):
     model = great_international.AboutUkLandingPage
     subscriptions = [
-        great_international.InternationalSectorPage
+        great_international.InternationalSectorPage,
+        great_international.AboutUkRegionListingPage,
+        great_international.AboutUkRegionPage
     ]
 
 

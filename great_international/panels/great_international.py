@@ -1,4 +1,4 @@
-from django.forms import Textarea, CheckboxSelectMultiple
+from django.forms import Textarea, CheckboxSelectMultiple, Select
 
 from wagtail.admin.edit_handlers import (
     InlinePanel, HelpPanel, FieldPanel, FieldRowPanel, MultiFieldPanel,
@@ -6,6 +6,7 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtailmedia.widgets import AdminMediaChooser
 
 from core.helpers import make_translated_interface
 from core.panels import SearchEngineOptimisationPanel
@@ -658,8 +659,16 @@ class InternationalArticlePagePanels:
             children=[
                 FieldPanel('article_subheading'),
                 FieldPanel('article_teaser'),
-                ImageChooserPanel('article_image'),
                 FieldPanel('article_body_text')
+            ]
+        ),
+        MultiFieldPanel(
+            heading='CTA fields',
+            children=[
+                FieldPanel('cta_title'),
+                FieldPanel('cta_teaser'),
+                FieldPanel('cta_link_label'),
+                FieldPanel('cta_link'),
             ]
         ),
         MultiFieldPanel(
@@ -681,15 +690,23 @@ class InternationalArticlePagePanels:
         SearchEngineOptimisationPanel(),
     ]
 
+    image_panels = [
+        ImageChooserPanel('article_image'),
+        FieldPanel('article_video', widget=AdminMediaChooser),
+    ]
+
     settings_panels = [
-        FieldPanel('title_en_gb'),
+        FieldPanel('type_of_article', widget=Select),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
-        settings_panels=settings_panels
+        settings_panels=settings_panels,
+        other_panels=[
+            ObjectList(image_panels, heading='Images')
+        ],
     )
 
 
@@ -1188,7 +1205,6 @@ class AboutUkLandingPagePanels:
     image_panels = [
         ImageChooserPanel('hero_image'),
         ImageChooserPanel('why_choose_uk_image'),
-        ImageChooserPanel('regions_section_image'),
         MultiFieldPanel(
             heading="How we help images",
             children=[
@@ -1237,7 +1253,35 @@ class AboutUkLandingPagePanels:
             classname="collapsible",
             children=[
                 FieldPanel('regions_section_title'),
-                FieldPanel('regions_section_content'),
+                FieldPanel('regions_section_intro'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        PageChooserPanel('scotland', 'great_international.AboutUkRegionPage'),
+                        FieldPanel('scotland_text')
+                    ]),
+                    MultiFieldPanel([
+                        PageChooserPanel('northern_ireland', 'great_international.AboutUkRegionPage'),
+                        FieldPanel('northern_ireland_text')
+                    ]),
+                    MultiFieldPanel([
+                        PageChooserPanel('north_england', 'great_international.AboutUkRegionPage'),
+                        FieldPanel('north_england_text')
+                    ]),
+                ]),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        PageChooserPanel('wales', 'great_international.AboutUkRegionPage'),
+                        FieldPanel('wales_text')
+                    ]),
+                    MultiFieldPanel([
+                        PageChooserPanel('midlands', 'great_international.AboutUkRegionPage'),
+                        FieldPanel('midlands_text')
+                    ]),
+                    MultiFieldPanel([
+                        PageChooserPanel('south_england', 'great_international.AboutUkRegionPage'),
+                        FieldPanel('south_england_text')
+                    ]),
+                ]),
                 FieldPanel('regions_section_cta_text'),
                 FieldPanel('regions_section_cta_link'),
             ]
