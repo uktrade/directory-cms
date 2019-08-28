@@ -9,6 +9,8 @@
 - CMS-1832 - Update django
 - CMS-1753 - Remove slug links from markdown fields
 - CI-431 - Added `AboutUkRegionListingPage` and `AboutUkRegionPage` which will replace `CapitalInvestRegionPage`
+- CI-400 - Added related regions and text on About Uk pages for map 
+- XOT-1020 - Added extra fields to article page type (domestic and international)
 
 ### Fixed Bugs
 - CMS-1830 - Move title field into translated admin panels to fix bug with untranslated tree_based_breadcrumbs

@@ -9,3 +9,10 @@ APP_URLS = {
     cms.COMPONENTS: settings.APP_URL_COMPONENTS,
     cms.GREAT_INTERNATIONAL: settings.APP_URL_GREAT_INTERNATIONAL
 }
+
+ARTICLE_TYPES = [
+    ('blog', 'Blog'),
+    ('advice', 'Advice'),
+    ('case_study', 'Case study'),
+    ('campaign', 'Campaign'),
+]

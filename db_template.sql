@@ -522,14 +522,21 @@ CREATE TABLE public.export_readiness_articlelistingpage (
 CREATE TABLE public.export_readiness_articlepage (
     page_ptr_id integer NOT NULL,
     service_name character varying(100),
-    article_title character varying(255) NOT NULL,
-    article_teaser character varying(255),
+    article_title text NOT NULL,
+    article_teaser text,
     article_body_text text NOT NULL,
     article_image_id integer,
     related_page_one_id integer,
     related_page_three_id integer,
     related_page_two_id integer,
-    uses_tree_based_routing boolean NOT NULL
+    uses_tree_based_routing boolean NOT NULL,
+    article_subheading text NOT NULL,
+    article_video_id integer,
+    cta_link character varying(255) NOT NULL,
+    cta_link_label character varying(255) NOT NULL,
+    cta_teaser text NOT NULL,
+    cta_title character varying(255) NOT NULL,
+    type_of_article text
 );
 
 
@@ -2572,15 +2579,15 @@ CREATE TABLE public.great_international_aboutuklandingpage (
     intro_ja text,
     intro_pt text,
     intro_zh_hans text,
-    regions_section_content text NOT NULL,
-    regions_section_content_ar text,
-    regions_section_content_de text,
-    regions_section_content_en_gb text,
-    regions_section_content_es text,
-    regions_section_content_fr text,
-    regions_section_content_ja text,
-    regions_section_content_pt text,
-    regions_section_content_zh_hans text,
+    regions_section_intro text NOT NULL,
+    regions_section_intro_ar text,
+    regions_section_intro_de text,
+    regions_section_intro_en_gb text,
+    regions_section_intro_es text,
+    regions_section_intro_fr text,
+    regions_section_intro_ja text,
+    regions_section_intro_pt text,
+    regions_section_intro_zh_hans text,
     regions_section_cta_link character varying(255) NOT NULL,
     regions_section_cta_link_ar character varying(255),
     regions_section_cta_link_de character varying(255),
@@ -2599,7 +2606,6 @@ CREATE TABLE public.great_international_aboutuklandingpage (
     regions_section_cta_text_ja character varying(255),
     regions_section_cta_text_pt character varying(255),
     regions_section_cta_text_zh_hans character varying(255),
-    regions_section_image_id integer,
     regions_section_title character varying(255) NOT NULL,
     regions_section_title_ar character varying(255),
     regions_section_title_de character varying(255),
@@ -2645,7 +2651,115 @@ CREATE TABLE public.great_international_aboutuklandingpage (
     why_choose_uk_title_fr character varying(255),
     why_choose_uk_title_ja character varying(255),
     why_choose_uk_title_pt character varying(255),
-    why_choose_uk_title_zh_hans character varying(255)
+    why_choose_uk_title_zh_hans character varying(255),
+    midlands_id integer,
+    midlands_ar_id integer,
+    midlands_de_id integer,
+    midlands_en_gb_id integer,
+    midlands_es_id integer,
+    midlands_fr_id integer,
+    midlands_ja_id integer,
+    midlands_pt_id integer,
+    midlands_text character varying(255) NOT NULL,
+    midlands_text_ar character varying(255),
+    midlands_text_de character varying(255),
+    midlands_text_en_gb character varying(255),
+    midlands_text_es character varying(255),
+    midlands_text_fr character varying(255),
+    midlands_text_ja character varying(255),
+    midlands_text_pt character varying(255),
+    midlands_text_zh_hans character varying(255),
+    midlands_zh_hans_id integer,
+    north_england_id integer,
+    north_england_ar_id integer,
+    north_england_de_id integer,
+    north_england_en_gb_id integer,
+    north_england_es_id integer,
+    north_england_fr_id integer,
+    north_england_ja_id integer,
+    north_england_pt_id integer,
+    north_england_text character varying(255) NOT NULL,
+    north_england_text_ar character varying(255),
+    north_england_text_de character varying(255),
+    north_england_text_en_gb character varying(255),
+    north_england_text_es character varying(255),
+    north_england_text_fr character varying(255),
+    north_england_text_ja character varying(255),
+    north_england_text_pt character varying(255),
+    north_england_text_zh_hans character varying(255),
+    north_england_zh_hans_id integer,
+    northern_ireland_id integer,
+    northern_ireland_ar_id integer,
+    northern_ireland_de_id integer,
+    northern_ireland_en_gb_id integer,
+    northern_ireland_es_id integer,
+    northern_ireland_fr_id integer,
+    northern_ireland_ja_id integer,
+    northern_ireland_pt_id integer,
+    northern_ireland_text character varying(255) NOT NULL,
+    northern_ireland_text_ar character varying(255),
+    northern_ireland_text_de character varying(255),
+    northern_ireland_text_en_gb character varying(255),
+    northern_ireland_text_es character varying(255),
+    northern_ireland_text_fr character varying(255),
+    northern_ireland_text_ja character varying(255),
+    northern_ireland_text_pt character varying(255),
+    northern_ireland_text_zh_hans character varying(255),
+    northern_ireland_zh_hans_id integer,
+    scotland_id integer,
+    scotland_ar_id integer,
+    scotland_de_id integer,
+    scotland_en_gb_id integer,
+    scotland_es_id integer,
+    scotland_fr_id integer,
+    scotland_ja_id integer,
+    scotland_pt_id integer,
+    scotland_text character varying(255) NOT NULL,
+    scotland_text_ar character varying(255),
+    scotland_text_de character varying(255),
+    scotland_text_en_gb character varying(255),
+    scotland_text_es character varying(255),
+    scotland_text_fr character varying(255),
+    scotland_text_ja character varying(255),
+    scotland_text_pt character varying(255),
+    scotland_text_zh_hans character varying(255),
+    scotland_zh_hans_id integer,
+    south_england_id integer,
+    south_england_ar_id integer,
+    south_england_de_id integer,
+    south_england_en_gb_id integer,
+    south_england_es_id integer,
+    south_england_fr_id integer,
+    south_england_ja_id integer,
+    south_england_pt_id integer,
+    south_england_text character varying(255) NOT NULL,
+    south_england_text_ar character varying(255),
+    south_england_text_de character varying(255),
+    south_england_text_en_gb character varying(255),
+    south_england_text_es character varying(255),
+    south_england_text_fr character varying(255),
+    south_england_text_ja character varying(255),
+    south_england_text_pt character varying(255),
+    south_england_text_zh_hans character varying(255),
+    south_england_zh_hans_id integer,
+    wales_id integer,
+    wales_ar_id integer,
+    wales_de_id integer,
+    wales_en_gb_id integer,
+    wales_es_id integer,
+    wales_fr_id integer,
+    wales_ja_id integer,
+    wales_pt_id integer,
+    wales_text character varying(255) NOT NULL,
+    wales_text_ar character varying(255),
+    wales_text_de character varying(255),
+    wales_text_en_gb character varying(255),
+    wales_text_es character varying(255),
+    wales_text_fr character varying(255),
+    wales_text_ja character varying(255),
+    wales_text_pt character varying(255),
+    wales_text_zh_hans character varying(255),
+    wales_zh_hans_id integer
 );
 
 
@@ -5107,14 +5221,6 @@ CREATE TABLE public.great_international_internationalarticlepage (
     article_body_text_ja text,
     article_body_text_pt text,
     article_body_text_zh_hans text,
-    article_image_ar_id integer,
-    article_image_de_id integer,
-    article_image_en_gb_id integer,
-    article_image_es_id integer,
-    article_image_fr_id integer,
-    article_image_ja_id integer,
-    article_image_pt_id integer,
-    article_image_zh_hans_id integer,
     article_subheading_ar text,
     article_subheading_de text,
     article_subheading_en_gb text,
@@ -5163,7 +5269,45 @@ CREATE TABLE public.great_international_internationalarticlepage (
     related_page_two_ja_id integer,
     related_page_two_pt_id integer,
     related_page_two_zh_hans_id integer,
-    uses_tree_based_routing boolean NOT NULL
+    uses_tree_based_routing boolean NOT NULL,
+    article_video_id integer,
+    cta_link character varying(255) NOT NULL,
+    cta_link_ar character varying(255),
+    cta_link_de character varying(255),
+    cta_link_en_gb character varying(255),
+    cta_link_es character varying(255),
+    cta_link_fr character varying(255),
+    cta_link_ja character varying(255),
+    cta_link_label character varying(255) NOT NULL,
+    cta_link_label_ar character varying(255),
+    cta_link_label_de character varying(255),
+    cta_link_label_en_gb character varying(255),
+    cta_link_label_es character varying(255),
+    cta_link_label_fr character varying(255),
+    cta_link_label_ja character varying(255),
+    cta_link_label_pt character varying(255),
+    cta_link_label_zh_hans character varying(255),
+    cta_link_pt character varying(255),
+    cta_link_zh_hans character varying(255),
+    cta_teaser text NOT NULL,
+    cta_teaser_ar text,
+    cta_teaser_de text,
+    cta_teaser_en_gb text,
+    cta_teaser_es text,
+    cta_teaser_fr text,
+    cta_teaser_ja text,
+    cta_teaser_pt text,
+    cta_teaser_zh_hans text,
+    cta_title character varying(255) NOT NULL,
+    cta_title_ar character varying(255),
+    cta_title_de character varying(255),
+    cta_title_en_gb character varying(255),
+    cta_title_es character varying(255),
+    cta_title_fr character varying(255),
+    cta_title_ja character varying(255),
+    cta_title_pt character varying(255),
+    cta_title_zh_hans character varying(255),
+    type_of_article text
 );
 
 
@@ -13939,6 +14083,9 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 366	find_a_supplier	0072_auto_20190823_1036	2019-08-23 11:42:52.801729+01
 367	great_international	0070_auto_20190823_1036	2019-08-23 12:02:13.721937+01
 368	invest	0034_auto_20190823_1036	2019-08-23 12:10:12.739233+01
+369	great_international	0071_auto_20190823_1525	2019-08-23 16:33:01.592257+01
+370	export_readiness	0053_auto_20190827_1051	2019-08-27 13:46:40.148358+01
+371	great_international	0072_auto_20190827_1237	2019-08-27 13:47:47.04719+01
 \.
 
 
@@ -13970,7 +14117,7 @@ COPY public.export_readiness_articlelistingpage (page_ptr_id, service_name, land
 -- Data for Name: export_readiness_articlepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_articlepage (page_ptr_id, service_name, article_title, article_teaser, article_body_text, article_image_id, related_page_one_id, related_page_three_id, related_page_two_id, uses_tree_based_routing) FROM stdin;
+COPY public.export_readiness_articlepage (page_ptr_id, service_name, article_title, article_teaser, article_body_text, article_image_id, related_page_one_id, related_page_three_id, related_page_two_id, uses_tree_based_routing, article_subheading, article_video_id, cta_link, cta_link_label, cta_teaser, cta_title, type_of_article) FROM stdin;
 \.
 
 
@@ -14282,7 +14429,7 @@ COPY public.great_international_aboutukarticlesfields (id, sort_order, title, su
 -- Data for Name: great_international_aboutuklandingpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_aboutuklandingpage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, hero_title, hero_title_en_gb, hero_title_de, hero_title_ja, hero_title_zh_hans, hero_title_fr, hero_title_es, hero_title_pt, hero_title_ar, hero_image_id, contact_cta_link, contact_cta_link_ar, contact_cta_link_de, contact_cta_link_en_gb, contact_cta_link_es, contact_cta_link_fr, contact_cta_link_ja, contact_cta_link_pt, contact_cta_link_zh_hans, contact_cta_text, contact_cta_text_ar, contact_cta_text_de, contact_cta_text_en_gb, contact_cta_text_es, contact_cta_text_fr, contact_cta_text_ja, contact_cta_text_pt, contact_cta_text_zh_hans, contact_text, contact_text_ar, contact_text_de, contact_text_en_gb, contact_text_es, contact_text_fr, contact_text_ja, contact_text_pt, contact_text_zh_hans, contact_title, contact_title_ar, contact_title_de, contact_title_en_gb, contact_title_es, contact_title_fr, contact_title_ja, contact_title_pt, contact_title_zh_hans, ebook_section_body, ebook_section_body_ar, ebook_section_body_de, ebook_section_body_en_gb, ebook_section_body_es, ebook_section_body_fr, ebook_section_body_ja, ebook_section_body_pt, ebook_section_body_zh_hans, ebook_section_cta_link_id, ebook_section_cta_link_ar_id, ebook_section_cta_link_de_id, ebook_section_cta_link_en_gb_id, ebook_section_cta_link_es_id, ebook_section_cta_link_fr_id, ebook_section_cta_link_ja_id, ebook_section_cta_link_pt_id, ebook_section_cta_link_zh_hans_id, ebook_section_cta_text, ebook_section_cta_text_ar, ebook_section_cta_text_de, ebook_section_cta_text_en_gb, ebook_section_cta_text_es, ebook_section_cta_text_fr, ebook_section_cta_text_ja, ebook_section_cta_text_pt, ebook_section_cta_text_zh_hans, ebook_section_image_id, ebook_section_image_alt_text, ebook_section_image_alt_text_ar, ebook_section_image_alt_text_de, ebook_section_image_alt_text_en_gb, ebook_section_image_alt_text_es, ebook_section_image_alt_text_fr, ebook_section_image_alt_text_ja, ebook_section_image_alt_text_pt, ebook_section_image_alt_text_zh_hans, ebook_section_title, ebook_section_title_ar, ebook_section_title_de, ebook_section_title_en_gb, ebook_section_title_es, ebook_section_title_fr, ebook_section_title_ja, ebook_section_title_pt, ebook_section_title_zh_hans, how_we_help_cta_link, how_we_help_cta_link_ar, how_we_help_cta_link_de, how_we_help_cta_link_en_gb, how_we_help_cta_link_es, how_we_help_cta_link_fr, how_we_help_cta_link_ja, how_we_help_cta_link_pt, how_we_help_cta_link_zh_hans, how_we_help_cta_text, how_we_help_cta_text_ar, how_we_help_cta_text_de, how_we_help_cta_text_en_gb, how_we_help_cta_text_es, how_we_help_cta_text_fr, how_we_help_cta_text_ja, how_we_help_cta_text_pt, how_we_help_cta_text_zh_hans, how_we_help_five_icon_id, how_we_help_five_text, how_we_help_five_text_ar, how_we_help_five_text_de, how_we_help_five_text_en_gb, how_we_help_five_text_es, how_we_help_five_text_fr, how_we_help_five_text_ja, how_we_help_five_text_pt, how_we_help_five_text_zh_hans, how_we_help_five_title, how_we_help_five_title_ar, how_we_help_five_title_de, how_we_help_five_title_en_gb, how_we_help_five_title_es, how_we_help_five_title_fr, how_we_help_five_title_ja, how_we_help_five_title_pt, how_we_help_five_title_zh_hans, how_we_help_four_icon_id, how_we_help_four_text, how_we_help_four_text_ar, how_we_help_four_text_de, how_we_help_four_text_en_gb, how_we_help_four_text_es, how_we_help_four_text_fr, how_we_help_four_text_ja, how_we_help_four_text_pt, how_we_help_four_text_zh_hans, how_we_help_four_title, how_we_help_four_title_ar, how_we_help_four_title_de, how_we_help_four_title_en_gb, how_we_help_four_title_es, how_we_help_four_title_fr, how_we_help_four_title_ja, how_we_help_four_title_pt, how_we_help_four_title_zh_hans, how_we_help_intro, how_we_help_intro_ar, how_we_help_intro_de, how_we_help_intro_en_gb, how_we_help_intro_es, how_we_help_intro_fr, how_we_help_intro_ja, how_we_help_intro_pt, how_we_help_intro_zh_hans, how_we_help_one_icon_id, how_we_help_one_text, how_we_help_one_text_ar, how_we_help_one_text_de, how_we_help_one_text_en_gb, how_we_help_one_text_es, how_we_help_one_text_fr, how_we_help_one_text_ja, how_we_help_one_text_pt, how_we_help_one_text_zh_hans, how_we_help_one_title, how_we_help_one_title_ar, how_we_help_one_title_de, how_we_help_one_title_en_gb, how_we_help_one_title_es, how_we_help_one_title_fr, how_we_help_one_title_ja, how_we_help_one_title_pt, how_we_help_one_title_zh_hans, how_we_help_six_icon_id, how_we_help_six_text, how_we_help_six_text_ar, how_we_help_six_text_de, how_we_help_six_text_en_gb, how_we_help_six_text_es, how_we_help_six_text_fr, how_we_help_six_text_ja, how_we_help_six_text_pt, how_we_help_six_text_zh_hans, how_we_help_six_title, how_we_help_six_title_ar, how_we_help_six_title_de, how_we_help_six_title_en_gb, how_we_help_six_title_es, how_we_help_six_title_fr, how_we_help_six_title_ja, how_we_help_six_title_pt, how_we_help_six_title_zh_hans, how_we_help_three_icon_id, how_we_help_three_text, how_we_help_three_text_ar, how_we_help_three_text_de, how_we_help_three_text_en_gb, how_we_help_three_text_es, how_we_help_three_text_fr, how_we_help_three_text_ja, how_we_help_three_text_pt, how_we_help_three_text_zh_hans, how_we_help_three_title, how_we_help_three_title_ar, how_we_help_three_title_de, how_we_help_three_title_en_gb, how_we_help_three_title_es, how_we_help_three_title_fr, how_we_help_three_title_ja, how_we_help_three_title_pt, how_we_help_three_title_zh_hans, how_we_help_title, how_we_help_title_ar, how_we_help_title_de, how_we_help_title_en_gb, how_we_help_title_es, how_we_help_title_fr, how_we_help_title_ja, how_we_help_title_pt, how_we_help_title_zh_hans, how_we_help_two_icon_id, how_we_help_two_text, how_we_help_two_text_ar, how_we_help_two_text_de, how_we_help_two_text_en_gb, how_we_help_two_text_es, how_we_help_two_text_fr, how_we_help_two_text_ja, how_we_help_two_text_pt, how_we_help_two_text_zh_hans, how_we_help_two_title, how_we_help_two_title_ar, how_we_help_two_title_de, how_we_help_two_title_en_gb, how_we_help_two_title_es, how_we_help_two_title_fr, how_we_help_two_title_ja, how_we_help_two_title_pt, how_we_help_two_title_zh_hans, industries_section_cta_link, industries_section_cta_link_ar, industries_section_cta_link_de, industries_section_cta_link_en_gb, industries_section_cta_link_es, industries_section_cta_link_fr, industries_section_cta_link_ja, industries_section_cta_link_pt, industries_section_cta_link_zh_hans, industries_section_cta_text, industries_section_cta_text_ar, industries_section_cta_text_de, industries_section_cta_text_en_gb, industries_section_cta_text_es, industries_section_cta_text_fr, industries_section_cta_text_ja, industries_section_cta_text_pt, industries_section_cta_text_zh_hans, industries_section_intro, industries_section_intro_ar, industries_section_intro_de, industries_section_intro_en_gb, industries_section_intro_es, industries_section_intro_fr, industries_section_intro_ja, industries_section_intro_pt, industries_section_intro_zh_hans, industries_section_title, industries_section_title_ar, industries_section_title_de, industries_section_title_en_gb, industries_section_title_es, industries_section_title_fr, industries_section_title_ja, industries_section_title_pt, industries_section_title_zh_hans, intro, intro_ar, intro_de, intro_en_gb, intro_es, intro_fr, intro_ja, intro_pt, intro_zh_hans, regions_section_content, regions_section_content_ar, regions_section_content_de, regions_section_content_en_gb, regions_section_content_es, regions_section_content_fr, regions_section_content_ja, regions_section_content_pt, regions_section_content_zh_hans, regions_section_cta_link, regions_section_cta_link_ar, regions_section_cta_link_de, regions_section_cta_link_en_gb, regions_section_cta_link_es, regions_section_cta_link_fr, regions_section_cta_link_ja, regions_section_cta_link_pt, regions_section_cta_link_zh_hans, regions_section_cta_text, regions_section_cta_text_ar, regions_section_cta_text_de, regions_section_cta_text_en_gb, regions_section_cta_text_es, regions_section_cta_text_fr, regions_section_cta_text_ja, regions_section_cta_text_pt, regions_section_cta_text_zh_hans, regions_section_image_id, regions_section_title, regions_section_title_ar, regions_section_title_de, regions_section_title_en_gb, regions_section_title_es, regions_section_title_fr, regions_section_title_ja, regions_section_title_pt, regions_section_title_zh_hans, why_choose_uk_content, why_choose_uk_content_ar, why_choose_uk_content_de, why_choose_uk_content_en_gb, why_choose_uk_content_es, why_choose_uk_content_fr, why_choose_uk_content_ja, why_choose_uk_content_pt, why_choose_uk_content_zh_hans, why_choose_uk_cta_link, why_choose_uk_cta_link_ar, why_choose_uk_cta_link_de, why_choose_uk_cta_link_en_gb, why_choose_uk_cta_link_es, why_choose_uk_cta_link_fr, why_choose_uk_cta_link_ja, why_choose_uk_cta_link_pt, why_choose_uk_cta_link_zh_hans, why_choose_uk_cta_text, why_choose_uk_cta_text_ar, why_choose_uk_cta_text_de, why_choose_uk_cta_text_en_gb, why_choose_uk_cta_text_es, why_choose_uk_cta_text_fr, why_choose_uk_cta_text_ja, why_choose_uk_cta_text_pt, why_choose_uk_cta_text_zh_hans, why_choose_uk_image_id, why_choose_uk_title, why_choose_uk_title_ar, why_choose_uk_title_de, why_choose_uk_title_en_gb, why_choose_uk_title_es, why_choose_uk_title_fr, why_choose_uk_title_ja, why_choose_uk_title_pt, why_choose_uk_title_zh_hans) FROM stdin;
+COPY public.great_international_aboutuklandingpage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, hero_title, hero_title_en_gb, hero_title_de, hero_title_ja, hero_title_zh_hans, hero_title_fr, hero_title_es, hero_title_pt, hero_title_ar, hero_image_id, contact_cta_link, contact_cta_link_ar, contact_cta_link_de, contact_cta_link_en_gb, contact_cta_link_es, contact_cta_link_fr, contact_cta_link_ja, contact_cta_link_pt, contact_cta_link_zh_hans, contact_cta_text, contact_cta_text_ar, contact_cta_text_de, contact_cta_text_en_gb, contact_cta_text_es, contact_cta_text_fr, contact_cta_text_ja, contact_cta_text_pt, contact_cta_text_zh_hans, contact_text, contact_text_ar, contact_text_de, contact_text_en_gb, contact_text_es, contact_text_fr, contact_text_ja, contact_text_pt, contact_text_zh_hans, contact_title, contact_title_ar, contact_title_de, contact_title_en_gb, contact_title_es, contact_title_fr, contact_title_ja, contact_title_pt, contact_title_zh_hans, ebook_section_body, ebook_section_body_ar, ebook_section_body_de, ebook_section_body_en_gb, ebook_section_body_es, ebook_section_body_fr, ebook_section_body_ja, ebook_section_body_pt, ebook_section_body_zh_hans, ebook_section_cta_link_id, ebook_section_cta_link_ar_id, ebook_section_cta_link_de_id, ebook_section_cta_link_en_gb_id, ebook_section_cta_link_es_id, ebook_section_cta_link_fr_id, ebook_section_cta_link_ja_id, ebook_section_cta_link_pt_id, ebook_section_cta_link_zh_hans_id, ebook_section_cta_text, ebook_section_cta_text_ar, ebook_section_cta_text_de, ebook_section_cta_text_en_gb, ebook_section_cta_text_es, ebook_section_cta_text_fr, ebook_section_cta_text_ja, ebook_section_cta_text_pt, ebook_section_cta_text_zh_hans, ebook_section_image_id, ebook_section_image_alt_text, ebook_section_image_alt_text_ar, ebook_section_image_alt_text_de, ebook_section_image_alt_text_en_gb, ebook_section_image_alt_text_es, ebook_section_image_alt_text_fr, ebook_section_image_alt_text_ja, ebook_section_image_alt_text_pt, ebook_section_image_alt_text_zh_hans, ebook_section_title, ebook_section_title_ar, ebook_section_title_de, ebook_section_title_en_gb, ebook_section_title_es, ebook_section_title_fr, ebook_section_title_ja, ebook_section_title_pt, ebook_section_title_zh_hans, how_we_help_cta_link, how_we_help_cta_link_ar, how_we_help_cta_link_de, how_we_help_cta_link_en_gb, how_we_help_cta_link_es, how_we_help_cta_link_fr, how_we_help_cta_link_ja, how_we_help_cta_link_pt, how_we_help_cta_link_zh_hans, how_we_help_cta_text, how_we_help_cta_text_ar, how_we_help_cta_text_de, how_we_help_cta_text_en_gb, how_we_help_cta_text_es, how_we_help_cta_text_fr, how_we_help_cta_text_ja, how_we_help_cta_text_pt, how_we_help_cta_text_zh_hans, how_we_help_five_icon_id, how_we_help_five_text, how_we_help_five_text_ar, how_we_help_five_text_de, how_we_help_five_text_en_gb, how_we_help_five_text_es, how_we_help_five_text_fr, how_we_help_five_text_ja, how_we_help_five_text_pt, how_we_help_five_text_zh_hans, how_we_help_five_title, how_we_help_five_title_ar, how_we_help_five_title_de, how_we_help_five_title_en_gb, how_we_help_five_title_es, how_we_help_five_title_fr, how_we_help_five_title_ja, how_we_help_five_title_pt, how_we_help_five_title_zh_hans, how_we_help_four_icon_id, how_we_help_four_text, how_we_help_four_text_ar, how_we_help_four_text_de, how_we_help_four_text_en_gb, how_we_help_four_text_es, how_we_help_four_text_fr, how_we_help_four_text_ja, how_we_help_four_text_pt, how_we_help_four_text_zh_hans, how_we_help_four_title, how_we_help_four_title_ar, how_we_help_four_title_de, how_we_help_four_title_en_gb, how_we_help_four_title_es, how_we_help_four_title_fr, how_we_help_four_title_ja, how_we_help_four_title_pt, how_we_help_four_title_zh_hans, how_we_help_intro, how_we_help_intro_ar, how_we_help_intro_de, how_we_help_intro_en_gb, how_we_help_intro_es, how_we_help_intro_fr, how_we_help_intro_ja, how_we_help_intro_pt, how_we_help_intro_zh_hans, how_we_help_one_icon_id, how_we_help_one_text, how_we_help_one_text_ar, how_we_help_one_text_de, how_we_help_one_text_en_gb, how_we_help_one_text_es, how_we_help_one_text_fr, how_we_help_one_text_ja, how_we_help_one_text_pt, how_we_help_one_text_zh_hans, how_we_help_one_title, how_we_help_one_title_ar, how_we_help_one_title_de, how_we_help_one_title_en_gb, how_we_help_one_title_es, how_we_help_one_title_fr, how_we_help_one_title_ja, how_we_help_one_title_pt, how_we_help_one_title_zh_hans, how_we_help_six_icon_id, how_we_help_six_text, how_we_help_six_text_ar, how_we_help_six_text_de, how_we_help_six_text_en_gb, how_we_help_six_text_es, how_we_help_six_text_fr, how_we_help_six_text_ja, how_we_help_six_text_pt, how_we_help_six_text_zh_hans, how_we_help_six_title, how_we_help_six_title_ar, how_we_help_six_title_de, how_we_help_six_title_en_gb, how_we_help_six_title_es, how_we_help_six_title_fr, how_we_help_six_title_ja, how_we_help_six_title_pt, how_we_help_six_title_zh_hans, how_we_help_three_icon_id, how_we_help_three_text, how_we_help_three_text_ar, how_we_help_three_text_de, how_we_help_three_text_en_gb, how_we_help_three_text_es, how_we_help_three_text_fr, how_we_help_three_text_ja, how_we_help_three_text_pt, how_we_help_three_text_zh_hans, how_we_help_three_title, how_we_help_three_title_ar, how_we_help_three_title_de, how_we_help_three_title_en_gb, how_we_help_three_title_es, how_we_help_three_title_fr, how_we_help_three_title_ja, how_we_help_three_title_pt, how_we_help_three_title_zh_hans, how_we_help_title, how_we_help_title_ar, how_we_help_title_de, how_we_help_title_en_gb, how_we_help_title_es, how_we_help_title_fr, how_we_help_title_ja, how_we_help_title_pt, how_we_help_title_zh_hans, how_we_help_two_icon_id, how_we_help_two_text, how_we_help_two_text_ar, how_we_help_two_text_de, how_we_help_two_text_en_gb, how_we_help_two_text_es, how_we_help_two_text_fr, how_we_help_two_text_ja, how_we_help_two_text_pt, how_we_help_two_text_zh_hans, how_we_help_two_title, how_we_help_two_title_ar, how_we_help_two_title_de, how_we_help_two_title_en_gb, how_we_help_two_title_es, how_we_help_two_title_fr, how_we_help_two_title_ja, how_we_help_two_title_pt, how_we_help_two_title_zh_hans, industries_section_cta_link, industries_section_cta_link_ar, industries_section_cta_link_de, industries_section_cta_link_en_gb, industries_section_cta_link_es, industries_section_cta_link_fr, industries_section_cta_link_ja, industries_section_cta_link_pt, industries_section_cta_link_zh_hans, industries_section_cta_text, industries_section_cta_text_ar, industries_section_cta_text_de, industries_section_cta_text_en_gb, industries_section_cta_text_es, industries_section_cta_text_fr, industries_section_cta_text_ja, industries_section_cta_text_pt, industries_section_cta_text_zh_hans, industries_section_intro, industries_section_intro_ar, industries_section_intro_de, industries_section_intro_en_gb, industries_section_intro_es, industries_section_intro_fr, industries_section_intro_ja, industries_section_intro_pt, industries_section_intro_zh_hans, industries_section_title, industries_section_title_ar, industries_section_title_de, industries_section_title_en_gb, industries_section_title_es, industries_section_title_fr, industries_section_title_ja, industries_section_title_pt, industries_section_title_zh_hans, intro, intro_ar, intro_de, intro_en_gb, intro_es, intro_fr, intro_ja, intro_pt, intro_zh_hans, regions_section_intro, regions_section_intro_ar, regions_section_intro_de, regions_section_intro_en_gb, regions_section_intro_es, regions_section_intro_fr, regions_section_intro_ja, regions_section_intro_pt, regions_section_intro_zh_hans, regions_section_cta_link, regions_section_cta_link_ar, regions_section_cta_link_de, regions_section_cta_link_en_gb, regions_section_cta_link_es, regions_section_cta_link_fr, regions_section_cta_link_ja, regions_section_cta_link_pt, regions_section_cta_link_zh_hans, regions_section_cta_text, regions_section_cta_text_ar, regions_section_cta_text_de, regions_section_cta_text_en_gb, regions_section_cta_text_es, regions_section_cta_text_fr, regions_section_cta_text_ja, regions_section_cta_text_pt, regions_section_cta_text_zh_hans, regions_section_title, regions_section_title_ar, regions_section_title_de, regions_section_title_en_gb, regions_section_title_es, regions_section_title_fr, regions_section_title_ja, regions_section_title_pt, regions_section_title_zh_hans, why_choose_uk_content, why_choose_uk_content_ar, why_choose_uk_content_de, why_choose_uk_content_en_gb, why_choose_uk_content_es, why_choose_uk_content_fr, why_choose_uk_content_ja, why_choose_uk_content_pt, why_choose_uk_content_zh_hans, why_choose_uk_cta_link, why_choose_uk_cta_link_ar, why_choose_uk_cta_link_de, why_choose_uk_cta_link_en_gb, why_choose_uk_cta_link_es, why_choose_uk_cta_link_fr, why_choose_uk_cta_link_ja, why_choose_uk_cta_link_pt, why_choose_uk_cta_link_zh_hans, why_choose_uk_cta_text, why_choose_uk_cta_text_ar, why_choose_uk_cta_text_de, why_choose_uk_cta_text_en_gb, why_choose_uk_cta_text_es, why_choose_uk_cta_text_fr, why_choose_uk_cta_text_ja, why_choose_uk_cta_text_pt, why_choose_uk_cta_text_zh_hans, why_choose_uk_image_id, why_choose_uk_title, why_choose_uk_title_ar, why_choose_uk_title_de, why_choose_uk_title_en_gb, why_choose_uk_title_es, why_choose_uk_title_fr, why_choose_uk_title_ja, why_choose_uk_title_pt, why_choose_uk_title_zh_hans, midlands_id, midlands_ar_id, midlands_de_id, midlands_en_gb_id, midlands_es_id, midlands_fr_id, midlands_ja_id, midlands_pt_id, midlands_text, midlands_text_ar, midlands_text_de, midlands_text_en_gb, midlands_text_es, midlands_text_fr, midlands_text_ja, midlands_text_pt, midlands_text_zh_hans, midlands_zh_hans_id, north_england_id, north_england_ar_id, north_england_de_id, north_england_en_gb_id, north_england_es_id, north_england_fr_id, north_england_ja_id, north_england_pt_id, north_england_text, north_england_text_ar, north_england_text_de, north_england_text_en_gb, north_england_text_es, north_england_text_fr, north_england_text_ja, north_england_text_pt, north_england_text_zh_hans, north_england_zh_hans_id, northern_ireland_id, northern_ireland_ar_id, northern_ireland_de_id, northern_ireland_en_gb_id, northern_ireland_es_id, northern_ireland_fr_id, northern_ireland_ja_id, northern_ireland_pt_id, northern_ireland_text, northern_ireland_text_ar, northern_ireland_text_de, northern_ireland_text_en_gb, northern_ireland_text_es, northern_ireland_text_fr, northern_ireland_text_ja, northern_ireland_text_pt, northern_ireland_text_zh_hans, northern_ireland_zh_hans_id, scotland_id, scotland_ar_id, scotland_de_id, scotland_en_gb_id, scotland_es_id, scotland_fr_id, scotland_ja_id, scotland_pt_id, scotland_text, scotland_text_ar, scotland_text_de, scotland_text_en_gb, scotland_text_es, scotland_text_fr, scotland_text_ja, scotland_text_pt, scotland_text_zh_hans, scotland_zh_hans_id, south_england_id, south_england_ar_id, south_england_de_id, south_england_en_gb_id, south_england_es_id, south_england_fr_id, south_england_ja_id, south_england_pt_id, south_england_text, south_england_text_ar, south_england_text_de, south_england_text_en_gb, south_england_text_es, south_england_text_fr, south_england_text_ja, south_england_text_pt, south_england_text_zh_hans, south_england_zh_hans_id, wales_id, wales_ar_id, wales_de_id, wales_en_gb_id, wales_es_id, wales_fr_id, wales_ja_id, wales_pt_id, wales_text, wales_text_ar, wales_text_de, wales_text_en_gb, wales_text_es, wales_text_fr, wales_text_ja, wales_text_pt, wales_text_zh_hans, wales_zh_hans_id) FROM stdin;
 \.
 
 
@@ -14410,7 +14557,7 @@ COPY public.great_international_internationalarticlelistingpage_tags (id, intern
 -- Data for Name: great_international_internationalarticlepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_internationalarticlepage (page_ptr_id, service_name, article_title, article_teaser, article_body_text, article_image_id, related_page_one_id, related_page_three_id, related_page_two_id, article_subheading, article_body_text_ar, article_body_text_de, article_body_text_en_gb, article_body_text_es, article_body_text_fr, article_body_text_ja, article_body_text_pt, article_body_text_zh_hans, article_image_ar_id, article_image_de_id, article_image_en_gb_id, article_image_es_id, article_image_fr_id, article_image_ja_id, article_image_pt_id, article_image_zh_hans_id, article_subheading_ar, article_subheading_de, article_subheading_en_gb, article_subheading_es, article_subheading_fr, article_subheading_ja, article_subheading_pt, article_subheading_zh_hans, article_teaser_ar, article_teaser_de, article_teaser_en_gb, article_teaser_es, article_teaser_fr, article_teaser_ja, article_teaser_pt, article_teaser_zh_hans, article_title_ar, article_title_de, article_title_en_gb, article_title_es, article_title_fr, article_title_ja, article_title_pt, article_title_zh_hans, related_page_one_ar_id, related_page_one_de_id, related_page_one_en_gb_id, related_page_one_es_id, related_page_one_fr_id, related_page_one_ja_id, related_page_one_pt_id, related_page_one_zh_hans_id, related_page_three_ar_id, related_page_three_de_id, related_page_three_en_gb_id, related_page_three_es_id, related_page_three_fr_id, related_page_three_ja_id, related_page_three_pt_id, related_page_three_zh_hans_id, related_page_two_ar_id, related_page_two_de_id, related_page_two_en_gb_id, related_page_two_es_id, related_page_two_fr_id, related_page_two_ja_id, related_page_two_pt_id, related_page_two_zh_hans_id, uses_tree_based_routing) FROM stdin;
+COPY public.great_international_internationalarticlepage (page_ptr_id, service_name, article_title, article_teaser, article_body_text, article_image_id, related_page_one_id, related_page_three_id, related_page_two_id, article_subheading, article_body_text_ar, article_body_text_de, article_body_text_en_gb, article_body_text_es, article_body_text_fr, article_body_text_ja, article_body_text_pt, article_body_text_zh_hans, article_subheading_ar, article_subheading_de, article_subheading_en_gb, article_subheading_es, article_subheading_fr, article_subheading_ja, article_subheading_pt, article_subheading_zh_hans, article_teaser_ar, article_teaser_de, article_teaser_en_gb, article_teaser_es, article_teaser_fr, article_teaser_ja, article_teaser_pt, article_teaser_zh_hans, article_title_ar, article_title_de, article_title_en_gb, article_title_es, article_title_fr, article_title_ja, article_title_pt, article_title_zh_hans, related_page_one_ar_id, related_page_one_de_id, related_page_one_en_gb_id, related_page_one_es_id, related_page_one_fr_id, related_page_one_ja_id, related_page_one_pt_id, related_page_one_zh_hans_id, related_page_three_ar_id, related_page_three_de_id, related_page_three_en_gb_id, related_page_three_es_id, related_page_three_fr_id, related_page_three_ja_id, related_page_three_pt_id, related_page_three_zh_hans_id, related_page_two_ar_id, related_page_two_de_id, related_page_two_en_gb_id, related_page_two_es_id, related_page_two_fr_id, related_page_two_ja_id, related_page_two_pt_id, related_page_two_zh_hans_id, uses_tree_based_routing, article_video_id, cta_link, cta_link_ar, cta_link_de, cta_link_en_gb, cta_link_es, cta_link_fr, cta_link_ja, cta_link_label, cta_link_label_ar, cta_link_label_de, cta_link_label_en_gb, cta_link_label_es, cta_link_label_fr, cta_link_label_ja, cta_link_label_pt, cta_link_label_zh_hans, cta_link_pt, cta_link_zh_hans, cta_teaser, cta_teaser_ar, cta_teaser_de, cta_teaser_en_gb, cta_teaser_es, cta_teaser_fr, cta_teaser_ja, cta_teaser_pt, cta_teaser_zh_hans, cta_title, cta_title_ar, cta_title_de, cta_title_en_gb, cta_title_es, cta_title_fr, cta_title_ja, cta_title_pt, cta_title_zh_hans, type_of_article) FROM stdin;
 \.
 
 
@@ -15054,7 +15201,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 123, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 368, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 371, true);
 
 
 --
@@ -17011,6 +17158,13 @@ CREATE INDEX export_readiness_articlelistingpage_service_name_03f3affd_like ON p
 --
 
 CREATE INDEX export_readiness_articlepage_article_image_id_89070cd3 ON public.export_readiness_articlepage USING btree (article_image_id);
+
+
+--
+-- Name: export_readiness_articlepage_article_video_id_0a7568c7; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX export_readiness_articlepage_article_video_id_0a7568c7 ON public.export_readiness_articlepage USING btree (article_video_id);
 
 
 --
@@ -19429,6 +19583,146 @@ CREATE INDEX great_international_aboutu_how_we_help_two_icon_id_1f9a2606 ON publ
 
 
 --
+-- Name: great_international_aboutu_midlands_en_gb_id_ca12377e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_midlands_en_gb_id_ca12377e ON public.great_international_aboutuklandingpage USING btree (midlands_en_gb_id);
+
+
+--
+-- Name: great_international_aboutu_midlands_zh_hans_id_5ac39c08; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_midlands_zh_hans_id_5ac39c08 ON public.great_international_aboutuklandingpage USING btree (midlands_zh_hans_id);
+
+
+--
+-- Name: great_international_aboutu_north_england_ar_id_aa39e953; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_north_england_ar_id_aa39e953 ON public.great_international_aboutuklandingpage USING btree (north_england_ar_id);
+
+
+--
+-- Name: great_international_aboutu_north_england_de_id_3f5eb573; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_north_england_de_id_3f5eb573 ON public.great_international_aboutuklandingpage USING btree (north_england_de_id);
+
+
+--
+-- Name: great_international_aboutu_north_england_en_gb_id_b07c3add; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_north_england_en_gb_id_b07c3add ON public.great_international_aboutuklandingpage USING btree (north_england_en_gb_id);
+
+
+--
+-- Name: great_international_aboutu_north_england_es_id_2eda3dd2; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_north_england_es_id_2eda3dd2 ON public.great_international_aboutuklandingpage USING btree (north_england_es_id);
+
+
+--
+-- Name: great_international_aboutu_north_england_fr_id_50342dcf; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_north_england_fr_id_50342dcf ON public.great_international_aboutuklandingpage USING btree (north_england_fr_id);
+
+
+--
+-- Name: great_international_aboutu_north_england_id_0d0f2054; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_north_england_id_0d0f2054 ON public.great_international_aboutuklandingpage USING btree (north_england_id);
+
+
+--
+-- Name: great_international_aboutu_north_england_ja_id_cb3f1b5c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_north_england_ja_id_cb3f1b5c ON public.great_international_aboutuklandingpage USING btree (north_england_ja_id);
+
+
+--
+-- Name: great_international_aboutu_north_england_pt_id_d7162ee8; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_north_england_pt_id_d7162ee8 ON public.great_international_aboutuklandingpage USING btree (north_england_pt_id);
+
+
+--
+-- Name: great_international_aboutu_north_england_zh_hans_id_f7b92a77; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_north_england_zh_hans_id_f7b92a77 ON public.great_international_aboutuklandingpage USING btree (north_england_zh_hans_id);
+
+
+--
+-- Name: great_international_aboutu_northern_ireland_ar_id_b63650d2; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_northern_ireland_ar_id_b63650d2 ON public.great_international_aboutuklandingpage USING btree (northern_ireland_ar_id);
+
+
+--
+-- Name: great_international_aboutu_northern_ireland_de_id_c8b0c945; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_northern_ireland_de_id_c8b0c945 ON public.great_international_aboutuklandingpage USING btree (northern_ireland_de_id);
+
+
+--
+-- Name: great_international_aboutu_northern_ireland_en_gb_id_35119bb6; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_northern_ireland_en_gb_id_35119bb6 ON public.great_international_aboutuklandingpage USING btree (northern_ireland_en_gb_id);
+
+
+--
+-- Name: great_international_aboutu_northern_ireland_es_id_ad448eba; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_northern_ireland_es_id_ad448eba ON public.great_international_aboutuklandingpage USING btree (northern_ireland_es_id);
+
+
+--
+-- Name: great_international_aboutu_northern_ireland_fr_id_42979f9e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_northern_ireland_fr_id_42979f9e ON public.great_international_aboutuklandingpage USING btree (northern_ireland_fr_id);
+
+
+--
+-- Name: great_international_aboutu_northern_ireland_id_f2475a1e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_northern_ireland_id_f2475a1e ON public.great_international_aboutuklandingpage USING btree (northern_ireland_id);
+
+
+--
+-- Name: great_international_aboutu_northern_ireland_ja_id_7681aa42; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_northern_ireland_ja_id_7681aa42 ON public.great_international_aboutuklandingpage USING btree (northern_ireland_ja_id);
+
+
+--
+-- Name: great_international_aboutu_northern_ireland_pt_id_1100f42b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_northern_ireland_pt_id_1100f42b ON public.great_international_aboutuklandingpage USING btree (northern_ireland_pt_id);
+
+
+--
+-- Name: great_international_aboutu_northern_ireland_zh_hans_i_8bdab000; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_northern_ireland_zh_hans_i_8bdab000 ON public.great_international_aboutuklandingpage USING btree (northern_ireland_zh_hans_id);
+
+
+--
 -- Name: great_international_aboutu_page_en_gb_id_411b9d83; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -19569,10 +19863,17 @@ CREATE INDEX great_international_aboutu_region_summary_section_ima_d19e8b86 ON p
 
 
 --
--- Name: great_international_aboutu_regions_section_image_id_6ae3c9c6; Type: INDEX; Schema: public; Owner: -
+-- Name: great_international_aboutu_scotland_en_gb_id_62025df4; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX great_international_aboutu_regions_section_image_id_6ae3c9c6 ON public.great_international_aboutuklandingpage USING btree (regions_section_image_id);
+CREATE INDEX great_international_aboutu_scotland_en_gb_id_62025df4 ON public.great_international_aboutuklandingpage USING btree (scotland_en_gb_id);
+
+
+--
+-- Name: great_international_aboutu_scotland_zh_hans_id_a0b1ab96; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_scotland_zh_hans_id_a0b1ab96 ON public.great_international_aboutuklandingpage USING btree (scotland_zh_hans_id);
 
 
 --
@@ -19650,6 +19951,69 @@ CREATE INDEX great_international_aboutu_service_name_2d1ba2c9 ON public.great_in
 --
 
 CREATE INDEX great_international_aboutu_service_name_c9a3a2ea ON public.great_international_aboutukregionlistingpage USING btree (service_name);
+
+
+--
+-- Name: great_international_aboutu_south_england_ar_id_2fd064fd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_south_england_ar_id_2fd064fd ON public.great_international_aboutuklandingpage USING btree (south_england_ar_id);
+
+
+--
+-- Name: great_international_aboutu_south_england_de_id_802dda05; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_south_england_de_id_802dda05 ON public.great_international_aboutuklandingpage USING btree (south_england_de_id);
+
+
+--
+-- Name: great_international_aboutu_south_england_en_gb_id_f75b03d2; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_south_england_en_gb_id_f75b03d2 ON public.great_international_aboutuklandingpage USING btree (south_england_en_gb_id);
+
+
+--
+-- Name: great_international_aboutu_south_england_es_id_01066c04; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_south_england_es_id_01066c04 ON public.great_international_aboutuklandingpage USING btree (south_england_es_id);
+
+
+--
+-- Name: great_international_aboutu_south_england_fr_id_c5e3a0e6; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_south_england_fr_id_c5e3a0e6 ON public.great_international_aboutuklandingpage USING btree (south_england_fr_id);
+
+
+--
+-- Name: great_international_aboutu_south_england_id_a086b60e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_south_england_id_a086b60e ON public.great_international_aboutuklandingpage USING btree (south_england_id);
+
+
+--
+-- Name: great_international_aboutu_south_england_ja_id_80865aab; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_south_england_ja_id_80865aab ON public.great_international_aboutuklandingpage USING btree (south_england_ja_id);
+
+
+--
+-- Name: great_international_aboutu_south_england_pt_id_5d84a2b1; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_south_england_pt_id_5d84a2b1 ON public.great_international_aboutuklandingpage USING btree (south_england_pt_id);
+
+
+--
+-- Name: great_international_aboutu_south_england_zh_hans_id_c80f639b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_south_england_zh_hans_id_c80f639b ON public.great_international_aboutuklandingpage USING btree (south_england_zh_hans_id);
 
 
 --
@@ -19842,6 +20206,13 @@ CREATE INDEX great_international_aboutu_sub_section_two_icon_zh_ha_0be325de ON p
 
 
 --
+-- Name: great_international_aboutu_wales_zh_hans_id_f2b27641; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutu_wales_zh_hans_id_f2b27641 ON public.great_international_aboutuklandingpage USING btree (wales_zh_hans_id);
+
+
+--
 -- Name: great_international_aboutu_why_choose_uk_image_id_5fca62bc; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -19912,10 +20283,164 @@ CREATE INDEX great_international_aboutuklandingpage_hero_image_id_6da7f8a1 ON pu
 
 
 --
+-- Name: great_international_aboutuklandingpage_midlands_ar_id_15206a55; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_midlands_ar_id_15206a55 ON public.great_international_aboutuklandingpage USING btree (midlands_ar_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_midlands_de_id_e5899fb8; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_midlands_de_id_e5899fb8 ON public.great_international_aboutuklandingpage USING btree (midlands_de_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_midlands_es_id_c70a115f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_midlands_es_id_c70a115f ON public.great_international_aboutuklandingpage USING btree (midlands_es_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_midlands_fr_id_a98351e5; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_midlands_fr_id_a98351e5 ON public.great_international_aboutuklandingpage USING btree (midlands_fr_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_midlands_id_3ebd6b2f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_midlands_id_3ebd6b2f ON public.great_international_aboutuklandingpage USING btree (midlands_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_midlands_ja_id_f69cd612; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_midlands_ja_id_f69cd612 ON public.great_international_aboutuklandingpage USING btree (midlands_ja_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_midlands_pt_id_d2841252; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_midlands_pt_id_d2841252 ON public.great_international_aboutuklandingpage USING btree (midlands_pt_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_scotland_ar_id_d6622b67; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_scotland_ar_id_d6622b67 ON public.great_international_aboutuklandingpage USING btree (scotland_ar_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_scotland_de_id_ec2a509f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_scotland_de_id_ec2a509f ON public.great_international_aboutuklandingpage USING btree (scotland_de_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_scotland_es_id_511b94a8; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_scotland_es_id_511b94a8 ON public.great_international_aboutuklandingpage USING btree (scotland_es_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_scotland_fr_id_b33f58b1; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_scotland_fr_id_b33f58b1 ON public.great_international_aboutuklandingpage USING btree (scotland_fr_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_scotland_id_e38ccf7f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_scotland_id_e38ccf7f ON public.great_international_aboutuklandingpage USING btree (scotland_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_scotland_ja_id_1a1eedb8; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_scotland_ja_id_1a1eedb8 ON public.great_international_aboutuklandingpage USING btree (scotland_ja_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_scotland_pt_id_1e5e66de; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_scotland_pt_id_1e5e66de ON public.great_international_aboutuklandingpage USING btree (scotland_pt_id);
+
+
+--
 -- Name: great_international_aboutuklandingpage_service_name_441d14f1; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX great_international_aboutuklandingpage_service_name_441d14f1 ON public.great_international_aboutuklandingpage USING btree (service_name);
+
+
+--
+-- Name: great_international_aboutuklandingpage_wales_ar_id_f4acc58c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_wales_ar_id_f4acc58c ON public.great_international_aboutuklandingpage USING btree (wales_ar_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_wales_de_id_1bad0d6b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_wales_de_id_1bad0d6b ON public.great_international_aboutuklandingpage USING btree (wales_de_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_wales_en_gb_id_249bd089; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_wales_en_gb_id_249bd089 ON public.great_international_aboutuklandingpage USING btree (wales_en_gb_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_wales_es_id_4a1e9e4b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_wales_es_id_4a1e9e4b ON public.great_international_aboutuklandingpage USING btree (wales_es_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_wales_fr_id_0c724043; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_wales_fr_id_0c724043 ON public.great_international_aboutuklandingpage USING btree (wales_fr_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_wales_id_588804b1; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_wales_id_588804b1 ON public.great_international_aboutuklandingpage USING btree (wales_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_wales_ja_id_5af02794; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_wales_ja_id_5af02794 ON public.great_international_aboutuklandingpage USING btree (wales_ja_id);
+
+
+--
+-- Name: great_international_aboutuklandingpage_wales_pt_id_f2c9f890; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX great_international_aboutuklandingpage_wales_pt_id_f2c9f890 ON public.great_international_aboutuklandingpage USING btree (wales_pt_id);
 
 
 --
@@ -22670,41 +23195,6 @@ CREATE INDEX great_international_inte_service_name_bf9e2f01_like ON public.great
 
 
 --
--- Name: great_international_intern_article_image_ar_id_45ae21e4; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_article_image_ar_id_45ae21e4 ON public.great_international_internationalarticlepage USING btree (article_image_ar_id);
-
-
---
--- Name: great_international_intern_article_image_de_id_ba22feb5; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_article_image_de_id_ba22feb5 ON public.great_international_internationalarticlepage USING btree (article_image_de_id);
-
-
---
--- Name: great_international_intern_article_image_en_gb_id_af5af2ec; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_article_image_en_gb_id_af5af2ec ON public.great_international_internationalarticlepage USING btree (article_image_en_gb_id);
-
-
---
--- Name: great_international_intern_article_image_es_id_4e512618; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_article_image_es_id_4e512618 ON public.great_international_internationalarticlepage USING btree (article_image_es_id);
-
-
---
--- Name: great_international_intern_article_image_fr_id_ec641043; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_article_image_fr_id_ec641043 ON public.great_international_internationalarticlepage USING btree (article_image_fr_id);
-
-
---
 -- Name: great_international_intern_article_image_id_aa9240b3; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -22712,24 +23202,10 @@ CREATE INDEX great_international_intern_article_image_id_aa9240b3 ON public.grea
 
 
 --
--- Name: great_international_intern_article_image_ja_id_db501d73; Type: INDEX; Schema: public; Owner: -
+-- Name: great_international_intern_article_video_id_cb536424; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX great_international_intern_article_image_ja_id_db501d73 ON public.great_international_internationalarticlepage USING btree (article_image_ja_id);
-
-
---
--- Name: great_international_intern_article_image_pt_id_fd60b36a; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_article_image_pt_id_fd60b36a ON public.great_international_internationalarticlepage USING btree (article_image_pt_id);
-
-
---
--- Name: great_international_intern_article_image_zh_hans_id_02bf9c26; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX great_international_intern_article_image_zh_hans_id_02bf9c26 ON public.great_international_internationalarticlepage USING btree (article_image_zh_hans_id);
+CREATE INDEX great_international_intern_article_video_id_cb536424 ON public.great_international_internationalarticlepage USING btree (article_video_id);
 
 
 --
@@ -33530,6 +34006,14 @@ ALTER TABLE ONLY public.export_readiness_articlepage
 
 
 --
+-- Name: export_readiness_articlepage export_readiness_art_article_video_id_0a7568c7_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.export_readiness_articlepage
+    ADD CONSTRAINT export_readiness_art_article_video_id_0a7568c7_fk_wagtailme FOREIGN KEY (article_video_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: export_readiness_articlepage_tags export_readiness_art_articlepage_id_f030e54b_fk_export_re; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -34826,46 +35310,6 @@ ALTER TABLE ONLY public.find_a_supplier_landingpagearticlesummary
 
 
 --
--- Name: great_international_internationalarticlepage great_international__article_image_ar_id_45ae21e4_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_ar_id_45ae21e4_fk_wagtailim FOREIGN KEY (article_image_ar_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__article_image_de_id_ba22feb5_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_de_id_ba22feb5_fk_wagtailim FOREIGN KEY (article_image_de_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__article_image_en_gb__af5af2ec_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_en_gb__af5af2ec_fk_wagtailim FOREIGN KEY (article_image_en_gb_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__article_image_es_id_4e512618_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_es_id_4e512618_fk_wagtailim FOREIGN KEY (article_image_es_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__article_image_fr_id_ec641043_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_fr_id_ec641043_fk_wagtailim FOREIGN KEY (article_image_fr_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_internationalarticlepage great_international__article_image_id_aa9240b3_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -34874,27 +35318,11 @@ ALTER TABLE ONLY public.great_international_internationalarticlepage
 
 
 --
--- Name: great_international_internationalarticlepage great_international__article_image_ja_id_db501d73_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_internationalarticlepage great_international__article_video_id_cb536424_fk_wagtailme; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_ja_id_db501d73_fk_wagtailim FOREIGN KEY (article_image_ja_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__article_image_pt_id_fd60b36a_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_pt_id_fd60b36a_fk_wagtailim FOREIGN KEY (article_image_pt_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_internationalarticlepage great_international__article_image_zh_han_02bf9c26_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_internationalarticlepage
-    ADD CONSTRAINT great_international__article_image_zh_han_02bf9c26_fk_wagtailim FOREIGN KEY (article_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__article_video_id_cb536424_fk_wagtailme FOREIGN KEY (article_video_id) REFERENCES public.wagtailmedia_media(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -40538,11 +40966,227 @@ ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
 
 
 --
+-- Name: great_international_aboutuklandingpage great_international__midlands_ar_id_15206a55_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__midlands_ar_id_15206a55_fk_great_int FOREIGN KEY (midlands_ar_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__midlands_de_id_e5899fb8_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__midlands_de_id_e5899fb8_fk_great_int FOREIGN KEY (midlands_de_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__midlands_en_gb_id_ca12377e_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__midlands_en_gb_id_ca12377e_fk_great_int FOREIGN KEY (midlands_en_gb_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__midlands_es_id_c70a115f_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__midlands_es_id_c70a115f_fk_great_int FOREIGN KEY (midlands_es_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__midlands_fr_id_a98351e5_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__midlands_fr_id_a98351e5_fk_great_int FOREIGN KEY (midlands_fr_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__midlands_id_3ebd6b2f_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__midlands_id_3ebd6b2f_fk_great_int FOREIGN KEY (midlands_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__midlands_ja_id_f69cd612_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__midlands_ja_id_f69cd612_fk_great_int FOREIGN KEY (midlands_ja_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__midlands_pt_id_d2841252_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__midlands_pt_id_d2841252_fk_great_int FOREIGN KEY (midlands_pt_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__midlands_zh_hans_id_5ac39c08_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__midlands_zh_hans_id_5ac39c08_fk_great_int FOREIGN KEY (midlands_zh_hans_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: great_international_internationaltradehomepage great_international__mobile_hero_image_id_7dfe660e_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_internationaltradehomepage
     ADD CONSTRAINT great_international__mobile_hero_image_id_7dfe660e_fk_wagtailim FOREIGN KEY (mobile_hero_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__north_england_ar_id_aa39e953_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__north_england_ar_id_aa39e953_fk_great_int FOREIGN KEY (north_england_ar_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__north_england_de_id_3f5eb573_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__north_england_de_id_3f5eb573_fk_great_int FOREIGN KEY (north_england_de_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__north_england_en_gb__b07c3add_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__north_england_en_gb__b07c3add_fk_great_int FOREIGN KEY (north_england_en_gb_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__north_england_es_id_2eda3dd2_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__north_england_es_id_2eda3dd2_fk_great_int FOREIGN KEY (north_england_es_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__north_england_fr_id_50342dcf_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__north_england_fr_id_50342dcf_fk_great_int FOREIGN KEY (north_england_fr_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__north_england_id_0d0f2054_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__north_england_id_0d0f2054_fk_great_int FOREIGN KEY (north_england_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__north_england_ja_id_cb3f1b5c_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__north_england_ja_id_cb3f1b5c_fk_great_int FOREIGN KEY (north_england_ja_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__north_england_pt_id_d7162ee8_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__north_england_pt_id_d7162ee8_fk_great_int FOREIGN KEY (north_england_pt_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__north_england_zh_han_f7b92a77_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__north_england_zh_han_f7b92a77_fk_great_int FOREIGN KEY (north_england_zh_hans_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_ar__b63650d2_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_ar__b63650d2_fk_great_int FOREIGN KEY (northern_ireland_ar_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_de__c8b0c945_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_de__c8b0c945_fk_great_int FOREIGN KEY (northern_ireland_de_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_en__35119bb6_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_en__35119bb6_fk_great_int FOREIGN KEY (northern_ireland_en_gb_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_es__ad448eba_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_es__ad448eba_fk_great_int FOREIGN KEY (northern_ireland_es_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_fr__42979f9e_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_fr__42979f9e_fk_great_int FOREIGN KEY (northern_ireland_fr_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_id_f2475a1e_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_id_f2475a1e_fk_great_int FOREIGN KEY (northern_ireland_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_ja__7681aa42_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_ja__7681aa42_fk_great_int FOREIGN KEY (northern_ireland_ja_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_pt__1100f42b_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_pt__1100f42b_fk_great_int FOREIGN KEY (northern_ireland_pt_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_zh__8bdab000_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_zh__8bdab000_fk_great_int FOREIGN KEY (northern_ireland_zh_hans_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -42362,14 +43006,6 @@ ALTER TABLE ONLY public.great_international_capitalinvestregionpage
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__regions_section_imag_6ae3c9c6_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__regions_section_imag_6ae3c9c6_fk_wagtailim FOREIGN KEY (regions_section_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: great_international_aboutditlandingpage great_international__related_page_one_ar__5f1f4853_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -44047,6 +44683,78 @@ ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
 
 ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
     ADD CONSTRAINT great_international__scale_icon_zh_hans_i_59d91ece_fk_wagtailim FOREIGN KEY (scale_icon_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__scotland_ar_id_d6622b67_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__scotland_ar_id_d6622b67_fk_great_int FOREIGN KEY (scotland_ar_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__scotland_de_id_ec2a509f_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__scotland_de_id_ec2a509f_fk_great_int FOREIGN KEY (scotland_de_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__scotland_en_gb_id_62025df4_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__scotland_en_gb_id_62025df4_fk_great_int FOREIGN KEY (scotland_en_gb_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__scotland_es_id_511b94a8_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__scotland_es_id_511b94a8_fk_great_int FOREIGN KEY (scotland_es_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__scotland_fr_id_b33f58b1_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__scotland_fr_id_b33f58b1_fk_great_int FOREIGN KEY (scotland_fr_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__scotland_id_e38ccf7f_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__scotland_id_e38ccf7f_fk_great_int FOREIGN KEY (scotland_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__scotland_ja_id_1a1eedb8_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__scotland_ja_id_1a1eedb8_fk_great_int FOREIGN KEY (scotland_ja_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__scotland_pt_id_1e5e66de_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__scotland_pt_id_1e5e66de_fk_great_int FOREIGN KEY (scotland_pt_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__scotland_zh_hans_id_a0b1ab96_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__scotland_zh_hans_id_a0b1ab96_fk_great_int FOREIGN KEY (scotland_zh_hans_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -46498,6 +47206,78 @@ ALTER TABLE ONLY public.great_international_internationaltradehomepage
 
 
 --
+-- Name: great_international_aboutuklandingpage great_international__south_england_ar_id_2fd064fd_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__south_england_ar_id_2fd064fd_fk_great_int FOREIGN KEY (south_england_ar_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__south_england_de_id_802dda05_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__south_england_de_id_802dda05_fk_great_int FOREIGN KEY (south_england_de_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__south_england_en_gb__f75b03d2_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__south_england_en_gb__f75b03d2_fk_great_int FOREIGN KEY (south_england_en_gb_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__south_england_es_id_01066c04_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__south_england_es_id_01066c04_fk_great_int FOREIGN KEY (south_england_es_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__south_england_fr_id_c5e3a0e6_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__south_england_fr_id_c5e3a0e6_fk_great_int FOREIGN KEY (south_england_fr_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__south_england_id_a086b60e_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__south_england_id_a086b60e_fk_great_int FOREIGN KEY (south_england_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__south_england_ja_id_80865aab_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__south_england_ja_id_80865aab_fk_great_int FOREIGN KEY (south_england_ja_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__south_england_pt_id_5d84a2b1_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__south_england_pt_id_5d84a2b1_fk_great_int FOREIGN KEY (south_england_pt_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__south_england_zh_han_c80f639b_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__south_england_zh_han_c80f639b_fk_great_int FOREIGN KEY (south_england_zh_hans_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: great_international_capitalinvestregionpage great_international__sub_section_one_icon_1bf71505_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -48007,6 +48787,78 @@ ALTER TABLE ONLY public.great_international_internationalhomepage
 
 ALTER TABLE ONLY public.great_international_internationalhomepageold
     ADD CONSTRAINT great_international__trade_image_zh_hans__6885704a_fk_wagtailim FOREIGN KEY (trade_image_zh_hans_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__wales_ar_id_f4acc58c_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__wales_ar_id_f4acc58c_fk_great_int FOREIGN KEY (wales_ar_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__wales_de_id_1bad0d6b_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__wales_de_id_1bad0d6b_fk_great_int FOREIGN KEY (wales_de_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__wales_en_gb_id_249bd089_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__wales_en_gb_id_249bd089_fk_great_int FOREIGN KEY (wales_en_gb_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__wales_es_id_4a1e9e4b_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__wales_es_id_4a1e9e4b_fk_great_int FOREIGN KEY (wales_es_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__wales_fr_id_0c724043_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__wales_fr_id_0c724043_fk_great_int FOREIGN KEY (wales_fr_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__wales_id_588804b1_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__wales_id_588804b1_fk_great_int FOREIGN KEY (wales_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__wales_ja_id_5af02794_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__wales_ja_id_5af02794_fk_great_int FOREIGN KEY (wales_ja_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__wales_pt_id_f2c9f890_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__wales_pt_id_f2c9f890_fk_great_int FOREIGN KEY (wales_pt_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__wales_zh_hans_id_f2b27641_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__wales_zh_hans_id_f2b27641_fk_great_int FOREIGN KEY (wales_zh_hans_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --

@@ -14,6 +14,7 @@ from core.models import (
     FormPageMetaClass,
 )
 from core.mixins import ServiceHomepageMixin
+from core.constants import ARTICLE_TYPES
 
 from export_readiness import snippets
 
@@ -789,6 +790,8 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
     ]
     subpage_types = []
 
+    type_of_article = models.TextField(choices=ARTICLE_TYPES, null=True)
+
     article_title = models.TextField()
     article_subheading = models.TextField(
         blank=True,
@@ -807,7 +810,35 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    article_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     article_body_text = MarkdownField()
+
+    cta_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA title'
+    )
+    cta_teaser = models.TextField(
+        blank=True,
+        verbose_name='CTA teaser'
+    )
+
+    cta_link_label = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link label'
+    )
+    cta_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA link'
+    )
 
     related_page_one = models.ForeignKey(
         'great_international.InternationalArticlePage',
@@ -1416,14 +1447,62 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
     industries_section_cta_link = models.CharField(max_length=255, blank=True)
 
     regions_section_title = models.CharField(max_length=255, blank=True)
-    regions_section_content = MarkdownField(blank=True)
-    regions_section_image = models.ForeignKey(
-        'wagtailimages.Image',
+    regions_section_intro = MarkdownField(blank=True)
+
+    scotland = models.ForeignKey(
+        'great_international.AboutUkRegionPage',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        blank=True
     )
+    scotland_text = models.CharField(max_length=255, blank=True)
+
+    northern_ireland = models.ForeignKey(
+        'great_international.AboutUkRegionPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    northern_ireland_text = models.CharField(max_length=255, blank=True)
+
+    north_england = models.ForeignKey(
+        'great_international.AboutUkRegionPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    north_england_text = models.CharField(max_length=255, blank=True)
+
+    wales = models.ForeignKey(
+        'great_international.AboutUkRegionPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    wales_text = models.CharField(max_length=255, blank=True)
+
+    midlands = models.ForeignKey(
+        'great_international.AboutUkRegionPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    midlands_text = models.CharField(max_length=255, blank=True)
+
+    south_england = models.ForeignKey(
+        'great_international.AboutUkRegionPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    south_england_text = models.CharField(max_length=255, blank=True)
+
     regions_section_cta_text = models.CharField(max_length=255, blank=True)
     regions_section_cta_link = models.CharField(max_length=255, blank=True)
 
