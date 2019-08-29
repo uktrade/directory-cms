@@ -185,7 +185,7 @@ class InvestInternationalHomePage(
         max_length=255,
         blank=True
     )
-    how_we_help_lead_in = MarkdownField(blank=True, null=True)
+    how_we_help_lead_in = models.TextField(blank=True, null=True)
     how_we_help_text_one = models.CharField(max_length=255, blank=True)
     how_we_help_icon_one = models.ForeignKey(
         'wagtailimages.Image',
