@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.14
--- Dumped by pg_dump version 11.3
+-- Dumped from database version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,9 +12,22 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
-SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
 
 SET default_tablespace = '';
 
@@ -9429,15 +9442,15 @@ CREATE TABLE public.great_international_investinternationalhomepage (
     sector_title_es text,
     sector_title_pt text,
     sector_title_ar text,
-    sector_button_text text NOT NULL,
-    sector_button_text_en_gb text,
-    sector_button_text_de text,
-    sector_button_text_ja text,
-    sector_button_text_zh_hans text,
-    sector_button_text_fr text,
-    sector_button_text_es text,
-    sector_button_text_pt text,
-    sector_button_text_ar text,
+    sector_button_text character varying(255) NOT NULL,
+    sector_button_text_en_gb character varying(255),
+    sector_button_text_de character varying(255),
+    sector_button_text_ja character varying(255),
+    sector_button_text_zh_hans character varying(255),
+    sector_button_text_fr character varying(255),
+    sector_button_text_es character varying(255),
+    sector_button_text_pt character varying(255),
+    sector_button_text_ar character varying(255),
     sector_button_url character varying(255) NOT NULL,
     sector_button_url_en_gb character varying(255),
     sector_button_url_de character varying(255),
@@ -14213,6 +14226,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 369	great_international	0071_auto_20190823_1525	2019-08-23 16:33:01.592257+01
 370	export_readiness	0053_auto_20190827_1051	2019-08-27 13:46:40.148358+01
 371	great_international	0072_auto_20190827_1237	2019-08-27 13:47:47.04719+01
+372	great_international	0073_auto_20190829_0935	2019-08-29 10:41:58.60564+01
 \.
 
 
@@ -15328,7 +15342,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 123, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 371, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 372, true);
 
 
 --

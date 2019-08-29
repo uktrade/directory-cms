@@ -35,8 +35,7 @@ from tests.great_international.factories import (
     AboutUkLandingPageFactory,
     InvestInternationalHomePageFactory,
     AboutUkRegionListingPageFactory,
-    CapitalInvestRegionPageFactory,
-    InvestHighPotentialOpportunityDetailPageFactory)
+    CapitalInvestRegionPageFactory)
 
 from great_international.models.capital_invest import (
     CapitalInvestRelatedRegions,
@@ -1204,82 +1203,7 @@ def test_about_uk_region_listing_page_has_empty_regions_if_no_parent(
 
 
 @pytest.mark.django_db
-def test_expand_international_landing_page_featured_industries(international_root_page, rf):
-    featured_industry_one = InternationalSectorPageFactory(
-        parent=international_root_page,
-        slug='one'
-    )
-    featured_industry_two = InternationalSectorPageFactory(
-        parent=international_root_page,
-        slug='two'
-    )
-    featured_industry_three = InternationalSectorPageFactory(
-        parent=international_root_page,
-        slug='three'
-    )
-    homepage = InvestInternationalHomePageFactory(
-        parent=international_root_page,
-        slug='expand',
-        featured_industry_one=featured_industry_one,
-        featured_industry_two=featured_industry_two,
-        featured_industry_three=featured_industry_three,
-    )
-
-    serializer = InvestInternationalHomePageSerializer(
-        instance=homepage,
-        context={'request': rf.get('/')}
-    )
-
-    serialized_pages = serializer.data['sectors']
-
-    assert len(serialized_pages) == 3
-    assert serialized_pages[0]['meta']['slug'] == 'one'
-    assert serialized_pages[1]['meta']['slug'] == 'two'
-    assert serialized_pages[2]['meta']['slug'] == 'three'
-
-
-@pytest.mark.django_db
-def test_expand_international_landing_page_gets_hpos(document, international_root_page, rf):
-    InvestHighPotentialOpportunityDetailPageFactory(
-        parent=international_root_page,
-        featured=True,
-        pdf_document=document,
-        slug='one'
-    )
-    InvestHighPotentialOpportunityDetailPageFactory(
-        parent=international_root_page,
-        pdf_document=document,
-        featured=False,
-        slug='two'
-    )
-    InvestHighPotentialOpportunityDetailPageFactory(
-        parent=international_root_page,
-        pdf_document=document,
-        featured=True,
-        slug='three'
-    )
-    homepage = InvestInternationalHomePageFactory(
-        parent=international_root_page,
-        slug='expand',
-    )
-
-    serializer = InvestInternationalHomePageSerializer(
-        instance=homepage,
-        context={'request': rf.get('/')}
-    )
-
-    serialized_pages = serializer.data['high_potential_opportunities']
-
-    slugs = [hpo['meta']['slug'] for hpo in serialized_pages]
-
-    assert len(serialized_pages) == 2
-    assert 'one' in slugs
-    assert 'two' not in slugs
-    assert 'three' in slugs
-
-
-@pytest.mark.django_db
-def test_expand_international_landing_page_how_to_expand(international_root_page, rf):
+def test_invest_international_landing_page_how_to_expand(international_root_page, rf):
 
     homepage = InvestInternationalHomePageFactory(
         parent=international_root_page,
