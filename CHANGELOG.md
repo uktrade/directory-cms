@@ -2,15 +2,24 @@
 
 ## Pre-release
 
+### Implemented enhancements
+- XOT-1020 - Added extra fields to article page type (domestic and international)
+- XOT-1020 - Edited formatting of article types
+
+## [2019.08.27_1](https://github.com/uktrade/directory-cms/releases/tag/2019.08.27_1)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.08.27...2019.08.27_1)
+
 ### Hotfix
 - no ticket - Management command that lists pages containing slug-base hyperlinking
+
+## [2019.08.27](https://github.com/uktrade/directory-cms/releases/tag/2019.08.27)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.08.15...2019.08.27)
 
 ### Implemented enhancements
 - CMS-1832 - Update django
 - CMS-1753 - Remove slug links from markdown fields
 - CI-431 - Added `AboutUkRegionListingPage` and `AboutUkRegionPage` which will replace `CapitalInvestRegionPage`
-- CI-400 - Added related regions and text on About Uk pages for map 
-- XOT-1020 - Added extra fields to article page type (domestic and international)
+- CI-400 - Added related regions and text on About Uk pages for map
 
 ### Fixed Bugs
 - CMS-1830 - Move title field into translated admin panels to fix bug with untranslated tree_based_breadcrumbs
