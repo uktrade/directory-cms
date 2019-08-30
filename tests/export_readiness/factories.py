@@ -119,7 +119,7 @@ class ArticlePageFactory(wagtail_factories.PageFactory):
     class Meta:
         model = models.ArticlePage
 
-    type_of_article = 'blog'
+    type_of_article = 'Blog'
 
     article_title = factory.fuzzy.FuzzyText(length=10)
     article_subheading = factory.fuzzy.FuzzyText(length=10)
