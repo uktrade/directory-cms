@@ -1143,6 +1143,7 @@ class CapitalInvestContactFormSuccessPageTranslationOptions(
         BaseTranslationOptions
 ):
     fields = (
-        'large_text',
-        'small_text',
+        'message_box_heading',
+        'message_box_description',
+        'what_happens_next_description',
     )
