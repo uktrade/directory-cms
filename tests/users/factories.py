@@ -7,7 +7,6 @@ from django.test import Client
 from wagtail.core.models import GroupPagePermission, PAGE_PERMISSION_TYPES
 
 from tests.export_readiness import factories as exred
-from tests.find_a_supplier import factories as fas
 
 User = get_user_model()
 Branch = namedtuple(
@@ -159,22 +158,6 @@ def two_branches_with_users(root_page):
     |              |-> ArticleListingPage
     |              |   |-> ArticlePage
     |              |-> ArticlePage
-    |-> FAS
-    |   |-> LandingPage  (subpage_types aren't defined)
-    |       |-> IndustryLandingPage
-    |           |-> IndustryContactPage
-    |           |-> IndustryPage
-    |               |-> IndustryArticlePage
-    |-> Invest
-    |   |-> InvestHomePage  (subpage_types aren't defined)
-    |       |-> RegionLandingPage
-    |       |   |-> sectorPage
-    |       |       |-> sectorPage
-    |       |-> SectorLandingPage
-    |       |   |-> SectorPage
-    |       |       |-> sectorPage
-    |       |-> SetupGuideLandingPage
-    |           |-> SetupGuidePage
     |-> International
         |-> InternationalHomePage
             |-> InternationalTopicLandingPage
@@ -189,18 +172,14 @@ def two_branches_with_users(root_page):
     """
 
     home_page_1 = exred.HomePageFactory.create(parent=root_page)
-    home_page_2 = fas.LandingPageFactory.create(parent=root_page)
 
     landing_page_1 = exred.TopicLandingPageFactory.create(parent=home_page_1)
-    landing_page_2 = fas.IndustryLandingPageFactory.create(parent=home_page_2)
 
     listing_page_1 = exred.ArticleListingPageFactory.create(
         parent=landing_page_1
     )
-    listing_page_2 = fas.IndustryPageFactory.create(parent=landing_page_2)
 
     article_1 = exred.ArticlePageFactory(parent=listing_page_1)
-    article_2 = fas.IndustryArticlePageFactory(parent=listing_page_2)
 
     editors_1, moderators_1, editors_2, moderators_2, admins = \
         GroupFactory.create_batch(5)
@@ -214,8 +193,6 @@ def two_branches_with_users(root_page):
     )
     set_permissions(home_page_1, editors_1, ['add', 'edit'])
     set_permissions(home_page_1, moderators_1, ['add', 'edit', 'publish'])
-    set_permissions(home_page_2, editors_2, ['add', 'edit'])
-    set_permissions(home_page_2, moderators_2, ['add', 'edit', 'publish'])
 
     password = 'test'
 
@@ -269,7 +246,6 @@ def two_branches_with_users(root_page):
         home_page_1, landing_page_1, listing_page_1, article_1,
         editors_1, editor_1, editor_1_client,
         moderators_1, moderator_1, moderator_1_client,
-        home_page_2, landing_page_2, listing_page_2, article_2,
         editors_2, editor_2, editor_2_client,
         moderators_2, moderator_2, moderator_2_client,
     )

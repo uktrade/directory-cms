@@ -1,7 +1,9 @@
 import os
+from itertools import product
 from unittest.mock import patch
 
 import pytest
+from modeltranslation.utils import build_localized_fieldname
 from six import b
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
@@ -19,8 +21,7 @@ from conf import settings
 from core.models import RoutingSettings
 from groups.models import GroupInfo
 from users.models import UserProfile
-from .great_international.factories import InternationalHomePageFactory
-from .find_a_supplier.factories import IndustryPageFactory
+from .great_international.factories import InternationalHomePageFactory, InternationalArticlePageFactory
 from .users.factories import UserFactory
 
 
@@ -30,23 +31,6 @@ def root_page():
     On start Wagtail provides one page with ID=1 and it's called "Root page"
     """
     return Page.objects.get(pk=1)
-
-
-@pytest.fixture
-def untranslated_page(root_page):
-    return IndustryPageFactory(
-        parent=root_page,
-        title_en_gb='ENGLISH',
-        breadcrumbs_label_en_gb='label',
-        introduction_text_en_gb='lede',
-        search_description_en_gb='description',
-        hero_text_en_gb='hero text',
-        introduction_column_one_text_en_gb='lede column one',
-        introduction_column_two_text_en_gb='lede column two',
-        introduction_column_three_text_en_gb='lede column three',
-        company_list_text_en_gb='companies',
-        company_list_call_to_action_text_en_gb='view all',
-    )
 
 
 @pytest.fixture
@@ -230,3 +214,67 @@ def international_site(international_root_page):
         defaults={'root_path_prefix': '/international/content/'}
     )
     return site
+
+
+@pytest.fixture
+def page_without_specific_type(root_page):
+    page = Page(title="No specific type", slug='no-specific-type')
+    root_page.add_child(instance=page)
+    return page
+
+
+@pytest.fixture
+def translated_page(settings, international_root_page):
+    page = InternationalArticlePageFactory(
+        parent=international_root_page,
+        title_en_gb='ENGLISH',
+        title_de='GERMAN',
+        title_ja='JAPANESE',
+        title_zh_hans='SIMPLIFIED CHINESE',
+        title_fr='FRENCH',
+        title_es='SPANISH',
+        title_pt='PORTUGUESE',
+        title_ar='ARABIC',
+    )
+    field_names = page.get_required_translatable_fields()
+    language_codes = settings.LANGUAGES
+    for field_name, (language_code, _) in product(field_names, language_codes):
+        localized_name = build_localized_fieldname(field_name, language_code)
+        if not getattr(page, localized_name):
+            setattr(page, localized_name, localized_name + '-v')
+    page.save()
+    return page
+
+
+@pytest.fixture
+def site_with_translated_page_as_root(translated_page):
+    return Site.objects.create(
+        site_name='Test',
+        hostname='example.com',
+        port=8097,
+        root_page=translated_page,
+    )
+
+
+@pytest.fixture
+def page_with_reversion(admin_user, translated_page):
+    translated_page.title = 'published-title',
+    translated_page.title_en_gb = 'published-title'
+    translated_page.save()
+
+    translated_page.title_en_gb = 'draft-title'
+    translated_page.save_revision(
+        user=admin_user,
+        submitted_for_moderation=False,
+    )
+    return translated_page
+
+
+@pytest.fixture
+def site_with_revised_page_as_root(page_with_reversion):
+    return Site.objects.create(
+        site_name='Test',
+        hostname='example.com',
+        port=8098,
+        root_page=page_with_reversion,
+    )
