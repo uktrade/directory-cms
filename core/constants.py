@@ -9,8 +9,8 @@ APP_URLS = {
 }
 
 ARTICLE_TYPES = [
-    ('blog', 'Blog'),
-    ('advice', 'Advice'),
-    ('case_study', 'Case study'),
-    ('campaign', 'Campaign'),
+    ('Blog', 'Blog'),
+    ('Advice', 'Advice'),
+    ('Case study', 'Case study'),
+    ('Campaign', 'Campaign'),
 ]
