@@ -169,7 +169,7 @@ def test_moderators_can_approve_revisions_only_for_pages_in_their_branch(
 def test_branch_user_can_create_child_pages_in_it(branch_factory, root_page):
     branch = branch_factory.get(root_page)
     data = {
-        'type_of_article': 'blog',
+        'type_of_article': 'Blog',
         'article_title': 'test article',
         'article_teaser': 'test article',
         'article_body_text': 'test article',
@@ -253,7 +253,7 @@ def test_branch_user_cant_create_pages_in_branch_they_dont_manage(
     branch_1 = branch_factory.get(root_page)
     branch_2 = branch_factory.get(root_page)
     data = {
-        'type_of_article': 'blog',
+        'type_of_article': 'Blog',
         'article_title': 'test article',
         'article_teaser': 'test article',
         'article_body_text': 'test article',
@@ -283,7 +283,7 @@ def test_admins_can_create_pages_in_any_branch(root_page):
 
     # Add ExRed Article page
     data_1 = {
-        'type_of_article': 'blog',
+        'type_of_article': 'Blog',
         'article_title': 'test article',
         'article_teaser': 'test article',
         'article_body_text': 'test article',
@@ -308,7 +308,7 @@ def test_admins_can_create_pages_in_any_branch(root_page):
 
     # Add FAS Industry Article page
     data_2 = {
-        'type_of_article': 'blog',
+        'type_of_article': 'Blog',
         'article_title': 'test article',
         'article_teaser': 'test article',
         'article_body_text': 'test article',
@@ -385,7 +385,7 @@ def test_branch_user_can_submit_changes_for_moderation(
 ):
     branch = branch_factory.get(root_page)
     data = {
-        'type_of_article': 'blog',
+        'type_of_article': 'Blog',
         'article_title': 'new title',
         'article_teaser': 'new teaser',
         'article_body_text': 'new body text',
@@ -414,7 +414,7 @@ def test_branch_user_can_submit_changes_for_moderation(
 def test_branch_user_can_view_drafts(branch_factory, root_page):
     branch = branch_factory.get(root_page)
     data = {
-        'type_of_article': 'blog',
+        'type_of_article': 'Blog',
         'article_title': 'new title',
         'article_teaser': 'new teaser',
         'article_body_text': 'new body text',
