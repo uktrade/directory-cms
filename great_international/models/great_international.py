@@ -8,7 +8,6 @@ from directory_constants import slugs
 from core.model_fields import MarkdownField
 
 from core.models import (
-    ExclusivePageMixin,
     WagtailAdminExclusivePageMixin,
     FormPageMetaClass,
 )
@@ -517,7 +516,6 @@ class InternationalHomePage(
             invest_models.InvestInternationalHomePage,
             fas_models.InternationalTradeHomePage
         ]
-
 
 
 class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseInternationalPage):

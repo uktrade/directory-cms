@@ -174,7 +174,7 @@ def test_api_serves_drafts(
     url = reverse(
         'api:lookup-by-slug', kwargs={'slug': page_with_reversion.slug}
     )
-    query_params = {'service_name': 'FIND_A_SUPPLIER'}
+    query_params = {'service_name': cms.GREAT_INTERNATIONAL}
     query_params.update(draft_query_params)
     response = client.get(url, query_params)
     assert response.status_code == 200
@@ -285,7 +285,9 @@ def test_add_page_prepopulate(translated_page, admin_client, image, cluster_data
 
 
 @pytest.mark.django_db
-def test_add_page_prepopulate_missing_content_type(translated_page, admin_client, international_root_page, cluster_data):
+def test_add_page_prepopulate_missing_content_type(
+        translated_page, admin_client, international_root_page, cluster_data
+):
     url = reverse(
         'preload-add-page',
         kwargs={
@@ -393,7 +395,7 @@ def test_lookup_by_path_for_non_existent_page(client):
     ))
     assert response.status_code == 404
 
-    expected_msg = f"No page could be found matching site_id '{site_id}' and path '{path}'" # noqa
+    expected_msg = f"No page could be found matching site_id '{site_id}' and path '{path}'"
     assert response.json() == {'message': expected_msg}
 
 
@@ -406,7 +408,7 @@ def test_lookup_by_slug(translated_page, admin_client):
         }
     )
 
-    response = admin_client.get(url, {'service_name': cms.FIND_A_SUPPLIER})
+    response = admin_client.get(url, {'service_name': cms.GREAT_INTERNATIONAL})
 
     assert response.status_code == 200
     assert response.json()['id'] == translated_page.id
@@ -439,7 +441,7 @@ def test_lookup_by_slug_missing_page(admin_client):
 
     assert response.status_code == 404
 
-    expected_msg = f"No page could be found matching service_name '{service_name}' and slug '{slug}'" # noqa
+    expected_msg = f"No page could be found matching service_name '{service_name}' and slug '{slug}'"
     assert response.json() == {'message': expected_msg}
 
 

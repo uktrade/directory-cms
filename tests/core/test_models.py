@@ -10,7 +10,6 @@ from wagtail.core.models import Page, Site
 
 from core.models import BasePage, ExclusivePageMixin, RoutingSettings
 from tests.great_international.factories import InternationalSectorPageFactory
-from tests.export_readiness.factories import HomePageFactory
 
 
 from tests.export_readiness.factories import (

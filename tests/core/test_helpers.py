@@ -1,5 +1,3 @@
-from unittest.mock import patch
-
 import pytest
 from wagtail.admin.widgets import PageListingButton
 from django.urls import reverse

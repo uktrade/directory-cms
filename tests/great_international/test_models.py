@@ -5,7 +5,6 @@ from great_international.models import (
     great_international, invest, capital_invest, find_a_supplier
 )
 from . import factories
-from tests.export_readiness import factories as exread_factories
 
 
 def test_models_hierarchy():
@@ -16,7 +15,6 @@ def test_models_hierarchy():
         great_international.InternationalTopicLandingPage,
         great_international.InternationalCuratedTopicLandingPage,
         great_international.InternationalGuideLandingPage,
-        great_international.InternationalRegionPage,
         great_international.InternationalEUExitFormPage,
         great_international.InternationalEUExitFormSuccessPage,
         great_international.AboutDitLandingPage,
@@ -39,10 +37,6 @@ def test_models_hierarchy():
         invest.InvestHighPotentialOpportunityFormSuccessPage,
     ]
     assert great_international.InternationalHomePage.allowed_parent_page_models() == [Page]
-    # region page
-    assert great_international.InternationalRegionPage.allowed_subpage_models() == []
-    # regional folder page
-    assert great_international.InternationalLocalisedFolderPage.allowed_subpage_models() == []
     # topic landing
     assert great_international.InternationalTopicLandingPage.allowed_subpage_models() == [
             great_international.InternationalArticleListingPage,
