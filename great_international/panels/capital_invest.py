@@ -529,8 +529,9 @@ class CapitalInvestContactFormPagePanels:
 class CapitalInvestContactFormSuccessPagePanels:
     content_panels = [
         FieldPanel('title'),
-        FieldPanel('large_text'),
-        FieldPanel('small_text'),
+        FieldPanel('message_box_heading'),
+        FieldPanel('message_box_description'),
+        FieldPanel('what_happens_next_description'),
     ]
 
     settings_panels = [
