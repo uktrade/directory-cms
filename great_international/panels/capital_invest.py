@@ -513,6 +513,7 @@ class CapitalInvestContactFormPagePanels:
         FieldPanel('breadcrumbs_label'),
         FieldPanel('heading'),
         FieldPanel('intro'),
+        FieldPanel('comment'),
         FieldPanel('cta_text'),
     ]
 
