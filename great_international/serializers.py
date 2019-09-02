@@ -2201,6 +2201,7 @@ class CapitalInvestContactFormPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     heading = serializers.CharField()
     intro = core_fields.MarkdownToHTMLField()
+    comment = serializers.CharField()
     cta_text = serializers.CharField()
 
 

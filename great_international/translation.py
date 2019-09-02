@@ -1134,6 +1134,7 @@ class CapitalInvestContactFormPageTranslationOptions(
         'breadcrumbs_label',
         'heading',
         'intro',
+        'comment',
         'cta_text',
     )
 
