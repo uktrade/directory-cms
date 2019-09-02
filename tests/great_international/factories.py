@@ -210,12 +210,6 @@ class InternationalHomePageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
-class InternationalHomePageOldFactory(InternationalHomePageFactory):
-
-    class Meta:
-        model = models.great_international.InternationalHomePageOld
-
-
 class InternationalArticleListingPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
@@ -362,26 +356,6 @@ class InternationalGuideLandingPageFactory(wagtail_factories.PageFactory):
     guides_section_heading = factory.fuzzy.FuzzyText(length=10)
 
     parent = None
-
-
-class InternationalRegionPageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.great_international.InternationalRegionPage
-
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    parent = None
-
-
-class InternationalLocalisedFolderPageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.great_international.InternationalLocalisedFolderPage
-
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    parent = factory.SubFactory(InternationalRegionPageFactory)
 
 
 class InternationalCapitalInvestLandingPageFactory(

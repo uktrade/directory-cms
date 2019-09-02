@@ -20,7 +20,6 @@ from great_international.serializers import (
 from tests.great_international.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
-    InternationalHomePageOldFactory,
     InternationalCuratedTopicLandingPageFactory,
     InternationalGuideLandingPageFactory,
     AboutUkRegionPageFactory,
@@ -212,22 +211,6 @@ def test_home_page_related_pages(international_root_page, rf):
         assert 'title' in page
         assert 'teaser' in page
         assert 'thumbnail' in page
-
-
-@pytest.mark.django_db
-def test_consistent_page_type_for_old_and_new_home_pages(root_page, rf):
-    context = {'request': rf.get('/')}
-    expected_page_type = 'InternationalHomePage'
-
-    page1 = InternationalHomePageFactory(parent=root_page, slug='one')
-    page1_serializer = InternationalHomePageSerializer(
-        instance=page1, context=context)
-    assert page1_serializer.data['page_type'] == expected_page_type
-
-    page2 = InternationalHomePageOldFactory(parent=root_page, slug='two')
-    page2_serializer = InternationalHomePageSerializer(
-        instance=page2, context=context)
-    assert page2_serializer.data['page_type'] == expected_page_type
 
 
 @pytest.mark.django_db

@@ -8,17 +8,6 @@ from core import helpers
 from core.helpers import render_markdown, get_page_full_url
 
 
-@pytest.fixture(autouse=True)
-def mock_translated_fields():
-    stub = patch(
-        'find_a_supplier.models.IndustryPage.get_translatable_fields',
-        return_value=['title']
-    )
-    stub.start()
-    yield stub
-    stub.stop()
-
-
 @pytest.mark.django_db
 def test_get_or_create_image_existing(image):
     actual = helpers.get_or_create_image(image.file.name)
@@ -36,10 +25,10 @@ def test_get_or_create_image_new(image, uploaded_file):
 
 
 @pytest.mark.django_db
-def test_get_button_url_name_internal_url(page):
+def test_get_button_url_name_internal_url(international_root_page):
     button = PageListingButton(
         'View draft',
-        reverse('wagtailadmin_pages:view_draft', args=[page.id]),
+        reverse('wagtailadmin_pages:view_draft', args=[international_root_page.id]),
     )
 
     assert helpers.get_button_url_name(button) == 'view_draft'

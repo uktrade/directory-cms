@@ -41,13 +41,6 @@ class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     ]
 
 
-class InternationalHomePageOldSubscriber(AbstractDatabaseCacheSubscriber):
-    model = great_international.InternationalHomePageOld
-    subscriptions = [
-        great_international.InternationalArticlePage,
-    ]
-
-
 class InternationalArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = great_international.InternationalArticlePage
     subscriptions = [
@@ -116,11 +109,6 @@ class InternationalCapitalInvestLandingPageSubscriber(
         capital_invest.CapitalInvestRegionPage,
         great_international.AboutUkRegionPage
     ]
-
-
-class CapitalInvestRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = capital_invest.CapitalInvestRegionPage
-    subscriptions = []
 
 
 class CapitalInvestOpportunityPageSubscriber(AbstractDatabaseCacheSubscriber):

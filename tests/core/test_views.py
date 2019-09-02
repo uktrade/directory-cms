@@ -11,10 +11,7 @@ from django.urls import reverse
 from core import helpers, permissions, views
 from core.helpers import CachedResponse
 from conf.signature import SignatureCheckPermission
-from tests.find_a_supplier.factories import (
-    FindASupplierAppFactory, IndustryLandingPageFactory
-)
-from tests.invest.factories import InfoPageFactory
+from tests.great_international.factories import InternationalSectorPageFactory, InternationalArticlePageFactory
 from .helpers import clean_post_data
 
 
@@ -63,8 +60,7 @@ def test_permissions_published(rf):
 ))
 @pytest.mark.django_db
 def test_api_translations_are_loaded_when_available(
-    client, translated_page, site_with_translated_page_as_root, language_code,
-    expected_title
+    client, translated_page, site_with_translated_page_as_root, language_code, expected_title
 ):
     # to be added as a query params to all requests
     languge_query_params = {'lang': language_code}
@@ -86,7 +82,7 @@ def test_api_translations_are_loaded_when_available(
 
     # looking up by slug and service_name
     url = reverse('api:lookup-by-slug', kwargs={'slug': translated_page.slug})
-    query_params = {'service_name': 'FIND_A_SUPPLIER'}
+    query_params = {'service_name': cms.GREAT_INTERNATIONAL}
     query_params.update(languge_query_params)
     response = client.get(url, query_params)
     assert response.status_code == 200
@@ -188,7 +184,7 @@ def test_api_serves_drafts(
 
 
 @pytest.mark.django_db
-def test_copy_upsteam(admin_client, translated_page, settings, image):
+def test_copy_upsteam(admin_client, translated_page, image):
     translated_page.hero_image = image
     translated_page.save()
 
@@ -201,7 +197,7 @@ def test_copy_upsteam(admin_client, translated_page, settings, image):
 
 
 @pytest.mark.django_db
-def test_update_upstream(admin_client, translated_page, settings, image):
+def test_update_upstream(admin_client, translated_page, image):
     translated_page.hero_image = image
     translated_page.save()
 
@@ -215,7 +211,7 @@ def test_update_upstream(admin_client, translated_page, settings, image):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize('url_name', ('copy-upstream', 'update-upstream'))
-def test_upstream_anon(client, translated_page, settings, image, url_name):
+def test_upstream_anon(client, translated_page, image, url_name):
     translated_page.hero_image = image
     translated_page.save()
 
@@ -231,19 +227,17 @@ def test_upstream_anon(client, translated_page, settings, image, url_name):
     (True, 'wagtailadmin/pages/edit.html'),
     (False, 'wagtailadmin/pages/create.html'),
 ))
-def test_add_page_prepopulate(
-    translated_fas_industry_page, settings, admin_client, image, cluster_data,
-    include_slug, expected_template, fas_industry_landing_page
-):
+def test_add_page_prepopulate(translated_page, admin_client, image, cluster_data, include_slug, expected_template,
+                              international_root_page):
     url = reverse(
         'preload-add-page',
         kwargs={
-            'service_name': translated_fas_industry_page._meta.app_label,
-            'model_name': translated_fas_industry_page._meta.model_name,
-            'parent_slug': fas_industry_landing_page.slug,
+            'service_name': translated_page._meta.app_label,
+            'model_name': translated_page._meta.model_name,
+            'parent_slug': international_root_page.slug,
         }
     )
-    model_as_dict = model_to_dict(translated_fas_industry_page, exclude=[
+    model_as_dict = model_to_dict(translated_page, exclude=[
         'go_live_at',
         'expire_at',
         'slug',
@@ -268,7 +262,7 @@ def test_add_page_prepopulate(
     }
     if include_slug:
         post_data['slug'] = expected_data['slug'] = (
-            translated_fas_industry_page.slug
+            international_root_page.slug
         )
 
     response = admin_client.post(url, clean_post_data(post_data))
@@ -291,21 +285,18 @@ def test_add_page_prepopulate(
 
 
 @pytest.mark.django_db
-def test_add_page_prepopulate_missing_content_type(
-    translated_fas_industry_page, settings, admin_client,
-    fas_industry_landing_page, cluster_data
-):
+def test_add_page_prepopulate_missing_content_type(translated_page, admin_client, international_root_page, cluster_data):
     url = reverse(
         'preload-add-page',
         kwargs={
-            'service_name': translated_fas_industry_page._meta.app_label,
+            'service_name': translated_page._meta.app_label,
             'model_name': 'doesnotexist',
-            'parent_slug': fas_industry_landing_page.slug,
+            'parent_slug': international_root_page.slug,
         }
     )
 
     post_data = model_to_dict(
-        translated_fas_industry_page,
+        international_root_page,
         exclude=['go_live_at', 'expire_at', 'hero_image']
     )
     post_data.update(cluster_data)
@@ -316,26 +307,22 @@ def test_add_page_prepopulate_missing_content_type(
 
 
 @pytest.mark.django_db
-def test_add_page_prepopulate_get(
-    translated_fas_industry_page, settings, admin_client,
-    fas_industry_landing_page, cluster_data
-):
+def test_add_page_prepopulate_get(translated_page, admin_client, international_root_page):
     url = reverse(
         'preload-add-page',
         kwargs={
-            'service_name': translated_fas_industry_page._meta.app_label,
-            'model_name': translated_fas_industry_page._meta.model_name,
-            'parent_slug': fas_industry_landing_page.slug,
+            'service_name': translated_page._meta.app_label,
+            'model_name': translated_page._meta.model_name,
+            'parent_slug': international_root_page.slug,
         }
     )
-
     response = admin_client.get(url)
 
     assert response.status_code == 405
 
 
 @pytest.mark.django_db
-def test_list_page(admin_client, translated_page, root_page):
+def test_list_page(admin_client, root_page):
     url = reverse('wagtailadmin_explore', args=(root_page.pk,))
 
     response = admin_client.get(url)
@@ -353,7 +340,7 @@ def test_page_listing(translated_page, admin_client):
 
 
 @pytest.mark.django_db
-def test_translations_exposed(page, translated_page, settings, client):
+def test_translations_exposed(translated_page, settings, client):
     url = reverse('api:api:pages:detail', kwargs={'pk': translated_page.pk})
 
     response = client.get(url)
@@ -364,17 +351,18 @@ def test_translations_exposed(page, translated_page, settings, client):
 
 
 @pytest.mark.django_db
-def test_lookup_by_path(root_page, page, admin_client):
+def test_lookup_by_path(international_root_page, admin_client):
+    page = InternationalArticlePageFactory(parent=international_root_page)
+
     # Creating a semi-realistic page structure and moving page into it
-    app_root_page = FindASupplierAppFactory(parent=root_page)
-    parent_page = IndustryLandingPageFactory(parent=app_root_page)
+    parent_page = InternationalSectorPageFactory(parent=international_root_page)
     page.move(target=parent_page, pos='last-child')
 
     # Creating a site with app_root_page as the root
     site = Site.objects.create(
         site_name='Test',
         hostname='example.com',
-        root_page=app_root_page,
+        root_page=international_root_page,
     )
 
     # to lookup page, the path should include the parent's slug and
@@ -455,11 +443,11 @@ def test_lookup_by_slug_missing_page(admin_client):
     assert response.json() == {'message': expected_msg}
 
 
-def test_cache_etags_match(admin_client, root_page):
-    service_name = cms.INVEST
+def test_cache_etags_match(admin_client, international_root_page):
+    service_name = cms.GREAT_INTERNATIONAL
 
     # given there exists a page that is cached
-    page = InfoPageFactory.create(parent=root_page, live=True)
+    page = InternationalSectorPageFactory.create(parent=international_root_page, live=True)
     url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
     admin_client.get(url, {'service_name': service_name})
 
@@ -476,10 +464,10 @@ def test_cache_etags_match(admin_client, root_page):
     assert response_three.content == b''
 
 
-def test_cache_etags_mismatch(admin_client, root_page):
-    service_name = cms.INVEST
+def test_cache_etags_mismatch(admin_client, international_root_page):
+    service_name = cms.GREAT_INTERNATIONAL
     # given there exists a page that is cached
-    page = InfoPageFactory.create(parent=root_page, live=True)
+    page = InternationalSectorPageFactory.create(parent=international_root_page, live=True)
 
     # when the page is retrieved
     url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
