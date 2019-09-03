@@ -3,7 +3,6 @@ import pytest
 from bs4 import BeautifulSoup
 from directory_constants import cms
 from modeltranslation.utils import build_localized_fieldname
-from wagtail.core.models import Site
 
 from django.forms.models import model_to_dict
 from django.urls import reverse
@@ -11,7 +10,7 @@ from django.urls import reverse
 from core import helpers, permissions, views
 from core.helpers import CachedResponse
 from conf.signature import SignatureCheckPermission
-from tests.great_international.factories import InternationalSectorPageFactory, InternationalArticlePageFactory
+from tests.great_international.factories import InternationalSectorPageFactory
 from .helpers import clean_post_data
 
 
@@ -353,26 +352,18 @@ def test_translations_exposed(translated_page, settings, client):
 
 
 @pytest.mark.django_db
-def test_lookup_by_path(international_root_page, admin_client):
-    page = InternationalArticlePageFactory(parent=international_root_page)
-
+def test_lookup_by_path(international_root_page, page, admin_client):
     # Creating a semi-realistic page structure and moving page into it
     parent_page = InternationalSectorPageFactory(parent=international_root_page)
     page.move(target=parent_page, pos='last-child')
-
-    # Creating a site with app_root_page as the root
-    site = Site.objects.create(
-        site_name='Test',
-        hostname='example.com',
-        root_page=international_root_page,
-    )
 
     # to lookup page, the path should include the parent's slug and
     # the page's slug, but NOT that of app_root_page
     path = '/'.join([parent_page.slug, page.slug])
     response = admin_client.get(reverse(
-        'api:lookup-by-path', kwargs={'site_id': site.id, 'path': path}
+        'api:lookup-by-path', kwargs={'site_id': '1', 'path': path}
     ))
+
     assert response.status_code == 200
     assert response.json()['id'] == page.id
 
@@ -380,7 +371,7 @@ def test_lookup_by_path(international_root_page, admin_client):
     # characters on either end of the value shouldn't hinder matching
     dodgy_path = '///' + path + '///'
     response = admin_client.get(reverse(
-        'api:lookup-by-path', kwargs={'site_id': site.id, 'path': dodgy_path}
+        'api:lookup-by-path', kwargs={'site_id': '1', 'path': dodgy_path}
     ))
     assert response.status_code == 200
     assert response.json()['id'] == page.id
