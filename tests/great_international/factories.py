@@ -808,7 +808,7 @@ class CapitalInvestContactFormSuccessPageFactory(
     class Meta:
         model = models.capital_invest.CapitalInvestContactFormSuccessPage
 
-    large_text = factory.fuzzy.FuzzyText(length=50)
+    message_box_heading = factory.fuzzy.FuzzyText(length=50)
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     last_published_at = timezone.now()

@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.14
--- Dumped by pg_dump version 11.3
+-- Dumped from database version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,9 +12,22 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
-SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
 
 SET default_tablespace = '';
 
@@ -3839,7 +3852,16 @@ CREATE TABLE public.great_international_capitalinvestcontactformpage (
     cta_text_fr character varying(255),
     cta_text_es character varying(255),
     cta_text_pt character varying(255),
-    cta_text_ar character varying(255)
+    cta_text_ar character varying(255),
+    comment text NOT NULL,
+    comment_ar text,
+    comment_de text,
+    comment_en_gb text,
+    comment_es text,
+    comment_fr text,
+    comment_ja text,
+    comment_pt text,
+    comment_zh_hans text
 );
 
 
@@ -3851,24 +3873,33 @@ CREATE TABLE public.great_international_capitalinvestcontactformsuccesspage (
     page_ptr_id integer NOT NULL,
     service_name character varying(100),
     uses_tree_based_routing boolean NOT NULL,
-    large_text character varying(255) NOT NULL,
-    large_text_en_gb character varying(255),
-    large_text_de character varying(255),
-    large_text_ja character varying(255),
-    large_text_zh_hans character varying(255),
-    large_text_fr character varying(255),
-    large_text_es character varying(255),
-    large_text_pt character varying(255),
-    large_text_ar character varying(255),
-    small_text text NOT NULL,
-    small_text_en_gb text,
-    small_text_de text,
-    small_text_ja text,
-    small_text_zh_hans text,
-    small_text_fr text,
-    small_text_es text,
-    small_text_pt text,
-    small_text_ar text
+    message_box_heading character varying(255) NOT NULL,
+    message_box_heading_en_gb character varying(255),
+    message_box_heading_de character varying(255),
+    message_box_heading_ja character varying(255),
+    message_box_heading_zh_hans character varying(255),
+    message_box_heading_fr character varying(255),
+    message_box_heading_es character varying(255),
+    message_box_heading_pt character varying(255),
+    message_box_heading_ar character varying(255),
+    message_box_description text NOT NULL,
+    message_box_description_en_gb text,
+    message_box_description_de text,
+    message_box_description_ja text,
+    message_box_description_zh_hans text,
+    message_box_description_fr text,
+    message_box_description_es text,
+    message_box_description_pt text,
+    message_box_description_ar text,
+    what_happens_next_description text NOT NULL,
+    what_happens_next_description_ar text,
+    what_happens_next_description_de text,
+    what_happens_next_description_en_gb text,
+    what_happens_next_description_es text,
+    what_happens_next_description_fr text,
+    what_happens_next_description_ja text,
+    what_happens_next_description_pt text,
+    what_happens_next_description_zh_hans text
 );
 
 
@@ -14086,6 +14117,9 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 369	great_international	0071_auto_20190823_1525	2019-08-23 16:33:01.592257+01
 370	export_readiness	0053_auto_20190827_1051	2019-08-27 13:46:40.148358+01
 371	great_international	0072_auto_20190827_1237	2019-08-27 13:47:47.04719+01
+372	export_readiness	0054_auto_20190830_1345	2019-09-02 15:26:48.980483+01
+373	great_international	0073_auto_20190830_1345	2019-09-02 15:26:50.132024+01
+374	great_international	0074_auto_20190902_1424	2019-09-02 15:27:27.029073+01
 \.
 
 
@@ -14461,7 +14495,7 @@ COPY public.great_international_aboutukwhychoosetheukpage (page_ptr_id, service_
 -- Data for Name: great_international_capitalinvestcontactformpage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_capitalinvestcontactformpage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, heading, heading_en_gb, heading_de, heading_ja, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_ar, intro, intro_en_gb, intro_de, intro_ja, intro_zh_hans, intro_fr, intro_es, intro_pt, intro_ar, cta_text, cta_text_en_gb, cta_text_de, cta_text_ja, cta_text_zh_hans, cta_text_fr, cta_text_es, cta_text_pt, cta_text_ar) FROM stdin;
+COPY public.great_international_capitalinvestcontactformpage (page_ptr_id, service_name, uses_tree_based_routing, breadcrumbs_label, breadcrumbs_label_en_gb, breadcrumbs_label_de, breadcrumbs_label_ja, breadcrumbs_label_zh_hans, breadcrumbs_label_fr, breadcrumbs_label_es, breadcrumbs_label_pt, breadcrumbs_label_ar, heading, heading_en_gb, heading_de, heading_ja, heading_zh_hans, heading_fr, heading_es, heading_pt, heading_ar, intro, intro_en_gb, intro_de, intro_ja, intro_zh_hans, intro_fr, intro_es, intro_pt, intro_ar, cta_text, cta_text_en_gb, cta_text_de, cta_text_ja, cta_text_zh_hans, cta_text_fr, cta_text_es, cta_text_pt, cta_text_ar, comment, comment_ar, comment_de, comment_en_gb, comment_es, comment_fr, comment_ja, comment_pt, comment_zh_hans) FROM stdin;
 \.
 
 
@@ -14469,7 +14503,7 @@ COPY public.great_international_capitalinvestcontactformpage (page_ptr_id, servi
 -- Data for Name: great_international_capitalinvestcontactformsuccesspage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.great_international_capitalinvestcontactformsuccesspage (page_ptr_id, service_name, uses_tree_based_routing, large_text, large_text_en_gb, large_text_de, large_text_ja, large_text_zh_hans, large_text_fr, large_text_es, large_text_pt, large_text_ar, small_text, small_text_en_gb, small_text_de, small_text_ja, small_text_zh_hans, small_text_fr, small_text_es, small_text_pt, small_text_ar) FROM stdin;
+COPY public.great_international_capitalinvestcontactformsuccesspage (page_ptr_id, service_name, uses_tree_based_routing, message_box_heading, message_box_heading_en_gb, message_box_heading_de, message_box_heading_ja, message_box_heading_zh_hans, message_box_heading_fr, message_box_heading_es, message_box_heading_pt, message_box_heading_ar, message_box_description, message_box_description_en_gb, message_box_description_de, message_box_description_ja, message_box_description_zh_hans, message_box_description_fr, message_box_description_es, message_box_description_pt, message_box_description_ar, what_happens_next_description, what_happens_next_description_ar, what_happens_next_description_de, what_happens_next_description_en_gb, what_happens_next_description_es, what_happens_next_description_fr, what_happens_next_description_ja, what_happens_next_description_pt, what_happens_next_description_zh_hans) FROM stdin;
 \.
 
 
@@ -15201,7 +15235,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 123, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 371, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 374, true);
 
 
 --
