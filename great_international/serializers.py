@@ -2180,9 +2180,11 @@ class CapitalInvestContactFormPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     heading = serializers.CharField()
     intro = core_fields.MarkdownToHTMLField()
+    comment = serializers.CharField()
     cta_text = serializers.CharField()
 
 
 class CapitalInvestContactFormSuccessPageSerializer(BasePageSerializer):
-    large_text = serializers.CharField()
-    small_text = core_fields.MarkdownToHTMLField()
+    message_box_heading = serializers.CharField()
+    message_box_description = core_fields.MarkdownToHTMLField()
+    what_happens_next_description = core_fields.MarkdownToHTMLField()
