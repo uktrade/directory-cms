@@ -7,6 +7,7 @@ from django.test import Client
 from wagtail.core.models import GroupPagePermission, PAGE_PERMISSION_TYPES
 
 from tests.export_readiness import factories as exred
+from tests.great_international import factories as international
 
 User = get_user_model()
 Branch = namedtuple(
@@ -98,7 +99,6 @@ def branch_with_user(
         is_staff=False
 ):
     """Returns a listing page with a child page, user group, user & client.
-
     For Wagtail permission model check:
     http://docs.wagtail.io/en/v2.0/topics/permissions.html#page-permissions
     """
@@ -126,12 +126,11 @@ def branch_with_user(
     return Branch(listing_page, article_page, group, user, client)
 
 
-def two_branches_with_users(root_page):
+def two_branches_with_users(root_page, international_root_page):
     """
     Creates 2 independent branches (application):
         1) ExRed
-        2) FAS
-
+        2) International
     Each branch has a:
         * home page
         * landing page
@@ -139,12 +138,9 @@ def two_branches_with_users(root_page):
         * article page
         * editor (with [add, edit] permissions set to home page)
         * moderator (with [add, edit, publish] permissions set to home page)
-
     It also creates an Admin user associated with the root_page (pk=1).
-
     Graph below depicts 'subpage_types' model dependency for all
     current CMS clients:
-
     root_page (pk=1)
     |
     |-> ExRed
@@ -174,12 +170,15 @@ def two_branches_with_users(root_page):
     home_page_1 = exred.HomePageFactory.create(parent=root_page)
 
     landing_page_1 = exred.TopicLandingPageFactory.create(parent=home_page_1)
+    landing_page_2 = international.InternationalSectorPageFactory.create(parent=international_root_page)
 
     listing_page_1 = exred.ArticleListingPageFactory.create(
         parent=landing_page_1
     )
+    listing_page_2 = international.InternationalArticleListingPageFactory.create(parent=landing_page_2)
 
     article_1 = exred.ArticlePageFactory(parent=listing_page_1)
+    article_2 = international.InternationalArticlePageFactory(parent=listing_page_2)
 
     editors_1, moderators_1, editors_2, moderators_2, admins = \
         GroupFactory.create_batch(5)
@@ -193,6 +192,8 @@ def two_branches_with_users(root_page):
     )
     set_permissions(home_page_1, editors_1, ['add', 'edit'])
     set_permissions(home_page_1, moderators_1, ['add', 'edit', 'publish'])
+    set_permissions(international_root_page, editors_2, ['add', 'edit'])
+    set_permissions(international_root_page, moderators_2, ['add', 'edit', 'publish'])
 
     password = 'test'
 
@@ -246,6 +247,7 @@ def two_branches_with_users(root_page):
         home_page_1, landing_page_1, listing_page_1, article_1,
         editors_1, editor_1, editor_1_client,
         moderators_1, moderator_1, moderator_1_client,
+        home_page_2, landing_page_2, listing_page_2, article_2,
         editors_2, editor_2, editor_2_client,
         moderators_2, moderator_2, moderator_2_client,
     )
