@@ -42,26 +42,6 @@ def country_guide_page(article_page):
 
 
 @pytest.mark.django_db
-def test_list_serializer(international_root_page):
-    data = UpstreamModelSerializer.serialize(international_root_page)
-    assert data['(image)hero_image'] == (
-        international_root_page.hero_image.file.name
-    )
-
-
-@pytest.mark.django_db
-@mock.patch('core.views.PreloadPageView.get_form_kwargs', mock.Mock())
-def test_list_deserializer(rf, international_root_page):
-    serialized_data = {
-        '(list)search_filter_sector': international_root_page.search_filter_sector[0],
-    }
-
-    actual = UpstreamModelSerializer.deserialize(serialized_data, rf)
-
-    assert actual['search_filter_sector'] == international_root_page.search_filter_sector
-
-
-@pytest.mark.django_db
 def test_tag_serializer(root_page):
     legal = TagFactory.create(name='Legal')
     eagle = TagFactory.create(name='Eagle')
