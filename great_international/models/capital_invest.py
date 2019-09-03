@@ -705,6 +705,12 @@ class CapitalInvestContactFormPage(
     breadcrumbs_label = models.CharField(max_length=255, blank=True)
     heading = models.CharField(max_length=255)
     intro = MarkdownField(blank=True)
+    comment = models.TextField(
+        max_length=255,
+        default="To provide you with the best help, we may forward your message to "
+                "appropriate Capital Investment team colleagues in British embassies, "
+                "high commissions and consulates located internationally. "
+    )
     cta_text = models.CharField(max_length=255)
 
     @classmethod
@@ -720,5 +726,6 @@ class CapitalInvestContactFormSuccessPage(
     parent_page_types = ['great_international.CapitalInvestContactFormPage']
     slug_identity = slugs.FORM_SUCCESS_SLUG
 
-    large_text = models.CharField(max_length=255)
-    small_text = MarkdownField(blank=True)
+    message_box_heading = models.CharField(max_length=255)
+    message_box_description = MarkdownField(blank=True)
+    what_happens_next_description = MarkdownField(blank=True)
