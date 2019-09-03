@@ -21,7 +21,8 @@ from conf import settings
 from core.models import RoutingSettings
 from groups.models import GroupInfo
 from users.models import UserProfile
-from .great_international.factories import InternationalHomePageFactory, InternationalArticlePageFactory
+from .great_international.factories import InternationalHomePageFactory, InternationalArticlePageFactory, \
+    InvestHighPotentialOpportunityDetailPageFactory
 from .users.factories import UserFactory
 
 
@@ -158,7 +159,7 @@ def team_leaders(team_leaders_group):
     user_1 = UserFactory(username='user1', first_name='Adam')
     user_2 = UserFactory(username='user2', first_name='Zac')
     team_leaders_group.user_set.set([user_1, user_2])
-    return (user_1, user_2)
+    return user_1, user_2
 
 
 @pytest.fixture
@@ -277,4 +278,29 @@ def site_with_revised_page_as_root(page_with_reversion):
         hostname='example.com',
         port=8098,
         root_page=page_with_reversion,
+    )
+
+
+@pytest.fixture
+def page(international_root_page):
+    return InternationalArticlePageFactory(
+        parent=international_root_page,
+        slug='the-slug'
+    )
+
+
+@pytest.fixture
+def high_potential_opportunity_page(page):
+    pdf_document = Document.objects.create(
+        title='document.pdf',
+        file=page.article_image.file  # not really pdf
+    )
+    return InvestHighPotentialOpportunityDetailPageFactory(pdf_document=pdf_document)
+
+
+@pytest.fixture()
+def untranslated_page():
+    return InternationalArticlePageFactory(
+        parent=international_root_page,
+        slug='the-slug'
     )
