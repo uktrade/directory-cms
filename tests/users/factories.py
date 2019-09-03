@@ -247,7 +247,7 @@ def two_branches_with_users(root_page, international_root_page):
         home_page_1, landing_page_1, listing_page_1, article_1,
         editors_1, editor_1, editor_1_client,
         moderators_1, moderator_1, moderator_1_client,
-        home_page_2, landing_page_2, listing_page_2, article_2,
+        international_root_page, landing_page_2, listing_page_2, article_2,
         editors_2, editor_2, editor_2_client,
         moderators_2, moderator_2, moderator_2_client,
     )

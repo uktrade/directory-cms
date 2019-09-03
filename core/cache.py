@@ -317,7 +317,7 @@ class PageIDCache:
             cls.by_path_map_key: ids_by_path,
             cls.by_slug_map_key: ids_by_slug,
         }
-        cls.cache.set(cls.cache_key, page_ids, timeout=settings.API_CACHE_EXPIRE_SECONDS) # noqa
+        cls.cache.set(cls.cache_key, page_ids, timeout=settings.API_CACHE_EXPIRE_SECONDS)
         return page_ids
 
     @classmethod
