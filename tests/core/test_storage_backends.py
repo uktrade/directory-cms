@@ -30,7 +30,7 @@ def test_replace_disabled_hardcoded(settings):
 
 
 @pytest.mark.django_db
-def test_immutable_file_storage_get_image_by_path_exists(page):
+def test_immutable_file_storage_get_image_by_path_exists():
 
     image_hash = models.ImageHash.objects.all().first()
 
@@ -64,9 +64,7 @@ def test_immutable_file_storage_get_image_by_path_not_exist_in_database():
 
 
 @pytest.mark.django_db
-def test_immutable_file_storage_get_document_by_path_exists(
-    high_potential_opportunity_page
-):
+def test_immutable_file_storage_get_document_by_path_exists():
     document_hash = models.DocumentHash.objects.all().first()
 
     backend = storage_backends.ImmutableFilesS3Boto3Storage()

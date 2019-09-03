@@ -151,8 +151,8 @@ def test_language_names_translated(translated_page):
 
 
 @pytest.mark.django_db
-def test_language_names_untranslated(page):
-    assert page.language_names == ''
+def test_language_names_untranslated(international_root_page):
+    assert international_root_page.language_names == ''
 
 
 @pytest.mark.django_db
