@@ -509,7 +509,7 @@ class RelatedOpportunitySerializer(serializers.Serializer):
 class RelatedDitServicesPageSerializer(BasePageSerializer):
     hero_title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
-    teaser = core_fields.MarkdownToHTMLField()
+    featured_description = core_fields.MarkdownToHTMLField()
 
 
 MODEL_TO_SERIALIZER_MAPPING = {
@@ -1914,6 +1914,7 @@ class AboutDitServicesPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('original')
+    featured_description = core_fields.MarkdownToHTMLField()
     teaser = core_fields.MarkdownToHTMLField()
     teaser_image = wagtail_fields.ImageRenditionField('fill-640x360')
     case_study_image = wagtail_fields.ImageRenditionField('original')
