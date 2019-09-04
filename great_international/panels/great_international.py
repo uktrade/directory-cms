@@ -1149,6 +1149,7 @@ class AboutDitServicesPagePanels:
                 ImageChooserPanel('teaser_image'),
             ],
         ),
+        FieldPanel('featured_description'),
         MultiFieldPanel(
             heading="Services section",
             classname='collapsible',
