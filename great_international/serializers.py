@@ -509,6 +509,7 @@ class RelatedOpportunitySerializer(serializers.Serializer):
 class RelatedDitServicesPageSerializer(BasePageSerializer):
     hero_title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    teaser = core_fields.MarkdownToHTMLField()
     featured_description = core_fields.MarkdownToHTMLField()
 
 
