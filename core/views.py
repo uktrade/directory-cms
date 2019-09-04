@@ -4,7 +4,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
-from wagtail.core.models import Orderable, Page
+from wagtail.core.models import Orderable, Page, Site
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
@@ -12,6 +12,7 @@ from django.http.response import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, Http404
 from django.template.response import TemplateResponse
 from django.utils import translation
+from django.utils.functional import cached_property
 from django.utils.cache import get_conditional_response
 from django.views.generic.edit import FormView
 
@@ -90,7 +91,8 @@ class DetailViewEndpointBase(APIEndpointBase):
     filter_backends = APIEndpointBase.filter_backends + [DjangoFilterBackend]
     renderer_classes = [JSONRenderer]
 
-    def get_object_id(self):
+    @cached_property
+    def object_id(self):
         """
         Returns the `id` of the requested page. The value is used to
         query `PageCache` for cached response, and by get_object() to
@@ -115,7 +117,7 @@ class DetailViewEndpointBase(APIEndpointBase):
         the endpoint an opportunity to raise exceptions due to invalid
         parameters values being supplied.
         """
-        self.get_object_id()
+        self.object_id
 
     def get_object(self):
         if hasattr(self, 'object'):
@@ -124,7 +126,7 @@ class DetailViewEndpointBase(APIEndpointBase):
         # find a page by its id
         instance = get_object_or_404(
             self.filter_queryset(self.get_queryset()),
-            id=self.get_object_id(),
+            id=self.object_id,
         ).specific
 
         # check perms or load draft if requested
@@ -145,7 +147,7 @@ class DetailViewEndpointBase(APIEndpointBase):
 
         # Return a cached response if one is available
         cached_data = cache.PageCache.get(
-            page_id=self.get_object_id(),
+            page_id=self.object_id,
             lang=translation.get_language(),
             region=request.GET.get('region'),
         )
@@ -178,58 +180,38 @@ class PageLookupBySlugAPIEndpoint(DetailViewEndpointBase):
             raise ValidationError(detail={'service_name':  "This parameter is required"})
         super().check_parameter_validity()
 
-    def get_object_id(self):
+    @cached_property
+    def object_id(self):
         """
         Return the `id` of a relevant Page based on the `service_name` value
         from request.GET and the `slug` parameters from the URL.
         """
-        if hasattr(self, 'object_id'):
-            return self.object_id
 
         slug = self.kwargs['slug']
         service_name = self.request.GET['service_name']
 
-        object_id = cache.PageIDCache.get_for_slug(
-            slug=slug, service_name=service_name
-        )
+        object_id = cache.PageIDCache.get_for_slug(slug=slug, service_name=service_name)
         if object_id is None:
             raise Http404(
                 "No page could be found matching service_name '{}' and "
                 "slug '{}'".format(service_name, slug)
             )
 
-        self.object_id = object_id
         return object_id
 
 
 class PageLookupByPathAPIEndpoint(DetailViewEndpointBase):
 
-    def get_object_id(self):
+    @cached_property
+    def object_id(self):
         """
         Return the `id` of a relevant Page based on the `site_id` and `path`
         parameters from the URL.
         """
-        if hasattr(self, 'object_id'):
-            return self.object_id
 
-        site_id = self.kwargs['site_id']
-        path = self.kwargs['path']
-        if not path:
-            lookup_path = '/'
-        else:
-            lookup_path = '/' + path.strip('/') + '/'
-
-        # Query the cache for a matching `id`
-        object_id = cache.PageIDCache.get_for_path(
-            site_id=site_id, path=lookup_path
-        )
+        object_id = cache.PageIDCache.get_for_path(site_id=self.kwargs['site_id'], path=self.kwargs['path'] or '/')
         if object_id is None:
-            raise Http404(
-                "No page could be found matching site_id '{}' and path '{}'"
-                .format(site_id, path)
-            )
-
-        self.object_id = object_id
+            raise Http404("No page found matching site_id '{site_id}' and path '{path}'".format(**self.kwargs))
         return object_id
 
 
@@ -267,14 +249,17 @@ class UpstreamBaseView(FormView):
 
     def get_context_data(self, **kwargs):
         page = self.get_object()
+        parent = page.specific.get_parent().specific
+        site = page.get_site()
         return super().get_context_data(
             environment_form=self.environment_form_class(),
             page=page,
-            service_name=page._meta.app_label,
+            app_label=page._meta.app_label,
             model_name=page._meta.model_name,
             serialized_relations=self.serialize_relations(),
             serialized_object=self.serialize_object(),
-            parent_slug=page.specific.get_parent().slug,
+            parent_path=parent.full_path,
+            site_name=site.site_name,
             **kwargs
         )
 
@@ -304,8 +289,8 @@ class PreloadPageView(FormView):
     def get_page_content_type(self):
         try:
             return ContentType.objects.get_by_natural_key(
-                self.kwargs['service_name'],
-                self.kwargs['model_name'],
+                app_label=self.kwargs['app_label'],
+                model=self.kwargs['model_name'],
             )
         except ContentType.DoesNotExist:
             raise Http404()
@@ -315,7 +300,7 @@ class PreloadPageView(FormView):
         try:
             page = page_class.objects.get(
                 slug=self.request.POST.get('slug'),
-                service_name__iexact=self.kwargs['service_name']
+                service_name__iexact=self.kwargs['app_label']
             )
         except page_class.DoesNotExist:
             page = page_class()
@@ -326,20 +311,14 @@ class PreloadPageView(FormView):
         page_class = self.page_content_type.model_class()
         return page_class.get_edit_handler().get_form_class()
 
-    def get_parent(self):
-        queryset = filters.ServiceNameFilter().filter_service_name(
-            queryset=Page.objects.all(),
-            name=None,
-            value=self.kwargs['service_name'].upper(),
-        )
-        return get_object_or_404(
-            queryset,
-            slug=self.kwargs['parent_slug'],
-        ).specific
+    def get_parent(self, path, site_id):
+        pk = cache.PageIDCache.get_for_path(path=path, site_id=site_id)
+        return get_object_or_404(Page.objects.all(), pk=pk).specific
 
     def get_context_data(self, form):
         page_class = self.page_content_type.model_class()
-        parent_page = self.get_parent()
+        site = Site.objects.get(site_name=self.kwargs['site_name'])
+        parent_page = self.get_parent(path=self.kwargs['parent_path'], site_id=site.id)
         edit_handler = page_class.get_edit_handler()
         form_class = edit_handler.get_form_class()
         form = form_class(

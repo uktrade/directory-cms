@@ -94,8 +94,7 @@ urlpatterns = [
     ),
     url(
         (
-            r'^admin/pages/preload/(?P<service_name>[a-zA-Z_]+)/'
-            r'(?P<model_name>[a-zA-Z]+)/(?P<parent_slug>[a-zA-Z-]+)/$'
+            r'^admin/pages/preload/(?P<app_label>[a-zA-Z_]+)/(?P<model_name>[a-zA-Z]+)/(?P<site_name>[a-zA-Z]+)(?P<parent_path>.*)$'
         ),
         login_required(csrf_exempt(core.views.PreloadPageView.as_view())),
         name='preload-add-page',

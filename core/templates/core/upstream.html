@@ -5,7 +5,7 @@
     {% trans "Copy" as copy_str %}
     {% include "wagtailadmin/shared/header.html" with title=copy_str subtitle=page.get_admin_display_title icon="doc-empty-inverse" %}
     <div class="nice-padding">
-        <form id="form" path="{% url 'preload-add-page' service_name=service_name model_name=model_name parent_slug=parent_slug %}" method="POST" novalidate>
+        <form id="form" path="{% url 'preload-add-page' app_label=app_label site_name=site_name model_name=model_name parent_path=parent_path %}" method="POST" novalidate>
 
             {% for name, value in serialized_relations %}
                 <input type="hidden" value="{{ value }}" name="{{ name }}" id="id_{{ name }}" />
