@@ -385,7 +385,7 @@ def test_lookup_by_path_for_non_existent_page(client):
     ))
     assert response.status_code == 404
 
-    expected_msg = f"No page could be found matching site_id '{site_id}' and path '{path}'"
+    expected_msg = f"No page found matching site_id '{site_id}' and path '{path}'"
     assert response.json() == {'message': expected_msg}
 
 

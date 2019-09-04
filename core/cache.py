@@ -267,6 +267,10 @@ class PageIDCache:
 
     @staticmethod
     def build_path_lookup_key(site_id, path):
+        if not path.endswith('/'):
+            path = f'{path}/'
+        if not path.startswith('/'):
+            path = f'/{path}'
         return f'{site_id}:{path}'
 
     @staticmethod
@@ -353,3 +357,4 @@ class PageIDCache:
         post_save.connect(receiver=cls.clear, sender=Site)
         post_delete.connect(receiver=cls.clear, sender=Site)
         post_migrate.connect(receiver=cls.clear)
+

@@ -236,7 +236,7 @@ class BasePage(Page):
     @property
     def full_path(self):
         """Return the full path of a page, ignoring the root_page and
-        the app page. Used by the lookup-by-url view in prototype mode
+        the app page. Used by the lookup-by-path view in prototype mode
         """
         if self.uses_tree_based_routing:
             return self.get_tree_based_url(include_site_url=False)
