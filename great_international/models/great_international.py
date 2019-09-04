@@ -1369,7 +1369,7 @@ class AboutDitServicesPage(panels.AboutDitServicesPagePanels, BaseInternationalP
         verbose_name='',
         blank=True
     )
-    featured_description = MarkdownField(
+    featured_description = models.TextField(
         null=True,
         blank=True,
         help_text="This will be used when this page is featured as a "
