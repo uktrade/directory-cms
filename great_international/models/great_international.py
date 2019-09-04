@@ -1369,6 +1369,12 @@ class AboutDitServicesPage(panels.AboutDitServicesPagePanels, BaseInternationalP
         verbose_name='',
         blank=True
     )
+    featured_description = models.TextField(
+        null=True,
+        blank=True,
+        help_text="This will be used when this page is featured as a "
+                  "card on another page i.e. the About DIT landing page"
+    )
     teaser_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
