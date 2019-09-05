@@ -852,6 +852,7 @@ class AboutDitServicesPageTranslationOptions(
         'breadcrumbs_label',
         'hero_title',
         'hero_image',
+        'featured_description',
         'teaser',
         'teaser_image',
         'case_study_image',

@@ -365,8 +365,11 @@ class AboutUkRegionSerializer(serializers.Serializer):
         if not region:
             return []
 
-        serializer = MinimalPageWithHeroTitleSerializer(
-            region.specific)
+        if hasattr(region.specific, 'heading'):
+            serializer = MinimalPageSerializer(region.specific)
+        else:
+            serializer = MinimalPageWithHeroTitleSerializer(
+                region.specific)
 
         return serializer.data
 
@@ -509,6 +512,7 @@ class RelatedDitServicesPageSerializer(BasePageSerializer):
     hero_title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
     teaser = core_fields.MarkdownToHTMLField()
+    featured_description = serializers.CharField()
 
 
 MODEL_TO_SERIALIZER_MAPPING = {
@@ -1893,6 +1897,7 @@ class AboutDitServicesPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('original')
+    featured_description = serializers.CharField()
     teaser = core_fields.MarkdownToHTMLField()
     teaser_image = wagtail_fields.ImageRenditionField('fill-640x360')
     case_study_image = wagtail_fields.ImageRenditionField('original')

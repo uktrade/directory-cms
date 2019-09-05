@@ -524,7 +524,8 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
         'great_international.InternationalCampaignPage',
         'great_international.InternationalCuratedTopicLandingPage',
         'great_international.InternationalGuideLandingPage',
-        'great_international.InternationalSectorPage'
+        'great_international.InternationalSectorPage',
+        'great_international.AboutUkWhyChooseTheUkPage'
     ]
     subpage_types = []
 
@@ -1107,6 +1108,12 @@ class AboutDitServicesPage(panels.AboutDitServicesPagePanels, BaseInternationalP
         verbose_name='',
         blank=True
     )
+    featured_description = models.TextField(
+        null=True,
+        blank=True,
+        help_text="This will be used when this page is featured as a "
+                  "card on another page i.e. the About DIT landing page"
+    )
     teaser_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -1188,7 +1195,7 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
     regions_section_intro = MarkdownField(blank=True)
 
     scotland = models.ForeignKey(
-        'great_international.AboutUkRegionPage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -1197,7 +1204,7 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
     scotland_text = models.CharField(max_length=255, blank=True)
 
     northern_ireland = models.ForeignKey(
-        'great_international.AboutUkRegionPage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -1206,7 +1213,7 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
     northern_ireland_text = models.CharField(max_length=255, blank=True)
 
     north_england = models.ForeignKey(
-        'great_international.AboutUkRegionPage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -1215,7 +1222,7 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
     north_england_text = models.CharField(max_length=255, blank=True)
 
     wales = models.ForeignKey(
-        'great_international.AboutUkRegionPage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -1224,7 +1231,7 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
     wales_text = models.CharField(max_length=255, blank=True)
 
     midlands = models.ForeignKey(
-        'great_international.AboutUkRegionPage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -1233,7 +1240,7 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
     midlands_text = models.CharField(max_length=255, blank=True)
 
     south_england = models.ForeignKey(
-        'great_international.AboutUkRegionPage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -1599,6 +1606,7 @@ class AboutUkArticlesFields(Orderable, AboutUkArticleField):
 
 class AboutUkWhyChooseTheUkPage(panels.AboutUkWhyChooseTheUkPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.AboutUkLandingPage']
+    subpage_types = ['great_international.InternationalArticlePage']
 
     breadcrumbs_label = models.CharField(max_length=255)
     hero_title = models.CharField(max_length=255)
