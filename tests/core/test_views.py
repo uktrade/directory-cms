@@ -89,7 +89,7 @@ def test_api_translations_are_loaded_when_available(
 
 
 @pytest.mark.parametrize('language_code', (
-    'en-gb' 'de' 'ja', 'zh-hans', 'fr', 'es', 'pt', 'ar',
+    'en-gb', 'de', 'ja', 'zh-hans', 'fr', 'es', 'pt', 'ar',
 ))
 @pytest.mark.django_db
 def test_api_falls_back_to_english_when_translations_unavailable(
@@ -123,7 +123,7 @@ def test_api_falls_back_to_english_when_translations_unavailable(
         'api:lookup-by-slug',
         kwargs={'slug': untranslated_page.slug}
     )
-    query_params = {'service_name': 'FIND_A_SUPPLIER'}
+    query_params = {'service_name': 'GREAT_INTERNATIONAL'}
     query_params.update(languge_query_params)
     response = client.get(url, query_params)
     assert response.status_code == 200
