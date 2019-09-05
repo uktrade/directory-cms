@@ -33,7 +33,7 @@ from tests.great_international.factories import (
     AboutUkWhyChooseTheUkPageFactory,
     AboutUkLandingPageFactory,
     InvestInternationalHomePageFactory,
-    CapitalInvestRegionPageFactory, AboutUkRegionListingPageFactory)
+    CapitalInvestRegionPageFactory, AboutUkRegionListingPageFactory, InvestRegionPageFactory)
 
 from great_international.models.capital_invest import (
     CapitalInvestRelatedRegions,
@@ -1112,11 +1112,18 @@ def test_about_uk_landing_page_has_regions(
         parent=international_root_page
     )
 
+    midlands = AboutUkRegionPageFactory(
+        slug="midlands",
+        parent=international_root_page
+    )
+
     about_uk = AboutUkLandingPageFactory(
         slug='about-uk',
         parent=international_root_page,
         scotland=scotland,
-        scotland_text="Lorem ipsum"
+        scotland_text="Lorem ipsum",
+        midlands=midlands,
+        midlands_text="Lorem ipsum",
     )
 
     serializer = AboutUkLandingPageSerializer(
@@ -1130,14 +1137,21 @@ def test_about_uk_landing_page_has_regions(
         assert 'text' in field
     assert serializer.data['regions'][0]['text'] == 'Lorem ipsum'
     assert serializer.data['regions'][0]['region']['meta']['slug'] == 'scotland'
+    assert serializer.data['regions'][4]['text'] == 'Lorem ipsum'
+    assert serializer.data['regions'][4]['region']['meta']['slug'] == 'midlands'
 
 
 @pytest.mark.django_db
 def test_about_uk_region_listing_page_has_regions(
         rf, international_root_page
 ):
-    scotland = AboutUkRegionPageFactory(
+    scotland = InvestRegionPageFactory(
         slug="scotland",
+        parent=international_root_page
+    )
+
+    midlands = AboutUkRegionPageFactory(
+        slug="midlands",
         parent=international_root_page
     )
 
@@ -1145,7 +1159,9 @@ def test_about_uk_region_listing_page_has_regions(
         slug='about-uk',
         parent=international_root_page,
         scotland=scotland,
-        scotland_text="Lorem ipsum"
+        scotland_text="Lorem ipsum",
+        midlands=midlands,
+        midlands_text="Lorem ipsum",
     )
 
     regions = AboutUkRegionListingPageFactory(
@@ -1164,6 +1180,8 @@ def test_about_uk_region_listing_page_has_regions(
         assert 'text' in field
     assert serializer.data['mapped_regions'][0]['text'] == 'Lorem ipsum'
     assert serializer.data['mapped_regions'][0]['region']['meta']['slug'] == 'scotland'
+    assert serializer.data['mapped_regions'][4]['text'] == 'Lorem ipsum'
+    assert serializer.data['mapped_regions'][4]['region']['meta']['slug'] == 'midlands'
 
 
 @pytest.mark.django_db
