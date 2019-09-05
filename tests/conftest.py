@@ -299,8 +299,9 @@ def high_potential_opportunity_page(page):
 
 
 @pytest.fixture()
-def untranslated_page():
+def untranslated_page(international_root_page):
     return InternationalArticlePageFactory(
         parent=international_root_page,
-        slug='the-slug'
+        slug='the-slug',
+        title_en_gb='ENGLISH',
     )
