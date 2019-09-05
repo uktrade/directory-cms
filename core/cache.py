@@ -358,4 +358,3 @@ class PageIDCache:
         post_save.connect(receiver=cls.clear, sender=Site)
         post_delete.connect(receiver=cls.clear, sender=Site)
         post_migrate.connect(receiver=cls.clear)
-
