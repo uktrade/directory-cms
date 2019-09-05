@@ -218,6 +218,7 @@ class PageLookupByPathAPIEndpoint(DetailViewEndpointBase):
 class UpstreamBaseView(FormView):
     environment_form_class = forms.CopyToEnvironmentForm
     template_name = 'core/upstream.html'
+    is_edit = None
 
     def get_form_class(self):
         page = self.get_object()
@@ -249,8 +250,6 @@ class UpstreamBaseView(FormView):
 
     def get_context_data(self, **kwargs):
         page = self.get_object()
-        parent = page.specific.get_parent().specific
-        site = page.get_site()
         return super().get_context_data(
             environment_form=self.environment_form_class(),
             page=page,
@@ -258,8 +257,9 @@ class UpstreamBaseView(FormView):
             model_name=page._meta.model_name,
             serialized_relations=self.serialize_relations(),
             serialized_object=self.serialize_object(),
-            parent_path=parent.full_path,
-            site_name=site.site_name,
+            parent=page.specific.get_parent().specific,
+            site=page.get_site(),
+            is_edit=self.is_edit,
             **kwargs
         )
 
@@ -295,14 +295,22 @@ class PreloadPageView(FormView):
         except ContentType.DoesNotExist:
             raise Http404()
 
+    @cached_property
+    def site(self):
+        site_name = None if self.kwargs['site_name'] == 'None' else self.kwargs['site_name']
+        return Site.objects.get(site_name=site_name)
+
     def get_page(self):
         page_class = self.page_content_type.model_class()
-        try:
-            page = page_class.objects.get(
-                slug=self.request.POST.get('slug'),
-                service_name__iexact=self.kwargs['app_label']
-            )
-        except page_class.DoesNotExist:
+        # import pdb
+        # pdb.set_trace()
+        page = None
+        if 'full_path' in self.request.POST:
+            try:
+                page = self.lookup_page(path=self.request.POST['full_path'], site_id=self.site.pk)
+            except Http404:
+                pass
+        if not page:
             page = page_class()
         page.owner = self.request.user
         return page
@@ -311,14 +319,13 @@ class PreloadPageView(FormView):
         page_class = self.page_content_type.model_class()
         return page_class.get_edit_handler().get_form_class()
 
-    def get_parent(self, path, site_id):
+    def lookup_page(self, path, site_id):
         pk = cache.PageIDCache.get_for_path(path=path, site_id=site_id)
         return get_object_or_404(Page.objects.all(), pk=pk).specific
 
     def get_context_data(self, form):
         page_class = self.page_content_type.model_class()
-        site = Site.objects.get(site_name=self.kwargs['site_name'])
-        parent_page = self.get_parent(path=self.kwargs['parent_path'], site_id=site.id)
+        parent_page = self.lookup_page(path=self.kwargs['parent_path'], site_id=self.site.id)
         edit_handler = page_class.get_edit_handler()
         form_class = edit_handler.get_form_class()
         form = form_class(

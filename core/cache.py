@@ -267,6 +267,7 @@ class PageIDCache:
 
     @staticmethod
     def build_path_lookup_key(site_id, path):
+        path = path.strip('/')
         if not path.endswith('/'):
             path = f'{path}/'
         if not path.startswith('/'):
