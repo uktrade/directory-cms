@@ -1257,29 +1257,47 @@ class AboutUkLandingPagePanels:
                 FieldPanel('regions_section_intro'),
                 FieldRowPanel([
                     MultiFieldPanel([
-                        PageChooserPanel('scotland', 'great_international.AboutUkRegionPage'),
+                        PageChooserPanel(
+                            'scotland',
+                            ['great_international.AboutUkRegionPage', 'great_international.InvestRegionPage']
+                        ),
                         FieldPanel('scotland_text')
                     ]),
                     MultiFieldPanel([
-                        PageChooserPanel('northern_ireland', 'great_international.AboutUkRegionPage'),
+                        PageChooserPanel(
+                            'northern_ireland',
+                            ['great_international.AboutUkRegionPage', 'great_international.InvestRegionPage']
+                        ),
                         FieldPanel('northern_ireland_text')
                     ]),
                     MultiFieldPanel([
-                        PageChooserPanel('north_england', 'great_international.AboutUkRegionPage'),
+                        PageChooserPanel(
+                            'north_england',
+                            ['great_international.AboutUkRegionPage', 'great_international.InvestRegionPage']
+                        ),
                         FieldPanel('north_england_text')
                     ]),
                 ]),
                 FieldRowPanel([
                     MultiFieldPanel([
-                        PageChooserPanel('wales', 'great_international.AboutUkRegionPage'),
+                        PageChooserPanel(
+                            'wales',
+                            ['great_international.AboutUkRegionPage', 'great_international.InvestRegionPage']
+                        ),
                         FieldPanel('wales_text')
                     ]),
                     MultiFieldPanel([
-                        PageChooserPanel('midlands', 'great_international.AboutUkRegionPage'),
+                        PageChooserPanel(
+                            'midlands',
+                            ['great_international.AboutUkRegionPage', 'great_international.InvestRegionPage']
+                        ),
                         FieldPanel('midlands_text')
                     ]),
                     MultiFieldPanel([
-                        PageChooserPanel('south_england', 'great_international.AboutUkRegionPage'),
+                        PageChooserPanel(
+                            'south_england',
+                            ['great_international.AboutUkRegionPage', 'great_international.InvestRegionPage']
+                        ),
                         FieldPanel('south_england_text')
                     ]),
                 ]),

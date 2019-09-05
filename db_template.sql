@@ -14130,6 +14130,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 373	great_international	0073_auto_20190830_1345	2019-09-02 15:26:50.132024+01
 374	great_international	0074_auto_20190902_1424	2019-09-02 15:27:27.029073+01
 375	great_international	0075_auto_20190904_1529	2019-09-04 16:32:02.274388+01
+376	great_international	0076_auto_20190905_0812	2019-09-05 09:53:41.712129+01
 \.
 
 
@@ -15245,7 +15246,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 123, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 375, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 376, true);
 
 
 --
@@ -41010,75 +41011,75 @@ ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__midlands_ar_id_15206a55_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__midlands_ar_id_15206a55_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__midlands_ar_id_15206a55_fk_great_int FOREIGN KEY (midlands_ar_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__midlands_ar_id_15206a55_fk_wagtailco FOREIGN KEY (midlands_ar_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__midlands_de_id_e5899fb8_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__midlands_de_id_e5899fb8_fk_great_int FOREIGN KEY (midlands_de_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__midlands_en_gb_id_ca12377e_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__midlands_de_id_e5899fb8_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__midlands_en_gb_id_ca12377e_fk_great_int FOREIGN KEY (midlands_en_gb_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__midlands_de_id_e5899fb8_fk_wagtailco FOREIGN KEY (midlands_de_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__midlands_es_id_c70a115f_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__midlands_es_id_c70a115f_fk_great_int FOREIGN KEY (midlands_es_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__midlands_fr_id_a98351e5_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__midlands_en_gb_id_ca12377e_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__midlands_fr_id_a98351e5_fk_great_int FOREIGN KEY (midlands_fr_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__midlands_en_gb_id_ca12377e_fk_wagtailco FOREIGN KEY (midlands_en_gb_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__midlands_id_3ebd6b2f_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__midlands_id_3ebd6b2f_fk_great_int FOREIGN KEY (midlands_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__midlands_ja_id_f69cd612_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__midlands_es_id_c70a115f_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__midlands_ja_id_f69cd612_fk_great_int FOREIGN KEY (midlands_ja_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__midlands_es_id_c70a115f_fk_wagtailco FOREIGN KEY (midlands_es_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__midlands_pt_id_d2841252_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__midlands_pt_id_d2841252_fk_great_int FOREIGN KEY (midlands_pt_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__midlands_zh_hans_id_5ac39c08_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__midlands_fr_id_a98351e5_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__midlands_zh_hans_id_5ac39c08_fk_great_int FOREIGN KEY (midlands_zh_hans_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__midlands_fr_id_a98351e5_fk_wagtailco FOREIGN KEY (midlands_fr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__midlands_id_3ebd6b2f_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__midlands_id_3ebd6b2f_fk_wagtailco FOREIGN KEY (midlands_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__midlands_ja_id_f69cd612_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__midlands_ja_id_f69cd612_fk_wagtailco FOREIGN KEY (midlands_ja_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__midlands_pt_id_d2841252_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__midlands_pt_id_d2841252_fk_wagtailco FOREIGN KEY (midlands_pt_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__midlands_zh_hans_id_5ac39c08_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__midlands_zh_hans_id_5ac39c08_fk_wagtailco FOREIGN KEY (midlands_zh_hans_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -41090,147 +41091,147 @@ ALTER TABLE ONLY public.great_international_internationaltradehomepage
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__north_england_ar_id_aa39e953_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__north_england_ar_id_aa39e953_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__north_england_ar_id_aa39e953_fk_great_int FOREIGN KEY (north_england_ar_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__north_england_ar_id_aa39e953_fk_wagtailco FOREIGN KEY (north_england_ar_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__north_england_de_id_3f5eb573_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__north_england_de_id_3f5eb573_fk_great_int FOREIGN KEY (north_england_de_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__north_england_en_gb__b07c3add_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__north_england_de_id_3f5eb573_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__north_england_en_gb__b07c3add_fk_great_int FOREIGN KEY (north_england_en_gb_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__north_england_de_id_3f5eb573_fk_wagtailco FOREIGN KEY (north_england_de_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__north_england_es_id_2eda3dd2_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__north_england_es_id_2eda3dd2_fk_great_int FOREIGN KEY (north_england_es_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__north_england_fr_id_50342dcf_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__north_england_en_gb__b07c3add_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__north_england_fr_id_50342dcf_fk_great_int FOREIGN KEY (north_england_fr_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__north_england_en_gb__b07c3add_fk_wagtailco FOREIGN KEY (north_england_en_gb_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__north_england_id_0d0f2054_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__north_england_id_0d0f2054_fk_great_int FOREIGN KEY (north_england_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__north_england_ja_id_cb3f1b5c_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__north_england_es_id_2eda3dd2_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__north_england_ja_id_cb3f1b5c_fk_great_int FOREIGN KEY (north_england_ja_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__north_england_es_id_2eda3dd2_fk_wagtailco FOREIGN KEY (north_england_es_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__north_england_pt_id_d7162ee8_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__north_england_pt_id_d7162ee8_fk_great_int FOREIGN KEY (north_england_pt_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__north_england_zh_han_f7b92a77_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__north_england_fr_id_50342dcf_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__north_england_zh_han_f7b92a77_fk_great_int FOREIGN KEY (north_england_zh_hans_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__north_england_fr_id_50342dcf_fk_wagtailco FOREIGN KEY (north_england_fr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__northern_ireland_ar__b63650d2_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__northern_ireland_ar__b63650d2_fk_great_int FOREIGN KEY (northern_ireland_ar_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__northern_ireland_de__c8b0c945_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__north_england_id_0d0f2054_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__northern_ireland_de__c8b0c945_fk_great_int FOREIGN KEY (northern_ireland_de_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__north_england_id_0d0f2054_fk_wagtailco FOREIGN KEY (north_england_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__northern_ireland_en__35119bb6_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__northern_ireland_en__35119bb6_fk_great_int FOREIGN KEY (northern_ireland_en_gb_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__northern_ireland_es__ad448eba_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__north_england_ja_id_cb3f1b5c_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__northern_ireland_es__ad448eba_fk_great_int FOREIGN KEY (northern_ireland_es_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__north_england_ja_id_cb3f1b5c_fk_wagtailco FOREIGN KEY (north_england_ja_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__northern_ireland_fr__42979f9e_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__northern_ireland_fr__42979f9e_fk_great_int FOREIGN KEY (northern_ireland_fr_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__northern_ireland_id_f2475a1e_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__north_england_pt_id_d7162ee8_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__northern_ireland_id_f2475a1e_fk_great_int FOREIGN KEY (northern_ireland_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__north_england_pt_id_d7162ee8_fk_wagtailco FOREIGN KEY (north_england_pt_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__northern_ireland_ja__7681aa42_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__northern_ireland_ja__7681aa42_fk_great_int FOREIGN KEY (northern_ireland_ja_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__northern_ireland_pt__1100f42b_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__north_england_zh_han_f7b92a77_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__northern_ireland_pt__1100f42b_fk_great_int FOREIGN KEY (northern_ireland_pt_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__north_england_zh_han_f7b92a77_fk_wagtailco FOREIGN KEY (north_england_zh_hans_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__northern_ireland_zh__8bdab000_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_ar__b63650d2_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__northern_ireland_zh__8bdab000_fk_great_int FOREIGN KEY (northern_ireland_zh_hans_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__northern_ireland_ar__b63650d2_fk_wagtailco FOREIGN KEY (northern_ireland_ar_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_de__c8b0c945_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_de__c8b0c945_fk_wagtailco FOREIGN KEY (northern_ireland_de_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_en__35119bb6_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_en__35119bb6_fk_wagtailco FOREIGN KEY (northern_ireland_en_gb_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_es__ad448eba_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_es__ad448eba_fk_wagtailco FOREIGN KEY (northern_ireland_es_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_fr__42979f9e_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_fr__42979f9e_fk_wagtailco FOREIGN KEY (northern_ireland_fr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_id_f2475a1e_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_id_f2475a1e_fk_wagtailco FOREIGN KEY (northern_ireland_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_ja__7681aa42_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_ja__7681aa42_fk_wagtailco FOREIGN KEY (northern_ireland_ja_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_pt__1100f42b_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_pt__1100f42b_fk_wagtailco FOREIGN KEY (northern_ireland_pt_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__northern_ireland_zh__8bdab000_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__northern_ireland_zh__8bdab000_fk_wagtailco FOREIGN KEY (northern_ireland_zh_hans_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -44730,75 +44731,75 @@ ALTER TABLE ONLY public.great_international_capitalinvestopportunitypage
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__scotland_ar_id_d6622b67_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__scotland_ar_id_d6622b67_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__scotland_ar_id_d6622b67_fk_great_int FOREIGN KEY (scotland_ar_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__scotland_ar_id_d6622b67_fk_wagtailco FOREIGN KEY (scotland_ar_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__scotland_de_id_ec2a509f_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__scotland_de_id_ec2a509f_fk_great_int FOREIGN KEY (scotland_de_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__scotland_en_gb_id_62025df4_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__scotland_de_id_ec2a509f_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__scotland_en_gb_id_62025df4_fk_great_int FOREIGN KEY (scotland_en_gb_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__scotland_de_id_ec2a509f_fk_wagtailco FOREIGN KEY (scotland_de_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__scotland_es_id_511b94a8_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__scotland_es_id_511b94a8_fk_great_int FOREIGN KEY (scotland_es_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__scotland_fr_id_b33f58b1_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__scotland_en_gb_id_62025df4_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__scotland_fr_id_b33f58b1_fk_great_int FOREIGN KEY (scotland_fr_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__scotland_en_gb_id_62025df4_fk_wagtailco FOREIGN KEY (scotland_en_gb_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__scotland_id_e38ccf7f_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__scotland_id_e38ccf7f_fk_great_int FOREIGN KEY (scotland_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__scotland_ja_id_1a1eedb8_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__scotland_es_id_511b94a8_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__scotland_ja_id_1a1eedb8_fk_great_int FOREIGN KEY (scotland_ja_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__scotland_es_id_511b94a8_fk_wagtailco FOREIGN KEY (scotland_es_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__scotland_pt_id_1e5e66de_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__scotland_pt_id_1e5e66de_fk_great_int FOREIGN KEY (scotland_pt_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__scotland_zh_hans_id_a0b1ab96_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__scotland_fr_id_b33f58b1_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__scotland_zh_hans_id_a0b1ab96_fk_great_int FOREIGN KEY (scotland_zh_hans_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__scotland_fr_id_b33f58b1_fk_wagtailco FOREIGN KEY (scotland_fr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__scotland_id_e38ccf7f_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__scotland_id_e38ccf7f_fk_wagtailco FOREIGN KEY (scotland_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__scotland_ja_id_1a1eedb8_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__scotland_ja_id_1a1eedb8_fk_wagtailco FOREIGN KEY (scotland_ja_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__scotland_pt_id_1e5e66de_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__scotland_pt_id_1e5e66de_fk_wagtailco FOREIGN KEY (scotland_pt_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__scotland_zh_hans_id_a0b1ab96_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__scotland_zh_hans_id_a0b1ab96_fk_wagtailco FOREIGN KEY (scotland_zh_hans_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -47250,75 +47251,75 @@ ALTER TABLE ONLY public.great_international_internationaltradehomepage
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__south_england_ar_id_2fd064fd_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__south_england_ar_id_2fd064fd_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__south_england_ar_id_2fd064fd_fk_great_int FOREIGN KEY (south_england_ar_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__south_england_ar_id_2fd064fd_fk_wagtailco FOREIGN KEY (south_england_ar_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__south_england_de_id_802dda05_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__south_england_de_id_802dda05_fk_great_int FOREIGN KEY (south_england_de_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__south_england_en_gb__f75b03d2_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__south_england_de_id_802dda05_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__south_england_en_gb__f75b03d2_fk_great_int FOREIGN KEY (south_england_en_gb_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__south_england_de_id_802dda05_fk_wagtailco FOREIGN KEY (south_england_de_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__south_england_es_id_01066c04_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__south_england_es_id_01066c04_fk_great_int FOREIGN KEY (south_england_es_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__south_england_fr_id_c5e3a0e6_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__south_england_en_gb__f75b03d2_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__south_england_fr_id_c5e3a0e6_fk_great_int FOREIGN KEY (south_england_fr_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__south_england_en_gb__f75b03d2_fk_wagtailco FOREIGN KEY (south_england_en_gb_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__south_england_id_a086b60e_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__south_england_id_a086b60e_fk_great_int FOREIGN KEY (south_england_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__south_england_ja_id_80865aab_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__south_england_es_id_01066c04_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__south_england_ja_id_80865aab_fk_great_int FOREIGN KEY (south_england_ja_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__south_england_es_id_01066c04_fk_wagtailco FOREIGN KEY (south_england_es_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__south_england_pt_id_5d84a2b1_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__south_england_pt_id_5d84a2b1_fk_great_int FOREIGN KEY (south_england_pt_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__south_england_zh_han_c80f639b_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__south_england_fr_id_c5e3a0e6_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__south_england_zh_han_c80f639b_fk_great_int FOREIGN KEY (south_england_zh_hans_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__south_england_fr_id_c5e3a0e6_fk_wagtailco FOREIGN KEY (south_england_fr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__south_england_id_a086b60e_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__south_england_id_a086b60e_fk_wagtailco FOREIGN KEY (south_england_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__south_england_ja_id_80865aab_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__south_england_ja_id_80865aab_fk_wagtailco FOREIGN KEY (south_england_ja_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__south_england_pt_id_5d84a2b1_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__south_england_pt_id_5d84a2b1_fk_wagtailco FOREIGN KEY (south_england_pt_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__south_england_zh_han_c80f639b_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__south_england_zh_han_c80f639b_fk_wagtailco FOREIGN KEY (south_england_zh_hans_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -48834,75 +48835,75 @@ ALTER TABLE ONLY public.great_international_internationalhomepageold
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__wales_ar_id_f4acc58c_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__wales_ar_id_f4acc58c_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__wales_ar_id_f4acc58c_fk_great_int FOREIGN KEY (wales_ar_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__wales_ar_id_f4acc58c_fk_wagtailco FOREIGN KEY (wales_ar_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__wales_de_id_1bad0d6b_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__wales_de_id_1bad0d6b_fk_great_int FOREIGN KEY (wales_de_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__wales_en_gb_id_249bd089_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__wales_de_id_1bad0d6b_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__wales_en_gb_id_249bd089_fk_great_int FOREIGN KEY (wales_en_gb_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__wales_de_id_1bad0d6b_fk_wagtailco FOREIGN KEY (wales_de_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__wales_es_id_4a1e9e4b_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__wales_es_id_4a1e9e4b_fk_great_int FOREIGN KEY (wales_es_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__wales_fr_id_0c724043_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__wales_en_gb_id_249bd089_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__wales_fr_id_0c724043_fk_great_int FOREIGN KEY (wales_fr_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__wales_en_gb_id_249bd089_fk_wagtailco FOREIGN KEY (wales_en_gb_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__wales_id_588804b1_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__wales_id_588804b1_fk_great_int FOREIGN KEY (wales_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__wales_ja_id_5af02794_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__wales_es_id_4a1e9e4b_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__wales_ja_id_5af02794_fk_great_int FOREIGN KEY (wales_ja_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__wales_es_id_4a1e9e4b_fk_wagtailco FOREIGN KEY (wales_es_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: great_international_aboutuklandingpage great_international__wales_pt_id_f2c9f890_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__wales_pt_id_f2c9f890_fk_great_int FOREIGN KEY (wales_pt_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: great_international_aboutuklandingpage great_international__wales_zh_hans_id_f2b27641_fk_great_int; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: great_international_aboutuklandingpage great_international__wales_fr_id_0c724043_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.great_international_aboutuklandingpage
-    ADD CONSTRAINT great_international__wales_zh_hans_id_f2b27641_fk_great_int FOREIGN KEY (wales_zh_hans_id) REFERENCES public.great_international_aboutukregionpage(page_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT great_international__wales_fr_id_0c724043_fk_wagtailco FOREIGN KEY (wales_fr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__wales_id_588804b1_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__wales_id_588804b1_fk_wagtailco FOREIGN KEY (wales_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__wales_ja_id_5af02794_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__wales_ja_id_5af02794_fk_wagtailco FOREIGN KEY (wales_ja_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__wales_pt_id_f2c9f890_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__wales_pt_id_f2c9f890_fk_wagtailco FOREIGN KEY (wales_pt_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: great_international_aboutuklandingpage great_international__wales_zh_hans_id_f2b27641_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.great_international_aboutuklandingpage
+    ADD CONSTRAINT great_international__wales_zh_hans_id_f2b27641_fk_wagtailco FOREIGN KEY (wales_zh_hans_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
