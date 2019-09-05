@@ -786,7 +786,8 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
         'great_international.InternationalCampaignPage',
         'great_international.InternationalCuratedTopicLandingPage',
         'great_international.InternationalGuideLandingPage',
-        'great_international.InternationalSectorPage'
+        'great_international.InternationalSectorPage',
+        'great_international.AboutUkWhyChooseTheUkPage'
     ]
     subpage_types = []
 
@@ -1867,6 +1868,7 @@ class AboutUkArticlesFields(Orderable, AboutUkArticleField):
 
 class AboutUkWhyChooseTheUkPage(panels.AboutUkWhyChooseTheUkPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.AboutUkLandingPage']
+    subpage_types = ['great_international.InternationalArticlePage']
 
     breadcrumbs_label = models.CharField(max_length=255)
     hero_title = models.CharField(max_length=255)
