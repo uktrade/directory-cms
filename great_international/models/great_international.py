@@ -1456,7 +1456,7 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
     regions_section_intro = MarkdownField(blank=True)
 
     scotland = models.ForeignKey(
-        'great_international.AboutUkRegionPage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -1465,7 +1465,7 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
     scotland_text = models.CharField(max_length=255, blank=True)
 
     northern_ireland = models.ForeignKey(
-        'great_international.AboutUkRegionPage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -1474,7 +1474,7 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
     northern_ireland_text = models.CharField(max_length=255, blank=True)
 
     north_england = models.ForeignKey(
-        'great_international.AboutUkRegionPage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -1483,7 +1483,7 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
     north_england_text = models.CharField(max_length=255, blank=True)
 
     wales = models.ForeignKey(
-        'great_international.AboutUkRegionPage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -1492,7 +1492,7 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
     wales_text = models.CharField(max_length=255, blank=True)
 
     midlands = models.ForeignKey(
-        'great_international.AboutUkRegionPage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -1501,7 +1501,7 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
     midlands_text = models.CharField(max_length=255, blank=True)
 
     south_england = models.ForeignKey(
-        'great_international.AboutUkRegionPage',
+        'wagtailcore.Page',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
