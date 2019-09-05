@@ -7,6 +7,7 @@
 - XOT-1020 - Edited formatting of article types
 - CI-460 - Added updated fields to Capital invest contact form and success pages
 - CI-475 - Added featured description to About DIT services page to be used on featured cards
+- CI-476 - Allow invest regions pages to be added as related regions to About UK pages
 
 ## [2019.08.27_1](https://github.com/uktrade/directory-cms/releases/tag/2019.08.27_1)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.08.27...2019.08.27_1)

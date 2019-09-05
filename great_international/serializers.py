@@ -366,8 +366,11 @@ class AboutUkRegionSerializer(serializers.Serializer):
         if not region:
             return []
 
-        serializer = MinimalPageWithHeroTitleSerializer(
-            region.specific)
+        if hasattr(region.specific, 'heading'):
+            serializer = MinimalPageSerializer(region.specific)
+        else:
+            serializer = MinimalPageWithHeroTitleSerializer(
+                region.specific)
 
         return serializer.data
 
