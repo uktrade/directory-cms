@@ -350,6 +350,7 @@ class InternationalCapitalInvestLandingPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = (
+        'breadcrumbs_label',
         'hero_title',
         'hero_image',
         'hero_subheading',
