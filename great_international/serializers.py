@@ -1076,6 +1076,7 @@ class InternationalEUExitFormSuccessPageSerializer(BasePageSerializer):
 
 class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer):
 
+    breadcrumbs_label = serializers.CharField(max_length=255)
     hero_title = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
     hero_subheading = serializers.CharField(max_length=255)
