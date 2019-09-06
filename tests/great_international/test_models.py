@@ -30,6 +30,7 @@ def test_models_hierarchy():
     assert invest.InvestInternationalHomePage.allowed_subpage_models() == [
         invest.InvestHighPotentialOpportunitiesPage,
         invest.InvestRegionLandingPage,
+        great_international.InternationalGuideLandingPage
     ]
     assert invest.InvestHighPotentialOpportunitiesPage.allowed_subpage_models() == [
         invest.InvestHighPotentialOpportunityDetailPage,
@@ -73,6 +74,7 @@ def test_models_hierarchy():
         ]
     assert capital_invest.InternationalCapitalInvestLandingPage.allowed_subpage_models() == [
             capital_invest.CapitalInvestContactFormPage,
+            great_international.InternationalGuideLandingPage
         ]
     assert capital_invest.CapitalInvestOpportunityListingPage.allowed_subpage_models() == [
             capital_invest.CapitalInvestOpportunityPage,
@@ -90,7 +92,8 @@ def test_models_hierarchy():
         ]
     assert great_international.AboutUkLandingPage.allowed_subpage_models() == [
             great_international.AboutUkWhyChooseTheUkPage,
-            great_international.AboutUkRegionListingPage
+            great_international.AboutUkRegionListingPage,
+            great_international.InternationalTopicLandingPage
         ]
     assert great_international.AboutUkRegionListingPage.allowed_subpage_models() == [
             great_international.AboutUkRegionPage

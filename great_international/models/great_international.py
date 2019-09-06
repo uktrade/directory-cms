@@ -1034,7 +1034,10 @@ class InternationalCampaignPage(panels.InternationalCampaignPagePanels, BaseInte
 
 
 class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, BaseInternationalPage):
-    parent_page_types = ['great_international.InternationalHomePage']
+    parent_page_types = [
+        'great_international.InternationalHomePage',
+        'great_international.AboutUkLandingPage'
+    ]
     subpage_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
@@ -1131,7 +1134,11 @@ class InternationalCuratedTopicLandingPage(panels.InternationalCuratedTopicLandi
 
 
 class InternationalGuideLandingPage(panels.InternationalGuideLandingPagePanels, BaseInternationalPage):
-    parent_page_types = ['great_international.InternationalHomePage']
+    parent_page_types = [
+        'great_international.InternationalHomePage',
+        'great_international.InvestInternationalHomePage',
+        'great_international.InternationalCapitalInvestLandingPage'
+    ]
     subpage_types = ['great_international.InternationalArticlePage']
 
     display_title = models.CharField(max_length=255)
@@ -1423,6 +1430,7 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
     subpage_types = [
         'great_international.AboutUkWhyChooseTheUkPage',
         'great_international.AboutUkRegionListingPage',
+        'great_international.InternationalTopicLandingPage'
     ]
 
     breadcrumbs_label = models.CharField(max_length=255)
