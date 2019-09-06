@@ -745,6 +745,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
     hero_cta_link = serializers.CharField(max_length=255)
     hero_image = wagtail_fields.ImageRenditionField('original')
 
+    # Old International Home Page fields
     invest_title = serializers.CharField(max_length=255)
     invest_content = core_fields.MarkdownToHTMLField()
     invest_image = wagtail_fields.ImageRenditionField(
@@ -807,6 +808,69 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
     tariffs_call_to_action_text = serializers.CharField(max_length=255)
     study_in_uk_cta_text = serializers.CharField(max_length=255)
     visit_uk_cta_text = serializers.CharField(max_length=255)
+
+    # New International Home Page fields
+    is_new_page_ready = serializers.BooleanField()
+
+    ready_to_trade_story_one = core_fields.MarkdownToHTMLField()
+    ready_to_trade_story_two = core_fields.MarkdownToHTMLField()
+    ready_to_trade_story_three = core_fields.MarkdownToHTMLField()
+
+    benefits_of_uk_title = serializers.CharField(max_length=255)
+    benefits_of_uk_intro = serializers.CharField()
+
+    benefits_of_uk_one = core_fields.MarkdownToHTMLField()
+    benefits_of_uk_two = core_fields.MarkdownToHTMLField()
+    benefits_of_uk_three = core_fields.MarkdownToHTMLField()
+    benefits_of_uk_four = core_fields.MarkdownToHTMLField()
+    benefits_of_uk_five = core_fields.MarkdownToHTMLField()
+    benefits_of_uk_six = core_fields.MarkdownToHTMLField()
+
+    ready_for_brexit_title = serializers.CharField(max_length=255)
+    ready_for_brexit_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    ready_for_brexit_cta_text = serializers.CharField(max_length=255)
+    ready_for_brexit_cta_link = serializers.CharField(max_length=255)
+
+    how_we_help_title = serializers.CharField(max_length=255)
+    how_we_help_intro = serializers.CharField()
+    how_we_help_one_icon = wagtail_fields.ImageRenditionField('original')
+    how_we_help_one_text = core_fields.MarkdownToHTMLField()
+    how_we_help_two_icon = wagtail_fields.ImageRenditionField('original')
+    how_we_help_two_text = core_fields.MarkdownToHTMLField()
+    how_we_help_three_icon = wagtail_fields.ImageRenditionField('original')
+    how_we_help_three_text = core_fields.MarkdownToHTMLField()
+
+    ways_of_doing_business_title = serializers.CharField(max_length=255)
+    related_page_expand = serializers.SerializerMethodField()
+    related_page_expand_description = serializers.CharField()
+    related_page_invest_capital = serializers.SerializerMethodField()
+    related_page_invest_capital_description = serializers.CharField()
+    related_page_buy = serializers.SerializerMethodField()
+    related_page_buy_description = serializers.CharField()
+
+    case_study_image = wagtail_fields.ImageRenditionField('original')
+    case_study_title = serializers.CharField(max_length=255)
+    case_study_text = serializers.CharField()
+    case_study_cta_text = serializers.CharField(max_length=255)
+    case_study_cta_link = serializers.CharField(max_length=255)
+
+    industries_section_title = serializers.CharField(max_length=255)
+    industries_section_intro = serializers.CharField()
+    industries_section_industry_label = serializers.CharField(max_length=255)
+    industries_section_cta_text = serializers.CharField(max_length=255)
+    industries_section_cta_link = serializers.CharField(max_length=255)
+
+    link_to_section_title = serializers.CharField(max_length=255)
+    link_to_section_intro = serializers.CharField()
+    link_to_section_one = core_fields.MarkdownToHTMLField()
+    link_to_section_one_cta_text = serializers.CharField(max_length=255)
+    link_to_section_one_cta_link = serializers.CharField(max_length=255)
+    link_to_section_two = core_fields.MarkdownToHTMLField()
+    link_to_section_two_cta_text = serializers.CharField(max_length=255)
+    link_to_section_two_cta_link = serializers.CharField(max_length=255)
+    link_to_section_three = core_fields.MarkdownToHTMLField()
+    link_to_section_three_cta_text = serializers.CharField(max_length=255)
+    link_to_section_three_cta_link = serializers.CharField(max_length=255)
 
 
 class InternationalCampaignPageSerializer(PageWithRelatedPagesSerializer):

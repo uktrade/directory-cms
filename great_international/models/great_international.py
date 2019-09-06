@@ -290,7 +290,8 @@ class InternationalHomePage(
         related_name='+',
     )
 
-    invest_title = models.CharField(max_length=255)
+    # Old home page fields
+    invest_title = models.CharField(max_length=255, blank=True)
     invest_content = MarkdownField(blank=True)
     invest_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -300,7 +301,7 @@ class InternationalHomePage(
         related_name='+',
     )
 
-    trade_title = models.CharField(max_length=255)
+    trade_title = models.CharField(max_length=255, blank=True)
     trade_content = MarkdownField(blank=True)
     trade_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -430,9 +431,9 @@ class InternationalHomePage(
     )
 
     # tariffs
-    tariffs_title = models.CharField(max_length=255)
-    tariffs_description = MarkdownField()
-    tariffs_link = models.URLField()
+    tariffs_title = models.CharField(max_length=255, blank=True)
+    tariffs_description = MarkdownField(blank=True)
+    tariffs_link = models.URLField(blank=True)
     tariffs_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -440,7 +441,7 @@ class InternationalHomePage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    tariffs_call_to_action_text = models.CharField(max_length=255)
+    tariffs_call_to_action_text = models.CharField(max_length=255, blank=True)
 
     # featured links
     featured_links_title = models.CharField(
@@ -475,7 +476,7 @@ class InternationalHomePage(
     )
 
     # news
-    news_title = models.CharField(max_length=255)
+    news_title = models.CharField(max_length=255, blank=True)
     related_page_one = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
@@ -498,8 +499,120 @@ class InternationalHomePage(
         related_name='+',
     )
 
-    study_in_uk_cta_text = models.CharField(max_length=255)
-    visit_uk_cta_text = models.CharField(max_length=255)
+    study_in_uk_cta_text = models.CharField(max_length=255, blank=True)
+    visit_uk_cta_text = models.CharField(max_length=255, blank=True)
+
+    # New International home page fields
+
+    is_new_page_ready = models.BooleanField(default=False, blank=True)
+
+    ready_to_trade_story_one = MarkdownField(blank=True)
+    ready_to_trade_story_two = MarkdownField(blank=True)
+    ready_to_trade_story_three = MarkdownField(blank=True)
+
+    benefits_of_uk_title = models.CharField(max_length=255, blank=True)
+    benefits_of_uk_intro = models.TextField(blank=True)
+
+    benefits_of_uk_one = MarkdownField(blank=True)
+    benefits_of_uk_two = MarkdownField(blank=True)
+    benefits_of_uk_three = MarkdownField(blank=True)
+    benefits_of_uk_four = MarkdownField(blank=True)
+    benefits_of_uk_five = MarkdownField(blank=True)
+    benefits_of_uk_six = MarkdownField(blank=True)
+
+    ready_for_brexit_title = models.CharField(max_length=255, blank=True)
+    ready_for_brexit_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    ready_for_brexit_cta_text = models.CharField(max_length=255, blank=True)
+    ready_for_brexit_cta_link = models.CharField(max_length=255, blank=True)
+
+    how_we_help_title = models.CharField(max_length=255, blank=True)
+    how_we_help_intro = models.TextField(blank=True)
+    how_we_help_one_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    how_we_help_one_text = MarkdownField(blank=True)
+    how_we_help_two_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    how_we_help_two_text = MarkdownField(blank=True)
+    how_we_help_three_icon = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    how_we_help_three_text = MarkdownField(blank=True)
+
+    ways_of_doing_business_title = models.CharField(max_length=255, blank=True)
+    related_page_expand = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_expand_description = models.TextField(max_length=255, blank=True)
+    related_page_invest_capital = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_invest_capital_description = models.TextField(max_length=255, blank=True)
+    related_page_buy = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    related_page_buy_description = models.TextField(max_length=255, blank=True)
+
+    case_study_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    case_study_title = models.CharField(max_length=255, blank=True)
+    case_study_text = models.TextField(blank=True)
+    case_study_cta_text = models.CharField(max_length=255, blank=True)
+    case_study_cta_link = models.CharField(max_length=255, blank=True)
+
+    industries_section_title = models.CharField(max_length=255, blank=True)
+    industries_section_intro = models.TextField(blank=True)
+    industries_section_industry_label = models.CharField(max_length=255, blank=True)
+    industries_section_cta_text = models.CharField(max_length=255, blank=True)
+    industries_section_cta_link = models.CharField(max_length=255, blank=True)
+
+    link_to_section_title = models.CharField(max_length=255, blank=True)
+    link_to_section_intro = models.TextField(blank=True)
+    link_to_section_one = MarkdownField(blank=True)
+    link_to_section_one_cta_text = models.CharField(max_length=255, blank=True)
+    link_to_section_one_cta_link = models.CharField(max_length=255, blank=True)
+    link_to_section_two = MarkdownField(blank=True)
+    link_to_section_two_cta_text = models.CharField(max_length=255, blank=True)
+    link_to_section_two_cta_link = models.CharField(max_length=255, blank=True)
+    link_to_section_three = MarkdownField(blank=True)
+    link_to_section_three_cta_text = models.CharField(max_length=255, blank=True)
+    link_to_section_three_cta_link = models.CharField(max_length=255, blank=True)
 
     @classmethod
     def allowed_subpage_models(cls):
