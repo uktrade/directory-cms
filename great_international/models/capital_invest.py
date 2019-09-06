@@ -16,8 +16,6 @@ from great_international.models.base import BaseInternationalPage
 import great_international.panels.capital_invest as panels
 from directory_constants import slugs
 
-from great_international.models.great_international import InternationalGuideLandingPage
-
 
 class RegionCardField(models.Model):
     region_card_image = models.ForeignKey(
@@ -129,13 +127,10 @@ class InternationalCapitalInvestLandingPage(
     slug_identity = 'capital-invest'
 
     parent_page_types = ['great_international.InternationalHomePage']
-
-    @classmethod
-    def allowed_subpage_models(cls):
-        return [
-            CapitalInvestContactFormPage,
-            InternationalGuideLandingPage
-        ]
+    subpage_types = [
+        'great_international.CapitalInvestContactFormPage',
+        'great_international.InternationalGuideLandingPage'
+    ]
 
     breadcrumbs_label = models.CharField(max_length=255, blank=True)
     hero_title = models.CharField(max_length=255)
