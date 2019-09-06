@@ -74,6 +74,7 @@ def test_models_hierarchy():
         ]
     assert capital_invest.InternationalCapitalInvestLandingPage.allowed_subpage_models() == [
             capital_invest.CapitalInvestContactFormPage,
+            great_international.InternationalGuideLandingPage
         ]
     assert capital_invest.CapitalInvestOpportunityListingPage.allowed_subpage_models() == [
             capital_invest.CapitalInvestOpportunityPage,
