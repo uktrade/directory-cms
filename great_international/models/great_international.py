@@ -1036,7 +1036,8 @@ class InternationalCampaignPage(panels.InternationalCampaignPagePanels, BaseInte
 class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalHomePage',
-        'great_international.AboutUkLandingPage'
+        'great_international.AboutUkLandingPage',
+        'great_international.InternationalCapitalInvestLandingPage'
     ]
     subpage_types = [
         'great_international.InternationalArticleListingPage',
@@ -1136,7 +1137,8 @@ class InternationalCuratedTopicLandingPage(panels.InternationalCuratedTopicLandi
 class InternationalGuideLandingPage(panels.InternationalGuideLandingPagePanels, BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalHomePage',
-        'great_international.InvestInternationalHomePage'
+        'great_international.InvestInternationalHomePage',
+        'great_international.'
     ]
     subpage_types = ['great_international.InternationalArticlePage']
 
