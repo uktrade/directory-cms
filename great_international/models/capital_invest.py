@@ -16,6 +16,8 @@ from great_international.models.base import BaseInternationalPage
 import great_international.panels.capital_invest as panels
 from directory_constants import slugs
 
+from great_international.models.great_international import InternationalGuideLandingPage
+
 
 class RegionCardField(models.Model):
     region_card_image = models.ForeignKey(
@@ -131,7 +133,8 @@ class InternationalCapitalInvestLandingPage(
     @classmethod
     def allowed_subpage_models(cls):
         return [
-            CapitalInvestContactFormPage
+            CapitalInvestContactFormPage,
+            InternationalGuideLandingPage
         ]
 
     breadcrumbs_label = models.CharField(max_length=255, blank=True)
