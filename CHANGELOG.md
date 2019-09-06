@@ -9,6 +9,7 @@
 - CI-475 - Added featured description to About DIT services page to be used on featured cards
 - CI-476 - Allow invest regions pages to be added as related regions to About UK pages
 - CI-477 - Why choose the UK page can add international article page as child
+- CI-478 - Added breadcrumbs label to capital invest landing page
 
 ## [2019.08.27_1](https://github.com/uktrade/directory-cms/releases/tag/2019.08.27_1)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.08.27...2019.08.27_1)
