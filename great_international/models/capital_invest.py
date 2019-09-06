@@ -127,12 +127,10 @@ class InternationalCapitalInvestLandingPage(
     slug_identity = 'capital-invest'
 
     parent_page_types = ['great_international.InternationalHomePage']
-
-    @classmethod
-    def allowed_subpage_models(cls):
-        return [
-            CapitalInvestContactFormPage
-        ]
+    subpage_types = [
+        'great_international.CapitalInvestContactFormPage',
+        'great_international.InternationalGuideLandingPage'
+    ]
 
     breadcrumbs_label = models.CharField(max_length=255, blank=True)
     hero_title = models.CharField(max_length=255)
