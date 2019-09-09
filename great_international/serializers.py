@@ -945,8 +945,6 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
     related_page_buy = serializers.SerializerMethodField()
     related_page_buy_description = serializers.CharField()
 
-    related_cards = serializers.SerializerMethodField()
-
     case_study_image = wagtail_fields.ImageRenditionField('original')
     case_study_title = serializers.CharField(max_length=255)
     case_study_text = core_fields.MarkdownToHTMLField()
