@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- XOT-1035 - Add hero image renditions for new responsive frontend component
 - XOT-1020 - Added extra fields to article page type (domestic and international)
 - XOT-1020 - Edited formatting of article types
 - CI-460 - Added updated fields to Capital invest contact form and success pages
