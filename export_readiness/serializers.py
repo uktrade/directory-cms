@@ -5,10 +5,12 @@ from directory_constants import slugs
 from conf import settings
 from core import fields as core_fields
 from core.serializers import (
-    BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper
+    BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper,
+    HeroSerializer, HeroThumbnailSerializer,
 )
-from great_international.serializers import StatisticProxyDataWrapper, \
-    StatisticSerializer
+from great_international.serializers import (
+    StatisticProxyDataWrapper, StatisticSerializer,
+)
 
 from .models import (
     ArticleListingPage, ArticlePage, TopicLandingPage, CampaignPage,
@@ -29,20 +31,14 @@ class RelatedArticlePageSerializer(BasePageSerializer):
 
 
 class RelatedCampaignPageSerializer(BasePageSerializer):
-    title = serializers.CharField(
-        max_length=255, source='campaign_heading')
-    thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360',
-        source='campaign_hero_image')
+    title = serializers.CharField(max_length=255, source='campaign_heading')
+    thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='campaign_hero_image')
 
 
 class RelatedArticleListingPageSerializer(BasePageSerializer):
     title = serializers.CharField(source='landing_page_title')
-    thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360',
-        source='hero_image')
-    teaser = serializers.CharField(
-        max_length=255, source='list_teaser')
+    thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
+    teaser = serializers.CharField(max_length=255, source='list_teaser')
 
 
 MODEL_TO_SERIALIZER_MAPPING = {
@@ -78,10 +74,9 @@ class GenericBodyOnlyPageSerializer(BasePageSerializer):
     body = core_fields.MarkdownToHTMLField()
 
 
-class GetFinancePageSerializer(BasePageSerializer):
+class GetFinancePageSerializer(BasePageSerializer, HeroSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_text = core_fields.MarkdownToHTMLField()
-    hero_image = wagtail_fields.ImageRenditionField('original')
     ukef_logo = wagtail_fields.ImageRenditionField('original')
     contact_proposition = core_fields.MarkdownToHTMLField()
     contact_button = serializers.CharField()
@@ -150,14 +145,10 @@ class MarketingArticlePageSerializer(BaseArticlePageSerializer):
 
 
 class ArticleListingPageSerializer(
-    BasePageSerializer,
-    ChildPagesSerializerHelper
+    BasePageSerializer, ChildPagesSerializerHelper, HeroThumbnailSerializer, HeroSerializer
 ):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
-    hero_image = wagtail_fields.ImageRenditionField('original')
-    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360', source='hero_image')
 
     articles_count = serializers.IntegerField()
     list_teaser = core_fields.MarkdownToHTMLField(allow_null=True)
@@ -403,15 +394,11 @@ class IntroCTAsSerializer(serializers.Serializer):
     title = serializers.CharField()
 
 
-class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
-    hero_image = wagtail_fields.ImageRenditionField('original')
+class CountryGuidePageSerializer(PageWithRelatedPagesSerializer, HeroSerializer, HeroThumbnailSerializer):
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
     heading_teaser = serializers.CharField()
     intro_ctas = serializers.SerializerMethodField()
-    hero_image = wagtail_fields.ImageRenditionField('original')
-    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360', source='hero_image')
 
     section_one_body = core_fields.MarkdownToHTMLField()
     section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
@@ -526,16 +513,12 @@ class HomePageSerializer(BasePageSerializer):
 
 
 class TopicLandingPageSerializer(
-    BasePageSerializer,
-    ChildPagesSerializerHelper
+    BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer, HeroThumbnailSerializer
 ):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
     hero_teaser = serializers.CharField(max_length=255)
-    hero_image = wagtail_fields.ImageRenditionField('original')
     banner_text = core_fields.MarkdownToHTMLField()
-    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360', source='hero_image')
 
     teaser = serializers.CharField()
 
