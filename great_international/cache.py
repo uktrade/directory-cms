@@ -78,7 +78,8 @@ class InternationalTopicLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
         great_international.InternationalArticlePage,
         great_international.InternationalArticleListingPage,
         great_international.InternationalSectorPage,
-        great_international.InternationalCampaignPage
+        great_international.InternationalCampaignPage,
+        great_international.AboutUkLandingPage
     ]
 
 
@@ -91,7 +92,11 @@ class InternationalCuratedTopicLandingPageSubscriber(
 
 class InternationalGuideLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = great_international.InternationalGuideLandingPage
-    subscriptions = [great_international.InternationalArticlePage]
+    subscriptions = [
+        great_international.InternationalArticlePage,
+        invest.InvestInternationalHomePage,
+        capital_invest.InternationalCapitalInvestLandingPage
+    ]
 
 
 class InternationalEUExitFormPageSubscriber(
@@ -114,7 +119,8 @@ class InternationalCapitalInvestLandingPageSubscriber(
     model = capital_invest.InternationalCapitalInvestLandingPage
     subscriptions = [
         capital_invest.CapitalInvestRegionPage,
-        great_international.AboutUkRegionPage
+        great_international.AboutUkRegionPage,
+        great_international.InternationalGuideLandingPage
     ]
 
 
@@ -146,7 +152,8 @@ class InvestInternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = invest.InvestInternationalHomePage
     subscriptions = [
         great_international.InternationalSectorPage,
-        invest.InvestHighPotentialOpportunityDetailPage
+        invest.InvestHighPotentialOpportunityDetailPage,
+        great_international.InternationalGuideLandingPage
     ]
 
 
@@ -238,7 +245,8 @@ class AboutUkLandingPageSubscriber(
     subscriptions = [
         great_international.InternationalSectorPage,
         great_international.AboutUkRegionListingPage,
-        great_international.AboutUkRegionPage
+        great_international.AboutUkRegionPage,
+        great_international.InternationalTopicLandingPage
     ]
 
 
