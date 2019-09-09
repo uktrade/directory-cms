@@ -195,7 +195,7 @@ class InternationalCampaignPageTranslationOptions(BaseTranslationOptions):
 
 
 @register(great_international.InternationalHomePageOld)
-class InternationalHomePageTranslationOptions(BaseTranslationOptions):
+class InternationalHomePageOldTranslationOptions(BaseTranslationOptions):
     fields = (
         'hero_title',
         'hero_subtitle',
