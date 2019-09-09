@@ -193,6 +193,7 @@ class InternationalHomePagePanels:
         MultiFieldPanel(
             heading="Ready to trade stories",
             children=[
+                HelpPanel('At least one ready to trade story is required for this section to show'),
                 FieldPanel('ready_to_trade_story_one'),
                 FieldPanel('ready_to_trade_story_two'),
                 FieldPanel('ready_to_trade_story_three'),
@@ -201,6 +202,7 @@ class InternationalHomePagePanels:
         MultiFieldPanel(
             heading="Benefits of the UK section",
             children=[
+                HelpPanel('A title and at least one benefit text is required for this section to show'),
                 FieldPanel('benefits_of_uk_title'),
                 FieldPanel('benefits_of_uk_intro'),
                 FieldRowPanel([
@@ -218,6 +220,7 @@ class InternationalHomePagePanels:
         MultiFieldPanel(
             heading="Ready for brexit section",
             children=[
+                HelpPanel('A title, cta text and cta link are required for this section to show'),
                 FieldPanel('ready_for_brexit_title'),
                 ImageChooserPanel('ready_for_brexit_image'),
                 FieldPanel('ready_for_brexit_cta_text'),
@@ -227,6 +230,7 @@ class InternationalHomePagePanels:
         MultiFieldPanel(
             heading="How we help",
             children=[
+                HelpPanel('A title and at least one how we help with an icon and text is required for this section to show'),  # NOQA
                 FieldPanel('how_we_help_title'),
                 FieldPanel('how_we_help_intro'),
                 FieldRowPanel([
@@ -248,26 +252,27 @@ class InternationalHomePagePanels:
         MultiFieldPanel(
             heading="Ways of doing business section",
             children=[
+                HelpPanel('A title and at least one related page is required for this section to show'),
                 FieldPanel('ways_of_doing_business_title'),
                 FieldRowPanel([
                     MultiFieldPanel([
                         PageChooserPanel(
                             'related_page_expand',
-                            'great_international.InternationalCapitalInvestLandingPage'
+                            'great_international.InvestInternationalHomePage'
                         ),
                         FieldPanel('related_page_expand_description')
                     ]),
                     MultiFieldPanel([
                         PageChooserPanel(
                             'related_page_invest_capital',
-                            'great_international.InternationalTradeHomePage'
+                            'great_international.InternationalCapitalInvestLandingPage'
                         ),
                         FieldPanel('related_page_invest_capital_description')
                     ]),
                     MultiFieldPanel([
                         PageChooserPanel(
                             'related_page_buy',
-                            'great_international.InvestInternationalHomePage'
+                            'great_international.InternationalTradeHomePage'
                         ),
                         FieldPanel('related_page_buy_description')
                     ]),
@@ -277,6 +282,7 @@ class InternationalHomePagePanels:
         MultiFieldPanel(
             heading="Case study",
             children=[
+                HelpPanel('Required fields for section to show: Case Study Image, Case Study Title'),
                 ImageChooserPanel('case_study_image'),
                 FieldPanel('case_study_title'),
                 FieldPanel('case_study_text'),
@@ -287,6 +293,7 @@ class InternationalHomePagePanels:
         MultiFieldPanel(
             heading="Industries section",
             children=[
+                HelpPanel('A title and a sector in the active language is required for this section to show'),
                 FieldPanel('industries_section_title'),
                 FieldPanel('industries_section_intro'),
                 FieldPanel('industries_section_industry_label'),
@@ -297,6 +304,7 @@ class InternationalHomePagePanels:
         MultiFieldPanel(
             heading="Link to section",
             children=[
+                HelpPanel('A title and at least one link to section is required for this section to show'),
                 FieldPanel('link_to_section_title'),
                 FieldPanel('link_to_section_intro'),
                 FieldRowPanel([
