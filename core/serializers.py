@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from wagtail.images.api import fields as wagtail_fields
 
 from core import fields
 from great_international.models.capital_invest import \
@@ -13,6 +14,20 @@ class PageTitleAndUrlSerializer(serializers.Serializer):
 class PageBreadcrumbsAndUrlSerializer(serializers.Serializer):
     title = serializers.CharField(source='breadcrumbs_label')
     url = serializers.CharField()
+
+
+class HeroThumbnailSerializer(serializers.Serializer):
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
+
+
+class HeroSerializer(serializers.Serializer):
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    hero_xlarge = wagtail_fields.ImageRenditionField('fill-1500x375', source='hero_image')
+    hero_xlarge_tall = wagtail_fields.ImageRenditionField('fill-1500x500', source='hero_image')
+    hero_large = wagtail_fields.ImageRenditionField('fill-1280x375', source='hero_image')
+    hero_medium = wagtail_fields.ImageRenditionField('fill-768x300', source='hero_image')
+    hero_medium_tall = wagtail_fields.ImageRenditionField('fill-768x376', source='hero_image')
+    hero_small = wagtail_fields.ImageRenditionField('fill-640x300', source='hero_image')
 
 
 class BasePageSerializer(serializers.Serializer):
