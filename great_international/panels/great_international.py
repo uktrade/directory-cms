@@ -1603,7 +1603,10 @@ class AboutUkWhyChooseTheUkPagePanels:
                 HelpPanel('At least one field required for section to show'),
                 FieldRowPanel([
                     FieldPanel('section_one_body'),
-                    ImageChooserPanel('section_one_image'),
+                    MultiFieldPanel([
+                        ImageChooserPanel('section_one_image'),
+                        FieldPanel('section_one_video', widget=AdminMediaChooser)
+                    ])
                 ])
             ],
         ),
