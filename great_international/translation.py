@@ -1150,6 +1150,7 @@ class AboutUkWhyChooseTheUkPageTranslationOptions(
         'teaser',
         'section_one_body',
         'section_one_image',
+        'section_one_video',
         'statistic_1_number',
         'statistic_1_heading',
         'statistic_1_smallprint',
