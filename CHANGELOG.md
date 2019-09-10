@@ -14,6 +14,7 @@
 - CI-474 - Allowed pages to be moved to reflect new IA, changed Invest and About UK landing pages children pages
 - CI-451 - Added new fields to International home page
 - CI-479 - Added video to Why choose UK Page
+- CI-480 - Added SEOOptimisationPanel to more pages
 
 ## [2019.08.27_1](https://github.com/uktrade/directory-cms/releases/tag/2019.08.27_1)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.08.27...2019.08.27_1)
