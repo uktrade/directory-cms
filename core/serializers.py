@@ -167,12 +167,14 @@ class StreamChildBaseSerializer(serializers.Serializer):
         return ret
 
 
-class ColumnWithTitleIconTextBlockStreamChildBaseSerializer(StreamChildBaseSerializer):
+class HeadingContentStreamChildBaseSerializer(StreamChildBaseSerializer):
+    heading = serializers.CharField()
+    content = serializers.CharField()
+
+
+class ColumnWithTitleIconTextBlockStreamChildBaseSerializer(HeadingContentStreamChildBaseSerializer):
     icon = wagtail_fields.ImageRenditionField('original', required=False)
-    title = serializers.CharField()
-    body = serializers.CharField()
 
 
-class DetailsSummaryBlockStreamChildBaseSerializer(StreamChildBaseSerializer):
-    title = serializers.CharField()
-    body = serializers.CharField()
+class DetailsSummaryBlockStreamChildBaseSerializer(HeadingContentStreamChildBaseSerializer):
+    pass

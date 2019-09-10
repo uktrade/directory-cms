@@ -481,21 +481,21 @@ class HomePageSerializer(BasePageSerializer):
     banner_content = core_fields.MarkdownToHTMLField(allow_null=True)
     banner_label = serializers.CharField(max_length=50, allow_null=True)
 
-    hero_xlarge = wagtail_fields.ImageRenditionField('fill-1200x300', source='hero_image')
-    hero_large = wagtail_fields.ImageRenditionField('fill-1200x400', source='hero_image')
-    hero_medium = wagtail_fields.ImageRenditionField('fill-768x376', source='hero_image')
-    hero_text = serializers.CharField()
-    hero_cta_text = serializers.CharField()
-    hero_cta_linked_page = RelatedArticlePageSerializer()
+    hero_xlarge = wagtail_fields.ImageRenditionField('fill-1200x300', source='hero_image', required=False)
+    hero_large = wagtail_fields.ImageRenditionField('fill-1200x400', source='hero_image', required=False)
+    hero_medium = wagtail_fields.ImageRenditionField('fill-768x376', source='hero_image', required=False)
+    hero_text = serializers.CharField(required=False)
+    hero_cta_text = serializers.CharField(required=False)
+    hero_cta_linked_page = RelatedArticlePageSerializer(required=False)
 
-    how_dit_helps_title = serializers.CharField()
-    how_dit_helps_columns = ColumnWithTitleIconTextBlockStreamChildBaseSerializer(many=True)
+    how_dit_helps_title = serializers.CharField(required=False)
+    how_dit_helps_columns = ColumnWithTitleIconTextBlockStreamChildBaseSerializer(many=True, required=False)
 
-    questions_section_title = serializers.CharField()
-    questions = DetailsSummaryBlockStreamChildBaseSerializer(many=True)
+    questions_section_title = serializers.CharField(required=False)
+    questions = DetailsSummaryBlockStreamChildBaseSerializer(many=True, required=False)
 
-    what_is_new_title = serializers.CharField()
-    what_is_new_pages = RelatedArticlePageStreamChildBaseSerializer(many=True)
+    what_is_new_title = serializers.CharField(required=False)
+    what_is_new_pages = RelatedArticlePageStreamChildBaseSerializer(many=True, required=False)
 
     def get_articles(self, obj):
         try:
