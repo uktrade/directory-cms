@@ -111,92 +111,9 @@ def test_international_topic_landing_page_view_sectors_alphabetical_order(
     ]
 
 
-def test_article_listingpage_with_localised_content(admin_client, international_root_page):
-    article_listing_page = factories.InternationalArticleListingPageFactory.create(  # NOQA
-        parent=international_root_page,
-        live=True,
-        slug='setup-uk'
-    )
-    factories.InternationalArticlePageFactory.create(
-        parent=article_listing_page,
-        live=True
-    )
-    region_page = factories.InternationalRegionPageFactory(
-        parent=international_root_page,
-        live=True,
-        slug='germany'
-    )
-    regional_folder_page = factories.InternationalLocalisedFolderPageFactory(
-        parent=region_page,
-        live=True,
-        slug='setup-uk'
-    )
-    localised_article = factories.InternationalArticlePageFactory.create(
-        parent=regional_folder_page,
-        live=True
-    )
-
-    url = reverse(
-        'api:lookup-by-slug',
-        kwargs={'slug': article_listing_page.slug}
-    )
-
-    response = admin_client.get(
-        url,
-        {'region': 'germany', 'service_name': cms.GREAT_INTERNATIONAL}
-    )
-    assert response.status_code == 200
-    assert 'localised_child_pages' in response.json()
-    expected_localised_article = response.json(
-        )['localised_child_pages'][0]['id']
-    assert expected_localised_article == localised_article.pk
-
-
-def test_article_listingpage_without_localised_content(
-        admin_client, international_root_page
-):
-    article_listing_page = factories.InternationalArticleListingPageFactory.create( # NOQA
-        parent=international_root_page,
-        live=True,
-        slug='setup-uk'
-    )
-    factories.InternationalArticlePageFactory.create(
-        parent=article_listing_page,
-        live=True
-    )
-    region_page = factories.InternationalRegionPageFactory(
-        parent=international_root_page,
-        live=True,
-        slug='germany'
-    )
-    regional_folder_page = factories.InternationalLocalisedFolderPageFactory(
-        parent=region_page,
-        live=True,
-        slug='news'  # different branch from setup uk
-    )
-    factories.InternationalArticlePageFactory.create(
-        parent=regional_folder_page,
-        live=True
-    )
-
-    url = reverse(
-        'api:lookup-by-slug',
-        kwargs={'slug': article_listing_page.slug}
-    )
-
-    response = admin_client.get(
-        url,
-        {'region': 'bar', 'service_name': cms.GREAT_INTERNATIONAL}
-    )
-    assert response.status_code == 200
-    assert 'localised_child_pages' in response.json()
-    assert response.json()['localised_child_pages'] == []
-
-
 def test_client_not_passing_region(admin_client, international_root_page):
-    article_listing_page = factories.InternationalArticleListingPageFactory.create(  # NOQA
-        parent=international_root_page,
-        live=True
+    article_listing_page = factories.InternationalArticleListingPageFactory.create(
+        parent=international_root_page, live=True
     )
 
     url = reverse(
@@ -205,8 +122,6 @@ def test_client_not_passing_region(admin_client, international_root_page):
     )
     response = admin_client.get(url)
     assert response.status_code == 200
-    assert 'localised_child_pages' in response.json()
-    assert response.json()['localised_child_pages'] == []
 
 
 def test_invest_home_page(document, admin_client, international_root_page):

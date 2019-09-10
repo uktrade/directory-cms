@@ -42,27 +42,6 @@ def country_guide_page(article_page):
 
 
 @pytest.mark.django_db
-def test_list_serializer(page):
-    data = UpstreamModelSerializer.serialize(page)
-    assert data['(image)introduction_column_one_icon'] == (
-        page.introduction_column_one_icon.file.name
-    )
-    assert data['(list)search_filter_sector'] == page.search_filter_sector[0]
-
-
-@pytest.mark.django_db
-@mock.patch('core.views.PreloadPageView.get_form_kwargs')
-def test_list_deserializer(mock_get_form_kwargs, rf, page):
-    serialized_data = {
-        '(list)search_filter_sector': page.search_filter_sector[0],
-    }
-
-    actual = UpstreamModelSerializer.deserialize(serialized_data, rf)
-
-    assert actual['search_filter_sector'] == page.search_filter_sector
-
-
-@pytest.mark.django_db
 def test_tag_serializer(root_page):
     legal = TagFactory.create(name='Legal')
     eagle = TagFactory.create(name='Eagle')
@@ -78,8 +57,8 @@ def test_tag_serializer(root_page):
 
 
 @pytest.mark.django_db
-@mock.patch('core.views.PreloadPageView.get_form_kwargs')
-def test_tag_deserializer(mock_get_form_kwargs, rf, page):
+@mock.patch('core.views.PreloadPageView.get_form_kwargs', mock.Mock())
+def test_tag_deserializer(rf):
     legal = TagFactory.create(name='Legal')
     eagle = TagFactory.create(name='Eagle')
     serialized_data = {
@@ -132,7 +111,7 @@ def test_related_page_field_serialize(country_guide_page):
 
 
 @pytest.mark.django_db
-def test_related_page_field_deserializer(rf, root_page, article_page):
+def test_related_page_field_deserializer(rf, root_page):
     domestic_homepage = HomePageFactory(parent=root_page)
     topic_page = TopicLandingPageFactory(parent=domestic_homepage)
     article_list_page = ArticleListingPageFactory(parent=topic_page)
@@ -154,7 +133,7 @@ def test_related_page_field_deserializer(rf, root_page, article_page):
 
 
 @pytest.mark.django_db
-def test_related_page_field_deserializer_invalid_slug(rf, root_page):
+def test_related_page_field_deserializer_invalid_slug(root_page):
     HomePageFactory(parent=root_page)
     missing_slug = 'some-missing-slug'
 

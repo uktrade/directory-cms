@@ -123,11 +123,6 @@ class InternationalCapitalInvestLandingPageSubscriber(
     ]
 
 
-class CapitalInvestRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = capital_invest.CapitalInvestRegionPage
-    subscriptions = []
-
-
 class CapitalInvestOpportunityPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = capital_invest.CapitalInvestOpportunityPage
     subscriptions = [

@@ -358,26 +358,6 @@ class InternationalGuideLandingPageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
-class InternationalRegionPageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.great_international.InternationalRegionPage
-
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    parent = None
-
-
-class InternationalLocalisedFolderPageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.great_international.InternationalLocalisedFolderPage
-
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    parent = factory.SubFactory(InternationalRegionPageFactory)
-
-
 class InternationalCapitalInvestLandingPageFactory(
     wagtail_factories.PageFactory
 ):
