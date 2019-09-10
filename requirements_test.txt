@@ -94,7 +94,7 @@ unidecode==1.0.23         # via wagtail
 urllib3==1.24.2
 vine==1.1.4               # via amqp
 w3lib==1.20.0
-wagtail-factories==1.1.0
+wagtail-factories==2.0.0
 wagtail-modeltranslation==0.10.2
 wagtail==2.5.1
 wagtailmedia==0.3.1
