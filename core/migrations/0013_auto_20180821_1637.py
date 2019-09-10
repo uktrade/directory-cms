@@ -9,8 +9,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('core', '0012_auto_20180821_1634'),
-        ('invest', '0008_auto_20180817_1630'),
-        ('find_a_supplier', '0062_auto_20180817_1630_squashed_0065_auto_20180829_1027'),
         ('export_readiness', '0012_auto_20180821_0810'),
     ]
 

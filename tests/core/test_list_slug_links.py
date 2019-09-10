@@ -6,7 +6,6 @@ from django.core.management import call_command
 from django.urls import reverse
 
 from tests.export_readiness.factories import ArticlePageFactory, CountryGuidePageFactory
-from tests.invest.factories import InfoPageFactory
 
 
 @pytest.mark.django_db
@@ -22,10 +21,6 @@ def test_list_slug_links(root_page):
         parent=root_page,
         article_body_text=f'[things](slug:{guide.slug}) are good',
     )
-    info = InfoPageFactory.create(
-        parent=root_page,
-        content_en_gb=f'[things](slug:{guide.slug}) are great',
-    )
 
     call_command('list_slug_links', stdout=stdout)
     stdout.seek(0)
@@ -33,4 +28,3 @@ def test_list_slug_links(root_page):
 
     assert reverse('wagtailadmin_pages:edit', args=(article.pk,)) in urls
     assert reverse('wagtailadmin_pages:edit', args=(guide.pk,)) not in urls
-    assert reverse('wagtailadmin_pages:edit', args=(info.pk,)) in urls
