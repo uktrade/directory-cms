@@ -134,22 +134,22 @@ class SameSectorOpportunitiesHelper(serializers.Serializer):
 
 class StreamChildBaseSerializer(serializers.Serializer):
 
-    def to_representation(self, instance):
+    def to_representation(self, stream_child):
         """
         instance is wagtail.core.blocks.stream_block.StreamValue.StreamChild
-        instance.value is either an instance of StructValue, if struct block, or an instance of the model
+        instance.value is either an instance of StructValue, if struct block, or a single value
         """
         ret = OrderedDict()
         fields = self._readable_fields
 
         for field in fields:
             try:
-                if isinstance(instance.value, StructValue):
+                if isinstance(stream_child.value, StructValue):
                     # streamfield with struct block
-                    attribute = instance.value[field.field_name]
+                    attribute = stream_child.value[field.field_name]
                 else:
                     # streamfield with single block
-                    attribute = field.get_attribute(instance.value)
+                    attribute = field.get_attribute(stream_child.value)
             except SkipField:
                 continue
 
