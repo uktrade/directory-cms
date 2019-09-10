@@ -1052,7 +1052,17 @@ CREATE TABLE public.export_readiness_homepage (
     banner_content text NOT NULL,
     banner_label character varying(50),
     news_description text NOT NULL,
-    news_title character varying(255) NOT NULL
+    news_title character varying(255) NOT NULL,
+    hero_cta_linked_page_id integer,
+    hero_cta_text character varying(255),
+    hero_image_id integer,
+    hero_text text,
+    how_dit_helps_columns text,
+    how_dit_helps_title text,
+    questions text,
+    questions_section_title character varying(255),
+    what_is_new_pages text,
+    what_is_new_title character varying(255)
 );
 
 
@@ -14089,6 +14099,8 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 379	great_international	0079_delete_internationalhomepageold	2019-09-09 16:49:29.965775+01
 380	great_international	0080_auto_20190910_0838	2019-09-10 13:36:35.15788+01
 381	great_international	0081_auto_20190910_1233	2019-09-10 13:36:36.978951+01
+382	export_readiness	0055_auto_20190910_1242	2019-09-10 16:40:32.928672+01
+383	export_readiness	0056_auto_20190910_1337	2019-09-10 16:40:33.805338+01
 \.
 
 
@@ -14224,7 +14236,7 @@ COPY public.export_readiness_getfinancepage (page_ptr_id, service_name, breadcru
 -- Data for Name: export_readiness_homepage; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.export_readiness_homepage (page_ptr_id, service_name, uses_tree_based_routing, banner_content, banner_label, news_description, news_title) FROM stdin;
+COPY public.export_readiness_homepage (page_ptr_id, service_name, uses_tree_based_routing, banner_content, banner_label, news_description, news_title, hero_cta_linked_page_id, hero_cta_text, hero_image_id, hero_text, how_dit_helps_columns, how_dit_helps_title, questions, questions_section_title, what_is_new_pages, what_is_new_title) FROM stdin;
 \.
 
 
@@ -15172,7 +15184,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 123, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 381, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 383, true);
 
 
 --
@@ -17614,6 +17626,20 @@ CREATE INDEX export_readiness_exportreadinessapp_service_name_545f7fca ON public
 --
 
 CREATE INDEX export_readiness_exportreadinessapp_service_name_545f7fca_like ON public.export_readiness_homepage USING btree (service_name varchar_pattern_ops);
+
+
+--
+-- Name: export_readiness_homepage_hero_cta_linked_page_id_4f25fb40; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX export_readiness_homepage_hero_cta_linked_page_id_4f25fb40 ON public.export_readiness_homepage USING btree (hero_cta_linked_page_id);
+
+
+--
+-- Name: export_readiness_homepage_hero_image_id_df0d5063; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX export_readiness_homepage_hero_image_id_df0d5063 ON public.export_readiness_homepage USING btree (hero_image_id);
 
 
 --
@@ -33942,6 +33968,22 @@ ALTER TABLE ONLY public.export_readiness_euexitinternationalformpage
 
 ALTER TABLE ONLY public.export_readiness_homepage
     ADD CONSTRAINT export_readiness_exp_page_ptr_id_37b95a6e_fk_wagtailco FOREIGN KEY (page_ptr_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: export_readiness_homepage export_readiness_hom_hero_cta_linked_page_4f25fb40_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.export_readiness_homepage
+    ADD CONSTRAINT export_readiness_hom_hero_cta_linked_page_4f25fb40_fk_wagtailco FOREIGN KEY (hero_cta_linked_page_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: export_readiness_homepage export_readiness_hom_hero_image_id_df0d5063_fk_wagtailim; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.export_readiness_homepage
+    ADD CONSTRAINT export_readiness_hom_hero_image_id_df0d5063_fk_wagtailim FOREIGN KEY (hero_image_id) REFERENCES public.wagtailimages_image(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --

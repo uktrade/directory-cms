@@ -56,7 +56,7 @@ jobs:
             make debug_test
             codecov
       - store_test_results:
-          path: test-results
+          path: tests
 
   flake8:
     docker:
