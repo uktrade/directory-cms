@@ -138,34 +138,6 @@ def test_markdown_to_html_field_without_slug_hyperlinks(international_root_page,
 
 
 @pytest.mark.django_db
-def test_breadcrumbs_field(page, rf):
-    IndustryLandingPageFactory(breadcrumbs_label_en_gb='label-one')
-    IndustryPageFactory(breadcrumbs_label_en_gb='label-two')
-    LandingPageFactory(breadcrumbs_label_en_gb='label-three')
-    IndustryContactPageFactory(breadcrumbs_label_en_gb='label-four')
-
-    serializer = IndustryPageSerializer(
-        instance=page,
-        context={'request': rf.get('/')}
-    )
-
-    assert serializer.data['breadcrumbs'] == {
-        'industrylandingpage': {
-            'slug': 'industries-landing-page',
-            'label': 'label-one'
-        },
-        'industrycontactpage': {
-            'slug': 'industry-contact',
-            'label': 'label-four'
-        },
-        'landingpage': {
-            'slug': 'landing-page',
-            'label': 'label-three'
-        }
-    }
-
-
-@pytest.mark.django_db
 def test_single_struct_block_stream_field_factory():
     field = fields.single_struct_block_stream_field_factory(
         'test',
