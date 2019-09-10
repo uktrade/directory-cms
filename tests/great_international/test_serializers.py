@@ -33,7 +33,8 @@ from tests.great_international.factories import (
     AboutUkWhyChooseTheUkPageFactory,
     AboutUkLandingPageFactory,
     InvestInternationalHomePageFactory,
-    CapitalInvestRegionPageFactory, AboutUkRegionListingPageFactory, InvestRegionPageFactory)
+    CapitalInvestRegionPageFactory, AboutUkRegionListingPageFactory, InvestRegionPageFactory,
+    InternationalTradeHomePageFactory)
 
 from great_international.models.capital_invest import (
     CapitalInvestRelatedRegions,
@@ -1200,3 +1201,174 @@ def test_about_uk_region_listing_page_has_empty_regions_if_no_parent(
     )
 
     assert serializer.data['mapped_regions'] == []
+
+
+@pytest.mark.django_db
+def test_new_int_home_page_has_ready_to_trade_stories(
+        rf, international_root_page
+):
+    home = InternationalHomePageFactory(
+        slug='international',
+        parent=international_root_page
+    )
+
+    serializer = InternationalHomePageSerializer(
+        instance=home,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['ready_to_trade_stories']) == 3
+    for story in serializer.data['ready_to_trade_stories']:
+        assert 'story' in story
+
+
+@pytest.mark.django_db
+def test_new_int_home_page_has_benefits_ok_uk(
+        rf, international_root_page
+):
+    home = InternationalHomePageFactory(
+        slug='international',
+        parent=international_root_page
+    )
+
+    serializer = InternationalHomePageSerializer(
+        instance=home,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['benefits_of_uk']) == 6
+    for benefit in serializer.data['benefits_of_uk']:
+        assert 'benefits_of_uk_text' in benefit
+
+
+@pytest.mark.django_db
+def test_new_int_home_page_has_how_we_help(
+        rf, international_root_page
+):
+    home = InternationalHomePageFactory(
+        slug='international',
+        parent=international_root_page
+    )
+
+    serializer = InternationalHomePageSerializer(
+        instance=home,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['how_we_help']) == 3
+    for how_we_help in serializer.data['how_we_help']:
+        assert 'text' in how_we_help
+        assert 'icon' in how_we_help
+
+
+@pytest.mark.django_db
+def test_new_int_home_page_has_link_to_section_links(
+        rf, international_root_page
+):
+    home = InternationalHomePageFactory(
+        slug='international',
+        parent=international_root_page
+    )
+
+    serializer = InternationalHomePageSerializer(
+        instance=home,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['link_to_section_links']) == 3
+    for link in serializer.data['link_to_section_links']:
+        assert 'text' in link
+        assert 'cta_text' in link
+        assert 'cta_link' in link
+
+
+@pytest.mark.django_db
+def test_new_int_home_page_has_all_sectors(
+        rf, international_root_page
+):
+    InternationalSectorPageFactory(
+        parent=international_root_page,
+        slug='sector-one',
+    )
+
+    home = InternationalHomePageFactory(
+        slug='international',
+        parent=international_root_page
+    )
+
+    serializer = InternationalHomePageSerializer(
+        instance=home,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['all_sectors']) == 1
+    assert serializer.data['all_sectors'][0]['meta']['slug'] == 'sector-one'
+
+
+@pytest.mark.django_db
+def test_new_int_home_page_has_related_expand(
+        rf, international_root_page
+):
+    expand = InvestInternationalHomePageFactory(
+        parent=international_root_page,
+        slug='expand',
+    )
+
+    home = InternationalHomePageFactory(
+        slug='international',
+        related_page_expand=expand,
+        parent=international_root_page
+    )
+
+    serializer = InternationalHomePageSerializer(
+        instance=home,
+        context={'request': rf.get('/')}
+    )
+
+    assert serializer.data['related_page_expand']['meta']['slug'] == 'expand'
+
+
+@pytest.mark.django_db
+def test_new_int_home_page_has_related_capital_invest(
+        rf, international_root_page
+):
+    capital_invest = InternationalCapitalInvestLandingPageFactory(
+        parent=international_root_page,
+        slug='capital-invest',
+    )
+
+    home = InternationalHomePageFactory(
+        slug='international',
+        related_page_invest_capital=capital_invest,
+        parent=international_root_page
+    )
+
+    serializer = InternationalHomePageSerializer(
+        instance=home,
+        context={'request': rf.get('/')}
+    )
+
+    assert serializer.data['related_page_invest_capital']['meta']['slug'] == 'capital-invest'
+
+
+@pytest.mark.django_db
+def test_new_int_home_page_has_related_trade(
+        rf, international_root_page
+):
+    trade = InternationalTradeHomePageFactory(
+        parent=international_root_page,
+        slug='trade',
+    )
+
+    home = InternationalHomePageFactory(
+        slug='international',
+        related_page_buy=trade,
+        parent=international_root_page
+    )
+
+    serializer = InternationalHomePageSerializer(
+        instance=home,
+        context={'request': rf.get('/')}
+    )
+
+    assert serializer.data['related_page_buy']['meta']['slug'] == 'trade'

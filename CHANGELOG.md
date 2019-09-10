@@ -11,6 +11,8 @@
 - CI-477 - Why choose the UK page can add international article page as child
 - CI-478 - Added breadcrumbs label to capital invest landing page
 - CI-474 - Allowed pages to be moved to reflect new IA, changed Invest and About UK landing pages children pages
+- CI-451 - Added new fields to International home page
+- CI-479 - Added video to Why choose UK Page
 
 ## [2019.08.27_1](https://github.com/uktrade/directory-cms/releases/tag/2019.08.27_1)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.08.27...2019.08.27_1)
