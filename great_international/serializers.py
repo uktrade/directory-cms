@@ -981,8 +981,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
             for num in ['one', 'two', 'three']
         ]
         serializer = ReadyToTradeStorySerializer(data, many=True)
-        stories_with_data = [story for story in serializer.data if story['story']]
-        return stories_with_data
+        return [story for story in serializer.data if story['story']]
 
     def get_benefits_of_uk(self, instance):
         data = [
@@ -993,8 +992,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
             for num in ONE_TO_SIX_WORDS
         ]
         serializer = BenefitsOfUkTextSerializer(data, many=True)
-        benefits_of_uk = [benefit for benefit in serializer.data if benefit['benefits_of_uk_text']]
-        return benefits_of_uk
+        return [benefit for benefit in serializer.data if benefit['benefits_of_uk_text']]
 
     def get_how_we_help(self, instance):
         data = [
@@ -1005,8 +1003,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
             for num in ['one', 'two', 'three']
         ]
         serializer = HowWeHelpMarkDownTextSerializer(data, many=True)
-        how_we_help = [how_we_help for how_we_help in serializer.data if how_we_help['icon'] and how_we_help['text']]
-        return how_we_help
+        return [how_we_help for how_we_help in serializer.data if how_we_help['icon'] and how_we_help['text']]
 
     def get_link_to_section_links(self, instance):
         data = [
@@ -1017,8 +1014,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
             for num in ['one', 'two', 'three']
         ]
         serializer = LinkToSectionLinksSerializer(data, many=True)
-        links = [link for link in serializer.data if link['text'] and link['cta_text'] and link['cta_link']]
-        return links
+        return [link for link in serializer.data if link['text'] and link['cta_text'] and link['cta_link']]
 
     def get_all_sectors(self, instance):
         queryset = InternationalSectorPage.objects.live().public().all()
@@ -1028,8 +1024,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
             allow_null=True,
             context=self.context
         ).data
-        sectors = [sector for sector in serialized if sector['title'] and sector['featured_description']]
-        return sectors
+        return [sector for sector in serialized if sector['title'] and sector['featured_description']]
 
     def get_related_page_expand(self, instance):
         serialized = []
