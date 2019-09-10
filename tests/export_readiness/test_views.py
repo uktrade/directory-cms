@@ -106,7 +106,7 @@ def test_article_page_view(admin_client, root_page):
     assert 'slug' in response.json()['tags'][0]
 
 
-def test_homepage(admin_client, root_page):
+def test_domestic_homepage(admin_client, root_page):
 
     home_page = factories.HomePageFactory.create(
         parent=root_page

@@ -1,4 +1,6 @@
 from rest_framework import fields
+from wagtail.core import blocks
+from wagtail.core.fields import StreamField
 
 from conf import settings
 from core import helpers, models
@@ -89,3 +91,14 @@ class FieldAttributesField(fields.DictField):
             'label': getattr(instance, self.source + '_label'),
             'help_text': getattr(instance, self.source + '_help_text'),
         }
+
+
+def single_struct_block_stream_field_factory(field_name, block_class_instance, max_num=None, min_num=None, **kwargs):
+    field = StreamField(
+        blocks.StreamBlock(
+            [(field_name, block_class_instance)],
+            max_num=max_num,
+            min_num=min_num
+        ),
+        **kwargs)
+    return field
