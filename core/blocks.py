@@ -9,6 +9,7 @@ class HeadingContentBaseBlock(blocks.StructBlock):
 
 class ColumnWithTitleIconTextBlock(HeadingContentBaseBlock):
     icon = ImageChooserBlock(required=False)
+    image_alt = blocks.CharBlock()
 
 
 class DetailsSummaryBlock(HeadingContentBaseBlock):
