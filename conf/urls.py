@@ -84,18 +84,17 @@ urlpatterns = [
     ),
     url(
         r'^admin/pages/(?P<pk>[0-9]+)/copy-upstream/$',
-        login_required(core.views.CopyUpstreamView.as_view()),
+        login_required(core.views.CopyUpstreamView.as_view(is_edit=False)),
         name='copy-upstream',
     ),
     url(
         r'^admin/pages/(?P<pk>[0-9]+)/update-upstream/$',
-        login_required(core.views.UpdateUpstreamView.as_view()),
+        login_required(core.views.UpdateUpstreamView.as_view(is_edit=True)),
         name='update-upstream',
     ),
     url(
         (
-            r'^admin/pages/preload/(?P<service_name>[a-zA-Z_]+)/'
-            r'(?P<model_name>[a-zA-Z]+)/(?P<parent_slug>[a-zA-Z-]+)/$'
+            r'^admin/pages/preload/(?P<app_label>[a-zA-Z_]+)/(?P<model_name>[a-zA-Z]+)/(?P<site_name>[a-zA-Z]+)(?P<parent_path>.*)$'  # NOQA
         ),
         login_required(csrf_exempt(core.views.PreloadPageView.as_view())),
         name='preload-add-page',
