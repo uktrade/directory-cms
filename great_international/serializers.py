@@ -482,8 +482,7 @@ class RelatedInvestHomePageSerializer(BasePageSerializer):
 
 class RelatedTradeHomePageSerializer(BasePageSerializer):
 
-    title = serializers.CharField(
-        max_length=255, source='hero_text')
+    title = serializers.CharField(max_length=255)
     image = wagtail_fields.ImageRenditionField(
         'fill-640x360',
         source='hero_image')
