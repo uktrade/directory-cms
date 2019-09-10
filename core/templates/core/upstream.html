@@ -6,7 +6,7 @@
     {% include "wagtailadmin/shared/header.html" with title=copy_str subtitle=page.get_admin_display_title icon="doc-empty-inverse" %}
     <div class="nice-padding">
         {% if not site %}
-            Cannot perform ation because the page must be attached to a site
+            Cannot perform action because the page must be attached to a site
         {% else %}
             <form id="form" path="{% url 'preload-add-page' app_label=app_label site_name=site.site_name model_name=model_name parent_path=parent.full_path %}" method="POST" novalidate>
 
