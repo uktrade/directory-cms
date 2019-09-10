@@ -202,6 +202,8 @@ class InternationalHomePageTranslationOptions(BaseTranslationOptions):
         'hero_cta_text',
         'hero_cta_link',
         'hero_image',
+
+        # Old International Home Page fields
         'invest_title',
         'invest_content',
         'invest_image',
@@ -247,6 +249,68 @@ class InternationalHomePageTranslationOptions(BaseTranslationOptions):
         'related_page_one',
         'related_page_two',
         'related_page_three',
+
+        # New International Home Page fields
+        'is_new_page_ready',
+        'ready_to_trade_story_one',
+        'ready_to_trade_story_two',
+        'ready_to_trade_story_three',
+
+        'benefits_of_uk_title',
+        'benefits_of_uk_intro',
+
+        'benefits_of_uk_one',
+        'benefits_of_uk_two',
+        'benefits_of_uk_three',
+        'benefits_of_uk_four',
+        'benefits_of_uk_five',
+        'benefits_of_uk_six',
+
+        'ready_for_brexit_title',
+        'ready_for_brexit_image',
+        'ready_for_brexit_cta_text',
+        'ready_for_brexit_cta_link',
+
+        'how_we_help_title',
+        'how_we_help_intro',
+        'how_we_help_one_icon',
+        'how_we_help_one_text',
+        'how_we_help_two_icon',
+        'how_we_help_two_text',
+        'how_we_help_three_icon',
+        'how_we_help_three_text',
+
+        'ways_of_doing_business_title',
+        'related_page_expand',
+        'related_page_expand_description',
+        'related_page_invest_capital',
+        'related_page_invest_capital_description',
+        'related_page_buy',
+        'related_page_buy_description',
+
+        'case_study_image',
+        'case_study_title',
+        'case_study_text',
+        'case_study_cta_text',
+        'case_study_cta_link',
+
+        'industries_section_title',
+        'industries_section_intro',
+        'industries_section_industry_label',
+        'industries_section_cta_text',
+        'industries_section_cta_link',
+
+        'link_to_section_title',
+        'link_to_section_intro',
+        'link_to_section_one',
+        'link_to_section_one_cta_text',
+        'link_to_section_one_cta_link',
+        'link_to_section_two',
+        'link_to_section_two_cta_text',
+        'link_to_section_two_cta_link',
+        'link_to_section_three',
+        'link_to_section_three_cta_text',
+        'link_to_section_three_cta_link',
     )
 
 
@@ -1074,6 +1138,7 @@ class AboutUkWhyChooseTheUkPageTranslationOptions(
         'teaser',
         'section_one_body',
         'section_one_image',
+        'section_one_video',
         'statistic_1_number',
         'statistic_1_heading',
         'statistic_1_smallprint',
