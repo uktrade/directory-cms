@@ -839,7 +839,8 @@ class InternationalCuratedTopicLandingPagePanels:
                     ]),
                 ]),
             ]
-        )
+        ),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
@@ -898,7 +899,8 @@ class InternationalGuideLandingPagePanels:
                 FieldPanel('section_three_cta_text'),
                 FieldPanel('section_three_cta_link'),
             ]
-        )
+        ),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
@@ -1035,6 +1037,7 @@ class AboutDitLandingPagePanels:
                 FieldPanel('case_study_cta_link'),
             ],
         ),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
@@ -1120,6 +1123,7 @@ class AboutDitServicesPagePanels:
                 FieldPanel('contact_us_section_cta_link'),
             ],
         ),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
@@ -1302,6 +1306,7 @@ class AboutUkLandingPagePanels:
                 FieldPanel('contact_cta_link'),
             ]
         ),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
@@ -1342,6 +1347,7 @@ class AboutUkRegionListingPagePanels:
                 FieldPanel('contact_cta_link'),
             ]
         ),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
@@ -1536,6 +1542,7 @@ class AboutUkRegionPagePanels:
                 FieldPanel('contact_cta_link'),
             ],
         ),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
@@ -1689,6 +1696,7 @@ class AboutUkWhyChooseTheUkPagePanels:
                 FieldPanel('contact_us_section_cta_link'),
             ],
         ),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
