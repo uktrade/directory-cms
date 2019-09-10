@@ -1209,7 +1209,10 @@ def test_new_int_home_page_has_ready_to_trade_stories(
 ):
     home = InternationalHomePageFactory(
         slug='international',
-        parent=international_root_page
+        parent=international_root_page,
+        ready_to_trade_story_one='some story',
+        ready_to_trade_story_two='some story',
+        ready_to_trade_story_three='',
     )
 
     serializer = InternationalHomePageSerializer(
@@ -1217,7 +1220,7 @@ def test_new_int_home_page_has_ready_to_trade_stories(
         context={'request': rf.get('/')}
     )
 
-    assert len(serializer.data['ready_to_trade_stories']) == 3
+    assert len(serializer.data['ready_to_trade_stories']) == 2
     for story in serializer.data['ready_to_trade_stories']:
         assert 'story' in story
 
@@ -1228,7 +1231,13 @@ def test_new_int_home_page_has_benefits_ok_uk(
 ):
     home = InternationalHomePageFactory(
         slug='international',
-        parent=international_root_page
+        parent=international_root_page,
+        benefits_of_uk_one='',
+        benefits_of_uk_two='some text',
+        benefits_of_uk_three='',
+        benefits_of_uk_four='',
+        benefits_of_uk_five='some text',
+        benefits_of_uk_six='some text',
     )
 
     serializer = InternationalHomePageSerializer(
@@ -1236,18 +1245,24 @@ def test_new_int_home_page_has_benefits_ok_uk(
         context={'request': rf.get('/')}
     )
 
-    assert len(serializer.data['benefits_of_uk']) == 6
+    assert len(serializer.data['benefits_of_uk']) == 3
     for benefit in serializer.data['benefits_of_uk']:
         assert 'benefits_of_uk_text' in benefit
 
 
 @pytest.mark.django_db
 def test_new_int_home_page_has_how_we_help(
-        rf, international_root_page
+        rf, international_root_page, image
 ):
     home = InternationalHomePageFactory(
         slug='international',
-        parent=international_root_page
+        parent=international_root_page,
+        how_we_help_one_icon=image,
+        how_we_help_one_text='How we help',
+        how_we_help_two_icon=image,
+        how_we_help_two_text='How we help',
+        how_we_help_three_icon=image,
+        how_we_help_three_text='',
     )
 
     serializer = InternationalHomePageSerializer(
@@ -1255,7 +1270,7 @@ def test_new_int_home_page_has_how_we_help(
         context={'request': rf.get('/')}
     )
 
-    assert len(serializer.data['how_we_help']) == 3
+    assert len(serializer.data['how_we_help']) == 2
     for how_we_help in serializer.data['how_we_help']:
         assert 'text' in how_we_help
         assert 'icon' in how_we_help
@@ -1267,7 +1282,16 @@ def test_new_int_home_page_has_link_to_section_links(
 ):
     home = InternationalHomePageFactory(
         slug='international',
-        parent=international_root_page
+        parent=international_root_page,
+        link_to_section_one='Some markdown',
+        link_to_section_one_cta_text='Get in touch',
+        link_to_section_one_cta_link='',
+        link_to_section_two='Some markdown',
+        link_to_section_two_cta_text='Get in touch',
+        link_to_section_two_cta_link='/international',
+        link_to_section_three='',
+        link_to_section_three_cta_text='Get in touch',
+        link_to_section_three_cta_link='/international',
     )
 
     serializer = InternationalHomePageSerializer(
@@ -1275,7 +1299,7 @@ def test_new_int_home_page_has_link_to_section_links(
         context={'request': rf.get('/')}
     )
 
-    assert len(serializer.data['link_to_section_links']) == 3
+    assert len(serializer.data['link_to_section_links']) == 1
     for link in serializer.data['link_to_section_links']:
         assert 'text' in link
         assert 'cta_text' in link
@@ -1289,6 +1313,7 @@ def test_new_int_home_page_has_all_sectors(
     InternationalSectorPageFactory(
         parent=international_root_page,
         slug='sector-one',
+        featured_description='some description'
     )
 
     home = InternationalHomePageFactory(
@@ -1307,11 +1332,13 @@ def test_new_int_home_page_has_all_sectors(
 
 @pytest.mark.django_db
 def test_new_int_home_page_has_related_expand(
-        rf, international_root_page
+        rf, international_root_page, image
 ):
     expand = InvestInternationalHomePageFactory(
         parent=international_root_page,
         slug='expand',
+        heading="Some title",
+        hero_image=image
     )
 
     home = InternationalHomePageFactory(
@@ -1330,11 +1357,13 @@ def test_new_int_home_page_has_related_expand(
 
 @pytest.mark.django_db
 def test_new_int_home_page_has_related_capital_invest(
-        rf, international_root_page
+        rf, international_root_page, image
 ):
     capital_invest = InternationalCapitalInvestLandingPageFactory(
         parent=international_root_page,
         slug='capital-invest',
+        hero_title='Hero title',
+        hero_image=image
     )
 
     home = InternationalHomePageFactory(
@@ -1353,11 +1382,13 @@ def test_new_int_home_page_has_related_capital_invest(
 
 @pytest.mark.django_db
 def test_new_int_home_page_has_related_trade(
-        rf, international_root_page
+        rf, international_root_page, image
 ):
     trade = InternationalTradeHomePageFactory(
         parent=international_root_page,
         slug='trade',
+        title='the title',
+        hero_image=image
     )
 
     home = InternationalHomePageFactory(
