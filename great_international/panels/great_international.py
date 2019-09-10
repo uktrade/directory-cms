@@ -293,7 +293,8 @@ class InternationalHomePagePanels:
         MultiFieldPanel(
             heading="Industries section",
             children=[
-                HelpPanel('A title and a sector in the active language is required for this section to show'),
+                HelpPanel('A title and a sector in the active language with a featured description '
+                          'is required for this section to show'),
                 FieldPanel('industries_section_title'),
                 FieldPanel('industries_section_intro'),
                 FieldPanel('industries_section_industry_label'),
