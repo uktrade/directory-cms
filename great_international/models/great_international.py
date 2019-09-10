@@ -1781,6 +1781,15 @@ class AboutUkWhyChooseTheUkPage(panels.AboutUkWhyChooseTheUkPagePanels, BaseInte
         related_name='+',
         blank=True
     )
+    section_one_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text="Section one image will be used over this video, please ensure section one image is empty "
+                  "in order for this video to be used instead."
+    )
 
     statistic_1_heading = models.CharField(max_length=255, blank=True)
     statistic_1_number = models.CharField(max_length=255, blank=True)
