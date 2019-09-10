@@ -20,8 +20,6 @@ from conf.celery import app
 ROOT_PATHS_TO_SERVICE_NAMES = {
     slugs.GREAT_HOME: cms.EXPORT_READINESS,
     slugs.GREAT_HOME_INTERNATIONAL: cms.GREAT_INTERNATIONAL,
-    'find-a-supplier-app': cms.FIND_A_SUPPLIER,
-    'invest-app': cms.INVEST,
     'components-app': cms.COMPONENTS,
 }
 
@@ -269,6 +267,11 @@ class PageIDCache:
 
     @staticmethod
     def build_path_lookup_key(site_id, path):
+        path = path.strip('/')
+        if not path.endswith('/'):
+            path = f'{path}/'
+        if not path.startswith('/'):
+            path = f'/{path}'
         return f'{site_id}:{path}'
 
     @staticmethod
@@ -319,7 +322,7 @@ class PageIDCache:
             cls.by_path_map_key: ids_by_path,
             cls.by_slug_map_key: ids_by_slug,
         }
-        cls.cache.set(cls.cache_key, page_ids, timeout=settings.API_CACHE_EXPIRE_SECONDS) # noqa
+        cls.cache.set(cls.cache_key, page_ids, timeout=settings.API_CACHE_EXPIRE_SECONDS)
         return page_ids
 
     @classmethod

@@ -25,5 +25,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(migrate_forwards, migrate_backwards),
+        migrations.RunPython(migrate_forwards, migrate_backwards, elidable=True),
     ]

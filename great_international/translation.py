@@ -324,11 +324,6 @@ class InternationalArticleListingPage(BaseTranslationOptions):
     )
 
 
-@register(great_international.InternationalRegionPage)
-class InternationalRegionPageTranslationOptions(BaseTranslationOptions):
-    fields = []
-
-
 @register(great_international.InternationalTopicLandingPage)
 class InternationalTopicLandingPageTranslationOptions(BaseTranslationOptions):
     fields = (
@@ -387,13 +382,6 @@ class InternationalGuideLandingPageTranslationOptions(
         'section_three_cta_text',
         'section_three_cta_link',
     )
-
-
-@register(great_international.InternationalLocalisedFolderPage)
-class InternationalRegionalFolderPageTranslationOptions(
-    BaseTranslationOptions
-):
-    fields = []
 
 
 @register(great_international.InternationalEUExitFormPage)

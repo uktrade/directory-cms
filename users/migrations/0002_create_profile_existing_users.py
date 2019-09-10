@@ -24,6 +24,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(set_existing_users_as_approved,
-                             reverse_code=migrations.RunPython.noop)
+        migrations.RunPython(set_existing_users_as_approved, reverse_code=migrations.RunPython.noop, elidable=True)
     ]
