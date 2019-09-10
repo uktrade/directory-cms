@@ -163,7 +163,7 @@ def test_breadcrumbs_field(page, rf):
 def test_single_struct_block_stream_field_factory():
     field = fields.single_struct_block_stream_field_factory(
         'test',
-        block_class=blocks.TextBlock,
+        block_class_instance=blocks.TextBlock(),
         max_num=6,
         min_num=1,
         null=True,
