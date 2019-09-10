@@ -22,6 +22,7 @@ class RelatedArticlePageSerializer(BasePageSerializer):
     """Separate serializer for related article pages so we don't end up with
     infinite nesting of related pages inside an article page"""
 
+    type_of_article = serializers.CharField()
     article_title = serializers.CharField(max_length=255)
     article_teaser = serializers.CharField(max_length=255)
     article_image = wagtail_fields.ImageRenditionField('original')
