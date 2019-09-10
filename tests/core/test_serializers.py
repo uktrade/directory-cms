@@ -1,16 +1,15 @@
 import pytest
-from find_a_supplier.serializers import IndustryPageSerializer
-from great_international.serializers import CapitalInvestContactFormSuccessPageSerializer
+from great_international.serializers import CapitalInvestContactFormSuccessPageSerializer, \
+    InternationalArticlePageSerializer
 from tests.great_international.factories import CapitalInvestContactFormPageFactory, \
-    CapitalInvestContactFormSuccessPageFactory
+    CapitalInvestContactFormSuccessPageFactory, InternationalArticlePageFactory
 
 
 @pytest.mark.django_db
-def test_base_page_serializer(page, rf):
-    page.slug = 'test-slug'
-    page.pk = 4
+def test_base_page_serializer(rf, international_root_page):
+    page = InternationalArticlePageFactory(slug='test-slug', parent=international_root_page)
 
-    serializer = IndustryPageSerializer(
+    serializer = InternationalArticlePageSerializer(
         instance=page,
         context={'request': rf.get('/')}
     )
@@ -21,9 +20,8 @@ def test_base_page_serializer(page, rf):
     assert 'meta' in serializer.data  # meta content tested in another test
     assert serializer.data['full_url'] == page.full_url
     assert serializer.data['full_path'] == page.full_path
-    assert serializer.data['last_published_at'] == page.last_published_at
     assert serializer.data['title'] == page.title
-    assert serializer.data['page_type'] == 'IndustryPage'
+    assert serializer.data['page_type'] == 'InternationalArticlePage'
 
 
 @pytest.mark.django_db

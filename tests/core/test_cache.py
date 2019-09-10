@@ -6,8 +6,6 @@ from wagtail.core.models import Page, get_page_models
 from core import cache, models
 
 import components.models
-import find_a_supplier.models
-import invest.models
 import export_readiness
 import great_international.models
 from tests.great_international.factories import (
@@ -114,8 +112,6 @@ def test_page_cache_get_set_delete():
 
 @pytest.mark.django_db
 def test_cache_populator(translated_page):
-    # translated_page is a IndustryPage, which is registered for caching in
-    # find_a_supplier.cache
     cache.CachePopulator.populate(translated_page.pk)
     for language_code in translated_page.translated_languages:
         assert cache.PageCache.get(
@@ -253,8 +249,6 @@ def test_all_models_cached():
     exclude = {
         # apps
         components.models.ComponentsApp,
-        find_a_supplier.models.FindASupplierApp,
-        invest.models.InvestApp,
         # "folders"
         export_readiness.models.MarketingPages,
         export_readiness.models.SitePolicyPages,
@@ -262,9 +256,8 @@ def test_all_models_cached():
         export_readiness.models.ContactSuccessPages,
         export_readiness.models.EUExitFormPages,
         export_readiness.models.AllContactPagesPage,
-        great_international.models.great_international.InternationalRegionPage,
-        great_international.models.great_international.InternationalLocalisedFolderPage,
         great_international.models.invest.InvestHighPotentialOpportunitiesPage,
+        great_international.models.capital_invest.CapitalInvestRegionPage,
         # Page is added by TestSubscriber in other tests.
         Page,
     }
