@@ -172,5 +172,5 @@ def test_single_struct_block_stream_field_factory():
     assert isinstance(field, StreamField)
     assert field.null is True
     assert field.blank is True
-    assert field.stream_block._constructor_kwargs == {'max_num': 6, 'min_num': 1}
+    assert field.stream_block._constructor_kwargs == {'max_num': 6, 'min_num': 1, 'required': False}
     assert isinstance(field.stream_block.child_blocks['test'], blocks.TextBlock)

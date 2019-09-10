@@ -55,6 +55,9 @@ jobs:
             . venv/bin/activate
             make debug_test
             codecov
+      - store_test_results:
+          path: test-results
+
   flake8:
     docker:
       - image: circleci/python:3.6.8
