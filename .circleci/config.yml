@@ -30,8 +30,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pip install --upgrade pip
-            pip install -r requirements_test.txt
+            make install_requirements
       - save_cache:
           key: v1-deps-{{ checksum "requirements_test.txt" }}
           paths:
@@ -53,7 +52,7 @@ jobs:
           name: Run tests
           command: |
             . venv/bin/activate
-            make debug_test
+            make pytest -- --cov=. --cov-config=.coveragerc --cov-report=term
             codecov
   flake8:
     docker:
@@ -68,7 +67,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install flake8
-            flake8 . flake8 . --exclude=migrations,venv --max-line-length=120
+            make flake8
 
 workflows:
   version: 2

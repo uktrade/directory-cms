@@ -7,9 +7,11 @@ from modeltranslation.utils import build_localized_fieldname
 from six import b
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
-from wagtail.core.models import Page, Site
+from wagtail.core.models import GroupPagePermission, Page, Site
 
 from django import db
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
 from django.core.cache import cache
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
@@ -26,12 +28,88 @@ from .great_international.factories import InternationalHomePageFactory, Interna
 from .users.factories import UserFactory
 
 
-@pytest.fixture()
-def root_page():
+@pytest.fixture
+def wagtail_initial_data(request):
+    if not request.node.get_closest_marker('django_db'):
+        return
+    page_content_type, _ = ContentType.objects.get_or_create(
+        model='page',
+        app_label='wagtailcore'
+    )
+    root, _ = Page.objects.get_or_create(
+        slug='root',
+        defaults=dict(
+            title='Root',
+            title_en_gb='Root',
+            content_type=page_content_type,
+            path='0001',
+            depth=1,
+            numchild=1,
+            url_path='/',
+        )
+    )
+    Page.objects.get_or_create(
+        slug='home',
+        defaults=dict(
+            title="Welcome to your new Wagtail site!",
+            title_en_gb="Welcome to your new Wagtail site!",
+            content_type=page_content_type,
+            path='00010001',
+            depth=2,
+            numchild=0,
+            url_path='/home/',
+        )
+    )
+
+    wagtailadmin_content_type, _ = ContentType.objects.get_or_create(
+        app_label='wagtailadmin',
+        model='admin'
+    )
+    admin_permission, created = Permission.objects.get_or_create(
+        content_type=wagtailadmin_content_type,
+        codename='access_admin',
+        name='Can access Wagtail admin'
+    )
+
+    moderators_group = Group.objects.create(name='Moderators')
+    editors_group = Group.objects.create(name='Editors')
+
+    GroupPagePermission.objects.create(
+        group=moderators_group,
+        page=root,
+        permission_type='add',
+    )
+    GroupPagePermission.objects.create(
+        group=moderators_group,
+        page=root,
+        permission_type='edit',
+    )
+    GroupPagePermission.objects.create(
+        group=moderators_group,
+        page=root,
+        permission_type='publish',
+    )
+
+    GroupPagePermission.objects.create(
+        group=editors_group,
+        page=root,
+        permission_type='add',
+    )
+    GroupPagePermission.objects.create(
+        group=editors_group,
+        page=root,
+        permission_type='edit',
+    )
+
+    return root
+
+
+@pytest.fixture
+def root_page(wagtail_initial_data):
     """
     On start Wagtail provides one page with ID=1 and it's called "Root page"
     """
-    return Page.objects.get(pk=1)
+    return wagtail_initial_data
 
 
 @pytest.fixture
@@ -97,28 +175,6 @@ def clear_django_cache():
     cache.clear()
 
 
-@pytest.fixture(scope='session')
-def django_db_createdb():
-    """Never let Django create the test db.
-    django_db_setup will take care of it"""
-    return False
-
-
-@pytest.fixture(scope='session')
-def django_db_setup(django_db_blocker):
-    """Load db schema from template."""
-    with django_db_blocker.unblock():
-        settings.DATABASES['default']['NAME'] = 'test_directory_cms_debug'
-        os.system('PGPASSWORD=debug dropdb  test_directory_cms_debug')
-        os.system('PGPASSWORD=debug createdb -h localhost -U debug test_directory_cms_debug')  # NOQA
-        os.system('PGPASSWORD=debug psql -h localhost -U debug -d test_directory_cms_debug -f db_template.sql >/dev/null 2>&1')  # NOQA
-        call_command('migrate')  # if the template is old we need to migrate
-        yield
-
-        for connection in db.connections.all():
-            connection.close()
-
-
 @pytest.fixture(autouse=True)
 def feature_flags(settings):
     # solves this issue: https://github.com/pytest-dev/pytest-django/issues/601
@@ -174,6 +230,7 @@ def approved_user():
 @pytest.fixture
 def user_awaiting_approval(groups_with_info):
     user = UserFactory(username='awaiting-approval-user')
+    user.user_permissions.add(Permission.objects.get(codename='access_admin'))
     profile = user.userprofile
     profile.assignment_status = UserProfile.STATUS_AWAITING_APPROVAL
     profile.self_assigned_group_id = groups_with_info[0].id
@@ -181,8 +238,11 @@ def user_awaiting_approval(groups_with_info):
     return user
 
 
-@pytest.fixture()
-def international_root_page(root_page):
+@pytest.fixture
+def international_root_page(root_page, request):
+    if not request.node.get_closest_marker('django_db'):
+        return
+
     return InternationalHomePageFactory.create(
         parent=root_page,
         slug='home',
@@ -201,7 +261,10 @@ def international_root_page(root_page):
 
 
 @pytest.fixture(autouse=True)
-def international_site(international_root_page):
+def international_site(international_root_page, request):
+    if not request.node.get_closest_marker('django_db'):
+        return
+
     site, created = Site.objects.get_or_create(
         port=80,
         hostname='great.gov.uk',
