@@ -12,7 +12,6 @@ from core.serializers import (
 from .models.great_international import (
     InternationalArticlePage,
     InternationalArticleListingPage,
-    InternationalLocalisedFolderPage,
     InternationalCampaignPage,
     InternationalGuideLandingPage,
     InternationalSectorPage,
@@ -1115,26 +1114,6 @@ class InternationalArticleListingPageSerializer(
     list_teaser = core_fields.MarkdownToHTMLField(allow_null=True)
     hero_teaser = serializers.CharField(allow_null=True)
     child_pages = serializers.SerializerMethodField()
-    localised_child_pages = serializers.SerializerMethodField()
-
-    def get_localised_child_pages(self, obj):
-        data = []
-        if 'region' in self.context:
-            slug = f'{obj.slug}-{self.context["region"]}'
-            folder = InternationalLocalisedFolderPage.objects.filter(slug=slug)
-            if folder.exists():
-                articles = self.get_child_pages_data_for(
-                    folder[0],
-                    InternationalArticlePage,
-                    RelatedArticlePageSerializer
-                )
-                campaigns = self.get_child_pages_data_for(
-                    folder[0],
-                    InternationalCampaignPage,
-                    InternationalCampaignPageSerializer
-                )
-                data = articles + campaigns
-        return data
 
     def get_child_pages(self, obj):
         articles = self.get_child_pages_data_for(

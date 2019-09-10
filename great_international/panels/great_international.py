@@ -217,6 +217,7 @@ class InternationalHomePagePanels:
                 ]),
             ],
         ),
+
         MultiFieldPanel(
             heading="Ready for brexit section",
             children=[
@@ -578,23 +579,6 @@ class BaseInternationalSectorPagePanels:
         content_panels=content_panels,
         settings_panels=settings_panels
     )
-
-
-class InternationalRegionPagePanels:
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-        FieldPanel('tags', widget=CheckboxSelectMultiple)
-    ]
-
-
-class InternationalLocalisedFolderPagePanels:
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-    ]
 
 
 class InternationalArticlePagePanels:

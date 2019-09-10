@@ -6,7 +6,7 @@ test_requirements:
 	pip install -r requirements_test.txt
 
 FLAKE8 := flake8 . --exclude=migrations,.venv --max-line-length=120
-PYTEST := pytest tests -vv -x --ignore=venv --ignore=conf/celery.py --cov=. --cov-config=.coveragerc --capture=no $(pytest_args)
+PYTEST := pytest tests -vv --ignore=venv --ignore=conf/celery.py --cov=. --cov-config=.coveragerc --capture=no $(pytest_args)
 PYTEST_FIXTURES := pytest --fixtures
 COLLECT_STATIC := python manage.py collectstatic --noinput
 DJANGO_MIGRATE := python manage.py distributed_migrate --noinput
@@ -76,7 +76,10 @@ DEBUG_SET_ENV_VARS := \
 	export ACTIVITY_STREAM_ACCESS_KEY_ID=123-id-key; \
 	export ACTIVITY_STREAM_SECRET_ACCESS_KEY=123-secret-key; \
 	export FEATURE_ENFORCE_STAFF_SSO_ENABLED=false; \
-	export USERS_REQUEST_ACCESS_PREVENT_RESUBMISSION=false
+	export USERS_REQUEST_ACCESS_PREVENT_RESUBMISSION=false; \
+	export AWS_STORAGE_BUCKET_NAME=debug; \
+	export AWS_ACCESS_KEY_ID=debug; \
+	export AWS_SECRET_ACCESS_KEY=debug
 
 
 TEST_SET_ENV_VARS := \
