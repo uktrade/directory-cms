@@ -108,6 +108,7 @@ def test_edit_user_view_invalid_form(admin_client, approved_user):
     assert response.status_code == status.HTTP_200_OK
 
 
+@pytest.mark.django_db
 def test_edit_user_view_cannot_change_personal_details_when_sso_enforced(
     admin_client
 ):
@@ -128,6 +129,7 @@ def test_edit_user_view_cannot_change_personal_details_when_sso_enforced(
 
     # Change this back to avoid cross-test pollution
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
+    reload_urlconf()
 
 
 @pytest.mark.django_db
@@ -153,6 +155,7 @@ def test_edit_user_view_preserves_ability_to_update_is_active(admin_client):
 
     # Reset flag to avoid cross-test pollution
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
+    reload_urlconf()
 
 
 @pytest.mark.django_db
@@ -172,6 +175,7 @@ def test_edit_user_view_warns_administrator_if_user_is_awaiting_approval(
 
     # Reset flag to avoid cross-test pollution
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
+    reload_urlconf()
 
 
 @pytest.mark.django_db
@@ -185,10 +189,7 @@ def test_edit_user_view_marks_user_as_approved_if_added_to_group(
     profile = user_awaiting_approval.userprofile
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
 
-    with patch(
-        'users.views.notify_user_of_access_request_approval',
-        autospec=True
-    ) as mocked_method:
+    with patch('users.views.notify_user_of_access_request_approval', autospec=True) as mocked_method:
         response = admin_client.post(url, {
             'username': user.username,
             'first_name': user.first_name,
@@ -220,6 +221,7 @@ def test_edit_user_view_marks_user_as_approved_if_added_to_group(
 
     # Reset flag to avoid cross-test pollution
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
+    reload_urlconf()
 
 
 @pytest.mark.django_db
@@ -266,6 +268,7 @@ def reload_urlconf(urlconf=None):
         import_module(urlconf)
 
 
+@pytest.mark.django_db
 def test_force_staff_sso(client):
     """Test that URLs and redirects are in place."""
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = True
