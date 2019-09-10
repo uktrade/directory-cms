@@ -619,7 +619,6 @@ class InternationalHomePage(
             InternationalTopicLandingPage,
             InternationalCuratedTopicLandingPage,
             InternationalGuideLandingPage,
-            InternationalRegionPage,
             InternationalEUExitFormPage,
             InternationalEUExitFormSuccessPage,
             AboutDitLandingPage,
@@ -632,31 +631,6 @@ class InternationalHomePage(
         ]
 
 
-# !!! TO BE REMOVED !!!
-class InternationalRegionPage(panels.InternationalRegionPagePanels, BaseInternationalPage):
-    parent_page_types = ['great_international.InternationalHomePage']
-    subpage_types = []
-
-    tags = ParentalManyToManyField(snippets.Tag, blank=True)
-
-    def save(self, *args, **kwargs):
-        return super().save(*args, **kwargs)
-
-
-# !!! TO BE REMOVED !!!
-class InternationalLocalisedFolderPage(panels.InternationalLocalisedFolderPagePanels, BaseInternationalPage):
-    subpage_types = [
-        'great_international.InternationalArticlePage',
-        'great_international.InternationalCampaignPage'
-    ]
-
-    def save(self, *args, **kwargs):
-        if self.pk is None:
-            self.slug = slugify(f'{self.slug}-{self.get_parent().slug}')
-        return super().save(*args, **kwargs)
-
-
->>>>>>> develop
 class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
