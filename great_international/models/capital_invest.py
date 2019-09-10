@@ -127,13 +127,12 @@ class InternationalCapitalInvestLandingPage(
     slug_identity = 'capital-invest'
 
     parent_page_types = ['great_international.InternationalHomePage']
+    subpage_types = [
+        'great_international.CapitalInvestContactFormPage',
+        'great_international.InternationalGuideLandingPage'
+    ]
 
-    @classmethod
-    def allowed_subpage_models(cls):
-        return [
-            CapitalInvestContactFormPage
-        ]
-
+    breadcrumbs_label = models.CharField(max_length=255, blank=True)
     hero_title = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',

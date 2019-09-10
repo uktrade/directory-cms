@@ -12,6 +12,7 @@ class InternationalCapitalInvestLandingPagePanels:
 
     content_panels = [
         FieldPanel('title'),
+        FieldPanel('breadcrumbs_label'),
         MultiFieldPanel(
             heading="Hero",
             children=[
