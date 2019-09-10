@@ -27,358 +27,305 @@ class InternationalHomePagePanels:
             ]
         ),
         MultiFieldPanel(
-            heading="Featured Cards",
+            heading="Old International Home Page",
+            classname="collapsible collapsed",
             children=[
+                MultiFieldPanel(
+                    heading="Featured Cards",
+                    children=[
+                        FieldRowPanel([
+                            MultiFieldPanel(
+                                heading='Invest Card',
+                                children=[
+                                    FieldPanel('invest_title'),
+                                    FieldPanel('invest_content'),
+                                    ImageChooserPanel('invest_image')
+                                ]
+                            ),
+                            MultiFieldPanel(
+                                heading='Trade Card',
+                                children=[
+                                    FieldPanel('trade_title'),
+                                    FieldPanel('trade_content'),
+                                    ImageChooserPanel('trade_image')
+                                ]
+                            ),
+                        ]),
+                    ]
+                ),
+                MultiFieldPanel(
+                    heading='Features highlight',
+                    children=[
+                        FieldPanel('section_two_heading'),
+                        FieldPanel('section_two_teaser'),
+                        FieldRowPanel([
+                            MultiFieldPanel(
+                                children=[
+                                    ImageChooserPanel(
+                                        'section_two_subsection_one_icon'
+                                    ),
+                                    FieldPanel('section_two_subsection_one_heading'),
+                                    FieldPanel('section_two_subsection_one_body')
+                                ]),
+                            MultiFieldPanel(
+                                children=[
+                                    ImageChooserPanel(
+                                        'section_two_subsection_two_icon'
+                                    ),
+                                    FieldPanel('section_two_subsection_two_heading'),
+                                    FieldPanel('section_two_subsection_two_body')
+                                ]),
+                            MultiFieldPanel(
+                                children=[
+                                    ImageChooserPanel(
+                                        'section_two_subsection_three_icon'
+                                    ),
+                                    FieldPanel('section_two_subsection_three_heading'),
+                                    FieldPanel('section_two_subsection_three_body')
+                                ]),
+                            MultiFieldPanel(
+                                children=[
+                                    ImageChooserPanel(
+                                        'section_two_subsection_four_icon'
+                                    ),
+                                    FieldPanel('section_two_subsection_four_heading'),
+                                    FieldPanel('section_two_subsection_four_body')
+                                ]),
+                            MultiFieldPanel(
+                                children=[
+                                    ImageChooserPanel(
+                                        'section_two_subsection_five_icon'
+                                    ),
+                                    FieldPanel('section_two_subsection_five_heading'),
+                                    FieldPanel('section_two_subsection_five_body')
+                                ]),
+                            MultiFieldPanel(
+                                children=[
+                                    ImageChooserPanel(
+                                        'section_two_subsection_six_icon'),
+                                    FieldPanel('section_two_subsection_six_heading'
+                                               ),
+                                    FieldPanel('section_two_subsection_six_body')
+                                ])
+                        ])
+                    ]),
+                MultiFieldPanel(
+                    heading='Tariffs',
+                    children=[
+                        FieldPanel('tariffs_title'),
+                        FieldPanel('tariffs_description'),
+                        FieldPanel('tariffs_link'),
+                        ImageChooserPanel('tariffs_image'),
+                        FieldPanel('tariffs_call_to_action_text')
+                    ]
+                ),
+                MultiFieldPanel(
+                    heading='Featured links',
+                    children=[
+                        FieldPanel('featured_links_title'),
+                        FieldPanel('featured_links_summary'),
+                        FieldRowPanel([
+                            MultiFieldPanel(
+                                children=[
+                                    FieldPanel('featured_link_one_heading'),
+                                    ImageChooserPanel('featured_link_one_image')
+                                ]),
+                            MultiFieldPanel(
+                                children=[
+                                    FieldPanel('featured_link_two_heading'),
+                                    ImageChooserPanel('featured_link_two_image')
+                                ]),
+                            MultiFieldPanel(
+                                children=[
+                                    FieldPanel('featured_link_three_heading'),
+                                    ImageChooserPanel('featured_link_three_image')
+                                ])
+                        ])]
+                ),
+                MultiFieldPanel(
+                    heading='News section',
+                    children=[
+                        FieldPanel('news_title'),
+                        FieldRowPanel([
+                            PageChooserPanel(
+                                'related_page_one',
+                                [
+                                    'great_international.InternationalArticlePage',
+                                    'great_international.InternationalCampaignPage',
+                                ]),
+                            PageChooserPanel(
+                                'related_page_two',
+                                [
+                                    'great_international.InternationalArticlePage',
+                                    'great_international.InternationalCampaignPage',
+                                ]),
+                            PageChooserPanel(
+                                'related_page_three',
+                                [
+                                    'great_international.InternationalArticlePage',
+                                    'great_international.InternationalCampaignPage',
+                                ]),
+                        ])
+                    ]
+                ),
+                MultiFieldPanel(
+                    heading='Featured CTA\'s',
+                    children=[
+                        FieldRowPanel([
+                            MultiFieldPanel(
+                                heading="Study in the UK",
+                                children=[
+                                    FieldPanel('study_in_uk_cta_text')
+                                ]
+                            ),
+                            MultiFieldPanel(
+                                heading="Visit the UK",
+                                children=[
+                                    FieldPanel('visit_uk_cta_text')
+                                ]
+                            ),
+                        ]),
+                    ]
+                ),
+            ]
+        ),
+        FieldPanel('is_new_page_ready'),
+        MultiFieldPanel(
+            heading="Ready to trade stories",
+            children=[
+                HelpPanel('At least one ready to trade story is required for this section to show'),
+                FieldPanel('ready_to_trade_story_one'),
+                FieldPanel('ready_to_trade_story_two'),
+                FieldPanel('ready_to_trade_story_three'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Benefits of the UK section",
+            children=[
+                HelpPanel('A title and at least one benefit text is required for this section to show'),
+                FieldPanel('benefits_of_uk_title'),
+                FieldPanel('benefits_of_uk_intro'),
                 FieldRowPanel([
-                    MultiFieldPanel(
-                        heading='Invest Card',
-                        children=[
-                            FieldPanel('invest_title'),
-                            FieldPanel('invest_content'),
-                            ImageChooserPanel('invest_image')
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        heading='Trade Card',
-                        children=[
-                            FieldPanel('trade_title'),
-                            FieldPanel('trade_content'),
-                            ImageChooserPanel('trade_image')
-                        ]
-                    ),
+                    FieldPanel('benefits_of_uk_one'),
+                    FieldPanel('benefits_of_uk_two'),
+                    FieldPanel('benefits_of_uk_three'),
                 ]),
-            ]
-        ),
-
-        MultiFieldPanel(
-            heading='Features highlight',
-            children=[
-                FieldPanel('section_two_heading'),
-                FieldPanel('section_two_teaser'),
                 FieldRowPanel([
-                    MultiFieldPanel(
-                        children=[
-                            ImageChooserPanel(
-                                'section_two_subsection_one_icon'
-                            ),
-                            FieldPanel('section_two_subsection_one_heading'),
-                            FieldPanel('section_two_subsection_one_body')
-                        ]),
-                    MultiFieldPanel(
-                        children=[
-                            ImageChooserPanel(
-                                'section_two_subsection_two_icon'
-                            ),
-                            FieldPanel('section_two_subsection_two_heading'),
-                            FieldPanel('section_two_subsection_two_body')
-                        ]),
-                    MultiFieldPanel(
-                        children=[
-                            ImageChooserPanel(
-                                'section_two_subsection_three_icon'
-                            ),
-                            FieldPanel('section_two_subsection_three_heading'),
-                            FieldPanel('section_two_subsection_three_body')
-                        ]),
-                    MultiFieldPanel(
-                        children=[
-                            ImageChooserPanel(
-                                'section_two_subsection_four_icon'
-                            ),
-                            FieldPanel('section_two_subsection_four_heading'),
-                            FieldPanel('section_two_subsection_four_body')
-                        ]),
-                    MultiFieldPanel(
-                        children=[
-                            ImageChooserPanel(
-                                'section_two_subsection_five_icon'
-                            ),
-                            FieldPanel('section_two_subsection_five_heading'),
-                            FieldPanel('section_two_subsection_five_body')
-                        ]),
-                    MultiFieldPanel(
-                        children=[
-                            ImageChooserPanel(
-                                'section_two_subsection_six_icon'),
-                            FieldPanel('section_two_subsection_six_heading'
-                                       ),
-                            FieldPanel('section_two_subsection_six_body')
-                        ])
-                ])
-            ]),
-
-        MultiFieldPanel(
-            heading='Tariffs',
-            children=[
-                FieldPanel('tariffs_title'),
-                FieldPanel('tariffs_description'),
-                FieldPanel('tariffs_link'),
-                ImageChooserPanel('tariffs_image'),
-                FieldPanel('tariffs_call_to_action_text')
-            ]
-        ),
-
-        MultiFieldPanel(
-            heading='Featured links',
-            children=[
-                FieldPanel('featured_links_title'),
-                FieldPanel('featured_links_summary'),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        children=[
-                            FieldPanel('featured_link_one_heading'),
-                            ImageChooserPanel('featured_link_one_image')
-                        ]),
-                    MultiFieldPanel(
-                        children=[
-                            FieldPanel('featured_link_two_heading'),
-                            ImageChooserPanel('featured_link_two_image')
-                        ]),
-                    MultiFieldPanel(
-                        children=[
-                            FieldPanel('featured_link_three_heading'),
-                            ImageChooserPanel('featured_link_three_image')
-                        ])
-                ])]
-        ),
-
-        MultiFieldPanel(
-            heading='News section',
-            children=[
-                FieldPanel('news_title'),
-                FieldRowPanel([
-                    PageChooserPanel(
-                        'related_page_one',
-                        [
-                            'great_international.InternationalArticlePage',
-                            'great_international.InternationalCampaignPage',
-                        ]),
-                    PageChooserPanel(
-                        'related_page_two',
-                        [
-                            'great_international.InternationalArticlePage',
-                            'great_international.InternationalCampaignPage',
-                        ]),
-                    PageChooserPanel(
-                        'related_page_three',
-                        [
-                            'great_international.InternationalArticlePage',
-                            'great_international.InternationalCampaignPage',
-                        ]),
-                ])
-            ]
-        ),
-
-        MultiFieldPanel(
-            heading='Featured CTA\'s',
-            children=[
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        heading="Study in the UK",
-                        children=[
-                            FieldPanel('study_in_uk_cta_text')
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        heading="Visit the UK",
-                        children=[
-                            FieldPanel('visit_uk_cta_text')
-                        ]
-                    ),
+                    FieldPanel('benefits_of_uk_four'),
+                    FieldPanel('benefits_of_uk_five'),
+                    FieldPanel('benefits_of_uk_six'),
                 ]),
-            ]
+            ],
         ),
-
-        SearchEngineOptimisationPanel(),
-    ]
-
-    settings_panels = [
-        FieldPanel('slug'),
-    ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
-
-
-class InternationalHomePageOldPanels:
-
-    content_panels = [
-        FieldPanel('title'),
         MultiFieldPanel(
-            heading="Hero Section",
+            heading="Ready for brexit section",
             children=[
-                FieldPanel('hero_title'),
-                FieldPanel('hero_subtitle'),
-                FieldPanel("hero_cta_text"),
-                FieldPanel("hero_cta_link"),
-                ImageChooserPanel("hero_image")
+                HelpPanel('A title, cta text and cta link are required for this section to show'),
+                FieldPanel('ready_for_brexit_title'),
+                ImageChooserPanel('ready_for_brexit_image'),
+                FieldPanel('ready_for_brexit_cta_text'),
+                FieldPanel('ready_for_brexit_cta_link'),
             ]
         ),
         MultiFieldPanel(
-            heading="Featured Cards",
+            heading="How we help",
             children=[
+                HelpPanel('A title and at least one how we help with an icon and text is required for this section to show'),  # NOQA
+                FieldPanel('how_we_help_title'),
+                FieldPanel('how_we_help_intro'),
                 FieldRowPanel([
-                    MultiFieldPanel(
-                        heading='Invest Card',
-                        children=[
-                            FieldPanel('invest_title'),
-                            FieldPanel('invest_content'),
-                            ImageChooserPanel('invest_image')
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        heading='Trade Card',
-                        children=[
-                            FieldPanel('trade_title'),
-                            FieldPanel('trade_content'),
-                            ImageChooserPanel('trade_image')
-                        ]
-                    ),
-                ]),
-            ]
-        ),
-
-        MultiFieldPanel(
-            heading='Features highlight',
-            children=[
-                FieldPanel('section_two_heading'),
-                FieldPanel('section_two_teaser'),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        children=[
-                            ImageChooserPanel(
-                                'section_two_subsection_one_icon'
-                            ),
-                            FieldPanel('section_two_subsection_one_heading'),
-                            FieldPanel('section_two_subsection_one_body')
-                        ]),
-                    MultiFieldPanel(
-                        children=[
-                            ImageChooserPanel(
-                                'section_two_subsection_two_icon'
-                            ),
-                            FieldPanel('section_two_subsection_two_heading'),
-                            FieldPanel('section_two_subsection_two_body')
-                        ]),
-                    MultiFieldPanel(
-                        children=[
-                            ImageChooserPanel(
-                                'section_two_subsection_three_icon'
-                            ),
-                            FieldPanel('section_two_subsection_three_heading'),
-                            FieldPanel('section_two_subsection_three_body')
-                        ]),
-                    MultiFieldPanel(
-                        children=[
-                            ImageChooserPanel(
-                                'section_two_subsection_four_icon'
-                            ),
-                            FieldPanel('section_two_subsection_four_heading'),
-                            FieldPanel('section_two_subsection_four_body')
-                        ]),
-                    MultiFieldPanel(
-                        children=[
-                            ImageChooserPanel(
-                                'section_two_subsection_five_icon'
-                            ),
-                            FieldPanel('section_two_subsection_five_heading'),
-                            FieldPanel('section_two_subsection_five_body')
-                        ]),
-                    MultiFieldPanel(
-                        children=[
-                            ImageChooserPanel(
-                                'section_two_subsection_six_icon'),
-                            FieldPanel('section_two_subsection_six_heading'
-                                       ),
-                            FieldPanel('section_two_subsection_six_body')
-                        ])
-                ])
-            ]),
-
-        MultiFieldPanel(
-            heading='Tariffs',
-            children=[
-                FieldPanel('tariffs_title'),
-                FieldPanel('tariffs_description'),
-                FieldPanel('tariffs_link'),
-                ImageChooserPanel('tariffs_image'),
-                FieldPanel('tariffs_call_to_action_text')
-            ]
-        ),
-
-        MultiFieldPanel(
-            heading='Featured links',
-            children=[
-                FieldPanel('featured_links_title'),
-                FieldPanel('featured_links_summary'),
-                FieldRowPanel([
-                    MultiFieldPanel(
-                        children=[
-                            FieldPanel('featured_link_one_heading'),
-                            ImageChooserPanel('featured_link_one_image')
-                        ]),
-                    MultiFieldPanel(
-                        children=[
-                            FieldPanel('featured_link_two_heading'),
-                            ImageChooserPanel('featured_link_two_image')
-                        ]),
-                    MultiFieldPanel(
-                        children=[
-                            FieldPanel('featured_link_three_heading'),
-                            ImageChooserPanel('featured_link_three_image')
-                        ])
-                ])]
-        ),
-
-        MultiFieldPanel(
-            heading='News section',
-            children=[
-                FieldPanel('news_title'),
-                FieldRowPanel([
-                    PageChooserPanel(
-                        'related_page_one',
-                        [
-                            'great_international.InternationalArticlePage',
-                            'great_international.InternationalCampaignPage',
-                        ]),
-                    PageChooserPanel(
-                        'related_page_two',
-                        [
-                            'great_international.InternationalArticlePage',
-                            'great_international.InternationalCampaignPage',
-                        ]),
-                    PageChooserPanel(
-                        'related_page_three',
-                        [
-                            'great_international.InternationalArticlePage',
-                            'great_international.InternationalCampaignPage',
-                        ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('how_we_help_one_icon'),
+                        FieldPanel('how_we_help_one_text')
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('how_we_help_two_icon'),
+                        FieldPanel('how_we_help_two_text')
+                    ]),
+                    MultiFieldPanel([
+                        ImageChooserPanel('how_we_help_three_icon'),
+                        FieldPanel('how_we_help_three_text')
+                    ]),
                 ])
             ]
         ),
-
         MultiFieldPanel(
-            heading='Featured CTA\'s',
+            heading="Ways of doing business section",
             children=[
+                HelpPanel('A title and at least one related page is required for this section to show'),
+                FieldPanel('ways_of_doing_business_title'),
                 FieldRowPanel([
-                    MultiFieldPanel(
-                        heading="Study in the UK",
-                        children=[
-                            FieldPanel('study_in_uk_cta_text')
-                        ]
-                    ),
-                    MultiFieldPanel(
-                        heading="Visit the UK",
-                        children=[
-                            FieldPanel('visit_uk_cta_text')
-                        ]
-                    ),
-                ]),
+                    MultiFieldPanel([
+                        PageChooserPanel(
+                            'related_page_expand',
+                            'great_international.InvestInternationalHomePage'
+                        ),
+                        FieldPanel('related_page_expand_description')
+                    ]),
+                    MultiFieldPanel([
+                        PageChooserPanel(
+                            'related_page_invest_capital',
+                            'great_international.InternationalCapitalInvestLandingPage'
+                        ),
+                        FieldPanel('related_page_invest_capital_description')
+                    ]),
+                    MultiFieldPanel([
+                        PageChooserPanel(
+                            'related_page_buy',
+                            'great_international.InternationalTradeHomePage'
+                        ),
+                        FieldPanel('related_page_buy_description')
+                    ]),
+                ])
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Case study",
+            children=[
+                HelpPanel('Required fields for section to show: Case Study Image, Case Study Title'),
+                ImageChooserPanel('case_study_image'),
+                FieldPanel('case_study_title'),
+                FieldPanel('case_study_text'),
+                FieldPanel('case_study_cta_text'),
+                FieldPanel('case_study_cta_link'),
             ]
         ),
-
+        MultiFieldPanel(
+            heading="Industries section",
+            children=[
+                HelpPanel('A title and a sector in the active language is required for this section to show'),
+                FieldPanel('industries_section_title'),
+                FieldPanel('industries_section_intro'),
+                FieldPanel('industries_section_industry_label'),
+                FieldPanel('industries_section_cta_text'),
+                FieldPanel('industries_section_cta_link'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Link to section",
+            children=[
+                HelpPanel('A title and at least one link to section is required for this section to show'),
+                FieldPanel('link_to_section_title'),
+                FieldPanel('link_to_section_intro'),
+                FieldRowPanel([
+                    MultiFieldPanel([
+                        FieldPanel('link_to_section_one'),
+                        FieldPanel('link_to_section_one_cta_text'),
+                        FieldPanel('link_to_section_one_cta_link'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('link_to_section_two'),
+                        FieldPanel('link_to_section_two_cta_text'),
+                        FieldPanel('link_to_section_two_cta_link'),
+                    ]),
+                    MultiFieldPanel([
+                        FieldPanel('link_to_section_three'),
+                        FieldPanel('link_to_section_three_cta_text'),
+                        FieldPanel('link_to_section_three_cta_link'),
+                    ]),
+                ])
+            ]
+        ),
         SearchEngineOptimisationPanel(),
     ]
 

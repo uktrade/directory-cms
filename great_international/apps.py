@@ -11,7 +11,6 @@ class GreatInternationalConfig(AppConfig):
         cache.InternationalSectorPageSubscriber.subscribe()
         cache.InternationalSubSectorPageSubscriber.subscribe()
         cache.InternationalHomePageSubscriber.subscribe()
-        cache.InternationalHomePageOldSubscriber.subscribe()
         cache.InternationalArticlePageSubscriber.subscribe()
         cache.InternationalCampaignPageSubscriber.subscribe()
         cache.InternationalArticleListingPageSubscriber.subscribe()
