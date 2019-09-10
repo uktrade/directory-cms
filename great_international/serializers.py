@@ -2383,6 +2383,7 @@ class AboutUkWhyChooseTheUkPageSerializer(BasePageSerializer):
     teaser = core_fields.MarkdownToHTMLField()
     section_one_body = core_fields.MarkdownToHTMLField()
     section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    section_one_video = core_fields.VideoField()
 
     statistics = serializers.SerializerMethodField()
 
