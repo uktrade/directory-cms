@@ -1039,8 +1039,8 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
         if not instance.related_page_invest_capital:
             return serialized
         invest_capital_page = RelatedCapitalInvestPageSerializer(instance.related_page_invest_capital.specific).data
-        if 'image' in invest_capital_page and 'title' in invest_capital_page \
-                and invest_capital_page['image'] and invest_capital_page['title']:
+        if 'image' in invest_capital_page and 'title' in invest_capital_page and invest_capital_page['image'] \
+                and invest_capital_page['title']:
             serialized = invest_capital_page
         return serialized
 
@@ -1049,8 +1049,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer):
         if not instance.related_page_buy:
             return serialized
         trade_page = RelatedTradeHomePageSerializer(instance.related_page_buy.specific).data
-        if 'image' in trade_page and 'title' in trade_page \
-                and trade_page['image'] and trade_page['title']:
+        if 'image' in trade_page and 'title' in trade_page and trade_page['image'] and trade_page['title']:
             serialized = trade_page
         return serialized
 
