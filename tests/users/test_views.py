@@ -1,11 +1,13 @@
-import sys
-import pytest
-from unittest.mock import patch
 from importlib import import_module, reload
+import pytest
+import sys
+from unittest.mock import patch
+
+from rest_framework import status
+
 from django.conf import settings
 from django.urls import clear_url_caches
 from django.urls import reverse
-from rest_framework import status
 
 from .factories import UserFactory
 from groups.models import GroupInfo
@@ -178,7 +180,6 @@ def test_edit_user_view_warns_administrator_if_user_is_awaiting_approval(
     reload_urlconf()
 
 
-@pytest.mark.xfail
 @pytest.mark.django_db
 def test_edit_user_view_marks_user_as_approved_if_added_to_group(admin_client, admin_user, user_awaiting_approval):
     # This flag must be set for the warning to show
