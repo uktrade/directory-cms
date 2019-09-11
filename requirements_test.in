@@ -1,15 +1,14 @@
 -r requirements.in
 
-pytest>=4.4.0<5.0.0
-pytest-cov>=2.7.1<3.0
-pytest-django>=3.5.1<4.0.0
-pytest-xdist
+pytest
+pytest-cov
+pytest-django
 pytest-sugar
 flake8
 requests_mock
 freezegun
 codecov
-factory-boy==2.8.1
+factory-boy
 beautifulsoup4
-wagtail-factories==2.0.0
-django-debug-toolbar==2.0
+wagtail-factories
+django-debug-toolbar
