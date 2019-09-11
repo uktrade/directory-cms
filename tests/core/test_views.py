@@ -93,8 +93,7 @@ def test_api_translations_are_loaded_when_available(
 ))
 @pytest.mark.django_db
 def test_api_falls_back_to_english_when_translations_unavailable(
-    client, untranslated_page, site_with_untranslated_page_as_root,
-    language_code
+    client, untranslated_page, site_with_untranslated_page_as_root, language_code
 ):
     # to be added as a query params to all requests
     languge_query_params = {'lang': language_code}
@@ -438,6 +437,7 @@ def test_lookup_by_slug_missing_page(admin_client):
     assert response.json() == {'message': expected_msg}
 
 
+@pytest.mark.django_db
 def test_cache_etags_match(admin_client, international_root_page):
     service_name = cms.GREAT_INTERNATIONAL
 
@@ -459,6 +459,7 @@ def test_cache_etags_match(admin_client, international_root_page):
     assert response_three.content == b''
 
 
+@pytest.mark.django_db
 def test_cache_etags_mismatch(admin_client, international_root_page):
     service_name = cms.GREAT_INTERNATIONAL
     # given there exists a page that is cached
