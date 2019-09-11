@@ -136,7 +136,7 @@ class EditUserView(
             # need to update their session hash
             update_session_auth_hash(self.request, user)
 
-        if self.is_approval and user.has_perm('wagtailadmin.access_admin'):
+        if self.is_approval and self.request.user.has_perm('wagtailadmin.access_admin'):
             self.mark_user_as_approved()
             self.notify_user()
 
