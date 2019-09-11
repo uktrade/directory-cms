@@ -230,7 +230,6 @@ def approved_user():
 @pytest.fixture
 def user_awaiting_approval(groups_with_info):
     user = UserFactory(username='awaiting-approval-user')
-    user.user_permissions.add(Permission.objects.get(codename='access_admin'))
     profile = user.userprofile
     profile.assignment_status = UserProfile.STATUS_AWAITING_APPROVAL
     profile.self_assigned_group_id = groups_with_info[0].id
@@ -245,7 +244,7 @@ def international_root_page(root_page, request):
 
     return InternationalHomePageFactory.create(
         parent=root_page,
-        slug='home',
+        slug='international-home',
         title_en_gb='home',
         hero_title_en_gb='foo',
         invest_title_en_gb='foo',

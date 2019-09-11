@@ -71,13 +71,13 @@ def test_get_edit_user_view(admin_client):
 
 
 @pytest.mark.django_db
-def test_edit_user_view(admin_client):
+def test_edit_user_view(team_leaders_group, admin_client):
     user = UserFactory(**USER_DETAILS)
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
 
     # We'll add the user to a group, as well as changing their details
     post_data = USER_DETAILS_CHANGING.copy()
-    post_data['groups'] = ['1']
+    post_data['groups'] = [team_leaders_group.pk]
     response = admin_client.post(url, data=post_data)
 
     assert response.context['message'] == 'User johnsmith updated.'
@@ -91,7 +91,7 @@ def test_edit_user_view(admin_client):
 
     # And they should have been added to a group
     group_ids = set(user.groups.values_list('id', flat=True))
-    assert group_ids == {1}
+    assert group_ids == {team_leaders_group.pk}
 
 
 @pytest.mark.django_db
@@ -225,9 +225,7 @@ def test_edit_user_view_marks_user_as_approved_if_added_to_group(
 
 
 @pytest.mark.django_db
-def test_edit_user_view_does_not_mark_user_as_approved_if_not_added_to_a_group(
-    admin_client, admin_user, user_awaiting_approval
-):
+def test_edit_user_view_does_not_mark_user_as_approved_if_not_added_to_a_group(admin_client, user_awaiting_approval):
     user = user_awaiting_approval
     profile = user_awaiting_approval.userprofile
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})

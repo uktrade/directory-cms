@@ -53,8 +53,8 @@ def test_page_paths(root_page, international_root_page):
     international_page_three = InternationalArticlePageFactory(
         parent=international_page_two, slug='article')
 
-    assert international_page_two.full_path == 'topic/list/'
-    assert international_page_three.full_path == 'topic/list/article/'
+    assert international_page_two.full_path == '/international/content/topic/list/'
+    assert international_page_three.full_path == '/international/content/topic/list/article/'
 
 
 @pytest.mark.django_db
