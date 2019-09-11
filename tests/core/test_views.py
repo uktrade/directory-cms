@@ -7,7 +7,7 @@ from modeltranslation.utils import build_localized_fieldname
 from django.forms.models import model_to_dict
 from django.urls import reverse
 
-from core import helpers, permissions, views
+from core import cache, helpers, permissions, views
 from core.helpers import CachedResponse
 from conf.signature import SignatureCheckPermission
 from tests.great_international.factories import InternationalSectorPageFactory
@@ -229,6 +229,7 @@ def test_upstream_anon(client, translated_page, image, url_name):
 def test_add_page_prepopulate(
         is_edit, expected_template, international_root_page, translated_page, admin_client, image, cluster_data
 ):
+    cache.PageIDCache.populate()
     url = reverse(
         'preload-add-page',
         kwargs={
@@ -261,7 +262,7 @@ def test_add_page_prepopulate(
         'introduction_column_three_icon': str(image.pk),
     }
     if is_edit:
-        post_data['full_path'] = expected_data['full_path'] = translated_page.full_path
+        post_data['full_path'] = expected_data['full_path'] = translated_page.get_url_parts()[2]
 
     response = admin_client.post(url, clean_post_data(post_data))
 

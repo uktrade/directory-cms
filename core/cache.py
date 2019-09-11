@@ -299,7 +299,6 @@ class PageIDCache:
 
         # This value should be cached by Wagtail
         site_root_paths = Site.get_site_root_paths()
-
         for page in cls.get_population_queryset():
             # Path lookup keys must include the site id and url_path, minus
             # the site root path, which Page.get_url_parts() can give us
