@@ -176,7 +176,6 @@ def test_homepage_no_advice(admin_client, root_page):
 
 
 @pytest.mark.django_db
-
 def test_international_landing_age(admin_client, root_page):
     page = factories.InternationaLandingPageFactory.create(
         parent=root_page
