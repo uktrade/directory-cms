@@ -119,7 +119,7 @@ def test_translated_languages(international_root_page, language_code):
 @pytest.mark.django_db
 def test_translated_localised_urls(translated_page):
 
-    domain = f'http://localhost/{translated_page.slug}'
+    domain = f'http://great.gov.uk/international/content/{translated_page.slug}'
 
     assert sorted(translated_page.get_localized_urls()) == [
         ('ar', domain + '/?lang=ar'),

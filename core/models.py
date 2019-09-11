@@ -17,9 +17,7 @@ from django.contrib.contenttypes.fields import (
     GenericForeignKey, GenericRelation
 )
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.postgres.fields import ArrayField
 from django.db import models, transaction
-from django.forms import MultipleChoiceField
 from django.shortcuts import redirect
 from django.utils import translation
 
@@ -41,17 +39,6 @@ class Breadcrumb(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     page = GenericForeignKey('content_type', 'object_id')
-
-
-class ChoiceArrayField(ArrayField):
-
-    def formfield(self, **kwargs):
-        defaults = {
-            'form_class': MultipleChoiceField,
-            'choices': self.base_field.choices,
-        }
-        defaults.update(kwargs)
-        return super(ArrayField, self).formfield(**defaults)
 
 
 @register_setting

@@ -226,8 +226,9 @@ def test_upstream_anon(client, translated_page, image, url_name):
     (True, 'wagtailadmin/pages/edit.html'),
     (False, 'wagtailadmin/pages/create.html'),
 ))
-def test_add_page_prepopulate(translated_page, admin_client, image, cluster_data, is_edit, expected_template,
-                              international_root_page, international_site):
+def test_add_page_prepopulate(
+        is_edit, expected_template, international_root_page, translated_page, admin_client, image, cluster_data
+):
     url = reverse(
         'preload-add-page',
         kwargs={
@@ -436,7 +437,6 @@ def test_lookup_by_slug_missing_page(admin_client):
     assert response.json() == {'message': expected_msg}
 
 
-@pytest.mark.django_db
 def test_cache_etags_match(admin_client, international_root_page):
     service_name = cms.GREAT_INTERNATIONAL
 
@@ -458,7 +458,6 @@ def test_cache_etags_match(admin_client, international_root_page):
     assert response_three.content == b''
 
 
-@pytest.mark.django_db
 def test_cache_etags_mismatch(admin_client, international_root_page):
     service_name = cms.GREAT_INTERNATIONAL
     # given there exists a page that is cached
