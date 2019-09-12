@@ -7,7 +7,6 @@ from wagtailmedia.widgets import AdminMediaChooser
 
 from core.panels import SearchEngineOptimisationPanel
 
-
 ACCORDION_FIELDS_HELP_TEXT = (
     'To be displayed, this industry needs at least: a title, a teaser, '
     '2 bullet points, and 2 calls to action (CTAs).')
@@ -927,6 +926,7 @@ class CountryGuidePagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
 
@@ -1180,67 +1180,6 @@ class HomePagePanels:
             ]
         ),
 
-        SearchEngineOptimisationPanel(),
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-    ]
-
-
-class HomePageOldPanels:
-
-    content_panels = [
-        MultiFieldPanel(
-            heading='EU Exit banner',
-            children=[
-                FieldPanel('banner_label'),
-                FieldPanel('banner_content'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading='EU exit news',
-            children=[
-                FieldPanel('news_title'),
-                FieldPanel('news_description')
-            ]
-        ),
-        SearchEngineOptimisationPanel(),
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-    ]
-
-
-class InternationalLandingPagePanels:
-
-    content_panels = [
-        SearchEngineOptimisationPanel()
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-    ]
-
-
-class EUExitInternationalFormPagePanels:
-    content_panels_before_form = [
-        MultiFieldPanel(
-            heading='Hero',
-            children=[
-                FieldPanel('breadcrumbs_label'),
-                FieldPanel('heading'),
-                FieldPanel('body_text'),
-            ]
-        ),
-    ]
-    content_panels_after_form = [
-        FieldPanel('disclaimer', widget=Textarea),
-        FieldPanel('submit_button_text'),
         SearchEngineOptimisationPanel(),
     ]
 
