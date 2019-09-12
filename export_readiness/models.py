@@ -1037,6 +1037,8 @@ class CountryGuidePage(panels.CountryGuidePagePanels, BaseDomesticPage):
         related_name='+'
     )
 
+    tags = ParentalManyToManyField(snippets.IndustryTag, blank=True)
+
 
 class MarketingPages(ExclusivePageMixin, BaseDomesticPage):
 
@@ -1396,60 +1398,6 @@ class HomePage(
         ]
 
 
-class HomePageOld(panels.HomePageOldPanels, ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
-    slug_identity = slugs.GREAT_HOME_OLD
-    parent_page_types = []
-    subpage_types = []
-
-    banner_content = MarkdownField()
-    banner_label = models.CharField(max_length=50, null=True, blank=True)
-    news_title = models.CharField(max_length=255)
-    news_description = MarkdownField()
-
-
-class InternationalLandingPage(panels.InternationalLandingPagePanels, ExclusivePageMixin, BaseDomesticPage):
-
-    slug_identity = slugs.GREAT_HOME_INTERNATIONAL
-    # slug_override = 'international'
-    subpage_types = [
-        'export_readiness.ArticleListingPage',
-    ]
-
-    @property
-    def articles_count(self):
-        return sum(
-            (listing_page.specific.articles_count for listing_page in
-             self.get_descendants().type(ArticleListingPage).live())
-        )
-
-
-class EUExitInternationalFormPage(ExclusivePageMixin, BaseDomesticPage, metaclass=FormPageMetaClass):
-    # metaclass creates <fild_name>_label and <field_name>_help_text
-    form_field_names = [
-        'first_name',
-        'last_name',
-        'email',
-        'organisation_type',
-        'company_name',
-        'country',
-        'city',
-        'comment',
-    ]
-
-    full_path_override = '/international/eu-exit-news/contact/'
-    slug_identity = slugs.EUEXIT_INTERNATIONAL_FORM
-
-    breadcrumbs_label = models.CharField(max_length=50)
-    heading = models.CharField(max_length=255)
-    body_text = MarkdownField()
-    submit_button_text = models.CharField(max_length=50)
-    disclaimer = models.TextField(max_length=500)
-
-    content_panels_before_form = panels.EUExitInternationalFormPagePanels.content_panels_before_form
-    content_panels_after_form = panels.EUExitInternationalFormPagePanels.content_panels_after_form
-    settings_panels = panels.EUExitInternationalFormPagePanels.settings_panels
-
-
 class EUExitDomesticFormPage(ExclusivePageMixin, BaseDomesticPage, metaclass=FormPageMetaClass):
     # metaclass creates <fild_name>_label and <field_name>_help_text
     form_field_names = [
@@ -1504,7 +1452,6 @@ class EUExitFormPages(ExclusivePageMixin, BaseDomesticPage):
     folder_page = True
 
     subpage_types = [
-        'export_readiness.EUExitInternationalFormPage',
         'export_readiness.EUExitDomesticFormPage',
         'export_readiness.EUExitFormSuccessPage',
     ]

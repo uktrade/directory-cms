@@ -41,7 +41,7 @@ class TagsListField(fields.ListField):
 
     def get_attribute(self, instance):
         return [
-            {'name': item.name, 'slug': item.slug}
+            {'name': item.name}
             for item in instance.tags.all()
         ]
 
