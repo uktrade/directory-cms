@@ -7,7 +7,7 @@ from modeltranslation.utils import build_localized_fieldname
 from django.forms.models import model_to_dict
 from django.urls import reverse
 
-from core import helpers, permissions, views
+from core import cache, helpers, permissions, views
 from core.helpers import CachedResponse
 from conf.signature import SignatureCheckPermission
 from tests.great_international.factories import InternationalSectorPageFactory
@@ -93,8 +93,7 @@ def test_api_translations_are_loaded_when_available(
 ))
 @pytest.mark.django_db
 def test_api_falls_back_to_english_when_translations_unavailable(
-    client, untranslated_page, site_with_untranslated_page_as_root,
-    language_code
+    client, untranslated_page, site_with_untranslated_page_as_root, language_code
 ):
     # to be added as a query params to all requests
     languge_query_params = {'lang': language_code}
@@ -226,8 +225,10 @@ def test_upstream_anon(client, translated_page, image, url_name):
     (True, 'wagtailadmin/pages/edit.html'),
     (False, 'wagtailadmin/pages/create.html'),
 ))
-def test_add_page_prepopulate(translated_page, admin_client, image, cluster_data, is_edit, expected_template,
-                              international_root_page, international_site):
+def test_add_page_prepopulate(
+        is_edit, expected_template, international_root_page, translated_page, admin_client, image, cluster_data
+):
+    cache.PageIDCache.populate()
     url = reverse(
         'preload-add-page',
         kwargs={
@@ -260,7 +261,7 @@ def test_add_page_prepopulate(translated_page, admin_client, image, cluster_data
         'introduction_column_three_icon': str(image.pk),
     }
     if is_edit:
-        post_data['full_path'] = expected_data['full_path'] = translated_page.full_path
+        post_data['full_path'] = expected_data['full_path'] = translated_page.get_url_parts()[2]
 
     response = admin_client.post(url, clean_post_data(post_data))
 
@@ -436,6 +437,7 @@ def test_lookup_by_slug_missing_page(admin_client):
     assert response.json() == {'message': expected_msg}
 
 
+@pytest.mark.django_db
 def test_cache_etags_match(admin_client, international_root_page):
     service_name = cms.GREAT_INTERNATIONAL
 
@@ -457,6 +459,7 @@ def test_cache_etags_match(admin_client, international_root_page):
     assert response_three.content == b''
 
 
+@pytest.mark.django_db
 def test_cache_etags_mismatch(admin_client, international_root_page):
     service_name = cms.GREAT_INTERNATIONAL
     # given there exists a page that is cached

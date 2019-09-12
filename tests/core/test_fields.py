@@ -24,11 +24,11 @@ def test_meta_field(rf, international_root_page):
     assert serializer.data['meta'] == {
         'draft_token': None,
         'languages': [('en-gb', 'English')],
-        'url': 'http://localhost/test-slug/',
+        'url': 'http://great.gov.uk/international/content/test-slug/',
         'localised_urls': [
             (
                 'en-gb',
-                'http://localhost/test-slug/'
+                'http://great.gov.uk/international/content/test-slug/'
             )
         ],
         'slug': 'test-slug',
@@ -53,11 +53,11 @@ def test_meta_field_slug_translation(international_root_page, rf):
     assert data == {
         'draft_token': None,
         'languages': [('en-gb', 'English')],
-        'url': 'http://localhost/test-slug/',
+        'url': 'http://great.gov.uk/international/content/test-slug/',
         'localised_urls': [
             (
                 'en-gb',
-                'http://localhost/test-slug/'
+                'http://great.gov.uk/international/content/test-slug/'
             )
         ],
         'slug': 'test-slug',
@@ -72,7 +72,7 @@ def test_meta_field_contains_draft_token(page_with_reversion, rf):
         context={'request': rf.get('/')}
     )
 
-    url = f'http://localhost/{page_with_reversion.slug}/'
+    url = f'http://great.gov.uk/international/content/{page_with_reversion.slug}/'
     token = page_with_reversion.get_draft_token()
     assert serializer.data['meta']['draft_token'] == token
     assert serializer.data['meta']['languages'] == [
