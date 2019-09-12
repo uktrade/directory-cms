@@ -7,10 +7,11 @@ from core import fields as core_fields
 from core.serializers import (
     BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper,
     HeroSerializer, HeroThumbnailSerializer,
+    ColumnWithTitleIconTextBlockStreamChildBaseSerializer, DetailsSummaryBlockStreamChildBaseSerializer,
+    StreamChildBaseSerializer
 )
-from great_international.serializers import (
-    StatisticProxyDataWrapper, StatisticSerializer,
-)
+
+from great_international.serializers import StatisticProxyDataWrapper, StatisticSerializer
 
 from .models import (
     ArticleListingPage, ArticlePage, TopicLandingPage, CampaignPage,
@@ -23,6 +24,7 @@ class RelatedArticlePageSerializer(BasePageSerializer):
     """Separate serializer for related article pages so we don't end up with
     infinite nesting of related pages inside an article page"""
 
+    type_of_article = serializers.CharField()
     article_title = serializers.CharField(max_length=255)
     article_teaser = serializers.CharField(max_length=255)
     article_image = wagtail_fields.ImageRenditionField('original')
@@ -452,6 +454,10 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer, HeroSerializer,
         return serializer.data
 
 
+class RelatedArticlePageStreamChildBaseSerializer(RelatedArticlePageSerializer, StreamChildBaseSerializer):
+    pass
+
+
 class HomePageSerializer(BasePageSerializer):
     news_title = serializers.CharField(
         max_length=255,
@@ -462,6 +468,22 @@ class HomePageSerializer(BasePageSerializer):
     advice = serializers.SerializerMethodField()
     banner_content = core_fields.MarkdownToHTMLField(allow_null=True)
     banner_label = serializers.CharField(max_length=50, allow_null=True)
+
+    hero_xlarge = wagtail_fields.ImageRenditionField('fill-1200x300', source='hero_image', required=False)
+    hero_large = wagtail_fields.ImageRenditionField('fill-1200x400', source='hero_image', required=False)
+    hero_medium = wagtail_fields.ImageRenditionField('fill-768x376', source='hero_image', required=False)
+    hero_text = serializers.CharField(required=False)
+    hero_cta_text = serializers.CharField(required=False)
+    hero_cta_linked_page = RelatedArticlePageSerializer(required=False)
+
+    how_dit_helps_title = serializers.CharField(required=False)
+    how_dit_helps_columns = ColumnWithTitleIconTextBlockStreamChildBaseSerializer(many=True, required=False)
+
+    questions_section_title = serializers.CharField(required=False)
+    questions = DetailsSummaryBlockStreamChildBaseSerializer(many=True, required=False)
+
+    what_is_new_title = serializers.CharField(required=False)
+    what_is_new_pages = RelatedArticlePageStreamChildBaseSerializer(many=True, required=False)
 
     def get_articles(self, obj):
         try:

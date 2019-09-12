@@ -32,22 +32,28 @@
 [Redis](https://redis.io/)
 
 
-### Configuration
+#### Configuration
 
-Secrets such as API keys and environment specific configurations are placed in `conf/.env` - a file that is not added to version control. You will need to create that file locally in order for the project to run.
+Secrets such as API keys and environment specific configurations are placed in `conf/env/secrets-do-not-commit` - a file that is not added to version control. To create a template secrets file with dummy values run `make init_secrets`.
 
-Here is an example `conf/.env` with placeholder values to get you going:
+### Commands
 
-```
-AWS_STORAGE_BUCKET_NAME=debug
-AWS_ACCESS_KEY_ID=debug
-AWS_SECRET_ACCESS_KEY=debug
-EMAIL_HOST=debug
-EMAIL_PORT=debug
-EMAIL_HOST_USER=debug
-EMAIL_HOST_PASSWORD=debug
-DEFAULT_FROM_EMAIL=debug
-```
+| Command                       | Description |
+| ----------------------------- | ------------|
+| make clean                    | Delete pyc files |
+| make pytest                   | Run all tests |
+| make pytest test_foo.py       | Run all tests in file called test_foo.py |
+| make pytest -- --last-failed` | Run the last tests to fail |
+| make pytest -- -k foo         | Run the test called foo |
+| make pytest -- <foo>          | Run arbitrary pytest command |
+| make flake8                   | Run linting |
+| make manage <foo>             | Run arbitrary management command |
+| make webserver                | Run the development web server |
+| make requirements             | Compile the requirements file |
+| make install_requirements     | Installed the compile requirements file |
+| make css                      | Compile scss to css |
+| make init_secrets             | Create your secret env var file |
+| make worker                   | Run async cache celery worker |
 
 ### Image storage
 

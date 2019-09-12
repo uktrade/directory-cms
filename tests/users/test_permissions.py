@@ -11,14 +11,13 @@ from tests.users.factories import (
 )
 
 
-@pytest.mark.CMS_837
 @pytest.mark.django_db
-def test_branch_editors_should_only_see_pages_from_their_branch(root_page):
+def test_branch_editors_should_only_see_pages_from_their_branch(root_page, international_root_page):
     """
     This reproduces Wagtail's admin call to list pages in the 'Pages' menu.
     Editors should only see app pages that share common root page
     """
-    env = two_branches_with_users(root_page)
+    env = two_branches_with_users(root_page, international_root_page)
 
     resp_1 = env.editor_1_client.get(
         f'/admin/api/v2beta/pages/?child_of={env.landing_1.pk}&for_explorer=1'
@@ -35,15 +34,13 @@ def test_branch_editors_should_only_see_pages_from_their_branch(root_page):
     assert resp_2.json()['items'][0]['id'] == env.listing_2.pk
 
 
-@pytest.mark.quirk
-@pytest.mark.CMS_837
 @pytest.mark.django_db
-def test_branch_editors_cannot_access_pages_not_from_their_branch(root_page):
+def test_branch_editors_cannot_access_pages_not_from_their_branch(root_page, international_root_page):
     """
     This reproduces situation when an editor would try to access page that
     doesn't belong to they branch by simply changing page ID in the URL
     """
-    env = two_branches_with_users(root_page)
+    env = two_branches_with_users(root_page, international_root_page)
 
     resp_1 = env.editor_1_client.get(f'/admin/pages/{env.home_2.pk}/edit/')
     assert resp_1.status_code == status.HTTP_403_FORBIDDEN
@@ -69,14 +66,13 @@ def test_branch_editors_cannot_access_pages_not_from_their_branch(root_page):
     assert resp_6.json()['items'][0]['id'] == env.listing_2.pk
 
 
-@pytest.mark.CMS_837
 @pytest.mark.django_db
-def test_branch_moderators_should_only_see_pages_from_their_branch(root_page):
+def test_branch_moderators_should_only_see_pages_from_their_branch(root_page, international_root_page):
     """
     This reproduces Wagtail's admin call to list pages in the 'Pages' menu.
     Moderators should only see app pages that share common root page
     """
-    env = two_branches_with_users(root_page)
+    env = two_branches_with_users(root_page, international_root_page)
 
     resp_1 = env.moderator_1_client.get(
         f'/admin/api/v2beta/pages/?child_of={env.landing_1.pk}&for_explorer=1'
@@ -93,15 +89,13 @@ def test_branch_moderators_should_only_see_pages_from_their_branch(root_page):
     assert resp_2.json()['items'][0]['id'] == env.listing_2.pk
 
 
-@pytest.mark.quirk
-@pytest.mark.CMS_837
 @pytest.mark.django_db
-def test_moderators_cannot_access_pages_not_from_their_branch(root_page):
+def test_moderators_cannot_access_pages_not_from_their_branch(root_page, international_root_page):
     """
     This reproduces situation when a moderator would try to access page that
     doesn't belong to they branch by simply changing page ID in the URL
     """
-    env = two_branches_with_users(root_page)
+    env = two_branches_with_users(root_page, international_root_page)
 
     resp_1 = env.moderator_1_client.get(
         f'/admin/pages/{env.home_2.pk}/edit/'
@@ -133,9 +127,9 @@ def test_moderators_cannot_access_pages_not_from_their_branch(root_page):
 
 @pytest.mark.django_db
 def test_moderators_can_approve_revisions_only_for_pages_in_their_branch(
-    root_page
+    root_page, international_root_page
 ):
-    env = two_branches_with_users(root_page)
+    env = two_branches_with_users(root_page, international_root_page)
 
     new_title = 'The title was modified'
     env.article_2.title = new_title
@@ -156,9 +150,6 @@ def test_moderators_can_approve_revisions_only_for_pages_in_their_branch(
     assert resp_2.status_code == status.HTTP_200_OK
 
 
-@pytest.mark.CMS_839
-@pytest.mark.CMS_840
-@pytest.mark.CMS_841
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     'branch_factory', [
@@ -202,9 +193,6 @@ def test_branch_user_can_create_child_pages_in_it(branch_factory, root_page):
     assert resp_2.json()['items'][1]['id'] == new_article_id
 
 
-@pytest.mark.CMS_839
-@pytest.mark.CMS_840
-@pytest.mark.CMS_841
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     'branch_factory', [
@@ -239,8 +227,6 @@ def test_branch_user_cant_create_child_pages_without_mandatory_data(
     assert not (mandatory_fields - set(resp.context['form'].errors.keys()))
 
 
-@pytest.mark.CMS_839
-@pytest.mark.CMS_840
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     'branch_factory', [
@@ -276,12 +262,11 @@ def test_branch_user_cant_create_pages_in_branch_they_dont_manage(
     assert resp.status_code == status.HTTP_403_FORBIDDEN
 
 
-@pytest.mark.CMS_841
 @pytest.mark.django_db
-def test_admins_can_create_pages_in_any_branch(root_page):
-    env = two_branches_with_users(root_page)
+def test_admins_can_create_pages_in_any_branch(root_page, international_root_page):
+    env = two_branches_with_users(root_page, international_root_page)
 
-    # Add ExRed Article page
+    # Add exread Article page
     data_1 = {
         'type_of_article': 'Blog',
         'article_title': 'test article',
@@ -306,25 +291,14 @@ def test_admins_can_create_pages_in_any_branch(root_page):
     assert resp_1.status_code == status.HTTP_302_FOUND
     assert resp_1.url.startswith('/admin/pages/')  # format is /admin/pages/3/
 
-    # Add FAS Industry Article page
+    # Add international Article page
     data_2 = {
         'type_of_article': 'Blog',
-        'article_title': 'test article',
-        'article_teaser': 'test article',
-        'article_body_text': 'test article',
+        'article_title_en_gb': 'test article',
+        'article_body_text_en_gb': 'test article',
         'title_en_gb': 'test article',
-        'body': 'this is a test page',
         'slug': 'test-article',
         'action-publish': 'action-publish',
-        'breadcrumbs_label_en_gb': 'test breadcrumb',
-        'introduction_title_en_gb': 'test introduction',
-        'author_name_en_gb': 'dit',
-        'job_title_en_gb': 'dit',
-        'proposition_text_en_gb': 'test proposition',
-        'call_to_action_text_en_gb': 'contact us',
-        'back_to_home_link_text_en_gb': 'home',
-        'social_share_title_en_gb': 'share',
-        'date_en_gb': '2019-01-01',
     }
     resp_2 = env.admin_client.post(
         reverse(
@@ -341,10 +315,9 @@ def test_admins_can_create_pages_in_any_branch(root_page):
     assert resp_2.url.startswith('/admin/pages/')  # format is /admin/pages/3/
 
 
-@pytest.mark.CMS_839
 @pytest.mark.django_db
-def test_editors_cannot_publish_child_pages(root_page):
-    env = two_branches_with_users(root_page)
+def test_editors_cannot_publish_child_pages(root_page, international_root_page):
+    env = two_branches_with_users(root_page, international_root_page)
 
     draft_page = ArticlePageFactory(
         parent=env.landing_1, live=False
@@ -359,10 +332,9 @@ def test_editors_cannot_publish_child_pages(root_page):
     assert resp.status_code == status.HTTP_403_FORBIDDEN
 
 
-@pytest.mark.CMS_839
 @pytest.mark.django_db
-def test_editors_cannot_unpublish_child_pages(root_page):
-    env = two_branches_with_users(root_page)
+def test_editors_cannot_unpublish_child_pages(root_page, international_root_page):
+    env = two_branches_with_users(root_page, international_root_page)
 
     resp = env.editor_1_client.post(
         reverse('wagtailadmin_pages:unpublish', args=[env.article_1.pk])
@@ -370,9 +342,6 @@ def test_editors_cannot_unpublish_child_pages(root_page):
     assert resp.status_code == status.HTTP_403_FORBIDDEN
 
 
-@pytest.mark.CMS_839
-@pytest.mark.CMS_840
-@pytest.mark.CMS_841
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     'branch_factory', [
@@ -401,9 +370,6 @@ def test_branch_user_can_submit_changes_for_moderation(
     assert int(resp.url.split('/')[3]) == branch.listing.pk  # format is /admin/pages/3/  # NOQA
 
 
-@pytest.mark.CMS_839
-@pytest.mark.CMS_840
-@pytest.mark.CMS_841
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     'branch_factory', [
@@ -438,9 +404,6 @@ def test_branch_user_can_view_drafts(branch_factory, root_page):
     assert branch.article.slug in resp_2.url
 
 
-@pytest.mark.CMS_839
-@pytest.mark.CMS_840
-@pytest.mark.CMS_841
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     'branch_factory', [
@@ -463,9 +426,6 @@ def test_branch_user_can_list_revisions(branch_factory, root_page):
     assert revert_path in resp.content.decode()
 
 
-@pytest.mark.CMS_839
-@pytest.mark.CMS_840
-@pytest.mark.CMS_841
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     'branch_factory', [
@@ -498,8 +458,6 @@ def test_branch_user_can_compare_changes_between_revisions(
            not in content
 
 
-@pytest.mark.CMS_840
-@pytest.mark.CMS_841
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "branch_factory", [
@@ -523,8 +481,6 @@ def test_moderators_and_admins_can_publish_child_pages(
     assert resp.url == '/admin/'
 
 
-@pytest.mark.CMS_840
-@pytest.mark.CMS_841
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "branch_factory", [
@@ -552,18 +508,15 @@ def test_moderators_and_admins_can_unpublish_child_pages(
     assert article_status['has_unpublished_changes']
 
 
-@pytest.mark.quirk
-@pytest.mark.CMS_840
-@pytest.mark.CMS_841
 @pytest.mark.django_db
 def test_moderators_and_admins_can_view_revisions_from_other_branches(
-        root_page
+        root_page, international_root_page
 ):
     """
     Unfortunately on API level Wagtail allows Moderators to view revisions from
     other branches.
     """
-    env = two_branches_with_users(root_page)
+    env = two_branches_with_users(root_page, international_root_page)
 
     revision_1 = env.article_1.save_revision(
         user=env.editor_1, submitted_for_moderation=True
@@ -611,11 +564,9 @@ def test_moderators_and_admins_can_view_revisions_from_other_branches(
     assert revert_path_2 in content_4
 
 
-@pytest.mark.CMS_840
-@pytest.mark.CMS_841
 @pytest.mark.django_db
-def test_moderators_can_reject_revision(root_page):
-    env = two_branches_with_users(root_page)
+def test_moderators_can_reject_revision(root_page, international_root_page):
+    env = two_branches_with_users(root_page, international_root_page)
 
     new_title = 'The title was modified'
     env.article_1.title = new_title
@@ -638,10 +589,9 @@ def test_moderators_can_reject_revision(root_page):
     assert 'rejected for publication' in resp_2.content.decode()
 
 
-@pytest.mark.CMS_841
 @pytest.mark.django_db
-def test_admins_can_reject_revision(root_page):
-    env = two_branches_with_users(root_page)
+def test_admins_can_reject_revision(root_page, international_root_page):
+    env = two_branches_with_users(root_page, international_root_page)
 
     new_title = 'The title was modified'
     env.article_1.title = new_title
@@ -664,10 +614,9 @@ def test_admins_can_reject_revision(root_page):
     assert 'rejected for publication' in resp_2.content.decode()
 
 
-@pytest.mark.CMS_840
 @pytest.mark.django_db
-def test_moderators_cannot_reject_revision_from_other_branch(root_page):
-    env = two_branches_with_users(root_page)
+def test_moderators_cannot_reject_revision_from_other_branch(root_page, international_root_page):
+    env = two_branches_with_users(root_page, international_root_page)
 
     new_title = 'The title was modified'
     env.article_1.title = new_title
@@ -682,10 +631,9 @@ def test_moderators_cannot_reject_revision_from_other_branch(root_page):
     assert resp.status_code == status.HTTP_403_FORBIDDEN
 
 
-@pytest.mark.CMS_836
 @pytest.mark.django_db
-def test_admins_should_be_able_to_access_all_pages_in_any_branch(root_page):
-    env = two_branches_with_users(root_page)
+def test_admins_should_be_able_to_access_all_pages_in_any_branch(root_page, international_root_page):
+    env = two_branches_with_users(root_page, international_root_page)
 
     resp_1 = env.admin_client.get(
         f'/admin/api/v2beta/pages/?child_of={env.landing_1.pk}&for_explorer=1'
@@ -708,15 +656,13 @@ def test_admins_should_be_able_to_access_all_pages_in_any_branch(root_page):
     assert resp_4.status_code == status.HTTP_200_OK
 
 
-@pytest.mark.quirk
-@pytest.mark.CMS_836
 @pytest.mark.django_db
-def test_admins_should_be_able_to_reject_revision_from_any_branch(root_page):
+def test_admins_should_be_able_to_reject_revision_from_any_branch(root_page, international_root_page):
     """
     Somehow Wagtail doesn't show to the editor that revision was rejected
     and thus we have to use Admin client to check that (in last assertion)
     """
-    env = two_branches_with_users(root_page)
+    env = two_branches_with_users(root_page, international_root_page)
 
     # At this point there should be no revisions
     resp_1 = env.editor_1_client.get(
@@ -763,7 +709,6 @@ def test_admins_should_be_able_to_reject_revision_from_any_branch(root_page):
     assert 'rejected for publication' in resp_4.content.decode()
 
 
-@pytest.mark.CMS_841
 @pytest.mark.django_db
 def test_admins_should_have_permissions_to_manage_users(root_page):
     """Admins should have all required permissions to manage users."""
@@ -785,7 +730,6 @@ def test_admins_should_have_permissions_to_manage_users(root_page):
     assert not (permissions - admin.user.get_all_permissions())
 
 
-@pytest.mark.CMS_838
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "branch_factory", [
@@ -814,7 +758,6 @@ def test_non_admin_user_should_not_have_permissions_to_manage_user_accounts(
     assert (permissions - branch.user.get_all_permissions()) == permissions
 
 
-@pytest.mark.CMS_838
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "branch_factory", [
@@ -833,7 +776,6 @@ def test_non_admin_user_should_not_be_able_to_access_manage_users_page(
     assert 'Sorry, you do not have permission to access this area.' in content
 
 
-@pytest.mark.CMS_838
 @pytest.mark.django_db
 def test_admin_user_should_be_able_to_access_manage_users_page(root_page):
     """Admins can access '/admin/users/' page"""

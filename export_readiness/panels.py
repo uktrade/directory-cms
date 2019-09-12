@@ -1,7 +1,7 @@
 from django.forms import CheckboxSelectMultiple, Textarea, Select
 
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel, HelpPanel)
+    FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel, HelpPanel, StreamFieldPanel)
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
@@ -1128,6 +1128,7 @@ class HomePagePanels:
     content_panels = [
         MultiFieldPanel(
             heading='EU Exit banner',
+            classname='collapsible',
             children=[
                 FieldPanel('banner_label'),
                 FieldPanel('banner_content'),
@@ -1135,11 +1136,50 @@ class HomePagePanels:
         ),
         MultiFieldPanel(
             heading='EU exit news',
+            classname='collapsible',
             children=[
                 FieldPanel('news_title'),
                 FieldPanel('news_description')
             ]
         ),
+        MultiFieldPanel(
+            heading='Hero',
+            classname='collapsible',
+            children=[
+                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_text'),
+                FieldPanel('hero_cta_text'),
+                PageChooserPanel(
+                    'hero_cta_linked_page',
+                    page_type='export_readiness.ArticlePage'
+                )
+            ],
+        ),
+        MultiFieldPanel(
+            heading='How DIT helps',
+            classname='collapsible',
+            children=[
+                FieldPanel('how_dit_helps_title'),
+                StreamFieldPanel('how_dit_helps_columns')
+            ],
+        ),
+        MultiFieldPanel(
+            heading='Popular questions',
+            classname='collapsible',
+            children=[
+                FieldPanel('questions_section_title'),
+                StreamFieldPanel('questions')
+            ]
+        ),
+        MultiFieldPanel(
+            heading='What\'s new',
+            classname='collapsible',
+            children=[
+                FieldPanel('what_is_new_title'),
+                StreamFieldPanel('what_is_new_pages')
+            ]
+        ),
+
         SearchEngineOptimisationPanel(),
     ]
 
