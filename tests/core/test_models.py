@@ -53,8 +53,8 @@ def test_page_paths(root_page, international_root_page):
     international_page_three = InternationalArticlePageFactory(
         parent=international_page_two, slug='article')
 
-    assert international_page_two.full_path == 'topic/list/'
-    assert international_page_three.full_path == 'topic/list/article/'
+    assert international_page_two.full_path == '/international/content/topic/list/'
+    assert international_page_three.full_path == '/international/content/topic/list/article/'
 
 
 @pytest.mark.django_db
@@ -119,7 +119,7 @@ def test_translated_languages(international_root_page, language_code):
 @pytest.mark.django_db
 def test_translated_localised_urls(translated_page):
 
-    domain = f'http://localhost/{translated_page.slug}'
+    domain = f'http://great.gov.uk/international/content/{translated_page.slug}'
 
     assert sorted(translated_page.get_localized_urls()) == [
         ('ar', domain + '/?lang=ar'),

@@ -15,6 +15,8 @@
 - CI-479 - Added video to Why choose UK Page
 - CI-480 - Added SEOOptimisationPanel to more pages
 
+- No ticket - Improve speed of test execution
+- 
 ## [2019.08.27_1](https://github.com/uktrade/directory-cms/releases/tag/2019.08.27_1)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.08.27...2019.08.27_1)
 
