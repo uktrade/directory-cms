@@ -9,7 +9,6 @@ from core.serializers import (
     FormPageSerializerMetaclass,
     SameSectorOpportunitiesHelper,
     HeroSerializer,
-    HeroThumbnailSerializer,
 )
 
 from .models.great_international import (
@@ -635,9 +634,7 @@ class PageWithRelatedPagesSerializer(BasePageSerializer):
         return serialized
 
 
-class BaseInternationalSectorPageSerializer(
-    PageWithRelatedPagesSerializer, HeroSerializer, HeroThumbnailSerializer
-):
+class BaseInternationalSectorPageSerializer(PageWithRelatedPagesSerializer, HeroSerializer):
 
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField()
@@ -1085,9 +1082,7 @@ class InternationalCampaignPageSerializer(PageWithRelatedPagesSerializer):
     cta_box_button_text = serializers.CharField(max_length=255)
 
 
-class InternationalArticleListingPageSerializer(
-    BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer, HeroThumbnailSerializer
-):
+class InternationalArticleListingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
 
@@ -1110,9 +1105,7 @@ class InternationalArticleListingPageSerializer(
         return articles + campaigns
 
 
-class InternationalTopicLandingPageSerializer(
-    BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer, HeroThumbnailSerializer
-):
+class InternationalTopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
     hero_teaser = serializers.CharField(max_length=255)
@@ -1182,7 +1175,7 @@ class FeatureProxyDataWrapper:
         return self.get_field_value('feature_{}_url')
 
 
-class InternationalCuratedTopicLandingPageSerializer(BasePageSerializer, HeroSerializer, HeroThumbnailSerializer):
+class InternationalCuratedTopicLandingPageSerializer(BasePageSerializer, HeroSerializer):
     display_title = serializers.CharField()
 
     teaser = serializers.CharField()
@@ -1212,7 +1205,7 @@ class InternationalCuratedTopicLandingPageSerializer(BasePageSerializer, HeroSer
         return self.get_features(instance, 'three', 'four', 'five')
 
 
-class InternationalGuideLandingPageSerializer(BasePageSerializer, HeroThumbnailSerializer, HeroSerializer):
+class InternationalGuideLandingPageSerializer(BasePageSerializer, HeroSerializer):
 
     display_title = serializers.CharField()
 
@@ -1690,7 +1683,7 @@ class FeaturedCardsSerializer(serializers.Serializer):
     cta_link = serializers.CharField(max_length=255)
 
 
-class FeaturedInternationalSectorPageSerializer(BasePageSerializer, HeroThumbnailSerializer):
+class FeaturedInternationalSectorPageSerializer(BasePageSerializer, HeroSerializer):
     heading = serializers.CharField(max_length=255)
     featured_description = serializers.CharField(max_length=255)
 
@@ -1792,9 +1785,7 @@ class InvestInternationalHomePageSerializer(BasePageSerializer, HeroSerializer):
         return serializer.data
 
 
-class InvestHighPotentialOpportunityDetailPageBaseSerializer(
-    BasePageSerializer, HeroThumbnailSerializer, HeroSerializer
-):
+class InvestHighPotentialOpportunityDetailPageBaseSerializer(BasePageSerializer, HeroSerializer):
     breadcrumbs_label = serializers.CharField(max_length=50)
     heading = serializers.CharField(max_length=255)
     description = serializers.CharField(max_length=255)

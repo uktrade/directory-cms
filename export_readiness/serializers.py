@@ -5,8 +5,7 @@ from directory_constants import slugs
 from conf import settings
 from core import fields as core_fields
 from core.serializers import (
-    BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper,
-    HeroSerializer, HeroThumbnailSerializer,
+    BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper, HeroSerializer,
     ColumnWithTitleIconTextBlockStreamChildBaseSerializer, DetailsSummaryBlockStreamChildBaseSerializer,
     StreamChildBaseSerializer
 )
@@ -147,7 +146,7 @@ class MarketingArticlePageSerializer(BaseArticlePageSerializer):
 
 
 class ArticleListingPageSerializer(
-    BasePageSerializer, ChildPagesSerializerHelper, HeroThumbnailSerializer, HeroSerializer
+    BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer
 ):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
@@ -396,7 +395,7 @@ class IntroCTAsSerializer(serializers.Serializer):
     title = serializers.CharField()
 
 
-class CountryGuidePageSerializer(PageWithRelatedPagesSerializer, HeroSerializer, HeroThumbnailSerializer):
+class CountryGuidePageSerializer(PageWithRelatedPagesSerializer, HeroSerializer):
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
     heading_teaser = serializers.CharField()
@@ -534,9 +533,7 @@ class HomePageSerializer(BasePageSerializer):
         return 'HomePage'
 
 
-class TopicLandingPageSerializer(
-    BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer, HeroThumbnailSerializer
-):
+class TopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
     hero_teaser = serializers.CharField(max_length=255)

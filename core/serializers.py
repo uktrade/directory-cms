@@ -21,12 +21,9 @@ class PageBreadcrumbsAndUrlSerializer(serializers.Serializer):
     url = serializers.CharField()
 
 
-class HeroThumbnailSerializer(serializers.Serializer):
-    hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
-
-
 class HeroSerializer(serializers.Serializer):
     hero_image = wagtail_fields.ImageRenditionField('original')
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
     hero_xlarge = wagtail_fields.ImageRenditionField('fill-1500x375', source='hero_image')
     hero_xlarge_tall = wagtail_fields.ImageRenditionField('fill-1500x500', source='hero_image')
     hero_large = wagtail_fields.ImageRenditionField('fill-1280x375', source='hero_image')
