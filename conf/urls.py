@@ -12,7 +12,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView
 
 import core.views
-import export_readiness.views
 from activitystream.views import ActivityStreamView
 from groups.views import GroupInfoModalView
 
@@ -39,13 +38,6 @@ api_urls = [
             )
         ),
         name='lookup-by-path'
-    ),
-    url(
-        r'^pages/lookup-by-tag/(?P<slug>[\w-]+)/$',
-        api_router.wrap_view(
-            export_readiness.views.PageLookupByTagListAPIEndpoint.as_view()
-        ),
-        name='lookup-by-tag-list'
     ),
     url(
         r'^pages/types/$',
