@@ -6,6 +6,7 @@ from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 
 from core.helpers import make_translated_interface
+from core.panels import SearchEngineOptimisationPanel
 
 
 class InternationalCapitalInvestLandingPagePanels:
@@ -132,6 +133,7 @@ class InternationalCapitalInvestLandingPagePanels:
                 FieldPanel('contact_section_cta_text')
             ]
         ),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
@@ -323,6 +325,7 @@ class CapitalInvestRegionPagePanels:
                 FieldPanel('contact_cta_link'),
             ],
         ),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
@@ -340,7 +343,8 @@ class CapitalInvestOpportunityListingPagePanels:
     content_panels = [
         FieldPanel('title'),
         FieldPanel('breadcrumbs_label'),
-        FieldPanel('search_results_title')
+        FieldPanel('search_results_title'),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
@@ -496,6 +500,7 @@ class CapitalInvestOpportunityPagePanels:
                 FieldPanel('contact_text'),
             ],
         ),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
@@ -516,6 +521,7 @@ class CapitalInvestContactFormPagePanels:
         FieldPanel('intro'),
         FieldPanel('comment'),
         FieldPanel('cta_text'),
+        SearchEngineOptimisationPanel()
     ]
 
     settings_panels = [
@@ -533,7 +539,7 @@ class CapitalInvestContactFormSuccessPagePanels:
         FieldPanel('title'),
         FieldPanel('message_box_heading'),
         FieldPanel('message_box_description'),
-        FieldPanel('what_happens_next_description'),
+        FieldPanel('what_happens_next_description')
     ]
 
     settings_panels = [
