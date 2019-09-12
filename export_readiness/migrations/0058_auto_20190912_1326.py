@@ -42,7 +42,7 @@ INDUSTRY_NAMES = (
 
 def create_industry_tags(apps, schema_editor):
     IndustryTag = apps.get_model('export_readiness', 'IndustryTag')
-    objs = (IndustryTag(name=f'{name}') for name in INDUSTRY_NAMES)
+    objs = (IndustryTag(name=name) for name in INDUSTRY_NAMES)
     IndustryTag.objects.bulk_create(objs)
 
 
