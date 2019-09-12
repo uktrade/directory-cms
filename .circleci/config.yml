@@ -37,6 +37,9 @@ jobs:
             . venv/bin/activate
             make pytest -- --cov=. --cov-config=.coveragerc --cov-report=term
             codecov
+      - store_test_results:
+          path: tests
+
   flake8:
     docker:
       - image: circleci/python:3.6.8

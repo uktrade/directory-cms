@@ -9,6 +9,7 @@
 - CI-475 - Added featured description to About DIT services page to be used on featured cards
 - CI-476 - Allow invest regions pages to be added as related regions to About UK pages
 - CI-477 - Why choose the UK page can add international article page as child
+- XOT-1033 - Great domestic homepage
 - CI-478 - Added breadcrumbs label to capital invest landing page
 - CI-474 - Allowed pages to be moved to reflect new IA, changed Invest and About UK landing pages children pages
 - CI-451 - Added new fields to International home page
