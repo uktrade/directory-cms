@@ -5,6 +5,7 @@ from unittest.mock import patch
 
 from rest_framework import status
 
+from django.contrib.auth.models import Permission, Group
 from django.conf import settings
 from django.urls import clear_url_caches
 from django.urls import reverse
@@ -181,13 +182,18 @@ def test_edit_user_view_warns_administrator_if_user_is_awaiting_approval(
 
 
 @pytest.mark.django_db
-def test_edit_user_view_marks_user_as_approved_if_added_to_group(admin_client, admin_user, user_awaiting_approval):
+def test_edit_user_view_marks_user_as_approved_if_added_to_group(
+    admin_client, admin_user, user_awaiting_approval
+):
     # This flag must be set for the warning to show
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = True
 
     user = user_awaiting_approval
     profile = user_awaiting_approval.userprofile
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
+
+    group = Group.objects.get(pk=profile.self_assigned_group_id)
+    group.permissions.add(Permission.objects.get(codename='access_admin'))
 
     with patch('users.views.notify_user_of_access_request_approval', autospec=True) as mocked_method:
         response = admin_client.post(url, {
@@ -196,7 +202,7 @@ def test_edit_user_view_marks_user_as_approved_if_added_to_group(admin_client, a
             'last_name': user.last_name,
             'email': user.email,
             'is_active': True,
-            'groups': [profile.self_assigned_group_id],
+            'groups': [group.pk],
         })
 
     # Ensure the post was successful
