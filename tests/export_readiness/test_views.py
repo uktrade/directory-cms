@@ -108,7 +108,6 @@ def test_article_page_view(admin_client, root_page):
     assert response.status_code == 200
     assert 'tags' in response.json()
     assert 'name' in response.json()['tags'][0]
-    assert 'slug' in response.json()['tags'][0]
 
 
 @pytest.mark.django_db
@@ -176,41 +175,14 @@ def test_homepage_no_advice(admin_client, root_page):
 
 
 @pytest.mark.django_db
-def test_international_landing_age(admin_client, root_page):
-    page = factories.InternationaLandingPageFactory.create(
-        parent=root_page
-    )
-    url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
-    response = admin_client.get(url)
-    assert response.status_code == 200
-    assert 'articles_count' in response.json()
-
-
-@pytest.mark.django_db
-def test_lookup_by_tag_slug(admin_client, root_page):
-    tag = factories.TagFactory(name='foo')
-    article1 = factories.ArticlePageFactory(parent=root_page,)
-    article1.tags = [tag]
-    article1.save()
-    article2 = factories.ArticlePageFactory(parent=root_page)
-    article2.tags = [tag]
-    article2.save()
-    factories.ArticlePageFactory(parent=root_page)
-    url = reverse('api:lookup-by-tag-list', kwargs={'slug': tag.slug})
-    response = admin_client.get(url)
-
-    assert response.status_code == 200
-    assert response.json()['name'] == tag.name
-    assert response.json()['slug'] == tag.slug
-    assert len(response.json()['articles']) == 2
-
-
-@pytest.mark.django_db
 def test_country_page_view(admin_client, root_page):
     page = factories.CountryGuidePageFactory(
         parent=root_page,
         live=True
     )
+    tag = factories.IndustryTagFactory(name='test')
+    page.tags = [tag]
+    page.save()
     url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
@@ -221,6 +193,8 @@ def test_country_page_view(admin_client, root_page):
     assert 'subsections' in response.json()['accordions'][0]
     assert 'statistics' in response.json()['accordions'][0]
     assert 'case_study' in response.json()['accordions'][0]
+    assert 'tags' in response.json()
+    assert response.json()['tags'][0]['name'] == 'test'
 
 
 @pytest.mark.django_db
