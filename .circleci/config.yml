@@ -4,10 +4,6 @@ version: 2
 machine_python3_postgres: &machine_python3_postgres_redis
   docker:
     - image: circleci/python:3.6.8
-    - image: circleci/postgres:9.5-alpine-ram
-      environment:
-        POSTGRES_USER: debug
-        POSTGRES_PASSWORD: debug
     - image: circleci/redis:3.2-alpine
 
 
@@ -30,30 +26,16 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pip install --upgrade pip
-            pip install -r requirements_test.txt
+            make install_requirements
       - save_cache:
           key: v1-deps-{{ checksum "requirements_test.txt" }}
           paths:
             - "venv"
       - run:
-          name: Install dockerize
-          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
-          environment:
-            DOCKERIZE_VERSION: v0.3.0
-      - run:
-          name: Wait for db
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
-      - run:
-          name: Install psql
-          command: |
-            sudo apt-get update
-            sudo apt-get install postgresql-client-9.6
-      - run:
           name: Run tests
           command: |
             . venv/bin/activate
-            make debug_test
+            make pytest -- --cov=. --cov-config=.coveragerc --cov-report=term
             codecov
       - store_test_results:
           path: tests
@@ -71,7 +53,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install flake8
-            flake8 . flake8 . --exclude=migrations,venv --max-line-length=120
+            make flake8
 
 workflows:
   version: 2

@@ -7,6 +7,7 @@ from tests.export_readiness import factories
 from directory_constants import urls
 
 
+@pytest.mark.django_db
 def test_performance_dashboard(admin_client, root_page):
     page = factories.PerformanceDashboardPageFactory(
         live=True,
@@ -21,6 +22,7 @@ def test_performance_dashboard(admin_client, root_page):
     assert response.json()['page_type'] == 'PerformanceDashboardPage'
 
 
+@pytest.mark.django_db
 def test_performance_dashboard_notes(admin_client, root_page):
     page = factories.PerformanceDashboardNotesPageFactory(
         live=True,
@@ -33,6 +35,7 @@ def test_performance_dashboard_notes(admin_client, root_page):
     assert response.status_code == 200
 
 
+@pytest.mark.django_db
 def test_topic_landing_page_view(admin_client, root_page):
     topic_landing_page = factories.TopicLandingPageFactory.create(
         parent=root_page,
@@ -57,6 +60,7 @@ def test_topic_landing_page_view(admin_client, root_page):
     assert 'child_pages' in response.json()
 
 
+@pytest.mark.django_db
 def test_article_listing_page_view(admin_client, root_page):
     article_listing_page = factories.ArticleListingPageFactory.create(
         parent=root_page,
@@ -80,6 +84,7 @@ def test_article_listing_page_view(admin_client, root_page):
     assert 'meta' in response.json()['articles'][0]
 
 
+@pytest.mark.django_db
 def test_article_page_view(admin_client, root_page):
     topic_landing_page = factories.TopicLandingPageFactory.create(
         parent=root_page,
@@ -106,8 +111,8 @@ def test_article_page_view(admin_client, root_page):
     assert 'slug' in response.json()['tags'][0]
 
 
+@pytest.mark.django_db
 def test_domestic_homepage(admin_client, root_page):
-
     home_page = factories.HomePageFactory.create(
         parent=root_page
     )
@@ -142,7 +147,8 @@ def test_domestic_homepage(admin_client, root_page):
     assert len(response.json()['articles']) == 5
 
 
-def test_homepage_no_news(admin_client, root_page):
+@pytest.mark.django_db
+def test_domestic_homepage_no_news(admin_client, root_page):
 
     home_page = factories.HomePageFactory.create(
         parent=root_page
@@ -155,6 +161,7 @@ def test_homepage_no_news(admin_client, root_page):
     assert len(response.json()['articles']) == 0
 
 
+@pytest.mark.django_db
 def test_homepage_no_advice(admin_client, root_page):
 
     home_page = factories.HomePageFactory.create(
@@ -168,8 +175,8 @@ def test_homepage_no_advice(admin_client, root_page):
     assert len(response.json()['advice']) == 0
 
 
+@pytest.mark.django_db
 def test_international_landing_age(admin_client, root_page):
-
     page = factories.InternationaLandingPageFactory.create(
         parent=root_page
     )
