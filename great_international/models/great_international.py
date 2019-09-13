@@ -288,6 +288,8 @@ class InternationalHomePage(
         related_name='+',
     )
 
+    brexit_banner_text = MarkdownField(blank=True)
+
     # Old home page fields
     invest_title = models.CharField(max_length=255, blank=True)
     invest_content = MarkdownField(blank=True)

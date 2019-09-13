@@ -202,6 +202,7 @@ class InternationalHomePageTranslationOptions(BaseTranslationOptions):
         'hero_cta_text',
         'hero_cta_link',
         'hero_image',
+        'brexit_banner_text',
 
         # Old International Home Page fields
         'invest_title',
