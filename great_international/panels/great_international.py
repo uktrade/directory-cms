@@ -26,6 +26,7 @@ class InternationalHomePagePanels:
                 ImageChooserPanel("hero_image")
             ]
         ),
+        FieldPanel('brexit_banner_text'),
         MultiFieldPanel(
             heading="Old International Home Page",
             classname="collapsible collapsed",

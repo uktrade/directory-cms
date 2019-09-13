@@ -18,6 +18,7 @@
 - CI-480 - Added SEOOptimisationPanel to more pages
 - No ticket - Improve speed of test execution
 - XOT-1073 Add industry tags to Country Pages
+- CI-486 - Added brexit banner field to `InternationalHomePage`
 
 
 ## [2019.08.27_1](https://github.com/uktrade/directory-cms/releases/tag/2019.08.27_1)
