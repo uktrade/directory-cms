@@ -2252,6 +2252,8 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
     contact_cta_link = serializers.CharField(max_length=255)
     contact_cta_text = serializers.CharField(max_length=255)
 
+    mapped_regions = serializers.SerializerMethodField()
+
     def get_economics_stats(self, instance):
         data = [
             EconomicsStatisticProxyDataWrapper(
@@ -2284,6 +2286,14 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
         ]
         serializer = RegionSubsectionSerializer(data, many=True)
         return serializer.data
+
+    def get_mapped_regions(self, instance):
+        queryset = AboutUkLandingPage.objects.live().public().first()
+
+        if not queryset:
+            return []
+
+        return get_mapped_regions(queryset)
 
 
 class AboutUkArticlesFieldSerializer(serializers.Serializer):

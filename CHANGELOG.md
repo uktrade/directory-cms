@@ -21,6 +21,7 @@
 - XOT-1073 Add industry tags to Country Pages
 - CI-486 - Added brexit banner field to `InternationalHomePage`
 - CI-496 - Updated field on `InternationalHomePage` to be markdown
+- CI-492 - Added `mapped_regions` to region page
 
 ### Fixed bugs
 - No ticket - Fixed base sector page serializer being in serializer_mapping
