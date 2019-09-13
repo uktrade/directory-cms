@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- CMS-1732 - Add new fields to HPO detail page for image alt and video transcript
 - XOT-1035 - Add hero image renditions for new responsive frontend component
 - XOT-1020 - Added extra fields to article page type (domestic and international)
 - XOT-1020 - Edited formatting of article types
@@ -37,7 +38,7 @@
 - CMS-1832 - Update django
 - CMS-1753 - Remove slug links from markdown fields
 - CI-431 - Added `AboutUkRegionListingPage` and `AboutUkRegionPage` which will replace `CapitalInvestRegionPage`
-- CI-400 - Added related regions and text on About Uk pages for map 
+- CI-400 - Added related regions and text on About Uk pages for map
 - XOT-1020 - Added extra fields to article page type (domestic and international)
 - CMS-1716 - Remove obsolete code
 - CI-400 - Added related regions and text on About Uk pages for map
