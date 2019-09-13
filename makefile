@@ -1,4 +1,4 @@
-ARGUMENTS = $(filter-out $@,$(MAKECMDGOALS))
+ARGUMENTS = $(filter-out $@,$(MAKECMDGOALS)) $(filter-out --,$(MAKEFLAGS))
 
 clean:
 	-find . -type f -name "*.pyc" -delete
@@ -36,12 +36,11 @@ install_requirements:
 css:
 	./node_modules/.bin/gulp sass
 
-init_secrets:
-	cp conf/env/secrets-template conf/env/secrets-do-not-commit
+secrets:
+	cp conf/env/secrets-template conf/env/secrets-do-not-commit; \
 	sed -i -e 's/#DO NOT ADD SECRETS TO THIS FILE//g' conf/env/secrets-do-not-commit
 
 worker:
 	ENV_FILES='secrets-do-not-commit,dev' celery -A conf worker -l info
-
 
 .PHONY: clean pytest flake8 manage webserver requirements install_requirements css worker
