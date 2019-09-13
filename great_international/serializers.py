@@ -799,6 +799,10 @@ class InternationalSectorPageSerializer(
         )
 
 
+class InternationalSubSectorPageSerializer(BaseInternationalSectorPageSerializer):
+    pass
+
+
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
     type_of_article = serializers.CharField()
 

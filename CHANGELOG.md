@@ -20,6 +20,9 @@
 - XOT-1073 Add industry tags to Country Pages
 - CI-486 - Added brexit banner field to `InternationalHomePage`
 
+### Fixed bugs
+- No ticket - Fixed base sector page serializer being in serializer_mapping
+
 
 ## [2019.08.27_1](https://github.com/uktrade/directory-cms/releases/tag/2019.08.27_1)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.08.27...2019.08.27_1)
