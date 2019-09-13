@@ -1794,72 +1794,68 @@ class InvestHighPotentialOpportunityDetailPageBaseSerializer(BasePageSerializer,
     contact_button = serializers.CharField(max_length=500)
     proposition_one = core_fields.MarkdownToHTMLField()
     proposition_one_image = wagtail_fields.ImageRenditionField('original')
+    proposition_one_image_alt = serializers.CharField()
     proposition_one_video = core_fields.VideoField()
+    proposition_one_video_transcript = core_fields.MarkdownToHTMLField()
     opportunity_list_title = serializers.CharField()
     opportunity_list_item_one = core_fields.MarkdownToHTMLField()
     opportunity_list_item_two = core_fields.MarkdownToHTMLField()
     opportunity_list_item_three = core_fields.MarkdownToHTMLField()
     opportunity_list_image = wagtail_fields.ImageRenditionField('original')
+    opportunity_list_image_alt = serializers.CharField()
     proposition_two = core_fields.MarkdownToHTMLField()
     proposition_two_list_item_one = core_fields.MarkdownToHTMLField()
     proposition_two_list_item_two = core_fields.MarkdownToHTMLField()
     proposition_two_list_item_three = core_fields.MarkdownToHTMLField()
     proposition_two_image = wagtail_fields.ImageRenditionField('original')
+    proposition_two_image_alt = serializers.CharField()
     proposition_two_video = core_fields.VideoField()
+    proposition_two_video_transcript = core_fields.MarkdownToHTMLField()
     competitive_advantages_title = serializers.CharField()
     competitive_advantages_list_item_one = core_fields.MarkdownToHTMLField()
-    competitive_advantages_list_item_one_icon = \
-        wagtail_fields.ImageRenditionField('original')
+    competitive_advantages_list_item_one_icon = wagtail_fields.ImageRenditionField('original')
     competitive_advantages_list_item_two = core_fields.MarkdownToHTMLField()
-    competitive_advantages_list_item_two_icon = \
-        wagtail_fields.ImageRenditionField('original')
+    competitive_advantages_list_item_two_icon = wagtail_fields.ImageRenditionField('original')
     competitive_advantages_list_item_three = core_fields.MarkdownToHTMLField()
-    competitive_advantages_list_item_three_icon = \
-        wagtail_fields.ImageRenditionField('original')
+    competitive_advantages_list_item_three_icon = wagtail_fields.ImageRenditionField('original')
     testimonial = core_fields.MarkdownToHTMLField()
     testimonial_background = wagtail_fields.ImageRenditionField('original')
     companies_list_text = core_fields.MarkdownToHTMLField()
-    companies_list_item_image_one = wagtail_fields.ImageRenditionField(
-        'original'
-    )
-    companies_list_item_image_two = wagtail_fields.ImageRenditionField(
-        'original'
-    )
-    companies_list_item_image_three = wagtail_fields.ImageRenditionField(
-        'original'
-    )
-    companies_list_item_image_four = wagtail_fields.ImageRenditionField(
-        'original'
-    )
-    companies_list_item_image_five = wagtail_fields.ImageRenditionField(
-        'original'
-    )
-    companies_list_item_image_six = wagtail_fields.ImageRenditionField(
-        'original'
-    )
-    companies_list_item_image_seven = wagtail_fields.ImageRenditionField(
-        'original'
-    )
-    companies_list_item_image_eight = wagtail_fields.ImageRenditionField(
-        'original'
-    )
+    companies_list_item_image_one = wagtail_fields.ImageRenditionField('original')
+    companies_list_item_image_alt_one = serializers.CharField()
+    companies_list_item_image_two = wagtail_fields.ImageRenditionField('original')
+    companies_list_item_image_alt_two = serializers.CharField()
+    companies_list_item_image_three = wagtail_fields.ImageRenditionField('original')
+    companies_list_item_image_alt_three = serializers.CharField()
+    companies_list_item_image_four = wagtail_fields.ImageRenditionField('original')
+    companies_list_item_image_alt_four = serializers.CharField()
+    companies_list_item_image_five = wagtail_fields.ImageRenditionField('original')
+    companies_list_item_image_alt_five = serializers.CharField()
+    companies_list_item_image_six = wagtail_fields.ImageRenditionField('original')
+    companies_list_item_image_alt_six = serializers.CharField()
+    companies_list_item_image_seven = wagtail_fields.ImageRenditionField('original')
+    companies_list_item_image_alt_seven = serializers.CharField()
+    companies_list_item_image_eight = wagtail_fields.ImageRenditionField('original')
+    companies_list_item_image_alt_eight = serializers.CharField()
     case_study_list_title = serializers.CharField()
     case_study_one_text = core_fields.MarkdownToHTMLField()
     case_study_one_image = wagtail_fields.ImageRenditionField('original')
+    case_study_one_image_alt = serializers.CharField()
     case_study_two_text = core_fields.MarkdownToHTMLField()
     case_study_two_image = wagtail_fields.ImageRenditionField('original')
+    case_study_two_image_alt = serializers.CharField()
     case_study_three_text = core_fields.MarkdownToHTMLField()
     case_study_three_image = wagtail_fields.ImageRenditionField('original')
+    case_study_three_image_alt = serializers.CharField()
     case_study_four_text = core_fields.MarkdownToHTMLField()
     case_study_four_image = wagtail_fields.ImageRenditionField('original')
+    case_study_four_image_alt = serializers.CharField()
     other_opportunities_title = serializers.CharField()
     pdf_document = core_fields.DocumentURLField()
     summary_image = wagtail_fields.ImageRenditionField('original')
 
 
-class InvestHighPotentialOpportunityDetailPageSerializer(
-        InvestHighPotentialOpportunityDetailPageBaseSerializer
-):
+class InvestHighPotentialOpportunityDetailPageSerializer(InvestHighPotentialOpportunityDetailPageBaseSerializer):
     other_opportunities = serializers.SerializerMethodField()
 
     def get_other_opportunities(self, instance):
