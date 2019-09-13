@@ -1,6 +1,7 @@
 from django.db import models
 
 from wagtail.core.models import Page
+from wagtail.core import blocks as wagtail_blocks
 
 from modelcluster.fields import ParentalManyToManyField
 
@@ -17,6 +18,7 @@ from core.constants import ARTICLE_TYPES
 from core.mixins import ServiceHomepageMixin, ServiceNameUniqueSlugMixin
 
 from . import panels, snippets
+from core import blocks, fields
 
 
 class BaseDomesticPage(ServiceNameUniqueSlugMixin, BasePage):
@@ -1035,6 +1037,8 @@ class CountryGuidePage(panels.CountryGuidePagePanels, BaseDomesticPage):
         related_name='+'
     )
 
+    tags = ParentalManyToManyField(snippets.IndustryTag, blank=True)
+
 
 class MarketingPages(ExclusivePageMixin, BaseDomesticPage):
 
@@ -1341,6 +1345,46 @@ class HomePage(
     news_title = models.CharField(max_length=255)
     news_description = MarkdownField()
 
+    # hero
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    hero_text = models.TextField(null=True, blank=True)
+    hero_cta_text = models.CharField(null=True, blank=True, max_length=255)
+    hero_cta_linked_page = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    # how DIT helps
+    how_dit_helps_title = models.TextField(null=True, blank=True)
+    how_dit_helps_columns = fields.single_struct_block_stream_field_factory(
+        field_name='columns',
+        block_class_instance=blocks.ColumnWithTitleIconTextBlock(),
+        max_num=3, null=True, blank=True
+    )
+    # questions accordions
+    questions_section_title = models.CharField(max_length=255, null=True, blank=True)
+    questions = fields.single_struct_block_stream_field_factory(
+        field_name='questions',
+        block_class_instance=blocks.DetailsSummaryBlock(),
+        max_num=5, null=True, blank=True
+    )
+    # what's new
+    what_is_new_title = models.CharField(max_length=255, null=True, blank=True)
+    what_is_new_pages = fields.single_struct_block_stream_field_factory(
+        field_name='pages',
+        block_class_instance=wagtail_blocks.PageChooserBlock(page_type='export_readiness.ArticlePage'),
+        max_num=6, null=True, blank=True
+    )
+
     @staticmethod
     def get_verbose_name():
         return 'Great domestic home page'
@@ -1352,60 +1396,6 @@ class HomePage(
             model for model in Page.allowed_subpage_models()
             if (getattr(model, 'service_name_value', None) == allowed_name and model is not cls)
         ]
-
-
-class HomePageOld(panels.HomePageOldPanels, ExclusivePageMixin, ServiceHomepageMixin, BaseDomesticPage):
-    slug_identity = slugs.GREAT_HOME_OLD
-    parent_page_types = []
-    subpage_types = []
-
-    banner_content = MarkdownField()
-    banner_label = models.CharField(max_length=50, null=True, blank=True)
-    news_title = models.CharField(max_length=255)
-    news_description = MarkdownField()
-
-
-class InternationalLandingPage(panels.InternationalLandingPagePanels, ExclusivePageMixin, BaseDomesticPage):
-
-    slug_identity = slugs.GREAT_HOME_INTERNATIONAL
-    # slug_override = 'international'
-    subpage_types = [
-        'export_readiness.ArticleListingPage',
-    ]
-
-    @property
-    def articles_count(self):
-        return sum(
-            (listing_page.specific.articles_count for listing_page in
-             self.get_descendants().type(ArticleListingPage).live())
-        )
-
-
-class EUExitInternationalFormPage(ExclusivePageMixin, BaseDomesticPage, metaclass=FormPageMetaClass):
-    # metaclass creates <fild_name>_label and <field_name>_help_text
-    form_field_names = [
-        'first_name',
-        'last_name',
-        'email',
-        'organisation_type',
-        'company_name',
-        'country',
-        'city',
-        'comment',
-    ]
-
-    full_path_override = '/international/eu-exit-news/contact/'
-    slug_identity = slugs.EUEXIT_INTERNATIONAL_FORM
-
-    breadcrumbs_label = models.CharField(max_length=50)
-    heading = models.CharField(max_length=255)
-    body_text = MarkdownField()
-    submit_button_text = models.CharField(max_length=50)
-    disclaimer = models.TextField(max_length=500)
-
-    content_panels_before_form = panels.EUExitInternationalFormPagePanels.content_panels_before_form
-    content_panels_after_form = panels.EUExitInternationalFormPagePanels.content_panels_after_form
-    settings_panels = panels.EUExitInternationalFormPagePanels.settings_panels
 
 
 class EUExitDomesticFormPage(ExclusivePageMixin, BaseDomesticPage, metaclass=FormPageMetaClass):
@@ -1462,7 +1452,6 @@ class EUExitFormPages(ExclusivePageMixin, BaseDomesticPage):
     folder_page = True
 
     subpage_types = [
-        'export_readiness.EUExitInternationalFormPage',
         'export_readiness.EUExitDomesticFormPage',
         'export_readiness.EUExitFormSuccessPage',
     ]
