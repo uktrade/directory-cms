@@ -827,6 +827,8 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer, HeroSerial
     hero_cta_text = serializers.CharField(max_length=255)
     hero_cta_link = serializers.CharField(max_length=255)
 
+    brexit_banner_text = core_fields.MarkdownToHTMLField()
+
     # Old International Home Page fields
     invest_title = serializers.CharField(max_length=255)
     invest_content = core_fields.MarkdownToHTMLField()
