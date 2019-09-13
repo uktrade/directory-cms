@@ -224,25 +224,27 @@ class InvestHighPotentialOpportunitiesPagePanels:
 class InvestHighPotentialOpportunityDetailPagePanels:
 
     content_panels = [
-        FieldPanel('title'),
         MultiFieldPanel(
-            heading='Hero',
+            classname='collapsible',
+            heading='General',
             children=[
-                FieldPanel('breadcrumbs_label'),
-                FieldPanel('heading'),
-                ImageChooserPanel('hero_image'),
-            ]
-        ),
-
-        MultiFieldPanel(
-            heading='Featured Description',
-            children=[
-                FieldPanel('description')
+                FieldRowPanel(children=[
+                    MultiFieldPanel(children=[
+                        FieldPanel('title'),
+                        FieldPanel('breadcrumbs_label'),
+                        FieldPanel('heading'),
+                        FieldPanel('description'),
+                    ]),
+                    MultiFieldPanel(children=[
+                        ImageChooserPanel('hero_image')
+                    ]),
+                ])
             ]
         ),
 
         MultiFieldPanel(
             heading='Contact us',
+            classname='collapsible',
             children=[
                 FieldRowPanel(
                     children=[
@@ -255,21 +257,15 @@ class InvestHighPotentialOpportunityDetailPagePanels:
         MultiFieldPanel(
             heading='Proposition one',
             children=[
-                FieldRowPanel(
-                    children=[
-                        FieldPanel('proposition_one'),
-                        MultiFieldPanel(
-                            children=[
-                                ImageChooserPanel('proposition_one_image'),
-                                FieldPanel(
-                                    'proposition_one_video',
-                                    widget=AdminMediaChooser
-                                ),
-                            ]
-                        )
-                    ]
-                )
-
+                FieldRowPanel(children=[
+                    FieldPanel('proposition_one'),
+                    MultiFieldPanel(children=[
+                        ImageChooserPanel('proposition_one_image'),
+                        FieldPanel('proposition_one_image_alt'),
+                        FieldPanel('proposition_one_video', widget=AdminMediaChooser),
+                        FieldPanel('proposition_one_video_transcript'),
+                    ])
+                ])
             ]
         ),
         MultiFieldPanel(
@@ -285,7 +281,10 @@ class InvestHighPotentialOpportunityDetailPagePanels:
                                 FieldPanel('opportunity_list_item_three'),
                             ]
                         ),
-                        ImageChooserPanel('opportunity_list_image'),
+                        MultiFieldPanel(children=[
+                            ImageChooserPanel('opportunity_list_image'),
+                            FieldPanel('opportunity_list_image_alt'),
+                        ])
                     ]
                 )
             ]
@@ -306,10 +305,9 @@ class InvestHighPotentialOpportunityDetailPagePanels:
                         MultiFieldPanel(
                             children=[
                                 ImageChooserPanel('proposition_two_image'),
-                                FieldPanel(
-                                    'proposition_two_video',
-                                    widget=AdminMediaChooser
-                                ),
+                                FieldPanel('proposition_two_image_alt'),
+                                FieldPanel('proposition_two_video', widget=AdminMediaChooser),
+                                FieldPanel('proposition_two_video_transcript'),
                             ]
                         )
                     ]
@@ -329,15 +327,9 @@ class InvestHighPotentialOpportunityDetailPagePanels:
                 ),
                 FieldRowPanel(
                     children=[
-                        ImageChooserPanel(
-                            'competitive_advantages_list_item_one_icon'
-                        ),
-                        ImageChooserPanel(
-                            'competitive_advantages_list_item_two_icon'
-                        ),
-                        ImageChooserPanel(
-                            'competitive_advantages_list_item_three_icon'
-                        ),
+                        ImageChooserPanel('competitive_advantages_list_item_one_icon'),
+                        ImageChooserPanel('competitive_advantages_list_item_two_icon'),
+                        ImageChooserPanel('competitive_advantages_list_item_three_icon'),
                     ]
                 )
             ]
@@ -353,22 +345,42 @@ class InvestHighPotentialOpportunityDetailPagePanels:
             heading='Company list',
             children=[
                 FieldPanel('companies_list_text'),
-                FieldRowPanel(
-                    children=[
+                FieldRowPanel(children=[
+                    MultiFieldPanel(children=[
                         ImageChooserPanel('companies_list_item_image_one'),
+                        FieldPanel('companies_list_item_image_alt_one'),
+                    ]),
+                    MultiFieldPanel(children=[
                         ImageChooserPanel('companies_list_item_image_two'),
+                        FieldPanel('companies_list_item_image_alt_two'),
+                    ]),
+                    MultiFieldPanel(children=[
                         ImageChooserPanel('companies_list_item_image_three'),
+                        FieldPanel('companies_list_item_image_alt_three'),
+                    ]),
+                    MultiFieldPanel(children=[
                         ImageChooserPanel('companies_list_item_image_four'),
-                    ]
-                ),
-                FieldRowPanel(
-                    children=[
+                        FieldPanel('companies_list_item_image_alt_four'),
+                    ]),
+                ]),
+                FieldRowPanel(children=[
+                    MultiFieldPanel(children=[
                         ImageChooserPanel('companies_list_item_image_five'),
+                        FieldPanel('companies_list_item_image_alt_five'),
+                    ]),
+                    MultiFieldPanel(children=[
                         ImageChooserPanel('companies_list_item_image_six'),
+                        FieldPanel('companies_list_item_image_alt_six'),
+                    ]),
+                    MultiFieldPanel(children=[
                         ImageChooserPanel('companies_list_item_image_seven'),
+                        FieldPanel('companies_list_item_image_alt_seven'),
+                    ]),
+                    MultiFieldPanel(children=[
                         ImageChooserPanel('companies_list_item_image_eight'),
-                    ]
-                )
+                        FieldPanel('companies_list_item_image_alt_eight'),
+                    ])
+                ])
             ]
         ),
         MultiFieldPanel(
@@ -378,27 +390,37 @@ class InvestHighPotentialOpportunityDetailPagePanels:
                 FieldRowPanel(
                     children=[
                         FieldPanel('case_study_one_text'),
-                        ImageChooserPanel('case_study_one_image'),
+                        MultiFieldPanel(children=[
+                            ImageChooserPanel('case_study_one_image'),
+                            FieldPanel('case_study_one_image_alt'),
+                        ])
                     ]
                 ),
                 FieldRowPanel(
                     children=[
                         FieldPanel('case_study_two_text'),
-                        ImageChooserPanel('case_study_two_image'),
+                        MultiFieldPanel(children=[
+                            ImageChooserPanel('case_study_two_image'),
+                            FieldPanel('case_study_two_image_alt'),
+                        ])
                     ]
                 ),
                 FieldRowPanel(
                     children=[
                         FieldPanel('case_study_three_text'),
-                        ImageChooserPanel('case_study_three_image'),
+                        MultiFieldPanel(children=[
+                            ImageChooserPanel('case_study_three_image'),
+                            FieldPanel('case_study_three_image_alt'),
+                        ])
                     ]
                 ),
-                FieldRowPanel(
-                    children=[
-                        FieldPanel('case_study_four_text'),
+                FieldRowPanel(children=[
+                    FieldPanel('case_study_four_text'),
+                    MultiFieldPanel(children=[
                         ImageChooserPanel('case_study_four_image'),
-                    ]
-                )
+                        FieldPanel('case_study_four_image_alt'),
+                    ])
+                ])
             ]
         ),
         MultiFieldPanel(
