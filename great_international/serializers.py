@@ -799,6 +799,10 @@ class InternationalSectorPageSerializer(
         )
 
 
+class InternationalSubSectorPageSerializer(BaseInternationalSectorPageSerializer):
+    pass
+
+
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
     type_of_article = serializers.CharField()
 
@@ -826,6 +830,8 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer, HeroSerial
     hero_subtitle = serializers.CharField(max_length=255)
     hero_cta_text = serializers.CharField(max_length=255)
     hero_cta_link = serializers.CharField(max_length=255)
+
+    brexit_banner_text = core_fields.MarkdownToHTMLField()
 
     # Old International Home Page fields
     invest_title = serializers.CharField(max_length=255)
