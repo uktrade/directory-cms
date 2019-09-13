@@ -6,7 +6,7 @@
 [![gitflow-image]][gitflow]
 [![calver-image]][calver]
 
-**Directory CMS - the Department for International Trade (DIT)**
+**CMS for the GREAT platform - the Department for International Trade (DIT)**
 
 ---
 
@@ -15,13 +15,9 @@
 ### Installing
     $ git clone https://github.com/uktrade/directory-cms
     $ cd directory-cms
-    $ virtualenv .venv -p python3.6
-    $ source .venv/bin/activate
-    $ pip install -r requirements_test.txt
-    # Start postgres now before proceeding.
-    $ make debug_db
-    $ make debug_migrate
-    $ make debug_createsuperuser
+    $ [create and activate virtual environment]
+    $ make install_requirements
+    $ make manage migrate
 
 
 ### Requirements
@@ -34,7 +30,7 @@
 
 #### Configuration
 
-Secrets such as API keys and environment specific configurations are placed in `conf/env/secrets-do-not-commit` - a file that is not added to version control. To create a template secrets file with dummy values run `make init_secrets`.
+Secrets such as API keys and environment specific configurations are placed in `conf/env/secrets-do-not-commit` - a file that is not added to version control. To create a template secrets file with dummy values run `make secrets`.
 
 ### Commands
 
@@ -52,7 +48,7 @@ Secrets such as API keys and environment specific configurations are placed in `
 | make requirements             | Compile the requirements file |
 | make install_requirements     | Installed the compile requirements file |
 | make css                      | Compile scss to css |
-| make init_secrets             | Create your secret env var file |
+| make secrets                  | Create your secret env var file |
 | make worker                   | Run async cache celery worker |
 
 ### Image storage
@@ -75,24 +71,6 @@ UI clients on local expect the CMS to be reachable at the address http://cms.tra
      Add 127.0.0.1 cms.trade.great
 
 You can test this works by attempting to visit http://cms.trade.great:8010/admin in your browser.
-
-
-## Running the webserver
-    $ source .venv/bin/activate
-    $ make debug_webserver
-
-## Running the tests
-
-    $ make debug_test
-
-### Create a new template_sql file
-
-    To speed up tests a SQL template file is provided. If the file becomes obsolete run the following command on an up-to-date db instance to improve test speeds locally.
-
-    *NOTE:* You should avoid committing updated database templates to the repository, as doing so has the potential to expose sensitive data from your copy of the database. Only templates created from a freshly created/migrated database should ever be committed to the repository.
-
-    $ make update_db_template
-
 
 ## Session
 
@@ -146,10 +124,10 @@ https://github.com/uktrade?q=great
 [code-climate-image]: https://codeclimate.com/github/uktrade/directory-cms/badges/issue_count.svg
 [code-climate]: https://codeclimate.com/github/uktrade/directory-cms
 
-[circle-ci-image]: https://circleci.com/gh/uktrade/directory-cms/tree/master.svg?style=svg
-[circle-ci]: https://circleci.com/gh/uktrade/directory-cms/tree/master
+[circle-ci-image]: https://circleci.com/gh/uktrade/directory-cms/tree/develop.svg?style=svg
+[circle-ci]: https://circleci.com/gh/uktrade/directory-cms/tree/develop
 
-[codecov-image]: https://codecov.io/gh/uktrade/directory-cms/branch/master/graph/badge.svg
+[codecov-image]: https://codecov.io/gh/uktrade/directory-cms/branch/develop/graph/badge.svg
 [codecov]: https://codecov.io/gh/uktrade/directory-cms
 
 [gitflow-image]: https://img.shields.io/badge/Branching%20strategy-gitflow-5FBB1C.svg
