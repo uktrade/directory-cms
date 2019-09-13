@@ -13,8 +13,7 @@ from core.serializers import (
 from great_international.serializers import StatisticProxyDataWrapper, StatisticSerializer
 
 from .models import (
-    ArticleListingPage, ArticlePage, TopicLandingPage, CampaignPage,
-    SuperregionPage, EUExitInternationalFormPage, EUExitDomesticFormPage,
+    ArticleListingPage, ArticlePage, TopicLandingPage, CampaignPage, SuperregionPage, EUExitDomesticFormPage,
     CountryGuidePage
 )
 
@@ -416,6 +415,8 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer, HeroSerializer)
 
     help_market_guide_cta_link = serializers.CharField(max_length=255)
 
+    tags = core_fields.TagsListField()
+
     def get_intro_ctas(self, instance):
         data = [
             IntroCTAProxyDataWrapper(instance=instance, position_number=num)
@@ -585,14 +586,9 @@ class SuperregionPageSerializer(TopicLandingPageSerializer):
     """
 
 
-class InternationalLandingPageSerializer(BasePageSerializer):
-    articles_count = serializers.IntegerField()
-
-
 class TagSerializer(serializers.Serializer):
     """This is not a Page model."""
     name = serializers.CharField()
-    slug = serializers.CharField()
     articles = serializers.SerializerMethodField()
 
     def get_articles(self, object):
@@ -654,14 +650,6 @@ class EUExitGenericFormPageSerializer(BasePageSerializer):
     body_text = core_fields.MarkdownToHTMLField()
     submit_button_text = serializers.CharField()
     disclaimer = core_fields.MarkdownToHTMLField()
-
-
-class EUExitInternationalFormPageSerializer(
-    EUExitGenericFormPageSerializer,
-    metaclass=FormPageSerializerMetaclass
-):
-    class Meta:
-        model_class = EUExitInternationalFormPage
 
 
 class EUExitDomesticFormPageSerializer(
