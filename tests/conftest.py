@@ -1,52 +1,111 @@
-import os
+from itertools import product
 from unittest.mock import patch
 
 import pytest
+from modeltranslation.utils import build_localized_fieldname
 from six import b
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
-from wagtail.core.models import Page, Site
+from wagtail.core.models import GroupPagePermission, Page, Site
 
-from django import db
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
 from django.core.cache import cache
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.core.management import call_command
 from django.utils import translation
 
-from conf import settings
 from core.models import RoutingSettings
 from groups.models import GroupInfo
 from users.models import UserProfile
-from .great_international.factories import InternationalHomePageFactory
-from .find_a_supplier.factories import IndustryPageFactory
+from .great_international.factories import InternationalHomePageFactory, InternationalArticlePageFactory, \
+    InvestHighPotentialOpportunityDetailPageFactory
 from .users.factories import UserFactory
 
 
-@pytest.fixture()
-def root_page():
-    """
-    On start Wagtail provides one page with ID=1 and it's called "Root page"
-    """
-    return Page.objects.get(pk=1)
+@pytest.fixture
+def wagtail_initial_data(request):
+    if not request.node.get_closest_marker('django_db'):
+        return
+    page_content_type, _ = ContentType.objects.get_or_create(
+        model='page',
+        app_label='wagtailcore'
+    )
+    root, _ = Page.objects.get_or_create(
+        slug='root',
+        defaults=dict(
+            title='Root',
+            title_en_gb='Root',
+            content_type=page_content_type,
+            path='0001',
+            depth=1,
+            numchild=1,
+            url_path='/',
+        )
+    )
+    Page.objects.get_or_create(
+        slug='home',
+        defaults=dict(
+            title="Welcome to your new Wagtail site!",
+            title_en_gb="Welcome to your new Wagtail site!",
+            content_type=page_content_type,
+            path='00010001',
+            depth=2,
+            numchild=0,
+            url_path='/home/',
+        )
+    )
+
+    wagtailadmin_content_type, _ = ContentType.objects.get_or_create(
+        app_label='wagtailadmin',
+        model='admin'
+    )
+    admin_permission, created = Permission.objects.get_or_create(
+        content_type=wagtailadmin_content_type,
+        codename='access_admin',
+        name='Can access Wagtail admin'
+    )
+
+    moderators_group = Group.objects.create(name='Moderators')
+    editors_group = Group.objects.create(name='Editors')
+
+    GroupPagePermission.objects.create(
+        group=moderators_group,
+        page=root,
+        permission_type='add',
+    )
+    GroupPagePermission.objects.create(
+        group=moderators_group,
+        page=root,
+        permission_type='edit',
+    )
+    GroupPagePermission.objects.create(
+        group=moderators_group,
+        page=root,
+        permission_type='publish',
+    )
+
+    GroupPagePermission.objects.create(
+        group=editors_group,
+        page=root,
+        permission_type='add',
+    )
+    GroupPagePermission.objects.create(
+        group=editors_group,
+        page=root,
+        permission_type='edit',
+    )
+
+    return root
 
 
 @pytest.fixture
-def untranslated_page(root_page):
-    return IndustryPageFactory(
-        parent=root_page,
-        title_en_gb='ENGLISH',
-        breadcrumbs_label_en_gb='label',
-        introduction_text_en_gb='lede',
-        search_description_en_gb='description',
-        hero_text_en_gb='hero text',
-        introduction_column_one_text_en_gb='lede column one',
-        introduction_column_two_text_en_gb='lede column two',
-        introduction_column_three_text_en_gb='lede column three',
-        company_list_text_en_gb='companies',
-        company_list_call_to_action_text_en_gb='view all',
-    )
+def root_page(wagtail_initial_data):
+    """
+    On start Wagtail provides one page with ID=1 and it's called "Root page"
+    """
+    return wagtail_initial_data
 
 
 @pytest.fixture
@@ -112,28 +171,6 @@ def clear_django_cache():
     cache.clear()
 
 
-@pytest.fixture(scope='session')
-def django_db_createdb():
-    """Never let Django create the test db.
-    django_db_setup will take care of it"""
-    return False
-
-
-@pytest.fixture(scope='session')
-def django_db_setup(django_db_blocker):
-    """Load db schema from template."""
-    with django_db_blocker.unblock():
-        settings.DATABASES['default']['NAME'] = 'test_directory_cms_debug'
-        os.system('PGPASSWORD=debug dropdb  test_directory_cms_debug')
-        os.system('PGPASSWORD=debug createdb -h localhost -U debug test_directory_cms_debug')  # NOQA
-        os.system('PGPASSWORD=debug psql -h localhost -U debug -d test_directory_cms_debug -f db_template.sql >/dev/null 2>&1')  # NOQA
-        call_command('migrate')  # if the template is old we need to migrate
-        yield
-
-        for connection in db.connections.all():
-            connection.close()
-
-
 @pytest.fixture(autouse=True)
 def feature_flags(settings):
     # solves this issue: https://github.com/pytest-dev/pytest-django/issues/601
@@ -174,7 +211,7 @@ def team_leaders(team_leaders_group):
     user_1 = UserFactory(username='user1', first_name='Adam')
     user_2 = UserFactory(username='user2', first_name='Zac')
     team_leaders_group.user_set.set([user_1, user_2])
-    return (user_1, user_2)
+    return user_1, user_2
 
 
 @pytest.fixture
@@ -196,11 +233,14 @@ def user_awaiting_approval(groups_with_info):
     return user
 
 
-@pytest.fixture()
-def international_root_page(root_page):
+@pytest.fixture
+def international_root_page(root_page, request):
+    if not request.node.get_closest_marker('django_db'):
+        return
+
     return InternationalHomePageFactory.create(
         parent=root_page,
-        slug='home',
+        slug='international-home',
         title_en_gb='home',
         hero_title_en_gb='foo',
         invest_title_en_gb='foo',
@@ -216,7 +256,10 @@ def international_root_page(root_page):
 
 
 @pytest.fixture(autouse=True)
-def international_site(international_root_page):
+def international_site(international_root_page, request):
+    if not request.node.get_closest_marker('django_db'):
+        return
+
     site, created = Site.objects.get_or_create(
         port=80,
         hostname='great.gov.uk',
@@ -230,3 +273,93 @@ def international_site(international_root_page):
         defaults={'root_path_prefix': '/international/content/'}
     )
     return site
+
+
+@pytest.fixture
+def page_without_specific_type(root_page):
+    page = Page(title="No specific type", slug='no-specific-type')
+    root_page.add_child(instance=page)
+    return page
+
+
+@pytest.fixture
+def translated_page(settings, international_root_page):
+    page = InternationalArticlePageFactory(
+        parent=international_root_page,
+        title_en_gb='ENGLISH',
+        title_de='GERMAN',
+        title_ja='JAPANESE',
+        title_zh_hans='SIMPLIFIED CHINESE',
+        title_fr='FRENCH',
+        title_es='SPANISH',
+        title_pt='PORTUGUESE',
+        title_ar='ARABIC',
+    )
+    field_names = page.get_required_translatable_fields()
+    language_codes = settings.LANGUAGES
+    for field_name, (language_code, _) in product(field_names, language_codes):
+        localized_name = build_localized_fieldname(field_name, language_code)
+        if not getattr(page, localized_name):
+            setattr(page, localized_name, localized_name + '-v')
+    page.save()
+    return page
+
+
+@pytest.fixture
+def site_with_translated_page_as_root(translated_page):
+    return Site.objects.create(
+        site_name='Test',
+        hostname='example.com',
+        port=8097,
+        root_page=translated_page,
+    )
+
+
+@pytest.fixture
+def page_with_reversion(admin_user, translated_page):
+    translated_page.title = 'published-title',
+    translated_page.title_en_gb = 'published-title'
+    translated_page.save()
+
+    translated_page.title_en_gb = 'draft-title'
+    translated_page.save_revision(
+        user=admin_user,
+        submitted_for_moderation=False,
+    )
+    return translated_page
+
+
+@pytest.fixture
+def site_with_revised_page_as_root(page_with_reversion):
+    return Site.objects.create(
+        site_name='Test',
+        hostname='example.com',
+        port=8098,
+        root_page=page_with_reversion,
+    )
+
+
+@pytest.fixture
+def page(international_root_page):
+    return InternationalArticlePageFactory(
+        parent=international_root_page,
+        slug='the-slug'
+    )
+
+
+@pytest.fixture
+def high_potential_opportunity_page(page):
+    pdf_document = Document.objects.create(
+        title='document.pdf',
+        file=page.article_image.file  # not really pdf
+    )
+    return InvestHighPotentialOpportunityDetailPageFactory(pdf_document=pdf_document)
+
+
+@pytest.fixture()
+def untranslated_page(international_root_page):
+    return InternationalArticlePageFactory(
+        parent=international_root_page,
+        slug='the-slug',
+        title_en_gb='ENGLISH',
+    )

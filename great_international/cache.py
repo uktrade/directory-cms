@@ -18,7 +18,8 @@ class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
         great_international.InternationalSubSectorPage,
         great_international.InternationalTopicLandingPage,
         great_international.InternationalCuratedTopicLandingPage,
-        great_international.AboutUkLandingPage
+        great_international.AboutUkLandingPage,
+        great_international.InternationalHomePage
     ]
 
 
@@ -38,13 +39,10 @@ class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = great_international.InternationalHomePage
     subscriptions = [
         great_international.InternationalArticlePage,
-    ]
-
-
-class InternationalHomePageOldSubscriber(AbstractDatabaseCacheSubscriber):
-    model = great_international.InternationalHomePageOld
-    subscriptions = [
-        great_international.InternationalArticlePage,
+        invest.InvestInternationalHomePage,
+        capital_invest.InternationalCapitalInvestLandingPage,
+        find_a_supplier.InternationalTradeHomePage,
+        great_international.InternationalSectorPage
     ]
 
 
@@ -78,7 +76,8 @@ class InternationalTopicLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
         great_international.InternationalArticlePage,
         great_international.InternationalArticleListingPage,
         great_international.InternationalSectorPage,
-        great_international.InternationalCampaignPage
+        great_international.InternationalCampaignPage,
+        great_international.AboutUkLandingPage
     ]
 
 
@@ -91,7 +90,11 @@ class InternationalCuratedTopicLandingPageSubscriber(
 
 class InternationalGuideLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = great_international.InternationalGuideLandingPage
-    subscriptions = [great_international.InternationalArticlePage]
+    subscriptions = [
+        great_international.InternationalArticlePage,
+        invest.InvestInternationalHomePage,
+        capital_invest.InternationalCapitalInvestLandingPage
+    ]
 
 
 class InternationalEUExitFormPageSubscriber(
@@ -114,13 +117,10 @@ class InternationalCapitalInvestLandingPageSubscriber(
     model = capital_invest.InternationalCapitalInvestLandingPage
     subscriptions = [
         capital_invest.CapitalInvestRegionPage,
-        great_international.AboutUkRegionPage
+        great_international.AboutUkRegionPage,
+        great_international.InternationalGuideLandingPage,
+        great_international.InternationalHomePage
     ]
-
-
-class CapitalInvestRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = capital_invest.CapitalInvestRegionPage
-    subscriptions = []
 
 
 class CapitalInvestOpportunityPageSubscriber(AbstractDatabaseCacheSubscriber):
@@ -146,7 +146,9 @@ class InvestInternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = invest.InvestInternationalHomePage
     subscriptions = [
         great_international.InternationalSectorPage,
-        invest.InvestHighPotentialOpportunityDetailPage
+        invest.InvestHighPotentialOpportunityDetailPage,
+        great_international.InternationalGuideLandingPage,
+        great_international.InternationalHomePage
     ]
 
 
@@ -200,7 +202,8 @@ class InvestRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
 class InternationalTradeHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = find_a_supplier.InternationalTradeHomePage
     subscriptions = [
-        great_international.InternationalSectorPage
+        great_international.InternationalSectorPage,
+        great_international.InternationalHomePage
     ]
 
 
@@ -238,7 +241,8 @@ class AboutUkLandingPageSubscriber(
     subscriptions = [
         great_international.InternationalSectorPage,
         great_international.AboutUkRegionListingPage,
-        great_international.AboutUkRegionPage
+        great_international.AboutUkRegionPage,
+        great_international.InternationalTopicLandingPage
     ]
 
 
