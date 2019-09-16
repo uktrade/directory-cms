@@ -1,12 +1,14 @@
 ARGUMENTS = $(filter-out $@,$(MAKECMDGOALS)) $(filter-out --,$(MAKEFLAGS))
+TESTFILES?=tests
 
 clean:
 	-find . -type f -name "*.pyc" -delete
 	-find . -type d -name "__pycache__" -delete
 
+ENV_VAR?='test,dev'
 pytest:
-	ENV_FILES='test,dev' \
-	pytest $(ARGUMENTS) \
+	ENV_FILES=$(ENV_FILES) \
+	pytest $(TESTFILES) $(ARGUMENTS) \
 	--ignore=node_modules \
 	--ignore=conf/celery.py \
 	--capture=no \
@@ -20,11 +22,13 @@ flake8:
 	--exclude=.venv,venv,node_modules,migrations \
 	--max-line-length=120
 
+ENV_VAR?='secrets-do-not-commit,dev'
 manage:
-	ENV_FILES='secrets-do-not-commit,dev' ./manage.py $(ARGUMENTS)
+	ENV_FILES=$(ENV_FILES) ./manage.py $(ARGUMENTS)
 
+ENV_VAR?='secrets-do-not-commit,dev'
 webserver:
-	ENV_FILES='secrets-do-not-commit,dev' python manage.py runserver 0.0.0.0:8010 $(ARGUMENTS)
+	ENV_FILES=$(ENV_FILES) python manage.py runserver 0.0.0.0:8010 $(ARGUMENTS)
 
 requirements:
 	pip-compile requirements.in

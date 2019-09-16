@@ -25,8 +25,7 @@ jobs:
           name: Run tests
           command: |
             . venv/bin/activate
-            TESTFILES=$(circleci tests glob "tests/**/*.py"| circleci tests split)
-            make pytest ${TESTFILES} -- --cov=. --cov-config=.coveragerc --cov-report=term --junitxml=test-reports/junit.xml
+            TESTFILES=$(circleci tests glob "tests/**/*.py"| circleci tests split) make pytest
             codecov
       - store_test_results:
           path: test-reports
