@@ -372,7 +372,7 @@ class SectionThreeSubsectionSerializer(serializers.Serializer):
 
 class SectionTwoSubsectionSerializer(serializers.Serializer):
     icon = wagtail_fields.ImageRenditionField('original')
-    heading = serializers.CharField(max_length=255)
+    heading = core_fields.MarkdownToHTMLField(max_length=255)
     body = serializers.CharField()
 
 
