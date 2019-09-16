@@ -474,7 +474,7 @@ class HomePageSerializer(BasePageSerializer):
     hero_medium = wagtail_fields.ImageRenditionField('fill-768x376', source='hero_image', required=False)
     hero_text = serializers.CharField(required=False)
     hero_cta_text = serializers.CharField(required=False)
-    hero_cta_linked_page = RelatedArticlePageSerializer(required=False)
+    hero_cta_linked_page = RelatedArticlePageSerializer(required=False, source='hero_cta_linked_page.specific.url')
 
     how_dit_helps_title = serializers.CharField(required=False)
     how_dit_helps_columns = ColumnWithTitleIconTextBlockStreamChildBaseSerializer(many=True, required=False)

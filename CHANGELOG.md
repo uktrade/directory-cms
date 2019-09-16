@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- No ticket - Reinstate db template and add makefile commands to make setting up fresh database faster
 - CMS-1732 - Add new fields to HPO detail page for image alt and video transcript
 - XOT-1035 - Add hero image renditions for new responsive frontend component
 - XOT-1020 - Added extra fields to article page type (domestic and international)
@@ -21,6 +22,8 @@
 - XOT-1073 Add industry tags to Country Pages
 - CI-486 - Added brexit banner field to `InternationalHomePage`
 - CI-496 - Updated field on `InternationalHomePage` to be markdown
+- CI-492 - Added `mapped_regions` to region page
+- No ticket - Add migrations check to CircleCI
 
 ### Fixed bugs
 - No ticket - Fixed base sector page serializer being in serializer_mapping
