@@ -30,6 +30,7 @@ jobs:
           path: test-reports
       - store_artifacts:
           path: test-reports
+
   flake8:
     docker:
       - image: circleci/python:3.6.8
@@ -45,9 +46,35 @@ jobs:
             pip install flake8
             make flake8
 
+  migrations:
+    docker:
+      - image: circleci/python:3.6.6
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - restore_cache:
+          key: v1-deps-{{ checksum "requirements_test.txt" }}
+      - run:
+          name: Create virtualenv and install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            make install_requirements
+      - save_cache:
+          key: v1-deps-{{ checksum "requirements_test.txt" }}
+          paths:
+            - "venv"
+      - run:
+          name: Check migrations
+          command: |
+            . venv/bin/activate
+            make check_migrations
+
 workflows:
   version: 2
   test_and_flake8:
     jobs:
       - test
       - flake8
+      - migrations

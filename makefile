@@ -23,6 +23,9 @@ flake8:
 manage:
 	ENV_FILES='secrets-do-not-commit,dev' ./manage.py $(ARGUMENTS)
 
+check_migrations:
+	yes n | ENV_FILES='test,dev' ./manage.py migrate --plan
+
 webserver:
 	ENV_FILES='secrets-do-not-commit,dev' python manage.py runserver 0.0.0.0:8010 $(ARGUMENTS)
 
@@ -60,4 +63,4 @@ update_db_template:
 		--dbname=cms_temporary_template
 	dropdb -U postgres cms_temporary_template
 
-.PHONY: clean pytest flake8 manage webserver requirements install_requirements css worker
+.PHONY: clean pytest flake8 manage webserver requirements install_requirements css worker check_migrations
