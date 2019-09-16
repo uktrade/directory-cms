@@ -24,6 +24,7 @@
 
 ### Fixed bugs
 - No ticket - Fixed base sector page serializer being in serializer_mapping
+- No ticket - Undone CI-496 changes, markdown field back to charfield
 
 
 ## [2019.08.27_1](https://github.com/uktrade/directory-cms/releases/tag/2019.08.27_1)
