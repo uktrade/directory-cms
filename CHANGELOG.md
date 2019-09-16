@@ -22,6 +22,7 @@
 - CI-486 - Added brexit banner field to `InternationalHomePage`
 
 ### Fixed bugs
+- No ticket - Fix conflicting migrations
 - No ticket - Fixed base sector page serializer being in serializer_mapping
 
 
