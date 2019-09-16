@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/python:3.6.6
       - image: circleci/redis:3.2-alpine
-    parallelism: 10
+    parallelism: 6
     steps:
       - checkout
       - setup_remote_docker:
@@ -27,7 +27,7 @@ jobs:
             . venv/bin/activate
             TESTFILES=$(circleci tests glob "tests/**/*.py"| circleci tests split)
             make pytest ${TESTFILES} -- --cov=. --cov-config=.coveragerc --cov-report=term --junitxml=test-reports/junit.xml
-            codecov
+            codecov -F
       - store_test_results:
           path: test-reports
       - store_artifacts:
