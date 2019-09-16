@@ -6,7 +6,7 @@ clean:
 
 pytest:
 	ENV_FILES='test,dev' \
-	pytest tests $(ARGUMENTS) \
+	pytest $(ARGUMENTS) \
 	--ignore=node_modules \
 	--ignore=conf/celery.py \
 	--capture=no \
