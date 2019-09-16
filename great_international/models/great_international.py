@@ -330,7 +330,7 @@ class InternationalHomePage(
         related_name='+',
         verbose_name='Features highlight 1 icon'
     )
-    section_two_subsection_one_heading = models.CharField(
+    section_two_subsection_one_heading = MarkdownField(
         max_length=255,
         blank=True,
         verbose_name='Features highlight 1 heading'
@@ -348,7 +348,7 @@ class InternationalHomePage(
         related_name='+',
         verbose_name='Features highlight 2 icon'
     )
-    section_two_subsection_two_heading = models.CharField(
+    section_two_subsection_two_heading = MarkdownField(
         max_length=255,
         blank=True,
         verbose_name='Features highlight 2 heading'
@@ -366,7 +366,7 @@ class InternationalHomePage(
         related_name='+',
         verbose_name='Features highlight 3 icon'
     )
-    section_two_subsection_three_heading = models.CharField(
+    section_two_subsection_three_heading = MarkdownField(
         blank=True,
         max_length=255,
         verbose_name='Features highlight 3 heading'
@@ -384,7 +384,7 @@ class InternationalHomePage(
         related_name='+',
         verbose_name='Features highlight 4 icon'
     )
-    section_two_subsection_four_heading = models.CharField(
+    section_two_subsection_four_heading = MarkdownField(
         max_length=255,
         blank=True,
         verbose_name='Features highlight 4 heading'
@@ -402,7 +402,7 @@ class InternationalHomePage(
         related_name='+',
         verbose_name='Features highlight 5 icon'
     )
-    section_two_subsection_five_heading = models.CharField(
+    section_two_subsection_five_heading = MarkdownField(
         max_length=255,
         blank=True,
         verbose_name='Features highlight 5 heading'
@@ -420,7 +420,7 @@ class InternationalHomePage(
         related_name='+',
         verbose_name='Features highlight 6 icon'
     )
-    section_two_subsection_six_heading = models.CharField(
+    section_two_subsection_six_heading = MarkdownField(
         blank=True,
         max_length=255,
         verbose_name='Features highlight 6 heading'
