@@ -6,6 +6,8 @@ jobs:
       - image: circleci/redis:3.2-alpine
     steps:
       - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
       - restore_cache:
           key: v1-deps-{{ checksum "requirements_test.txt" }}
       - run:
@@ -33,6 +35,8 @@ jobs:
       - image: circleci/python:3.6.8
     steps:
       - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: Run flake8
           command: |
