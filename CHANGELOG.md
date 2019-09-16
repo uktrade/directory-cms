@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- No ticket - Reinstate db template and add makefile commands to make setting up fresh database faster
 - CMS-1732 - Add new fields to HPO detail page for image alt and video transcript
 - XOT-1035 - Add hero image renditions for new responsive frontend component
 - XOT-1020 - Added extra fields to article page type (domestic and international)
