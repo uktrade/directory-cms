@@ -84,6 +84,8 @@ class InternationalHomePagePanels:
                                     FieldPanel('section_two_subsection_three_heading'),
                                     FieldPanel('section_two_subsection_three_body')
                                 ]),
+                        ]),
+                        FieldRowPanel([
                             MultiFieldPanel(
                                 children=[
                                     ImageChooserPanel(
