@@ -1,22 +1,11 @@
 version: 2
-
-# Machines configs
-machine_python3_postgres: &machine_python3_postgres_redis
-  docker:
-    - image: circleci/python:3.6.8
-    - image: circleci/redis:3.2-alpine
-
-
-# Individual (shared) steps.
-step_checkout_repo: &step_checkout_repo
-  checkout
-
-
 jobs:
   test:
-    <<: *machine_python3_postgres_redis
+    docker:
+      - image: circleci/python:3.6.6
+      - image: circleci/redis:3.2-alpine
     steps:
-      - *step_checkout_repo
+      - checkout
       - setup_remote_docker:
           docker_layer_caching: true
       - restore_cache:
@@ -35,16 +24,18 @@ jobs:
           name: Run tests
           command: |
             . venv/bin/activate
-            make pytest -- --cov=. --cov-config=.coveragerc --cov-report=term
+            make pytest -- --cov=. --cov-config=.coveragerc --cov-report=term --junitxml=test-reports/junit.xml
             codecov
       - store_test_results:
-          path: tests
+          path: test-reports
+      - store_artifacts:
+          path: test-reports
 
   flake8:
     docker:
       - image: circleci/python:3.6.8
     steps:
-      - *step_checkout_repo
+      - checkout
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
@@ -55,9 +46,35 @@ jobs:
             pip install flake8
             make flake8
 
+  migrations:
+    docker:
+      - image: circleci/python:3.6.6
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - restore_cache:
+          key: v1-deps-{{ checksum "requirements_test.txt" }}
+      - run:
+          name: Create virtualenv and install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            make install_requirements
+      - save_cache:
+          key: v1-deps-{{ checksum "requirements_test.txt" }}
+          paths:
+            - "venv"
+      - run:
+          name: Check migrations
+          command: |
+            . venv/bin/activate
+            make check_migrations
+
 workflows:
   version: 2
   test_and_flake8:
     jobs:
       - test
       - flake8
+      - migrations
