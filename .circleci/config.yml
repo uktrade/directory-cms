@@ -26,7 +26,7 @@ jobs:
           command: |
             . venv/bin/activate
             TESTFILES=$(circleci tests glob "tests/**/*.py"| circleci tests split)
-            ENV_FILES=test,dev pytest ${TESTFILES} --cov=. --cov-config=.coveragerc --cov-report=html
+            ENV_FILES=test,dev pytest ${TESTFILES} --cov=. --cov-config=.coveragerc --cov-report html
             COVERALLS_PARALLEL=true coveralls
       - store_test_results:
           path: test-reports
