@@ -1,5 +1,4 @@
 ARGUMENTS = $(filter-out $@,$(MAKECMDGOALS)) $(filter-out --,$(MAKEFLAGS))
-TESTFILES?=tests
 
 clean:
 	-find . -type f -name "*.pyc" -delete
@@ -8,14 +7,7 @@ clean:
 ENV_FILES?='test,dev'
 pytest:
 	ENV_FILES=$(ENV_FILES) \
-	pytest $(TESTFILES) $(ARGUMENTS) \
-	--ignore=node_modules \
-	--ignore=conf/celery.py \
-	--capture=no \
-	--nomigrations \
-	--reuse-db \
-	-W ignore::DeprecationWarning \
-	-vv
+	pytest $(ARGUMENTS)
 
 flake8:
 	flake8 . \
