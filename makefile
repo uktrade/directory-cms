@@ -63,4 +63,7 @@ update_db_template:
 		--dbname=cms_temporary_template
 	dropdb -U postgres cms_temporary_template
 
+dummy_data:
+	ENV_FILES='secrets-do-not-commit,dev' ./manage.py loaddata fixtures/data.json
+
 .PHONY: clean pytest flake8 manage webserver requirements install_requirements css worker check_migrations
