@@ -6,9 +6,9 @@ from core import fields as core_fields
 
 
 class CampaignBlockStreamChildSerializer(StreamChildBaseSerializer):
-   heading = serializers.CharField()
-   subheading = serializers.CharField()
-   related_link = serializers.CharField()
-   image = wagtail_fields.ImageRenditionField('original')
-   video = core_fields.VideoField()
-   video_transcript = serializers.CharField()
+    heading = serializers.CharField()
+    subheading = serializers.CharField()
+    related_link = serializers.CharField()
+    image = wagtail_fields.ImageRenditionField('original')
+    video = core_fields.VideoField()
+    video_transcript = serializers.CharField()

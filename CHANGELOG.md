@@ -24,6 +24,7 @@
 - CI-496 - Updated field on `InternationalHomePage` to be markdown
 - CI-492 - Added `mapped_regions` to region page
 - No ticket - Add migrations check to CircleCI
+- XOT-1039 - Add campaign block to Great Domestic Homepage
 
 ### Fixed bugs
 - XOT-1033 - Fix hero CTA link serializer
