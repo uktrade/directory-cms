@@ -66,4 +66,4 @@ update_db_template:
 dummy_data:
 	ENV_FILES='secrets-do-not-commit,dev' ./manage.py loaddata fixtures/data.json
 
-.PHONY: clean pytest flake8 manage webserver requirements install_requirements css worker check_migrations
+.PHONY: clean pytest flake8 manage webserver requirements install_requirements css worker secrets check_migrations setup_db update_db_template dummy_data
