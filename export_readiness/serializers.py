@@ -5,10 +5,11 @@ from directory_constants import slugs
 from conf import settings
 from core import fields as core_fields
 from core.serializers import (
-    BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper, HeroSerializer,
-    ColumnWithTitleIconTextBlockStreamChildBaseSerializer, DetailsSummaryBlockStreamChildBaseSerializer,
-    StreamChildBaseSerializer
+    BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper, HeroSerializer
 )
+from core.blocks_serializers import StreamChildBaseSerializer, ColumnWithTitleIconTextBlockStreamChildBaseSerializer, \
+    DetailsSummaryBlockStreamChildBaseSerializer
+from export_readiness import blocks_serializers
 
 from great_international.serializers import StatisticProxyDataWrapper, StatisticSerializer
 
@@ -454,7 +455,7 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer, HeroSerializer)
         return serializer.data
 
 
-class RelatedArticlePageStreamChildBaseSerializer(RelatedArticlePageSerializer, StreamChildBaseSerializer):
+class RelatedArticlePageStreamChildSerializer(RelatedArticlePageSerializer, StreamChildBaseSerializer):
     pass
 
 
@@ -483,7 +484,9 @@ class HomePageSerializer(BasePageSerializer):
     questions = DetailsSummaryBlockStreamChildBaseSerializer(many=True, required=False)
 
     what_is_new_title = serializers.CharField(required=False)
-    what_is_new_pages = RelatedArticlePageStreamChildBaseSerializer(many=True, required=False)
+    what_is_new_pages = RelatedArticlePageStreamChildSerializer(many=True, required=False)
+
+    campaign = blocks_serializers.CampaignBlockStreamChildSerializer(required=False, many=True)
 
     def get_articles(self, obj):
         try:
