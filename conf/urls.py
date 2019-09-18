@@ -12,7 +12,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView
 
 import core.views
-import export_readiness.views
 from activitystream.views import ActivityStreamView
 from groups.views import GroupInfoModalView
 
@@ -39,13 +38,6 @@ api_urls = [
             )
         ),
         name='lookup-by-path'
-    ),
-    url(
-        r'^pages/lookup-by-tag/(?P<slug>[\w-]+)/$',
-        api_router.wrap_view(
-            export_readiness.views.PageLookupByTagListAPIEndpoint.as_view()
-        ),
-        name='lookup-by-tag-list'
     ),
     url(
         r'^pages/types/$',
@@ -84,18 +76,17 @@ urlpatterns = [
     ),
     url(
         r'^admin/pages/(?P<pk>[0-9]+)/copy-upstream/$',
-        login_required(core.views.CopyUpstreamView.as_view()),
+        login_required(core.views.CopyUpstreamView.as_view(is_edit=False)),
         name='copy-upstream',
     ),
     url(
         r'^admin/pages/(?P<pk>[0-9]+)/update-upstream/$',
-        login_required(core.views.UpdateUpstreamView.as_view()),
+        login_required(core.views.UpdateUpstreamView.as_view(is_edit=True)),
         name='update-upstream',
     ),
     url(
         (
-            r'^admin/pages/preload/(?P<service_name>[a-zA-Z_]+)/'
-            r'(?P<model_name>[a-zA-Z]+)/(?P<parent_slug>[a-zA-Z-]+)/$'
+            r'^admin/pages/preload/(?P<app_label>[a-zA-Z_]+)/(?P<model_name>[a-zA-Z]+)/(?P<site_name>[a-zA-Z]+)(?P<parent_path>.*)$'  # NOQA
         ),
         login_required(csrf_exempt(core.views.PreloadPageView.as_view())),
         name='preload-add-page',

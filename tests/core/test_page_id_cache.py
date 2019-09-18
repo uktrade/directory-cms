@@ -53,7 +53,7 @@ def test_population_and_value_getting(
             'EXPORT_READINESS:topic': topic_page.id,
             'EXPORT_READINESS:list': article_list_page.id,
             'EXPORT_READINESS:article': article_page.id,
-            'GREAT_INTERNATIONAL:home': international_root_page.id
+            'GREAT_INTERNATIONAL:international-home': international_root_page.id
         },
     }
 

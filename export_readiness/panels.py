@@ -1,12 +1,11 @@
 from django.forms import CheckboxSelectMultiple, Textarea, Select
 
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel, HelpPanel)
+    FieldPanel, FieldRowPanel, MultiFieldPanel, PageChooserPanel, HelpPanel, StreamFieldPanel)
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
 from core.panels import SearchEngineOptimisationPanel
-
 
 ACCORDION_FIELDS_HELP_TEXT = (
     'To be displayed, this industry needs at least: a title, a teaser, '
@@ -927,6 +926,7 @@ class CountryGuidePagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
+        FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
 
 
@@ -1128,6 +1128,7 @@ class HomePagePanels:
     content_panels = [
         MultiFieldPanel(
             heading='EU Exit banner',
+            classname='collapsible',
             children=[
                 FieldPanel('banner_label'),
                 FieldPanel('banner_content'),
@@ -1135,72 +1136,50 @@ class HomePagePanels:
         ),
         MultiFieldPanel(
             heading='EU exit news',
+            classname='collapsible',
             children=[
                 FieldPanel('news_title'),
                 FieldPanel('news_description')
             ]
         ),
-        SearchEngineOptimisationPanel(),
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-    ]
-
-
-class HomePageOldPanels:
-
-    content_panels = [
-        MultiFieldPanel(
-            heading='EU Exit banner',
-            children=[
-                FieldPanel('banner_label'),
-                FieldPanel('banner_content'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading='EU exit news',
-            children=[
-                FieldPanel('news_title'),
-                FieldPanel('news_description')
-            ]
-        ),
-        SearchEngineOptimisationPanel(),
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-    ]
-
-
-class InternationalLandingPagePanels:
-
-    content_panels = [
-        SearchEngineOptimisationPanel()
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-    ]
-
-
-class EUExitInternationalFormPagePanels:
-    content_panels_before_form = [
         MultiFieldPanel(
             heading='Hero',
+            classname='collapsible',
             children=[
-                FieldPanel('breadcrumbs_label'),
-                FieldPanel('heading'),
-                FieldPanel('body_text'),
+                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_text'),
+                FieldPanel('hero_cta_text'),
+                PageChooserPanel(
+                    'hero_cta_linked_page',
+                    page_type='export_readiness.ArticlePage'
+                )
+            ],
+        ),
+        MultiFieldPanel(
+            heading='How DIT helps',
+            classname='collapsible',
+            children=[
+                FieldPanel('how_dit_helps_title'),
+                StreamFieldPanel('how_dit_helps_columns')
+            ],
+        ),
+        MultiFieldPanel(
+            heading='Popular questions',
+            classname='collapsible',
+            children=[
+                FieldPanel('questions_section_title'),
+                StreamFieldPanel('questions')
             ]
         ),
-    ]
-    content_panels_after_form = [
-        FieldPanel('disclaimer', widget=Textarea),
-        FieldPanel('submit_button_text'),
+        MultiFieldPanel(
+            heading='What\'s new',
+            classname='collapsible',
+            children=[
+                FieldPanel('what_is_new_title'),
+                StreamFieldPanel('what_is_new_pages')
+            ]
+        ),
+
         SearchEngineOptimisationPanel(),
     ]
 

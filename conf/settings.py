@@ -19,7 +19,9 @@ import environ
 from django.urls import reverse_lazy
 
 env = environ.Env()
-env.read_env()
+for env_file in env.list('ENV_FILES', default=[]):
+    env.read_env(f'conf/env/{env_file}')
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -80,10 +82,8 @@ INSTALLED_APPS = [
     'storages',
     'rest_framework',
     'wagtailmedia',
-    'find_a_supplier.apps.FindASupplierConfig',
     'export_readiness.apps.GreatDomesticConfig',
     'great_international.apps.GreatInternationalConfig',
-    'invest.apps.InvestConfig',
     'components.apps.ComponentsConfig',
     'activitystream.apps.ActivityStreamConfig',
     'django_filters',

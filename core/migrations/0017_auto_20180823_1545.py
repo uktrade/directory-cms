@@ -5,44 +5,9 @@ from __future__ import unicode_literals
 from django.db import migrations
 
 
-apps_model_pairs_translated = (
-    ('find_a_supplier', 'IndustryPage'),
-    ('find_a_supplier', 'IndustryLandingPage'),
-    ('find_a_supplier', 'IndustryArticlePage'),
-    ('find_a_supplier', 'LandingPage'),
-    ('find_a_supplier', 'IndustryContactPage'),
-)
-
 apps_model_pairs_untranslated = (
     ('export_readiness', 'GetFinancePage'),
 )
-
-
-def populate_translated_breadcrumbs(apps, schema_editor):
-    Breadcrumb = apps.get_model('core', 'Breadcrumb')
-    ContentType = apps.get_model('contenttypes', 'ContentType')
-
-    for app_name, model_name in apps_model_pairs_translated:
-        historic_model = apps.get_model(app_name, model_name)
-        for page in historic_model.objects.all():
-            content_type = ContentType.objects.get_for_model(page)
-            Breadcrumb.objects.create(
-                service_name=page.service_name,
-                slug=page.slug,
-                object_id=page.pk,
-                content_type=content_type,
-                label=page.breadcrumbs_label_en_gb,
-                label_en_gb=page.breadcrumbs_label_en_gb,
-                label_de=page.breadcrumbs_label_de,
-                label_ja=page.breadcrumbs_label_ja,
-                label_ru=page.breadcrumbs_label_ru,
-                label_zh_hans=page.breadcrumbs_label_zh_hans,
-                label_fr=page.breadcrumbs_label_fr,
-                label_es=page.breadcrumbs_label_es,
-                label_pt=page.breadcrumbs_label_pt,
-                label_pt_br=page.breadcrumbs_label_pt_br,
-                label_ar=page.breadcrumbs_label_ar,
-            )
 
 
 def populate_untranslated_breadcrumbs(apps, schema_editor):
@@ -74,11 +39,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(
-            populate_translated_breadcrumbs,
-            delete_breadcrumbs,
-            elidable=True
-        ),
         migrations.RunPython(
             populate_untranslated_breadcrumbs,
             delete_breadcrumbs,

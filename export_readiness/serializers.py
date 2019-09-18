@@ -5,14 +5,15 @@ from directory_constants import slugs
 from conf import settings
 from core import fields as core_fields
 from core.serializers import (
-    BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper
+    BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper, HeroSerializer,
+    ColumnWithTitleIconTextBlockStreamChildBaseSerializer, DetailsSummaryBlockStreamChildBaseSerializer,
+    StreamChildBaseSerializer
 )
-from great_international.serializers import StatisticProxyDataWrapper, \
-    StatisticSerializer
+
+from great_international.serializers import StatisticProxyDataWrapper, StatisticSerializer
 
 from .models import (
-    ArticleListingPage, ArticlePage, TopicLandingPage, CampaignPage,
-    SuperregionPage, EUExitInternationalFormPage, EUExitDomesticFormPage,
+    ArticleListingPage, ArticlePage, TopicLandingPage, CampaignPage, SuperregionPage, EUExitDomesticFormPage,
     CountryGuidePage
 )
 
@@ -21,6 +22,7 @@ class RelatedArticlePageSerializer(BasePageSerializer):
     """Separate serializer for related article pages so we don't end up with
     infinite nesting of related pages inside an article page"""
 
+    type_of_article = serializers.CharField()
     article_title = serializers.CharField(max_length=255)
     article_teaser = serializers.CharField(max_length=255)
     article_image = wagtail_fields.ImageRenditionField('original')
@@ -29,20 +31,14 @@ class RelatedArticlePageSerializer(BasePageSerializer):
 
 
 class RelatedCampaignPageSerializer(BasePageSerializer):
-    title = serializers.CharField(
-        max_length=255, source='campaign_heading')
-    thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360',
-        source='campaign_hero_image')
+    title = serializers.CharField(max_length=255, source='campaign_heading')
+    thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='campaign_hero_image')
 
 
 class RelatedArticleListingPageSerializer(BasePageSerializer):
     title = serializers.CharField(source='landing_page_title')
-    thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360',
-        source='hero_image')
-    teaser = serializers.CharField(
-        max_length=255, source='list_teaser')
+    thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
+    teaser = serializers.CharField(max_length=255, source='list_teaser')
 
 
 MODEL_TO_SERIALIZER_MAPPING = {
@@ -78,10 +74,9 @@ class GenericBodyOnlyPageSerializer(BasePageSerializer):
     body = core_fields.MarkdownToHTMLField()
 
 
-class GetFinancePageSerializer(BasePageSerializer):
+class GetFinancePageSerializer(BasePageSerializer, HeroSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_text = core_fields.MarkdownToHTMLField()
-    hero_image = wagtail_fields.ImageRenditionField('original')
     ukef_logo = wagtail_fields.ImageRenditionField('original')
     contact_proposition = core_fields.MarkdownToHTMLField()
     contact_button = serializers.CharField()
@@ -150,14 +145,10 @@ class MarketingArticlePageSerializer(BaseArticlePageSerializer):
 
 
 class ArticleListingPageSerializer(
-    BasePageSerializer,
-    ChildPagesSerializerHelper
+    BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer
 ):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
-    hero_image = wagtail_fields.ImageRenditionField('original')
-    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360', source='hero_image')
 
     articles_count = serializers.IntegerField()
     list_teaser = core_fields.MarkdownToHTMLField(allow_null=True)
@@ -403,15 +394,11 @@ class IntroCTAsSerializer(serializers.Serializer):
     title = serializers.CharField()
 
 
-class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
-    hero_image = wagtail_fields.ImageRenditionField('original')
+class CountryGuidePageSerializer(PageWithRelatedPagesSerializer, HeroSerializer):
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
     heading_teaser = serializers.CharField()
     intro_ctas = serializers.SerializerMethodField()
-    hero_image = wagtail_fields.ImageRenditionField('original')
-    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360', source='hero_image')
 
     section_one_body = core_fields.MarkdownToHTMLField()
     section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
@@ -427,6 +414,8 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
     fact_sheet = serializers.SerializerMethodField()
 
     help_market_guide_cta_link = serializers.CharField(max_length=255)
+
+    tags = core_fields.TagsListField()
 
     def get_intro_ctas(self, instance):
         data = [
@@ -465,6 +454,10 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer):
         return serializer.data
 
 
+class RelatedArticlePageStreamChildBaseSerializer(RelatedArticlePageSerializer, StreamChildBaseSerializer):
+    pass
+
+
 class HomePageSerializer(BasePageSerializer):
     news_title = serializers.CharField(
         max_length=255,
@@ -475,6 +468,22 @@ class HomePageSerializer(BasePageSerializer):
     advice = serializers.SerializerMethodField()
     banner_content = core_fields.MarkdownToHTMLField(allow_null=True)
     banner_label = serializers.CharField(max_length=50, allow_null=True)
+
+    hero_xlarge = wagtail_fields.ImageRenditionField('fill-1200x300', source='hero_image', required=False)
+    hero_large = wagtail_fields.ImageRenditionField('fill-1200x400', source='hero_image', required=False)
+    hero_medium = wagtail_fields.ImageRenditionField('fill-768x376', source='hero_image', required=False)
+    hero_text = serializers.CharField(required=False)
+    hero_cta_text = serializers.CharField(required=False)
+    hero_cta_linked_page = serializers.CharField(required=False, source='hero_cta_linked_page.specific.url')
+
+    how_dit_helps_title = serializers.CharField(required=False)
+    how_dit_helps_columns = ColumnWithTitleIconTextBlockStreamChildBaseSerializer(many=True, required=False)
+
+    questions_section_title = serializers.CharField(required=False)
+    questions = DetailsSummaryBlockStreamChildBaseSerializer(many=True, required=False)
+
+    what_is_new_title = serializers.CharField(required=False)
+    what_is_new_pages = RelatedArticlePageStreamChildBaseSerializer(many=True, required=False)
 
     def get_articles(self, obj):
         try:
@@ -525,17 +534,11 @@ class HomePageSerializer(BasePageSerializer):
         return 'HomePage'
 
 
-class TopicLandingPageSerializer(
-    BasePageSerializer,
-    ChildPagesSerializerHelper
-):
+class TopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
     hero_teaser = serializers.CharField(max_length=255)
-    hero_image = wagtail_fields.ImageRenditionField('original')
     banner_text = core_fields.MarkdownToHTMLField()
-    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
-        'fill-640x360', source='hero_image')
 
     teaser = serializers.CharField()
 
@@ -583,14 +586,9 @@ class SuperregionPageSerializer(TopicLandingPageSerializer):
     """
 
 
-class InternationalLandingPageSerializer(BasePageSerializer):
-    articles_count = serializers.IntegerField()
-
-
 class TagSerializer(serializers.Serializer):
     """This is not a Page model."""
     name = serializers.CharField()
-    slug = serializers.CharField()
     articles = serializers.SerializerMethodField()
 
     def get_articles(self, object):
@@ -652,14 +650,6 @@ class EUExitGenericFormPageSerializer(BasePageSerializer):
     body_text = core_fields.MarkdownToHTMLField()
     submit_button_text = serializers.CharField()
     disclaimer = core_fields.MarkdownToHTMLField()
-
-
-class EUExitInternationalFormPageSerializer(
-    EUExitGenericFormPageSerializer,
-    metaclass=FormPageSerializerMetaclass
-):
-    class Meta:
-        model_class = EUExitInternationalFormPage
 
 
 class EUExitDomesticFormPageSerializer(

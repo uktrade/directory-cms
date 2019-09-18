@@ -195,7 +195,6 @@ class InternationalCampaignPageTranslationOptions(BaseTranslationOptions):
 
 
 @register(great_international.InternationalHomePage)
-@register(great_international.InternationalHomePageOld)
 class InternationalHomePageTranslationOptions(BaseTranslationOptions):
     fields = (
         'hero_title',
@@ -203,6 +202,9 @@ class InternationalHomePageTranslationOptions(BaseTranslationOptions):
         'hero_cta_text',
         'hero_cta_link',
         'hero_image',
+        'brexit_banner_text',
+
+        # Old International Home Page fields
         'invest_title',
         'invest_content',
         'invest_image',
@@ -248,6 +250,68 @@ class InternationalHomePageTranslationOptions(BaseTranslationOptions):
         'related_page_one',
         'related_page_two',
         'related_page_three',
+
+        # New International Home Page fields
+        'is_new_page_ready',
+        'ready_to_trade_story_one',
+        'ready_to_trade_story_two',
+        'ready_to_trade_story_three',
+
+        'benefits_of_uk_title',
+        'benefits_of_uk_intro',
+
+        'benefits_of_uk_one',
+        'benefits_of_uk_two',
+        'benefits_of_uk_three',
+        'benefits_of_uk_four',
+        'benefits_of_uk_five',
+        'benefits_of_uk_six',
+
+        'ready_for_brexit_title',
+        'ready_for_brexit_image',
+        'ready_for_brexit_cta_text',
+        'ready_for_brexit_cta_link',
+
+        'how_we_help_title',
+        'how_we_help_intro',
+        'how_we_help_one_icon',
+        'how_we_help_one_text',
+        'how_we_help_two_icon',
+        'how_we_help_two_text',
+        'how_we_help_three_icon',
+        'how_we_help_three_text',
+
+        'ways_of_doing_business_title',
+        'related_page_expand',
+        'related_page_expand_description',
+        'related_page_invest_capital',
+        'related_page_invest_capital_description',
+        'related_page_buy',
+        'related_page_buy_description',
+
+        'case_study_image',
+        'case_study_title',
+        'case_study_text',
+        'case_study_cta_text',
+        'case_study_cta_link',
+
+        'industries_section_title',
+        'industries_section_intro',
+        'industries_section_industry_label',
+        'industries_section_cta_text',
+        'industries_section_cta_link',
+
+        'link_to_section_title',
+        'link_to_section_intro',
+        'link_to_section_one',
+        'link_to_section_one_cta_text',
+        'link_to_section_one_cta_link',
+        'link_to_section_two',
+        'link_to_section_two_cta_text',
+        'link_to_section_two_cta_link',
+        'link_to_section_three',
+        'link_to_section_three_cta_text',
+        'link_to_section_three_cta_link',
     )
 
 
@@ -259,11 +323,6 @@ class InternationalArticleListingPage(BaseTranslationOptions):
         'hero_teaser',
         'list_teaser',
     )
-
-
-@register(great_international.InternationalRegionPage)
-class InternationalRegionPageTranslationOptions(BaseTranslationOptions):
-    fields = []
 
 
 @register(great_international.InternationalTopicLandingPage)
@@ -326,13 +385,6 @@ class InternationalGuideLandingPageTranslationOptions(
     )
 
 
-@register(great_international.InternationalLocalisedFolderPage)
-class InternationalRegionalFolderPageTranslationOptions(
-    BaseTranslationOptions
-):
-    fields = []
-
-
 @register(great_international.InternationalEUExitFormPage)
 class InternationalEUExitFormPageTranslationOptions(BaseTranslationOptions):
     fields = []
@@ -350,6 +402,7 @@ class InternationalCapitalInvestLandingPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = (
+        'breadcrumbs_label',
         'hero_title',
         'hero_image',
         'hero_subheading',
@@ -697,18 +750,23 @@ class HighPotentialOpportunityDetailPageTranslationOptions(
         'contact_button',
         'proposition_one',
         'proposition_one_image',
+        'proposition_one_image_alt',
         'proposition_one_video',
+        'proposition_one_video_transcript',
         'opportunity_list_title',
         'opportunity_list_item_one',
         'opportunity_list_item_two',
         'opportunity_list_item_three',
         'opportunity_list_image',
+        'opportunity_list_image_alt',
         'proposition_two',
         'proposition_two_list_item_one',
         'proposition_two_list_item_two',
         'proposition_two_list_item_three',
         'proposition_two_image',
+        'proposition_two_image_alt',
         'proposition_two_video',
+        'proposition_two_video_transcript',
         'competitive_advantages_title',
         'competitive_advantages_list_item_one',
         'competitive_advantages_list_item_one_icon',
@@ -720,22 +778,34 @@ class HighPotentialOpportunityDetailPageTranslationOptions(
         'testimonial_background',
         'companies_list_text',
         'companies_list_item_image_one',
+        'companies_list_item_image_alt_one',
         'companies_list_item_image_two',
+        'companies_list_item_image_alt_two',
         'companies_list_item_image_three',
+        'companies_list_item_image_alt_three',
         'companies_list_item_image_four',
+        'companies_list_item_image_alt_four',
         'companies_list_item_image_five',
+        'companies_list_item_image_alt_five',
         'companies_list_item_image_six',
+        'companies_list_item_image_alt_six',
         'companies_list_item_image_seven',
+        'companies_list_item_image_alt_seven',
         'companies_list_item_image_eight',
+        'companies_list_item_image_alt_eight',
         'case_study_list_title',
         'case_study_one_text',
         'case_study_one_image',
+        'case_study_one_image_alt',
         'case_study_two_text',
         'case_study_two_image',
+        'case_study_two_image_alt',
         'case_study_three_text',
         'case_study_three_image',
+        'case_study_three_image_alt',
         'case_study_four_text',
         'case_study_four_image',
+        'case_study_four_image_alt',
         'other_opportunities_title',
         'summary_image',
     )
@@ -865,6 +935,7 @@ class AboutDitServicesPageTranslationOptions(
         'breadcrumbs_label',
         'hero_title',
         'hero_image',
+        'featured_description',
         'teaser',
         'teaser_image',
         'case_study_image',
@@ -1085,6 +1156,7 @@ class AboutUkWhyChooseTheUkPageTranslationOptions(
         'teaser',
         'section_one_body',
         'section_one_image',
+        'section_one_video',
         'statistic_1_number',
         'statistic_1_heading',
         'statistic_1_smallprint',
@@ -1134,6 +1206,7 @@ class CapitalInvestContactFormPageTranslationOptions(
         'breadcrumbs_label',
         'heading',
         'intro',
+        'comment',
         'cta_text',
     )
 
@@ -1143,6 +1216,7 @@ class CapitalInvestContactFormSuccessPageTranslationOptions(
         BaseTranslationOptions
 ):
     fields = (
-        'large_text',
-        'small_text',
+        'message_box_heading',
+        'message_box_description',
+        'what_happens_next_description',
     )
