@@ -1706,7 +1706,7 @@ class AboutUkArticleField(panels.AboutUkArticleFieldPanels, models.Model):
         blank=True
     )
     title = models.CharField(max_length=255, blank=True)
-    summary = models.TextField(blank=True)
+    summary = MarkdownField(blank=True)
     link_text = models.CharField(max_length=255,
                                  blank=True,
                                  verbose_name='Link text')
