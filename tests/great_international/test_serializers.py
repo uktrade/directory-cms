@@ -45,8 +45,8 @@ from great_international.models.capital_invest import (
 )
 from great_international.models.great_international import (
     AboutDitServicesFields,
-    AboutUkArticlesFields
-)
+    AboutUkArticlesFields,
+    ReadyToTradeArticlesFields)
 
 
 @pytest.mark.django_db
@@ -946,7 +946,7 @@ def test_about_uk_why_choose_the_uk_page_gets_added_related_articles_fields(
 def test_ready_to_trade_landing_page_gets_added_related_articles_fields(
         rf, international_root_page
 ):
-    services_fields = AboutUkArticlesFields(
+    services_fields = ReadyToTradeArticlesFields(
         title="title"
     )
 
