@@ -1679,10 +1679,9 @@ class AboutUkWhyChooseTheUkPagePanels:
                 MultiFieldPanel([
                     FieldPanel('ebook_section_title'),
                     FieldPanel('ebook_section_body'),
-                    HelpPanel('CTAs require both text and a link to show '
-                              'on page. '),
+                    HelpPanel('CTAs require both text and a link to show on page.'),
                     FieldPanel('ebook_section_cta_text'),
-                    DocumentChooserPanel('ebook_section_pdf_link'),
+                    FieldPanel('ebook_section_cta_link'),
                 ]),
             ]
         ),
