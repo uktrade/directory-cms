@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- CI-498 - Changed ebook pdf to a cta link
 - XOT-1039 - Add campaign block to Great Domestic Homepage
 - No ticket - Add database fixtures and update readme with usage instructions
 - CI-503 - Added fields to WhyChooseUkPage for ready to trade

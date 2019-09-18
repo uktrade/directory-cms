@@ -1183,9 +1183,7 @@ class AboutUkWhyChooseTheUkPageTranslationOptions(
         'ebook_section_body',
         'ebook_section_cta_text',
         'ebook_section_cta_link',
-        'ebook_section_pdf_link',
         'how_dit_help_title',
-
         'related_page_one',
         'related_page_two',
         'related_page_three',
