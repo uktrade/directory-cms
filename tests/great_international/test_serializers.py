@@ -16,7 +16,7 @@ from great_international.serializers import (
     AboutUkWhyChooseTheUkPageSerializer,
     AboutUkLandingPageSerializer,
     InvestInternationalHomePageSerializer,
-    CapitalInvestRegionPageSerializer, AboutUkRegionListingPageSerializer)
+    CapitalInvestRegionPageSerializer, AboutUkRegionListingPageSerializer, ReadyToTradeLandingPageSerializer)
 from tests.great_international.factories import (
     InternationalSectorPageFactory, InternationalArticlePageFactory,
     InternationalCampaignPageFactory, InternationalHomePageFactory,
@@ -34,7 +34,7 @@ from tests.great_international.factories import (
     AboutUkLandingPageFactory,
     InvestInternationalHomePageFactory,
     CapitalInvestRegionPageFactory, AboutUkRegionListingPageFactory, InvestRegionPageFactory,
-    InternationalTradeHomePageFactory)
+    InternationalTradeHomePageFactory, ReadyToTradeLandingPageFactory)
 
 from great_international.models.capital_invest import (
     CapitalInvestRelatedRegions,
@@ -939,6 +939,29 @@ def test_about_uk_why_choose_the_uk_page_gets_added_related_articles_fields(
     )
 
     for page in serializer.data['about_uk_articles_fields']:
+        assert page['title'] == 'title'
+
+
+@pytest.mark.django_db
+def test_ready_to_trade_landing_page_gets_added_related_articles_fields(
+        rf, international_root_page
+):
+    services_fields = AboutUkArticlesFields(
+        title="title"
+    )
+
+    ready_to_trade_landing_page = ReadyToTradeLandingPageFactory(
+        parent=international_root_page,
+        slug='services',
+        articles_fields=[services_fields]
+    )
+
+    serializer = ReadyToTradeLandingPageSerializer(
+        instance=ready_to_trade_landing_page,
+        context={'request': rf.get('/')}
+    )
+
+    for page in serializer.data['articles_fields']:
         assert page['title'] == 'title'
 
 

@@ -2416,11 +2416,11 @@ class ReadyToTradeLandingPageSerializer(BasePageSerializer, HeroSerializer):
     statistic_6_heading = serializers.CharField(max_length=255)
     statistic_6_smallprint = serializers.CharField(max_length=255)
 
-    about_uk_articles_fields = serializers.SerializerMethodField()
+    articles_fields = serializers.SerializerMethodField()
 
-    def get_about_uk_articles_fields(self, instance):
+    def get_articles_fields(self, instance):
         serializer = AboutUkArticlesFieldSerializer(
-            instance.about_uk_articles_fields.all(),
+            instance.articles_fields.all(),
             many=True,
             allow_null=True,
             context=self.context
