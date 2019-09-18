@@ -629,7 +629,8 @@ class InternationalHomePage(
             capital_invest_models.CapitalInvestOpportunityListingPage,
             capital_invest_models.CapitalInvestRegionPage,
             invest_models.InvestInternationalHomePage,
-            fas_models.InternationalTradeHomePage
+            fas_models.InternationalTradeHomePage,
+            AboutUkWhyChooseTheUkPage
         ]
 
 
@@ -1705,7 +1706,7 @@ class AboutUkArticleField(panels.AboutUkArticleFieldPanels, models.Model):
         blank=True
     )
     title = models.CharField(max_length=255, blank=True)
-    summary = models.TextField(blank=True)
+    summary = MarkdownField(blank=True)
     link_text = models.CharField(max_length=255,
                                  blank=True,
                                  verbose_name='Link text')
@@ -1728,7 +1729,7 @@ class AboutUkArticlesFields(Orderable, AboutUkArticleField):
 
 
 class AboutUkWhyChooseTheUkPage(panels.AboutUkWhyChooseTheUkPagePanels, BaseInternationalPage):
-    parent_page_types = ['great_international.AboutUkLandingPage']
+    parent_page_types = ['great_international.AboutUkLandingPage', 'great_international.InternationalHomePage']
     subpage_types = ['great_international.InternationalArticlePage']
 
     breadcrumbs_label = models.CharField(max_length=255)
@@ -1745,6 +1746,9 @@ class AboutUkWhyChooseTheUkPage(panels.AboutUkWhyChooseTheUkPagePanels, BaseInte
         verbose_name='',
         blank=True
     )
+
+    primary_contact_cta_text = models.CharField(max_length=255, blank=True)
+    primary_contact_cta_link = models.CharField(max_length=255, blank=True)
 
     section_one_body = MarkdownField(
         null=True,
@@ -1807,6 +1811,32 @@ class AboutUkWhyChooseTheUkPage(panels.AboutUkWhyChooseTheUkPagePanels, BaseInte
     ebook_section_body = MarkdownField(null=True, blank=True)
     ebook_section_cta_text = models.CharField(max_length=255, blank=True)
     ebook_section_cta_link = models.CharField(max_length=255, blank=True)
+
+    how_dit_help_title = models.CharField(max_length=255, blank=True)
+
+    related_page_one = models.ForeignKey(
+        'great_international.AboutDitServicesPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    related_page_two = models.ForeignKey(
+        'great_international.AboutDitServicesPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    related_page_three = models.ForeignKey(
+        'great_international.AboutDitServicesPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
 
     contact_us_section_title = models.CharField(
         max_length=255,

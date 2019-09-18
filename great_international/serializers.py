@@ -2301,16 +2301,20 @@ class AboutUkArticlesFieldSerializer(serializers.Serializer):
         'fill-640x360'
     )
     title = serializers.CharField()
-    summary = serializers.CharField()
+    summary = core_fields.MarkdownToHTMLField()
     link_text = serializers.CharField()
     link_url = serializers.CharField()
 
 
-class AboutUkWhyChooseTheUkPageSerializer(BasePageSerializer, HeroSerializer):
+class AboutUkWhyChooseTheUkPageSerializer(PageWithRelatedPagesSerializer, BasePageSerializer, HeroSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
 
     teaser = core_fields.MarkdownToHTMLField()
+
+    primary_contact_cta_text = serializers.CharField(max_length=255)
+    primary_contact_cta_link = serializers.CharField(max_length=255)
+
     section_one_body = core_fields.MarkdownToHTMLField()
     section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
     section_one_video = core_fields.VideoField()
@@ -2366,6 +2370,8 @@ class AboutUkWhyChooseTheUkPageSerializer(BasePageSerializer, HeroSerializer):
     ebook_section_body = core_fields.MarkdownToHTMLField()
     ebook_section_cta_text = serializers.CharField()
     ebook_section_cta_link = serializers.CharField()
+
+    how_dit_help_title = serializers.CharField(max_length=255)
 
     contact_us_section_title = serializers.CharField()
     contact_us_section_summary = core_fields.MarkdownToHTMLField()
