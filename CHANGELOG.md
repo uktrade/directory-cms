@@ -3,8 +3,8 @@
 ## Pre-release
 
 ### Implemented enhancements
-
 - XOT-1039 - Add campaign block to Great Domestic Homepage
+- No ticket - Add database fixtures and update readme with usage instructions
 
 
 ## [2019.09.18](https://github.com/uktrade/directory-cms/releases/tag/2019.09.18)

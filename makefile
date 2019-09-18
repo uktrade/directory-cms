@@ -46,12 +46,12 @@ secrets:
 worker:
 	ENV_FILES='secrets-do-not-commit,dev' celery -A conf worker -l info
 
-setup_db:
+database:
 	PGPASSWORD=debug dropdb  directory_cms_debug
 	PGPASSWORD=debug createdb -h localhost -U debug directory_cms_debug
 	PGPASSWORD=debug psql -h localhost -U debug -d directory_cms_debug -f db_template.sql >/dev/null 2>&1
 
-update_db_template:
+database_template:
 	createdb -U postgres -h localhost cms_temporary_template
 	psql -U postgres -h localhost -d cms_temporary_template -f db_template.sql
 	ENV_FILES='secrets-do-not-commit,dev' \
@@ -63,4 +63,7 @@ update_db_template:
 		--dbname=cms_temporary_template
 	dropdb -U postgres cms_temporary_template
 
-.PHONY: clean pytest flake8 manage webserver requirements install_requirements css worker check_migrations
+load_fixtures:
+	ENV_FILES='secrets-do-not-commit,dev' ./manage.py loaddata fixtures/data.json
+
+.PHONY: clean pytest flake8 manage webserver requirements install_requirements css worker secrets check_migrations database database_template load_fixtures
