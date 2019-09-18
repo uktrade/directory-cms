@@ -2301,7 +2301,7 @@ class AboutUkArticlesFieldSerializer(serializers.Serializer):
         'fill-640x360'
     )
     title = serializers.CharField()
-    summary = serializers.CharField()
+    summary = core_fields.MarkdownToHTMLField()
     link_text = serializers.CharField()
     link_url = serializers.CharField()
 
