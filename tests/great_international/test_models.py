@@ -23,7 +23,8 @@ def test_models_hierarchy():
         capital_invest.CapitalInvestOpportunityListingPage,
         capital_invest.CapitalInvestRegionPage,
         invest.InvestInternationalHomePage,
-        find_a_supplier.InternationalTradeHomePage
+        find_a_supplier.InternationalTradeHomePage,
+        great_international.ReadyToTradeLandingPage
     ]
     assert invest.InvestInternationalHomePage.allowed_subpage_models() == [
         invest.InvestHighPotentialOpportunitiesPage,
@@ -94,6 +95,9 @@ def test_models_hierarchy():
         ]
     assert great_international.AboutUkRegionPage.allowed_subpage_models() == []
     assert great_international.AboutUkWhyChooseTheUkPage.allowed_subpage_models() == [
+        great_international.InternationalArticlePage
+    ]
+    assert great_international.ReadyToTradeLandingPage.allowed_subpage_models() == [
         great_international.InternationalArticlePage
     ]
 
