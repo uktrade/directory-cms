@@ -268,6 +268,13 @@ class AboutUkWhyChooseTheUkPageSubscriber(
     subscriptions = []
 
 
+class ReadyToTradeLandingPageSubscriber(
+    AbstractDatabaseCacheSubscriber
+):
+    model = great_international.ReadyToTradeLandingPage
+    subscriptions = []
+
+
 class CapitalInvestContactFormPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):

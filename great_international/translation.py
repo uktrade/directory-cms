@@ -1189,8 +1189,61 @@ class AboutUkWhyChooseTheUkPageTranslationOptions(
     )
 
 
+@register(great_international.ReadyToTradeLandingPage)
+class ReadyToTradeLandingPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'hero_title',
+        'hero_image',
+        'teaser',
+        'section_one_body',
+        'section_one_image',
+        'section_one_video',
+        'statistic_1_number',
+        'statistic_1_heading',
+        'statistic_1_smallprint',
+        'statistic_2_number',
+        'statistic_2_heading',
+        'statistic_2_smallprint',
+        'statistic_3_number',
+        'statistic_3_heading',
+        'statistic_3_smallprint',
+        'statistic_4_number',
+        'statistic_4_heading',
+        'statistic_4_smallprint',
+        'statistic_5_number',
+        'statistic_5_heading',
+        'statistic_5_smallprint',
+        'statistic_6_number',
+        'statistic_6_heading',
+        'statistic_6_smallprint',
+        'ebook_section_image',
+        'ebook_section_image_alt_text',
+        'ebook_section_title',
+        'ebook_section_body',
+        'ebook_section_cta_text',
+        'ebook_section_cta_link',
+        'ebook_section_pdf_link',
+        'contact_us_section_title',
+        'contact_us_section_summary',
+        'contact_us_section_cta_text',
+        'contact_us_section_cta_link',
+    )
+
+
 @register(great_international.AboutUkArticlesFields)
 class AboutUkArticlesFieldsTranslationOptions(
+        BaseTranslationOptions
+):
+    fields = (
+        'page',
+    )
+
+
+@register(great_international.ReadyToTradeArticlesFields)
+class ReadyToTradeArticlesFieldsTranslationOptions(
         BaseTranslationOptions
 ):
     fields = (

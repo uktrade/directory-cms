@@ -629,7 +629,8 @@ class InternationalHomePage(
             capital_invest_models.CapitalInvestOpportunityListingPage,
             capital_invest_models.CapitalInvestRegionPage,
             invest_models.InvestInternationalHomePage,
-            fas_models.InternationalTradeHomePage
+            fas_models.InternationalTradeHomePage,
+            ReadyToTradeLandingPage
         ]
 
 
@@ -1727,8 +1728,130 @@ class AboutUkArticlesFields(Orderable, AboutUkArticleField):
     )
 
 
+class ReadyToTradeArticlesFields(Orderable, AboutUkArticleField):
+    page = ParentalKey(
+        'great_international.ReadyToTradeLandingPage',
+        on_delete=models.CASCADE,
+        related_name='about_uk_articles_fields',
+        blank=True,
+        null=True,
+    )
+
+
 class AboutUkWhyChooseTheUkPage(panels.AboutUkWhyChooseTheUkPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.AboutUkLandingPage']
+    subpage_types = ['great_international.InternationalArticlePage']
+
+    breadcrumbs_label = models.CharField(max_length=255)
+    hero_title = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    teaser = MarkdownField(
+        null=True,
+        verbose_name='',
+        blank=True
+    )
+
+    section_one_body = MarkdownField(
+        null=True,
+        blank=True
+    )
+    section_one_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    section_one_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text="Section one image will be used over this video, please ensure section one image is empty "
+                  "in order for this video to be used instead."
+    )
+
+    statistic_1_heading = models.CharField(max_length=255, blank=True)
+    statistic_1_number = models.CharField(max_length=255, blank=True)
+    statistic_1_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_2_heading = models.CharField(max_length=255, blank=True)
+    statistic_2_number = models.CharField(max_length=255, blank=True)
+    statistic_2_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_3_heading = models.CharField(max_length=255, blank=True)
+    statistic_3_number = models.CharField(max_length=255, blank=True)
+    statistic_3_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_4_heading = models.CharField(max_length=255, blank=True)
+    statistic_4_number = models.CharField(max_length=255, blank=True)
+    statistic_4_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_5_heading = models.CharField(max_length=255, blank=True)
+    statistic_5_number = models.CharField(max_length=255, blank=True)
+    statistic_5_smallprint = models.CharField(max_length=255, blank=True)
+
+    statistic_6_heading = models.CharField(max_length=255, blank=True)
+    statistic_6_number = models.CharField(max_length=255, blank=True)
+    statistic_6_smallprint = models.CharField(max_length=255, blank=True)
+
+    ebook_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    ebook_section_image_alt_text = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Description of image for screenreaders"
+    )
+    ebook_section_title = models.CharField(max_length=255, blank=True)
+    ebook_section_body = MarkdownField(null=True, blank=True)
+    ebook_section_cta_text = models.CharField(max_length=255, blank=True)
+    ebook_section_cta_link = models.CharField(max_length=255, blank=True)
+    ebook_section_pdf_link = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    contact_us_section_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='Title'
+    )
+    contact_us_section_summary = MarkdownField(
+        null=True,
+        blank=True,
+        verbose_name='Summary'
+    )
+    contact_us_section_cta_text = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA text'
+    )
+    contact_us_section_cta_link = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name='CTA URL'
+    )
+
+
+class ReadyToTradeLandingPage(panels.ReadyToTradeLandingPagePanels, WagtailAdminExclusivePageMixin,
+                              BaseInternationalPage):
+    slug_identity = 'ready-to-trade'
+    parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = ['great_international.InternationalArticlePage']
 
     breadcrumbs_label = models.CharField(max_length=255)

@@ -36,3 +36,4 @@ class GreatInternationalConfig(AppConfig):
         cache.AboutUkWhyChooseTheUkPageSubscriber.subscribe()
         cache.CapitalInvestContactFormPageSubscriber.subscribe()
         cache.CapitalInvestContactFormSuccessPageSubscriber.subscribe()
+        cache.ReadyToTradeLandingPageSubscriber.subscribe()

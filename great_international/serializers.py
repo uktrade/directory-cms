@@ -2373,6 +2373,73 @@ class AboutUkWhyChooseTheUkPageSerializer(BasePageSerializer, HeroSerializer):
     contact_us_section_cta_link = serializers.CharField()
 
 
+class ReadyToTradeLandingPageSerializer(BasePageSerializer, HeroSerializer):
+    breadcrumbs_label = serializers.CharField()
+    hero_title = serializers.CharField()
+
+    teaser = core_fields.MarkdownToHTMLField()
+    section_one_body = core_fields.MarkdownToHTMLField()
+    section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    section_one_video = core_fields.VideoField()
+
+    statistics = serializers.SerializerMethodField()
+
+    def get_statistics(self, instance):
+        data = [
+            StatisticProxyDataWrapper(instance=instance, position_number=num)
+            for num in ['1', '2', '3', '4', '5', '6']
+        ]
+        serializer = StatisticSerializer(data, many=True)
+        return serializer.data
+
+    statistic_1_number = serializers.CharField(max_length=255)
+    statistic_1_heading = serializers.CharField(max_length=255)
+    statistic_1_smallprint = serializers.CharField(max_length=255)
+
+    statistic_2_number = serializers.CharField(max_length=255)
+    statistic_2_heading = serializers.CharField(max_length=255)
+    statistic_2_smallprint = serializers.CharField(max_length=255)
+
+    statistic_3_number = serializers.CharField(max_length=255)
+    statistic_3_heading = serializers.CharField(max_length=255)
+    statistic_3_smallprint = serializers.CharField(max_length=255)
+
+    statistic_4_number = serializers.CharField(max_length=255)
+    statistic_4_heading = serializers.CharField(max_length=255)
+    statistic_4_smallprint = serializers.CharField(max_length=255)
+
+    statistic_5_number = serializers.CharField(max_length=255)
+    statistic_5_heading = serializers.CharField(max_length=255)
+    statistic_5_smallprint = serializers.CharField(max_length=255)
+
+    statistic_6_number = serializers.CharField(max_length=255)
+    statistic_6_heading = serializers.CharField(max_length=255)
+    statistic_6_smallprint = serializers.CharField(max_length=255)
+
+    about_uk_articles_fields = serializers.SerializerMethodField()
+
+    def get_about_uk_articles_fields(self, instance):
+        serializer = AboutUkArticlesFieldSerializer(
+            instance.about_uk_articles_fields.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
+    ebook_section_image = wagtail_fields.ImageRenditionField('fill-299x423')
+    ebook_section_image_alt_text = serializers.CharField()
+    ebook_section_title = serializers.CharField()
+    ebook_section_body = core_fields.MarkdownToHTMLField()
+    ebook_section_cta_text = serializers.CharField()
+    ebook_section_pdf_link = core_fields.DocumentURLField()
+
+    contact_us_section_title = serializers.CharField()
+    contact_us_section_summary = core_fields.MarkdownToHTMLField()
+    contact_us_section_cta_text = serializers.CharField()
+    contact_us_section_cta_link = serializers.CharField()
+
+
 class CapitalInvestContactFormPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     heading = serializers.CharField()
