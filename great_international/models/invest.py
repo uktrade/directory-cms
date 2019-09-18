@@ -11,6 +11,16 @@ import great_international.panels.invest as panels
 from .base import BaseInternationalPage
 
 
+VIDEO_TRANSCRIPT_HELP_TEXT = (
+    "If the video is present, a transcript must be provided."
+)
+
+IMAGE_DESCRIPTION_HELP_TEXT = (
+    "If this image adds extra information to the page that is not already provided by the text "
+    "(e.g. if the image is a diagram, chart, or has text on it) then an image description must be provided."
+)
+
+
 class InvestInternationalHomePage(
     WagtailAdminExclusivePageMixin,
     BaseInternationalPage,
@@ -21,6 +31,7 @@ class InvestInternationalHomePage(
     subpage_types = [
         'InvestHighPotentialOpportunitiesPage',
         'InvestRegionLandingPage',
+        'InternationalGuideLandingPage'
     ]
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -321,8 +332,9 @@ class InvestHighPotentialOpportunityDetailPage(
     featured = models.BooleanField(default=True)
     description = models.TextField(
         blank=True,
-        help_text="This is the description shown when the HPO "
-                  "is featured on another page i.e. the Invest Home Page"
+        help_text=(
+            "This is the description shown when the HPO is featured on another page i.e. the Invest Home Page"
+        )
     )
 
     contact_proposition = MarkdownField(
@@ -338,12 +350,21 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    proposition_one_image_alt = models.TextField(
+        blank=True,
+        help_text=IMAGE_DESCRIPTION_HELP_TEXT,
+    )
     proposition_one_video = models.ForeignKey(
         'wagtailmedia.Media',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
+    )
+    proposition_one_video_transcript = MarkdownField(
+        blank=True,
+        null=True,
+        help_text=VIDEO_TRANSCRIPT_HELP_TEXT,
     )
     opportunity_list_title = models.CharField(max_length=300)
     opportunity_list_item_one = MarkdownField()
@@ -356,6 +377,10 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    opportunity_list_image_alt = models.TextField(
+        blank=True,
+        help_text=IMAGE_DESCRIPTION_HELP_TEXT
+    )
     proposition_two = MarkdownField(blank=False)
     proposition_two_list_item_one = MarkdownField()
     proposition_two_list_item_two = MarkdownField()
@@ -367,12 +392,21 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    proposition_two_image_alt = models.TextField(
+        blank=True,
+        help_text=IMAGE_DESCRIPTION_HELP_TEXT,
+    )
     proposition_two_video = models.ForeignKey(
         'wagtailmedia.Media',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
+    )
+    proposition_two_video_transcript = MarkdownField(
+        blank=True,
+        null=True,
+        help_text=VIDEO_TRANSCRIPT_HELP_TEXT,
     )
     competitive_advantages_title = models.CharField(
         max_length=300,
@@ -419,12 +453,20 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    companies_list_item_image_alt_one = models.TextField(
+        blank=True,
+        help_text=IMAGE_DESCRIPTION_HELP_TEXT,
+    )
     companies_list_item_image_two = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
+    )
+    companies_list_item_image_alt_two = models.TextField(
+        blank=True,
+        help_text=IMAGE_DESCRIPTION_HELP_TEXT,
     )
     companies_list_item_image_three = models.ForeignKey(
         'wagtailimages.Image',
@@ -433,12 +475,20 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    companies_list_item_image_alt_three = models.TextField(
+        blank=True,
+        help_text=IMAGE_DESCRIPTION_HELP_TEXT,
+    )
     companies_list_item_image_four = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
+    )
+    companies_list_item_image_alt_four = models.TextField(
+        blank=True,
+        help_text=IMAGE_DESCRIPTION_HELP_TEXT,
     )
     companies_list_item_image_five = models.ForeignKey(
         'wagtailimages.Image',
@@ -447,12 +497,20 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    companies_list_item_image_alt_five = models.TextField(
+        blank=True,
+        help_text=IMAGE_DESCRIPTION_HELP_TEXT,
+    )
     companies_list_item_image_six = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
+    )
+    companies_list_item_image_alt_six = models.TextField(
+        blank=True,
+        help_text=IMAGE_DESCRIPTION_HELP_TEXT,
     )
     companies_list_item_image_seven = models.ForeignKey(
         'wagtailimages.Image',
@@ -461,12 +519,20 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    companies_list_item_image_alt_seven = models.TextField(
+        blank=True,
+        help_text=IMAGE_DESCRIPTION_HELP_TEXT,
+    )
     companies_list_item_image_eight = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
+    )
+    companies_list_item_image_alt_eight = models.TextField(
+        blank=True,
+        help_text=IMAGE_DESCRIPTION_HELP_TEXT,
     )
     case_study_list_title = models.CharField(max_length=300)
     case_study_one_text = MarkdownField(blank=True)
@@ -477,6 +543,10 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    case_study_one_image_alt = models.TextField(
+        blank=True,
+        help_text=IMAGE_DESCRIPTION_HELP_TEXT,
+    )
     case_study_two_text = MarkdownField(blank=True)
     case_study_two_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -484,6 +554,10 @@ class InvestHighPotentialOpportunityDetailPage(
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
+    )
+    case_study_two_image_alt = models.TextField(
+        blank=True,
+        help_text=IMAGE_DESCRIPTION_HELP_TEXT,
     )
     case_study_three_text = MarkdownField(blank=True)
     case_study_three_image = models.ForeignKey(
@@ -493,6 +567,10 @@ class InvestHighPotentialOpportunityDetailPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    case_study_three_image_alt = models.TextField(
+        blank=True,
+        help_text=IMAGE_DESCRIPTION_HELP_TEXT,
+    )
     case_study_four_text = MarkdownField(blank=True)
     case_study_four_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -500,6 +578,10 @@ class InvestHighPotentialOpportunityDetailPage(
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
+    )
+    case_study_four_image_alt = models.TextField(
+        blank=True,
+        help_text=IMAGE_DESCRIPTION_HELP_TEXT,
     )
     other_opportunities_title = models.CharField(
         max_length=300,

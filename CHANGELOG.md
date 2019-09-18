@@ -2,15 +2,52 @@
 
 ## Pre-release
 
+### Implemented enhancements
+- No ticket - Reinstate db template and add makefile commands to make setting up fresh database faster
+- CMS-1732 - Add new fields to HPO detail page for image alt and video transcript
+- XOT-1035 - Add hero image renditions for new responsive frontend component
+- XOT-1020 - Added extra fields to article page type (domestic and international)
+- XOT-1020 - Edited formatting of article types
+- CI-460 - Added updated fields to Capital invest contact form and success pages
+- CI-475 - Added featured description to About DIT services page to be used on featured cards
+- CI-476 - Allow invest regions pages to be added as related regions to About UK pages
+- CI-477 - Why choose the UK page can add international article page as child
+- XOT-1033 - Great domestic homepage
+- CI-478 - Added breadcrumbs label to capital invest landing page
+- CI-474 - Allowed pages to be moved to reflect new IA, changed Invest and About UK landing pages children pages
+- CI-451 - Added new fields to International home page
+- CI-479 - Added video to Why choose UK Page
+- CI-480 - Added SEOOptimisationPanel to more pages
+- No ticket - Improve speed of test execution
+- XOT-1073 Add industry tags to Country Pages
+- CI-486 - Added brexit banner field to `InternationalHomePage`
+- CI-496 - Updated field on `InternationalHomePage` to be markdown
+- CI-492 - Added `mapped_regions` to region page
+- No ticket - Add migrations check to CircleCI
+
+### Fixed bugs
+- XOT-1033 - Fix hero CTA link serializer
+- No ticket - Fixed base sector page serializer being in serializer_mapping
+- No ticket - Undone CI-496 changes, markdown field back to charfield
+
+
+## [2019.08.27_1](https://github.com/uktrade/directory-cms/releases/tag/2019.08.27_1)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.08.27...2019.08.27_1)
+
 ### Hotfix
 - no ticket - Management command that lists pages containing slug-base hyperlinking
+
+## [2019.08.27](https://github.com/uktrade/directory-cms/releases/tag/2019.08.27)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.08.15...2019.08.27)
 
 ### Implemented enhancements
 - CMS-1832 - Update django
 - CMS-1753 - Remove slug links from markdown fields
 - CI-431 - Added `AboutUkRegionListingPage` and `AboutUkRegionPage` which will replace `CapitalInvestRegionPage`
-- CI-400 - Added related regions and text on About Uk pages for map 
+- CI-400 - Added related regions and text on About Uk pages for map
 - XOT-1020 - Added extra fields to article page type (domestic and international)
+- CMS-1716 - Remove obsolete code
+- CI-400 - Added related regions and text on About Uk pages for map
 
 ### Fixed Bugs
 - CMS-1830 - Move title field into translated admin panels to fix bug with untranslated tree_based_breadcrumbs

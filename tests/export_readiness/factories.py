@@ -119,7 +119,7 @@ class ArticlePageFactory(wagtail_factories.PageFactory):
     class Meta:
         model = models.ArticlePage
 
-    type_of_article = 'blog'
+    type_of_article = 'Blog'
 
     article_title = factory.fuzzy.FuzzyText(length=10)
     article_subheading = factory.fuzzy.FuzzyText(length=10)
@@ -166,6 +166,14 @@ class TagFactory(factory.django.DjangoModelFactory):
     name = factory.fuzzy.FuzzyText(length=10)
 
 
+class IndustryTagFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = snippets.IndustryTag
+
+    name = factory.fuzzy.FuzzyText(length=10)
+
+
 class HomePageFactory(wagtail_factories.PageFactory):
 
     class Meta:
@@ -175,22 +183,6 @@ class HomePageFactory(wagtail_factories.PageFactory):
     news_description = factory.fuzzy.FuzzyText(length=10)
     banner_content = factory.fuzzy.FuzzyText(length=10)
     banner_label = factory.fuzzy.FuzzyText(length=10)
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    last_published_at = timezone.now()
-    parent = None
-
-
-class HomePageOldFactory(HomePageFactory):
-
-    class Meta:
-        model = models.HomePageOld
-
-
-class InternationaLandingPageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.InternationalLandingPage
 
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))

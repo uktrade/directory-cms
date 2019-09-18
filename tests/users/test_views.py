@@ -1,11 +1,14 @@
-import sys
-import pytest
-from unittest.mock import patch
 from importlib import import_module, reload
+import pytest
+import sys
+from unittest.mock import patch
+
+from rest_framework import status
+
+from django.contrib.auth.models import Permission, Group
 from django.conf import settings
 from django.urls import clear_url_caches
 from django.urls import reverse
-from rest_framework import status
 
 from .factories import UserFactory
 from groups.models import GroupInfo
@@ -71,13 +74,13 @@ def test_get_edit_user_view(admin_client):
 
 
 @pytest.mark.django_db
-def test_edit_user_view(admin_client):
+def test_edit_user_view(team_leaders_group, admin_client):
     user = UserFactory(**USER_DETAILS)
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
 
     # We'll add the user to a group, as well as changing their details
     post_data = USER_DETAILS_CHANGING.copy()
-    post_data['groups'] = ['1']
+    post_data['groups'] = [team_leaders_group.pk]
     response = admin_client.post(url, data=post_data)
 
     assert response.context['message'] == 'User johnsmith updated.'
@@ -91,7 +94,7 @@ def test_edit_user_view(admin_client):
 
     # And they should have been added to a group
     group_ids = set(user.groups.values_list('id', flat=True))
-    assert group_ids == {1}
+    assert group_ids == {team_leaders_group.pk}
 
 
 @pytest.mark.django_db
@@ -108,6 +111,7 @@ def test_edit_user_view_invalid_form(admin_client, approved_user):
     assert response.status_code == status.HTTP_200_OK
 
 
+@pytest.mark.django_db
 def test_edit_user_view_cannot_change_personal_details_when_sso_enforced(
     admin_client
 ):
@@ -128,6 +132,7 @@ def test_edit_user_view_cannot_change_personal_details_when_sso_enforced(
 
     # Change this back to avoid cross-test pollution
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
+    reload_urlconf()
 
 
 @pytest.mark.django_db
@@ -153,6 +158,7 @@ def test_edit_user_view_preserves_ability_to_update_is_active(admin_client):
 
     # Reset flag to avoid cross-test pollution
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
+    reload_urlconf()
 
 
 @pytest.mark.django_db
@@ -172,6 +178,7 @@ def test_edit_user_view_warns_administrator_if_user_is_awaiting_approval(
 
     # Reset flag to avoid cross-test pollution
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
+    reload_urlconf()
 
 
 @pytest.mark.django_db
@@ -185,17 +192,17 @@ def test_edit_user_view_marks_user_as_approved_if_added_to_group(
     profile = user_awaiting_approval.userprofile
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
 
-    with patch(
-        'users.views.notify_user_of_access_request_approval',
-        autospec=True
-    ) as mocked_method:
+    group = Group.objects.get(pk=profile.self_assigned_group_id)
+    group.permissions.add(Permission.objects.get(codename='access_admin'))
+
+    with patch('users.views.notify_user_of_access_request_approval', autospec=True) as mocked_method:
         response = admin_client.post(url, {
             'username': user.username,
             'first_name': user.first_name,
             'last_name': user.last_name,
             'email': user.email,
             'is_active': True,
-            'groups': [profile.self_assigned_group_id],
+            'groups': [group.pk],
         })
 
     # Ensure the post was successful
@@ -220,14 +227,16 @@ def test_edit_user_view_marks_user_as_approved_if_added_to_group(
 
     # Reset flag to avoid cross-test pollution
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = False
+    reload_urlconf()
 
 
 @pytest.mark.django_db
-def test_edit_user_view_does_not_mark_user_as_approved_if_not_added_to_a_group(
-    admin_client, admin_user, user_awaiting_approval
-):
-    user = user_awaiting_approval
-    profile = user_awaiting_approval.userprofile
+def test_edit_user_view_does_not_mark_user_as_approved_if_not_added_to_a_group(admin_client, groups_with_info):
+    user = UserFactory(username='some-user')
+    profile = user.userprofile
+    profile.assignment_status = UserProfile.STATUS_AWAITING_APPROVAL
+    profile.self_assigned_group_id = groups_with_info[0].id
+    profile.save()
     url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
 
     with patch(
@@ -266,6 +275,7 @@ def reload_urlconf(urlconf=None):
         import_module(urlconf)
 
 
+@pytest.mark.django_db
 def test_force_staff_sso(client):
     """Test that URLs and redirects are in place."""
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = True

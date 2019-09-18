@@ -78,25 +78,6 @@ class HomePageSubscriber(AbstractDatabaseCacheSubscriber):
     ]
 
 
-class HomePageOldSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.HomePageOld
-    subscriptions = [
-        models.ArticleListingPage,
-        models.TopicLandingPage,
-        models.ArticlePage,
-    ]
-
-
-class InternationalLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.InternationalLandingPage
-    subscriptions = []
-
-
-class EUExitInternationalFormPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.EUExitInternationalFormPage
-    subscriptions = []
-
-
 class EUExitDomesticFormPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = models.EUExitDomesticFormPage
     subscriptions = []
@@ -140,4 +121,5 @@ class CountryGuidePageSubscriber(AbstractDatabaseCacheSubscriber):
         models.TopicLandingPage,
         models.ArticleListingPage,
         models.CampaignPage,
+        snippets.IndustryTag
     ]
