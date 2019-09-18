@@ -4,6 +4,7 @@
 
 ### Implemented enhancements
 - CI-498 - Changed ebook pdf to a cta link
+- No ticket - Add database fixtures and update readme with usage instructions
 
 ## [2019.09.18](https://github.com/uktrade/directory-cms/releases/tag/2019.09.18)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.08.27_1...2019.09.18)
