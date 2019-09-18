@@ -1,6 +1,7 @@
 [run]
 omit =
     .venv/*
+    venv/*
     conf/wsgi.py
     conf/settings.py
     conf/celery.py
