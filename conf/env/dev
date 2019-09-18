@@ -33,3 +33,4 @@ ACTIVITY_STREAM_SECRET_ACCESS_KEY=123-secret-key
 FEATURE_ENFORCE_STAFF_SSO_ENABLED=false
 USERS_REQUEST_ACCESS_PREVENT_RESUBMISSION=false
 STATICFILES_STORAGE=django.contrib.staticfiles.storage.StaticFilesStorage
+DEFAULT_FILE_STORAGE=core.storage_backends.FileSystemStorage
