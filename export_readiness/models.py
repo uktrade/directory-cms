@@ -16,6 +16,7 @@ from core.models import (
 )
 from core.constants import ARTICLE_TYPES
 from core.mixins import ServiceHomepageMixin, ServiceNameUniqueSlugMixin
+from export_readiness.blocks import CampaignBlock
 
 from . import panels, snippets
 from core import blocks, fields
@@ -1383,6 +1384,12 @@ class HomePage(
         field_name='pages',
         block_class_instance=wagtail_blocks.PageChooserBlock(page_type='export_readiness.ArticlePage'),
         max_num=6, null=True, blank=True
+    )
+
+    campaign = fields.single_struct_block_stream_field_factory(
+        field_name='campaign',
+        block_class_instance=CampaignBlock(),
+        max_num=1, null=True, blank=True
     )
 
     @staticmethod

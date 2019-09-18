@@ -3,7 +3,9 @@
 ## Pre-release
 
 ### Implemented enhancements
+- XOT-1039 - Add campaign block to Great Domestic Homepage
 - No ticket - Add database fixtures and update readme with usage instructions
+
 
 ## [2019.09.18](https://github.com/uktrade/directory-cms/releases/tag/2019.09.18)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.08.27_1...2019.09.18)
@@ -29,6 +31,7 @@
 - CI-496 - Updated field on `InternationalHomePage` to be markdown
 - CI-492 - Added `mapped_regions` to region page
 - No ticket - Add migrations check to CircleCI
+
 
 ### Fixed bugs
 - XOT-1033 - Fix hero CTA link serializer
