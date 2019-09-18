@@ -1732,7 +1732,7 @@ class ReadyToTradeArticlesFields(Orderable, AboutUkArticleField):
     page = ParentalKey(
         'great_international.ReadyToTradeLandingPage',
         on_delete=models.CASCADE,
-        related_name='about_uk_articles_fields',
+        related_name='articles_fields',
         blank=True,
         null=True,
     )

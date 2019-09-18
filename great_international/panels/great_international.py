@@ -1803,8 +1803,8 @@ class ReadyToTradeLandingPagePanels:
             classname='collapsible',
             children=[
                 InlinePanel(
-                    'about_uk_articles_fields',
-                    label="About UK articles"
+                    'articles_fields',
+                    label="Articles"
                 )
             ]
         ),
