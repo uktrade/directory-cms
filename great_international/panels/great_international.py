@@ -1581,6 +1581,8 @@ class AboutUkWhyChooseTheUkPagePanels:
         MultiFieldPanel(
             heading="Hero",
             children=[
+                HelpPanel('The hero title no longer shows, use this as alt text for the hero image which includes '
+                          'the text heading'),
                 FieldPanel('hero_title'),
                 ImageChooserPanel('hero_image'),
             ],
