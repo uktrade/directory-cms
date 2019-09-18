@@ -26,6 +26,7 @@
 - No ticket - Add migrations check to CircleCI
 
 ### Fixed bugs
+- XOT-1033 - Fix hero CTA link serializer
 - No ticket - Fixed base sector page serializer being in serializer_mapping
 - No ticket - Undone CI-496 changes, markdown field back to charfield
 
