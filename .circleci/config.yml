@@ -25,13 +25,17 @@ jobs:
           name: Run tests
           command: |
             . venv/bin/activate
+            mkdir test-reports
             TESTFILES=$(circleci tests glob "tests/**/*.py"| circleci tests split)
-            ENV_FILES=test,dev pytest ${TESTFILES} --cov=. --cov-config=.coveragerc --cov-report html
+            ENV_FILES=test,dev pytest ${TESTFILES} --cov=. --cov-config=.coveragerc --cov-report html --junitxml=test-reports/junit.xml
             COVERALLS_PARALLEL=true coveralls
       - store_test_results:
           path: test-reports
       - store_artifacts:
           path: test-reports
+    notify:
+      webhooks:
+        - url: https://coveralls.io/webhook?repo_token=$COVERALLS_REPO_TOKEN
 
   flake8:
     docker:
