@@ -641,7 +641,8 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
         'great_international.InternationalCuratedTopicLandingPage',
         'great_international.InternationalGuideLandingPage',
         'great_international.InternationalSectorPage',
-        'great_international.AboutUkWhyChooseTheUkPage'
+        'great_international.AboutUkWhyChooseTheUkPage',
+        'great_international.ReadyToTradeLandingPage'
     ]
     subpage_types = []
 
