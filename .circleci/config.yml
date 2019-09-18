@@ -1,7 +1,6 @@
 version: 2
 jobs:
   test:
-    working_directory: /tmp/cci-test
     docker:
       - image: circleci/python:3.6.6
       - image: circleci/redis:3.2-alpine
@@ -28,32 +27,20 @@ jobs:
             . venv/bin/activate
             mkdir test-reports
             TESTFILES=$(circleci tests glob "tests/**/*.py"| circleci tests split)
-            ENV_FILES=test,dev pytest ${TESTFILES} --cov=. --cov-config=.coveragerc --cov-report html --junitxml=test-reports/junit.xml
+            CIRCLE_BUILD_NUM=$CIRCLE_WORKFLOW_ID ENV_FILES=test,dev pytest ${TESTFILES} --cov=. --cov-config=.coveragerc --cov-report html --junitxml=test-reports/junit.xml
             COVERALLS_PARALLEL=true coveralls debug
-      - run:
-          name: save build number
-          command: echo "export TARGET_CIRCLE_BUILD_NUM=$CIRCLE_BUILD_NUM" > workspace/new-env-vars
       - store_test_results:
           path: test-reports
       - store_artifacts:
           path: test-reports
-      - persist_to_workspace:
-          root: workspace
-          paths:
-              - new-env-vars
 
   notify:
-    working_directory: /tmp/cci-test
     docker:
       - image: circleci/python:3.6.8
     steps:
-      - attach_workspace:
-          at: /tmp/cci-test/workspace
-      - run: cat workspace/new-env-vars >> $BASH_ENV
-      - run: echo $TARGET_CIRCLE_BUILD_NUM;
       - run:
           name: Trigger tests complete
-          command: curl -k https://coveralls.io/webhook?repo_token=$COVERALLS_REPO_TOKEN -d "payload[build_num]=$TARGET_CIRCLE_BUILD_NUM&payload[status]=done"
+          command: curl -k https://coveralls.io/webhook?repo_token=$COVERALLS_REPO_TOKEN -d "payload[build_num]=$CIRCLE_WORKFLOW_ID&payload[status]=done"
 
   flake8:
     docker:
