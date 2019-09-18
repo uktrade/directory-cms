@@ -1811,13 +1811,6 @@ class AboutUkWhyChooseTheUkPage(panels.AboutUkWhyChooseTheUkPagePanels, BaseInte
     ebook_section_body = MarkdownField(null=True, blank=True)
     ebook_section_cta_text = models.CharField(max_length=255, blank=True)
     ebook_section_cta_link = models.CharField(max_length=255, blank=True)
-    ebook_section_pdf_link = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
 
     how_dit_help_title = models.CharField(max_length=255, blank=True)
 

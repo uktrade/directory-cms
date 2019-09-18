@@ -2369,7 +2369,7 @@ class AboutUkWhyChooseTheUkPageSerializer(PageWithRelatedPagesSerializer, BasePa
     ebook_section_title = serializers.CharField()
     ebook_section_body = core_fields.MarkdownToHTMLField()
     ebook_section_cta_text = serializers.CharField()
-    ebook_section_pdf_link = core_fields.DocumentURLField()
+    ebook_section_cta_link = serializers.CharField()
 
     how_dit_help_title = serializers.CharField(max_length=255)
 
