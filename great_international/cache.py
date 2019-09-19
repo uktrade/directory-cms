@@ -265,7 +265,9 @@ class AboutUkWhyChooseTheUkPageSubscriber(
     AbstractDatabaseCacheSubscriber
 ):
     model = great_international.AboutUkWhyChooseTheUkPage
-    subscriptions = []
+    subscriptions = [
+        great_international.AboutDitServicesPage
+    ]
 
 
 class CapitalInvestContactFormPageSubscriber(

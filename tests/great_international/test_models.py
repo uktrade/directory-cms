@@ -23,7 +23,8 @@ def test_models_hierarchy():
         capital_invest.CapitalInvestOpportunityListingPage,
         capital_invest.CapitalInvestRegionPage,
         invest.InvestInternationalHomePage,
-        find_a_supplier.InternationalTradeHomePage
+        find_a_supplier.InternationalTradeHomePage,
+        great_international.AboutUkWhyChooseTheUkPage
     ]
     assert invest.InvestInternationalHomePage.allowed_subpage_models() == [
         invest.InvestHighPotentialOpportunitiesPage,

@@ -1179,6 +1179,7 @@ class HomePagePanels:
                 StreamFieldPanel('what_is_new_pages')
             ]
         ),
+        StreamFieldPanel('campaign'),
 
         SearchEngineOptimisationPanel(),
     ]
