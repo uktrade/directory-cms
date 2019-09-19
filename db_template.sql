@@ -14288,6 +14288,9 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 387	great_international	0082_auto_20190913_1339	2019-09-16 10:33:04.800386+01
 388	great_international	0082_auto_20190913_0930	2019-09-16 10:33:16.088874+01
 389	great_international	0083_merge_20190916_0920	2019-09-16 10:33:16.117848+01
+390	great_international	0083_merge_20190916_0912	2019-09-17 11:43:05.697077+01
+391	great_international	0084_auto_20190916_0913	2019-09-17 11:44:05.296924+01
+392	great_international	0085_auto_20190916_1443	2019-09-17 11:45:30.856904+01
 \.
 
 
@@ -15396,7 +15399,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 124, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 389, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 392, true);
 
 
 --
