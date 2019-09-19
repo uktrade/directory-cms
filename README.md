@@ -2,7 +2,7 @@
 
 [![code-climate-image]][code-climate]
 [![circle-ci-image]][circle-ci]
-[![codecov-image]][codecov]
+[![coverage-image]][coverage]
 [![gitflow-image]][gitflow]
 [![calver-image]][calver]
 
@@ -139,8 +139,8 @@ https://github.com/uktrade?q=great
 [circle-ci-image]: https://circleci.com/gh/uktrade/directory-cms/tree/develop.svg?style=svg
 [circle-ci]: https://circleci.com/gh/uktrade/directory-cms/tree/develop
 
-[codecov-image]: https://codecov.io/gh/uktrade/directory-cms/branch/develop/graph/badge.svg
-[codecov]: https://codecov.io/gh/uktrade/directory-cms
+[coverage-image]: https://coveralls.io/repos/github/uktrade/directory-cms/badge.svg
+[coverage]: https://coveralls.io/github/uktrade/directory-cms
 
 [gitflow-image]: https://img.shields.io/badge/Branching%20strategy-gitflow-5FBB1C.svg
 [gitflow]: https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
