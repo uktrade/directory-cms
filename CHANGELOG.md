@@ -3,11 +3,19 @@
 ## Pre-release
 
 ### Implemented enhancements
+- CI-498 - Changed ebook pdf to a cta link
+- XOT-1039 - Add campaign block to Great Domestic Homepage
+- No ticket - Add database fixtures and update readme with usage instructions
+- CI-503 - Added fields to WhyChooseUkPage for ready to trade
+
+## [2019.09.18](https://github.com/uktrade/directory-cms/releases/tag/2019.09.18)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.08.27_1...2019.09.18)
+
+### Implemented enhancements
 - No ticket - Reinstate db template and add makefile commands to make setting up fresh database faster
 - CMS-1732 - Add new fields to HPO detail page for image alt and video transcript
 - XOT-1035 - Add hero image renditions for new responsive frontend component
 - XOT-1020 - Added extra fields to article page type (domestic and international)
-- XOT-1020 - Edited formatting of article types
 - CI-460 - Added updated fields to Capital invest contact form and success pages
 - CI-475 - Added featured description to About DIT services page to be used on featured cards
 - CI-476 - Allow invest regions pages to be added as related regions to About UK pages
@@ -24,6 +32,7 @@
 - CI-496 - Updated field on `InternationalHomePage` to be markdown
 - CI-492 - Added `mapped_regions` to region page
 - No ticket - Add migrations check to CircleCI
+
 
 ### Fixed bugs
 - XOT-1033 - Fix hero CTA link serializer
@@ -47,7 +56,6 @@
 - CI-400 - Added related regions and text on About Uk pages for map
 - XOT-1020 - Added extra fields to article page type (domestic and international)
 - CMS-1716 - Remove obsolete code
-- CI-400 - Added related regions and text on About Uk pages for map
 
 ### Fixed Bugs
 - CMS-1830 - Move title field into translated admin panels to fix bug with untranslated tree_based_breadcrumbs
