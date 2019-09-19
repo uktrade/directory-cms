@@ -2,6 +2,10 @@
 
 ## Pre-release
 
+
+## [2019.09.19](https://github.com/uktrade/directory-cms/releases/tag/2019.09.19)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.09.18...2019.09.19)
+
 ### Implemented enhancements
 - CI-498 - Changed ebook pdf to a cta link
 - XOT-1039 - Add campaign block to Great Domestic Homepage
