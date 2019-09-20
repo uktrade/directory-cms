@@ -1037,6 +1037,7 @@ class ArticlePagePanels:
                 FieldPanel('article_teaser'),
                 ImageChooserPanel('article_image'),
                 FieldPanel('article_video', widget=AdminMediaChooser),
+                FieldPanel('article_video_transcript'),
                 FieldPanel('article_body_text')
             ]
         ),
