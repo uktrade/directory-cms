@@ -21,6 +21,10 @@ from export_readiness.blocks import CampaignBlock
 from . import panels, snippets
 from core import blocks, fields
 
+VIDEO_TRANSCRIPT_HELP_TEXT = (
+    "If the video is present, a transcript must be provided."
+)
+
 
 class BaseDomesticPage(ServiceNameUniqueSlugMixin, BasePage):
     service_name_value = cms.EXPORT_READINESS
@@ -1216,6 +1220,11 @@ class ArticlePage(panels.ArticlePagePanels, BaseDomesticPage):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
+    )
+    article_video_transcript = MarkdownField(
+        null=True,
+        blank=True,
+        help_text=VIDEO_TRANSCRIPT_HELP_TEXT
     )
     article_body_text = MarkdownField()
 
