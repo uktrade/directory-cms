@@ -1217,6 +1217,10 @@ class ArticlePage(panels.ArticlePagePanels, BaseDomesticPage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    article_video_transcript = MarkdownField(
+        null=True,
+        blank=True
+    )
     article_body_text = MarkdownField()
 
     cta_title = models.CharField(

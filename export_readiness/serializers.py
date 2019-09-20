@@ -135,10 +135,13 @@ class BaseArticlePageSerializer(PageWithRelatedPagesSerializer):
     tags = core_fields.TagsListField()
 
 
+
 class ArticlePageSerializer(BaseArticlePageSerializer):
     type_of_article = serializers.CharField()
     article_subheading = serializers.CharField()
     article_video = core_fields.VideoField()
+    article_video_transcript = core_fields.MarkdownToHTMLField()
+
 
 
 class MarketingArticlePageSerializer(BaseArticlePageSerializer):
