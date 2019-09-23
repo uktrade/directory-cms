@@ -5,6 +5,7 @@
 ### Implemented enhancements
 - XOT-1444 - add article video transcript component
 - XOT-1108 - Filter markets by sector
+- XOT-1074 - Add `ArticePage` to the children of `TopicLandingPage`
 
 ## [2019.09.19](https://github.com/uktrade/directory-cms/releases/tag/2019.09.19)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.09.18...2019.09.19)
