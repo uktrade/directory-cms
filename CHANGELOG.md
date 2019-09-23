@@ -3,7 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
-- XOT-1444 - add article video transcript comoponent
+- XOT-1444 - add article video transcript component
 - XOT-1108 - Filter markets by sector
 
 ## [2019.09.19](https://github.com/uktrade/directory-cms/releases/tag/2019.09.19)
