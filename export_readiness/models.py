@@ -234,7 +234,8 @@ class TopicLandingPage(panels.TopicLandingPagePanels, BaseDomesticPage):
     subpage_types = [
         'export_readiness.ArticleListingPage',
         'export_readiness.SuperregionPage',
-        'export_readiness.CountryGuidePage'
+        'export_readiness.CountryGuidePage',
+        'export_readiness.ArticlePage'
     ]
 
     landing_page_title = models.CharField(max_length=255)
