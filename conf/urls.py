@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView
 
 import core.views
+import export_readiness.views
 from activitystream.views import ActivityStreamView
 from groups.views import GroupInfoModalView
 
@@ -43,7 +44,21 @@ api_urls = [
         r'^pages/types/$',
         core.views.PageTypeView.as_view(),
         name='pages-types-list'
-    )
+    ),
+    url(
+        r'^pages/lookup-countries-by-tag/(?P<pk>[0-9]+)/$',
+        api_router.wrap_view(
+            export_readiness.views.CountryPageLookupByIndustryTagIDListAPIView.as_view()
+        ),
+        name='lookup-countries-by-tag-list'
+    ),
+    url(
+        r'^pages/industry-tags/$',
+        api_router.wrap_view(
+            export_readiness.views.IndustryTagsListAPIView.as_view()
+        ),
+        name='industry-tags-list'
+    ),
 ]
 
 
