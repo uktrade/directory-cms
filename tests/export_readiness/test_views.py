@@ -190,7 +190,8 @@ def test_country_page_view(admin_client, root_page):
     assert 'statistics' in response.json()['accordions'][0]
     assert 'case_study' in response.json()['accordions'][0]
     assert 'tags' in response.json()
-    assert response.json()['tags'][0]['name'] == 'test'
+    assert response.json()['tags'][0]['name'] == tag.name
+    assert response.json()['tags'][0]['id'] == tag.id
 
 
 @pytest.mark.django_db
@@ -218,3 +219,31 @@ def test_topic_landing_page_view_country_guides_alph_order(
     assert [page['id'] for page in response.json()['child_pages']] == [
         country_guide_page1.pk, country_guide_page2.pk
     ]
+
+
+@pytest.mark.django_db
+def test_industry_tags_list_endpoint(client):
+    tag1 = factories.IndustryTagFactory()
+    tag2 = factories.IndustryTagFactory()
+    url = reverse('api:industry-tags-list')
+    response = client.get(url)
+    assert response.status_code == 200
+    assert response.json() == [
+        {'id': tag1.pk, 'name': tag1.name},
+        {'id': tag2.pk, 'name': tag2.name}
+    ]
+
+
+@pytest.mark.django_db
+def test_lookup_countries_by_tag_list_endpoint(client):
+    tag = factories.IndustryTagFactory()
+    market1 = factories.CountryGuidePageFactory()
+    market1.tags = [tag]
+    market1.save()
+    market2 = factories.CountryGuidePageFactory()
+    market2.tags = [tag]
+    market2.save()
+    url = reverse('api:lookup-countries-by-tag-list', kwargs={'pk': tag.pk})
+    response = client.get(url)
+    assert response.status_code == 200
+    assert len(response.json()['countries']) == 2

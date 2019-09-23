@@ -590,18 +590,22 @@ class SuperregionPageSerializer(TopicLandingPageSerializer):
     """
 
 
-class TagSerializer(serializers.Serializer):
-    """This is not a Page model."""
+class TagCountryPageSerializer(serializers.Serializer):
     name = serializers.CharField()
-    articles = serializers.SerializerMethodField()
+    countries = serializers.SerializerMethodField()
 
-    def get_articles(self, object):
-        serializer = ArticlePageSerializer(
-            object.articlepage_set.filter(live=True),
+    def get_countries(self, object):
+        serializer = CountryGuidePageSerializer(
+            object.countryguidepage_set.filter(live=True),
             many=True,
             context=self.context
         )
         return serializer.data
+
+
+class TagSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    name = serializers.CharField()
 
 
 class CampaignPageSerializer(PageWithRelatedPagesSerializer):
