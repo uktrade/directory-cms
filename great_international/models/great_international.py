@@ -1215,7 +1215,12 @@ class AboutDitServicesFields(Orderable, AboutDitServiceField):
 
 
 class AboutDitServicesPage(panels.AboutDitServicesPagePanels, BaseInternationalPage):
-    parent_page_types = ['great_international.AboutDitLandingPage']
+    parent_page_types = [
+        'great_international.AboutDitLandingPage',
+        'great_international.InternationalCapitalInvestLandingPage',
+        'great_international.InternationalTradeHomePage',
+        'great_international.InvestInternationalHomePage'
+    ]
 
     breadcrumbs_label = models.CharField(max_length=255)
     hero_title = models.CharField(max_length=255)
