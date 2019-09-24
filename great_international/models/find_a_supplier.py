@@ -15,7 +15,7 @@ class InternationalTradeHomePage(
 ):
     slug_identity = slugs.FAS_INTERNATIONAL_HOME_PAGE
     parent_page_types = ['great_international.InternationalHomePage']
-    subpage_types = ['InternationalTradeIndustryContactPage']
+    subpage_types = ['InternationalTradeIndustryContactPage', 'great_international.AboutDitServicesPage']
 
     hero_image = models.ForeignKey(
         'wagtailimages.Image',

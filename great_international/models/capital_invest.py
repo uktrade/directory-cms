@@ -129,7 +129,8 @@ class InternationalCapitalInvestLandingPage(
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
         'great_international.CapitalInvestContactFormPage',
-        'great_international.InternationalGuideLandingPage'
+        'great_international.InternationalGuideLandingPage',
+        'great_international.AboutDitServicesPage'
     ]
 
     breadcrumbs_label = models.CharField(max_length=255, blank=True)
