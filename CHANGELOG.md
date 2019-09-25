@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- No ticket - Improve db fixtures
 - XOT-1107 - Add article pages to serializer for topic pages, only serialize necessary data
 - XOT-1444 - add article video transcript component
 - XOT-1108 - Filter markets by sector
