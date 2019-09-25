@@ -14,17 +14,15 @@ flake8:
 	--exclude=.venv,venv,node_modules,migrations \
 	--max-line-length=120
 
-ENV_FILES?='secrets-do-not-commit,dev'
 manage:
-	ENV_FILES=$(ENV_FILES) ./manage.py $(ARGUMENTS)
+	ENV_FILES='secrets-do-not-commit,dev' ./manage.py $(ARGUMENTS)
 
 ENV_FILES?='secrets-do-not-commit,dev'
 check_migrations:
 	yes n | ENV_FILES=$(ENV_FILES) ./manage.py migrate --plan
 
-ENV_FILES?='secrets-do-not-commit,dev'
 webserver:
-	ENV_FILES=$(ENV_FILES) python manage.py runserver 0.0.0.0:8010 $(ARGUMENTS)
+	ENV_FILES='secrets-do-not-commit,dev' python manage.py runserver 0.0.0.0:8010 $(ARGUMENTS)
 
 requirements:
 	pip-compile requirements.in
