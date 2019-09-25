@@ -51,17 +51,20 @@ Secrets such as API keys and environment specific configurations are placed in `
 | make secrets                  | Create your secret env var file |
 | make worker                   | Run async cache celery worker |
 | make database                 | Updates the db template with any newly added migrations |
-| make database_template        | Drop, then set up fresh db from template |
+| make db_template              | Drop, then set up fresh db from template |
 | make load_fixtures            | Load fixtures from `fixtures/data.json` |
 
 ### Setting up the local database
 
     $ make database
+
+`make database` drops then recreates the local database then loads `db_template.sql` so no migrations need to be run. Do this if you need a fresh database with no pre-existing pages or users.
+
     $ make load_fixtures
 
-`make database` drops the local database then loads `db_template.sql`. Then `make load_fixtures` loads fixtures from `fixtures/data.json`. This includes a dummy account with username "dev" and password "password".
+To add some dummy content to your local database run `make load_fixtures`. *This will overwrite your local database* with data from `db_fixtures.sql`. This includes a dummy account with username "dev" and password "password".
 
-To make sure setting up a fresh db is nice and speedy please make sure to run `make database_template` after adding any new migrations.
+To make sure setting up a fresh db is nice and speedy please make sure to run `make db_template` after adding any new migrations.
 
 ### Image storage
 
