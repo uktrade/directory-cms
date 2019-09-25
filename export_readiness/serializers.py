@@ -625,6 +625,14 @@ class TagSerializer(serializers.Serializer):
     name = serializers.CharField()
 
 
+class IndustryTagSerializer(TagSerializer):
+    icon = wagtail_fields.ImageRenditionField('original')
+    pages_count = serializers.SerializerMethodField()
+
+    def get_pages_count(self, tag):
+        return tag.countryguidepage_set.all().count()
+
+
 class CampaignPageSerializer(PageWithRelatedPagesSerializer):
     campaign_heading = serializers.CharField(max_length=255)
 
