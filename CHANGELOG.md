@@ -8,6 +8,7 @@
 - XOT-1108 - Filter markets by sector
 - XOT-1074 - Add `ArticePage` to the children of `TopicLandingPage`
 - CI-508 - Allowing DIT services pages to be children of invest, capital invest and trade home pages
+- CI-510 - Updated help panel to mirror front-end changes
 
 ## [2019.09.19](https://github.com/uktrade/directory-cms/releases/tag/2019.09.19)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.09.18...2019.09.19)
