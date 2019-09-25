@@ -840,6 +840,24 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer, HeroSerial
         'fill-640x360'
     )
 
+    how_dit_help_title = serializers.CharField(max_length=255)
+
+    related_how_dit_help_pages = serializers.SerializerMethodField()
+
+    def get_related_how_dit_help_pages(self, instance):
+        serialized = []
+        items = [
+            instance.related_how_dit_help_page_one,
+            instance.related_how_dit_help_page_two,
+            instance.related_how_dit_help_page_three
+        ]
+        for related_page in items:
+            if not related_page:
+                continue
+            serializer = AboutDitServicesPageSerializer(related_page.specific)
+            serialized.append(serializer.data)
+        return serialized
+
     section_two_heading = serializers.CharField()
     section_two_teaser = serializers.CharField()
     section_two_subsections = serializers.SerializerMethodField()
