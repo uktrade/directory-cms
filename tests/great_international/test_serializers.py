@@ -1418,7 +1418,7 @@ def test_new_int_home_page_has_related_how_dit_help_pages(
 
     home = InternationalHomePageFactory(
         slug='international',
-        related_page_buy=how_we_help,
+        related_how_dit_help_pages=[how_we_help],
         parent=international_root_page
     )
 
