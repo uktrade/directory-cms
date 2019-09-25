@@ -845,6 +845,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer, HeroSerial
     related_how_dit_help_pages = serializers.SerializerMethodField()
 
     def get_related_how_dit_help_pages(self, instance):
+        serialized = []
         items = [
             instance.related_how_dit_help_page_one,
             instance.related_how_dit_help_page_two,
@@ -852,8 +853,10 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer, HeroSerial
         ]
         for related_page in items:
             if not related_page:
-                return []
-        return [AboutDitServicesPageSerializer(related_page.specific).data for related_page in items if related_page]
+                continue
+            serializer = AboutDitServicesPageSerializer(related_page.specific)
+            serialized.append(serializer.data)
+        return serialized
 
     section_two_heading = serializers.CharField()
     section_two_teaser = serializers.CharField()
