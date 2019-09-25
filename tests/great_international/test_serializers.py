@@ -1403,3 +1403,28 @@ def test_new_int_home_page_has_related_trade(
     )
 
     assert serializer.data['related_page_buy']['meta']['slug'] == 'trade'
+
+
+@pytest.mark.django_db
+def test_new_int_home_page_has_related_how_dit_help_pages(
+        rf, international_root_page, image
+):
+    how_we_help = AboutDitServicesPageFactory(
+        parent=international_root_page,
+        slug='how-we-help-buy',
+        title='the title',
+        hero_image=image
+    )
+
+    home = InternationalHomePageFactory(
+        slug='international',
+        related_page_buy=how_we_help,
+        parent=international_root_page
+    )
+
+    serializer = InternationalHomePageSerializer(
+        instance=home,
+        context={'request': rf.get('/')}
+    )
+
+    assert serializer.data['related_how_dit_help_pages'][0]['meta']['slug'] == 'how-we-help-buy'
