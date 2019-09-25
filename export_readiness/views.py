@@ -12,5 +12,5 @@ class CountryPageLookupByIndustryTagIDListAPIView(RetrieveAPIView):
 
 class IndustryTagsListAPIView(ListAPIView):
     queryset = snippets.IndustryTag.objects.all()
-    serializer_class = serializers.TagSerializer
+    serializer_class = serializers.IndustryTagSerializer
     permission_classes = [SignatureCheckPermission]

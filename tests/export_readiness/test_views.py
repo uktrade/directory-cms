@@ -1,3 +1,5 @@
+from unittest.mock import ANY
+
 import pytest
 from rest_framework.reverse import reverse
 from directory_constants import slugs
@@ -225,12 +227,28 @@ def test_topic_landing_page_view_country_guides_alph_order(
 def test_industry_tags_list_endpoint(client):
     tag1 = factories.IndustryTagFactory()
     tag2 = factories.IndustryTagFactory()
+    page = factories.CountryGuidePageFactory()
+    page2 = factories.CountryGuidePageFactory()
+    page.tags = [tag1, tag2]
+    page.save()
+    page2.tags = [tag1]
+    page2.save()
     url = reverse('api:industry-tags-list')
     response = client.get(url)
     assert response.status_code == 200
     assert response.json() == [
-        {'id': tag1.pk, 'name': tag1.name},
-        {'id': tag2.pk, 'name': tag2.name}
+        {
+            'id': tag1.pk,
+            'name': tag1.name,
+            'icon': {'url': ANY, 'width': 100, 'height': 100},
+            'pages_count': 2
+        },
+        {
+            'id': tag2.pk,
+            'name': tag2.name,
+            'icon': {'url': ANY, 'width': 100, 'height': 100},
+            'pages_count': 1
+        }
     ]
 
 
