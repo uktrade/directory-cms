@@ -42,7 +42,8 @@ class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
         invest.InvestInternationalHomePage,
         capital_invest.InternationalCapitalInvestLandingPage,
         find_a_supplier.InternationalTradeHomePage,
-        great_international.InternationalSectorPage
+        great_international.InternationalSectorPage,
+        great_international.AboutDitServicesPage
     ]
 
 
@@ -236,7 +237,8 @@ class AboutDitServicesPageSubscriber(
         great_international.AboutDitLandingPage,
         capital_invest.InternationalCapitalInvestLandingPage,
         invest.InvestInternationalHomePage,
-        find_a_supplier.InternationalTradeHomePage
+        find_a_supplier.InternationalTradeHomePage,
+        great_international.InternationalHomePage
     ]
 
 
