@@ -441,6 +441,8 @@ class InternationalCapitalInvestLandingPageTranslationOptions(
         'how_we_help_three_text',
         'how_we_help_four_icon',
         'how_we_help_four_text',
+        'how_we_help_cta_text',
+        'how_we_help_cta_link',
 
         'contact_section_title',
         'contact_section_text',
@@ -717,6 +719,8 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'how_we_help_icon_five',
 
         'how_we_help_text_six',
+        'how_we_help_cta_text',
+        'how_we_help_cta_link',
         'sector_button_text',
         'sector_button_url',
         'contact_section_title',
@@ -889,6 +893,8 @@ class InternationalTradeHomePageTranslationOptions(BaseTranslationOptions):
         'services_column_two_icon',
         'services_column_three_icon',
         'services_column_four_icon',
+        'how_we_help_cta_text',
+        'how_we_help_cta_link',
     )
 
 
