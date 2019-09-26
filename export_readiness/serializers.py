@@ -548,6 +548,7 @@ class ChildPageSerializer(BasePageSerializer):
 
 class ChildCountryGuidePageSerializer(ChildPageSerializer):
     heading = serializers.CharField()
+    sub_heading = serializers.CharField()
 
 
 class TopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer):
