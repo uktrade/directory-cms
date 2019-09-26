@@ -245,6 +245,9 @@ class InternationalCapitalInvestLandingPage(
     )
     how_we_help_four_text = models.CharField(max_length=255, blank=True)
 
+    how_we_help_cta_text = models.CharField(max_length=255, blank=True)
+    how_we_help_cta_link = models.CharField(max_length=255, blank=True)
+
     contact_section_title = models.CharField(max_length=255, blank=True)
     contact_section_text = models.CharField(max_length=255, blank=True)
     contact_section_cta_text = models.CharField(max_length=255, blank=True)
