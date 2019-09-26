@@ -1313,6 +1313,10 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer, HeroSe
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_intro = serializers.CharField(max_length=255)
     how_we_help_icon_and_text = serializers.SerializerMethodField()
+
+    how_we_help_cta_text = serializers.CharField(max_length=255)
+    how_we_help_cta_link = serializers.CharField(max_length=255)
+
     contact_section_title = serializers.CharField(max_length=255)
     contact_section_text = serializers.CharField(max_length=255)
     contact_section_cta_text = serializers.CharField(max_length=255)
@@ -1739,6 +1743,8 @@ class InvestInternationalHomePageSerializer(BasePageSerializer, HeroSerializer):
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_lead_in = serializers.CharField(max_length=255)
     how_we_help = serializers.SerializerMethodField()
+    how_we_help_cta_text = serializers.CharField(max_length=255)
+    how_we_help_cta_link = serializers.CharField(max_length=255)
     contact_section_title = serializers.CharField(max_length=255)
     contact_section_content = serializers.CharField(max_length=255)
     contact_section_call_to_action_text = serializers.CharField(max_length=255)
@@ -2032,6 +2038,8 @@ class InternationalTradeHomePageSerializer(BasePageSerializer):
     services_column_two_icon = wagtail_fields.ImageRenditionField('original')
     services_column_three_icon = wagtail_fields.ImageRenditionField('original')
     services_column_four_icon = wagtail_fields.ImageRenditionField('original')
+    how_we_help_cta_text = serializers.CharField(max_length=255)
+    how_we_help_cta_link = serializers.CharField(max_length=255)
     industries = serializers.SerializerMethodField()
 
     def get_industries(self, instance):
