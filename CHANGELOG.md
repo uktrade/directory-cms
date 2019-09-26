@@ -12,6 +12,9 @@
 - XOT-1124 - Add icon and pages count to industry tags
 - CI-518 - Added new how dit help fields to International Home page
 
+### Fixed bugs
+- No ticket - Add missing field to serializer
+
 ## [2019.09.19](https://github.com/uktrade/directory-cms/releases/tag/2019.09.19)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.09.18...2019.09.19)
 
