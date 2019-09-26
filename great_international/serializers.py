@@ -854,7 +854,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer, HeroSerial
         for related_page in items:
             if not related_page:
                 continue
-            serializer = AboutDitServicesPageSerializer(related_page.specific)
+            serializer = RelatedDitServicesPageSerializer(related_page.specific)
             serialized.append(serializer.data)
         return serialized
 
