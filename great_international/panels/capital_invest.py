@@ -58,6 +58,8 @@ class InternationalCapitalInvestLandingPagePanels:
                         FieldPanel('how_we_help_four_text'),
                     ]),
                 ]),
+                FieldPanel('how_we_help_cta_text'),
+                FieldPanel('how_we_help_cta_link'),
             ]
         ),
         MultiFieldPanel(
