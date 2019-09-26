@@ -11,6 +11,7 @@
 - CI-510 - Updated help panel to mirror front-end changes
 - XOT-1124 - Add icon and pages count to industry tags
 - CI-518 - Added new how dit help fields to International Home page
+- CI-493 - Added how we help ctas to Invest, Expand and Trade home pages 
 
 ### Fixed bugs
 - No ticket - Add missing field to serializer

@@ -79,6 +79,9 @@ class InternationalTradeHomePage(
         related_name='+'
     )
 
+    how_we_help_cta_text = models.CharField(max_length=255, blank=True)
+    how_we_help_cta_link = models.CharField(max_length=255, blank=True)
+
 
 class InternationalTradeIndustryContactPage(
     panels.InternationalTradeIndustryContactPagePanels, ExclusivePageMixin, BreadcrumbMixin,

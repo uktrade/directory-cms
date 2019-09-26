@@ -223,6 +223,9 @@ class InvestInternationalHomePage(
         related_name='+',
     )
 
+    how_we_help_cta_text = models.CharField(max_length=255, blank=True)
+    how_we_help_cta_link = models.CharField(max_length=255, blank=True)
+
     contact_section_title = models.CharField(max_length=255, blank=True)
     contact_section_content = models.TextField(max_length=255, blank=True)
     contact_section_call_to_action_text = models.CharField(
