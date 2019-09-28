@@ -55,6 +55,34 @@ class InternationalHomePagePanels:
                     ]
                 ),
                 MultiFieldPanel(
+                    heading="How DIT helps",
+                    classname='collapsible',
+                    children=[
+                        HelpPanel('Required for section to show: title and at least one related page'),
+                        FieldPanel('how_dit_help_title'),
+                        FieldRowPanel([
+                            MultiFieldPanel([
+                                PageChooserPanel(
+                                    'related_how_dit_help_page_one',
+                                    'great_international.AboutDitServicesPage'
+                                ),
+                            ]),
+                            MultiFieldPanel([
+                                PageChooserPanel(
+                                    'related_how_dit_help_page_two',
+                                    'great_international.AboutDitServicesPage'
+                                ),
+                            ]),
+                            MultiFieldPanel([
+                               PageChooserPanel(
+                                   'related_how_dit_help_page_three',
+                                   'great_international.AboutDitServicesPage'
+                               ),
+                            ]),
+                        ]),
+                    ],
+                ),
+                MultiFieldPanel(
                     heading='Features highlight',
                     children=[
                         FieldPanel('section_two_heading'),
@@ -1082,7 +1110,7 @@ class AboutDitServicesPagePanels:
         MultiFieldPanel(
             heading="Teaser",
             children=[
-                HelpPanel('At least one field required for section to show'),
+                HelpPanel('Teaser is required for section to show'),
                 FieldPanel('teaser'),
                 ImageChooserPanel('teaser_image'),
             ],
@@ -1581,8 +1609,6 @@ class AboutUkWhyChooseTheUkPagePanels:
         MultiFieldPanel(
             heading="Hero",
             children=[
-                HelpPanel('The hero title no longer shows, use this as alt text for the hero image which includes '
-                          'the text heading'),
                 FieldPanel('hero_title'),
                 ImageChooserPanel('hero_image'),
             ],

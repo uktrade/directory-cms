@@ -15,7 +15,7 @@ class InternationalTradeHomePage(
 ):
     slug_identity = slugs.FAS_INTERNATIONAL_HOME_PAGE
     parent_page_types = ['great_international.InternationalHomePage']
-    subpage_types = ['InternationalTradeIndustryContactPage']
+    subpage_types = ['InternationalTradeIndustryContactPage', 'great_international.AboutDitServicesPage']
 
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -78,6 +78,9 @@ class InternationalTradeHomePage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+
+    how_we_help_cta_text = models.CharField(max_length=255, blank=True)
+    how_we_help_cta_link = models.CharField(max_length=255, blank=True)
 
 
 class InternationalTradeIndustryContactPage(
