@@ -66,8 +66,10 @@ class InternationalTradeHomePagePanels:
                             ImageChooserPanel('services_column_four_icon'),
                             FieldPanel('services_column_four'),
                         ]),
-                    ]
+                    ],
                 ),
+                FieldPanel('how_we_help_cta_text'),
+                FieldPanel('how_we_help_cta_link'),
             ],
             classname='collapsible',
         ),

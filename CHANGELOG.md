@@ -3,6 +3,23 @@
 ## Pre-release
 
 ### Implemented enhancements
+- XOT-1107 - Add article pages to serializer for topic pages, only serialize necessary data
+- XOT-1444 - add article video transcript component
+- XOT-1108 - Filter markets by sector
+- XOT-1074 - Add `ArticePage` to the children of `TopicLandingPage`
+- CI-508 - Allowing DIT services pages to be children of invest, capital invest and trade home pages
+- CI-510 - Updated help panel to mirror front-end changes
+- XOT-1124 - Add icon and pages count to industry tags
+- CI-518 - Added new how dit help fields to International Home page
+- CI-493 - Added how we help ctas to Invest, Expand and Trade home pages 
+
+### Fixed bugs
+- No ticket - Add missing field to serializer
+
+## [2019.09.19](https://github.com/uktrade/directory-cms/releases/tag/2019.09.19)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.09.18...2019.09.19)
+
+### Implemented enhancements
 - CI-498 - Changed ebook pdf to a cta link
 - XOT-1039 - Add campaign block to Great Domestic Homepage
 - No ticket - Add database fixtures and update readme with usage instructions
