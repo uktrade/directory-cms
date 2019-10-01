@@ -12,6 +12,7 @@
 - XOT-1124 - Add icon and pages count to industry tags
 - CI-518 - Added new how dit help fields to International Home page
 - CI-493 - Added how we help ctas to Invest, Expand and Trade home pages 
+- CI-522 - Added new fields for new expand home page
 
 ### Fixed bugs
 - No ticket - Add missing field to serializer
