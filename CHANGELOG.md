@@ -2,6 +2,9 @@
 
 ## Pre-release
 
+### Implemented enhancements
+- CI-522 - Added new fields for new expand home page
+
 ## [2019.10.01](https://github.com/uktrade/directory-cms/releases/tag/2019.10.01)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.09.19...2019.10.01)
 
@@ -15,7 +18,6 @@
 - XOT-1124 - Add icon and pages count to industry tags
 - CI-518 - Added new how dit help fields to International Home page
 - CI-493 - Added how we help ctas to Invest, Expand and Trade home pages 
-- CI-522 - Added new fields for new expand home page
 
 ### Fixed bugs
 - No ticket - Add missing field to serializer
