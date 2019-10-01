@@ -172,6 +172,7 @@ class IndustryTagFactory(factory.django.DjangoModelFactory):
         model = snippets.IndustryTag
 
     name = factory.fuzzy.FuzzyText(length=10)
+    icon = factory.SubFactory(wagtail_factories.ImageFactory)
 
 
 class HomePageFactory(wagtail_factories.PageFactory):
@@ -230,9 +231,7 @@ class CountryGuidePageFactory(wagtail_factories.PageFactory):
     heading = factory.fuzzy.FuzzyText(length=10)
     sub_heading = factory.fuzzy.FuzzyText(length=10)
     heading_teaser = factory.fuzzy.FuzzyText(length=10)
-    hero_image = factory.SubFactory(
-        wagtail_factories.ImageFactory
-    )
+    hero_image = factory.SubFactory(wagtail_factories.ImageFactory)
     intro_cta_one_title = factory.fuzzy.FuzzyText(length=10)
     intro_cta_one_link = factory.fuzzy.FuzzyText(length=10)
     intro_cta_two_title = factory.fuzzy.FuzzyText(length=10)
