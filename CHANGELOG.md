@@ -2,6 +2,9 @@
 
 ## Pre-release
 
+## [2019.10.01](https://github.com/uktrade/directory-cms/releases/tag/2019.10.01)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.09.19...2019.10.01)
+
 ### Implemented enhancements
 - XOT-1107 - Add article pages to serializer for topic pages, only serialize necessary data
 - XOT-1444 - add article video transcript component
