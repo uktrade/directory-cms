@@ -31,7 +31,8 @@ class InvestInternationalHomePage(
     subpage_types = [
         'InvestHighPotentialOpportunitiesPage',
         'InvestRegionLandingPage',
-        'InternationalGuideLandingPage'
+        'InternationalGuideLandingPage',
+        'great_international.AboutDitServicesPage',
     ]
 
     breadcrumbs_label = models.CharField(max_length=50)
@@ -221,6 +222,9 @@ class InvestInternationalHomePage(
         on_delete=models.SET_NULL,
         related_name='+',
     )
+
+    how_we_help_cta_text = models.CharField(max_length=255, blank=True)
+    how_we_help_cta_link = models.CharField(max_length=255, blank=True)
 
     contact_section_title = models.CharField(max_length=255, blank=True)
     contact_section_content = models.TextField(max_length=255, blank=True)

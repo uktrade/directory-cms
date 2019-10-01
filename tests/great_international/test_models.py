@@ -29,7 +29,8 @@ def test_models_hierarchy():
     assert invest.InvestInternationalHomePage.allowed_subpage_models() == [
         invest.InvestHighPotentialOpportunitiesPage,
         invest.InvestRegionLandingPage,
-        great_international.InternationalGuideLandingPage
+        great_international.InternationalGuideLandingPage,
+        great_international.AboutDitServicesPage
     ]
     assert invest.InvestHighPotentialOpportunitiesPage.allowed_subpage_models() == [
         invest.InvestHighPotentialOpportunityDetailPage,
@@ -69,7 +70,8 @@ def test_models_hierarchy():
         ]
     assert capital_invest.InternationalCapitalInvestLandingPage.allowed_subpage_models() == [
             capital_invest.CapitalInvestContactFormPage,
-            great_international.InternationalGuideLandingPage
+            great_international.InternationalGuideLandingPage,
+            great_international.AboutDitServicesPage
         ]
     assert capital_invest.CapitalInvestOpportunityListingPage.allowed_subpage_models() == [
             capital_invest.CapitalInvestOpportunityPage,

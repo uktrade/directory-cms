@@ -4,16 +4,10 @@ clean:
 	-find . -type f -name "*.pyc" -delete
 	-find . -type d -name "__pycache__" -delete
 
+ENV_FILES?='test,dev'
 pytest:
-	ENV_FILES='test,dev' \
-	pytest tests $(ARGUMENTS) \
-	--ignore=node_modules \
-	--ignore=conf/celery.py \
-	--capture=no \
-	--nomigrations \
-	--reuse-db \
-	-W ignore::DeprecationWarning \
-	-vv
+	ENV_FILES=$(ENV_FILES) \
+	pytest tests $(ARGUMENTS)
 
 flake8:
 	flake8 . \
@@ -23,8 +17,9 @@ flake8:
 manage:
 	ENV_FILES='secrets-do-not-commit,dev' ./manage.py $(ARGUMENTS)
 
+ENV_FILES?='secrets-do-not-commit,dev'
 check_migrations:
-	yes n | ENV_FILES='test,dev' ./manage.py migrate --plan
+	yes n | ENV_FILES=$(ENV_FILES) ./manage.py migrate --plan
 
 webserver:
 	ENV_FILES='secrets-do-not-commit,dev' python manage.py runserver 0.0.0.0:8010 $(ARGUMENTS)

@@ -139,6 +139,7 @@ class ArticlePageSerializer(BaseArticlePageSerializer):
     type_of_article = serializers.CharField()
     article_subheading = serializers.CharField()
     article_video = core_fields.VideoField()
+    article_video_transcript = core_fields.MarkdownToHTMLField()
 
 
 class MarketingArticlePageSerializer(BaseArticlePageSerializer):
@@ -537,6 +538,19 @@ class HomePageSerializer(BasePageSerializer):
         return 'HomePage'
 
 
+class ChildArticlePageSerializer(BasePageSerializer):
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='article_image')
+
+
+class ChildPageSerializer(BasePageSerializer):
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
+
+
+class ChildCountryGuidePageSerializer(ChildPageSerializer):
+    heading = serializers.CharField()
+    sub_heading = serializers.CharField()
+
+
 class TopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
@@ -550,22 +564,27 @@ class TopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper,
     def get_child_pages(self, obj):
         articles = self.get_child_pages_data_for(
             obj,
+            ArticlePage,
+            ChildArticlePageSerializer
+        )
+        article_lists = self.get_child_pages_data_for(
+            obj,
             ArticleListingPage,
-            ArticleListingPageSerializer
+            ChildPageSerializer
         )
         superregions = self.get_child_pages_data_for(
             obj,
             SuperregionPage,
-            SuperregionPageSerializer
+            ChildPageSerializer
         )
         country_guides = self.get_child_pages_data_for(
             obj,
             CountryGuidePage,
-            CountryGuidePageSerializer
+            ChildCountryGuidePageSerializer
         )
         country_guides = sorted(country_guides, key=lambda x: x['heading'])
 
-        return articles + superregions + country_guides
+        return article_lists + articles + superregions + country_guides
 
 
 class SuperregionPageSerializer(TopicLandingPageSerializer):
@@ -589,18 +608,30 @@ class SuperregionPageSerializer(TopicLandingPageSerializer):
     """
 
 
-class TagSerializer(serializers.Serializer):
-    """This is not a Page model."""
+class TagCountryPageSerializer(serializers.Serializer):
     name = serializers.CharField()
-    articles = serializers.SerializerMethodField()
+    countries = serializers.SerializerMethodField()
 
-    def get_articles(self, object):
-        serializer = ArticlePageSerializer(
-            object.articlepage_set.filter(live=True),
+    def get_countries(self, object):
+        serializer = CountryGuidePageSerializer(
+            object.countryguidepage_set.filter(live=True),
             many=True,
             context=self.context
         )
         return serializer.data
+
+
+class TagSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    name = serializers.CharField()
+
+
+class IndustryTagSerializer(TagSerializer):
+    icon = wagtail_fields.ImageRenditionField('original')
+    pages_count = serializers.SerializerMethodField()
+
+    def get_pages_count(self, tag):
+        return tag.countryguidepage_set.all().count()
 
 
 class CampaignPageSerializer(PageWithRelatedPagesSerializer):

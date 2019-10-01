@@ -42,7 +42,8 @@ class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
         invest.InvestInternationalHomePage,
         capital_invest.InternationalCapitalInvestLandingPage,
         find_a_supplier.InternationalTradeHomePage,
-        great_international.InternationalSectorPage
+        great_international.InternationalSectorPage,
+        great_international.AboutDitServicesPage
     ]
 
 
@@ -119,7 +120,8 @@ class InternationalCapitalInvestLandingPageSubscriber(
         capital_invest.CapitalInvestRegionPage,
         great_international.AboutUkRegionPage,
         great_international.InternationalGuideLandingPage,
-        great_international.InternationalHomePage
+        great_international.InternationalHomePage,
+        great_international.AboutDitServicesPage
     ]
 
 
@@ -148,7 +150,8 @@ class InvestInternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
         great_international.InternationalSectorPage,
         invest.InvestHighPotentialOpportunityDetailPage,
         great_international.InternationalGuideLandingPage,
-        great_international.InternationalHomePage
+        great_international.InternationalHomePage,
+        great_international.AboutDitServicesPage
     ]
 
 
@@ -203,7 +206,8 @@ class InternationalTradeHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = find_a_supplier.InternationalTradeHomePage
     subscriptions = [
         great_international.InternationalSectorPage,
-        great_international.InternationalHomePage
+        great_international.InternationalHomePage,
+        great_international.AboutDitServicesPage
     ]
 
 
@@ -230,7 +234,11 @@ class AboutDitServicesPageSubscriber(
 ):
     model = great_international.AboutDitServicesPage
     subscriptions = [
-        great_international.AboutDitLandingPage
+        great_international.AboutDitLandingPage,
+        capital_invest.InternationalCapitalInvestLandingPage,
+        invest.InvestInternationalHomePage,
+        find_a_supplier.InternationalTradeHomePage,
+        great_international.InternationalHomePage
     ]
 
 
