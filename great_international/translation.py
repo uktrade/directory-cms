@@ -726,7 +726,23 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'contact_section_title',
         'contact_section_content',
         'contact_section_call_to_action_text',
-        'contact_section_call_to_action_url'
+        'contact_section_call_to_action_url',
+
+        'how_to_expand_title',
+        'how_to_expand_intro',
+
+        'how_to_expand_title_one',
+        'how_to_expand_text_one',
+        'how_to_expand_title_two',
+        'how_to_expand_text_two',
+        'how_to_expand_title_three',
+        'how_to_expand_text_three',
+        'how_to_expand_title_four',
+        'how_to_expand_text_four',
+        'isd_section_title',
+        'isd_section_text',
+        'isd_section_cta_text',
+        'isd_section_cta_link',
     )
 
 
