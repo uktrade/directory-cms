@@ -564,27 +564,22 @@ class TopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper,
     def get_child_pages(self, obj):
         articles = self.get_child_pages_data_for(
             obj,
-            ArticlePage,
-            ChildArticlePageSerializer
-        )
-        article_lists = self.get_child_pages_data_for(
-            obj,
             ArticleListingPage,
-            ChildPageSerializer
+            ArticleListingPageSerializer
         )
         superregions = self.get_child_pages_data_for(
             obj,
             SuperregionPage,
-            ChildPageSerializer
+            SuperregionPageSerializer
         )
         country_guides = self.get_child_pages_data_for(
             obj,
             CountryGuidePage,
-            ChildCountryGuidePageSerializer
+            CountryGuidePageSerializer
         )
         country_guides = sorted(country_guides, key=lambda x: x['heading'])
 
-        return article_lists + articles + superregions + country_guides
+        return articles + superregions + country_guides
 
 
 class SuperregionPageSerializer(TopicLandingPageSerializer):
