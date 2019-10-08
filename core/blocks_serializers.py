@@ -54,3 +54,9 @@ class ColumnWithTitleIconTextBlockStreamChildBaseSerializer(HeadingContentStream
 
 class DetailsSummaryBlockStreamChildBaseSerializer(HeadingContentStreamChildBaseSerializer):
     pass
+
+
+class LinkBlockStreamChildSerializer(StreamChildBaseSerializer):
+    source = serializers.CharField(help_text='The source of the link, eg GOV.UK')
+    text = serializers.CharField()
+    url = serializers.CharField()
