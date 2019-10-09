@@ -1,7 +1,6 @@
 from django.db import models
 
 from wagtail.core.models import Page
-from wagtail.core import blocks as wagtail_blocks
 
 from modelcluster.fields import ParentalManyToManyField
 
@@ -1366,19 +1365,22 @@ class HomePage(
     )
     hero_text = models.TextField(null=True, blank=True)
     hero_cta_text = models.CharField(null=True, blank=True, max_length=255)
-    hero_cta_linked_page = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
+    hero_cta_url = models.CharField(null=True, blank=True, max_length=255)
+
+    # chevron component
+    chevron_url = models.CharField(null=True, blank=True, max_length=255)
+    chevron_text = models.CharField(null=True, blank=True, max_length=255)
+    chevron_links = fields.single_struct_block_stream_field_factory(
+        field_name='links',
+        block_class_instance=blocks.LinkBlock(),
+        max_num=3, null=True, blank=True
     )
 
     # how DIT helps
     how_dit_helps_title = models.TextField(null=True, blank=True)
     how_dit_helps_columns = fields.single_struct_block_stream_field_factory(
         field_name='columns',
-        block_class_instance=blocks.ColumnWithTitleIconTextBlock(),
+        block_class_instance=blocks.LinkWithImageAndContentBlock(),
         max_num=3, null=True, blank=True
     )
     # questions accordions
@@ -1392,7 +1394,7 @@ class HomePage(
     what_is_new_title = models.CharField(max_length=255, null=True, blank=True)
     what_is_new_pages = fields.single_struct_block_stream_field_factory(
         field_name='pages',
-        block_class_instance=wagtail_blocks.PageChooserBlock(page_type='export_readiness.ArticlePage'),
+        block_class_instance=blocks.LinkWithImageAndContentBlock(),
         max_num=6, null=True, blank=True
     )
 
@@ -1416,7 +1418,7 @@ class HomePage(
 
 
 class EUExitDomesticFormPage(ExclusivePageMixin, BaseDomesticPage, metaclass=FormPageMetaClass):
-    # metaclass creates <fild_name>_label and <field_name>_help_text
+    # metaclass creates <field_name>_label and <field_name>_help_text
     form_field_names = [
         'first_name',
         'last_name',
