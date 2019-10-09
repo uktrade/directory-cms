@@ -1165,11 +1165,15 @@ class HomePagePanels:
             ],
         ),
         MultiFieldPanel(
-            heading='Popular questions',
+            heading='Export good from the UK',
             classname='collapsible',
             children=[
-                FieldPanel('questions_section_title'),
-                StreamFieldPanel('questions')
+                FieldPanel('madb_title'),
+                ImageChooserPanel('madb_image'),
+                FieldPanel('madb_image_alt'),
+                FieldPanel('madb_content'),
+                FieldPanel('madb_cta_text'),
+                FieldPanel('madb_cta_url')
             ]
         ),
         MultiFieldPanel(

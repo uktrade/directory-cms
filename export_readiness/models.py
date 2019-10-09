@@ -1381,13 +1381,22 @@ class HomePage(
         block_class_instance=blocks.ColumnWithTitleIconTextBlock(),
         max_num=3, null=True, blank=True
     )
-    # questions accordions
-    questions_section_title = models.CharField(max_length=255, null=True, blank=True)
-    questions = fields.single_struct_block_stream_field_factory(
-        field_name='questions',
-        block_class_instance=blocks.DetailsSummaryBlock(),
-        max_num=5, null=True, blank=True
+
+    # Market access database
+    madb_title = models.CharField(null=True, blank=True, max_length=255, verbose_name='Title')
+    madb_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='Image'
     )
+    madb_image_alt = models.TextField(null=True, blank=True, verbose_name='Image alt text')
+    madb_content = models.TextField(null=True, blank=True, verbose_name='Content')
+    madb_cta_text = models.CharField(null=True, blank=True, max_length=255, verbose_name='CTA text')
+    madb_cta_url = models.CharField(null=True, blank=True, max_length=255, verbose_name='CTA URL')
+
     # what's new
     what_is_new_title = models.CharField(max_length=255, null=True, blank=True)
     what_is_new_pages = fields.single_struct_block_stream_field_factory(

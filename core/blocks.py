@@ -19,7 +19,3 @@ class HeadingContentBaseBlock(blocks.StructBlock):
 class ColumnWithTitleIconTextBlock(HeadingContentBaseBlock):
     icon = ImageChooserBlock(required=False)
     image_alt = blocks.CharBlock(required=False)
-
-
-class DetailsSummaryBlock(HeadingContentBaseBlock):
-    pass
