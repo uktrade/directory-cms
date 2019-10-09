@@ -8,7 +8,7 @@ from core.serializers import (
     BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper, HeroSerializer
 )
 from core.blocks_serializers import StreamChildBaseSerializer, ColumnWithTitleIconTextBlockStreamChildBaseSerializer, \
-    DetailsSummaryBlockStreamChildBaseSerializer
+    DetailsSummaryBlockStreamChildBaseSerializer, LinkBlockStreamChildSerializer
 from export_readiness import blocks_serializers
 
 from great_international.serializers import StatisticProxyDataWrapper, StatisticSerializer
@@ -477,6 +477,10 @@ class HomePageSerializer(BasePageSerializer):
     hero_text = serializers.CharField(required=False)
     hero_cta_text = serializers.CharField(required=False)
     hero_cta_linked_page = serializers.CharField(required=False, source='hero_cta_linked_page.specific.url')
+
+    chevron_url = serializers.CharField(required=False)
+    chevron_text = serializers.CharField(required=False)
+    chevron_links = LinkBlockStreamChildSerializer(many=True, required=False)
 
     how_dit_helps_title = serializers.CharField(required=False)
     how_dit_helps_columns = ColumnWithTitleIconTextBlockStreamChildBaseSerializer(many=True, required=False)
