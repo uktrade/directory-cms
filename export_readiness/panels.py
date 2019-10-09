@@ -1150,11 +1150,17 @@ class HomePagePanels:
                 ImageChooserPanel('hero_image'),
                 FieldPanel('hero_text'),
                 FieldPanel('hero_cta_text'),
-                PageChooserPanel(
-                    'hero_cta_linked_page',
-                    page_type='export_readiness.ArticlePage'
-                )
+                FieldPanel('hero_cta_url')
             ],
+        ),
+        MultiFieldPanel(
+            heading='Prepare for Brexit',
+            classname='collapsible',
+            children=[
+                FieldPanel('chevron_url'),
+                FieldPanel('chevron_text'),
+                StreamFieldPanel('chevron_links')
+            ]
         ),
         MultiFieldPanel(
             heading='How DIT helps',
