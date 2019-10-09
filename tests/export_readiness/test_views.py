@@ -114,13 +114,9 @@ def test_article_page_view(admin_client, root_page):
 
 @pytest.mark.django_db
 def test_domestic_homepage(admin_client, root_page):
-    related_article = factories.ArticlePageFactory.create(
-        parent=root_page,
-        slug='test-article'
-    )
     home_page = factories.HomePageFactory.create(
         parent=root_page,
-        hero_cta_linked_page=related_article
+        hero_cta_url='/foo/bar'
     )
 
     # news
@@ -136,7 +132,7 @@ def test_domestic_homepage(admin_client, root_page):
 
     url = reverse('api:api:pages:detail', kwargs={'pk': home_page.pk})
     response = admin_client.get(url)
-    assert response.json()['hero_cta_linked_page'] == 'http://exred.trade.great:8007/test-article/'
+    assert response.json()['hero_cta_url'] == '/foo/bar'
     assert response.status_code == 200
     assert 'articles' in response.json()
     assert 'advice' in response.json()

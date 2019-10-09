@@ -5,6 +5,9 @@
 ### Implemented enhancements
 
 - XOT-1136 - Add Brexit chevron component to great.gov.uk homepage
+- XOT-1141 - What's new component
+- XOT-1139 - How DIT helps component
+- XOT-1111 - Allow external link on hero CTA button
 
 
 ## [2019.10.07](https://github.com/uktrade/directory-cms/releases/tag/2019.10.07)
