@@ -23,3 +23,9 @@ class ColumnWithTitleIconTextBlock(HeadingContentBaseBlock):
 
 class DetailsSummaryBlock(HeadingContentBaseBlock):
     pass
+
+
+class LinkBlock(blocks.StructBlock):
+    source = blocks.CharBlock()
+    text = blocks.CharBlock()
+    url = blocks.CharBlock()  # not a URL block to allow relative links
