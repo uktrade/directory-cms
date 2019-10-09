@@ -19,3 +19,9 @@ class HeadingContentBaseBlock(blocks.StructBlock):
 class ColumnWithTitleIconTextBlock(HeadingContentBaseBlock):
     icon = ImageChooserBlock(required=False)
     image_alt = blocks.CharBlock(required=False)
+
+
+class LinkBlock(blocks.StructBlock):
+    source = blocks.CharBlock()
+    text = blocks.CharBlock()
+    url = blocks.CharBlock()  # not a URL block to allow relative links
