@@ -7,7 +7,7 @@ from core import fields as core_fields
 from core.serializers import (
     BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper, HeroSerializer
 )
-from core.blocks_serializers import StreamChildBaseSerializer, ColumnWithTitleIconTextBlockStreamChildBaseSerializer, \
+from core.blocks_serializers import StreamChildBaseSerializer, LinkWithImageAndContentBlockStreamChildSerializer, \
     LinkBlockStreamChildSerializer
 from export_readiness import blocks_serializers
 
@@ -476,14 +476,14 @@ class HomePageSerializer(BasePageSerializer):
     hero_medium = wagtail_fields.ImageRenditionField('fill-768x376', source='hero_image', required=False)
     hero_text = serializers.CharField(required=False)
     hero_cta_text = serializers.CharField(required=False)
-    hero_cta_linked_page = serializers.CharField(required=False, source='hero_cta_linked_page.specific.url')
+    hero_cta_url = serializers.CharField(required=False)
 
     chevron_url = serializers.CharField(required=False)
     chevron_text = serializers.CharField(required=False)
     chevron_links = LinkBlockStreamChildSerializer(many=True, required=False)
 
     how_dit_helps_title = serializers.CharField(required=False)
-    how_dit_helps_columns = ColumnWithTitleIconTextBlockStreamChildBaseSerializer(many=True, required=False)
+    how_dit_helps_columns = LinkWithImageAndContentBlockStreamChildSerializer(many=True, required=False)
 
     madb_title = serializers.CharField(required=False)
     madb_image = wagtail_fields.ImageRenditionField('original', required=False)
@@ -493,7 +493,7 @@ class HomePageSerializer(BasePageSerializer):
     madb_cta_url = serializers.CharField(required=False)
 
     what_is_new_title = serializers.CharField(required=False)
-    what_is_new_pages = RelatedArticlePageStreamChildSerializer(many=True, required=False)
+    what_is_new_pages = LinkWithImageAndContentBlockStreamChildSerializer(many=True, required=False)
 
     campaign = blocks_serializers.CampaignBlockStreamChildSerializer(required=False, many=True)
 
