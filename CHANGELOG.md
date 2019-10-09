@@ -7,6 +7,9 @@
 ### Hotfix
 - no ticket - revert XOT-1074
 
+### Implemented enhancements
+- XOT-1045 - Add IndustryTags to keywords monitored by site-wide search function
+
 
 ## [2019.10.01](https://github.com/uktrade/directory-cms/releases/tag/2019.10.01)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.09.19...2019.10.01)
