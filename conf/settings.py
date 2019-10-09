@@ -193,6 +193,8 @@ LANGUAGES_DETAILS = (
 LANGUAGES = [(code, label) for code, label, _ in LANGUAGES_DETAILS]
 LANGUAGES_LOCALIZED = [(code, label) for code, _, label in LANGUAGES_DETAILS]
 
+LANGUAGE_COOKIE_NAME = 'cms_language'  # avoid clashing with the UI language cookie
+
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
 
