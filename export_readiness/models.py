@@ -1374,6 +1374,15 @@ class HomePage(
         related_name='+'
     )
 
+    # chevron component
+    chevron_url = models.CharField(null=True, blank=True, max_length=255)
+    chevron_text = models.CharField(null=True, blank=True, max_length=255)
+    chevron_links = fields.single_struct_block_stream_field_factory(
+        field_name='links',
+        block_class_instance=blocks.LinkBlock(),
+        max_num=3, null=True, blank=True
+    )
+
     # how DIT helps
     how_dit_helps_title = models.TextField(null=True, blank=True)
     how_dit_helps_columns = fields.single_struct_block_stream_field_factory(
