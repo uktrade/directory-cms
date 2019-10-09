@@ -6,6 +6,12 @@
 
 - XOT-1144 - Market access database component
 
+
+### Implemented enhancements
+
+- XOT-1136 - Add Brexit chevron component to great.gov.uk homepage
+
+
 ## [2019.10.07](https://github.com/uktrade/directory-cms/releases/tag/2019.10.07)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.10.01...2019.10.07)
 

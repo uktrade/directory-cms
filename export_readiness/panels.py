@@ -1157,6 +1157,15 @@ class HomePagePanels:
             ],
         ),
         MultiFieldPanel(
+            heading='Prepare for Brexit',
+            classname='collapsible',
+            children=[
+                FieldPanel('chevron_url'),
+                FieldPanel('chevron_text'),
+                StreamFieldPanel('chevron_links')
+            ]
+        ),
+        MultiFieldPanel(
             heading='How DIT helps',
             classname='collapsible',
             children=[

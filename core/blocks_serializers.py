@@ -50,3 +50,9 @@ class HeadingContentStreamChildBaseSerializer(StreamChildBaseSerializer):
 class ColumnWithTitleIconTextBlockStreamChildBaseSerializer(HeadingContentStreamChildBaseSerializer):
     icon = wagtail_fields.ImageRenditionField('original', required=False)
     image_alt = serializers.CharField()
+
+
+class LinkBlockStreamChildSerializer(StreamChildBaseSerializer):
+    source = serializers.CharField(help_text='The source of the link, eg GOV.UK')
+    text = serializers.CharField()
+    url = serializers.CharField()
