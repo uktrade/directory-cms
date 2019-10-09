@@ -8,14 +8,13 @@
 - XOT-1141 - What's new component
 - XOT-1139 - How DIT helps component
 - XOT-1111 - Allow external link on hero CTA button
-
+- XOT-1113 - CMS language cookie bug fix
 
 ## [2019.10.07](https://github.com/uktrade/directory-cms/releases/tag/2019.10.07)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.10.01...2019.10.07)
 
 ### Hotfix
 - no ticket - revert XOT-1074
-
 
 ## [2019.10.01](https://github.com/uktrade/directory-cms/releases/tag/2019.10.01)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.09.19...2019.10.01)
