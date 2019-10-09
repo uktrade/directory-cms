@@ -1150,10 +1150,7 @@ class HomePagePanels:
                 ImageChooserPanel('hero_image'),
                 FieldPanel('hero_text'),
                 FieldPanel('hero_cta_text'),
-                PageChooserPanel(
-                    'hero_cta_linked_page',
-                    page_type='export_readiness.ArticlePage'
-                )
+                FieldPanel('hero_cta_url')
             ],
         ),
         MultiFieldPanel(

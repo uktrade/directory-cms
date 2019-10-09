@@ -26,6 +26,12 @@ class DetailsSummaryBlock(HeadingContentBaseBlock):
 
 
 class LinkBlock(blocks.StructBlock):
-    source = blocks.CharBlock()
+    source = blocks.CharBlock(help_text='The source of the link, eg GOV.UK')
     text = blocks.CharBlock()
     url = blocks.CharBlock()  # not a URL block to allow relative links
+
+
+class LinkWithImageAndContentBlock(LinkBlock):
+    image = ImageChooserBlock(required=False)
+    image_alt = blocks.CharBlock(required=False)
+    content = blocks.RichTextBlock()
