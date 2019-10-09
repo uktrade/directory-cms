@@ -50,7 +50,3 @@ class HeadingContentStreamChildBaseSerializer(StreamChildBaseSerializer):
 class ColumnWithTitleIconTextBlockStreamChildBaseSerializer(HeadingContentStreamChildBaseSerializer):
     icon = wagtail_fields.ImageRenditionField('original', required=False)
     image_alt = serializers.CharField()
-
-
-class DetailsSummaryBlockStreamChildBaseSerializer(HeadingContentStreamChildBaseSerializer):
-    pass
