@@ -1,8 +1,13 @@
 # Changelog
 
-
-
 ## Pre-release
+
+### Implemented enhancements
+
+- XOT-1144 - Market access database component
+
+## [2019.10.07](https://github.com/uktrade/directory-cms/releases/tag/2019.10.07)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.10.01...2019.10.07)
 
 ### Hotfix
 - no ticket - revert XOT-1074
