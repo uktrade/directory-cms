@@ -52,10 +52,6 @@ class ColumnWithTitleIconTextBlockStreamChildBaseSerializer(HeadingContentStream
     image_alt = serializers.CharField(required=False)
 
 
-class DetailsSummaryBlockStreamChildBaseSerializer(HeadingContentStreamChildBaseSerializer):
-    pass
-
-
 class LinkBlockStreamChildSerializer(StreamChildBaseSerializer):
     source = serializers.CharField()
     text = serializers.CharField()
