@@ -4,6 +4,11 @@
 
 ### Implemented enhancements
 
+- XOT-1144 - Market access database component
+
+
+### Implemented enhancements
+
 - XOT-1136 - Add Brexit chevron component to great.gov.uk homepage
 - XOT-1141 - What's new component
 - XOT-1139 - How DIT helps component

@@ -21,10 +21,6 @@ class ColumnWithTitleIconTextBlock(HeadingContentBaseBlock):
     image_alt = blocks.CharBlock(required=False)
 
 
-class DetailsSummaryBlock(HeadingContentBaseBlock):
-    pass
-
-
 class LinkBlock(blocks.StructBlock):
     source = blocks.CharBlock(help_text='The source of the link, eg GOV.UK')
     text = blocks.CharBlock()

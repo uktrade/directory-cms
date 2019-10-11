@@ -7,8 +7,8 @@ from core import fields as core_fields
 from core.serializers import (
     BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper, HeroSerializer
 )
-from core.blocks_serializers import StreamChildBaseSerializer, DetailsSummaryBlockStreamChildBaseSerializer, \
-    LinkBlockStreamChildSerializer, LinkWithImageAndContentBlockStreamChildSerializer
+from core.blocks_serializers import StreamChildBaseSerializer, LinkWithImageAndContentBlockStreamChildSerializer, \
+    LinkBlockStreamChildSerializer
 from export_readiness import blocks_serializers
 
 from great_international.serializers import StatisticProxyDataWrapper, StatisticSerializer
@@ -485,8 +485,12 @@ class HomePageSerializer(BasePageSerializer):
     how_dit_helps_title = serializers.CharField(required=False)
     how_dit_helps_columns = LinkWithImageAndContentBlockStreamChildSerializer(many=True, required=False)
 
-    questions_section_title = serializers.CharField(required=False)
-    questions = DetailsSummaryBlockStreamChildBaseSerializer(many=True, required=False)
+    madb_title = serializers.CharField(required=False)
+    madb_image = wagtail_fields.ImageRenditionField('original', required=False)
+    madb_image_alt = serializers.CharField(required=False)
+    madb_content = serializers.CharField(required=False)
+    madb_cta_text = serializers.CharField(required=False)
+    madb_cta_url = serializers.CharField(required=False)
 
     what_is_new_title = serializers.CharField(required=False)
     what_is_new_pages = LinkWithImageAndContentBlockStreamChildSerializer(many=True, required=False)
