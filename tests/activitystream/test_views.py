@@ -10,7 +10,8 @@ from rest_framework.test import APIClient
 from django.conf import settings
 from django.utils import timezone
 
-from tests.export_readiness.factories import ArticlePageFactory, CountryGuidePageFactory
+from tests.export_readiness.factories import ArticlePageFactory, \
+  CountryGuidePageFactory, IndustryTagFactory
 
 URL = 'http://testserver' + reverse('activity-stream')
 URL_INCORRECT_DOMAIN = 'http://incorrect' + reverse('activity-stream')
@@ -190,6 +191,11 @@ def test_lists_live_articles_in_stream(api_client):
             last_published_at=timezone.now(),
             slug='article-e')
 
+        tag1 = IndustryTagFactory(name='tag1')
+        tag2 = IndustryTagFactory(name='tag2')
+        article_e.tags = [tag1, tag2]
+        article_e.save()
+
     sender = auth_sender()
     response = api_client.get(
         URL,
@@ -224,6 +230,7 @@ def test_lists_live_articles_in_stream(api_client):
     assert article_attribute(items[3], 'name') == 'Market Page E'
     assert article_attribute(items[3], 'id') == id_prefix + str(article_e.id)
     assert items[3]['published'] == '2019-01-14T12:00:02+00:00'
+    assert article_attribute(items[3], 'keywords') == 'tag1 tag2'
 
 
 @pytest.mark.django_db
