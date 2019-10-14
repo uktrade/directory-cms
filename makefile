@@ -46,7 +46,10 @@ database:
 	PGPASSWORD=debug createdb -h localhost -U debug directory_cms_debug
 	PGPASSWORD=debug psql -h localhost -U debug -d directory_cms_debug -f db_template.sql >/dev/null 2>&1
 
-database_template:
+load_fixtures:
+	PGPASSWORD=debug psql -h localhost -U debug -d directory_cms_debug -f db_fixtures.sql >/dev/null 2>&1
+
+db_template:
 	createdb -U postgres -h localhost cms_temporary_template
 	psql -U postgres -h localhost -d cms_temporary_template -f db_template.sql
 	ENV_FILES='secrets-do-not-commit,dev' \
@@ -58,7 +61,14 @@ database_template:
 		--dbname=cms_temporary_template
 	dropdb -U postgres cms_temporary_template
 
-load_fixtures:
-	ENV_FILES='secrets-do-not-commit,dev' ./manage.py loaddata fixtures/data.json
+fixtures:
+	psql -U postgres -h localhost -d directory_cms_debug -f db_fixtures.sql
+	ENV_FILES='secrets-do-not-commit,dev' \
+	export DATABASE_URL=postgres://postgres:postgres@localhost:5432/directory_cms_debug; \
+	python ./manage.py migrate
+	pg_dump -U postgres \
+		--no-owner \
+		--file=db_fixtures.sql \
+		--dbname=directory_cms_debug
 
-.PHONY: clean pytest flake8 manage webserver requirements install_requirements css worker secrets check_migrations database database_template load_fixtures
+.PHONY: clean pytest flake8 manage webserver requirements install_requirements css worker secrets check_migrations database db_template load_fixtures fixtures
