@@ -3,7 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
-
+- No ticket - Improve db fixtures
 - XOT-1144 - Market access database component
 
 
