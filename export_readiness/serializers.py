@@ -471,9 +471,8 @@ class HomePageSerializer(BasePageSerializer):
     banner_content = core_fields.MarkdownToHTMLField(allow_null=True)
     banner_label = serializers.CharField(max_length=50, allow_null=True)
 
-    hero_xlarge = wagtail_fields.ImageRenditionField('fill-1200x300', source='hero_image', required=False)
-    hero_large = wagtail_fields.ImageRenditionField('fill-1200x400', source='hero_image', required=False)
-    hero_medium = wagtail_fields.ImageRenditionField('fill-768x376', source='hero_image', required=False)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
     hero_text = serializers.CharField(required=False)
     hero_cta_text = serializers.CharField(required=False)
     hero_cta_url = serializers.CharField(required=False)
