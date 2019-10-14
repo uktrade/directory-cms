@@ -241,6 +241,27 @@ class InvestHowWeHelpProxyDataWrapper:
         )
 
 
+class ExpandHowToExpandProxyDataWrapper:
+
+    def __init__(self, instance, position_number):
+        self.position_number = position_number
+        self.instance = instance
+
+    @property
+    def title(self):
+        return getattr(
+            self.instance,
+            f'how_to_expand_title_{self.position_number}'
+        )
+
+    @property
+    def text(self):
+        return getattr(
+            self.instance,
+            f'how_to_expand_text_{self.position_number}'
+        )
+
+
 class HowWeHelpProxyDataWrapper:
 
     def __init__(self, instance, position_number):
@@ -419,6 +440,11 @@ class LinkToSectionLinksSerializer(serializers.Serializer):
     text = core_fields.MarkdownToHTMLField()
     cta_text = serializers.CharField(max_length=255)
     cta_link = serializers.CharField(max_length=255)
+
+
+class HowToExpandSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=255)
+    text = core_fields.MarkdownToHTMLField()
 
 
 class AboutUkRegionSerializer(serializers.Serializer):
@@ -839,6 +865,24 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer, HeroSerial
     invest_image = wagtail_fields.ImageRenditionField(
         'fill-640x360'
     )
+
+    how_dit_help_title = serializers.CharField(max_length=255)
+
+    related_how_dit_help_pages = serializers.SerializerMethodField()
+
+    def get_related_how_dit_help_pages(self, instance):
+        serialized = []
+        items = [
+            instance.related_how_dit_help_page_one,
+            instance.related_how_dit_help_page_two,
+            instance.related_how_dit_help_page_three
+        ]
+        for related_page in items:
+            if not related_page:
+                continue
+            serializer = RelatedDitServicesPageSerializer(related_page.specific)
+            serialized.append(serializer.data)
+        return serialized
 
     section_two_heading = serializers.CharField()
     section_two_teaser = serializers.CharField()
@@ -1295,6 +1339,10 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer, HeroSe
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_intro = serializers.CharField(max_length=255)
     how_we_help_icon_and_text = serializers.SerializerMethodField()
+
+    how_we_help_cta_text = serializers.CharField(max_length=255)
+    how_we_help_cta_link = serializers.CharField(max_length=255)
+
     contact_section_title = serializers.CharField(max_length=255)
     contact_section_text = serializers.CharField(max_length=255)
     contact_section_cta_text = serializers.CharField(max_length=255)
@@ -1721,6 +1769,8 @@ class InvestInternationalHomePageSerializer(BasePageSerializer, HeroSerializer):
     how_we_help_title = serializers.CharField(max_length=255)
     how_we_help_lead_in = serializers.CharField(max_length=255)
     how_we_help = serializers.SerializerMethodField()
+    how_we_help_cta_text = serializers.CharField(max_length=255)
+    how_we_help_cta_link = serializers.CharField(max_length=255)
     contact_section_title = serializers.CharField(max_length=255)
     contact_section_content = serializers.CharField(max_length=255)
     contact_section_call_to_action_text = serializers.CharField(max_length=255)
@@ -1728,6 +1778,16 @@ class InvestInternationalHomePageSerializer(BasePageSerializer, HeroSerializer):
     sectors = serializers.SerializerMethodField()
     high_potential_opportunities = serializers.SerializerMethodField()
     guides = serializers.SerializerMethodField()
+
+    how_to_expand_title = serializers.CharField(max_length=255)
+    how_to_expand_image = wagtail_fields.ImageRenditionField('original')
+    how_to_expand_intro = core_fields.MarkdownToHTMLField()
+    how_to_expand = serializers.SerializerMethodField()
+
+    isd_section_title = serializers.CharField(max_length=255)
+    isd_section_text = core_fields.MarkdownToHTMLField()
+    isd_section_cta_text = serializers.CharField(max_length=255)
+    isd_section_cta_link = serializers.CharField(max_length=255)
 
     featured_cards = serializers.SerializerMethodField()
 
@@ -1788,6 +1848,16 @@ class InvestInternationalHomePageSerializer(BasePageSerializer, HeroSerializer):
             for num in ['one', 'two', 'three']
         ]
         serializer = FeaturedCardsSerializer(data, many=True)
+        return serializer.data
+
+    def get_how_to_expand(self, instance):
+        data = [
+            ExpandHowToExpandProxyDataWrapper(
+                instance=instance, position_number=position_number
+            )
+            for position_number in ['one', 'two', 'three', 'four']
+        ]
+        serializer = HowToExpandSerializer(data, many=True)
         return serializer.data
 
 
@@ -2014,6 +2084,8 @@ class InternationalTradeHomePageSerializer(BasePageSerializer):
     services_column_two_icon = wagtail_fields.ImageRenditionField('original')
     services_column_three_icon = wagtail_fields.ImageRenditionField('original')
     services_column_four_icon = wagtail_fields.ImageRenditionField('original')
+    how_we_help_cta_text = serializers.CharField(max_length=255)
+    how_we_help_cta_link = serializers.CharField(max_length=255)
     industries = serializers.SerializerMethodField()
 
     def get_industries(self, instance):

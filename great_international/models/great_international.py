@@ -531,6 +531,32 @@ class InternationalHomePage(
     ready_for_brexit_cta_text = models.CharField(max_length=255, blank=True)
     ready_for_brexit_cta_link = models.CharField(max_length=255, blank=True)
 
+    how_dit_help_title = models.CharField(max_length=255, blank=True)
+
+    related_how_dit_help_page_one = models.ForeignKey(
+        'great_international.AboutDitServicesPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    related_how_dit_help_page_two = models.ForeignKey(
+        'great_international.AboutDitServicesPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    related_how_dit_help_page_three = models.ForeignKey(
+        'great_international.AboutDitServicesPage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
     how_we_help_title = models.CharField(max_length=255, blank=True)
     how_we_help_intro = models.TextField(blank=True)
     how_we_help_one_icon = models.ForeignKey(

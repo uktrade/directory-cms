@@ -215,6 +215,10 @@ class InternationalHomePageTranslationOptions(BaseTranslationOptions):
         'tariffs_description',
         'tariffs_link',
         'tariffs_image',
+        'how_dit_help_title',
+        'related_how_dit_help_page_one',
+        'related_how_dit_help_page_two',
+        'related_how_dit_help_page_three',
         'section_two_heading',
         'section_two_teaser',
         'section_two_subsection_one_icon',
@@ -437,6 +441,8 @@ class InternationalCapitalInvestLandingPageTranslationOptions(
         'how_we_help_three_text',
         'how_we_help_four_icon',
         'how_we_help_four_text',
+        'how_we_help_cta_text',
+        'how_we_help_cta_link',
 
         'contact_section_title',
         'contact_section_text',
@@ -713,12 +719,30 @@ class InvestHomePageTranslation(BaseTranslationOptions):
         'how_we_help_icon_five',
 
         'how_we_help_text_six',
+        'how_we_help_cta_text',
+        'how_we_help_cta_link',
         'sector_button_text',
         'sector_button_url',
         'contact_section_title',
         'contact_section_content',
         'contact_section_call_to_action_text',
-        'contact_section_call_to_action_url'
+        'contact_section_call_to_action_url',
+
+        'how_to_expand_title',
+        'how_to_expand_intro',
+
+        'how_to_expand_title_one',
+        'how_to_expand_text_one',
+        'how_to_expand_title_two',
+        'how_to_expand_text_two',
+        'how_to_expand_title_three',
+        'how_to_expand_text_three',
+        'how_to_expand_title_four',
+        'how_to_expand_text_four',
+        'isd_section_title',
+        'isd_section_text',
+        'isd_section_cta_text',
+        'isd_section_cta_link',
     )
 
 
@@ -885,6 +909,8 @@ class InternationalTradeHomePageTranslationOptions(BaseTranslationOptions):
         'services_column_two_icon',
         'services_column_three_icon',
         'services_column_four_icon',
+        'how_we_help_cta_text',
+        'how_we_help_cta_link',
     )
 
 

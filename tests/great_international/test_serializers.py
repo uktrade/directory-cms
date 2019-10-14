@@ -1403,3 +1403,75 @@ def test_new_int_home_page_has_related_trade(
     )
 
     assert serializer.data['related_page_buy']['meta']['slug'] == 'trade'
+
+
+@pytest.mark.django_db
+def test_new_int_home_page_has_related_how_dit_help_pages(
+        rf, international_root_page, image
+):
+    how_we_help_one = AboutDitServicesPageFactory(
+        parent=international_root_page,
+        slug='how-we-help-buy',
+        title='the title',
+        hero_image=image
+    )
+    how_we_help_two = AboutDitServicesPageFactory(
+        parent=international_root_page,
+        slug='how-we-help-invest',
+        title='the title',
+        hero_image=image
+    )
+
+    home = InternationalHomePageFactory(
+        slug='international',
+        related_how_dit_help_page_one=how_we_help_one,
+        related_how_dit_help_page_two=how_we_help_two,
+        parent=international_root_page
+    )
+
+    serializer = InternationalHomePageSerializer(
+        instance=home,
+        context={'request': rf.get('/')}
+    )
+
+    assert serializer.data['related_how_dit_help_pages'][0]['meta']['slug'] == 'how-we-help-buy'
+    assert serializer.data['related_how_dit_help_pages'][1]['meta']['slug'] == 'how-we-help-invest'
+
+
+@pytest.mark.django_db
+def test_new_int_home_page_related_how_dit_help_pages_null(
+        rf, international_root_page, image
+):
+
+    home = InternationalHomePageFactory(
+        slug='international',
+        parent=international_root_page
+    )
+
+    serializer = InternationalHomePageSerializer(
+        instance=home,
+        context={'request': rf.get('/')}
+    )
+
+    assert serializer.data['related_how_dit_help_pages'] == []
+
+
+@pytest.mark.django_db
+def test_invest_international_landing_page_how_to_expand(international_root_page, rf):
+
+    homepage = InvestInternationalHomePageFactory(
+        parent=international_root_page,
+        slug='expand',
+    )
+
+    serializer = InvestInternationalHomePageSerializer(
+        instance=homepage,
+        context={'request': rf.get('/')}
+    )
+
+    serialized_pages = serializer.data
+
+    assert len(serialized_pages['how_to_expand']) == 4
+    for how_to in serialized_pages['how_to_expand']:
+        assert 'title' in how_to
+        assert 'text' in how_to
