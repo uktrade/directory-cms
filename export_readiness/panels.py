@@ -1171,7 +1171,7 @@ class HomePagePanels:
             ],
         ),
         MultiFieldPanel(
-            heading='Export good from the UK',
+            heading='Export goods from the UK',
             classname='collapsible',
             children=[
                 FieldPanel('madb_title'),
@@ -1186,11 +1186,11 @@ class HomePagePanels:
             heading='What\'s new',
             classname='collapsible',
             children=[
+                StreamFieldPanel('campaign'),
                 FieldPanel('what_is_new_title'),
                 StreamFieldPanel('what_is_new_pages')
             ]
         ),
-        StreamFieldPanel('campaign'),
 
         SearchEngineOptimisationPanel(),
     ]
