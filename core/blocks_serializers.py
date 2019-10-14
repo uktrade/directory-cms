@@ -60,5 +60,5 @@ class LinkBlockStreamChildSerializer(StreamChildBaseSerializer):
 
 class LinkWithImageAndContentBlockStreamChildSerializer(LinkBlockStreamChildSerializer):
     content = serializers.CharField()
-    image = wagtail_fields.ImageRenditionField('original', required=False)
+    image = wagtail_fields.ImageRenditionField('fill-640x360', required=False)
     image_alt = serializers.CharField(required=False)
