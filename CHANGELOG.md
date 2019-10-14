@@ -4,6 +4,34 @@
 
 ### Implemented enhancements
 - No ticket - Improve db fixtures
+- XOT-1144 - Market access database component
+
+
+### Implemented enhancements
+
+- XOT-1136 - Add Brexit chevron component to great.gov.uk homepage
+- XOT-1141 - What's new component
+- XOT-1139 - How DIT helps component
+- XOT-1111 - Allow external link on hero CTA button
+- XOT-1113 - CMS language cookie bug fix
+- XOT-1045 - Add IndustryTags to keywords monitored by site-wide search function
+
+## [2019.10.07](https://github.com/uktrade/directory-cms/releases/tag/2019.10.07)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.10.01...2019.10.07)
+
+### Hotfix
+- no ticket - revert XOT-1074
+
+## [2019.10.01](https://github.com/uktrade/directory-cms/releases/tag/2019.10.01)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.09.19...2019.10.01)
+
+### Implemented enhancements
+- CI-522 - Added new fields for new expand home page
+
+## [2019.10.01](https://github.com/uktrade/directory-cms/releases/tag/2019.10.01)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.09.19...2019.10.01)
+
+### Implemented enhancements
 - XOT-1107 - Add article pages to serializer for topic pages, only serialize necessary data
 - XOT-1444 - add article video transcript component
 - XOT-1108 - Filter markets by sector
@@ -11,6 +39,11 @@
 - CI-508 - Allowing DIT services pages to be children of invest, capital invest and trade home pages
 - CI-510 - Updated help panel to mirror front-end changes
 - XOT-1124 - Add icon and pages count to industry tags
+- CI-518 - Added new how dit help fields to International Home page
+- CI-493 - Added how we help ctas to Invest, Expand and Trade home pages
+
+### Fixed bugs
+- No ticket - Add missing field to serializer
 
 ## [2019.09.19](https://github.com/uktrade/directory-cms/releases/tag/2019.09.19)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.09.18...2019.09.19)
