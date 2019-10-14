@@ -22,7 +22,7 @@ class ColumnWithTitleIconTextBlock(HeadingContentBaseBlock):
 
 
 class LinkBlock(blocks.StructBlock):
-    source = blocks.CharBlock(help_text='The source of the link, eg GOV.UK')
+    source = blocks.CharBlock(help_text='The source or the type of the link, e.g. GOV.UK/Advice')
     text = blocks.CharBlock()
     url = blocks.CharBlock()  # not a URL block to allow relative links
 
