@@ -4,8 +4,8 @@ from export_readiness.serializers import (
     MarketingArticlePageSerializer
 )
 from tests.export_readiness.factories import (
-    ArticlePageFactory, CountryGuidePageFactory, CampaignPageFactory, HomePageFactory, TopicLandingPageFactory,
-    MarketingArticlePageFactory
+    ArticlePageFactory, ArticleListingPageFactory, CountryGuidePageFactory, CampaignPageFactory,
+    HomePageFactory, TopicLandingPageFactory, MarketingArticlePageFactory
 )
 
 
@@ -139,3 +139,60 @@ def test_breadcrumbs_serializer_top_level_page(root_page, rf):
     assert len(breadcrumbs) == 1
     assert breadcrumbs[0]['title'] == 'topic'
     assert breadcrumbs[0]['url'] == 'http://exred.trade.great:8007/topic/'
+
+
+@pytest.mark.django_db
+def test_child_pages_helper_serializer_only_direct_descendants(root_page, rf):
+    home_page = HomePageFactory(parent=root_page)
+
+    advice_page = TopicLandingPageFactory(
+        title_en_gb='Advice',
+        title='Advice',
+        slug='advice',
+        parent=home_page)
+
+    article_list = ArticleListingPageFactory(parent=advice_page, slug='list')
+    ArticlePageFactory(parent=article_list, slug='article')
+
+    serializer = TopicLandingPageSerializer(
+        instance=advice_page,
+        context={'request': rf.get('/')}
+    )
+
+    children = serializer.data['child_pages']
+
+    assert len(children) == 1
+    assert children[0]['meta']['slug'] == 'list'
+
+
+@pytest.mark.django_db
+def test_topic_serializer_multiple_child_page_types(root_page, rf):
+    home_page = HomePageFactory(parent=root_page)
+
+    advice_page = TopicLandingPageFactory(
+        title_en_gb='Advice',
+        slug='advice',
+        parent=home_page)
+
+    ArticleListingPageFactory(parent=advice_page, slug='list')
+    ArticlePageFactory(parent=advice_page, slug='article')
+    CountryGuidePageFactory(
+        slug='country-guide',
+        heading='Foo',
+        parent=advice_page,
+        intro_cta_one_title='',
+        intro_cta_one_link='',
+        intro_cta_two_title='',
+        intro_cta_two_link='',
+        intro_cta_three_title='',
+        intro_cta_three_link='',
+    )
+
+    serializer = TopicLandingPageSerializer(
+        instance=advice_page,
+        context={'request': rf.get('/')}
+    )
+
+    children = serializer.data['child_pages']
+
+    assert len(children) == 3
