@@ -49,8 +49,16 @@ class HeadingContentStreamChildBaseSerializer(StreamChildBaseSerializer):
 
 class ColumnWithTitleIconTextBlockStreamChildBaseSerializer(HeadingContentStreamChildBaseSerializer):
     icon = wagtail_fields.ImageRenditionField('original', required=False)
-    image_alt = serializers.CharField()
+    image_alt = serializers.CharField(required=False)
 
 
-class DetailsSummaryBlockStreamChildBaseSerializer(HeadingContentStreamChildBaseSerializer):
-    pass
+class LinkBlockStreamChildSerializer(StreamChildBaseSerializer):
+    source = serializers.CharField()
+    text = serializers.CharField()
+    url = serializers.CharField()
+
+
+class LinkWithImageAndContentBlockStreamChildSerializer(LinkBlockStreamChildSerializer):
+    content = serializers.CharField()
+    image = wagtail_fields.ImageRenditionField('fill-640x360', required=False)
+    image_alt = serializers.CharField(required=False)
