@@ -502,7 +502,7 @@ class HomePageSerializer(BasePageSerializer):
                 slug=settings.EU_EXIT_NEWS_LISTING_PAGE_SLUG
             )
             queryset = (
-                ArticlePage.objects.descendant_of(article_listing_page).live()
+                ArticlePage.objects.child_of(article_listing_page).live()
             )
         except ArticleListingPage.DoesNotExist:
             queryset = None
@@ -521,7 +521,7 @@ class HomePageSerializer(BasePageSerializer):
                 slug=slugs.GREAT_ADVICE
             )
             queryset = (
-                ArticleListingPage.objects.descendant_of(topic_landing_page)
+                ArticleListingPage.objects.child_of(topic_landing_page)
                 .live()
             )
         except TopicLandingPage.DoesNotExist:
@@ -571,22 +571,27 @@ class TopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper,
     def get_child_pages(self, obj):
         articles = self.get_child_pages_data_for(
             obj,
+            ArticlePage,
+            ChildArticlePageSerializer
+        )
+        article_lists = self.get_child_pages_data_for(
+            obj,
             ArticleListingPage,
-            ArticleListingPageSerializer
+            ChildPageSerializer
         )
         superregions = self.get_child_pages_data_for(
             obj,
             SuperregionPage,
-            SuperregionPageSerializer
+            ChildPageSerializer
         )
         country_guides = self.get_child_pages_data_for(
             obj,
             CountryGuidePage,
-            CountryGuidePageSerializer
+            ChildCountryGuidePageSerializer
         )
         country_guides = sorted(country_guides, key=lambda x: x['heading'])
 
-        return articles + superregions + country_guides
+        return article_lists + articles + superregions + country_guides
 
 
 class SuperregionPageSerializer(TopicLandingPageSerializer):
