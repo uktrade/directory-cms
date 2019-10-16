@@ -1280,7 +1280,7 @@ class InternationalGuideLandingPageSerializer(BasePageSerializer, HeroSerializer
     section_three_cta_link = serializers.CharField(max_length=255)
 
     def get_guides(self, obj):
-        article_list = (InternationalArticlePage.objects.descendant_of(obj).live().order_by('-first_published_at'))[:9]
+        article_list = (InternationalArticlePage.objects.child_of(obj).live().order_by('-first_published_at'))[:9]
         serializer = RelatedArticlePageSerializer(article_list, many=True)
         return serializer.data
 
@@ -1832,7 +1832,7 @@ class InvestInternationalHomePageSerializer(BasePageSerializer, HeroSerializer):
     def get_guides(self, obj):
         article_list = (
                InternationalArticlePage.objects
-               .descendant_of(obj)
+               .child_of(obj)
                .live()
                .order_by('-first_published_at')
            )[:9]
