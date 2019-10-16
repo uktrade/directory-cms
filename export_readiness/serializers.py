@@ -545,15 +545,24 @@ class HomePageSerializer(BasePageSerializer):
         return 'HomePage'
 
 
+class ChildSuperregionPageSerializer(BasePageSerializer):
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='article_image')
+    teaser = serializers.CharField()
+
+
 class ChildArticlePageSerializer(BasePageSerializer):
     hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='article_image')
+    teaser = serializers.CharField(source='article_teaser')
+    sub_heading = serializers.CharField(source='article_subheading')
 
 
-class ChildPageSerializer(BasePageSerializer):
+class ChildArticleListPageSerializer(BasePageSerializer):
     hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
+    teaser = serializers.CharField(source='list_teaser')
 
 
-class ChildCountryGuidePageSerializer(ChildPageSerializer):
+class ChildCountryGuidePageSerializer(BasePageSerializer):
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
     heading = serializers.CharField()
     sub_heading = serializers.CharField()
 
@@ -577,12 +586,12 @@ class TopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper,
         article_lists = self.get_child_pages_data_for(
             obj,
             ArticleListingPage,
-            ChildPageSerializer
+            ChildArticleListPageSerializer
         )
         superregions = self.get_child_pages_data_for(
             obj,
             SuperregionPage,
-            ChildPageSerializer
+            ChildSuperregionPageSerializer
         )
         country_guides = self.get_child_pages_data_for(
             obj,
