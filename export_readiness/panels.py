@@ -1150,11 +1150,17 @@ class HomePagePanels:
                 ImageChooserPanel('hero_image'),
                 FieldPanel('hero_text'),
                 FieldPanel('hero_cta_text'),
-                PageChooserPanel(
-                    'hero_cta_linked_page',
-                    page_type='export_readiness.ArticlePage'
-                )
+                FieldPanel('hero_cta_url')
             ],
+        ),
+        MultiFieldPanel(
+            heading='Prepare for Brexit',
+            classname='collapsible',
+            children=[
+                FieldPanel('chevron_url'),
+                FieldPanel('chevron_text'),
+                StreamFieldPanel('chevron_links')
+            ]
         ),
         MultiFieldPanel(
             heading='How DIT helps',
@@ -1165,22 +1171,26 @@ class HomePagePanels:
             ],
         ),
         MultiFieldPanel(
-            heading='Popular questions',
+            heading='Export goods from the UK',
             classname='collapsible',
             children=[
-                FieldPanel('questions_section_title'),
-                StreamFieldPanel('questions')
+                FieldPanel('madb_title'),
+                ImageChooserPanel('madb_image'),
+                FieldPanel('madb_image_alt'),
+                FieldPanel('madb_content'),
+                FieldPanel('madb_cta_text'),
+                FieldPanel('madb_cta_url')
             ]
         ),
         MultiFieldPanel(
             heading='What\'s new',
             classname='collapsible',
             children=[
+                StreamFieldPanel('campaign'),
                 FieldPanel('what_is_new_title'),
                 StreamFieldPanel('what_is_new_pages')
             ]
         ),
-        StreamFieldPanel('campaign'),
 
         SearchEngineOptimisationPanel(),
     ]

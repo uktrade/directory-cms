@@ -1,12 +1,31 @@
 # Changelog
 
-
-
 ## Pre-release
+
+### Implemented enhancements
+- No ticket - Improve db fixtures
+- XOT-1144 - Market access database component
+- XOT-1136 - Add Brexit chevron component to great.gov.uk homepage
+- XOT-1141 - What's new component
+- XOT-1139 - How DIT helps component
+- XOT-1111 - Allow external link on hero CTA button
+- XOT-1113 - CMS language cookie bug fix
+- XOT-1045 - Add IndustryTags to keywords monitored by site-wide search function
+
+### Fixed bugs
+- XOT-1107 - Fix bug where all descendants were serialized by ChildPagesSerializerHelper instead of only direct children
+
+## [2019.10.07](https://github.com/uktrade/directory-cms/releases/tag/2019.10.07)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.10.01...2019.10.07)
 
 ### Hotfix
 - no ticket - revert XOT-1074
 
+## [2019.10.01](https://github.com/uktrade/directory-cms/releases/tag/2019.10.01)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.09.19...2019.10.01)
+
+### Implemented enhancements
+- CI-522 - Added new fields for new expand home page
 
 ## [2019.10.01](https://github.com/uktrade/directory-cms/releases/tag/2019.10.01)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.09.19...2019.10.01)

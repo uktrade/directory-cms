@@ -7,8 +7,8 @@ from core import fields as core_fields
 from core.serializers import (
     BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper, HeroSerializer
 )
-from core.blocks_serializers import StreamChildBaseSerializer, ColumnWithTitleIconTextBlockStreamChildBaseSerializer, \
-    DetailsSummaryBlockStreamChildBaseSerializer
+from core.blocks_serializers import StreamChildBaseSerializer, LinkWithImageAndContentBlockStreamChildSerializer, \
+    LinkBlockStreamChildSerializer
 from export_readiness import blocks_serializers
 
 from great_international.serializers import StatisticProxyDataWrapper, StatisticSerializer
@@ -471,21 +471,28 @@ class HomePageSerializer(BasePageSerializer):
     banner_content = core_fields.MarkdownToHTMLField(allow_null=True)
     banner_label = serializers.CharField(max_length=50, allow_null=True)
 
-    hero_xlarge = wagtail_fields.ImageRenditionField('fill-1200x300', source='hero_image', required=False)
-    hero_large = wagtail_fields.ImageRenditionField('fill-1200x400', source='hero_image', required=False)
-    hero_medium = wagtail_fields.ImageRenditionField('fill-768x376', source='hero_image', required=False)
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
     hero_text = serializers.CharField(required=False)
     hero_cta_text = serializers.CharField(required=False)
-    hero_cta_linked_page = serializers.CharField(required=False, source='hero_cta_linked_page.specific.url')
+    hero_cta_url = serializers.CharField(required=False)
+
+    chevron_url = serializers.CharField(required=False)
+    chevron_text = serializers.CharField(required=False)
+    chevron_links = LinkBlockStreamChildSerializer(many=True, required=False)
 
     how_dit_helps_title = serializers.CharField(required=False)
-    how_dit_helps_columns = ColumnWithTitleIconTextBlockStreamChildBaseSerializer(many=True, required=False)
+    how_dit_helps_columns = LinkWithImageAndContentBlockStreamChildSerializer(many=True, required=False)
 
-    questions_section_title = serializers.CharField(required=False)
-    questions = DetailsSummaryBlockStreamChildBaseSerializer(many=True, required=False)
+    madb_title = serializers.CharField(required=False)
+    madb_image = wagtail_fields.ImageRenditionField('original', required=False)
+    madb_image_alt = serializers.CharField(required=False)
+    madb_content = serializers.CharField(required=False)
+    madb_cta_text = serializers.CharField(required=False)
+    madb_cta_url = serializers.CharField(required=False)
 
     what_is_new_title = serializers.CharField(required=False)
-    what_is_new_pages = RelatedArticlePageStreamChildSerializer(many=True, required=False)
+    what_is_new_pages = LinkWithImageAndContentBlockStreamChildSerializer(many=True, required=False)
 
     campaign = blocks_serializers.CampaignBlockStreamChildSerializer(required=False, many=True)
 
@@ -495,7 +502,7 @@ class HomePageSerializer(BasePageSerializer):
                 slug=settings.EU_EXIT_NEWS_LISTING_PAGE_SLUG
             )
             queryset = (
-                ArticlePage.objects.descendant_of(article_listing_page).live()
+                ArticlePage.objects.child_of(article_listing_page).live()
             )
         except ArticleListingPage.DoesNotExist:
             queryset = None
@@ -514,7 +521,7 @@ class HomePageSerializer(BasePageSerializer):
                 slug=slugs.GREAT_ADVICE
             )
             queryset = (
-                ArticleListingPage.objects.descendant_of(topic_landing_page)
+                ArticleListingPage.objects.child_of(topic_landing_page)
                 .live()
             )
         except TopicLandingPage.DoesNotExist:
@@ -564,22 +571,27 @@ class TopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper,
     def get_child_pages(self, obj):
         articles = self.get_child_pages_data_for(
             obj,
+            ArticlePage,
+            ChildArticlePageSerializer
+        )
+        article_lists = self.get_child_pages_data_for(
+            obj,
             ArticleListingPage,
-            ArticleListingPageSerializer
+            ChildPageSerializer
         )
         superregions = self.get_child_pages_data_for(
             obj,
             SuperregionPage,
-            SuperregionPageSerializer
+            ChildPageSerializer
         )
         country_guides = self.get_child_pages_data_for(
             obj,
             CountryGuidePage,
-            CountryGuidePageSerializer
+            ChildCountryGuidePageSerializer
         )
         country_guides = sorted(country_guides, key=lambda x: x['heading'])
 
-        return articles + superregions + country_guides
+        return article_lists + articles + superregions + country_guides
 
 
 class SuperregionPageSerializer(TopicLandingPageSerializer):

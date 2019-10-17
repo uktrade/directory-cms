@@ -13,6 +13,7 @@ class InvestInternationalHomePagePanels:
 
     image_panels = [
         ImageChooserPanel('hero_image'),
+        ImageChooserPanel('how_to_expand_image'),
     ]
 
     content_panels = [
@@ -24,6 +25,8 @@ class InvestInternationalHomePagePanels:
                 FieldPanel('breadcrumbs_label'),
                 FieldPanel('heading'),
                 FieldPanel('sub_heading'),
+                HelpPanel('Cta\'s require both text and a link to show '
+                          'on page. '),
                 FieldPanel('hero_call_to_action_text'),
                 FieldPanel('hero_call_to_action_url'),
             ],
@@ -67,60 +70,41 @@ class InvestInternationalHomePagePanels:
 
         ),
         MultiFieldPanel(
-            heading='Featured card links ',
+            heading='How to Expand section',
             classname='collapsible',
             children=[
-                HelpPanel('Required fields for section to show: '
-                          'All images, titles and summaries'),
+                HelpPanel('Required fields for section to show: How to expand title, image and '
+                          'at least one item with title and text'),
+                FieldPanel('how_to_expand_title'),
+                FieldPanel('how_to_expand_intro'),
                 FieldRowPanel(
                     [
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel('featured_card_one_image'),
-                                FieldPanel('featured_card_one_title'),
-                                FieldPanel('featured_card_one_summary'),
-                                FieldPanel('featured_card_one_cta_link'),
+                                FieldPanel('how_to_expand_title_one'),
+                                FieldPanel('how_to_expand_text_one')
                             ],
                         ),
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel('featured_card_two_image'),
-                                FieldPanel('featured_card_two_title'),
-                                FieldPanel('featured_card_two_summary'),
-                                FieldPanel('featured_card_two_cta_link'),
+                                FieldPanel('how_to_expand_title_two'),
+                                FieldPanel('how_to_expand_text_two')
                             ],
                         ),
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel('featured_card_three_image'),
-                                FieldPanel('featured_card_three_title'),
-                                FieldPanel('featured_card_three_summary'),
-                                FieldPanel('featured_card_three_cta_link'),
+                                FieldPanel('how_to_expand_title_three'),
+                                FieldPanel('how_to_expand_text_three')
                             ]
+                        ),
+                        MultiFieldPanel(
+                            [
+                                FieldPanel('how_to_expand_title_four'),
+                                FieldPanel('how_to_expand_text_four')
+                            ],
                         ),
                     ]
                 ),
-            ],
-        ),
-        MultiFieldPanel(
-            heading='Industries section',
-            children=[
-                HelpPanel('Required fields for section to show: '
-                          'Sector Title, Sector Content'),
-                FieldPanel('sector_title'),
-                FieldPanel('sector_intro'),
-                FieldPanel('sector_button_text'),
-                FieldPanel('sector_button_url'),
-            ],
-
-        ),
-        MultiFieldPanel(
-            heading='High Potential Opportunities',
-            children=[
-                HelpPanel('Required fields for section to show: '
-                          'HPO title, 1 HPO in active language'),
-                FieldPanel('hpo_title'),
-                FieldPanel('hpo_intro')
             ],
         ),
         MultiFieldPanel(
@@ -187,6 +171,76 @@ class InvestInternationalHomePagePanels:
                           'on page. '),
                 FieldPanel('contact_section_call_to_action_text'),
                 FieldPanel('contact_section_call_to_action_url'),
+            ],
+        ), MultiFieldPanel(
+            heading='Investment Support Directory Section',
+            classname='collapsible',
+            children=[
+                HelpPanel('Required fields for section to show: '
+                          'ISD section title and text'),
+                FieldPanel('isd_section_title'),
+                FieldPanel('isd_section_text'),
+                HelpPanel('Cta\'s require both text and a link to show '
+                          'on page. '),
+                FieldPanel('isd_section_cta_text'),
+                FieldPanel('isd_section_cta_link'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading='High Potential Opportunities',
+            children=[
+                HelpPanel('Required fields for section to show: '
+                          'HPO title, 1 HPO in active language'),
+                FieldPanel('hpo_title'),
+                FieldPanel('hpo_intro')
+            ],
+        ),
+        MultiFieldPanel(
+            heading='Industries section',
+            children=[
+                HelpPanel('Required fields for section to show: '
+                          'Sector Title, Sector Content and at least one featured industry '
+                          '(choose in \'featured industries\' tab)'),
+                FieldPanel('sector_title'),
+                FieldPanel('sector_intro'),
+                FieldPanel('sector_button_text'),
+                FieldPanel('sector_button_url'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading='Featured card links ',
+            classname='collapsible collapsed',
+            children=[
+                HelpPanel('Required fields for section to show: '
+                          'All images, titles and summaries'),
+                FieldRowPanel(
+                    [
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel('featured_card_one_image'),
+                                FieldPanel('featured_card_one_title'),
+                                FieldPanel('featured_card_one_summary'),
+                                FieldPanel('featured_card_one_cta_link'),
+                            ],
+                        ),
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel('featured_card_two_image'),
+                                FieldPanel('featured_card_two_title'),
+                                FieldPanel('featured_card_two_summary'),
+                                FieldPanel('featured_card_two_cta_link'),
+                            ],
+                        ),
+                        MultiFieldPanel(
+                            [
+                                ImageChooserPanel('featured_card_three_image'),
+                                FieldPanel('featured_card_three_title'),
+                                FieldPanel('featured_card_three_summary'),
+                                FieldPanel('featured_card_three_cta_link'),
+                            ]
+                        ),
+                    ]
+                ),
             ],
         ),
         SearchEngineOptimisationPanel()

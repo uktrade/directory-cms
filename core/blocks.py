@@ -21,5 +21,13 @@ class ColumnWithTitleIconTextBlock(HeadingContentBaseBlock):
     image_alt = blocks.CharBlock(required=False)
 
 
-class DetailsSummaryBlock(HeadingContentBaseBlock):
-    pass
+class LinkBlock(blocks.StructBlock):
+    source = blocks.CharBlock(help_text='The source or the type of the link, e.g. GOV.UK/Advice')
+    text = blocks.CharBlock()
+    url = blocks.CharBlock()  # not a URL block to allow relative links
+
+
+class LinkWithImageAndContentBlock(LinkBlock):
+    image = ImageChooserBlock(required=False)
+    image_alt = blocks.CharBlock(required=False)
+    content = blocks.RichTextBlock()

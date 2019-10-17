@@ -18,7 +18,10 @@ class CountryGuidePageSerializer(serializers.Serializer):
                 'name': obj.heading,
                 'summary': obj.sub_heading,
                 'content': obj.section_one_body,
-                'url': obj.get_url()
+                'url': obj.get_url(),
+                'keywords': " ".join(
+                    obj.tags.all().values_list('name', flat=True)
+                )
             },
         }
 
