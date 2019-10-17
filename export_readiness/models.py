@@ -286,7 +286,7 @@ class ArticleListingPage(panels.ArticleListingPagePanels, BaseDomesticPage):
 
 
 class CountryGuidePage(panels.CountryGuidePagePanels, BaseDomesticPage):
-    """Make a cup of tea, this model is BIG!"""
+    """Make a cup of tea, this model is BIG! ☕"""
 
     class Meta:
         ordering = ['-heading']
@@ -350,8 +350,12 @@ class CountryGuidePage(panels.CountryGuidePagePanels, BaseDomesticPage):
     statistic_6_heading = models.CharField(max_length=255, blank=True)
     statistic_6_smallprint = models.CharField(max_length=255, blank=True)
 
-    section_two_heading = models.CharField(max_length=255, verbose_name='High potential industries for UK businesses')
-    section_two_teaser = models.TextField(verbose_name='Summary of the industry opportunities')
+    section_two_heading = models.CharField(
+        max_length=255,
+        verbose_name='High potential industries for UK businesses',
+        blank=True
+    )
+    section_two_teaser = models.TextField(verbose_name='Summary of the industry opportunities', blank=True)
 
     # accordion 1
     accordion_1_icon = models.ForeignKey(

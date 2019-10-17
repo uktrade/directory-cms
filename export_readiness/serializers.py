@@ -408,8 +408,8 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer, HeroSerializer)
     section_one_image_caption_company = serializers.CharField(
         max_length=255)
 
-    section_two_heading = serializers.CharField(max_length=255)
-    section_two_teaser = serializers.CharField()
+    section_two_heading = serializers.CharField(max_length=255, allow_null=True)
+    section_two_teaser = serializers.CharField(allow_null=True)
 
     statistics = serializers.SerializerMethodField()
     accordions = serializers.SerializerMethodField()

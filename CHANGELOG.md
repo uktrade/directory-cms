@@ -12,6 +12,7 @@
 - XOT-1111 - Allow external link on hero CTA button
 - XOT-1113 - CMS language cookie bug fix
 - XOT-1045 - Add IndustryTags to keywords monitored by site-wide search function
+- XOT-1161 - Make fields optional on market guides
 
 ### Fixed bugs
 - XOT-1107 - Fix bug where all descendants were serialized by ChildPagesSerializerHelper instead of only direct children
@@ -26,12 +27,6 @@
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.09.19...2019.10.01)
 
 ### Implemented enhancements
-- CI-522 - Added new fields for new expand home page
-
-## [2019.10.01](https://github.com/uktrade/directory-cms/releases/tag/2019.10.01)
-[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.09.19...2019.10.01)
-
-### Implemented enhancements
 - XOT-1107 - Add article pages to serializer for topic pages, only serialize necessary data
 - XOT-1444 - add article video transcript component
 - XOT-1108 - Filter markets by sector
@@ -41,6 +36,7 @@
 - XOT-1124 - Add icon and pages count to industry tags
 - CI-518 - Added new how dit help fields to International Home page
 - CI-493 - Added how we help ctas to Invest, Expand and Trade home pages
+- CI-522 - Added new fields for new expand home page
 
 ### Fixed bugs
 - No ticket - Add missing field to serializer
