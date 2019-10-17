@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- XOT-1107 - Serialize subheading and teaser of child pages of topic landing page
 - No ticket - Improve db fixtures
 - XOT-1144 - Market access database component
 - XOT-1136 - Add Brexit chevron component to great.gov.uk homepage
