@@ -4,6 +4,15 @@
 
 ### Implemented enhancements
 - XOT-1107 - Serialize subheading and teaser of child pages of topic landing page
+- XOT-1161 - Make fields optional on market guides
+
+### Fixed bugs
+
+
+## [2019.10.17](https://github.com/uktrade/directory-cms/releases/tag/2019.10.17)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.10.07...2019.10.17)
+
+### Implemented enhancements
 - No ticket - Improve db fixtures
 - XOT-1144 - Market access database component
 - XOT-1136 - Add Brexit chevron component to great.gov.uk homepage
@@ -12,7 +21,6 @@
 - XOT-1111 - Allow external link on hero CTA button
 - XOT-1113 - CMS language cookie bug fix
 - XOT-1045 - Add IndustryTags to keywords monitored by site-wide search function
-- XOT-1161 - Make fields optional on market guides
 
 ### Fixed bugs
 - XOT-1107 - Fix bug where all descendants were serialized by ChildPagesSerializerHelper instead of only direct children
