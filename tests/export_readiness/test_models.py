@@ -29,6 +29,7 @@ def test_app_models():
         models.ContactUsGuidancePage,
         models.ContactSuccessPage,
         models.AllContactPagesPage,
+        models.SellingOnlineOverseasHomePage,
     }
 
 
