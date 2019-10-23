@@ -213,7 +213,8 @@ def test_soo_homepage_serializer(root_page, rf):
     soo_home_page = SellingOnlineOverseasHomePageFactory(
         featured_case_study_one=case_study_one,
         featured_case_study_two=case_study_two,
-        parent_page=home_page
+        featured_case_study_three=None,
+        parent=home_page
     )
 
     serializer = SellingOnlineOverseasHomePageSerializer(
