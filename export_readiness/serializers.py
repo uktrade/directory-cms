@@ -408,8 +408,8 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer, HeroSerializer)
     section_one_image_caption_company = serializers.CharField(
         max_length=255)
 
-    section_two_heading = serializers.CharField(max_length=255)
-    section_two_teaser = serializers.CharField()
+    section_two_heading = serializers.CharField(max_length=255, allow_null=True)
+    section_two_teaser = serializers.CharField(allow_null=True)
 
     statistics = serializers.SerializerMethodField()
     accordions = serializers.SerializerMethodField()
@@ -545,15 +545,24 @@ class HomePageSerializer(BasePageSerializer):
         return 'HomePage'
 
 
+class ChildSuperregionPageSerializer(BasePageSerializer):
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='article_image')
+    teaser = serializers.CharField()
+
+
 class ChildArticlePageSerializer(BasePageSerializer):
     hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='article_image')
+    teaser = serializers.CharField(source='article_teaser')
+    sub_heading = serializers.CharField(source='article_subheading')
 
 
-class ChildPageSerializer(BasePageSerializer):
+class ChildArticleListPageSerializer(BasePageSerializer):
     hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
+    teaser = serializers.CharField(source='list_teaser')
 
 
-class ChildCountryGuidePageSerializer(ChildPageSerializer):
+class ChildCountryGuidePageSerializer(BasePageSerializer):
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
     heading = serializers.CharField()
     sub_heading = serializers.CharField()
 
@@ -577,12 +586,12 @@ class TopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper,
         article_lists = self.get_child_pages_data_for(
             obj,
             ArticleListingPage,
-            ChildPageSerializer
+            ChildArticleListPageSerializer
         )
         superregions = self.get_child_pages_data_for(
             obj,
             SuperregionPage,
-            ChildPageSerializer
+            ChildSuperregionPageSerializer
         )
         country_guides = self.get_child_pages_data_for(
             obj,
@@ -638,7 +647,7 @@ class IndustryTagSerializer(TagSerializer):
     pages_count = serializers.SerializerMethodField()
 
     def get_pages_count(self, tag):
-        return tag.countryguidepage_set.all().count()
+        return tag.countryguidepage_set.all().live().count()
 
 
 class CampaignPageSerializer(PageWithRelatedPagesSerializer):
