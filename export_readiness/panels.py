@@ -1300,3 +1300,19 @@ class ContactSuccessPagePanels:
     ]
 
     settings_panels = []
+
+
+class SellingOnlineOverseasHomePagePanels:
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='Featured case studies',
+            children=[
+                FieldRowPanel([
+                    PageChooserPanel('featured_case_study_one', ['export_readiness.ArticlePage']),
+                    PageChooserPanel('featured_case_study_two', ['export_readiness.ArticlePage']),
+                    PageChooserPanel('featured_case_study_three', ['export_readiness.ArticlePage']),
+                ])
+            ]
+        ),
+    ]
