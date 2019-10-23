@@ -647,7 +647,7 @@ class IndustryTagSerializer(TagSerializer):
     pages_count = serializers.SerializerMethodField()
 
     def get_pages_count(self, tag):
-        return tag.countryguidepage_set.all().count()
+        return tag.countryguidepage_set.all().live().count()
 
 
 class CampaignPageSerializer(PageWithRelatedPagesSerializer):
