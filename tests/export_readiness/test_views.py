@@ -225,10 +225,13 @@ def test_industry_tags_list_endpoint(client):
     tag2 = factories.IndustryTagFactory()
     page = factories.CountryGuidePageFactory()
     page2 = factories.CountryGuidePageFactory()
+    page3 = factories.CountryGuidePageFactory(live=False)
     page.tags = [tag1, tag2]
     page.save()
     page2.tags = [tag1]
     page2.save()
+    page3.tags = [tag1]
+    page3.save()
     url = reverse('api:industry-tags-list')
     response = client.get(url)
     assert response.status_code == 200
