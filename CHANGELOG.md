@@ -6,6 +6,7 @@
 - No ticket - Add SOO homepage
 
 ### Fixed bugs
+- XOT-1183 - Fix missing translated child articles on how to setup page
 
 
 ## [2019.10.23](https://github.com/uktrade/directory-cms/releases/tag/2019.10.23)
