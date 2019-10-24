@@ -264,8 +264,7 @@ def test_curated_topic_landing_page_has_features(international_root_page, rf):
 
 
 @pytest.mark.django_db
-def test_guide_landing_page_serializer_guide_list(international_root_page,
-                                                  image, rf):
+def test_guide_landing_page_serializer_guide_list(international_root_page, image, rf):
     """
     The serializer for InternationalGuideLandingPage should include a list
     of decendants of type InternationalArticlePage only
