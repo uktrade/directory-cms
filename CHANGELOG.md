@@ -5,6 +5,7 @@
 ### Implemented enhancements
 - XOT-1107 - Serialize subheading and teaser of child pages of topic landing page
 - XOT-1161 - Make fields optional on market guides
+- No ticket - Add SOO homepage
 - no ticket - Fix sector counts on markets homepage
 
 ### Fixed bugs
