@@ -4,6 +4,7 @@
 
 ### Implemented enhancements
 - No ticket - Add SOO homepage
+- XOT-1170 - Remove old fields from domestic homepage
 
 ### Fixed bugs
 - XOT-1183 - Fix missing translated child articles on how to setup page
