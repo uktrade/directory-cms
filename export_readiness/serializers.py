@@ -12,8 +12,7 @@ from export_readiness import blocks_serializers
 from great_international.serializers import StatisticProxyDataWrapper, StatisticSerializer
 
 from .models import (
-    ArticleListingPage, ArticlePage, TopicLandingPage, CampaignPage, SuperregionPage, EUExitDomesticFormPage,
-    CountryGuidePage
+    ArticleListingPage, ArticlePage, CampaignPage, SuperregionPage, EUExitDomesticFormPage, CountryGuidePage
 )
 
 
