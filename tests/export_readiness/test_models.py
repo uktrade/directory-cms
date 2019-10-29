@@ -39,10 +39,6 @@ def test_set_slug():
         title_en_gb='the app',
         depth=2,
         path='/thing',
-        banner_content='blah',
-        banner_label='blah',
-        news_title='blah',
-        news_description='blah',
     )
 
     assert instance.slug == models.HomePage.slug_identity
