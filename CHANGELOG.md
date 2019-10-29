@@ -4,6 +4,7 @@
 
 ### Implemented enhancements
 - No ticket - Add SOO homepage
+- XOT-1177 - Upgrade Wagtail to 2.6.3
 
 ### Fixed bugs
 - XOT-1183 - Fix missing translated child articles on how to setup page
