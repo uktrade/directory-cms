@@ -25,8 +25,8 @@ webserver:
 	ENV_FILES='secrets-do-not-commit,dev' python manage.py runserver 0.0.0.0:8010 $(ARGUMENTS)
 
 requirements:
-	pip-compile requirements.in
-	pip-compile requirements_test.in
+	pip-compile -r --annotate requirements.in
+	pip-compile -r --annotate requirements_test.in
 
 install_requirements:
 	pip install -r requirements_test.txt
