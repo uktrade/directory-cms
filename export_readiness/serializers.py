@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
-from directory_constants import slugs
 
-from conf import settings
 from core import fields as core_fields
 from core.serializers import (
     BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper, HeroSerializer

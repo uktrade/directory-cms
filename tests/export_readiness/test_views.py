@@ -2,9 +2,7 @@ from unittest.mock import ANY
 
 import pytest
 from rest_framework.reverse import reverse
-from directory_constants import slugs
 
-from conf import settings
 from tests.export_readiness import factories
 from directory_constants import urls
 
