@@ -1128,22 +1128,6 @@ class HomePagePanels:
 
     content_panels = [
         MultiFieldPanel(
-            heading='EU Exit banner',
-            classname='collapsible',
-            children=[
-                FieldPanel('banner_label'),
-                FieldPanel('banner_content'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading='EU exit news',
-            classname='collapsible',
-            children=[
-                FieldPanel('news_title'),
-                FieldPanel('news_description')
-            ]
-        ),
-        MultiFieldPanel(
             heading='Hero',
             classname='collapsible',
             children=[

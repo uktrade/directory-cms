@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
-from directory_constants import slugs
 
-from conf import settings
 from core import fields as core_fields
 from core.serializers import (
     BasePageSerializer, FormPageSerializerMetaclass, ChildPagesSerializerHelper, HeroSerializer
@@ -14,8 +12,7 @@ from export_readiness import blocks_serializers
 from great_international.serializers import StatisticProxyDataWrapper, StatisticSerializer
 
 from .models import (
-    ArticleListingPage, ArticlePage, TopicLandingPage, CampaignPage, SuperregionPage, EUExitDomesticFormPage,
-    CountryGuidePage
+    ArticleListingPage, ArticlePage, CampaignPage, SuperregionPage, EUExitDomesticFormPage, CountryGuidePage
 )
 
 
@@ -461,16 +458,6 @@ class RelatedArticlePageStreamChildSerializer(RelatedArticlePageSerializer, Stre
 
 
 class HomePageSerializer(BasePageSerializer):
-    news_title = serializers.CharField(
-        max_length=255,
-        allow_null=True,
-    )
-    news_description = core_fields.MarkdownToHTMLField()
-    articles = serializers.SerializerMethodField()
-    advice = serializers.SerializerMethodField()
-    banner_content = core_fields.MarkdownToHTMLField(allow_null=True)
-    banner_label = serializers.CharField(max_length=50, allow_null=True)
-
     hero_image = wagtail_fields.ImageRenditionField('original')
     hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
     hero_text = serializers.CharField(required=False)
@@ -495,54 +482,6 @@ class HomePageSerializer(BasePageSerializer):
     what_is_new_pages = LinkWithImageAndContentBlockStreamChildSerializer(many=True, required=False)
 
     campaign = blocks_serializers.CampaignBlockStreamChildSerializer(required=False, many=True)
-
-    def get_articles(self, obj):
-        try:
-            article_listing_page = ArticleListingPage.objects.get(
-                slug=settings.EU_EXIT_NEWS_LISTING_PAGE_SLUG
-            )
-            queryset = (
-                ArticlePage.objects.child_of(article_listing_page).live()
-            )
-        except ArticleListingPage.DoesNotExist:
-            queryset = None
-
-        serializer = ArticlePageSerializer(
-            queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-        return serializer.data
-
-    def get_advice(self, obj):
-        try:
-            topic_landing_page = TopicLandingPage.objects.get(
-                slug=slugs.GREAT_ADVICE
-            )
-            queryset = (
-                ArticleListingPage.objects.child_of(topic_landing_page)
-                .live()
-            )
-        except TopicLandingPage.DoesNotExist:
-            queryset = None
-
-        serializer = ArticleListingPageSerializer(
-            queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-        return serializer.data
-
-    def get_page_type(self, obj):
-        """
-        Overrides BasePageSerializer.get_page_type() so that `page_type`
-        is the same whether serialising an `HomePage` or `HomePageOld`
-        instance. This will prevent front-ends from falling over while
-        still requesting the old page.
-        """
-        return 'HomePage'
 
 
 class ChildSuperregionPageSerializer(BasePageSerializer):
