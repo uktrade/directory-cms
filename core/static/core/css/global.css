@@ -5,37 +5,6 @@
     color: #aaa;
 }
 
-/**
- * Wagtail page reodering toggle overrides.
- * Remove these when upgrading to a version of Wagtail that includes those changes,
- * https://github.com/wagtail/wagtail/pull/5187.
- */
-.listing th.ord {
-    text-align: center;
-    padding-right: 1em !important;
-}
-
-.listing th.ord .icon {
-    opacity: 0.5;
-}
-
-.listing th.ord--active a,
-.listing th.ord a:hover {
-    color: #007d7e;
-}
-
-.listing th.ord--active .icon {
-    opacity: 1;
-}
-
-td.ord .handle {
-    margin-left: 13px;
-}
-
-.table-headers {
-    height: 35px;
-}
-
 /* Fix styling for custom group list checkboxes on user update view */
 .group_with_summaries_multiple_choice_field ul li label {
     display: block;

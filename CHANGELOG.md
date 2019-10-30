@@ -4,6 +4,7 @@
 
 ### Implemented enhancements
 - No ticket - Add SOO homepage
+- XOT-1177 - Upgrade Wagtail to 2.6.3
 - XOT-1170 - Remove old fields from domestic homepage
 
 ### Fixed bugs
