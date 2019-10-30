@@ -1354,11 +1354,6 @@ class HomePage(
     slug_identity = slugs.GREAT_HOME
     parent_page_types = ['wagtailcore.Page']
 
-    banner_content = MarkdownField()
-    banner_label = models.CharField(max_length=50, null=True, blank=True)
-    news_title = models.CharField(max_length=255)
-    news_description = MarkdownField()
-
     # hero
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
