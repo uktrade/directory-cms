@@ -123,3 +123,10 @@ class CountryGuidePageSubscriber(AbstractDatabaseCacheSubscriber):
         models.CampaignPage,
         snippets.IndustryTag
     ]
+
+
+class SellingOnlineOverseasHomePageSubscriber(AbstractDatabaseCacheSubscriber):
+    model = models.SellingOnlineOverseasHomePage
+    subscriptions = [
+        models.ArticlePage,
+    ]

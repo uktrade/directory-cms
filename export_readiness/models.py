@@ -1354,11 +1354,6 @@ class HomePage(
     slug_identity = slugs.GREAT_HOME
     parent_page_types = ['wagtailcore.Page']
 
-    banner_content = MarkdownField()
-    banner_label = models.CharField(max_length=50, null=True, blank=True)
-    news_title = models.CharField(max_length=255)
-    news_description = MarkdownField()
-
     # hero
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -1708,6 +1703,44 @@ class AllContactPagesPage(ExclusivePageMixin, BaseDomesticPage):
 
     class Meta:
         verbose_name = 'Forms'
+
+    def save(self, *args, **kwargs):
+        self.title = self.get_verbose_name()
+        return super().save(*args, **kwargs)
+
+
+class SellingOnlineOverseasHomePage(panels.SellingOnlineOverseasHomePagePanels, ExclusivePageMixin, BaseDomesticPage):
+
+    # Need to do this because the slug 'selling-online-overseas'
+    # is already taken by the SOO performance dashboard page
+    slug_identity = 'selling-online-overseas-homepage'
+    slug_override = 'selling-online-overseas'
+
+    subpage_types = []
+    settings_panels = []
+
+    # Featured case studies
+    featured_case_study_one = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    featured_case_study_two = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    featured_case_study_three = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     def save(self, *args, **kwargs):
         self.title = self.get_verbose_name()

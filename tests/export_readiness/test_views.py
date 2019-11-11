@@ -2,9 +2,7 @@ from unittest.mock import ANY
 
 import pytest
 from rest_framework.reverse import reverse
-from directory_constants import slugs
 
-from conf import settings
 from tests.export_readiness import factories
 from directory_constants import urls
 
@@ -119,53 +117,10 @@ def test_domestic_homepage(admin_client, root_page):
         hero_cta_url='/foo/bar'
     )
 
-    # news
-    article_listing_page = factories.ArticleListingPageFactory(slug=settings.EU_EXIT_NEWS_LISTING_PAGE_SLUG)
-    for _ in range(5):
-        factories.ArticlePageFactory.create(parent=article_listing_page)
-    factories.ArticlePageFactory.create(parent=root_page)
-
-    # guidance
-    topic_landing_page = factories.TopicLandingPageFactory(slug=slugs.GREAT_ADVICE)
-    for _ in range(5):
-        factories.ArticleListingPageFactory.create(parent=topic_landing_page)
-
     url = reverse('api:api:pages:detail', kwargs={'pk': home_page.pk})
     response = admin_client.get(url)
     assert response.json()['hero_cta_url'] == '/foo/bar'
     assert response.status_code == 200
-    assert 'articles' in response.json()
-    assert 'advice' in response.json()
-    assert len(response.json()['advice']) == 5
-    assert len(response.json()['articles']) == 5
-
-
-@pytest.mark.django_db
-def test_domestic_homepage_no_news(admin_client, root_page):
-
-    home_page = factories.HomePageFactory.create(
-        parent=root_page
-    )
-
-    url = reverse('api:api:pages:detail', kwargs={'pk': home_page.pk})
-    response = admin_client.get(url)
-    assert response.status_code == 200
-    assert 'articles' in response.json()
-    assert len(response.json()['articles']) == 0
-
-
-@pytest.mark.django_db
-def test_homepage_no_advice(admin_client, root_page):
-
-    home_page = factories.HomePageFactory.create(
-        parent=root_page
-    )
-
-    url = reverse('api:api:pages:detail', kwargs={'pk': home_page.pk})
-    response = admin_client.get(url)
-    assert response.status_code == 200
-    assert 'advice' in response.json()
-    assert len(response.json()['advice']) == 0
 
 
 @pytest.mark.django_db
