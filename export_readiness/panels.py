@@ -1128,22 +1128,6 @@ class HomePagePanels:
 
     content_panels = [
         MultiFieldPanel(
-            heading='EU Exit banner',
-            classname='collapsible',
-            children=[
-                FieldPanel('banner_label'),
-                FieldPanel('banner_content'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading='EU exit news',
-            classname='collapsible',
-            children=[
-                FieldPanel('news_title'),
-                FieldPanel('news_description')
-            ]
-        ),
-        MultiFieldPanel(
             heading='Hero',
             classname='collapsible',
             children=[
@@ -1300,3 +1284,25 @@ class ContactSuccessPagePanels:
     ]
 
     settings_panels = []
+
+
+class SellingOnlineOverseasHomePagePanels:
+
+    content_panels = [
+        MultiFieldPanel(
+            heading='Featured case studies',
+            children=[
+                HelpPanel(
+                    content=(
+                        'Currently the only portion of this page that is editable here is the featured case studies. '
+                        'All other content on the page comes from the frontend code. '
+                        'If you require changes to be made to it, please ask a developer.'),
+                ),
+                FieldRowPanel([
+                    PageChooserPanel('featured_case_study_one', ['export_readiness.ArticlePage']),
+                    PageChooserPanel('featured_case_study_two', ['export_readiness.ArticlePage']),
+                    PageChooserPanel('featured_case_study_three', ['export_readiness.ArticlePage']),
+                ])
+            ]
+        ),
+    ]

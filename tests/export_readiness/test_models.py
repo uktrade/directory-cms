@@ -29,6 +29,7 @@ def test_app_models():
         models.ContactUsGuidancePage,
         models.ContactSuccessPage,
         models.AllContactPagesPage,
+        models.SellingOnlineOverseasHomePage,
     }
 
 
@@ -38,10 +39,6 @@ def test_set_slug():
         title_en_gb='the app',
         depth=2,
         path='/thing',
-        banner_content='blah',
-        banner_label='blah',
-        news_title='blah',
-        news_description='blah',
     )
 
     assert instance.slug == models.HomePage.slug_identity
@@ -165,3 +162,19 @@ def test_performance_dashboard_infers_field_values(product_link, values):
     assert page.full_path == values['full_path_override']
     assert page.landing_dashboard == values['landing_dashboard']
     assert page.heading == values['heading']
+
+
+@pytest.mark.django_db
+def test_soo_homepage_title(root_page):
+    home_page = factories.HomePageFactory(parent=root_page)
+
+    soo_home_page = factories.SellingOnlineOverseasHomePageFactory(
+        featured_case_study_one=None,
+        featured_case_study_two=None,
+        featured_case_study_three=None,
+        parent=home_page
+    )
+
+    soo_home_page.save()
+
+    assert soo_home_page.title == 'Selling online overseas home page'

@@ -3,11 +3,21 @@
 ## Pre-release
 
 ### Implemented enhancements
+- No ticket - Add SOO homepage
+- XOT-1177 - Upgrade Wagtail to 2.6.3
+- XOT-1170 - Remove old fields from domestic homepage
+
+### Fixed bugs
+- XOT-1183 - Fix missing translated child articles on how to setup page
+
+
+## [2019.10.23](https://github.com/uktrade/directory-cms/releases/tag/2019.10.23)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.10.17...2019.10.23)
+
+### Implemented enhancements
 - XOT-1107 - Serialize subheading and teaser of child pages of topic landing page
 - XOT-1161 - Make fields optional on market guides
 - no ticket - Fix sector counts on markets homepage
-
-### Fixed bugs
 
 
 ## [2019.10.17](https://github.com/uktrade/directory-cms/releases/tag/2019.10.17)
