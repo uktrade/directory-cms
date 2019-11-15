@@ -113,8 +113,8 @@ def test_markets_page_serializer(root_page, rf):
         context={'request': rf.get('/')}
     )
 
-    sorted = serializer.data['sorted_title']
-    assert sorted == 'Netherlands'
+    cleaned_title = serializer.data['sorted_title']
+    assert cleaned_title == 'Netherlands'
 
 
 @pytest.mark.django_db
