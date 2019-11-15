@@ -114,7 +114,6 @@ def test_markets_page_serializer(root_page, rf):
     )
 
     sorted = serializer.data['sorted_title']
-    print(serializer.data)
     assert sorted == 'Netherlands'
 
 
