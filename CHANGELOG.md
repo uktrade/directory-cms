@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- XOT-1185 - add serialized field for UI to order countries prefixed with 'the' alphabetically by country, without changing the display name
 - No ticket - Add SOO homepage
 - XOT-1177 - Upgrade Wagtail to 2.6.3
 - XOT-1170 - Remove old fields from domestic homepage
