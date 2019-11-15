@@ -504,6 +504,10 @@ class ChildCountryGuidePageSerializer(BasePageSerializer):
     hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
     heading = serializers.CharField()
     sub_heading = serializers.CharField()
+    sorted_title = serializers.SerializerMethodField()
+
+    def get_sorted_title(self, parent):
+        return parent.title.lower().replace('the ', '')
 
 
 class TopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer):
