@@ -15,6 +15,8 @@ from .models import (
     ArticleListingPage, ArticlePage, CampaignPage, SuperregionPage, EUExitDomesticFormPage, CountryGuidePage
 )
 
+import re
+
 
 class RelatedArticlePageSerializer(BasePageSerializer):
     """Separate serializer for related article pages so we don't end up with
@@ -507,7 +509,7 @@ class ChildCountryGuidePageSerializer(BasePageSerializer):
     sorted_title = serializers.SerializerMethodField()
 
     def get_sorted_title(self, parent):
-        return parent.title.lower().replace('the ', '')
+        return re.sub(r'^the ', '', parent.title, flags=re.IGNORECASE)
 
 
 class TopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer):
