@@ -1,7 +1,7 @@
 import pytest
 from export_readiness.serializers import (
     ArticlePageSerializer, CountryGuidePageSerializer, CampaignPageSerializer, TopicLandingPageSerializer,
-    MarketingArticlePageSerializer, SellingOnlineOverseasHomePageSerializer, ChildCountryGuidePageSerializer
+    MarketingArticlePageSerializer, SellingOnlineOverseasHomePageSerializer
 )
 from tests.export_readiness.factories import (
     ArticlePageFactory, ArticleListingPageFactory, CountryGuidePageFactory, CampaignPageFactory,
@@ -92,29 +92,6 @@ def test_country_guide_page_serializer(root_page, rf):
     )
 
     assert len(serializer.data['intro_ctas']) == 0
-
-
-@pytest.mark.django_db
-def test_markets_page_serializer(root_page, rf):
-    home_page = HomePageFactory(parent=root_page)
-    markets_page = TopicLandingPageFactory(
-        title_en_gb='The Netherlands',
-        title='The Netherlands',
-        slug='topic',
-        parent=home_page)
-    country_guide = CountryGuidePageFactory(
-        title_en_gb='The Netherlands',
-        title='The Netherlands',
-        slug='country',
-        parent=markets_page)
-
-    serializer = ChildCountryGuidePageSerializer(
-        instance=country_guide,
-        context={'request': rf.get('/')}
-    )
-
-    cleaned_title = serializer.data['sorted_title']
-    assert cleaned_title == 'Netherlands'
 
 
 @pytest.mark.django_db
