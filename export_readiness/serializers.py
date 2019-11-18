@@ -15,8 +15,6 @@ from .models import (
     ArticleListingPage, ArticlePage, CampaignPage, SuperregionPage, EUExitDomesticFormPage, CountryGuidePage
 )
 
-import re
-
 
 class RelatedArticlePageSerializer(BasePageSerializer):
     """Separate serializer for related article pages so we don't end up with
@@ -506,10 +504,6 @@ class ChildCountryGuidePageSerializer(BasePageSerializer):
     hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
     heading = serializers.CharField()
     sub_heading = serializers.CharField()
-    sorted_title = serializers.SerializerMethodField()
-
-    def get_sorted_title(self, parent):
-        return re.sub(r'^the ', '', parent.title, flags=re.IGNORECASE)
 
 
 class TopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer):
