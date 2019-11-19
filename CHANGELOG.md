@@ -2,6 +2,10 @@
 
 ## Pre-release
 
+
+## [2019.11.18](https://github.com/uktrade/directory-cms/releases/tag/2019.11.18)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.10.23...2019.11.18)
+
 ### Implemented enhancements
 - No ticket - Add SOO homepage
 - XOT-1177 - Upgrade Wagtail to 2.6.3
