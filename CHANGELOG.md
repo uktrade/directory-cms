@@ -2,6 +2,8 @@
 
 ## Pre-release
 
+- XOT-1210 Upgrade staff sso library to 1.0.0
+
 
 ## [2019.11.18](https://github.com/uktrade/directory-cms/releases/tag/2019.11.18)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.10.23...2019.11.18)
