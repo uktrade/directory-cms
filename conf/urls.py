@@ -24,20 +24,12 @@ api_urls = [
     url(r'^', api_router.urls),
     url(
         r'^pages/lookup-by-slug/(?P<slug>[\w-]+)/',
-        api_router.wrap_view(
-            core.views.PageLookupBySlugAPIEndpoint.as_view(
-                {'get': 'detail_view'}
-            )
-        ),
+        api_router.wrap_view(core.views.PageLookupBySlugAPIEndpoint.as_view({'get': 'detail_view'})),
         name='lookup-by-slug'
     ),
     url(
         r'^pages/lookup-by-path/(?P<site_id>[0-9]+)/(?P<path>[\w\-/]*)$',
-        api_router.wrap_view(
-            core.views.PageLookupByPathAPIEndpoint.as_view(
-                {'get': 'detail_view'}
-            )
-        ),
+        api_router.wrap_view(core.views.PageLookupByPathAPIEndpoint.as_view({'get': 'detail_view'})),
         name='lookup-by-path'
     ),
     url(
@@ -47,30 +39,22 @@ api_urls = [
     ),
     url(
         r'^pages/lookup-countries-by-tag/(?P<pk>[0-9]+)/$',
-        api_router.wrap_view(
-            export_readiness.views.CountryPageLookupByIndustryTagIDListAPIView.as_view()
-        ),
+        api_router.wrap_view(export_readiness.views.CountryPageLookupByIndustryTagIDListAPIView.as_view()),
         name='lookup-countries-by-tag-list'
     ),
     url(
         r'^pages/industry-tags/$',
-        api_router.wrap_view(
-            export_readiness.views.IndustryTagsListAPIView.as_view()
-        ),
+        api_router.wrap_view(export_readiness.views.IndustryTagsListAPIView.as_view()),
         name='industry-tags-list'
     ),
     url(
         r'^pages/lookup-countries/$',
-        api_router.wrap_view(
-            export_readiness.views.CountryPageListAPIView.as_view()
-        ),
+        api_router.wrap_view(export_readiness.views.CountryPageListAPIView.as_view()),
         name='lookup-country-guides-list-view'
     ),
     url(
         r'^regions/$',
-        api_router.wrap_view(
-            export_readiness.views.RegionsListAPIView.as_view()
-        ),
+        api_router.wrap_view(export_readiness.views.RegionsListAPIView.as_view()),
         name='regions-list-view'
     ),
 ]
@@ -120,11 +104,7 @@ urlpatterns = [
         login_required(csrf_exempt(core.views.PreloadPageView.as_view())),
         name='preload-add-page',
     ),
-    url(
-        r'^admin/group-info/$',
-        login_required(GroupInfoModalView.as_view()),
-        name='group-info',
-    ),
+    url(r'^admin/group-info/$', login_required(GroupInfoModalView.as_view()), name='group-info'),
 
     # Prevent users from changing their email address
     url(r'^admin/account/change_email/$', RedirectView.as_view(url='/admin/')),
@@ -132,11 +112,7 @@ urlpatterns = [
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^auth/request-access/', include('users.urls_sso')),
-    url(
-        r'^activity-stream/v1/',
-        ActivityStreamView.as_view(),
-        name='activity-stream'
-    ),
+    url(r'^activity-stream/v1/', ActivityStreamView.as_view(), name='activity-stream'),
 
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
@@ -148,10 +124,8 @@ urlpatterns = [
 
 if settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
     urlpatterns = [
-        url('^auth/', include('authbroker_client.urls')
-            ),
-        url(r'^admin/login/$',
-            RedirectView.as_view(url='/auth/login/', query_string=True)),
+        url('^auth/', include('authbroker_client.urls')),
+        url(r'^admin/login/$', RedirectView.as_view(url='/auth/login/', query_string=True)),
     ] + urlpatterns
 
 
