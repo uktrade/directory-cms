@@ -19,7 +19,7 @@ html2text==2018.1.9
 wagtail==2.6.*
 wagtailmedia==0.3.1
 pytube==9.2.2
-django-filter==2.1.0
+django-filter==2.2.0
 django-redis==4.10.0
 celery[redis]
 kombu==4.2.1

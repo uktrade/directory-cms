@@ -59,6 +59,20 @@ api_urls = [
         ),
         name='industry-tags-list'
     ),
+    url(
+        r'^pages/lookup-countries/$',
+        api_router.wrap_view(
+            export_readiness.views.CountryPageListAPIView.as_view()
+        ),
+        name='lookup-country-guides-list-view'
+    ),
+    url(
+        r'^regions/$',
+        api_router.wrap_view(
+            export_readiness.views.RegionsListAPIView.as_view()
+        ),
+        name='regions-list-view'
+    ),
 ]
 
 

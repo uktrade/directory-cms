@@ -926,7 +926,8 @@ class CountryGuidePagePanels:
     settings_panels = [
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
-        FieldPanel('tags', widget=CheckboxSelectMultiple)
+        FieldPanel('tags', widget=CheckboxSelectMultiple),
+        FieldPanel('country')
     ]
 
 

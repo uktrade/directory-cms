@@ -35,3 +35,31 @@ class IndustryTag(models.Model):
         FieldPanel('name'),
         ImageChooserPanel('icon')
     ]
+
+
+@register_snippet
+class Region(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    panels = [
+        FieldPanel('name')
+    ]
+
+
+@register_snippet
+class Country(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.CharField(max_length=100, unique=True)
+    region = models.ForeignKey(Region, null=True, blank=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.name
+
+    panels = [
+        FieldPanel('name'),
+        FieldPanel('slug'),
+        FieldPanel('region')
+    ]
