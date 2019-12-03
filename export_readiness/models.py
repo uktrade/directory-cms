@@ -1047,6 +1047,13 @@ class CountryGuidePage(panels.CountryGuidePagePanels, BaseDomesticPage):
     )
 
     tags = ParentalManyToManyField(snippets.IndustryTag, blank=True)
+    country = models.ForeignKey(
+        snippets.Country,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
 
 class MarketingPages(ExclusivePageMixin, BaseDomesticPage):
