@@ -3,6 +3,7 @@
 ## Pre-release
 
 - XOT-1210 Upgrade staff sso library to 1.0.0
+- XOT-1232 - Country guides filtering API
 
 
 ## [2019.11.18](https://github.com/uktrade/directory-cms/releases/tag/2019.11.18)

@@ -21,7 +21,7 @@ directory-healthcheck==1.1.1
 dj-database-url==0.5.0
 django-admin-ip-restrictor==1.0.0
 django-environ==0.4.5
-django-filter==2.1.0
+django-filter==2.2.0
 django-health-check==3.8.0  # via directory-healthcheck
 django-ipware==2.1.0      # via django-admin-ip-restrictor
 django-modelcluster==4.3  # via wagtail
@@ -79,4 +79,4 @@ whitenoise==4.1.2
 willow==1.1               # via wagtail
 
 # The following packages are considered to be unsafe in a requirements file:
-# setuptools==42.0.1        # via jsonschema
+# setuptools==42.0.2        # via jsonschema
