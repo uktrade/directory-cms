@@ -219,3 +219,68 @@ def test_lookup_countries_by_tag_list_endpoint(client):
     response = client.get(url)
     assert response.status_code == 200
     assert len(response.json()['countries']) == 2
+
+
+@pytest.mark.django_db
+def test_lookup_market_guides_missing_filters(client):
+    tag = factories.IndustryTagFactory()
+    tag2 = factories.IndustryTagFactory()
+    market1 = factories.CountryGuidePageFactory()
+    market1.tags = [tag, tag2]
+    market1.save()
+    market2 = factories.CountryGuidePageFactory()
+    market2.tags = [tag]
+    market2.save()
+
+    url = reverse('api:lookup-country-guides-list-view')
+
+    response = client.get(url)
+    assert response.status_code == 200
+    assert len(response.json()) == 2
+
+
+@pytest.mark.django_db
+def test_lookup_market_guides_missing_region(client):
+    tag = factories.IndustryTagFactory()
+    tag2 = factories.IndustryTagFactory()
+    market1 = factories.CountryGuidePageFactory()
+    market1.tags = [tag, tag2]
+    market1.save()
+    market2 = factories.CountryGuidePageFactory()
+    market2.tags = [tag]
+    market2.save()
+
+    url = reverse('api:lookup-country-guides-list-view')
+
+    response = client.get(f'{url}?industry={tag.name},{tag2.name}')
+    assert response.status_code == 200
+    assert len(response.json()) == 1
+    assert response.json()[0]['id'] == market1.pk
+
+
+@pytest.mark.django_db
+def test_lookup_market_guides_all_filters(client):
+    tag = factories.IndustryTagFactory()
+    region = factories.RegionFactory()
+    country = factories.CountryFactory(region=region)
+    market1 = factories.CountryGuidePageFactory(country=country)
+    market1.tags = [tag]
+    market1.save()
+    market2 = factories.CountryGuidePageFactory()
+    market2.tags = [tag]
+    market2.save()
+    url = reverse('api:lookup-country-guides-list-view')
+
+    response = client.get(f'{url}?industry={tag.name}&region={region.name}')
+    assert response.status_code == 200
+    assert len(response.json()) == 1
+    assert response.json()[0]['id'] == market1.pk
+
+
+@pytest.mark.django_db
+def test_regions_list_view(client):
+
+    url = reverse('api:regions-list-view')
+
+    response = client.get(url)
+    assert response.status_code == 200
