@@ -1,13 +1,10 @@
 from __future__ import absolute_import, unicode_literals
-import logging
 import os
 from ssl import CERT_NONE
 
 from django.conf import settings
 
 from celery import Celery
-from raven import Client
-from raven.contrib.celery import register_signal, register_logger_signal
 
 
 # set the default Django settings module for the 'celery' program.
@@ -34,11 +31,3 @@ if settings.FEATURE_REDIS_USE_SSL:
 
 # Load task modules from all registered Django app configs.
 app.autodiscover_tasks()
-
-sentry_client = Client(dsn=settings.RAVEN_CONFIG['dsn'])
-
-# register a custom filter to filter out duplicate logs
-register_logger_signal(sentry_client, loglevel=logging.ERROR)
-
-# hook into the Celery error handler
-register_signal(sentry_client)
