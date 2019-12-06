@@ -4,7 +4,7 @@
 #
 #    pip-compile requirements_test.in
 #
-amqp==2.3.2               # via kombu
+amqp==2.5.2               # via kombu
 atomicwrites==1.2.1       # via pytest
 attrs==18.2.0             # via jsonschema, pytest
 beautifulsoup4==4.6.0
@@ -14,7 +14,7 @@ bleach==3.0.2
 boto3==1.6.3
 botocore==1.9.23          # via boto3, s3transfer
 celery[redis]==4.2.1
-certifi==2018.11.29       # via requests
+certifi==2018.11.29       # via requests, sentry-sdk
 chardet==3.0.4            # via requests
 coverage==4.5.2           # via coveralls, pytest-cov
 coveralls==1.8.2
@@ -35,7 +35,7 @@ django-redis==4.10.0
 django-staff-sso-client==1.0.0
 django-taggit==0.23.0     # via wagtail
 django-treebeard==4.3     # via wagtail
-django==2.2.6
+django==2.2.8
 django_storages==1.7.1
 djangorestframework==3.9.4
 docopt==0.6.2             # via coveralls, notifications-python-client
@@ -52,10 +52,10 @@ gunicorn==19.5.0
 html2text==2018.1.9
 html5lib==1.0.1           # via wagtail
 idna==2.7                 # via requests
-importlib-metadata==0.20  # via pluggy, pytest
+importlib-metadata==0.20  # via kombu, pluggy, pytest
 jmespath==0.9.3           # via boto3, botocore
 jsonschema==3.0.1         # via directory-components
-kombu==4.2.1
+kombu==4.6.6
 markdown==2.6
 mccabe==0.6.1             # via flake8
 mohawk==0.3.4             # via sigauth
@@ -80,14 +80,15 @@ pytest==5.1.2
 python-dateutil==2.6.1    # via botocore, faker, freezegun
 pytube==9.2.2
 pytz==2018.7              # via celery, django, django-modelcluster, wagtail
-raven==6.10.0
+raven==6.10.0             # via django-staff-sso-client
 redis==2.10.6             # via celery, django-redis
 requests-mock==1.5.2
 requests-oauthlib==1.2.0  # via django-staff-sso-client
 requests==2.21.0
 s3transfer==0.1.13        # via boto3
+sentry-sdk==0.13.4
 sigauth==4.1.0
-six==1.12.0               # via bleach, faker, freezegun, html5lib, jsonschema, mohawk, more-itertools, packaging, pyrsistent, python-dateutil, requests-mock, w3lib, wagtail
+six==1.12.0               # via bleach, faker, freezegun, html5lib, jsonschema, mohawk, more-itertools, packaging, pyrsistent, requests-mock, w3lib, wagtail
 sqlparse==0.2.4           # via django, django-debug-toolbar
 termcolor==1.1.0          # via pytest-sugar
 text-unidecode==1.2       # via faker
@@ -106,4 +107,4 @@ willow==1.1               # via wagtail
 zipp==0.6.0               # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
-# setuptools==42.0.2        # via flake8, jsonschema
+# setuptools
