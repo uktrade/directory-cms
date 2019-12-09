@@ -219,6 +219,7 @@ class UpstreamBaseView(FormView):
     environment_form_class = forms.CopyToEnvironmentForm
     template_name = 'core/upstream.html'
     is_edit = None
+    management_form_class = forms.PreloadPageManagementForm
 
     def get_form_class(self):
         page = self.get_object()
@@ -250,15 +251,24 @@ class UpstreamBaseView(FormView):
 
     def get_context_data(self, **kwargs):
         page = self.get_object()
+        site = page.get_site()
+        prefix = self.management_form_class.prefix
+        management_form = self.management_form_class(
+            data={
+                f'{prefix}-app_label': page._meta.app_label,
+                f'{prefix}-parent_full_path': page.specific.get_parent().specific.full_path,
+                f'{prefix}-model_name': page._meta.model_name,
+                f'{prefix}-site_name': site.site_name,
+                f'{prefix}-full_path': page.full_path if self.is_edit else None
+            },
+        )
         return super().get_context_data(
             environment_form=self.environment_form_class(),
+            management_form=management_form,
             page=page,
-            app_label=page._meta.app_label,
-            model_name=page._meta.model_name,
             serialized_relations=self.serialize_relations(),
             serialized_object=self.serialize_object(),
-            parent=page.specific.get_parent().specific,
-            site=page.get_site(),
+            site=site,
             is_edit=self.is_edit,
             **kwargs
         )
@@ -276,36 +286,42 @@ class PreloadPageView(FormView):
     template_name = 'wagtailadmin/pages/create.html'
     update_template_name = 'wagtailadmin/pages/edit.html'
     filter_class = filters.ServiceNameDRFFilter
+    management_form_class = forms.PreloadPageManagementForm
     http_method_names = ['post']
 
-    def dispatch(self, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):
+        self.management_form = self.management_form_class(data=request.POST)
+        if not self.management_form.is_valid():
+            return HttpResponseBadRequest(self.management_form.errors)
         self.page_content_type = self.get_page_content_type()
         self.page = self.get_page()
         try:
-            return super().dispatch(*args, **kwargs)
+            return super().dispatch(request, *args, **kwargs)
         except ValidationError as error:
             return HttpResponseBadRequest(error)
 
     def get_page_content_type(self):
         try:
             return ContentType.objects.get_by_natural_key(
-                app_label=self.kwargs['app_label'],
-                model=self.kwargs['model_name'],
+                app_label=self.management_form.cleaned_data['app_label'],
+                model=self.management_form.cleaned_data['model_name'],
             )
         except ContentType.DoesNotExist:
             raise Http404()
 
     @cached_property
     def site(self):
-        site_name = None if self.kwargs['site_name'] == 'None' else self.kwargs['site_name']
-        return Site.objects.get(site_name=site_name)
+        return Site.objects.get(site_name=self.management_form.cleaned_data['site_name'])
 
     def get_page(self):
         page_class = self.page_content_type.model_class()
         page = None
-        if 'full_path' in self.request.POST:
+        if self.management_form.cleaned_data.get('full_path'):
             try:
-                page = self.lookup_page(path=self.request.POST['full_path'], site_id=self.site.pk)
+                page = self.lookup_page(
+                    path=self.management_form.cleaned_data['full_path'],
+                    site_id=self.site.pk
+                )
             except Http404:
                 pass
         if not page:
@@ -323,7 +339,10 @@ class PreloadPageView(FormView):
 
     def get_context_data(self, form):
         page_class = self.page_content_type.model_class()
-        parent_page = self.lookup_page(path=self.kwargs['parent_path'], site_id=self.site.id)
+        parent_page = self.lookup_page(
+            path=self.management_form.cleaned_data['parent_full_path'],
+            site_id=self.site.id
+        )
         edit_handler = page_class.get_edit_handler()
         form_class = edit_handler.get_form_class()
         form = form_class(
