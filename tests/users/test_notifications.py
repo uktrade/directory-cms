@@ -30,7 +30,7 @@ def test_notify_user_of_access_request_approval(rf):
         personalisation=dict(
             name=kwargs['user_name'],
             reviewer_name=kwargs['reviewer_name'],
-            sign_in_url='http://testserver/admin/login',
+            sign_in_url='http://testserver/admin/login/',
         ),
     )
     mocked_method.assert_called_with(**expected_call_args)
