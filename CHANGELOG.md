@@ -9,7 +9,7 @@
 
 ### Fixed bugs
 - XOT-1249 - Fix redis connection, allowing cache population on save
-
+- No ticket - Fix copy upstream
 
 ## [2019.11.18](https://github.com/uktrade/directory-cms/releases/tag/2019.11.18)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.10.23...2019.11.18)
