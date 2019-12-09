@@ -133,11 +133,9 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 VCAP_SERVICES = env.json('VCAP_SERVICES', {})
 
 if 'redis' in VCAP_SERVICES:
-    REDIS_CACHE_URL = VCAP_SERVICES['redis'][0]['credentials']['uri']
-    REDIS_CELERY_URL = REDIS_CACHE_URL.replace('rediss://', 'redis://')
+    REDIS_URL = VCAP_SERVICES['redis'][0]['credentials']['uri']
 else:
-    REDIS_CACHE_URL = env.str('REDIS_CACHE_URL', '')
-    REDIS_CELERY_URL = env.str('REDIS_CELERY_URL', '')
+    REDIS_URL = env.str('REDIS_URL', '')
 
 
 # # Database
@@ -156,7 +154,7 @@ else:
     CACHES = {
         'default': {
             'BACKEND': 'django_redis.cache.RedisCache',
-            'LOCATION': REDIS_CACHE_URL,
+            'LOCATION': REDIS_URL,
             'OPTIONS': {
                 'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             }
@@ -449,10 +447,8 @@ ALLOWED_ADMIN_IP_RANGES = env.list(
 RESTRICTED_APP_NAMES = ['admin', 'wagtailadmin']
 
 # Celery
-# separate to REDIS_CACHE_URL as needs to start with 'redis' and SSL conf
-# is in conf/celery.py
-CELERY_BROKER_URL = REDIS_CELERY_URL
-CELERY_RESULT_BACKEND = REDIS_CELERY_URL
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = REDIS_URL
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
