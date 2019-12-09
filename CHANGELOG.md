@@ -2,11 +2,14 @@
 
 ## Pre-release
 
-
 ### Implemented enhancements
-- XOT-1210 Upgrade staff sso library to 1.0.0
+- XOT-1210 - Upgrade staff sso library to 1.0.0
 - XOT-1232 - Country guides filtering API
 - TT-1304 - Upgrade sentry client
+
+### Fixed bugs
+- XOT-1249 - Fix redis connection, allowing cache population on save
+
 
 ## [2019.11.18](https://github.com/uktrade/directory-cms/releases/tag/2019.11.18)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.10.23...2019.11.18)
