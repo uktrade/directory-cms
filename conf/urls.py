@@ -98,9 +98,7 @@ urlpatterns = [
         name='update-upstream',
     ),
     url(
-        (
-            r'^admin/pages/preload/(?P<app_label>[a-zA-Z_]+)/(?P<model_name>[a-zA-Z]+)/(?P<site_name>[a-zA-Z]+)(?P<parent_path>.*)$'  # NOQA
-        ),
+        r'^admin/pages/preload/',
         login_required(csrf_exempt(core.views.PreloadPageView.as_view())),
         name='preload-add-page',
     ),
