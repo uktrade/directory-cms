@@ -256,10 +256,10 @@ class UpstreamBaseView(FormView):
         management_form = self.management_form_class(
             data={
                 f'{prefix}-app_label': page._meta.app_label,
-                f'{prefix}-parent_full_path': page.specific.get_parent().specific.full_path,
+                f'{prefix}-parent_path': page.specific.get_parent().get_url_parts()[2],
                 f'{prefix}-model_name': page._meta.model_name,
                 f'{prefix}-site_name': site.site_name,
-                f'{prefix}-full_path': page.full_path if self.is_edit else None
+                f'{prefix}-path': page.get_url_parts()[2] if self.is_edit else None
             },
         )
         return super().get_context_data(
@@ -316,10 +316,10 @@ class PreloadPageView(FormView):
     def get_page(self):
         page_class = self.page_content_type.model_class()
         page = None
-        if self.management_form.cleaned_data.get('full_path'):
+        if self.management_form.cleaned_data.get('path'):
             try:
                 page = self.lookup_page(
-                    path=self.management_form.cleaned_data['full_path'],
+                    path=self.management_form.cleaned_data['path'],
                     site_id=self.site.pk
                 )
             except Http404:
@@ -340,7 +340,7 @@ class PreloadPageView(FormView):
     def get_context_data(self, form):
         page_class = self.page_content_type.model_class()
         parent_page = self.lookup_page(
-            path=self.management_form.cleaned_data['parent_full_path'],
+            path=self.management_form.cleaned_data['parent_path'],
             site_id=self.site.id
         )
         edit_handler = page_class.get_edit_handler()
@@ -370,9 +370,7 @@ class PreloadPageView(FormView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        data = UpstreamModelSerializer.deserialize(
-            kwargs['data'], request=self.request
-        )
+        data = UpstreamModelSerializer.deserialize(kwargs['data'], request=self.request)
         kwargs['data'] = data
         return kwargs
 
