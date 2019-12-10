@@ -226,18 +226,10 @@ def test_upstream_anon(client, translated_page, image, url_name):
     (False, 'wagtailadmin/pages/create.html'),
 ))
 def test_add_page_prepopulate(
-        is_edit, expected_template, international_root_page, translated_page, admin_client, image, cluster_data
+    is_edit, expected_template, international_root_page, translated_page, admin_client, image, cluster_data
 ):
     cache.PageIDCache.populate()
-    url = reverse(
-        'preload-add-page',
-        kwargs={
-            'app_label': translated_page._meta.app_label,
-            'model_name': translated_page._meta.model_name,
-            'parent_path': international_root_page.full_path,
-            'site_name': international_root_page.get_site().site_name,
-        }
-    )
+    url = reverse('preload-add-page')
     model_as_dict = model_to_dict(translated_page, exclude=[
         'go_live_at',
         'expire_at',
@@ -250,9 +242,12 @@ def test_add_page_prepopulate(
         '(image)introduction_column_one_icon': image.file.name,
         '(image)introduction_column_two_icon': image.file.name,
         '(image)introduction_column_three_icon': image.file.name,
+        'management-app_label': translated_page._meta.app_label,
+        'management-model_name': translated_page._meta.model_name,
+        'management-parent_full_path': international_root_page.full_path,
+        'management-site_name': international_root_page.get_site().site_name,
         **cluster_data,
     }
-
     expected_data = {
         **model_as_dict,
         'hero_image': str(image.pk),
@@ -261,7 +256,7 @@ def test_add_page_prepopulate(
         'introduction_column_three_icon': str(image.pk),
     }
     if is_edit:
-        post_data['full_path'] = expected_data['full_path'] = translated_page.get_url_parts()[2]
+        post_data['management-full_path'] = expected_data['full_path'] = translated_page.get_url_parts()[2]
 
     response = admin_client.post(url, clean_post_data(post_data))
 
@@ -305,22 +300,6 @@ def xtest_add_page_prepopulate_missing_content_type(
     response = admin_client.post(url, clean_post_data(post_data))
 
     assert response.status_code == 404
-
-
-@pytest.mark.django_db
-def xtest_add_page_prepopulate_get(translated_page, admin_client, international_root_page):
-    url = reverse(
-        'preload-add-page',
-        kwargs={
-            'app_label': translated_page._meta.app_label,
-            'model_name': translated_page._meta.model_name,
-            'parent_path': international_root_page.full_path,
-            'site_name': translated_page.get_site().site_name,
-        }
-    )
-    response = admin_client.get(url)
-
-    assert response.status_code == 405
 
 
 @pytest.mark.django_db
