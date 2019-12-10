@@ -99,7 +99,7 @@ urlpatterns = [
     ),
     url(
         r'^admin/pages/preload/',
-        csrf_exempt(core.views.PreloadPageView.as_view()),
+        login_required(csrf_exempt(core.views.PreloadPageView.as_view())),
         name='preload-add-page',
     ),
     url(r'^admin/group-info/$', login_required(GroupInfoModalView.as_view()), name='group-info'),
