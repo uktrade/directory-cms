@@ -21,12 +21,12 @@ class PreloadPageManagementForm(forms.Form):
     prefix = 'management'
 
     app_label = forms.CharField(widget=forms.HiddenInput())
-    parent_full_path = forms.CharField(widget=forms.HiddenInput())
+    parent_path = forms.CharField(widget=forms.HiddenInput())
     model_name = forms.CharField(widget=forms.HiddenInput())
     site_name = forms.CharField(widget=forms.HiddenInput())
-    full_path = forms.CharField(widget=forms.HiddenInput(), required=False)
+    path = forms.CharField(widget=forms.HiddenInput(), required=False)
 
-    def clean_management_site_name(self):
+    def clean_site_name(self):
         value = self.cleaned_data['site_name']
         return None if value == 'None' else value
 
