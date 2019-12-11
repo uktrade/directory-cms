@@ -2,6 +2,10 @@
 
 ## Pre-release
 
+
+## [2019.12.12](https://github.com/uktrade/directory-cms/releases/tag/2019.12.12)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.11.18...2019.12.12)
+
 ### Implemented enhancements
 - XOT-1210 - Upgrade staff sso library to 1.0.0
 - XOT-1232 - Country guides filtering API
