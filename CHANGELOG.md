@@ -3,6 +3,18 @@
 ## Pre-release
 
 ### Implemented enhancements
+- XOT-1210 - Upgrade staff sso library to 1.0.0
+- XOT-1232 - Country guides filtering API
+- TT-1304 - Upgrade sentry client
+
+### Fixed bugs
+- XOT-1249 - Fix redis connection, allowing cache population on save
+- No ticket - Fix copy upstream
+
+## [2019.11.18](https://github.com/uktrade/directory-cms/releases/tag/2019.11.18)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.10.23...2019.11.18)
+
+### Implemented enhancements
 - No ticket - Add SOO homepage
 - XOT-1177 - Upgrade Wagtail to 2.6.3
 - XOT-1170 - Remove old fields from domestic homepage
