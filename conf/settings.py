@@ -15,8 +15,11 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 
 import dj_database_url
-import environ
 from django.urls import reverse_lazy
+import environ
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 
 env = environ.Env()
 for env_file in env.list('ENV_FILES', default=[]):
@@ -55,7 +58,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.contenttypes',
     'django.contrib.messages',
-    'raven.contrib.django.raven_compat',
     'django.contrib.sessions',
     'directory_healthcheck',
     'health_check.db',
@@ -131,11 +133,9 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 VCAP_SERVICES = env.json('VCAP_SERVICES', {})
 
 if 'redis' in VCAP_SERVICES:
-    REDIS_CACHE_URL = VCAP_SERVICES['redis'][0]['credentials']['uri']
-    REDIS_CELERY_URL = REDIS_CACHE_URL.replace('rediss://', 'redis://')
+    REDIS_URL = VCAP_SERVICES['redis'][0]['credentials']['uri']
 else:
-    REDIS_CACHE_URL = env.str('REDIS_CACHE_URL', '')
-    REDIS_CELERY_URL = env.str('REDIS_CELERY_URL', '')
+    REDIS_URL = env.str('REDIS_URL', '')
 
 
 # # Database
@@ -154,7 +154,7 @@ else:
     CACHES = {
         'default': {
             'BACKEND': 'django_redis.cache.RedisCache',
-            'LOCATION': REDIS_CACHE_URL,
+            'LOCATION': REDIS_URL,
             'OPTIONS': {
                 'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             }
@@ -282,49 +282,14 @@ if DEBUG:
             },
         }
     }
-else:
-    # Sentry logging
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'root': {
-            'level': 'WARNING',
-            'handlers': ['sentry'],
-        },
-        'formatters': {
-            'verbose': {
-                'format': '%(levelname)s %(asctime)s %(module)s '
-                          '%(process)d %(thread)d %(message)s'
-            },
-        },
-        'handlers': {
-            'sentry': {
-                'level': 'ERROR',
-                'class': (
-                    'raven.contrib.django.raven_compat.handlers.SentryHandler'
-                ),
-                'tags': {'custom-tag': 'x'},
-            },
-            'console': {
-                'level': 'DEBUG',
-                'class': 'logging.StreamHandler',
-                'formatter': 'verbose'
-            }
-        },
-        'loggers': {
-            'raven': {
-                'level': 'DEBUG',
-                'handlers': ['console'],
-                'propagate': False,
-            },
-            'sentry.errors': {
-                'level': 'DEBUG',
-                'handlers': ['console'],
-                'propagate': False,
-            },
-        },
-    }
 
+# Sentry
+if env.str('SENTRY_DSN', ''):
+    sentry_sdk.init(
+        dsn=env.str('SENTRY_DSN'),
+        environment=env.str('SENTRY_ENVIRONMENT'),
+        integrations=[DjangoIntegration()]
+    )
 
 SIGNATURE_SECRET = env.str('SIGNATURE_SECRET')
 
@@ -334,14 +299,11 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_HSTS_SECONDS = env.int('SECURE_HSTS_SECONDS', 16070400)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
-# Sentry
-RAVEN_CONFIG = {
-    'dsn': env.str('SENTRY_DSN', ''),
-}
-
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 SESSION_COOKIE_SECURE = env.bool('SESSION_COOKIE_SECURE', True)
 SESSION_COOKIE_HTTPONLY = True
+# must be None to allow copy upstream to work
+SESSION_COOKIE_SAMESITE = None
 CSRF_COOKIE_SECURE = env.bool('CSRF_COOKIE_SECURE', True)
 
 # security
@@ -360,7 +322,6 @@ DIRECTORY_HEALTHCHECK_BACKENDS = [
 WAGTAIL_SITE_NAME = 'directory-cms'
 WAGTAIL_PASSWORD_RESET_ENABLED = False
 
-LOGIN_URL = '/admin/login'
 BASE_URL = env.str('BASE_URL')
 
 APP_URL_EXPORT_READINESS = env.str('APP_URL_EXPORT_READINESS')
@@ -458,7 +419,9 @@ if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
     WAGTAIL_PASSWORD_MANAGEMENT_ENABLED = False
     WAGTAIL_PASSWORD_RESET_ENABLED = False
     WAGTAILUSERS_PASSWORD_ENABLED = False
-
+    MIGRATE_EMAIL_USER_ON_LOGIN = env.bool('MIGRATE_EMAIL_USER_ON_LOGIN', False)
+else:
+    LOGIN_URL = '/admin/login/'
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
@@ -487,10 +450,8 @@ ALLOWED_ADMIN_IP_RANGES = env.list(
 RESTRICTED_APP_NAMES = ['admin', 'wagtailadmin']
 
 # Celery
-# separate to REDIS_CACHE_URL as needs to start with 'redis' and SSL conf
-# is in conf/celery.py
-CELERY_BROKER_URL = REDIS_CELERY_URL
-CELERY_RESULT_BACKEND = REDIS_CELERY_URL
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = REDIS_URL
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
