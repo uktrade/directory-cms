@@ -1123,7 +1123,7 @@ class AboutDitServicesPagePanels:
                     FieldPanel('ebook_section_body'),
                     HelpPanel('CTAs require both text and a link to show on page. '),
                     FieldPanel('ebook_section_cta_text'),
-                    DocumentChooserPanel('ebook_section_cta_link'),
+                    FieldPanel('ebook_section_cta_link'),
                 ]),
             ]
         ),
