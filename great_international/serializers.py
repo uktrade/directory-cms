@@ -2159,7 +2159,7 @@ class AboutDitServicesPageSerializer(BasePageSerializer, HeroSerializer):
     ebook_section_image_alt_text = serializers.CharField()
     ebook_section_body = core_fields.MarkdownToHTMLField()
     ebook_section_cta_text = serializers.CharField()
-    ebook_section_cta_link = core_fields.DocumentURLField()
+    ebook_section_cta_link = serializers.CharField()
     case_study_image = wagtail_fields.ImageRenditionField('original')
     case_study_title = serializers.CharField()
     case_study_text = serializers.CharField()
