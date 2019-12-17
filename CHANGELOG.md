@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- No ticket - Update pillow to fix vulnerability
 - CI-627 - Add ebook section to AboutDitServicesPage, remove translations for images
 
 ## [2019.12.12](https://github.com/uktrade/directory-cms/releases/tag/2019.12.12)
