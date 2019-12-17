@@ -2,6 +2,8 @@
 
 ## Pre-release
 
+### Implemented enhancements
+- CI-627 - Add ebook section to AboutDitServicesPage, remove translations for images
 
 ## [2019.12.12](https://github.com/uktrade/directory-cms/releases/tag/2019.12.12)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.11.18...2019.12.12)
