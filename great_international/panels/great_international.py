@@ -1104,16 +1104,28 @@ class AboutDitServicesPagePanels:
             heading="Hero",
             children=[
                 FieldPanel('hero_title'),
-                ImageChooserPanel('hero_image'),
             ],
         ),
         MultiFieldPanel(
             heading="Teaser",
             children=[
-                HelpPanel('Teaser is required for section to show'),
                 FieldPanel('teaser'),
-                ImageChooserPanel('teaser_image'),
             ],
+        ),
+        MultiFieldPanel(
+            heading="EBook section",
+            classname='collapsible',
+            children=[
+                FieldRowPanel([
+                    FieldPanel('ebook_section_image_alt_text')
+                ]),
+                MultiFieldPanel([
+                    FieldPanel('ebook_section_body'),
+                    HelpPanel('CTAs require both text and a link to show on page. '),
+                    FieldPanel('ebook_section_cta_text'),
+                    FieldPanel('ebook_section_cta_link'),
+                ]),
+            ]
         ),
         FieldPanel('featured_description'),
         MultiFieldPanel(
@@ -1132,7 +1144,6 @@ class AboutDitServicesPagePanels:
             children=[
                 HelpPanel('Required fields for section to show: '
                           'Case Study Image, Case Study Title'),
-                ImageChooserPanel('case_study_image'),
                 FieldPanel('case_study_title'),
                 FieldPanel('case_study_text'),
                 HelpPanel('CTAs require both text and a link to show '
@@ -1158,13 +1169,22 @@ class AboutDitServicesPagePanels:
         SearchEngineOptimisationPanel()
     ]
 
+    image_panels = [
+        ImageChooserPanel('hero_image'),
+        ImageChooserPanel('ebook_section_image'),
+        ImageChooserPanel('case_study_image'),
+    ]
+
     settings_panels = [
         FieldPanel('slug'),
     ]
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
-        settings_panels=settings_panels
+        settings_panels=settings_panels,
+        other_panels=[
+            ObjectList(image_panels, heading='Images'),
+        ]
     )
 
 
