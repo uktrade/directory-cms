@@ -5,7 +5,7 @@ from django.db import migrations
 
 DATA = {
     'Antarctica': ('Antarctica'),
-    'Australian islands, Indian Ocean': ('Christmas Island', 'Cocos (Keeling) Islands')
+    'Australian islands, Indian Ocean': ('Christmas Island', 'Cocos (Keeling) Islands'),
     'British islands, South Atlantic Ocean': (
         'Ascension',
         'Falkland Islands',
