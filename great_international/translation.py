@@ -960,11 +960,14 @@ class AboutDitServicesPageTranslationOptions(
     fields = (
         'breadcrumbs_label',
         'hero_title',
-        'hero_image',
         'featured_description',
         'teaser',
-        'teaser_image',
-        'case_study_image',
+
+        'ebook_section_image_alt_text',
+        'ebook_section_body',
+        'ebook_section_cta_text',
+        'ebook_section_cta_link',
+
         'case_study_title',
         'case_study_text',
         'case_study_cta_text',
