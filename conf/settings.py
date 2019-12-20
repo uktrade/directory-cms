@@ -18,6 +18,7 @@ import dj_database_url
 from django.urls import reverse_lazy
 import environ
 import sentry_sdk
+from sentry_sdk.integrations.celery import CeleryIntegration
 from sentry_sdk.integrations.django import DjangoIntegration
 
 
@@ -282,13 +283,47 @@ if DEBUG:
             },
         }
     }
-
+else:
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": True,
+        "formatters": {
+            "verbose": {
+                "format": "%(levelname)s %(asctime)s %(module)s "
+                          "%(process)d %(thread)d %(message)s"
+            }
+        },
+        "handlers": {
+            "console": {
+                "level": "DEBUG",
+                "class": "logging.StreamHandler",
+                "formatter": "verbose",
+            }
+        },
+        "loggers": {
+            "django.db.backends": {
+                "level": "ERROR",
+                "handlers": ["console"],
+                "propagate": False,
+            },
+            "sentry_sdk": {
+                "level": "ERROR",
+                "handlers": ["console"],
+                "propagate": False
+            },
+            "django.security.DisallowedHost": {
+                "level": "ERROR",
+                "handlers": ["console"],
+                "propagate": False,
+            },
+        },
+    }
 # Sentry
 if env.str('SENTRY_DSN', ''):
     sentry_sdk.init(
         dsn=env.str('SENTRY_DSN'),
         environment=env.str('SENTRY_ENVIRONMENT'),
-        integrations=[DjangoIntegration()]
+        integrations=[DjangoIntegration(), CeleryIntegration()]
     )
 
 SIGNATURE_SECRET = env.str('SIGNATURE_SECRET')
