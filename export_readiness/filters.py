@@ -1,3 +1,4 @@
+from django.db.models import Q
 import django_filters
 
 from export_readiness import models
@@ -8,8 +9,13 @@ class CharFilter(django_filters.CharFilter):
         if not value:
             return qs
         values = value.split(',')
-        for value in values:
-            qs |= qs.filter(**{f'{self.field_name}__{self.lookup_expr}': value})
+        if len(values) == 1:
+            qs = qs.filter(**{f'{self.field_name}__{self.lookup_expr}': value})
+        else:
+            q_objects = Q()
+            for value in values:
+                q_objects |= Q(**{f'{self.field_name}__{self.lookup_expr}': value})
+                qs = qs.filter(q_objects)
         return qs.distinct()
 
 

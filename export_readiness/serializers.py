@@ -394,28 +394,28 @@ class IntroCTAsSerializer(serializers.Serializer):
 
 
 class CountryGuidePageSerializer(PageWithRelatedPagesSerializer, HeroSerializer):
-    heading = serializers.CharField(max_length=255)
-    sub_heading = serializers.CharField(max_length=255)
-    heading_teaser = serializers.CharField()
-    intro_ctas = serializers.SerializerMethodField()
+    # heading = serializers.CharField(max_length=255)
+    # sub_heading = serializers.CharField(max_length=255)
+    # heading_teaser = serializers.CharField()
+    # intro_ctas = serializers.SerializerMethodField()
 
-    section_one_body = core_fields.MarkdownToHTMLField()
-    section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
-    section_one_image_caption = serializers.CharField(max_length=255)
-    section_one_image_caption_company = serializers.CharField(
-        max_length=255)
+    # section_one_body = core_fields.MarkdownToHTMLField()
+    # section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    # section_one_image_caption = serializers.CharField(max_length=255)
+    # section_one_image_caption_company = serializers.CharField(
+    #     max_length=255)
 
-    section_two_heading = serializers.CharField(max_length=255, allow_null=True)
-    section_two_teaser = serializers.CharField(allow_null=True)
+    # section_two_heading = serializers.CharField(max_length=255, allow_null=True)
+    # section_two_teaser = serializers.CharField(allow_null=True)
 
-    statistics = serializers.SerializerMethodField()
-    accordions = serializers.SerializerMethodField()
-    fact_sheet = serializers.SerializerMethodField()
+    # statistics = serializers.SerializerMethodField()
+    # accordions = serializers.SerializerMethodField()
+    # fact_sheet = serializers.SerializerMethodField()
 
     help_market_guide_cta_link = serializers.CharField(max_length=255)
 
     tags = core_fields.TagsListField()
-    region = serializers.CharField(allow_null=True, source='country__region_name')
+    region = serializers.CharField(allow_null=True, source='country.region.name')
 
     def get_intro_ctas(self, instance):
         data = [
