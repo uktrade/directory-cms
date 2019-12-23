@@ -16,6 +16,9 @@ class Tag(models.Model):
         FieldPanel('name')
     ]
 
+    class Meta:
+        ordering = ('name',)
+
 
 @register_snippet
 class IndustryTag(models.Model):
@@ -36,6 +39,9 @@ class IndustryTag(models.Model):
         ImageChooserPanel('icon')
     ]
 
+    class Meta:
+        ordering = ('name',)
+
 
 @register_snippet
 class Region(models.Model):
@@ -47,6 +53,9 @@ class Region(models.Model):
     panels = [
         FieldPanel('name')
     ]
+
+    class Meta:
+        ordering = ('name',)
 
 
 @register_snippet
@@ -63,3 +72,6 @@ class Country(models.Model):
         FieldPanel('slug'),
         FieldPanel('region')
     ]
+
+    class Meta:
+        ordering = ('name',)
