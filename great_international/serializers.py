@@ -2103,24 +2103,11 @@ class InternationalTradeHomePageSerializer(BasePageSerializer):
 
 class InternationalTradeIndustryContactPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
-    breadcrumbs = core_fields.BreadcrumbsField(
-        service_name=cms.FIND_A_SUPPLIER
-    )
+    breadcrumbs = core_fields.BreadcrumbsField(service_name=cms.FIND_A_SUPPLIER)
     introduction_text = core_fields.MarkdownToHTMLField()
     submit_button_text = serializers.CharField()
     success_message_text = core_fields.MarkdownToHTMLField()
     success_back_link_text = serializers.CharField()
-    industry_options = serializers.SerializerMethodField()
-
-    def get_industry_options(self, instance):
-        queryset = InternationalSectorPage.objects.filter(live=True)
-        serializer = BaseInternationalSectorPageSerializer(
-            queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-        return serializer.data
 
 
 class AboutDitLandingPageSerializer(PageWithRelatedPagesSerializer, BasePageSerializer, HeroSerializer):
