@@ -16,6 +16,7 @@ botocore==1.9.23          # via boto3, s3transfer
 celery[redis]==4.2.1
 certifi==2018.11.29       # via requests, sentry-sdk
 chardet==3.0.4            # via requests
+click==7.0                # via pip-tools
 coverage==4.5.2           # via coveralls, pytest-cov
 coveralls==1.8.2
 directory-components==20.0.0
@@ -64,7 +65,8 @@ more-itertools==4.3.0     # via pytest, zipp
 notifications-python-client==5.3.0
 oauthlib==3.0.1           # via requests-oauthlib
 packaging==18.0           # via pytest, pytest-sugar
-pillow==5.3.0             # via wagtail
+pillow==6.2.1
+pip-tools==4.3.0
 pluggy==0.12.0            # via pytest
 psycopg2==2.7.3.2
 py==1.7.0                 # via pytest
@@ -88,7 +90,7 @@ requests==2.21.0
 s3transfer==0.1.13        # via boto3
 sentry-sdk==0.13.4
 sigauth==4.1.0
-six==1.12.0               # via bleach, faker, freezegun, html5lib, jsonschema, mohawk, more-itertools, packaging, pyrsistent, python-dateutil, requests-mock, w3lib, wagtail
+six==1.12.0               # via bleach, faker, freezegun, html5lib, jsonschema, mohawk, more-itertools, packaging, pip-tools, pyrsistent, python-dateutil, requests-mock, w3lib, wagtail
 sqlparse==0.2.4           # via django, django-debug-toolbar
 termcolor==1.1.0          # via pytest-sugar
 text-unidecode==1.2       # via faker

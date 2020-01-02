@@ -54,7 +54,7 @@ monotonic==1.5            # via notifications-python-client
 more-itertools==8.0.0     # via zipp
 notifications-python-client==5.3.0
 oauthlib==3.1.0           # via requests-oauthlib
-pillow==6.2.1             # via wagtail
+pillow==6.2.1
 psycopg2==2.7.3.2
 pyjwt==1.7.1              # via notifications-python-client
 pyrsistent==0.15.6        # via jsonschema

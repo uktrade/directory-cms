@@ -32,3 +32,4 @@ urllib3>=1.24.2<2.0.0
 w3lib>=1.19.0<2.0.0
 django-admin-ip-restrictor==1.0.0
 notifications-python-client==5.3.*
+pillow>=6.2.0  # for security fix. check compatibility on next wagtail upgrade
