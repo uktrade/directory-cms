@@ -7,6 +7,7 @@
 - CI-627 - Add ebook section to AboutDitServicesPage, remove translations for images
 
 ### Fixed bugs
+- No ticket - Roll back modeltranslation to fix issue with page copy
 - No ticket - Delete unused field from serializer to prevent page returning too much data and causing an error
 
 ## [2019.12.12](https://github.com/uktrade/directory-cms/releases/tag/2019.12.12)
