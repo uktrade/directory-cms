@@ -415,7 +415,7 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer, HeroSerializer)
     help_market_guide_cta_link = serializers.CharField(max_length=255)
 
     tags = core_fields.TagsListField()
-    region = serializers.CharField(allow_null=True, source='country__region_name')
+    region = serializers.CharField(allow_null=True, source='country.region.name')
 
     def get_intro_ctas(self, instance):
         data = [
