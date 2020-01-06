@@ -99,7 +99,7 @@ urllib3==1.24.2
 vine==1.1.4               # via amqp
 w3lib==1.20.0
 wagtail-factories==2.0.0
-wagtail-modeltranslation==0.10.6
+wagtail-modeltranslation==0.10.2
 wagtail==2.6.3
 wagtailmedia==0.3.1
 wcwidth==0.1.7            # via pytest
