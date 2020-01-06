@@ -30,14 +30,11 @@ class CountryPageListAPIView(ListAPIView):
         q_regions = Q()
         if industry:
             for value in industry.split(','):
-                q_industries |= Q(**{'country__region__name': value})
-                queryset.filter(q_industries)
+                q_industries |= Q(tags__name=value)
         if region:
             for value in region.split(','):
-                q_regions |= Q(**{'tags__name': value})
-                queryset.filter(q_regions)
-
-        return queryset.distinct()
+                q_regions |= Q(country__region__name=value)
+        return queryset.filter(q_industries & q_regions).distinct()
 
 
 class RegionsListAPIView(ListAPIView):
