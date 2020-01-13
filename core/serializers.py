@@ -2,8 +2,6 @@ from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
 
 from core import fields
-from great_international.models.capital_invest import \
-    CapitalInvestOpportunityPage
 
 
 class PageTitleAndUrlSerializer(serializers.Serializer):
