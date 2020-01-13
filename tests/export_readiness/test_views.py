@@ -244,7 +244,7 @@ def test_lookup_market_guides_missing_region(client):
     tag = factories.IndustryTagFactory()
     tag2 = factories.IndustryTagFactory()
     market1 = factories.CountryGuidePageFactory()
-    market1.tags = [tag, tag2]
+    market1.tags = [tag2]
     market1.save()
     market2 = factories.CountryGuidePageFactory()
     market2.tags = [tag]
@@ -270,6 +270,7 @@ def test_lookup_market_guides_missing_region_markets_have_region(client):
     market2 = factories.CountryGuidePageFactory()
     market2.tags = [tag]
     market2.save()
+    factories.CountryGuidePageFactory()
 
     url = reverse('api:lookup-country-guides-list-view')
 
@@ -284,7 +285,7 @@ def test_lookup_market_guides_all_filters(client):
     tag = factories.IndustryTagFactory()
     region = factories.RegionFactory()
     country = factories.CountryFactory(region=region)
-    market1 = factories.CountryGuidePageFactory()
+    market1 = factories.CountryGuidePageFactory(country=country)
     market1.tags = [tag]
     market1.save()
     factories.CountryGuidePageFactory(country=country)
@@ -292,7 +293,7 @@ def test_lookup_market_guides_all_filters(client):
 
     response = client.get(f'{url}?industry={tag.name}&region={region.name}')
     assert response.status_code == 200
-    assert len(response.json()) == 2
+    assert len(response.json()) == 1
     assert response.json()[0]['id'] == market1.pk
 
 

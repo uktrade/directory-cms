@@ -1,8 +1,8 @@
-from django_filters.rest_framework import DjangoFilterBackend
+from django.db.models import Q
 from rest_framework.generics import RetrieveAPIView, ListAPIView
 
 from conf.signature import SignatureCheckPermission
-from export_readiness import filters, models, serializers, snippets
+from export_readiness import models, serializers, snippets
 
 
 class CountryPageLookupByIndustryTagIDListAPIView(RetrieveAPIView):
@@ -19,10 +19,22 @@ class IndustryTagsListAPIView(ListAPIView):
 
 class CountryPageListAPIView(ListAPIView):
     queryset = models.CountryGuidePage.objects.all()
-    filter_backends = [DjangoFilterBackend]
     serializer_class = serializers.CountryGuidePageSerializer
-    filterset_class = filters.CountryGuideFilter
     permission_classes = [SignatureCheckPermission]
+
+    def get_queryset(self):
+        queryset = models.CountryGuidePage.objects.all()
+        industry = self.request.query_params.get('industry')
+        region = self.request.query_params.get('region')
+        q_industries = Q()
+        q_regions = Q()
+        if industry:
+            for value in industry.split(','):
+                q_industries |= Q(tags__name=value)
+        if region:
+            for value in region.split(','):
+                q_regions |= Q(country__region__name=value)
+        return queryset.filter(q_industries & q_regions).distinct()
 
 
 class RegionsListAPIView(ListAPIView):
