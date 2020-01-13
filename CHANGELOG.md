@@ -3,6 +3,12 @@
 ## Pre-release
 
 ### Implemented enhancements
+ - TT-2248 - Facilitate .internal domain communication
+
+## [2020.01.09](https://github.com/uktrade/directory-cms/releases/tag/2020.01.09)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.12.12...2020.01.09)
+
+### Implemented enhancements
 - No ticket - Update pillow to fix vulnerability
 - CI-627 - Add ebook section to AboutDitServicesPage, remove translations for images
 
