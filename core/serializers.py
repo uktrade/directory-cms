@@ -2,8 +2,6 @@ from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
 
 from core import fields
-from great_international.models.capital_invest import \
-    CapitalInvestOpportunityPage
 
 
 class PageTitleAndUrlSerializer(serializers.Serializer):
@@ -104,33 +102,3 @@ class ParentPageSerializerHelper(serializers.Serializer):
             context=self.context
         )
         return serializer.data
-
-
-class SameSectorOpportunitiesHelper(serializers.Serializer):
-    def get_same_sector_opportunity_pages_data_for(
-            self, instance, serializer, related_sectors
-    ):
-        page_type = CapitalInvestOpportunityPage
-        page_type.objects.live().public().all().prefetch_related('related_sectors')
-        all_opportunity_pages = page_type.objects.live().public().all()
-
-        related_sectors_with_opps = {
-            sector['title']: [] for sectors in related_sectors
-            for sector in sectors.values() if sector
-        }
-
-        for opportunity in all_opportunity_pages:
-            opps_related_sectors = opportunity.related_sectors.all()
-            for sector in related_sectors_with_opps:
-                for related_sector in opps_related_sectors:
-                    if related_sector.related_sector and related_sector.related_sector.title == sector \
-                            and opportunity.slug != instance.slug:
-                        serialized_opp = serializer(
-                            opportunity,
-                            allow_null=True,
-                            context=self.context
-                        ).data
-                        related_sectors_with_opps[sector]\
-                            .append(serialized_opp)
-
-        return related_sectors_with_opps

@@ -586,9 +586,7 @@ def test_international_sector_page_gets_opps_with_sector_as_related(
 
 
 @pytest.mark.django_db
-def test_opp_page_null_case_related_sector(
-        rf, international_root_page
-):
+def test_opp_page_null_case_related_sector(rf, international_root_page):
 
     related_sector = CapitalInvestRelatedSectors()
 
@@ -942,9 +940,8 @@ def test_about_uk_why_choose_the_uk_page_gets_added_related_articles_fields(
 
 
 @pytest.mark.django_db
-def test_opportunity_page_gets_opportunities_with_same_sector(
-        rf, international_root_page
-):
+def test_opportunity_page_gets_opportunities_with_same_sector(rf, international_root_page):
+
     topic_landing_page = InternationalGuideLandingPageFactory(
         parent=international_root_page,
         slug='page-slug',
@@ -961,9 +958,7 @@ def test_opportunity_page_gets_opportunities_with_same_sector(
         slug='ashton-green',
         title_en_gb='Ashton Green',
         related_sectors=[
-            CapitalInvestRelatedSectors(
-                related_sector=sector
-            )
+            CapitalInvestRelatedSectors(related_sector=sector)
         ]
     )
 
@@ -972,9 +967,7 @@ def test_opportunity_page_gets_opportunities_with_same_sector(
         slug='birimingham-curzon',
         title_en_gb='Birmingham Curzon',
         related_sectors=[
-            CapitalInvestRelatedSectors(
-                related_sector=sector
-            )
+            CapitalInvestRelatedSectors(related_sector=sector)
         ]
     )
 
@@ -983,16 +976,15 @@ def test_opportunity_page_gets_opportunities_with_same_sector(
         context={'request': rf.get('/')}
     )
 
-    assert len(birmingham_serializer.data['related_sector_with_opportunities'].keys()) == 1
-    for sectors in birmingham_serializer.data['related_sector_with_opportunities'].values():
-        for sector in sectors:
-            assert sector['meta']['slug'] == 'ashton-green'
+    related_opps = birmingham_serializer.data['related_opportunities']
+
+    assert len(related_opps) == 1
+
+    assert related_opps[0]['meta']['slug'] == 'ashton-green'
 
 
 @pytest.mark.django_db
-def test_opportunity_page_null_case_gets_opportunities_with_same_sector(
-        rf, international_root_page
-):
+def test_opportunity_page_null_case_gets_opportunities_with_same_sector(rf, international_root_page):
     topic_landing_page = InternationalGuideLandingPageFactory(
         parent=international_root_page,
         slug='page-slug',
@@ -1004,24 +996,21 @@ def test_opportunity_page_null_case_gets_opportunities_with_same_sector(
         title='sector_title'
     )
 
-    related_sector = CapitalInvestRelatedSectors(
-        related_sector=sector
-    )
+    related_sector = CapitalInvestRelatedSectors(related_sector=sector)
 
-    birmingham_curzon = CapitalInvestOpportunityPageFactory(
+    opportunity = CapitalInvestOpportunityPageFactory(
         parent=international_root_page,
         slug='birimingham-curzon',
         title_en_gb='Birmingham Curzon',
         related_sectors=[related_sector]
     )
 
-    birmingham_curzon_serializer = CapitalInvestOpportunityPageSerializer(
-        instance=birmingham_curzon,
+    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
+        instance=opportunity,
         context={'request': rf.get('/')}
     )
 
-    for value in birmingham_curzon_serializer.data['related_sector_with_opportunities'].values():
-        assert value == []
+    assert len(opportunity_serializer.data['related_opportunities']) == 0
 
 
 @pytest.mark.django_db
