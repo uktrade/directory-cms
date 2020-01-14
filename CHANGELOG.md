@@ -2,6 +2,9 @@
 
 ## Pre-release
 
+### Fixed bugs
+- No ticket - Refactor related opportunities serializer
+
 ### Implemented enhancements
  - TT-2248 - Facilitate .internal domain communication
 
@@ -13,7 +16,6 @@
 - CI-627 - Add ebook section to AboutDitServicesPage, remove translations for images
 
 ### Fixed bugs
-- No ticket - Refactor related opportunities serializer
 - No ticket - Roll back modeltranslation to fix issue with page copy
 - No ticket - Delete unused field from serializer to prevent page returning too much data and causing an error
 
