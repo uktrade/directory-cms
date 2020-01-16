@@ -7,6 +7,7 @@
 - TT-2254 - Cleaned up obsolete settings
 
 ### Implemented enhancements
+- XOT-1278 - Allow article pages under marketing pages folder
 - TT-2248 - Facilitate .internal domain communication
 
 ## [2020.01.09](https://github.com/uktrade/directory-cms/releases/tag/2020.01.09)
