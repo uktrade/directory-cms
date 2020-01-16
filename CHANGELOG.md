@@ -4,7 +4,7 @@
 
 ### Fixed bugs
 - No ticket - Refactor related opportunities serializer
-- TT-2254 - Cleaned up obseolete settings
+- TT-2254 - Cleaned up obsolete settings
 
 ### Implemented enhancements
 - TT-2248 - Facilitate .internal domain communication
