@@ -9,6 +9,7 @@
 ### Implemented enhancements
 - XOT-1278 - Allow article pages under marketing pages folder
 - TT-2248 - Facilitate .internal domain communication
+- XOT-1279 - Speed up markets landing page
 
 ## [2020.01.09](https://github.com/uktrade/directory-cms/releases/tag/2020.01.09)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2019.12.12...2020.01.09)
