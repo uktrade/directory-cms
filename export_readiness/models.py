@@ -1062,6 +1062,7 @@ class MarketingPages(ExclusivePageMixin, BaseDomesticPage):
 
     subpage_types = [
         'export_readiness.MarketingArticlePage',
+        'export_readiness.ArticlePage',
     ]
 
     settings_panels = []
