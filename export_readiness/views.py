@@ -40,7 +40,7 @@ class CountryPageListAPIView(ListAPIView):
     def cache_key(self):
         industry = self.request.GET.get('industry')
         region = self.request.GET.get('region')
-        return f'{industry}{region}'
+        return f'countryguide_{industry}{region}'
 
     def get_queryset(self):
         queryset = models.CountryGuidePage.objects.all()
@@ -62,6 +62,7 @@ class CountryPageListAPIView(ListAPIView):
         cached_content = cache.get(key=self.cache_key)
         if cached_content:
             response = Response(cached_content)
+            response.render()
         else:
             response = super().dispatch(request, *args, **kwargs)
             response.render()
