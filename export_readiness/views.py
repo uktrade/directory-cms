@@ -1,9 +1,10 @@
+import json
+
 from django.core.cache import cache
 from django.db.models import Q
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from rest_framework.generics import RetrieveAPIView, ListAPIView
-from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
 from conf.signature import SignatureCheckPermission
@@ -34,7 +35,6 @@ class CountryPageListAPIView(ListAPIView):
     serializer_class = serializers.CountryGuidePageSerializer
     permission_classes = [SignatureCheckPermission]
     http_method_names = ('get', )
-    renderer_classes = (JSONRenderer,)
 
     @property
     def cache_key(self):
@@ -65,7 +65,7 @@ class CountryPageListAPIView(ListAPIView):
 
         cached_content = cache.get(key=self.cache_key)
         if cached_content:
-            response = Response(cached_content)
+            response = Response(json.loads(cached_content), content_type='application/json')
         else:
             response = super().get(*args, **kwargs)
             response.add_post_render_callback(foo)
