@@ -393,6 +393,13 @@ class IntroCTAsSerializer(serializers.Serializer):
     title = serializers.CharField()
 
 
+class CountryGuideListingPageSerializer(serializers.Serializer):
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
+    full_path = serializers.CharField(max_length=255, source='specific.full_path')
+    last_published_at = serializers.DateTimeField()
+    title = serializers.CharField()
+
+
 class CountryGuidePageSerializer(PageWithRelatedPagesSerializer, HeroSerializer):
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
