@@ -309,11 +309,12 @@ def test_lookup_market_guides_all_filters_cache(client):
     factories.CountryGuidePageFactory(country=country)
     url = reverse('api:lookup-country-guides-list-view')
 
-    cache.set(key=f'countryguide_{tag.name}{region.name}', value=b'foobar')
+    cache.set(key=f'countryguide_{tag.name}{region.name}', value=b'{"foobar": "True"}')
 
     response = client.get(f'{url}?industry={tag.name}&region={region.name}')
     assert response.status_code == 200
-    assert response.content == b'"foobar"'
+    assert response.json() == {'foobar': 'True'}
+    assert response.content_type == 'application/json'
 
 
 @pytest.mark.django_db
