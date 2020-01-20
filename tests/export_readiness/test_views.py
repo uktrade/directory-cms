@@ -1,6 +1,7 @@
 from unittest.mock import ANY
 
 import pytest
+from django.core.cache import cache
 from rest_framework.reverse import reverse
 
 from tests.export_readiness import factories
@@ -281,7 +282,7 @@ def test_lookup_market_guides_missing_region_markets_have_region(client):
 
 
 @pytest.mark.django_db
-def test_lookup_market_guides_all_filters(client):
+def test_lookup_market_guides_all_filters_no_cache(client):
     tag = factories.IndustryTagFactory()
     region = factories.RegionFactory()
     country = factories.CountryFactory(region=region)
@@ -295,6 +296,24 @@ def test_lookup_market_guides_all_filters(client):
     assert response.status_code == 200
     assert len(response.json()) == 1
     assert response.json()[0]['id'] == market1.pk
+
+
+@pytest.mark.django_db
+def test_lookup_market_guides_all_filters_cache(client):
+    tag = factories.IndustryTagFactory()
+    region = factories.RegionFactory()
+    country = factories.CountryFactory(region=region)
+    market1 = factories.CountryGuidePageFactory(country=country)
+    market1.tags = [tag]
+    market1.save()
+    factories.CountryGuidePageFactory(country=country)
+    url = reverse('api:lookup-country-guides-list-view')
+
+    cache.set(key=f'countryguide_{tag.name}{region.name}', value=b'foobar')
+
+    response = client.get(f'{url}?industry={tag.name}&region={region.name}')
+    assert response.status_code == 200
+    assert response.content == b'"foobar"'
 
 
 @pytest.mark.django_db

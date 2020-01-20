@@ -58,15 +58,17 @@ class CountryPageListAPIView(ListAPIView):
                 q_regions |= Q(country__region__name=value)
         return queryset.filter(q_industries & q_regions).distinct()
 
-    def dispatch(self, request, *args, **kwargs):
+    def get(self, *args, **kwargs):
+
+        def foo(response):
+            cache.set(key=self.cache_key, value=response.content, timeout=THIRTY_MINUTES_IN_SECONDS)
+
         cached_content = cache.get(key=self.cache_key)
         if cached_content:
             response = Response(cached_content)
-            response.render()
         else:
-            response = super().dispatch(request, *args, **kwargs)
-            response.render()
-            cache.set(key=self.cache_key, value=response.content, timeout=THIRTY_MINUTES_IN_SECONDS)
+            response = super().get(*args, **kwargs)
+            response.add_post_render_callback(foo)
         return response
 
 
