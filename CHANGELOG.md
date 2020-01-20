@@ -2,8 +2,10 @@
 
 ## Pre-release
 
+## [2020.01.20](https://github.com/uktrade/directory-cms/releases/tag/2020.01.20)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.01.09...2020.01.20)
+
 ### Fixed bugs
-- No ticket - Refactor related opportunities serializer
 - TT-2254 - Cleaned up obsolete settings
 
 ### Implemented enhancements
@@ -19,6 +21,7 @@
 - CI-627 - Add ebook section to AboutDitServicesPage, remove translations for images
 
 ### Fixed bugs
+- No ticket - Refactor related opportunities serializer
 - No ticket - Roll back modeltranslation to fix issue with page copy
 - No ticket - Delete unused field from serializer to prevent page returning too much data and causing an error
 
