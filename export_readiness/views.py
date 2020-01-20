@@ -65,7 +65,7 @@ class CountryPageListAPIView(ListAPIView):
 
         cached_content = cache.get(key=self.cache_key)
         if cached_content:
-            response = Response(cached_content)
+            response = Response(cached_content, content_type='application/json')
         else:
             response = super().get(*args, **kwargs)
             response.add_post_render_callback(foo)
