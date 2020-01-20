@@ -7,7 +7,6 @@ from core.serializers import (
     BasePageSerializer,
     ChildPagesSerializerHelper,
     FormPageSerializerMetaclass,
-    SameSectorOpportunitiesHelper,
     HeroSerializer,
 )
 
@@ -633,8 +632,7 @@ class RelatedDitServicesPageSerializer(BasePageSerializer):
 MODEL_TO_SERIALIZER_MAPPING = {
     InternationalArticlePage: RelatedArticlePageSerializer,
     InternationalCampaignPage: RelatedCampaignPageSerializer,
-    CapitalInvestOpportunityPage:
-    RelatedCapitalInvestOpportunityPageSerializer,
+    CapitalInvestOpportunityPage: RelatedCapitalInvestOpportunityPageSerializer,
     AboutDitServicesPage: RelatedDitServicesPageSerializer,
 }
 
@@ -1538,7 +1536,7 @@ class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
 
 
 class CapitalInvestOpportunityPageSerializer(
-    RelatedRegionSerializer, SameSectorOpportunitiesHelper, BasePageSerializer, HeroSerializer
+    RelatedRegionSerializer, BasePageSerializer, HeroSerializer
 ):
 
     breadcrumbs_label = serializers.CharField(max_length=255)
@@ -1636,14 +1634,26 @@ class CapitalInvestOpportunityPageSerializer(
                             for sub_sector in serializer.data]
         return sub_sectors_list
 
-    related_sector_with_opportunities = serializers.SerializerMethodField()
+    related_opportunities = serializers.SerializerMethodField()
 
-    def get_related_sector_with_opportunities(self, instance):
-        return self.get_same_sector_opportunity_pages_data_for(
-            instance,
-            RelatedCapitalInvestOpportunityPageSerializer,
-            self.get_related_sectors(instance)
-        )
+    def get_related_opportunities(self, instance):
+        random_sector = instance.related_sectors.order_by('?').first()
+
+        if random_sector:
+
+            three_random_opps = CapitalInvestOpportunityPage.objects.filter(
+                related_sectors__related_sector_id=random_sector.related_sector_id
+            ).order_by('?').exclude(id=instance.id)[:3]
+
+            serializer = RelatedCapitalInvestOpportunityPageSerializer(
+                three_random_opps,
+                many=True,
+                allow_null=True,
+                context=self.context
+            )
+            return serializer.data
+
+        return []
 
 
 class MinimalPageSerializer(BasePageSerializer):
