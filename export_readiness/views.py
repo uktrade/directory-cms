@@ -43,7 +43,7 @@ class CountryPageListAPIView(ListAPIView):
         return f'countryguide_{industry}{region}'
 
     def get_queryset(self):
-        queryset = models.CountryGuidePage.objects.all()
+        queryset = models.CountryGuidePage.objects.filter(live=True)
         industry = self.request.query_params.get('industry')
         region = self.request.query_params.get('region')
         if not industry and not region:

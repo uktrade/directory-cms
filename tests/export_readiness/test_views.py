@@ -290,6 +290,9 @@ def test_lookup_market_guides_all_filters_no_cache(client):
     market1.tags = [tag]
     market1.save()
     factories.CountryGuidePageFactory(country=country)
+    market2 = factories.CountryGuidePageFactory(country=country, live=False)  # draft
+    market2.tags = [tag]
+    market2.save()
     url = reverse('api:lookup-country-guides-list-view')
 
     response = client.get(f'{url}?industry={tag.name}&region={region.name}')
