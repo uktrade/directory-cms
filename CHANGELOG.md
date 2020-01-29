@@ -2,6 +2,9 @@
 
 ## Pre-release
 
+### Implemented enhancements
+- No ticket - Fix markets page draft results bug
+
 ## [2020.01.20](https://github.com/uktrade/directory-cms/releases/tag/2020.01.20)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.01.09...2020.01.20)
 
