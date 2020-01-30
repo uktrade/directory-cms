@@ -482,7 +482,7 @@ class HomePageSerializer(BasePageSerializer):
     madb_title = serializers.CharField(required=False)
     madb_image = wagtail_fields.ImageRenditionField('original', required=False)
     madb_image_alt = serializers.CharField(required=False)
-    madb_content = serializers.CharField(required=False)
+    madb_content = core_fields.MarkdownToHTMLField(required=False)
     madb_cta_text = serializers.CharField(required=False)
     madb_cta_url = serializers.CharField(required=False)
 
