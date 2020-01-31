@@ -1402,7 +1402,7 @@ class HomePage(
         verbose_name='Image'
     )
     madb_image_alt = models.TextField(null=True, blank=True, verbose_name='Image alt text')
-    madb_content = models.TextField(null=True, blank=True, verbose_name='Content')
+    madb_content = MarkdownField(null=True, blank=True, verbose_name='Content')
     madb_cta_text = models.CharField(null=True, blank=True, max_length=255, verbose_name='CTA text')
     madb_cta_url = models.CharField(null=True, blank=True, max_length=255, verbose_name='CTA URL')
 
