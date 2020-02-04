@@ -13,6 +13,13 @@
 
 - XOT-1285 madb content markdown field
 
+## [2020.02.04](https://github.com/uktrade/directory-cms/releases/tag/2020.02.04)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.01.29...2020.02.04)
+
+### Hotfix
+
+- No ticket - Upgrade Django to fix security vulnerability
+
 ## [2020.01.29](https://github.com/uktrade/directory-cms/releases/tag/2020.01.29)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.01.20...2020.01.29)
 
