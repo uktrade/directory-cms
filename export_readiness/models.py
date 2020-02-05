@@ -1020,8 +1020,9 @@ class CountryGuidePage(panels.CountryGuidePagePanels, BaseDomesticPage):
     )
 
     # need help
-    help_market_guide_cta_link = models.CharField(
-        max_length=255, blank=True, verbose_name='GOV.UK country guide URL')
+    duties_and_custom_procedures_cta_link = models.URLField(
+        blank=True, null=True, verbose_name='Check duties and customs procedures for exporting goods'
+    )
 
     # related pages
     related_page_one = models.ForeignKey(

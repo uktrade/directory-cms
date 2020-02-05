@@ -889,7 +889,7 @@ class CountryGuidePagePanels:
             heading='Need help',
             classname='collapsible',
             children=[
-                FieldPanel('help_market_guide_cta_link')
+                FieldPanel('duties_and_custom_procedures_cta_link')
             ]
         ),
         MultiFieldPanel(

@@ -419,7 +419,7 @@ class CountryGuidePageSerializer(PageWithRelatedPagesSerializer, HeroSerializer)
     accordions = serializers.SerializerMethodField()
     fact_sheet = serializers.SerializerMethodField()
 
-    help_market_guide_cta_link = serializers.CharField(max_length=255)
+    duties_and_custom_procedures_cta_link = serializers.CharField(max_length=255)
 
     tags = core_fields.TagsListField()
     region = serializers.CharField(allow_null=True, source='country.region.name')

@@ -71,6 +71,7 @@ pluggy==0.12.0            # via pytest
 psycopg2==2.7.3.2
 py==1.7.0                 # via pytest
 pycodestyle==2.4.0        # via flake8
+pycountry==19.8.18
 pyflakes==2.0.0           # via flake8
 pyjwt==1.7.1              # via notifications-python-client
 pyparsing==2.3.0          # via packaging
