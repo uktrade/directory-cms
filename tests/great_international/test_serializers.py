@@ -41,7 +41,6 @@ from great_international.models.capital_invest import (
     CapitalInvestRelatedRegions,
     CapitalInvestHomesInEnglandCardFieldsSummary,
     CapitalInvestRegionCardFieldsSummary,
-    CapitalInvestRelatedSectors,
     CapitalInvestRelatedSubSectors
 )
 from great_international.models.great_international import (
