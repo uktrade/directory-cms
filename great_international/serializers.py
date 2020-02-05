@@ -1639,31 +1639,38 @@ class CapitalInvestOpportunityPageSerializer(
     related_opportunities = serializers.SerializerMethodField()
 
     def get_related_opportunities(self, instance):
-        random_sector_id = random.choice(
-            instance.related_sectors.values_list('related_sector_id', flat=True))
+        related_sectors_ids = instance.related_sectors.values_list('related_sector_id', flat=True)
 
-        if random_sector_id:
+        if not related_sectors_ids:
+            return []
 
-            related_opps_ids = CapitalInvestOpportunityPage.objects.filter(
-                related_sectors__related_sector_id=random_sector_id
-            ).exclude(id=instance.id).values_list('pk', flat=True)
+        random_sector_id = random.choice(related_sectors_ids)
 
+        related_opps_ids = CapitalInvestOpportunityPage.objects.filter(
+            related_sectors__related_sector_id=random_sector_id
+        ).exclude(id=instance.id).values_list('pk', flat=True)
+
+        if not related_opps_ids:
+            return []
+
+        elif len(related_opps_ids) > 3:
             random_ids = random.sample(list(related_opps_ids), 3)
 
-            related_opps = []
+        else:
+            random_ids = related_opps_ids
 
-            for id in random_ids:
-                related_opps.append(CapitalInvestOpportunityPage.objects.get(pk=id))
+        related_opps = []
 
-            serializer = RelatedCapitalInvestOpportunityPageSerializer(
-                related_opps,
-                many=True,
-                allow_null=True,
-                context=self.context
-            )
-            return serializer.data
+        for id in random_ids:
+            related_opps.append(CapitalInvestOpportunityPage.objects.get(pk=id))
 
-        return []
+        serializer = RelatedCapitalInvestOpportunityPageSerializer(
+            related_opps,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
 
 
 class MinimalPageSerializer(BasePageSerializer):
