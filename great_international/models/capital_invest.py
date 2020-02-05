@@ -544,9 +544,7 @@ class CapitalInvestRelatedSubSectors(Orderable, RelatedSubSector):
     )
 
 
-class CapitalInvestOpportunityPage(
-    panels.CapitalInvestOpportunityPagePanels, BaseInternationalPage
-):
+class CapitalInvestOpportunityPage(panels.CapitalInvestOpportunityPagePanels, BaseInternationalPage):
 
     parent_page_types = [
         'great_international.CapitalInvestOpportunityListingPage'
