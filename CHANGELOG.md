@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- XOT-1275 - Add MADB link field to country guide
 
 ### Fixed bugs
 
