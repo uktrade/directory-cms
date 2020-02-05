@@ -6,6 +6,7 @@
 - XOT-1275 - Add MADB link field to country guide
 
 ### Fixed bugs
+No ticket - Fix error on opportunity page
 
 ## [2020.01.31](https://github.com/uktrade/directory-cms/releases/tag/2020.01.31)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.01.29...2020.01.31)
