@@ -20,6 +20,8 @@ def set_duties_and_custom_procedures_cta_link(apps, schema_editor):
             matches = pycountry.countries.search_fuzzy(guide.country.name)
         except LookupError:
             logger.warn(f'no country match for {guide.country.name}')
+        except AttributeError:
+            logger.warn(f'skipping {guide.title}')
         else:
             guide.duties_and_custom_procedures_cta_link = f'{url}{matches[0].alpha_2}'
             guide.save()
