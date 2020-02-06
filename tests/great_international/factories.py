@@ -412,6 +412,14 @@ class CapitalInvestOpportunityPageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
+class CapitalInvestRelatedSectorsFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.capital_invest.CapitalInvestRelatedSectors
+
+    page = None
+    related_sector = None
+
+
 class CapitalInvestOpportunityListingPageFactory(
     wagtail_factories.PageFactory
 ):

@@ -1,3 +1,5 @@
+import random
+
 from directory_constants import cms
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
@@ -1637,23 +1639,38 @@ class CapitalInvestOpportunityPageSerializer(
     related_opportunities = serializers.SerializerMethodField()
 
     def get_related_opportunities(self, instance):
-        random_sector = instance.related_sectors.order_by('?').first()
+        related_sectors_ids = instance.related_sectors.values_list('related_sector_id', flat=True)
 
-        if random_sector:
+        if not related_sectors_ids:
+            return []
 
-            three_random_opps = CapitalInvestOpportunityPage.objects.filter(
-                related_sectors__related_sector_id=random_sector.related_sector_id
-            ).order_by('?').exclude(id=instance.id)[:3]
+        random_sector_id = random.choice(related_sectors_ids)
 
-            serializer = RelatedCapitalInvestOpportunityPageSerializer(
-                three_random_opps,
-                many=True,
-                allow_null=True,
-                context=self.context
-            )
-            return serializer.data
+        related_opps_ids = CapitalInvestOpportunityPage.objects.filter(
+            related_sectors__related_sector_id=random_sector_id
+        ).exclude(id=instance.id).values_list('pk', flat=True)
 
-        return []
+        if not related_opps_ids:
+            return []
+
+        elif len(related_opps_ids) > 3:
+            random_ids = random.sample(list(related_opps_ids), 3)
+
+        else:
+            random_ids = related_opps_ids
+
+        related_opps = []
+
+        for id in random_ids:
+            related_opps.append(CapitalInvestOpportunityPage.objects.get(pk=id))
+
+        serializer = RelatedCapitalInvestOpportunityPageSerializer(
+            related_opps,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
 
 
 class MinimalPageSerializer(BasePageSerializer):
