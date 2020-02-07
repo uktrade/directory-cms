@@ -34,13 +34,13 @@ from tests.great_international.factories import (
     AboutUkLandingPageFactory,
     InvestInternationalHomePageFactory,
     CapitalInvestRegionPageFactory, AboutUkRegionListingPageFactory, InvestRegionPageFactory,
-    InternationalTradeHomePageFactory)
+    InternationalTradeHomePageFactory, CapitalInvestRelatedSectorsFactory
+)
 
 from great_international.models.capital_invest import (
     CapitalInvestRelatedRegions,
     CapitalInvestHomesInEnglandCardFieldsSummary,
     CapitalInvestRegionCardFieldsSummary,
-    CapitalInvestRelatedSectors,
     CapitalInvestRelatedSubSectors
 )
 from great_international.models.great_international import (
@@ -511,8 +511,7 @@ def test_capital_invest_landing_page_has_how_we_help(
 
 
 @pytest.mark.django_db
-def test_opportunity_page_can_add_sector_as_related(rf,
-                                                    international_root_page):
+def test_opportunity_page_can_add_sector_as_related(rf, international_root_page):
 
     guide_landing_page = InternationalGuideLandingPageFactory(
         parent=international_root_page,
@@ -524,15 +523,13 @@ def test_opportunity_page_can_add_sector_as_related(rf,
         slug='sector'
     )
 
-    related_sector = CapitalInvestRelatedSectors(
-        related_sector=sector
-    )
-
     opportunity = CapitalInvestOpportunityPageFactory(
         parent=international_root_page,
         slug='opp',
-        related_sectors=[related_sector]
+        related_sectors=[]
     )
+    related_sector = CapitalInvestRelatedSectorsFactory(related_sector=sector, page=opportunity)
+    opportunity.related_sector = related_sector
 
     opportunity_serializer = CapitalInvestOpportunityPageSerializer(
         instance=opportunity,
@@ -558,15 +555,13 @@ def test_international_sector_page_gets_opps_with_sector_as_related(
         slug='sector'
     )
 
-    related_sector = CapitalInvestRelatedSectors(
-        related_sector=sector
-    )
-
     opportunity = CapitalInvestOpportunityPageFactory(
         parent=international_root_page,
         slug='opp',
-        related_sectors=[related_sector]
+        related_sectors=[]
     )
+    related_sector = CapitalInvestRelatedSectorsFactory(related_sector=sector, page=opportunity)
+    opportunity.related_sector = related_sector
 
     opportunity_serializer = CapitalInvestOpportunityPageSerializer(
         instance=opportunity,
@@ -588,13 +583,13 @@ def test_international_sector_page_gets_opps_with_sector_as_related(
 @pytest.mark.django_db
 def test_opp_page_null_case_related_sector(rf, international_root_page):
 
-    related_sector = CapitalInvestRelatedSectors()
-
     opportunity = CapitalInvestOpportunityPageFactory(
         parent=international_root_page,
         slug='opp',
-        related_sectors=[related_sector]
+        related_sectors=[]
     )
+    related_sector = CapitalInvestRelatedSectorsFactory(page=opportunity)
+    opportunity.related_sector = related_sector
 
     opportunity_serializer = CapitalInvestOpportunityPageSerializer(
         instance=opportunity,
@@ -606,9 +601,46 @@ def test_opp_page_null_case_related_sector(rf, international_root_page):
 
 
 @pytest.mark.django_db
-def test_opp_page_null_case_related_sector2(
-        rf, international_root_page
-):
+def test_opp_page_related_random_opps(rf, international_root_page):
+
+    guide_landing_page = InternationalGuideLandingPageFactory(
+        parent=international_root_page,
+        slug='page-slug',
+    )
+
+    sector = InternationalSectorPageFactory(
+        parent=guide_landing_page,
+        slug='sector'
+    )
+
+    opportunity = CapitalInvestOpportunityPageFactory(
+        parent=international_root_page,
+        slug='opp',
+        related_sectors=[]
+    )
+
+    related_sector = CapitalInvestRelatedSectorsFactory(related_sector=sector, page=opportunity)
+    opportunity.related_sectors = [related_sector]
+
+    for i in range(3):
+        opp = CapitalInvestOpportunityPageFactory(
+            parent=international_root_page,
+            slug=f'opp{i}',
+            related_sectors=[related_sector]
+        )
+        related_sector = CapitalInvestRelatedSectorsFactory(related_sector=sector, page=opp)
+        opp.related_sectors = [related_sector]
+
+    serializer = CapitalInvestOpportunityPageSerializer(
+        instance=opportunity,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['related_opportunities']) == 3
+
+
+@pytest.mark.django_db
+def test_opp_page_null_case_related_sector2(rf, international_root_page):
 
     opportunity = CapitalInvestOpportunityPageFactory(
         parent=international_root_page,
@@ -644,15 +676,13 @@ def test_international_sector_opportunity_null_case(
         slug='sectorB'
     )
 
-    related_sector = CapitalInvestRelatedSectors(
-        related_sector=sector_a
-    )
-
     opportunity = CapitalInvestOpportunityPageFactory(
         parent=international_root_page,
         slug='opp',
-        related_sectors=[related_sector]
+        related_sectors=[]
     )
+    related_sector = CapitalInvestRelatedSectorsFactory(related_sector=sector_a, page=opportunity)
+    opportunity.related_sector = related_sector
 
     opportunity_serializer = CapitalInvestOpportunityPageSerializer(
         instance=opportunity,
@@ -685,12 +715,10 @@ def test_international_sector_opportunity_null_case2(
         slug='sector'
     )
 
-    related_sector = CapitalInvestRelatedSectors()
-
     opportunity = CapitalInvestOpportunityPageFactory(
         parent=international_root_page,
         slug='opp',
-        related_sectors=[related_sector]
+        related_sectors=[]
     )
 
     opportunity_serializer = CapitalInvestOpportunityPageSerializer(
@@ -953,30 +981,30 @@ def test_opportunity_page_gets_opportunities_with_same_sector(rf, international_
         title='sector_title'
     )
 
-    CapitalInvestOpportunityPageFactory(
+    ashton_green = CapitalInvestOpportunityPageFactory(
         parent=international_root_page,
         slug='ashton-green',
         title_en_gb='Ashton Green',
-        related_sectors=[
-            CapitalInvestRelatedSectors(related_sector=sector)
-        ]
+        related_sectors=[]
     )
+    related_sector = CapitalInvestRelatedSectorsFactory(related_sector=sector, page=ashton_green)
+    ashton_green.related_sector = related_sector
 
-    birmingham_opportuntiy = CapitalInvestOpportunityPageFactory(
+    birmingham = CapitalInvestOpportunityPageFactory(
         parent=international_root_page,
         slug='birimingham-curzon',
         title_en_gb='Birmingham Curzon',
-        related_sectors=[
-            CapitalInvestRelatedSectors(related_sector=sector)
-        ]
+        related_sectors=[]
     )
+    related_sector = CapitalInvestRelatedSectorsFactory(related_sector=sector, page=birmingham)
+    ashton_green.related_sector = related_sector
 
-    birmingham_serializer = CapitalInvestOpportunityPageSerializer(
-        instance=birmingham_opportuntiy,
+    serializer = CapitalInvestOpportunityPageSerializer(
+        instance=birmingham,
         context={'request': rf.get('/')}
     )
 
-    related_opps = birmingham_serializer.data['related_opportunities']
+    related_opps = serializer.data['related_opportunities']
 
     assert len(related_opps) == 1
 
@@ -996,7 +1024,7 @@ def test_opportunity_page_null_case_gets_opportunities_with_same_sector(rf, inte
         title='sector_title'
     )
 
-    related_sector = CapitalInvestRelatedSectors(related_sector=sector)
+    related_sector = CapitalInvestRelatedSectorsFactory(related_sector=sector)
 
     opportunity = CapitalInvestOpportunityPageFactory(
         parent=international_root_page,
