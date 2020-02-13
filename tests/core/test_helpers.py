@@ -73,3 +73,13 @@ def test_render_markdown_table():
 def test_get_page_full_url(domain, full_path, expected_url):
     url = get_page_full_url(domain, full_path)
     assert url == expected_url
+
+
+@pytest.mark.parametrize('range,exp', [
+    (3, ['one', 'two', 'three']),
+    (4, ['one', 'two', 'three', 'four']),
+    (5, ['one', 'two', 'three', 'four', 'five']),
+    (6, ['one', 'two', 'three', 'four', 'five', 'six']),
+])
+def test_num2words_list(range, exp):
+    assert helpers.num2words_list(range) == exp
