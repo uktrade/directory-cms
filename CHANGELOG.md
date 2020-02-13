@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- CI-658 - Make international home page featured link urls editable, refactor serializers
 - XOT-1275 - Add MADB link field to country guide
 
 ### Fixed bugs
