@@ -3,8 +3,10 @@ import random
 from directory_constants import cms
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
+from wagtail.images.models import Image
 
 from core import fields as core_fields
+from core.helpers import num2words_list
 from core.serializers import (
     BasePageSerializer,
     ChildPagesSerializerHelper,
@@ -29,8 +31,6 @@ from .models.invest import (
 from .models.capital_invest import CapitalInvestOpportunityPage
 
 
-ONE_TO_SIX_WORDS = ['one', 'two', 'three', 'four', 'five', 'six']
-ONE_TO_SEVEN_WORDS = ONE_TO_SIX_WORDS + ['seven']
 REGIONS = ['scotland', 'northern_ireland', 'north_england', 'wales', 'midlands', 'south_england']
 
 
@@ -62,24 +62,30 @@ class SectionThreeSubsectionProxyDataWrapper:
         )
 
 
-class FeaturedLinkProxyDataWrapper:
-    def __init__(self, instance, position_number):
-        self.position_number = position_number
-        self.instance = instance
+def listify_fields(instance, range, field_prefix, field_suffixes, required_fields):
+    result = []
 
-    @property
-    def image(self):
-        return getattr(
-            self.instance,
-            f'featured_link_{self.position_number}_image'
-        )
+    for num in num2words_list(range):
+        validation = {}
+        field = {}
 
-    @property
-    def heading(self):
-        return getattr(
-            self.instance,
-            f'featured_link_{self.position_number}_heading'
-        )
+        for suffix in field_suffixes:
+            field_name = f'{field_prefix}_{num}_{suffix}'
+
+            if suffix in required_fields:
+                validation[suffix] = getattr(instance, field_name)
+
+            val = getattr(instance, field_name)
+
+            if isinstance(val, Image):
+                val = wagtail_fields.ImageRenditionField('original').to_representation(val)
+
+            field[suffix] = val
+
+        if all(validation.values()):
+            result.append(field)
+
+    return result
 
 
 class SectionTwoSubsectionProxyDataWrapper:
@@ -407,6 +413,7 @@ class StatisticSerializer(serializers.Serializer):
 class FeaturedLinkSerializer(serializers.Serializer):
     image = wagtail_fields.ImageRenditionField('original')
     heading = serializers.CharField(max_length=255)
+    url = serializers.CharField(max_length=255)
 
 
 class EconomicStatSerializer(serializers.Serializer):
@@ -716,7 +723,7 @@ class BaseInternationalSectorPageSerializer(PageWithRelatedPagesSerializer, Hero
                 instance=instance,
                 position_number=num
             )
-            for num in ['one', 'two', 'three']
+            for num in num2words_list(3)
         ]
         serializer = SectionTwoSubsectionSerializer(data, many=True)
         return serializer.data
@@ -760,7 +767,7 @@ class BaseInternationalSectorPageSerializer(PageWithRelatedPagesSerializer, Hero
                 instance=instance,
                 position_number=num
             )
-            for num in ['one', 'two']
+            for num in num2words_list(2)
         ]
         serializer = SectionThreeSubsectionSerializer(data, many=True)
         return serializer.data
@@ -903,7 +910,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer, HeroSerial
                 instance=instance,
                 position_number=num
             )
-            for num in ['one', 'two', 'three', 'four', 'five', 'six']
+            for num in num2words_list(6)
         ]
         serializer = SectionTwoSubsectionSerializer(data, many=True)
         return serializer.data
@@ -913,15 +920,8 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer, HeroSerial
     featured_links = serializers.SerializerMethodField()
 
     def get_featured_links(self, instance):
-        data = [
-            FeaturedLinkProxyDataWrapper(
-                instance=instance,
-                position_number=num
-            )
-            for num in ['one', 'two', 'three']
-        ]
-        serializer = FeaturedLinkSerializer(data, many=True)
-        return serializer.data
+        data = listify_fields(instance, 3, 'featured_link', ['image', 'heading', 'url'], ['image', 'heading', 'url'])
+        return data
 
     trade_title = serializers.CharField(max_length=255)
     trade_content = core_fields.MarkdownToHTMLField()
@@ -1010,7 +1010,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer, HeroSerial
                 instance=instance,
                 position=num,
             )
-            for num in ['one', 'two', 'three']
+            for num in num2words_list(3)
         ]
         serializer = ReadyToTradeStorySerializer(data, many=True)
         return [story for story in serializer.data if story['story']]
@@ -1021,7 +1021,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer, HeroSerial
                 instance=instance,
                 position=num,
             )
-            for num in ONE_TO_SIX_WORDS
+            for num in num2words_list(6)
         ]
         serializer = BenefitsOfUkTextSerializer(data, many=True)
         return [benefit for benefit in serializer.data if benefit['benefits_of_uk_text']]
@@ -1032,7 +1032,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer, HeroSerial
                 instance=instance,
                 position_number=num,
             )
-            for num in ['one', 'two', 'three']
+            for num in num2words_list(3)
         ]
         serializer = HowWeHelpMarkDownTextSerializer(data, many=True)
         return [how_we_help for how_we_help in serializer.data if how_we_help['icon'] and how_we_help['text']]
@@ -1043,7 +1043,7 @@ class InternationalHomePageSerializer(PageWithRelatedPagesSerializer, HeroSerial
                 instance=instance,
                 position=num,
             )
-            for num in ['one', 'two', 'three']
+            for num in num2words_list(3)
         ]
         serializer = LinkToSectionLinksSerializer(data, many=True)
         return [link for link in serializer.data if link['text'] and link['cta_text'] and link['cta_link']]
@@ -1356,7 +1356,7 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer, HeroSe
                 instance=instance,
                 position_number=num
             )
-            for num in ['one', 'two', 'three', 'four']
+            for num in num2words_list(4)
         ]
         serializer = HowWeHelpSerializer(data, many=True)
         return serializer.data
@@ -1459,7 +1459,7 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer, HeroSerializer):
                 instance=instance,
                 position_number=num
             )
-            for num in ['one', 'two', 'three']
+            for num in num2words_list(3)
         ]
         serializer = RegionSubsectionSerializer(data, many=True)
         return serializer.data
@@ -1823,7 +1823,7 @@ class InvestInternationalHomePageSerializer(BasePageSerializer, HeroSerializer):
             InvestHowWeHelpProxyDataWrapper(
                 instance=instance, position_number=position_number
             )
-            for position_number in ONE_TO_SIX_WORDS
+            for position_number in num2words_list(6)
         ]
         serializer = HowWeHelpSerializer(data, many=True)
         return serializer.data
@@ -1872,7 +1872,7 @@ class InvestInternationalHomePageSerializer(BasePageSerializer, HeroSerializer):
                 instance=instance,
                 position_number=num
             )
-            for num in ['one', 'two', 'three']
+            for num in num2words_list(3)
         ]
         serializer = FeaturedCardsSerializer(data, many=True)
         return serializer.data
@@ -1882,7 +1882,7 @@ class InvestInternationalHomePageSerializer(BasePageSerializer, HeroSerializer):
             ExpandHowToExpandProxyDataWrapper(
                 instance=instance, position_number=position_number
             )
-            for position_number in ['one', 'two', 'three', 'four']
+            for position_number in num2words_list(4)
         ]
         serializer = HowToExpandSerializer(data, many=True)
         return serializer.data
@@ -2065,7 +2065,7 @@ class InvestRegionPageSerializer(BasePageSerializer, ChildPagesSerializerHelper,
     def get_subsections(self, instance):
         data = [
             SubsectionProxyDataWrapper(instance=instance, suffix=num)
-            for num in ONE_TO_SEVEN_WORDS
+            for num in num2words_list(7)
         ]
         serializer = SubsectionSerializer(data, many=True)
         return serializer.data
@@ -2240,7 +2240,7 @@ class AboutUkLandingPageSerializer(BasePageSerializer, HeroSerializer):
                 instance=instance,
                 position_number=num
             )
-            for num in ['one', 'two', 'three', 'four', 'five', 'six']
+            for num in num2words_list(6)
         ]
         serializer = HowWeHelpWithTitleSerializer(data, many=True)
         return serializer.data
@@ -2372,7 +2372,7 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
                 instance=instance,
                 position_number=num
             )
-            for num in ['one', 'two', 'three']
+            for num in num2words_list(3)
         ]
         serializer = RegionSubsectionSerializer(data, many=True)
         return serializer.data
