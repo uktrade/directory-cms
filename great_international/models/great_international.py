@@ -451,6 +451,7 @@ class InternationalHomePage(
     featured_links_summary = models.TextField(blank=True)
 
     featured_link_one_heading = models.TextField(blank=True)
+    featured_link_one_url = models.CharField(blank=True, max_length=255)
     featured_link_one_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -459,6 +460,7 @@ class InternationalHomePage(
         related_name='+'
     )
     featured_link_two_heading = models.TextField(blank=True)
+    featured_link_two_url = models.CharField(blank=True, max_length=255)
     featured_link_two_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -467,6 +469,7 @@ class InternationalHomePage(
         related_name='+'
     )
     featured_link_three_heading = models.TextField(blank=True)
+    featured_link_three_url = models.CharField(blank=True, max_length=255)
     featured_link_three_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,

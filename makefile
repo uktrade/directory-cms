@@ -47,7 +47,7 @@ database:
 	PGPASSWORD=debug psql -h localhost -U debug -d directory_cms_debug -f db_template.sql >/dev/null 2>&1
 
 load_fixtures:
-	PGPASSWORD=debug psql -h localhost -U debug -d directory_cms_debug -f db_fixtures.sql >/dev/null 2>&1
+	PGPASSWORD=debug psql -h localhost -U debug -d directory_cms_debug -f backup.sql
 
 db_template:
 	createdb -U postgres -h localhost cms_temporary_template
