@@ -1,3 +1,4 @@
+from num2words import num2words
 import copy
 import os
 from urllib.parse import urljoin
@@ -240,3 +241,7 @@ def get_page_full_url(domain, full_path):
         full_path = full_path[1:]
     url = urljoin(domain, full_path)
     return url
+
+
+def num2words_list(length):
+    return list(map(num2words, list(range(1, length + 1))))
