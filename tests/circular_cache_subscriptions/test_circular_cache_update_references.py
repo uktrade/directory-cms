@@ -91,7 +91,9 @@ def test_circular_cache_update_references_domestic_site():
 
 
 def test_circular_cache_update_references_international_site():
-    # for more info on ignored circular refs please check /great_international/cache.py
+    # ATM There is one circular cache reference defined and commented in
+    # /great_international/cache.py
+    # Thus, I've added an option to ignore known & expected circular references
     ignored_circular_references = {
         'invest.InvestRegionPage': ['invest.InvestRegionPage']
     }
