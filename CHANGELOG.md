@@ -2,10 +2,6 @@
 
 ## Pre-release
 
-### Hotfix
-
-- No ticket - Remove cyclic references in cache update subscriptions
-
 ### Implemented enhancements
 - XOT-1275 - Add MADB link field to country guide
 
