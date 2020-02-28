@@ -39,7 +39,7 @@ django-treebeard==4.3     # via wagtail
 django==2.2.10
 django_storages==1.7.1
 djangorestframework==3.9.4
-docopt==0.6.2             # via coveralls, notifications-python-client
+docopt==0.6.2             # via coveralls, notifications-python-client, num2words
 docutils==0.14            # via botocore
 draftjs-exporter==2.1.5   # via wagtail
 factory-boy==2.8.1
@@ -63,6 +63,7 @@ mohawk==0.3.4             # via sigauth
 monotonic==1.5            # via notifications-python-client
 more-itertools==4.3.0     # via pytest, zipp
 notifications-python-client==5.3.0
+num2words==0.5.10
 oauthlib==3.0.1           # via requests-oauthlib
 packaging==18.0           # via pytest, pytest-sugar
 pillow==6.2.1

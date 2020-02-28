@@ -2,6 +2,18 @@
 
 ## Pre-release
 
+### Implemented enhancements
+- CI-658 - Make international home page featured link urls editable, refactor serializers
+
+### Fixed bugs
+- No ticket - Add tests to find circular references in cache update subscriptions
+
+## [2020.02.26](https://github.com/uktrade/directory-cms/releases/tag/2020.02.26)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.02.07...2020.02.26)
+
+### Hotfix
+- No ticket - Remove circular references in cache update subscriptions
+
 ## [2020.02.07](https://github.com/uktrade/directory-cms/releases/tag/2020.02.07)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.01.31...2020.02.07)
 

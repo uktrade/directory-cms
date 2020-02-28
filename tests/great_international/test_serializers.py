@@ -1121,9 +1121,7 @@ def test_invest_international_homepage_featured_industries(international_root_pa
 
 
 @pytest.mark.django_db
-def test_about_uk_landing_page_has_regions(
-        rf, international_root_page
-):
+def test_about_uk_landing_page_has_regions(rf, international_root_page):
     scotland = AboutUkRegionPageFactory(
         slug="scotland",
         parent=international_root_page
@@ -1159,9 +1157,7 @@ def test_about_uk_landing_page_has_regions(
 
 
 @pytest.mark.django_db
-def test_about_uk_region_listing_page_has_regions(
-        rf, international_root_page
-):
+def test_about_uk_region_listing_page_has_regions(rf, international_root_page):
     scotland = InvestRegionPageFactory(
         slug="scotland",
         parent=international_root_page
@@ -1202,9 +1198,7 @@ def test_about_uk_region_listing_page_has_regions(
 
 
 @pytest.mark.django_db
-def test_about_uk_region_listing_page_has_empty_regions_if_no_parent(
-        rf, international_root_page
-):
+def test_about_uk_region_listing_page_has_empty_regions_if_no_parent(rf, international_root_page):
 
     regions = AboutUkRegionListingPageFactory(
         slug='regions',
@@ -1220,9 +1214,7 @@ def test_about_uk_region_listing_page_has_empty_regions_if_no_parent(
 
 
 @pytest.mark.django_db
-def test_new_int_home_page_has_ready_to_trade_stories(
-        rf, international_root_page
-):
+def test_new_int_home_page_has_ready_to_trade_stories(rf, international_root_page):
     home = InternationalHomePageFactory(
         slug='international',
         parent=international_root_page,
@@ -1242,9 +1234,58 @@ def test_new_int_home_page_has_ready_to_trade_stories(
 
 
 @pytest.mark.django_db
-def test_new_int_home_page_has_benefits_ok_uk(
-        rf, international_root_page
-):
+def test_new_int_home_page_has_featured_links_one(rf, international_root_page, image):
+    home = InternationalHomePageFactory(
+        slug='international',
+        parent=international_root_page,
+        featured_link_one_image=image,
+        featured_link_one_url='/foo',
+        featured_link_one_heading='Foo',
+        featured_link_two_image=None,
+        featured_link_two_url=None,
+        featured_link_two_heading=None,
+        featured_link_three_image=None,
+        featured_link_three_url=None,
+        featured_link_three_heading=None,
+    )
+
+    serializer = InternationalHomePageSerializer(
+        instance=home,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['featured_links']) == 1
+
+
+@pytest.mark.django_db
+def test_new_int_home_page_has_featured_links_all(rf, international_root_page, image):
+    home = InternationalHomePageFactory(
+        slug='international',
+        parent=international_root_page,
+        featured_link_one_image=image,
+        featured_link_one_url='/one',
+        featured_link_one_heading='One',
+        featured_link_two_image=image,
+        featured_link_two_url='/two',
+        featured_link_two_heading='Two',
+        featured_link_three_image=image,
+        featured_link_three_url='/three',
+        featured_link_three_heading='Three',
+    )
+
+    serializer = InternationalHomePageSerializer(
+        instance=home,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(serializer.data['featured_links']) == 3
+    assert serializer.data['featured_links'][0]['heading'] == 'One'
+    assert serializer.data['featured_links'][1]['heading'] == 'Two'
+    assert serializer.data['featured_links'][2]['heading'] == 'Three'
+
+
+@pytest.mark.django_db
+def test_new_int_home_page_has_benefits_ok_uk(rf, international_root_page):
     home = InternationalHomePageFactory(
         slug='international',
         parent=international_root_page,
@@ -1267,9 +1308,7 @@ def test_new_int_home_page_has_benefits_ok_uk(
 
 
 @pytest.mark.django_db
-def test_new_int_home_page_has_how_we_help(
-        rf, international_root_page, image
-):
+def test_new_int_home_page_has_how_we_help(rf, international_root_page, image):
     home = InternationalHomePageFactory(
         slug='international',
         parent=international_root_page,
@@ -1293,9 +1332,7 @@ def test_new_int_home_page_has_how_we_help(
 
 
 @pytest.mark.django_db
-def test_new_int_home_page_has_link_to_section_links(
-        rf, international_root_page
-):
+def test_new_int_home_page_has_link_to_section_links(rf, international_root_page):
     home = InternationalHomePageFactory(
         slug='international',
         parent=international_root_page,
@@ -1323,9 +1360,7 @@ def test_new_int_home_page_has_link_to_section_links(
 
 
 @pytest.mark.django_db
-def test_new_int_home_page_has_all_sectors(
-        rf, international_root_page
-):
+def test_new_int_home_page_has_all_sectors(rf, international_root_page):
     InternationalSectorPageFactory(
         parent=international_root_page,
         slug='sector-one',
@@ -1347,9 +1382,7 @@ def test_new_int_home_page_has_all_sectors(
 
 
 @pytest.mark.django_db
-def test_new_int_home_page_has_related_expand(
-        rf, international_root_page, image
-):
+def test_new_int_home_page_has_related_expand(rf, international_root_page, image):
     expand = InvestInternationalHomePageFactory(
         parent=international_root_page,
         slug='expand',
@@ -1372,9 +1405,7 @@ def test_new_int_home_page_has_related_expand(
 
 
 @pytest.mark.django_db
-def test_new_int_home_page_has_related_capital_invest(
-        rf, international_root_page, image
-):
+def test_new_int_home_page_has_related_capital_invest(rf, international_root_page, image):
     capital_invest = InternationalCapitalInvestLandingPageFactory(
         parent=international_root_page,
         slug='capital-invest',
@@ -1397,9 +1428,7 @@ def test_new_int_home_page_has_related_capital_invest(
 
 
 @pytest.mark.django_db
-def test_new_int_home_page_has_related_trade(
-        rf, international_root_page, image
-):
+def test_new_int_home_page_has_related_trade(rf, international_root_page, image):
     trade = InternationalTradeHomePageFactory(
         parent=international_root_page,
         slug='trade',
@@ -1422,9 +1451,7 @@ def test_new_int_home_page_has_related_trade(
 
 
 @pytest.mark.django_db
-def test_new_int_home_page_has_related_how_dit_help_pages(
-        rf, international_root_page, image
-):
+def test_new_int_home_page_has_related_how_dit_help_pages(rf, international_root_page, image):
     how_we_help_one = AboutDitServicesPageFactory(
         parent=international_root_page,
         slug='how-we-help-buy',
@@ -1455,9 +1482,7 @@ def test_new_int_home_page_has_related_how_dit_help_pages(
 
 
 @pytest.mark.django_db
-def test_new_int_home_page_related_how_dit_help_pages_null(
-        rf, international_root_page, image
-):
+def test_new_int_home_page_related_how_dit_help_pages_null(rf, international_root_page, image):
 
     home = InternationalHomePageFactory(
         slug='international',
