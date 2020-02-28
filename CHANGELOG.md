@@ -2,6 +2,14 @@
 
 ## Pre-release
 
+## [2020.02.26](https://github.com/uktrade/directory-cms/releases/tag/2020.02.26)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.02.07...2020.02.26)
+
+### Hotfix
+
+- No ticket - Remove circular references in cache update subscriptions
+- No ticket - Add tests to find circular references in cache update subscriptions
+
 ### Implemented enhancements
 - CI-658 - Make international home page featured link urls editable, refactor serializers
 - XOT-1275 - Add MADB link field to country guide
