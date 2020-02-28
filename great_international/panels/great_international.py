@@ -159,16 +159,19 @@ class InternationalHomePagePanels:
                             MultiFieldPanel(
                                 children=[
                                     FieldPanel('featured_link_one_heading'),
+                                    FieldPanel('featured_link_one_url'),
                                     ImageChooserPanel('featured_link_one_image')
                                 ]),
                             MultiFieldPanel(
                                 children=[
                                     FieldPanel('featured_link_two_heading'),
+                                    FieldPanel('featured_link_two_url'),
                                     ImageChooserPanel('featured_link_two_image')
                                 ]),
                             MultiFieldPanel(
                                 children=[
                                     FieldPanel('featured_link_three_heading'),
+                                    FieldPanel('featured_link_three_url'),
                                     ImageChooserPanel('featured_link_three_image')
                                 ])
                         ])]
