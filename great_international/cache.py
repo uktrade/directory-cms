@@ -11,15 +11,10 @@ from great_international.models import capital_invest
 class InternationalSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = great_international.InternationalSectorPage
     subscriptions = [
-        great_international.InternationalArticlePage,
         great_international.InternationalCampaignPage,
-        capital_invest.CapitalInvestOpportunityPage,
         capital_invest.CapitalInvestOpportunityListingPage,
         great_international.InternationalSubSectorPage,
-        great_international.InternationalTopicLandingPage,
         great_international.InternationalCuratedTopicLandingPage,
-        great_international.AboutUkLandingPage,
-        great_international.InternationalHomePage
     ]
 
 
@@ -28,10 +23,8 @@ class InternationalSubSectorPageSubscriber(AbstractDatabaseCacheSubscriber):
     subscriptions = [
         great_international.InternationalArticlePage,
         great_international.InternationalCampaignPage,
-        capital_invest.CapitalInvestOpportunityPage,
         capital_invest.CapitalInvestOpportunityListingPage,
         great_international.InternationalTopicLandingPage,
-        great_international.InternationalSubSectorPage
     ]
 
 
@@ -39,19 +32,12 @@ class InternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = great_international.InternationalHomePage
     subscriptions = [
         great_international.InternationalArticlePage,
-        invest.InvestInternationalHomePage,
-        capital_invest.InternationalCapitalInvestLandingPage,
-        find_a_supplier.InternationalTradeHomePage,
-        great_international.InternationalSectorPage,
-        great_international.AboutDitServicesPage
     ]
 
 
 class InternationalArticlePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = great_international.InternationalArticlePage
     subscriptions = [
-        great_international.InternationalTopicLandingPage,
-        great_international.InternationalSectorPage,
     ]
 
 
@@ -74,11 +60,8 @@ class InternationalArticleListingPageSubscriber(
 class InternationalTopicLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = great_international.InternationalTopicLandingPage
     subscriptions = [
-        great_international.InternationalArticlePage,
         great_international.InternationalArticleListingPage,
-        great_international.InternationalSectorPage,
         great_international.InternationalCampaignPage,
-        great_international.AboutUkLandingPage
     ]
 
 
@@ -93,8 +76,6 @@ class InternationalGuideLandingPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = great_international.InternationalGuideLandingPage
     subscriptions = [
         great_international.InternationalArticlePage,
-        invest.InvestInternationalHomePage,
-        capital_invest.InternationalCapitalInvestLandingPage
     ]
 
 
@@ -119,19 +100,12 @@ class InternationalCapitalInvestLandingPageSubscriber(
     subscriptions = [
         capital_invest.CapitalInvestRegionPage,
         great_international.AboutUkRegionPage,
-        great_international.InternationalGuideLandingPage,
-        great_international.InternationalHomePage,
-        great_international.AboutDitServicesPage
     ]
 
 
 class CapitalInvestOpportunityPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = capital_invest.CapitalInvestOpportunityPage
     subscriptions = [
-        capital_invest.CapitalInvestOpportunityPage,
-        great_international.InternationalSectorPage,
-        great_international.InternationalSubSectorPage,
-        capital_invest.CapitalInvestOpportunityListingPage,
     ]
 
 
@@ -149,9 +123,6 @@ class InvestInternationalHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     subscriptions = [
         great_international.InternationalSectorPage,
         invest.InvestHighPotentialOpportunityDetailPage,
-        great_international.InternationalGuideLandingPage,
-        great_international.InternationalHomePage,
-        great_international.AboutDitServicesPage
     ]
 
 
@@ -160,9 +131,6 @@ class InvestHighPotentialOpportunityFormPageSubscriber(
 ):
     model = invest.InvestHighPotentialOpportunityFormPage
     subscriptions = [
-        invest.InvestHighPotentialOpportunityDetailPage,
-        invest.InvestHighPotentialOpportunityFormPage,
-        invest.InvestHighPotentialOpportunityFormSuccessPage,
     ]
 
 
@@ -171,9 +139,6 @@ class InvestHighPotentialOpportunityDetailPageSubscriber(
 ):
     model = invest.InvestHighPotentialOpportunityDetailPage
     subscriptions = [
-        invest.InvestHighPotentialOpportunityDetailPage,
-        invest.InvestHighPotentialOpportunityFormPage,
-        invest.InvestHighPotentialOpportunityFormSuccessPage,
     ]
 
 
@@ -182,8 +147,6 @@ class InvestHighPotentialOpportunityFormSuccessPageSubscriber(
 ):
     model = invest.InvestHighPotentialOpportunityFormSuccessPage
     subscriptions = [
-        invest.InvestHighPotentialOpportunityDetailPage,
-        invest.InvestHighPotentialOpportunityFormPage,
     ]
 
 
@@ -206,8 +169,6 @@ class InternationalTradeHomePageSubscriber(AbstractDatabaseCacheSubscriber):
     model = find_a_supplier.InternationalTradeHomePage
     subscriptions = [
         great_international.InternationalSectorPage,
-        great_international.InternationalHomePage,
-        great_international.AboutDitServicesPage
     ]
 
 
@@ -225,7 +186,6 @@ class AboutDitLandingPageSubscriber(
 ):
     model = great_international.AboutDitLandingPage
     subscriptions = [
-        great_international.AboutDitServicesPage
     ]
 
 
@@ -234,11 +194,7 @@ class AboutDitServicesPageSubscriber(
 ):
     model = great_international.AboutDitServicesPage
     subscriptions = [
-        great_international.AboutDitLandingPage,
         capital_invest.InternationalCapitalInvestLandingPage,
-        invest.InvestInternationalHomePage,
-        find_a_supplier.InternationalTradeHomePage,
-        great_international.InternationalHomePage
     ]
 
 
@@ -248,23 +204,18 @@ class AboutUkLandingPageSubscriber(
     model = great_international.AboutUkLandingPage
     subscriptions = [
         great_international.InternationalSectorPage,
-        great_international.AboutUkRegionListingPage,
-        great_international.AboutUkRegionPage,
-        great_international.InternationalTopicLandingPage
     ]
 
 
 class AboutUkRegionListingPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = great_international.AboutUkRegionListingPage
     subscriptions = [
-        great_international.AboutUkLandingPage
     ]
 
 
 class AboutUkRegionPageSubscriber(AbstractDatabaseCacheSubscriber):
     model = great_international.AboutUkRegionPage
     subscriptions = [
-        great_international.AboutUkLandingPage,
         great_international.AboutUkRegionListingPage
     ]
 
