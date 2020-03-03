@@ -91,6 +91,7 @@ INSTALLED_APPS = [
     'activitystream.apps.ActivityStreamConfig',
     'django_filters',
     'authbroker_client',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -162,9 +163,7 @@ else:
         }
     }
 
-API_CACHE_EXPIRE_SECONDS = env.int(
-    'API_CACHE_EXPIRE_SECONDS', 60 * 60 * 24 * 30  # 30 days
-)
+API_CACHE_EXPIRE_SECONDS = env.int('API_CACHE_EXPIRE_SECONDS', 60 * 30)  # 30 minutes
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/

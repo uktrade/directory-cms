@@ -284,3 +284,9 @@ class DatabaseCacheSubscriber:
     @classmethod
     def delete(cls, sender, instance, *args, **kwargs):
         cls.cache_populator.delete(instance)
+
+
+@app.task
+def rebuild_all_cache():
+    for page in Page.objects.filter(live=True).specific():
+        CachePopulator.populate_async(page)

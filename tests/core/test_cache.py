@@ -1,17 +1,15 @@
+from unittest.mock import call
+
+import factory
 import pytest
 from unittest import mock
 
-from wagtail.core.models import Page, get_page_models
+from wagtail.core.models import Page
+from wagtail.core.signals import page_published
 
-from core import cache, models
+from core import cache
 
-import components.models
-import export_readiness
-import great_international.models
-from tests.great_international.factories import (
-    InternationalArticleListingPageFactory
-)
-
+from tests.great_international.factories import InternationalArticlePageFactory
 
 @pytest.mark.parametrize('page_id,language_code,region,expected', (
     (
@@ -226,3 +224,16 @@ def test_transactional_cache_delete(mock_delete_many, mock_delete):
         'serialized-page-2:',
         'serialized-page-3:',
     ])
+
+
+@pytest.mark.django_db
+@factory.django.mute_signals(page_published)
+@mock.patch('core.cache.CachePopulator')
+def test_rebuild_all_cache_task(mock_cache_populator):
+    article1 = InternationalArticlePageFactory(live=True)
+    article2 = InternationalArticlePageFactory(live=True)
+    InternationalArticlePageFactory(live=False)
+    cache.rebuild_all_cache()
+    assert mock_cache_populator.populate_async.call_count == 5  # contains root, welcome to wagtail and home pages
+    assert mock_cache_populator.populate_async.call_args_list[-2] == call(article1)
+    assert mock_cache_populator.populate_async.call_args_list[-1] == call(article2)
