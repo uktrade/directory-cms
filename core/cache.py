@@ -143,61 +143,6 @@ class CachePopulator:
                 )
 
 
-class AbstractDatabaseCacheSubscriber(abc.ABC):
-
-    cache_populator = CachePopulator
-
-    def __init__(self):
-        raise SystemError('This class cannot be instantiated.')
-
-    @property
-    @abc.abstractmethod
-    def model(self):
-        return  # pragma: no cover
-
-    @property
-    @abc.abstractmethod
-    def subscriptions(self):
-        return []  # pragma: no cover
-
-    @classmethod
-    def subscribe(cls):
-        page_published.connect(
-            receiver=cls.populate,
-            sender=cls.model,
-            dispatch_uid=cls.model.__name__,
-        )
-        page_unpublished.connect(
-            receiver=cls.delete,
-            sender=cls.model,
-            dispatch_uid=cls.model.__name__,
-        )
-        for model in cls.subscriptions:
-            post_save.connect(
-                receiver=cls.populate_many,
-                sender=model,
-                dispatch_uid=f'{cls.model.__name__}-{model.__name__}',
-            )
-            page_unpublished.connect(
-                receiver=cls.populate_many,
-                sender=model,
-                dispatch_uid=f'{cls.model.__name__}-{model.__name__}',
-            )
-
-    @classmethod
-    def populate(cls, sender, instance, *args, **kwargs):
-        cls.cache_populator.populate_async(instance)
-
-    @classmethod
-    def delete(cls, sender, instance, *args, **kwargs):
-        cls.cache_populator.delete(instance)
-
-    @classmethod
-    def populate_many(cls, sender, instance, *args, **kwargs):
-        for related_instance in cls.model.objects.filter(live=True):
-            cls.cache_populator.populate_async(related_instance)
-
-
 class RegionAwareCachePopulator(CachePopulator):
     regions = ['eu', 'not-eu']
 
@@ -357,3 +302,30 @@ class PageIDCache:
         post_save.connect(receiver=cls.clear, sender=Site)
         post_delete.connect(receiver=cls.clear, sender=Site)
         post_migrate.connect(receiver=cls.clear)
+
+
+class DatabaseCacheSubscriber:
+
+
+    def __init__(self, model_classes, cache_populator=CachePopulator):
+        self.model_classes = model_classes
+        self.cache_populator = cache_populator
+
+    def subscribe(self)
+        for model_class in self.model_classes:
+            page_published.connect(
+                receiver=cls.populate,
+                sender=model_class,
+                dispatch_uid=cls.model.__name__,
+            )
+            page_unpublished.connect(
+                receiver=cls.delete,
+                sender=model_class,
+                dispatch_uid=cls.model.__name__,
+            )
+
+    def populate(self, sender, instance, *args, **kwargs):
+        self.cache_populator.populate_async(instance)
+
+    def delete(self, sender, instance, *args, **kwargs):
+        self.cache_populator.delete(instance)
