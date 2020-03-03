@@ -146,6 +146,8 @@ DATABASES = {
     'default': dj_database_url.config()
 }
 
+API_CACHE_EXPIRE_SECONDS = env.int('API_CACHE_EXPIRE_SECONDS', 60 * 60 * 24 * 30)  # 30 days
+
 if env.bool('API_CACHE_DISABLED', False):
     CACHES = {
         'default': {
@@ -163,7 +165,6 @@ else:
         }
     }
 
-API_CACHE_EXPIRE_SECONDS = env.int('API_CACHE_EXPIRE_SECONDS', 60 * 30)  # 30 minutes
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
