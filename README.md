@@ -105,6 +105,11 @@ AUTHBROKER_CLIENT_SECRET
 
 Speak to webops or a team mate for the above values.
 
+## Cache
+A cached version of the page is created every time the page is saved.
+Additionally, all the cache entries are recreated by a scheduled task using [django-celery-beat](http://docs.celeryproject.org/en/latest/userguide/periodic-tasks.html#using-custom-scheduler-classes).
+Make sure to add the `rebuild_all_cache` task to the scheduler via the Django admin interface.
+
 
 ## Helpful links
 * [Developers Onboarding Checklist](https://uktrade.atlassian.net/wiki/spaces/ED/pages/32243946/Developers+onboarding+checklist)
