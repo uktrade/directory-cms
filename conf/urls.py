@@ -1,4 +1,6 @@
 import directory_healthcheck.views
+from django.contrib import admin
+from django.urls import path
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.api.v2.router import WagtailAPIRouter
 from wagtail.core import urls as wagtail_urls
@@ -21,6 +23,7 @@ api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
 
 
 api_urls = [
+    path('django-admin/', admin.site.urls),
     url(r'^', api_router.urls),
     url(
         r'^pages/lookup-by-slug/(?P<slug>[\w-]+)/',
