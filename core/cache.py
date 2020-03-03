@@ -269,16 +269,18 @@ class DatabaseCacheSubscriber:
             page_published.connect(
                 receiver=cls.populate,
                 sender=model_class,
-                dispatch_uid=cls.model.__name__,
+                dispatch_uid=model_class.__name__,
             )
             page_unpublished.connect(
                 receiver=cls.delete,
                 sender=model_class,
-                dispatch_uid=cls.model.__name__,
+                dispatch_uid=model_class.__name__,
             )
 
-    def populate(self, sender, instance, *args, **kwargs):
-        self.cache_populator.populate_async(instance)
+    @classmethod
+    def populate(cls, sender, instance, *args, **kwargs):
+        cls.cache_populator.populate_async(instance)
 
-    def delete(self, sender, instance, *args, **kwargs):
-        self.cache_populator.delete(instance)
+    @classmethod
+    def delete(cls, sender, instance, *args, **kwargs):
+        cls.cache_populator.delete(instance)
