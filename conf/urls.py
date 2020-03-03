@@ -23,7 +23,6 @@ api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
 
 
 api_urls = [
-    path('django-admin/', admin.site.urls),
     url(r'^', api_router.urls),
     url(
         r'^pages/lookup-by-slug/(?P<slug>[\w-]+)/',
@@ -78,6 +77,7 @@ healthcheck_urls = [
 
 
 urlpatterns = [
+    url(r'^django-admin/', admin.site.urls),
     url(
         r'^api/',
         include((api_urls, 'api'))
