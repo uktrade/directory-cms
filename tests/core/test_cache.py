@@ -11,6 +11,7 @@ from core import cache
 
 from tests.great_international.factories import InternationalArticlePageFactory
 
+
 @pytest.mark.parametrize('page_id,language_code,region,expected', (
     (
         1,

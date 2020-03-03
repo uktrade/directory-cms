@@ -115,7 +115,6 @@ class CachePopulator:
 
     @classmethod
     def populate_async(cls, instance):
-        cls.delete(instance)
         cls.populate.delay(instance.pk)
 
     @classmethod
@@ -288,5 +287,6 @@ class DatabaseCacheSubscriber:
 
 @app.task
 def rebuild_all_cache():
-    for page in Page.objects.filter(live=True).specific():
-        CachePopulator.populate_async(page)
+    for page in Page.objects.live().specific():
+        if page.__class__ in MODELS_SERIALIZERS_MAPPING:
+            CachePopulator.populate_async(page)
