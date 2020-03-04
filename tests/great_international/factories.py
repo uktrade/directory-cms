@@ -201,7 +201,18 @@ class InternationalHomePageFactory(wagtail_factories.PageFactory):
     tariffs_link = 'http://foo.com'
     tariffs_description = factory.fuzzy.FuzzyText(length=10)
     featured_link_one_heading = factory.fuzzy.FuzzyText(length=10)
+    featured_link_one_url = factory.fuzzy.FuzzyText(length=10)
     featured_link_one_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    featured_link_two_heading = factory.fuzzy.FuzzyText(length=10)
+    featured_link_two_url = factory.fuzzy.FuzzyText(length=10)
+    featured_link_two_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    featured_link_three_heading = factory.fuzzy.FuzzyText(length=10)
+    featured_link_three_url = factory.fuzzy.FuzzyText(length=10)
+    featured_link_three_image = factory.SubFactory(
         wagtail_factories.ImageFactory
     )
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))

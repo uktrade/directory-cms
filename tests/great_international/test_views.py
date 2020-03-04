@@ -26,7 +26,7 @@ def test_international_homepage(admin_client, root_page):
     subsections = response.json()['section_two_subsections']
     assert list(subsections[0].keys()) == ['icon', 'heading', 'body']
     featured_links = response.json()['featured_links'][0]
-    assert list(featured_links.keys()) == ['image', 'heading']
+    assert list(featured_links.keys()) == ['image', 'heading', 'url']
 
 
 @pytest.mark.django_db
