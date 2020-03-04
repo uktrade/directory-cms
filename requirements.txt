@@ -34,7 +34,7 @@ django-treebeard==4.3     # via wagtail
 django==2.2.10
 django_storages==1.7.1
 djangorestframework==3.9.4
-docopt==0.6.2             # via notifications-python-client
+docopt==0.6.2             # via notifications-python-client, num2words
 docutils==0.15.2          # via botocore
 draftjs-exporter==2.1.7   # via wagtail
 future==0.18.2            # via notifications-python-client
@@ -53,6 +53,7 @@ mohawk==0.3.4             # via sigauth
 monotonic==1.5            # via notifications-python-client
 more-itertools==8.0.0     # via zipp
 notifications-python-client==5.3.0
+num2words==0.5.10
 oauthlib==3.1.0           # via requests-oauthlib
 pillow==6.2.1
 psycopg2==2.7.3.2
