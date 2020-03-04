@@ -115,7 +115,6 @@ class CachePopulator:
 
     @classmethod
     def populate_async(cls, instance):
-        cls.delete(instance)
         cls.populate.delay(instance.pk)
 
     @classmethod
