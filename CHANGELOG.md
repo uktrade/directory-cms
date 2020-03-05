@@ -2,6 +2,7 @@
 
 ## Pre-release
 
+
 ### Implemented enhancements
 - CMS-1859 - Simplify caching system
 
