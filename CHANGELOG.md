@@ -2,8 +2,8 @@
 
 ## Pre-release
 
-## [2020.03.02](https://github.com/uktrade/directory-cms/releases/tag/2020.03.02)
-[Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.02.07...2020.03.02)
+## [2020.03.04](https://github.com/uktrade/directory-cms/releases/tag/2020.03.04)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.03.02...2020.03.04)
 
 ### Implemented enhancements
 - CI-658 - Make international home page featured link urls editable, refactor serializers
