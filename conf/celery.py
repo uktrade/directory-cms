@@ -10,6 +10,10 @@ from celery import Celery
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'conf.settings')
 
+# AUTHBROKER_URL is misidentified as a secret by celery when pidbox is used, resulting in
+# celery trying to parse AUTHBROKER_URL as a transport, resulting in error. so turn the feature off
+os.environ['FEATURE_ENFORCE_STAFF_SSO_ENABLED'] = False
+
 app = Celery('cms')
 
 # Using a string here means the worker don't have to serialize
@@ -27,7 +31,6 @@ if settings.FEATURE_REDIS_USE_SSL:
     }
     app.conf.broker_use_ssl = ssl_conf
     app.conf.redis_backend_use_ssl = ssl_conf
-
 
 # Load task modules from all registered Django app configs.
 app.autodiscover_tasks()
