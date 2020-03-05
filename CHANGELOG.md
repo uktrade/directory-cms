@@ -11,10 +11,6 @@
 ### Fixed bugs
 - No ticket - Add tests to find circular references in cache update subscriptions
 
-
-## [2020.03.02](https://github.com/uktrade/directory-cms/releases/tag/2020.03.02)
-[Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.02.07...2020.03.02)
-
 ### Hotfix
 - No ticket - Remove circular references in cache update subscriptions
 
