@@ -288,5 +288,5 @@ class DatabaseCacheSubscriber:
 @app.task
 def rebuild_all_cache():
     for page in Page.objects.live().specific():
-        if page.__class__ in MODELS_SERIALIZERS_MAPPING:
+        if page.__class__ in MODELS_SERIALIZERS_MAPPING and page.__class__ is not Page:
             CachePopulator.populate_async(page)
