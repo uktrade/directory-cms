@@ -92,25 +92,6 @@ You can test this works by attempting to visit http://cms.trade.great:8010/admin
 Signed cookies are used as the session backend to avoid using a database. We therefore must avoid storing non-trivial data in the session, because the browser will be exposed to the data.
 
 
-## Caching
-
-When adding new pages the following steps should be followed to ensure they are added to the cache:
-
-1. Add an entry to the sub-app's cache.py e.g.:
-```
-class MyPageSubscriber(AbstractDatabaseCacheSubscriber):
-    model = models.MyPage
-    subscriptions = [
-        models.RelatedPageOne,
-        models.RelatedpageTwo,
-    ]
-```
-
-2. Add `MyPageSubscriber.subscribe()` to the sub-apps's `apps.py`
-
-Note on `subscriptions`: the page is serialized when saved to the cache as a JSON document. The serializer may contain content provided by another page. How do we clear the page's cache when related content changes? By adding the related page to `subscriptions` . Any model defined in `subscriptions` will result in the cache entry being cleared when related content is changed.
-
-
 ## Staff SSO
 
 On local machine, SSO is turned off by default.
@@ -123,6 +104,11 @@ AUTHBROKER_CLIENT_SECRET
 ```
 
 Speak to webops or a team mate for the above values.
+
+## Cache
+A cached version of the page is created every time the page is saved.
+Additionally, all the cache entries are recreated by a scheduled task using [django-celery-beat](http://docs.celeryproject.org/en/latest/userguide/periodic-tasks.html#using-custom-scheduler-classes).
+Make sure to add the `rebuild_all_cache` task to the scheduler via the Django admin interface.
 
 
 ## Helpful links
