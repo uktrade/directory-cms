@@ -2,6 +2,8 @@
 
 ## Pre-release
 
+## [2020.03.06](https://github.com/uktrade/directory-cms/releases/tag/2020.03.06)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.03.04...2020.03.06)
 
 ### Implemented enhancements
 - CMS-1859 - Simplify caching system
