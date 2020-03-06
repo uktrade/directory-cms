@@ -1,4 +1,3 @@
-import abc
 import hashlib
 from urllib.parse import urlencode
 
@@ -23,8 +22,7 @@ ROOT_PATHS_TO_SERVICE_NAMES = {
     'components-app': cms.COMPONENTS,
 }
 
-SERVICE_NAMES_TO_ROOT_PATHS = {
-    value: key for key, value in ROOT_PATHS_TO_SERVICE_NAMES.items()}
+SERVICE_NAMES_TO_ROOT_PATHS = {value: key for key, value in ROOT_PATHS_TO_SERVICE_NAMES.items()}
 
 
 class PageCache:
@@ -117,7 +115,6 @@ class CachePopulator:
 
     @classmethod
     def populate_async(cls, instance):
-        cls.delete(instance)
         cls.populate.delay(instance.pk)
 
     @classmethod
@@ -141,105 +138,6 @@ class CachePopulator:
                     page_id=instance.id,
                     lang=language_code,
                 )
-
-
-class AbstractDatabaseCacheSubscriber(abc.ABC):
-
-    cache_populator = CachePopulator
-
-    def __init__(self):
-        raise SystemError('This class cannot be instantiated.')
-
-    @property
-    @abc.abstractmethod
-    def model(self):
-        return  # pragma: no cover
-
-    @property
-    @abc.abstractmethod
-    def subscriptions(self):
-        return []  # pragma: no cover
-
-    @classmethod
-    def subscribe(cls):
-        page_published.connect(
-            receiver=cls.populate,
-            sender=cls.model,
-            dispatch_uid=cls.model.__name__,
-        )
-        page_unpublished.connect(
-            receiver=cls.delete,
-            sender=cls.model,
-            dispatch_uid=cls.model.__name__,
-        )
-        for model in cls.subscriptions:
-            post_save.connect(
-                receiver=cls.populate_many,
-                sender=model,
-                dispatch_uid=f'{cls.model.__name__}-{model.__name__}',
-            )
-            page_unpublished.connect(
-                receiver=cls.populate_many,
-                sender=model,
-                dispatch_uid=f'{cls.model.__name__}-{model.__name__}',
-            )
-
-    @classmethod
-    def populate(cls, sender, instance, *args, **kwargs):
-        cls.cache_populator.populate_async(instance)
-
-    @classmethod
-    def delete(cls, sender, instance, *args, **kwargs):
-        cls.cache_populator.delete(instance)
-
-    @classmethod
-    def populate_many(cls, sender, instance, *args, **kwargs):
-        for related_instance in cls.model.objects.filter(live=True):
-            cls.cache_populator.populate_async(related_instance)
-
-
-class RegionAwareCachePopulator(CachePopulator):
-    regions = ['eu', 'not-eu']
-
-    @staticmethod
-    @app.task(name='region-aware-populate')
-    def populate(instance_pk):
-        instance = Page.objects.get(pk=instance_pk).specific
-        RegionAwareCachePopulator.populate_sync(instance)
-
-    @classmethod
-    def populate_async(cls, instance):
-        cls.delete(instance)
-        cls.populate.delay(instance.pk)
-
-    @classmethod
-    def populate_sync(cls, instance):
-        serializer_class = MODELS_SERIALIZERS_MAPPING[instance.__class__]
-        with PageCache.transaction() as page_cache:
-            for language_code in instance.translated_languages:
-                with translation.override(language_code):
-                    for region in cls.regions:
-                        serializer = serializer_class(
-                            instance=instance,
-                            context={'region': region}
-                        )
-                        page_cache.set(
-                            page_id=instance.id,
-                            data=serializer.data,
-                            lang=language_code,
-                            region=region,
-                        )
-
-    @classmethod
-    def delete(cls, instance):
-        with PageCache.transaction() as page_cache:
-            for language_code in instance.translated_languages:
-                for region in cls.regions:
-                    page_cache.delete(
-                        page_id=instance.id,
-                        lang=language_code,
-                        region=region,
-                    )
 
 
 class PageIDCache:
@@ -357,3 +255,38 @@ class PageIDCache:
         post_save.connect(receiver=cls.clear, sender=Site)
         post_delete.connect(receiver=cls.clear, sender=Site)
         post_migrate.connect(receiver=cls.clear)
+
+
+class DatabaseCacheSubscriber:
+
+    cache_populator = CachePopulator
+    model_classes = MODELS_SERIALIZERS_MAPPING.keys()
+
+    @classmethod
+    def subscribe(cls):
+        for model_class in cls.model_classes:
+            page_published.connect(
+                receiver=cls.populate,
+                sender=model_class,
+                dispatch_uid=model_class.__name__,
+            )
+            page_unpublished.connect(
+                receiver=cls.delete,
+                sender=model_class,
+                dispatch_uid=model_class.__name__,
+            )
+
+    @classmethod
+    def populate(cls, sender, instance, *args, **kwargs):
+        cls.cache_populator.populate_async(instance)
+
+    @classmethod
+    def delete(cls, sender, instance, *args, **kwargs):
+        cls.cache_populator.delete(instance)
+
+
+@app.task
+def rebuild_all_cache():
+    for page in Page.objects.live().specific():
+        if page.__class__ in MODELS_SERIALIZERS_MAPPING and page.__class__ is not Page:
+            CachePopulator.populate_async(page)
