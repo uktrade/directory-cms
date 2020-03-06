@@ -1,16 +1,15 @@
+from unittest.mock import call
+
+import factory
 import pytest
 from unittest import mock
 
-from wagtail.core.models import Page, get_page_models
+from wagtail.core.models import Page
+from wagtail.core.signals import page_published
 
-from core import cache, models
+from core import cache
 
-import components.models
-import export_readiness
-import great_international.models
-from tests.great_international.factories import (
-    InternationalArticleListingPageFactory
-)
+from tests.great_international.factories import InternationalArticlePageFactory
 
 
 @pytest.mark.parametrize('page_id,language_code,region,expected', (
@@ -120,50 +119,12 @@ def test_cache_populator(translated_page):
         )
 
 
-@pytest.mark.django_db
-def test_region_aware_cache_populator(international_root_page):
-    page = InternationalArticleListingPageFactory(
-        parent=international_root_page
-    )
-
-    cache.RegionAwareCachePopulator.populate(page.pk)
-    for language_code in page.translated_languages:
-        for region in cache.RegionAwareCachePopulator.regions:
-            assert cache.PageCache.get(
-                page_id=page.id,
-                lang=language_code,
-                region=region,
-            )
-
-
-@pytest.mark.django_db
-def test_region_aware_cache_populator_async(international_root_page):
-    page = InternationalArticleListingPageFactory(
-        parent=international_root_page
-    )
-
-    cache.RegionAwareCachePopulator.populate_async(page)
-    for language_code in page.translated_languages:
-        for region in cache.RegionAwareCachePopulator.regions:
-            assert cache.PageCache.get(
-                page_id=page.id,
-                lang=language_code,
-                region=region,
-            )
-
-
 @mock.patch('wagtail.core.signals.page_published.connect')
-@mock.patch('core.cache.post_save.connect')
 @mock.patch('core.cache.page_unpublished.connect')
-def test_subscriber_subscribe_to_publish(
-    mock_page_unpublished, mock_post_save, mock_page_published
-):
+def test_subscriber_subscribe_to_publish(mock_page_unpublished, mock_page_published):
 
-    class TestSubscriber(cache.AbstractDatabaseCacheSubscriber):
-        model = Page
-        subscriptions = [
-            models.Breadcrumb
-        ]
+    class TestSubscriber(cache.DatabaseCacheSubscriber):
+        model_classes = [Page]
 
     TestSubscriber.subscribe()
 
@@ -173,35 +134,19 @@ def test_subscriber_subscribe_to_publish(
         receiver=TestSubscriber.populate,
         sender=Page,
     )
-    assert mock_post_save.call_count == 1
-    assert mock_page_unpublished.call_count == 2
-    assert mock_post_save.call_args == mock.call(
-        dispatch_uid='Page-Breadcrumb',
-        receiver=TestSubscriber.populate_many,
-        sender=models.Breadcrumb,
+    assert mock_page_unpublished.call_count == 1
+    assert mock_page_unpublished.call_args == mock.call(
+        dispatch_uid='Page',
+        receiver=TestSubscriber.delete,
+        sender=Page
     )
-    assert mock_page_unpublished.call_args_list == [
-        mock.call(
-            dispatch_uid='Page',
-            receiver=TestSubscriber.delete,
-            sender=Page
-        ),
-        mock.call(
-            dispatch_uid='Page-Breadcrumb',
-            receiver=TestSubscriber.populate_many,
-            sender=models.Breadcrumb,
-        )
-    ]
 
 
 @pytest.mark.django_db
 @mock.patch('core.cache.CachePopulator.populate.delay')
 def test_subscriber_populate(mock_populate, translated_page):
-    class TestSubscriber(cache.AbstractDatabaseCacheSubscriber):
-        model = Page
-        subscriptions = [
-            models.Breadcrumb
-        ]
+    class TestSubscriber(cache.DatabaseCacheSubscriber):
+        model_classes = [Page]
 
     TestSubscriber.populate(sender=None, instance=translated_page)
 
@@ -211,11 +156,8 @@ def test_subscriber_populate(mock_populate, translated_page):
 
 @mock.patch('core.cache.PageCache.delete')
 def test_subscriber_delete(mock_delete):
-    class TestSubscriber(cache.AbstractDatabaseCacheSubscriber):
-        model = Page
-        subscriptions = [
-            models.Breadcrumb
-        ]
+    class TestSubscriber(cache.DatabaseCacheSubscriber):
+        model_classes = [Page]
 
     instance = mock.Mock(
         id=1, slug='some-slug', service_name='thing',
@@ -228,50 +170,6 @@ def test_subscriber_delete(mock_delete):
         page_id=1,
         lang='en-gb',
     )
-
-
-@pytest.mark.django_db
-@mock.patch('core.cache.CachePopulator.populate.delay')
-def test_subscriber_populate_many(mock_populate, translated_page):
-    class TestSubscriber(cache.AbstractDatabaseCacheSubscriber):
-        model = translated_page.__class__
-        subscriptions = [
-            models.Breadcrumb
-        ]
-
-    TestSubscriber.populate_many(sender=None, instance=translated_page)
-
-    assert mock_populate.call_count == 1
-    assert mock_populate.call_args == mock.call(translated_page.pk)
-
-
-def test_all_models_cached():
-    exclude = {
-        # apps
-        components.models.ComponentsApp,
-        # "folders"
-        export_readiness.models.MarketingPages,
-        export_readiness.models.SitePolicyPages,
-        export_readiness.models.ContactUsGuidancePages,
-        export_readiness.models.ContactSuccessPages,
-        export_readiness.models.EUExitFormPages,
-        export_readiness.models.AllContactPagesPage,
-        great_international.models.invest.InvestHighPotentialOpportunitiesPage,
-        great_international.models.capital_invest.CapitalInvestRegionPage,
-        # Page is added by TestSubscriber in other tests.
-        Page,
-    }
-    all_models = {
-        model for model in get_page_models()
-        if model not in exclude
-    }
-    cached_models = {
-        item.model
-        for item in cache.AbstractDatabaseCacheSubscriber.__subclasses__()
-        if item.model not in exclude
-    }
-
-    assert all_models == cached_models
 
 
 @mock.patch('django.core.cache.cache.set')
@@ -329,12 +227,14 @@ def test_transactional_cache_delete(mock_delete_many, mock_delete):
     ])
 
 
-def test_initialising_cache_class_raises_error():
-
-    class DummyCacheSubscriber(cache.AbstractDatabaseCacheSubscriber):
-        model = None
-        subscriptions = []
-
-    with pytest.raises(SystemError) as excinfo:
-        DummyCacheSubscriber()
-    assert 'This class cannot be instantiated.' in str(excinfo.value)
+@pytest.mark.django_db
+@factory.django.mute_signals(page_published)
+@mock.patch('core.cache.CachePopulator')
+def test_rebuild_all_cache_task(mock_cache_populator):
+    article1 = InternationalArticlePageFactory(live=True)
+    article2 = InternationalArticlePageFactory(live=True)
+    InternationalArticlePageFactory(live=False)
+    cache.rebuild_all_cache()
+    assert mock_cache_populator.populate_async.call_count == 3  # contains home page
+    assert mock_cache_populator.populate_async.call_args_list[-2] == call(article1)
+    assert mock_cache_populator.populate_async.call_args_list[-1] == call(article2)

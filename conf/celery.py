@@ -6,6 +6,8 @@ from django.conf import settings
 
 from celery import Celery
 
+# note AUTHBROKER_URL is misidentified as a secret by celery when pidbox is used, resulting in
+# celery trying to parse AUTHBROKER_URL as a transport, resulting in error. so turn the feature off in Procfile
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'conf.settings')
@@ -27,7 +29,6 @@ if settings.FEATURE_REDIS_USE_SSL:
     }
     app.conf.broker_use_ssl = ssl_conf
     app.conf.redis_backend_use_ssl = ssl_conf
-
 
 # Load task modules from all registered Django app configs.
 app.autodiscover_tasks()

@@ -7,7 +7,7 @@ class CoreConfig(AppConfig):
 
     def ready(self):
         from core import signals
-        from core.cache import PageIDCache
+        from core.cache import PageIDCache, DatabaseCacheSubscriber
 
         post_save.connect(
             receiver=signals.create_image_hash,
@@ -18,3 +18,4 @@ class CoreConfig(AppConfig):
             sender='wagtaildocs.Document'
         )
         PageIDCache.subscribe()
+        DatabaseCacheSubscriber.subscribe()
