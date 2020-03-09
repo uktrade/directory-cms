@@ -80,6 +80,11 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
         self.handle_activate_language(instance)
         return instance
 
+    def listing_view(self, request):
+        queryset = self.filter_queryset(self.get_queryset())
+        data = queryset.values_list('pk', flat=True)
+        return Response(data)
+
 
 class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
     pass
