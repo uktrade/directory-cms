@@ -117,7 +117,7 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
 class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
     def listing_view(self, request):
         queryset = self.filter_queryset(self.get_queryset())
-        data = queryset.values_list('pk', flat=True)
+        data = queryset.live().values_list('pk', flat=True)
         return Response(data)
 
     @cached_property
