@@ -5,6 +5,9 @@
 
 ### Implemented enhancements
 - CMS-1859 - Simplify caching system
+- no ticket - return only pks on /api/pages/
+- no ticket - Add caching to /api/pages/<pk>/
+- no ticket - Remove region support
 
 ## [2020.03.04](https://github.com/uktrade/directory-cms/releases/tag/2020.03.04)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.03.02...2020.03.04)
