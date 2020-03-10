@@ -80,42 +80,6 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
         self.handle_activate_language(instance)
         return instance
 
-    def listing_view(self, request):
-        queryset = self.filter_queryset(self.get_queryset())
-        data = queryset.values_list('pk', flat=True)
-        return Response(data)
-
-
-class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
-    pass
-
-
-class DetailViewEndpointBase(APIEndpointBase):
-    detail_only_fields = ['id']
-    authentication_classes = []
-    filter_backends = APIEndpointBase.filter_backends + [DjangoFilterBackend]
-    renderer_classes = [JSONRenderer]
-
-    @cached_property
-    def object_id(self):
-        """
-        Returns the `id` of the requested page. The value is used to
-        query `PageCache` for cached response, and by get_object() to
-        query the database for a `Page` object. Each subclass must
-        override this method to work out the correct `id` value from
-        the arguments it receives.
-
-        While this is a slightly roundabout way of identifying pages,
-        caches make lookups very cheap, allowing us to identify bad
-        parameter combinations early on, at very little cost. Using ids
-        for cache lookups also allows `PageCache` to remain simpler and
-        more generic, making it useful in more places.
-
-        Raises Http404 when the supplied arguments cannot be matched
-        to a page id.
-        """
-        raise NotImplementedError  # pragma: no cover
-
     def check_parameter_validity(self):
         """
         Called by `detail_view()` early in the response cycle to give
@@ -123,25 +87,6 @@ class DetailViewEndpointBase(APIEndpointBase):
         parameters values being supplied.
         """
         self.object_id
-
-    def get_object(self):
-        if hasattr(self, 'object'):
-            return self.object
-
-        # find a page by its id
-        instance = get_object_or_404(
-            self.filter_queryset(self.get_queryset()),
-            id=self.object_id,
-        ).specific
-
-        # check perms or load draft if requested
-        self.check_object_permissions(self.request, instance)
-        instance = self.handle_serve_draft_object(instance)
-        self.handle_activate_language(instance)
-
-        # remember result if requested again
-        self.object = instance
-        return instance
 
     def detail_view(self, request, **kwargs):
         # Exit early if there are any issues
@@ -175,6 +120,63 @@ class DetailViewEndpointBase(APIEndpointBase):
         # If API caching is enabled, one will be added to the cached version
         # created above.
         return response
+
+
+class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
+    def listing_view(self, request):
+        queryset = self.filter_queryset(self.get_queryset())
+        data = queryset.values_list('pk', flat=True)
+        return Response(data)
+
+    @cached_property
+    def object_id(self):
+        return self.kwargs['pk']
+
+
+class DetailViewEndpointBase(APIEndpointBase):
+    detail_only_fields = ['id']
+    authentication_classes = []
+    filter_backends = APIEndpointBase.filter_backends + [DjangoFilterBackend]
+    renderer_classes = [JSONRenderer]
+
+    @cached_property
+    def object_id(self):
+        """
+        Returns the `id` of the requested page. The value is used to
+        query `PageCache` for cached response, and by get_object() to
+        query the database for a `Page` object. Each subclass must
+        override this method to work out the correct `id` value from
+        the arguments it receives.
+
+        While this is a slightly roundabout way of identifying pages,
+        caches make lookups very cheap, allowing us to identify bad
+        parameter combinations early on, at very little cost. Using ids
+        for cache lookups also allows `PageCache` to remain simpler and
+        more generic, making it useful in more places.
+
+        Raises Http404 when the supplied arguments cannot be matched
+        to a page id.
+        """
+        raise NotImplementedError  # pragma: no cover
+
+    def get_object(self):
+        if hasattr(self, 'object'):
+            return self.object
+
+        # find a page by its id
+        instance = get_object_or_404(
+            self.filter_queryset(self.get_queryset()),
+            id=self.object_id,
+        ).specific
+
+        # check perms or load draft if requested
+        self.check_object_permissions(self.request, instance)
+        instance = self.handle_serve_draft_object(instance)
+        self.handle_activate_language(instance)
+
+        # remember result if requested again
+        self.object = instance
+        return instance
 
 
 class PageLookupBySlugAPIEndpoint(DetailViewEndpointBase):
