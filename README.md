@@ -1,6 +1,5 @@
 # directory-cms
 
-[![code-climate-image]][code-climate]
 [![circle-ci-image]][circle-ci]
 [![coverage-image]][coverage]
 [![gitflow-image]][gitflow]
@@ -121,9 +120,6 @@ Make sure to add the `rebuild_all_cache` task to the scheduler via the Django ad
 https://github.com/uktrade?q=directory
 
 https://github.com/uktrade?q=great
-
-[code-climate-image]: https://codeclimate.com/github/uktrade/directory-cms/badges/issue_count.svg
-[code-climate]: https://codeclimate.com/github/uktrade/directory-cms
 
 [circle-ci-image]: https://circleci.com/gh/uktrade/directory-cms/tree/develop.svg?style=svg
 [circle-ci]: https://circleci.com/gh/uktrade/directory-cms/tree/develop
