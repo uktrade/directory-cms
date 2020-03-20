@@ -22,6 +22,10 @@ from core.upstream_serializers import UpstreamModelSerializer
 from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
 
 
+class PageNotSerializableError(NotImplementedError):
+    pass
+
+
 class APIEndpointBase(PagesAdminAPIEndpoint):
     """At the very deep core this is a DRF GenericViewSet, with a few wagtail
     layers on top.
@@ -123,6 +127,18 @@ class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
     @cached_property
     def object_id(self):
         return self.kwargs['pk']
+
+    def get_serializer_class(self):
+        model_class = self.get_model_class()
+        if model_class not in MODELS_SERIALIZERS_MAPPING:
+            raise PageNotSerializableError(model_class.__name__)
+        return super().get_serializer_class()
+
+    def handle_exception(self, exc):
+        if isinstance(exc, PageNotSerializableError):
+            # page that exists has been requested, but it's not serializable. E.g, it's a folder page
+            return Response(status=201)
+        return super().handle_exception(exc)
 
 
 class DetailViewEndpointBase(APIEndpointBase):
