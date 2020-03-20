@@ -137,7 +137,7 @@ class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
     def handle_exception(self, exc):
         if isinstance(exc, PageNotSerializableError):
             # page that exists has been requested, but it's not serializable. E.g, it's a folder page
-            return Response(status=201)
+            return Response(status=204)
         return super().handle_exception(exc)
 
 
