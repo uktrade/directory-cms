@@ -10,6 +10,7 @@ from django.urls import reverse
 from core import cache, helpers, permissions, views
 from core.helpers import CachedResponse
 from conf.signature import SignatureCheckPermission
+from components.models import ComponentsApp
 from tests.great_international.factories import InternationalSectorPageFactory
 from .helpers import clean_post_data
 
@@ -327,6 +328,21 @@ def test_translations_exposed(translated_page, settings, client):
     expected = [[code, label] for code, label in settings.LANGUAGES_LOCALIZED]
 
     assert response.json()['meta']['languages'] == expected
+
+
+@pytest.mark.django_db
+def test_unserializable_page_requested(settings, client):
+    page = ComponentsApp.objects.create(
+        title_en_gb='the app',
+        depth=2,
+        path='/thing',
+    )
+
+    url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
+
+    response = client.get(url)
+
+    assert response.status_code == 204
 
 
 @pytest.mark.django_db
