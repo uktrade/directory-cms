@@ -22,6 +22,10 @@ from core.upstream_serializers import UpstreamModelSerializer
 from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
 
 
+class PageNotSerializableError(NotImplementedError):
+    pass
+
+
 class APIEndpointBase(PagesAdminAPIEndpoint):
     """At the very deep core this is a DRF GenericViewSet, with a few wagtail
     layers on top.
@@ -33,7 +37,7 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
     meta_fields = []
     known_query_parameters = (
         PagesAdminAPIEndpoint.known_query_parameters.union(
-            ['lang', 'draft_token', 'service_name', 'region']
+            ['lang', 'draft_token', 'service_name']
         )
     )
 
@@ -47,13 +51,6 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
     def get_serializer_class(self):
         model_class = self.get_model_class()
         return MODELS_SERIALIZERS_MAPPING[model_class]
-
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        region = self.request.GET.get('region')
-        if region:
-            context['region'] = region
-        return context
 
     @property
     def permission_classes(self):
@@ -80,14 +77,68 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
         self.handle_activate_language(instance)
         return instance
 
-    def listing_view(self, request):
-        queryset = self.filter_queryset(self.get_queryset())
-        data = queryset.values_list('pk', flat=True)
-        return Response(data)
+    def check_parameter_validity(self):
+        """
+        Called by `detail_view()` early in the response cycle to give
+        the endpoint an opportunity to raise exceptions due to invalid
+        parameters values being supplied.
+        """
+        self.object_id
+
+    def detail_view(self, request, **kwargs):
+        # Exit early if there are any issues
+        self.check_parameter_validity()
+
+        if helpers.is_draft_requested(request):
+            return super().detail_view(request, pk=None)
+
+        # Return a cached response if one is available
+        cached_data = cache.PageCache.get(
+            page_id=self.object_id,
+            lang=translation.get_language(),
+        )
+        if cached_data:
+            cached_response = helpers.CachedResponse(cached_data)
+            cached_response['etag'] = cached_data.get('etag', None)
+            return get_conditional_response(
+                request=request,
+                etag=cached_response['etag'],
+                response=cached_response,
+            )
+
+        # No cached response available
+        response = super().detail_view(request, pk=None)
+        if response.status_code == 200:
+            # Reuse the already-fetched object to populate the cache
+            cache.CachePopulator.populate_async(self.get_object())
+
+        # No etag is set for this response because creating one is expensive.
+        # If API caching is enabled, one will be added to the cached version
+        # created above.
+        return response
 
 
 class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
-    pass
+    def listing_view(self, request):
+        queryset = self.filter_queryset(self.get_queryset())
+        data = queryset.live().values_list('pk', flat=True)
+        return Response(data)
+
+    @cached_property
+    def object_id(self):
+        return self.kwargs['pk']
+
+    def get_serializer_class(self):
+        model_class = self.get_model_class()
+        if model_class not in MODELS_SERIALIZERS_MAPPING:
+            raise PageNotSerializableError(model_class.__name__)
+        return super().get_serializer_class()
+
+    def handle_exception(self, exc):
+        if isinstance(exc, PageNotSerializableError):
+            # page that exists has been requested, but it's not serializable. E.g, it's a folder page
+            return Response(status=204)
+        return super().handle_exception(exc)
 
 
 class DetailViewEndpointBase(APIEndpointBase):
@@ -116,14 +167,6 @@ class DetailViewEndpointBase(APIEndpointBase):
         """
         raise NotImplementedError  # pragma: no cover
 
-    def check_parameter_validity(self):
-        """
-        Called by `detail_view()` early in the response cycle to give
-        the endpoint an opportunity to raise exceptions due to invalid
-        parameters values being supplied.
-        """
-        self.object_id
-
     def get_object(self):
         if hasattr(self, 'object'):
             return self.object
@@ -142,39 +185,6 @@ class DetailViewEndpointBase(APIEndpointBase):
         # remember result if requested again
         self.object = instance
         return instance
-
-    def detail_view(self, request, **kwargs):
-        # Exit early if there are any issues
-        self.check_parameter_validity()
-
-        if helpers.is_draft_requested(request):
-            return super().detail_view(request, pk=None)
-
-        # Return a cached response if one is available
-        cached_data = cache.PageCache.get(
-            page_id=self.object_id,
-            lang=translation.get_language(),
-            region=request.GET.get('region'),
-        )
-        if cached_data:
-            cached_response = helpers.CachedResponse(cached_data)
-            cached_response['etag'] = cached_data.get('etag', None)
-            return get_conditional_response(
-                request=request,
-                etag=cached_response['etag'],
-                response=cached_response,
-            )
-
-        # No cached response available
-        response = super().detail_view(request, pk=None)
-        if response.status_code == 200:
-            # Reuse the already-fetched object to populate the cache
-            cache.CachePopulator.populate_async(self.get_object())
-
-        # No etag is set for this response because creating one is expensive.
-        # If API caching is enabled, one will be added to the cached version
-        # created above.
-        return response
 
 
 class PageLookupBySlugAPIEndpoint(DetailViewEndpointBase):
