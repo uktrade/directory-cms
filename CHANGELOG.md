@@ -1,16 +1,22 @@
 # Changelog
 
 ## Pre-release
+
+
+## [2020.03.23](https://github.com/uktrade/directory-cms/releases/tag/2020.03.23)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.03.06...2020.03.23)
+
+### Implemented enhancements
 - no ticket - Handle non-serializable page requested via /api/pages/<pk>/
 - no ticket - Upgrade bleach to fix vulnerability
+- no ticket - return only pks on /api/pages/
+- no ticket - Add caching to /api/pages/<pk>/
 
 ## [2020.03.06](https://github.com/uktrade/directory-cms/releases/tag/2020.03.06)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.03.04...2020.03.06)
 
 ### Implemented enhancements
 - CMS-1859 - Simplify caching system
-- no ticket - return only pks on /api/pages/
-- no ticket - Add caching to /api/pages/<pk>/
 - no ticket - Remove region support
 
 ## [2020.03.04](https://github.com/uktrade/directory-cms/releases/tag/2020.03.04)
