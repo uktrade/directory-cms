@@ -2,6 +2,8 @@
 
 ## Pre-release
 
+## Hotfix
+- No ticket - v3-cipipeline manifest.yml file fix
 
 ## [2020.03.23](https://github.com/uktrade/directory-cms/releases/tag/2020.03.23)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.03.06...2020.03.23)
