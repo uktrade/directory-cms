@@ -2,6 +2,9 @@
 
 ## Pre-release
 
+### Implemented enhancements
+- CI-677 - Add CTA link field to Capital Investment homepage hero
+
 ## Hotfix
 - No ticket - v3-cipipeline manifest.yml file fix
 
