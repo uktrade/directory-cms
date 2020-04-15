@@ -1428,6 +1428,31 @@ def test_new_int_home_page_has_related_capital_invest(rf, international_root_pag
 
 
 @pytest.mark.django_db
+def test_capital_invest_landing_page_has_cta(rf, international_root_page, image):
+    capital_invest_landing_page = InternationalCapitalInvestLandingPageFactory(
+        parent=international_root_page,
+        slug='capital-invest',
+        hero_title='Hero title',
+        hero_image=image,
+        hero_subheading='Hero subheading',
+        hero_subtitle='Hero subtitle',
+        hero_cta_text='click here',
+        hero_cta_link='/hero/cta/link',
+    )
+
+    serializer = InternationalCapitalInvestLandingPageSerializer(
+        instance=capital_invest_landing_page,
+        context={'request': rf.get('/')},
+    )
+
+    assert serializer.data['hero_title'] == 'Hero title'
+    assert serializer.data['hero_subheading'] == 'Hero subheading'
+    assert serializer.data['hero_subtitle'] == 'Hero subtitle'
+    assert serializer.data['hero_cta_text'] == 'click here'
+    assert serializer.data['hero_cta_link'] == '/hero/cta/link'
+
+
+@pytest.mark.django_db
 def test_new_int_home_page_has_related_trade(rf, international_root_page, image):
     trade = InternationalTradeHomePageFactory(
         parent=international_root_page,
