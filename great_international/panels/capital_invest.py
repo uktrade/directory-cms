@@ -21,7 +21,8 @@ class InternationalCapitalInvestLandingPagePanels:
                 FieldPanel('hero_title'),
                 FieldPanel('hero_subheading'),
                 FieldPanel('hero_subtitle'),
-                FieldPanel('hero_cta_text')
+                FieldPanel('hero_cta_text'),
+                FieldPanel('hero_cta_link'),
             ]
         ),
         MultiFieldPanel(

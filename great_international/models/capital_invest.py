@@ -149,6 +149,7 @@ class InternationalCapitalInvestLandingPage(
     )
     hero_subtitle = models.CharField(max_length=255, blank=True)
     hero_cta_text = models.CharField(max_length=255, blank=True)
+    hero_cta_link = models.CharField(max_length=255, blank=True)
 
     featured_description = models.TextField(max_length=255, blank=True)
 
