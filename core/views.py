@@ -89,14 +89,13 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
         # Exit early if there are any issues
         self.check_parameter_validity()
 
+        variation_kwargs = {'lang': translation.get_language()}
+
         if helpers.is_draft_requested(request):
-            return super().detail_view(request, pk=None)
+            variation_kwargs['draft_version'] = True
 
         # Return a cached response if one is available
-        cached_data = cache.PageCache.get(
-            page_id=self.object_id,
-            lang=translation.get_language(),
-        )
+        cached_data = cache.PageCache.get(page_id=self.object_id, **variation_kwargs)
         if cached_data:
             cached_response = helpers.CachedResponse(cached_data)
             cached_response['etag'] = cached_data.get('etag', None)

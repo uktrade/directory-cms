@@ -129,6 +129,15 @@ class CachePopulator:
                         data=serializer.data,
                         lang=language_code,
                     )
+                    if instance.has_unpublished_changes:
+                        draft_instance = instance.get_latest_nested_revision_as_page()
+                        draft_serializer = serializer_class(instance=draft_instance)
+                        page_cache.set(
+                            page_id=instance.id,
+                            data=draft_serializer.data,
+                            lang=language_code,
+                            draft_version=True
+                        )
 
     @classmethod
     def delete(cls, instance):
@@ -137,6 +146,11 @@ class CachePopulator:
                 page_cache.delete(
                     page_id=instance.id,
                     lang=language_code,
+                )
+                page_cache.delete(
+                    page_id=instance.id,
+                    lang=language_code,
+                    draft_version=True
                 )
 
 
