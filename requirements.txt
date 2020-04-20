@@ -9,7 +9,7 @@ attrs==19.3.0             # via jsonschema
 beautifulsoup4==4.6.0     # via directory-components, wagtail
 billiard==3.6.1.0         # via celery
 bleach-whitelist==0.0.9   # via -r requirements.in
-bleach==3.1.1             # via -r requirements.in
+bleach==3.1.4             # via -r requirements.in
 boto3==1.6.3              # via -r requirements.in
 botocore==1.9.23          # via boto3, s3transfer
 celery[redis]==4.3.0      # via -r requirements.in, django-celery-beat
@@ -25,12 +25,12 @@ django-environ==0.4.5     # via -r requirements.in
 django-filter==2.2.0      # via -r requirements.in
 django-health-check==3.8.0  # via directory-healthcheck
 django-ipware==2.1.0      # via django-admin-ip-restrictor
-django-modelcluster==4.4  # via wagtail
+django-modelcluster==5.0.1  # via wagtail
 django-modeltranslation==0.14  # via wagtail-modeltranslation
 django-pglocks==1.0.2     # via -r requirements.in
 django-redis==4.10.0      # via -r requirements.in
 django-staff-sso-client==1.0.0  # via -r requirements.in
-django-taggit==0.24.0     # via wagtail
+django-taggit==1.2.0      # via wagtail
 django-timezone-field==4.0  # via django-celery-beat
 django-treebeard==4.3     # via wagtail
 django==2.2.10            # via -r requirements.in, directory-components, directory-constants, directory-healthcheck, django-admin-ip-restrictor, django-celery-beat, django-filter, django-redis, django-staff-sso-client, django-storages, django-taggit, django-timezone-field, django-treebeard, sigauth, wagtail
@@ -57,7 +57,7 @@ more-itertools==8.0.0     # via zipp
 notifications-python-client==5.3.0  # via -r requirements.in
 num2words==0.5.10         # via -r requirements.in
 oauthlib==3.1.0           # via requests-oauthlib
-pillow==6.2.1             # via -r requirements.in, wagtail
+pillow==6.2.2             # via -r requirements.in, wagtail
 psycopg2==2.7.3.2         # via -r requirements.in
 pycountry==19.8.18        # via -r requirements.in
 pyjwt==1.7.1              # via notifications-python-client
@@ -80,11 +80,11 @@ urllib3==1.24.3           # via -r requirements.in, requests, sentry-sdk
 vine==1.3.0               # via amqp, celery
 w3lib==1.21.0             # via -r requirements.in
 wagtail-modeltranslation==0.10.2  # via -r requirements.in
-wagtail==2.6.3            # via -r requirements.in, wagtail-modeltranslation, wagtailmedia
+wagtail==2.7.2            # via -r requirements.in, wagtail-modeltranslation, wagtailmedia
 wagtailmedia==0.3.1       # via -r requirements.in
 webencodings==0.5.1       # via bleach, html5lib
 whitenoise==4.1.2         # via -r requirements.in
-willow==1.1               # via wagtail
+willow==1.3               # via wagtail
 zipp==0.6.0               # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
