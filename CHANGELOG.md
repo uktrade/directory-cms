@@ -4,6 +4,7 @@
 
 ### Implemented enhancements
 - CI-677 - Add CTA link field to Capital Investment homepage hero
+- no ticket - Add cache supoort to draft pages
 
 ## Hotfix
 - No ticket - v3-cipipeline manifest.yml file fix
