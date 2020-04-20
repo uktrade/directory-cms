@@ -15,17 +15,13 @@ class MarkdownToHTMLField(fields.CharField):
 class MetaDictField(fields.DictField):
 
     def get_attribute(self, instance):
-        if 'request' in self.context:
-            is_draft = helpers.is_draft_requested(self.context['request'])
-        else:
-            is_draft = False
         return {
             'languages': [
                 (code, label) for (code, label) in settings.LANGUAGES_LOCALIZED
                 if code in instance.specific.translated_languages
             ],
             'url': instance.specific.get_url(
-                is_draft=is_draft,
+                is_draft=self.context.get('is_draft', False),
                 language_code=settings.LANGUAGE_CODE,
             ),
             'slug': instance.slug,

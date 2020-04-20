@@ -1,3 +1,5 @@
+from logging import getLogger
+
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ValidationError
 from rest_framework.renderers import JSONRenderer
@@ -20,6 +22,9 @@ from conf.signature import SignatureCheckPermission
 from core import cache, filters, forms, helpers, permissions, serializers
 from core.upstream_serializers import UpstreamModelSerializer
 from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
+
+
+logger = getLogger(__name__)
 
 
 class PageNotSerializableError(NotImplementedError):
@@ -107,14 +112,21 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
 
         # No cached response available
         response = super().detail_view(request, pk=None)
+
         if response.status_code == 200:
             # Reuse the already-fetched object to populate the cache
             cache.CachePopulator.populate_async(self.get_object())
 
+        logger.warn(f'Page cache miss')
         # No etag is set for this response because creating one is expensive.
         # If API caching is enabled, one will be added to the cached version
         # created above.
         return response
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['is_draft'] = helpers.is_draft_requested(self.request)
+        return context
 
 
 class PagesOptionalDraftAPIEndpoint(APIEndpointBase):

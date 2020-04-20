@@ -131,7 +131,10 @@ class CachePopulator:
                     )
                     if instance.has_unpublished_changes:
                         draft_instance = instance.get_latest_nested_revision_as_page()
-                        draft_serializer = serializer_class(instance=draft_instance)
+                        draft_serializer = serializer_class(
+                            instance=draft_instance,
+                            context={'is_draft': True}
+                        )
                         page_cache.set(
                             page_id=instance.id,
                             data=draft_serializer.data,
