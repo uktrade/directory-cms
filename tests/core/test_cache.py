@@ -160,16 +160,23 @@ def test_subscriber_delete(mock_delete):
         model_classes = [Page]
 
     instance = mock.Mock(
-        id=1, slug='some-slug', service_name='thing',
+        id=2, slug='some-slug', service_name='thing',
         translated_languages=['en-gb']
     )
     TestSubscriber.delete(sender=None, instance=instance)
 
-    assert mock_delete.call_count == 1
-    assert mock_delete.call_args == mock.call(
-        page_id=1,
-        lang='en-gb',
-    )
+    assert mock_delete.call_count == 2
+    assert mock_delete.call_args_list == [
+        mock.call(
+            page_id=2,
+            lang='en-gb',
+        ),
+        mock.call(
+            page_id=2,
+            lang='en-gb',
+            draft_version=True,
+        )
+    ]
 
 
 @mock.patch('django.core.cache.cache.set')
