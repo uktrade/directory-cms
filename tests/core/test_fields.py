@@ -5,7 +5,6 @@ from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 
 from core import fields
-from core import permissions
 from great_international.serializers import InternationalSectorPageSerializer, InternationalArticlePageSerializer
 from tests.great_international.factories import InternationalSectorPageFactory
 
@@ -103,10 +102,9 @@ def test_meta_field_draft(international_root_page, rf):
         parent=international_root_page,
         slug='test-slug',
     )
-    request = rf.get('/', {permissions.DraftTokenPermisison.TOKEN_PARAM: '1'})
     serializer = InternationalSectorPageSerializer(
         instance=sector_page,
-        context={'request': request}
+        context={'is_draft': True}
     )
 
     assert serializer.data['meta']['url'] == sector_page.get_url(is_draft=True)
