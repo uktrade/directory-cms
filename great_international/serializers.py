@@ -1316,6 +1316,7 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer, HeroSe
     hero_subheading = serializers.CharField(max_length=255)
     hero_subtitle = serializers.CharField(max_length=255)
     hero_cta_text = serializers.CharField(max_length=255)
+    hero_cta_link = serializers.CharField(max_length=255)
 
     reason_to_invest_section_title = serializers.CharField(max_length=255)
     reason_to_invest_section_intro = serializers.CharField(max_length=255)
