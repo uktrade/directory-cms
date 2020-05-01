@@ -91,7 +91,8 @@ INSTALLED_APPS = [
     'activitystream.apps.ActivityStreamConfig',
     'django_filters',
     'authbroker_client',
-    'django_celery_beat'
+    'django_celery_beat',
+    'elasticapm.contrib.django',
 ]
 
 MIDDLEWARE = [
@@ -479,3 +480,13 @@ CELERY_TASK_ALWAYS_EAGER = env.bool('CELERY_ALWAYS_EAGER', False)
 # Activity Stream API
 ACTIVITY_STREAM_ACCESS_KEY_ID = env.str('ACTIVITY_STREAM_ACCESS_KEY_ID')
 ACTIVITY_STREAM_SECRET_ACCESS_KEY = env.str('ACTIVITY_STREAM_SECRET_ACCESS_KEY')
+
+# Application Performance Monitoring
+if env.str('ELASTIC_APM_SERVER_URL', ''):
+    ELASTIC_APM = {
+        'SERVICE_NAME': env.str('ELASTIC_APM_SERVICE_NAME', 'directory-cms'),
+        'SECRET_TOKEN': env.str('ELASTIC_APM_SECRET_TOKEN'),
+        'SERVER_URL': env.str('ELASTIC_APM_SERVER_URL'),
+        'ENVIRONMENT': env.str('SENTRY_ENVIRONMENT'),
+        'DEBUG': DEBUG,
+    }
