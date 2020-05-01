@@ -14,7 +14,7 @@ bleach==3.1.1             # via -r requirements.in
 boto3==1.6.3              # via -r requirements.in
 botocore==1.9.23          # via boto3, s3transfer
 celery[redis]==4.2.1      # via -r requirements.in, django-celery-beat
-certifi==2018.11.29       # via requests, sentry-sdk
+certifi==2018.11.29       # via elastic-apm, requests, sentry-sdk
 chardet==3.0.4            # via requests
 click==7.0                # via pip-tools
 coverage==4.5.2           # via coveralls, pytest-cov
@@ -44,6 +44,7 @@ djangorestframework==3.9.4  # via -r requirements.in, sigauth, wagtail
 docopt==0.6.2             # via coveralls, notifications-python-client, num2words
 docutils==0.14            # via botocore
 draftjs-exporter==2.1.5   # via wagtail
+elastic-apm==5.5.2        # via -r requirements.in
 factory-boy==2.8.1        # via -r requirements_test.in, wagtail-factories
 faker==1.0.1              # via factory-boy
 flake8==3.6.0             # via -r requirements_test.in
@@ -100,7 +101,7 @@ sqlparse==0.2.4           # via django, django-debug-toolbar
 termcolor==1.1.0          # via pytest-sugar
 text-unidecode==1.2       # via faker
 unidecode==1.0.23         # via wagtail
-urllib3==1.24.2           # via -r requirements.in, requests, sentry-sdk
+urllib3==1.24.2           # via -r requirements.in, elastic-apm, requests, sentry-sdk
 vine==1.1.4               # via amqp
 w3lib==1.20.0             # via -r requirements.in
 wagtail-factories==2.0.0  # via -r requirements_test.in
