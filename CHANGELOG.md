@@ -4,6 +4,7 @@
 
 ### Implemented enhancements
 - no ticked - Add APM support
+- XOT-1341 - Make fields 3* optional fields
 
 ## Fixed bugs
 
