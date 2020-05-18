@@ -137,10 +137,22 @@ class PerformanceDashboardPage(panels.PerformanceDashboardPagePanels, BaseDomest
     data_period_row_two = models.CharField(max_length=100)
     data_description_row_two = MarkdownField()
     # row 3
-    data_title_row_three = models.CharField(max_length=100)
-    data_number_row_three = models.CharField(max_length=15)
-    data_period_row_three = models.CharField(max_length=100)
-    data_description_row_three = MarkdownField()
+    data_title_row_three = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    data_number_row_three = models.CharField(
+        max_length=15,
+        blank=True,
+        null=True,
+    )
+    data_period_row_three = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    data_description_row_three = MarkdownField(blank=True, null=True)
     # row 4
     data_title_row_four = models.CharField(
         max_length=100,

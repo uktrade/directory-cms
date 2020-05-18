@@ -3,10 +3,20 @@
 ## Pre-release
 
 ### Implemented enhancements
+- no ticked - Add APM support
+- XOT-1341 - Make fields 3* optional fields
+
+## Fixed bugs
+
+
+## [2020.04.22](https://github.com/uktrade/directory-cms/releases/tag/2020.04.22)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.03.23...2020.04.22)
+
+### Implemented enhancements
 - CI-677 - Add CTA link field to Capital Investment homepage hero
 - no ticket - Add cache supoort to draft pages
 
-## Hotfix
+## Fixed bugs
 - No ticket - v3-cipipeline manifest.yml file fix
 
 ## [2020.03.23](https://github.com/uktrade/directory-cms/releases/tag/2020.03.23)
