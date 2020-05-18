@@ -3,11 +3,14 @@
 ## Pre-release
 
 ### Implemented enhancements
-- no ticked - Add APM support
-- XOT-1341 - Make fields 3* optional fields
 
 ## Fixed bugs
 
+## [2020.05.18](https://github.com/uktrade/directory-cms/releases/tag/2020.05.18)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.04.22...2020.05.18)
+### Implemented enhancements
+- no ticked - Add APM support
+- XOT-1341 - Make fields 3* optional fields
 
 ## [2020.04.22](https://github.com/uktrade/directory-cms/releases/tag/2020.04.22)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.03.23...2020.04.22)
