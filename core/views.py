@@ -117,7 +117,7 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
             # Reuse the already-fetched object to populate the cache
             cache.CachePopulator.populate_async(self.get_object())
 
-        logger.warn(f'Page cache miss')
+        logger.warn('Page cache miss')
         # No etag is set for this response because creating one is expensive.
         # If API caching is enabled, one will be added to the cached version
         # created above.
