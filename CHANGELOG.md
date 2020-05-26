@@ -10,7 +10,7 @@
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.04.22...2020.05.26)
 
 ### Implemented enhancements
-- no ticked - Add APM support
+- no ticket - Add APM support
 - XOT-1341 - Make fields 3* optional fields
 
 
