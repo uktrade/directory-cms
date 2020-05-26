@@ -104,10 +104,11 @@ class BasePage(Page):
     slug_override = None
 
     subpage_types = []
-    base_form_class = forms.WagtailAdminPageForm
     content_panels = []
     promote_panels = []
     read_only_fields = []
+
+    _base_form_class = forms.WagtailAdminPageForm
 
     def __init__(self, *args, **kwargs):
         self.signer = signing.Signer()
@@ -115,6 +116,19 @@ class BasePage(Page):
         #  goo.gl/yYD4pw
         self.clean = lambda: None
         super().__init__(*args, **kwargs)
+
+    @classmethod
+    def get_subclasses(cls):
+        for subclass in cls.__subclasses__():
+            yield from subclass.get_subclasses()
+            yield subclass
+
+    @classmethod
+    def fix_base_form_class_monkeypatch(cls):
+        # workaround modeltranslation patching Page.base_form_class in an unpythonic way
+        for model in cls.get_subclasses():
+            base_form_class = getattr(model, '_base_form_class')
+            setattr(model, 'base_form_class', base_form_class)
 
     @transaction.atomic
     def save(self, *args, **kwargs):
@@ -400,7 +414,8 @@ class WagtailAdminExclusivePageMixin:
     attribute set, that will be used as default slug in the page
     creation UI.
     """
-    base_form_class = forms.WagtailAdminPageExclusivePageForm
+
+    _base_form_class = forms.WagtailAdminPageExclusivePageForm
 
     @classmethod
     def can_create_at(cls, parent):
@@ -453,7 +468,7 @@ class BreadcrumbMixin(models.Model):
 
 
 class ServiceMixin(models.Model):
-    base_form_class = forms.BaseAppAdminPageForm
+    _base_form_class = forms.BaseAppAdminPageForm
     view_path = ''
     parent_page_types = ['wagtailcore.Page']
 
