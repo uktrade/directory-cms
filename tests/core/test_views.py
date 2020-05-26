@@ -229,6 +229,7 @@ def test_upstream_anon(client, translated_page, image, url_name):
 def test_add_page_prepopulate(
     is_edit, expected_template, international_root_page, translated_page, admin_client, image, cluster_data
 ):
+
     cache.PageIDCache.populate()
     url = reverse('preload-add-page')
     model_as_dict = model_to_dict(translated_page, exclude=[

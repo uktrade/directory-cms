@@ -81,7 +81,6 @@ pyparsing==2.4.7          # via packaging
 pyrsistent==0.16.0        # via jsonschema
 pytest-cov==2.9.0         # via -r requirements_test.in
 pytest-django==3.9.0      # via -r requirements_test.in
-pytest-sugar==0.9.3       # via -r requirements_test.in
 pytest==5.4.2             # via -r requirements_test.in, pytest-cov, pytest-django, pytest-sugar
 python-crontab==2.5.1     # via django-celery-beat
 python-dateutil==2.6.1    # via botocore, faker, freezegun, python-crontab
