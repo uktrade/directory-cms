@@ -31,6 +31,10 @@ class PageNotSerializableError(NotImplementedError):
     pass
 
 
+class PageSerializationTooExpensiveError(TimeoutError):
+    pass
+
+
 class APIEndpointBase(PagesAdminAPIEndpoint):
     """At the very deep core this is a DRF GenericViewSet, with a few wagtail
     layers on top.
@@ -45,6 +49,15 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
             ['lang', 'draft_token', 'service_name']
         )
     )
+
+    def handle_exception(self, exc):
+        if isinstance(exc, PageNotSerializableError):
+            # page that exists has been requested, but it's not serializable. E.g, it's a folder page
+            return Response(status=204)
+        if isinstance(exc, PageSerializationTooExpensiveError):
+            # the request took too long so the code manually bailed out by raising a timeout
+            return Response(status=501)
+        return super().handle_exception(exc)
 
     def get_model_class(self):
         if self.action == 'listing_view':
@@ -110,18 +123,14 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
                 response=cached_response,
             )
 
-        # No cached response available
-        response = super().detail_view(request, pk=None)
-
-        if response.status_code == 200:
-            # Reuse the already-fetched object to populate the cache
-            cache.CachePopulator.populate_async(self.get_object())
-
         logger.warn('Page cache miss')
-        # No etag is set for this response because creating one is expensive.
-        # If API caching is enabled, one will be added to the cached version
-        # created above.
-        return response
+
+        cache.CachePopulator.populate_async(self.get_object())
+
+        # super().detail_view can take several seconds due to unoptimized database reads - so lots of
+        # resources get used but ultimately will timeout. So here we attempt, but bail out after 2 seconds
+        with helpers.timeout(seconds=2, error_class=PageSerializationTooExpensiveError):
+            return super().detail_view(request, pk=None)
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
@@ -144,12 +153,6 @@ class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
         if model_class not in MODELS_SERIALIZERS_MAPPING:
             raise PageNotSerializableError(model_class.__name__)
         return super().get_serializer_class()
-
-    def handle_exception(self, exc):
-        if isinstance(exc, PageNotSerializableError):
-            # page that exists has been requested, but it's not serializable. E.g, it's a folder page
-            return Response(status=204)
-        return super().handle_exception(exc)
 
 
 class DetailViewEndpointBase(APIEndpointBase):
@@ -339,6 +342,13 @@ class PreloadPageView(FormView):
     def site(self):
         return Site.objects.get(site_name=self.management_form.cleaned_data['site_name'])
 
+    @cached_property
+    def parent_page(self):
+        return self.lookup_page(
+            path=self.management_form.cleaned_data['parent_path'],
+            site_id=self.site.id
+        )
+
     def get_page(self):
         page_class = self.page_content_type.model_class()
         page = None
@@ -365,18 +375,14 @@ class PreloadPageView(FormView):
 
     def get_context_data(self, form):
         page_class = self.page_content_type.model_class()
-        parent_page = self.lookup_page(
-            path=self.management_form.cleaned_data['parent_path'],
-            site_id=self.site.id
-        )
         edit_handler = page_class.get_edit_handler()
         form_class = edit_handler.get_form_class()
         form = form_class(
             data=form.data,
             instance=self.page,
-            parent_page=parent_page,
+            parent_page=self.parent_page,
         )
-        edit_handler = edit_handler.bind_to_instance(
+        edit_handler = edit_handler.bind_to(
             instance=self.page,
             form=form,
             request=self.request
@@ -384,7 +390,7 @@ class PreloadPageView(FormView):
         return {
             'content_type': self.page_content_type,
             'page_class': page_class,
-            'parent_page': parent_page,
+            'parent_page': self.parent_page,
             'edit_handler': edit_handler,
             'preview_modes': self.page.preview_modes,
             'form': form,
@@ -398,6 +404,7 @@ class PreloadPageView(FormView):
         kwargs = super().get_form_kwargs()
         data = UpstreamModelSerializer.deserialize(kwargs['data'], request=self.request)
         kwargs['data'] = data
+        kwargs['parent_page'] = self.parent_page
         return kwargs
 
     def form_valid(self, form):

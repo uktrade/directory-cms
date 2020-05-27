@@ -92,7 +92,6 @@ INSTALLED_APPS = [
     'django_filters',
     'authbroker_client',
     'django_celery_beat',
-    'elasticapm.contrib.django',
 ]
 
 MIDDLEWARE = [
@@ -490,3 +489,4 @@ if env.str('ELASTIC_APM_SERVER_URL', ''):
         'ENVIRONMENT': env.str('SENTRY_ENVIRONMENT'),
         'DEBUG': DEBUG,
     }
+    INSTALLED_APPS.append('elasticapm.contrib.django')
