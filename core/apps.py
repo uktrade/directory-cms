@@ -6,7 +6,7 @@ class CoreConfig(AppConfig):
     name = 'core'
 
     def ready(self):
-        from core import signals
+        from core import models, signals
         from core.cache import PageIDCache, DatabaseCacheSubscriber
 
         post_save.connect(
@@ -19,3 +19,4 @@ class CoreConfig(AppConfig):
         )
         PageIDCache.subscribe()
         DatabaseCacheSubscriber.subscribe()
+        models.BasePage.fix_base_form_class_monkeypatch()

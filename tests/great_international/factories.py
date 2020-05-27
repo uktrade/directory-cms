@@ -1,7 +1,10 @@
+import random
+import string
+
 import factory
 import factory.fuzzy
-import string
 import wagtail_factories
+
 from django.utils import timezone
 
 from great_international import models
@@ -303,7 +306,7 @@ class fuzzyURL(factory.fuzzy.BaseFuzzyAttribute):
 
     def fuzz(self):
         chars = [
-            factory.fuzzy._random.choice(string.ascii_lowercase)
+            random.choice(string.ascii_lowercase)
             for _i in range(self.name_length)
         ]
         return self.protocol + '://' + ''.join(chars) + '.' + self.tld

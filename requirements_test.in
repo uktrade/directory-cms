@@ -6,7 +6,7 @@ pytest-django
 pytest-sugar
 flake8
 requests_mock
-freezegun
+freezegun==0.3.14
 coveralls
 factory-boy
 beautifulsoup4
