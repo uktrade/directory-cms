@@ -4,6 +4,7 @@
 
 ### Implemented enhancements
 ## Fixed bugs
+- No ticket - Upgraded dependencies to fix security vulnerability
 
 
 ## [2020.05.26](https://github.com/uktrade/directory-cms/releases/tag/2020.05.26)
