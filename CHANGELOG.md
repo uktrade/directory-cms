@@ -5,7 +5,7 @@
 ### Implemented enhancements
 ## Fixed bugs
 - No ticket - Upgraded dependencies to fix security vulnerability
-
+- No ticket - Expedite non-success response during cache miss
 
 ## [2020.05.26](https://github.com/uktrade/directory-cms/releases/tag/2020.05.26)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.04.22...2020.05.26)
