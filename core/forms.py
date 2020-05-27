@@ -5,7 +5,7 @@ from modeltranslation.utils import build_localized_fieldname
 from django import forms
 from django.conf import settings
 
-from wagtail.admin.forms import WagtailAdminPageForm
+from wagtail_modeltranslation.patch_wagtailadmin_forms import WagtailFixedAdminPageForm
 
 
 class CopyToEnvironmentForm(forms.Form):
@@ -31,7 +31,7 @@ class PreloadPageManagementForm(forms.Form):
         return None if value == 'None' else value
 
 
-class WagtailAdminPageForm(WagtailAdminPageForm):
+class WagtailAdminPageForm(WagtailFixedAdminPageForm):
 
     def __new__(cls, data=None, *args, **kwargs):
         form_class = super().__new__(cls)
@@ -74,6 +74,7 @@ class WagtailAdminPageForm(WagtailAdminPageForm):
         """
 
         css_classname = 'required-for-language'
+
         fields = form_class._meta.model.get_required_translatable_fields()
         for name, (code, _) in itertools.product(fields, settings.LANGUAGES):
             field_name = build_localized_fieldname(name, lang=code)

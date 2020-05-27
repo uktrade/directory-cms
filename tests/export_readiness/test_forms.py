@@ -12,7 +12,7 @@ def test_terms_slug(model_class, rf):
     edit_handler = model_class.get_edit_handler()
     form_class = edit_handler.get_form_class()
     form = form_class()
-    edit_handler.bind_to_instance(
+    edit_handler.bind_to(
         instance=instance,
         form=form,
         request=rf
