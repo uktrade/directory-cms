@@ -7,6 +7,7 @@
 - XOT-1341 - Make fields 3* optional fields
 
 ## Fixed bugs
+- No ticket - Upgraded dependencies to fix security vulnerability
 
 
 ## [2020.04.22](https://github.com/uktrade/directory-cms/releases/tag/2020.04.22)
