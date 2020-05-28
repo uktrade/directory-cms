@@ -1,13 +1,16 @@
-import pytest
+import time
+from unittest import mock
 
 from bs4 import BeautifulSoup
 from directory_constants import cms
 from modeltranslation.utils import build_localized_fieldname
+import pytest
+from rest_framework.serializers import Serializer
 
 from django.forms.models import model_to_dict
 from django.urls import reverse
 
-from core import cache, helpers, permissions, views
+from core import cache, helpers, permissions, serializer_mapping, views
 from core.helpers import CachedResponse
 from conf.signature import SignatureCheckPermission
 from components.models import ComponentsApp
@@ -450,6 +453,28 @@ def test_cache_etags_match(admin_client, international_root_page):
     )
     assert response_three.status_code == 304
     assert response_three.content == b''
+
+
+@pytest.mark.django_db
+def test_cache_miss_slow_database_read(admin_client, international_root_page):
+
+    class SlowSerializer(Serializer):
+        def to_representation(self, instance):
+            time.sleep(3)
+            return {}
+
+    service_name = cms.GREAT_INTERNATIONAL
+
+    page = InternationalSectorPageFactory.create(parent=international_root_page, live=True)
+
+    url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
+
+    # given the page  is very slow to read
+    with mock.patch.dict(serializer_mapping.MODELS_SERIALIZERS_MAPPING, {page.__class__: SlowSerializer}):
+        response = admin_client.get(url, {'service_name': service_name})
+
+    # then the response results in 501
+    assert response.status_code == 501
 
 
 @pytest.mark.django_db
