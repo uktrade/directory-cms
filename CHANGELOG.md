@@ -3,6 +3,8 @@
 ## Pre-release
 
 ### Implemented enhancements
+- No ticket - Improve caching of markets endpoint
+
 ## Fixed bugs
 
 ## [2020.05.28](https://github.com/uktrade/directory-cms/releases/tag/2020.05.28)
