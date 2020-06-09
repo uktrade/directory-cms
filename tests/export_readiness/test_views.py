@@ -224,20 +224,21 @@ def test_lookup_countries_by_tag_list_endpoint(client):
 
 @pytest.mark.django_db
 def test_lookup_market_guides_missing_filters(client):
-    tag = factories.IndustryTagFactory()
-    tag2 = factories.IndustryTagFactory()
+    tag = factories.IndustryTagFactory(name='aerospace')
+    tag2 = factories.IndustryTagFactory(name='technology')
     market1 = factories.CountryGuidePageFactory()
-    market1.tags = [tag, tag2]
-    market1.save()
+    market1.tags = [tag2]
+    market1.save_revision().publish()
     market2 = factories.CountryGuidePageFactory()
     market2.tags = [tag]
-    market2.save()
+    market2.save_revision().publish()
+    CountryPageCachePopulator.populate()
 
     url = reverse('api:lookup-country-guides-list-view')
 
     response = client.get(url)
     assert response.status_code == 200
-    assert response.json() == []
+    assert len(response.json()) == 2
 
 
 @pytest.mark.django_db
@@ -250,12 +251,13 @@ def test_lookup_market_guides_missing_region(client):
     market2 = factories.CountryGuidePageFactory()
     market2.tags = [tag]
     market2.save_revision().publish()
+    CountryPageCachePopulator.populate()
 
     url = reverse('api:lookup-country-guides-list-view')
 
     response = client.get(f'{url}?industry={tag.name},{tag2.name}')
     assert response.status_code == 200
-    assert response.json() == []
+    assert len(response.json()) == 2
 
 
 @pytest.mark.django_db
@@ -278,8 +280,8 @@ def test_lookup_market_guides_missing_region_markets_have_region(client):
     response = client.get(f'{url}?industry={tag.name},{tag2.name}')
     assert response.status_code == 200
     assert len(response.json()) == 2
-    assert response.json()[0]['id'] == market2.pk
-    assert response.json()[1]['id'] == market1.pk
+    assert response.json()[0]['id'] == market1.pk
+    assert response.json()[1]['id'] == market2.pk
 
 
 @pytest.mark.django_db
