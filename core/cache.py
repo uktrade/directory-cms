@@ -321,18 +321,24 @@ class CountryPageCachePopulator:
         pages = collections.defaultdict(list)
         serializer_class = MODELS_SERIALIZERS_MAPPING[CountryGuidePage]
 
+        # store the record four times: so can be filtered by country+industry, country, industry, or no filter
         for page in CountryGuidePage.objects.select_related('country').live():
             serializer = serializer_class(instance=page)
 
+            # allows retrieve with no filter
+            pages[(None, None)].append(serializer.data)
             for industry in page.tags.values_list('name', flat=True):
-                pages[(industry, page.country.name if page.country else None)].append(serializer.data)
+                if page.country:
+                    # allow retrieve with both filters
+                    pages[(industry, page.country.name)].append(serializer.data)
+                    # allow retrieve with country
+                    pages[(None, page.country.name)].append(serializer.data)
+                # allow retrieve with industry
+                pages[(industry, None)].append(serializer.data)
 
         with CountryPagesCache.transaction() as country_cache:
             for (industry, country), data in pages.items():
-                # store hte record three times: so can be filtered by country+industry, country, or industry
                 country_cache.set(data, country=country, industry=industry)
-                country_cache.set(data, country=None, industry=industry)
-                country_cache.set(data, country=country, industry=None)
 
 
 class DatabaseCacheSubscriber:
