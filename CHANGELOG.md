@@ -1,17 +1,22 @@
 # Changelog
 
 ## Pre-release
+### Implemented enhancements
+### Fixed bugs
+
+## [2020.06.12](https://github.com/uktrade/directory-cms/releases/tag/2020.06.12)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.05.28...2020.06.12)
 
 ### Implemented enhancements
 - No ticket - Improve caching of markets endpoint
 
-## Fixed bugs
+### Fixed bugs
 - No ticket - Upgrade django to fix security vulnerability
 
 ## [2020.05.28](https://github.com/uktrade/directory-cms/releases/tag/2020.05.28)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.05.26...2020.05.28)
 
-## Fixed bugs
+### Fixed bugs
 - No ticket - Upgraded dependencies to fix security vulnerability
 - No ticket - Expedite non-success response during cache miss
 
