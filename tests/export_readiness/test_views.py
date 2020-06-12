@@ -5,7 +5,7 @@ from rest_framework.reverse import reverse
 
 from tests.export_readiness import factories
 from directory_constants import urls
-from core.cache import CountryPageCachePopulator
+from core.cache import MarketPagesCachePopulator
 
 
 @pytest.mark.django_db
@@ -232,7 +232,7 @@ def test_lookup_market_guides_missing_filters(client):
     market2 = factories.CountryGuidePageFactory()
     market2.tags = [tag]
     market2.save_revision().publish()
-    CountryPageCachePopulator.populate()
+    MarketPagesCachePopulator.populate()
 
     url = reverse('api:lookup-country-guides-list-view')
 
@@ -251,7 +251,7 @@ def test_lookup_market_guides_missing_region(client):
     market2 = factories.CountryGuidePageFactory()
     market2.tags = [tag]
     market2.save_revision().publish()
-    CountryPageCachePopulator.populate()
+    MarketPagesCachePopulator.populate()
 
     url = reverse('api:lookup-country-guides-list-view')
 
@@ -274,7 +274,7 @@ def test_lookup_market_guides_missing_region_markets_have_region(client):
     market2.save_revision().publish()
     factories.CountryGuidePageFactory()
 
-    CountryPageCachePopulator.populate()
+    MarketPagesCachePopulator.populate()
 
     url = reverse('api:lookup-country-guides-list-view')
     response = client.get(f'{url}?industry={tag.name},{tag2.name}')
@@ -287,8 +287,8 @@ def test_lookup_market_guides_missing_region_markets_have_region(client):
 @pytest.mark.django_db
 def test_lookup_market_guides_all_filters_no_cache(client):
     tag = factories.IndustryTagFactory(name='aerospace')
-    region = factories.RegionFactory()
-    country = factories.CountryFactory(name='France', region=region)
+    region = factories.RegionFactory(name='europe')
+    country = factories.CountryFactory(region=region)
     market1 = factories.CountryGuidePageFactory(country=country)
     market1.tags = [tag]
     market1.save_revision().publish()
@@ -298,8 +298,8 @@ def test_lookup_market_guides_all_filters_no_cache(client):
     market2.save_revision()
     url = reverse('api:lookup-country-guides-list-view')
 
-    CountryPageCachePopulator.populate()
-    response = client.get(f'{url}?industry={tag.name}&region={country.name}')
+    MarketPagesCachePopulator.populate()
+    response = client.get(f'{url}?industry={tag.name}&region={region.name}')
     assert response.status_code == 200
     assert len(response.json()) == 1
     assert response.json()[0]['id'] == market1.pk
@@ -308,18 +308,18 @@ def test_lookup_market_guides_all_filters_no_cache(client):
 @pytest.mark.django_db
 def test_lookup_market_guides_all_filters_cache(client):
     tag = factories.IndustryTagFactory(name='aerospace')
-    region = factories.RegionFactory()
-    country = factories.CountryFactory(name='France', region=region)
+    region = factories.RegionFactory(name='europe')
+    country = factories.CountryFactory(region=region)
     market1 = factories.CountryGuidePageFactory(country=country)
     market1.tags = [tag]
     market1.save_revision().publish()
 
     factories.CountryGuidePageFactory(country=country)
 
-    CountryPageCachePopulator.populate()
+    MarketPagesCachePopulator.populate()
     url = reverse('api:lookup-country-guides-list-view')
 
-    response = client.get(f'{url}?industry={tag.name}&region={country.name}')
+    response = client.get(f'{url}?industry={tag.name}&region={region.name}')
     assert response.status_code == 200
     assert response.content_type == 'application/json'
     parsed = response.json()
