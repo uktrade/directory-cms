@@ -1,4 +1,6 @@
+import collections
 import hashlib
+import itertools
 from urllib.parse import urlencode
 
 from directory_constants import cms, slugs
@@ -14,6 +16,7 @@ from django.utils.http import quote_etag
 
 from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
 from conf.celery import app
+from export_readiness.models import CountryGuidePage
 
 
 ROOT_PATHS_TO_SERVICE_NAMES = {
@@ -274,6 +277,70 @@ class PageIDCache:
         post_migrate.connect(receiver=cls.clear)
 
 
+class CountryPagesCache:
+    cache = cache
+
+    @staticmethod
+    def build_key(country, industry):
+        return f'countryguide_{country}{industry}'
+
+    @classmethod
+    def set(cls, data, country=None, industry=None,):
+        key = cls.build_key(country=country, industry=industry)
+        cls.cache.set(key, data, timeout=settings.API_CACHE_EXPIRE_SECONDS)
+
+    @classmethod
+    def get_many(cls, industries=[None], countries=[None]):
+        keys = [cls.build_key(*args) for args in itertools.product(countries, industries)]
+        pages = {}
+        # making the values returned distint
+        for records in cls.cache.get_many(keys).values():
+            for record in records:
+                pages[record['id']] = record
+
+        return list(pages.values())
+
+    @classmethod
+    def transaction(cls):
+        class Transaction(cls):
+            cache = TransactionalCache()
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                self.cache.commit()
+
+        return Transaction()
+
+
+class CountryPageCachePopulator:
+
+    @classmethod
+    def populate(cls, *args, **kwargs):
+        pages = collections.defaultdict(list)
+        serializer_class = MODELS_SERIALIZERS_MAPPING[CountryGuidePage]
+
+        # store the record four times: so can be filtered by country+industry, country, industry, or no filter
+        for page in CountryGuidePage.objects.select_related('country').live():
+            serializer = serializer_class(instance=page)
+
+            # allows retrieve with no filter
+            pages[(None, None)].append(serializer.data)
+            for industry in page.tags.values_list('name', flat=True):
+                if page.country:
+                    # allow retrieve with both filters
+                    pages[(industry, page.country.name)].append(serializer.data)
+                    # allow retrieve with country
+                    pages[(None, page.country.name)].append(serializer.data)
+                # allow retrieve with industry
+                pages[(industry, None)].append(serializer.data)
+
+        with CountryPagesCache.transaction() as country_cache:
+            for (industry, country), data in pages.items():
+                country_cache.set(data, country=country, industry=industry)
+
+
 class DatabaseCacheSubscriber:
 
     cache_populator = CachePopulator
@@ -307,3 +374,4 @@ def rebuild_all_cache():
     for page in Page.objects.live().specific():
         if page.__class__ in MODELS_SERIALIZERS_MAPPING and page.__class__ is not Page:
             CachePopulator.populate_async(page)
+    CountryPageCachePopulator.populate()
