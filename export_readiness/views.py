@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from conf.signature import SignatureCheckPermission
 from export_readiness import serializers, snippets
-from core.cache import CountryPagesCache
+from core.cache import MarketPagesCache
 
 THIRTY_MINUTES_IN_SECONDS = 30 * 60
 
@@ -38,7 +38,7 @@ class CountryPageListAPIView(ListAPIView):
             filters['industries'] = industries.split(',')
         if countries:
             filters['countries'] = countries.split(',')
-        cached_content = CountryPagesCache.get_many(**filters)
+        cached_content = MarketPagesCache.get_many(**filters)
         return Response(cached_content or [], content_type='application/json')
 
 
