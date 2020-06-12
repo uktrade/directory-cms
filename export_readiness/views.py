@@ -1,15 +1,11 @@
-import json
-
-from django.core.cache import cache
-from django.db.models import Q
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from rest_framework.generics import RetrieveAPIView, ListAPIView
 from rest_framework.response import Response
 
 from conf.signature import SignatureCheckPermission
-from export_readiness import models, serializers, snippets
-
+from export_readiness import serializers, snippets
+from core.cache import MarketPagesCache
 
 THIRTY_MINUTES_IN_SECONDS = 30 * 60
 
@@ -31,45 +27,19 @@ class IndustryTagsListAPIView(ListAPIView):
 
 
 class CountryPageListAPIView(ListAPIView):
-    queryset = models.CountryGuidePage.objects.all()
-    serializer_class = serializers.CountryGuidePageSerializer
     permission_classes = [SignatureCheckPermission]
     http_method_names = ('get', )
 
-    @property
-    def cache_key(self):
-        industry = self.request.GET.get('industry')
-        region = self.request.GET.get('region')
-        return f'countryguide_{industry}{region}'
-
-    def get_queryset(self):
-        queryset = models.CountryGuidePage.objects.filter(live=True)
-        industry = self.request.query_params.get('industry')
-        region = self.request.query_params.get('region')
-        if not industry and not region:
-            return queryset
-        q_industries = Q()
-        q_regions = Q()
-        if industry:
-            for value in industry.split(','):
-                q_industries |= Q(tags__name=value)
-        if region:
-            for value in region.split(','):
-                q_regions |= Q(country__region__name=value)
-        return queryset.filter(q_industries & q_regions).distinct()
-
     def get(self, *args, **kwargs):
-
-        def foo(response):
-            cache.set(key=self.cache_key, value=response.content, timeout=THIRTY_MINUTES_IN_SECONDS)
-
-        cached_content = cache.get(key=self.cache_key)
-        if cached_content:
-            response = Response(json.loads(cached_content), content_type='application/json')
-        else:
-            response = super().get(*args, **kwargs)
-            response.add_post_render_callback(foo)
-        return response
+        filters = {}
+        industries = self.request.GET.get('industry')
+        countries = self.request.GET.get('region')
+        if industries:
+            filters['industries'] = industries.split(',')
+        if countries:
+            filters['countries'] = countries.split(',')
+        cached_content = MarketPagesCache.get_many(**filters)
+        return Response(cached_content or [], content_type='application/json')
 
 
 class RegionsListAPIView(ListAPIView):
