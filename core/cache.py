@@ -118,7 +118,8 @@ class CachePopulator:
 
     @classmethod
     def populate_async(cls, instance):
-        cls.populate.delay(instance.pk)
+        if instance.__class__ in MODELS_SERIALIZERS_MAPPING and instance.__class__ is not Page:
+            cls.populate.delay(instance.pk)
 
     @classmethod
     def populate_sync(cls, instance):
@@ -372,6 +373,5 @@ class DatabaseCacheSubscriber:
 @app.task
 def rebuild_all_cache():
     for page in Page.objects.live().specific():
-        if page.__class__ in MODELS_SERIALIZERS_MAPPING and page.__class__ is not Page:
-            CachePopulator.populate_async(page)
+        CachePopulator.populate_async(page)
     MarketPagesCachePopulator.populate()
