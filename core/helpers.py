@@ -1,7 +1,6 @@
 from num2words import num2words
 import copy
 import os
-import signal
 from urllib.parse import urljoin
 
 import bleach
@@ -246,19 +245,3 @@ def get_page_full_url(domain, full_path):
 
 def num2words_list(length):
     return list(map(num2words, list(range(1, length + 1))))
-
-
-class timeout:
-    def __init__(self, seconds=2, error_class=TimeoutError):
-        self.seconds = seconds
-        self.error_class = error_class
-
-    def handle_timeout(self, signum, frame):
-        raise self.error_class
-
-    def __enter__(self):
-        signal.signal(signal.SIGALRM, self.handle_timeout)
-        signal.alarm(self.seconds)
-
-    def __exit__(self, type, value, traceback):
-        signal.alarm(0)

@@ -5,7 +5,7 @@ from rest_framework.reverse import reverse
 
 from tests.export_readiness import factories
 from directory_constants import urls
-from core.cache import MarketPagesCachePopulator
+from core import cache
 
 
 @pytest.mark.django_db
@@ -15,6 +15,7 @@ def test_performance_dashboard(admin_client, root_page):
         parent=root_page,
         product_link=urls.SERVICES_GREAT_DOMESTIC
     )
+    cache.rebuild_all_cache()
 
     url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
 
@@ -29,6 +30,7 @@ def test_performance_dashboard_notes(admin_client, root_page):
         live=True,
         parent=root_page
     )
+    cache.rebuild_all_cache()
 
     url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
 
@@ -54,6 +56,7 @@ def test_topic_landing_page_view(admin_client, root_page):
         parent=article_listing_page,
         live=True
     )
+    cache.rebuild_all_cache()
 
     url = reverse('api:api:pages:detail', kwargs={'pk': topic_landing_page.pk})
     response = admin_client.get(url)
@@ -75,6 +78,7 @@ def test_article_listing_page_view(admin_client, root_page):
         parent=article_listing_page,
         live=True
     )
+    cache.rebuild_all_cache()
 
     url = reverse(
         'api:api:pages:detail', kwargs={'pk': article_listing_page.pk}
@@ -104,6 +108,8 @@ def test_article_page_view(admin_client, root_page):
     article.tags = [tag, tag2]
     article.save()
 
+    cache.rebuild_all_cache()
+
     url = reverse('api:api:pages:detail', kwargs={'pk': article.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
@@ -117,6 +123,7 @@ def test_domestic_homepage(admin_client, root_page):
         parent=root_page,
         hero_cta_url='/foo/bar'
     )
+    cache.rebuild_all_cache()
 
     url = reverse('api:api:pages:detail', kwargs={'pk': home_page.pk})
     response = admin_client.get(url)
@@ -133,6 +140,8 @@ def test_country_page_view(admin_client, root_page):
     tag = factories.IndustryTagFactory(name='test')
     page.tags = [tag]
     page.save()
+    cache.rebuild_all_cache()
+
     url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
@@ -166,6 +175,7 @@ def test_topic_landing_page_view_country_guides_alph_order(
         live=True,
         heading='foo'
     )
+    cache.rebuild_all_cache()
 
     url = reverse('api:api:pages:detail', kwargs={'pk': topic_landing_page.pk})
     response = admin_client.get(url)
@@ -232,7 +242,7 @@ def test_lookup_market_guides_missing_filters(client):
     market2 = factories.CountryGuidePageFactory()
     market2.tags = [tag]
     market2.save_revision().publish()
-    MarketPagesCachePopulator.populate()
+    cache.MarketPagesCachePopulator.populate()
 
     url = reverse('api:lookup-country-guides-list-view')
 
@@ -251,7 +261,7 @@ def test_lookup_market_guides_missing_region(client):
     market2 = factories.CountryGuidePageFactory()
     market2.tags = [tag]
     market2.save_revision().publish()
-    MarketPagesCachePopulator.populate()
+    cache.MarketPagesCachePopulator.populate()
 
     url = reverse('api:lookup-country-guides-list-view')
 
@@ -274,7 +284,7 @@ def test_lookup_market_guides_missing_region_markets_have_region(client):
     market2.save_revision().publish()
     factories.CountryGuidePageFactory()
 
-    MarketPagesCachePopulator.populate()
+    cache.MarketPagesCachePopulator.populate()
 
     url = reverse('api:lookup-country-guides-list-view')
     response = client.get(f'{url}?industry={tag.name},{tag2.name}')
@@ -298,7 +308,7 @@ def test_lookup_market_guides_all_filters_no_cache(client):
     market2.save_revision()
     url = reverse('api:lookup-country-guides-list-view')
 
-    MarketPagesCachePopulator.populate()
+    cache.MarketPagesCachePopulator.populate()
     response = client.get(f'{url}?industry={tag.name}&region={region.name}')
     assert response.status_code == 200
     assert len(response.json()) == 1
@@ -316,7 +326,7 @@ def test_lookup_market_guides_all_filters_cache(client):
 
     factories.CountryGuidePageFactory(country=country)
 
-    MarketPagesCachePopulator.populate()
+    cache.MarketPagesCachePopulator.populate()
     url = reverse('api:lookup-country-guides-list-view')
 
     response = client.get(f'{url}?industry={tag.name}&region={region.name}')

@@ -65,6 +65,8 @@ def test_permissions_published(rf):
 def test_api_translations_are_loaded_when_available(
     client, translated_page, site_with_translated_page_as_root, language_code, expected_title
 ):
+    cache.rebuild_all_cache()
+
     # to be added as a query params to all requests
     languge_query_params = {'lang': language_code}
 
@@ -99,6 +101,7 @@ def test_api_translations_are_loaded_when_available(
 def test_api_falls_back_to_english_when_translations_unavailable(
     client, untranslated_page, site_with_untranslated_page_as_root, language_code
 ):
+    cache.rebuild_all_cache()
     # to be added as a query params to all requests
     languge_query_params = {'lang': language_code}
 
@@ -134,9 +137,8 @@ def test_api_falls_back_to_english_when_translations_unavailable(
 
 
 @pytest.mark.django_db
-def test_api_serves_drafts(
-    client, page_with_reversion, site_with_revised_page_as_root
-):
+def test_api_serves_drafts(client, page_with_reversion, site_with_revised_page_as_root):
+    cache.rebuild_all_cache()
     # For applying the draft token as a query param for each request
     param_name = permissions.DraftTokenPermisison.TOKEN_PARAM
     draft_query_params = {
@@ -232,6 +234,7 @@ def test_upstream_anon(client, translated_page, image, url_name):
 def test_add_page_prepopulate(
     is_edit, expected_template, international_root_page, translated_page, admin_client, image, cluster_data
 ):
+    cache.rebuild_all_cache()
     cache.PageIDCache.populate()
     url = reverse('preload-add-page')
     model_as_dict = model_to_dict(translated_page, exclude=[
@@ -324,6 +327,8 @@ def test_page_listing(translated_page, admin_client):
 
 @pytest.mark.django_db
 def test_translations_exposed(translated_page, settings, client):
+    cache.rebuild_all_cache()
+
     url = reverse('api:api:pages:detail', kwargs={'pk': translated_page.pk})
 
     response = client.get(url)
@@ -340,6 +345,7 @@ def test_unserializable_page_requested(settings, client):
         depth=2,
         path='/thing',
     )
+    cache.rebuild_all_cache()
 
     url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
 
@@ -353,6 +359,8 @@ def test_lookup_by_path(international_root_page, page, admin_client):
     # Creating a semi-realistic page structure and moving page into it
     parent_page = InternationalSectorPageFactory(parent=international_root_page)
     page.move(target=parent_page, pos='last-child')
+
+    cache.rebuild_all_cache()
 
     # to lookup page, the path should include the parent's slug and
     # the page's slug, but NOT that of app_root_page
@@ -389,6 +397,8 @@ def test_lookup_by_path_for_non_existent_page(client):
 
 @pytest.mark.django_db
 def test_lookup_by_slug(translated_page, admin_client):
+    cache.rebuild_all_cache()
+
     url = reverse(
         'api:lookup-by-slug',
         kwargs={
