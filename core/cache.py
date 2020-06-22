@@ -118,7 +118,8 @@ class CachePopulator:
 
     @classmethod
     def populate_async(cls, instance):
-        cls.populate.delay(instance.pk)
+        if instance.__class__ in MODELS_SERIALIZERS_MAPPING and instance.__class__ is not Page:
+            cls.populate.delay(instance.pk)
 
     @classmethod
     def populate_sync(cls, instance):
@@ -277,23 +278,23 @@ class PageIDCache:
         post_migrate.connect(receiver=cls.clear)
 
 
-class CountryPagesCache:
+class MarketPagesCache:
     cache = cache
 
     @staticmethod
-    def build_key(country, industry):
-        return f'countryguide_{country}{industry}'
+    def build_key(region, industry):
+        return f'countryguide_{region}{industry}'
 
     @classmethod
-    def set(cls, data, country=None, industry=None,):
-        key = cls.build_key(country=country, industry=industry)
+    def set(cls, data, region=None, industry=None,):
+        key = cls.build_key(region=region, industry=industry)
         cls.cache.set(key, data, timeout=settings.API_CACHE_EXPIRE_SECONDS)
 
     @classmethod
     def get_many(cls, industries=[None], countries=[None]):
         keys = [cls.build_key(*args) for args in itertools.product(countries, industries)]
         pages = {}
-        # making the values returned distint
+        # making the values returned distinct
         for records in cls.cache.get_many(keys).values():
             for record in records:
                 pages[record['id']] = record
@@ -314,15 +315,15 @@ class CountryPagesCache:
         return Transaction()
 
 
-class CountryPageCachePopulator:
+class MarketPagesCachePopulator:
 
     @classmethod
     def populate(cls, *args, **kwargs):
         pages = collections.defaultdict(list)
         serializer_class = MODELS_SERIALIZERS_MAPPING[CountryGuidePage]
 
-        # store the record four times: so can be filtered by country+industry, country, industry, or no filter
-        for page in CountryGuidePage.objects.select_related('country').live():
+        # store the record four times: so can be filtered by region+industry, region, industry, or no filter
+        for page in CountryGuidePage.objects.select_related('country__region').live():
             serializer = serializer_class(instance=page)
 
             # allows retrieve with no filter
@@ -330,15 +331,15 @@ class CountryPageCachePopulator:
             for industry in page.tags.values_list('name', flat=True):
                 if page.country:
                     # allow retrieve with both filters
-                    pages[(industry, page.country.name)].append(serializer.data)
-                    # allow retrieve with country
-                    pages[(None, page.country.name)].append(serializer.data)
+                    pages[(industry, page.country.region.name)].append(serializer.data)
+                    # allow retrieve with region
+                    pages[(None, page.country.region.name)].append(serializer.data)
                 # allow retrieve with industry
                 pages[(industry, None)].append(serializer.data)
 
-        with CountryPagesCache.transaction() as country_cache:
-            for (industry, country), data in pages.items():
-                country_cache.set(data, country=country, industry=industry)
+        with MarketPagesCache.transaction() as market_cache:
+            for (industry, region), data in pages.items():
+                market_cache.set(data, region=region, industry=industry)
 
 
 class DatabaseCacheSubscriber:
@@ -372,6 +373,5 @@ class DatabaseCacheSubscriber:
 @app.task
 def rebuild_all_cache():
     for page in Page.objects.live().specific():
-        if page.__class__ in MODELS_SERIALIZERS_MAPPING and page.__class__ is not Page:
-            CachePopulator.populate_async(page)
-    CountryPageCachePopulator.populate()
+        CachePopulator.populate_async(page)
+    MarketPagesCachePopulator.populate()
