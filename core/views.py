@@ -27,14 +27,6 @@ from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
 logger = getLogger(__name__)
 
 
-class PageNotSerializableError(NotImplementedError):
-    pass
-
-
-class PageSerializationTooExpensiveError(TimeoutError):
-    pass
-
-
 class APIEndpointBase(PagesAdminAPIEndpoint):
     """At the very deep core this is a DRF GenericViewSet, with a few wagtail
     layers on top.
@@ -49,15 +41,6 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
             ['lang', 'draft_token', 'service_name']
         )
     )
-
-    def handle_exception(self, exc):
-        if isinstance(exc, PageNotSerializableError):
-            # page that exists has been requested, but it's not serializable. E.g, it's a folder page
-            return Response(status=204)
-        if isinstance(exc, PageSerializationTooExpensiveError):
-            # the request took too long so the code manually bailed out by raising a timeout
-            return Response(status=501)
-        return super().handle_exception(exc)
 
     def get_model_class(self):
         if self.action == 'listing_view':
@@ -107,30 +90,38 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
         # Exit early if there are any issues
         self.check_parameter_validity()
 
-        variation_kwargs = {'lang': translation.get_language()}
+        draft_version = helpers.is_draft_requested(request)
 
-        if helpers.is_draft_requested(request):
-            variation_kwargs['draft_version'] = True
+        langs = []
+        if translation.get_language():
+            langs.append(translation.get_language())
+        langs.append('en-gb')
 
         # Return a cached response if one is available
-        cached_data = cache.PageCache.get(page_id=self.object_id, **variation_kwargs)
-        if cached_data:
-            cached_response = helpers.CachedResponse(cached_data)
-            cached_response['etag'] = cached_data.get('etag', None)
-            return get_conditional_response(
-                request=request,
-                etag=cached_response['etag'],
-                response=cached_response,
-            )
+        for lang in langs:
+            cached_data = cache.PageCache.get(page_id=self.object_id, lang=lang, draft_version=draft_version)
+            if cached_data:
+                cached_response = helpers.CachedResponse(cached_data)
+                cached_response['etag'] = cached_data.get('etag', None)
+                return get_conditional_response(
+                    request=request,
+                    etag=cached_response['etag'],
+                    response=cached_response,
+                )
 
         logger.warn('Page cache miss')
 
-        cache.CachePopulator.populate_async(self.get_object())
+        page = self.get_object()
+
+        if type(page) not in MODELS_SERIALIZERS_MAPPING:
+            # page that exists has been requested, but it's not serializable. E.g, it's a folder page
+            return Response(status=204)
+        else:
+            cache.CachePopulator.populate_async(self.get_object())
 
         # super().detail_view can take several seconds due to unoptimized database reads - so lots of
-        # resources get used but ultimately will timeout. So here we attempt, but bail out after 2 seconds
-        with helpers.timeout(seconds=2, error_class=PageSerializationTooExpensiveError):
-            return super().detail_view(request, pk=None)
+        # resources get used but ultimately will timeout
+        return Response(status=501)
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
@@ -147,12 +138,6 @@ class PagesOptionalDraftAPIEndpoint(APIEndpointBase):
     @cached_property
     def object_id(self):
         return self.kwargs['pk']
-
-    def get_serializer_class(self):
-        model_class = self.get_model_class()
-        if model_class not in MODELS_SERIALIZERS_MAPPING:
-            raise PageNotSerializableError(model_class.__name__)
-        return super().get_serializer_class()
 
 
 class DetailViewEndpointBase(APIEndpointBase):

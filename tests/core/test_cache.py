@@ -242,6 +242,6 @@ def test_rebuild_all_cache_task(mock_cache_populator):
     article2 = InternationalArticlePageFactory(live=True)
     InternationalArticlePageFactory(live=False)
     cache.rebuild_all_cache()
-    assert mock_cache_populator.populate_async.call_count == 3  # contains home page
+    assert mock_cache_populator.populate_async.call_count == 5  # contains home page
     assert mock_cache_populator.populate_async.call_args_list[-2] == call(article1)
     assert mock_cache_populator.populate_async.call_args_list[-1] == call(article2)

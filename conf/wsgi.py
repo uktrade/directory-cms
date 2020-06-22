@@ -11,6 +11,10 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
+import psycogreen.gevent
+psycogreen.gevent.patch_psycopg()
+
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "conf.settings")
 
 application = get_wsgi_application()
