@@ -4,12 +4,16 @@ from rest_framework.reverse import reverse
 
 from tests.great_international import factories
 
+from core import cache
+
 
 @pytest.mark.django_db
 def test_international_sector_page(admin_client, international_root_page):
     sector_page = factories.InternationalSectorPageFactory.create(
         parent=international_root_page
     )
+    cache.rebuild_all_cache()
+
     url = reverse('api:api:pages:detail', kwargs={'pk': sector_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
@@ -20,6 +24,8 @@ def test_international_homepage(admin_client, root_page):
     home_page = factories.InternationalHomePageFactory.create(
         parent=root_page
     )
+    cache.rebuild_all_cache()
+
     url = reverse('api:api:pages:detail', kwargs={'pk': home_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
@@ -34,6 +40,8 @@ def test_international_campaign_page(admin_client, international_root_page):
     campaign_page = factories.InternationalCampaignPageFactory(
         parent=international_root_page
     )
+    cache.rebuild_all_cache()
+
     url = reverse('api:api:pages:detail', kwargs={'pk': campaign_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
@@ -53,6 +61,7 @@ def test_international_article_listing_page_view(admin_client, international_roo
         parent=article_listing_page,
         live=True
     )
+    cache.rebuild_all_cache()
 
     url = reverse(
         'api:api:pages:detail', kwargs={'pk': article_listing_page.pk}
@@ -81,6 +90,7 @@ def test_international_topic_landing_page_view(admin_client, international_root_
         parent=topic_landing_page,
         live=True
     )
+    cache.rebuild_all_cache()
 
     url = reverse('api:api:pages:detail', kwargs={'pk': topic_landing_page.pk})
     response = admin_client.get(url)
@@ -108,6 +118,8 @@ def test_international_topic_landing_page_view_sectors_alphabetical_order(
         live=True,
         heading='foo'
     )
+    cache.rebuild_all_cache()
+
     url = reverse('api:api:pages:detail', kwargs={'pk': landing_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
@@ -135,6 +147,7 @@ def test_invest_home_page(document, admin_client, international_root_page):
         featured=False,
         parent=international_root_page,
     )
+    cache.rebuild_all_cache()
 
     url = reverse(
         'api:lookup-by-slug',
@@ -154,6 +167,7 @@ def test_invest_region_page(admin_client, international_root_page):
         live=True, featured=True, parent=international_root_page
     )
     factories.InvestRegionPageFactory(live=True, parent=page)
+    cache.rebuild_all_cache()
 
     url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
 
@@ -167,6 +181,7 @@ def test_invest_region_landing_page(admin_client, international_root_page):
         live=True, parent=international_root_page
     )
     factories.InvestRegionPageFactory(live=True, parent=page)
+    cache.rebuild_all_cache()
 
     url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
 
@@ -188,6 +203,7 @@ def test_high_potential_opportunity_api(document, admin_client, international_ro
         pdf_document=document,
         slug='some-nice-slug',
     )
+    cache.rebuild_all_cache()
 
     url = reverse(
         'api:lookup-by-slug',
@@ -212,6 +228,8 @@ def test_international_trade_home_page_exposes_industries(
     homepage = factories.InternationalTradeHomePageFactory(
         live=True, parent=international_root_page
     )
+    cache.rebuild_all_cache()
+
     url = reverse('api:api:pages:detail', kwargs={'pk': homepage.pk})
     response = admin_client.get(url)
 
@@ -225,6 +243,9 @@ def test_sector_page_exposes_articles_child_sub_pages(admin_client, internationa
     sector_page = factories.InternationalSectorPageFactory(parent=international_root_page, slug='sector-one')
     factories.InternationalArticlePageFactory(parent=sector_page)
     factories.InternationalArticlePageFactory(parent=sector_page)
+
+    cache.rebuild_all_cache()
+
     url = reverse('api:api:pages:detail', kwargs={'pk': sector_page.pk})
     response = admin_client.get(url)
 
