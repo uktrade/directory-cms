@@ -4,6 +4,14 @@
 ### Implemented enhancements
 ### Fixed bugs
 
+
+## [2020.06.15](https://github.com/uktrade/directory-cms/releases/tag/2020.06.15)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.06.12...2020.06.15)
+
+### Hotfix
+- No ticket - Stop using signal.alarm for bailing out of expensive code
+
+
 ## [2020.06.12](https://github.com/uktrade/directory-cms/releases/tag/2020.06.12)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.05.28...2020.06.12)
 
