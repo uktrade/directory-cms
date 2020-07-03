@@ -13,3 +13,4 @@ beautifulsoup4
 wagtail-factories
 django-debug-toolbar
 pip-tools
+codecov

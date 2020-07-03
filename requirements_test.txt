@@ -6,110 +6,111 @@
 #
 amqp==2.6.0               # via kombu
 attrs==19.3.0             # via jsonschema, pytest
-beautifulsoup4==4.6.0     # via -r requirements_test.in, directory-components, wagtail
+beautifulsoup4==4.6.0
 billiard==3.6.3.0         # via celery
-bleach-whitelist==0.0.10  # via -r requirements.in
-bleach==3.1.5             # via -r requirements.in
-boto3==1.6.3              # via -r requirements.in
+bleach-whitelist==0.0.10
+bleach==3.1.5
+boto3==1.6.3
 botocore==1.9.23          # via boto3, s3transfer
-celery[redis]==4.4.5      # via -r requirements.in, django-celery-beat
-certifi==2020.4.5.2       # via elastic-apm, requests, sentry-sdk
+celery[redis]==4.4.6
+certifi==2020.6.20        # via elastic-apm, requests, sentry-sdk
 chardet==3.0.4            # via requests
 click==7.1.2              # via pip-tools
-coverage==5.1             # via coveralls, pytest-cov
-coveralls==2.0.0          # via -r requirements_test.in
-directory-components==20.3.1  # via -r requirements.in
-directory-constants==18.7.0  # via -r requirements.in, directory-components
-directory-healthcheck==1.1.2  # via -r requirements.in
-dj-database-url==0.5.0    # via -r requirements.in
-django-admin-ip-restrictor==2.1.0  # via -r requirements.in
-django-celery-beat==2.0.0  # via -r requirements.in
-django-debug-toolbar==2.2  # via -r requirements_test.in
-django-environ==0.4.5     # via -r requirements.in
-django-filter==2.2.0      # via -r requirements.in
+codecov==2.1.7
+coverage==5.1             # via codecov, coveralls, pytest-cov
+coveralls==2.0.0
+directory-components==20.3.1
+directory-constants==18.7.0
+directory-healthcheck==1.1.2
+dj-database-url==0.5.0
+django-admin-ip-restrictor==2.1.0
+django-celery-beat==2.0.0
+django-debug-toolbar==2.2
+django-environ==0.4.5
+django-filter==2.2.0
 django-health-check==3.8.0  # via directory-healthcheck
 django-ipware==2.1.0      # via django-admin-ip-restrictor
 django-modelcluster==5.0.2  # via wagtail
 django-modeltranslation==0.15  # via wagtail-modeltranslation
-django-pglocks==1.0.2     # via -r requirements.in
-django-redis==4.10.0      # via -r requirements.in
-django-staff-sso-client==1.0.1  # via -r requirements.in
+django-pglocks==1.0.2
+django-redis==4.10.0
+django-staff-sso-client==1.0.1
 django-taggit==1.3.0      # via wagtail
 django-timezone-field==4.0  # via django-celery-beat
 django-treebeard==4.3.1   # via wagtail
-django==2.2.13            # via -r requirements.in, directory-components, directory-constants, directory-healthcheck, django-admin-ip-restrictor, django-celery-beat, django-debug-toolbar, django-filter, django-modeltranslation, django-redis, django-staff-sso-client, django-storages, django-taggit, django-timezone-field, django-treebeard, sigauth, wagtail
-django_storages==1.7.1    # via -r requirements.in
-djangorestframework==3.9.4  # via -r requirements.in, sigauth, wagtail
+django==2.2.14
+django_storages==1.7.1
+djangorestframework==3.9.4
 docopt==0.6.2             # via coveralls, notifications-python-client, num2words
 docutils==0.16            # via botocore
 draftjs-exporter==2.1.7   # via wagtail
-elastic-apm==5.7.0        # via -r requirements.in
-factory-boy==2.12.0       # via -r requirements_test.in, wagtail-factories
-faker==4.1.0              # via factory-boy
-flake8==3.8.3             # via -r requirements_test.in
-freezegun==0.3.14         # via -r requirements_test.in
+elastic-apm==5.8.0
+factory-boy==2.12.0
+faker==4.1.1              # via factory-boy
+flake8==3.8.3
+freezegun==0.3.14
 future==0.18.2            # via celery, notifications-python-client
-gevent==20.6.1            # via -r requirements.in
+gevent==20.6.2
 greenlet==0.4.16          # via gevent
-gunicorn==19.5.0          # via -r requirements.in
-html2text==2018.1.9       # via -r requirements.in
-html5lib==1.0.1           # via wagtail
+gunicorn==19.5.0
+html2text==2018.1.9
+html5lib==1.1             # via wagtail
 idna==2.8                 # via requests
-importlib-metadata==1.6.1  # via flake8, kombu, pluggy, pytest
+importlib-metadata==1.7.0  # via flake8, kombu, pluggy, pytest
 jmespath==0.10.0          # via boto3, botocore
 jsonschema==3.0.1         # via directory-components
-kombu==4.6.10             # via -r requirements.in, celery
-markdown==2.6             # via -r requirements.in
+kombu==4.6.11
+markdown==2.6
 mccabe==0.6.1             # via flake8
 mohawk==0.3.4             # via sigauth
 monotonic==1.5            # via notifications-python-client
-more-itertools==8.3.0     # via pytest
-notifications-python-client==5.3.0  # via -r requirements.in
-num2words==0.5.10         # via -r requirements.in
+more-itertools==8.4.0     # via pytest
+notifications-python-client==5.3.0
+num2words==0.5.10
 oauthlib==3.1.0           # via requests-oauthlib
 packaging==20.4           # via bleach, pytest, pytest-sugar
-pillow==6.2.2             # via -r requirements.in, wagtail
-pip-tools==5.2.1          # via -r requirements_test.in
+pillow==6.2.2
+pip-tools==5.2.1
 pluggy==0.13.1            # via pytest
-psycogreen==1.0.2         # via -r requirements.in
-psycopg2==2.7.3.2         # via -r requirements.in
-py==1.8.1                 # via pytest
+psycogreen==1.0.2
+psycopg2==2.7.3.2
+py==1.9.0                 # via pytest
 pycodestyle==2.6.0        # via flake8
-pycountry==19.8.18        # via -r requirements.in
+pycountry==19.8.18
 pyflakes==2.2.0           # via flake8
 pyjwt==1.7.1              # via notifications-python-client
 pyparsing==2.4.7          # via packaging
 pyrsistent==0.16.0        # via jsonschema
-pytest-cov==2.9.0         # via -r requirements_test.in
-pytest-django==3.9.0      # via -r requirements_test.in
-pytest-sugar==0.9.3       # via -r requirements_test.in
-pytest==5.4.3             # via -r requirements_test.in, pytest-cov, pytest-django, pytest-sugar
+pytest-cov==2.10.0
+pytest-django==3.9.0
+pytest-sugar==0.9.3
+pytest==5.4.3
 python-crontab==2.5.1     # via django-celery-beat
 python-dateutil==2.6.1    # via botocore, faker, freezegun, python-crontab
-pytube==9.2.2             # via -r requirements.in
+pytube==9.2.2
 pytz==2020.1              # via celery, django, django-modelcluster, django-timezone-field, wagtail
 redis==3.5.3              # via celery, django-redis
-requests-mock==1.8.0      # via -r requirements_test.in
+requests-mock==1.8.0
 requests-oauthlib==1.3.0  # via django-staff-sso-client
-requests==2.21.0          # via -r requirements.in, coveralls, notifications-python-client, requests-mock, requests-oauthlib, wagtail
+requests==2.21.0
 s3transfer==0.1.13        # via boto3
-sentry-sdk==0.13.4        # via -r requirements.in
-sigauth==4.1.0            # via -r requirements.in
-six==1.15.0               # via bleach, django-modeltranslation, freezegun, html5lib, jsonschema, mohawk, packaging, pip-tools, python-dateutil, requests-mock, w3lib, wagtail
+sentry-sdk==0.13.4
+sigauth==4.1.0
+six==1.15.0               # via bleach, django-modeltranslation, freezegun, html5lib, jsonschema, mohawk, packaging, pip-tools, pyrsistent, python-dateutil, requests-mock, w3lib, wagtail
 sqlparse==0.3.1           # via django, django-debug-toolbar
 termcolor==1.1.0          # via pytest-sugar
 text-unidecode==1.3       # via faker
 unidecode==1.1.1          # via wagtail
-urllib3==1.24.3           # via -r requirements.in, elastic-apm, requests, sentry-sdk
+urllib3==1.24.3
 vine==1.3.0               # via amqp, celery
-w3lib==1.22.0             # via -r requirements.in
-wagtail-factories==2.0.0  # via -r requirements_test.in
-wagtail-modeltranslation==0.10.13  # via -r requirements.in
-wagtail==2.7.3            # via -r requirements.in, wagtail-factories, wagtail-modeltranslation, wagtailmedia
-wagtailmedia==0.5.0       # via -r requirements.in
-wcwidth==0.2.4            # via pytest
+w3lib==1.22.0
+wagtail-factories==2.0.0
+wagtail-modeltranslation==0.10.13
+wagtail==2.7.3
+wagtailmedia==0.5.0
+wcwidth==0.2.5            # via pytest
 webencodings==0.5.1       # via bleach, html5lib
-whitenoise==4.1.2         # via -r requirements.in
+whitenoise==4.1.2
 willow==1.3               # via wagtail
 zipp==3.1.0               # via importlib-metadata
 zope.event==4.4           # via gevent
