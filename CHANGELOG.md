@@ -3,7 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
-- no-ticket - Migrate to codecov remove coveralls
+- no-ticket - migrate to codecov remove coveralls
 
 ### Fixed bugs
 
