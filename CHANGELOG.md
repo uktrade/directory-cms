@@ -1,7 +1,10 @@
 # Changelog
 
 ## Pre-release
+
 ### Implemented enhancements
+- no-ticket - Migrate to codecov remove coveralls
+
 ### Fixed bugs
 
 
