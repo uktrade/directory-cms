@@ -28,7 +28,7 @@ jobs:
             mkdir test-reports
             TESTFILES=$(circleci tests glob "tests/**/*.py")
             ENV_FILES=test,dev pytest ${TESTFILES} --cov=. --cov-config=.coveragerc --cov-report html --cov-report term --junitxml=test-reports/junit.xml
-            COVERALLS_PARALLEL=true coveralls
+            codecov
       - run: mkdir -p workspace
       - run: echo "export TARGET_CIRCLE_BUILD_NUM=$CIRCLE_BUILD_NUM" >> workspace/new-env-vars
       - store_test_results:
