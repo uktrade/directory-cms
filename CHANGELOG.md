@@ -7,6 +7,8 @@
 
 ### Fixed bugs
 
+### Hotfix
+- No ticket - Update of dependencies to fix security vulnerability
 
 ## [2020.06.15](https://github.com/uktrade/directory-cms/releases/tag/2020.06.15)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.06.12...2020.06.15)
