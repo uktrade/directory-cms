@@ -2482,3 +2482,7 @@ class CapitalInvestContactFormSuccessPageSerializer(BasePageSerializer):
     message_box_heading = serializers.CharField()
     message_box_description = core_fields.MarkdownToHTMLField()
     what_happens_next_description = core_fields.MarkdownToHTMLField()
+
+
+class InvestHighPotentialOpportunitiesPageSerializer(serializers.Serializer):
+    pass
