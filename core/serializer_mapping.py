@@ -31,6 +31,10 @@ MODELS_SERIALIZERS_MAPPING = {
     export_readiness.models.SuperregionPage: export_readiness.serializers.SuperregionPageSerializer,  # NOQA
     export_readiness.models.CountryGuidePage: export_readiness.serializers.CountryGuidePageSerializer,  # NOQA
     export_readiness.models.SellingOnlineOverseasHomePage: export_readiness.serializers.SellingOnlineOverseasHomePageSerializer,  # NOQA
+    export_readiness.models.ContactSuccessPages: export_readiness.serializers.ContactSuccessPagesSerializer,  # NOQA
+    export_readiness.models.ContactUsGuidancePages: export_readiness.serializers.ContactUsGuidancePagesSerializer,
+    export_readiness.models.SitePolicyPages: export_readiness.serializers.SitePolicyPagesSerializer,
+
     # great international
     great_international.models.great_international.InternationalSectorPage: great_international.serializers.InternationalSectorPageSerializer,  # NOQA
     great_international.models.great_international.InternationalSubSectorPage: great_international.serializers.InternationalSubSectorPageSerializer,  # NOQA
@@ -63,6 +67,9 @@ MODELS_SERIALIZERS_MAPPING = {
     great_international.models.find_a_supplier.InternationalTradeIndustryContactPage: great_international.serializers.InternationalTradeIndustryContactPageSerializer,  # NOQA
     great_international.models.invest.InvestRegionPage: great_international.serializers.InvestRegionPageSerializer,  # NOQA
     great_international.models.invest.InvestRegionLandingPage: great_international.serializers.InvestRegionLandingPageSerializer,  # NOQA
+    great_international.models.invest.InvestHighPotentialOpportunitiesPage: great_international.serializers.InvestHighPotentialOpportunitiesPageSerializer,
     # components
-    components.models.BannerComponent: components.serializers.BannerComponentPageSerializer  # NOQA
+    components.models.BannerComponent: components.serializers.BannerComponentPageSerializer,  # NOQA
+    components.models.ComponentsApp: components.serializers.ComponentsAppSerializer,
+
 }

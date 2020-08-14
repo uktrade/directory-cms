@@ -113,7 +113,9 @@ class CachePopulator:
     @staticmethod
     @app.task
     def populate(instance_pk):
+        #import pdb; pdb.set_trace()
         instance = Page.objects.get(pk=instance_pk).specific
+        # if type(instance) is not Page:
         CachePopulator.populate_sync(instance)
 
     @classmethod
@@ -373,5 +375,7 @@ class DatabaseCacheSubscriber:
 @app.task
 def rebuild_all_cache():
     for page in Page.objects.live().specific():
-        CachePopulator.populate_async(page)
+        if type(page) is not Page:
+            CachePopulator.populate_sync(page)
+
     MarketPagesCachePopulator.populate()

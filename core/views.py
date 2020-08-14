@@ -210,7 +210,6 @@ class PageLookupBySlugAPIEndpoint(DetailViewEndpointBase):
                 "No page could be found matching service_name '{}' and "
                 "slug '{}'".format(service_name, slug)
             )
-
         return object_id
 
 

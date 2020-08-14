@@ -42,16 +42,16 @@ worker:
 	ENV_FILES='secrets-do-not-commit,dev' celery -A conf worker -l info
 
 database:
-	PGPASSWORD=debug dropdb  directory_cms_debug
+	#PGPASSWORD=debug dropdb -h localhost -U postgres  directory_cms_debug
 	PGPASSWORD=debug createdb -h localhost -U debug directory_cms_debug
 	PGPASSWORD=debug psql -h localhost -U debug -d directory_cms_debug -f db_template.sql >/dev/null 2>&1
 
 load_fixtures:
-	PGPASSWORD=debug psql -h localhost -U debug -d directory_cms_debug -f backup.sql
+	PGPASSWORD=debug psql -h localhost -U debug -d directory_cms_debug -f db_fixtures.sql
 
 db_template:
-	createdb -U postgres -h localhost cms_temporary_template
-	psql -U postgres -h localhost -d cms_temporary_template -f db_template.sql
+	createdb -U debug -h localhost cms_temporary_template
+	psql -U debug -h localhost -d cms_temporary_template -f db_template.sql
 	ENV_FILES='secrets-do-not-commit,dev' \
 	export DATABASE_URL=postgres://postgres:postgres@localhost:5432/cms_temporary_template; \
 	python ./manage.py migrate
@@ -62,7 +62,7 @@ db_template:
 	dropdb -U postgres cms_temporary_template
 
 fixtures:
-	psql -U postgres -h localhost -d directory_cms_debug -f db_fixtures.sql
+	#psql -U postgres -h localhost -d directory_cms_debug -f db_fixtures.sql
 	ENV_FILES='secrets-do-not-commit,dev' \
 	export DATABASE_URL=postgres://postgres:postgres@localhost:5432/directory_cms_debug; \
 	python ./manage.py migrate

@@ -584,6 +584,17 @@ class TagCountryPageSerializer(serializers.Serializer):
         return serializer.data
 
 
+class SitePolicyPagesSerializer(serializers.Serializer):
+    pass
+
+class ContactSuccessPagesSerializer(serializers.Serializer):
+    pass
+
+
+class ContactUsGuidancePagesSerializer(serializers.Serializer):
+    pass
+
+
 class IDNameSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField()
