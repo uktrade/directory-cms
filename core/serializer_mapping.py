@@ -32,8 +32,9 @@ MODELS_SERIALIZERS_MAPPING = {
     export_readiness.models.CountryGuidePage: export_readiness.serializers.CountryGuidePageSerializer,  # NOQA
     export_readiness.models.SellingOnlineOverseasHomePage: export_readiness.serializers.SellingOnlineOverseasHomePageSerializer,  # NOQA
     export_readiness.models.ContactSuccessPages: export_readiness.serializers.ContactSuccessPagesSerializer,  # NOQA
-    export_readiness.models.ContactUsGuidancePages: export_readiness.serializers.ContactUsGuidancePagesSerializer,
-    export_readiness.models.SitePolicyPages: export_readiness.serializers.SitePolicyPagesSerializer,
+    export_readiness.models.ContactUsGuidancePages: export_readiness.serializers.ContactUsGuidancePagesSerializer,  # NOQA
+    export_readiness.models.SitePolicyPages: export_readiness.serializers.SitePolicyPagesSerializer,  # NOQA
+
 
     # great international
     great_international.models.great_international.InternationalSectorPage: great_international.serializers.InternationalSectorPageSerializer,  # NOQA
@@ -67,7 +68,7 @@ MODELS_SERIALIZERS_MAPPING = {
     great_international.models.find_a_supplier.InternationalTradeIndustryContactPage: great_international.serializers.InternationalTradeIndustryContactPageSerializer,  # NOQA
     great_international.models.invest.InvestRegionPage: great_international.serializers.InvestRegionPageSerializer,  # NOQA
     great_international.models.invest.InvestRegionLandingPage: great_international.serializers.InvestRegionLandingPageSerializer,  # NOQA
-    great_international.models.invest.InvestHighPotentialOpportunitiesPage: great_international.serializers.InvestHighPotentialOpportunitiesPageSerializer,
+    great_international.models.invest.InvestHighPotentialOpportunitiesPage: great_international.serializers.InvestHighPotentialOpportunitiesPageSerializer,  # NOQA
     # components
     components.models.BannerComponent: components.serializers.BannerComponentPageSerializer,  # NOQA
     components.models.ComponentsApp: components.serializers.ComponentsAppSerializer,
