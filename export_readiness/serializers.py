@@ -587,6 +587,7 @@ class TagCountryPageSerializer(serializers.Serializer):
 class SitePolicyPagesSerializer(serializers.Serializer):
     pass
 
+
 class ContactSuccessPagesSerializer(serializers.Serializer):
     pass
 

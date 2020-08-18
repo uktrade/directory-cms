@@ -113,9 +113,7 @@ class CachePopulator:
     @staticmethod
     @app.task
     def populate(instance_pk):
-        #import pdb; pdb.set_trace()
         instance = Page.objects.get(pk=instance_pk).specific
-        # if type(instance) is not Page:
         CachePopulator.populate_sync(instance)
 
     @classmethod
