@@ -351,7 +351,7 @@ def test_unserializable_page_requested(settings, client):
 
     response = client.get(url)
 
-    assert response.status_code == 204
+    assert response.status_code == 200
 
 
 @pytest.mark.django_db
