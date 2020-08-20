@@ -4,6 +4,7 @@
 
 ### Implemented enhancements
 - no-ticket - migrate to codecov remove coveralls
+- GAA-31 - Upgrading Wagtail to 2.9
 
 ### Fixed bugs
 
