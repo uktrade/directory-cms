@@ -8,6 +8,9 @@ staticfiles
 BrowserStackLocal
 node_modules/
 
+.env
+ENV/
+
 # C extensions
 *.so
 
