@@ -6,7 +6,7 @@
 #
 amqp==2.6.1               # via kombu
 attrs==19.3.0             # via jsonschema
-beautifulsoup4==4.6.0     # via directory-components, wagtail
+beautifulsoup4==4.8.2     # via directory-components, wagtail
 billiard==3.6.3.0         # via celery
 bleach-whitelist==0.0.11  # via -r requirements.in
 bleach==3.1.5             # via -r requirements.in
@@ -51,6 +51,7 @@ importlib-metadata==1.7.0  # via kombu
 jmespath==0.10.0          # via boto3, botocore
 jsonschema==3.0.1         # via directory-components
 kombu==4.6.11             # via -r requirements.in, celery
+l18n==2018.5              # via wagtail
 markdown==2.6             # via -r requirements.in
 mohawk==0.3.4             # via sigauth
 monotonic==1.5            # via notifications-python-client
@@ -68,25 +69,27 @@ pyrsistent==0.16.0        # via jsonschema
 python-crontab==2.5.1     # via django-celery-beat
 python-dateutil==2.6.1    # via botocore, python-crontab
 pytube==9.2.2             # via -r requirements.in
-pytz==2020.1              # via celery, django, django-modelcluster, django-timezone-field, wagtail
+pytz==2020.1              # via celery, django, django-modelcluster, django-timezone-field, l18n
 redis==3.5.3              # via celery, django-redis
 requests-oauthlib==1.3.0  # via django-staff-sso-client
 requests==2.21.0          # via -r requirements.in, notifications-python-client, requests-oauthlib, wagtail
 s3transfer==0.1.13        # via boto3
 sentry-sdk==0.13.4        # via -r requirements.in
 sigauth==4.1.0            # via -r requirements.in
-six==1.15.0               # via bleach, django-modeltranslation, html5lib, jsonschema, mohawk, packaging, pyrsistent, python-dateutil, w3lib, wagtail
+six==1.15.0               # via bleach, django-modeltranslation, html5lib, jsonschema, l18n, mohawk, packaging, pyrsistent, python-dateutil, w3lib
+soupsieve==2.0.1          # via beautifulsoup4
 sqlparse==0.3.1           # via django
 unidecode==1.1.1          # via wagtail
 urllib3==1.24.3           # via -r requirements.in, elastic-apm, requests, sentry-sdk
 vine==1.3.0               # via amqp, celery
 w3lib==1.22.0             # via -r requirements.in
 wagtail-modeltranslation==0.10.13  # via -r requirements.in
-wagtail==2.7.4            # via -r requirements.in, wagtail-modeltranslation, wagtailmedia
+wagtail==2.9.3            # via -r requirements.in, wagtail-modeltranslation, wagtailmedia
 wagtailmedia==0.5.0       # via -r requirements.in
 webencodings==0.5.1       # via bleach, html5lib
 whitenoise==4.1.2         # via -r requirements.in
 willow==1.3               # via wagtail
+xlsxwriter==1.3.3         # via wagtail
 zipp==3.1.0               # via importlib-metadata
 zope.event==4.4           # via gevent
 zope.interface==5.1.0     # via gevent
