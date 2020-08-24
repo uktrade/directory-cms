@@ -5,7 +5,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from wagtail.admin.api.endpoints import PagesAdminAPIEndpoint
+from wagtail.admin.api.views import PagesAdminAPIViewSet
 from wagtail.core.models import Orderable, Page, Site
 
 from django.conf import settings
@@ -27,7 +27,7 @@ from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
 logger = getLogger(__name__)
 
 
-class APIEndpointBase(PagesAdminAPIEndpoint):
+class APIEndpointBase(PagesAdminAPIViewSet):
     """At the very deep core this is a DRF GenericViewSet, with a few wagtail
     layers on top.
 
@@ -37,7 +37,7 @@ class APIEndpointBase(PagesAdminAPIEndpoint):
     queryset = Page.objects.all()
     meta_fields = []
     known_query_parameters = (
-        PagesAdminAPIEndpoint.known_query_parameters.union(
+        PagesAdminAPIViewSet.known_query_parameters.union(
             ['lang', 'draft_token', 'service_name']
         )
     )

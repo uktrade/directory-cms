@@ -5,7 +5,7 @@
 #    pip-compile requirements.in
 #
 amqp==2.6.1               # via kombu
-attrs==19.3.0             # via jsonschema
+attrs==20.1.0             # via jsonschema
 beautifulsoup4==4.8.2     # via directory-components, wagtail
 billiard==3.6.3.0         # via celery
 bleach-whitelist==0.0.11  # via -r requirements.in
@@ -85,7 +85,7 @@ vine==1.3.0               # via amqp, celery
 w3lib==1.22.0             # via -r requirements.in
 wagtail-modeltranslation==0.10.13  # via -r requirements.in
 wagtail==2.9.3            # via -r requirements.in, wagtail-modeltranslation, wagtailmedia
-wagtailmedia==0.5.0       # via -r requirements.in
+wagtailmedia==0.6.0       # via -r requirements.in
 webencodings==0.5.1       # via bleach, html5lib
 whitenoise==4.1.2         # via -r requirements.in
 willow==1.3               # via wagtail
