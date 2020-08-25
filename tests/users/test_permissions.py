@@ -343,7 +343,7 @@ def test_branch_user_can_submit_changes_for_moderation(
     )
     # on success, user should be redirected on parent page listing
     assert resp.status_code == status.HTTP_302_FOUND, resp.context['form'].errors  # NOQA
-    assert int(resp.url.split('/')[3]) == branch.listing.pk  # format is /admin/pages/3/  # NOQA
+    assert int(resp.url.split('/')[3]) == branch.article.pk  # format is /admin/pages/3/  # NOQA
 
 
 @pytest.mark.django_db
