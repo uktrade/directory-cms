@@ -18,16 +18,16 @@ def test_branch_editors_should_only_see_pages_from_their_branch(root_page, inter
     Editors should only see app pages that share common root page
     """
     env = two_branches_with_users(root_page, international_root_page)
-
+    admin_api_url = reverse('wagtailadmin_api:pages:listing')
     resp_1 = env.editor_1_client.get(
-        f'/admin/api/v2beta/pages/?child_of={env.landing_1.pk}&for_explorer=1'
+        f'{admin_api_url}?child_of={env.landing_1.pk}&for_explorer=1'
     )
     assert resp_1.status_code == status.HTTP_200_OK
     assert resp_1.json()['meta']['total_count'] == 1
     assert resp_1.json()['items'][0]['id'] == env.listing_1.pk
 
     resp_2 = env.editor_2_client.get(
-        f'/admin/api/v2beta/pages/?child_of={env.landing_2.pk}&for_explorer=1'
+        f'{admin_api_url}?child_of={env.landing_2.pk}&for_explorer=1'
     )
     assert resp_2.status_code == status.HTTP_200_OK
     assert resp_2.json()['meta']['total_count'] == 1
@@ -64,9 +64,9 @@ def test_branch_moderators_should_only_see_pages_from_their_branch(root_page, in
     Moderators should only see app pages that share common root page
     """
     env = two_branches_with_users(root_page, international_root_page)
-
+    admin_api_url = reverse('wagtailadmin_api:pages:listing')
     resp_1 = env.moderator_1_client.get(
-        f'/admin/api/v2beta/pages/?child_of={env.landing_1.pk}&for_explorer=1'
+        f'{admin_api_url}?child_of={env.landing_1.pk}&for_explorer=1'
     )
     assert resp_1.status_code == status.HTTP_200_OK
     assert resp_1.json()['meta']['total_count'] == 1
@@ -134,6 +134,7 @@ def test_moderators_can_approve_revisions_only_for_pages_in_their_branch(
     ])
 def test_branch_user_can_create_child_pages_in_it(branch_factory, root_page):
     branch = branch_factory.get(root_page)
+    admin_api_url = reverse('wagtailadmin_api:pages:listing')
     data = {
         'type_of_article': 'Blog',
         'article_title': 'test article',
@@ -160,7 +161,7 @@ def test_branch_user_can_create_child_pages_in_it(branch_factory, root_page):
     # check if new page is visible in the 'Pages' menu
     new_article_id = int(resp_1.url.split('/')[3])  # format is '/admin/pages/6/edit/'  # NOQA
     resp_2 = branch.client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch.listing.pk}&for_explorer=1'  # NOQA
+        f'{admin_api_url}?child_of={branch.listing.pk}&for_explorer=1'  # NOQA
     )
     assert resp_2.status_code == status.HTTP_200_OK
     assert resp_2.json()['meta']['total_count'] == 2
@@ -342,7 +343,7 @@ def test_branch_user_can_submit_changes_for_moderation(
     )
     # on success, user should be redirected on parent page listing
     assert resp.status_code == status.HTTP_302_FOUND, resp.context['form'].errors  # NOQA
-    assert int(resp.url.split('/')[3]) == branch.listing.pk  # format is /admin/pages/3/  # NOQA
+    assert int(resp.url.split('/')[3]) == branch.article.pk  # format is /admin/pages/3/  # NOQA
 
 
 @pytest.mark.django_db
@@ -466,6 +467,7 @@ def test_moderators_and_admins_can_unpublish_child_pages(
         branch_factory, root_page
 ):
     branch = branch_factory.get(root_page)
+    admin_api_url = reverse('wagtailadmin_api:pages:listing')
 
     resp = branch.client.post(
         reverse('wagtailadmin_pages:unpublish', args=[branch.article.pk])
@@ -474,7 +476,7 @@ def test_moderators_and_admins_can_unpublish_child_pages(
     assert int(resp.url.split('/')[3]) == branch.listing.pk  # format is /admin/pages/4/  # NOQA
 
     resp_2 = branch.client.get(
-        f'/admin/api/v2beta/pages/?child_of={branch.listing.pk}&for_explorer=1'
+        f'{admin_api_url}?child_of={branch.listing.pk}&for_explorer=1'
     )
     assert resp_2.status_code == status.HTTP_200_OK
     article_status = resp_2.json()['items'][0]['meta']['status']
@@ -609,24 +611,24 @@ def test_moderators_cannot_reject_revision_from_other_branch(root_page, internat
 @pytest.mark.django_db
 def test_admins_should_be_able_to_access_all_pages_in_any_branch(root_page, international_root_page):
     env = two_branches_with_users(root_page, international_root_page)
-
+    admin_api_url = reverse('wagtailadmin_api:pages:listing')
     resp_1 = env.admin_client.get(
-        f'/admin/api/v2beta/pages/?child_of={env.landing_1.pk}&for_explorer=1'
+        f'{admin_api_url}?child_of={env.landing_1.pk}&for_explorer=1'
     )
     assert resp_1.status_code == status.HTTP_200_OK
 
     resp_2 = env.admin_client.get(
-        f'/admin/api/v2beta/pages/?child_of={env.landing_2.pk}&for_explorer=1'
+        f'{admin_api_url}?child_of={env.landing_2.pk}&for_explorer=1'
     )
     assert resp_2.status_code == status.HTTP_200_OK
 
     resp_3 = env.admin_client.get(
-        f'/admin/api/v2beta/pages/?child_of={env.article_1.pk}&for_explorer=1'
+        f'{admin_api_url}?child_of={env.article_1.pk}&for_explorer=1'
     )
     assert resp_3.status_code == status.HTTP_200_OK
 
     resp_4 = env.admin_client.get(
-        f'/admin/api/v2beta/pages/?child_of={env.article_2.pk}&for_explorer=1'
+        f'{admin_api_url}?child_of={env.article_2.pk}&for_explorer=1'
     )
     assert resp_4.status_code == status.HTTP_200_OK
 
