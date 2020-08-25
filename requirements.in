@@ -1,5 +1,5 @@
 django==2.2.*
-djangorestframework==3.9.*
+djangorestframework==3.11.*
 django-environ==0.4.5
 gunicorn==19.5.0
 sentry-sdk==0.13.4
@@ -15,7 +15,7 @@ directory-components==20.*
 directory-constants==18.*
 django-staff-sso-client==1.*
 html2text==2018.1.9
-wagtail==2.9.*
+wagtail==2.10.*
 wagtailmedia==0.*
 pytube==9.2.2
 django-filter==2.2.0
