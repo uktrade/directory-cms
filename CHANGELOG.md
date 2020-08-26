@@ -1,7 +1,12 @@
 # Changelog
 
 ## Pre-release
+
 ### Implemented enhancements
+- GAA-31 - Upgrading wagtail to 2.10
+- no-ticket - migrate to codecov remove coveralls
+- GAA-31 - Upgrading Wagtail to 2.9
+
 ### Fixed bugs
 
 ### Hotfix
