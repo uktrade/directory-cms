@@ -1,5 +1,8 @@
 from rest_framework import serializers
-from export_readiness.models import ArticlePage
+from export_readiness.models import (
+    ArticlePage,
+    MarketingArticlePage,
+)
 
 
 class CountryGuidePageSerializer(serializers.Serializer):
@@ -44,10 +47,16 @@ class ArticlePageSerializer(serializers.Serializer):
         }
 
 
+class MarketingArticlePageSerializer(ArticlePageSerializer):
+    pass
+
+
 class PageSerializer(serializers.Serializer):
 
     def to_representation(self, obj):
         if isinstance(obj, ArticlePage):
             return ArticlePageSerializer(obj).data
+        elif isinstance(obj, MarketingArticlePage):
+            return MarketingArticlePageSerializer(obj).data
         else:  # CountryGuidePage
             return CountryGuidePageSerializer(obj).data
