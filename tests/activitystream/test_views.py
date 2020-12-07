@@ -10,8 +10,12 @@ from rest_framework.test import APIClient
 from django.conf import settings
 from django.utils import timezone
 
-from tests.export_readiness.factories import ArticlePageFactory, \
-  CountryGuidePageFactory, IndustryTagFactory
+from tests.export_readiness.factories import (
+    ArticlePageFactory,
+    CountryGuidePageFactory,
+    IndustryTagFactory,
+    MarketingArticlePageFactory,
+)
 
 URL = 'http://testserver' + reverse('activity-stream')
 URL_INCORRECT_DOMAIN = 'http://incorrect' + reverse('activity-stream')
@@ -166,6 +170,14 @@ def test_lists_live_articles_in_stream(api_client):
             last_published_at=timezone.now(),
             slug='article-b')
 
+        marketing_article_1 = MarketingArticlePageFactory(
+            article_title='Marketing Article One',
+            article_teaser='Descriptive text for marketing article',
+            article_body_text='Body text for marketing article',
+            last_published_at=timezone.now(),
+            slug='marketing-article-one',
+        )
+
     with freeze_time('2019-01-14 12:00:02'):
         article_c = ArticlePageFactory(
             article_title='Article C',
@@ -182,9 +194,17 @@ def test_lists_live_articles_in_stream(api_client):
             slug='article-d',
             live=False)
 
+        marketing_article_2 = MarketingArticlePageFactory(
+            article_title='Marketing Article Two',
+            article_teaser='Descriptive text for second marketing article',
+            article_body_text='Body text for second marketing article',
+            last_published_at=timezone.now(),
+            slug='marketing-article-two',
+        )
+
         # Note CountryGuidePageFactory creates an additional
         # ArticlePage as a related page.
-        article_e = CountryGuidePageFactory(
+        country_guide_page_e = CountryGuidePageFactory(
             heading='Market Page E',
             sub_heading='Descriptive text',
             section_one_body='Body text',
@@ -193,8 +213,8 @@ def test_lists_live_articles_in_stream(api_client):
 
         tag1 = IndustryTagFactory(name='tag1')
         tag2 = IndustryTagFactory(name='tag2')
-        article_e.tags = [tag1, tag2]
-        article_e.save()
+        country_guide_page_e.tags = [tag1, tag2]
+        country_guide_page_e.save()
 
     sender = auth_sender()
     response = api_client.get(
@@ -207,9 +227,10 @@ def test_lists_live_articles_in_stream(api_client):
 
     id_prefix = 'dit:cms:Article:'
 
-    # Three ArticlePages defined above, plus CountryGuidePage,
+    # Three ArticlePages defined above, plus two MarketingArticlePages,
+    # plus one CountryGuidePage,
     # Plus the extra ArticlePage created by CountryGuidePageFactory
-    assert len(items) == 5
+    assert len(items) == 7
 
     assert article_attribute(items[0], 'name') == 'Article A'
     assert article_attribute(items[0], 'id') == id_prefix + str(article_a.id)
@@ -223,14 +244,24 @@ def test_lists_live_articles_in_stream(api_client):
     assert article_attribute(items[1], 'id') == id_prefix + str(article_b.id)
     assert items[1]['published'] == '2019-01-14T12:00:01+00:00'
 
-    assert article_attribute(items[2], 'name') == 'Article C'
-    assert article_attribute(items[2], 'id') == id_prefix + str(article_c.id)
-    assert items[2]['published'] == '2019-01-14T12:00:02+00:00'
+    assert article_attribute(items[2], 'name') == 'Marketing Article One'
+    assert article_attribute(items[2], 'id') == id_prefix + str(marketing_article_1.id)
+    assert items[2]['published'] == '2019-01-14T12:00:01+00:00'
 
-    assert article_attribute(items[3], 'name') == 'Market Page E'
-    assert article_attribute(items[3], 'id') == id_prefix + str(article_e.id)
+    assert article_attribute(items[3], 'name') == 'Article C'
+    assert article_attribute(items[3], 'id') == id_prefix + str(article_c.id)
     assert items[3]['published'] == '2019-01-14T12:00:02+00:00'
-    assert article_attribute(items[3], 'keywords') == 'tag1 tag2'
+
+    assert article_attribute(items[4], 'name') == 'Marketing Article Two'
+    assert article_attribute(items[4], 'id') == id_prefix + str(marketing_article_2.id)
+    assert items[4]['published'] == '2019-01-14T12:00:02+00:00'
+
+    assert article_attribute(items[5], 'name') == 'Market Page E'
+    assert article_attribute(items[5], 'id') == id_prefix + str(country_guide_page_e.id)
+    assert items[5]['published'] == '2019-01-14T12:00:02+00:00'
+    assert article_attribute(items[5], 'keywords') == 'tag1 tag2'
+
+    # items[6] will be the Article created when the Country Guide page was also made
 
 
 @pytest.mark.django_db
