@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- GBAU-887 - Send MarketingArticlePages to ActivityStream so they appear in search results
 - GAA-31 - Upgrading wagtail to 2.10
 - no-ticket - migrate to codecov remove coveralls
 - GAA-31 - Upgrading Wagtail to 2.9
