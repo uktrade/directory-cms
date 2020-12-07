@@ -5,7 +5,11 @@ from rest_framework.reverse import reverse
 from rest_framework.generics import ListAPIView
 from wagtail.core.models import Page
 
-from export_readiness.models import ArticlePage, CountryGuidePage
+from export_readiness.models import (
+    ArticlePage,
+    CountryGuidePage,
+    MarketingArticlePage,
+)
 from activitystream.authentication import ActivityStreamAuthentication, \
     ActivityStreamHawkResponseMiddleware
 from activitystream.filters import PageFilter
@@ -35,7 +39,7 @@ class ActivityStreamView(ListAPIView):
         filter = PageFilter(
             request.GET,
             queryset=Page.objects.type(
-                (ArticlePage, CountryGuidePage)
+                (ArticlePage, CountryGuidePage, MarketingArticlePage)
             ).filter(live=True)
         )
         page_qs = filter.qs.specific(). \
