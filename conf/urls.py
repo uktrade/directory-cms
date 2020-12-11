@@ -17,6 +17,8 @@ import export_readiness.views
 from activitystream.views import ActivityStreamView
 from groups.views import GroupInfoModalView
 
+from wagtail_transfer import urls as wagtailtransfer_urls
+
 api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
 
@@ -77,6 +79,11 @@ healthcheck_urls = [
 
 urlpatterns = [
     url(r'^django-admin/', admin.site.urls),
+    url(
+        # Has to come before main /admin/ else will fail
+        'admin/wagtail-transfer/',
+        include(wagtailtransfer_urls),
+    ),
     url(
         r'^api/',
         include((api_urls, 'api'))
