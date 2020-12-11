@@ -22,7 +22,7 @@ django-filter==2.2.0
 django-redis==4.10.0
 celery[redis]
 django-celery-beat==2.0.0
-kombu==4.*
+kombu==5.*
 requests==2.21.0
 markdown==2.6
 bleach==3.*
@@ -38,3 +38,4 @@ pycountry==19.8.18
 elastic-apm>=5.5.2,<6.0.0
 gevent>=20.6.1,<21.0.0
 psycogreen>=1.0.2,<2.0.0
+wagtail-transfer==0.6.0

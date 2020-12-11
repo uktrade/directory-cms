@@ -92,6 +92,7 @@ INSTALLED_APPS = [
     'django_filters',
     'authbroker_client',
     'django_celery_beat',
+    'wagtail_transfer',
 ]
 
 MIDDLEWARE = [
@@ -212,6 +213,14 @@ DEFAULT_FILE_STORAGE = env.str(
     'DEFAULT_FILE_STORAGE',
     'core.storage_backends.ImmutableFilesS3Boto3Storage'
 )
+
+# Wagtail-Transfer configured to EXPORT ONLY
+WAGTAILTRANSFER_SECRET_KEY = env.str('WAGTAILTRANSFER_SECRET_KEY', '')
+WAGTAILTRANSFER_UPDATE_RELATED_MODELS = []
+
+WAGTAILTRANSFER_NO_FOLLOW_MODELS = ['wagtailcore.page', 'auth.User']
+
+USER_MEDIA_ON_S3 = DEFAULT_FILE_STORAGE == 'core.storage_backends.ImmutableFilesS3Boto3Storage'
 
 # Logging for development
 if DEBUG:
