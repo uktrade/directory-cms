@@ -38,6 +38,7 @@ class BaseInternationalSectorPage(panels.BaseInternationalSectorPagePanels, Base
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
