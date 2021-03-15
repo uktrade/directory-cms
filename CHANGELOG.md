@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+- GBAU-927 - Add robots.txt, disallowing everything
 - GBAU-887 - Send MarketingArticlePages to ActivityStream so they appear in search results
 - GAA-31 - Upgrading wagtail to 2.10
 - no-ticket - migrate to codecov remove coveralls
