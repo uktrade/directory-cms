@@ -1,3 +1,6 @@
+
+import directory_components.views
+from directory_components.decorators import skip_ga360
 import directory_healthcheck.views
 from django.contrib import admin
 from wagtail.admin import urls as wagtailadmin_urls
@@ -84,6 +87,11 @@ urlpatterns = [
     url(
         r'^healthcheck/',
         include((healthcheck_urls, 'healthcheck'))
+    ),
+    url(
+        r"^robots\.txt$",
+        skip_ga360(directory_components.views.RobotsView.as_view(template_name='core/robots.txt')),
+        name='robots'
     ),
     url(
         r'^$',
