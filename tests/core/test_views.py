@@ -519,3 +519,9 @@ def test_pages_types_view(admin_client):
 def test_pages_view(admin_client):
     response = admin_client.get('/api/pages/')
     assert response.status_code == 200
+
+
+def test_robots_txt(client):
+    response = client.get('/robots.txt')
+    assert response.content == b'User-agent: * \nDisallow: /'
+    assert response._headers['content-type'] == ('Content-Type', 'text/plain')
