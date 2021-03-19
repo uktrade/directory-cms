@@ -113,7 +113,7 @@ django==2.2.15
     #   wagtail
 django_storages==1.7.1
     # via -r requirements.in
-djangorestframework==3.11.1
+djangorestframework==3.11.2
     # via
     #   -r requirements.in
     #   sigauth
