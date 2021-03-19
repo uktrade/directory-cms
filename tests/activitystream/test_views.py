@@ -61,7 +61,7 @@ def auth_sender(key_id=settings.ACTIVITY_STREAM_ACCESS_KEY_ID,
 
 
 @pytest.mark.django_db
-def test_empty_object_returned_with_authentication(api_client):
+def test_empty_object_returned_with_authentication(api_client, en_locale):
     """If the Authorization and X-Forwarded-For headers are correct, then
     the correct, and authentic, data is returned
     """
@@ -104,7 +104,7 @@ def test_empty_object_returned_with_authentication(api_client):
 
 
 @pytest.mark.django_db
-def test_authentication_fails_if_url_mismatched(api_client):
+def test_authentication_fails_if_url_mismatched(api_client, en_locale):
     """Creates a Hawk header with incorrect domain"""
     sender = auth_sender(url=URL_INCORRECT_DOMAIN)
     response = api_client.get(
@@ -129,7 +129,7 @@ def test_authentication_fails_if_url_mismatched(api_client):
 
 
 @pytest.mark.django_db
-def test_if_61_seconds_in_past_401_returned(api_client):
+def test_if_61_seconds_in_past_401_returned(api_client, en_locale):
     """If the Authorization header is generated 61 seconds in the past, then a
     401 is returned
     """
@@ -152,7 +152,7 @@ def test_if_61_seconds_in_past_401_returned(api_client):
 
 
 @pytest.mark.django_db
-def test_lists_live_articles_in_stream(api_client):
+def test_lists_live_articles_in_stream(api_client, en_locale):
 
     # Create the articles
     with freeze_time('2019-01-14 12:00:01'):
@@ -265,7 +265,7 @@ def test_lists_live_articles_in_stream(api_client):
 
 
 @pytest.mark.django_db
-def test_pagination(api_client, django_assert_num_queries):
+def test_pagination(api_client, django_assert_num_queries, en_locale):
     """The requests are paginated, ending on a article without a next key
     """
 
