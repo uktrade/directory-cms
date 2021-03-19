@@ -33,13 +33,15 @@ def en_locale():
 
 
 @pytest.fixture
-def wagtail_initial_data(request):
+def wagtail_initial_data(request, en_locale):
     if not request.node.get_closest_marker('django_db'):
         return
     page_content_type, _ = ContentType.objects.get_or_create(
         model='page',
         app_label='wagtailcore'
     )
+    locale = Locale.objects.get(language_code='en-gb')
+
     root, _ = Page.objects.get_or_create(
         slug='root',
         defaults=dict(
@@ -49,6 +51,7 @@ def wagtail_initial_data(request):
             path='0001',
             depth=1,
             numchild=1,
+            locale=locale,
             url_path='/',
         )
     )
@@ -62,6 +65,7 @@ def wagtail_initial_data(request):
             depth=2,
             numchild=0,
             url_path='/home/',
+            locale=locale,
         )
     )
 
