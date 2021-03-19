@@ -1,4 +1,5 @@
 import requests
+from wagtail.core.models import Locale
 
 
 def clean_post_data(post_data):
@@ -18,3 +19,13 @@ def create_response(status_code, json_body={}, content=None):
     response.json = lambda: json_body
     response._content = content
     return response
+
+
+class SetUpLocaleMixin:
+    """Ensures a default locale is in the database
+    pytest equivalent is the `en_locale` fixture
+    """
+
+    def _fixture_setup(self):
+        Locale.objects.get_or_create(language_code='en-gb')
+        return super()._fixture_setup()

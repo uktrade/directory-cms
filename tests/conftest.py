@@ -6,7 +6,7 @@ from modeltranslation.utils import build_localized_fieldname
 from six import b
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
-from wagtail.core.models import GroupPagePermission, Page, Site
+from wagtail.core.models import GroupPagePermission, Locale, Page, Site
 
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
@@ -22,6 +22,14 @@ from users.models import UserProfile
 from .great_international.factories import InternationalHomePageFactory, InternationalArticlePageFactory, \
     InvestHighPotentialOpportunityDetailPageFactory
 from .users.factories import UserFactory
+
+
+@pytest.mark.django_db
+@pytest.fixture()
+def en_locale():
+    # Equivalent for unittest is in tests.core.helpers.SetUpLocaleMixin
+    return Locale.objects.get_or_create(language_code='en-gb')
+
 
 
 @pytest.fixture
