@@ -31,7 +31,6 @@ def en_locale():
     return Locale.objects.get_or_create(language_code='en-gb')
 
 
-
 @pytest.fixture
 def wagtail_initial_data(request, en_locale):
     if not request.node.get_closest_marker('django_db'):

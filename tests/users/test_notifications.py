@@ -1,9 +1,12 @@
 from unittest.mock import patch
+import pytest
 from users.notifications import (
     notifications_client,
     notify_user_of_access_request_approval,
     notify_team_leader_of_pending_access_request,
 )
+
+pytestmark = pytest.mark.django_db
 
 
 def test_notify_user_of_access_request_approval(rf):
