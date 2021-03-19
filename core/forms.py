@@ -5,7 +5,12 @@ from modeltranslation.utils import build_localized_fieldname
 from django import forms
 from django.conf import settings
 
-from wagtail_modeltranslation.patch_wagtailadmin_forms import WagtailFixedAdminPageForm
+from wagtail.admin.forms import WagtailAdminPageForm as UnpatchedWagtailAdminPageForm
+
+from wagtail_modeltranslation.patch_wagtailadmin_forms import patch_admin_page_form
+
+
+WagtailFixedAdminPageForm = patch_admin_page_form(UnpatchedWagtailAdminPageForm)
 
 
 class CopyToEnvironmentForm(forms.Form):

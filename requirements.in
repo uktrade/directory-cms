@@ -27,7 +27,7 @@ requests==2.21.0
 markdown==2.6
 bleach==3.*
 bleach-whitelist==0.*
-wagtail-modeltranslation==0.10.13
+wagtail-modeltranslation==0.10.17
 urllib3>=1.24.2<2.0.0
 w3lib>=1.19.0<2.0.0
 django-admin-ip-restrictor==2.1.0
