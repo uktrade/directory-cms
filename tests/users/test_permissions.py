@@ -43,10 +43,10 @@ def test_branch_editors_cannot_access_pages_not_from_their_branch(root_page, int
     env = two_branches_with_users(root_page, international_root_page)
 
     resp_1 = env.editor_1_client.get(f'/admin/pages/{env.home_2.pk}/edit/')
-    assert resp_1.status_code == status.HTTP_403_FORBIDDEN
+    assert resp_1.status_code == status.HTTP_302_FOUND
 
     resp_2 = env.editor_2_client.get(f'/admin/pages/{env.home_1.pk}/edit/')
-    assert resp_2.status_code == status.HTTP_403_FORBIDDEN
+    assert resp_2.status_code == status.HTTP_302_FOUND
 
     resp_3 = env.editor_1_client.get(f'/admin/pages/{env.home_2.pk}/')
     assert resp_3.status_code == status.HTTP_302_FOUND
@@ -84,12 +84,12 @@ def test_moderators_cannot_access_pages_not_from_their_branch(root_page, interna
     resp_1 = env.moderator_1_client.get(
         f'/admin/pages/{env.home_2.pk}/edit/'
     )
-    assert resp_1.status_code == status.HTTP_403_FORBIDDEN
+    assert resp_1.status_code == status.HTTP_302_FOUND
 
     resp_2 = env.moderator_2_client.get(
         f'/admin/pages/{env.home_1.pk}/edit/'
     )
-    assert resp_2.status_code == status.HTTP_403_FORBIDDEN
+    assert resp_2.status_code == status.HTTP_302_FOUND
 
     resp_3 = env.moderator_1_client.get(f'/admin/pages/{env.home_2.pk}/')
     assert resp_3.status_code == status.HTTP_302_FOUND
@@ -115,7 +115,7 @@ def test_moderators_can_approve_revisions_only_for_pages_in_their_branch(
     resp_1 = env.moderator_1_client.post(
         reverse('wagtailadmin_pages:approve_moderation', args=[revision.pk])
     )
-    assert resp_1.status_code == status.HTTP_403_FORBIDDEN
+    assert resp_1.status_code == status.HTTP_302_FOUND
 
     # after publishing a page, user is redirected to the '/admin/' page
     resp_2 = env.moderator_2_client.post(
@@ -235,7 +235,7 @@ def test_branch_user_cant_create_pages_in_branch_they_dont_manage(
         ),
         data=data,
     )
-    assert resp.status_code == status.HTTP_403_FORBIDDEN
+    assert resp.status_code == status.HTTP_302_FOUND
 
 
 @pytest.mark.django_db
@@ -305,7 +305,7 @@ def test_editors_cannot_publish_child_pages(root_page, international_root_page):
     resp = env.editor_1_client.post(
         reverse('wagtailadmin_pages:approve_moderation', args=[revision.pk])
     )
-    assert resp.status_code == status.HTTP_403_FORBIDDEN
+    assert resp.status_code == status.HTTP_302_FOUND
 
 
 @pytest.mark.django_db
@@ -315,7 +315,7 @@ def test_editors_cannot_unpublish_child_pages(root_page, international_root_page
     resp = env.editor_1_client.post(
         reverse('wagtailadmin_pages:unpublish', args=[env.article_1.pk])
     )
-    assert resp.status_code == status.HTTP_403_FORBIDDEN
+    assert resp.status_code == status.HTTP_302_FOUND
 
 
 @pytest.mark.django_db
@@ -323,7 +323,7 @@ def test_editors_cannot_unpublish_child_pages(root_page, international_root_page
     'branch_factory', [
         BranchEditorFactory,
         BranchModeratorFactory,
-        AdminFactory,
+        AdminFactory
     ])
 def test_branch_user_can_submit_changes_for_moderation(
         branch_factory, root_page
@@ -605,7 +605,7 @@ def test_moderators_cannot_reject_revision_from_other_branch(root_page, internat
     resp = env.moderator_2_client.post(
         reverse('wagtailadmin_pages:reject_moderation', args=[revision.pk])
     )
-    assert resp.status_code == status.HTTP_403_FORBIDDEN
+    assert resp.status_code == status.HTTP_302_FOUND
 
 
 @pytest.mark.django_db
