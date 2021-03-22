@@ -249,6 +249,7 @@ def test_branch_user_cant_create_pages_in_branch_they_dont_manage(
     # no pages added
     assert old_page_count == Page.objects.count()
 
+
 @pytest.mark.django_db
 def test_admins_can_create_pages_in_any_branch(root_page, international_root_page):
     env = two_branches_with_users(root_page, international_root_page)
@@ -629,12 +630,13 @@ def test_moderators_cannot_reject_revision_from_other_branch(root_page, internat
     )
     assert resp.status_code == status.HTTP_302_FOUND  # On wagtail 2.10 used to be 403
     assert resp.url == '/admin/'
-    
+
     revision.refresh_from_db()
-    # If moderation rejection had been allowed, submitted_for_moderation would 
+    # If moderation rejection had been allowed, submitted_for_moderation would
     # now be False
     # https://github.com/wagtail/wagtail/blob/v2.11.6/wagtail/core/models.py#L2856
     assert revision.submitted_for_moderation is True
+
 
 @pytest.mark.django_db
 def test_admins_should_be_able_to_access_all_pages_in_any_branch(root_page, international_root_page):
