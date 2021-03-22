@@ -1,6 +1,8 @@
 import pytest
 from django.urls import reverse
 from rest_framework import status
+from wagtail.core.models import Page
+
 
 from tests.export_readiness.factories import ArticlePageFactory
 from tests.users.factories import (
@@ -43,10 +45,12 @@ def test_branch_editors_cannot_access_pages_not_from_their_branch(root_page, int
     env = two_branches_with_users(root_page, international_root_page)
 
     resp_1 = env.editor_1_client.get(f'/admin/pages/{env.home_2.pk}/edit/')
-    assert resp_1.status_code == status.HTTP_403_FORBIDDEN
+    assert resp_1.status_code == status.HTTP_302_FOUND  # On wagtail 2.10 used to be 403
+    assert resp_1.url == '/admin/'  # Defaults to cms home
 
     resp_2 = env.editor_2_client.get(f'/admin/pages/{env.home_1.pk}/edit/')
-    assert resp_2.status_code == status.HTTP_403_FORBIDDEN
+    assert resp_2.status_code == status.HTTP_302_FOUND  # On wagtail 2.10 used to be 403
+    assert resp_2.url == '/admin/'
 
     resp_3 = env.editor_1_client.get(f'/admin/pages/{env.home_2.pk}/')
     assert resp_3.status_code == status.HTTP_302_FOUND
@@ -84,12 +88,14 @@ def test_moderators_cannot_access_pages_not_from_their_branch(root_page, interna
     resp_1 = env.moderator_1_client.get(
         f'/admin/pages/{env.home_2.pk}/edit/'
     )
-    assert resp_1.status_code == status.HTTP_403_FORBIDDEN
+    assert resp_1.status_code == status.HTTP_302_FOUND  # On wagtail 2.10 used to be 403
+    assert resp_1.url == '/admin/'  # defaults to cms home
 
     resp_2 = env.moderator_2_client.get(
         f'/admin/pages/{env.home_1.pk}/edit/'
     )
-    assert resp_2.status_code == status.HTTP_403_FORBIDDEN
+    assert resp_2.status_code == status.HTTP_302_FOUND  # On wagtail 2.10 used to be 403
+    assert resp_2.url == '/admin/'  # defaults to cms home
 
     resp_3 = env.moderator_1_client.get(f'/admin/pages/{env.home_2.pk}/')
     assert resp_3.status_code == status.HTTP_302_FOUND
@@ -115,7 +121,8 @@ def test_moderators_can_approve_revisions_only_for_pages_in_their_branch(
     resp_1 = env.moderator_1_client.post(
         reverse('wagtailadmin_pages:approve_moderation', args=[revision.pk])
     )
-    assert resp_1.status_code == status.HTTP_403_FORBIDDEN
+    assert resp_1.status_code == status.HTTP_302_FOUND  # On wagtail 2.10 used to be 403
+    assert resp_1.url == '/admin/'  # defaults to cms home
 
     # after publishing a page, user is redirected to the '/admin/' page
     resp_2 = env.moderator_2_client.post(
@@ -223,6 +230,7 @@ def test_branch_user_cant_create_pages_in_branch_they_dont_manage(
         'slug': 'test-article',
         'action-publish': 'action-publish',
     }
+    old_page_count = Page.objects.count()
 
     resp = branch_1.client.post(
         reverse(
@@ -235,7 +243,11 @@ def test_branch_user_cant_create_pages_in_branch_they_dont_manage(
         ),
         data=data,
     )
-    assert resp.status_code == status.HTTP_403_FORBIDDEN
+    assert resp.status_code == status.HTTP_302_FOUND  # On wagtail 2.10 used to be 403
+    assert resp.url == '/admin/'  # defaults to cms home
+
+    # no pages added
+    assert old_page_count == Page.objects.count()
 
 
 @pytest.mark.django_db
@@ -298,6 +310,7 @@ def test_editors_cannot_publish_child_pages(root_page, international_root_page):
     draft_page = ArticlePageFactory(
         parent=env.landing_1, live=False
     )
+    assert draft_page.live is False
     revision = draft_page.save_revision(
         user=env.editor_1, submitted_for_moderation=True
     )
@@ -305,17 +318,27 @@ def test_editors_cannot_publish_child_pages(root_page, international_root_page):
     resp = env.editor_1_client.post(
         reverse('wagtailadmin_pages:approve_moderation', args=[revision.pk])
     )
-    assert resp.status_code == status.HTTP_403_FORBIDDEN
+    assert resp.status_code == status.HTTP_302_FOUND  # On wagtail 2.10 used to be 403
+    assert resp.url == '/admin/'  # defaults to cms home
+
+    draft_page.refresh_from_db()
+    assert draft_page.live is False
 
 
 @pytest.mark.django_db
 def test_editors_cannot_unpublish_child_pages(root_page, international_root_page):
     env = two_branches_with_users(root_page, international_root_page)
 
+    assert env.article_1.live is True
+
     resp = env.editor_1_client.post(
         reverse('wagtailadmin_pages:unpublish', args=[env.article_1.pk])
     )
-    assert resp.status_code == status.HTTP_403_FORBIDDEN
+    assert resp.status_code == status.HTTP_302_FOUND  # On wagtail 2.10 used to be 403
+    assert resp.url == '/admin/'  # defaults to cms home
+
+    env.article_1.refresh_from_db()
+    assert env.article_1.live is True
 
 
 @pytest.mark.django_db
@@ -323,7 +346,7 @@ def test_editors_cannot_unpublish_child_pages(root_page, international_root_page
     'branch_factory', [
         BranchEditorFactory,
         BranchModeratorFactory,
-        AdminFactory,
+        AdminFactory
     ])
 def test_branch_user_can_submit_changes_for_moderation(
         branch_factory, root_page
@@ -605,7 +628,14 @@ def test_moderators_cannot_reject_revision_from_other_branch(root_page, internat
     resp = env.moderator_2_client.post(
         reverse('wagtailadmin_pages:reject_moderation', args=[revision.pk])
     )
-    assert resp.status_code == status.HTTP_403_FORBIDDEN
+    assert resp.status_code == status.HTTP_302_FOUND  # On wagtail 2.10 used to be 403
+    assert resp.url == '/admin/'
+
+    revision.refresh_from_db()
+    # If moderation rejection had been allowed, submitted_for_moderation would
+    # now be False
+    # https://github.com/wagtail/wagtail/blob/v2.11.6/wagtail/core/models.py#L2856
+    assert revision.submitted_for_moderation is True
 
 
 @pytest.mark.django_db

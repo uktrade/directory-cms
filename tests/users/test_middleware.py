@@ -7,6 +7,9 @@ from users.models import UserProfile
 from users.middleware import SSORedirectUsersToRequestAccessViews
 
 
+pytestmark = pytest.mark.django_db
+
+
 class MockProfile:
     def __init__(self, assignment_status):
         if assignment_status is None:
