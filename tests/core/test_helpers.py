@@ -5,15 +5,15 @@ from django.urls import reverse
 from core import helpers
 from core.helpers import render_markdown, get_page_full_url
 
+pytestmark = pytest.mark.django_db
 
-@pytest.mark.django_db
+
 def test_get_or_create_image_existing(image):
     actual = helpers.get_or_create_image(image.file.name)
 
     assert actual == image
 
 
-@pytest.mark.django_db
 def test_get_or_create_image_new(image, uploaded_file):
     image.delete()
 
@@ -22,7 +22,6 @@ def test_get_or_create_image_new(image, uploaded_file):
     assert actual.file.name == 'original_images/test_image.png'
 
 
-@pytest.mark.django_db
 def test_get_button_url_name_internal_url(international_root_page):
     button = PageListingButton(
         'View draft',
