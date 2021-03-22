@@ -5,6 +5,8 @@ import pytest
 
 from core import models, storage_backends
 
+pytestmark = pytest.mark.django_db
+
 
 @patch('django.core.files.storage.Storage.delete')
 def test_delete_disabled(mock_delete):
@@ -29,7 +31,6 @@ def test_replace_disabled_hardcoded(settings):
     )
 
 
-@pytest.mark.django_db
 def test_immutable_file_storage_get_image_by_path_exists():
 
     image_hash = models.ImageHash.objects.all().first()
@@ -43,7 +44,6 @@ def test_immutable_file_storage_get_image_by_path_exists():
     assert image == image_hash.image
 
 
-@pytest.mark.django_db
 def test_immutable_file_storage_get_image_by_path_not_exist_in_bucket():
     backend = storage_backends.ImmutableFilesS3Boto3Storage()
     with patch.object(backend.connection, 'ObjectSummary') as mock:
@@ -53,7 +53,6 @@ def test_immutable_file_storage_get_image_by_path_not_exist_in_bucket():
     assert image is None
 
 
-@pytest.mark.django_db
 def test_immutable_file_storage_get_image_by_path_not_exist_in_database():
     backend = storage_backends.ImmutableFilesS3Boto3Storage()
     with patch.object(backend.connection, 'ObjectSummary') as mock:
@@ -63,7 +62,6 @@ def test_immutable_file_storage_get_image_by_path_not_exist_in_database():
     assert image is None
 
 
-@pytest.mark.django_db
 def test_immutable_file_storage_get_document_by_path_exists(document):
     document_hash = models.DocumentHash.objects.all().first()
 
@@ -78,7 +76,6 @@ def test_immutable_file_storage_get_document_by_path_exists(document):
     assert document == document_hash.document
 
 
-@pytest.mark.django_db
 def test_immutable_file_storage_get_document_by_path_not_exist_in_bucket():
     backend = storage_backends.ImmutableFilesS3Boto3Storage()
     with patch.object(backend.connection, 'ObjectSummary') as mock:
@@ -88,7 +85,6 @@ def test_immutable_file_storage_get_document_by_path_not_exist_in_bucket():
     assert document is None
 
 
-@pytest.mark.django_db
 def test_immutable_file_storage_get_document_by_path_not_exist_in_database():
     backend = storage_backends.ImmutableFilesS3Boto3Storage()
     with patch.object(backend.connection, 'ObjectSummary') as mock:

@@ -34,6 +34,7 @@ USER_DETAILS_CHANGING = {
 }
 
 
+@pytest.mark.django_db
 def test_create_user_view_get(admin_client):
     url = reverse('wagtailusers_users:add')
     response = admin_client.get(url)

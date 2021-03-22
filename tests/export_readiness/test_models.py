@@ -4,6 +4,7 @@ from export_readiness import models
 from . import factories
 
 
+@pytest.mark.django_db
 def test_app_models():
     # using sets here because order shouldn't matter
     assert set(models.HomePage.allowed_subpage_models()) == {

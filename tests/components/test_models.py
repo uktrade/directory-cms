@@ -2,6 +2,8 @@ import pytest
 
 from components import models
 
+pytestmark = pytest.mark.django_db
+
 
 def test_app_models():
     assert models.ComponentsApp.allowed_subpage_models() == [
@@ -15,7 +17,7 @@ def test_app_required_translatable_fields():
 
 
 @pytest.mark.django_db
-def test_set_slug():
+def test_set_slug(en_locale):
     instance = models.ComponentsApp.objects.create(
         title_en_gb='the app',
         depth=2,
