@@ -115,7 +115,7 @@ django==2.2.19
     #   wagtail
 django_storages==1.7.1
     # via -r requirements.in
-djangorestframework==3.11.2
+djangorestframework==3.12.2
     # via
     #   -r requirements.in
     #   sigauth
@@ -355,7 +355,7 @@ zipp==3.4.1
     #   pep517
 zope.event==4.5.0
     # via gevent
-zope.interface==5.2.0
+zope.interface==5.3.0
     # via gevent
 
 # The following packages are considered to be unsafe in a requirements file:
