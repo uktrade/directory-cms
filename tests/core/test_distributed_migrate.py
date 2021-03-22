@@ -1,6 +1,10 @@
+import pytest
+
 from unittest.mock import call, patch
 
 from django.core.management import call_command
+
+pytestmark = pytest.mark.django_db
 
 
 @patch('core.management.commands.distributed_migrate.MigrateCommand.handle')
