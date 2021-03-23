@@ -1,8 +1,13 @@
 # Changelog
 
 ## Pre-release
-
 ### Implemented enhancements
+
+### Fixed bugs
+## [1.0.0](https://github.com/uktrade/great-international-ui/releases/tag/1.0.0)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.12.07...1.0.0)
+### Implemented enhancements
+- NO-TICKET - wagtail upgrade to 2.11
 - NO-TICKET - Bump Python runtime to 3.6.12
 - GBAU-927 - Add robots.txt, disallowing everything
 - GBAU-887 - Send MarketingArticlePages to ActivityStream so they appear in search results
