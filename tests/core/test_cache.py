@@ -11,6 +11,8 @@ from core import cache
 
 from tests.great_international.factories import InternationalArticlePageFactory
 
+pytestmark = pytest.mark.django_db
+
 
 @pytest.mark.parametrize('page_id,language_code,region,expected', (
     (

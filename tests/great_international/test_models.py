@@ -7,6 +7,7 @@ from great_international.models import (
 from . import factories
 
 
+@pytest.mark.django_db
 def test_models_hierarchy():
     # homepage / app root
     assert great_international.InternationalHomePage.allowed_subpage_models() \
