@@ -31,6 +31,7 @@ def cluster_data(settings):
     return data
 
 
+@pytest.mark.django_db
 def test_permissions_draft(rf):
     view = views.PagesOptionalDraftAPIEndpoint()
     param = permissions.DraftTokenPermisison.TOKEN_PARAM
@@ -42,6 +43,7 @@ def test_permissions_draft(rf):
     ]
 
 
+@pytest.mark.django_db
 def test_permissions_published(rf):
     view = views.PagesOptionalDraftAPIEndpoint()
     view.request = rf.get('/')
@@ -509,6 +511,7 @@ def test_cache_etags_mismatch(admin_client, international_root_page):
     assert response_two.content
 
 
+@pytest.mark.django_db
 def test_pages_types_view(admin_client):
     url = reverse('api:pages-types-list')
     response = admin_client.get(url)
@@ -516,6 +519,14 @@ def test_pages_types_view(admin_client):
     assert 'types' in response.json()
 
 
+@pytest.mark.django_db
 def test_pages_view(admin_client):
     response = admin_client.get('/api/pages/')
     assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_robots_txt(client):
+    response = client.get('/robots.txt')
+    assert response.content == b'User-agent: * \nDisallow: /'
+    assert response._headers['content-type'] == ('Content-Type', 'text/plain')

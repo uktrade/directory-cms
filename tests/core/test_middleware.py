@@ -1,7 +1,11 @@
+import pytest
+
 from django.conf import settings
 from django.utils import translation
 
 from core import middleware
+
+pytestmark = pytest.mark.django_db
 
 
 def test_locale_middleware_installed():
