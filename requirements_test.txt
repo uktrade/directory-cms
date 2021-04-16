@@ -65,7 +65,7 @@ django-admin-ip-restrictor==2.1.0
     # via -r requirements.in
 django-celery-beat==2.0.0
     # via -r requirements.in
-django-debug-toolbar==3.2
+django-debug-toolbar==3.2.1
     # via -r requirements_test.in
 django-environ==0.4.5
     # via -r requirements.in
