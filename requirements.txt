@@ -77,7 +77,7 @@ django-timezone-field==4.1.2
     # via django-celery-beat
 django-treebeard==4.5.1
     # via wagtail
-django==2.2.19
+django==2.2.20
     # via
     #   -r requirements.in
     #   directory-components
