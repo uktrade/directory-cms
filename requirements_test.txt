@@ -201,7 +201,7 @@ packaging==20.9
     #   pytest-sugar
 pep517==0.10.0
     # via pip-tools
-pillow==8.1.2
+pillow==8.2.0
     # via
     #   -r requirements.in
     #   wagtail

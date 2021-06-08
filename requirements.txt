@@ -159,7 +159,7 @@ openpyxl==3.0.7
     # via tablib
 packaging==20.9
     # via bleach
-pillow==8.1.2
+pillow==8.2.0
     # via
     #   -r requirements.in
     #   wagtail
