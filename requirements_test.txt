@@ -327,7 +327,7 @@ wagtail-factories==2.0.1
     # via -r requirements_test.in
 wagtail-modeltranslation==0.10.17
     # via -r requirements.in
-wagtail==2.11.6
+wagtail==2.11.8
     # via
     #   -r requirements.in
     #   wagtail-factories
