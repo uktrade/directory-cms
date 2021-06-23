@@ -23,12 +23,12 @@ django-redis==4.10.0
 celery[redis]==4.4.7
 django-celery-beat==2.0.0
 kombu==4.*
-requests==2.21.0
+requests[security]==2.25.1
 markdown==2.6
 bleach==3.*
 bleach-whitelist==0.*
 wagtail-modeltranslation==0.10.17
-urllib3>=1.24.2<2.0.0
+urllib3>=1.26.5,<2.0.0
 w3lib>=1.19.0<2.0.0
 django-admin-ip-restrictor==2.1.0
 notifications-python-client==5.3.*
