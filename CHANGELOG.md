@@ -3,6 +3,7 @@
 ## Pre-release
 ### Implemented enhancements
 - NO-TICKET: urllib3 vulnerability alert fixup
+- GBAU-947 - Removed default special terms message 
 
 ### Fixed bugs
 ## [1.0.0](https://github.com/uktrade/great-international-ui/releases/tag/1.0.0)
