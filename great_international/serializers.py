@@ -27,11 +27,29 @@ from .models.invest import (
     InvestHighPotentialOpportunityDetailPage,
     InvestRegionPage
 )
+from .models.investment_atlas import (
+    InvestmentOpportunityPage,
+)
 
 from .models.capital_invest import CapitalInvestOpportunityPage
 
 
 REGIONS = ['scotland', 'northern_ireland', 'north_england', 'wales', 'midlands', 'south_england']
+
+
+class EntitySummarySerializerBase(serializers.Serializer):
+    """Base class for nested entities that don't need full page representations"""
+    id = serializers.IntegerField()
+
+    full_url = serializers.CharField(max_length=255)
+    full_path = serializers.CharField(max_length=255, source='specific.full_path')
+    last_published_at = serializers.DateTimeField()
+
+    title = serializers.CharField()
+    page_type = serializers.SerializerMethodField()
+
+    def get_page_type(self, instance):
+        return instance.__class__.__name__
 
 
 class SectionThreeSubsectionProxyDataWrapper:
@@ -2482,3 +2500,88 @@ class CapitalInvestContactFormSuccessPageSerializer(BasePageSerializer):
     message_box_heading = serializers.CharField()
     message_box_description = core_fields.MarkdownToHTMLField()
     what_happens_next_description = core_fields.MarkdownToHTMLField()
+
+
+class RegionPageSummarySerializer(EntitySummarySerializerBase):
+    """Shorter version of AboutUkRegionPageSerializer for nesting content
+    in InvestmentOpportunityPageSerializer results"""
+
+    IMAGE_RENDITION_SPEC = 'fill-640x360'
+
+    hero_title = serializers.CharField(max_length=255)
+    featured_description = serializers.CharField(max_length=255)
+
+    region_summary_section_image = wagtail_fields.ImageRenditionField(IMAGE_RENDITION_SPEC)
+    region_summary_section_intro = serializers.CharField(max_length=255)
+    region_summary_section_content = core_fields.MarkdownToHTMLField(
+        max_length=255
+    )
+
+
+class SectorSummarySerializer(EntitySummarySerializerBase):
+
+    IMAGE_RENDITION_SPEC = 'fill-960x540'
+
+    title = serializers.CharField(max_length=255, source='heading')
+    image = wagtail_fields.ImageRenditionField(IMAGE_RENDITION_SPEC, source='hero_image')
+    featured_description = serializers.CharField(max_length=255)
+
+
+class InvestmentOpportunitySummarySerializer(EntitySummarySerializerBase):
+
+    IMAGE_RENDITION_SPEC = 'fill-960x540'
+
+    title = serializers.CharField(max_length=255, source='heading')
+    image = wagtail_fields.ImageRenditionField(IMAGE_RENDITION_SPEC, source='featured_image_1')
+    featured_description = serializers.CharField(max_length=255, source='executive_summary')
+
+
+class InvestmentOpportunityPageSerializer(BasePageSerializer):
+
+    FEATURED_IMAGE_RENDITION_SPEC = 'fill-960x540'
+
+    breadcrumbs_label = serializers.CharField()
+
+    featured_image_1 = wagtail_fields.ImageRenditionField(FEATURED_IMAGE_RENDITION_SPEC)
+    featured_image_1_alt = serializers.CharField()
+    featured_image_1_caption = serializers.CharField()
+
+    featured_image_2 = wagtail_fields.ImageRenditionField(FEATURED_IMAGE_RENDITION_SPEC)
+    featured_image_2_alt = serializers.CharField()
+    featured_image_2_caption = serializers.CharField()
+
+    featured_image_3 = wagtail_fields.ImageRenditionField(FEATURED_IMAGE_RENDITION_SPEC)
+    featured_image_3_alt = serializers.CharField()
+    featured_image_3_caption = serializers.CharField()
+
+    featured_image_4 = wagtail_fields.ImageRenditionField(FEATURED_IMAGE_RENDITION_SPEC)
+    featured_image_4_alt = serializers.CharField()
+    featured_image_4_caption = serializers.CharField()
+
+    featured_image_5 = wagtail_fields.ImageRenditionField(FEATURED_IMAGE_RENDITION_SPEC)
+    featured_image_5_alt = serializers.CharField()
+    featured_image_5_caption = serializers.CharField()
+
+    executive_summary = core_fields.MarkdownToHTMLField()
+    data_snapshot = core_fields.MarkdownToHTMLField()
+
+    contact_name = serializers.CharField()
+    contact_job_title = serializers.CharField()
+    contact_image = wagtail_fields.ImageRenditionField('fill-200x200')
+    contact_cta_email = serializers.CharField()
+
+    opportunity_details = core_fields.MarkdownToHTMLField()
+    location_details = core_fields.MarkdownToHTMLField()
+    financial_details = core_fields.MarkdownToHTMLField()
+    local_or_national_support = core_fields.MarkdownToHTMLField()
+
+    relevant_regions = RegionPageSummarySerializer(many=True, read_only=True)
+    relevant_sectors = SectorSummarySerializer(many=True, read_only=True)
+    related_opportunities = InvestmentOpportunitySummarySerializer(many=True, read_only=True)
+
+
+    # TO COME/TBC
+    # location / geo pointfield
+    # dit_how_we_help_summary -> see AboutUKLandingPage for set of fields
+    # case_studies
+    # uk_specialist_support - from ISD

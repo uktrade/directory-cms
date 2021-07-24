@@ -6,6 +6,7 @@ from great_international.models import (
     invest,
     capital_invest,
     find_a_supplier,
+    investment_atlas,
 )
 
 
@@ -1257,4 +1258,31 @@ class CapitalInvestContactFormSuccessPageTranslationOptions(
         'message_box_heading',
         'message_box_description',
         'what_happens_next_description',
+    )
+
+
+@register(investment_atlas.InvestmentOpportunityPage)
+class InvestmentOpportunityPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'featured_image_1_alt',
+        'featured_image_1_caption',
+        'featured_image_2_alt',
+        'featured_image_2_caption',
+        'featured_image_3_alt',
+        'featured_image_3_caption',
+        'featured_image_4_alt',
+        'featured_image_4_caption',
+        'featured_image_5_alt',
+        'featured_image_5_caption',
+        'executive_summary',
+        'data_snapshot',
+        'contact_name',
+        'contact_job_title',
+        'opportunity_details',
+        'location_details',
+        'financial_details',
+        'local_or_national_support',
     )
