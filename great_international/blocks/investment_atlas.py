@@ -37,7 +37,7 @@ class BaseOpportunityImageBlock(blocks.StructBlock):
             retval_dict.update(
                 {
                     'image': img.get_rendition(_rendition_spec).url,
-                    'image_alt': value.get('image_alt', ''),
+                    'image_alt': value.get('image_alt'),
                     'caption': value.get('caption'),
                 }
             )
@@ -58,7 +58,8 @@ class InlineOpportunityImageBlock(BaseOpportunityImageBlock):
 
     def get_api_representation(self, value, context=None):
         retval_dict = super().get_api_representation(value, context)
-        retval_dict.update({'custom_css_class': value.get('custom_css_class')})
+        if retval_dict:
+            retval_dict.update({'custom_css_class': value.get('custom_css_class')})
         return retval_dict
 
 
@@ -74,7 +75,10 @@ class MarkdownBlock(blocks.FieldBlock):
     def get_api_representation(self, value, context=None):
         """Expand the default serialization to turn the Markdown into HTML"""
         raw_markdown = super().get_api_representation(value, context)
-        return render_markdown(raw_markdown)
+        if raw_markdown:
+            return render_markdown(raw_markdown)
+        else:
+            return ''
 
 
 class CopyBlock(blocks.StructBlock):
