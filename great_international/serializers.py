@@ -4,6 +4,7 @@ from directory_constants import cms
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
 from wagtail.images.models import Image
+from wagtail.api.v2.serializers import StreamField as StreamFieldSerializer
 
 from core import fields as core_fields
 from core.helpers import num2words_list
@@ -21,21 +22,50 @@ from .models.great_international import (
     InternationalGuideLandingPage,
     InternationalSectorPage,
     InternationalEUExitFormPage,
-    InternationalSubSectorPage, AboutDitServicesPage, AboutUkLandingPage)
+    InternationalSubSectorPage,
+    AboutDitServicesPage,
+    AboutUkLandingPage,
+)
 from .models.invest import (
     InvestHighPotentialOpportunityFormPage,
     InvestHighPotentialOpportunityDetailPage,
-    InvestRegionPage
+    InvestRegionPage,
+)
+
+from .models.investment_atlas import (
+    InvestmentOpportunityPage,
 )
 
 from .models.capital_invest import CapitalInvestOpportunityPage
 
 
-REGIONS = ['scotland', 'northern_ireland', 'north_england', 'wales', 'midlands', 'south_england']
+REGIONS = [
+    "scotland",
+    "northern_ireland",
+    "north_england",
+    "wales",
+    "midlands",
+    "south_england",
+]
+
+
+class EntitySummarySerializerBase(serializers.Serializer):
+    """Base class for nested entities that don't need full page representations"""
+
+    id = serializers.IntegerField()
+
+    full_url = serializers.CharField(max_length=255)
+    full_path = serializers.CharField(max_length=255, source="specific.full_path")
+    last_published_at = serializers.DateTimeField()
+
+    title = serializers.CharField()
+    page_type = serializers.SerializerMethodField()
+
+    def get_page_type(self, instance):
+        return instance.__class__.__name__
 
 
 class SectionThreeSubsectionProxyDataWrapper:
-
     def __init__(self, instance, position_number):
         self.position_number = position_number
         self.instance = instance
@@ -2482,3 +2512,295 @@ class CapitalInvestContactFormSuccessPageSerializer(BasePageSerializer):
     message_box_heading = serializers.CharField()
     message_box_description = core_fields.MarkdownToHTMLField()
     what_happens_next_description = core_fields.MarkdownToHTMLField()
+
+
+class RegionPageSummarySerializer(EntitySummarySerializerBase, HeroSerializer):
+    """Shorter version of AboutUkRegionPageSerializer for nesting content
+    in InvestmentOpportunityPageSerializer results
+
+    Note that HeroSerializer gives us a number hero image options
+    """
+
+    IMAGE_RENDITION_SPEC = "fill-640x360"
+
+    hero_title = serializers.CharField(max_length=255)
+    featured_description = serializers.CharField(max_length=255)
+
+    region_summary_section_image = wagtail_fields.ImageRenditionField(
+        IMAGE_RENDITION_SPEC
+    )
+    region_summary_section_intro = serializers.CharField(max_length=255)
+    region_summary_section_content = core_fields.MarkdownToHTMLField(max_length=255)
+
+
+class SectorSummarySerializer(EntitySummarySerializerBase):
+
+    IMAGE_RENDITION_SPEC = "fill-960x540"
+
+    title = serializers.CharField(max_length=255, source="heading")
+    image = wagtail_fields.ImageRenditionField(
+        IMAGE_RENDITION_SPEC, source="hero_image"
+    )
+    featured_description = serializers.CharField(max_length=255)
+
+
+class InvestmentOpportunitySummarySerializer(EntitySummarySerializerBase):
+
+    IMAGE_RENDITION_SPEC = "fill-960x540"
+
+    title = serializers.CharField(max_length=255, source="heading")
+    image = wagtail_fields.ImageRenditionField(
+        IMAGE_RENDITION_SPEC, source="featured_image_1"
+    )
+    featured_description = serializers.CharField(
+        max_length=255, source="executive_summary"
+    )
+
+
+class InvestmentOpportunityPageSerializer(BasePageSerializer):
+
+    FEATURED_IMAGE_RENDITION_SPEC = "fill-960x540"
+
+    # Intro/summary
+    # title is automatic, from BasePageSerializer
+    breadcrumbs_label = serializers.CharField()
+    strapline = serializers.CharField()
+    introduction = core_fields.MarkdownToHTMLField()
+    opportunity_summary = serializers.CharField()
+
+    # Key facts
+    location = serializers.CharField()
+    location_coords = serializers.CharField()
+
+    promoter = serializers.CharField()
+    scale = serializers.CharField()
+    scale_value = serializers.CharField()
+    planning_status = serializers.CharField()
+    investment_type = serializers.CharField()
+    time_to_investment_decision = serializers.SerializerMethodField()
+
+    # Main opportunity content
+    featured_images = StreamFieldSerializer()
+    main_content = StreamFieldSerializer()
+
+    # Relations
+    related_regions = RegionPageSummarySerializer(
+        many=True,
+        read_only=True,
+    )
+    related_sectors = serializers.SerializerMethodField()
+    sub_sectors = serializers.SerializerMethodField()
+    related_opportunities = serializers.SerializerMethodField()
+
+    def get_time_to_investment_decision(self, instance):
+        return instance.get_time_to_investment_decision_display()
+
+    def get_related_sectors(self, instance):
+        serializer = RelatedSectorSerializer(
+            instance.related_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
+    def get_sub_sectors(self, instance):
+        serializer = RelatedSubSectorSerializer(
+            instance.related_sub_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        sub_sectors_list = [sub_sector['related_sub_sector'] for sub_sector in serializer.data]
+        return sub_sectors_list
+
+    def get_related_opportunities(self, instance):
+        # Related opportunities are defined as ones in the same REGION, whereas previously (with the
+        # CapitalInvestOpportunityPageSerializer) we were showing based on SECTOR.
+
+        related_regions_ids = instance.related_regions.values_list('id', flat=True)
+
+        if not related_regions_ids:
+            return []
+
+        related_opps = InvestmentOpportunityPage.objects.filter(
+            related_regions__in=related_regions_ids
+        ).exclude(
+            id=instance.id
+        ).order_by(
+            '-priority_weighting'
+        ).distinct()
+
+        if not related_opps:
+            return []
+
+        serializer = RelatedInvestmentOpportunityPageSerializer(
+            related_opps,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
+
+class MinimalRegionPageSummarySerializer(BasePageSerializer):
+    title = serializers.CharField(source="hero_title")
+
+
+class RelatedInvestmentOpportunityPageSerializer(BasePageSerializer):
+    """Less detailed version of an InvestmentOppportunity - for instance used
+    by InvestmentOpportunityPageSerializer.get_related_opportunities"""
+
+    # title comes from BasePageSerializer
+    thumbnail_image = serializers.SerializerMethodField()
+    opportunity_summary = serializers.CharField()
+    regions = serializers.SerializerMethodField()
+    sectors = serializers.SerializerMethodField()
+    sub_sectors = serializers.SerializerMethodField()
+
+    def get_thumbnail_image(self, instance):
+        rendition_spec = 'fill-640x360'
+        # The thumbnail image will be either the first image in the featured_images StreamField, or none
+        if instance.featured_images:
+            first_image = instance.featured_images[0]
+            return first_image.block.get_api_representation(
+                value=first_image.value,
+                context={'rendition_spec': rendition_spec}
+            )
+
+    def get_regions(self, instance):
+        related_regions = instance.related_regions.live().all()
+        serializer = MinimalRegionPageSummarySerializer(
+            related_regions,
+            many=True,
+            read_only=True,
+        )
+        return serializer.data
+
+    def get_sectors(self, instance):
+        # Note: This serializer is more verbose than we _need_ here
+        serializer = RelatedSectorSerializer(
+            instance.related_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
+    def get_sub_sectors(self, instance):
+        # Note: This serializer is more verbose than we _need_ here
+        serializer = RelatedSubSectorSerializer(
+            instance.related_sub_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        sub_sectors_list = [sub_sector['related_sub_sector'] for sub_sector in serializer.data]
+        return sub_sectors_list
+
+
+class InvestmentOpportunityForListPageSerializer(BasePageSerializer):
+
+    title = serializers.CharField(max_length=255)
+    hero_image = serializers.SerializerMethodField()
+
+    # key facts we want to filter by
+    # sector = serializers.CharField(max_length=255)  # doesn't exist on new opp model [yet?]
+
+    scale = serializers.CharField(max_length=255)
+    scale_value = serializers.DecimalField(max_digits=10, decimal_places=2)
+    planning_status = serializers.CharField(max_length=255)
+    investment_type = serializers.CharField(max_length=255)
+    time_to_investment_decision = serializers.SerializerMethodField()
+
+    related_regions = serializers.SerializerMethodField()
+    related_sectors = serializers.SerializerMethodField()
+    sub_sectors = serializers.SerializerMethodField()
+
+    def get_hero_image(self, instance):
+        rendition_spec = 'fill-640x360'
+        # The thumbnail image will be either the first image in the featured_images StreamField, or none
+        if instance.featured_images:
+            first_image = instance.featured_images[0]
+            return first_image.block.get_api_representation(
+                value=first_image.value,
+                context={'rendition_spec': rendition_spec}
+            )
+
+    def get_time_to_investment_decision(self, instance):
+        return instance.get_time_to_investment_decision_display()
+
+    def get_related_regions(self, instance):
+        related_regions = instance.related_regions.live().all()
+        serializer = MinimalRegionPageSummarySerializer(
+            related_regions,
+            many=True,
+            read_only=True,
+        )
+        return serializer.data
+
+    def get_related_sectors(self, instance):
+        serializer = RelatedSectorSerializer(
+            instance.related_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
+    def get_sub_sectors(self, instance):
+        serializer = RelatedSubSectorSerializer(
+            instance.related_sub_sectors.all(),
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        sub_sectors_list = [sub_sector['related_sub_sector']
+                            for sub_sector in serializer.data]
+        return sub_sectors_list
+
+
+class InvestmentOpportunityListingPageSerializer(BasePageSerializer):
+    # Heavily based on the CapitalInvestOpportunityListingSerializer it basically replaces
+
+    breadcrumbs_label = serializers.CharField()
+    search_results_title = serializers.CharField()
+    hero_text = serializers.CharField()
+    contact_cta_title = serializers.CharField()
+    contact_cta_text = serializers.CharField()
+    contact_cta_link = serializers.CharField()
+
+    opportunity_list = serializers.SerializerMethodField()
+    sector_with_sub_sectors = serializers.SerializerMethodField()
+
+    def get_opportunity_list(self, instance):
+
+        queryset = InvestmentOpportunityPage.objects.live().public()
+
+        if not queryset:
+            return []
+
+        serializer = InvestmentOpportunityForListPageSerializer(
+            queryset,
+            many=True,
+            allow_null=True,
+            context=self.context
+        )
+        return serializer.data
+
+    def get_sub_sector_headings(self, sector):
+
+        return [sub_sector['heading'] for sub_sector in sector['child_sub_sectors']]
+
+    def get_sector_with_sub_sectors(self, instance):
+
+        all_sectors = InternationalSectorPage.objects.live().public()
+
+        sectors = InternationalSectorPageSerializer(
+            all_sectors,
+            many=True,
+            allow_null=True,
+            context=self.context
+        ).data
+
+        return {sector['heading']: self.get_sub_sector_headings(sector) for sector in sectors}
