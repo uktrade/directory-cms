@@ -5,14 +5,15 @@ from django import forms
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 
-from core.widgets import MarkdownTextarea
+from core.blocks import ButtonBlock
 from core.helpers import render_markdown
+from core.widgets import MarkdownTextarea
 
 
 DEFAULT_IMAGE_RENDITION_SPEC = "fill-960x540"
 
 
-class BaseOpportunityImageBlock(blocks.StructBlock):
+class BaseAtlasImageBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     image_alt = blocks.CharBlock(
         max_length=255,
@@ -45,11 +46,11 @@ class BaseOpportunityImageBlock(blocks.StructBlock):
         return retval_dict
 
 
-class FeaturedImageBlock(BaseOpportunityImageBlock):
+class FeaturedImageBlock(BaseAtlasImageBlock):
     pass
 
 
-class InlineOpportunityImageBlock(BaseOpportunityImageBlock):
+class InlineOpportunityImageBlock(BaseAtlasImageBlock):
     custom_css_class = blocks.CharBlock(
         max_length=255,
         required=False,
@@ -107,4 +108,44 @@ class ContactDetailsBlock(blocks.StructBlock):
         blank=True,
         null=True,
         help_text="Can be a URL or an email link in the format mailto:user@example.com"
+    )
+
+
+class AtlasLandingPagePanelImageBlock(BaseAtlasImageBlock):
+    pass
+
+
+class AtlasLandingPagePanelBlock(blocks.StructBlock):
+
+    heading = blocks.CharBlock(
+        max_length=255,
+        required=True,
+    )
+    main_text = blocks.TextBlock(
+        max_length=255,
+        help_text="The first column of the panel"
+    )
+    call_to_action = ButtonBlock(
+        required=False,
+        help_text="Set text for the CTA and either an internal or an external URL for its destination"
+    )
+    second_column = blocks.StreamBlock(
+        [
+            ('image', AtlasLandingPagePanelImageBlock()),
+            ('text', blocks.TextBlock()),
+        ],
+        label='Second column of panel',
+        max_num=1,
+        required=False,
+        help_text=(
+            "An image OR a text block, but not both."
+        )
+    )
+    block_slug = blocks.CharBlock(
+        max_length=255,
+        required=False,
+        help_text=(
+            "If a block has special content, this helps us identify it. "
+            "Consult with a developer when you set it. If in doubt, leave it blank."
+        )
     )

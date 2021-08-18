@@ -7,8 +7,50 @@ from wagtail.admin.edit_handlers import (
     StreamFieldPanel,
 )
 
+from wagtail.images.edit_handlers import ImageChooserPanel
+
 from core.helpers import make_translated_interface
 from core.panels import SearchEngineOptimisationPanel
+
+
+class InvestmentAtlasLandingPagePanels:
+
+    content_panels = [
+        MultiFieldPanel(
+            heading="Title and breadcrumbs",
+            classname='collapsible',
+            children=[
+                FieldPanel('title'),
+                FieldPanel('breadcrumbs_label'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Hero',
+            classname='collapsible',
+            children=[
+                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_title'),
+                FieldPanel('hero_strapline'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Downpage content panels',
+            classname='collapsible',
+            children=[
+                StreamFieldPanel('downpage_sections'),
+            ],
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('slug'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels,
+    )
 
 
 class InvestmentOpportunityListingPagePanels:

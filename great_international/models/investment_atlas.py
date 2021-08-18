@@ -54,12 +54,56 @@ class PlanningStatus(models.Model):
         verbose_name_plural = 'Planning Status choices'
 
 
+class InvestmentAtlasLandingPage(
+    BaseInternationalPage,
+    WagtailAdminExclusivePageMixin,
+    investment_atlas_panels.InvestmentAtlasLandingPagePanels,
+):
+    subpage_types = [
+        'great_international.InvestmentOpportunityListingPage',
+        # TO COME: more subpage_types to control CMS page heirarchy
+    ]
+
+    # title comes from base page
+    breadcrumbs_label = models.CharField(max_length=100)
+
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=False
+    )
+
+    hero_title = models.CharField(
+        blank=False,
+        null=False,
+        max_length=150,
+        help_text='Distinct from the page title, this is the title text for the main hero'
+    )
+
+    hero_strapline = models.TextField(
+        max_length=500,
+        blank=True,
+        null=True,
+    )
+
+    downpage_sections = StreamField(
+        [
+            ('panel', investment_atlas_blocks.AtlasLandingPagePanelBlock()),
+        ],
+        null=True,
+        blank=True,
+    )
+
+
 class InvestmentOpportunityListingPage(
     WagtailAdminExclusivePageMixin,
     BaseInternationalPage,
     investment_atlas_panels.InvestmentOpportunityListingPagePanels,
 ):
-    subpage_types = ['InvestmentOpportunityPage', ]
+    parent_page_types = ['great_international.InvestmentAtlasLandingPage', ]
+    subpage_types = ['great_international.InvestmentOpportunityPage', ]
 
     # `title` comes from the base class
     breadcrumbs_label = models.CharField(max_length=50)
