@@ -659,7 +659,7 @@ class InternationalHomePage(
             capital_invest_models.CapitalInvestOpportunityListingPage,
             capital_invest_models.CapitalInvestRegionPage,
             invest_models.InvestInternationalHomePage,
-            investment_atlas_models.InvestmentOpportunityListingPage,
+            investment_atlas_models.InvestmentAtlasLandingPage,
             fas_models.InternationalTradeHomePage,
             AboutUkWhyChooseTheUkPage
         ]

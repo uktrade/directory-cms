@@ -1261,6 +1261,19 @@ class CapitalInvestContactFormSuccessPageTranslationOptions(
     )
 
 
+@register(investment_atlas.InvestmentAtlasLandingPage)
+class InvestmentAtlasLandingPageTranslationOptions(
+    BaseTranslationOptions,
+):
+    fields = (
+        'breadcrumbs_label',
+        'hero_title',
+        'hero_image',
+        'hero_strapline',
+        'downpage_sections',
+    )
+
+
 @register(investment_atlas.InvestmentOpportunityListingPage)
 class InvestmentOpportunityListingPageTranslationOptions(
     BaseTranslationOptions
