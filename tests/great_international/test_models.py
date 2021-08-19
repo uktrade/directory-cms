@@ -28,7 +28,7 @@ def test_models_hierarchy():
         capital_invest.CapitalInvestOpportunityListingPage,
         capital_invest.CapitalInvestRegionPage,
         invest.InvestInternationalHomePage,
-        investment_atlas.InvestmentOpportunityListingPage,
+        investment_atlas.InvestmentAtlasLandingPage,
         find_a_supplier.InternationalTradeHomePage,
         great_international.AboutUkWhyChooseTheUkPage,
 
