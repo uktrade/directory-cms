@@ -2,6 +2,9 @@
 
 ## Pre-release
 ### Implemented enhancements
+- GP2-3157: Add new InvestmentAtlasLandingPage model to to CMS, incl serializer
+- GP2-3153: Add new Opportunity detail page to CMS, incl serializer
+- GP2-3154: Add new Opportunity listing page to CMS, incl serializer
 - NO-TICKET: urllib3 vulnerability alert fixup
 
 ### Fixed bugs

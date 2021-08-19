@@ -645,6 +645,7 @@ class InternationalHomePage(
 
     @classmethod
     def allowed_subpage_models(cls):
+        from . import investment_atlas as investment_atlas_models
         return [
             InternationalArticleListingPage,
             InternationalTopicLandingPage,
@@ -658,6 +659,7 @@ class InternationalHomePage(
             capital_invest_models.CapitalInvestOpportunityListingPage,
             capital_invest_models.CapitalInvestRegionPage,
             invest_models.InvestInternationalHomePage,
+            investment_atlas_models.InvestmentAtlasLandingPage,
             fas_models.InternationalTradeHomePage,
             AboutUkWhyChooseTheUkPage
         ]
