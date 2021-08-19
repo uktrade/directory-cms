@@ -809,3 +809,70 @@ class CapitalInvestContactFormSuccessPageFactory(
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     last_published_at = timezone.now()
     parent = None
+
+
+class PlanningStatusFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.investment_atlas.PlanningStatus
+
+    name = factory.fuzzy.FuzzyText(length=30)
+
+
+class InvestmentTypeFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.investment_atlas.InvestmentType
+
+    name = factory.fuzzy.FuzzyText(length=30)
+
+
+class InvestmentOpportunityPageFactory(wagtail_factories.PageFactory):
+    class Meta:
+        model = models.investment_atlas.InvestmentOpportunityPage
+
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None
+
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
+    priority_weighting = '0.0'
+    strapline = factory.fuzzy.FuzzyText(length=200)
+    introduction = factory.fuzzy.FuzzyText(length=300)
+    opportunity_summary = factory.fuzzy.FuzzyText(length=300)
+    location = factory.fuzzy.FuzzyText(length=200)
+    location_coords = '0, 0'
+    promoter = factory.fuzzy.FuzzyText(length=200)
+    scale = factory.fuzzy.FuzzyText(length=255)
+    scale_value = factory.fuzzy.FuzzyDecimal(low=1, high=99999)
+
+    planning_status = factory.SubFactory(PlanningStatusFactory)
+    investment_type = factory.SubFactory(InvestmentTypeFactory)
+    time_to_investment_decision = models.investment_atlas.TIME_TO_INVESTMENT_DECISION_0M_6M
+
+    # Streamfields - set them in the instance
+    # featured_images
+    # main_content
+
+    # related_regions - set them on the instance from the factory
+
+
+class InvestmentOpportunityRelatedSectorsFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.investment_atlas.InvestmentOpportunityRelatedSectors
+
+    page = None
+    related_sector = None
+
+
+class InvestmentOpportunityListingPageFactory(wagtail_factories.PageFactory):
+    class Meta:
+        model = models.investment_atlas.InvestmentOpportunityListingPage
+
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
+    search_results_title = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    hero_text = factory.fuzzy.FuzzyText(length=50)
+    contact_cta_title = factory.fuzzy.FuzzyText(length=50)
+    contact_cta_text = factory.fuzzy.FuzzyText(length=50)
+    contact_cta_link = 'https://example.com/test/cta/'
+    parent = None
