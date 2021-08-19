@@ -2544,7 +2544,7 @@ class SectorSummarySerializer(EntitySummarySerializerBase):
     featured_description = serializers.CharField(max_length=255)
 
 
-class InvestmentAtlasLandingPageSerializer(BasePageSerializer):    
+class InvestmentAtlasLandingPageSerializer(BasePageSerializer):
     IMAGE_RENDITION_SPEC = "original"
     MOBILE_IMAGE_RENDITION_SPEC = "fill-960x540"
 
@@ -2553,12 +2553,12 @@ class InvestmentAtlasLandingPageSerializer(BasePageSerializer):
         IMAGE_RENDITION_SPEC
     )
     mobile_hero_image = wagtail_fields.ImageRenditionField(
-        MOBILE_IMAGE_RENDITION_SPEC, 
+        MOBILE_IMAGE_RENDITION_SPEC,
         source='hero_image',
     )
     hero_strapline = serializers.CharField()
     downpage_sections = StreamFieldSerializer()
-        
+
 
 class InvestmentOpportunitySummarySerializer(EntitySummarySerializerBase):
 
