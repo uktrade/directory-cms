@@ -124,11 +124,22 @@ class InvestmentOpportunityPagePanels:
             ],
         ),
         MultiFieldPanel(
+            heading='Opportunity Contact',
+            classname='collapsible',
+            children=[
+                FieldPanel('contact_name'),
+                ImageChooserPanel('contact_avatar'),
+                FieldPanel('contact_job_title'),
+                FieldPanel('contact_link'),
+            ],
+        ),
+        MultiFieldPanel(
             heading='The Oppportunity',
             classname='collapsible',
             children=[
                 StreamFieldPanel('featured_images'),
                 StreamFieldPanel('main_content'),
+                FieldPanel('important_links'),
             ],
         ),
         SearchEngineOptimisationPanel(),

@@ -1,4 +1,3 @@
-from core.model_fields import MarkdownField
 from django.db import models
 
 from wagtail.core.fields import StreamField
@@ -8,6 +7,8 @@ from wagtail.admin.edit_handlers import PageChooserPanel
 from .base import BaseInternationalPage
 
 from core.fields import single_struct_block_stream_field_factory
+from core.model_fields import MarkdownField
+
 from core.models import WagtailAdminExclusivePageMixin
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
@@ -315,10 +316,35 @@ class InvestmentOpportunityPage(
     # The Opportunity
     main_content = StreamField(
         [
-            ('copy', investment_atlas_blocks.CopyBlock()),
-            ('contact_details', investment_atlas_blocks.ContactDetailsBlock()),
-            ('image', investment_atlas_blocks.InlineOpportunityImageBlock())
+            ('content_section', investment_atlas_blocks.PageSectionBlock()),
         ],
         null=True,
         blank=True,
+    )
+
+    important_links = MarkdownField(
+        blank=True,
+        null=True,
+    )
+
+    # Contact details
+    contact_name = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    contact_avatar = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    contact_job_title = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    contact_link = models.URLField(
+        blank=True,
+        null=True,
+        max_length=1500,
     )
