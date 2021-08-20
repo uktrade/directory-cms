@@ -1306,4 +1306,9 @@ class InvestmentOpportunityPageTranslationOptions(
         'investment_type',
         'time_to_investment_decision',
         'main_content',
+        'important_links',
+        'contact_name',
+        'contact_avatar',
+        'contact_job_title',
+        'contact_link'
     )
