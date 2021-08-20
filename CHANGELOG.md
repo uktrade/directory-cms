@@ -2,6 +2,7 @@
 
 ## Pre-release
 ### Implemented enhancements
+- GP2-3157: (Extension): Refactor the InvestmentOpportunity page in light of new designs
 - NOTICKET: Fix failing PutObject call from Wagtail
 - GP2-3157: Add new InvestmentAtlasLandingPage model to to CMS, incl serializer
 - GP2-3153: Add new Opportunity detail page to CMS, incl serializer
