@@ -2575,7 +2575,7 @@ class InvestmentOpportunitySummarySerializer(EntitySummarySerializerBase):
 
 class InvestmentOpportunityPageSerializer(BasePageSerializer):
 
-    FEATURED_IMAGE_RENDITION_SPEC = "fill-960x540"
+    AVATAR_RENDITION_SPEC = "fill-500x500"
 
     # Intro/summary
     # title is automatic, from BasePageSerializer
@@ -2598,6 +2598,15 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer):
     # Main opportunity content
     featured_images = StreamFieldSerializer()
     main_content = StreamFieldSerializer()
+
+    important_links = core_fields.MarkdownToHTMLField()
+
+    contact_name = serializers.CharField()
+    contact_job_title = serializers.CharField()
+    contact_link = serializers.CharField()
+    contact_avatar = wagtail_fields.ImageRenditionField(
+        AVATAR_RENDITION_SPEC,
+    )
 
     # Relations
     related_regions = RegionPageSummarySerializer(
