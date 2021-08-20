@@ -82,13 +82,27 @@ class MarkdownBlock(blocks.FieldBlock):
             return ''
 
 
-class CopyBlock(blocks.StructBlock):
-    "Generic copy block"
+class PageSectionBlock(blocks.StructBlock):
+    "Each PageSectionBlock is a new section/panel in the rendered page"
 
-    text_content = MarkdownBlock(
-        required=True,
+    content = blocks.StreamBlock([
+            ('text', MarkdownBlock()),
+            ('image', InlineOpportunityImageBlock()),
+            (
+                'columns',
+                blocks.StreamBlock(
+                    [
+                        ('text', MarkdownBlock()),
+                    ],
+                    help_text="Smaller snippets of content"
+                ),
+            ),
+
+        ],
+        required=False,
     )
-    custom_css_class = blocks.CharBlock(
+
+    block_slug = blocks.CharBlock(
         max_length=255,
         required=False,
         help_text="Only needed if special styling is involved: check with a developer. If in doubt, it's not needed"
