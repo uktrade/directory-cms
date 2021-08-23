@@ -97,6 +97,12 @@ class InvestmentAtlasLandingPage(
         blank=True,
     )
 
+    @property
+    def full_url(self):
+        full_url_items = super().full_url.split('/')
+        full_url_items.remove('content')
+        return '/'.join(full_url_items)
+
 
 class InvestmentOpportunityListingPage(
     WagtailAdminExclusivePageMixin,
@@ -127,6 +133,12 @@ class InvestmentOpportunityListingPage(
     contact_cta_link = models.URLField(
         blank=True,
     )
+
+    @property
+    def full_url(self):
+        full_url_items = super().full_url.split('/')
+        full_url_items.remove('content')
+        return '/'.join(full_url_items)
 
 
 class RelatedSector(models.Model):
