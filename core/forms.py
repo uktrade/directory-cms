@@ -46,12 +46,13 @@ class WagtailAdminPageForm(WagtailFixedAdminPageForm):
 
     def __init__(self, *args, **kwargs):
         """Set slug to read only if editing an existing page."""
-        instance = kwargs.get('instance')
-        if instance and instance.pk:
-            field = self.base_fields.get('slug')  # App pages don't have slug
-            if field:
-                field.disabled = True
-                field.required = False
+        if not settings.EDITABLE_SLUG:
+            instance = kwargs.get('instance')
+            if instance and instance.pk:
+                field = self.base_fields.get('slug')  # App pages don't have slug
+                if field:
+                    field.disabled = True
+                    field.required = False
         super().__init__(*args, **kwargs)
 
     @staticmethod
