@@ -876,3 +876,18 @@ class InvestmentOpportunityListingPageFactory(wagtail_factories.PageFactory):
     contact_cta_text = factory.fuzzy.FuzzyText(length=50)
     contact_cta_link = 'https://example.com/test/cta/'
     parent = None
+
+
+class InvestmentAtlasLandingPageFactory(wagtail_factories.PageFactory):
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+
+    hero_title = factory.fuzzy.FuzzyText(length=10)
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    parent = None
+
+    class Meta:
+        model = models.investment_atlas.InvestmentAtlasLandingPage
