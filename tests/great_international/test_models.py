@@ -127,5 +127,26 @@ def test_hpo_folder_page(international_root_page):
     invest_hpo_folder = factories.InvestHighPotentialOpportunitiesPageFactory(
         parent=invest_home
     )
-
     assert invest_hpo_folder.title == 'High potential opportunities'
+
+
+@pytest.mark.django_db
+def test_url_for_investment_opportunity_listing_page(international_root_page):
+    int_home = factories.InternationalHomePageFactory(
+        parent=international_root_page
+    )
+    invest_home = factories.InvestmentOpportunityListingPageFactory(
+        parent=int_home
+    )
+    assert 'content' not in invest_home.url.split('/')
+
+
+@pytest.mark.django_db
+def test_url_for_investment_atlas_landing_page(international_root_page):
+    int_home = factories.InternationalHomePageFactory(
+        parent=international_root_page
+    )
+    invest_home = factories.InvestmentAtlasLandingPageFactory(
+        parent=int_home
+    )
+    assert 'content' not in invest_home.url.split('/')
