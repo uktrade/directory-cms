@@ -816,6 +816,7 @@ class PlanningStatusFactory(factory.django.DjangoModelFactory):
         model = models.investment_atlas.PlanningStatus
 
     name = factory.fuzzy.FuzzyText(length=30)
+    verbose_description = factory.fuzzy.FuzzyText(length=200)
 
 
 class InvestmentTypeFactory(factory.django.DjangoModelFactory):

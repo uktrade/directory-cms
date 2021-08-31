@@ -51,6 +51,7 @@ from tests.great_international.factories import (
     InvestmentOpportunityPageFactory,
     InvestmentOpportunityRelatedSectorsFactory,
     InvestmentOpportunityListingPageFactory,
+    PlanningStatusFactory,
 )
 
 from great_international.models.capital_invest import (
@@ -2124,3 +2125,47 @@ def test_atlas_related_investment_opportunity_page_serializer__get_thumbnail_ima
 
     output = serializer.get_thumbnail_image(mock_instance)
     assert output == 'http://example.com/image.jpg'
+
+
+@pytest.mark.django_db
+def test_atlas_opportunity_listing_page_serializer__get_planning_status(
+    rf,
+    international_root_page,
+):
+
+    planning_status = PlanningStatusFactory(
+        name="Planning Status One",
+        verbose_description="Verbose description for the first planning status type"
+    )
+
+    opportunity = InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        slug='opp_one',
+        planning_status=planning_status,
+    )
+    opportunity_serializer = InvestmentOpportunityPageSerializer(
+        instance=opportunity,
+        context={'request': rf.get('/')}
+    )
+    assert opportunity_serializer.data['planning_status'] == dict(
+        name="Planning Status One",
+        verbose_description="Verbose description for the first planning status type"
+    )
+
+
+@pytest.mark.django_db
+def test_atlas_opportunity_listing_page_serializer__get_planning_status__is_null(
+    rf,
+    international_root_page,
+):
+
+    opportunity = InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        slug='opp_one',
+        planning_status=None,  # deliberately None, so the factory doesn't add one
+    )
+    opportunity_serializer = InvestmentOpportunityPageSerializer(
+        instance=opportunity,
+        context={'request': rf.get('/')}
+    )
+    assert opportunity_serializer.data['planning_status'] == dict()
