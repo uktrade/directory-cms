@@ -2128,7 +2128,7 @@ def test_atlas_related_investment_opportunity_page_serializer__get_thumbnail_ima
 
 
 @pytest.mark.django_db
-def test_atlas_opportunity_listing_page_serializer__get_planning_status(
+def test_atlas_opportunity_page_serializer__get_planning_status(
     rf,
     international_root_page,
 ):
@@ -2137,7 +2137,6 @@ def test_atlas_opportunity_listing_page_serializer__get_planning_status(
         name="Planning Status One",
         verbose_description="Verbose description for the first planning status type"
     )
-
     opportunity = InvestmentOpportunityPageFactory(
         parent=international_root_page,
         slug='opp_one',
@@ -2154,7 +2153,7 @@ def test_atlas_opportunity_listing_page_serializer__get_planning_status(
 
 
 @pytest.mark.django_db
-def test_atlas_opportunity_listing_page_serializer__get_planning_status__is_null(
+def test_atlas_opportunity_page_serializer__get_planning_status__is_null(
     rf,
     international_root_page,
 ):
@@ -2169,3 +2168,24 @@ def test_atlas_opportunity_listing_page_serializer__get_planning_status__is_null
         context={'request': rf.get('/')}
     )
     assert opportunity_serializer.data['planning_status'] == dict()
+
+
+@pytest.mark.django_db
+def test_atlas_opportunity_listing_page_serializer__planning_status__is_not_verbose(
+    international_root_page,
+):
+
+    planning_status = PlanningStatusFactory(
+        name="Planning Status One",
+        verbose_description="Verbose description for the first planning status type"
+    )
+    opportunity = InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        slug='opp_one',
+        planning_status=planning_status,
+    )
+
+    opportunity_for_list_serializer = InvestmentOpportunityForListPageSerializer(
+        instance=opportunity
+    )
+    assert opportunity_for_list_serializer.data['planning_status'] == 'Planning Status One'

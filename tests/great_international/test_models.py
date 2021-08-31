@@ -150,3 +150,15 @@ def test_url_for_investment_atlas_landing_page(international_root_page):
         parent=int_home
     )
     assert 'content' not in invest_home.url.split('/')
+
+
+@pytest.mark.django_db
+def test_planning_status__str__method():
+    # Just to keep coverage happy...
+
+    planning_status = factories.PlanningStatusFactory(
+        name="Planning Status One",
+        verbose_description="Verbose description for the first planning status type"
+    )
+
+    assert f"{planning_status}" == "Planning Status One"

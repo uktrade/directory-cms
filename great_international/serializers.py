@@ -2744,7 +2744,7 @@ class InvestmentOpportunityForListPageSerializer(BasePageSerializer):
 
     scale = serializers.CharField(max_length=255)
     scale_value = serializers.DecimalField(max_digits=10, decimal_places=2)
-    planning_status = serializers.CharField(max_length=255)
+    planning_status = serializers.SerializerMethodField()
     investment_type = serializers.CharField(max_length=255)
     time_to_investment_decision = serializers.SerializerMethodField()
 
@@ -2761,6 +2761,11 @@ class InvestmentOpportunityForListPageSerializer(BasePageSerializer):
                 value=first_image.value,
                 context={'rendition_spec': rendition_spec}
             )
+
+    def get_planning_status(self, instance):
+        # Ensure we always return the name, not the entire object. This protects against
+        # the __str__ method being changed and breaking things
+        return instance.planning_status.name
 
     def get_time_to_investment_decision(self, instance):
         return instance.get_time_to_investment_decision_display()
