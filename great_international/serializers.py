@@ -2591,7 +2591,7 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer):
     promoter = serializers.CharField()
     scale = serializers.CharField()
     scale_value = serializers.CharField()
-    planning_status = serializers.CharField()
+    planning_status = serializers.SerializerMethodField()
     investment_type = serializers.CharField()
     time_to_investment_decision = serializers.SerializerMethodField()
 
@@ -2619,6 +2619,16 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer):
 
     def get_time_to_investment_decision(self, instance):
         return instance.get_time_to_investment_decision_display()
+
+    def get_planning_status(self, instance):
+        # TODO: add modeltranslation support as required, at the snippet model level
+        if instance.planning_status:
+            return {
+                'name': instance.planning_status.name,
+                'verbose_description': instance.planning_status.verbose_description,
+            }
+        else:
+            return {}
 
     def get_related_sectors(self, instance):
         serializer = RelatedSectorSerializer(

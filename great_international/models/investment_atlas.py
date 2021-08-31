@@ -34,6 +34,7 @@ TIME_TO_INVESTMENT_DECISION_OPTIONS = (
 
 @register_snippet
 class InvestmentType(models.Model):
+    # TODO: add modeltranslation support as required, at the snippet model level
     name = models.CharField(
         max_length=50
     )
@@ -44,8 +45,12 @@ class InvestmentType(models.Model):
 
 @register_snippet
 class PlanningStatus(models.Model):
+    # TODO: add modeltranslation support as required, at the snippet model level
     name = models.CharField(
         max_length=50
+    )
+    verbose_description = models.CharField(
+        max_length=500
     )
 
     def __str__(self):
