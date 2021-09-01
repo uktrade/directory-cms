@@ -4,6 +4,7 @@
 ### Implemented enhancements
 - GP2-3330: Extend InvestmentOpportunityForListPageSerializer to guarantee representation of PlanningStatus snippet
 - GP2-3330: Extend PlanningStatus snippet model field to support a verbose description
+- GP2-3306: Support reusable snippets in InvestmentOpportunityPage's main content streamfield
 - GP2-3157: (Extension): Refactor the InvestmentOpportunity page in light of new designs
 - NOTICKET: Fix failing PutObject call from Wagtail
 - GP2-3157: Add new InvestmentAtlasLandingPage model to to CMS, incl serializer

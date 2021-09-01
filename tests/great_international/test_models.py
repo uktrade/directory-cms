@@ -162,3 +162,10 @@ def test_planning_status__str__method():
     )
 
     assert f"{planning_status}" == "Planning Status One"
+
+
+@pytest.mark.django_db
+def test_reusable_content_snippet__str_method():
+    snippet = factories.ReusableContentSectionFactory()
+    # Quick coverage appeasement for the __str__ method
+    assert f'{snippet}' == f'Reusable content: {snippet.title}'
