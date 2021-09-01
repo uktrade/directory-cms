@@ -2,7 +2,12 @@ from django.db import models
 
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Orderable
-from wagtail.admin.edit_handlers import PageChooserPanel
+from wagtail.admin.edit_handlers import (
+    HelpPanel,
+    FieldPanel,
+    PageChooserPanel,
+    StreamFieldPanel,
+)
 
 from .base import BaseInternationalPage
 
@@ -31,6 +36,9 @@ TIME_TO_INVESTMENT_DECISION_OPTIONS = (
     (TIME_TO_INVESTMENT_DECISION_2Y_PLUS, '2 years +'),
 )
 
+# FOR ALL THE SNIPPETS:
+# TODO: translation support: https://wagtail-modeltranslation.readthedocs.io/en/latest/Registering%20Models.html
+
 
 @register_snippet
 class InvestmentType(models.Model):
@@ -58,6 +66,49 @@ class PlanningStatus(models.Model):
 
     class Meta:
         verbose_name_plural = 'Planning Status choices'
+
+
+@register_snippet
+class ReusableContentSection(models.Model):
+    # Identical content structure to the main content on an InvestmentOpportunityPage,
+    # but designed for re-use
+
+    title = models.CharField(
+        max_length=200,
+        blank=False,
+    )
+
+    content = StreamField(
+        investment_atlas_blocks.page_section_block_spec_list,
+        blank=False,
+    )
+
+    block_slug = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Only needed if special styling is involved: check with a developer. If in doubt, it's not needed"
+    )
+
+    panels = [
+        HelpPanel(
+            "<b>For repeated content that is the same across all pages, author it "
+            "here and then include it in a StreamField in the relevant page.</b>"
+            "<ul><li>The title field is only for internal reference - "
+            "its content will not be used in the public site.</li>"
+            "<li>The structure of the main content panel is the same as for each "
+            "Content Section in an Opportunity page.</li></ul>"
+        ),
+        FieldPanel('title'),
+        StreamFieldPanel('content'),
+        FieldPanel('block_slug'),
+    ]
+
+    def __str__(self):
+        return f"Reusable content: {self.title}"
+
+
+# FOR ALL THE SNIPPETS:
+# TODO: translation support: https://wagtail-modeltranslation.readthedocs.io/en/latest/Registering%20Models.html
 
 
 class InvestmentAtlasLandingPage(
@@ -334,6 +385,12 @@ class InvestmentOpportunityPage(
     main_content = StreamField(
         [
             ('content_section', investment_atlas_blocks.PageSectionBlock()),
+            (
+                'snippet_content',
+                investment_atlas_blocks.ReusableSnippetChooserBlock(
+                    ReusableContentSection
+                )
+            )
         ],
         null=True,
         blank=True,
