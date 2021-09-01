@@ -1,11 +1,18 @@
 from unittest import mock
 import pytest
 
+from wagtail.core.blocks import StreamBlock
+
+from .factories import ReusableContentSectionFactory
+
+from great_international.models.investment_atlas import ReusableContentSection
 from great_international.blocks.investment_atlas import (
     DEFAULT_IMAGE_RENDITION_SPEC,
+    _get_block_for_block_name,
     FeaturedImageBlock,
     InlineOpportunityImageBlock,
     MarkdownBlock,
+    ReusableSnippetChooserBlock
 )
 
 pytestmark = pytest.mark.django_db
@@ -119,3 +126,57 @@ def test_markdown__get_api_representation__no_data():
     block = MarkdownBlock()
     assert block.get_api_representation(value='') == ''
     assert block.get_api_representation(value=None) == ''
+
+
+@pytest.mark.parametrize(
+    'block_name,expected_class',
+    (
+        ('text', MarkdownBlock),
+        ('image', InlineOpportunityImageBlock),
+        ('columns', StreamBlock),
+        ('absent_from_spec', None),
+    )
+)
+def test_get_block_for_block_name(block_name, expected_class):
+
+    block = _get_block_for_block_name(block_name)
+
+    if block_name == 'absent_from_spec':
+        assert block is None
+    else:
+        assert block.__class__ == expected_class
+
+
+def test_reusable_snippet_chooser_block__get_api_representation():
+
+    snippet = ReusableContentSectionFactory()
+    assert all([snippet.title, snippet.block_slug])
+    # The factory bootstraps some values, but let's add some streamfield spec to the snippet too
+
+    snippet.content = [
+        ('text', '##Hello world.\n*bold* text'),
+        ('text', 'Line of text here.')
+    ]
+
+    block = ReusableSnippetChooserBlock(ReusableContentSection)
+
+    assert block.get_api_representation(value=snippet) == {
+        'block_slug': snippet.block_slug,
+        'content': [
+            {
+                "type": "text",
+                "value": "<h2>Hello world.</h2>\n<p><em>bold</em> text</p>",  # light check the MarkdownBlock was used
+                "id": None  # IDs are set when a streamfield is saved
+            },
+            {
+                "type": "text",
+                "value": "<p>Line of text here.</p>",
+                "id": None  # IDs are set when a streamfield is saved
+            },
+        ]
+    }
+
+
+def test_reusable_snippet_chooser_block__get_api_representation__null_value():
+    block = ReusableSnippetChooserBlock(ReusableContentSection)
+    assert block.get_api_representation(value=None) == {}

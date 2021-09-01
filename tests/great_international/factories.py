@@ -892,3 +892,12 @@ class InvestmentAtlasLandingPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
         model = models.investment_atlas.InvestmentAtlasLandingPage
+
+
+class ReusableContentSectionFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.investment_atlas.ReusableContentSection
+
+    title = factory.fuzzy.FuzzyText(length=10)
+    block_slug = factory.fuzzy.FuzzyText(length=10)
+    # content is a StreamField, so easier to set in the test
