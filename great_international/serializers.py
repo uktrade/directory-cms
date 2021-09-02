@@ -3,7 +3,6 @@ import random
 from directory_constants import cms
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
-from wagtail.images.models import Image
 from wagtail.api.v2.serializers import StreamField as StreamFieldSerializer
 
 from core import fields as core_fields
@@ -90,32 +89,6 @@ class SectionThreeSubsectionProxyDataWrapper:
             self.instance,
             f'section_three_subsection_{self.position_number}_body'
         )
-
-
-def listify_fields(instance, range, field_prefix, field_suffixes, required_fields):
-    result = []
-
-    for num in num2words_list(range):
-        validation = {}
-        field = {}
-
-        for suffix in field_suffixes:
-            field_name = f'{field_prefix}_{num}_{suffix}'
-
-            if suffix in required_fields:
-                validation[suffix] = getattr(instance, field_name)
-
-            val = getattr(instance, field_name)
-
-            if isinstance(val, Image):
-                val = wagtail_fields.ImageRenditionField('original').to_representation(val)
-
-            field[suffix] = val
-
-        if all(validation.values()):
-            result.append(field)
-
-    return result
 
 
 class SectionTwoSubsectionProxyDataWrapper:
@@ -366,59 +339,6 @@ class AboutUkRegionsProxyDataWrapper:
         return getattr(
             self.instance,
             f'{self.region_title}_text'
-        )
-
-
-class ReadyToTradeStoryProxyDataWrapper:
-    def __init__(self, instance, position):
-        self.position = position
-        self.instance = instance
-
-    @property
-    def story(self):
-        return getattr(
-            self.instance,
-            f'ready_to_trade_story_{self.position}'
-        )
-
-
-class LinkToSectionLinksProxyDataWrapper:
-    def __init__(self, instance, position):
-        self.position = position
-        self.instance = instance
-
-    @property
-    def text(self):
-        return getattr(
-            self.instance,
-            f'link_to_section_{self.position}'
-        )
-
-    @property
-    def cta_text(self):
-        return getattr(
-            self.instance,
-            f'link_to_section_{self.position}_cta_text'
-        )
-
-    @property
-    def cta_link(self):
-        return getattr(
-            self.instance,
-            f'link_to_section_{self.position}_cta_link'
-        )
-
-
-class BenefitsOfUkProxyDataWrapper:
-    def __init__(self, instance, position):
-        self.position = position
-        self.instance = instance
-
-    @property
-    def benefits_of_uk_text(self):
-        return getattr(
-            self.instance,
-            f'benefits_of_uk_{self.position}'
         )
 
 
