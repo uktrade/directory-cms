@@ -24,15 +24,58 @@ def test_international_homepage(admin_client, root_page):
     home_page = factories.InternationalHomePageFactory.create(
         parent=root_page
     )
+    home_page.homepage_link_panels = [
+        (
+            'link_panel',
+            {
+                'title': 'panel one',
+                'supporting_text': 'panel one supporting text',
+                'link': {
+                    'external_link': 'http://example.com/one/',
+                }
+            }
+        ),
+        (
+            'link_panel',
+            {
+                'title': 'panel two',
+                'supporting_text': 'panel two supporting text',
+                'link': {
+                    'external_link': 'http://example.com/two/',
+                }
+            }
+        ),
+    ]
+    home_page.save()
+
     cache.rebuild_all_cache()
 
     url = reverse('api:api:pages:detail', kwargs={'pk': home_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
-    subsections = response.json()['section_two_subsections']
-    assert list(subsections[0].keys()) == ['icon', 'heading', 'body']
-    featured_links = response.json()['featured_links'][0]
-    assert list(featured_links.keys()) == ['image', 'heading', 'url']
+    json_response = response.json()
+
+    assert 'hero_title' in json_response
+
+    homepage_link_panels = response.json()['homepage_link_panels']
+    assert homepage_link_panels[0]['type'] == 'link_panel'
+    assert homepage_link_panels[0]['value'] == {
+        'title': 'panel one',
+        'supporting_text': 'panel one supporting text',
+        'link': {
+            'external_link': 'http://example.com/one/',
+            'internal_link': None,
+        }
+    }
+    assert homepage_link_panels[1]['type'] == 'link_panel'
+    assert homepage_link_panels[1]['value'] == {
+        'title': 'panel two',
+        'supporting_text': 'panel two supporting text',
+        'link': {
+            'external_link': 'http://example.com/two/',
+            'internal_link': None,
+        }
+    }
 
 
 @pytest.mark.django_db
