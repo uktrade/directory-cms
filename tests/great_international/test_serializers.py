@@ -1228,7 +1228,7 @@ def test_capital_invest_landing_page_has_cta(rf, international_root_page, image)
 
 
 @pytest.mark.django_db
-def test_international_homepage(rf, international_root_page):
+def test_international_homepage_serializer(rf, international_root_page):
 
     home_page = InternationalHomePageFactory(
         slug='international',
@@ -1270,17 +1270,13 @@ def test_international_homepage(rf, international_root_page):
     assert homepage_link_panels[0]['value'] == {
         'title': 'panel one',
         'supporting_text': 'panel one supporting text',
-        'link': {
-            'internal_link': home_page.id,
-        }
+        'link': home_page.url,
     }
     assert homepage_link_panels[1]['type'] == 'link_panel'
     assert homepage_link_panels[1]['value'] == {
         'title': 'panel two',
         'supporting_text': 'panel two supporting text',
-        'link': {
-            'external_link': 'http://example.com/two/',
-        }
+        'link': 'http://example.com/two/',
     }
 
 

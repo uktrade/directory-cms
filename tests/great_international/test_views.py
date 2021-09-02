@@ -62,19 +62,13 @@ def test_international_homepage(admin_client, root_page):
     assert homepage_link_panels[0]['value'] == {
         'title': 'panel one',
         'supporting_text': 'panel one supporting text',
-        'link': {
-            'external_link': 'http://example.com/one/',
-            'internal_link': None,
-        }
+        'link': 'http://example.com/one/',
     }
     assert homepage_link_panels[1]['type'] == 'link_panel'
     assert homepage_link_panels[1]['value'] == {
         'title': 'panel two',
         'supporting_text': 'panel two supporting text',
-        'link': {
-            'external_link': 'http://example.com/two/',
-            'internal_link': None,
-        }
+        'link': 'http://example.com/two/',
     }
 
 
