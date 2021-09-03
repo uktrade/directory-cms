@@ -198,7 +198,14 @@ class InternationalCampaignPageTranslationOptions(BaseTranslationOptions):
 @register(great_international.InternationalHomePage)
 class InternationalHomePageTranslationOptions(BaseTranslationOptions):
     fields = (
+        # Current fields
         'hero_title',
+        'homepage_link_panels',
+
+        # --- START LEGACY FIELDS ---
+        # These are retained in the database, but not exposed in the CMS
+        # See note on the InternationalHomePage model. Both 'old' and 'new' fields
+        # mentioned below are all legacy
         'hero_subtitle',
         'hero_cta_text',
         'hero_cta_link',
@@ -320,6 +327,7 @@ class InternationalHomePageTranslationOptions(BaseTranslationOptions):
         'link_to_section_three',
         'link_to_section_three_cta_text',
         'link_to_section_three_cta_link',
+        # --- END LEGACY FIELDS ---
     )
 
 

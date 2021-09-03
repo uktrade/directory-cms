@@ -1,6 +1,7 @@
 from django.db import models
 
 from modelcluster.fields import ParentalManyToManyField, ParentalKey
+from wagtail.core.fields import StreamField
 from wagtail.core.models import Orderable
 
 from directory_constants import slugs
@@ -17,6 +18,7 @@ from core.constants import ARTICLE_TYPES
 from export_readiness import snippets
 
 from great_international.panels import great_international as panels
+from great_international.blocks import great_international as blocks
 
 from . import invest as invest_models
 from . import capital_invest as capital_invest_models
@@ -267,12 +269,32 @@ class InternationalSubSectorPage(BaseInternationalSectorPage):
 
 
 class InternationalHomePage(
-    panels.InternationalHomePagePanels, WagtailAdminExclusivePageMixin, ServiceHomepageMixin,
+    panels.InternationalHomePagePanels,
+    WagtailAdminExclusivePageMixin,
+    ServiceHomepageMixin,
     BaseInternationalPage,
 ):
     slug_identity = slugs.GREAT_HOME_INTERNATIONAL
 
+    # ---- START FIELDS IN USE  ----
     hero_title = models.CharField(max_length=255)
+    homepage_link_panels = StreamField(
+        [
+            ('link_panel', blocks.InternationalHomepagePanelBlock()),
+        ],
+        blank=True,
+        null=True,
+    )
+    # For now the hero_image and CSS colour for the page background will
+    # be hard-coded, but we can make it editable via the CMS
+
+    # ---- END FIELDS IN USE  ----
+
+    # ---- START UNUSED LEGACY FIELDS ----
+    # ALL OF THE FIELDS BELOW ARE NOW REDUNDANT
+    # However, removing them from the DB creates a gigantic migration that times
+    # out on the PaaS because it takes 20 minutes to run.
+
     hero_subtitle = models.CharField(max_length=255, blank=True)
     hero_cta_text = models.CharField(
         max_length=255,
@@ -642,6 +664,8 @@ class InternationalHomePage(
     link_to_section_three = MarkdownField(blank=True)
     link_to_section_three_cta_text = models.CharField(max_length=255, blank=True)
     link_to_section_three_cta_link = models.CharField(max_length=255, blank=True)
+
+    # ---- END UNUSED LEGACY FIELDS ----
 
     @classmethod
     def allowed_subpage_models(cls):
