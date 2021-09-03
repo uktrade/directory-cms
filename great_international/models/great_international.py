@@ -290,11 +290,10 @@ class InternationalHomePage(
 
     # ---- END FIELDS IN USE  ----
 
-
     # ---- START UNUSED LEGACY FIELDS ----
     # ALL OF THE FIELDS BELOW ARE NOW REDUNDANT
-    # However, removing them from the DB creates a gigantic migration that times 
-    # out on the PaaS because it takes 20 minutes to run. 
+    # However, removing them from the DB creates a gigantic migration that times
+    # out on the PaaS because it takes 20 minutes to run.
 
     hero_subtitle = models.CharField(max_length=255, blank=True)
     hero_cta_text = models.CharField(

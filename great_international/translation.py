@@ -198,7 +198,7 @@ class InternationalCampaignPageTranslationOptions(BaseTranslationOptions):
 @register(great_international.InternationalHomePage)
 class InternationalHomePageTranslationOptions(BaseTranslationOptions):
     fields = (
-        # current fields
+        # Current fields
         'hero_title',
         'homepage_link_panels',
 

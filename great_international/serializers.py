@@ -809,7 +809,7 @@ class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
 
 
 class InternationalHomePageSerializer(BasePageSerializer):
-    # Note that this is massively cut down from the original version, 
+    # Note that this is massively cut down from the original version,
     # but that the older fields still exist on the model (see the comment there)
 
     hero_title = serializers.CharField(max_length=255)
@@ -817,7 +817,7 @@ class InternationalHomePageSerializer(BasePageSerializer):
 
     # For now the hero_image and CSS colour for the page background will
     # be hard-coded, but we can make it editable via the CMS and expose them here
-    # as API data when we need to.
+    # as API data when we need to.
 
 
 class InternationalCampaignPageSerializer(PageWithRelatedPagesSerializer):
