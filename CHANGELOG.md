@@ -2,7 +2,6 @@
 
 ## Pre-release
 ### Implemented enhancements
-- GP2-3158: Refactor InternationalHomepage on the CMS side (Page, translations, serializer)
 - GP2-3330: Extend InvestmentOpportunityForListPageSerializer to guarantee representation of PlanningStatus snippet
 - GP2-3330: Extend PlanningStatus snippet model field to support a verbose description
 - GP2-3306: Support reusable snippets in InvestmentOpportunityPage's main content streamfield
