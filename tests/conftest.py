@@ -7,6 +7,7 @@ from six import b
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
 from wagtail.core.models import GroupPagePermission, Locale, Page, Site
+from wagtail_factories.factories import ImageFactory
 
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
@@ -107,6 +108,10 @@ def wagtail_initial_data(request, en_locale):
         page=root,
         permission_type='edit',
     )
+
+    # Also set up an Image (and implicitly also a Collection),
+    # because other tests depend on their existence
+    ImageFactory()
 
     return root
 
@@ -254,15 +259,7 @@ def international_root_page(root_page, request):
         slug='international-home',
         title_en_gb='home',
         hero_title_en_gb='foo',
-        invest_title_en_gb='foo',
-        trade_title_en_gb='foo',
-        tariffs_title_en_gb='foo',
-        tariffs_description_en_gb='foo',
-        tariffs_link_en_gb='http://foo.com',
-        tariffs_call_to_action_text_en_gb='foo',
-        news_title_en_gb='foo',
-        study_in_uk_cta_text_en_gb='foo',
-        visit_uk_cta_text_en_gb='foo'
+        # homepage_link_panels is a Streamfield and can be set in tests
     )
 
 
