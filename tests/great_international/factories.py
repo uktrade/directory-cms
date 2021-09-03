@@ -181,13 +181,47 @@ class InternationalHomePageFactory(wagtail_factories.PageFactory):
     class Meta:
         model = models.great_international.InternationalHomePage
 
+    hero_title = factory.fuzzy.FuzzyText(length=10)
+    invest_title = factory.fuzzy.FuzzyText(length=10)
+    trade_title = factory.fuzzy.FuzzyText(length=10)
+    section_two_heading = factory.fuzzy.FuzzyText(length=10)
+    section_two_teaser = factory.fuzzy.FuzzyText(length=10)
+    section_two_subsection_one_heading = factory.fuzzy.FuzzyText(length=10)
+    section_two_subsection_one_body = factory.fuzzy.FuzzyText(length=10)
+    section_two_subsection_one_icon = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    section_two_subsection_two_heading = factory.fuzzy.FuzzyText(length=10)
+    section_two_subsection_two_body = factory.fuzzy.FuzzyText(length=10)
+    section_two_subsection_two_icon = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    tariffs_call_to_action_text = factory.fuzzy.FuzzyText(length=10)
+    study_in_uk_cta_text = factory.fuzzy.FuzzyText(length=10)
+    visit_uk_cta_text = factory.fuzzy.FuzzyText(length=10)
+    news_title = factory.fuzzy.FuzzyText(length=10)
+    tariffs_title = factory.fuzzy.FuzzyText(length=10)
+    tariffs_link = 'http://foo.com'
+    tariffs_description = factory.fuzzy.FuzzyText(length=10)
+    featured_link_one_heading = factory.fuzzy.FuzzyText(length=10)
+    featured_link_one_url = factory.fuzzy.FuzzyText(length=10)
+    featured_link_one_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    featured_link_two_heading = factory.fuzzy.FuzzyText(length=10)
+    featured_link_two_url = factory.fuzzy.FuzzyText(length=10)
+    featured_link_two_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    featured_link_three_heading = factory.fuzzy.FuzzyText(length=10)
+    featured_link_three_url = factory.fuzzy.FuzzyText(length=10)
+    featured_link_three_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     last_published_at = timezone.now()
     parent = None
-
-    hero_title = factory.fuzzy.FuzzyText(length=10)
-    # homepage_link_panels is a StreamField
 
 
 class InternationalArticleListingPageFactory(wagtail_factories.PageFactory):
