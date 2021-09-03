@@ -3,6 +3,7 @@ from wagtail.core import blocks
 
 from core import blocks as core_blocks
 
+
 class InternationalHomepagePanelBlock(blocks.StructBlock):
     title = blocks.CharBlock(
         max_length=255,
