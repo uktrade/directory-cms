@@ -1234,6 +1234,7 @@ def test_international_homepage_serializer(rf, international_root_page):
         slug='international',
         parent=international_root_page,  # This is tautological, but irrelevant here
     )
+    home_page.hero_subtitle = "THIS LEGACY FIELD SHOULD NOT BE USED"
 
     home_page.homepage_link_panels = [
         (
@@ -1259,6 +1260,8 @@ def test_international_homepage_serializer(rf, international_root_page):
     ]
     home_page.save()
 
+    assert home_page.hero_subtitle is not None
+
     serializer = InternationalHomePageSerializer(
         instance=home_page,
         context={'request': rf.get('/')}
@@ -1278,6 +1281,26 @@ def test_international_homepage_serializer(rf, international_root_page):
         'supporting_text': 'panel two supporting text',
         'link': 'http://example.com/two/',
     }
+
+    # confirm the legacy fields are not exposed:
+    for example_field_name in [
+        'hero_subtitle',
+        'hero_cta_text',
+        'hero_cta_link',
+        'hero_image',
+        'brexit_banner_text',
+        'invest_title',
+        'invest_content',
+        'invest_image',
+        # there are more, but these are useful smoke tests
+        'case_study_image',
+        'case_study_title',
+        'case_study_text',
+        'case_study_cta_text',
+        'case_study_cta_link',
+    ]:
+
+        assert example_field_name not in serializer.data
 
 
 @pytest.mark.django_db
