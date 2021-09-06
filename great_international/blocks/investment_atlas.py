@@ -143,7 +143,6 @@ class AtlasLandingPagePanelBlock(blocks.StructBlock):
         required=True,
     )
     main_text = blocks.TextBlock(
-        max_length=255,
         help_text="The first column of the panel"
     )
     call_to_action = ButtonBlock(
