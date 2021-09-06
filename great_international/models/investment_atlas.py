@@ -119,6 +119,8 @@ class InvestmentAtlasLandingPage(
     subpage_types = [
         'great_international.InvestmentOpportunityListingPage',
         # TO COME: more subpage_types to control CMS page heirarchy
+        'great_international.AboutUkWhyChooseTheUkPage',
+
     ]
 
     # title comes from base page
@@ -166,7 +168,10 @@ class InvestmentOpportunityListingPage(
     investment_atlas_panels.InvestmentOpportunityListingPagePanels,
 ):
     parent_page_types = ['great_international.InvestmentAtlasLandingPage', ]
-    subpage_types = ['great_international.InvestmentOpportunityPage', ]
+    subpage_types = [
+        'great_international.InvestmentOpportunityPage',
+        'great_international.AboutUkWhyChooseTheUkPage',
+    ]
 
     # `title` comes from the base class
     breadcrumbs_label = models.CharField(max_length=50)
