@@ -6,6 +6,7 @@ from great_international.models import (
     invest,
     capital_invest,
     find_a_supplier,
+    investment_atlas,
 )
 
 
@@ -197,7 +198,14 @@ class InternationalCampaignPageTranslationOptions(BaseTranslationOptions):
 @register(great_international.InternationalHomePage)
 class InternationalHomePageTranslationOptions(BaseTranslationOptions):
     fields = (
+        # Current fields
         'hero_title',
+        'homepage_link_panels',
+
+        # --- START LEGACY FIELDS ---
+        # These are retained in the database, but not exposed in the CMS
+        # See note on the InternationalHomePage model. Both 'old' and 'new' fields
+        # mentioned below are all legacy
         'hero_subtitle',
         'hero_cta_text',
         'hero_cta_link',
@@ -319,6 +327,7 @@ class InternationalHomePageTranslationOptions(BaseTranslationOptions):
         'link_to_section_three',
         'link_to_section_three_cta_text',
         'link_to_section_three_cta_link',
+        # --- END LEGACY FIELDS ---
     )
 
 
@@ -1257,4 +1266,57 @@ class CapitalInvestContactFormSuccessPageTranslationOptions(
         'message_box_heading',
         'message_box_description',
         'what_happens_next_description',
+    )
+
+
+@register(investment_atlas.InvestmentAtlasLandingPage)
+class InvestmentAtlasLandingPageTranslationOptions(
+    BaseTranslationOptions,
+):
+    fields = (
+        'breadcrumbs_label',
+        'hero_title',
+        'hero_image',
+        'hero_strapline',
+        'downpage_sections',
+    )
+
+
+@register(investment_atlas.InvestmentOpportunityListingPage)
+class InvestmentOpportunityListingPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'search_results_title',
+        'hero_text',
+        'contact_cta_title',
+        'contact_cta_text',
+        'contact_cta_link',
+    )
+
+
+@register(investment_atlas.InvestmentOpportunityPage)
+class InvestmentOpportunityPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'featured_images',
+        'strapline',
+        'introduction',
+        'opportunity_summary',
+        'promoter',
+        'location',
+        'scale',
+        'scale_value',
+        'planning_status',
+        'investment_type',
+        'time_to_investment_decision',
+        'main_content',
+        'important_links',
+        'contact_name',
+        'contact_avatar',
+        'contact_job_title',
+        'contact_link'
     )

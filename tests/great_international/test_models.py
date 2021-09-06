@@ -2,7 +2,11 @@ import pytest
 from wagtail.core.models import Page
 
 from great_international.models import (
-    great_international, invest, capital_invest, find_a_supplier
+    capital_invest,
+    find_a_supplier,
+    great_international,
+    invest,
+    investment_atlas,
 )
 from . import factories
 
@@ -24,8 +28,10 @@ def test_models_hierarchy():
         capital_invest.CapitalInvestOpportunityListingPage,
         capital_invest.CapitalInvestRegionPage,
         invest.InvestInternationalHomePage,
+        investment_atlas.InvestmentAtlasLandingPage,
         find_a_supplier.InternationalTradeHomePage,
-        great_international.AboutUkWhyChooseTheUkPage
+        great_international.AboutUkWhyChooseTheUkPage,
+
     ]
     assert invest.InvestInternationalHomePage.allowed_subpage_models() == [
         invest.InvestHighPotentialOpportunitiesPage,
@@ -121,5 +127,45 @@ def test_hpo_folder_page(international_root_page):
     invest_hpo_folder = factories.InvestHighPotentialOpportunitiesPageFactory(
         parent=invest_home
     )
-
     assert invest_hpo_folder.title == 'High potential opportunities'
+
+
+@pytest.mark.django_db
+def test_url_for_investment_opportunity_listing_page(international_root_page):
+    int_home = factories.InternationalHomePageFactory(
+        parent=international_root_page
+    )
+    invest_home = factories.InvestmentOpportunityListingPageFactory(
+        parent=int_home
+    )
+    assert 'content' not in invest_home.url.split('/')
+
+
+@pytest.mark.django_db
+def test_url_for_investment_atlas_landing_page(international_root_page):
+    int_home = factories.InternationalHomePageFactory(
+        parent=international_root_page
+    )
+    invest_home = factories.InvestmentAtlasLandingPageFactory(
+        parent=int_home
+    )
+    assert 'content' not in invest_home.url.split('/')
+
+
+@pytest.mark.django_db
+def test_planning_status__str__method():
+    # Just to keep coverage happy...
+
+    planning_status = factories.PlanningStatusFactory(
+        name="Planning Status One",
+        verbose_description="Verbose description for the first planning status type"
+    )
+
+    assert f"{planning_status}" == "Planning Status One"
+
+
+@pytest.mark.django_db
+def test_reusable_content_snippet__str_method():
+    snippet = factories.ReusableContentSectionFactory()
+    # Quick coverage appeasement for the __str__ method
+    assert f'{snippet}' == f'Reusable content: {snippet.title}'

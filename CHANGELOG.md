@@ -1,8 +1,24 @@
 # Changelog
 
 ## Pre-release
-
 ### Implemented enhancements
+- GP2-3158: REVIST Refactor of InternationalHomepage on the CMS side -- had to make a simpler version after reverting previous branch, because migrations timed out
+- GP2-3158: Refactor InternationalHomepage on the CMS side (Page, translations, serializer)
+- GP2-3330: Extend InvestmentOpportunityForListPageSerializer to guarantee representation of PlanningStatus snippet
+- GP2-3330: Extend PlanningStatus snippet model field to support a verbose description
+- GP2-3306: Support reusable snippets in InvestmentOpportunityPage's main content streamfield
+- GP2-3157: (Extension): Refactor the InvestmentOpportunity page in light of new designs
+- NOTICKET: Fix failing PutObject call from Wagtail
+- GP2-3157: Add new InvestmentAtlasLandingPage model to to CMS, incl serializer
+- GP2-3153: Add new Opportunity detail page to CMS, incl serializer
+- GP2-3154: Add new Opportunity listing page to CMS, incl serializer
+- NO-TICKET: urllib3 vulnerability alert fixup
+
+### Fixed bugs
+## [1.0.0](https://github.com/uktrade/great-international-ui/releases/tag/1.0.0)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.12.07...1.0.0)
+### Implemented enhancements
+- NO-TICKET - wagtail upgrade to 2.11
 - NO-TICKET - Bump Python runtime to 3.6.12
 - GBAU-927 - Add robots.txt, disallowing everything
 - GBAU-887 - Send MarketingArticlePages to ActivityStream so they appear in search results
