@@ -1798,7 +1798,11 @@ class AboutUkArticlesFields(Orderable, AboutUkArticleField):
 
 
 class AboutUkWhyChooseTheUkPage(panels.AboutUkWhyChooseTheUkPagePanels, BaseInternationalPage):
-    parent_page_types = ['great_international.AboutUkLandingPage', 'great_international.InternationalHomePage']
+    parent_page_types = [
+        'great_international.AboutUkLandingPage',
+        'great_international.InternationalHomePage',
+        'great_international.InvestmentAtlasLandingPage'
+    ]
     subpage_types = ['great_international.InternationalArticlePage']
 
     breadcrumbs_label = models.CharField(max_length=255)
