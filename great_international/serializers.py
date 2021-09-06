@@ -2059,10 +2059,8 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
     property_and_infrastructure_section_title = serializers.CharField(
         max_length=255
     )
-    property_and_infrastructure_section_image = \
-        wagtail_fields.ImageRenditionField('original')
-    property_and_infrastructure_section_content = \
-        core_fields.MarkdownToHTMLField(max_length=255)
+    property_and_infrastructure_section_image = wagtail_fields.ImageRenditionField('original')
+    property_and_infrastructure_section_content = core_fields.MarkdownToHTMLField(max_length=255)
 
     case_study_image = wagtail_fields.ImageRenditionField('original')
     case_study_title = serializers.CharField(max_length=255)
@@ -2077,6 +2075,24 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
     contact_cta_text = serializers.CharField(max_length=255)
 
     mapped_regions = serializers.SerializerMethodField()
+
+    related_opportunities = serializers.SerializerMethodField()
+
+    def get_related_opportunities(self, instance):
+        # Return up to three investment_atlas.InvestmentOpportunties,
+        # related by Region, ordered by their weighting and then pk
+        # as a tie-breaker, so newer ones come first if weighting is
+        # the same
+
+        relevant_regions = instance.investmentopportunitypage_set.order_by(
+            '-priority_weighting', '-pk'
+        )
+        data = relevant_regions[:3]
+        serializer = RelatedInvestmentOpportunityPageSerializer(
+            data,
+            many=True,
+        )
+        return serializer.data
 
     def get_economics_stats(self, instance):
         data = [
@@ -2387,7 +2403,8 @@ class MinimalRegionPageSummarySerializer(BasePageSerializer):
 
 class RelatedInvestmentOpportunityPageSerializer(BasePageSerializer):
     """Less detailed version of an InvestmentOppportunity - for instance used
-    by InvestmentOpportunityPageSerializer.get_related_opportunities"""
+    by InvestmentOpportunityPageSerializer.get_related_opportunities
+    and AboutUkRegionPageSerializer.get_related_opportunities"""
 
     # title comes from BasePageSerializer
     thumbnail_image = serializers.SerializerMethodField()

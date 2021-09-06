@@ -2,6 +2,7 @@
 
 ## Pre-release
 ### Implemented enhancements
+- GP2-3287: Add Related Opportunities to the region-page's serializer
 - GP2-3158: REVIST Refactor of InternationalHomepage on the CMS side -- had to make a simpler version after reverting previous branch, because migrations timed out
 - GP2-3158: Refactor InternationalHomepage on the CMS side (Page, translations, serializer)
 - GP2-3330: Extend InvestmentOpportunityForListPageSerializer to guarantee representation of PlanningStatus snippet
