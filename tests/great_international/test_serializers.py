@@ -331,6 +331,121 @@ def test_about_uk_region_page_has_statistics(international_root_page, rf):
 
 
 @pytest.mark.django_db
+def test_about_uk_region_page_has_related_opportunities(international_root_page, rf):
+    region_1 = AboutUkRegionPageFactory(
+        slug='region-1-slug',
+        hero_title="Region 1",
+        parent=international_root_page
+    )
+    region_2 = AboutUkRegionPageFactory(
+        slug='region-2-slug',
+        hero_title="Region 2",
+        parent=international_root_page
+    )
+    region_3 = AboutUkRegionPageFactory(
+        slug='region-3-slug',
+        hero_title="Region 2",
+        parent=international_root_page
+    )
+
+    opp_1 = InvestmentOpportunityPageFactory(
+        slug='opp_1',
+        title='opp_1',
+        parent=international_root_page
+    )
+    opp_2 = InvestmentOpportunityPageFactory(
+        slug='opp_2',
+        title='opp_2',
+        parent=international_root_page
+    )
+    opp_3 = InvestmentOpportunityPageFactory(
+        slug='opp_3',
+        title='opp_3',
+        priority_weighting='9',  # should come first in a list
+        parent=international_root_page
+    )
+    opp_4 = InvestmentOpportunityPageFactory(
+        slug='opp_4',
+        title='opp_4',
+        parent=international_root_page
+    )
+    opp_5 = InvestmentOpportunityPageFactory(
+        slug='opp_5',
+        title='opp_5',
+        parent=international_root_page
+    )
+    opp_6 = InvestmentOpportunityPageFactory(
+        slug='opp_6',
+        title='opp_6',
+        parent=international_root_page
+    )
+    opp_7 = InvestmentOpportunityPageFactory(
+        slug='opp_7',
+        title='opp_7',
+        parent=international_root_page
+    )
+
+    opp_1.related_regions.add(region_1)
+    opp_1.related_regions.add(region_2)
+    opp_1.save()
+    opp_2.related_regions.add(region_1)
+    opp_2.save()
+    opp_3.related_regions.add(region_2)
+    opp_3.save()
+    opp_4.related_regions.add(region_1)
+    opp_4.save()
+    opp_5.related_regions.add(region_1)
+    opp_5.save()
+    opp_6.related_regions.add(region_1)
+    opp_6.save()
+    opp_7.related_regions.add(region_1)
+    opp_7.save()
+
+    assert opp_1.related_regions.count() == 2
+    assert opp_2.related_regions.count() == 1
+    assert opp_3.related_regions.count() == 1
+    assert opp_4.related_regions.count() == 1
+    assert opp_5.related_regions.count() == 1
+    assert opp_6.related_regions.count() == 1
+    assert opp_7.related_regions.count() == 1
+
+    assert region_1.investmentopportunitypage_set.count() == 6
+    assert region_2.investmentopportunitypage_set.count() == 2
+    assert region_3.investmentopportunitypage_set.count() == 0
+
+    region_1_serializer = AboutUkRegionPageSerializer(
+        instance=region_1,
+        context={'request': rf.get('/')}
+    )
+    region_1_related_opportunities = region_1_serializer.data['related_opportunities']
+
+    assert len(region_1_related_opportunities) == 3
+    assert [x['meta']['slug'] for x in region_1_related_opportunities] == [
+        'opp_7',  # newest with default priority
+        'opp_6',  # next newest with default priority
+        'opp_5',  # next newest with default priority
+    ]
+
+    region_2_serializer = AboutUkRegionPageSerializer(
+        instance=region_2,
+        context={'request': rf.get('/')}
+    )
+    region_2_related_opportunities = region_2_serializer.data['related_opportunities']
+    assert len(region_2_related_opportunities) == 2
+    assert [x['meta']['slug'] for x in region_2_related_opportunities] == [
+        'opp_3',  # higher pri than opp_1
+        'opp_1',
+    ]
+
+    region_3_serializer = AboutUkRegionPageSerializer(
+        instance=region_3,
+        context={'request': rf.get('/')}
+    )
+    region_3_related_opportunities = region_3_serializer.data['related_opportunities']
+    assert len(region_3_related_opportunities) == 0
+
+
+@pytest.mark.django_db
 def test_capital_invest_landing_page_gets_added_related_regions(
         rf, international_root_page
 ):
