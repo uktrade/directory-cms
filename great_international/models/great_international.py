@@ -281,7 +281,7 @@ class InternationalInvestmentSectorPage(
     # This model replaces InternationalSectorPage
 
     parent_page_types = ['great_international.InternationalTopicLandingPage']
-    subpage_types = []
+    subpage_types = ['great_international.InternationalInvestmentSubSectorPage']
 
     tags = ParentalManyToManyField(
         snippets.Tag,
@@ -378,6 +378,24 @@ class InternationalInvestmentSectorPage(
         null=True,
         blank=True,
         max_num=3,
+    )
+
+class InternationalInvestmentSubSectorPage(
+    panels.InternationalInvestmentSubSectorPagePanels, 
+    BaseInternationalPage,
+):
+    # This model replaces InternationalSubSectorPage
+
+    # It is more of a category/snippet than an actual page right now, 
+    # but was originally created this way to potentially support its 
+    # own content. We're keeping this pattern for expediency in the 
+    # re-working of the site, in case we to need to easily add content for 
+    # sub-sectors in the future -- we just add fields to this model.
+
+    parent_page_types = ['great_international.InternationalInvestmentSectorPage']
+    heading = models.CharField(
+        max_length=255,
+        verbose_name='Sub-sector name',
     )
 
 
@@ -808,7 +826,8 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
         'great_international.InternationalCampaignPage',
         'great_international.InternationalCuratedTopicLandingPage',
         'great_international.InternationalGuideLandingPage',
-        'great_international.InternationalSectorPage',
+        'great_international.InternationalSectorPage',  # deprecated
+        'great_international.InternationalInvestmentSectorPage',  # new, replaces InternationalSectorPage
         'great_international.AboutUkWhyChooseTheUkPage'
     ]
     subpage_types = []

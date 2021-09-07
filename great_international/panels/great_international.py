@@ -1528,3 +1528,20 @@ class InternationalInvestmentSectorPagePanels:
         other_panels=related_entities_panels,  # These are shown as separate tabs
         settings_panels=settings_panels
     )
+
+
+class InternationalInvestmentSubSectorPagePanels:
+
+    content_panels = [
+        FieldPanel('title'),
+        FieldPanel('heading'),
+    ]
+
+    settings_panels = [
+        FieldPanel('slug'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
