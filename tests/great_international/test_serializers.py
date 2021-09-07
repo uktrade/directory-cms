@@ -51,6 +51,8 @@ from tests.great_international.factories import (
     InvestmentOpportunityRelatedSectorsFactory,
     InvestmentOpportunityListingPageFactory,
     PlanningStatusFactory,
+    InternationalInvestmentSectorPageFactory,
+    InternationalInvestmentSubSectorPageFactory
 )
 
 from great_international.models.capital_invest import (
@@ -1450,7 +1452,7 @@ def test_atlas_opportunity_page_can_add_sector_as_related(rf, international_root
         slug='page-slug',
     )
 
-    sector = InternationalSectorPageFactory(
+    sector = InternationalInvestmentSectorPageFactory(
         parent=guide_landing_page,
         slug='sector-a-test'
     )
@@ -1533,30 +1535,30 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
     )
 
     # set up some sectors and subsectors, to help show they don't influence results
-    sector_a = InternationalSectorPageFactory(
+    sector_a = InternationalInvestmentSectorPageFactory(
         parent=guide_landing_page,
         slug='sectorA'
     )
-    sector_b = InternationalSectorPageFactory(
+    sector_b = InternationalInvestmentSectorPageFactory(
         parent=guide_landing_page,
         slug='sectorB'
     )
-    sector_c = InternationalSectorPageFactory(
+    sector_c = InternationalInvestmentSectorPageFactory(
         parent=guide_landing_page,
         slug='sectorB'
     )
 
-    subsector_a1 = InternationalSubSectorPageFactory(
+    subsector_a1 = InternationalInvestmentSubSectorPageFactory(
         parent=sector_a,
         heading='sub_sector_a1_heading',
         slug='sub_sector_a1'
     )
-    subsector_b2 = InternationalSubSectorPageFactory(
+    subsector_b2 = InternationalInvestmentSubSectorPageFactory(
         parent=sector_b,
         heading='sub_sector_b2_heading',
         slug='sub_sector_b2'
     )
-    subsector_b3 = InternationalSubSectorPageFactory(
+    subsector_b3 = InternationalInvestmentSubSectorPageFactory(
         parent=sector_b,
         heading='sub_sector_b3_heading',
         slug='sub_sector_b3'
@@ -1803,12 +1805,12 @@ def test_atlas_opportunity_page_can_add_sub_sector_as_related(rf, international_
         slug='page-slug',
     )
 
-    sector = InternationalSectorPageFactory(
+    sector = InternationalInvestmentSectorPageFactory(
         parent=guide_landing_page,
         slug='sector'
     )
 
-    sub_sector = InternationalSubSectorPageFactory(
+    sub_sector = InternationalInvestmentSubSectorPageFactory(
         parent=sector,
         heading='sub_sector_heading',
         slug='sub_sector'
