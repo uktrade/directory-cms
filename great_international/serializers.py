@@ -2485,7 +2485,7 @@ class InvestmentOpportunityForListPageSerializer(BasePageSerializer):
     def get_planning_status(self, instance):
         # Ensure we always return the name, not the entire object. This protects against
         # the __str__ method being changed and breaking things
-        return instance.planning_status.name
+        return instance.planning_status.name if instance.planning_status else None
 
     def get_time_to_investment_decision(self, instance):
         return instance.get_time_to_investment_decision_display()

@@ -2065,3 +2065,21 @@ def test_atlas_opportunity_listing_page_serializer__planning_status__is_not_verb
         instance=opportunity
     )
     assert opportunity_for_list_serializer.data['planning_status'] == 'Planning Status One'
+
+
+@pytest.mark.django_db
+def test_atlas_opportunity_listing_page_serializer__planning_status__is_none(
+    international_root_page,
+):
+
+    planning_status = None
+    opportunity = InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        slug='opp_one',
+        planning_status=planning_status,
+    )
+
+    opportunity_for_list_serializer = InvestmentOpportunityForListPageSerializer(
+        instance=opportunity
+    )
+    assert opportunity_for_list_serializer.data['planning_status'] is None
