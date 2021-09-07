@@ -1518,7 +1518,7 @@ class InternationalInvestmentSectorPagePanels:
         FieldRowPanel(
             heading='Related Opportunities',
             children=[
-                FieldPanel('manually_selected_related_opportunities'),
+                StreamFieldPanel('manually_selected_related_opportunities'),
             ]
         ),
     ]
