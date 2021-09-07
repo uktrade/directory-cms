@@ -1344,3 +1344,10 @@ class InternationalInvestmentSectorPageTranslationOptions(
         'early_opportunities_header',
         'early_opportunities',
     )
+
+
+@register(great_international.InternationalInvestmentSubSectorPage)
+class InternationalInvestmentSubSectorPageTranslationOptions(BaseTranslationOptions):
+    fields = (
+        'heading',
+    )
