@@ -3,6 +3,7 @@ from django.db import models
 from modelcluster.fields import ParentalManyToManyField, ParentalKey
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Orderable
+from wagtail.core.blocks import PageChooserBlock
 
 from directory_constants import slugs
 
@@ -351,14 +352,20 @@ class InternationalInvestmentSectorPage(
         blank=True,
         help_text='You may want to phrase this to suit the kind of opportunities being featured, if not automatic'
     )
-    manually_selected_related_opportunities = ParentalManyToManyField(
-        'great_international.InvestmentOpportunityPage',
+    manually_selected_related_opportunities = single_struct_block_stream_field_factory(
+        field_name='related_opportunity',
+        block_class_instance=PageChooserBlock(
+            page_type='great_international.InvestmentOpportunityPage',
+        ),
+        null=True,
         blank=True,
+        max_num=3,
         help_text=(
-            'Max 3 will be shown. If none is selected, three will be automatically chosen '
-            'based on priority and/or most recently created'
+            'Max 3 will be shown. If none is specified, three will be automatically chosen '
+            'based on matching sector, their priority_weighting and most recent creation'
         )
     )
+    
     downpage_content = single_struct_block_stream_field_factory(
         field_name='content_section',
         block_class_instance=blocks.InternationalInvestmentSectorPageBlock(),
