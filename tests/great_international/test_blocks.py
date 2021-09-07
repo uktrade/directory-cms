@@ -5,13 +5,16 @@ from wagtail.core.blocks import StreamBlock
 
 from .factories import ReusableContentSectionFactory
 
+from great_international.blocks.great_international import (
+    FeaturedImageBlock,
+    MarkdownBlock,
+)
+
 from great_international.models.investment_atlas import ReusableContentSection
 from great_international.blocks.investment_atlas import (
     DEFAULT_IMAGE_RENDITION_SPEC,
     _get_block_for_block_name,
-    FeaturedImageBlock,
     InlineOpportunityImageBlock,
-    MarkdownBlock,
     ReusableSnippetChooserBlock
 )
 

@@ -2,6 +2,7 @@ from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import AbstractMediaChooserBlock
 
+from wagtail.images.blocks import ImageChooserBlock
 
 class VideoChooserBlock(AbstractMediaChooserBlock):
     def render_basic(self, value, context=None):
@@ -74,3 +75,38 @@ class ButtonBlock(blocks.StructBlock):
 
     class Meta:
         icon = 'radio-full'
+
+
+DEFAULT_IMAGE_RENDITION_SPEC = "fill-960x540"
+
+class BaseAltTextImageBlock(blocks.StructBlock):
+    image = ImageChooserBlock(required=True)
+    image_alt = blocks.CharBlock(
+        max_length=255,
+        required=True,
+    )
+    caption = blocks.CharBlock(
+        max_length=255,
+        required=False,
+    )
+
+    def get_api_representation(self, value, context=None):
+        """Expand the default serialization to show the image rendition URL"""
+        if not context:
+            context = {}
+
+        retval_dict = {}
+
+        img = value.get("image")
+
+        if img:
+            _rendition_spec = context.get('rendition_spec', DEFAULT_IMAGE_RENDITION_SPEC)
+            retval_dict.update(
+                {
+                    'image': img.get_rendition(_rendition_spec).url,
+                    'image_alt': value.get('image_alt'),
+                    'caption': value.get('caption'),
+                }
+            )
+
+        return retval_dict
