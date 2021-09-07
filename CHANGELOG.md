@@ -17,6 +17,8 @@
 - NO-TICKET: urllib3 vulnerability alert fixup
 
 ### Fixed bugs
+- NO-TICKET: fixed InvestmentOpportunityForListPageSerializer when there is no planning_status 
+
 ## [1.0.0](https://github.com/uktrade/great-international-ui/releases/tag/1.0.0)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.12.07...1.0.0)
 ### Implemented enhancements
