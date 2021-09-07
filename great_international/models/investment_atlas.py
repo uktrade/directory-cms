@@ -206,7 +206,7 @@ class InvestmentOpportunityListingPage(
 
 class RelatedSector(models.Model):
     related_sector = models.ForeignKey(
-        'great_international.InternationalSectorPage',
+        'great_international.InternationalInvestmentSectorPage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -217,7 +217,7 @@ class RelatedSector(models.Model):
         PageChooserPanel(
             'related_sector',
             [
-                'great_international.InternationalSectorPage'
+                'great_international.InternationalInvestmentSectorPage'
             ]
         ),
     ]
@@ -239,7 +239,7 @@ class InvestmentOpportunityRelatedSectors(Orderable, RelatedSector):
 
 class RelatedSubSector(models.Model):
     related_sub_sector = models.ForeignKey(
-        'great_international.InternationalSubSectorPage',
+        'great_international.InternationalInvestmentSubSectorPage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -249,7 +249,7 @@ class RelatedSubSector(models.Model):
     panels = [
         PageChooserPanel(
             'related_sub_sector',
-            ['great_international.InternationalSubSectorPage']
+            ['great_international.InternationalInvestmentSubSectorPage']
         ),
     ]
 
@@ -365,7 +365,9 @@ class InvestmentOpportunityPage(
         verbose_name="Scale value (in millions)"
     )
 
-    # Note that a `related_sub_sectors` reverse relation comes
+    # Note that a `related_sectors` reverse relation 
+    # comes from InvestmentOpportunityRelatedectors
+    # and a `related_sub_sectors` reverse relation comes
     # from InvestmentOpportunityRelatedSubSectors
 
     planning_status = models.ForeignKey(
