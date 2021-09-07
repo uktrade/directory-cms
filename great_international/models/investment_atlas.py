@@ -17,9 +17,10 @@ from core.model_fields import MarkdownField
 from core.models import WagtailAdminExclusivePageMixin
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
-import great_international.panels.investment_atlas as investment_atlas_panels
-import great_international.models.great_international as gi_models
+import great_international.blocks.great_international as great_international_blocks
+from great_international.models import great_international as great_international_models
 import great_international.blocks.investment_atlas as investment_atlas_blocks
+import great_international.panels.investment_atlas as investment_atlas_panels
 
 from wagtail.snippets.models import register_snippet
 
@@ -290,7 +291,7 @@ class InvestmentOpportunityPage(
 
     featured_images = single_struct_block_stream_field_factory(
         field_name='images',
-        block_class_instance=investment_atlas_blocks.FeaturedImageBlock(),
+        block_class_instance=great_international_blocks.FeaturedImageBlock(),
         max_num=5,
         null=True,
         blank=True,
@@ -341,7 +342,7 @@ class InvestmentOpportunityPage(
     )
 
     related_regions = ParentalManyToManyField(
-        gi_models.AboutUkRegionPage,
+        great_international_models.AboutUkRegionPage,
         blank=True,
     )
 
