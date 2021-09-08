@@ -51,7 +51,7 @@ def test_models_hierarchy():
     assert great_international.InternationalTopicLandingPage.allowed_subpage_models() == [
             great_international.InternationalArticleListingPage,
             great_international.InternationalCampaignPage,
-            great_international.InternationalSectorPage,
+            great_international.InternationalInvestmentSectorPage,
         ]
     # curated topic landing
     assert great_international.InternationalCuratedTopicLandingPage.allowed_subpage_models() == []

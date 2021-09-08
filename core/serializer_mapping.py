@@ -34,6 +34,8 @@ MODELS_SERIALIZERS_MAPPING = {
     # great international
     great_international.models.great_international.InternationalSectorPage: great_international.serializers.InternationalSectorPageSerializer,  # NOQA
     great_international.models.great_international.InternationalSubSectorPage: great_international.serializers.InternationalSubSectorPageSerializer,  # NOQA
+    great_international.models.great_international.InternationalInvestmentSectorPage: great_international.serializers.InternationalInvestmentSectorPageSerializer,  # NOQA
+    great_international.models.great_international.InternationalInvestmentSubSectorPage: great_international.serializers.InternationalInvestmentSubSectorPageSerializer,  # NOQA
     great_international.models.great_international.InternationalHomePage: great_international.serializers.InternationalHomePageSerializer,  # NOQA
     great_international.models.great_international.InternationalArticlePage: great_international.serializers.InternationalArticlePageSerializer,  # NOQA
     great_international.models.great_international.InternationalCampaignPage: great_international.serializers.InternationalCampaignPageSerializer,  # NOQA

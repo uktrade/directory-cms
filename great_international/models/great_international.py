@@ -3,10 +3,12 @@ from django.db import models
 from modelcluster.fields import ParentalManyToManyField, ParentalKey
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Orderable
+from wagtail.core.blocks import PageChooserBlock
 
 from directory_constants import slugs
 
 from core.model_fields import MarkdownField
+from core.fields import single_struct_block_stream_field_factory
 
 from core.models import (
     WagtailAdminExclusivePageMixin,
@@ -23,6 +25,7 @@ from great_international.blocks import great_international as blocks
 from . import invest as invest_models
 from . import capital_invest as capital_invest_models
 from . import find_a_supplier as fas_models
+
 from .base import BaseInternationalPage
 
 
@@ -249,7 +252,8 @@ class BaseInternationalSectorPage(panels.BaseInternationalSectorPagePanels, Base
 
 
 class InternationalSectorPage(BaseInternationalSectorPage):
-
+    # DEPRECATED!
+    # THIS HAS BEEN REPLACED IN USE BY InternationalInvestmentSectorPage
     class Meta:
         ordering = ['-heading']
 
@@ -264,8 +268,142 @@ class InternationalSectorPage(BaseInternationalSectorPage):
 
 
 class InternationalSubSectorPage(BaseInternationalSectorPage):
+    # DEPRECATED!
+    # THIS HAS BEEN REPLACED IN USE BY InternationalInvestmentSubSectorPage
 
     parent_page_types = ['great_international.InternationalSectorPage']
+
+
+class InternationalInvestmentSectorPage(
+    panels.InternationalInvestmentSectorPagePanels,
+    BaseInternationalPage,
+):
+    # This model replaces InternationalSectorPage
+
+    parent_page_types = ['great_international.InternationalTopicLandingPage']
+    subpage_types = ['great_international.InternationalInvestmentSubSectorPage']
+
+    tags = ParentalManyToManyField(
+        snippets.Tag,
+        blank=True,
+    )
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    heading = models.CharField(
+        max_length=255,
+        verbose_name='Sector name',
+    )
+    standfirst = models.TextField(
+        blank=True,
+        help_text='Displayed below the sector name',
+    )
+    featured_description = models.TextField(
+        blank=True,
+        help_text='This is the description shown when the sector is featured on another page'
+    )
+    intro_text = MarkdownField(
+        blank=True,
+        null=True,
+    )
+    intro_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    # Contact details
+    contact_name = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    contact_avatar = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    contact_job_title = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    contact_link = models.URLField(
+        blank=True,
+        null=True,
+        max_length=1500,
+    )
+    contact_link_button_preamble = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text='eg: "Contact the sector lead"'
+    )
+    contact_link_button_label = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    related_opportunities_header = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text='You may want to phrase this to suit the kind of opportunities being featured, if not automatic'
+    )
+    manually_selected_related_opportunities = single_struct_block_stream_field_factory(
+        field_name='related_opportunity',
+        block_class_instance=PageChooserBlock(
+            page_type='great_international.InvestmentOpportunityPage',
+        ),
+        null=True,
+        blank=True,
+        max_num=3,
+        help_text=(
+            'Max 3 will be shown. If none is specified, three will be automatically chosen '
+            'based on matching sector, their priority_weighting and most recent creation'
+        )
+    )
+
+    downpage_content = single_struct_block_stream_field_factory(
+        field_name='content_section',
+        block_class_instance=blocks.InternationalInvestmentSectorPageBlock(),
+        null=True,
+        blank=True,
+    )
+
+    early_opportunities_header = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text='Set to "Early investment opportunities" or customise based on the sector, as appropriate'
+    )
+
+    early_opportunities = single_struct_block_stream_field_factory(
+        field_name='early_opportunity',
+        block_class_instance=blocks.InternationalInvestmentSectorPageEarlyOpportunityBlock(),
+        null=True,
+        blank=True,
+        max_num=3,
+    )
+
+
+class InternationalInvestmentSubSectorPage(
+    panels.InternationalInvestmentSubSectorPagePanels,
+    BaseInternationalPage,
+):
+    # This model replaces InternationalSubSectorPage
+
+    # It is more of a category/snippet than an actual page right now,
+    # but was originally created this way to potentially support its
+    # own content. We're keeping this pattern for expediency in the
+    # re-working of the site, in case we to need to easily add content for
+    # sub-sectors in the future -- we just add fields to this model.
+
+    parent_page_types = ['great_international.InternationalInvestmentSectorPage']
+    heading = models.CharField(
+        max_length=255,
+        verbose_name='Sub-sector name',
+    )
 
 
 class InternationalHomePage(
@@ -695,7 +833,8 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
         'great_international.InternationalCampaignPage',
         'great_international.InternationalCuratedTopicLandingPage',
         'great_international.InternationalGuideLandingPage',
-        'great_international.InternationalSectorPage',
+        'great_international.InternationalSectorPage',  # deprecated
+        'great_international.InternationalInvestmentSectorPage',  # new, replaces InternationalSectorPage
         'great_international.AboutUkWhyChooseTheUkPage'
     ]
     subpage_types = []
@@ -946,13 +1085,13 @@ class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, 
     parent_page_types = [
         'great_international.InternationalHomePage',
         'great_international.AboutUkLandingPage',
-        'great_international.InvestmentAtlasLandingPage'
-
+        'great_international.InvestmentAtlasLandingPage',
     ]
     subpage_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
-        'great_international.InternationalSectorPage',
+        # 'great_international.InternationalSectorPage',  # OLD CapInvest sector page - deprecated
+        'great_international.InternationalInvestmentSectorPage',  # NEW Atlas sector page
     ]
 
     landing_page_title = models.CharField(max_length=255)
@@ -1537,14 +1676,16 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
 
 
 class AboutUkRegionListingPage(
-    panels.AboutUkRegionListingPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage
+    panels.AboutUkRegionListingPagePanels,
+    WagtailAdminExclusivePageMixin,
+    BaseInternationalPage
 ):
 
     slug_identity = 'regions'
 
     parent_page_types = [
         'great_international.AboutUkLandingPage',
-        'great_international.InvestmentAtlasLandingPage'
+        'great_international.InvestmentAtlasLandingPage',
     ]
     subpage_types = [
         'great_international.AboutUkRegionPage',
