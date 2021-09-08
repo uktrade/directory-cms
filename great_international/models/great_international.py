@@ -945,7 +945,9 @@ class InternationalCampaignPage(panels.InternationalCampaignPagePanels, BaseInte
 class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalHomePage',
-        'great_international.AboutUkLandingPage'
+        'great_international.AboutUkLandingPage',
+        'great_international.InvestmentAtlasLandingPage'
+
     ]
     subpage_types = [
         'great_international.InternationalArticleListingPage',
@@ -1545,7 +1547,7 @@ class AboutUkRegionListingPage(
         'great_international.InvestmentAtlasLandingPage'
     ]
     subpage_types = [
-        'great_international.AboutUkRegionListingPage',
+        'great_international.AboutUkRegionPage',
     ]
 
     breadcrumbs_label = models.CharField(max_length=255)
