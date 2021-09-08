@@ -2,6 +2,7 @@
 
 ## Pre-release
 ### Implemented enhancements
+- GP2-3215: Add InternationalInvestmentSectorPage and ...SubSectorPage to replace original ones
 - GP2-3160: Amending Parent/SubPage so restructing content 
 - GP2-3287: Add Related Opportunities to the region-page's serializer
 - GP2-3158: REVIST Refactor of InternationalHomepage on the CMS side -- had to make a simpler version after reverting previous branch, because migrations timed out
