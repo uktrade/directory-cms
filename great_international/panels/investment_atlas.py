@@ -134,7 +134,7 @@ class InvestmentOpportunityPagePanels:
             ],
         ),
         MultiFieldPanel(
-            heading='The Oppportunity',
+            heading='The Opportunity',
             classname='collapsible',
             children=[
                 StreamFieldPanel('featured_images'),

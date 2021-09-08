@@ -1320,3 +1320,34 @@ class InvestmentOpportunityPageTranslationOptions(
         'contact_job_title',
         'contact_link'
     )
+
+
+@register(great_international.InternationalInvestmentSectorPage)
+class InternationalInvestmentSectorPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'hero_image',
+        'heading',
+        'standfirst',
+        'featured_description',
+        'intro_text',
+        'intro_image',
+        'contact_name',
+        'contact_avatar',
+        'contact_job_title',
+        'contact_link',
+        'contact_link_button_preamble',
+        'contact_link_button_label',
+        'related_opportunities_header',
+        'downpage_content',
+        'early_opportunities_header',
+        'early_opportunities',
+    )
+
+
+@register(great_international.InternationalInvestmentSubSectorPage)
+class InternationalInvestmentSubSectorPageTranslationOptions(BaseTranslationOptions):
+    fields = (
+        'heading',
+    )

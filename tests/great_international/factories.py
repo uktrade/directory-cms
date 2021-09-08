@@ -867,3 +867,34 @@ class ReusableContentSectionFactory(factory.django.DjangoModelFactory):
     title = factory.fuzzy.FuzzyText(length=10)
     block_slug = factory.fuzzy.FuzzyText(length=10)
     # content is a StreamField, so easier to set in the test
+
+
+class InternationalInvestmentSectorPageFactory(wagtail_factories.PageFactory):
+    class Meta:
+        model = models.great_international.InternationalInvestmentSectorPage
+
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None
+
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    intro_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+
+    heading = factory.fuzzy.FuzzyText(length=10)
+
+
+class InternationalInvestmentSubSectorPageFactory(wagtail_factories.PageFactory):
+    class Meta:
+        model = models.great_international.InternationalInvestmentSubSectorPage
+
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None
+
+    heading = factory.fuzzy.FuzzyText(length=10)

@@ -1454,3 +1454,94 @@ class AboutUkWhyChooseTheUkPagePanels:
         settings_panels=settings_panels
 
     )
+
+
+class InternationalInvestmentSectorPagePanels:
+    content_panels = [
+        FieldPanel('title'),
+        MultiFieldPanel(
+            heading='Heading',
+            classname='collapsible',
+            children=[
+                FieldPanel('heading'),
+                ImageChooserPanel('hero_image'),
+                FieldPanel('standfirst'),
+                FieldPanel('featured_description')
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Intro',
+            classname='collapsible',
+            children=[
+                FieldPanel('intro_text'),
+                ImageChooserPanel('intro_image'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Contact details',
+            classname='collapsible',
+            children=[
+                FieldPanel('contact_name'),
+                ImageChooserPanel('contact_avatar'),
+                FieldPanel('contact_job_title'),
+                FieldPanel('contact_link'),
+                FieldPanel('contact_link_button_preamble'),
+                FieldPanel('contact_link_button_label'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Related opportunities',
+            classname='collapsible',
+            children=[
+                FieldPanel('related_opportunities_header'),
+                HelpPanel('See the dedicated tab for selecting the opportunities themselves'),
+            ]
+        ),
+        StreamFieldPanel('downpage_content'),
+        MultiFieldPanel(
+            heading='Early opportunities',
+            classname='collapsible',
+            children=[
+                FieldPanel('early_opportunities_header'),
+                StreamFieldPanel('early_opportunities'),
+            ]
+        ),
+        SearchEngineOptimisationPanel()
+    ]
+
+    settings_panels = [
+        FieldPanel('slug'),
+        FieldPanel('tags'),
+    ]
+
+    related_entities_panels = [
+        FieldRowPanel(
+            heading='Related Opportunities',
+            children=[
+                StreamFieldPanel('manually_selected_related_opportunities'),
+            ]
+        ),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        other_panels=related_entities_panels,  # These are shown as separate tabs
+        settings_panels=settings_panels
+    )
+
+
+class InternationalInvestmentSubSectorPagePanels:
+
+    content_panels = [
+        FieldPanel('title'),
+        FieldPanel('heading'),
+    ]
+
+    settings_panels = [
+        FieldPanel('slug'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
