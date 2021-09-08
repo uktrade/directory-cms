@@ -21,7 +21,6 @@ from export_readiness import snippets
 
 from great_international.panels import great_international as panels
 from great_international.blocks import great_international as blocks
-from great_international.blocks import investment_atlas as investment_atlas_blocks
 
 from . import invest as invest_models
 from . import capital_invest as capital_invest_models
@@ -365,7 +364,7 @@ class InternationalInvestmentSectorPage(
             'based on matching sector, their priority_weighting and most recent creation'
         )
     )
-    
+
     downpage_content = single_struct_block_stream_field_factory(
         field_name='content_section',
         block_class_instance=blocks.InternationalInvestmentSectorPageBlock(),
@@ -387,16 +386,17 @@ class InternationalInvestmentSectorPage(
         max_num=3,
     )
 
+
 class InternationalInvestmentSubSectorPage(
-    panels.InternationalInvestmentSubSectorPagePanels, 
+    panels.InternationalInvestmentSubSectorPagePanels,
     BaseInternationalPage,
 ):
     # This model replaces InternationalSubSectorPage
 
-    # It is more of a category/snippet than an actual page right now, 
-    # but was originally created this way to potentially support its 
-    # own content. We're keeping this pattern for expediency in the 
-    # re-working of the site, in case we to need to easily add content for 
+    # It is more of a category/snippet than an actual page right now,
+    # but was originally created this way to potentially support its
+    # own content. We're keeping this pattern for expediency in the
+    # re-working of the site, in case we to need to easily add content for
     # sub-sectors in the future -- we just add fields to this model.
 
     parent_page_types = ['great_international.InternationalInvestmentSectorPage']
@@ -1085,13 +1085,12 @@ class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, 
     parent_page_types = [
         'great_international.InternationalHomePage',
         'great_international.AboutUkLandingPage',
-        'great_international.InvestmentAtlasLandingPage'
-
+        'great_international.InvestmentAtlasLandingPage',
     ]
     subpage_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
-        # 'great_international.InternationalSectorPage',  # OLD CapInvest sector page - deprecated
+        # 'great_international.InternationalSectorPage',  # OLD CapInvest sector page - deprecated
         'great_international.InternationalInvestmentSectorPage',  # NEW Atlas sector page
     ]
 
@@ -1677,14 +1676,16 @@ class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage)
 
 
 class AboutUkRegionListingPage(
-    panels.AboutUkRegionListingPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage
+    panels.AboutUkRegionListingPagePanels,
+    WagtailAdminExclusivePageMixin,
+    BaseInternationalPage
 ):
 
     slug_identity = 'regions'
 
     parent_page_types = [
         'great_international.AboutUkLandingPage',
-        'great_international.InvestmentAtlasLandingPage'
+        'great_international.InvestmentAtlasLandingPage',
     ]
     subpage_types = [
         'great_international.AboutUkRegionPage',

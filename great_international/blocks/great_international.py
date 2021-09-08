@@ -25,6 +25,7 @@ class MarkdownBlock(blocks.FieldBlock):
         else:
             return ''
 
+
 class FeaturedImageBlock(core_blocks.BaseAltTextImageBlock):
     pass
 

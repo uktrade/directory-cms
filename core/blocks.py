@@ -2,7 +2,6 @@ from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmedia.blocks import AbstractMediaChooserBlock
 
-from wagtail.images.blocks import ImageChooserBlock
 
 class VideoChooserBlock(AbstractMediaChooserBlock):
     def render_basic(self, value, context=None):
@@ -78,6 +77,7 @@ class ButtonBlock(blocks.StructBlock):
 
 
 DEFAULT_IMAGE_RENDITION_SPEC = "fill-960x540"
+
 
 class BaseAltTextImageBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)

@@ -365,7 +365,7 @@ class InvestmentOpportunityPage(
         verbose_name="Scale value (in millions)"
     )
 
-    # Note that a `related_sectors` reverse relation 
+    # Note that a `related_sectors` reverse relation
     # comes from InvestmentOpportunityRelatedectors
     # and a `related_sub_sectors` reverse relation comes
     # from InvestmentOpportunityRelatedSubSectors

@@ -145,12 +145,12 @@ def test_international_topic_landing_page_view_sectors_alphabetical_order(
     landing_page = factories.InternationalTopicLandingPageFactory.create(
         parent=international_root_page
     )
-    sector_page1 = factories.InternationalSectorPageFactory.create(
+    sector_page1 = factories.InternationalInvestmentSectorPageFactory.create(
         parent=landing_page,
         live=True,
         heading='acme'
     )
-    sector_page2 = factories.InternationalSectorPageFactory.create(
+    sector_page2 = factories.InternationalInvestmentSectorPageFactory.create(
         parent=landing_page,
         live=True,
         heading='foo'
@@ -259,11 +259,17 @@ def test_high_potential_opportunity_api(document, admin_client, international_ro
 def test_international_trade_home_page_exposes_industries(
     admin_client, international_root_page
 ):
-    industry = factories.InternationalSectorPageFactory(parent=international_root_page,
-                                                        live=True)
-    factories.InternationalSectorPageFactory(parent=international_root_page, live=False)
+    industry = factories.InternationalInvestmentSectorPageFactory(
+        parent=international_root_page,
+        live=True,
+    )
+    factories.InternationalInvestmentSectorPageFactory(
+        parent=international_root_page,
+        live=False,
+    )
     homepage = factories.InternationalTradeHomePageFactory(
-        live=True, parent=international_root_page
+        live=True,
+        parent=international_root_page
     )
     cache.rebuild_all_cache()
 

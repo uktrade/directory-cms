@@ -20,7 +20,6 @@ from .models.great_international import (
     InternationalCampaignPage,
     InternationalGuideLandingPage,
     InternationalSectorPage,
-    InternationalInvestmentSectorPage,
     InternationalEUExitFormPage,
     InternationalSubSectorPage,
     InternationalInvestmentSectorPage,
@@ -621,7 +620,7 @@ class PageWithRelatedPagesSerializer(BasePageSerializer):
 
 
 class BaseInternationalSectorPageSerializer(PageWithRelatedPagesSerializer, HeroSerializer):
-    # DEPRECATED 
+    # DEPRECATED
 
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField()
@@ -919,8 +918,8 @@ class InternationalTopicLandingPageSerializer(BasePageSerializer, ChildPagesSeri
         )
         sectors = self.get_child_pages_data_for(
             obj,
-            InternationalSectorPage,
-            BaseInternationalSectorPageSerializer
+            InternationalInvestmentSectorPage,  # NB this is the new Sector page, not the old one
+            InternationalInvestmentSectorPageSerializer
         )
         sectors = sorted(sectors, key=lambda x: x['heading'])
         return articles + campaigns + guides + sectors
@@ -1857,10 +1856,10 @@ class InternationalTradeHomePageSerializer(BasePageSerializer):
     industries = serializers.SerializerMethodField()
 
     def get_industries(self, instance):
-        queryset = InternationalSectorPage.objects.filter(
+        queryset = InternationalInvestmentSectorPage.objects.filter(
             live=True
         ).order_by('slug')[:3]
-        serializer = BaseInternationalSectorPageSerializer(
+        serializer = InternationalInvestmentSectorPageSerializer(
             queryset,
             many=True,
             allow_null=True,
@@ -2004,8 +2003,8 @@ class AboutUkLandingPageSerializer(BasePageSerializer, HeroSerializer):
     all_sectors = serializers.SerializerMethodField()
 
     def get_all_sectors(self, instance):
-        queryset = InternationalSectorPage.objects.live().public().all()
-        serialized = InternationalSectorPageSerializer(
+        queryset = InternationalInvestmentSectorPage.objects.live().public().all()
+        serialized = InternationalInvestmentSectorPageSerializer(
             queryset,
             many=True,
             allow_null=True,
@@ -2561,9 +2560,9 @@ class InvestmentOpportunityListingPageSerializer(BasePageSerializer):
 
     def get_sector_with_sub_sectors(self, instance):
 
-        all_sectors = InternationalSectorPage.objects.live().public()
+        all_sectors = InternationalInvestmentSectorPage.objects.live().public()
 
-        sectors = InternationalSectorPageSerializer(
+        sectors = InternationalInvestmentSectorPageSerializer(
             all_sectors,
             many=True,
             allow_null=True,
@@ -2572,8 +2571,9 @@ class InvestmentOpportunityListingPageSerializer(BasePageSerializer):
 
         return {sector['heading']: self.get_sub_sector_headings(sector) for sector in sectors}
 
+
 class InternationalInvestmentSectorPageSerializer(
-    BasePageSerializer, 
+    BasePageSerializer,
     HeroSerializer,
     ChildPagesSerializerHelper,
 ):
@@ -2581,7 +2581,7 @@ class InternationalInvestmentSectorPageSerializer(
     IMAGE_RENDITION_SPEC = "fill-960x540"
     AVATAR_RENDITION_SPEC = "fill-500x500"
 
-    # hero_image is serialized by HeroSerializer
+    # hero_image is serialized by HeroSerializer
     heading = serializers.CharField()
     sub_heading = serializers.CharField(source='standfirst')
     featured_description = serializers.CharField()
@@ -2598,7 +2598,7 @@ class InternationalInvestmentSectorPageSerializer(
 
     # Related opportunities
     related_opportunities_header = serializers.CharField()
-    related_opportunities = serializers.SerializerMethodField() 
+    related_opportunities = serializers.SerializerMethodField()
 
     # Main downpage content
     downpage_content = StreamFieldSerializer()
@@ -2626,30 +2626,32 @@ class InternationalInvestmentSectorPageSerializer(
         )
 
     def get_related_opportunities(self, instance):
-        # If instance.manually_selected_related_opportunities has content, 
+        # If instance.manually_selected_related_opportunities has content,
         # (it's a StreamField, remember), return them (up to three),
         # else grab up to three related opportunities based on matching sector.
-        # 
-        # Note that for now, ordering of the auto-selected ones is based 
-        # on the priority_weighting and creation order on the relevant 
-        # opportunities. 
+        #
+        # Note that for now, ordering of the auto-selected ones is based
+        # on the priority_weighting and creation order on the relevant
+        # opportunities.
 
         opportunities = []
 
-        if len(instance.manually_selected_related_opportunities):  
+        if len(instance.manually_selected_related_opportunities):
             opportunities = [
-                x.value for x in instance.manually_selected_related_opportunities 
+                x.value for x in instance.manually_selected_related_opportunities
                 if x.value and x.value.live
             ]
         else:
-            all_opp_pages = InvestmentOpportunityPage.objects.live().public()
-
-            for page in all_opp_pages:
+            for page in InvestmentOpportunityPage.objects.live().public().order_by(
+                '-priority_weighting', '-pk'
+            ):
                 for related_sectors in page.related_sectors.all():
                     if not related_sectors.related_sector:
                         continue
                     elif related_sectors.related_sector.title == instance.title:
                         opportunities.append(page)
+
+            opportunities = opportunities[:3]  # limit to three Opps, max
 
         if not opportunities:
             return []
@@ -2664,6 +2666,6 @@ class InternationalInvestmentSectorPageSerializer(
 
 
 class InternationalInvestmentSubSectorPageSerializer(
-    BasePageSerializer, 
+    BasePageSerializer,
 ):
     heading = serializers.CharField()
