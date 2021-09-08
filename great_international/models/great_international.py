@@ -1540,9 +1540,12 @@ class AboutUkRegionListingPage(
 
     slug_identity = 'regions'
 
-    parent_page_types = ['great_international.AboutUkLandingPage']
+    parent_page_types = [
+        'great_international.AboutUkLandingPage',
+        'great_international.InvestmentAtlasLandingPage'
+    ]
     subpage_types = [
-        'great_international.AboutUkRegionPage',
+        'great_international.AboutUkRegionListingPage',
     ]
 
     breadcrumbs_label = models.CharField(max_length=255)
