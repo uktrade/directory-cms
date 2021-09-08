@@ -945,7 +945,9 @@ class InternationalCampaignPage(panels.InternationalCampaignPagePanels, BaseInte
 class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalHomePage',
-        'great_international.AboutUkLandingPage'
+        'great_international.AboutUkLandingPage',
+        'great_international.InvestmentAtlasLandingPage'
+
     ]
     subpage_types = [
         'great_international.InternationalArticleListingPage',
@@ -1540,7 +1542,10 @@ class AboutUkRegionListingPage(
 
     slug_identity = 'regions'
 
-    parent_page_types = ['great_international.AboutUkLandingPage']
+    parent_page_types = [
+        'great_international.AboutUkLandingPage',
+        'great_international.InvestmentAtlasLandingPage'
+    ]
     subpage_types = [
         'great_international.AboutUkRegionPage',
     ]

@@ -120,7 +120,8 @@ class InvestmentAtlasLandingPage(
         'great_international.InvestmentOpportunityListingPage',
         # TO COME: more subpage_types to control CMS page heirarchy
         'great_international.AboutUkWhyChooseTheUkPage',
-
+        'great_international.AboutUkRegionListingPage',
+        'great_international.InternationalTopicLandingPage',
     ]
 
     # title comes from base page
