@@ -1277,6 +1277,7 @@ class InvestmentAtlasLandingPageTranslationOptions(
         'breadcrumbs_label',
         'hero_title',
         'hero_image',
+        'mobile_hero_image',
         'hero_strapline',
         'downpage_sections',
     )

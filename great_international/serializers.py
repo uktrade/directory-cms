@@ -2271,7 +2271,7 @@ class SectorSummarySerializer(EntitySummarySerializerBase):
 
 class InvestmentAtlasLandingPageSerializer(BasePageSerializer):
     IMAGE_RENDITION_SPEC = "original"
-    MOBILE_IMAGE_RENDITION_SPEC = "fill-960x540"
+    MOBILE_IMAGE_RENDITION_SPEC = "original"
 
     breadcrumbs_label = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField(
@@ -2279,7 +2279,6 @@ class InvestmentAtlasLandingPageSerializer(BasePageSerializer):
     )
     mobile_hero_image = wagtail_fields.ImageRenditionField(
         MOBILE_IMAGE_RENDITION_SPEC,
-        source='hero_image',
     )
     hero_strapline = serializers.CharField()
     downpage_sections = StreamFieldSerializer()
