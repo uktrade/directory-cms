@@ -135,7 +135,14 @@ class InvestmentAtlasLandingPage(
         related_name='+',
         blank=False
     )
-
+    mobile_hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='Dedicated image for use on small/mobile-screen rendering of the page'
+    )
     hero_title = models.CharField(
         blank=False,
         null=False,

@@ -2,6 +2,7 @@
 
 ## Pre-release
 ### Implemented enhancements
+- GP2-3393: Add mobile hero image to Investment Atlas landing page
 - NOTICKET: Small CMS-related snags from early feedback
 - GP2-3215: Add InternationalInvestmentSectorPage and ...SubSectorPage to replace original ones
 - GP2-3160: Amending Parent/SubPage so restructing content 
