@@ -420,8 +420,7 @@ class AboutUkRegionSerializer(serializers.Serializer):
         if hasattr(region.specific, 'heading'):
             serializer = MinimalPageSerializer(region.specific)
         else:
-            serializer = MinimalPageWithHeroTitleSerializer(
-                region.specific)
+            serializer = MinimalPageWithHeroTitleAndHeroImageSerializer(region.specific)
 
         return serializer.data
 
@@ -1417,8 +1416,12 @@ class MinimalPageSerializer(BasePageSerializer):
     heading = serializers.CharField(max_length=255)
 
 
-class MinimalPageWithHeroTitleSerializer(BasePageSerializer):
+class MinimalPageWithHeroTitleAndHeroImageSerializer(BasePageSerializer):
     hero_title = serializers.CharField(max_length=255)
+    hero_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360',
+        allow_null=True
+    )
 
 
 # Invest seralizers
