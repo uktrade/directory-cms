@@ -2,6 +2,7 @@
 
 ## Pre-release
 ### Implemented enhancements
+- NOTICKET: Small CMS-related snags from early feedback
 - GP2-3215: Add InternationalInvestmentSectorPage and ...SubSectorPage to replace original ones
 - GP2-3160: Amending Parent/SubPage so restructing content 
 - GP2-3287: Add Related Opportunities to the region-page's serializer
