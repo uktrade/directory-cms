@@ -104,7 +104,7 @@ class InternationalInvestmentSectorPageBlock(blocks.StructBlock):
 
 class InternationalInvestmentSectorPageEarlyOpportunityBlock(blocks.StructBlock):
     image = FeaturedImageBlock(
-        blank=False,
+        blank=True,
     )
     text = MarkdownBlock(
         blank=False,
