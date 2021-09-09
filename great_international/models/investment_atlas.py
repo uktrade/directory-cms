@@ -316,7 +316,7 @@ class InvestmentOpportunityPage(
     introduction = MarkdownField(
         blank=False,
         help_text=(
-            'A single paragraph max including spaces to introduce the opportunity '
+            'A single paragraph to introduce the opportunity '
             '– what is the vision / ambition of the opportunity, timeline and where relevant, procurement method. '
             'What type of investor is this suitable for? Where is it and why is that important? '
             'Further detail can be provided in the “The Opportunity” section.'
