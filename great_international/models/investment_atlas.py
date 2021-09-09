@@ -151,7 +151,14 @@ class InvestmentAtlasLandingPage(
 
     downpage_sections = StreamField(
         [
-            ('panel', investment_atlas_blocks.AtlasLandingPagePanelBlock()),
+            (
+                'panel',
+                investment_atlas_blocks.AtlasLandingPagePanelBlock(
+                    help_text=(
+                        "If 'Block slug' is set to 'with-regions-map', the panel will show the regions map"
+                    ),
+                ),
+            ),
         ],
         null=True,
         blank=True,
@@ -392,7 +399,14 @@ class InvestmentOpportunityPage(
     # The Opportunity
     main_content = StreamField(
         [
-            ('content_section', investment_atlas_blocks.PageSectionBlock()),
+            ('content_section', investment_atlas_blocks.PageSectionBlock(
+                help_text=(
+                    "If 'Block slug' is set to 'with-key-links', the 'Key links' "
+                    "panel is shown next to the text. "
+                    "If 'Block slug' is set to 'with-region-spotlight', "
+                    "the 'Region spotlight' panel is shown next to the text."
+                )
+            )),
             (
                 'snippet_content',
                 investment_atlas_blocks.ReusableSnippetChooserBlock(
