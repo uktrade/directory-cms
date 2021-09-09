@@ -47,7 +47,6 @@ from tests.great_international.factories import (
     InvestInternationalHomePageFactory,
     CapitalInvestRegionPageFactory,
     AboutUkRegionListingPageFactory,
-    InvestRegionPageFactory,
     CapitalInvestRelatedSectorsFactory,
     InvestmentOpportunityPageFactory,
     InvestmentOpportunityRelatedSectorsFactory,
@@ -1268,7 +1267,7 @@ def test_about_uk_landing_page_has_regions(rf, international_root_page):
 
 @pytest.mark.django_db
 def test_about_uk_region_listing_page_has_regions(rf, international_root_page):
-    scotland = InvestRegionPageFactory(
+    scotland = AboutUkRegionPageFactory(
         slug="scotland",
         parent=international_root_page
     )
@@ -1301,10 +1300,16 @@ def test_about_uk_region_listing_page_has_regions(rf, international_root_page):
     for field in serializer.data['mapped_regions']:
         assert 'region' in field
         assert 'text' in field
+
+    scotland_image_path_stub = scotland.hero_image.file.name.replace('.jpg', '').replace('original_', '/media/')
+    midlands_image_path_stub = midlands.hero_image.file.name.replace('.jpg', '').replace('original_', '/media/')
+
     assert serializer.data['mapped_regions'][0]['text'] == 'Lorem ipsum'
     assert serializer.data['mapped_regions'][0]['region']['meta']['slug'] == 'scotland'
+    assert scotland_image_path_stub in serializer.data['mapped_regions'][0]['region']['hero_image']['url']
     assert serializer.data['mapped_regions'][4]['text'] == 'Lorem ipsum'
     assert serializer.data['mapped_regions'][4]['region']['meta']['slug'] == 'midlands'
+    assert midlands_image_path_stub in serializer.data['mapped_regions'][4]['region']['hero_image']['url']
 
 
 @pytest.mark.django_db
