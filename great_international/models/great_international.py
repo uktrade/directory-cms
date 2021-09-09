@@ -383,7 +383,7 @@ class InternationalInvestmentSectorPage(
         block_class_instance=blocks.InternationalInvestmentSectorPageEarlyOpportunityBlock(),
         null=True,
         blank=True,
-        max_num=3,
+        max_num=6,
     )
 
 
