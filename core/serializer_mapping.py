@@ -68,6 +68,7 @@ MODELS_SERIALIZERS_MAPPING = {
     great_international.models.investment_atlas.InvestmentOpportunityPage: great_international.serializers.InvestmentOpportunityPageSerializer,  # NOQA
     great_international.models.investment_atlas.InvestmentOpportunityListingPage: great_international.serializers.InvestmentOpportunityListingPageSerializer,  # NOQA
     great_international.models.investment_atlas.InvestmentAtlasLandingPage: great_international.serializers.InvestmentAtlasLandingPageSerializer,  # NOQA
+    great_international.models.great_international.WhyInvestInTheUKPage: great_international.serializers.WhyInvestInTheUKPageSerializer,  # NOQA
     # components
     components.models.BannerComponent: components.serializers.BannerComponentPageSerializer  # NOQA
 }
