@@ -29,6 +29,7 @@ class InvestmentAtlasLandingPagePanels:
             classname='collapsible',
             children=[
                 ImageChooserPanel('hero_image'),
+                ImageChooserPanel('mobile_hero_image'),
                 FieldPanel('hero_title'),
                 FieldPanel('hero_strapline'),
             ]

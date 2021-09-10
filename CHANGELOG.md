@@ -2,6 +2,7 @@
 
 ## Pre-release
 ### Implemented enhancements
+- GP2-3393: Add mobile hero image to Investment Atlas landing page
 - GP2-3216: Add images for each region in regions listings page
 - NOTICKET: Small CMS-related snags from early feedback
 - GP2-3215: Add InternationalInvestmentSectorPage and ...SubSectorPage to replace original ones
