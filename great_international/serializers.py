@@ -2302,7 +2302,9 @@ class InvestmentOpportunitySummarySerializer(EntitySummarySerializerBase):
 
 class InvestmentOpportunityPageSerializer(BasePageSerializer):
 
+    IMAGE_RENDITION_SPEC = "fill-960x540"
     AVATAR_RENDITION_SPEC = "fill-500x500"
+    HERO_IMAGE_RENDITION_SPEC = "original"
 
     # Intro/summary
     # title is automatic, from BasePageSerializer
@@ -2310,6 +2312,12 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer):
     strapline = serializers.CharField()
     introduction = core_fields.MarkdownToHTMLField()
     opportunity_summary = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField(
+        HERO_IMAGE_RENDITION_SPEC,
+    )
+    intro_image = wagtail_fields.ImageRenditionField(
+        IMAGE_RENDITION_SPEC,
+    )
 
     # Key facts
     location = serializers.CharField()
@@ -2323,7 +2331,6 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer):
     time_to_investment_decision = serializers.SerializerMethodField()
 
     # Main opportunity content
-    featured_images = StreamFieldSerializer()
     main_content = StreamFieldSerializer()
 
     important_links = core_fields.MarkdownToHTMLField()
@@ -2415,21 +2422,15 @@ class RelatedInvestmentOpportunityPageSerializer(BasePageSerializer):
     and AboutUkRegionPageSerializer.get_related_opportunities"""
 
     # title comes from BasePageSerializer
-    thumbnail_image = serializers.SerializerMethodField()
+    thumbnail_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360',
+        source='hero_image'
+    )
+
     opportunity_summary = serializers.CharField()
     regions = serializers.SerializerMethodField()
     sectors = serializers.SerializerMethodField()
     sub_sectors = serializers.SerializerMethodField()
-
-    def get_thumbnail_image(self, instance):
-        rendition_spec = 'fill-640x360'
-        # The thumbnail image will be either the first image in the featured_images StreamField, or none
-        if instance.featured_images:
-            first_image = instance.featured_images[0]
-            return first_image.block.get_api_representation(
-                value=first_image.value,
-                context={'rendition_spec': rendition_spec}
-            )
 
     def get_regions(self, instance):
         related_regions = instance.related_regions.live().all()
@@ -2465,8 +2466,9 @@ class RelatedInvestmentOpportunityPageSerializer(BasePageSerializer):
 class InvestmentOpportunityForListPageSerializer(BasePageSerializer):
 
     title = serializers.CharField(max_length=255)
-    hero_image = serializers.SerializerMethodField()
-
+    hero_image = wagtail_fields.ImageRenditionField(
+        'fill-640x360',
+    )
     # key facts we want to filter by
     # sector = serializers.CharField(max_length=255)  # doesn't exist on new opp model [yet?]
 
@@ -2479,16 +2481,6 @@ class InvestmentOpportunityForListPageSerializer(BasePageSerializer):
     related_regions = serializers.SerializerMethodField()
     related_sectors = serializers.SerializerMethodField()
     sub_sectors = serializers.SerializerMethodField()
-
-    def get_hero_image(self, instance):
-        rendition_spec = 'fill-640x360'
-        # The thumbnail image will be either the first image in the featured_images StreamField, or none
-        if instance.featured_images:
-            first_image = instance.featured_images[0]
-            return first_image.block.get_api_representation(
-                value=first_image.value,
-                context={'rendition_spec': rendition_spec}
-            )
 
     def get_planning_status(self, instance):
         # Ensure we always return the name, not the entire object. This protects against

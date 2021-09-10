@@ -11,13 +11,11 @@ from wagtail.admin.edit_handlers import (
 
 from .base import BaseInternationalPage
 
-from core.fields import single_struct_block_stream_field_factory
 from core.model_fields import MarkdownField
 
 from core.models import WagtailAdminExclusivePageMixin
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
-import great_international.blocks.great_international as great_international_blocks
 from great_international.models import great_international as great_international_models
 import great_international.blocks.investment_atlas as investment_atlas_blocks
 import great_international.panels.investment_atlas as investment_atlas_panels
@@ -119,7 +117,6 @@ class InvestmentAtlasLandingPage(
 ):
     subpage_types = [
         'great_international.InvestmentOpportunityListingPage',
-        # TO COME: more subpage_types to control CMS page heirarchy
         'great_international.AboutUkWhyChooseTheUkPage',
         'great_international.AboutUkRegionListingPage',
         'great_international.InternationalTopicLandingPage',
@@ -302,15 +299,14 @@ class InvestmentOpportunityPage(
             'Max val: 999.99'
         ),
     )
-
-    featured_images = single_struct_block_stream_field_factory(
-        field_name='images',
-        block_class_instance=great_international_blocks.FeaturedImageBlock(),
-        max_num=5,
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
         null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
         blank=True,
+        help_text='Main page hero image, above the opportunity title'
     )
-
     strapline = models.CharField(
         max_length=200,
         blank=False,
@@ -319,7 +315,6 @@ class InvestmentOpportunityPage(
             'to the fore. 200 chars max.'
         )
     )
-
     introduction = MarkdownField(
         blank=False,
         help_text=(
@@ -329,7 +324,14 @@ class InvestmentOpportunityPage(
             'Further detail can be provided in the “The Opportunity” section.'
         ),
     )
-
+    intro_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True,
+        help_text='Goes beside the opportunity intro text'
+    )
     opportunity_summary = models.TextField(
         max_length=300,
         blank=False,

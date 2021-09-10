@@ -805,6 +805,8 @@ class InvestmentOpportunityPageFactory(wagtail_factories.PageFactory):
     strapline = factory.fuzzy.FuzzyText(length=200)
     introduction = factory.fuzzy.FuzzyText(length=300)
     opportunity_summary = factory.fuzzy.FuzzyText(length=300)
+    hero_image = factory.SubFactory(wagtail_factories.ImageFactory)
+    intro_image = factory.SubFactory(wagtail_factories.ImageFactory)
     location = factory.fuzzy.FuzzyText(length=200)
     location_coords = '0, 0'
     promoter = factory.fuzzy.FuzzyText(length=200)
@@ -816,7 +818,6 @@ class InvestmentOpportunityPageFactory(wagtail_factories.PageFactory):
     time_to_investment_decision = models.investment_atlas.TIME_TO_INVESTMENT_DECISION_0M_6M
 
     # Streamfields - set them in the instance
-    # featured_images
     # main_content
 
     # related_regions - set them on the instance from the factory
