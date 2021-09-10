@@ -3,6 +3,7 @@
 ## Pre-release
 ### Implemented enhancements
 - GP2-3392: Refactor CMS to have specific hero and intro images for InvestmentOpportunityPage
+- GP2-3374: Add new WhyInvestInTheUK page
 - GP2-3393: Add mobile hero image to Investment Atlas landing page
 - GP2-3216: Add images for each region in regions listings page
 - NOTICKET: Small CMS-related snags from early feedback

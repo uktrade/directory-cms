@@ -2082,6 +2082,7 @@ class WhyInvestInTheUKPage(
         'wagtailimages.Image',
         null=True,
         on_delete=models.SET_NULL,
+        help_text='Main page hero image, above the title',
         related_name='+'
     )
 
