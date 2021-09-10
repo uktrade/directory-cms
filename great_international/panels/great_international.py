@@ -1,5 +1,4 @@
-from django.forms import Textarea, CheckboxSelectMultiple, Select
-
+from django.forms import CheckboxSelectMultiple, Select, Textarea
 from wagtail.admin.edit_handlers import (
     FieldPanel,
     FieldRowPanel,
@@ -10,8 +9,8 @@ from wagtail.admin.edit_handlers import (
     PageChooserPanel,
     StreamFieldPanel,
 )
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
 from core.helpers import make_translated_interface
@@ -1537,6 +1536,58 @@ class InternationalInvestmentSubSectorPagePanels:
         FieldPanel('heading'),
     ]
 
+    settings_panels = [
+        FieldPanel('slug'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
+
+
+class WhyInvestInTheUKPagePanels:
+
+    content_panels = [
+        FieldPanel('title'),
+        FieldPanel('featured_description'),
+        MultiFieldPanel(
+            heading="Hero Section",
+            classname='collapsible',
+            children=[
+                FieldPanel('hero_title'),
+                ImageChooserPanel('hero_image'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="UK Regions",
+            classname='collapsible',
+            children=[
+                FieldPanel('region_summary_section_title'),
+                FieldPanel('region_summary_section_intro'),
+                ImageChooserPanel('region_summary_section_image'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="UK Sectors",
+            classname='collapsible',
+            children=[
+                FieldPanel('uk_sector_section_title'),
+                FieldPanel('uk_sector_section_intro'),
+                ImageChooserPanel('uk_sector_section_image'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="Investment opportunities",
+            classname='collapsible',
+            children=[
+                FieldPanel('investment_opps_title'),
+                FieldPanel('investment_opps_intro'),
+            ],
+        ),
+
+        SearchEngineOptimisationPanel()
+    ]
     settings_panels = [
         FieldPanel('slug'),
     ]

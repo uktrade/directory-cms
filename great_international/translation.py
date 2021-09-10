@@ -1,13 +1,7 @@
 from modeltranslation.decorators import register
 
 from core.translation import BaseTranslationOptions
-from great_international.models import (
-    great_international,
-    invest,
-    capital_invest,
-    find_a_supplier,
-    investment_atlas,
-)
+from great_international.models import capital_invest, find_a_supplier, great_international, invest, investment_atlas
 
 
 @register(great_international.BaseInternationalSectorPage)
@@ -1352,4 +1346,21 @@ class InternationalInvestmentSectorPageTranslationOptions(
 class InternationalInvestmentSubSectorPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'heading',
+    )
+
+
+@register(great_international.WhyInvestInTheUKPage)
+class InternationalWhyInvestInTheUKPageTranslationOptions(BaseTranslationOptions):
+    fields = (
+        'featured_description',
+        'hero_title',
+        'hero_image',
+        'region_summary_section_title',
+        'region_summary_section_intro',
+        'region_summary_section_image',
+        'uk_sector_section_title',
+        'uk_sector_section_intro',
+        'uk_sector_section_image',
+        'investment_opps_title',
+        'investment_opps_intro',
     )
