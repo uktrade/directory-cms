@@ -17,9 +17,10 @@ from core.model_fields import MarkdownField
 from core.models import WagtailAdminExclusivePageMixin
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
-import great_international.panels.investment_atlas as investment_atlas_panels
-import great_international.models.great_international as gi_models
+import great_international.blocks.great_international as great_international_blocks
+from great_international.models import great_international as great_international_models
 import great_international.blocks.investment_atlas as investment_atlas_blocks
+import great_international.panels.investment_atlas as investment_atlas_panels
 
 from wagtail.snippets.models import register_snippet
 
@@ -119,6 +120,9 @@ class InvestmentAtlasLandingPage(
     subpage_types = [
         'great_international.InvestmentOpportunityListingPage',
         # TO COME: more subpage_types to control CMS page heirarchy
+        'great_international.AboutUkWhyChooseTheUkPage',
+        'great_international.AboutUkRegionListingPage',
+        'great_international.InternationalTopicLandingPage',
     ]
 
     # title comes from base page
@@ -131,7 +135,14 @@ class InvestmentAtlasLandingPage(
         related_name='+',
         blank=False
     )
-
+    mobile_hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='Dedicated image for use on small/mobile-screen rendering of the page'
+    )
     hero_title = models.CharField(
         blank=False,
         null=False,
@@ -147,7 +158,14 @@ class InvestmentAtlasLandingPage(
 
     downpage_sections = StreamField(
         [
-            ('panel', investment_atlas_blocks.AtlasLandingPagePanelBlock()),
+            (
+                'panel',
+                investment_atlas_blocks.AtlasLandingPagePanelBlock(
+                    help_text=(
+                        "If 'Block slug' is set to 'with-regions-map', the panel will show the regions map"
+                    ),
+                ),
+            ),
         ],
         null=True,
         blank=True,
@@ -166,7 +184,10 @@ class InvestmentOpportunityListingPage(
     investment_atlas_panels.InvestmentOpportunityListingPagePanels,
 ):
     parent_page_types = ['great_international.InvestmentAtlasLandingPage', ]
-    subpage_types = ['great_international.InvestmentOpportunityPage', ]
+    subpage_types = [
+        'great_international.InvestmentOpportunityPage',
+        'great_international.AboutUkWhyChooseTheUkPage',
+    ]
 
     # `title` comes from the base class
     breadcrumbs_label = models.CharField(max_length=50)
@@ -199,7 +220,7 @@ class InvestmentOpportunityListingPage(
 
 class RelatedSector(models.Model):
     related_sector = models.ForeignKey(
-        'great_international.InternationalSectorPage',
+        'great_international.InternationalInvestmentSectorPage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -210,7 +231,7 @@ class RelatedSector(models.Model):
         PageChooserPanel(
             'related_sector',
             [
-                'great_international.InternationalSectorPage'
+                'great_international.InternationalInvestmentSectorPage'
             ]
         ),
     ]
@@ -232,7 +253,7 @@ class InvestmentOpportunityRelatedSectors(Orderable, RelatedSector):
 
 class RelatedSubSector(models.Model):
     related_sub_sector = models.ForeignKey(
-        'great_international.InternationalSubSectorPage',
+        'great_international.InternationalInvestmentSubSectorPage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -242,7 +263,7 @@ class RelatedSubSector(models.Model):
     panels = [
         PageChooserPanel(
             'related_sub_sector',
-            ['great_international.InternationalSubSectorPage']
+            ['great_international.InternationalInvestmentSubSectorPage']
         ),
     ]
 
@@ -284,7 +305,7 @@ class InvestmentOpportunityPage(
 
     featured_images = single_struct_block_stream_field_factory(
         field_name='images',
-        block_class_instance=investment_atlas_blocks.FeaturedImageBlock(),
+        block_class_instance=great_international_blocks.FeaturedImageBlock(),
         max_num=5,
         null=True,
         blank=True,
@@ -300,10 +321,9 @@ class InvestmentOpportunityPage(
     )
 
     introduction = MarkdownField(
-        max_length=300,
         blank=False,
         help_text=(
-            'A single paragraph of 300 characters max including spaces to introduce the opportunity '
+            'A single paragraph to introduce the opportunity '
             '– what is the vision / ambition of the opportunity, timeline and where relevant, procurement method. '
             'What type of investor is this suitable for? Where is it and why is that important? '
             'Further detail can be provided in the “The Opportunity” section.'
@@ -335,7 +355,7 @@ class InvestmentOpportunityPage(
     )
 
     related_regions = ParentalManyToManyField(
-        gi_models.AboutUkRegionPage,
+        great_international_models.AboutUkRegionPage,
         blank=True,
     )
 
@@ -358,7 +378,9 @@ class InvestmentOpportunityPage(
         verbose_name="Scale value (in millions)"
     )
 
-    # Note that a `related_sub_sectors` reverse relation comes
+    # Note that a `related_sectors` reverse relation
+    # comes from InvestmentOpportunityRelatedectors
+    # and a `related_sub_sectors` reverse relation comes
     # from InvestmentOpportunityRelatedSubSectors
 
     planning_status = models.ForeignKey(
@@ -384,7 +406,14 @@ class InvestmentOpportunityPage(
     # The Opportunity
     main_content = StreamField(
         [
-            ('content_section', investment_atlas_blocks.PageSectionBlock()),
+            ('content_section', investment_atlas_blocks.PageSectionBlock(
+                help_text=(
+                    "If 'Block slug' is set to 'with-key-links', the 'Key links' "
+                    "panel is shown next to the text. "
+                    "If 'Block slug' is set to 'with-region-spotlight', "
+                    "the 'Region spotlight' panel is shown next to the text."
+                )
+            )),
             (
                 'snippet_content',
                 investment_atlas_blocks.ReusableSnippetChooserBlock(

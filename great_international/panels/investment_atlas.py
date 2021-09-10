@@ -29,6 +29,7 @@ class InvestmentAtlasLandingPagePanels:
             classname='collapsible',
             children=[
                 ImageChooserPanel('hero_image'),
+                ImageChooserPanel('mobile_hero_image'),
                 FieldPanel('hero_title'),
                 FieldPanel('hero_strapline'),
             ]
@@ -134,7 +135,7 @@ class InvestmentOpportunityPagePanels:
             ],
         ),
         MultiFieldPanel(
-            heading='The Oppportunity',
+            heading='The Opportunity',
             classname='collapsible',
             children=[
                 StreamFieldPanel('featured_images'),

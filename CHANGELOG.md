@@ -2,6 +2,12 @@
 
 ## Pre-release
 ### Implemented enhancements
+- GP2-3393: Add mobile hero image to Investment Atlas landing page
+- GP2-3216: Add images for each region in regions listings page
+- NOTICKET: Small CMS-related snags from early feedback
+- GP2-3215: Add InternationalInvestmentSectorPage and ...SubSectorPage to replace original ones
+- GP2-3160: Amending Parent/SubPage so restructing content 
+- GP2-3287: Add Related Opportunities to the region-page's serializer
 - GP2-3158: REVIST Refactor of InternationalHomepage on the CMS side -- had to make a simpler version after reverting previous branch, because migrations timed out
 - GP2-3158: Refactor InternationalHomepage on the CMS side (Page, translations, serializer)
 - GP2-3330: Extend InvestmentOpportunityForListPageSerializer to guarantee representation of PlanningStatus snippet
@@ -15,6 +21,8 @@
 - NO-TICKET: urllib3 vulnerability alert fixup
 
 ### Fixed bugs
+- NO-TICKET: fixed InvestmentOpportunityForListPageSerializer when there is no planning_status 
+
 ## [1.0.0](https://github.com/uktrade/great-international-ui/releases/tag/1.0.0)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.12.07...1.0.0)
 ### Implemented enhancements

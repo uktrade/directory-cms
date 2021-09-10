@@ -24,6 +24,8 @@ from great_international.serializers import (
     InvestmentOpportunityListingPageSerializer,
     InvestmentOpportunityForListPageSerializer,
     RelatedInvestmentOpportunityPageSerializer,
+    InternationalInvestmentSectorPageSerializer,
+    InternationalInvestmentSubSectorPageSerializer,
 )
 from tests.great_international.factories import (
     InternationalSectorPageFactory,
@@ -45,12 +47,13 @@ from tests.great_international.factories import (
     InvestInternationalHomePageFactory,
     CapitalInvestRegionPageFactory,
     AboutUkRegionListingPageFactory,
-    InvestRegionPageFactory,
     CapitalInvestRelatedSectorsFactory,
     InvestmentOpportunityPageFactory,
     InvestmentOpportunityRelatedSectorsFactory,
     InvestmentOpportunityListingPageFactory,
     PlanningStatusFactory,
+    InternationalInvestmentSectorPageFactory,
+    InternationalInvestmentSubSectorPageFactory
 )
 
 from great_international.models.capital_invest import (
@@ -61,9 +64,11 @@ from great_international.models.capital_invest import (
 )
 from great_international.models.great_international import (
     AboutDitServicesFields,
-    AboutUkArticlesFields
+    AboutUkArticlesFields,
+    InternationalInvestmentSectorPage,
 )
 from great_international.models.investment_atlas import (
+    InvestmentOpportunityPage,
     InvestmentOpportunityRelatedSubSectors,
 )
 
@@ -328,6 +333,121 @@ def test_about_uk_region_page_has_statistics(international_root_page, rf):
         assert 'number' in statistic
         assert 'heading' in statistic
         assert 'smallprint' in statistic
+
+
+@pytest.mark.django_db
+def test_about_uk_region_page_has_related_opportunities(international_root_page, rf):
+    region_1 = AboutUkRegionPageFactory(
+        slug='region-1-slug',
+        hero_title="Region 1",
+        parent=international_root_page
+    )
+    region_2 = AboutUkRegionPageFactory(
+        slug='region-2-slug',
+        hero_title="Region 2",
+        parent=international_root_page
+    )
+    region_3 = AboutUkRegionPageFactory(
+        slug='region-3-slug',
+        hero_title="Region 2",
+        parent=international_root_page
+    )
+
+    opp_1 = InvestmentOpportunityPageFactory(
+        slug='opp_1',
+        title='opp_1',
+        parent=international_root_page
+    )
+    opp_2 = InvestmentOpportunityPageFactory(
+        slug='opp_2',
+        title='opp_2',
+        parent=international_root_page
+    )
+    opp_3 = InvestmentOpportunityPageFactory(
+        slug='opp_3',
+        title='opp_3',
+        priority_weighting='9',  # should come first in a list
+        parent=international_root_page
+    )
+    opp_4 = InvestmentOpportunityPageFactory(
+        slug='opp_4',
+        title='opp_4',
+        parent=international_root_page
+    )
+    opp_5 = InvestmentOpportunityPageFactory(
+        slug='opp_5',
+        title='opp_5',
+        parent=international_root_page
+    )
+    opp_6 = InvestmentOpportunityPageFactory(
+        slug='opp_6',
+        title='opp_6',
+        parent=international_root_page
+    )
+    opp_7 = InvestmentOpportunityPageFactory(
+        slug='opp_7',
+        title='opp_7',
+        parent=international_root_page
+    )
+
+    opp_1.related_regions.add(region_1)
+    opp_1.related_regions.add(region_2)
+    opp_1.save()
+    opp_2.related_regions.add(region_1)
+    opp_2.save()
+    opp_3.related_regions.add(region_2)
+    opp_3.save()
+    opp_4.related_regions.add(region_1)
+    opp_4.save()
+    opp_5.related_regions.add(region_1)
+    opp_5.save()
+    opp_6.related_regions.add(region_1)
+    opp_6.save()
+    opp_7.related_regions.add(region_1)
+    opp_7.save()
+
+    assert opp_1.related_regions.count() == 2
+    assert opp_2.related_regions.count() == 1
+    assert opp_3.related_regions.count() == 1
+    assert opp_4.related_regions.count() == 1
+    assert opp_5.related_regions.count() == 1
+    assert opp_6.related_regions.count() == 1
+    assert opp_7.related_regions.count() == 1
+
+    assert region_1.investmentopportunitypage_set.count() == 6
+    assert region_2.investmentopportunitypage_set.count() == 2
+    assert region_3.investmentopportunitypage_set.count() == 0
+
+    region_1_serializer = AboutUkRegionPageSerializer(
+        instance=region_1,
+        context={'request': rf.get('/')}
+    )
+    region_1_related_opportunities = region_1_serializer.data['related_opportunities']
+
+    assert len(region_1_related_opportunities) == 3
+    assert [x['meta']['slug'] for x in region_1_related_opportunities] == [
+        'opp_7',  # newest with default priority
+        'opp_6',  # next newest with default priority
+        'opp_5',  # next newest with default priority
+    ]
+
+    region_2_serializer = AboutUkRegionPageSerializer(
+        instance=region_2,
+        context={'request': rf.get('/')}
+    )
+    region_2_related_opportunities = region_2_serializer.data['related_opportunities']
+    assert len(region_2_related_opportunities) == 2
+    assert [x['meta']['slug'] for x in region_2_related_opportunities] == [
+        'opp_3',  # higher pri than opp_1
+        'opp_1',
+    ]
+
+    region_3_serializer = AboutUkRegionPageSerializer(
+        instance=region_3,
+        context={'request': rf.get('/')}
+    )
+    region_3_related_opportunities = region_3_serializer.data['related_opportunities']
+    assert len(region_3_related_opportunities) == 0
 
 
 @pytest.mark.django_db
@@ -1055,7 +1175,7 @@ def test_about_uk_landing_page_has_how_we_help(
 def test_about_uk_landing_page_has_all_sectors(
         rf, international_root_page
 ):
-    InternationalSectorPageFactory(
+    InternationalInvestmentSectorPageFactory(
         parent=international_root_page,
         slug='sector-one',
     )
@@ -1147,7 +1267,7 @@ def test_about_uk_landing_page_has_regions(rf, international_root_page):
 
 @pytest.mark.django_db
 def test_about_uk_region_listing_page_has_regions(rf, international_root_page):
-    scotland = InvestRegionPageFactory(
+    scotland = AboutUkRegionPageFactory(
         slug="scotland",
         parent=international_root_page
     )
@@ -1180,10 +1300,16 @@ def test_about_uk_region_listing_page_has_regions(rf, international_root_page):
     for field in serializer.data['mapped_regions']:
         assert 'region' in field
         assert 'text' in field
+
+    scotland_image_path_stub = scotland.hero_image.file.name.replace('.jpg', '').replace('original_', '/media/')
+    midlands_image_path_stub = midlands.hero_image.file.name.replace('.jpg', '').replace('original_', '/media/')
+
     assert serializer.data['mapped_regions'][0]['text'] == 'Lorem ipsum'
     assert serializer.data['mapped_regions'][0]['region']['meta']['slug'] == 'scotland'
+    assert scotland_image_path_stub in serializer.data['mapped_regions'][0]['region']['hero_image']['url']
     assert serializer.data['mapped_regions'][4]['text'] == 'Lorem ipsum'
     assert serializer.data['mapped_regions'][4]['region']['meta']['slug'] == 'midlands'
+    assert midlands_image_path_stub in serializer.data['mapped_regions'][4]['region']['hero_image']['url']
 
 
 @pytest.mark.django_db
@@ -1335,7 +1461,7 @@ def test_atlas_opportunity_page_can_add_sector_as_related(rf, international_root
         slug='page-slug',
     )
 
-    sector = InternationalSectorPageFactory(
+    sector = InternationalInvestmentSectorPageFactory(
         parent=guide_landing_page,
         slug='sector-a-test'
     )
@@ -1418,30 +1544,29 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
     )
 
     # set up some sectors and subsectors, to help show they don't influence results
-    sector_a = InternationalSectorPageFactory(
+    sector_a = InternationalInvestmentSectorPageFactory(
         parent=guide_landing_page,
         slug='sectorA'
     )
-    sector_b = InternationalSectorPageFactory(
+    sector_b = InternationalInvestmentSectorPageFactory(
         parent=guide_landing_page,
         slug='sectorB'
     )
-    sector_c = InternationalSectorPageFactory(
+    sector_c = InternationalInvestmentSectorPageFactory(
         parent=guide_landing_page,
-        slug='sectorB'
+        slug='sectorC'
     )
-
-    subsector_a1 = InternationalSubSectorPageFactory(
+    subsector_a1 = InternationalInvestmentSubSectorPageFactory(
         parent=sector_a,
         heading='sub_sector_a1_heading',
         slug='sub_sector_a1'
     )
-    subsector_b2 = InternationalSubSectorPageFactory(
+    subsector_b2 = InternationalInvestmentSubSectorPageFactory(
         parent=sector_b,
         heading='sub_sector_b2_heading',
         slug='sub_sector_b2'
     )
-    subsector_b3 = InternationalSubSectorPageFactory(
+    subsector_b3 = InternationalInvestmentSubSectorPageFactory(
         parent=sector_b,
         heading='sub_sector_b3_heading',
         slug='sub_sector_b3'
@@ -1688,12 +1813,12 @@ def test_atlas_opportunity_page_can_add_sub_sector_as_related(rf, international_
         slug='page-slug',
     )
 
-    sector = InternationalSectorPageFactory(
+    sector = InternationalInvestmentSectorPageFactory(
         parent=guide_landing_page,
         slug='sector'
     )
 
-    sub_sector = InternationalSubSectorPageFactory(
+    sub_sector = InternationalInvestmentSubSectorPageFactory(
         parent=sector,
         heading='sub_sector_heading',
         slug='sub_sector'
@@ -1788,50 +1913,50 @@ def test_atlas_opportunity_listing_page_gets_sectors_with_sub_sectors(rf, intern
         slug='page-slug',
     )
 
-    automotive_sector = InternationalSectorPageFactory(
+    automotive_sector = InternationalInvestmentSectorPageFactory(
         parent=topic_landing_page,
         slug='automotive'
     )
-    InternationalSectorPageSerializer(
+    InternationalInvestmentSectorPageSerializer(
         instance=automotive_sector,
         context={'request': rf.get('/')}
     )
 
-    real_estate_sector = InternationalSectorPageFactory(
+    real_estate_sector = InternationalInvestmentSectorPageFactory(
         parent=topic_landing_page,
         slug='real-estate'
     )
-    InternationalSectorPageSerializer(
+    InternationalInvestmentSectorPageSerializer(
         instance=real_estate_sector,
         context={'request': rf.get('/')}
     )
 
-    housing_sub_sector = InternationalSubSectorPageFactory(
+    housing_sub_sector = InternationalInvestmentSubSectorPageFactory(
         parent=real_estate_sector,
         heading='Housing',
         slug='housing'
     )
-    BaseInternationalSectorPageSerializer(
+    InternationalInvestmentSubSectorPageSerializer(
         instance=housing_sub_sector,
         context={'request': rf.get('/')}
     )
 
-    mixed_use_sub_sector = InternationalSubSectorPageFactory(
+    mixed_use_sub_sector = InternationalInvestmentSubSectorPageFactory(
         parent=automotive_sector,
         heading='Mixed Use',
         slug='mixed-use'
     )
-    BaseInternationalSectorPageSerializer(
+    InternationalInvestmentSubSectorPageSerializer(
         instance=mixed_use_sub_sector,
         context={'request': rf.get('/')}
     )
 
-    energy_sub_sector = InternationalSubSectorPageFactory(
+    energy_sub_sector = InternationalInvestmentSubSectorPageFactory(
         parent=automotive_sector,
         heading='Energy',
         slug='energy'
     )
-    BaseInternationalSectorPageSerializer(
+    InternationalInvestmentSubSectorPageSerializer(
         instance=energy_sub_sector,
         context={'request': rf.get('/')}
     )
@@ -1950,3 +2075,177 @@ def test_atlas_opportunity_listing_page_serializer__planning_status__is_not_verb
         instance=opportunity
     )
     assert opportunity_for_list_serializer.data['planning_status'] == 'Planning Status One'
+
+
+@pytest.mark.django_db
+def test_atlas_opportunity_listing_page_serializer__planning_status__is_none(
+    international_root_page,
+):
+
+    planning_status = None
+    opportunity = InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        slug='opp_one',
+        planning_status=planning_status,
+    )
+
+    opportunity_for_list_serializer = InvestmentOpportunityForListPageSerializer(
+        instance=opportunity
+    )
+    assert opportunity_for_list_serializer.data['planning_status'] is None
+
+
+@pytest.fixture
+def sector_pages_with_related_opportunities(international_root_page):
+
+    # make a landing page
+    guide_landing_page = InternationalGuideLandingPageFactory(
+        parent=international_root_page,
+        slug='page-slug',
+    )
+
+    # Add three Sector Pages, one will have no opportunities associated with it
+    sector_a = InternationalInvestmentSectorPageFactory(
+        parent=guide_landing_page,
+        slug='sectorA'
+    )
+    InternationalInvestmentSectorPageFactory(
+        parent=guide_landing_page,
+        slug='sectorB'
+    )
+    sector_c = InternationalInvestmentSectorPageFactory(
+        parent=guide_landing_page,
+        slug='sectorC'
+    )
+
+    # Add six opportunities, map four to SectorA, none to SectorB, two to SectorC
+    InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        slug='opp_1',
+        related_regions=[],
+        related_sectors=[InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_a)],
+        related_sub_sectors=[],
+        priority_weighting="0.0"
+    )
+
+    InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        slug='opp_2',
+        related_regions=[],
+        related_sectors=[InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_a)],
+        related_sub_sectors=[],
+        priority_weighting="0.0"
+    )
+
+    InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        slug='opp_3',
+        related_regions=[],
+        related_sectors=[InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_a)],
+        related_sub_sectors=[],
+        priority_weighting="100"  # Note, highest weighting
+    )
+
+    InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        slug='opp_4',
+        related_regions=[],
+        related_sectors=[InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_a)],
+        related_sub_sectors=[],
+        priority_weighting="10.1"
+    )
+
+    InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        slug='opp_5',
+        related_regions=[],
+        related_sectors=[InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_c)],
+        related_sub_sectors=[],
+        priority_weighting="0.0"
+    )
+
+    InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        slug='opp_6',
+        related_regions=[],
+        related_sectors=[InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_c)],
+        related_sub_sectors=[],
+        priority_weighting="1.0"
+    )
+
+
+@pytest.mark.django_db
+def test_international_investment_sector_page_serializer__get_related_opportunities__manually_selected(
+    sector_pages_with_related_opportunities
+):
+
+    sector_a = InternationalInvestmentSectorPage.objects.get(slug='sectorA')
+    sector_b = InternationalInvestmentSectorPage.objects.get(slug='sectorB')
+
+    opp_1 = InvestmentOpportunityPage.objects.get(slug='opp_1')
+    opp_2 = InvestmentOpportunityPage.objects.get(slug='opp_2')
+    opp_3 = InvestmentOpportunityPage.objects.get(slug='opp_3')
+    opp_5 = InvestmentOpportunityPage.objects.get(slug='opp_5')
+
+    # manually spec some related_opportunities. NB: doesn't enforce that their sectors match - nice-to-do
+    sector_a.manually_selected_related_opportunities = [
+        ('related_opportunity', opp_5),
+        ('related_opportunity', opp_1),
+        ('related_opportunity', opp_3),
+    ]
+    sector_a.save()
+
+    sector_b.manually_selected_related_opportunities = [
+        ('related_opportunity', opp_2),
+        ('related_opportunity', opp_1),
+    ]
+    sector_b.save()
+
+    serialized_sector_a = InternationalInvestmentSectorPageSerializer(sector_a)
+    serialized_sector_b = InternationalInvestmentSectorPageSerializer(sector_b)
+
+    assert len(serialized_sector_a.data['related_opportunities']) == 3
+
+    assert [x['meta']['slug'] for x in serialized_sector_a.data['related_opportunities']] == [
+        'opp_5',
+        'opp_1',
+        'opp_3',
+    ]
+
+    assert len(serialized_sector_b.data['related_opportunities']) == 2
+
+    assert [x['meta']['slug'] for x in serialized_sector_b.data['related_opportunities']] == [
+        'opp_2',
+        'opp_1',
+    ]
+
+    # sector C has none manually configured but two auto-associated, covered in the test below
+
+
+@pytest.mark.django_db
+def test_international_investment_sector_page_serializer__get_related_opportunities__auto_selected(
+    sector_pages_with_related_opportunities
+):
+    sector_a = InternationalInvestmentSectorPage.objects.get(slug='sectorA')
+    sector_b = InternationalInvestmentSectorPage.objects.get(slug='sectorB')
+    sector_c = InternationalInvestmentSectorPage.objects.get(slug='sectorC')
+
+    serialized_sector_a = InternationalInvestmentSectorPageSerializer(sector_a)
+    serialized_sector_b = InternationalInvestmentSectorPageSerializer(sector_b)
+    serialized_sector_c = InternationalInvestmentSectorPageSerializer(sector_c)
+
+    assert len(serialized_sector_a.data['related_opportunities']) == 3   # even though four are configured, limited to 3
+    assert [x['meta']['slug'] for x in serialized_sector_a.data['related_opportunities']] == [
+        'opp_3',  # highest weighted
+        'opp_4',  # next highest weighted
+        'opp_2',  # no weighting, but newer than opp_1
+    ]
+
+    assert len(serialized_sector_b.data['related_opportunities']) == 0   # none configured
+    assert [x['meta']['slug'] for x in serialized_sector_b.data['related_opportunities']] == []
+
+    assert len(serialized_sector_c.data['related_opportunities']) == 2
+    assert [x['meta']['slug'] for x in serialized_sector_c.data['related_opportunities']] == [
+        'opp_6',
+        'opp_5',
+    ]
