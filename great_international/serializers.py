@@ -2663,3 +2663,23 @@ class InternationalInvestmentSubSectorPageSerializer(
     BasePageSerializer,
 ):
     heading = serializers.CharField()
+
+
+class WhyInvestInTheUKPageSerializer(
+    BasePageSerializer,
+    HeroSerializer,
+):
+    IMAGE_RENDITION_SPEC = "fill-500x500"
+
+    featured_description = serializers.CharField()
+    hero_title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField(
+        IMAGE_RENDITION_SPEC
+    )
+    region_summary_section_title = serializers.CharField()
+
+    region_summary_section_intro = serializers.CharField()
+    investment_opps_title = serializers.CharField()
+    investment_opps_intro = serializers.CharField()
+    uk_sector_section_title = serializers.CharField()
+    uk_sector_section_intro = serializers.CharField()
