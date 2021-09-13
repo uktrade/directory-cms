@@ -453,3 +453,4 @@ class InvestmentOpportunityPage(
         null=True,
         max_length=1500,
     )
+    
