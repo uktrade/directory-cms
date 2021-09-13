@@ -2669,7 +2669,7 @@ class WhyInvestInTheUKPageSerializer(
     BasePageSerializer,
     HeroSerializer,
 ):
-    IMAGE_RENDITION_SPEC = "fill-500x500"
+    IMAGE_RENDITION_SPEC = "fill-960x540"
 
     featured_description = serializers.CharField()
     hero_title = serializers.CharField()
