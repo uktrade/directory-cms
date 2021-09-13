@@ -1,31 +1,22 @@
+from directory_constants import slugs
 from django.db import models
-
-from modelcluster.fields import ParentalManyToManyField, ParentalKey
+from modelcluster.fields import ParentalKey, ParentalManyToManyField
+from wagtail.core.blocks import PageChooserBlock
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Orderable
-from wagtail.core.blocks import PageChooserBlock
 
-from directory_constants import slugs
-
-from core.model_fields import MarkdownField
-from core.fields import single_struct_block_stream_field_factory
-
-from core.models import (
-    WagtailAdminExclusivePageMixin,
-    FormPageMetaClass,
-)
-from core.mixins import ServiceHomepageMixin
 from core.constants import ARTICLE_TYPES
-
+from core.fields import single_struct_block_stream_field_factory
+from core.mixins import ServiceHomepageMixin
+from core.model_fields import MarkdownField
+from core.models import FormPageMetaClass, WagtailAdminExclusivePageMixin
 from export_readiness import snippets
-
-from great_international.panels import great_international as panels
 from great_international.blocks import great_international as blocks
+from great_international.panels import great_international as panels
 
-from . import invest as invest_models
 from . import capital_invest as capital_invest_models
 from . import find_a_supplier as fas_models
-
+from . import invest as invest_models
 from .base import BaseInternationalPage
 
 
@@ -1086,6 +1077,7 @@ class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, 
         'great_international.InternationalHomePage',
         'great_international.AboutUkLandingPage',
         'great_international.InvestmentAtlasLandingPage',
+        'great_international.WhyInvestInTheUKPage',
     ]
     subpage_types = [
         'great_international.InternationalArticleListingPage',
@@ -2076,4 +2068,52 @@ class AboutUkWhyChooseTheUkPage(panels.AboutUkWhyChooseTheUkPagePanels, BaseInte
         max_length=255,
         blank=True,
         verbose_name='CTA URL'
+    )
+
+
+class WhyInvestInTheUKPage(
+    panels.WhyInvestInTheUKPagePanels,
+    BaseInternationalPage
+):
+    parent_page_types = ['great_international.InvestmentAtlasLandingPage', ]
+
+    hero_title = models.CharField(max_length=255)
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        help_text='Main page hero image, above the title',
+        related_name='+'
+    )
+
+    featured_description = models.TextField(max_length=1000, blank=True)
+
+    region_summary_section_title = models.CharField(max_length=255, blank=True)
+    region_summary_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+    region_summary_section_intro = models.TextField(max_length=1000, blank=True)
+
+    uk_sector_section_title = models.CharField(max_length=255, blank=True)
+    uk_sector_section_intro = models.TextField(max_length=1000, blank=True)
+    uk_sector_section_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True
+    )
+
+    investment_opps_title = models.CharField(
+        max_length=255,
+        verbose_name="Investment opportunities title", blank=True
+    )
+    investment_opps_intro = models.TextField(
+        max_length=1000,
+        blank=True,
+        verbose_name="Investment opportunities intro"
     )
