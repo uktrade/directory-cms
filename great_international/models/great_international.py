@@ -2112,7 +2112,7 @@ class WhyInvestInTheUKPage(
         max_length=255,
         verbose_name="Investment opportunities title", blank=True
     )
-    investment_opps_intro = models.CharField(
+    investment_opps_intro = models.TextField(
         max_length=1000,
         blank=True,
         verbose_name="Investment opportunities intro"
