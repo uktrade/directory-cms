@@ -120,6 +120,7 @@ class InvestmentAtlasLandingPage(
         'great_international.AboutUkWhyChooseTheUkPage',
         'great_international.AboutUkRegionListingPage',
         'great_international.InternationalTopicLandingPage',
+        'great_international.WhyInvestInTheUKPage',
     ]
 
     # title comes from base page
