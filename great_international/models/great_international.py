@@ -826,7 +826,8 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
         'great_international.InternationalGuideLandingPage',
         'great_international.InternationalSectorPage',  # deprecated
         'great_international.InternationalInvestmentSectorPage',  # new, replaces InternationalSectorPage
-        'great_international.AboutUkWhyChooseTheUkPage'
+        'great_international.AboutUkWhyChooseTheUkPage',
+        'great_international.WhyInvestInTheUKPage'
     ]
     subpage_types = []
 
@@ -2076,6 +2077,7 @@ class WhyInvestInTheUKPage(
     BaseInternationalPage
 ):
     parent_page_types = ['great_international.InvestmentAtlasLandingPage', ]
+    subpage_types = ['great_international.InternationalArticlePage']
 
     hero_title = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
