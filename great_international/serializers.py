@@ -1418,9 +1418,10 @@ class MinimalPageSerializer(BasePageSerializer):
 
 class MinimalPageWithHeroTitleAndHeroImageSerializer(BasePageSerializer):
     hero_title = serializers.CharField(max_length=255)
-    hero_image = wagtail_fields.ImageRenditionField(
+    hero_image_thumbnail = wagtail_fields.ImageRenditionField(
         'fill-640x360',
-        allow_null=True
+        allow_null=True,
+        source='hero_image'
     )
 
 
