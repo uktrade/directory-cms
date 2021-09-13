@@ -2,6 +2,7 @@
 from django import forms
 
 from wagtail.core import blocks
+from wagtail.images.blocks import ImageChooserBlock
 
 from core import blocks as core_blocks
 from core.helpers import render_markdown
@@ -30,6 +31,16 @@ class FeaturedImageBlock(core_blocks.BaseAltTextImageBlock):
     pass
 
 
+class OptionalImageBlock(core_blocks.BaseAltTextImageBlock):
+
+    # redefine a couple of fields as optional
+    image = ImageChooserBlock(required=False)
+    image_alt = blocks.CharBlock(
+        max_length=255,
+        required=False,
+    )
+
+
 class InternationalHomepagePanelBlock(blocks.StructBlock):
     title = blocks.CharBlock(
         max_length=255,
@@ -48,6 +59,27 @@ class InternationalHomepagePanelBlock(blocks.StructBlock):
         icon = 'fa-globe'
 
 
+class InternationalInvestmentSectorPageCopyBlockBase(blocks.StructBlock):
+    text = MarkdownBlock(
+        required=False,
+    )
+    image = OptionalImageBlock(
+        required=False,
+    )
+
+
+class InternationalInvestmentSectorPageCopyBlock(
+    InternationalInvestmentSectorPageCopyBlockBase
+):
+    pass
+
+
+class InternationalInvestmentSectorPageEarlyOpportunityBlock(
+    InternationalInvestmentSectorPageCopyBlockBase
+):
+    pass
+
+
 sector_page_block_spec_list = [
     (
         'header',
@@ -62,13 +94,9 @@ sector_page_block_spec_list = [
             [
                 (
                     'text',
-                    MarkdownBlock(
+                    InternationalInvestmentSectorPageCopyBlock(
                         help_text="Use H3 headers or lower, not H2 or H1",
                     ),
-                ),
-                (
-                    'image',
-                    FeaturedImageBlock(),
                 ),
                 (
                     'columns',
@@ -76,13 +104,10 @@ sector_page_block_spec_list = [
                         [
                             ('text', MarkdownBlock()),
                         ],
-                        help_text="Smaller snippets of content"
                     ),
                 ),
             ],
             min_num=1,
-            max_num=2,
-            help_text="Smaller snippets of content"
         ),
     ),
 ]
@@ -99,13 +124,4 @@ class InternationalInvestmentSectorPageBlock(blocks.StructBlock):
         max_length=255,
         required=False,
         help_text="Only needed if special styling is involved: check with a developer. If in doubt, it's not needed"
-    )
-
-
-class InternationalInvestmentSectorPageEarlyOpportunityBlock(blocks.StructBlock):
-    image = FeaturedImageBlock(
-        blank=True,
-    )
-    text = MarkdownBlock(
-        blank=False,
     )
