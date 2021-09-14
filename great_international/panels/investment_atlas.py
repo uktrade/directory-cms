@@ -95,10 +95,11 @@ class InvestmentOpportunityPagePanels:
             children=[
                 FieldPanel('title'),
                 FieldPanel('breadcrumbs_label'),
+                ImageChooserPanel('hero_image'),
                 FieldPanel('strapline'),
                 FieldPanel('introduction'),
+                ImageChooserPanel('intro_image'),
                 FieldPanel('opportunity_summary'),
-
             ],
         ),
         MultiFieldPanel(
@@ -138,7 +139,6 @@ class InvestmentOpportunityPagePanels:
             heading='The Opportunity',
             classname='collapsible',
             children=[
-                StreamFieldPanel('featured_images'),
                 StreamFieldPanel('main_content'),
                 FieldPanel('important_links'),
             ],

@@ -231,7 +231,7 @@ six==1.16.0
     #   w3lib
 soupsieve==2.2.1
     # via beautifulsoup4
-sqlparse==0.4.1
+sqlparse==0.4.2
     # via django
 tablib[xls,xlsx]==3.0.0
     # via wagtail
