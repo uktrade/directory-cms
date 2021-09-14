@@ -1,4 +1,3 @@
-from unittest import mock
 import pytest
 
 from great_international.serializers import (
@@ -23,7 +22,6 @@ from great_international.serializers import (
     InvestmentOpportunityPageSerializer,
     InvestmentOpportunityListingPageSerializer,
     InvestmentOpportunityForListPageSerializer,
-    RelatedInvestmentOpportunityPageSerializer,
     InternationalInvestmentSectorPageSerializer,
     InternationalInvestmentSubSectorPageSerializer,
 )
@@ -1306,10 +1304,10 @@ def test_about_uk_region_listing_page_has_regions(rf, international_root_page):
 
     assert serializer.data['mapped_regions'][0]['text'] == 'Lorem ipsum'
     assert serializer.data['mapped_regions'][0]['region']['meta']['slug'] == 'scotland'
-    assert scotland_image_path_stub in serializer.data['mapped_regions'][0]['region']['hero_image']['url']
+    assert scotland_image_path_stub in serializer.data['mapped_regions'][0]['region']['hero_image_thumbnail']['url']
     assert serializer.data['mapped_regions'][4]['text'] == 'Lorem ipsum'
     assert serializer.data['mapped_regions'][4]['region']['meta']['slug'] == 'midlands'
-    assert midlands_image_path_stub in serializer.data['mapped_regions'][4]['region']['hero_image']['url']
+    assert midlands_image_path_stub in serializer.data['mapped_regions'][4]['region']['hero_image_thumbnail']['url']
 
 
 @pytest.mark.django_db
@@ -1980,37 +1978,6 @@ def test_atlas_opportunity_listing_page_gets_sectors_with_sub_sectors(rf, intern
     ]
 
     assert len(all_sub_sectors) == 3
-
-
-@pytest.mark.django_db
-def test_atlas_opportunity_listing_page_serializer__get_hero_image():
-
-    serializer = InvestmentOpportunityForListPageSerializer()
-
-    mock_instance = mock.Mock()
-    mock_image_block_1 = mock.Mock()
-    mock_image_block_1.block.get_api_representation.return_value = 'http://example.com/image.jpg'
-    mock_image_block_2 = mock.Mock()
-    mock_image_block_2.block.get_api_representation.side_effect = Exception('Should not be called!')
-    mock_instance.featured_images = [mock_image_block_1, mock_image_block_2]
-
-    output = serializer.get_hero_image(mock_instance)
-    assert output == 'http://example.com/image.jpg'
-
-
-@pytest.mark.django_db
-def test_atlas_related_investment_opportunity_page_serializer__get_thumbnail_image():
-    serializer = RelatedInvestmentOpportunityPageSerializer()
-
-    mock_instance = mock.Mock()
-    mock_image_block_1 = mock.Mock()
-    mock_image_block_1.block.get_api_representation.return_value = 'http://example.com/image.jpg'
-    mock_image_block_2 = mock.Mock()
-    mock_image_block_2.block.get_api_representation.side_effect = Exception('Should not be called!')
-    mock_instance.featured_images = [mock_image_block_1, mock_image_block_2]
-
-    output = serializer.get_thumbnail_image(mock_instance)
-    assert output == 'http://example.com/image.jpg'
 
 
 @pytest.mark.django_db
