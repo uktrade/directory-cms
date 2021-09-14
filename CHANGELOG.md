@@ -3,6 +3,7 @@
 ## Pre-release
 ### Implemented enhancements
 - GP2-3374: Refactor WhyInvestUK page
+- GP2-3400: Backend for new How We Can Help page, via generic content page
 - NOTICKET: Allowing article  as a subpage of WhyInvestintheUK page 
 - NOTICKET: Update downpage content block on Sector page to support text+image block
 - NOTICKET: Update serializer for Regions page to show hero thumbnails for regions

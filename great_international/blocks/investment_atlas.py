@@ -4,7 +4,10 @@ from wagtail.core import blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from core.blocks import ButtonBlock, BaseAltTextImageBlock
-from great_international.blocks.great_international import MarkdownBlock
+from great_international.blocks.great_international import (
+    MarkdownBlock,
+    InternationalInvestmentSectorPageCopyBlockBase,
+)
 
 
 class InlineOpportunityImageBlock(BaseAltTextImageBlock):
@@ -144,3 +147,63 @@ class ReusableSnippetChooserBlock(SnippetChooserBlock):
                     })
             retval_dict.update({'content': rendered_content})
         return retval_dict
+
+
+class InternationalInvestmentGeneralCopyBlock(
+    InternationalInvestmentSectorPageCopyBlockBase
+):
+    pass
+
+
+general_page_block_list_spec = [
+    (
+        'header',
+        blocks.CharBlock(
+            max_length=255,
+            required=False,
+        ),
+    ),
+    (
+        'nested_content',
+        blocks.StreamBlock(
+            [
+                (
+                    'text',
+                    InternationalInvestmentGeneralCopyBlock(
+                        help_text="Use H3 headers or lower, not H2 or H1",
+                    ),
+                ),
+                (
+                    'columns',
+                    blocks.StreamBlock(
+                        [
+                            ('text', MarkdownBlock()),
+                        ],
+                    ),
+                ),
+                (
+                    'cta',
+                    ButtonBlock(
+                        required=False,
+                        help_text="Set text for the CTA and either an internal or an external URL for its destination"
+                    )
+                )
+            ],
+            min_num=1,
+        ),
+    ),
+]
+
+
+class InvestmentGeneralContentPageBlock(blocks.StructBlock):
+
+    content = blocks.StreamBlock(
+        general_page_block_list_spec,
+        required=False,
+    )
+
+    block_slug = blocks.CharBlock(
+        max_length=255,
+        required=False,
+        help_text="Only needed if special styling is involved: check with a developer. If in doubt, it's not needed"
+    )

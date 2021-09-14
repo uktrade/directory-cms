@@ -11,6 +11,7 @@ from wagtail.admin.edit_handlers import (
 
 from .base import BaseInternationalPage
 
+from core.fields import single_struct_block_stream_field_factory
 from core.model_fields import MarkdownField
 
 from core.models import WagtailAdminExclusivePageMixin
@@ -121,6 +122,7 @@ class InvestmentAtlasLandingPage(
         'great_international.AboutUkRegionListingPage',
         'great_international.InternationalTopicLandingPage',
         'great_international.WhyInvestInTheUKPage',
+        'great_international.InvestmentGeneralContentPage',
     ]
 
     # title comes from base page
@@ -453,4 +455,50 @@ class InvestmentOpportunityPage(
         blank=True,
         null=True,
         max_length=1500,
+    )
+
+
+class InvestmentGeneralContentPage(
+    investment_atlas_panels.InvestmentGeneralContentPagePanels,
+    BaseInternationalPage,
+):
+    parent_page_types = ['great_international.InvestmentAtlasLandingPage', ]
+    subpage_types = [
+        'great_international.InvestmentGeneralContentPage',
+        'great_international.InternationalArticlePage',
+    ]
+
+    # Title comes from BaseInternationalPage, but heading is what we have
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True,
+        help_text='Main page hero image, above the opportunity title'
+    )
+    strapline = models.CharField(
+        max_length=200,
+        blank=False,
+        help_text=(
+            'A single sentence which goes beneath the page title'
+        )
+    )
+    introduction = MarkdownField(
+        blank=False,
+    )
+    intro_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True,
+        help_text='Goes beside the opportunity intro text'
+    )
+
+    main_content = single_struct_block_stream_field_factory(
+        field_name='content_section',
+        block_class_instance=investment_atlas_blocks.InvestmentGeneralContentPageBlock(),
+        null=True,
+        blank=True,
     )
