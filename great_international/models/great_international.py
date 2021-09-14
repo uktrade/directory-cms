@@ -2087,35 +2087,15 @@ class WhyInvestInTheUKPage(
         help_text='Main page hero image, above the title',
         related_name='+'
     )
-
+    featured_summary = models.CharField(max_length=255, blank=True)
     featured_description = models.TextField(max_length=1000, blank=True)
 
-    region_summary_section_title = models.CharField(max_length=255, blank=True)
-    region_summary_section_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    region_summary_section_intro = models.TextField(max_length=1000, blank=True)
-
-    uk_sector_section_title = models.CharField(max_length=255, blank=True)
-    uk_sector_section_intro = models.TextField(max_length=1000, blank=True)
-    uk_sector_section_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-
-    investment_opps_title = models.CharField(
-        max_length=255,
-        verbose_name="Investment opportunities title", blank=True
-    )
-    investment_opps_intro = models.TextField(
-        max_length=1000,
+    uk_strength_title = models.CharField(max_length=255, blank=True)
+    uk_strength_intro = models.CharField(max_length=1000, blank=True)
+    uk_strength_panels = StreamField(
+        [
+            ('article_panel', blocks.InternationalUKStrengthPanelBlock()),
+        ],
         blank=True,
-        verbose_name="Investment opportunities intro"
+        null=True,
     )
