@@ -2570,7 +2570,7 @@ class InternationalInvestmentSectorPageSerializer(
     heading = serializers.CharField()
     sub_heading = serializers.CharField(source='standfirst')
     featured_description = serializers.CharField()
-    intro_text = serializers.CharField()
+    intro_text = core_fields.MarkdownToHTMLField()
     intro_image = wagtail_fields.ImageRenditionField(IMAGE_RENDITION_SPEC)
 
     # contact details
@@ -2667,3 +2667,19 @@ class WhyInvestInTheUKPageSerializer(
     uk_strength_title = serializers.CharField()
     uk_strength_intro = serializers.CharField()
     uk_strength_panels = StreamFieldSerializer()
+
+
+class InvestmentGeneralContentPageSerializer(
+    BasePageSerializer,
+    HeroSerializer,
+):
+    IMAGE_RENDITION_SPEC = "fill-960x540"
+
+    # title comes from BasePageSerializer
+    # hero_image comes from HeroSerializer
+    strapline = serializers.CharField()
+    introduction = core_fields.MarkdownToHTMLField()
+    intro_image = wagtail_fields.ImageRenditionField(
+        IMAGE_RENDITION_SPEC
+    )
+    main_content = StreamFieldSerializer()
