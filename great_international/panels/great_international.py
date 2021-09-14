@@ -1550,6 +1550,7 @@ class WhyInvestInTheUKPagePanels:
 
     content_panels = [
         FieldPanel('title'),
+        FieldPanel('featured_summary'),
         FieldPanel('featured_description'),
         MultiFieldPanel(
             heading="Hero Section",
@@ -1560,29 +1561,12 @@ class WhyInvestInTheUKPagePanels:
             ],
         ),
         MultiFieldPanel(
-            heading="UK Regions",
+            heading="UK Strengths",
             classname='collapsible',
             children=[
-                FieldPanel('region_summary_section_title'),
-                FieldPanel('region_summary_section_intro'),
-                ImageChooserPanel('region_summary_section_image'),
-            ],
-        ),
-        MultiFieldPanel(
-            heading="UK Sectors",
-            classname='collapsible',
-            children=[
-                FieldPanel('uk_sector_section_title'),
-                FieldPanel('uk_sector_section_intro'),
-                ImageChooserPanel('uk_sector_section_image'),
-            ],
-        ),
-        MultiFieldPanel(
-            heading="Investment opportunities",
-            classname='collapsible',
-            children=[
-                FieldPanel('investment_opps_title'),
-                FieldPanel('investment_opps_intro'),
+                FieldPanel('uk_strength_title'),
+                FieldPanel('uk_strength_intro'),
+                StreamFieldPanel('uk_strength_panels'),
             ],
         ),
 

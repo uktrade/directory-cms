@@ -1,6 +1,5 @@
 # Blocks for the main Great International site, not specific to any sub-section (eg investment_atlas)
 from django import forms
-
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 
@@ -125,3 +124,24 @@ class InternationalInvestmentSectorPageBlock(blocks.StructBlock):
         required=False,
         help_text="Only needed if special styling is involved: check with a developer. If in doubt, it's not needed"
     )
+
+
+class InternationalUKStrengthPanelBlock(
+    blocks.StructBlock
+):
+    title = blocks.CharBlock(
+        max_length=255,
+        required=True,
+    )
+    supporting_text = blocks.TextBlock(
+        max_length=1000,
+        required=False,
+    )
+
+    link = core_blocks.InternalOrExternalLinkBlock(
+        required=True,
+    )
+    image = core_blocks.BaseAltTextImageBlock(required=True)
+
+    class Meta:
+        icon = 'fa-globe'
