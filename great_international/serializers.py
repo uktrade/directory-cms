@@ -2303,7 +2303,6 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     strapline = serializers.CharField()
     introduction = core_fields.MarkdownToHTMLField()
-    opportunity_summary = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField(
         HERO_IMAGE_RENDITION_SPEC,
     )
@@ -2463,6 +2462,7 @@ class InvestmentOpportunityForListPageSerializer(BasePageSerializer):
     )
     # key facts we want to filter by
     # sector = serializers.CharField(max_length=255)  # doesn't exist on new opp model [yet?]
+    opportunity_summary = serializers.CharField()
 
     scale = serializers.CharField(max_length=255)
     scale_value = serializers.DecimalField(max_digits=10, decimal_places=2)

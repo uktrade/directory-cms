@@ -3,6 +3,7 @@
 ## Pre-release
 ### Implemented enhancements
 - GP2-3394: Fix InternalOrExternalLinkBlock's url generation
+- NOTICKET: add opportunity_summary to opp listing page results
 - GP2-3398: Add AboutUKRegionPage.region_summary_section_strapline field
 - GP2-3374: Refactor WhyInvestUK page
 - GP2-3400: Backend for new How We Can Help page, via generic content page
