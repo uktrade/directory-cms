@@ -2,6 +2,7 @@
 
 ## Pre-release
 ### Implemented enhancements
+- GP2-3398: Add AboutUKRegionPage.region_summary_section_strapline field
 - GP2-3374: Refactor WhyInvestUK page
 - GP2-3400: Backend for new How We Can Help page, via generic content page
 - NOTICKET: Allowing article  as a subpage of WhyInvestintheUK page 
