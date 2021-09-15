@@ -1099,6 +1099,7 @@ class AboutUkRegionPagePanels:
                 HelpPanel('Required fields for section to show: '
                           'Region Summary Section Content'),
                 ImageChooserPanel('region_summary_section_image'),
+                FieldPanel('region_summary_section_strapline'),
                 FieldPanel('region_summary_section_intro'),
                 FieldPanel('region_summary_section_content'),
             ],
