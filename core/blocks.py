@@ -61,7 +61,7 @@ class InternalOrExternalLinkBlock(blocks.StructBlock):
             isinstance(original_retval_dict['internal_link'], int)
         ):
             # Correct this to be a full URL, not a page ID
-            retval = value['internal_link'].get_url()
+            retval = value['internal_link'].specific.get_url()  # Note, this lacks the port number when used locally
         elif 'external_link' in original_retval_dict:
             retval = value['external_link']
 
