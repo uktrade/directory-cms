@@ -827,7 +827,8 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
         'great_international.InternationalSectorPage',  # deprecated
         'great_international.InternationalInvestmentSectorPage',  # new, replaces InternationalSectorPage
         'great_international.AboutUkWhyChooseTheUkPage',
-        'great_international.WhyInvestInTheUKPage'
+        'great_international.WhyInvestInTheUKPage',
+        'great_international.InvestmentGeneralContentPage',
     ]
     subpage_types = []
 
