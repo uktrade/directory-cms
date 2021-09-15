@@ -174,3 +174,29 @@ class InvestmentOpportunityPagePanels:
         other_panels=related_entities_panels,  # These are shown as separate tabs
         settings_panels=settings_panels,
     )
+
+
+class InvestmentGeneralContentPagePanels:
+    content_panels = [
+        MultiFieldPanel(
+            heading="Hero and Intro",
+            classname='collapsible',
+            children=[
+                FieldPanel('title'),
+                ImageChooserPanel('hero_image'),
+                FieldPanel('strapline'),
+                FieldPanel('introduction'),
+                ImageChooserPanel('intro_image'),
+            ],
+        ),
+        StreamFieldPanel('main_content'),
+        SearchEngineOptimisationPanel(),
+    ]
+    settings_panels = [
+        FieldPanel('slug'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )

@@ -1361,3 +1361,14 @@ class InternationalWhyInvestInTheUKPageTranslationOptions(BaseTranslationOptions
         'uk_strength_intro',
         'uk_strength_panels',
     )
+
+
+@register(investment_atlas.InvestmentGeneralContentPage)
+class InvestmentGeneralContentPageTranslationOptions(BaseTranslationOptions):
+    fields = (
+        'hero_image',
+        'strapline',
+        'introduction',
+        'intro_image',
+        'main_content',
+    )
