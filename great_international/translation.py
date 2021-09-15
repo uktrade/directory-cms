@@ -1093,6 +1093,7 @@ class AboutUkRegionPageTranslationOptions(
         'featured_description',
 
         'region_summary_section_image',
+        'region_summary_section_strapline',
         'region_summary_section_intro',
         'region_summary_section_content',
 

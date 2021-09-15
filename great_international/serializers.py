@@ -2043,6 +2043,7 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
 
     region_summary_section_image = wagtail_fields.ImageRenditionField(
         'original')
+    region_summary_section_strapline = serializers.CharField(max_length=255)
     region_summary_section_intro = serializers.CharField(max_length=255)
     region_summary_section_content = core_fields.MarkdownToHTMLField(
         max_length=255
