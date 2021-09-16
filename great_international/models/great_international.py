@@ -2102,6 +2102,7 @@ class WhyInvestInTheUKPage(
     )
     introduction = MarkdownField(
         blank=False,
+        null=True,
     )
     intro_image = models.ForeignKey(
         'wagtailimages.Image',
