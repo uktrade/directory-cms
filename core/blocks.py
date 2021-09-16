@@ -69,8 +69,13 @@ class InternalOrExternalLinkBlock(blocks.StructBlock):
 
 
 class ButtonBlock(blocks.StructBlock):
-    label = blocks.CharBlock(max_length=255)
-    link = InternalOrExternalLinkBlock(required=False)
+    label = blocks.CharBlock(
+        max_length=255,
+        required=False,
+    )
+    link = InternalOrExternalLinkBlock(
+        required=False,
+    )
 
     class Meta:
         icon = 'radio-full'
