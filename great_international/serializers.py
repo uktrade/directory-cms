@@ -2663,8 +2663,11 @@ class WhyInvestInTheUKPageSerializer(
 ):
     IMAGE_RENDITION_SPEC = "fill-960x540"
 
-    featured_summary = serializers.CharField()
-    featured_description = serializers.CharField()
+    strapline = serializers.CharField()
+    introduction = serializers.CharField()
+    intro_image = wagtail_fields.ImageRenditionField(
+        IMAGE_RENDITION_SPEC
+    )
     uk_strength_title = serializers.CharField()
     uk_strength_intro = serializers.CharField()
     uk_strength_panels = StreamFieldSerializer()
