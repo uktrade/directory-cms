@@ -2147,7 +2147,7 @@ class AboutUkArticlesFieldSerializer(serializers.Serializer):
     link_url = serializers.CharField()
 
 
-class AboutUkWhyChooseTheUkPageSerializer(RelatedArticlePageSerializer, HeroSerializer):
+class AboutUkWhyChooseTheUkPageSerializer(PageWithRelatedPagesSerializer, BasePageSerializer, HeroSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
 
