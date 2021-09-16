@@ -6,7 +6,7 @@ from wagtail.snippets.blocks import SnippetChooserBlock
 from core.blocks import ButtonBlock, BaseAltTextImageBlock
 from great_international.blocks.great_international import (
     MarkdownBlock,
-    InternationalInvestmentSectorPageCopyBlockBase,
+    InternationalInvestmentPageCopyBlockBase,
 )
 
 
@@ -150,9 +150,12 @@ class ReusableSnippetChooserBlock(SnippetChooserBlock):
 
 
 class InternationalInvestmentGeneralCopyBlock(
-    InternationalInvestmentSectorPageCopyBlockBase
+    InternationalInvestmentPageCopyBlockBase
 ):
-    pass
+    cta = ButtonBlock(
+        required=False,
+        help_text="Set text for the CTA and either an internal or an external URL for its destination"
+    )
 
 
 general_page_block_list_spec = [
@@ -181,13 +184,6 @@ general_page_block_list_spec = [
                         ],
                     ),
                 ),
-                (
-                    'cta',
-                    ButtonBlock(
-                        required=False,
-                        help_text="Set text for the CTA and either an internal or an external URL for its destination"
-                    )
-                )
             ],
             min_num=1,
         ),

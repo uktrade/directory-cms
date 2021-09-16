@@ -2,6 +2,7 @@
 
 ## Pre-release
 ### Implemented enhancements
+- GP2-3400: Update block spec for general Atlas content page to allow optional CTAs 
 - GP2-3394: Fix InternalOrExternalLinkBlock's url generation
 - NOTICKET: add opportunity_summary to opp listing page results
 - GP2-3398: Add AboutUKRegionPage.region_summary_section_strapline field
