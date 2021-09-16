@@ -2012,7 +2012,7 @@ class AboutUkLandingPageSerializer(BasePageSerializer, HeroSerializer):
         return get_mapped_regions(instance)
 
 
-class AboutUkRegionListingPageSerializer(PageWithRelatedPagesSerializer, BasePageSerializer, HeroSerializer):
+class AboutUkRegionListingPageSerializer(BasePageSerializer, HeroSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
 
@@ -2147,7 +2147,7 @@ class AboutUkArticlesFieldSerializer(serializers.Serializer):
     link_url = serializers.CharField()
 
 
-class AboutUkWhyChooseTheUkPageSerializer(PageWithRelatedPagesSerializer, BasePageSerializer, HeroSerializer):
+class AboutUkWhyChooseTheUkPageSerializer(RelatedArticlePageSerializer, HeroSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
 
