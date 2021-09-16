@@ -2034,7 +2034,7 @@ class AboutUkRegionListingPageSerializer(BasePageSerializer, HeroSerializer):
         return get_mapped_regions(queryset)
 
 
-class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
+class AboutUkRegionPageSerializer(PageWithRelatedPagesSerializer, BasePageSerializer, HeroSerializer):
 
     hero_title = serializers.CharField(max_length=255)
     breadcrumbs_label = serializers.CharField(max_length=255)
