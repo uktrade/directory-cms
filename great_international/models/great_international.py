@@ -2096,6 +2096,7 @@ class WhyInvestInTheUKPage(
     strapline = models.CharField(
         max_length=200,
         blank=False,
+        null=True,
         help_text=(
             'A single sentence which goes beneath the page title'
         )
