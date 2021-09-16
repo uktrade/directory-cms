@@ -2085,16 +2085,32 @@ class WhyInvestInTheUKPage(
     parent_page_types = ['great_international.InvestmentAtlasLandingPage', ]
     subpage_types = ['great_international.InternationalArticlePage']
 
-    hero_title = models.CharField(max_length=255)
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         on_delete=models.SET_NULL,
-        help_text='Main page hero image, above the title',
-        related_name='+'
+        related_name='+',
+        blank=True,
+        help_text='Main page hero image, above the title'
     )
-    featured_summary = models.CharField(max_length=255, blank=True)
-    featured_description = models.TextField(max_length=1000, blank=True)
+    strapline = models.CharField(
+        max_length=200,
+        blank=False,
+        help_text=(
+            'A single sentence which goes beneath the page title'
+        )
+    )
+    introduction = MarkdownField(
+        blank=False,
+    )
+    intro_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True,
+        help_text='Goes beside the intro text'
+    )
 
     uk_strength_title = models.CharField(max_length=255, blank=True)
     uk_strength_intro = models.CharField(max_length=1000, blank=True)

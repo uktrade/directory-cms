@@ -2012,7 +2012,7 @@ class AboutUkLandingPageSerializer(BasePageSerializer, HeroSerializer):
         return get_mapped_regions(instance)
 
 
-class AboutUkRegionListingPageSerializer(BasePageSerializer, HeroSerializer):
+class AboutUkRegionListingPageSerializer(PageWithRelatedPagesSerializer, HeroSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
 
@@ -2147,7 +2147,7 @@ class AboutUkArticlesFieldSerializer(serializers.Serializer):
     link_url = serializers.CharField()
 
 
-class AboutUkWhyChooseTheUkPageSerializer(PageWithRelatedPagesSerializer, BasePageSerializer, HeroSerializer):
+class AboutUkWhyChooseTheUkPageSerializer(RelatedArticlePageSerializer, HeroSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
 
@@ -2663,8 +2663,11 @@ class WhyInvestInTheUKPageSerializer(
 ):
     IMAGE_RENDITION_SPEC = "fill-960x540"
 
-    featured_summary = serializers.CharField()
-    featured_description = serializers.CharField()
+    strapline = serializers.CharField()
+    introduction = serializers.CharField()
+    intro_image = wagtail_fields.ImageRenditionField(
+        IMAGE_RENDITION_SPEC
+    )
     uk_strength_title = serializers.CharField()
     uk_strength_intro = serializers.CharField()
     uk_strength_panels = StreamFieldSerializer()
