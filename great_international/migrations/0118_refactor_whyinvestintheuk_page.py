@@ -215,8 +215,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='whyinvestintheukpage',
             name='strapline',
-            field=models.CharField(default=None, help_text='A single sentence which goes beneath the page title', max_length=200),
-            preserve_default=False,
+            field=models.CharField(help_text='A single sentence which goes beneath the page title', max_length=200,
+                                   null=True),
         ),
         migrations.AddField(
             model_name='whyinvestintheukpage',
