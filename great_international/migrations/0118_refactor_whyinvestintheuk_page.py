@@ -169,7 +169,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='whyinvestintheukpage',
             name='introduction',
-            field=core.model_fields.MarkdownField(default=None),
+            field=core.model_fields.MarkdownField(null=True),
             preserve_default=False,
         ),
         migrations.AddField(
