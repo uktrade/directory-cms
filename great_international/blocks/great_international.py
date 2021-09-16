@@ -58,7 +58,7 @@ class InternationalHomepagePanelBlock(blocks.StructBlock):
         icon = 'fa-globe'
 
 
-class InternationalInvestmentSectorPageCopyBlockBase(blocks.StructBlock):
+class InternationalInvestmentPageCopyBlockBase(blocks.StructBlock):
     text = MarkdownBlock(
         required=False,
     )
@@ -68,13 +68,13 @@ class InternationalInvestmentSectorPageCopyBlockBase(blocks.StructBlock):
 
 
 class InternationalInvestmentSectorPageCopyBlock(
-    InternationalInvestmentSectorPageCopyBlockBase
+    InternationalInvestmentPageCopyBlockBase
 ):
     pass
 
 
 class InternationalInvestmentSectorPageEarlyOpportunityBlock(
-    InternationalInvestmentSectorPageCopyBlockBase
+    InternationalInvestmentPageCopyBlockBase
 ):
     pass
 
