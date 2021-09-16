@@ -1353,10 +1353,10 @@ class InternationalInvestmentSubSectorPageTranslationOptions(BaseTranslationOpti
 @register(great_international.WhyInvestInTheUKPage)
 class InternationalWhyInvestInTheUKPageTranslationOptions(BaseTranslationOptions):
     fields = (
-        'hero_title',
         'hero_image',
-        'featured_summary',
-        'featured_description',
+        'strapline',
+        'introduction',
+        'intro_image',
         'uk_strength_title',
         'uk_strength_intro',
         'uk_strength_panels',

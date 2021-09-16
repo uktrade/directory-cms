@@ -1550,15 +1550,15 @@ class InternationalInvestmentSubSectorPagePanels:
 class WhyInvestInTheUKPagePanels:
 
     content_panels = [
-        FieldPanel('title'),
-        FieldPanel('featured_summary'),
-        FieldPanel('featured_description'),
         MultiFieldPanel(
-            heading="Hero Section",
+            heading="Hero and Intro",
             classname='collapsible',
             children=[
-                FieldPanel('hero_title'),
+                FieldPanel('title'),
                 ImageChooserPanel('hero_image'),
+                FieldPanel('strapline'),
+                FieldPanel('introduction'),
+                ImageChooserPanel('intro_image'),
             ],
         ),
         MultiFieldPanel(
