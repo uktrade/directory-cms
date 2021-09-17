@@ -1099,6 +1099,7 @@ class AboutUkRegionPagePanels:
                 HelpPanel('Required fields for section to show: '
                           'Region Summary Section Content'),
                 ImageChooserPanel('region_summary_section_image'),
+                FieldPanel('region_summary_section_strapline'),
                 FieldPanel('region_summary_section_intro'),
                 FieldPanel('region_summary_section_content'),
             ],
@@ -1549,40 +1550,24 @@ class InternationalInvestmentSubSectorPagePanels:
 class WhyInvestInTheUKPagePanels:
 
     content_panels = [
-        FieldPanel('title'),
-        FieldPanel('featured_description'),
         MultiFieldPanel(
-            heading="Hero Section",
+            heading="Hero and Intro",
             classname='collapsible',
             children=[
-                FieldPanel('hero_title'),
+                FieldPanel('title'),
                 ImageChooserPanel('hero_image'),
+                FieldPanel('strapline'),
+                FieldPanel('introduction'),
+                ImageChooserPanel('intro_image'),
             ],
         ),
         MultiFieldPanel(
-            heading="UK Regions",
+            heading="UK Strengths",
             classname='collapsible',
             children=[
-                FieldPanel('region_summary_section_title'),
-                FieldPanel('region_summary_section_intro'),
-                ImageChooserPanel('region_summary_section_image'),
-            ],
-        ),
-        MultiFieldPanel(
-            heading="UK Sectors",
-            classname='collapsible',
-            children=[
-                FieldPanel('uk_sector_section_title'),
-                FieldPanel('uk_sector_section_intro'),
-                ImageChooserPanel('uk_sector_section_image'),
-            ],
-        ),
-        MultiFieldPanel(
-            heading="Investment opportunities",
-            classname='collapsible',
-            children=[
-                FieldPanel('investment_opps_title'),
-                FieldPanel('investment_opps_intro'),
+                FieldPanel('uk_strength_title'),
+                FieldPanel('uk_strength_intro'),
+                StreamFieldPanel('uk_strength_panels'),
             ],
         ),
 

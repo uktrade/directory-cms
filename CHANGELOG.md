@@ -2,9 +2,16 @@
 
 ## Pre-release
 ### Implemented enhancements
+- GP2-3374: Refactor WhyInvestInTheUK page /model
+- GP2-3400: Update block spec for general Atlas content page to allow optional CTAs 
+- GP2-3394: Fix InternalOrExternalLinkBlock's url generation
+- NOTICKET: add opportunity_summary to opp listing page results
+- GP2-3398: Add AboutUKRegionPage.region_summary_section_strapline field
+- GP2-3374: Refactor WhyInvestUK page
+- GP2-3400: Backend for new How We Can Help page, via generic content page
 - NOTICKET: Allowing article  as a subpage of WhyInvestintheUK page 
-- NOTICKET - Update downpage content block on Sector page to support text+image block
-- NOTICKET - Update serializer for Regions page to show hero thumbnails for regions
+- NOTICKET: Update downpage content block on Sector page to support text+image block
+- NOTICKET: Update serializer for Regions page to show hero thumbnails for regions
 - GP2-3392: Refactor CMS to have specific hero and intro images for InvestmentOpportunityPage
 - GP2-3374: Add new WhyInvestInTheUK page
 - GP2-3393: Add mobile hero image to Investment Atlas landing page

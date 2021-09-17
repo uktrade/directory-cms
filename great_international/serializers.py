@@ -2,43 +2,33 @@ import random
 
 from directory_constants import cms
 from rest_framework import serializers
-from wagtail.images.api import fields as wagtail_fields
 from wagtail.api.v2.serializers import StreamField as StreamFieldSerializer
+from wagtail.images.api import fields as wagtail_fields
 
 from core import fields as core_fields
 from core.helpers import num2words_list
-from core.serializers import (
-    BasePageSerializer,
-    ChildPagesSerializerHelper,
-    FormPageSerializerMetaclass,
-    HeroSerializer,
-)
-
-from .models.great_international import (
-    InternationalArticlePage,
-    InternationalArticleListingPage,
-    InternationalCampaignPage,
-    InternationalGuideLandingPage,
-    InternationalSectorPage,
-    InternationalEUExitFormPage,
-    InternationalSubSectorPage,
-    InternationalInvestmentSectorPage,
-    InternationalInvestmentSubSectorPage,
-    AboutDitServicesPage,
-    AboutUkLandingPage,
-)
-from .models.invest import (
-    InvestHighPotentialOpportunityFormPage,
-    InvestHighPotentialOpportunityDetailPage,
-    InvestRegionPage,
-)
-
-from .models.investment_atlas import (
-    InvestmentOpportunityPage,
-)
+from core.serializers import BasePageSerializer, ChildPagesSerializerHelper, FormPageSerializerMetaclass, HeroSerializer
 
 from .models.capital_invest import CapitalInvestOpportunityPage
-
+from .models.great_international import (
+    AboutDitServicesPage,
+    AboutUkLandingPage,
+    InternationalArticleListingPage,
+    InternationalArticlePage,
+    InternationalCampaignPage,
+    InternationalEUExitFormPage,
+    InternationalGuideLandingPage,
+    InternationalInvestmentSectorPage,
+    InternationalInvestmentSubSectorPage,
+    InternationalSectorPage,
+    InternationalSubSectorPage,
+)
+from .models.invest import (
+    InvestHighPotentialOpportunityDetailPage,
+    InvestHighPotentialOpportunityFormPage,
+    InvestRegionPage,
+)
+from .models.investment_atlas import InvestmentOpportunityPage
 
 REGIONS = [
     "scotland",
@@ -2053,6 +2043,7 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
 
     region_summary_section_image = wagtail_fields.ImageRenditionField(
         'original')
+    region_summary_section_strapline = serializers.CharField(max_length=255)
     region_summary_section_intro = serializers.CharField(max_length=255)
     region_summary_section_content = core_fields.MarkdownToHTMLField(
         max_length=255
@@ -2312,7 +2303,6 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     strapline = serializers.CharField()
     introduction = core_fields.MarkdownToHTMLField()
-    opportunity_summary = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField(
         HERO_IMAGE_RENDITION_SPEC,
     )
@@ -2472,6 +2462,7 @@ class InvestmentOpportunityForListPageSerializer(BasePageSerializer):
     )
     # key facts we want to filter by
     # sector = serializers.CharField(max_length=255)  # doesn't exist on new opp model [yet?]
+    opportunity_summary = serializers.CharField()
 
     scale = serializers.CharField(max_length=255)
     scale_value = serializers.DecimalField(max_digits=10, decimal_places=2)
@@ -2580,7 +2571,7 @@ class InternationalInvestmentSectorPageSerializer(
     heading = serializers.CharField()
     sub_heading = serializers.CharField(source='standfirst')
     featured_description = serializers.CharField()
-    intro_text = serializers.CharField()
+    intro_text = core_fields.MarkdownToHTMLField()
     intro_image = wagtail_fields.ImageRenditionField(IMAGE_RENDITION_SPEC)
 
     # contact details
@@ -2672,15 +2663,27 @@ class WhyInvestInTheUKPageSerializer(
 ):
     IMAGE_RENDITION_SPEC = "fill-960x540"
 
-    featured_description = serializers.CharField()
-    hero_title = serializers.CharField()
-    hero_image = wagtail_fields.ImageRenditionField(
+    strapline = serializers.CharField()
+    introduction = serializers.CharField()
+    intro_image = wagtail_fields.ImageRenditionField(
         IMAGE_RENDITION_SPEC
     )
-    region_summary_section_title = serializers.CharField()
+    uk_strength_title = serializers.CharField()
+    uk_strength_intro = serializers.CharField()
+    uk_strength_panels = StreamFieldSerializer()
 
-    region_summary_section_intro = serializers.CharField()
-    investment_opps_title = serializers.CharField()
-    investment_opps_intro = serializers.CharField()
-    uk_sector_section_title = serializers.CharField()
-    uk_sector_section_intro = serializers.CharField()
+
+class InvestmentGeneralContentPageSerializer(
+    BasePageSerializer,
+    HeroSerializer,
+):
+    IMAGE_RENDITION_SPEC = "fill-960x540"
+
+    # title comes from BasePageSerializer
+    # hero_image comes from HeroSerializer
+    strapline = serializers.CharField()
+    introduction = core_fields.MarkdownToHTMLField()
+    intro_image = wagtail_fields.ImageRenditionField(
+        IMAGE_RENDITION_SPEC
+    )
+    main_content = StreamFieldSerializer()
