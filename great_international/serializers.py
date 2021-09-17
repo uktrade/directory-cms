@@ -22,6 +22,9 @@ from .models.great_international import (
     InternationalInvestmentSubSectorPage,
     InternationalSectorPage,
     InternationalSubSectorPage,
+    WhyInvestInTheUKPage,
+    InternationalTopicLandingPage,
+    AboutUkRegionPage,
 )
 from .models.invest import (
     InvestHighPotentialOpportunityDetailPage,
@@ -579,11 +582,33 @@ class RelatedDitServicesPageSerializer(BasePageSerializer):
     featured_description = serializers.CharField()
 
 
+class RelatedWhyInvestInTheUKPageSerializer(BasePageSerializer):
+    title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    featured_description=serializers.CharField(source='strapline')
+
+
+class RelatedInternationalTopicLandingPageSerializer(BasePageSerializer):
+    title = serializers.CharField(source='landing_page_title')
+    hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    featured_description = serializers.CharField(source='hero_teaser')
+
+
+class RelatedAboutUkRegionPageSerializer(BasePageSerializer):
+    title = serializers.CharField(source='hero_title')
+    hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    featured_description = serializers.CharField()
+
+
 MODEL_TO_SERIALIZER_MAPPING = {
     InternationalArticlePage: RelatedArticlePageSerializer,
     InternationalCampaignPage: RelatedCampaignPageSerializer,
     CapitalInvestOpportunityPage: RelatedCapitalInvestOpportunityPageSerializer,
     AboutDitServicesPage: RelatedDitServicesPageSerializer,
+    WhyInvestInTheUKPage: RelatedWhyInvestInTheUKPageSerializer,
+    InternationalTopicLandingPage:RelatedInternationalTopicLandingPageSerializer,
+    AboutUkRegionPage: RelatedAboutUkRegionPageSerializer,
+
 }
 
 
@@ -2012,7 +2037,7 @@ class AboutUkLandingPageSerializer(BasePageSerializer, HeroSerializer):
         return get_mapped_regions(instance)
 
 
-class AboutUkRegionListingPageSerializer(BasePageSerializer, HeroSerializer):
+class AboutUkRegionListingPageSerializer(PageWithRelatedPagesSerializer, HeroSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
 
