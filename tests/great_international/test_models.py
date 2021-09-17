@@ -132,24 +132,29 @@ def test_hpo_folder_page(international_root_page):
 
 @pytest.mark.django_db
 def test_url_for_investment_opportunity_listing_page(international_root_page):
-    int_home = factories.InternationalHomePageFactory(
-        parent=international_root_page
+    atlas_home = factories.InvestmentAtlasLandingPageFactory(
+        parent=international_root_page,
+        slug='investment',
     )
-    invest_home = factories.InvestmentOpportunityListingPageFactory(
-        parent=int_home
+    opportunities = factories.InvestmentOpportunityListingPageFactory(
+        parent=atlas_home,
+        slug='opportunities',
     )
-    assert 'content' not in invest_home.url.split('/')
+
+    assert 'content' not in opportunities.url.split('/')
+    assert opportunities.get_url() == 'http://great.gov.uk/international/investment/opportunities/'
+    assert opportunities.url == 'http://great.gov.uk/international/investment/opportunities/'
 
 
 @pytest.mark.django_db
 def test_url_for_investment_atlas_landing_page(international_root_page):
-    int_home = factories.InternationalHomePageFactory(
-        parent=international_root_page
+    atlas_home = factories.InvestmentAtlasLandingPageFactory(
+        parent=international_root_page,
+        slug='investment',
     )
-    invest_home = factories.InvestmentAtlasLandingPageFactory(
-        parent=int_home
-    )
-    assert 'content' not in invest_home.url.split('/')
+    assert 'content' not in atlas_home.url.split('/')
+    assert atlas_home.get_url() == 'http://great.gov.uk/international/investment/'
+    assert atlas_home.url == 'http://great.gov.uk/international/investment/'
 
 
 @pytest.mark.django_db

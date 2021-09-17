@@ -1093,6 +1093,7 @@ class AboutUkRegionPageTranslationOptions(
         'featured_description',
 
         'region_summary_section_image',
+        'region_summary_section_strapline',
         'region_summary_section_intro',
         'region_summary_section_content',
 
@@ -1352,15 +1353,22 @@ class InternationalInvestmentSubSectorPageTranslationOptions(BaseTranslationOpti
 @register(great_international.WhyInvestInTheUKPage)
 class InternationalWhyInvestInTheUKPageTranslationOptions(BaseTranslationOptions):
     fields = (
-        'featured_description',
-        'hero_title',
         'hero_image',
-        'region_summary_section_title',
-        'region_summary_section_intro',
-        'region_summary_section_image',
-        'uk_sector_section_title',
-        'uk_sector_section_intro',
-        'uk_sector_section_image',
-        'investment_opps_title',
-        'investment_opps_intro',
+        'strapline',
+        'introduction',
+        'intro_image',
+        'uk_strength_title',
+        'uk_strength_intro',
+        'uk_strength_panels',
+    )
+
+
+@register(investment_atlas.InvestmentGeneralContentPage)
+class InvestmentGeneralContentPageTranslationOptions(BaseTranslationOptions):
+    fields = (
+        'hero_image',
+        'strapline',
+        'introduction',
+        'intro_image',
+        'main_content',
     )
