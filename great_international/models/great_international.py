@@ -1100,6 +1100,28 @@ class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, 
     hero_teaser = models.CharField(max_length=255, null=True, blank=True)
     tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
+    related_page_one = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    related_page_two = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    related_page_three = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
 
 class InternationalCuratedTopicLandingPage(panels.InternationalCuratedTopicLandingPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
