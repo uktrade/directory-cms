@@ -480,6 +480,24 @@ class InternationalTopicLandingPagePanels:
                 FieldPanel('hero_teaser')
             ]
         ),
+        MultiFieldPanel(
+            heading="Explore more of the Investment Atlas section",
+            classname="collapsible",
+            children=[
+                PageChooserPanel('related_page_one', [
+                    'great_international.WhyInvestInTheUKPage',
+                    'great_international.AboutUkRegionPage',
+                    'great_international.InvestmentOpportunityPage']),
+                PageChooserPanel('related_page_two', [
+                    'great_international.WhyInvestInTheUKPage',
+                    'great_international.AboutUkRegionPage',
+                    'great_international.InvestmentOpportunityPage']),
+                PageChooserPanel('related_page_three', [
+                    'great_international.WhyInvestInTheUKPage',
+                    'great_international.AboutUkRegionPage',
+                    'great_international.InvestmentOpportunityPage']),
+            ]
+        ),
         SearchEngineOptimisationPanel(),
     ]
 
@@ -1071,15 +1089,18 @@ class AboutUkRegionListingPagePanels:
                     'related_page_one', [
                         'great_international.WhyInvestInTheUKPage',
                         'great_international.InternationalTopicLandingPage',
-                        'great_international.AboutUkRegionPage']),
+                        'great_international.AboutUkRegionPage',
+                        'great_international.InvestmentOpportunityPage']),
                 PageChooserPanel('related_page_two', [
                         'great_international.WhyInvestInTheUKPage',
                         'great_international.InternationalTopicLandingPage',
-                        'great_international.AboutUkRegionPage']),
+                        'great_international.AboutUkRegionPage',
+                        'great_international.InvestmentOpportunityPage']),
                 PageChooserPanel('related_page_three', [
                         'great_international.WhyInvestInTheUKPage',
                         'great_international.InternationalTopicLandingPage',
-                        'great_international.AboutUkRegionPage']),
+                        'great_international.AboutUkRegionPage',
+                        'great_international.InvestmentOpportunityPage']),
             ]
         ),
         SearchEngineOptimisationPanel()

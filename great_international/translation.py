@@ -341,6 +341,9 @@ class InternationalTopicLandingPageTranslationOptions(BaseTranslationOptions):
         'landing_page_title',
         'hero_image',
         'hero_teaser',
+        'related_page_one',
+        'related_page_two',
+        'related_page_three',
     )
 
 
