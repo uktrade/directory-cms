@@ -1078,6 +1078,9 @@ class AboutUkRegionListingPageTranslationOptions(
         'contact_text',
         'contact_cta_text',
         'contact_cta_link',
+        'related_page_one',
+        'related_page_two',
+        'related_page_three',
     )
 
 
