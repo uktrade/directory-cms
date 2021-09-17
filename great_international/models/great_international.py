@@ -1702,6 +1702,28 @@ class AboutUkRegionListingPage(
     contact_cta_text = models.CharField(max_length=255, blank=True)
     contact_cta_link = models.CharField(max_length=255, blank=True)
 
+    related_page_one = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    related_page_two = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    related_page_three = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
 
 class AboutUkRegionPage(panels.AboutUkRegionPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.AboutUkRegionListingPage']
