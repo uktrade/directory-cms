@@ -33,6 +33,7 @@ from .models.invest import (
 )
 from .models.investment_atlas import InvestmentOpportunityPage
 
+
 REGIONS = [
     "scotland",
     "northern_ireland",
@@ -600,6 +601,12 @@ class RelatedAboutUkRegionPageSerializer(BasePageSerializer):
     featured_description = serializers.CharField()
 
 
+class RelatedInvestmentOpportunityPageSerializer(BasePageSerializer):
+    title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    featured_description = serializers.CharField(source='strapline')
+
+
 MODEL_TO_SERIALIZER_MAPPING = {
     InternationalArticlePage: RelatedArticlePageSerializer,
     InternationalCampaignPage: RelatedCampaignPageSerializer,
@@ -608,7 +615,7 @@ MODEL_TO_SERIALIZER_MAPPING = {
     WhyInvestInTheUKPage: RelatedWhyInvestInTheUKPageSerializer,
     InternationalTopicLandingPage: RelatedInternationalTopicLandingPageSerializer,
     AboutUkRegionPage: RelatedAboutUkRegionPageSerializer,
-
+    InvestmentOpportunityPage: RelatedInvestmentOpportunityPageSerializer,
 }
 
 
@@ -907,7 +914,11 @@ class InternationalArticleListingPageSerializer(BasePageSerializer, ChildPagesSe
         return articles + campaigns
 
 
-class InternationalTopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer):
+class InternationalTopicLandingPageSerializer(
+    PageWithRelatedPagesSerializer,
+    ChildPagesSerializerHelper,
+    HeroSerializer
+):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
     hero_teaser = serializers.CharField(max_length=255)
