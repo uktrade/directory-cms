@@ -2700,7 +2700,7 @@ class WhyInvestInTheUKPageSerializer(
     IMAGE_RENDITION_SPEC = "fill-960x540"
 
     strapline = serializers.CharField()
-    introduction = serializers.CharField()
+    introduction = core_fields.MarkdownToHTMLField()
     intro_image = wagtail_fields.ImageRenditionField(
         IMAGE_RENDITION_SPEC
     )
