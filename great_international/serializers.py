@@ -586,7 +586,7 @@ class RelatedDitServicesPageSerializer(BasePageSerializer):
 class RelatedWhyInvestInTheUKPageSerializer(BasePageSerializer):
     title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
-    featured_description = serializers.CharField(source='strapline')
+    featured_description = core_fields.MarkdownToHTMLField(source='strapline')
 
 
 class RelatedInternationalTopicLandingPageSerializer(BasePageSerializer):
@@ -2700,7 +2700,7 @@ class WhyInvestInTheUKPageSerializer(
     IMAGE_RENDITION_SPEC = "fill-960x540"
 
     strapline = serializers.CharField()
-    introduction = serializers.CharField()
+    introduction = core_fields.MarkdownToHTMLField()
     intro_image = wagtail_fields.ImageRenditionField(
         IMAGE_RENDITION_SPEC
     )
