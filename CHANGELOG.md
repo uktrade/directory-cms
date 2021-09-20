@@ -2,6 +2,7 @@
 
 ## Pre-release
 ### Implemented enhancements
+- NOTICKET: Added markdown serializer for intro field of WhyInvestInTheUK page
 - GP2-3302: Added related pages for sector/industries pages
 - GP2-3301: Added related pages selection panel for Region listing page
 - GP2-3374: Refactor WhyInvestInTheUK page /model
