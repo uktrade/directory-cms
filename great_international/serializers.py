@@ -25,13 +25,18 @@ from .models.great_international import (
     WhyInvestInTheUKPage,
     InternationalTopicLandingPage,
     AboutUkRegionPage,
+    AboutUkRegionListingPage,
 )
 from .models.invest import (
     InvestHighPotentialOpportunityDetailPage,
     InvestHighPotentialOpportunityFormPage,
     InvestRegionPage,
 )
-from .models.investment_atlas import InvestmentOpportunityPage
+from .models.investment_atlas import (
+    InvestmentOpportunityPage,
+    InvestmentGeneralContentPage,
+    InvestmentOpportunityListingPage,
+)
 
 
 REGIONS = [
@@ -607,6 +612,23 @@ class RelatedInvestmentOpportunityPageSerializer(BasePageSerializer):
     featured_description = serializers.CharField(source='strapline')
 
 
+class RelatedInvestmentGeneralContentPageSerializer(BasePageSerializer):
+    title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    featured_description = serializers.CharField(source='strapline')
+
+
+class RelatedAboutUkRegionListingPageSerializer(BasePageSerializer):
+    title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    featured_description = serializers.CharField(source='hero_title')
+
+
+class RelatedInvestmentOpportunityListingPageSerializer(BasePageSerializer):
+    title = serializers.CharField()
+    featured_description = serializers.CharField(source='hero_text')
+
+
 MODEL_TO_SERIALIZER_MAPPING = {
     InternationalArticlePage: RelatedArticlePageSerializer,
     InternationalCampaignPage: RelatedCampaignPageSerializer,
@@ -616,6 +638,9 @@ MODEL_TO_SERIALIZER_MAPPING = {
     InternationalTopicLandingPage: RelatedInternationalTopicLandingPageSerializer,
     AboutUkRegionPage: RelatedAboutUkRegionPageSerializer,
     InvestmentOpportunityPage: RelatedInvestmentOpportunityPageSerializer,
+    InvestmentGeneralContentPage: RelatedInvestmentGeneralContentPageSerializer,
+    AboutUkRegionListingPage: RelatedAboutUkRegionListingPageSerializer,
+    InvestmentOpportunityListingPage: RelatedInvestmentOpportunityListingPageSerializer,
 }
 
 
