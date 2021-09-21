@@ -3,7 +3,9 @@ from django.db import models
 from directory_constants import slugs
 
 from core.models import (
-    ExclusivePageMixin, WagtailAdminExclusivePageMixin, FormPageMetaClass)
+    ExclusivePageMixin,
+    WagtailAdminExclusivePageMixin,
+)
 from core.model_fields import MarkdownField
 
 import great_international.panels.invest as panels
@@ -305,7 +307,8 @@ class InvestInternationalHomePage(
 
 
 class InvestHighPotentialOpportunitiesPage(
-    ExclusivePageMixin, BaseInternationalPage,
+    ExclusivePageMixin,
+    BaseInternationalPage,
     panels.InvestHighPotentialOpportunitiesPagePanels,
 ):
     """
@@ -319,48 +322,12 @@ class InvestHighPotentialOpportunitiesPage(
     parent_page_types = ['InvestInternationalHomePage']
     subpage_types = [
         'InvestHighPotentialOpportunityDetailPage',
-        'InvestHighPotentialOpportunityFormPage',
     ]
 
     def save(self, *args, **kwargs):
         # title is used for tree_based_breadcrumbs that are displayed in the UI
         self.title = 'High potential opportunities'
         return super().save(*args, **kwargs)
-
-
-class InvestHighPotentialOpportunityFormPage(
-    ExclusivePageMixin,
-    BaseInternationalPage,
-    metaclass=FormPageMetaClass,
-):
-    # metaclass creates <field_name>_label and <field_name>_help_text
-    form_field_names = [
-        'full_name',
-        'role_in_company',
-        'email_address',
-        'phone_number',
-        'company_name',
-        'website_url',
-        'country',
-        'company_size',
-        'opportunities',
-        'comment',
-    ]
-
-    slug_identity = slugs.CONTACT_FORM_SLUG
-    subpage_types = ['InvestHighPotentialOpportunityFormSuccessPage']
-    parent_page_types = ['InvestHighPotentialOpportunitiesPage']
-
-    heading = models.CharField(max_length=255)
-    sub_heading = models.CharField(max_length=255)
-    breadcrumbs_label = models.CharField(max_length=50)
-
-    content_panels_before_form = \
-        panels.InvestHighPotentialOpportunityFormPagePanels.content_panels_before_form  # noqa
-    content_panels_after_form = \
-        panels.InvestHighPotentialOpportunityFormPagePanels.content_panels_after_form  # noqa
-    settings_panels = \
-        panels.InvestHighPotentialOpportunityFormPagePanels.settings_panels
 
 
 class InvestHighPotentialOpportunityDetailPage(
@@ -652,41 +619,6 @@ class InvestHighPotentialOpportunityDetailPage(
             'Image used on the opportunity listing page for this opportunity'
         ),
         verbose_name='Image',
-    )
-
-
-class InvestHighPotentialOpportunityFormSuccessPage(
-    panels.InvestHighPotentialOpportunityFormSuccessPagePanels,
-    ExclusivePageMixin,
-    BaseInternationalPage,
-):
-    slug_identity = slugs.FORM_SUCCESS_SLUG
-    parent_page_types = ['InvestHighPotentialOpportunityFormPage']
-
-    breadcrumbs_label = models.CharField(max_length=50)
-    heading = models.CharField(
-        max_length=255,
-        verbose_name='section title'
-    )
-    sub_heading = models.CharField(
-        max_length=255,
-        verbose_name='section body',
-    )
-    next_steps_title = models.CharField(
-        max_length=255,
-        verbose_name='section title'
-    )
-    next_steps_body = models.CharField(
-        max_length=255,
-        verbose_name='section body',
-    )
-    documents_title = models.CharField(
-        max_length=255,
-        verbose_name='section title'
-    )
-    documents_body = models.CharField(
-        max_length=255,
-        verbose_name='section body',
     )
 
 

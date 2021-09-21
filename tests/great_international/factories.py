@@ -448,11 +448,11 @@ class InvestHighPotentialOpportunitiesPageFactory(wagtail_factories.PageFactory)
     parent = None
 
 
-class InvestHighPotentialOpportunityFormPageFactory(
+class ForeignDirectInvestmentFormPageFactory(
     wagtail_factories.PageFactory
 ):
     class Meta:
-        model = models.invest.InvestHighPotentialOpportunityFormPage
+        model = models.investment_atlas.ForeignDirectInvestmentFormPage
 
     breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
     heading = factory.fuzzy.FuzzyText(length=200)
