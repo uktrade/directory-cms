@@ -200,3 +200,57 @@ class InvestmentGeneralContentPagePanels:
         content_panels=content_panels,
         settings_panels=settings_panels
     )
+
+
+class ForeignDirectInvestmentFormPagePanels:
+
+    content_panels_before_form = [
+        MultiFieldPanel(
+            heading='Hero',
+            children=[
+                FieldPanel('breadcrumbs_label'),
+                FieldPanel('heading'),
+                FieldPanel('sub_heading'),
+            ]
+        ),
+    ]
+    content_panels_after_form = [SearchEngineOptimisationPanel()]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
+
+
+class ForeignDirectInvestmentFormSuccessPagePanels:
+
+    content_panels = [
+        FieldPanel('breadcrumbs_label'),
+        MultiFieldPanel(
+            heading='heading',
+            children=[
+                FieldPanel('heading'),
+                FieldPanel('sub_heading'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Next steps',
+            children=[
+                FieldPanel('next_steps_title'),
+                FieldPanel('next_steps_body'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Documents',
+            children=[
+                FieldPanel('documents_title'),
+                FieldPanel('documents_body'),
+            ]
+        ),
+        SearchEngineOptimisationPanel(),
+    ]
+
+    settings_panels = [
+        FieldPanel('title_en_gb'),
+        FieldPanel('slug'),
+    ]
