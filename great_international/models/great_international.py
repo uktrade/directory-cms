@@ -1100,6 +1100,28 @@ class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, 
     hero_teaser = models.CharField(max_length=255, null=True, blank=True)
     tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
+    related_page_one = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    related_page_two = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    related_page_three = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
 
 class InternationalCuratedTopicLandingPage(panels.InternationalCuratedTopicLandingPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
@@ -1702,6 +1724,28 @@ class AboutUkRegionListingPage(
     contact_cta_text = models.CharField(max_length=255, blank=True)
     contact_cta_link = models.CharField(max_length=255, blank=True)
 
+    related_page_one = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    related_page_two = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    related_page_three = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
 
 class AboutUkRegionPage(panels.AboutUkRegionPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.AboutUkRegionListingPage']
@@ -1729,7 +1773,7 @@ class AboutUkRegionPage(panels.AboutUkRegionPagePanels, BaseInternationalPage):
         blank=True,
         help_text="Displayd above Region Section Summary Intro"
     )
-    region_summary_section_intro = models.TextField(max_length=255, blank=True)
+    region_summary_section_intro = models.TextField(max_length=300, blank=True)
     region_summary_section_content = MarkdownField(blank=True)
 
     investment_opps_title = models.CharField(

@@ -22,13 +22,22 @@ from .models.great_international import (
     InternationalInvestmentSubSectorPage,
     InternationalSectorPage,
     InternationalSubSectorPage,
+    WhyInvestInTheUKPage,
+    InternationalTopicLandingPage,
+    AboutUkRegionPage,
+    AboutUkRegionListingPage,
 )
 from .models.invest import (
     InvestHighPotentialOpportunityDetailPage,
     InvestHighPotentialOpportunityFormPage,
     InvestRegionPage,
 )
-from .models.investment_atlas import InvestmentOpportunityPage
+from .models.investment_atlas import (
+    InvestmentOpportunityPage,
+    InvestmentGeneralContentPage,
+    InvestmentOpportunityListingPage,
+)
+
 
 REGIONS = [
     "scotland",
@@ -579,11 +588,59 @@ class RelatedDitServicesPageSerializer(BasePageSerializer):
     featured_description = serializers.CharField()
 
 
+class RelatedWhyInvestInTheUKPageSerializer(BasePageSerializer):
+    title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    featured_description = serializers.CharField(source='strapline')
+
+
+class RelatedInternationalTopicLandingPageSerializer(BasePageSerializer):
+    title = serializers.CharField(source='landing_page_title')
+    hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    featured_description = serializers.CharField(source='hero_teaser')
+
+
+class RelatedAboutUkRegionPageSerializer(BasePageSerializer):
+    title = serializers.CharField(source='hero_title')
+    hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    featured_description = serializers.CharField()
+
+
+class RelatedInvestmentOpportunityPageSerializer(BasePageSerializer):
+    title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    featured_description = serializers.CharField(source='strapline')
+
+
+class RelatedInvestmentGeneralContentPageSerializer(BasePageSerializer):
+    title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    featured_description = serializers.CharField(source='strapline')
+
+
+class RelatedAboutUkRegionListingPageSerializer(BasePageSerializer):
+    title = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
+    featured_description = serializers.CharField(source='hero_title')
+
+
+class RelatedInvestmentOpportunityListingPageSerializer(BasePageSerializer):
+    title = serializers.CharField()
+    featured_description = serializers.CharField(source='hero_text')
+
+
 MODEL_TO_SERIALIZER_MAPPING = {
     InternationalArticlePage: RelatedArticlePageSerializer,
     InternationalCampaignPage: RelatedCampaignPageSerializer,
     CapitalInvestOpportunityPage: RelatedCapitalInvestOpportunityPageSerializer,
     AboutDitServicesPage: RelatedDitServicesPageSerializer,
+    WhyInvestInTheUKPage: RelatedWhyInvestInTheUKPageSerializer,
+    InternationalTopicLandingPage: RelatedInternationalTopicLandingPageSerializer,
+    AboutUkRegionPage: RelatedAboutUkRegionPageSerializer,
+    InvestmentOpportunityPage: RelatedInvestmentOpportunityPageSerializer,
+    InvestmentGeneralContentPage: RelatedInvestmentGeneralContentPageSerializer,
+    AboutUkRegionListingPage: RelatedAboutUkRegionListingPageSerializer,
+    InvestmentOpportunityListingPage: RelatedInvestmentOpportunityListingPageSerializer,
 }
 
 
@@ -882,7 +939,11 @@ class InternationalArticleListingPageSerializer(BasePageSerializer, ChildPagesSe
         return articles + campaigns
 
 
-class InternationalTopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer):
+class InternationalTopicLandingPageSerializer(
+    PageWithRelatedPagesSerializer,
+    ChildPagesSerializerHelper,
+    HeroSerializer
+):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
     hero_teaser = serializers.CharField(max_length=255)
@@ -2012,7 +2073,7 @@ class AboutUkLandingPageSerializer(BasePageSerializer, HeroSerializer):
         return get_mapped_regions(instance)
 
 
-class AboutUkRegionListingPageSerializer(BasePageSerializer, HeroSerializer):
+class AboutUkRegionListingPageSerializer(PageWithRelatedPagesSerializer, HeroSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
 
@@ -2664,7 +2725,7 @@ class WhyInvestInTheUKPageSerializer(
     IMAGE_RENDITION_SPEC = "fill-960x540"
 
     strapline = serializers.CharField()
-    introduction = serializers.CharField()
+    introduction = core_fields.MarkdownToHTMLField()
     intro_image = wagtail_fields.ImageRenditionField(
         IMAGE_RENDITION_SPEC
     )
