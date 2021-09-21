@@ -487,15 +487,24 @@ class InternationalTopicLandingPagePanels:
                 PageChooserPanel('related_page_one', [
                     'great_international.WhyInvestInTheUKPage',
                     'great_international.AboutUkRegionPage',
-                    'great_international.InvestmentOpportunityPage']),
+                    'great_international.InvestmentOpportunityPage',
+                    'great_international.InvestmentGeneralContentPage',
+                    'great_international.AboutUkRegionListingPage',
+                    'great_international.InvestmentOpportunityListingPage']),
                 PageChooserPanel('related_page_two', [
                     'great_international.WhyInvestInTheUKPage',
                     'great_international.AboutUkRegionPage',
-                    'great_international.InvestmentOpportunityPage']),
+                    'great_international.InvestmentOpportunityPage',
+                    'great_international.InvestmentGeneralContentPage',
+                    'great_international.AboutUkRegionListingPage',
+                    'great_international.InvestmentOpportunityListingPage']),
                 PageChooserPanel('related_page_three', [
                     'great_international.WhyInvestInTheUKPage',
                     'great_international.AboutUkRegionPage',
-                    'great_international.InvestmentOpportunityPage']),
+                    'great_international.InvestmentOpportunityPage',
+                    'great_international.InvestmentGeneralContentPage',
+                    'great_international.AboutUkRegionListingPage',
+                    'great_international.InvestmentOpportunityListingPage']),
             ]
         ),
         SearchEngineOptimisationPanel(),
