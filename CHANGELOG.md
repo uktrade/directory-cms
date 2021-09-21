@@ -2,6 +2,7 @@
 
 ## Pre-release
 ### Implemented enhancements
+- NOTICKET: Increased character limit for regional summary intro field
 - NOTICKET: Added more page type to be selected for regions/sectors pages as related page
 - NOTICKET: Added markdown serializer for intro field of WhyInvestInTheUK page
 - GP2-3302: Added related pages for sector/industries pages
