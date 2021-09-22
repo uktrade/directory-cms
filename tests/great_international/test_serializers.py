@@ -1,5 +1,7 @@
 import pytest
 
+from django.conf import settings
+
 from great_international.serializers import (
     BaseInternationalSectorPageSerializer,
     InternationalArticlePageSerializer,
@@ -10,6 +12,7 @@ from great_international.serializers import (
     AboutUkRegionPageSerializer,
     InternationalCapitalInvestLandingPageSerializer,
     ForeignDirectInvestmentFormPageSerializer,
+    ForeignDirectInvestmentFormSuccessPageSerializer,
     CapitalInvestOpportunityPageSerializer,
     CapitalInvestOpportunityListingSerializer,
     InternationalSectorPageSerializer,
@@ -36,6 +39,7 @@ from tests.great_international.factories import (
     InternationalCapitalInvestLandingPageFactory,
     CapitalInvestOpportunityPageFactory,
     ForeignDirectInvestmentFormPageFactory,
+    ForeignDirectInvestmentFormSuccessPageFactory,
     CapitalInvestOpportunityListingPageFactory,
     InternationalSubSectorPageFactory,
     InternationalTopicLandingPageFactory,
@@ -50,6 +54,7 @@ from tests.great_international.factories import (
     InvestmentOpportunityRelatedSectorsFactory,
     InvestmentOpportunityListingPageFactory,
     PlanningStatusFactory,
+    InvestmentTypeFactory,
     InternationalInvestmentSectorPageFactory,
     InternationalInvestmentSubSectorPageFactory
 )
@@ -2164,10 +2169,42 @@ def test_international_investment_sector_page_serializer__get_related_opportunit
     ]
 
 
+def make_fdi_opportunity_mix(international_root_page):
+    # make a mix of opps, including some with FDIs
+
+    fdi_type = InvestmentTypeFactory(
+        name=settings.FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT
+    )
+    non_fdi_type = InvestmentTypeFactory(
+        name=f'Not {settings.FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT}'
+    )
+    InvestmentOpportunityPageFactory(
+        slug='opp_1__fdi',
+        investment_type=fdi_type,
+        parent=international_root_page
+    )
+    InvestmentOpportunityPageFactory(
+        slug='opp_2__non_fdi',
+        investment_type=non_fdi_type,
+        parent=international_root_page
+    )
+    InvestmentOpportunityPageFactory(
+        slug='opp_3__fdi',
+        investment_type=fdi_type,
+        parent=international_root_page
+    )
+    InvestmentOpportunityPageFactory(
+        slug='opp_4__non_fdi',
+        investment_type=non_fdi_type,
+        parent=international_root_page
+    )
+
+
 @pytest.mark.django_db
-def test_foreign_direct_investment_form_page_serializer(
-    international_root_page
-):
+def test_foreign_direct_investment_form_page_serializer(international_root_page):
+
+    make_fdi_opportunity_mix(international_root_page)
+
     instance = ForeignDirectInvestmentFormPageFactory(
         parent=international_root_page
     )
@@ -2216,3 +2253,31 @@ def test_foreign_direct_investment_form_page_serializer(
         'label': instance.comment_label,
         'help_text': instance.comment_help_text,
     }
+
+    assert len(serializer.data['opportunity_list']) == 2
+    assert serializer.data['opportunity_list'][0]['meta']['slug'] == 'opp_1__fdi'
+    assert serializer.data['opportunity_list'][1]['meta']['slug'] == 'opp_3__fdi'
+
+
+@pytest.mark.django_db
+def test_foreign_direct_investment_form_sucess_page_serializer(
+    international_root_page,
+):
+
+    make_fdi_opportunity_mix(international_root_page)
+
+    parent_form_page = ForeignDirectInvestmentFormPageFactory(
+        parent=international_root_page
+    )
+
+    instance = ForeignDirectInvestmentFormSuccessPageFactory(
+        parent=parent_form_page
+    )
+
+    serializer = ForeignDirectInvestmentFormSuccessPageSerializer(
+        instance
+    )
+
+    assert len(serializer.data['opportunity_list']) == 2
+    assert serializer.data['opportunity_list'][0]['meta']['slug'] == 'opp_1__fdi'
+    assert serializer.data['opportunity_list'][1]['meta']['slug'] == 'opp_3__fdi'

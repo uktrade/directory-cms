@@ -480,6 +480,22 @@ class ForeignDirectInvestmentFormPageFactory(
     parent = None
 
 
+class ForeignDirectInvestmentFormSuccessPageFactory(
+    wagtail_factories.PageFactory
+):
+    class Meta:
+        model = models.investment_atlas.ForeignDirectInvestmentFormSuccessPage
+
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
+    heading = factory.fuzzy.FuzzyText(length=200)
+    sub_heading = factory.fuzzy.FuzzyText(length=200)
+    next_steps_title = factory.fuzzy.FuzzyText(length=200)
+    next_steps_body = factory.fuzzy.FuzzyText(length=200)
+    documents_title = factory.fuzzy.FuzzyText(length=200)
+    documents_body = factory.fuzzy.FuzzyText(length=200)
+    parent = None
+
+
 class InvestHighPotentialOpportunityDetailPageFactory(
     wagtail_factories.PageFactory
 ):
