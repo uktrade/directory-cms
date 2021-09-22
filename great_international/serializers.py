@@ -1,5 +1,6 @@
 import random
 
+from django.conf import settings
 from directory_constants import cms
 from rest_framework import serializers
 from wagtail.api.v2.serializers import StreamField as StreamFieldSerializer
@@ -29,10 +30,10 @@ from .models.great_international import (
 )
 from .models.invest import (
     InvestHighPotentialOpportunityDetailPage,
-    InvestHighPotentialOpportunityFormPage,
     InvestRegionPage,
 )
 from .models.investment_atlas import (
+    ForeignDirectInvestmentFormPage,
     InvestmentOpportunityPage,
     InvestmentGeneralContentPage,
     InvestmentOpportunityListingPage,
@@ -1772,18 +1773,31 @@ class InvestHighPotentialOpportunityDetailPageSerializer(InvestHighPotentialOppo
         return serializer.data
 
 
-class InvestHighPotentialOpportunityListItemSerializer(BasePageSerializer):
-    pdf_document = core_fields.DocumentURLField()
-    heading = serializers.CharField(max_length=255)
+class InvestmentOpportunityForFormPageSerializer(BasePageSerializer):
+
+    heading = serializers.CharField(
+        max_length=255,
+        source='title',  # Remapping to keep with what GIUI is currently expecting
+    )
+
+    # In the future, if we revert to sending PDF attachments, we will need to
+    # re-include a `pdf_document` field in this serializer, with a value of
+    # the url to the relevant PDF doc from the Documents library.
+    # Great-international-ui then has a view and a template which
+    # specifically use this document value to send links to
+    # the files, as well as show them on the success page.
+
+    # Also, we may need to add in extra details such as the `opportunity_summary`
+    # field to be displayed alongside any PDF links
 
 
-class InvestHighPotentialOpportunityFormPageSerializer(
+class ForeignDirectInvestmentFormPageSerializer(
     BasePageSerializer,
     metaclass=FormPageSerializerMetaclass
 ):
 
     class Meta:
-        model_class = InvestHighPotentialOpportunityFormPage
+        model_class = ForeignDirectInvestmentFormPage
 
     heading = serializers.CharField(max_length=255)
     sub_heading = serializers.CharField(max_length=255)
@@ -1791,13 +1805,18 @@ class InvestHighPotentialOpportunityFormPageSerializer(
     opportunity_list = serializers.SerializerMethodField()
 
     def get_opportunity_list(self, instance):
+
         queryset = (
-            InvestHighPotentialOpportunityDetailPage.objects.all()
+            InvestmentOpportunityPage.objects.filter(
+                investment_type__name=settings.FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL
+            )
             .live()
-            .order_by('heading')
-            .exclude(slug=instance.slug)
+            .order_by('title')
         )
-        serializer = InvestHighPotentialOpportunityListItemSerializer(
+        # In the future, we might need to use a more fully-specced serializer, if
+        # we also need to show more info about the Opporutnity as well as a download
+        # link - see serializer comments
+        serializer = InvestmentOpportunityForFormPageSerializer(
             queryset,
             many=True,
             allow_null=True,
@@ -1806,7 +1825,7 @@ class InvestHighPotentialOpportunityFormPageSerializer(
         return serializer.data
 
 
-class InvestHighPotentialOpportunityFormSuccessPageSerializer(
+class ForeignDirectInvestmentFormSuccessPageSerializer(
     BasePageSerializer
 ):
     breadcrumbs_label = serializers.CharField(max_length=50)
@@ -1821,12 +1840,16 @@ class InvestHighPotentialOpportunityFormSuccessPageSerializer(
 
     def get_opportunity_list(self, instance):
         queryset = (
-            InvestHighPotentialOpportunityDetailPage.objects.all()
+            InvestmentOpportunityPage.objects.filter(
+                investment_type__name=settings.FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL
+            )
             .live()
-            .order_by('heading')
-            .exclude(slug=instance.slug)
+            .order_by('title')
         )
-        serializer = InvestHighPotentialOpportunityDetailPageSerializer(
+        # In the future, we might need to use a more fully-specced serializer, if
+        # we also need to show more info about the Opporutnity as well as a download
+        # link - see serializer comments
+        serializer = InvestmentOpportunityForFormPageSerializer(
             queryset,
             many=True,
             allow_null=True,
