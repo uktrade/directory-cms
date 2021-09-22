@@ -8,6 +8,7 @@
 - GP2-3302: Added related pages for sector/industries pages
 - GP2-3301: Added related pages selection panel for Region listing page
 - GP2-3374: Refactor WhyInvestInTheUK page /model
+- GP2-3407: Rename HPO contact page as FDI 
 - GP2-3400: Update block spec for general Atlas content page to allow optional CTAs 
 - GP2-3394: Fix InternalOrExternalLinkBlock's url generation
 - NOTICKET: add opportunity_summary to opp listing page results

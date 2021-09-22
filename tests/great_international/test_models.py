@@ -14,8 +14,7 @@ from . import factories
 @pytest.mark.django_db
 def test_models_hierarchy():
     # homepage / app root
-    assert great_international.InternationalHomePage.allowed_subpage_models() \
-        == [
+    assert great_international.InternationalHomePage.allowed_subpage_models() == [
         great_international.InternationalArticleListingPage,
         great_international.InternationalTopicLandingPage,
         great_international.InternationalCuratedTopicLandingPage,
@@ -41,10 +40,6 @@ def test_models_hierarchy():
     ]
     assert invest.InvestHighPotentialOpportunitiesPage.allowed_subpage_models() == [
         invest.InvestHighPotentialOpportunityDetailPage,
-        invest.InvestHighPotentialOpportunityFormPage,
-    ]
-    assert invest.InvestHighPotentialOpportunityFormPage.allowed_subpage_models() == [
-        invest.InvestHighPotentialOpportunityFormSuccessPage,
     ]
     assert great_international.InternationalHomePage.allowed_parent_page_models() == [Page]
     # topic landing
@@ -105,6 +100,9 @@ def test_models_hierarchy():
     assert great_international.AboutUkRegionPage.allowed_subpage_models() == []
     assert great_international.AboutUkWhyChooseTheUkPage.allowed_subpage_models() == [
         great_international.InternationalArticlePage
+    ]
+    assert investment_atlas.ForeignDirectInvestmentFormPage.allowed_subpage_models() == [
+        investment_atlas.ForeignDirectInvestmentFormSuccessPage,
     ]
 
 

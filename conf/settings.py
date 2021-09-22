@@ -490,3 +490,15 @@ if env.str('ELASTIC_APM_SERVER_URL', ''):
         'DEBUG': DEBUG,
     }
     INSTALLED_APPS.append('elasticapm.contrib.django')
+
+
+# Great International / Investment Atlas
+
+# The ForeignDirectInvestmentFormPageSerializer has to filter on the value of
+# a model identified by a string value. This provides us with some flexibiltiy
+# if the phrasing of that string changes at short notice.
+FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT = 'Foreign Direct Investment'
+FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL = env.str(
+    'FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL',
+    FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT
+)
