@@ -2376,7 +2376,7 @@ class InvestmentOpportunitySummarySerializer(EntitySummarySerializerBase):
     )
 
 
-class InvestmentOpportunityPageSerializer(BasePageSerializer):
+class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
 
     IMAGE_RENDITION_SPEC = "fill-960x540"
     AVATAR_RENDITION_SPEC = "fill-500x500"
@@ -2387,9 +2387,6 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     strapline = serializers.CharField()
     introduction = core_fields.MarkdownToHTMLField()
-    hero_image = wagtail_fields.ImageRenditionField(
-        HERO_IMAGE_RENDITION_SPEC,
-    )
     intro_image = wagtail_fields.ImageRenditionField(
         IMAGE_RENDITION_SPEC,
     )
