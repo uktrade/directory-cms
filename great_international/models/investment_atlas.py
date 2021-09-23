@@ -1,5 +1,7 @@
 from django.db import models
 
+from directory_constants import slugs
+
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Orderable
 from wagtail.admin.edit_handlers import (
@@ -14,7 +16,7 @@ from .base import BaseInternationalPage
 from core.fields import single_struct_block_stream_field_factory
 from core.model_fields import MarkdownField
 
-from core.models import WagtailAdminExclusivePageMixin
+from core.models import ExclusivePageMixin, FormPageMetaClass, WagtailAdminExclusivePageMixin
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from great_international.models import great_international as great_international_models
@@ -123,6 +125,7 @@ class InvestmentAtlasLandingPage(
         'great_international.InternationalTopicLandingPage',
         'great_international.WhyInvestInTheUKPage',
         'great_international.InvestmentGeneralContentPage',
+        'great_international.ForeignDirectInvestmentFormPage',
     ]
 
     # title comes from base page
@@ -501,4 +504,80 @@ class InvestmentGeneralContentPage(
         block_class_instance=investment_atlas_blocks.InvestmentGeneralContentPageBlock(),
         null=True,
         blank=True,
+    )
+
+
+class ForeignDirectInvestmentFormPage(
+    ExclusivePageMixin,
+    BaseInternationalPage,
+    metaclass=FormPageMetaClass,
+):
+    # This was formerly great_international.invest.InvestHighPotentialOpportunityFormPage
+
+    # metaclass creates <field_name>_label and <field_name>_help_text
+    form_field_names = [
+        'full_name',
+        'role_in_company',
+        'email_address',
+        'phone_number',
+        'company_name',
+        'website_url',
+        'country',
+        'company_size',
+        'opportunities',
+        'comment',
+    ]
+    slug_identity = 'foreign-direct-investment-contact'  # TODO: add to d-constants
+    subpage_types = ['great_international.ForeignDirectInvestmentFormSuccessPage']
+    parent_page_types = ['great_international.InvestmentAtlasLandingPage']
+
+    heading = models.CharField(max_length=255)
+    sub_heading = models.CharField(max_length=255)
+    breadcrumbs_label = models.CharField(max_length=50)
+
+    content_panels_before_form = (
+        investment_atlas_panels.ForeignDirectInvestmentFormPagePanels.content_panels_before_form
+    )
+    content_panels_after_form = (
+        investment_atlas_panels.ForeignDirectInvestmentFormPagePanels.content_panels_after_form
+    )
+    settings_panels = (
+        investment_atlas_panels.ForeignDirectInvestmentFormPagePanels.settings_panels
+    )
+
+
+class ForeignDirectInvestmentFormSuccessPage(
+    investment_atlas_panels.ForeignDirectInvestmentFormSuccessPagePanels,
+    ExclusivePageMixin,
+    BaseInternationalPage,
+):
+    # This was formerly great_international.invest.InvestHighPotentialOpportunityFormSuccessPage
+    slug_identity = slugs.FORM_SUCCESS_SLUG  # this forces the slug name
+    parent_page_types = ['ForeignDirectInvestmentFormPage']
+
+    breadcrumbs_label = models.CharField(max_length=50)
+    heading = models.CharField(
+        max_length=255,
+        verbose_name='section title'
+    )
+    sub_heading = models.CharField(
+        max_length=255,
+        verbose_name='section body',
+    )
+    next_steps_title = models.CharField(
+        max_length=255,
+        verbose_name='section title'
+    )
+    next_steps_body = models.CharField(
+        max_length=255,
+        verbose_name='section body',
+    )
+    # These are deprecated / unused for the time being
+    documents_title = models.CharField(
+        max_length=255,
+        verbose_name='section title'
+    )
+    documents_body = models.CharField(
+        max_length=255,
+        verbose_name='section body',
     )
