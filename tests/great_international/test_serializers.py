@@ -1,5 +1,7 @@
 import pytest
 
+from django.conf import settings
+
 from great_international.serializers import (
     BaseInternationalSectorPageSerializer,
     InternationalArticlePageSerializer,
@@ -9,7 +11,8 @@ from great_international.serializers import (
     InternationalGuideLandingPageSerializer,
     AboutUkRegionPageSerializer,
     InternationalCapitalInvestLandingPageSerializer,
-    InvestHighPotentialOpportunityFormPageSerializer,
+    ForeignDirectInvestmentFormPageSerializer,
+    ForeignDirectInvestmentFormSuccessPageSerializer,
     CapitalInvestOpportunityPageSerializer,
     CapitalInvestOpportunityListingSerializer,
     InternationalSectorPageSerializer,
@@ -35,7 +38,8 @@ from tests.great_international.factories import (
     AboutUkRegionPageFactory,
     InternationalCapitalInvestLandingPageFactory,
     CapitalInvestOpportunityPageFactory,
-    InvestHighPotentialOpportunityFormPageFactory,
+    ForeignDirectInvestmentFormPageFactory,
+    ForeignDirectInvestmentFormSuccessPageFactory,
     CapitalInvestOpportunityListingPageFactory,
     InternationalSubSectorPageFactory,
     InternationalTopicLandingPageFactory,
@@ -50,6 +54,7 @@ from tests.great_international.factories import (
     InvestmentOpportunityRelatedSectorsFactory,
     InvestmentOpportunityListingPageFactory,
     PlanningStatusFactory,
+    InvestmentTypeFactory,
     InternationalInvestmentSectorPageFactory,
     InternationalInvestmentSubSectorPageFactory
 )
@@ -541,60 +546,6 @@ def test_capital_invest_landing_page_returns_empty_when_no_related_regions(
     )
 
     assert serializer.data['added_region_card_fields'] == []
-
-
-@pytest.mark.django_db
-def test_high_potential_opportunity_form_page_serializer(
-    international_root_page
-):
-    instance = InvestHighPotentialOpportunityFormPageFactory(
-        parent=international_root_page
-    )
-
-    serializer = InvestHighPotentialOpportunityFormPageSerializer(
-        instance
-    )
-
-    assert serializer.data['full_name'] == {
-        'label': instance.full_name_label,
-        'help_text': instance.full_name_help_text,
-    }
-    assert serializer.data['role_in_company'] == {
-        'label': instance.role_in_company_label,
-        'help_text': instance.role_in_company_help_text,
-    }
-    assert serializer.data['email_address'] == {
-        'label': instance.email_address_label,
-        'help_text': instance.email_address_help_text,
-    }
-    assert serializer.data['phone_number'] == {
-        'label': instance.phone_number_label,
-        'help_text': instance.phone_number_help_text,
-    }
-    assert serializer.data['company_name'] == {
-        'label': instance.company_name_label,
-        'help_text': instance.company_name_help_text,
-    }
-    assert serializer.data['website_url'] == {
-        'label': instance.website_url_label,
-        'help_text': instance.website_url_help_text,
-    }
-    assert serializer.data['country'] == {
-        'label': instance.country_label,
-        'help_text': instance.country_help_text,
-    }
-    assert serializer.data['company_size'] == {
-        'label': instance.company_size_label,
-        'help_text': instance.company_size_help_text,
-    }
-    assert serializer.data['opportunities'] == {
-        'label': instance.opportunities_label,
-        'help_text': instance.opportunities_help_text,
-    }
-    assert serializer.data['comment'] == {
-        'label': instance.comment_label,
-        'help_text': instance.comment_help_text,
-    }
 
 
 @pytest.mark.django_db
@@ -2216,3 +2167,117 @@ def test_international_investment_sector_page_serializer__get_related_opportunit
         'opp_6',
         'opp_5',
     ]
+
+
+def make_fdi_opportunity_mix(international_root_page):
+    # make a mix of opps, including some with FDIs
+
+    fdi_type = InvestmentTypeFactory(
+        name=settings.FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT
+    )
+    non_fdi_type = InvestmentTypeFactory(
+        name=f'Not {settings.FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT}'
+    )
+    InvestmentOpportunityPageFactory(
+        slug='opp_1__fdi',
+        investment_type=fdi_type,
+        parent=international_root_page
+    )
+    InvestmentOpportunityPageFactory(
+        slug='opp_2__non_fdi',
+        investment_type=non_fdi_type,
+        parent=international_root_page
+    )
+    InvestmentOpportunityPageFactory(
+        slug='opp_3__fdi',
+        investment_type=fdi_type,
+        parent=international_root_page
+    )
+    InvestmentOpportunityPageFactory(
+        slug='opp_4__non_fdi',
+        investment_type=non_fdi_type,
+        parent=international_root_page
+    )
+
+
+@pytest.mark.django_db
+def test_foreign_direct_investment_form_page_serializer(international_root_page):
+
+    make_fdi_opportunity_mix(international_root_page)
+
+    instance = ForeignDirectInvestmentFormPageFactory(
+        parent=international_root_page
+    )
+
+    serializer = ForeignDirectInvestmentFormPageSerializer(
+        instance
+    )
+
+    assert serializer.data['full_name'] == {
+        'label': instance.full_name_label,
+        'help_text': instance.full_name_help_text,
+    }
+    assert serializer.data['role_in_company'] == {
+        'label': instance.role_in_company_label,
+        'help_text': instance.role_in_company_help_text,
+    }
+    assert serializer.data['email_address'] == {
+        'label': instance.email_address_label,
+        'help_text': instance.email_address_help_text,
+    }
+    assert serializer.data['phone_number'] == {
+        'label': instance.phone_number_label,
+        'help_text': instance.phone_number_help_text,
+    }
+    assert serializer.data['company_name'] == {
+        'label': instance.company_name_label,
+        'help_text': instance.company_name_help_text,
+    }
+    assert serializer.data['website_url'] == {
+        'label': instance.website_url_label,
+        'help_text': instance.website_url_help_text,
+    }
+    assert serializer.data['country'] == {
+        'label': instance.country_label,
+        'help_text': instance.country_help_text,
+    }
+    assert serializer.data['company_size'] == {
+        'label': instance.company_size_label,
+        'help_text': instance.company_size_help_text,
+    }
+    assert serializer.data['opportunities'] == {
+        'label': instance.opportunities_label,
+        'help_text': instance.opportunities_help_text,
+    }
+    assert serializer.data['comment'] == {
+        'label': instance.comment_label,
+        'help_text': instance.comment_help_text,
+    }
+
+    assert len(serializer.data['opportunity_list']) == 2
+    assert serializer.data['opportunity_list'][0]['meta']['slug'] == 'opp_1__fdi'
+    assert serializer.data['opportunity_list'][1]['meta']['slug'] == 'opp_3__fdi'
+
+
+@pytest.mark.django_db
+def test_foreign_direct_investment_form_sucess_page_serializer(
+    international_root_page,
+):
+
+    make_fdi_opportunity_mix(international_root_page)
+
+    parent_form_page = ForeignDirectInvestmentFormPageFactory(
+        parent=international_root_page
+    )
+
+    instance = ForeignDirectInvestmentFormSuccessPageFactory(
+        parent=parent_form_page
+    )
+
+    serializer = ForeignDirectInvestmentFormSuccessPageSerializer(
+        instance
+    )
+
+    assert len(serializer.data['opportunity_list']) == 2
+    assert serializer.data['opportunity_list'][0]['meta']['slug'] == 'opp_1__fdi'
+    assert serializer.data['opportunity_list'][1]['meta']['slug'] == 'opp_3__fdi'

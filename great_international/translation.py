@@ -763,8 +763,8 @@ class InvestHighPotentialOpportunitiesPageTranslationOptions(
     fields = []
 
 
-@register(invest.InvestHighPotentialOpportunityFormPage)
-class HighPotentialOpportunityFormPageTranslationOptions(
+@register(investment_atlas.ForeignDirectInvestmentFormPage)
+class ForeignDirectInvestmentFormPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = []
@@ -845,8 +845,8 @@ class HighPotentialOpportunityDetailPageTranslationOptions(
     )
 
 
-@register(invest.InvestHighPotentialOpportunityFormSuccessPage)
-class HighPotentialOpportunityFormSuccessPageTranslationOptions(
+@register(investment_atlas.ForeignDirectInvestmentFormSuccessPage)
+class ForeignDirectInvestmentFormSuccessPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = []

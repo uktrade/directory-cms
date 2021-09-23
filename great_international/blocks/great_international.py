@@ -94,7 +94,12 @@ sector_page_block_spec_list = [
                 (
                     'text',
                     InternationalInvestmentSectorPageCopyBlock(
-                        help_text="Use H3 headers or lower, not H2 or H1",
+                        help_text=(
+                            "Use H3 headers or lower, not H2 or H1. "
+                            "To add an expandable/folding marker to the text, "
+                            "add a horizontal rule (--- with a blank line before "
+                            "and after it) where the 'More' button should be."
+                        )
                     ),
                 ),
                 (

@@ -448,11 +448,11 @@ class InvestHighPotentialOpportunitiesPageFactory(wagtail_factories.PageFactory)
     parent = None
 
 
-class InvestHighPotentialOpportunityFormPageFactory(
+class ForeignDirectInvestmentFormPageFactory(
     wagtail_factories.PageFactory
 ):
     class Meta:
-        model = models.invest.InvestHighPotentialOpportunityFormPage
+        model = models.investment_atlas.ForeignDirectInvestmentFormPage
 
     breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
     heading = factory.fuzzy.FuzzyText(length=200)
@@ -477,6 +477,22 @@ class InvestHighPotentialOpportunityFormPageFactory(
     role_in_company_label = factory.fuzzy.FuzzyText(length=200)
     website_url_help_text = factory.fuzzy.FuzzyText(length=200)
     website_url_label = factory.fuzzy.FuzzyText(length=200)
+    parent = None
+
+
+class ForeignDirectInvestmentFormSuccessPageFactory(
+    wagtail_factories.PageFactory
+):
+    class Meta:
+        model = models.investment_atlas.ForeignDirectInvestmentFormSuccessPage
+
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
+    heading = factory.fuzzy.FuzzyText(length=200)
+    sub_heading = factory.fuzzy.FuzzyText(length=200)
+    next_steps_title = factory.fuzzy.FuzzyText(length=200)
+    next_steps_body = factory.fuzzy.FuzzyText(length=200)
+    documents_title = factory.fuzzy.FuzzyText(length=200)
+    documents_body = factory.fuzzy.FuzzyText(length=200)
     parent = None
 
 
