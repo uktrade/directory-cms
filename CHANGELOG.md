@@ -2,6 +2,7 @@
 
 ## Pre-release
 ### Implemented enhancements
+- NOTICKET: Add help text to the streamfield text blocks that use a markdown HR as expander toggle
 - NOTICKET: Added HeroSerializer for InvestmentOpportunityPageSerializer to align with other page
 - NOTICKET: Increased character limit for regional summary intro field
 - NOTICKET: Added more page type to be selected for regions/sectors pages as related page
