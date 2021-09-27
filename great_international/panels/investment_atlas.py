@@ -151,7 +151,7 @@ class InvestmentOpportunityPagePanels:
             heading='Location and Relevant Regions',
             classname='collapsible',
             children=[
-                StreamFieldPanel('location_coords'),
+                StreamFieldPanel('regions_with_locations'),
             ]
         ),
         FieldRowPanel(
