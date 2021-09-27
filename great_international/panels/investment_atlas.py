@@ -149,9 +149,9 @@ class InvestmentOpportunityPagePanels:
     related_entities_panels = [
         FieldRowPanel(
             heading='Location and Relevant Regions',
+            classname='collapsible',
             children=[
-                FieldPanel('location_coords'),
-                FieldPanel('related_regions'),
+                StreamFieldPanel('location_coords'),
             ]
         ),
         FieldRowPanel(

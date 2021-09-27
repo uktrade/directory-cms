@@ -208,3 +208,17 @@ class InvestmentGeneralContentPageBlock(blocks.StructBlock):
         required=False,
         help_text="Only needed if special styling is involved: check with a developer. If in doubt, it's not needed"
     )
+
+
+class OpportunityLocationBlock(blocks.StructBlock):
+    region =  blocks.PageChooserBlock(
+        required=False,
+        label='Linked Region',
+        page_type='great_international.AboutUkRegionPage'
+
+    )
+    location_coords = blocks.CharBlock(
+        max_length=200,
+        label='Linked Location Coordinates',
+        help_text='Latitude and longitude Coordinates, e.g. 176.0944492, -38.50245621',
+    )  # deliberately not a pointfield yet
