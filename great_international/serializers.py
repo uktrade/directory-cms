@@ -2318,6 +2318,10 @@ class CapitalInvestContactFormSuccessPageSerializer(BasePageSerializer):
     what_happens_next_description = core_fields.MarkdownToHTMLField()
 
 
+# class LocationSummarySerializer():
+#     map_coordinate = serializers.CharField()
+
+
 class RegionPageSummarySerializer(EntitySummarySerializerBase, HeroSerializer):
     """Shorter version of AboutUkRegionPageSerializer for nesting content
     in InvestmentOpportunityPageSerializer results
@@ -2393,7 +2397,7 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
 
     # Key facts
     location = serializers.CharField()
-    location_coords = serializers.CharField()
+    regions_with_locations = StreamFieldSerializer()
 
     promoter = serializers.CharField()
     scale = serializers.CharField()
@@ -2414,14 +2418,31 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
         AVATAR_RENDITION_SPEC,
     )
 
-    # Relations
-    related_regions = RegionPageSummarySerializer(
-        many=True,
-        read_only=True,
-    )
     related_sectors = serializers.SerializerMethodField()
     sub_sectors = serializers.SerializerMethodField()
     related_opportunities = serializers.SerializerMethodField()
+    # related_regions = serializers.SerializerMethodField()
+    # #map_coordinates = serializers.SerializerMethodField()
+    #
+    # def get_related_regions(self, instance):
+    #     related_regions = [item.value['region'] for item in instance.map_coordinates]
+    #
+    #     serializer = RegionPageSummarySerializer(
+    #         related_regions,
+    #         many=True,
+    #         read_only=True,
+    #     )
+    #     return serializer.data
+    #
+    # def get_map_coordinates(self, instance):
+    #     coordinates = [item.value['map_coordinate'] for item in instance.map_coordinates]
+    #
+    #     serializer = LocationSummarySerializer(
+    #         coordinates,
+    #         many=True,
+    #         read_only=True,
+    #     )
+    #     return serializer.data
 
     def get_time_to_investment_decision(self, instance):
         return instance.get_time_to_investment_decision_display()
