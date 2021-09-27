@@ -356,10 +356,11 @@ class InvestmentOpportunityPage(
             'Geospatial and region data is set in the Location and Relevant Regions tab.'
         )
     )
-    location_coords = models.CharField(
-        # NB: deliberately not a PointField [yet?], as we don't need GIS functionality at the DB level
-        blank=True,
-        max_length=200,
+    location_coords = StreamField( [
+        ('location_coordinate', investment_atlas_blocks.OpportunityLocationBlock()),
+        ],
+        null = True,
+        blank = True,
     )
 
     related_regions = ParentalManyToManyField(
