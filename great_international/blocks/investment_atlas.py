@@ -211,14 +211,20 @@ class InvestmentGeneralContentPageBlock(blocks.StructBlock):
 
 
 class OpportunityLocationBlock(blocks.StructBlock):
-    region =  blocks.PageChooserBlock(
+    region = blocks.PageChooserBlock(
         required=False,
         label='Linked Region',
         page_type='great_international.AboutUkRegionPage'
 
     )
-    location_coords = blocks.CharBlock(
+    map_coordinate = blocks.CharBlock(
         max_length=200,
         label='Linked Location Coordinates',
         help_text='Latitude and longitude Coordinates, e.g. 176.0944492, -38.50245621',
     )  # deliberately not a pointfield yet
+
+    def get_api_representation(self, value, context=None):
+        retval_dict = super().get_api_representation(value, context)
+        if retval_dict:
+            retval_dict.update({'region_title': value.get('region').title})
+        return retval_dict
