@@ -607,7 +607,7 @@ class RelatedAboutUkRegionPageSerializer(BasePageSerializer):
     featured_description = serializers.CharField()
 
 
-class RelatedInvestmentOpportunityPageMinimalSerializer(BasePageSerializer):
+class RelatedInvestmentOpportunityPageSerializer(BasePageSerializer):
     title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
     featured_description = serializers.CharField(source='strapline')
@@ -638,7 +638,7 @@ MODEL_TO_SERIALIZER_MAPPING = {
     WhyInvestInTheUKPage: RelatedWhyInvestInTheUKPageSerializer,
     InternationalTopicLandingPage: RelatedInternationalTopicLandingPageSerializer,
     AboutUkRegionPage: RelatedAboutUkRegionPageSerializer,
-    InvestmentOpportunityPage: RelatedInvestmentOpportunityPageMinimalSerializer,
+    InvestmentOpportunityPage: RelatedInvestmentOpportunityPageSerializer,
     InvestmentGeneralContentPage: RelatedInvestmentGeneralContentPageSerializer,
     AboutUkRegionListingPage: RelatedAboutUkRegionListingPageSerializer,
     InvestmentOpportunityListingPage: RelatedInvestmentOpportunityListingPageSerializer,
@@ -2316,10 +2316,6 @@ class CapitalInvestContactFormSuccessPageSerializer(BasePageSerializer):
     message_box_heading = serializers.CharField()
     message_box_description = core_fields.MarkdownToHTMLField()
     what_happens_next_description = core_fields.MarkdownToHTMLField()
-
-
-# class LocationSummarySerializer():
-#     map_coordinate = serializers.CharField()
 
 
 class RegionPageSummarySerializer(EntitySummarySerializerBase, HeroSerializer):
