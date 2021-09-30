@@ -2166,7 +2166,6 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
     def _get_regions(self, instance):
         return set([item.value['region'] for item in instance.regions_with_locations])
 
-
     def get_related_opportunities(self, instance):
         # Return up to three investment_atlas.InvestmentOpportunties,
         # related by Region, ordered by their weighting and then pk
@@ -2430,7 +2429,6 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
     related_opportunities = serializers.SerializerMethodField()
     related_regions = serializers.SerializerMethodField()
 
-
     def _get_regions(self, instance):
         return set([item.value['region'] for item in instance.regions_with_locations])
 
@@ -2494,7 +2492,6 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
         ).distinct():
             if self._get_regions(opp).intersection(related_regions_set):
                 related_opps.append(opp)
-
 
         if not related_opps:
             return []
