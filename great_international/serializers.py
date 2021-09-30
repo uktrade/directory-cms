@@ -607,7 +607,7 @@ class RelatedAboutUkRegionPageSerializer(BasePageSerializer):
     featured_description = serializers.CharField()
 
 
-class RelatedInvestmentOpportunityPageSerializer(BasePageSerializer):
+class RelatedInvestmentOpportunityPageMinimalSerializer(BasePageSerializer):
     title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
     featured_description = serializers.CharField(source='strapline')
@@ -638,7 +638,7 @@ MODEL_TO_SERIALIZER_MAPPING = {
     WhyInvestInTheUKPage: RelatedWhyInvestInTheUKPageSerializer,
     InternationalTopicLandingPage: RelatedInternationalTopicLandingPageSerializer,
     AboutUkRegionPage: RelatedAboutUkRegionPageSerializer,
-    InvestmentOpportunityPage: RelatedInvestmentOpportunityPageSerializer,
+    InvestmentOpportunityPage: RelatedInvestmentOpportunityPageMinimalSerializer,
     InvestmentGeneralContentPage: RelatedInvestmentGeneralContentPageSerializer,
     AboutUkRegionListingPage: RelatedAboutUkRegionListingPageSerializer,
     InvestmentOpportunityListingPage: RelatedInvestmentOpportunityListingPageSerializer,
