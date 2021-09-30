@@ -18,8 +18,7 @@ from core.model_fields import MarkdownField
 
 from core.models import ExclusivePageMixin, FormPageMetaClass, WagtailAdminExclusivePageMixin
 
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from great_international.models import great_international as great_international_models
+from modelcluster.fields import ParentalKey
 import great_international.blocks.investment_atlas as investment_atlas_blocks
 import great_international.panels.investment_atlas as investment_atlas_panels
 

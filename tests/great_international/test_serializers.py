@@ -1,7 +1,6 @@
 import json
 import pytest
 
-from wagtail.tests.utils.form_data import streamfield
 from django.conf import settings
 
 from great_international.serializers import (
@@ -1037,9 +1036,9 @@ def test_opportunity_listing_page_gets_sectors_with_sub_sectors(
         opportunity_listing_serializer.data['sector_with_sub_sectors']) == 2
 
     all_sub_sectors = [
-        sub_sector for sub_sectors in opportunity_listing_serializer
-            .data['sector_with_sub_sectors'].values() for sub_sector in sub_sectors
-    ]
+        sub_sector for sub_sectors in
+        opportunity_listing_serializer.data['sector_with_sub_sectors'].values() for sub_sector in sub_sectors
+        ]
 
     assert len(all_sub_sectors) == 3
 
@@ -2088,8 +2087,8 @@ def test_atlas_opportunity_listing_page_gets_sectors_with_sub_sectors(rf, intern
         opportunity_listing_serializer.data['sector_with_sub_sectors']) == 2
 
     all_sub_sectors = [
-        sub_sector for sub_sectors in opportunity_listing_serializer
-            .data['sector_with_sub_sectors'].values() for sub_sector in sub_sectors
+        sub_sector for sub_sectors in
+        opportunity_listing_serializer.data['sector_with_sub_sectors'].values() for sub_sector in sub_sectors
     ]
 
     assert len(all_sub_sectors) == 3
