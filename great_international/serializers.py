@@ -2177,7 +2177,7 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
                 '-priority_weighting', '-pk'
 
         ).distinct():
-            if self._get_regions(opp).intersection([instance]):
+            if instance in self._get_regions(opp):
                 # only interested in first three opportunities
                 if len(related_opps) >= 3:
                     break
@@ -2430,7 +2430,8 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
     related_regions = serializers.SerializerMethodField()
 
     def _get_regions(self, instance):
-        return set([item.value['region'] for item in instance.regions_with_locations if item.value['region'] and item.value['region'].live])
+        return set([item.value['region'] for item in instance.regions_with_locations
+                    if item.value['region'] and item.value['region'].live])
 
     def get_related_regions(self, instance):
         related_regions = self._get_regions(instance)
@@ -2581,7 +2582,8 @@ class InvestmentOpportunityForListPageSerializer(BasePageSerializer):
     sub_sectors = serializers.SerializerMethodField()
 
     def _get_regions(self, instance):
-        return set([item.value['region'] for item in instance.regions_with_locations if item.value['region'] and item.value['region'].live])
+        return set([item.value['region'] for item in instance.regions_with_locations
+                    if item.value['region'] and item.value['region'].live])
 
     def get_planning_status(self, instance):
         # Ensure we always return the name, not the entire object. This protects against
