@@ -2595,14 +2595,7 @@ class InvestmentOpportunityForListPageSerializer(BasePageSerializer):
 
     def get_related_regions(self, instance):
 
-        related_regions = set()
-
-        for opp in InvestmentOpportunityPage.objects.live().public().order_by(
-            '-priority_weighting', '-pk'
-        ):
-            # We only want to add regions for THIS opportunity
-            if opp.pk == instance.pk:
-                related_regions.update(self._get_regions(opp))
+        related_regions = self._get_regions(instance)
 
         serializer = MinimalRegionPageSummarySerializer(
             related_regions,
