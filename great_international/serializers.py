@@ -2430,7 +2430,7 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
     related_regions = serializers.SerializerMethodField()
 
     def _get_regions(self, instance):
-        return set([item.value['region'] for item in instance.regions_with_locations])
+        return set([item.value['region'] for item in instance.regions_with_locations if item.value['region'] and item.value['region'].live])
 
     def get_related_regions(self, instance):
         related_regions = self._get_regions(instance)
