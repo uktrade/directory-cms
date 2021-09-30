@@ -824,7 +824,6 @@ class InvestmentOpportunityPageFactory(wagtail_factories.PageFactory):
     hero_image = factory.SubFactory(wagtail_factories.ImageFactory)
     intro_image = factory.SubFactory(wagtail_factories.ImageFactory)
     location = factory.fuzzy.FuzzyText(length=200)
-    location_coords = '0, 0'
     promoter = factory.fuzzy.FuzzyText(length=200)
     scale = factory.fuzzy.FuzzyText(length=255)
     scale_value = factory.fuzzy.FuzzyDecimal(low=1, high=99999)
@@ -836,7 +835,7 @@ class InvestmentOpportunityPageFactory(wagtail_factories.PageFactory):
     # Streamfields - set them in the instance
     # main_content
 
-    # related_regions - set them on the instance from the factory
+    # regions_with_location - Added as streamfields which holds regions and map coordinates
 
 
 class InvestmentOpportunityRelatedSectorsFactory(factory.django.DjangoModelFactory):

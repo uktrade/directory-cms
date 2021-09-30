@@ -18,8 +18,7 @@ from core.model_fields import MarkdownField
 
 from core.models import ExclusivePageMixin, FormPageMetaClass, WagtailAdminExclusivePageMixin
 
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from great_international.models import great_international as great_international_models
+from modelcluster.fields import ParentalKey
 import great_international.blocks.investment_atlas as investment_atlas_blocks
 import great_international.panels.investment_atlas as investment_atlas_panels
 
@@ -356,14 +355,10 @@ class InvestmentOpportunityPage(
             'Geospatial and region data is set in the Location and Relevant Regions tab.'
         )
     )
-    location_coords = models.CharField(
-        # NB: deliberately not a PointField [yet?], as we don't need GIS functionality at the DB level
-        blank=True,
-        max_length=200,
-    )
-
-    related_regions = ParentalManyToManyField(
-        great_international_models.AboutUkRegionPage,
+    regions_with_locations = StreamField([
+        ('location', investment_atlas_blocks.OpportunityLocationBlock())
+    ],
+        null=True,
         blank=True,
     )
 
