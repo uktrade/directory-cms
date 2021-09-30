@@ -2177,7 +2177,7 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
                 '-priority_weighting', '-pk'
 
         ).distinct():
-            if self._get_regions(opp).intersection([instance]):
+            if instance in self._get_regions(opp):
                 # only interested in first three opportunities
                 if len(related_opps) >= 3:
                     break
