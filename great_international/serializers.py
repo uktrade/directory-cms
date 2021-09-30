@@ -2586,7 +2586,6 @@ class InvestmentOpportunityForListPageSerializer(BasePageSerializer):
     def _get_regions(self, instance):
         return set([item.value['region'] for item in instance.regions_with_locations if item.value['region'].live])
 
-
     def get_planning_status(self, instance):
         # Ensure we always return the name, not the entire object. This protects against
         # the __str__ method being changed and breaking things
@@ -2600,10 +2599,11 @@ class InvestmentOpportunityForListPageSerializer(BasePageSerializer):
         related_regions = set()
 
         for opp in InvestmentOpportunityPage.objects.live().public().order_by(
-                '-priority_weighting', '-pk'
+            '-priority_weighting', '-pk'
         ):
-
-            related_regions.update(self._get_regions(opp))
+            # We only want to add regions for THIS opportunity
+            if opp.pk == instance.pk:
+                related_regions.update(self._get_regions(opp))
 
         serializer = MinimalRegionPageSummarySerializer(
             related_regions,
