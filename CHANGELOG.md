@@ -2,6 +2,9 @@
 
 ## Pre-release
 ### Implemented enhancements
+- NOTICKET: increase character limit for case study text in AboutUKRegionPage
+- NOTICKET: increase character limit for investment type
+- NOTICKET: Rename serializer to avoid name clash/redefinition
 - NOTICKET: Increase length of case study text field on region page (255 to 500 chars)
 - NOTICKET: Add help text to the streamfield text blocks that use a markdown HR as expander toggle
 - NOTICKET: Added HeroSerializer for InvestmentOpportunityPageSerializer to align with other page
