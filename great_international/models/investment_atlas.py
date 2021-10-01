@@ -45,7 +45,7 @@ TIME_TO_INVESTMENT_DECISION_OPTIONS = (
 class InvestmentType(models.Model):
     # TODO: add modeltranslation support as required, at the snippet model level
     name = models.CharField(
-        max_length=50
+        max_length=99
     )
 
     def __str__(self):
