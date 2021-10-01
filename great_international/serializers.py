@@ -607,7 +607,7 @@ class RelatedAboutUkRegionPageSerializer(BasePageSerializer):
     featured_description = serializers.CharField()
 
 
-class RelatedInvestmentOpportunityPageSerializer(BasePageSerializer):
+class RelatedInvestmentOpportunityPageMinimalSerializer(BasePageSerializer):
     title = serializers.CharField()
     hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
     featured_description = serializers.CharField(source='strapline')
@@ -638,7 +638,7 @@ MODEL_TO_SERIALIZER_MAPPING = {
     WhyInvestInTheUKPage: RelatedWhyInvestInTheUKPageSerializer,
     InternationalTopicLandingPage: RelatedInternationalTopicLandingPageSerializer,
     AboutUkRegionPage: RelatedAboutUkRegionPageSerializer,
-    InvestmentOpportunityPage: RelatedInvestmentOpportunityPageSerializer,
+    InvestmentOpportunityPage: RelatedInvestmentOpportunityPageMinimalSerializer,
     InvestmentGeneralContentPage: RelatedInvestmentGeneralContentPageSerializer,
     AboutUkRegionListingPage: RelatedAboutUkRegionListingPageSerializer,
     InvestmentOpportunityListingPage: RelatedInvestmentOpportunityListingPageSerializer,
@@ -2163,18 +2163,28 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
 
     related_opportunities = serializers.SerializerMethodField()
 
+    def _get_regions(self, instance):
+        return set([item.value['region'] for item in instance.regions_with_locations])
+
     def get_related_opportunities(self, instance):
         # Return up to three investment_atlas.InvestmentOpportunties,
         # related by Region, ordered by their weighting and then pk
         # as a tie-breaker, so newer ones come first if weighting is
         # the same
+        related_opps = []
 
-        relevant_regions = instance.investmentopportunitypage_set.order_by(
-            '-priority_weighting', '-pk'
-        )
-        data = relevant_regions[:3]
+        for opp in InvestmentOpportunityPage.objects.live().public().order_by(
+                '-priority_weighting', '-pk'
+
+        ).distinct():
+            if instance in self._get_regions(opp):
+                # only interested in first three opportunities
+                if len(related_opps) >= 3:
+                    break
+                related_opps.append(opp)
+
         serializer = RelatedInvestmentOpportunityPageSerializer(
-            data,
+            related_opps,
             many=True,
         )
         return serializer.data
@@ -2393,7 +2403,7 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
 
     # Key facts
     location = serializers.CharField()
-    location_coords = serializers.CharField()
+    locations_for_regions = StreamFieldSerializer(source='regions_with_locations')
 
     promoter = serializers.CharField()
     scale = serializers.CharField()
@@ -2414,14 +2424,24 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
         AVATAR_RENDITION_SPEC,
     )
 
-    # Relations
-    related_regions = RegionPageSummarySerializer(
-        many=True,
-        read_only=True,
-    )
     related_sectors = serializers.SerializerMethodField()
     sub_sectors = serializers.SerializerMethodField()
     related_opportunities = serializers.SerializerMethodField()
+    related_regions = serializers.SerializerMethodField()
+
+    def _get_regions(self, instance):
+        return set([item.value['region'] for item in instance.regions_with_locations
+                    if item.value['region'] and item.value['region'].live])
+
+    def get_related_regions(self, instance):
+        related_regions = self._get_regions(instance)
+
+        serializer = RegionPageSummarySerializer(
+            related_regions,
+            many=True,
+            read_only=True,
+        )
+        return serializer.data
 
     def get_time_to_investment_decision(self, instance):
         return instance.get_time_to_investment_decision_display()
@@ -2459,18 +2479,20 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
         # Related opportunities are defined as ones in the same REGION, whereas previously (with the
         # CapitalInvestOpportunityPageSerializer) we were showing based on SECTOR.
 
-        related_regions_ids = instance.related_regions.values_list('id', flat=True)
+        related_regions_set = self._get_regions(instance)
 
-        if not related_regions_ids:
+        if not related_regions_set:
             return []
 
-        related_opps = InvestmentOpportunityPage.objects.live().public().filter(
-            related_regions__in=related_regions_ids
-        ).exclude(
-            id=instance.id
+        related_opps = []
+
+        for opp in InvestmentOpportunityPage.objects.live().public().exclude(
+                id=instance.id
         ).order_by(
             '-priority_weighting'
-        ).distinct()
+        ).distinct():
+            if self._get_regions(opp).intersection(related_regions_set):
+                related_opps.append(opp)
 
         if not related_opps:
             return []
@@ -2504,8 +2526,11 @@ class RelatedInvestmentOpportunityPageSerializer(BasePageSerializer):
     sectors = serializers.SerializerMethodField()
     sub_sectors = serializers.SerializerMethodField()
 
+    def _get_regions(self, instance):
+        return set([item.value['region'] for item in instance.regions_with_locations if item.value['region'].live])
+
     def get_regions(self, instance):
-        related_regions = instance.related_regions.live().all()
+        related_regions = self._get_regions(instance)
         serializer = MinimalRegionPageSummarySerializer(
             related_regions,
             many=True,
@@ -2550,10 +2575,15 @@ class InvestmentOpportunityForListPageSerializer(BasePageSerializer):
     planning_status = serializers.SerializerMethodField()
     investment_type = serializers.CharField(max_length=255)
     time_to_investment_decision = serializers.SerializerMethodField()
+    locations_with_regions = StreamFieldSerializer(source="regions_with_locations")
 
     related_regions = serializers.SerializerMethodField()
     related_sectors = serializers.SerializerMethodField()
     sub_sectors = serializers.SerializerMethodField()
+
+    def _get_regions(self, instance):
+        return set([item.value['region'] for item in instance.regions_with_locations
+                    if item.value['region'] and item.value['region'].live])
 
     def get_planning_status(self, instance):
         # Ensure we always return the name, not the entire object. This protects against
@@ -2564,7 +2594,9 @@ class InvestmentOpportunityForListPageSerializer(BasePageSerializer):
         return instance.get_time_to_investment_decision_display()
 
     def get_related_regions(self, instance):
-        related_regions = instance.related_regions.live().all()
+
+        related_regions = self._get_regions(instance)
+
         serializer = MinimalRegionPageSummarySerializer(
             related_regions,
             many=True,
