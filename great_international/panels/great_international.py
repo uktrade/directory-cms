@@ -11,6 +11,8 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtailmedia.edit_handlers import MediaChooserPanel
+   
 from wagtailmedia.widgets import AdminMediaChooser
 
 from core.helpers import make_translated_interface
@@ -22,7 +24,8 @@ class InternationalHomePagePanels:
     content_panels = [
         FieldPanel('title'),
         FieldPanel('hero_title'),
-        StreamFieldPanel('homepage_link_panels'),
+        MediaChooserPanel('hero_video'),
+        StreamFieldPanel('homepage_link_panels'),        
         SearchEngineOptimisationPanel(),
     ]
 
