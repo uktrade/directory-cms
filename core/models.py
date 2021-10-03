@@ -1,8 +1,10 @@
 from functools import partial
 import hashlib
+import mimetypes
 from urllib.parse import urlencode, urljoin
 
 from directory_constants import choices
+import ipdb
 
 from modeltranslation import settings as modeltranslation_settings
 from modeltranslation.utils import build_localized_fieldname
@@ -24,6 +26,53 @@ from django.utils import translation
 from core import constants, forms
 from core.helpers import get_page_full_url
 from core.wagtail_fields import FormHelpTextField, FormLabelField
+from wagtailmedia.models import Media
+from django.utils.translation import ugettext_lazy as _
+from django.urls import reverse
+
+class GreatMedia(Media):
+
+    transcript = models.TextField(
+        verbose_name=_('Transcript'), blank=True, null=True  # left null because was an existing field
+    )
+
+    subtitles_en = models.TextField(
+        verbose_name=_('English subtitles'),
+        null=True,
+        blank=True,
+        help_text='English-language subtitles for this video, in VTT format',
+    )
+
+    admin_form_fields = Media.admin_form_fields + (
+        'transcript',
+        'subtitles_en',
+    )
+
+    @property
+    def sources(self):
+        return [
+            {
+                'src': self.url,
+                'type': mimetypes.guess_type(self.filename)[0] or 'application/octet-stream',
+                'transcript': self.greatmedia.transcript,
+                'thumbnail': self.thumbnail.url
+            }
+        ]
+
+    @property
+    def subtitles(self):
+        output = []
+        # TO COME: support for more than just English
+        if self.greatmedia.subtitles_en:
+            output.append(
+                {
+                    'srclang': 'en',
+                    'label': 'English',
+                    'url': reverse('core:subtitles-serve', args=[self.id, 'en']),
+                    'default': False,
+                },
+            )
+        return output
 
 
 class Breadcrumb(models.Model):

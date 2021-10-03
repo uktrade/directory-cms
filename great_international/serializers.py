@@ -859,12 +859,24 @@ class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
 
     tags = core_fields.TagsListField()
 
+class GreatMediaSerializer(serializers.Serializer):
+    title = serializers.CharField()
+    transcript = serializers.SerializerMethodField()
+    sources = serializers.SerializerMethodField()
+    url = serializers.CharField()
+
+    def get_transcript(self, obj):
+        return obj.greatmedia.transcript
+
+    def get_sources(self, obj):
+        return obj.greatmedia.sources
 
 class InternationalHomePageSerializer(BasePageSerializer):
     # Note that this is massively cut down from the original version,
     # but that the older fields still exist on the model (see the comment there)
 
     hero_title = serializers.CharField(max_length=255)
+    hero_video = GreatMediaSerializer()
     homepage_link_panels = StreamFieldSerializer()
 
     # For now the hero_image and CSS colour for the page background will
