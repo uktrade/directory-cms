@@ -2149,7 +2149,7 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
 
     case_study_image = wagtail_fields.ImageRenditionField('original')
     case_study_title = serializers.CharField(max_length=255)
-    case_study_text = serializers.CharField(max_length=500)
+    case_study_text = core_fields.MarkdownToHTMLField()
     case_study_cta_text = serializers.CharField(max_length=255)
 
     case_study_cta_link = serializers.CharField(max_length=255)
