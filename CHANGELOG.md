@@ -2,6 +2,7 @@
 
 ## Pre-release
 ### Implemented enhancements
+- NOTICKET: Increase/remove character limit some field in AboutUKRegionPage
 - NOTICKET: Amended case_study_text to Markdownfield for AboutUKRegionPage
 - NOTICKET: Buildpack and Python upgrade
 - NOTICKET: increase character limit for case study text in AboutUKRegionPage
