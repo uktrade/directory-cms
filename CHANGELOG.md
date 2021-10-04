@@ -2,7 +2,8 @@
 
 ## Pre-release
 ### Implemented enhancements
-- NOTICKER: Buildpack and Python upgrade
+- NOTICKET: Amended case_study_text to Markdownfield for AboutUKRegionPage
+- NOTICKET: Buildpack and Python upgrade
 - NOTICKET: increase character limit for case study text in AboutUKRegionPage
 - NOTICKET: increase character limit for investment type
 - NOTICKET: Rename serializer to avoid name clash/redefinition

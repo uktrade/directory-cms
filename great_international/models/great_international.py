@@ -1945,7 +1945,7 @@ class AboutUkRegionPage(panels.AboutUkRegionPagePanels, BaseInternationalPage):
         blank=True
     )
     case_study_title = models.CharField(max_length=255, blank=True)
-    case_study_text = models.TextField(blank=True)
+    case_study_text = MarkdownField(blank=True)
     case_study_cta_text = models.CharField(max_length=255, blank=True)
     case_study_cta_link = models.CharField(max_length=255, blank=True)
 
