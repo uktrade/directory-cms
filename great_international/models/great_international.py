@@ -1773,7 +1773,7 @@ class AboutUkRegionPage(panels.AboutUkRegionPagePanels, BaseInternationalPage):
         blank=True,
         help_text="Displayd above Region Section Summary Intro"
     )
-    region_summary_section_intro = models.TextField(max_length=300, blank=True)
+    region_summary_section_intro = models.TextField(blank=True)
     region_summary_section_content = MarkdownField(blank=True)
 
     investment_opps_title = models.CharField(
