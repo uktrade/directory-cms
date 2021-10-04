@@ -2,6 +2,7 @@
 
 ## Pre-release
 ### Implemented enhancements
+- NOTICKET: Increase character limit in InvestmentOpportunityPage
 - NOTICKET: Increase/remove character limit some field in AboutUKRegionPage
 - NOTICKET: Amended case_study_text to Markdownfield for AboutUKRegionPage
 - NOTICKET: Buildpack and Python upgrade
