@@ -338,7 +338,6 @@ class InvestmentOpportunityPage(
         help_text='Goes beside the opportunity intro text'
     )
     opportunity_summary = models.TextField(
-        max_length=300,
         blank=False,
         help_text=(
             'Simple summary of the Opportunity, for display on OTHER pages (eg listing pages) '
