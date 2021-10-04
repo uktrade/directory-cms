@@ -1188,7 +1188,7 @@ class CapitalInvestRegionPageSerializer(BasePageSerializer, HeroSerializer):
 
     region_summary_section_image = wagtail_fields.ImageRenditionField(
         'original')
-    region_summary_section_intro = serializers.CharField(max_length=255)
+    region_summary_section_intro = serializers.CharField()
     region_summary_section_content = core_fields.MarkdownToHTMLField(
         max_length=255
     )
@@ -2129,9 +2129,7 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
         'original')
     region_summary_section_strapline = serializers.CharField(max_length=255)
     region_summary_section_intro = serializers.CharField(max_length=255)
-    region_summary_section_content = core_fields.MarkdownToHTMLField(
-        max_length=255
-    )
+    region_summary_section_content = core_fields.MarkdownToHTMLField()
 
     investment_opps_title = serializers.CharField(max_length=255)
     investment_opps_intro = serializers.CharField(max_length=255)
@@ -2145,7 +2143,7 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
         max_length=255
     )
     property_and_infrastructure_section_image = wagtail_fields.ImageRenditionField('original')
-    property_and_infrastructure_section_content = core_fields.MarkdownToHTMLField(max_length=255)
+    property_and_infrastructure_section_content = core_fields.MarkdownToHTMLField()
 
     case_study_image = wagtail_fields.ImageRenditionField('original')
     case_study_title = serializers.CharField(max_length=255)
