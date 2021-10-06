@@ -181,47 +181,13 @@ class InternationalHomePageFactory(wagtail_factories.PageFactory):
     class Meta:
         model = models.great_international.InternationalHomePage
 
-    hero_title = factory.fuzzy.FuzzyText(length=10)
-    invest_title = factory.fuzzy.FuzzyText(length=10)
-    trade_title = factory.fuzzy.FuzzyText(length=10)
-    section_two_heading = factory.fuzzy.FuzzyText(length=10)
-    section_two_teaser = factory.fuzzy.FuzzyText(length=10)
-    section_two_subsection_one_heading = factory.fuzzy.FuzzyText(length=10)
-    section_two_subsection_one_body = factory.fuzzy.FuzzyText(length=10)
-    section_two_subsection_one_icon = factory.SubFactory(
-        wagtail_factories.ImageFactory
-    )
-    section_two_subsection_two_heading = factory.fuzzy.FuzzyText(length=10)
-    section_two_subsection_two_body = factory.fuzzy.FuzzyText(length=10)
-    section_two_subsection_two_icon = factory.SubFactory(
-        wagtail_factories.ImageFactory
-    )
-    tariffs_call_to_action_text = factory.fuzzy.FuzzyText(length=10)
-    study_in_uk_cta_text = factory.fuzzy.FuzzyText(length=10)
-    visit_uk_cta_text = factory.fuzzy.FuzzyText(length=10)
-    news_title = factory.fuzzy.FuzzyText(length=10)
-    tariffs_title = factory.fuzzy.FuzzyText(length=10)
-    tariffs_link = 'http://foo.com'
-    tariffs_description = factory.fuzzy.FuzzyText(length=10)
-    featured_link_one_heading = factory.fuzzy.FuzzyText(length=10)
-    featured_link_one_url = factory.fuzzy.FuzzyText(length=10)
-    featured_link_one_image = factory.SubFactory(
-        wagtail_factories.ImageFactory
-    )
-    featured_link_two_heading = factory.fuzzy.FuzzyText(length=10)
-    featured_link_two_url = factory.fuzzy.FuzzyText(length=10)
-    featured_link_two_image = factory.SubFactory(
-        wagtail_factories.ImageFactory
-    )
-    featured_link_three_heading = factory.fuzzy.FuzzyText(length=10)
-    featured_link_three_url = factory.fuzzy.FuzzyText(length=10)
-    featured_link_three_image = factory.SubFactory(
-        wagtail_factories.ImageFactory
-    )
     slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     last_published_at = timezone.now()
     parent = None
+
+    hero_title = factory.fuzzy.FuzzyText(length=10)
+    # homepage_link_panels is a StreamField
 
 
 class InternationalArticleListingPageFactory(wagtail_factories.PageFactory):
@@ -482,11 +448,11 @@ class InvestHighPotentialOpportunitiesPageFactory(wagtail_factories.PageFactory)
     parent = None
 
 
-class InvestHighPotentialOpportunityFormPageFactory(
+class ForeignDirectInvestmentFormPageFactory(
     wagtail_factories.PageFactory
 ):
     class Meta:
-        model = models.invest.InvestHighPotentialOpportunityFormPage
+        model = models.investment_atlas.ForeignDirectInvestmentFormPage
 
     breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
     heading = factory.fuzzy.FuzzyText(length=200)
@@ -511,6 +477,22 @@ class InvestHighPotentialOpportunityFormPageFactory(
     role_in_company_label = factory.fuzzy.FuzzyText(length=200)
     website_url_help_text = factory.fuzzy.FuzzyText(length=200)
     website_url_label = factory.fuzzy.FuzzyText(length=200)
+    parent = None
+
+
+class ForeignDirectInvestmentFormSuccessPageFactory(
+    wagtail_factories.PageFactory
+):
+    class Meta:
+        model = models.investment_atlas.ForeignDirectInvestmentFormSuccessPage
+
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
+    heading = factory.fuzzy.FuzzyText(length=200)
+    sub_heading = factory.fuzzy.FuzzyText(length=200)
+    next_steps_title = factory.fuzzy.FuzzyText(length=200)
+    next_steps_body = factory.fuzzy.FuzzyText(length=200)
+    documents_title = factory.fuzzy.FuzzyText(length=200)
+    documents_body = factory.fuzzy.FuzzyText(length=200)
     parent = None
 
 
@@ -809,3 +791,126 @@ class CapitalInvestContactFormSuccessPageFactory(
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     last_published_at = timezone.now()
     parent = None
+
+
+class PlanningStatusFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.investment_atlas.PlanningStatus
+
+    name = factory.fuzzy.FuzzyText(length=30)
+    verbose_description = factory.fuzzy.FuzzyText(length=200)
+
+
+class InvestmentTypeFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.investment_atlas.InvestmentType
+
+    name = factory.fuzzy.FuzzyText(length=30)
+
+
+class InvestmentOpportunityPageFactory(wagtail_factories.PageFactory):
+    class Meta:
+        model = models.investment_atlas.InvestmentOpportunityPage
+
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    parent = None
+
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
+    priority_weighting = '0.0'
+    strapline = factory.fuzzy.FuzzyText(length=200)
+    introduction = factory.fuzzy.FuzzyText(length=300)
+    opportunity_summary = factory.fuzzy.FuzzyText(length=300)
+    hero_image = factory.SubFactory(wagtail_factories.ImageFactory)
+    intro_image = factory.SubFactory(wagtail_factories.ImageFactory)
+    location = factory.fuzzy.FuzzyText(length=200)
+    promoter = factory.fuzzy.FuzzyText(length=200)
+    scale = factory.fuzzy.FuzzyText(length=255)
+    scale_value = factory.fuzzy.FuzzyDecimal(low=1, high=99999)
+
+    planning_status = factory.SubFactory(PlanningStatusFactory)
+    investment_type = factory.SubFactory(InvestmentTypeFactory)
+    time_to_investment_decision = models.investment_atlas.TIME_TO_INVESTMENT_DECISION_0M_6M
+
+    # Streamfields - set them in the instance
+    # main_content
+
+    # regions_with_location - Added as streamfields which holds regions and map coordinates
+
+
+class InvestmentOpportunityRelatedSectorsFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.investment_atlas.InvestmentOpportunityRelatedSectors
+
+    page = None
+    related_sector = None
+
+
+class InvestmentOpportunityListingPageFactory(wagtail_factories.PageFactory):
+    class Meta:
+        model = models.investment_atlas.InvestmentOpportunityListingPage
+
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
+    search_results_title = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    hero_text = factory.fuzzy.FuzzyText(length=50)
+    contact_cta_title = factory.fuzzy.FuzzyText(length=50)
+    contact_cta_text = factory.fuzzy.FuzzyText(length=50)
+    contact_cta_link = 'https://example.com/test/cta/'
+    parent = None
+
+
+class InvestmentAtlasLandingPageFactory(wagtail_factories.PageFactory):
+    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+
+    hero_title = factory.fuzzy.FuzzyText(length=10)
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    parent = None
+
+    class Meta:
+        model = models.investment_atlas.InvestmentAtlasLandingPage
+
+
+class ReusableContentSectionFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.investment_atlas.ReusableContentSection
+
+    title = factory.fuzzy.FuzzyText(length=10)
+    block_slug = factory.fuzzy.FuzzyText(length=10)
+    # content is a StreamField, so easier to set in the test
+
+
+class InternationalInvestmentSectorPageFactory(wagtail_factories.PageFactory):
+    class Meta:
+        model = models.great_international.InternationalInvestmentSectorPage
+
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None
+
+    hero_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+    intro_image = factory.SubFactory(
+        wagtail_factories.ImageFactory
+    )
+
+    heading = factory.fuzzy.FuzzyText(length=10)
+
+
+class InternationalInvestmentSubSectorPageFactory(wagtail_factories.PageFactory):
+    class Meta:
+        model = models.great_international.InternationalInvestmentSubSectorPage
+
+    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
+    last_published_at = timezone.now()
+    parent = None
+
+    heading = factory.fuzzy.FuzzyText(length=10)

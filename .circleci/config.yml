@@ -3,7 +3,7 @@ jobs:
   test:
     working_directory: /tmp/cci-test
     docker:
-      - image: circleci/python:3.6.6
+      - image: circleci/python:3.6.15
       - image: circleci/redis:3.2-alpine
     steps:
       - checkout
@@ -43,7 +43,7 @@ jobs:
   notify:
     working_directory: /tmp/cci-test
     docker:
-      - image: circleci/python:3.6.8
+      - image: circleci/python:3.6.15
     steps:
       - attach_workspace:
           at: /tmp/cci-test/workspace
@@ -55,7 +55,7 @@ jobs:
 
   flake8:
     docker:
-      - image: circleci/python:3.6.8
+      - image: circleci/python:3.6.15
     steps:
       - checkout
       - setup_remote_docker:
@@ -70,7 +70,7 @@ jobs:
 
   migrations:
     docker:
-      - image: circleci/python:3.6.6
+      - image: circleci/python:3.6.15
     steps:
       - checkout
       - setup_remote_docker:

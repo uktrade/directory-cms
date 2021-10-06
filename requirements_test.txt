@@ -6,9 +6,9 @@
 #
 amqp==2.6.1
     # via kombu
-anyascii==0.1.7
+anyascii==0.2.0
     # via wagtail
-attrs==20.3.0
+attrs==21.2.0
     # via
     #   jsonschema
     #   pytest
@@ -17,11 +17,11 @@ beautifulsoup4==4.8.2
     #   -r requirements_test.in
     #   directory-components
     #   wagtail
-billiard==3.6.3.0
+billiard==3.6.4.0
     # via celery
-bleach-whitelist==0.0.11
-    # via -r requirements.in
 bleach==3.3.0
+    # via -r requirements.in
+bleach-whitelist==0.0.11
     # via -r requirements.in
 boto3==1.6.3
     # via -r requirements.in
@@ -33,14 +33,16 @@ celery[redis]==4.4.7
     # via
     #   -r requirements.in
     #   django-celery-beat
-certifi==2020.12.5
+certifi==2021.5.30
     # via
     #   elastic-apm
     #   requests
     #   sentry-sdk
-chardet==3.0.4
+cffi==1.14.5
+    # via cryptography
+chardet==4.0.0
     # via requests
-click==7.1.2
+click==8.0.1
     # via pip-tools
 codecov==2.1.11
     # via -r requirements_test.in
@@ -49,8 +51,12 @@ coverage==5.5
     #   codecov
     #   coveralls
     #   pytest-cov
-coveralls==3.0.1
+coveralls==3.1.0
     # via -r requirements_test.in
+cryptography==3.4.7
+    # via
+    #   pyopenssl
+    #   requests
 directory-components==20.3.1
     # via -r requirements.in
 directory-constants==18.7.0
@@ -61,39 +67,7 @@ directory-healthcheck==1.1.2
     # via -r requirements.in
 dj-database-url==0.5.0
     # via -r requirements.in
-django-admin-ip-restrictor==2.1.0
-    # via -r requirements.in
-django-celery-beat==2.0.0
-    # via -r requirements.in
-django-debug-toolbar==3.2
-    # via -r requirements_test.in
-django-environ==0.4.5
-    # via -r requirements.in
-django-filter==2.2.0
-    # via
-    #   -r requirements.in
-    #   wagtail
-django-health-check==3.8.0
-    # via directory-healthcheck
-django-ipware==2.1.0
-    # via django-admin-ip-restrictor
-django-modelcluster==5.1
-    # via wagtail
-django-modeltranslation==0.16.2
-    # via wagtail-modeltranslation
-django-pglocks==1.0.2
-    # via -r requirements.in
-django-redis==4.10.0
-    # via -r requirements.in
-django-staff-sso-client==1.0.1
-    # via -r requirements.in
-django-taggit==1.3.0
-    # via wagtail
-django-timezone-field==4.1.2
-    # via django-celery-beat
-django-treebeard==4.5.1
-    # via wagtail
-django==2.2.19
+django==2.2.24
     # via
     #   -r requirements.in
     #   directory-components
@@ -113,9 +87,41 @@ django==2.2.19
     #   djangorestframework
     #   sigauth
     #   wagtail
+django-admin-ip-restrictor==2.1.0
+    # via -r requirements.in
+django-celery-beat==2.0.0
+    # via -r requirements.in
+django-debug-toolbar==3.2.1
+    # via -r requirements_test.in
+django-environ==0.4.5
+    # via -r requirements.in
+django-filter==2.2.0
+    # via
+    #   -r requirements.in
+    #   wagtail
+django-health-check==3.8.0
+    # via directory-healthcheck
+django-ipware==2.1.0
+    # via django-admin-ip-restrictor
+django-modelcluster==5.1
+    # via wagtail
+django-modeltranslation==0.17.2
+    # via wagtail-modeltranslation
+django-pglocks==1.0.2
+    # via -r requirements.in
+django-redis==4.10.0
+    # via -r requirements.in
+django-staff-sso-client==1.0.1
+    # via -r requirements.in
 django_storages==1.7.1
     # via -r requirements.in
-djangorestframework==3.12.2
+django-taggit==1.4.0
+    # via wagtail
+django-timezone-field==4.1.2
+    # via django-celery-beat
+django-treebeard==4.5.1
+    # via wagtail
+djangorestframework==3.12.4
     # via
     #   -r requirements.in
     #   sigauth
@@ -125,21 +131,21 @@ docopt==0.6.2
     #   coveralls
     #   notifications-python-client
     #   num2words
-docutils==0.16
+docutils==0.17.1
     # via botocore
 draftjs-exporter==2.1.7
     # via wagtail
 elastic-apm==5.10.1
     # via -r requirements.in
-et-xmlfile==1.0.1
+et-xmlfile==1.1.0
     # via openpyxl
 factory-boy==2.12.0
     # via
     #   -r requirements_test.in
     #   wagtail-factories
-faker==6.6.2
+faker==8.8.1
     # via factory-boy
-flake8==3.9.0
+flake8==3.9.2
     # via -r requirements_test.in
 freezegun==0.3.14
     # via -r requirements_test.in
@@ -147,7 +153,7 @@ future==0.18.2
     # via notifications-python-client
 gevent==21.1.2
     # via -r requirements.in
-greenlet==1.0.0
+greenlet==1.1.0
     # via gevent
 gunicorn==19.5.0
     # via -r requirements.in
@@ -155,10 +161,11 @@ html2text==2018.1.9
     # via -r requirements.in
 html5lib==1.1
     # via wagtail
-idna==2.8
+idna==2.10
     # via requests
-importlib-metadata==3.7.3
+importlib-metadata==4.5.0
     # via
+    #   click
     #   flake8
     #   kombu
     #   pep517
@@ -184,13 +191,13 @@ mccabe==0.6.1
     # via flake8
 mohawk==0.3.4
     # via sigauth
-monotonic==1.5
+monotonic==1.6
     # via notifications-python-client
 notifications-python-client==5.3.0
     # via -r requirements.in
 num2words==0.5.10
     # via -r requirements.in
-oauthlib==3.1.0
+oauthlib==3.1.1
     # via requests-oauthlib
 openpyxl==3.0.7
     # via tablib
@@ -201,11 +208,11 @@ packaging==20.9
     #   pytest-sugar
 pep517==0.10.0
     # via pip-tools
-pillow==8.1.2
+pillow==8.3.2
     # via
     #   -r requirements.in
     #   wagtail
-pip-tools==6.0.1
+pip-tools==6.2.0
     # via -r requirements_test.in
 pluggy==0.13.1
     # via pytest
@@ -219,26 +226,30 @@ pycodestyle==2.7.0
     # via flake8
 pycountry==19.8.18
     # via -r requirements.in
-pyflakes==2.3.0
+pycparser==2.20
+    # via cffi
+pyflakes==2.3.1
     # via flake8
-pyjwt==2.0.1
+pyjwt==2.1.0
     # via notifications-python-client
+pyopenssl==20.0.1
+    # via requests
 pyparsing==2.4.7
     # via packaging
 pyrsistent==0.17.3
     # via jsonschema
-pytest-cov==2.11.1
-    # via -r requirements_test.in
-pytest-django==4.1.0
-    # via -r requirements_test.in
-pytest-sugar==0.9.4
-    # via -r requirements_test.in
-pytest==6.2.2
+pytest==6.2.4
     # via
     #   -r requirements_test.in
     #   pytest-cov
     #   pytest-django
     #   pytest-sugar
+pytest-cov==2.12.1
+    # via -r requirements_test.in
+pytest-django==4.4.0
+    # via -r requirements_test.in
+pytest-sugar==0.9.4
+    # via -r requirements_test.in
 python-crontab==2.5.1
     # via django-celery-beat
 python-dateutil==2.6.1
@@ -260,11 +271,7 @@ redis==3.5.3
     # via
     #   celery
     #   django-redis
-requests-mock==1.8.0
-    # via -r requirements_test.in
-requests-oauthlib==1.3.0
-    # via django-staff-sso-client
-requests==2.21.0
+requests[security]==2.25.1
     # via
     #   -r requirements.in
     #   codecov
@@ -273,13 +280,17 @@ requests==2.21.0
     #   requests-mock
     #   requests-oauthlib
     #   wagtail
+requests-mock==1.9.3
+    # via -r requirements_test.in
+requests-oauthlib==1.3.0
+    # via django-staff-sso-client
 s3transfer==0.1.13
     # via boto3
 sentry-sdk==0.13.4
     # via -r requirements.in
 sigauth==4.1.0
     # via -r requirements.in
-six==1.15.0
+six==1.16.0
     # via
     #   bleach
     #   django-modeltranslation
@@ -288,12 +299,13 @@ six==1.15.0
     #   jsonschema
     #   l18n
     #   mohawk
+    #   pyopenssl
     #   python-dateutil
     #   requests-mock
     #   w3lib
 soupsieve==2.2.1
     # via beautifulsoup4
-sqlparse==0.4.1
+sqlparse==0.4.2
     # via
     #   django
     #   django-debug-toolbar
@@ -307,11 +319,12 @@ toml==0.10.2
     # via
     #   pep517
     #   pytest
-typing-extensions==3.7.4.3
+    #   pytest-cov
+typing-extensions==3.10.0.0
     # via importlib-metadata
 unidecode==1.2.0
     # via wagtail
-urllib3==1.24.3
+urllib3==1.26.5
     # via
     #   -r requirements.in
     #   elastic-apm
@@ -323,29 +336,31 @@ vine==1.3.0
     #   celery
 w3lib==1.22.0
     # via -r requirements.in
-wagtail-factories==2.0.1
-    # via -r requirements_test.in
-wagtail-modeltranslation==0.10.17
-    # via -r requirements.in
-wagtail==2.11.6
+wagtail==2.11.8
     # via
     #   -r requirements.in
     #   wagtail-factories
     #   wagtail-modeltranslation
     #   wagtailmedia
-wagtailmedia==0.7.0
+wagtail-factories==2.0.1
+    # via -r requirements_test.in
+wagtail-modeltranslation==0.10.17
+    # via -r requirements.in
+wagtailmedia==0.7.1
     # via -r requirements.in
 webencodings==0.5.1
     # via
     #   bleach
     #   html5lib
+wheel==0.36.2
+    # via pip-tools
 whitenoise==4.1.2
     # via -r requirements.in
 willow==1.4
     # via wagtail
 xlrd==2.0.1
     # via tablib
-xlsxwriter==1.3.7
+xlsxwriter==1.4.3
     # via wagtail
 xlwt==1.3.0
     # via tablib
@@ -355,7 +370,7 @@ zipp==3.4.1
     #   pep517
 zope.event==4.5.0
     # via gevent
-zope.interface==5.3.0
+zope.interface==5.4.0
     # via gevent
 
 # The following packages are considered to be unsafe in a requirements file:

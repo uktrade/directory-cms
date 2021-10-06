@@ -24,15 +24,52 @@ def test_international_homepage(admin_client, root_page):
     home_page = factories.InternationalHomePageFactory.create(
         parent=root_page
     )
+    home_page.homepage_link_panels = [
+        (
+            'link_panel',
+            {
+                'title': 'panel one',
+                'supporting_text': 'panel one supporting text',
+                'link': {
+                    'external_link': 'http://example.com/one/',
+                }
+            }
+        ),
+        (
+            'link_panel',
+            {
+                'title': 'panel two',
+                'supporting_text': 'panel two supporting text',
+                'link': {
+                    'external_link': 'http://example.com/two/',
+                }
+            }
+        ),
+    ]
+    home_page.save()
+
     cache.rebuild_all_cache()
 
     url = reverse('api:api:pages:detail', kwargs={'pk': home_page.pk})
     response = admin_client.get(url)
     assert response.status_code == 200
-    subsections = response.json()['section_two_subsections']
-    assert list(subsections[0].keys()) == ['icon', 'heading', 'body']
-    featured_links = response.json()['featured_links'][0]
-    assert list(featured_links.keys()) == ['image', 'heading', 'url']
+    json_response = response.json()
+
+    assert 'hero_title' in json_response
+
+    homepage_link_panels = response.json()['homepage_link_panels']
+    assert homepage_link_panels[0]['type'] == 'link_panel'
+    assert homepage_link_panels[0]['value'] == {
+        'title': 'panel one',
+        'supporting_text': 'panel one supporting text',
+        'link': 'http://example.com/one/',
+    }
+    assert homepage_link_panels[1]['type'] == 'link_panel'
+    assert homepage_link_panels[1]['value'] == {
+        'title': 'panel two',
+        'supporting_text': 'panel two supporting text',
+        'link': 'http://example.com/two/',
+    }
 
 
 @pytest.mark.django_db
@@ -108,12 +145,12 @@ def test_international_topic_landing_page_view_sectors_alphabetical_order(
     landing_page = factories.InternationalTopicLandingPageFactory.create(
         parent=international_root_page
     )
-    sector_page1 = factories.InternationalSectorPageFactory.create(
+    sector_page1 = factories.InternationalInvestmentSectorPageFactory.create(
         parent=landing_page,
         live=True,
         heading='acme'
     )
-    sector_page2 = factories.InternationalSectorPageFactory.create(
+    sector_page2 = factories.InternationalInvestmentSectorPageFactory.create(
         parent=landing_page,
         live=True,
         heading='foo'
@@ -222,11 +259,17 @@ def test_high_potential_opportunity_api(document, admin_client, international_ro
 def test_international_trade_home_page_exposes_industries(
     admin_client, international_root_page
 ):
-    industry = factories.InternationalSectorPageFactory(parent=international_root_page,
-                                                        live=True)
-    factories.InternationalSectorPageFactory(parent=international_root_page, live=False)
+    industry = factories.InternationalInvestmentSectorPageFactory(
+        parent=international_root_page,
+        live=True,
+    )
+    factories.InternationalInvestmentSectorPageFactory(
+        parent=international_root_page,
+        live=False,
+    )
     homepage = factories.InternationalTradeHomePageFactory(
-        live=True, parent=international_root_page
+        live=True,
+        parent=international_root_page
     )
     cache.rebuild_all_cache()
 
