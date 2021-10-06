@@ -1,0 +1,4 @@
+# Ignore all HTML files:
+*.html
+changelog.md
+*.json

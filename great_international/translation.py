@@ -1,12 +1,7 @@
 from modeltranslation.decorators import register
 
 from core.translation import BaseTranslationOptions
-from great_international.models import (
-    great_international,
-    invest,
-    capital_invest,
-    find_a_supplier,
-)
+from great_international.models import capital_invest, find_a_supplier, great_international, invest, investment_atlas
 
 
 @register(great_international.BaseInternationalSectorPage)
@@ -197,7 +192,14 @@ class InternationalCampaignPageTranslationOptions(BaseTranslationOptions):
 @register(great_international.InternationalHomePage)
 class InternationalHomePageTranslationOptions(BaseTranslationOptions):
     fields = (
+        # Current fields
         'hero_title',
+        'homepage_link_panels',
+
+        # --- START LEGACY FIELDS ---
+        # These are retained in the database, but not exposed in the CMS
+        # See note on the InternationalHomePage model. Both 'old' and 'new' fields
+        # mentioned below are all legacy
         'hero_subtitle',
         'hero_cta_text',
         'hero_cta_link',
@@ -319,6 +321,7 @@ class InternationalHomePageTranslationOptions(BaseTranslationOptions):
         'link_to_section_three',
         'link_to_section_three_cta_text',
         'link_to_section_three_cta_link',
+        # --- END LEGACY FIELDS ---
     )
 
 
@@ -338,6 +341,9 @@ class InternationalTopicLandingPageTranslationOptions(BaseTranslationOptions):
         'landing_page_title',
         'hero_image',
         'hero_teaser',
+        'related_page_one',
+        'related_page_two',
+        'related_page_three',
     )
 
 
@@ -757,8 +763,8 @@ class InvestHighPotentialOpportunitiesPageTranslationOptions(
     fields = []
 
 
-@register(invest.InvestHighPotentialOpportunityFormPage)
-class HighPotentialOpportunityFormPageTranslationOptions(
+@register(investment_atlas.ForeignDirectInvestmentFormPage)
+class ForeignDirectInvestmentFormPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = []
@@ -839,8 +845,8 @@ class HighPotentialOpportunityDetailPageTranslationOptions(
     )
 
 
-@register(invest.InvestHighPotentialOpportunityFormSuccessPage)
-class HighPotentialOpportunityFormSuccessPageTranslationOptions(
+@register(investment_atlas.ForeignDirectInvestmentFormSuccessPage)
+class ForeignDirectInvestmentFormSuccessPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = []
@@ -1075,6 +1081,9 @@ class AboutUkRegionListingPageTranslationOptions(
         'contact_text',
         'contact_cta_text',
         'contact_cta_link',
+        'related_page_one',
+        'related_page_two',
+        'related_page_three',
     )
 
 
@@ -1090,6 +1099,7 @@ class AboutUkRegionPageTranslationOptions(
         'featured_description',
 
         'region_summary_section_image',
+        'region_summary_section_strapline',
         'region_summary_section_intro',
         'region_summary_section_content',
 
@@ -1257,4 +1267,114 @@ class CapitalInvestContactFormSuccessPageTranslationOptions(
         'message_box_heading',
         'message_box_description',
         'what_happens_next_description',
+    )
+
+
+@register(investment_atlas.InvestmentAtlasLandingPage)
+class InvestmentAtlasLandingPageTranslationOptions(
+    BaseTranslationOptions,
+):
+    fields = (
+        'breadcrumbs_label',
+        'hero_title',
+        'hero_image',
+        'mobile_hero_image',
+        'hero_strapline',
+        'downpage_sections',
+    )
+
+
+@register(investment_atlas.InvestmentOpportunityListingPage)
+class InvestmentOpportunityListingPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'search_results_title',
+        'hero_text',
+        'contact_cta_title',
+        'contact_cta_text',
+        'contact_cta_link',
+    )
+
+
+@register(investment_atlas.InvestmentOpportunityPage)
+class InvestmentOpportunityPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'breadcrumbs_label',
+        'hero_image',
+        'strapline',
+        'introduction',
+        'intro_image',
+        'opportunity_summary',
+        'promoter',
+        'location',
+        'scale',
+        'scale_value',
+        'planning_status',
+        'investment_type',
+        'time_to_investment_decision',
+        'main_content',
+        'important_links',
+        'contact_name',
+        'contact_avatar',
+        'contact_job_title',
+        'contact_link'
+    )
+
+
+@register(great_international.InternationalInvestmentSectorPage)
+class InternationalInvestmentSectorPageTranslationOptions(
+    BaseTranslationOptions
+):
+    fields = (
+        'hero_image',
+        'heading',
+        'standfirst',
+        'featured_description',
+        'intro_text',
+        'intro_image',
+        'contact_name',
+        'contact_avatar',
+        'contact_job_title',
+        'contact_link',
+        'contact_link_button_preamble',
+        'contact_link_button_label',
+        'related_opportunities_header',
+        'downpage_content',
+        'early_opportunities_header',
+        'early_opportunities',
+    )
+
+
+@register(great_international.InternationalInvestmentSubSectorPage)
+class InternationalInvestmentSubSectorPageTranslationOptions(BaseTranslationOptions):
+    fields = (
+        'heading',
+    )
+
+
+@register(great_international.WhyInvestInTheUKPage)
+class InternationalWhyInvestInTheUKPageTranslationOptions(BaseTranslationOptions):
+    fields = (
+        'hero_image',
+        'strapline',
+        'introduction',
+        'intro_image',
+        'uk_strength_title',
+        'uk_strength_intro',
+        'uk_strength_panels',
+    )
+
+
+@register(investment_atlas.InvestmentGeneralContentPage)
+class InvestmentGeneralContentPageTranslationOptions(BaseTranslationOptions):
+    fields = (
+        'hero_image',
+        'strapline',
+        'introduction',
+        'intro_image',
+        'main_content',
     )

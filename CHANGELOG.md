@@ -1,8 +1,60 @@
 # Changelog
 
 ## Pre-release
-
 ### Implemented enhancements
+- NOTICKET: Increase character limit in InvestmentOpportunityPage
+- NOTICKET: Increase/remove character limit some field in AboutUKRegionPage
+- NOTICKET: Amended case_study_text to Markdownfield for AboutUKRegionPage
+- NOTICKET: Buildpack and Python upgrade
+- NOTICKET: increase character limit for case study text in AboutUKRegionPage
+- NOTICKET: increase character limit for investment type
+- NOTICKET: Rename serializer to avoid name clash/redefinition
+- NOTICKET: Increase length of case study text field on region page (255 to 500 chars)
+- NOTICKET: Add help text to the streamfield text blocks that use a markdown HR as expander toggle
+- NOTICKET: Added HeroSerializer for InvestmentOpportunityPageSerializer to align with other page
+- NOTICKET: Increased character limit for regional summary intro field
+- NOTICKET: Added more page type to be selected for regions/sectors pages as related page
+- NOTICKET: Added markdown serializer for intro field of WhyInvestInTheUK page
+- GP2-3302: Added related pages for sector/industries pages
+- GP2-3301: Added related pages selection panel for Region listing page
+- GP2-3374: Refactor WhyInvestInTheUK page /model
+- GP2-3407: Rename HPO contact page as FDI 
+- GP2-3400: Update block spec for general Atlas content page to allow optional CTAs 
+- GP2-3394: Fix InternalOrExternalLinkBlock's url generation
+- NOTICKET: add opportunity_summary to opp listing page results
+- GP2-3398: Add AboutUKRegionPage.region_summary_section_strapline field
+- GP2-3374: Refactor WhyInvestUK page
+- GP2-3400: Backend for new How We Can Help page, via generic content page
+- NOTICKET: Allowing article  as a subpage of WhyInvestintheUK page 
+- NOTICKET: Update downpage content block on Sector page to support text+image block
+- NOTICKET: Update serializer for Regions page to show hero thumbnails for regions
+- GP2-3392: Refactor CMS to have specific hero and intro images for InvestmentOpportunityPage
+- GP2-3374: Add new WhyInvestInTheUK page
+- GP2-3393: Add mobile hero image to Investment Atlas landing page
+- GP2-3216: Add images for each region in regions listings page
+- NOTICKET: Small CMS-related snags from early feedback
+- GP2-3215: Add InternationalInvestmentSectorPage and ...SubSectorPage to replace original ones
+- GP2-3160: Amending Parent/SubPage so restructing content 
+- GP2-3287: Add Related Opportunities to the region-page's serializer
+- GP2-3158: REVIST Refactor of InternationalHomepage on the CMS side -- had to make a simpler version after reverting previous branch, because migrations timed out
+- GP2-3158: Refactor InternationalHomepage on the CMS side (Page, translations, serializer)
+- GP2-3330: Extend InvestmentOpportunityForListPageSerializer to guarantee representation of PlanningStatus snippet
+- GP2-3330: Extend PlanningStatus snippet model field to support a verbose description
+- GP2-3306: Support reusable snippets in InvestmentOpportunityPage's main content streamfield
+- GP2-3157: (Extension): Refactor the InvestmentOpportunity page in light of new designs
+- NOTICKET: Fix failing PutObject call from Wagtail
+- GP2-3157: Add new InvestmentAtlasLandingPage model to to CMS, incl serializer
+- GP2-3153: Add new Opportunity detail page to CMS, incl serializer
+- GP2-3154: Add new Opportunity listing page to CMS, incl serializer
+- NO-TICKET: urllib3 vulnerability alert fixup
+
+### Fixed bugs
+- NO-TICKET: fixed InvestmentOpportunityForListPageSerializer when there is no planning_status 
+
+## [1.0.0](https://github.com/uktrade/great-international-ui/releases/tag/1.0.0)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.12.07...1.0.0)
+### Implemented enhancements
+- NO-TICKET - wagtail upgrade to 2.11
 - NO-TICKET - Bump Python runtime to 3.6.12
 - GBAU-927 - Add robots.txt, disallowing everything
 - GBAU-887 - Send MarketingArticlePages to ActivityStream so they appear in search results

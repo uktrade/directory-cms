@@ -7,7 +7,14 @@ clean:
 ENV_FILES?='test,dev'
 pytest:
 	ENV_FILES=$(ENV_FILES) \
-	pytest tests $(ARGUMENTS)
+	pytest \
+		tests \
+		--junit-xml=./results/pytest_report.xml \
+		--cov-config=.coveragerc \
+		--cov-report=html \
+		--cov=. \
+		$(ARGUMENTS)
+
 
 flake8:
 	flake8 . \

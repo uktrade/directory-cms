@@ -364,7 +364,7 @@ COPY_DESTINATION_URLS = env.list('COPY_DESTINATION_URLS')
 
 # django-storages
 AWS_STORAGE_BUCKET_NAME = env.str('AWS_STORAGE_BUCKET_NAME', '')
-AWS_DEFAULT_ACL = 'public-read'
+AWS_DEFAULT_ACL = None
 AWS_AUTO_CREATE_BUCKET = False
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_ENCRYPTION = False
@@ -373,7 +373,7 @@ AWS_S3_CUSTOM_DOMAIN = env.str('AWS_S3_CUSTOM_DOMAIN', '')
 WS_S3_URL_PROTOCOL = env.str('AWS_S3_URL_PROTOCOL', 'https:')
 AWS_ACCESS_KEY_ID = env.str('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env.str('AWS_SECRET_ACCESS_KEY')
-AWS_S3_HOST = 's3-us-west-1.amazonaws.com'
+AWS_S3_HOST = env.str('AWS_S3_HOST', 's3-eu-west-2.amazonaws.com')  # NB this USED to be 's3-us-west-1.amazonaws.com'
 
 # Email and notifications
 EMAIL_BACKED_CLASSES = {
@@ -490,3 +490,15 @@ if env.str('ELASTIC_APM_SERVER_URL', ''):
         'DEBUG': DEBUG,
     }
     INSTALLED_APPS.append('elasticapm.contrib.django')
+
+
+# Great International / Investment Atlas
+
+# The ForeignDirectInvestmentFormPageSerializer has to filter on the value of
+# a model identified by a string value. This provides us with some flexibiltiy
+# if the phrasing of that string changes at short notice.
+FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT = 'Foreign Direct Investment'
+FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL = env.str(
+    'FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL',
+    FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT
+)

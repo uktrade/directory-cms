@@ -1,11 +1,16 @@
-from django.forms import Textarea, CheckboxSelectMultiple, Select
-
+from django.forms import CheckboxSelectMultiple, Select, Textarea
 from wagtail.admin.edit_handlers import (
-    InlinePanel, HelpPanel, FieldPanel, FieldRowPanel, MultiFieldPanel,
-    PageChooserPanel, ObjectList
+    FieldPanel,
+    FieldRowPanel,
+    HelpPanel,
+    InlinePanel,
+    MultiFieldPanel,
+    ObjectList,
+    PageChooserPanel,
+    StreamFieldPanel,
 )
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
 from core.helpers import make_translated_interface
@@ -16,352 +21,8 @@ class InternationalHomePagePanels:
 
     content_panels = [
         FieldPanel('title'),
-        MultiFieldPanel(
-            heading="Hero Section",
-            children=[
-                FieldPanel('hero_title'),
-                FieldPanel('hero_subtitle'),
-                FieldPanel("hero_cta_text"),
-                FieldPanel("hero_cta_link"),
-                ImageChooserPanel("hero_image")
-            ]
-        ),
-        FieldPanel('brexit_banner_text'),
-        MultiFieldPanel(
-            heading="Old International Home Page",
-            classname="collapsible collapsed",
-            children=[
-                MultiFieldPanel(
-                    heading="Featured Cards",
-                    children=[
-                        FieldRowPanel([
-                            MultiFieldPanel(
-                                heading='Invest Card',
-                                children=[
-                                    FieldPanel('invest_title'),
-                                    FieldPanel('invest_content'),
-                                    ImageChooserPanel('invest_image')
-                                ]
-                            ),
-                            MultiFieldPanel(
-                                heading='Trade Card',
-                                children=[
-                                    FieldPanel('trade_title'),
-                                    FieldPanel('trade_content'),
-                                    ImageChooserPanel('trade_image')
-                                ]
-                            ),
-                        ]),
-                    ]
-                ),
-                MultiFieldPanel(
-                    heading="How DIT helps",
-                    classname='collapsible',
-                    children=[
-                        HelpPanel('Required for section to show: title and at least one related page'),
-                        FieldPanel('how_dit_help_title'),
-                        FieldRowPanel([
-                            MultiFieldPanel([
-                                PageChooserPanel(
-                                    'related_how_dit_help_page_one',
-                                    'great_international.AboutDitServicesPage'
-                                ),
-                            ]),
-                            MultiFieldPanel([
-                                PageChooserPanel(
-                                    'related_how_dit_help_page_two',
-                                    'great_international.AboutDitServicesPage'
-                                ),
-                            ]),
-                            MultiFieldPanel([
-                               PageChooserPanel(
-                                   'related_how_dit_help_page_three',
-                                   'great_international.AboutDitServicesPage'
-                               ),
-                            ]),
-                        ]),
-                    ],
-                ),
-                MultiFieldPanel(
-                    heading='Features highlight',
-                    children=[
-                        FieldPanel('section_two_heading'),
-                        FieldPanel('section_two_teaser'),
-                        FieldRowPanel([
-                            MultiFieldPanel(
-                                children=[
-                                    ImageChooserPanel(
-                                        'section_two_subsection_one_icon'
-                                    ),
-                                    FieldPanel('section_two_subsection_one_heading'),
-                                    FieldPanel('section_two_subsection_one_body')
-                                ]),
-                            MultiFieldPanel(
-                                children=[
-                                    ImageChooserPanel(
-                                        'section_two_subsection_two_icon'
-                                    ),
-                                    FieldPanel('section_two_subsection_two_heading'),
-                                    FieldPanel('section_two_subsection_two_body')
-                                ]),
-                            MultiFieldPanel(
-                                children=[
-                                    ImageChooserPanel(
-                                        'section_two_subsection_three_icon'
-                                    ),
-                                    FieldPanel('section_two_subsection_three_heading'),
-                                    FieldPanel('section_two_subsection_three_body')
-                                ]),
-                        ]),
-                        FieldRowPanel([
-                            MultiFieldPanel(
-                                children=[
-                                    ImageChooserPanel(
-                                        'section_two_subsection_four_icon'
-                                    ),
-                                    FieldPanel('section_two_subsection_four_heading'),
-                                    FieldPanel('section_two_subsection_four_body')
-                                ]),
-                            MultiFieldPanel(
-                                children=[
-                                    ImageChooserPanel(
-                                        'section_two_subsection_five_icon'
-                                    ),
-                                    FieldPanel('section_two_subsection_five_heading'),
-                                    FieldPanel('section_two_subsection_five_body')
-                                ]),
-                            MultiFieldPanel(
-                                children=[
-                                    ImageChooserPanel(
-                                        'section_two_subsection_six_icon'),
-                                    FieldPanel('section_two_subsection_six_heading'
-                                               ),
-                                    FieldPanel('section_two_subsection_six_body')
-                                ])
-                        ])
-                    ]),
-                MultiFieldPanel(
-                    heading='Tariffs',
-                    children=[
-                        FieldPanel('tariffs_title'),
-                        FieldPanel('tariffs_description'),
-                        FieldPanel('tariffs_link'),
-                        ImageChooserPanel('tariffs_image'),
-                        FieldPanel('tariffs_call_to_action_text')
-                    ]
-                ),
-                MultiFieldPanel(
-                    heading='Featured links',
-                    children=[
-                        FieldPanel('featured_links_title'),
-                        FieldPanel('featured_links_summary'),
-                        FieldRowPanel([
-                            MultiFieldPanel(
-                                children=[
-                                    FieldPanel('featured_link_one_heading'),
-                                    FieldPanel('featured_link_one_url'),
-                                    ImageChooserPanel('featured_link_one_image')
-                                ]),
-                            MultiFieldPanel(
-                                children=[
-                                    FieldPanel('featured_link_two_heading'),
-                                    FieldPanel('featured_link_two_url'),
-                                    ImageChooserPanel('featured_link_two_image')
-                                ]),
-                            MultiFieldPanel(
-                                children=[
-                                    FieldPanel('featured_link_three_heading'),
-                                    FieldPanel('featured_link_three_url'),
-                                    ImageChooserPanel('featured_link_three_image')
-                                ])
-                        ])]
-                ),
-                MultiFieldPanel(
-                    heading='News section',
-                    children=[
-                        FieldPanel('news_title'),
-                        FieldRowPanel([
-                            PageChooserPanel(
-                                'related_page_one',
-                                [
-                                    'great_international.InternationalArticlePage',
-                                    'great_international.InternationalCampaignPage',
-                                ]),
-                            PageChooserPanel(
-                                'related_page_two',
-                                [
-                                    'great_international.InternationalArticlePage',
-                                    'great_international.InternationalCampaignPage',
-                                ]),
-                            PageChooserPanel(
-                                'related_page_three',
-                                [
-                                    'great_international.InternationalArticlePage',
-                                    'great_international.InternationalCampaignPage',
-                                ]),
-                        ])
-                    ]
-                ),
-                MultiFieldPanel(
-                    heading='Featured CTA\'s',
-                    children=[
-                        FieldRowPanel([
-                            MultiFieldPanel(
-                                heading="Study in the UK",
-                                children=[
-                                    FieldPanel('study_in_uk_cta_text')
-                                ]
-                            ),
-                            MultiFieldPanel(
-                                heading="Visit the UK",
-                                children=[
-                                    FieldPanel('visit_uk_cta_text')
-                                ]
-                            ),
-                        ]),
-                    ]
-                ),
-            ]
-        ),
-        FieldPanel('is_new_page_ready'),
-        MultiFieldPanel(
-            heading="Ready to trade stories",
-            children=[
-                HelpPanel('At least one ready to trade story is required for this section to show'),
-                FieldPanel('ready_to_trade_story_one'),
-                FieldPanel('ready_to_trade_story_two'),
-                FieldPanel('ready_to_trade_story_three'),
-            ],
-        ),
-        MultiFieldPanel(
-            heading="Benefits of the UK section",
-            children=[
-                HelpPanel('A title and at least one benefit text is required for this section to show'),
-                FieldPanel('benefits_of_uk_title'),
-                FieldPanel('benefits_of_uk_intro'),
-                FieldRowPanel([
-                    FieldPanel('benefits_of_uk_one'),
-                    FieldPanel('benefits_of_uk_two'),
-                    FieldPanel('benefits_of_uk_three'),
-                ]),
-                FieldRowPanel([
-                    FieldPanel('benefits_of_uk_four'),
-                    FieldPanel('benefits_of_uk_five'),
-                    FieldPanel('benefits_of_uk_six'),
-                ]),
-            ],
-        ),
-
-        MultiFieldPanel(
-            heading="Ready for brexit section",
-            children=[
-                HelpPanel('A title, cta text and cta link are required for this section to show'),
-                FieldPanel('ready_for_brexit_title'),
-                ImageChooserPanel('ready_for_brexit_image'),
-                FieldPanel('ready_for_brexit_cta_text'),
-                FieldPanel('ready_for_brexit_cta_link'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading="How we help",
-            children=[
-                HelpPanel('A title and at least one how we help with an icon and text is required for this section to show'),  # NOQA
-                FieldPanel('how_we_help_title'),
-                FieldPanel('how_we_help_intro'),
-                FieldRowPanel([
-                    MultiFieldPanel([
-                        ImageChooserPanel('how_we_help_one_icon'),
-                        FieldPanel('how_we_help_one_text')
-                    ]),
-                    MultiFieldPanel([
-                        ImageChooserPanel('how_we_help_two_icon'),
-                        FieldPanel('how_we_help_two_text')
-                    ]),
-                    MultiFieldPanel([
-                        ImageChooserPanel('how_we_help_three_icon'),
-                        FieldPanel('how_we_help_three_text')
-                    ]),
-                ])
-            ]
-        ),
-        MultiFieldPanel(
-            heading="Ways of doing business section",
-            children=[
-                HelpPanel('A title and at least one related page is required for this section to show'),
-                FieldPanel('ways_of_doing_business_title'),
-                FieldRowPanel([
-                    MultiFieldPanel([
-                        PageChooserPanel(
-                            'related_page_expand',
-                            'great_international.InvestInternationalHomePage'
-                        ),
-                        FieldPanel('related_page_expand_description')
-                    ]),
-                    MultiFieldPanel([
-                        PageChooserPanel(
-                            'related_page_invest_capital',
-                            'great_international.InternationalCapitalInvestLandingPage'
-                        ),
-                        FieldPanel('related_page_invest_capital_description')
-                    ]),
-                    MultiFieldPanel([
-                        PageChooserPanel(
-                            'related_page_buy',
-                            'great_international.InternationalTradeHomePage'
-                        ),
-                        FieldPanel('related_page_buy_description')
-                    ]),
-                ])
-            ],
-        ),
-        MultiFieldPanel(
-            heading="Case study",
-            children=[
-                HelpPanel('Required fields for section to show: Case Study Image, Case Study Title'),
-                ImageChooserPanel('case_study_image'),
-                FieldPanel('case_study_title'),
-                FieldPanel('case_study_text'),
-                FieldPanel('case_study_cta_text'),
-                FieldPanel('case_study_cta_link'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading="Industries section",
-            children=[
-                HelpPanel('A title and a sector in the active language with a featured description '
-                          'is required for this section to show'),
-                FieldPanel('industries_section_title'),
-                FieldPanel('industries_section_intro'),
-                FieldPanel('industries_section_industry_label'),
-                FieldPanel('industries_section_cta_text'),
-                FieldPanel('industries_section_cta_link'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading="Link to section",
-            children=[
-                HelpPanel('A title and at least one link to section is required for this section to show'),
-                FieldPanel('link_to_section_title'),
-                FieldPanel('link_to_section_intro'),
-                FieldRowPanel([
-                    MultiFieldPanel([
-                        FieldPanel('link_to_section_one'),
-                        FieldPanel('link_to_section_one_cta_text'),
-                        FieldPanel('link_to_section_one_cta_link'),
-                    ]),
-                    MultiFieldPanel([
-                        FieldPanel('link_to_section_two'),
-                        FieldPanel('link_to_section_two_cta_text'),
-                        FieldPanel('link_to_section_two_cta_link'),
-                    ]),
-                    MultiFieldPanel([
-                        FieldPanel('link_to_section_three'),
-                        FieldPanel('link_to_section_three_cta_text'),
-                        FieldPanel('link_to_section_three_cta_link'),
-                    ]),
-                ])
-            ]
-        ),
+        FieldPanel('hero_title'),
+        StreamFieldPanel('homepage_link_panels'),
         SearchEngineOptimisationPanel(),
     ]
 
@@ -817,6 +478,33 @@ class InternationalTopicLandingPagePanels:
             children=[
                 ImageChooserPanel('hero_image'),
                 FieldPanel('hero_teaser')
+            ]
+        ),
+        MultiFieldPanel(
+            heading="Explore more of the Investment Atlas section",
+            classname="collapsible",
+            children=[
+                PageChooserPanel('related_page_one', [
+                    'great_international.WhyInvestInTheUKPage',
+                    'great_international.AboutUkRegionPage',
+                    'great_international.InvestmentOpportunityPage',
+                    'great_international.InvestmentGeneralContentPage',
+                    'great_international.AboutUkRegionListingPage',
+                    'great_international.InvestmentOpportunityListingPage']),
+                PageChooserPanel('related_page_two', [
+                    'great_international.WhyInvestInTheUKPage',
+                    'great_international.AboutUkRegionPage',
+                    'great_international.InvestmentOpportunityPage',
+                    'great_international.InvestmentGeneralContentPage',
+                    'great_international.AboutUkRegionListingPage',
+                    'great_international.InvestmentOpportunityListingPage']),
+                PageChooserPanel('related_page_three', [
+                    'great_international.WhyInvestInTheUKPage',
+                    'great_international.AboutUkRegionPage',
+                    'great_international.InvestmentOpportunityPage',
+                    'great_international.InvestmentGeneralContentPage',
+                    'great_international.AboutUkRegionListingPage',
+                    'great_international.InvestmentOpportunityListingPage']),
             ]
         ),
         SearchEngineOptimisationPanel(),
@@ -1402,6 +1090,28 @@ class AboutUkRegionListingPagePanels:
                 FieldPanel('contact_cta_link'),
             ]
         ),
+        MultiFieldPanel(
+            heading="Explore more of the Investment Atlas section",
+            classname="collapsible",
+            children=[
+                PageChooserPanel(
+                    'related_page_one', [
+                        'great_international.WhyInvestInTheUKPage',
+                        'great_international.InternationalTopicLandingPage',
+                        'great_international.AboutUkRegionPage',
+                        'great_international.InvestmentOpportunityPage']),
+                PageChooserPanel('related_page_two', [
+                        'great_international.WhyInvestInTheUKPage',
+                        'great_international.InternationalTopicLandingPage',
+                        'great_international.AboutUkRegionPage',
+                        'great_international.InvestmentOpportunityPage']),
+                PageChooserPanel('related_page_three', [
+                        'great_international.WhyInvestInTheUKPage',
+                        'great_international.InternationalTopicLandingPage',
+                        'great_international.AboutUkRegionPage',
+                        'great_international.InvestmentOpportunityPage']),
+            ]
+        ),
         SearchEngineOptimisationPanel()
     ]
 
@@ -1438,6 +1148,7 @@ class AboutUkRegionPagePanels:
                 HelpPanel('Required fields for section to show: '
                           'Region Summary Section Content'),
                 ImageChooserPanel('region_summary_section_image'),
+                FieldPanel('region_summary_section_strapline'),
                 FieldPanel('region_summary_section_intro'),
                 FieldPanel('region_summary_section_content'),
             ],
@@ -1791,4 +1502,131 @@ class AboutUkWhyChooseTheUkPagePanels:
         content_panels=content_panels,
         settings_panels=settings_panels
 
+    )
+
+
+class InternationalInvestmentSectorPagePanels:
+    content_panels = [
+        FieldPanel('title'),
+        MultiFieldPanel(
+            heading='Heading',
+            classname='collapsible',
+            children=[
+                FieldPanel('heading'),
+                ImageChooserPanel('hero_image'),
+                FieldPanel('standfirst'),
+                FieldPanel('featured_description')
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Intro',
+            classname='collapsible',
+            children=[
+                FieldPanel('intro_text'),
+                ImageChooserPanel('intro_image'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Contact details',
+            classname='collapsible',
+            children=[
+                FieldPanel('contact_name'),
+                ImageChooserPanel('contact_avatar'),
+                FieldPanel('contact_job_title'),
+                FieldPanel('contact_link'),
+                FieldPanel('contact_link_button_preamble'),
+                FieldPanel('contact_link_button_label'),
+            ]
+        ),
+        MultiFieldPanel(
+            heading='Related opportunities',
+            classname='collapsible',
+            children=[
+                FieldPanel('related_opportunities_header'),
+                HelpPanel('See the dedicated tab for selecting the opportunities themselves'),
+            ]
+        ),
+        StreamFieldPanel('downpage_content'),
+        MultiFieldPanel(
+            heading='Early opportunities',
+            classname='collapsible',
+            children=[
+                FieldPanel('early_opportunities_header'),
+                StreamFieldPanel('early_opportunities'),
+            ]
+        ),
+        SearchEngineOptimisationPanel()
+    ]
+
+    settings_panels = [
+        FieldPanel('slug'),
+        FieldPanel('tags'),
+    ]
+
+    related_entities_panels = [
+        FieldRowPanel(
+            heading='Related Opportunities',
+            children=[
+                StreamFieldPanel('manually_selected_related_opportunities'),
+            ]
+        ),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        other_panels=related_entities_panels,  # These are shown as separate tabs
+        settings_panels=settings_panels
+    )
+
+
+class InternationalInvestmentSubSectorPagePanels:
+
+    content_panels = [
+        FieldPanel('title'),
+        FieldPanel('heading'),
+    ]
+
+    settings_panels = [
+        FieldPanel('slug'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
+    )
+
+
+class WhyInvestInTheUKPagePanels:
+
+    content_panels = [
+        MultiFieldPanel(
+            heading="Hero and Intro",
+            classname='collapsible',
+            children=[
+                FieldPanel('title'),
+                ImageChooserPanel('hero_image'),
+                FieldPanel('strapline'),
+                FieldPanel('introduction'),
+                ImageChooserPanel('intro_image'),
+            ],
+        ),
+        MultiFieldPanel(
+            heading="UK Strengths",
+            classname='collapsible',
+            children=[
+                FieldPanel('uk_strength_title'),
+                FieldPanel('uk_strength_intro'),
+                StreamFieldPanel('uk_strength_panels'),
+            ],
+        ),
+
+        SearchEngineOptimisationPanel()
+    ]
+    settings_panels = [
+        FieldPanel('slug'),
+    ]
+
+    edit_handler = make_translated_interface(
+        content_panels=content_panels,
+        settings_panels=settings_panels
     )
