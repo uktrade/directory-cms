@@ -2,6 +2,7 @@
 
 ## Pre-release
 ### Implemented enhancements
+- NOTICKET: Added GreatMedia to d-cms
 
 ### Fixed bugs
 
