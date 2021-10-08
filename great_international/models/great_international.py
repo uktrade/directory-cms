@@ -438,6 +438,13 @@ class InternationalHomePage(
         on_delete=models.SET_NULL,
         related_name='+',
     )
+    hero_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
 
     brexit_banner_text = MarkdownField(blank=True)
 
