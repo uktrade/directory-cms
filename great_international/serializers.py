@@ -865,12 +865,17 @@ class GreatMediaSerializer(serializers.Serializer):
     transcript = serializers.SerializerMethodField()
     sources = serializers.SerializerMethodField()
     url = serializers.CharField()
+    thumbnail = serializers.SerializerMethodField()
 
     def get_transcript(self, obj):
         return obj.greatmedia.transcript
 
     def get_sources(self, obj):
         return obj.greatmedia.sources
+
+    def get_thumbnail(self, obj):
+        if obj.thumbnail:
+            return obj.thumbnail.url
 
 
 class InternationalHomePageSerializer(BasePageSerializer):

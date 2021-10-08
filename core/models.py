@@ -54,8 +54,7 @@ class GreatMedia(Media):
             {
                 'src': self.url,
                 'type': mimetypes.guess_type(self.filename)[0] or 'application/octet-stream',
-                'transcript': self.greatmedia.transcript,
-                'thumbnail': self.thumbnail.url
+                'transcript': self.transcript,
             }
         ]
 
@@ -63,12 +62,12 @@ class GreatMedia(Media):
     def subtitles(self):
         output = []
         # TO COME: support for more than just English
-        if self.greatmedia.subtitles_en:
+        if self.subtitles_en:
             output.append(
                 {
                     'srclang': 'en',
                     'label': 'English',
-                    'url': reverse('core:subtitles-serve', args=[self.id, 'en']),
+                    'url': reverse('subtitles-serve', args=[self.id, 'en']),
                     'default': False,
                 },
             )
