@@ -46,15 +46,16 @@ click==8.0.1
     # via pip-tools
 codecov==2.1.12
     # via -r requirements_test.in
-coverage==5.5
+coverage[toml]==5.5
     # via
     #   codecov
     #   coveralls
     #   pytest-cov
 coveralls==3.2.0
     # via -r requirements_test.in
-cryptography==35.0.0
+cryptography==3.3.2
     # via
+    #   -r requirements.in
     #   pyopenssl
     #   requests
 directory-components==20.3.1
@@ -143,7 +144,7 @@ factory-boy==2.12.0
     # via
     #   -r requirements_test.in
     #   wagtail-factories
-faker==8.14.1
+faker==9.2.0
     # via factory-boy
 flake8==3.9.2
     # via -r requirements_test.in
@@ -230,7 +231,7 @@ pycparser==2.20
     # via cffi
 pyflakes==2.3.1
     # via flake8
-pyjwt==2.1.0
+pyjwt==2.2.0
     # via notifications-python-client
 pyopenssl==21.0.0
     # via requests
@@ -244,7 +245,7 @@ pytest==6.2.5
     #   pytest-cov
     #   pytest-django
     #   pytest-sugar
-pytest-cov==2.12.1
+pytest-cov==3.0.0
     # via -r requirements_test.in
 pytest-django==4.4.0
     # via -r requirements_test.in
@@ -293,6 +294,7 @@ sigauth==4.1.0
 six==1.16.0
     # via
     #   bleach
+    #   cryptography
     #   django-modeltranslation
     #   freezegun
     #   html5lib
@@ -317,8 +319,8 @@ text-unidecode==1.3
     # via faker
 toml==0.10.2
     # via
+    #   coverage
     #   pytest
-    #   pytest-cov
 tomli==1.2.1
     # via pep517
 typing-extensions==3.10.0.2
