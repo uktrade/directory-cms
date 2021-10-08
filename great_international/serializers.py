@@ -859,6 +859,7 @@ class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
 
     tags = core_fields.TagsListField()
 
+
 class GreatMediaSerializer(serializers.Serializer):
     title = serializers.CharField()
     transcript = serializers.SerializerMethodField()
@@ -870,6 +871,7 @@ class GreatMediaSerializer(serializers.Serializer):
 
     def get_sources(self, obj):
         return obj.greatmedia.sources
+
 
 class InternationalHomePageSerializer(BasePageSerializer):
     # Note that this is massively cut down from the original version,

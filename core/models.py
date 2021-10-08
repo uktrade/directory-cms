@@ -4,7 +4,6 @@ import mimetypes
 from urllib.parse import urlencode, urljoin
 
 from directory_constants import choices
-import ipdb
 
 from modeltranslation import settings as modeltranslation_settings
 from modeltranslation.utils import build_localized_fieldname
@@ -29,6 +28,7 @@ from core.wagtail_fields import FormHelpTextField, FormLabelField
 from wagtailmedia.models import Media
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
+
 
 class GreatMedia(Media):
 
