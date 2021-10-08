@@ -2,6 +2,12 @@
 
 ## Pre-release
 ### Implemented enhancements
+
+### Fixed bugs
+
+## [2.0.0](https://github.com/uktrade/directory-cms/releases/tag/2.0.0)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/1.0.0...2.0.0)
+### Implemented enhancements
 - NOTICKET: Increase character limit in InvestmentOpportunityPage
 - NOTICKET: Increase/remove character limit some field in AboutUKRegionPage
 - NOTICKET: Amended case_study_text to Markdownfield for AboutUKRegionPage
@@ -51,7 +57,7 @@
 ### Fixed bugs
 - NO-TICKET: fixed InvestmentOpportunityForListPageSerializer when there is no planning_status 
 
-## [1.0.0](https://github.com/uktrade/great-international-ui/releases/tag/1.0.0)
+## [1.0.0](https://github.com/uktrade/directory-cms/releases/tag/1.0.0)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2020.12.07...1.0.0)
 ### Implemented enhancements
 - NO-TICKET - wagtail upgrade to 2.11
