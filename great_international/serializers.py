@@ -2118,6 +2118,7 @@ class AboutUkLandingPageSerializer(BasePageSerializer, HeroSerializer):
 class AboutUkRegionListingPageSerializer(PageWithRelatedPagesSerializer, HeroSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
+    hero_video = GreatMediaSerializer()
 
     intro = core_fields.MarkdownToHTMLField()
 
