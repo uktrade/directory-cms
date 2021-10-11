@@ -1723,6 +1723,13 @@ class AboutUkRegionListingPage(
         related_name='+',
         blank=True
     )
+    hero_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
 
     intro = MarkdownField(blank=True)
 
