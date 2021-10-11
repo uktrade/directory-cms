@@ -967,6 +967,7 @@ class InternationalTopicLandingPageSerializer(
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
     hero_teaser = serializers.CharField(max_length=255)
+    hero_video = GreatMediaSerializer()
 
     child_pages = serializers.SerializerMethodField()
 

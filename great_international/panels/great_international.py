@@ -479,6 +479,7 @@ class InternationalTopicLandingPagePanels:
             heading='Hero',
             children=[
                 ImageChooserPanel('hero_image'),
+                MediaChooserPanel('hero_video'),
                 FieldPanel('hero_teaser')
             ]
         ),

@@ -340,6 +340,7 @@ class InternationalArticleListingPage(BaseTranslationOptions):
 class InternationalTopicLandingPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'landing_page_title',
+        'hero_video',
         'hero_image',
         'hero_teaser',
         'related_page_one',
