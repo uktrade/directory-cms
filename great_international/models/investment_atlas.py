@@ -157,6 +157,13 @@ class InvestmentAtlasLandingPage(
         blank=True,
         null=True,
     )
+    hero_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
 
     downpage_sections = StreamField(
         [
