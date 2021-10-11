@@ -1334,6 +1334,7 @@ class InternationalInvestmentSectorPageTranslationOptions(
 ):
     fields = (
         'hero_image',
+        'hero_video',
         'heading',
         'standfirst',
         'featured_description',
