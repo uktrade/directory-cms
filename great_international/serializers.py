@@ -2796,6 +2796,7 @@ class WhyInvestInTheUKPageSerializer(
 ):
     IMAGE_RENDITION_SPEC = "fill-960x540"
 
+    hero_video = GreatMediaSerializer()
     strapline = serializers.CharField()
     introduction = core_fields.MarkdownToHTMLField()
     intro_image = wagtail_fields.ImageRenditionField(
