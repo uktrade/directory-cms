@@ -1070,6 +1070,7 @@ class AboutUkLandingPagePanels:
 class AboutUkRegionListingPagePanels:
     image_panels = [
         ImageChooserPanel('hero_image'),
+        MediaChooserPanel('hero_video')
     ]
 
     content_panels = [
