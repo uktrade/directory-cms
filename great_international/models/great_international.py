@@ -1106,6 +1106,13 @@ class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, 
     )
     hero_teaser = models.CharField(max_length=255, null=True, blank=True)
     tags = ParentalManyToManyField(snippets.Tag, blank=True)
+    hero_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
 
     related_page_one = models.ForeignKey(
         'wagtailcore.Page',
