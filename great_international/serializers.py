@@ -2386,6 +2386,7 @@ class InvestmentAtlasLandingPageSerializer(BasePageSerializer):
     mobile_hero_image = wagtail_fields.ImageRenditionField(
         MOBILE_IMAGE_RENDITION_SPEC,
     )
+    hero_video = GreatMediaSerializer()
     hero_strapline = serializers.CharField()
     downpage_sections = StreamFieldSerializer()
 
