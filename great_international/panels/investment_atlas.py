@@ -8,6 +8,7 @@ from wagtail.admin.edit_handlers import (
 )
 
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtailmedia.edit_handlers import MediaChooserPanel
 
 from core.helpers import make_translated_interface
 from core.panels import SearchEngineOptimisationPanel
@@ -29,6 +30,7 @@ class InvestmentAtlasLandingPagePanels:
             classname='collapsible',
             children=[
                 ImageChooserPanel('hero_image'),
+                MediaChooserPanel('hero_video'),
                 ImageChooserPanel('mobile_hero_image'),
                 FieldPanel('hero_title'),
                 FieldPanel('hero_strapline'),
