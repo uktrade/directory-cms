@@ -203,6 +203,13 @@ class InvestmentOpportunityListingPage(
     search_results_title = models.CharField(
         max_length=255
     )
+    hero_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
     hero_text = models.TextField(
         max_length=2000,
         blank=False,

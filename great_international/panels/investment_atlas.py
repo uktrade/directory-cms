@@ -67,7 +67,13 @@ class InvestmentOpportunityListingPagePanels:
                 FieldPanel('breadcrumbs_label'),
             ],
         ),
-        FieldPanel('hero_text'),
+        MultiFieldPanel(
+            heading='Hero content',
+            children=[
+                MediaChooserPanel('hero_video'),
+                FieldPanel('hero_text'),
+            ],
+        ),
         MultiFieldPanel(
             heading='CTA content',
             children=[
