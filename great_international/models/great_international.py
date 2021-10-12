@@ -284,6 +284,13 @@ class InternationalInvestmentSectorPage(
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    hero_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
     heading = models.CharField(
         max_length=255,
         verbose_name='Sector name',

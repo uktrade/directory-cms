@@ -1518,6 +1518,7 @@ class InternationalInvestmentSectorPagePanels:
             children=[
                 FieldPanel('heading'),
                 ImageChooserPanel('hero_image'),
+                MediaChooserPanel('hero_video'),
                 FieldPanel('standfirst'),
                 FieldPanel('featured_description')
             ]

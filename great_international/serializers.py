@@ -2706,6 +2706,7 @@ class InternationalInvestmentSectorPageSerializer(
     featured_description = serializers.CharField()
     intro_text = core_fields.MarkdownToHTMLField()
     intro_image = wagtail_fields.ImageRenditionField(IMAGE_RENDITION_SPEC)
+    hero_video = GreatMediaSerializer()
 
     # contact details
     contact_name = serializers.CharField()
