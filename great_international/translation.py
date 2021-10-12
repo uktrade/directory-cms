@@ -1309,6 +1309,7 @@ class InvestmentOpportunityPageTranslationOptions(
     fields = (
         'breadcrumbs_label',
         'hero_image',
+        'hero_video',
         'strapline',
         'introduction',
         'intro_image',
