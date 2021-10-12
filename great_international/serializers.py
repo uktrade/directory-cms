@@ -866,12 +866,16 @@ class GreatMediaSerializer(serializers.Serializer):
     sources = serializers.SerializerMethodField()
     url = serializers.CharField()
     thumbnail = serializers.SerializerMethodField()
+    subtitles = serializers.SerializerMethodField()
 
     def get_transcript(self, obj):
         return obj.greatmedia.transcript
 
     def get_sources(self, obj):
         return obj.greatmedia.sources
+
+    def get_subtitles(self, obj):
+        return obj.greatmedia.subtitles
 
     def get_thumbnail(self, obj):
         if obj.thumbnail:
