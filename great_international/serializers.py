@@ -2420,6 +2420,7 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
     intro_image = wagtail_fields.ImageRenditionField(
         IMAGE_RENDITION_SPEC,
     )
+    hero_video = GreatMediaSerializer()
 
     # Key facts
     location = serializers.CharField()

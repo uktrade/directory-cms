@@ -104,6 +104,7 @@ class InvestmentOpportunityPagePanels:
                 FieldPanel('title'),
                 FieldPanel('breadcrumbs_label'),
                 ImageChooserPanel('hero_image'),
+                MediaChooserPanel('hero_video'),
                 FieldPanel('strapline'),
                 FieldPanel('introduction'),
                 ImageChooserPanel('intro_image'),
