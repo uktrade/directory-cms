@@ -1294,6 +1294,7 @@ class InvestmentOpportunityListingPageTranslationOptions(
     fields = (
         'breadcrumbs_label',
         'search_results_title',
+        'hero_video',
         'hero_text',
         'contact_cta_title',
         'contact_cta_text',

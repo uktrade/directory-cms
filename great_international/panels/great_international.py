@@ -476,7 +476,7 @@ class InternationalTopicLandingPagePanels:
         FieldPanel('title'),
         FieldPanel('landing_page_title'),
         MultiFieldPanel(
-            heading='Hero',
+            heading='Hero content',
             children=[
                 ImageChooserPanel('hero_image'),
                 MediaChooserPanel('hero_video'),
