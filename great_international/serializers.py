@@ -2650,6 +2650,7 @@ class InvestmentOpportunityListingPageSerializer(BasePageSerializer):
 
     breadcrumbs_label = serializers.CharField()
     search_results_title = serializers.CharField()
+    hero_video = GreatMediaSerializer()
     hero_text = serializers.CharField()
     contact_cta_title = serializers.CharField()
     contact_cta_text = serializers.CharField()
