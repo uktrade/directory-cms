@@ -17,12 +17,10 @@ class PageBreadcrumbsAndUrlSerializer(serializers.Serializer):
 class HeroSerializer(serializers.Serializer):
     hero_image = wagtail_fields.ImageRenditionField('original')
     hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
-    hero_xlarge = wagtail_fields.ImageRenditionField('fill-1500x375', source='hero_image')
-    hero_xlarge_tall = wagtail_fields.ImageRenditionField('fill-1500x500', source='hero_image')
-    hero_large = wagtail_fields.ImageRenditionField('fill-1280x375', source='hero_image')
-    hero_medium = wagtail_fields.ImageRenditionField('fill-768x300', source='hero_image')
-    hero_medium_tall = wagtail_fields.ImageRenditionField('fill-768x376', source='hero_image')
-    hero_small = wagtail_fields.ImageRenditionField('fill-640x300', source='hero_image')
+    hero_xlarge = wagtail_fields.ImageRenditionField('fill-1920x622', source='hero_image')
+    hero_large = wagtail_fields.ImageRenditionField('fill-1280x415', source='hero_image')
+    hero_medium = wagtail_fields.ImageRenditionField('fill-768x249', source='hero_image')
+    hero_small = wagtail_fields.ImageRenditionField('fill-640x208', source='hero_image')
 
 
 class BasePageSerializer(serializers.Serializer):

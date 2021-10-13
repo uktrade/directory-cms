@@ -860,11 +860,34 @@ class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
     tags = core_fields.TagsListField()
 
 
+class GreatMediaSerializer(serializers.Serializer):
+    title = serializers.CharField()
+    transcript = serializers.SerializerMethodField()
+    sources = serializers.SerializerMethodField()
+    url = serializers.CharField()
+    thumbnail = serializers.SerializerMethodField()
+    subtitles = serializers.SerializerMethodField()
+
+    def get_transcript(self, obj):
+        return obj.greatmedia.transcript
+
+    def get_sources(self, obj):
+        return obj.greatmedia.sources
+
+    def get_subtitles(self, obj):
+        return obj.greatmedia.subtitles
+
+    def get_thumbnail(self, obj):
+        if obj.thumbnail:
+            return obj.thumbnail.url
+
+
 class InternationalHomePageSerializer(BasePageSerializer):
     # Note that this is massively cut down from the original version,
     # but that the older fields still exist on the model (see the comment there)
 
     hero_title = serializers.CharField(max_length=255)
+    hero_video = GreatMediaSerializer()
     homepage_link_panels = StreamFieldSerializer()
 
     # For now the hero_image and CSS colour for the page background will
@@ -948,6 +971,7 @@ class InternationalTopicLandingPageSerializer(
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
     hero_teaser = serializers.CharField(max_length=255)
+    hero_video = GreatMediaSerializer()
 
     child_pages = serializers.SerializerMethodField()
 
@@ -2099,6 +2123,7 @@ class AboutUkLandingPageSerializer(BasePageSerializer, HeroSerializer):
 class AboutUkRegionListingPageSerializer(PageWithRelatedPagesSerializer, HeroSerializer):
     breadcrumbs_label = serializers.CharField()
     hero_title = serializers.CharField()
+    hero_video = GreatMediaSerializer()
 
     intro = core_fields.MarkdownToHTMLField()
 
@@ -2367,6 +2392,7 @@ class InvestmentAtlasLandingPageSerializer(BasePageSerializer):
     mobile_hero_image = wagtail_fields.ImageRenditionField(
         MOBILE_IMAGE_RENDITION_SPEC,
     )
+    hero_video = GreatMediaSerializer()
     hero_strapline = serializers.CharField()
     downpage_sections = StreamFieldSerializer()
 
@@ -2398,6 +2424,7 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
     intro_image = wagtail_fields.ImageRenditionField(
         IMAGE_RENDITION_SPEC,
     )
+    hero_video = GreatMediaSerializer()
 
     # Key facts
     location = serializers.CharField()
@@ -2628,6 +2655,7 @@ class InvestmentOpportunityListingPageSerializer(BasePageSerializer):
 
     breadcrumbs_label = serializers.CharField()
     search_results_title = serializers.CharField()
+    hero_video = GreatMediaSerializer()
     hero_text = serializers.CharField()
     contact_cta_title = serializers.CharField()
     contact_cta_text = serializers.CharField()
@@ -2684,6 +2712,7 @@ class InternationalInvestmentSectorPageSerializer(
     featured_description = serializers.CharField()
     intro_text = core_fields.MarkdownToHTMLField()
     intro_image = wagtail_fields.ImageRenditionField(IMAGE_RENDITION_SPEC)
+    hero_video = GreatMediaSerializer()
 
     # contact details
     contact_name = serializers.CharField()
@@ -2774,6 +2803,7 @@ class WhyInvestInTheUKPageSerializer(
 ):
     IMAGE_RENDITION_SPEC = "fill-960x540"
 
+    hero_video = GreatMediaSerializer()
     strapline = serializers.CharField()
     introduction = core_fields.MarkdownToHTMLField()
     intro_image = wagtail_fields.ImageRenditionField(

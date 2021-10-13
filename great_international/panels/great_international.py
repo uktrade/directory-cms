@@ -11,6 +11,7 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtailmedia.edit_handlers import MediaChooserPanel
 from wagtailmedia.widgets import AdminMediaChooser
 
 from core.helpers import make_translated_interface
@@ -22,6 +23,7 @@ class InternationalHomePagePanels:
     content_panels = [
         FieldPanel('title'),
         FieldPanel('hero_title'),
+        MediaChooserPanel('hero_video'),
         StreamFieldPanel('homepage_link_panels'),
         SearchEngineOptimisationPanel(),
     ]
@@ -474,9 +476,10 @@ class InternationalTopicLandingPagePanels:
         FieldPanel('title'),
         FieldPanel('landing_page_title'),
         MultiFieldPanel(
-            heading='Hero',
+            heading='Hero content',
             children=[
                 ImageChooserPanel('hero_image'),
+                MediaChooserPanel('hero_video'),
                 FieldPanel('hero_teaser')
             ]
         ),
@@ -1068,6 +1071,7 @@ class AboutUkLandingPagePanels:
 class AboutUkRegionListingPagePanels:
     image_panels = [
         ImageChooserPanel('hero_image'),
+        MediaChooserPanel('hero_video')
     ]
 
     content_panels = [
@@ -1514,6 +1518,7 @@ class InternationalInvestmentSectorPagePanels:
             children=[
                 FieldPanel('heading'),
                 ImageChooserPanel('hero_image'),
+                MediaChooserPanel('hero_video'),
                 FieldPanel('standfirst'),
                 FieldPanel('featured_description')
             ]
@@ -1605,6 +1610,7 @@ class WhyInvestInTheUKPagePanels:
             children=[
                 FieldPanel('title'),
                 ImageChooserPanel('hero_image'),
+                MediaChooserPanel('hero_video'),
                 FieldPanel('strapline'),
                 FieldPanel('introduction'),
                 ImageChooserPanel('intro_image'),
