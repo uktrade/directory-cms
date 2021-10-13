@@ -14,6 +14,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView
+from django.urls import path
 
 import core.views
 import export_readiness.views
@@ -126,6 +127,11 @@ urlpatterns = [
     # Wagtail's page serving mechanism. This should be the last pattern in
     # the list:
     url(r'', include(wagtail_urls)),
+    path(
+        'subtitles/<int:great_media_id>/<str:language>/content.vtt',
+        core.views.serve_subtitles,
+        name='subtitles-serve',
+    ),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
