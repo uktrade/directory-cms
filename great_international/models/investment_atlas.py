@@ -495,6 +495,13 @@ class InvestmentGeneralContentPage(
         blank=True,
         help_text='Main page hero image, above the opportunity title'
     )
+    hero_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
     strapline = models.CharField(
         max_length=200,
         blank=False,

@@ -2827,4 +2827,5 @@ class InvestmentGeneralContentPageSerializer(
     intro_image = wagtail_fields.ImageRenditionField(
         IMAGE_RENDITION_SPEC
     )
+    hero_video = GreatMediaSerializer()
     main_content = StreamFieldSerializer()
