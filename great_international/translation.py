@@ -1380,6 +1380,7 @@ class InternationalWhyInvestInTheUKPageTranslationOptions(BaseTranslationOptions
 class InvestmentGeneralContentPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'hero_image',
+        'hero_video',
         'strapline',
         'introduction',
         'intro_image',
