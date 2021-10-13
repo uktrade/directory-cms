@@ -3,7 +3,7 @@
 from wagtail.core import blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
 
-from core.blocks import ButtonBlock, BaseAltTextImageBlock
+from core.blocks import ButtonBlock, BaseAltTextImageBlock, GreatMediaBlock
 from great_international.blocks.great_international import (
     MarkdownBlock,
     InternationalInvestmentPageCopyBlockBase,
@@ -94,6 +94,7 @@ class AtlasLandingPagePanelBlock(blocks.StructBlock):
         [
             ('image', AtlasLandingPagePanelImageBlock()),
             ('text', blocks.TextBlock()),
+            ('video', GreatMediaBlock())
         ],
         label='Second column of panel',
         max_num=1,
