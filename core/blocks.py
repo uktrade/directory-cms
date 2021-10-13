@@ -115,3 +115,19 @@ class BaseAltTextImageBlock(blocks.StructBlock):
             )
 
         return retval_dict
+
+
+class GreatMediaBlock(AbstractMediaChooserBlock):
+
+    def get_api_representation(self, value, context=None):
+        from great_international.serializers import GreatMediaSerializer
+
+        """Expand the default serialization to show the GreatMediaSerializer"""
+        retval_dict = {}
+
+        if not value:
+            return retval_dict
+
+        serializer = GreatMediaSerializer(instance=value)
+        retval_dict = serializer.data
+        return retval_dict

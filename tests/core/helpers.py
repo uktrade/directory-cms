@@ -41,6 +41,7 @@ def make_test_video(
     filename='movie.mp4',
     duration=120,
     transcript=None,
+    subtitles=None,
     collection_name='Root',
 ):
     fake_file = ContentFile(content)
@@ -52,5 +53,5 @@ def make_test_video(
     media.file = File(fake_file)
     media.duration = duration
     media.transcript = transcript
-
+    media.subtitles_en = subtitles
     return media
