@@ -157,6 +157,13 @@ class InvestmentAtlasLandingPage(
         blank=True,
         null=True,
     )
+    hero_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
 
     downpage_sections = StreamField(
         [
@@ -195,6 +202,13 @@ class InvestmentOpportunityListingPage(
     breadcrumbs_label = models.CharField(max_length=50)
     search_results_title = models.CharField(
         max_length=255
+    )
+    hero_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
     )
     hero_text = models.TextField(
         max_length=2000,
@@ -311,6 +325,13 @@ class InvestmentOpportunityPage(
         related_name='+',
         blank=True,
         help_text='Main page hero image, above the opportunity title'
+    )
+    hero_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
     )
     strapline = models.CharField(
         max_length=200,
@@ -473,6 +494,13 @@ class InvestmentGeneralContentPage(
         related_name='+',
         blank=True,
         help_text='Main page hero image, above the opportunity title'
+    )
+    hero_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
     )
     strapline = models.CharField(
         max_length=200,

@@ -2,11 +2,15 @@ import pytest
 from unittest import mock
 
 from modeltranslation.utils import build_localized_fieldname
-
+from django.urls import reverse
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.utils import translation
+from django.test import TestCase
+
 from wagtail.core.models import Page, Site
+from tests.core.helpers import make_test_video
+
 
 from core.models import BasePage, ExclusivePageMixin, RoutingSettings
 from tests.great_international.factories import InternationalSectorPageFactory
@@ -318,3 +322,52 @@ def test_exclusivepagemixin_can_create_at(root_page):
     page = SitePolicyPagesFactory(parent=root_page)
     assert isinstance(page, ExclusivePageMixin)
     assert page.can_create_at(root_page) is False
+
+
+class TestGreatMedia(TestCase):
+    def test_sources_mp4_with_no_transcript(self):
+        media = make_test_video()
+        self.assertEqual(
+            media.sources,
+            [
+                {
+                    'src': '/media/movie.mp4',
+                    'type': 'video/mp4',
+                    'transcript': None,
+                }
+            ],
+        )
+
+    def test_sources_mp4_with_transcript(self):
+        media = make_test_video(transcript='A test transcript text')
+
+        self.assertEqual(
+            media.sources,
+            [
+                {
+                    'src': '/media/movie.mp4',
+                    'type': 'video/mp4',
+                    'transcript': 'A test transcript text',
+                }
+            ],
+        )
+
+    def test_subtitles__present(self):
+        media = make_test_video()
+        media.subtitles_en = 'Dummy subtitles content'
+        media.save()
+        self.assertTrue(media.subtitles_en)
+        expected = [
+            {
+                'srclang': 'en',
+                'label': 'English',
+                'url': reverse('subtitles-serve', args=[media.id, 'en']),
+                'default': False,
+            },
+        ]
+        self.assertEqual(media.subtitles, expected)
+
+    def test_subtitles__not_present(self):
+        media = make_test_video()
+        self.assertFalse(media.subtitles_en)
+        self.assertEqual(media.subtitles, [])

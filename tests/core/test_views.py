@@ -15,6 +15,9 @@ from core.helpers import CachedResponse
 from conf.signature import SignatureCheckPermission
 from components.models import ComponentsApp
 from tests.great_international.factories import InternationalSectorPageFactory
+from tests.core.helpers import make_test_video
+
+
 from .helpers import clean_post_data
 
 
@@ -530,3 +533,39 @@ def test_robots_txt(client):
     response = client.get('/robots.txt')
     assert response.content == b'User-agent: * \nDisallow: /'
     assert response._headers['content-type'] == ('Content-Type', 'text/plain')
+
+
+@pytest.mark.django_db
+def test_serve_subtitles(client):
+    media = make_test_video()
+
+    media.subtitles_en = 'Dummy subtitles content'
+    media.save()
+
+    dest = reverse('subtitles-serve', args=[media.id, 'en'])
+
+    resp = client.get(dest, follow=False)
+
+    assert resp.status_code == 200
+    assert resp.content == b'Dummy subtitles content'
+
+
+@pytest.mark.django_db
+def test_serve_subtitles__missing_media(client):
+
+    dest = reverse('subtitles-serve', args=[99999, 'en'])
+    resp = client.get(dest, follow=False)
+
+    assert resp.status_code == 404
+
+
+@pytest.mark.django_db
+def test_serve_subtitles__none_available(client):
+    media = make_test_video()
+    media.save()
+
+    dest = reverse('subtitles-serve', args=[media.id, 'en'])
+
+    resp = client.get(dest, follow=False)
+
+    assert resp.status_code == 404
