@@ -204,6 +204,7 @@ class InternationalHomePageTranslationOptions(BaseTranslationOptions):
         'hero_cta_text',
         'hero_cta_link',
         'hero_image',
+        'hero_video',
         'brexit_banner_text',
 
         # Old International Home Page fields
@@ -339,6 +340,7 @@ class InternationalArticleListingPage(BaseTranslationOptions):
 class InternationalTopicLandingPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'landing_page_title',
+        'hero_video',
         'hero_image',
         'hero_teaser',
         'related_page_one',
@@ -1279,6 +1281,7 @@ class InvestmentAtlasLandingPageTranslationOptions(
         'hero_title',
         'hero_image',
         'mobile_hero_image',
+        'hero_video',
         'hero_strapline',
         'downpage_sections',
     )
@@ -1291,6 +1294,7 @@ class InvestmentOpportunityListingPageTranslationOptions(
     fields = (
         'breadcrumbs_label',
         'search_results_title',
+        'hero_video',
         'hero_text',
         'contact_cta_title',
         'contact_cta_text',
@@ -1305,6 +1309,7 @@ class InvestmentOpportunityPageTranslationOptions(
     fields = (
         'breadcrumbs_label',
         'hero_image',
+        'hero_video',
         'strapline',
         'introduction',
         'intro_image',
@@ -1331,6 +1336,7 @@ class InternationalInvestmentSectorPageTranslationOptions(
 ):
     fields = (
         'hero_image',
+        'hero_video',
         'heading',
         'standfirst',
         'featured_description',
@@ -1360,6 +1366,7 @@ class InternationalInvestmentSubSectorPageTranslationOptions(BaseTranslationOpti
 class InternationalWhyInvestInTheUKPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'hero_image',
+        'hero_video',
         'strapline',
         'introduction',
         'intro_image',
@@ -1373,6 +1380,7 @@ class InternationalWhyInvestInTheUKPageTranslationOptions(BaseTranslationOptions
 class InvestmentGeneralContentPageTranslationOptions(BaseTranslationOptions):
     fields = (
         'hero_image',
+        'hero_video',
         'strapline',
         'introduction',
         'intro_image',

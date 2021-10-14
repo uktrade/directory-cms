@@ -1,23 +1,20 @@
 from unittest import mock
-import pytest
 
+import pytest
+from django.test import override_settings
 from wagtail.core.blocks import StreamBlock
 
-from .factories import ReusableContentSectionFactory
-
-from core.blocks import DEFAULT_IMAGE_RENDITION_SPEC
-
-from great_international.blocks.great_international import (
-    FeaturedImageBlock,
-    MarkdownBlock,
-)
-
-from great_international.models.investment_atlas import ReusableContentSection
+from core.blocks import DEFAULT_IMAGE_RENDITION_SPEC, GreatMediaBlock
+from great_international.blocks.great_international import FeaturedImageBlock, MarkdownBlock
 from great_international.blocks.investment_atlas import (
-    _get_block_for_block_name,
     InlineOpportunityImageBlock,
-    ReusableSnippetChooserBlock
+    ReusableSnippetChooserBlock,
+    _get_block_for_block_name,
 )
+from great_international.models.investment_atlas import ReusableContentSection
+from tests.core.helpers import make_test_video
+
+from .factories import ReusableContentSectionFactory
 
 pytestmark = pytest.mark.django_db
 
@@ -130,6 +127,37 @@ def test_markdown__get_api_representation__no_data():
     block = MarkdownBlock()
     assert block.get_api_representation(value='') == ''
     assert block.get_api_representation(value=None) == ''
+
+
+@override_settings(WAGTAILMEDIA_MEDIA_MODEL="core.GreatMedia")
+@pytest.mark.django_db
+def test_video_block_get_api_representation():
+    video = make_test_video(transcript='Test transcript', subtitles='test subtitle')
+    video.save()
+    block = GreatMediaBlock()
+
+    block_response = block.get_api_representation(value=video)
+    assert block_response == {
+        'title': 'Test file',
+        'transcript': 'Test transcript',
+        'sources': [
+            {
+                'src': video.url,
+                'type': 'video/mp4',
+                'transcript': 'Test transcript'
+            }
+        ],
+        'url': video.url,
+        'thumbnail': None,
+        'subtitles': [{
+            'default': False,
+            'label': 'English',
+            'srclang': 'en',
+            'url': '/subtitles/1/en/content.vtt'}]
+    }
+    # for empty video
+    block_response = block.get_api_representation(value=None)
+    assert block_response == {}
 
 
 @pytest.mark.parametrize(

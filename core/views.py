@@ -8,9 +8,12 @@ from rest_framework.views import APIView
 from wagtail.admin.api.views import PagesAdminAPIViewSet
 from wagtail.core.models import Orderable, Page, Site
 
+from core.models import GreatMedia
+
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.http.response import HttpResponseBadRequest
+from django.http.response import HttpResponse, HttpResponseBadRequest
+
 from django.shortcuts import get_object_or_404, Http404
 from django.template.response import TemplateResponse
 from django.utils import translation
@@ -423,3 +426,20 @@ class PageTypeView(APIView):
         serializer = serializers.PagesTypesSerializer(data=data)
         serializer.is_valid()
         return Response(serializer.data)
+
+
+def serve_subtitles(request, great_media_id, language):
+    """Subtitles are stored along with the core.models.GreatMedia instance
+    but they need to be served via their own dedicated URL.
+    """
+
+    video = get_object_or_404(GreatMedia, id=great_media_id)
+
+    # See if there's a subtitle field for the appropriate languages
+    field_name = f'subtitles_{language}'
+    subtitles = getattr(video, field_name, None)
+    if not bool(subtitles):
+        raise Http404()
+
+    response = HttpResponse(subtitles, content_type='text/vtt')
+    return response
