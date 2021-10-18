@@ -126,7 +126,7 @@ et-xmlfile==1.1.0
     # via openpyxl
 future==0.18.2
     # via notifications-python-client
-gevent==21.1.2
+gevent==21.8.0
     # via -r requirements.in
 greenlet==1.1.2
     # via gevent
