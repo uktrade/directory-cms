@@ -6,7 +6,7 @@ sentry-sdk==0.13.4
 django_storages==1.7.1
 whitenoise==4.1.2
 dj-database-url==0.5.0
-psycopg2==2.7.3.2
+psycopg2==2.8.* --no-binary psycopg2
 django-pglocks==1.0.2
 boto3==1.6.3
 sigauth==4.1.0
@@ -24,7 +24,7 @@ celery[redis]==4.4.7
 django-celery-beat==2.0.0
 kombu==4.*
 requests[security]==2.25.1
-markdown==2.6
+markdown==2.*
 bleach==3.*
 bleach-whitelist==0.*
 wagtail-modeltranslation==0.10.17
