@@ -1348,7 +1348,7 @@ class InternationalInvestmentSectorPageTranslationOptions(
         'contact_link',
         'contact_link_button_preamble',
         'contact_link_button_label',
-        'related_opportunities_header',
+        'other_opportunities_header',
         'downpage_content',
         'early_opportunities_header',
         'early_opportunities',
