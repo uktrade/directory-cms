@@ -344,7 +344,7 @@ class InternationalInvestmentSectorPage(
         max_length=255,
         blank=True,
     )
-    related_opportunities_header = models.CharField(
+    other_opportunities_header = models.CharField(
         max_length=255,
         blank=True,
         help_text='You may want to phrase this to suit the kind of opportunities being featured, if not automatic'

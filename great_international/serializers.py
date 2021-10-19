@@ -2723,7 +2723,7 @@ class InternationalInvestmentSectorPageSerializer(
     contact_link_button_label = serializers.CharField()
 
     # Related opportunities
-    related_opportunities_header = serializers.CharField()
+    other_opportunities_header = serializers.CharField()
     related_opportunities = serializers.SerializerMethodField()
 
     # Main downpage content

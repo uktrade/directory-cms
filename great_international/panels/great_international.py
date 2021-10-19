@@ -1544,10 +1544,10 @@ class InternationalInvestmentSectorPagePanels:
             ]
         ),
         MultiFieldPanel(
-            heading='Related opportunities',
+            heading='Other opportunities',
             classname='collapsible',
             children=[
-                FieldPanel('related_opportunities_header'),
+                FieldPanel('other_opportunities_header'),
                 HelpPanel('See the dedicated tab for selecting the opportunities themselves'),
             ]
         ),
