@@ -2501,22 +2501,21 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
         return sub_sectors_list
 
     def get_related_opportunities(self, instance):
-        # Related opportunities are defined as ones in the same REGION, whereas previously (with the
-        # CapitalInvestOpportunityPageSerializer) we were showing based on SECTOR.
+        # Related opportunities are defined as based on SECTOR.
 
-        related_regions_set = self._get_regions(instance)
+        related_sectors_set = set(sector.related_sector_id for sector in instance.related_sectors.all())
 
-        if not related_regions_set:
+        if not related_sectors_set:
             return []
 
         related_opps = []
-
         for opp in InvestmentOpportunityPage.objects.live().public().exclude(
                 id=instance.id
         ).order_by(
             '-priority_weighting'
         ).distinct():
-            if self._get_regions(opp).intersection(related_regions_set):
+            opp_sectors_set = set(sector.related_sector_id for sector in opp.related_sectors.all())
+            if opp_sectors_set.intersection(related_sectors_set):
                 related_opps.append(opp)
 
         if not related_opps:
