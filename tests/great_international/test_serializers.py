@@ -1554,8 +1554,8 @@ def test_atlas_opportunity_page_null_case_related_sector__alt(rf, international_
 
 @pytest.mark.django_db
 def test_atlas_opportunity_list_page_related_opportunities(rf, international_root_page):
-    # Unlike with the old CapInvest opps, Atlas ones are associated by Region.
-    # Sectors do not matter
+    # Unlike with the old CapInvest opps, Atlas ones are associated by Sector.
+    # Regions and Sub-sector do not matter
 
     # make a landing page
     guide_landing_page = InternationalGuideLandingPageFactory(
@@ -1610,12 +1610,10 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
         parent=international_root_page
     )
 
-    related_sector_a = InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_a)
     related_subsector_a1 = InvestmentOpportunityRelatedSubSectors(
         related_sub_sector=subsector_a1
     )
 
-    related_sector_b = InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_b)
     related_subsector_b2 = InvestmentOpportunityRelatedSubSectors(
         related_sub_sector=subsector_b2
     )
@@ -1624,26 +1622,25 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
         related_sub_sector=subsector_b3
     )
 
-    related_sector_c = InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_c)
-
     # Make eight opportunities:
-    # 1. Region A, Sector A, Subsector A1 -> Thing we'll match against
-    # 2. Region A, Sector A, no subsector -> valid match
-    # 3. Region A, Sector B, Subsector B2 -> valid match
-    # 4. Region A, Sector B, Subsector B3 -> valid match
-    # 5. Region B, Sector A, no subsector -> should not be shown
-    # 6. Region B, Sector A, Subsector A1 -> should not be shown
-    # 7. Region C, no sector -> should not be shown
-    # 8. Region C, Sector C -> should not be shown
-    # 9. Region C and Region A -> valid match
+    # 1. Sector A, Subsector A1 -> Related to Sector A, show show for sector A
+    # 2. Sector A, no subsector -> Related to Sector A, show show for sector A
+    # 3. Sector B, Subsector B2 -> Related to Sector B, show show for sector B
+    # 4. Sector B, Subsector B3 -> Related to Sector B, show show for sector B
+    # 5. Sector A, -> Related to Sector A, show show for sector A
+    # 6. Sector A, Subsector A1 -> Related to Sector A, show show for sector A
+    # 7. Sector C -> Related to Sector C, show show for sector C
+    # 8. Sector C -> Related to Sector C, show show for sector C
+    # 9. Sector C -> Related to Sector C, show show for sector A
+    # 10 with no sector -> No related to any sector - shouldnt shown
 
     # Also note that priority_weighting is used here to order which ones are shown first
 
-    # 1. Region A, Sector A, Subsector A1 -> Thing we'll match against
+    # 1. Sector A, Subsector A1 -> Related to Sector A, show show for sector A
     opportunity_1 = InvestmentOpportunityPageFactory(
         parent=international_root_page,
         slug='opp_one',
-        related_sectors=[related_sector_a],
+        related_sectors=[InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_a)],
         related_sub_sectors=[related_subsector_a1],
         priority_weighting="0.9"
     )
@@ -1660,11 +1657,11 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
     )
     opportunity_1.save()
 
-    # 2. Region A, Sector A, no subsector -> valid match
+    # 2. Sector A, no subsector -> Related to Sector A, show show for sector A
     opportunity_2 = InvestmentOpportunityPageFactory(
         parent=international_root_page,
         slug='opp_two',
-        related_sectors=[related_sector_a],
+        related_sectors=[InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_a)],
         related_sub_sectors=[],
         priority_weighting="1.0"
     )
@@ -1681,11 +1678,11 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
     )
     opportunity_2.save()
 
-    # 3. Region A, Sector B, Subsector B2 -> valid match
+    # 3. Sector B, Subsector B2 -> Related to Sector B, show show for sector B
     opportunity_3 = InvestmentOpportunityPageFactory(
         parent=international_root_page,
         slug='opp_three',
-        related_sectors=[related_sector_b],
+        related_sectors=[InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_b)],
         related_sub_sectors=[related_subsector_b2],
         priority_weighting="2.0"
     )
@@ -1703,11 +1700,11 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
     )
     opportunity_3.save()
 
-    # 4. Region A, Sector B, Subsector B3 -> valid match
+    # 4. Sector B, Subsector B3 -> Related to Sector B, show show for sector B
     opportunity_4 = InvestmentOpportunityPageFactory(
         parent=international_root_page,
         slug='opp_four',
-        related_sectors=[related_sector_b],
+        related_sectors=[InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_b)],
         related_sub_sectors=[related_subsector_b3],
         priority_weighting="1.5"
     )
@@ -1724,11 +1721,11 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
     )
     opportunity_4.save()
 
-    # 5. Region B, Sector A, no subsector -> should not be shown
+    # 5. Sector A, -> Related to Sector A, show show for sector A
     opportunity_5 = InvestmentOpportunityPageFactory(
         parent=international_root_page,
         slug='opp_five',
-        related_sectors=[related_sector_a],
+        related_sectors=[InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_a)],
         related_sub_sectors=[],
         priority_weighting="4.2"
     )
@@ -1745,11 +1742,11 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
     )
     opportunity_5.save()
 
-    # 6. Region B, Sector A, Subsector A1 -> should not be shown
+    # 6. Sector A, Subsector A1 -> Related to Sector A, show show for sector A
     opportunity_6 = InvestmentOpportunityPageFactory(
         parent=international_root_page,
         slug='opp_six',
-        related_sectors=[related_sector_a],
+        related_sectors=[InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_a)],
         related_sub_sectors=[related_subsector_a1],
         priority_weighting="6.2"
     )
@@ -1766,11 +1763,11 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
     )
     opportunity_6.save()
 
-    # 7. Region C, no sector -> should not be shown
+    # 7. Sector C -> Related to Sector C, show show for sector C
     opportunity_7 = InvestmentOpportunityPageFactory(
         parent=international_root_page,
         slug='opp_seven',
-        related_sectors=[],
+        related_sectors=[InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_c)],
         related_sub_sectors=[],
         priority_weighting="7.2"
 
@@ -1789,11 +1786,11 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
     )
     opportunity_7.save()
 
-    # 8. Region C, Sector C -> should not be shown
+    # 8. Sector C -> Related to Sector C, show show for sector C
     opportunity_8 = InvestmentOpportunityPageFactory(
         parent=international_root_page,
         slug='opp_eight',
-        related_sectors=[related_sector_c],
+        related_sectors=[InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_c)],
         related_sub_sectors=[],
         priority_weighting="5.2"
     )
@@ -1811,11 +1808,11 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
     )
     opportunity_8.save()
 
-    # 9. Region C and Region A -> valid match
+    # 9. Sector C -> Related to Sector C, show show for sector A
     opportunity_9 = InvestmentOpportunityPageFactory(
         parent=international_root_page,
         slug='opp_nine',
-        related_sectors=[related_sector_c],
+        related_sectors=[InvestmentOpportunityRelatedSectorsFactory(related_sector=sector_c)],
         related_sub_sectors=[]
         # Has default priority_wieghting (ie, 0.0)
     )
@@ -1839,6 +1836,34 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
     )
     opportunity_9.save()
 
+    # 10 with no sector -> No related to any sector - shouldnt shown
+    opportunity_10 = InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        slug='opp_nine',
+        related_sectors=[],
+        related_sub_sectors=[]
+        # Has default priority_wieghting (ie, 0.0)
+    )
+    opportunity_10.regions_with_locations = json.dumps(
+        [
+            {
+                "type": "location",
+                "value": {
+                    "region": region_a.id,
+                    "map_coordinate": "0,0"
+                }
+            },
+            {
+                "type": "location",
+                "value": {
+                    "region": region_c.id,
+                    "map_coordinate": "0,0"
+                }
+            }
+        ]
+    )
+    opportunity_10.save()
+
     # now grab the results for the opp
     opportunity_1_serializer = InvestmentOpportunityPageSerializer(
         instance=opportunity_1,
@@ -1848,10 +1873,9 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
     expected_slugs = [
         x.slug for x in [
             # these are ordered by priority
-            opportunity_3,
-            opportunity_4,
             opportunity_2,
-            opportunity_9,
+            opportunity_5,
+            opportunity_6,
         ]
     ]
 
@@ -1859,10 +1883,12 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
         x.slug for x in [
             # priority doesn't matter here, because we're testing for absence
             opportunity_1,
-            opportunity_5,
-            opportunity_6,
+            opportunity_3,
+            opportunity_4,
             opportunity_7,
             opportunity_8,
+            opportunity_9,
+            opportunity_10,
         ]
     ]
 
@@ -1875,47 +1901,58 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
         assert slug not in seen_slugs
         seen_slugs.append(slug)
 
-        region_ids = [x['id'] for x in page['regions']]
-        assert region_a.id in region_ids
-
     assert sorted(seen_slugs) == sorted(expected_slugs)
 
-    # Also show the number of related opps varies according to mutual regions
-    # 1. Region A, Sector A, Subsector A1 -> Thing we'll match against
-    # 2. Region A, Sector A, no subsector -> valid match
-    # 3. Region A, Sector B, Subsector B2 -> valid match
-    # 4. Region A, Sector B, Subsector B3 -> valid match
-    # 5. Region B, Sector A, no subsector -> should not be shown
-    # 6. Region B, Sector A, Subsector A1 -> should not be shown
-    # 7. Region C, no sector -> should not be shown
-    # 8. Region C, Sector C -> should not be shown
-    # 9. Region C and Region A -> valid match
+    # Also show the number of related opps varies according to mutual sectors
+    # 1. Sector A, Subsector A1 -> Related to Sector A, show show for sector A
+    # 2. Sector A, no subsector -> Related to Sector A, show show for sector A
+    # 3. Sector B, Subsector B2 -> Related to Sector B, show show for sector B
+    # 4. Sector B, Subsector B3 -> Related to Sector B, show show for sector B
+    # 5. Sector A, -> Related to Sector A, show show for sector A
+    # 6. Sector A, Subsector A1 -> Related to Sector A, show show for sector A
+    # 7. Sector C -> Related to Sector C, show show for sector C
+    # 8. Sector C -> Related to Sector C, show show for sector C
+    # 9. Sector C -> Related to Sector C, show show for sector A
+    # 10 with no sector -> No related to any sector - shouldnt shown
 
-    # Each Region C Opp should link to one other
-    for region_b_opp in [opportunity_5, opportunity_6]:
+    # Expected related_opps
+    # Sector A - 3 Related opps
+    # Sector B - 1 Related opp
+    # Sector C - 2 Related opps
+
+    # Each Sector A Opps should link to three other
+    for sector_a_opp in [opportunity_5, opportunity_6]:
         serializer = InvestmentOpportunityPageSerializer(
-            instance=region_b_opp,
+            instance=sector_a_opp,
             context={'request': rf.get('/')}
         )
-        assert len(serializer.data['related_opportunities']) == 1
-        assert region_b_opp.slug not in [x['meta']['slug'] for x in serializer.data['related_opportunities']]
+        assert len(serializer.data['related_opportunities']) == 3
+        assert sector_a_opp.slug not in [x['meta']['slug'] for x in serializer.data['related_opportunities']]
 
-    # These Region C Opps should link to two others
-    for region_c_opp in [opportunity_7, opportunity_8]:
+    # These Sector C Opps should link to two others
+    for sector_c_opp in [opportunity_7, opportunity_8, opportunity_9]:
         serializer = InvestmentOpportunityPageSerializer(
-            instance=region_c_opp,
+            instance=sector_c_opp,
             context={'request': rf.get('/')}
         )
         assert len(serializer.data['related_opportunities']) == 2
-        assert region_c_opp.slug not in [x['meta']['slug'] for x in serializer.data['related_opportunities']]
+        assert sector_c_opp.slug not in [x['meta']['slug'] for x in serializer.data['related_opportunities']]
 
-    # And this region C and Region A opp shoud link to 6 in total
+    # And this sector C opp shoud link to 2 in total
     serializer = InvestmentOpportunityPageSerializer(
         instance=opportunity_9,
         context={'request': rf.get('/')}
     )
-    assert len(serializer.data['related_opportunities']) == 6
+    assert len(serializer.data['related_opportunities']) == 2
     assert opportunity_9.slug not in [x['meta']['slug'] for x in serializer.data['related_opportunities']]
+
+    # And opportunity with no sector  shoud link to 0 in total
+    serializer = InvestmentOpportunityPageSerializer(
+        instance=opportunity_10,
+        context={'request': rf.get('/')}
+    )
+    assert len(serializer.data['related_opportunities']) == 0
+    assert opportunity_10.slug not in [x['meta']['slug'] for x in serializer.data['related_opportunities']]
 
 
 @pytest.mark.django_db
