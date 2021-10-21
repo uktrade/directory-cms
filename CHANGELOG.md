@@ -3,6 +3,7 @@
 ## Pre-release
 ### Implemented enhancements
 - NOTICKET: Added GreatMedia to d-cms
+- GP2-3740: Python 3.9 upgrade
 
 ### Fixed bugs
 
