@@ -2,6 +2,7 @@
 
 ## Pre-release
 ### Implemented enhancements
+- GP2-3387 - Management command to purge admin users
 - NOTICKET: Added GreatMedia to d-cms
 - GP2-3740: Python 3.9 upgrade
 
