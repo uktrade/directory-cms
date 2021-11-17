@@ -11,7 +11,6 @@ def test_app_models():
         models.TermsAndConditionsPage,
         models.PrivacyAndCookiesPage,
         models.SitePolicyPages,
-        models.GetFinancePage,
         models.PerformanceDashboardNotesPage,
         models.TopicLandingPage,
         models.SuperregionPage,
