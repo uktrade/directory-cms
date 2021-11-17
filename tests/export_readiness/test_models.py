@@ -12,7 +12,6 @@ def test_app_models():
         models.PrivacyAndCookiesPage,
         models.SitePolicyPages,
         models.GetFinancePage,
-        models.PerformanceDashboardPage,
         models.PerformanceDashboardNotesPage,
         models.TopicLandingPage,
         models.SuperregionPage,
@@ -147,22 +146,6 @@ def test_contact_us_success_infers_field_values(topic, values):
     assert page.slug == topic
     assert page.title == values['title']
     assert page.full_path == values['full_path_override']
-
-
-@pytest.mark.django_db
-@pytest.mark.parametrize(
-    'product_link,values', models.PerformanceDashboardPage.service_mapping.items()  # noqa
-)
-def test_performance_dashboard_infers_field_values(product_link, values):
-    page = factories.PerformanceDashboardPageFactory.create(
-        product_link=product_link
-    )
-
-    assert page.slug == values['slug']
-    assert page.title == values['heading'] + ' Performance Dashboard'
-    assert page.full_path == values['full_path_override']
-    assert page.landing_dashboard == values['landing_dashboard']
-    assert page.heading == values['heading']
 
 
 @pytest.mark.django_db
