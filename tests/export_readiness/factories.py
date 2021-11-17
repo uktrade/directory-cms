@@ -301,16 +301,6 @@ class CountryGuidePageFactory(wagtail_factories.PageFactory):
     related_page_three = factory.SubFactory(ArticleListingPageFactory)
 
 
-class SellingOnlineOverseasHomePageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.SellingOnlineOverseasHomePage
-
-    featured_case_study_one = factory.SubFactory(ArticlePageFactory)
-    featured_case_study_two = factory.SubFactory(ArticlePageFactory)
-    featured_case_study_three = factory.SubFactory(ArticlePageFactory)
-
-
 class RegionFactory(factory.django.DjangoModelFactory):
 
     class Meta:

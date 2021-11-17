@@ -28,7 +28,6 @@ def test_app_models():
         models.ContactUsGuidancePage,
         models.ContactSuccessPage,
         models.AllContactPagesPage,
-        models.SellingOnlineOverseasHomePage,
     }
 
 
@@ -145,19 +144,3 @@ def test_contact_us_success_infers_field_values(topic, values):
     assert page.slug == topic
     assert page.title == values['title']
     assert page.full_path == values['full_path_override']
-
-
-@pytest.mark.django_db
-def test_soo_homepage_title(root_page):
-    home_page = factories.HomePageFactory(parent=root_page)
-
-    soo_home_page = factories.SellingOnlineOverseasHomePageFactory(
-        featured_case_study_one=None,
-        featured_case_study_two=None,
-        featured_case_study_three=None,
-        parent=home_page
-    )
-
-    soo_home_page.save()
-
-    assert soo_home_page.title == 'Selling online overseas home page'

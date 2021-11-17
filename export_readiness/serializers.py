@@ -676,19 +676,3 @@ class ContactSuccessPageSerializer(BasePageSerializer):
     body_text = serializers.CharField()
     next_title = serializers.CharField()
     next_body_text = serializers.CharField()
-
-
-class SellingOnlineOverseasHomePageSerializer(BasePageSerializer):
-    featured_case_studies = serializers.SerializerMethodField()
-
-    def get_featured_case_studies(self, instance):
-        pages = [
-            instance.featured_case_study_one,
-            instance.featured_case_study_two,
-            instance.featured_case_study_three
-        ]
-
-        return [
-            ChildArticlePageSerializer(page.specific).data
-            for page in pages if page
-        ]
