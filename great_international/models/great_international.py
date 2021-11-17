@@ -816,7 +816,6 @@ class InternationalHomePage(
         return [
             InternationalArticleListingPage,
             InternationalTopicLandingPage,
-            InternationalCuratedTopicLandingPage,
             InternationalGuideLandingPage,
             InternationalEUExitFormPage,
             InternationalEUExitFormSuccessPage,
@@ -836,7 +835,6 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
-        'great_international.InternationalCuratedTopicLandingPage',
         'great_international.InternationalGuideLandingPage',
         'great_international.InternationalSectorPage',  # deprecated
         'great_international.InternationalInvestmentSectorPage',  # new, replaces InternationalSectorPage
@@ -1142,82 +1140,6 @@ class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, 
         on_delete=models.SET_NULL,
         related_name='+'
     )
-
-
-class InternationalCuratedTopicLandingPage(panels.InternationalCuratedTopicLandingPagePanels, BaseInternationalPage):
-    parent_page_types = ['great_international.InternationalHomePage']
-    subpage_types = []
-
-    display_title = models.CharField(max_length=255, blank=True, null=True)
-
-    hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    teaser = models.CharField(max_length=255)
-
-    feature_section_heading = models.CharField(max_length=255)
-
-    feature_one_heading = models.CharField(max_length=100)
-    feature_one_image = models.ForeignKey(
-        'wagtailimages.Image',
-        verbose_name="image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    feature_one_content = MarkdownField(verbose_name="content")
-
-    feature_two_heading = models.CharField(max_length=100)
-    feature_two_image = models.ForeignKey(
-        'wagtailimages.Image',
-        verbose_name="image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    feature_two_content = MarkdownField(verbose_name="content")
-
-    feature_three_heading = models.CharField(max_length=100)
-    feature_three_image = models.ForeignKey(
-        'wagtailimages.Image',
-        verbose_name="image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    feature_three_url = models.URLField(verbose_name="URL")
-
-    feature_four_heading = models.CharField(max_length=100)
-    feature_four_image = models.ForeignKey(
-        'wagtailimages.Image',
-        verbose_name="image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    feature_four_url = models.URLField(verbose_name="URL")
-
-    feature_five_heading = models.CharField(max_length=100)
-    feature_five_image = models.ForeignKey(
-        'wagtailimages.Image',
-        verbose_name="image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    feature_five_url = models.URLField(verbose_name="URL")
-
-    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
 class InternationalGuideLandingPage(panels.InternationalGuideLandingPagePanels, BaseInternationalPage):
