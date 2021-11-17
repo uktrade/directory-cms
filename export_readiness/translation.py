@@ -107,8 +107,3 @@ class ContactSuccessPagesTranslationOptions(BaseTranslationOptions):
 @register(models.AllContactPagesPage)
 class AllContactPagesPageTranslationOptions(BaseTranslationOptions):
     fields = []
-
-
-@register(models.SellingOnlineOverseasHomePage)
-class SellingOnlineOverseasHomePageTranslationOptions(BaseTranslationOptions):
-    fields = []

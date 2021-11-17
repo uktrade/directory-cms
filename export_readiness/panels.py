@@ -1286,24 +1286,3 @@ class ContactSuccessPagePanels:
 
     settings_panels = []
 
-
-class SellingOnlineOverseasHomePagePanels:
-
-    content_panels = [
-        MultiFieldPanel(
-            heading='Featured case studies',
-            children=[
-                HelpPanel(
-                    content=(
-                        'Currently the only portion of this page that is editable here is the featured case studies. '
-                        'All other content on the page comes from the frontend code. '
-                        'If you require changes to be made to it, please ask a developer.'),
-                ),
-                FieldRowPanel([
-                    PageChooserPanel('featured_case_study_one', ['export_readiness.ArticlePage']),
-                    PageChooserPanel('featured_case_study_two', ['export_readiness.ArticlePage']),
-                    PageChooserPanel('featured_case_study_three', ['export_readiness.ArticlePage']),
-                ])
-            ]
-        ),
-    ]
