@@ -61,63 +61,6 @@ class SitePolicyPages(ExclusivePageMixin, BaseDomesticPage):
         return super().save(*args, **kwargs)
 
 
-class GetFinancePage(panels.GetFinancePagePanels, ExclusivePageMixin, BreadcrumbMixin, BaseDomesticPage):
-    slug_identity = slugs.GREAT_GET_FINANCE
-
-    breadcrumbs_label = models.CharField(max_length=50)
-    hero_text = MarkdownField()
-    hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    ukef_logo = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    contact_proposition = MarkdownField(blank=False)
-    contact_button = models.CharField(max_length=500)
-    advantages_title = models.CharField(max_length=500)
-    advantages_one = MarkdownField()
-    advantages_one_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    advantages_two = MarkdownField()
-    advantages_two_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    advantages_three = MarkdownField()
-    advantages_three_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    evidence = MarkdownField()
-    evidence_video = models.ForeignKey(
-        'wagtailmedia.Media',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-
 class PerformanceDashboardNotesPage(panels.PerformanceDashboardNotesPagePanels, ExclusivePageMixin, BaseDomesticPage):
 
     slug_identity = slugs.PERFORMANCE_DASHBOARD_NOTES
