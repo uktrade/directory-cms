@@ -4,12 +4,11 @@ from wagtail.core.models import Page
 
 from modelcluster.fields import ParentalManyToManyField
 
-from directory_constants import cms, slugs, urls
+from directory_constants import cms, slugs
 
 from core.model_fields import MarkdownField
 from core.models import (
     BasePage,
-    BreadcrumbMixin,
     ExclusivePageMixin,
     FormPageMetaClass,
 )

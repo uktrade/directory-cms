@@ -4,7 +4,6 @@ import pytest
 from rest_framework.reverse import reverse
 
 from tests.export_readiness import factories
-from directory_constants import urls
 from core import cache
 
 
