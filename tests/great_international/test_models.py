@@ -17,7 +17,6 @@ def test_models_hierarchy():
     assert great_international.InternationalHomePage.allowed_subpage_models() == [
         great_international.InternationalArticleListingPage,
         great_international.InternationalTopicLandingPage,
-        great_international.InternationalCuratedTopicLandingPage,
         great_international.InternationalGuideLandingPage,
         great_international.InternationalEUExitFormPage,
         great_international.InternationalEUExitFormSuccessPage,
@@ -48,8 +47,6 @@ def test_models_hierarchy():
             great_international.InternationalCampaignPage,
             great_international.InternationalInvestmentSectorPage,
         ]
-    # curated topic landing
-    assert great_international.InternationalCuratedTopicLandingPage.allowed_subpage_models() == []
     # guide landing
     assert great_international.InternationalGuideLandingPage.allowed_subpage_models() == [
             great_international.InternationalArticlePage,

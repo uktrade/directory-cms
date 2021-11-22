@@ -349,33 +349,6 @@ class InternationalTopicLandingPageTranslationOptions(BaseTranslationOptions):
     )
 
 
-@register(great_international.InternationalCuratedTopicLandingPage)
-class InternationalCuratedTopicLandingPageTranslationOptions(
-    BaseTranslationOptions
-):
-    fields = (
-        'display_title',
-        'hero_image',
-        'teaser',
-        'feature_section_heading',
-        'feature_one_heading',
-        'feature_one_image',
-        'feature_one_content',
-        'feature_two_heading',
-        'feature_two_image',
-        'feature_two_content',
-        'feature_three_heading',
-        'feature_three_image',
-        'feature_three_url',
-        'feature_four_heading',
-        'feature_four_image',
-        'feature_four_url',
-        'feature_five_heading',
-        'feature_five_image',
-        'feature_five_url',
-    )
-
-
 @register(great_international.InternationalGuideLandingPage)
 class InternationalGuideLandingPageTranslationOptions(
     BaseTranslationOptions
