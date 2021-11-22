@@ -43,16 +43,6 @@ api_urls = [
         name='pages-types-list'
     ),
     url(
-        r'^pages/lookup-countries-by-tag/(?P<pk>[0-9]+)/$',
-        api_router.wrap_view(export_readiness.views.CountryPageLookupByIndustryTagIDListAPIView.as_view()),
-        name='lookup-countries-by-tag-list'
-    ),
-    url(
-        r'^pages/industry-tags/$',
-        api_router.wrap_view(export_readiness.views.IndustryTagsListAPIView.as_view()),
-        name='industry-tags-list'
-    ),
-    url(
         r'^pages/lookup-countries/$',
         api_router.wrap_view(export_readiness.views.CountryPageListAPIView.as_view()),
         name='lookup-country-guides-list-view'

@@ -12,7 +12,6 @@ from django.utils import timezone
 
 from tests.export_readiness.factories import (
     ArticlePageFactory,
-    CountryGuidePageFactory,
     IndustryTagFactory,
     MarketingArticlePageFactory,
 )
@@ -202,19 +201,8 @@ def test_lists_live_articles_in_stream(api_client, en_locale):
             slug='marketing-article-two',
         )
 
-        # Note CountryGuidePageFactory creates an additional
-        # ArticlePage as a related page.
-        country_guide_page_e = CountryGuidePageFactory(
-            heading='Market Page E',
-            sub_heading='Descriptive text',
-            section_one_body='Body text',
-            last_published_at=timezone.now(),
-            slug='article-e')
-
-        tag1 = IndustryTagFactory(name='tag1')
-        tag2 = IndustryTagFactory(name='tag2')
-        country_guide_page_e.tags = [tag1, tag2]
-        country_guide_page_e.save()
+        IndustryTagFactory(name='tag1')
+        IndustryTagFactory(name='tag2')
 
     sender = auth_sender()
     response = api_client.get(
@@ -230,7 +218,7 @@ def test_lists_live_articles_in_stream(api_client, en_locale):
     # Three ArticlePages defined above, plus two MarketingArticlePages,
     # plus one CountryGuidePage,
     # Plus the extra ArticlePage created by CountryGuidePageFactory
-    assert len(items) == 7
+    assert len(items) == 5
 
     assert article_attribute(items[0], 'name') == 'Article A'
     assert article_attribute(items[0], 'id') == id_prefix + str(article_a.id)
@@ -255,11 +243,6 @@ def test_lists_live_articles_in_stream(api_client, en_locale):
     assert article_attribute(items[4], 'name') == 'Marketing Article Two'
     assert article_attribute(items[4], 'id') == id_prefix + str(marketing_article_2.id)
     assert items[4]['published'] == '2019-01-14T12:00:02+00:00'
-
-    assert article_attribute(items[5], 'name') == 'Market Page E'
-    assert article_attribute(items[5], 'id') == id_prefix + str(country_guide_page_e.id)
-    assert items[5]['published'] == '2019-01-14T12:00:02+00:00'
-    assert article_attribute(items[5], 'keywords') == 'tag1 tag2'
 
     # items[6] will be the Article created when the Country Guide page was also made
 

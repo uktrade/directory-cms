@@ -14,11 +14,6 @@ class SitePolicyPagesTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
-@register(models.CountryGuidePage)
-class CountryGuidePage(BaseTranslationOptions):
-    fields = []
-
-
 @register(models.MarketingPages)
 class MarketingPages(BaseTranslationOptions):
     fields = []
