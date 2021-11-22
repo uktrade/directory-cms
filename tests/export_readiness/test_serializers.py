@@ -1,11 +1,11 @@
 import pytest
 from export_readiness.serializers import (
     ArticlePageSerializer, CountryGuidePageSerializer, CampaignPageSerializer, TopicLandingPageSerializer,
-    MarketingArticlePageSerializer, SellingOnlineOverseasHomePageSerializer
+    MarketingArticlePageSerializer
 )
 from tests.export_readiness.factories import (
     ArticlePageFactory, ArticleListingPageFactory, CountryGuidePageFactory, CampaignPageFactory,
-    HomePageFactory, TopicLandingPageFactory, MarketingArticlePageFactory, SellingOnlineOverseasHomePageFactory
+    HomePageFactory, TopicLandingPageFactory, MarketingArticlePageFactory
 )
 
 
@@ -196,55 +196,3 @@ def test_topic_serializer_multiple_child_page_types(root_page, rf):
     children = serializer.data['child_pages']
 
     assert len(children) == 3
-
-
-@pytest.mark.django_db
-def test_soo_homepage_serializer(root_page, rf):
-    home_page = HomePageFactory(parent=root_page)
-
-    advice_page = TopicLandingPageFactory(
-        title_en_gb='Advice',
-        slug='advice',
-        parent=home_page)
-
-    case_study_one = ArticlePageFactory(parent=advice_page, slug='article-one')
-    case_study_two = ArticlePageFactory(parent=advice_page, slug='article-two')
-
-    soo_home_page = SellingOnlineOverseasHomePageFactory(
-        featured_case_study_one=None,
-        featured_case_study_two=case_study_one,
-        featured_case_study_three=case_study_two,
-        parent=home_page
-    )
-
-    serializer = SellingOnlineOverseasHomePageSerializer(
-        instance=soo_home_page,
-        context={'request': rf.get('/')}
-    )
-
-    children = serializer.data['featured_case_studies']
-
-    assert len(children) == 2
-    assert children[0]['meta']['slug'] == 'article-one'
-    assert children[1]['meta']['slug'] == 'article-two'
-
-
-@pytest.mark.django_db
-def test_soo_homepage_serializer_no_case_studies(root_page, rf):
-    home_page = HomePageFactory(parent=root_page)
-
-    soo_home_page = SellingOnlineOverseasHomePageFactory(
-        featured_case_study_one=None,
-        featured_case_study_two=None,
-        featured_case_study_three=None,
-        parent=home_page
-    )
-
-    serializer = SellingOnlineOverseasHomePageSerializer(
-        instance=soo_home_page,
-        context={'request': rf.get('/')}
-    )
-
-    children = serializer.data['featured_case_studies']
-
-    assert len(children) == 0

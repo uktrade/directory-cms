@@ -34,16 +34,6 @@ class PrivacyAndCookiesPageTranslationOptions(BaseTranslationOptions):
     fields = []
 
 
-@register(models.GetFinancePage)
-class GetFinancePageTranslationOptions(BaseTranslationOptions):
-    fields = []
-
-
-@register(models.PerformanceDashboardPage)
-class PerformanceDashboardPageTranslationOptions(BaseTranslationOptions):
-    fields = []
-
-
 @register(models.PerformanceDashboardNotesPage)
 class PerformanceDashboardNotesPageTranslationOptions(BaseTranslationOptions):
     fields = []
@@ -116,9 +106,4 @@ class ContactSuccessPagesTranslationOptions(BaseTranslationOptions):
 
 @register(models.AllContactPagesPage)
 class AllContactPagesPageTranslationOptions(BaseTranslationOptions):
-    fields = []
-
-
-@register(models.SellingOnlineOverseasHomePage)
-class SellingOnlineOverseasHomePageTranslationOptions(BaseTranslationOptions):
     fields = []

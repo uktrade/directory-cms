@@ -4,12 +4,11 @@ from wagtail.core.models import Page
 
 from modelcluster.fields import ParentalManyToManyField
 
-from directory_constants import cms, slugs, urls
+from directory_constants import cms, slugs
 
 from core.model_fields import MarkdownField
 from core.models import (
     BasePage,
-    BreadcrumbMixin,
     ExclusivePageMixin,
     FormPageMetaClass,
 )
@@ -58,187 +57,6 @@ class SitePolicyPages(ExclusivePageMixin, BaseDomesticPage):
 
     def save(self, *args, **kwargs):
         self.title = self.get_verbose_name()
-        return super().save(*args, **kwargs)
-
-
-class GetFinancePage(panels.GetFinancePagePanels, ExclusivePageMixin, BreadcrumbMixin, BaseDomesticPage):
-    slug_identity = slugs.GREAT_GET_FINANCE
-
-    breadcrumbs_label = models.CharField(max_length=50)
-    hero_text = MarkdownField()
-    hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    ukef_logo = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    contact_proposition = MarkdownField(blank=False)
-    contact_button = models.CharField(max_length=500)
-    advantages_title = models.CharField(max_length=500)
-    advantages_one = MarkdownField()
-    advantages_one_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    advantages_two = MarkdownField()
-    advantages_two_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    advantages_three = MarkdownField()
-    advantages_three_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    evidence = MarkdownField()
-    evidence_video = models.ForeignKey(
-        'wagtailmedia.Media',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-
-class PerformanceDashboardPage(panels.PerformanceDashboardPagePanels, BaseDomesticPage):
-    subpage_types = [
-        'export_readiness.PerformanceDashboardPage',
-        'export_readiness.PerformanceDashboardNotesPage',
-    ]
-
-    heading = models.CharField(max_length=255)
-    description = MarkdownField()
-    # row 1
-    data_title_row_one = models.CharField(max_length=100)
-    data_number_row_one = models.CharField(max_length=15)
-    data_period_row_one = models.CharField(max_length=100)
-    data_description_row_one = MarkdownField()
-    # row 2
-    data_title_row_two = models.CharField(
-        max_length=100,
-        blank=True,
-        null=True,
-    )
-    data_number_row_two = models.CharField(
-        max_length=15,
-        blank=True,
-        null=True,
-    )
-    data_period_row_two = models.CharField(
-        max_length=100,
-        blank=True,
-        null=True,
-    )
-    data_description_row_two = MarkdownField(blank=True, null=True)
-    # row 3
-    data_title_row_three = models.CharField(
-        max_length=100,
-        blank=True,
-        null=True,
-    )
-    data_number_row_three = models.CharField(
-        max_length=15,
-        blank=True,
-        null=True,
-    )
-    data_period_row_three = models.CharField(
-        max_length=100,
-        blank=True,
-        null=True,
-    )
-    data_description_row_three = MarkdownField(blank=True, null=True)
-    # row 4
-    data_title_row_four = models.CharField(
-        max_length=100,
-        blank=True,
-        null=True
-    )
-    data_number_row_four = models.CharField(
-        max_length=15,
-        blank=True,
-        null=True
-    )
-    data_period_row_four = models.CharField(
-        max_length=100,
-        blank=True,
-        null=True
-    )
-    data_description_row_four = MarkdownField(blank=True, null=True)
-
-    guidance_notes = MarkdownField(blank=True, null=True)
-    landing_dashboard = models.BooleanField(default=False)
-
-    service_mapping = {
-        urls.SERVICES_GREAT_DOMESTIC: {
-            'slug': slugs.PERFORMANCE_DASHBOARD,
-            'full_path_override': '/performance-dashboard/',
-            'heading': 'Great.gov.uk',
-            'landing_dashboard': True,
-        },
-        urls.SERVICES_SOO: {
-            'slug': slugs.PERFORMANCE_DASHBOARD_SOO,
-            'full_path_override': (
-                '/performance-dashboard/selling-online-overseas/'),
-            'heading': 'Selling Online Overseas',
-            'landing_dashboard': False,
-        },
-        urls.SERVICES_EXOPPS: {
-            'slug': slugs.PERFORMANCE_DASHBOARD_EXOPPS,
-            'full_path_override': (
-                '/performance-dashboard/export-opportunities/'),
-            'heading': 'Export Opportunities',
-            'landing_dashboard': False,
-        },
-        urls.SERVICES_FAB: {
-            'slug': (
-                slugs.PERFORMANCE_DASHBOARD_TRADE_PROFILE),
-            'full_path_override': '/performance-dashboard/trade-profiles/',
-            'heading': 'Business Profiles',
-            'landing_dashboard': False,
-        },
-        urls.SERVICES_INVEST: {
-            'slug': slugs.PERFORMANCE_DASHBOARD_INVEST,
-            'full_path_override': '/performance-dashboard/invest/',
-            'heading': 'Invest in Great Britain',
-            'landing_dashboard': False,
-        },
-    }
-    product_link = models.TextField(
-        choices=[
-            (key, val['heading']) for key, val in service_mapping.items()],
-        unique=True,
-        help_text=(
-            'The slug and page heading are inferred from the product link'),
-    )
-
-    @property
-    def full_path_override(self):
-        return self.service_mapping[self.product_link]['full_path_override']
-
-    def save(self, *args, **kwargs):
-        field_values = self.service_mapping[self.product_link]
-        self.title = field_values['heading'] + ' Performance Dashboard'
-        self.heading = field_values['heading']
-        self.slug = field_values['slug']
-        self.landing_dashboard = field_values['landing_dashboard']
         return super().save(*args, **kwargs)
 
 
@@ -1736,44 +1554,6 @@ class AllContactPagesPage(ExclusivePageMixin, BaseDomesticPage):
 
     class Meta:
         verbose_name = 'Forms'
-
-    def save(self, *args, **kwargs):
-        self.title = self.get_verbose_name()
-        return super().save(*args, **kwargs)
-
-
-class SellingOnlineOverseasHomePage(panels.SellingOnlineOverseasHomePagePanels, ExclusivePageMixin, BaseDomesticPage):
-
-    # Need to do this because the slug 'selling-online-overseas'
-    # is already taken by the SOO performance dashboard page
-    slug_identity = 'selling-online-overseas-homepage'
-    slug_override = 'selling-online-overseas'
-
-    subpage_types = []
-    settings_panels = []
-
-    # Featured case studies
-    featured_case_study_one = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    featured_case_study_two = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    featured_case_study_three = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
 
     def save(self, *args, **kwargs):
         self.title = self.get_verbose_name()
