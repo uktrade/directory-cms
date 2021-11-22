@@ -9,8 +9,7 @@ from django.http import HttpRequest
 
 from core.upstream_serializers import UpstreamModelSerializer
 from tests.export_readiness.factories import (
-    ArticlePageFactory, CountryGuidePageFactory,
-    TopicLandingPageFactory, ArticleListingPageFactory,
+    ArticlePageFactory, TopicLandingPageFactory, ArticleListingPageFactory,
     HomePageFactory, TagFactory
 )
 
@@ -32,13 +31,6 @@ class RequestWithMessages(HttpRequest):
 @pytest.fixture
 def article_page():
     return ArticlePageFactory()
-
-
-@pytest.fixture
-def country_guide_page(article_page):
-    return CountryGuidePageFactory(
-        related_page_one=article_page
-    )
 
 
 @pytest.mark.django_db
@@ -93,20 +85,6 @@ def test_document_field_deserializer(rf, high_potential_opportunity_page):
 
     assert actual['pdf_document'] == (
         high_potential_opportunity_page.pdf_document.pk
-    )
-
-
-@pytest.mark.django_db
-def test_related_page_field_serialize(country_guide_page):
-
-    data = UpstreamModelSerializer.serialize(country_guide_page)
-
-    assert data['(page)related_page_one'] == json.dumps(
-        {
-            'slug': country_guide_page.related_page_one.slug,
-            'service_name_value': (
-                country_guide_page.related_page_one.service_name_value),
-        }
     )
 
 

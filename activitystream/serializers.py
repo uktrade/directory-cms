@@ -5,30 +5,6 @@ from export_readiness.models import (
 )
 
 
-class CountryGuidePageSerializer(serializers.Serializer):
-
-    def to_representation(self, obj):
-        return {
-            'id': (
-                'dit:cms:Article:' + str(obj.id) +
-                ':Update'
-            ),
-            'type': 'Update',
-            'published': obj.last_published_at.isoformat('T'),
-            'object': {
-                'type': 'Article',
-                'id': 'dit:cms:Article:' + str(obj.id),
-                'name': obj.heading,
-                'summary': obj.sub_heading,
-                'content': obj.section_one_body,
-                'url': obj.get_url(),
-                'keywords': " ".join(
-                    obj.tags.all().values_list('name', flat=True)
-                )
-            },
-        }
-
-
 class ArticlePageSerializer(serializers.Serializer):
 
     def to_representation(self, obj):
@@ -58,5 +34,3 @@ class PageSerializer(serializers.Serializer):
             return ArticlePageSerializer(obj).data
         elif isinstance(obj, MarketingArticlePage):
             return MarketingArticlePageSerializer(obj).data
-        else:  # CountryGuidePage
-            return CountryGuidePageSerializer(obj).data

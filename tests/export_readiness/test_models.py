@@ -15,7 +15,6 @@ def test_app_models():
         models.TopicLandingPage,
         models.SuperregionPage,
         models.ArticleListingPage,
-        models.CountryGuidePage,
         models.MarketingPages,
         models.CampaignPage,
         models.ArticlePage,
