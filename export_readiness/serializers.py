@@ -72,23 +72,6 @@ class GenericBodyOnlyPageSerializer(BasePageSerializer):
     body = core_fields.MarkdownToHTMLField()
 
 
-class GetFinancePageSerializer(BasePageSerializer, HeroSerializer):
-    breadcrumbs_label = serializers.CharField()
-    hero_text = core_fields.MarkdownToHTMLField()
-    ukef_logo = wagtail_fields.ImageRenditionField('original')
-    contact_proposition = core_fields.MarkdownToHTMLField()
-    contact_button = serializers.CharField()
-    advantages_title = serializers.CharField()
-    advantages_one = core_fields.MarkdownToHTMLField()
-    advantages_one_icon = wagtail_fields.ImageRenditionField('original')
-    advantages_two = core_fields.MarkdownToHTMLField()
-    advantages_two_icon = wagtail_fields.ImageRenditionField('original')
-    advantages_three = core_fields.MarkdownToHTMLField()
-    advantages_three_icon = wagtail_fields.ImageRenditionField('original')
-    evidence = core_fields.MarkdownToHTMLField()
-    evidence_video = core_fields.VideoField()
-
-
 class PerformanceDashboardPageSerializer(BasePageSerializer):
     heading = serializers.CharField()
     description = core_fields.MarkdownToHTMLField()
