@@ -7,7 +7,6 @@ from wagtail.core.models import Page
 
 from export_readiness.models import (
     ArticlePage,
-    CountryGuidePage,
     MarketingArticlePage,
 )
 from activitystream.authentication import ActivityStreamAuthentication, \
@@ -39,7 +38,7 @@ class ActivityStreamView(ListAPIView):
         filter = PageFilter(
             request.GET,
             queryset=Page.objects.type(
-                (ArticlePage, CountryGuidePage, MarketingArticlePage)
+                (ArticlePage, MarketingArticlePage)
             ).filter(live=True)
         )
         page_qs = filter.qs.specific(). \
