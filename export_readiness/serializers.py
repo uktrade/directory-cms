@@ -9,10 +9,8 @@ from core.blocks_serializers import StreamChildBaseSerializer, LinkWithImageAndC
     LinkBlockStreamChildSerializer
 from export_readiness import blocks_serializers
 
-from great_international.serializers import StatisticProxyDataWrapper, StatisticSerializer
-
 from .models import (
-    ArticleListingPage, ArticlePage, CampaignPage, SuperregionPage, EUExitDomesticFormPage, CountryGuidePage
+    ArticleListingPage, ArticlePage, CampaignPage, SuperregionPage, EUExitDomesticFormPage
 )
 
 
@@ -383,67 +381,6 @@ class CountryGuideListingPageSerializer(serializers.Serializer):
     title = serializers.CharField()
 
 
-class CountryGuidePageSerializer(PageWithRelatedPagesSerializer, HeroSerializer):
-    heading = serializers.CharField(max_length=255)
-    sub_heading = serializers.CharField(max_length=255)
-    heading_teaser = serializers.CharField()
-    intro_ctas = serializers.SerializerMethodField()
-
-    section_one_body = core_fields.MarkdownToHTMLField()
-    section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
-    section_one_image_caption = serializers.CharField(max_length=255)
-    section_one_image_caption_company = serializers.CharField(
-        max_length=255)
-
-    section_two_heading = serializers.CharField(max_length=255, allow_null=True)
-    section_two_teaser = serializers.CharField(allow_null=True)
-
-    statistics = serializers.SerializerMethodField()
-    accordions = serializers.SerializerMethodField()
-    fact_sheet = serializers.SerializerMethodField()
-
-    duties_and_custom_procedures_cta_link = serializers.CharField(max_length=255)
-
-    tags = core_fields.TagsListField()
-    region = serializers.CharField(allow_null=True, source='country.region.name')
-
-    def get_intro_ctas(self, instance):
-        data = [
-            IntroCTAProxyDataWrapper(instance=instance, position_number=num)
-            for num in ['one', 'two', 'three']
-        ]
-        serialized = IntroCTAsSerializer(data, many=True).data
-        return [cta for cta in serialized if cta['link'] and cta['title']]
-
-    def get_fact_sheet(self, instance):
-        data = {
-            'fact_sheet_title': instance.fact_sheet_title,
-            'fact_sheet_teaser': instance.fact_sheet_teaser,
-            'columns': [
-                FactSheetColumnProxyDataWrapper(
-                    instance=instance, position_number=num)
-                for num in ['1', '2']
-            ]
-        }
-        return FactSheetSerializer(data).data
-
-    def get_statistics(self, instance):
-        data = [
-            StatisticProxyDataWrapper(instance=instance, position_number=num)
-            for num in ['1', '2', '3', '4', '5', '6']
-        ]
-        serializer = StatisticSerializer(data, many=True)
-        return serializer.data
-
-    def get_accordions(self, instance):
-        data = [
-            AccordionProxyDataWrapper(instance=instance, position_number=num)
-            for num in ['1', '2', '3', '4', '5', '6']
-        ]
-        serializer = AccordionSerializer(data, many=True)
-        return serializer.data
-
-
 class RelatedArticlePageStreamChildSerializer(RelatedArticlePageSerializer, StreamChildBaseSerializer):
     pass
 
@@ -491,12 +428,6 @@ class ChildArticleListPageSerializer(BasePageSerializer):
     teaser = serializers.CharField(source='list_teaser')
 
 
-class ChildCountryGuidePageSerializer(BasePageSerializer):
-    hero_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
-    heading = serializers.CharField()
-    sub_heading = serializers.CharField()
-
-
 class TopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer):
     landing_page_title = serializers.CharField(max_length=255)
     display_title = serializers.CharField(source='landing_page_title')
@@ -523,61 +454,13 @@ class TopicLandingPageSerializer(BasePageSerializer, ChildPagesSerializerHelper,
             SuperregionPage,
             ChildSuperregionPageSerializer
         )
-        country_guides = self.get_child_pages_data_for(
-            obj,
-            CountryGuidePage,
-            ChildCountryGuidePageSerializer
-        )
-        country_guides = sorted(country_guides, key=lambda x: x['heading'])
 
-        return article_lists + articles + superregions + country_guides
-
-
-class SuperregionPageSerializer(TopicLandingPageSerializer):
-    pass
-    """
-    Superregions are unused but will be used in the future
-
-    articles_count = serializers.IntegerField()
-        def get_child_pages(self, obj):
-        articles = self.get_child_pages_data_for(
-            obj,
-            ArticleListingPage,
-            ArticleListingPageSerializer
-        )
-        country_guides = self.get_child_pages_data_for(
-            obj,
-            CountryGuidePage,
-            CountryGuidePageSerializer
-        )
-        return articles + country_guides
-    """
-
-
-class TagCountryPageSerializer(serializers.Serializer):
-    name = serializers.CharField()
-    countries = serializers.SerializerMethodField()
-
-    def get_countries(self, object):
-        serializer = CountryGuidePageSerializer(
-            object.countryguidepage_set.filter(live=True),
-            many=True,
-            context=self.context
-        )
-        return serializer.data
+        return article_lists + articles + superregions
 
 
 class IDNameSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField()
-
-
-class IndustryTagSerializer(IDNameSerializer):
-    icon = wagtail_fields.ImageRenditionField('original')
-    pages_count = serializers.SerializerMethodField()
-
-    def get_pages_count(self, tag):
-        return tag.countryguidepage_set.all().live().count()
 
 
 class CampaignPageSerializer(PageWithRelatedPagesSerializer):

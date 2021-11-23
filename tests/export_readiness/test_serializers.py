@@ -1,10 +1,10 @@
 import pytest
 from export_readiness.serializers import (
-    ArticlePageSerializer, CountryGuidePageSerializer, CampaignPageSerializer, TopicLandingPageSerializer,
+    ArticlePageSerializer, CampaignPageSerializer, TopicLandingPageSerializer,
     MarketingArticlePageSerializer
 )
 from tests.export_readiness.factories import (
-    ArticlePageFactory, ArticleListingPageFactory, CountryGuidePageFactory, CampaignPageFactory,
+    ArticlePageFactory, ArticleListingPageFactory, CampaignPageFactory,
     HomePageFactory, TopicLandingPageFactory, MarketingArticlePageFactory
 )
 
@@ -12,7 +12,6 @@ from tests.export_readiness.factories import (
 @pytest.mark.django_db
 @pytest.mark.parametrize('ParentPage,Serializer', (
     (ArticlePageFactory, ArticlePageSerializer),
-    (CountryGuidePageFactory, CountryGuidePageSerializer),
     (CampaignPageFactory, CampaignPageSerializer),
     (MarketingArticlePageFactory, MarketingArticlePageSerializer),
 ))
@@ -51,7 +50,6 @@ def test_related_article_page_serializer_has_pages(
 @pytest.mark.parametrize('ParentPage,Serializer', (
     (ArticlePageFactory, ArticlePageSerializer),
     (MarketingArticlePageFactory, MarketingArticlePageSerializer),
-    (CountryGuidePageFactory, CountryGuidePageSerializer),
     (CampaignPageFactory, CampaignPageSerializer),
 ))
 def test_related_article_page_serializer_no_pages(
@@ -71,54 +69,6 @@ def test_related_article_page_serializer_no_pages(
     )
 
     assert len(serializer.data['related_pages']) == 0
-
-
-@pytest.mark.django_db
-def test_country_guide_page_serializer(root_page, rf):
-    markets_page = TopicLandingPageFactory(parent=root_page)
-    country_guide = CountryGuidePageFactory(
-        parent=markets_page,
-        intro_cta_one_title='',
-        intro_cta_one_link='',
-        intro_cta_two_title='',
-        intro_cta_two_link='',
-        intro_cta_three_title='',
-        intro_cta_three_link='',
-    )
-
-    serializer = CountryGuidePageSerializer(
-        instance=country_guide,
-        context={'request': rf.get('/')}
-    )
-
-    assert len(serializer.data['intro_ctas']) == 0
-
-
-@pytest.mark.django_db
-def test_breadcrumbs_serializer(root_page, rf):
-    home_page = HomePageFactory(parent=root_page)
-    markets_page = TopicLandingPageFactory(
-        title_en_gb='topic',
-        slug='topic',
-        parent=home_page)
-    country_guide = CountryGuidePageFactory(
-        title_en_gb='country',
-        slug='country',
-        parent=markets_page)
-
-    serializer = CountryGuidePageSerializer(
-        instance=country_guide,
-        context={'request': rf.get('/')}
-    )
-
-    breadcrumbs = serializer.data['tree_based_breadcrumbs']
-
-    assert len(breadcrumbs) == 2
-    assert breadcrumbs[0]['title'] == 'topic'
-    assert breadcrumbs[1]['title'] == 'country'
-    assert breadcrumbs[0]['url'] == 'http://exred.trade.great:8007/topic/'
-    assert breadcrumbs[1]['url'] == (
-        'http://exred.trade.great:8007/topic/country/')
 
 
 @pytest.mark.django_db
@@ -176,17 +126,6 @@ def test_topic_serializer_multiple_child_page_types(root_page, rf):
 
     ArticleListingPageFactory(parent=advice_page, slug='list')
     ArticlePageFactory(parent=advice_page, slug='article')
-    CountryGuidePageFactory(
-        slug='country-guide',
-        heading='Foo',
-        parent=advice_page,
-        intro_cta_one_title='',
-        intro_cta_one_link='',
-        intro_cta_two_title='',
-        intro_cta_two_link='',
-        intro_cta_three_title='',
-        intro_cta_three_link='',
-    )
 
     serializer = TopicLandingPageSerializer(
         instance=advice_page,
@@ -195,4 +134,4 @@ def test_topic_serializer_multiple_child_page_types(root_page, rf):
 
     children = serializer.data['child_pages']
 
-    assert len(children) == 3
+    assert len(children) == 2
