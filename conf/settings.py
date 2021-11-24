@@ -88,7 +88,6 @@ INSTALLED_APPS = [
     'export_readiness.apps.GreatDomesticConfig',
     'great_international.apps.GreatInternationalConfig',
     'components.apps.ComponentsConfig',
-    'activitystream.apps.ActivityStreamConfig',
     'django_filters',
     'authbroker_client',
     'django_celery_beat',
