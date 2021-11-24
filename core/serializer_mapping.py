@@ -17,7 +17,6 @@ MODELS_SERIALIZERS_MAPPING = {
     export_readiness.models.PrivacyAndCookiesPage: export_readiness.serializers.GenericBodyOnlyPageSerializer,  # NOQA
     export_readiness.models.PerformanceDashboardNotesPage: export_readiness.serializers.GenericBodyOnlyPageSerializer,  # NOQA
     export_readiness.models.ArticlePage: export_readiness.serializers.ArticlePageSerializer,  # NOQA
-    export_readiness.models.MarketingArticlePage: export_readiness.serializers.MarketingArticlePageSerializer,  # NOQA
     export_readiness.models.HomePage: export_readiness.serializers.HomePageSerializer,  # NOQA
     export_readiness.models.ArticleListingPage: export_readiness.serializers.ArticleListingPageSerializer,  # NOQA
     export_readiness.models.TopicLandingPage: export_readiness.serializers.TopicLandingPageSerializer,  # NOQA

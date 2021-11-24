@@ -1,11 +1,10 @@
 import pytest
 from export_readiness.serializers import (
     ArticlePageSerializer, CampaignPageSerializer, TopicLandingPageSerializer,
-    MarketingArticlePageSerializer
 )
 from tests.export_readiness.factories import (
     ArticlePageFactory, ArticleListingPageFactory, CampaignPageFactory,
-    HomePageFactory, TopicLandingPageFactory, MarketingArticlePageFactory
+    HomePageFactory, TopicLandingPageFactory
 )
 
 
@@ -13,7 +12,6 @@ from tests.export_readiness.factories import (
 @pytest.mark.parametrize('ParentPage,Serializer', (
     (ArticlePageFactory, ArticlePageSerializer),
     (CampaignPageFactory, CampaignPageSerializer),
-    (MarketingArticlePageFactory, MarketingArticlePageSerializer),
 ))
 def test_related_article_page_serializer_has_pages(
     ParentPage, Serializer, root_page, rf
@@ -49,7 +47,6 @@ def test_related_article_page_serializer_has_pages(
 @pytest.mark.django_db
 @pytest.mark.parametrize('ParentPage,Serializer', (
     (ArticlePageFactory, ArticlePageSerializer),
-    (MarketingArticlePageFactory, MarketingArticlePageSerializer),
     (CampaignPageFactory, CampaignPageSerializer),
 ))
 def test_related_article_page_serializer_no_pages(
