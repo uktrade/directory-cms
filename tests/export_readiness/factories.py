@@ -108,24 +108,6 @@ class ArticlePageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
-class MarketingArticlePageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.MarketingArticlePage
-
-    article_title = factory.fuzzy.FuzzyText(length=10)
-    article_teaser = factory.fuzzy.FuzzyText(length=10)
-    article_body_text = factory.fuzzy.FuzzyText(length=10)
-    cta_title = factory.fuzzy.FuzzyText(length=10)
-    cta_teaser = factory.fuzzy.FuzzyText(length=10)
-    cta_link_label = factory.fuzzy.FuzzyText(length=10)
-    cta_link = factory.fuzzy.FuzzyText(length=255)
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    last_published_at = timezone.now()
-    parent = None
-
-
 class TagFactory(factory.django.DjangoModelFactory):
 
     class Meta:
