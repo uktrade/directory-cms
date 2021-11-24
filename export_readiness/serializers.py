@@ -120,10 +120,6 @@ class ArticlePageSerializer(BaseArticlePageSerializer):
     article_video_transcript = core_fields.MarkdownToHTMLField()
 
 
-class MarketingArticlePageSerializer(BaseArticlePageSerializer):
-    pass
-
-
 class ArticleListingPageSerializer(
     BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer
 ):

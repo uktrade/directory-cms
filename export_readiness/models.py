@@ -128,7 +128,6 @@ class MarketingPages(ExclusivePageMixin, BaseDomesticPage):
     slug_identity = 'campaigns'
 
     subpage_types = [
-        'export_readiness.MarketingArticlePage',
         'export_readiness.ArticlePage',
     ]
 
@@ -350,77 +349,6 @@ class ArticlePage(panels.ArticlePagePanels, BaseDomesticPage):
         related_name='+',
     )
     tags = ParentalManyToManyField(snippets.Tag, blank=True)
-
-
-# !!! TO BE REPLACED BY `ArticlePage` !!!
-class MarketingArticlePage(panels.MarketingArticlePagePanels, BaseDomesticPage):
-
-    subpage_types = []
-
-    article_title = models.CharField(max_length=255)
-
-    article_teaser = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True
-    )
-    article_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    article_body_text = MarkdownField()
-
-    cta_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA title'
-    )
-
-    cta_teaser = models.TextField(
-        blank=True,
-        verbose_name='CTA teaser'
-    )
-    cta_link_label = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link label'
-    )
-
-    cta_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA link'
-    )
-
-    related_page_one = models.ForeignKey(
-        'export_readiness.ArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    related_page_two = models.ForeignKey(
-        'export_readiness.ArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    related_page_three = models.ForeignKey(
-        'export_readiness.ArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    tags = ParentalManyToManyField(snippets.Tag, blank=True)
-
-    class Meta:
-        verbose_name = 'Marketing Article Page'
-        verbose_name_plural = 'Marketing Article Pages'
 
 
 class HomePage(
