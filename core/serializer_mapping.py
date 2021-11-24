@@ -3,8 +3,6 @@ import wagtail
 import components.models
 import components.serializers
 import core.serializers
-import export_readiness.models
-import export_readiness.serializers
 import great_international.models
 import great_international.serializers
 
@@ -12,19 +10,6 @@ import great_international.serializers
 MODELS_SERIALIZERS_MAPPING = {
     # core page
     wagtail.core.models.Page: core.serializers.WagtailPageSerializer,
-    # export_readiness
-    export_readiness.models.TermsAndConditionsPage: export_readiness.serializers.GenericBodyOnlyPageSerializer,  # NOQA
-    export_readiness.models.PrivacyAndCookiesPage: export_readiness.serializers.GenericBodyOnlyPageSerializer,  # NOQA
-    export_readiness.models.PerformanceDashboardNotesPage: export_readiness.serializers.GenericBodyOnlyPageSerializer,  # NOQA
-    export_readiness.models.ArticlePage: export_readiness.serializers.ArticlePageSerializer,  # NOQA
-    export_readiness.models.HomePage: export_readiness.serializers.HomePageSerializer,  # NOQA
-    export_readiness.models.ArticleListingPage: export_readiness.serializers.ArticleListingPageSerializer,  # NOQA
-    export_readiness.models.TopicLandingPage: export_readiness.serializers.TopicLandingPageSerializer,  # NOQA
-    export_readiness.models.CampaignPage: export_readiness.serializers.CampaignPageSerializer,  # NOQA
-    export_readiness.models.EUExitDomesticFormPage: export_readiness.serializers.EUExitDomesticFormPageSerializer,  # NOQA
-    export_readiness.models.EUExitFormSuccessPage: export_readiness.serializers.EUExitFormSuccessPageSerializer,  # NOQA
-    export_readiness.models.ContactUsGuidancePage: export_readiness.serializers.ContactUsGuidancePageSerializer,  # NOQA
-    export_readiness.models.ContactSuccessPage: export_readiness.serializers.ContactSuccessPageSerializer,  # NOQA
     # great international
     great_international.models.great_international.InternationalSectorPage: great_international.serializers.InternationalSectorPageSerializer,  # NOQA
     great_international.models.great_international.InternationalSubSectorPage: great_international.serializers.InternationalSubSectorPageSerializer,  # NOQA
