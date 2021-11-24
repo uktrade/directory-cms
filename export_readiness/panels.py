@@ -317,53 +317,6 @@ class ArticlePagePanels:
     ]
 
 
-class MarketingArticlePagePanels:
-
-    content_panels = [
-        FieldPanel('article_title'),
-        MultiFieldPanel(
-            heading='Article content',
-            children=[
-                FieldPanel('article_teaser'),
-                ImageChooserPanel('article_image'),
-                FieldPanel('article_body_text')
-            ]
-        ),
-        MultiFieldPanel(
-            heading='CTA fields',
-            children=[
-                FieldPanel('cta_title'),
-                FieldPanel('cta_teaser'),
-                FieldPanel('cta_link_label'),
-                FieldPanel('cta_link'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading='Related articles',
-            children=[
-                FieldRowPanel([
-                    PageChooserPanel(
-                        'related_page_one',
-                        'export_readiness.ArticlePage'),
-                    PageChooserPanel(
-                        'related_page_two',
-                        'export_readiness.ArticlePage'),
-                    PageChooserPanel(
-                        'related_page_three',
-                        'export_readiness.ArticlePage'),
-                ]),
-            ]
-        ),
-        SearchEngineOptimisationPanel(),
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-        FieldPanel('tags', widget=CheckboxSelectMultiple),
-    ]
-
-
 class HomePagePanels:
 
     content_panels = [

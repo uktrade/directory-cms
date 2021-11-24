@@ -5,10 +5,8 @@ from rest_framework.reverse import reverse
 from rest_framework.generics import ListAPIView
 from wagtail.core.models import Page
 
-from export_readiness.models import (
-    ArticlePage,
-    MarketingArticlePage,
-)
+from export_readiness.models import ArticlePage
+
 from activitystream.authentication import ActivityStreamAuthentication, \
     ActivityStreamHawkResponseMiddleware
 from activitystream.filters import PageFilter
@@ -34,11 +32,10 @@ class ActivityStreamView(ListAPIView):
     @decorator_from_middleware(ActivityStreamHawkResponseMiddleware)
     def list(self, request):
         """A single page of activities"""
-
         filter = PageFilter(
             request.GET,
             queryset=Page.objects.type(
-                (ArticlePage, MarketingArticlePage)
+                (ArticlePage,)
             ).filter(live=True)
         )
         page_qs = filter.qs.specific(). \
