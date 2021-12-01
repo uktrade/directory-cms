@@ -701,7 +701,10 @@ class CapitalInvestOpportunityPage(panels.CapitalInvestOpportunityPagePanels, Ba
 class CapitalInvestContactFormPage(
     panels.CapitalInvestContactFormPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage
 ):
-    parent_page_types = ['great_international.InternationalCapitalInvestLandingPage']
+    parent_page_types = [
+        'great_international.InternationalCapitalInvestLandingPage',
+        'great_international.InvestmentAtlasLandingPage'
+    ]
     slug_identity = slugs.CONTACT_FORM_SLUG
 
     breadcrumbs_label = models.CharField(max_length=255, blank=True)
@@ -725,7 +728,10 @@ class CapitalInvestContactFormPage(
 class CapitalInvestContactFormSuccessPage(
     panels.CapitalInvestContactFormSuccessPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage
 ):
-    parent_page_types = ['great_international.CapitalInvestContactFormPage']
+    parent_page_types = [
+        'great_international.CapitalInvestContactFormPage',
+        'great_international.InvestmentAtlasLandingPage'
+    ]
     slug_identity = slugs.FORM_SUCCESS_SLUG
 
     message_box_heading = models.CharField(max_length=255)
