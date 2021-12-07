@@ -1,5 +1,4 @@
 import pytest
-from unittest import mock
 
 from modeltranslation.utils import build_localized_fieldname
 from django.urls import reverse
@@ -12,53 +11,8 @@ from wagtail.core.models import Page, Site
 from tests.core.helpers import make_test_video
 
 
-from core.models import BasePage, ExclusivePageMixin, RoutingSettings
+from core.models import BasePage, RoutingSettings
 from tests.great_international.factories import InternationalSectorPageFactory
-
-
-from tests.export_readiness.factories import (
-    HomePageFactory, TopicLandingPageFactory,
-    ArticleListingPageFactory, ArticlePageFactory,
-    PrivacyAndCookiesPageFactory, SitePolicyPagesFactory,
-)
-from tests.great_international.factories import (
-    InternationalTopicLandingPageFactory,
-    InternationalArticleListingPageFactory,
-    InternationalArticlePageFactory,
-)
-
-
-@pytest.mark.django_db
-def test_page_paths(root_page, international_root_page):
-    domestic_homepage = HomePageFactory(parent=root_page)
-    domestic_page_one = TopicLandingPageFactory(
-        parent=domestic_homepage, slug='topic')
-    domestic_page_two = ArticleListingPageFactory(
-        parent=domestic_page_one, slug='list')
-    domestic_page_three = ArticlePageFactory(
-        parent=domestic_page_two, slug='article')
-
-    assert domestic_page_two.full_path == '/topic/list/'
-    assert domestic_page_three.full_path == '/topic/list/article/'
-
-    domestice_site_policy = SitePolicyPagesFactory(parent=domestic_homepage)
-    domestic_cookies_one = PrivacyAndCookiesPageFactory(
-        slug='privacy', parent=domestice_site_policy)
-    domestic_cookies_two = PrivacyAndCookiesPageFactory(
-        slug='cookies', parent=domestic_cookies_one)
-
-    assert domestic_cookies_one.full_path == '/privacy/'
-    assert domestic_cookies_two.full_path == '/privacy/cookies/'
-
-    international_page_one = InternationalTopicLandingPageFactory(
-        parent=international_root_page, slug='topic')
-    international_page_two = InternationalArticleListingPageFactory(
-        parent=international_page_one, slug='list')
-    international_page_three = InternationalArticlePageFactory(
-        parent=international_page_two, slug='article')
-
-    assert international_page_two.full_path == '/international/content/topic/list/'
-    assert international_page_three.full_path == '/international/content/topic/list/article/'
 
 
 @pytest.mark.django_db
@@ -138,15 +92,6 @@ def test_translated_localised_urls(translated_page):
 
 
 @pytest.mark.django_db
-def test_translated_localised_urls_untranslated_page():
-    page = HomePageFactory()
-
-    assert page.get_localized_urls() == [
-        ('en-gb', 'http://exred.trade.great:8007'),
-    ]
-
-
-@pytest.mark.django_db
 def test_language_names_translated(translated_page):
     assert translated_page.language_names == (
         'Translated to German, Japanese, Simplified Chinese, '
@@ -157,52 +102,6 @@ def test_language_names_translated(translated_page):
 @pytest.mark.django_db
 def test_language_names_untranslated(international_root_page):
     assert international_root_page.language_names == ''
-
-
-@pytest.mark.django_db
-def test_get_tree_based_url(root_page):
-    domestic_homepage = HomePageFactory(parent=root_page)
-    domestic_page_one = TopicLandingPageFactory(
-        parent=domestic_homepage, slug='topic')
-    domestic_page_two = ArticleListingPageFactory(
-        parent=domestic_page_one, slug='list')
-    domestic_page_three = ArticlePageFactory(
-        parent=domestic_page_two, slug='article')
-
-    Site.objects.all().delete()
-    site = Site.objects.create(
-        site_name='Great Domestic',
-        hostname='domestic.trade.great',
-        port=8007,
-        root_page=domestic_homepage,
-    )
-
-    routing_settings = RoutingSettings.objects.create(
-        site=site,
-        root_path_prefix='/domestic/c',
-        include_port_in_urls=False,
-    )
-
-    assert domestic_page_two.get_tree_based_url() == '/domestic/c/topic/list/'
-    assert (
-        domestic_page_three.get_tree_based_url() ==
-        '/domestic/c/topic/list/article/'
-    )
-
-    # Test include_site_url
-    assert (
-        domestic_page_two.get_tree_based_url(include_site_url=True) ==
-        'http://domestic.trade.great/domestic/c/topic/list/'
-    )
-
-    # Test RoutingSettings.include_port_in_urls
-    routing_settings.include_port_in_urls = True
-    routing_settings.save()
-
-    assert (
-        domestic_page_two.get_tree_based_url(include_site_url=True) ==
-        'http://domestic.trade.great:8007/domestic/c/topic/list/'
-    )
 
 
 @pytest.mark.django_db
@@ -257,57 +156,6 @@ def test_get_site_creates_routing_settings_if_none_exist(root_page, django_asser
 
 
 @pytest.mark.django_db
-def test_url_methods_use_tree_based_routing(root_page):
-    # Checks that the full_path and full_url methods call get_tree_based_url
-    # when uses_tree_based_routing is True
-    domestic_homepage = HomePageFactory(parent=root_page)
-    domestic_page_one = TopicLandingPageFactory(
-        parent=domestic_homepage, slug='topic')
-    domestic_page_two = ArticleListingPageFactory(
-        parent=domestic_page_one, slug='list')
-    domestic_page_three = ArticlePageFactory(
-        parent=domestic_page_two, slug='article')
-
-    Site.objects.all().delete()
-    site = Site.objects.create(
-        site_name='Great Domestic',
-        hostname='domestic.trade.great',
-        port=8007,
-        root_page=domestic_homepage,
-    )
-
-    RoutingSettings.objects.create(
-        site=site,
-        root_path_prefix='/domestic/c',
-        include_port_in_urls=False,
-    )
-
-    domestic_page_three.get_tree_based_url = mock.MagicMock(
-        side_effect=domestic_page_three.get_tree_based_url
-    )
-
-    # First check without tree based routing
-    domestic_page_three.uses_tree_based_routing = False
-    assert domestic_page_three.full_path == '/topic/list/article/'
-    assert (
-        domestic_page_three.full_url ==
-        'http://exred.trade.great:8007/topic/list/article/'
-    )
-    domestic_page_three.get_tree_based_url.assert_not_called()
-
-    domestic_page_three.get_tree_based_url.reset_mock()
-
-    # Now check with tree based routing
-    domestic_page_three.uses_tree_based_routing = True
-    assert domestic_page_three.full_path == '/domestic/c/topic/list/article/'
-    assert (
-        domestic_page_three.full_url ==
-        'http://domestic.trade.great/domestic/c/topic/list/article/'
-    )
-    domestic_page_three.get_tree_based_url.assert_called()
-
-
-@pytest.mark.django_db
 def test_basepage_can_exist_under(root_page):
     page = InternationalSectorPageFactory(parent=root_page)
     assert isinstance(page, BasePage)
@@ -315,13 +163,6 @@ def test_basepage_can_exist_under(root_page):
     test_parent = Page(slug='basic', title='Page')
     test_parent.content_type = dummy_ctype
     assert page.can_exist_under(test_parent) is False
-
-
-@pytest.mark.django_db
-def test_exclusivepagemixin_can_create_at(root_page):
-    page = SitePolicyPagesFactory(parent=root_page)
-    assert isinstance(page, ExclusivePageMixin)
-    assert page.can_create_at(root_page) is False
 
 
 class TestGreatMedia(TestCase):

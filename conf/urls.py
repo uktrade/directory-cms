@@ -17,8 +17,6 @@ from django.views.generic import RedirectView
 from django.urls import path
 
 import core.views
-import export_readiness.views
-from activitystream.views import ActivityStreamView
 from groups.views import GroupInfoModalView
 
 api_router = WagtailAPIRouter('api')
@@ -41,26 +39,6 @@ api_urls = [
         r'^pages/types/$',
         core.views.PageTypeView.as_view(),
         name='pages-types-list'
-    ),
-    url(
-        r'^pages/lookup-countries-by-tag/(?P<pk>[0-9]+)/$',
-        api_router.wrap_view(export_readiness.views.CountryPageLookupByIndustryTagIDListAPIView.as_view()),
-        name='lookup-countries-by-tag-list'
-    ),
-    url(
-        r'^pages/industry-tags/$',
-        api_router.wrap_view(export_readiness.views.IndustryTagsListAPIView.as_view()),
-        name='industry-tags-list'
-    ),
-    url(
-        r'^pages/lookup-countries/$',
-        api_router.wrap_view(export_readiness.views.CountryPageListAPIView.as_view()),
-        name='lookup-country-guides-list-view'
-    ),
-    url(
-        r'^regions/$',
-        api_router.wrap_view(export_readiness.views.RegionsListAPIView.as_view()),
-        name='regions-list-view'
     ),
 ]
 
@@ -121,7 +99,6 @@ urlpatterns = [
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^auth/request-access/', include('users.urls_sso')),
-    url(r'^activity-stream/v1/', ActivityStreamView.as_view(), name='activity-stream'),
 
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
