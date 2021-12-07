@@ -4,7 +4,7 @@ import core.mixins
 import core.models
 from django.db import migrations, models
 import django.db.models.deletion
-import export_readiness.panels
+
 
 
 class Migration(migrations.Migration):
@@ -28,6 +28,6 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(export_readiness.panels.SellingOnlineOverseasHomePagePanels, core.models.ExclusivePageMixin, core.mixins.ServiceNameUniqueSlugMixin, 'wagtailcore.page'),
+            bases=(core.models.ExclusivePageMixin, core.mixins.ServiceNameUniqueSlugMixin, 'wagtailcore.page'),
         ),
     ]
