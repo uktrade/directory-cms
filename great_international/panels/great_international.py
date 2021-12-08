@@ -524,63 +524,6 @@ class InternationalTopicLandingPagePanels:
     )
 
 
-class InternationalCuratedTopicLandingPagePanels:
-
-    content_panels = [
-        FieldPanel('title'),
-        FieldPanel('display_title'),
-        ImageChooserPanel('hero_image'),
-        FieldPanel('teaser'),
-        MultiFieldPanel(
-            heading="featured content section",
-            children=[
-                FieldPanel('feature_section_heading'),
-                FieldRowPanel([
-                    MultiFieldPanel([
-                        FieldPanel('feature_one_heading'),
-                        ImageChooserPanel('feature_one_image'),
-                        FieldPanel('feature_one_content'),
-                    ]),
-                    MultiFieldPanel([
-                        FieldPanel('feature_two_heading'),
-                        ImageChooserPanel('feature_two_image'),
-                        FieldPanel('feature_two_content'),
-                    ]),
-                ]),
-                FieldRowPanel([
-                    MultiFieldPanel([
-                        FieldPanel('feature_three_heading'),
-                        ImageChooserPanel('feature_three_image'),
-                        FieldPanel('feature_three_url'),
-                    ]),
-                    MultiFieldPanel([
-                        FieldPanel('feature_four_heading'),
-                        ImageChooserPanel('feature_four_image'),
-                        FieldPanel('feature_four_url'),
-                    ]),
-                    MultiFieldPanel([
-                        FieldPanel('feature_five_heading'),
-                        ImageChooserPanel('feature_five_image'),
-                        FieldPanel('feature_five_url'),
-                    ]),
-                ]),
-            ]
-        ),
-        SearchEngineOptimisationPanel()
-    ]
-
-    settings_panels = [
-        SearchEngineOptimisationPanel(),
-        FieldPanel('slug'),
-        FieldPanel('tags', widget=CheckboxSelectMultiple)
-    ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
-
-
 class InternationalGuideLandingPagePanels:
 
     content_panels = [

@@ -1038,36 +1038,6 @@ class FeatureProxyDataWrapper:
         return self.get_field_value('feature_{}_url')
 
 
-class InternationalCuratedTopicLandingPageSerializer(BasePageSerializer, HeroSerializer):
-    display_title = serializers.CharField()
-
-    teaser = serializers.CharField()
-
-    feature_section_heading = serializers.CharField()
-
-    features_large = serializers.SerializerMethodField()
-
-    features_small = serializers.SerializerMethodField()
-
-    def get_features(self, instance, *positions):
-        data = [
-            FeatureProxyDataWrapper(
-                instance=instance,
-                position_number=num,
-
-            )
-            for num in positions
-        ]
-        serializer = FeatureSerializer(data, many=True)
-        return serializer.data
-
-    def get_features_large(self, instance):
-        return self.get_features(instance, 'one', 'two')
-
-    def get_features_small(self, instance):
-        return self.get_features(instance, 'three', 'four', 'five')
-
-
 class InternationalGuideLandingPageSerializer(BasePageSerializer, HeroSerializer):
 
     display_title = serializers.CharField()
