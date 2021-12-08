@@ -458,27 +458,6 @@ class CapitalInvestRegionPage(panels.CapitalInvestRegionPagePanels, BaseInternat
     contact_cta_text = models.CharField(max_length=255, blank=True)
 
 
-class CapitalInvestOpportunityListingPage(
-    panels.CapitalInvestOpportunityListingPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage,
-):
-
-    slug_identity = 'opportunities'
-
-    parent_page_types = ['great_international.InternationalHomePage']
-
-    @classmethod
-    def allowed_subpage_models(cls):
-        return [CapitalInvestOpportunityPage]
-
-    breadcrumbs_label = models.CharField(
-        max_length=255,
-        default="Opportunities"
-    )
-    search_results_title = models.CharField(
-        max_length=255
-    )
-
-
 class RelatedSector(models.Model):
     related_sector = models.ForeignKey(
         'great_international.InternationalSectorPage',
@@ -547,9 +526,7 @@ class CapitalInvestRelatedSubSectors(Orderable, RelatedSubSector):
 
 class CapitalInvestOpportunityPage(panels.CapitalInvestOpportunityPagePanels, BaseInternationalPage):
 
-    parent_page_types = [
-        'great_international.CapitalInvestOpportunityListingPage'
-    ]
+    parent_page_types = []
 
     breadcrumbs_label = models.CharField(max_length=255)
     hero_image = models.ForeignKey(

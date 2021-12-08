@@ -16,8 +16,6 @@ from great_international.serializers import (
     ForeignDirectInvestmentFormPageSerializer,
     ForeignDirectInvestmentFormSuccessPageSerializer,
     CapitalInvestOpportunityPageSerializer,
-    CapitalInvestOpportunityListingSerializer,
-    InternationalSectorPageSerializer,
     AboutDitServicesPageSerializer,
     AboutUkLandingPageSerializer,
     InvestInternationalHomePageSerializer,
@@ -41,7 +39,6 @@ from tests.great_international.factories import (
     CapitalInvestOpportunityPageFactory,
     ForeignDirectInvestmentFormPageFactory,
     ForeignDirectInvestmentFormSuccessPageFactory,
-    CapitalInvestOpportunityListingPageFactory,
     InternationalSubSectorPageFactory,
     InternationalTopicLandingPageFactory,
     AboutDitServicesPageFactory,
@@ -835,52 +832,6 @@ def test_international_sector_opportunity_null_case2(
 
 
 @pytest.mark.django_db
-def test_opportunity_listing_page_gets_opportunities(
-        rf, international_root_page
-):
-    opportunity_listing_page = CapitalInvestOpportunityListingPageFactory(
-        parent=international_root_page,
-        slug='opp-listing'
-    )
-
-    opportunity_page = CapitalInvestOpportunityPageFactory(
-        parent=opportunity_listing_page,
-        slug='opportunity'
-    )
-
-    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
-        instance=opportunity_page,
-        context={'request': rf.get('/')}
-    )
-
-    opportunity_listing_serializer = CapitalInvestOpportunityListingSerializer(
-        instance=opportunity_listing_page,
-        context={'request': rf.get('/')}
-    )
-
-    assert opportunity_serializer.data['meta']['slug'] == 'opportunity'
-    for opp in opportunity_listing_serializer.data['opportunity_list']:
-        assert opp['meta']['slug'] == 'opportunity'
-
-
-@pytest.mark.django_db
-def test_opportunity_listing_page_getting_opportunities_null_case(
-        rf, international_root_page
-):
-    opportunity_listing_page = CapitalInvestOpportunityListingPageFactory(
-        parent=international_root_page,
-        slug='opp-listing'
-    )
-
-    opportunity_listing_serializer = CapitalInvestOpportunityListingSerializer(
-        instance=opportunity_listing_page,
-        context={'request': rf.get('/')}
-    )
-
-    assert opportunity_listing_serializer.data['opportunity_list'] == []
-
-
-@pytest.mark.django_db
 def test_opportunity_page_can_add_sub_sector_as_related(
         rf, international_root_page):
     guide_landing_page = InternationalTopicLandingPageFactory(
@@ -936,84 +887,6 @@ def test_opportunity_page_can_add_sub_sector_as_related_null_case(
     )
 
     assert opportunity_serializer.data['sub_sectors'] == ['']
-
-
-@pytest.mark.django_db
-def test_opportunity_listing_page_gets_sectors_with_sub_sectors(
-        rf, international_root_page
-):
-    topic_landing_page = InternationalTopicLandingPageFactory(
-        parent=international_root_page,
-        slug='page-slug',
-    )
-
-    automotive_sector = InternationalSectorPageFactory(
-        parent=topic_landing_page,
-        slug='automotive'
-    )
-    InternationalSectorPageSerializer(
-        instance=automotive_sector,
-        context={'request': rf.get('/')}
-    )
-
-    real_estate_sector = InternationalSectorPageFactory(
-        parent=topic_landing_page,
-        slug='real-estate'
-    )
-    InternationalSectorPageSerializer(
-        instance=real_estate_sector,
-        context={'request': rf.get('/')}
-    )
-
-    housing_sub_sector = InternationalSubSectorPageFactory(
-        parent=real_estate_sector,
-        heading='Housing',
-        slug='housing'
-    )
-    BaseInternationalSectorPageSerializer(
-        instance=housing_sub_sector,
-        context={'request': rf.get('/')}
-    )
-
-    mixed_use_sub_sector = InternationalSubSectorPageFactory(
-        parent=automotive_sector,
-        heading='Mixed Use',
-        slug='mixed-use'
-    )
-    BaseInternationalSectorPageSerializer(
-        instance=mixed_use_sub_sector,
-        context={'request': rf.get('/')}
-    )
-
-    energy_sub_sector = InternationalSubSectorPageFactory(
-        parent=automotive_sector,
-        heading='Energy',
-        slug='energy'
-    )
-    BaseInternationalSectorPageSerializer(
-        instance=energy_sub_sector,
-        context={'request': rf.get('/')}
-    )
-
-    opportunity_listing_page = CapitalInvestOpportunityListingPageFactory(
-        parent=international_root_page,
-        slug='opp-listing'
-    )
-
-    opportunity_listing_serializer = CapitalInvestOpportunityListingSerializer(
-        instance=opportunity_listing_page,
-        context={'request': rf.get('/')}
-    )
-
-    assert len(
-        opportunity_listing_serializer.data['sector_with_sub_sectors']) == 2
-
-    all_sub_sectors = [
-        sub_sector for sub_sectors in
-        opportunity_listing_serializer.data['sector_with_sub_sectors'].values() for sub_sector in sub_sectors
-        ]
-
-    assert len(all_sub_sectors) == 3
 
 
 @pytest.mark.django_db
