@@ -819,7 +819,6 @@ class InternationalHomePage(
             InternationalGuideLandingPage,
             InternationalEUExitFormPage,
             InternationalEUExitFormSuccessPage,
-            AboutDitLandingPage,
             AboutUkLandingPage,
             capital_invest_models.InternationalCapitalInvestLandingPage,
             capital_invest_models.CapitalInvestOpportunityListingPage,
@@ -1274,70 +1273,6 @@ class InternationalEUExitFormSuccessPage(
     )
 
 
-class AboutDitLandingPage(panels.AboutDitLandingPagePanels, BaseInternationalPage):
-    parent_page_types = ['great_international.InternationalHomePage']
-    subpage_types = [
-        'great_international.AboutDitServicesPage'
-    ]
-
-    breadcrumbs_label = models.CharField(max_length=255)
-    hero_title = models.CharField(max_length=255)
-    hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    intro = models.TextField(blank=True)
-    section_one_content = MarkdownField(blank=True)
-    section_one_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-
-    how_dit_help_title = models.CharField(max_length=255, blank=True)
-
-    related_page_one = models.ForeignKey(
-        'great_international.AboutDitServicesPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-
-    related_page_two = models.ForeignKey(
-        'great_international.AboutDitServicesPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-
-    related_page_three = models.ForeignKey(
-        'great_international.AboutDitServicesPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-
-    case_study_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    case_study_title = models.CharField(max_length=255, blank=True)
-    case_study_text = models.TextField(max_length=255, blank=True)
-    case_study_cta_text = models.CharField(max_length=255, blank=True)
-    case_study_cta_link = models.CharField(max_length=255, blank=True)
-
-
 class AboutDitServiceField(panels.AboutDitServiceFieldPanels, models.Model):
     icon = models.ForeignKey(
         'wagtailimages.Image',
@@ -1371,7 +1306,6 @@ class AboutDitServicesFields(Orderable, AboutDitServiceField):
 
 class AboutDitServicesPage(panels.AboutDitServicesPagePanels, BaseInternationalPage):
     parent_page_types = [
-        'great_international.AboutDitLandingPage',
         'great_international.InternationalCapitalInvestLandingPage',
         'great_international.InternationalTradeHomePage',
         'great_international.InvestInternationalHomePage'
