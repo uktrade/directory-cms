@@ -119,7 +119,6 @@ class InvestmentAtlasLandingPage(
 ):
     subpage_types = [
         'great_international.InvestmentOpportunityListingPage',
-        'great_international.AboutUkWhyChooseTheUkPage',
         'great_international.AboutUkRegionListingPage',
         'great_international.InternationalTopicLandingPage',
         'great_international.WhyInvestInTheUKPage',
@@ -196,7 +195,6 @@ class InvestmentOpportunityListingPage(
     parent_page_types = ['great_international.InvestmentAtlasLandingPage', ]
     subpage_types = [
         'great_international.InvestmentOpportunityPage',
-        'great_international.AboutUkWhyChooseTheUkPage',
     ]
 
     # `title` comes from the base class
