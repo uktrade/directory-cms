@@ -1,4 +1,3 @@
-import collections
 import hashlib
 import itertools
 from urllib.parse import urlencode
@@ -16,7 +15,6 @@ from django.utils.http import quote_etag
 
 from core.serializer_mapping import MODELS_SERIALIZERS_MAPPING
 from conf.celery import app
-from export_readiness.models import CountryGuidePage
 
 
 ROOT_PATHS_TO_SERVICE_NAMES = {
@@ -315,33 +313,6 @@ class MarketPagesCache:
         return Transaction()
 
 
-class MarketPagesCachePopulator:
-
-    @classmethod
-    def populate(cls, *args, **kwargs):
-        pages = collections.defaultdict(list)
-        serializer_class = MODELS_SERIALIZERS_MAPPING[CountryGuidePage]
-
-        # store the record four times: so can be filtered by region+industry, region, industry, or no filter
-        for page in CountryGuidePage.objects.select_related('country__region').live():
-            serializer = serializer_class(instance=page)
-
-            # allows retrieve with no filter
-            pages[(None, None)].append(serializer.data)
-            for industry in page.tags.values_list('name', flat=True):
-                if page.country:
-                    # allow retrieve with both filters
-                    pages[(industry, page.country.region.name)].append(serializer.data)
-                    # allow retrieve with region
-                    pages[(None, page.country.region.name)].append(serializer.data)
-                # allow retrieve with industry
-                pages[(industry, None)].append(serializer.data)
-
-        with MarketPagesCache.transaction() as market_cache:
-            for (industry, region), data in pages.items():
-                market_cache.set(data, region=region, industry=industry)
-
-
 class DatabaseCacheSubscriber:
 
     cache_populator = CachePopulator
@@ -374,4 +345,3 @@ class DatabaseCacheSubscriber:
 def rebuild_all_cache():
     for page in Page.objects.live().specific():
         CachePopulator.populate_async(page)
-    MarketPagesCachePopulator.populate()

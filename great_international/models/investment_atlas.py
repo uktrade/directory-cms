@@ -125,6 +125,7 @@ class InvestmentAtlasLandingPage(
         'great_international.WhyInvestInTheUKPage',
         'great_international.InvestmentGeneralContentPage',
         'great_international.ForeignDirectInvestmentFormPage',
+        'great_international.CapitalInvestContactFormPage',
     ]
 
     # title comes from base page
