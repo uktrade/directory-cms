@@ -320,23 +320,6 @@ class InternationalCapitalInvestLandingPageFactory(
     parent = None
 
 
-class CapitalInvestRegionPageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.capital_invest.CapitalInvestRegionPage
-
-    hero_title = factory.fuzzy.FuzzyText(length=10)
-    hero_image = factory.SubFactory(
-        wagtail_factories.ImageFactory
-    )
-    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
-    featured_description = factory.fuzzy.FuzzyText(length=10)
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    last_published_at = timezone.now()
-    parent = None
-
-
 class CapitalInvestOpportunityPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
