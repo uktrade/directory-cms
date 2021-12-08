@@ -821,7 +821,6 @@ class InternationalHomePage(
             InternationalEUExitFormSuccessPage,
             AboutUkLandingPage,
             capital_invest_models.InternationalCapitalInvestLandingPage,
-            capital_invest_models.CapitalInvestOpportunityListingPage,
             capital_invest_models.CapitalInvestRegionPage,
             invest_models.InvestInternationalHomePage,
             investment_atlas_models.InvestmentAtlasLandingPage,

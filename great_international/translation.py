@@ -535,15 +535,6 @@ class CapitalInvestRegionPageTranslationOptions(
     )
 
 
-@register(capital_invest.CapitalInvestOpportunityListingPage)
-class CapitalInvestOpportunityListingPageTranslationOptions(
-        BaseTranslationOptions):
-    fields = (
-        'breadcrumbs_label',
-        'search_results_title'
-    )
-
-
 @register(capital_invest.CapitalInvestOpportunityPage)
 class CapitalInvestOpportunityPageTranslationOptions(
     BaseTranslationOptions

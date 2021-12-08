@@ -341,25 +341,6 @@ class CapitalInvestRegionPagePanels:
     )
 
 
-class CapitalInvestOpportunityListingPagePanels:
-
-    content_panels = [
-        FieldPanel('title'),
-        FieldPanel('breadcrumbs_label'),
-        FieldPanel('search_results_title'),
-        SearchEngineOptimisationPanel()
-    ]
-
-    settings_panels = [
-        FieldPanel('slug'),
-    ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
-
-
 class CapitalInvestOpportunityPagePanels:
 
     content_panels = [
