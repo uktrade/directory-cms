@@ -27,8 +27,6 @@ def test_models_hierarchy():
         invest.InvestInternationalHomePage,
         investment_atlas.InvestmentAtlasLandingPage,
         find_a_supplier.InternationalTradeHomePage,
-        great_international.AboutUkWhyChooseTheUkPage,
-
     ]
     assert invest.InvestInternationalHomePage.allowed_subpage_models() == [
         invest.InvestHighPotentialOpportunitiesPage,
@@ -83,7 +81,6 @@ def test_models_hierarchy():
             great_international.InternationalArticlePage
         ]
     assert great_international.AboutUkLandingPage.allowed_subpage_models() == [
-            great_international.AboutUkWhyChooseTheUkPage,
             great_international.AboutUkRegionListingPage,
             great_international.InternationalTopicLandingPage
         ]
@@ -91,9 +88,6 @@ def test_models_hierarchy():
             great_international.AboutUkRegionPage
         ]
     assert great_international.AboutUkRegionPage.allowed_subpage_models() == []
-    assert great_international.AboutUkWhyChooseTheUkPage.allowed_subpage_models() == [
-        great_international.InternationalArticlePage
-    ]
     assert investment_atlas.ForeignDirectInvestmentFormPage.allowed_subpage_models() == [
         investment_atlas.ForeignDirectInvestmentFormSuccessPage,
     ]

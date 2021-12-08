@@ -826,7 +826,6 @@ class InternationalHomePage(
             invest_models.InvestInternationalHomePage,
             investment_atlas_models.InvestmentAtlasLandingPage,
             fas_models.InternationalTradeHomePage,
-            AboutUkWhyChooseTheUkPage
         ]
 
 
@@ -837,7 +836,6 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
         'great_international.InternationalGuideLandingPage',
         'great_international.InternationalSectorPage',  # deprecated
         'great_international.InternationalInvestmentSectorPage',  # new, replaces InternationalSectorPage
-        'great_international.AboutUkWhyChooseTheUkPage',
         'great_international.WhyInvestInTheUKPage',
         'great_international.InvestmentGeneralContentPage',
     ]
@@ -1385,7 +1383,6 @@ class AboutDitServicesPage(panels.AboutDitServicesPagePanels, BaseInternationalP
 class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage):
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
-        'great_international.AboutUkWhyChooseTheUkPage',
         'great_international.AboutUkRegionListingPage',
         'great_international.InternationalTopicLandingPage'
     ]
@@ -1858,152 +1855,6 @@ class AboutUkArticleField(panels.AboutUkArticleFieldPanels, models.Model):
 
     class Meta:
         abstract = True
-
-
-class AboutUkArticlesFields(Orderable, AboutUkArticleField):
-    page = ParentalKey(
-        'great_international.AboutUkWhyChooseTheUkPage',
-        on_delete=models.CASCADE,
-        related_name='about_uk_articles_fields',
-        blank=True,
-        null=True,
-    )
-
-
-class AboutUkWhyChooseTheUkPage(panels.AboutUkWhyChooseTheUkPagePanels, BaseInternationalPage):
-    parent_page_types = [
-        'great_international.AboutUkLandingPage',
-        'great_international.InternationalHomePage',
-        'great_international.InvestmentAtlasLandingPage'
-    ]
-    subpage_types = ['great_international.InternationalArticlePage']
-
-    breadcrumbs_label = models.CharField(max_length=255)
-    hero_title = models.CharField(max_length=255)
-    hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    teaser = MarkdownField(
-        null=True,
-        verbose_name='',
-        blank=True
-    )
-
-    primary_contact_cta_text = models.CharField(max_length=255, blank=True)
-    primary_contact_cta_link = models.CharField(max_length=255, blank=True)
-
-    section_one_body = MarkdownField(
-        null=True,
-        blank=True
-    )
-    section_one_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    section_one_video = models.ForeignKey(
-        'wagtailmedia.Media',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        help_text="Section one image will be used over this video, please ensure section one image is empty "
-                  "in order for this video to be used instead."
-    )
-
-    statistic_1_heading = models.CharField(max_length=255, blank=True)
-    statistic_1_number = models.CharField(max_length=255, blank=True)
-    statistic_1_smallprint = models.CharField(max_length=255, blank=True)
-
-    statistic_2_heading = models.CharField(max_length=255, blank=True)
-    statistic_2_number = models.CharField(max_length=255, blank=True)
-    statistic_2_smallprint = models.CharField(max_length=255, blank=True)
-
-    statistic_3_heading = models.CharField(max_length=255, blank=True)
-    statistic_3_number = models.CharField(max_length=255, blank=True)
-    statistic_3_smallprint = models.CharField(max_length=255, blank=True)
-
-    statistic_4_heading = models.CharField(max_length=255, blank=True)
-    statistic_4_number = models.CharField(max_length=255, blank=True)
-    statistic_4_smallprint = models.CharField(max_length=255, blank=True)
-
-    statistic_5_heading = models.CharField(max_length=255, blank=True)
-    statistic_5_number = models.CharField(max_length=255, blank=True)
-    statistic_5_smallprint = models.CharField(max_length=255, blank=True)
-
-    statistic_6_heading = models.CharField(max_length=255, blank=True)
-    statistic_6_number = models.CharField(max_length=255, blank=True)
-    statistic_6_smallprint = models.CharField(max_length=255, blank=True)
-
-    ebook_section_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    ebook_section_image_alt_text = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text="Description of image for screenreaders"
-    )
-    ebook_section_title = models.CharField(max_length=255, blank=True)
-    ebook_section_body = MarkdownField(null=True, blank=True)
-    ebook_section_cta_text = models.CharField(max_length=255, blank=True)
-    ebook_section_cta_link = models.CharField(max_length=255, blank=True)
-
-    how_dit_help_title = models.CharField(max_length=255, blank=True)
-
-    related_page_one = models.ForeignKey(
-        'great_international.AboutDitServicesPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-
-    related_page_two = models.ForeignKey(
-        'great_international.AboutDitServicesPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-
-    related_page_three = models.ForeignKey(
-        'great_international.AboutDitServicesPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-
-    contact_us_section_title = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='Title'
-    )
-    contact_us_section_summary = MarkdownField(
-        null=True,
-        blank=True,
-        verbose_name='Summary'
-    )
-    contact_us_section_cta_text = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA text'
-    )
-    contact_us_section_cta_link = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name='CTA URL'
-    )
 
 
 class WhyInvestInTheUKPage(
