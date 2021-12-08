@@ -19,7 +19,6 @@ from great_international.serializers import (
     AboutDitServicesPageSerializer,
     AboutUkLandingPageSerializer,
     InvestInternationalHomePageSerializer,
-    CapitalInvestRegionPageSerializer,
     AboutUkRegionListingPageSerializer,
     InvestmentOpportunityPageSerializer,
     InvestmentOpportunityListingPageSerializer,
@@ -44,7 +43,6 @@ from tests.great_international.factories import (
     AboutDitServicesPageFactory,
     AboutUkLandingPageFactory,
     InvestInternationalHomePageFactory,
-    CapitalInvestRegionPageFactory,
     AboutUkRegionListingPageFactory,
     CapitalInvestRelatedSectorsFactory,
     InvestmentOpportunityPageFactory,
@@ -259,30 +257,6 @@ def test_guide_landing_page_serializer_guide_list(international_root_page, image
         assert 'title' in item
         assert 'teaser' in item
         assert 'thumbnail' in item
-
-
-@pytest.mark.django_db
-def test_capital_invest_region_page_has_statistics(international_root_page, rf):
-    region = CapitalInvestRegionPageFactory(
-        slug='region-slug',
-        parent=international_root_page
-    )
-
-    serializer = CapitalInvestRegionPageSerializer(
-        instance=region,
-        context={'request': rf.get('/')}
-    )
-
-    assert len(serializer.data['location_stats']) == 6
-    assert len(serializer.data['economics_stats']) == 6
-    for statistic in serializer.data['location_stats']:
-        assert 'number' in statistic
-        assert 'heading' in statistic
-        assert 'smallprint' in statistic
-    for statistic in serializer.data['economics_stats']:
-        assert 'number' in statistic
-        assert 'heading' in statistic
-        assert 'smallprint' in statistic
 
 
 @pytest.mark.django_db

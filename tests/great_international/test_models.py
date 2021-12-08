@@ -22,7 +22,6 @@ def test_models_hierarchy():
         great_international.InternationalEUExitFormSuccessPage,
         great_international.AboutUkLandingPage,
         capital_invest.InternationalCapitalInvestLandingPage,
-        capital_invest.CapitalInvestRegionPage,
         invest.InvestInternationalHomePage,
         investment_atlas.InvestmentAtlasLandingPage,
         find_a_supplier.InternationalTradeHomePage,
