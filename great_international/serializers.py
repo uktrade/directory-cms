@@ -21,7 +21,6 @@ from .models.great_international import (
     InternationalGuideLandingPage,
     InternationalInvestmentSectorPage,
     InternationalInvestmentSubSectorPage,
-    InternationalSectorPage,
     InternationalSubSectorPage,
     WhyInvestInTheUKPage,
     InternationalTopicLandingPage,
@@ -362,12 +361,6 @@ class StatisticSerializer(serializers.Serializer):
     smallprint = serializers.CharField(max_length=255)
 
 
-class FeaturedLinkSerializer(serializers.Serializer):
-    image = wagtail_fields.ImageRenditionField('original')
-    heading = serializers.CharField(max_length=255)
-    url = serializers.CharField(max_length=255)
-
-
 class EconomicStatSerializer(serializers.Serializer):
     number = serializers.CharField(max_length=255)
     heading = serializers.CharField(max_length=255)
@@ -385,21 +378,10 @@ class HowWeHelpSerializer(serializers.Serializer):
     icon = wagtail_fields.ImageRenditionField('original')
 
 
-class HowWeHelpMarkDownTextSerializer(serializers.Serializer):
-    text = core_fields.MarkdownToHTMLField()
-    icon = wagtail_fields.ImageRenditionField('original')
-
-
 class HowWeHelpWithTitleSerializer(serializers.Serializer):
     icon = wagtail_fields.ImageRenditionField('original')
     title = serializers.CharField(max_length=255)
     text = serializers.CharField(max_length=255)
-
-
-class LinkToSectionLinksSerializer(serializers.Serializer):
-    text = core_fields.MarkdownToHTMLField()
-    cta_text = serializers.CharField(max_length=255)
-    cta_link = serializers.CharField(max_length=255)
 
 
 class HowToExpandSerializer(serializers.Serializer):
@@ -447,24 +429,6 @@ class RelatedCapitalInvestPageSerializer(BasePageSerializer):
     featured_description = serializers.CharField(max_length=255)
 
 
-class RelatedInvestHomePageSerializer(BasePageSerializer):
-
-    title = serializers.CharField(
-        max_length=255, source='heading')
-    image = wagtail_fields.ImageRenditionField(
-        'fill-640x360',
-        source='hero_image')
-    teaser = serializers.CharField(max_length=255)
-
-
-class RelatedTradeHomePageSerializer(BasePageSerializer):
-
-    title = serializers.CharField(max_length=255)
-    image = wagtail_fields.ImageRenditionField(
-        'fill-640x360',
-        source='hero_image')
-
-
 class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
     title = serializers.CharField(max_length=255, source='hero_title')
     hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
@@ -494,16 +458,6 @@ class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
         sub_sectors_list = [sub_sector['related_sub_sector']
                             for sub_sector in serializer.data]
         return sub_sectors_list
-
-
-class RelatedSectorPageSerializer(BasePageSerializer):
-
-    title = serializers.CharField(
-        max_length=255, source='heading')
-    image = wagtail_fields.ImageRenditionField(
-        'fill-640x360',
-        source='hero_image')
-    featured_description = serializers.CharField(max_length=255)
 
 
 class RegionCardFieldSerializer(serializers.Serializer):
@@ -557,14 +511,6 @@ class RelatedSubSectorSerializer(serializers.Serializer):
         serializer = MinimalPageSerializer(
             sector.specific)
         return serializer.data['heading']
-
-
-class BenefitsOfUkTextSerializer(serializers.Serializer):
-    benefits_of_uk_text = core_fields.MarkdownToHTMLField()
-
-
-class ReadyToTradeStorySerializer(serializers.Serializer):
-    story = core_fields.MarkdownToHTMLField()
 
 
 class RelatedOpportunitySerializer(serializers.Serializer):
@@ -1000,44 +946,6 @@ class InternationalTopicLandingPageSerializer(
         return articles + campaigns + guides + sectors
 
 
-class FeatureSerializer(serializers.Serializer):
-    heading = serializers.CharField()
-    content = core_fields.MarkdownToHTMLField()
-    image = wagtail_fields.ImageRenditionField(
-        'fill-640x360')
-    url = serializers.CharField()
-
-
-class FeatureProxyDataWrapper:
-
-    def __init__(self, instance, position_number):
-        self.position_number = position_number
-        self.instance = instance
-
-    def get_field_value(self, attribute_name_pattern):
-        return getattr(
-            self.instance,
-            attribute_name_pattern.format(self.position_number),
-            None
-        )
-
-    @property
-    def heading(self):
-        return self.get_field_value('feature_{}_heading')
-
-    @property
-    def content(self):
-        return self.get_field_value('feature_{}_content')
-
-    @property
-    def image(self):
-        return self.get_field_value('feature_{}_image')
-
-    @property
-    def url(self):
-        return self.get_field_value('feature_{}_url')
-
-
 class InternationalGuideLandingPageSerializer(BasePageSerializer, HeroSerializer):
 
     display_title = serializers.CharField()
@@ -1202,48 +1110,6 @@ class OpportunityListSerializer(BasePageSerializer, RelatedRegionSerializer):
         sub_sectors_list = [sub_sector['related_sub_sector']
                             for sub_sector in serializer.data]
         return sub_sectors_list
-
-
-class CapitalInvestOpportunityListingSerializer(BasePageSerializer):
-    # Deprecated
-    breadcrumbs_label = serializers.CharField(max_length=255)
-    search_results_title = serializers.CharField(max_length=255)
-
-    opportunity_list = serializers.SerializerMethodField()
-
-    def get_opportunity_list(self, instance):
-
-        queryset = CapitalInvestOpportunityPage.objects.live().public()
-
-        if not queryset:
-            return []
-
-        serializer = OpportunityListSerializer(
-            queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-        return serializer.data
-
-    sector_with_sub_sectors = serializers.SerializerMethodField()
-
-    def get_sub_sector_headings(self, sector):
-        return [sub_sector['heading'] for sub_sector
-                in sector['child_sub_sectors']]
-
-    def get_sector_with_sub_sectors(self, instance):
-
-        all_sectors = InternationalSectorPage.objects.live().public()
-        sectors = InternationalSectorPageSerializer(
-            all_sectors,
-            many=True,
-            allow_null=True,
-            context=self.context
-        ).data
-
-        return {sector['heading']: self.get_sub_sector_headings(sector)
-                for sector in sectors}
 
 
 class CapitalInvestOpportunityPageSerializer(
@@ -2131,16 +1997,6 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
         return get_mapped_regions(queryset)
 
 
-class AboutUkArticlesFieldSerializer(serializers.Serializer):
-    image = wagtail_fields.ImageRenditionField(
-        'fill-640x360'
-    )
-    title = serializers.CharField()
-    summary = core_fields.MarkdownToHTMLField()
-    link_text = serializers.CharField()
-    link_url = serializers.CharField()
-
-
 class CapitalInvestContactFormPageSerializer(BasePageSerializer):
     breadcrumbs_label = serializers.CharField()
     heading = serializers.CharField()
@@ -2174,17 +2030,6 @@ class RegionPageSummarySerializer(EntitySummarySerializerBase, HeroSerializer):
     region_summary_section_content = core_fields.MarkdownToHTMLField(max_length=255)
 
 
-class SectorSummarySerializer(EntitySummarySerializerBase):
-
-    IMAGE_RENDITION_SPEC = "fill-960x540"
-
-    title = serializers.CharField(max_length=255, source="heading")
-    image = wagtail_fields.ImageRenditionField(
-        IMAGE_RENDITION_SPEC, source="hero_image"
-    )
-    featured_description = serializers.CharField(max_length=255)
-
-
 class InvestmentAtlasLandingPageSerializer(BasePageSerializer):
     IMAGE_RENDITION_SPEC = "original"
     MOBILE_IMAGE_RENDITION_SPEC = "original"
@@ -2199,19 +2044,6 @@ class InvestmentAtlasLandingPageSerializer(BasePageSerializer):
     hero_video = GreatMediaSerializer()
     hero_strapline = serializers.CharField()
     downpage_sections = StreamFieldSerializer()
-
-
-class InvestmentOpportunitySummarySerializer(EntitySummarySerializerBase):
-
-    IMAGE_RENDITION_SPEC = "fill-960x540"
-
-    title = serializers.CharField(max_length=255, source="heading")
-    image = wagtail_fields.ImageRenditionField(
-        IMAGE_RENDITION_SPEC, source="featured_image_1"
-    )
-    featured_description = serializers.CharField(
-        max_length=255, source="executive_summary"
-    )
 
 
 class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
