@@ -912,32 +912,6 @@ class InternationalTradeIndustryContactPageTranslationOptions(
     )
 
 
-@register(great_international.AboutDitLandingPage)
-class AboutDitLandingPageTranslationOptions(
-    BaseTranslationOptions
-):
-    fields = (
-        'breadcrumbs_label',
-        'hero_title',
-        'hero_image',
-        'intro',
-        'section_one_content',
-        'section_one_image',
-
-        'how_dit_help_title',
-
-        'related_page_one',
-        'related_page_two',
-        'related_page_three',
-
-        'case_study_image',
-        'case_study_title',
-        'case_study_text',
-        'case_study_cta_text',
-        'case_study_cta_link',
-    )
-
-
 @register(great_international.AboutDitServicesPage)
 class AboutDitServicesPageTranslationOptions(
     BaseTranslationOptions
