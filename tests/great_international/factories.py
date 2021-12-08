@@ -278,41 +278,6 @@ class fuzzyURL(factory.fuzzy.BaseFuzzyAttribute):
         return self.protocol + '://' + ''.join(chars) + '.' + self.tld
 
 
-class InternationalCuratedTopicLandingPageFactory(
-    wagtail_factories.PageFactory
-):
-
-    class Meta:
-        model = models.great_international.InternationalCuratedTopicLandingPage
-
-    display_title = factory.fuzzy.FuzzyText(length=10)
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.fuzzy.FuzzyText(length=10)
-    hero_image = factory.SubFactory(
-        wagtail_factories.ImageFactory
-    )
-    teaser = factory.fuzzy.FuzzyText(length=10)
-    feature_section_heading = factory.fuzzy.FuzzyText(length=10)
-    parent = None
-    # Large features
-    feature_one_heading = factory.fuzzy.FuzzyText(length=10)
-    feature_one_image = factory.SubFactory(wagtail_factories.ImageFactory)
-    feature_one_content = factory.fuzzy.FuzzyText(length=10)
-    feature_two_heading = factory.fuzzy.FuzzyText(length=10)
-    feature_two_image = factory.SubFactory(wagtail_factories.ImageFactory)
-    feature_two_content = factory.fuzzy.FuzzyText(length=10)
-    # Small features
-    feature_three_heading = factory.fuzzy.FuzzyText(length=10)
-    feature_three_image = factory.SubFactory(wagtail_factories.ImageFactory)
-    feature_three_url = fuzzyURL()
-    feature_four_heading = factory.fuzzy.FuzzyText(length=10)
-    feature_four_image = factory.SubFactory(wagtail_factories.ImageFactory)
-    feature_four_url = fuzzyURL()
-    feature_five_heading = factory.fuzzy.FuzzyText(length=10)
-    feature_five_image = factory.SubFactory(wagtail_factories.ImageFactory)
-    feature_five_url = fuzzyURL()
-
-
 class InternationalGuideLandingPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
