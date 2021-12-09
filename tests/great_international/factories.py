@@ -627,25 +627,6 @@ class AboutDitServicesPageFactory(
     parent = None
 
 
-class AboutUkLandingPageFactory(
-    wagtail_factories.PageFactory
-):
-
-    class Meta:
-        model = models.great_international.AboutUkLandingPage
-
-    breadcrumbs_label = factory.fuzzy.FuzzyText(length=50)
-    breadcrumbs_label_en_gb = factory.fuzzy.FuzzyText(length=50)
-    hero_title = factory.fuzzy.FuzzyText(length=10)
-    hero_image = factory.SubFactory(
-        wagtail_factories.ImageFactory
-    )
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    last_published_at = timezone.now()
-    parent = None
-
-
 class AboutUkRegionListingPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
