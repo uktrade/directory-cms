@@ -13,7 +13,6 @@ from core.serializers import BasePageSerializer, ChildPagesSerializerHelper, For
 from .models.capital_invest import CapitalInvestOpportunityPage
 from .models.great_international import (
     AboutDitServicesPage,
-    AboutUkLandingPage,
     InternationalArticleListingPage,
     InternationalArticlePage,
     InternationalCampaignPage,
@@ -37,16 +36,6 @@ from .models.investment_atlas import (
     InvestmentGeneralContentPage,
     InvestmentOpportunityListingPage,
 )
-
-
-REGIONS = [
-    "scotland",
-    "northern_ireland",
-    "north_england",
-    "wales",
-    "midlands",
-    "south_england",
-]
 
 
 class EntitySummarySerializerBase(serializers.Serializer):
@@ -324,22 +313,21 @@ class HowWeHelpWithTitleProxyDataWrapper:
 
 class AboutUkRegionsProxyDataWrapper:
 
-    def __init__(self, instance, region_title):
-        self.region_title = region_title
+    def __init__(self, instance):
         self.instance = instance
 
     @property
     def region(self):
         return getattr(
             self.instance,
-            f'{self.region_title}'
+            f'slug'
         )
 
     @property
     def text(self):
         return getattr(
             self.instance,
-            f'{self.region_title}_text'
+            f'featured_description'
         )
 
 
@@ -394,15 +382,15 @@ class AboutUkRegionSerializer(serializers.Serializer):
     text = serializers.CharField(max_length=255)
 
     def get_region(self, obj):
-        region = obj.region
+        region = obj.instance
 
         if not region:
             return []
 
-        if hasattr(region.specific, 'heading'):
-            serializer = MinimalPageSerializer(region.specific)
+        if hasattr(region, 'heading'):
+            serializer = MinimalPageSerializer(region)
         else:
-            serializer = MinimalPageWithHeroTitleAndHeroImageSerializer(region.specific)
+            serializer = MinimalPageWithHeroTitleAndHeroImageSerializer(region)
 
         return serializer.data
 
@@ -1780,87 +1768,15 @@ class AboutDitServicesPageSerializer(BasePageSerializer, HeroSerializer):
         return serializer.data
 
 
-def get_mapped_regions(instance):
+def get_mapped_regions(queryset):
     data = [
         AboutUkRegionsProxyDataWrapper(
-            instance=instance,
-            region_title=region
+            instance=region,
         )
-        for region in REGIONS
+        for region in queryset
     ]
     serializer = AboutUkRegionSerializer(data, many=True)
     return serializer.data
-
-
-class AboutUkLandingPageSerializer(BasePageSerializer, HeroSerializer):
-    breadcrumbs_label = serializers.CharField()
-    hero_title = serializers.CharField()
-
-    intro = core_fields.MarkdownToHTMLField()
-
-    why_choose_uk_title = serializers.CharField()
-    why_choose_uk_content = core_fields.MarkdownToHTMLField()
-    why_choose_uk_image = wagtail_fields.ImageRenditionField('fill-640x360')
-    why_choose_uk_cta_text = serializers.CharField()
-    why_choose_uk_cta_link = serializers.CharField()
-
-    industries_section_title = serializers.CharField()
-    industries_section_intro = core_fields.MarkdownToHTMLField()
-    industries_section_cta_text = serializers.CharField()
-    industries_section_cta_link = serializers.CharField()
-
-    regions_section_title = serializers.CharField()
-    regions_section_intro = core_fields.MarkdownToHTMLField()
-    regions_section_cta_text = serializers.CharField()
-    regions_section_cta_link = serializers.CharField()
-
-    how_we_help_title = serializers.CharField()
-    how_we_help_intro = core_fields.MarkdownToHTMLField()
-
-    how_we_help = serializers.SerializerMethodField()
-
-    def get_how_we_help(self, instance):
-        data = [
-            HowWeHelpWithTitleProxyDataWrapper(
-                instance=instance,
-                position_number=num
-            )
-            for num in num2words_list(6)
-        ]
-        serializer = HowWeHelpWithTitleSerializer(data, many=True)
-        return serializer.data
-
-    how_we_help_cta_text = serializers.CharField()
-    how_we_help_cta_link = serializers.CharField()
-
-    ebook_section_image = wagtail_fields.ImageRenditionField('fill-299x423')
-    ebook_section_image_alt_text = serializers.CharField()
-    ebook_section_title = serializers.CharField()
-    ebook_section_body = core_fields.MarkdownToHTMLField()
-    ebook_section_cta_text = serializers.CharField()
-    ebook_section_cta_link = core_fields.DocumentURLField()
-
-    contact_title = serializers.CharField()
-    contact_text = core_fields.MarkdownToHTMLField()
-    contact_cta_text = serializers.CharField()
-    contact_cta_link = serializers.CharField()
-
-    all_sectors = serializers.SerializerMethodField()
-
-    def get_all_sectors(self, instance):
-        queryset = InternationalInvestmentSectorPage.objects.live().public().all()
-        serialized = InternationalInvestmentSectorPageSerializer(
-            queryset,
-            many=True,
-            allow_null=True,
-            context=self.context
-        ).data
-        return serialized
-
-    regions = serializers.SerializerMethodField()
-
-    def get_regions(self, instance):
-        return get_mapped_regions(instance)
 
 
 class AboutUkRegionListingPageSerializer(PageWithRelatedPagesSerializer, HeroSerializer):
@@ -1878,7 +1794,7 @@ class AboutUkRegionListingPageSerializer(PageWithRelatedPagesSerializer, HeroSer
     mapped_regions = serializers.SerializerMethodField()
 
     def get_mapped_regions(self, instance):
-        queryset = AboutUkLandingPage.objects.live().public().first()
+        queryset = AboutUkRegionPage.objects.live().public()
 
         if not queryset:
             return []
@@ -1989,7 +1905,7 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
         return serializer.data
 
     def get_mapped_regions(self, instance):
-        queryset = AboutUkLandingPage.objects.live().public().first()
+        queryset = AboutUkRegionListingPage.objects.live().public().first()
 
         if not queryset:
             return []

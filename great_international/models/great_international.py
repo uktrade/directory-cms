@@ -819,7 +819,6 @@ class InternationalHomePage(
             InternationalGuideLandingPage,
             InternationalEUExitFormPage,
             InternationalEUExitFormSuccessPage,
-            AboutUkLandingPage,
             capital_invest_models.InternationalCapitalInvestLandingPage,
             invest_models.InvestInternationalHomePage,
             investment_atlas_models.InvestmentAtlasLandingPage,
@@ -1084,7 +1083,6 @@ class InternationalCampaignPage(panels.InternationalCampaignPagePanels, BaseInte
 class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalHomePage',
-        'great_international.AboutUkLandingPage',
         'great_international.InvestmentAtlasLandingPage',
         'great_international.WhyInvestInTheUKPage',
     ]
@@ -1378,191 +1376,6 @@ class AboutDitServicesPage(panels.AboutDitServicesPagePanels, BaseInternationalP
     )
 
 
-class AboutUkLandingPage(panels.AboutUkLandingPagePanels, BaseInternationalPage):
-    parent_page_types = ['great_international.InternationalHomePage']
-    subpage_types = [
-        'great_international.AboutUkRegionListingPage',
-        'great_international.InternationalTopicLandingPage'
-    ]
-
-    breadcrumbs_label = models.CharField(max_length=255)
-    hero_title = models.CharField(max_length=255)
-    hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    intro = MarkdownField(blank=True)
-
-    why_choose_uk_title = models.CharField(max_length=255, blank=True)
-    why_choose_uk_content = MarkdownField(blank=True)
-    why_choose_uk_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    why_choose_uk_cta_text = models.CharField(max_length=255, blank=True)
-    why_choose_uk_cta_link = models.CharField(max_length=255, blank=True)
-
-    industries_section_title = models.CharField(max_length=255, blank=True)
-    industries_section_intro = MarkdownField(blank=True)
-    industries_section_cta_text = models.CharField(max_length=255, blank=True)
-    industries_section_cta_link = models.CharField(max_length=255, blank=True)
-
-    regions_section_title = models.CharField(max_length=255, blank=True)
-    regions_section_intro = MarkdownField(blank=True)
-
-    scotland = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    scotland_text = models.CharField(max_length=255, blank=True)
-
-    northern_ireland = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    northern_ireland_text = models.CharField(max_length=255, blank=True)
-
-    north_england = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    north_england_text = models.CharField(max_length=255, blank=True)
-
-    wales = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    wales_text = models.CharField(max_length=255, blank=True)
-
-    midlands = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    midlands_text = models.CharField(max_length=255, blank=True)
-
-    south_england = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    south_england_text = models.CharField(max_length=255, blank=True)
-
-    regions_section_cta_text = models.CharField(max_length=255, blank=True)
-    regions_section_cta_link = models.CharField(max_length=255, blank=True)
-
-    how_we_help_title = models.CharField(max_length=255, blank=True)
-    how_we_help_intro = MarkdownField(blank=True)
-
-    how_we_help_one_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    how_we_help_one_title = models.CharField(max_length=255, blank=True)
-    how_we_help_one_text = models.TextField(max_length=255, blank=True)
-    how_we_help_two_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    how_we_help_two_title = models.CharField(max_length=255, blank=True)
-    how_we_help_two_text = models.TextField(max_length=255, blank=True)
-    how_we_help_three_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    how_we_help_three_title = models.CharField(max_length=255, blank=True)
-    how_we_help_three_text = models.TextField(max_length=255, blank=True)
-    how_we_help_four_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    how_we_help_four_title = models.CharField(max_length=255, blank=True)
-    how_we_help_four_text = models.TextField(max_length=255, blank=True)
-    how_we_help_five_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    how_we_help_five_title = models.CharField(max_length=255, blank=True)
-    how_we_help_five_text = models.TextField(max_length=255, blank=True)
-    how_we_help_six_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    how_we_help_six_title = models.CharField(max_length=255, blank=True)
-    how_we_help_six_text = models.TextField(max_length=255, blank=True)
-
-    how_we_help_cta_text = models.CharField(max_length=255, blank=True)
-    how_we_help_cta_link = models.CharField(max_length=255, blank=True)
-
-    ebook_section_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-    ebook_section_image_alt_text = models.CharField(
-        max_length=255,
-        blank=True,
-        help_text="Description of image for screenreaders"
-    )
-    ebook_section_title = models.CharField(max_length=255, blank=True)
-    ebook_section_body = MarkdownField(null=True, blank=True)
-    ebook_section_cta_text = models.CharField(max_length=255, blank=True)
-    ebook_section_cta_link = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
-    )
-
-    contact_title = models.CharField(max_length=255, blank=True)
-    contact_text = MarkdownField(blank=True)
-    contact_cta_text = models.CharField(max_length=255, blank=True)
-    contact_cta_link = models.CharField(max_length=255, blank=True)
-
-
 class AboutUkRegionListingPage(
     panels.AboutUkRegionListingPagePanels,
     WagtailAdminExclusivePageMixin,
@@ -1572,7 +1385,6 @@ class AboutUkRegionListingPage(
     slug_identity = 'regions'
 
     parent_page_types = [
-        'great_international.AboutUkLandingPage',
         'great_international.InvestmentAtlasLandingPage',
     ]
     subpage_types = [
