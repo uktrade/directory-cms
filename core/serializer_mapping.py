@@ -44,9 +44,6 @@ MODELS_SERIALIZERS_MAPPING = {
 
     # Not used by any CMS page in prod
     # --------------------------------
-    great_international.models.great_international.InternationalSectorPage: great_international.serializers.InternationalSectorPageSerializer,  # NOQA
-    great_international.models.great_international.InternationalSubSectorPage: great_international.serializers.InternationalSubSectorPageSerializer,  # NOQA
-    # great_international.models.capital_invest.CapitalInvestOpportunityPage: great_international.serializers.CapitalInvestOpportunityPageSerializer,  # NOQA
     great_international.models.great_international.InternationalCampaignPage: great_international.serializers.InternationalCampaignPageSerializer,  # NOQA
 
     # Pages using these exist in Wagtail but are draft or redirected

@@ -8,18 +8,6 @@ from core import cache
 
 
 @pytest.mark.django_db
-def test_international_sector_page(admin_client, international_root_page):
-    sector_page = factories.InternationalSectorPageFactory.create(
-        parent=international_root_page
-    )
-    cache.rebuild_all_cache()
-
-    url = reverse('api:api:pages:detail', kwargs={'pk': sector_page.pk})
-    response = admin_client.get(url)
-    assert response.status_code == 200
-
-
-@pytest.mark.django_db
 def test_international_homepage(admin_client, root_page):
     home_page = factories.InternationalHomePageFactory.create(
         parent=root_page
@@ -279,18 +267,3 @@ def test_international_trade_home_page_exposes_industries(
     assert response.status_code == 200
     assert len(response.json()['industries']) == 1
     assert response.json()['industries'][0]['meta']['pk'] == industry.pk
-
-
-@pytest.mark.django_db
-def test_sector_page_exposes_articles_child_sub_pages(admin_client, international_root_page):
-    sector_page = factories.InternationalSectorPageFactory(parent=international_root_page, slug='sector-one')
-    factories.InternationalArticlePageFactory(parent=sector_page)
-    factories.InternationalArticlePageFactory(parent=sector_page)
-
-    cache.rebuild_all_cache()
-
-    url = reverse('api:api:pages:detail', kwargs={'pk': sector_page.pk})
-    response = admin_client.get(url)
-
-    assert response.status_code == 200
-    assert len(response.json()['child_articles']) == 2
