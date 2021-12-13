@@ -318,17 +318,11 @@ class AboutUkRegionsProxyDataWrapper:
 
     @property
     def region(self):
-        return getattr(
-            self.instance,
-            f'slug'
-        )
+        return self.instance.slug
 
     @property
     def text(self):
-        return getattr(
-            self.instance,
-            f'featured_description'
-        )
+        return self.instance.featured_description
 
 
 class SectionThreeSubsectionSerializer(serializers.Serializer):
@@ -1905,7 +1899,7 @@ class AboutUkRegionPageSerializer(BasePageSerializer, HeroSerializer):
         return serializer.data
 
     def get_mapped_regions(self, instance):
-        queryset = AboutUkRegionListingPage.objects.live().public().first()
+        queryset = AboutUkRegionPage.objects.live().public()
 
         if not queryset:
             return []
