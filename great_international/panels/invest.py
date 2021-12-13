@@ -1,5 +1,5 @@
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList, HelpPanel, PageChooserPanel
+    FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList, HelpPanel
 )
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
