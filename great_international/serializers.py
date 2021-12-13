@@ -283,34 +283,6 @@ class HowWeHelpProxyDataWrapper:
         )
 
 
-class HowWeHelpWithTitleProxyDataWrapper:
-
-    def __init__(self, instance, position_number):
-        self.position_number = position_number
-        self.instance = instance
-
-    @property
-    def title(self):
-        return getattr(
-            self.instance,
-            f'how_we_help_{self.position_number}_title'
-        )
-
-    @property
-    def icon(self):
-        return getattr(
-            self.instance,
-            f'how_we_help_{self.position_number}_icon'
-        )
-
-    @property
-    def text(self):
-        return getattr(
-            self.instance,
-            f'how_we_help_{self.position_number}_text'
-        )
-
-
 class AboutUkRegionsProxyDataWrapper:
 
     def __init__(self, instance):
@@ -1061,37 +1033,6 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer, HeroSe
             context=self.context
         )
         return serializer.data
-
-
-class OpportunityListSerializer(BasePageSerializer, RelatedRegionSerializer):
-    title = serializers.CharField(max_length=255, source='hero_title')
-    hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
-    sector = serializers.CharField(max_length=255)
-    scale = serializers.CharField(max_length=255)
-    scale_value = serializers.DecimalField(max_digits=10, decimal_places=2)
-    related_sectors = serializers.SerializerMethodField()
-
-    def get_related_sectors(self, instance):
-        serializer = RelatedSectorSerializer(
-            instance.related_sectors.all(),
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-        return serializer.data
-
-    sub_sectors = serializers.SerializerMethodField()
-
-    def get_sub_sectors(self, instance):
-        serializer = RelatedSubSectorSerializer(
-            instance.related_sub_sectors.all(),
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-        sub_sectors_list = [sub_sector['related_sub_sector']
-                            for sub_sector in serializer.data]
-        return sub_sectors_list
 
 
 class CapitalInvestOpportunityPageSerializer(
