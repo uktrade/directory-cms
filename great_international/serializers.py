@@ -289,10 +289,6 @@ class AboutUkRegionsProxyDataWrapper:
         self.instance = instance
 
     @property
-    def region(self):
-        return self.instance.slug
-
-    @property
     def text(self):
         return self.instance.featured_description
 
