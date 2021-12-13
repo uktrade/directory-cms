@@ -15,7 +15,6 @@ from great_international.serializers import (
     InternationalCapitalInvestLandingPageSerializer,
     ForeignDirectInvestmentFormPageSerializer,
     ForeignDirectInvestmentFormSuccessPageSerializer,
-    CapitalInvestOpportunityPageSerializer,
     AboutDitServicesPageSerializer,
     InvestInternationalHomePageSerializer,
     AboutUkRegionListingPageSerializer,
@@ -34,15 +33,12 @@ from tests.great_international.factories import (
     InternationalGuideLandingPageFactory,
     AboutUkRegionPageFactory,
     InternationalCapitalInvestLandingPageFactory,
-    CapitalInvestOpportunityPageFactory,
     ForeignDirectInvestmentFormPageFactory,
     ForeignDirectInvestmentFormSuccessPageFactory,
-    InternationalSubSectorPageFactory,
     InternationalTopicLandingPageFactory,
     AboutDitServicesPageFactory,
     InvestInternationalHomePageFactory,
     AboutUkRegionListingPageFactory,
-    CapitalInvestRelatedSectorsFactory,
     InvestmentOpportunityPageFactory,
     InvestmentOpportunityRelatedSectorsFactory,
     InvestmentOpportunityListingPageFactory,
@@ -56,7 +52,6 @@ from great_international.models.capital_invest import (
     CapitalInvestRelatedRegions,
     CapitalInvestHomesInEnglandCardFieldsSummary,
     CapitalInvestRegionCardFieldsSummary,
-    CapitalInvestRelatedSubSectors,
 )
 from great_international.models.great_international import (
     AboutDitServicesFields,
@@ -586,282 +581,6 @@ def test_capital_invest_landing_page_has_how_we_help(
 
 
 @pytest.mark.django_db
-def test_opportunity_page_can_add_sector_as_related(rf, international_root_page):
-    guide_landing_page = InternationalGuideLandingPageFactory(
-        parent=international_root_page,
-        slug='page-slug',
-    )
-
-    sector = InternationalSectorPageFactory(
-        parent=guide_landing_page,
-        slug='sector'
-    )
-
-    opportunity = CapitalInvestOpportunityPageFactory(
-        parent=international_root_page,
-        slug='opp',
-        related_sectors=[]
-    )
-    related_sector = CapitalInvestRelatedSectorsFactory(related_sector=sector, page=opportunity)
-    opportunity.related_sector = related_sector
-
-    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
-        instance=opportunity,
-        context={'request': rf.get('/')}
-    )
-
-    for page in opportunity_serializer.data['related_sectors']:
-        assert page['related_sector']['meta']['slug'] == 'sector'
-
-
-@pytest.mark.django_db
-def test_international_sector_page_gets_opps_with_sector_as_related(
-        rf, international_root_page
-):
-    guide_landing_page = InternationalGuideLandingPageFactory(
-        parent=international_root_page,
-        slug='page-slug',
-    )
-
-    sector = InternationalSectorPageFactory(
-        parent=guide_landing_page,
-        slug='sector'
-    )
-
-    opportunity = CapitalInvestOpportunityPageFactory(
-        parent=international_root_page,
-        slug='opp',
-        related_sectors=[]
-    )
-    related_sector = CapitalInvestRelatedSectorsFactory(related_sector=sector, page=opportunity)
-    opportunity.related_sector = related_sector
-
-    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
-        instance=opportunity,
-        context={'request': rf.get('/')}
-    )
-
-    for page in opportunity_serializer.data['related_sectors']:
-        assert page['related_sector']['meta']['slug'] == 'sector'
-
-    sector_serializer = BaseInternationalSectorPageSerializer(
-        instance=sector,
-        context={'request': rf.get('/')}
-    )
-
-    for page in sector_serializer.data['related_opportunities']:
-        assert page['meta']['slug'] == 'opp'
-
-
-@pytest.mark.django_db
-def test_opp_page_null_case_related_sector(rf, international_root_page):
-    opportunity = CapitalInvestOpportunityPageFactory(
-        parent=international_root_page,
-        slug='opp',
-        related_sectors=[]
-    )
-    related_sector = CapitalInvestRelatedSectorsFactory(page=opportunity)
-    opportunity.related_sector = related_sector
-
-    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
-        instance=opportunity,
-        context={'request': rf.get('/')}
-    )
-
-    for page in opportunity_serializer.data['related_sectors']:
-        assert page['related_sector'] == []
-
-
-@pytest.mark.django_db
-def test_opp_page_related_random_opps(rf, international_root_page):
-    guide_landing_page = InternationalGuideLandingPageFactory(
-        parent=international_root_page,
-        slug='page-slug',
-    )
-
-    sector = InternationalSectorPageFactory(
-        parent=guide_landing_page,
-        slug='sector'
-    )
-
-    opportunity = CapitalInvestOpportunityPageFactory(
-        parent=international_root_page,
-        slug='opp',
-        related_sectors=[]
-    )
-
-    related_sector = CapitalInvestRelatedSectorsFactory(related_sector=sector, page=opportunity)
-    opportunity.related_sectors = [related_sector]
-
-    for i in range(3):
-        opp = CapitalInvestOpportunityPageFactory(
-            parent=international_root_page,
-            slug=f'opp{i}',
-            related_sectors=[related_sector]
-        )
-        related_sector = CapitalInvestRelatedSectorsFactory(related_sector=sector, page=opp)
-        opp.related_sectors = [related_sector]
-
-    serializer = CapitalInvestOpportunityPageSerializer(
-        instance=opportunity,
-        context={'request': rf.get('/')}
-    )
-
-    assert len(serializer.data['related_opportunities']) == 3
-
-
-@pytest.mark.django_db
-def test_opp_page_null_case_related_sector2(rf, international_root_page):
-    opportunity = CapitalInvestOpportunityPageFactory(
-        parent=international_root_page,
-        slug='opp',
-        related_sectors=[]
-    )
-
-    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
-        instance=opportunity,
-        context={'request': rf.get('/')}
-    )
-
-    assert opportunity_serializer.data['related_sectors'] == []
-
-
-@pytest.mark.django_db
-def test_international_sector_opportunity_null_case(
-        rf, international_root_page
-):
-    guide_landing_page = InternationalGuideLandingPageFactory(
-        parent=international_root_page,
-        slug='page-slug',
-    )
-
-    sector_a = InternationalSectorPageFactory(
-        parent=guide_landing_page,
-        slug='sectorA'
-    )
-
-    sector_b = InternationalSectorPageFactory(
-        parent=guide_landing_page,
-        slug='sectorB'
-    )
-
-    opportunity = CapitalInvestOpportunityPageFactory(
-        parent=international_root_page,
-        slug='opp',
-        related_sectors=[]
-    )
-    related_sector = CapitalInvestRelatedSectorsFactory(related_sector=sector_a, page=opportunity)
-    opportunity.related_sector = related_sector
-
-    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
-        instance=opportunity,
-        context={'request': rf.get('/')}
-    )
-
-    for page in opportunity_serializer.data['related_sectors']:
-        assert page['related_sector']['meta']['slug'] == 'sectorA'
-
-    sector_serializer = BaseInternationalSectorPageSerializer(
-        instance=sector_b,
-        context={'request': rf.get('/')}
-    )
-
-    assert sector_serializer.data['related_opportunities'] == []
-
-
-@pytest.mark.django_db
-def test_international_sector_opportunity_null_case2(
-        rf, international_root_page
-):
-    guide_landing_page = InternationalGuideLandingPageFactory(
-        parent=international_root_page,
-        slug='page-slug',
-    )
-
-    sector = InternationalSectorPageFactory(
-        parent=guide_landing_page,
-        slug='sector'
-    )
-
-    opportunity = CapitalInvestOpportunityPageFactory(
-        parent=international_root_page,
-        slug='opp',
-        related_sectors=[]
-    )
-
-    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
-        instance=opportunity,
-        context={'request': rf.get('/')}
-    )
-    for page in opportunity_serializer.data['related_sectors']:
-        assert page['related_sector'] == []
-
-    sector_serializer = BaseInternationalSectorPageSerializer(
-        instance=sector,
-        context={'request': rf.get('/')}
-    )
-    assert sector_serializer.data['related_opportunities'] == []
-
-
-@pytest.mark.django_db
-def test_opportunity_page_can_add_sub_sector_as_related(
-        rf, international_root_page):
-    guide_landing_page = InternationalTopicLandingPageFactory(
-        parent=international_root_page,
-        slug='page-slug',
-    )
-
-    sector = InternationalSectorPageFactory(
-        parent=guide_landing_page,
-        slug='sector'
-    )
-
-    sub_sector = InternationalSubSectorPageFactory(
-        parent=sector,
-        heading='sub_sector_heading',
-        slug='sub_sector'
-    )
-
-    related_sub_sector = CapitalInvestRelatedSubSectors(
-        related_sub_sector=sub_sector
-    )
-
-    opportunity = CapitalInvestOpportunityPageFactory(
-        parent=international_root_page,
-        slug='opp',
-        related_sub_sectors=[related_sub_sector]
-    )
-
-    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
-        instance=opportunity,
-        context={'request': rf.get('/')}
-    )
-
-    for sub_sector in opportunity_serializer.data['sub_sectors']:
-        assert sub_sector == 'sub_sector_heading'
-
-
-@pytest.mark.django_db
-def test_opportunity_page_can_add_sub_sector_as_related_null_case(
-        rf, international_root_page
-):
-    related_sub_sector = CapitalInvestRelatedSubSectors()
-
-    opportunity = CapitalInvestOpportunityPageFactory(
-        parent=international_root_page,
-        slug='opp',
-        related_sub_sectors=[related_sub_sector]
-    )
-
-    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
-        instance=opportunity,
-        context={'request': rf.get('/')}
-    )
-
-    assert opportunity_serializer.data['sub_sectors'] == ['']
-
-
-@pytest.mark.django_db
 def test_about_dit_services_page_gets_added_related_services_fields(
         rf, international_root_page
 ):
@@ -882,79 +601,6 @@ def test_about_dit_services_page_gets_added_related_services_fields(
 
     for page in serializer.data['about_dit_services_fields']:
         assert page['title'] == 'title'
-
-
-@pytest.mark.django_db
-def test_opportunity_page_gets_opportunities_with_same_sector(rf, international_root_page):
-    topic_landing_page = InternationalGuideLandingPageFactory(
-        parent=international_root_page,
-        slug='page-slug',
-    )
-
-    sector = InternationalSectorPageFactory(
-        parent=topic_landing_page,
-        slug='sector',
-        title='sector_title'
-    )
-
-    ashton_green = CapitalInvestOpportunityPageFactory(
-        parent=international_root_page,
-        slug='ashton-green',
-        title_en_gb='Ashton Green',
-        related_sectors=[]
-    )
-    related_sector = CapitalInvestRelatedSectorsFactory(related_sector=sector, page=ashton_green)
-    ashton_green.related_sector = related_sector
-
-    birmingham = CapitalInvestOpportunityPageFactory(
-        parent=international_root_page,
-        slug='birimingham-curzon',
-        title_en_gb='Birmingham Curzon',
-        related_sectors=[]
-    )
-    related_sector = CapitalInvestRelatedSectorsFactory(related_sector=sector, page=birmingham)
-    ashton_green.related_sector = related_sector
-
-    serializer = CapitalInvestOpportunityPageSerializer(
-        instance=birmingham,
-        context={'request': rf.get('/')}
-    )
-
-    related_opps = serializer.data['related_opportunities']
-
-    assert len(related_opps) == 1
-
-    assert related_opps[0]['meta']['slug'] == 'ashton-green'
-
-
-@pytest.mark.django_db
-def test_opportunity_page_null_case_gets_opportunities_with_same_sector(rf, international_root_page):
-    topic_landing_page = InternationalGuideLandingPageFactory(
-        parent=international_root_page,
-        slug='page-slug',
-    )
-
-    sector = InternationalSectorPageFactory(
-        parent=topic_landing_page,
-        slug='sector',
-        title='sector_title'
-    )
-
-    related_sector = CapitalInvestRelatedSectorsFactory(related_sector=sector)
-
-    opportunity = CapitalInvestOpportunityPageFactory(
-        parent=international_root_page,
-        slug='birimingham-curzon',
-        title_en_gb='Birmingham Curzon',
-        related_sectors=[related_sector]
-    )
-
-    opportunity_serializer = CapitalInvestOpportunityPageSerializer(
-        instance=opportunity,
-        context={'request': rf.get('/')}
-    )
-
-    assert len(opportunity_serializer.data['related_opportunities']) == 0
 
 
 @pytest.mark.django_db
