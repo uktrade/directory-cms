@@ -17,7 +17,6 @@ from .models.great_international import (
     InternationalGuideLandingPage,
     InternationalInvestmentSectorPage,
     InternationalInvestmentSubSectorPage,
-    InternationalSubSectorPage,
     WhyInvestInTheUKPage,
     InternationalTopicLandingPage,
     AboutUkRegionPage,
@@ -555,178 +554,6 @@ class PageWithRelatedPagesSerializer(BasePageSerializer):
         return serialized
 
 
-class BaseInternationalSectorPageSerializer(PageWithRelatedPagesSerializer, HeroSerializer):
-    # DEPRECATED
-
-    heading = serializers.CharField(max_length=255)
-    sub_heading = serializers.CharField()
-    heading_teaser = serializers.CharField()
-    featured_description = serializers.CharField()
-
-    section_one_body = core_fields.MarkdownToHTMLField()
-    section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
-    section_one_image_caption = serializers.CharField(max_length=255)
-    section_one_image_caption_company = serializers.CharField(max_length=255)
-
-    statistics = serializers.SerializerMethodField()
-
-    def get_statistics(self, instance):
-        data = [
-            StatisticProxyDataWrapper(instance=instance, position_number=num)
-            for num in ['1', '2', '3', '4', '5', '6']
-        ]
-        serializer = StatisticSerializer(data, many=True)
-        return serializer.data
-
-    statistic_1_number = serializers.CharField(max_length=255)
-    statistic_1_heading = serializers.CharField(max_length=255)
-    statistic_1_smallprint = serializers.CharField(max_length=255)
-
-    statistic_2_number = serializers.CharField(max_length=255)
-    statistic_2_heading = serializers.CharField(max_length=255)
-    statistic_2_smallprint = serializers.CharField(max_length=255)
-
-    statistic_3_number = serializers.CharField(max_length=255)
-    statistic_3_heading = serializers.CharField(max_length=255)
-    statistic_3_smallprint = serializers.CharField(max_length=255)
-
-    statistic_4_number = serializers.CharField(max_length=255)
-    statistic_4_heading = serializers.CharField(max_length=255)
-    statistic_4_smallprint = serializers.CharField(max_length=255)
-
-    statistic_5_number = serializers.CharField(max_length=255)
-    statistic_5_heading = serializers.CharField(max_length=255)
-    statistic_5_smallprint = serializers.CharField(max_length=255)
-
-    statistic_6_number = serializers.CharField(max_length=255)
-    statistic_6_heading = serializers.CharField(max_length=255)
-    statistic_6_smallprint = serializers.CharField(max_length=255)
-
-    section_two_heading = serializers.CharField(max_length=255)
-    section_two_teaser = serializers.CharField()
-    section_two_subsections = serializers.SerializerMethodField()
-
-    def get_section_two_subsections(self, instance):
-        data = [
-            SectionTwoSubsectionProxyDataWrapper(
-                instance=instance,
-                position_number=num
-            )
-            for num in num2words_list(3)
-        ]
-        serializer = SectionTwoSubsectionSerializer(data, many=True)
-        return serializer.data
-
-    section_two_subsection_one_icon = wagtail_fields.ImageRenditionField(
-        'original')
-    section_two_subsection_one_heading = serializers.CharField(max_length=255)
-    section_two_subsection_one_body = serializers.CharField()
-    section_two_subsection_two_icon = wagtail_fields.ImageRenditionField(
-        'original')
-    section_two_subsection_two_heading = serializers.CharField(max_length=255)
-    section_two_subsection_two_body = serializers.CharField()
-    section_two_subsection_three_icon = wagtail_fields.ImageRenditionField(
-        'original')
-    section_two_subsection_three_heading = serializers.CharField(
-        max_length=255)
-    section_two_subsection_three_body = serializers.CharField()
-
-    case_study_title = serializers.CharField(max_length=255)
-    case_study_description = serializers.CharField(max_length=255)
-    case_study_cta_text = serializers.CharField(max_length=255)
-    case_study_cta_page = serializers.SerializerMethodField()
-    case_study_image = wagtail_fields.ImageRenditionField('original')
-
-    def get_case_study_cta_page(self, obj):
-        if not obj.case_study_cta_page:
-            return None
-        related_page = obj.case_study_cta_page
-        serializer_class = MODEL_TO_SERIALIZER_MAPPING[
-            related_page.specific.__class__]
-        serializer = serializer_class(related_page.specific)
-        return serializer.data
-
-    section_three_heading = serializers.CharField(max_length=255)
-    section_three_teaser = serializers.CharField()
-    section_three_subsections = serializers.SerializerMethodField()
-
-    def get_section_three_subsections(self, instance):
-        data = [
-            SectionThreeSubsectionProxyDataWrapper(
-                instance=instance,
-                position_number=num
-            )
-            for num in num2words_list(2)
-        ]
-        serializer = SectionThreeSubsectionSerializer(data, many=True)
-        return serializer.data
-
-    section_three_subsection_one_heading = serializers.CharField(
-        max_length=255)
-    section_three_subsection_one_teaser = serializers.CharField()
-    section_three_subsection_one_body = core_fields.MarkdownToHTMLField()
-    section_three_subsection_two_heading = serializers.CharField(
-        max_length=255)
-    section_three_subsection_two_teaser = serializers.CharField()
-    section_three_subsection_two_body = core_fields.MarkdownToHTMLField()
-
-    project_opportunities_title = serializers.CharField(max_length=255)
-    related_opportunities_cta_text = serializers.CharField(max_length=255)
-    related_opportunities_cta_link = serializers.CharField(max_length=255)
-
-    related_opportunities = serializers.SerializerMethodField()
-
-    def get_related_opportunities(self, instance):
-
-        queryset = []
-        all_opp_pages = []
-
-        for page in all_opp_pages:
-            for related_sectors in page.related_sectors.all():
-                if not related_sectors.related_sector:
-                    continue
-                elif related_sectors.related_sector.title == instance.title:
-                    queryset.append(page)
-
-        if not queryset:
-            return []
-
-        serializer = RelatedOpportunitySerializer(
-            queryset,
-            allow_null=True,
-            context=self.context
-        )
-        return serializer.data['opportunities']
-
-
-class InternationalSectorPageSerializer(
-    BaseInternationalSectorPageSerializer,
-    ChildPagesSerializerHelper
-):
-    # DEPRECATED - see InternationalInvestmentSectorPageSerializer instead
-
-    child_sub_sectors = serializers.SerializerMethodField()
-    child_articles = serializers.SerializerMethodField()
-
-    def get_child_sub_sectors(self, obj):
-        return self.get_child_pages_data_for(
-            obj,
-            InternationalSubSectorPage,
-            MinimalPageSerializer
-        )
-
-    def get_child_articles(self, obj):
-        return self.get_child_pages_data_for(
-            obj,
-            InternationalArticlePage,
-            RelatedArticlePageSerializer
-        )
-
-
-class InternationalSubSectorPageSerializer(BaseInternationalSectorPageSerializer):
-    pass
-
-
 class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
     type_of_article = serializers.CharField()
 
@@ -1120,11 +947,6 @@ class FeaturedCardsSerializer(serializers.Serializer):
     cta_link = serializers.CharField(max_length=255)
 
 
-class FeaturedInternationalSectorPageSerializer(BasePageSerializer, HeroSerializer):
-    heading = serializers.CharField(max_length=255)
-    featured_description = serializers.CharField(max_length=255)
-
-
 class InvestInternationalHomePageSerializer(BasePageSerializer, HeroSerializer):
     breadcrumbs_label = serializers.CharField(max_length=50)
     heading = serializers.CharField(max_length=255)
@@ -1185,18 +1007,7 @@ class InvestInternationalHomePageSerializer(BasePageSerializer, HeroSerializer):
         return serializer.data
 
     def get_sectors(self, instance):
-        serialized = []
-        items = [
-            instance.featured_industry_one,
-            instance.featured_industry_two,
-            instance.featured_industry_three,
-        ]
-        for related_page in items:
-            if not related_page:
-                continue
-            serialized.append(
-                FeaturedInternationalSectorPageSerializer(related_page.specific).data)
-        return serialized
+        return []
 
     def get_high_potential_opportunities(self, instance):
         from .models.invest import InvestHighPotentialOpportunityDetailPage

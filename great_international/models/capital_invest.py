@@ -254,52 +254,6 @@ class InternationalCapitalInvestLandingPage(
     contact_section_cta_text = models.CharField(max_length=255, blank=True)
 
 
-class RelatedSector(models.Model):
-    related_sector = models.ForeignKey(
-        'great_international.InternationalSectorPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    panels = [
-        PageChooserPanel(
-            'related_sector',
-            [
-                'great_international.'
-                'InternationalSectorPage'
-            ]
-        ),
-    ]
-
-    class Meta:
-        abstract = True
-
-
-class RelatedSubSector(models.Model):
-    related_sub_sector = models.ForeignKey(
-        'great_international.InternationalSubSectorPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    panels = [
-        PageChooserPanel(
-            'related_sub_sector',
-            [
-                'great_international.'
-                'InternationalSubSectorPage'
-            ]
-        ),
-    ]
-
-    class Meta:
-        abstract = True
-
-
 class CapitalInvestContactFormPage(
     panels.CapitalInvestContactFormPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage
 ):

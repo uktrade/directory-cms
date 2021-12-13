@@ -12,7 +12,7 @@ from tests.core.helpers import make_test_video
 
 
 from core.models import BasePage, RoutingSettings
-from tests.great_international.factories import InternationalSectorPageFactory
+from tests.great_international.factories import InternationalArticlePageFactory
 
 
 @pytest.mark.django_db
@@ -107,14 +107,14 @@ def test_language_names_untranslated(international_root_page):
 @pytest.mark.django_db
 def test_get_site_returns_none_when_page_not_routable(root_page):
     Site.objects.all().delete()  # ensures pages are not routable
-    page = InternationalSectorPageFactory(parent=root_page, slug='industry')
+    page = InternationalArticlePageFactory(parent=root_page, slug='industry')
     result = page.get_site()
     assert result is None
 
 
 @pytest.mark.django_db
 def test_get_site_fetches_routing_settings_if_they_exist(root_page, django_assert_num_queries):
-    page = InternationalSectorPageFactory(parent=root_page, slug='industry')
+    page = InternationalArticlePageFactory(parent=root_page, slug='industry')
     site = Site.objects.create(hostname='example.org', root_page=page)
     RoutingSettings.objects.create(site=site)
 
@@ -136,7 +136,7 @@ def test_get_site_fetches_routing_settings_if_they_exist(root_page, django_asser
 
 @pytest.mark.django_db
 def test_get_site_creates_routing_settings_if_none_exist(root_page, django_assert_num_queries):
-    page = InternationalSectorPageFactory(parent=root_page, slug='industry')
+    page = InternationalArticlePageFactory(parent=root_page, slug='industry')
     site = Site.objects.create(hostname='example.gov', root_page=page)
 
     # running this first so that the query doesn't count toward
@@ -157,7 +157,7 @@ def test_get_site_creates_routing_settings_if_none_exist(root_page, django_asser
 
 @pytest.mark.django_db
 def test_basepage_can_exist_under(root_page):
-    page = InternationalSectorPageFactory(parent=root_page)
+    page = InternationalArticlePageFactory(parent=root_page)
     assert isinstance(page, BasePage)
     dummy_ctype = ContentType.objects.create(app_label='blah', model='blah')
     test_parent = Page(slug='basic', title='Page')

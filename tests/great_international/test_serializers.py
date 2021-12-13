@@ -6,7 +6,6 @@ from django.core.files.temp import NamedTemporaryFile
 from django.core.files import File
 
 from great_international.serializers import (
-    BaseInternationalSectorPageSerializer,
     InternationalArticlePageSerializer,
     InternationalCampaignPageSerializer,
     InternationalHomePageSerializer,
@@ -26,7 +25,6 @@ from great_international.serializers import (
 )
 from tests.core.helpers import make_test_video
 from tests.great_international.factories import (
-    InternationalSectorPageFactory,
     InternationalArticlePageFactory,
     InternationalCampaignPageFactory,
     InternationalHomePageFactory,
@@ -61,106 +59,6 @@ from great_international.models.investment_atlas import (
     InvestmentOpportunityPage,
     InvestmentOpportunityRelatedSubSectors,
 )
-
-
-@pytest.mark.django_db
-def test_sector_page_has_section_three_subsections(international_root_page,
-                                                   rf):
-    article = InternationalSectorPageFactory(
-        parent=international_root_page,
-        slug='article-slug'
-    )
-
-    serializer = BaseInternationalSectorPageSerializer(
-        instance=article,
-        context={'request': rf.get('/')}
-    )
-
-    assert len(serializer.data['section_three_subsections']) == 2
-    for section in serializer.data['section_three_subsections']:
-        assert 'heading' in section
-        assert 'teaser' in section
-        assert 'body' in section
-
-
-@pytest.mark.django_db
-def test_sector_page_has_section_two_subsections(international_root_page, rf):
-    article = InternationalSectorPageFactory(
-        parent=international_root_page,
-        slug='article-slug'
-    )
-
-    serializer = BaseInternationalSectorPageSerializer(
-        instance=article,
-        context={'request': rf.get('/')}
-    )
-
-    assert len(serializer.data['section_two_subsections']) == 3
-    for section in serializer.data['section_two_subsections']:
-        assert 'icon' in section
-        assert 'heading' in section
-        assert 'body' in section
-
-
-@pytest.mark.django_db
-def test_sector_page_has_statistics(international_root_page, rf):
-    article = InternationalSectorPageFactory(
-        parent=international_root_page,
-        slug='article-slug'
-    )
-
-    serializer = BaseInternationalSectorPageSerializer(
-        instance=article,
-        context={'request': rf.get('/')}
-    )
-
-    assert len(serializer.data['statistics']) == 6
-    for statistic in serializer.data['statistics']:
-        assert 'number' in statistic
-        assert 'heading' in statistic
-        assert 'smallprint' in statistic
-
-
-@pytest.mark.django_db
-def test_sector_page_related_pages_serializer_has_pages(
-        international_root_page, rf
-):
-    related_page_one = InternationalArticlePageFactory(
-        parent=international_root_page,
-        slug='one'
-    )
-
-    related_page_two = InternationalArticlePageFactory(
-        parent=international_root_page,
-        slug='two'
-    )
-    related_page_three = InternationalArticlePageFactory(
-        parent=international_root_page,
-        slug='three'
-    )
-    case_study_cta_page = InternationalArticlePageFactory(
-        parent=international_root_page,
-        slug="case_study"
-    )
-    article = InternationalSectorPageFactory(
-        parent=international_root_page,
-        slug='article-slug',
-        related_page_one=related_page_one,
-        related_page_two=related_page_two,
-        related_page_three=related_page_three,
-        case_study_cta_page=case_study_cta_page
-    )
-
-    serializer = BaseInternationalSectorPageSerializer(
-        instance=article,
-        context={'request': rf.get('/')}
-    )
-
-    assert len(serializer.data['related_pages']) == 3
-    cta_page = serializer.data['case_study_cta_page']
-    assert 'title' in cta_page
-    assert 'teaser' in cta_page
-    assert 'thumbnail' in cta_page
 
 
 @pytest.mark.django_db
@@ -238,7 +136,7 @@ def test_guide_landing_page_serializer_guide_list(international_root_page, image
     InternationalArticlePageFactory(parent=page, slug='one')
     InternationalArticlePageFactory(parent=page, slug='two')
     # This page in not an InternationalArticlePage, so should not be included
-    InternationalSectorPageFactory(parent=page, slug='three')
+    InternationalCampaignPageFactory(parent=page, slug='three')
 
     serializer = InternationalGuideLandingPageSerializer(
         instance=page,
@@ -601,41 +499,6 @@ def test_about_dit_services_page_gets_added_related_services_fields(
 
     for page in serializer.data['about_dit_services_fields']:
         assert page['title'] == 'title'
-
-
-@pytest.mark.django_db
-def test_invest_international_homepage_featured_industries(international_root_page, rf):
-    featured_industry_one = InternationalSectorPageFactory(
-        parent=international_root_page,
-        slug='one'
-    )
-    featured_industry_two = InternationalSectorPageFactory(
-        parent=international_root_page,
-        slug='two'
-    )
-    featured_industry_three = InternationalSectorPageFactory(
-        parent=international_root_page,
-        slug='three'
-    )
-    homepage = InvestInternationalHomePageFactory(
-        parent=international_root_page,
-        slug='invest',
-        featured_industry_one=featured_industry_one,
-        featured_industry_two=featured_industry_two,
-        featured_industry_three=featured_industry_three,
-    )
-
-    serializer = InvestInternationalHomePageSerializer(
-        instance=homepage,
-        context={'request': rf.get('/')}
-    )
-
-    serialized_pages = serializer.data['sectors']
-
-    assert len(serialized_pages) == 3
-    assert serialized_pages[0]['meta']['slug'] == 'one'
-    assert serialized_pages[1]['meta']['slug'] == 'two'
-    assert serialized_pages[2]['meta']['slug'] == 'three'
 
 
 @pytest.mark.django_db
