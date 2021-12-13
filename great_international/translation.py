@@ -435,73 +435,8 @@ class InternationalCapitalInvestLandingPageTranslationOptions(
     )
 
 
-@register(capital_invest.CapitalInvestOpportunityPage)
-class CapitalInvestOpportunityPageTranslationOptions(
-    BaseTranslationOptions
-):
-    fields = (
-        'breadcrumbs_label',
-        'hero_image',
-        'hero_title',
-        'related_region',
-
-        'opportunity_summary_intro',
-        'opportunity_summary_content',
-        'opportunity_summary_image',
-
-        'location_icon',
-        'location',
-        'location_heading',
-        'project_promoter_icon',
-        'project_promoter',
-        'project_promoter_heading',
-        'scale_icon',
-        'scale',
-        'scale_value',
-        'scale_heading',
-        'sector_icon',
-        'sector',
-        'sector_heading',
-        'investment_type_icon',
-        'investment_type',
-        'investment_type_heading',
-        'planning_status_icon',
-        'planning_status',
-        'planning_status_heading',
-
-        'project_background_title',
-        'project_background_intro',
-        'project_description_title',
-        'project_description_content',
-        'project_promoter_title',
-        'project_promoter_content',
-        'project_image',
-
-        'case_study_image',
-        'case_study_title',
-        'case_study_text',
-        'case_study_cta_text',
-        'case_study_cta_link',
-
-        'similar_projects_cta_text',
-        'similar_projects_cta_link',
-
-        'contact_title',
-        'contact_text',
-
-    )
-
-
 @register(capital_invest.CapitalInvestRelatedRegions)
 class RelatedRegionsTranslationOptions(
-        BaseTranslationOptions):
-    fields = (
-        'page',
-    )
-
-
-@register(capital_invest.CapitalInvestRelatedSectors)
-class RelatedSectorsTranslationOptions(
         BaseTranslationOptions):
     fields = (
         'page',
@@ -518,14 +453,6 @@ class CapitalInvestRegionCardFieldTranslationOptions(
 
 @register(capital_invest.CapitalInvestHomesInEnglandCardFieldsSummary)
 class CapitalInvestHomesInEnglandCardFieldsSummaryTranslationOptions(
-        BaseTranslationOptions):
-    fields = (
-        'page',
-    )
-
-
-@register(capital_invest.CapitalInvestRelatedSubSectors)
-class CapitalInvestRelatedSubSectorsTranslationOptions(
         BaseTranslationOptions):
     fields = (
         'page',

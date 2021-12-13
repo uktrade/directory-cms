@@ -1,7 +1,6 @@
 import random
 import string
 
-import factory
 import factory.fuzzy
 import wagtail_factories
 
@@ -318,34 +317,6 @@ class InternationalCapitalInvestLandingPageFactory(
     title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
     last_published_at = timezone.now()
     parent = None
-
-
-class CapitalInvestOpportunityPageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.capital_invest.CapitalInvestOpportunityPage
-
-    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
-    hero_title = factory.fuzzy.FuzzyText(length=10)
-    hero_image = factory.SubFactory(
-        wagtail_factories.ImageFactory
-    )
-    project_background_title = factory.fuzzy.FuzzyText(length=10)
-    project_background_intro = factory.fuzzy.FuzzyText(length=10)
-    location = factory.fuzzy.FuzzyText(length=10)
-    scale = factory.fuzzy.FuzzyText(length=10)
-    investment_type = factory.fuzzy.FuzzyText(length=10)
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    parent = None
-
-
-class CapitalInvestRelatedSectorsFactory(factory.django.DjangoModelFactory):
-    class Meta:
-        model = models.capital_invest.CapitalInvestRelatedSectors
-
-    page = None
-    related_sector = None
 
 
 class InvestInternationalHomePageFactory(wagtail_factories.PageFactory):

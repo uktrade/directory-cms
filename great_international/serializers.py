@@ -1,5 +1,3 @@
-import random
-
 from django.conf import settings
 from directory_constants import cms
 from rest_framework import serializers
@@ -10,7 +8,6 @@ from core import fields as core_fields
 from core.helpers import num2words_list
 from core.serializers import BasePageSerializer, ChildPagesSerializerHelper, FormPageSerializerMetaclass, HeroSerializer
 
-from .models.capital_invest import CapitalInvestOpportunityPage
 from .models.great_international import (
     AboutDitServicesPage,
     InternationalArticleListingPage,
@@ -526,7 +523,6 @@ class RelatedInvestmentOpportunityListingPageSerializer(BasePageSerializer):
 MODEL_TO_SERIALIZER_MAPPING = {
     InternationalArticlePage: RelatedArticlePageSerializer,
     InternationalCampaignPage: RelatedCampaignPageSerializer,
-    CapitalInvestOpportunityPage: RelatedCapitalInvestOpportunityPageSerializer,
     AboutDitServicesPage: RelatedDitServicesPageSerializer,
     WhyInvestInTheUKPage: RelatedWhyInvestInTheUKPageSerializer,
     InternationalTopicLandingPage: RelatedInternationalTopicLandingPageSerializer,
@@ -683,7 +679,7 @@ class BaseInternationalSectorPageSerializer(PageWithRelatedPagesSerializer, Hero
     def get_related_opportunities(self, instance):
 
         queryset = []
-        all_opp_pages = CapitalInvestOpportunityPage.objects.live().public()
+        all_opp_pages = []
 
         for page in all_opp_pages:
             for related_sectors in page.related_sectors.all():
@@ -1021,142 +1017,6 @@ class InternationalCapitalInvestLandingPageSerializer(BasePageSerializer, HeroSe
     def get_added_regions(self, instance):
         serializer = RelatedRegionSerializer(
             instance.added_regions.all(),
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-        return serializer.data
-
-
-class CapitalInvestOpportunityPageSerializer(
-    RelatedRegionSerializer, BasePageSerializer, HeroSerializer
-):
-
-    breadcrumbs_label = serializers.CharField(max_length=255)
-    hero_title = serializers.CharField(max_length=255)
-
-    opportunity_summary_intro = serializers.CharField(max_length=255)
-    opportunity_summary_content = core_fields.MarkdownToHTMLField(
-        max_length=255
-    )
-    opportunity_summary_image = wagtail_fields.ImageRenditionField(
-        'original')
-
-    location_icon = wagtail_fields.ImageRenditionField(
-        'original'
-    )
-    location = serializers.CharField(max_length=255)
-    location_heading = serializers.CharField(max_length=255)
-
-    project_promoter_icon = wagtail_fields.ImageRenditionField(
-        'original'
-    )
-    project_promoter = serializers.CharField(max_length=255)
-    project_promoter_heading = serializers.CharField(max_length=255)
-
-    scale_icon = wagtail_fields.ImageRenditionField(
-        'original'
-    )
-    scale = serializers.CharField(max_length=255)
-    scale_heading = serializers.CharField(max_length=255)
-    scale_value = serializers.DecimalField(
-        max_digits=10,
-        decimal_places=2
-    )
-
-    sector_icon = wagtail_fields.ImageRenditionField(
-        'original'
-    )
-    sector = serializers.CharField(max_length=255)
-    sector_heading = serializers.CharField(max_length=255)
-
-    investment_type_icon = wagtail_fields.ImageRenditionField(
-        'original'
-    )
-    investment_type = serializers.CharField(max_length=255)
-    investment_type_heading = serializers.CharField(max_length=255)
-
-    planning_status_icon = wagtail_fields.ImageRenditionField(
-        'original'
-    )
-    planning_status = serializers.CharField(max_length=255)
-    planning_status_heading = serializers.CharField(max_length=255)
-
-    project_background_title = serializers.CharField(max_length=255)
-    project_background_intro = core_fields.MarkdownToHTMLField()
-    project_description_title = serializers.CharField(max_length=255)
-    project_description_content = core_fields.MarkdownToHTMLField()
-    project_promoter_title = serializers.CharField(max_length=255)
-    project_promoter_content = core_fields.MarkdownToHTMLField()
-    project_image = wagtail_fields.ImageRenditionField(
-        'original')
-
-    case_study_image = wagtail_fields.ImageRenditionField('original')
-    case_study_title = serializers.CharField(max_length=255)
-    case_study_text = serializers.CharField(max_length=255)
-    case_study_cta_text = serializers.CharField(max_length=255)
-    case_study_cta_link = serializers.CharField(max_length=255)
-
-    similar_projects_cta_text = serializers.CharField(max_length=255)
-    similar_projects_cta_link = serializers.CharField(max_length=255)
-
-    contact_title = serializers.CharField(max_length=255)
-    contact_text = core_fields.MarkdownToHTMLField()
-
-    related_sectors = serializers.SerializerMethodField()
-
-    def get_related_sectors(self, instance):
-        serializer = RelatedSectorSerializer(
-            instance.related_sectors.all(),
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-        return serializer.data
-
-    sub_sectors = serializers.SerializerMethodField()
-
-    def get_sub_sectors(self, instance):
-        serializer = RelatedSubSectorSerializer(
-            instance.related_sub_sectors.all(),
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-        sub_sectors_list = [sub_sector['related_sub_sector']
-                            for sub_sector in serializer.data]
-        return sub_sectors_list
-
-    related_opportunities = serializers.SerializerMethodField()
-
-    def get_related_opportunities(self, instance):
-        related_sectors_ids = instance.related_sectors.values_list('related_sector_id', flat=True)
-
-        if not related_sectors_ids:
-            return []
-
-        random_sector_id = random.choice(related_sectors_ids)
-
-        related_opps_ids = CapitalInvestOpportunityPage.objects.filter(
-            related_sectors__related_sector_id=random_sector_id
-        ).exclude(id=instance.id).values_list('pk', flat=True)
-
-        if not related_opps_ids:
-            return []
-
-        elif len(related_opps_ids) > 3:
-            random_ids = random.sample(list(related_opps_ids), 3)
-
-        else:
-            random_ids = related_opps_ids
-
-        related_opps = []
-
-        for id in random_ids:
-            related_opps.append(CapitalInvestOpportunityPage.objects.get(pk=id))
-
-        serializer = RelatedCapitalInvestOpportunityPageSerializer(
-            related_opps,
             many=True,
             allow_null=True,
             context=self.context
