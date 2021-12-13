@@ -250,22 +250,11 @@ class InvestInternationalHomePagePanels:
         FieldPanel('slug'),
     ]
 
-    featured_industries_panels = [
-        MultiFieldPanel(
-            heading='Featured industries',
-            children=[
-                PageChooserPanel('featured_industry_one'),
-                PageChooserPanel('featured_industry_two'),
-                PageChooserPanel('featured_industry_three'),
-            ])
-    ]
-
     edit_handler = make_translated_interface(
         content_panels=content_panels,
         settings_panels=settings_panels,
         other_panels=[
             ObjectList(image_panels, heading='Images'),
-            ObjectList(featured_industries_panels, heading='Featured industries'),
         ]
     )
 
