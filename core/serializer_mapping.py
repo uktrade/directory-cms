@@ -17,6 +17,7 @@ MODELS_SERIALIZERS_MAPPING = {
     great_international.models.great_international.InternationalInvestmentSectorPage: great_international.serializers.InternationalInvestmentSectorPageSerializer,  # NOQA
     great_international.models.great_international.InternationalInvestmentSubSectorPage: great_international.serializers.InternationalInvestmentSubSectorPageSerializer,  # NOQA
     great_international.models.great_international.InternationalArticlePage: great_international.serializers.InternationalArticlePageSerializer,  # NOQA
+    great_international.models.great_international.InternationalCampaignPage: great_international.serializers.InternationalCampaignPageSerializer,  # NOQA
     great_international.models.great_international.AboutUkRegionPage: great_international.serializers.AboutUkRegionPageSerializer,  # NOQA
     great_international.models.great_international.AboutUkRegionListingPage: great_international.serializers.AboutUkRegionListingPageSerializer,  # NOQA
     great_international.models.great_international.InternationalTopicLandingPage: great_international.serializers.InternationalTopicLandingPageSerializer,  # NOQA
@@ -42,13 +43,8 @@ MODELS_SERIALIZERS_MAPPING = {
     great_international.models.find_a_supplier.InternationalTradeIndustryContactPage: great_international.serializers.InternationalTradeIndustryContactPageSerializer,  # NOQA
 
 
-    # Not used by any CMS page in prod
-    # --------------------------------
-    great_international.models.great_international.InternationalCampaignPage: great_international.serializers.InternationalCampaignPageSerializer,  # NOQA
-
     # Pages using these exist in Wagtail but are draft or redirected
     # --------------------------------------------------------------
-    great_international.models.capital_invest.InternationalCapitalInvestLandingPage: great_international.serializers.InternationalCapitalInvestLandingPageSerializer,  # NOQA
     great_international.models.great_international.InternationalGuideLandingPage: great_international.serializers.InternationalGuideLandingPageSerializer,  # NOQA
     great_international.models.invest.InvestInternationalHomePage: great_international.serializers.InvestInternationalHomePageSerializer,  # NOQA
     great_international.models.invest.InvestHighPotentialOpportunityDetailPage: great_international.serializers.InvestHighPotentialOpportunityDetailPageSerializer,   # NOQA

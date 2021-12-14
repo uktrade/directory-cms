@@ -20,7 +20,6 @@ def test_models_hierarchy():
         great_international.InternationalGuideLandingPage,
         great_international.InternationalEUExitFormPage,
         great_international.InternationalEUExitFormSuccessPage,
-        capital_invest.InternationalCapitalInvestLandingPage,
         invest.InvestInternationalHomePage,
         investment_atlas.InvestmentAtlasLandingPage,
         find_a_supplier.InternationalTradeHomePage,
@@ -60,11 +59,6 @@ def test_models_hierarchy():
         ]
     assert great_international.InternationalEUExitFormSuccessPage.allowed_parent_page_models() == [
             great_international.InternationalEUExitFormPage,
-        ]
-    assert capital_invest.InternationalCapitalInvestLandingPage.allowed_subpage_models() == [
-            capital_invest.CapitalInvestContactFormPage,
-            great_international.InternationalGuideLandingPage,
-            great_international.AboutDitServicesPage
         ]
     assert capital_invest.CapitalInvestContactFormPage.allowed_subpage_models() == [
             capital_invest.CapitalInvestContactFormSuccessPage

@@ -14,7 +14,6 @@ from export_readiness import snippets
 from great_international.blocks import great_international as blocks
 from great_international.panels import great_international as panels
 
-from . import capital_invest as capital_invest_models
 from . import find_a_supplier as fas_models
 from . import invest as invest_models
 from .base import BaseInternationalPage
@@ -572,7 +571,6 @@ class InternationalHomePage(
             InternationalGuideLandingPage,
             InternationalEUExitFormPage,
             InternationalEUExitFormSuccessPage,
-            capital_invest_models.InternationalCapitalInvestLandingPage,
             invest_models.InvestInternationalHomePage,
             investment_atlas_models.InvestmentAtlasLandingPage,
             fas_models.InternationalTradeHomePage,
@@ -890,7 +888,6 @@ class InternationalGuideLandingPage(panels.InternationalGuideLandingPagePanels, 
     parent_page_types = [
         'great_international.InternationalHomePage',
         'great_international.InvestInternationalHomePage',
-        'great_international.InternationalCapitalInvestLandingPage'
     ]
     subpage_types = ['great_international.InternationalArticlePage']
 
@@ -1051,7 +1048,6 @@ class AboutDitServicesFields(Orderable, AboutDitServiceField):
 
 class AboutDitServicesPage(panels.AboutDitServicesPagePanels, BaseInternationalPage):
     parent_page_types = [
-        'great_international.InternationalCapitalInvestLandingPage',
         'great_international.InternationalTradeHomePage',
         'great_international.InvestInternationalHomePage'
     ]
