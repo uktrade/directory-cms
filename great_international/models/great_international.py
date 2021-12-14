@@ -568,7 +568,6 @@ class InternationalHomePage(
         return [
             InternationalArticleListingPage,
             InternationalTopicLandingPage,
-            InternationalGuideLandingPage,
             InternationalEUExitFormPage,
             InternationalEUExitFormSuccessPage,
             invest_models.InvestInternationalHomePage,
@@ -581,7 +580,6 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
-        'great_international.InternationalGuideLandingPage',
         'great_international.InternationalInvestmentSectorPage',
         'great_international.WhyInvestInTheUKPage',
         'great_international.InvestmentGeneralContentPage',
@@ -882,74 +880,6 @@ class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, 
         on_delete=models.SET_NULL,
         related_name='+'
     )
-
-
-class InternationalGuideLandingPage(panels.InternationalGuideLandingPagePanels, BaseInternationalPage):
-    parent_page_types = [
-        'great_international.InternationalHomePage',
-        'great_international.InvestInternationalHomePage',
-    ]
-    subpage_types = ['great_international.InternationalArticlePage']
-
-    display_title = models.CharField(max_length=255)
-
-    hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    teaser = models.CharField(max_length=255)
-
-    section_one_content = MarkdownField(verbose_name="content")
-    section_one_image = models.ForeignKey(
-        'wagtailimages.Image',
-        verbose_name="image",
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    section_one_image_caption = models.CharField(
-        verbose_name="image caption",
-        max_length=100,
-        blank=True,
-        null=True,
-    )
-
-    section_two_heading = models.CharField(
-        verbose_name="heading",
-        max_length=100
-    )
-    section_two_teaser = models.TextField(verbose_name="teaser")
-    section_two_button_text = models.CharField(
-        verbose_name="button text",
-        max_length=100
-    )
-    section_two_button_url = models.CharField(
-        verbose_name="button URL",
-        max_length=255
-    )
-    section_two_image = models.ForeignKey(
-        'wagtailimages.Image',
-        verbose_name="image",
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    guides_section_heading = models.CharField(
-        verbose_name="section heading",
-        max_length=100,
-    )
-
-    section_three_title = models.CharField(max_length=255, blank=True)
-    section_three_text = models.TextField(blank=True)
-    section_three_cta_text = models.CharField(max_length=255, blank=True)
-    section_three_cta_link = models.CharField(max_length=255, blank=True)
-
-    tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
 class InternationalEUExitFormPage(

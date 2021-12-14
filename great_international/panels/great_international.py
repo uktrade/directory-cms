@@ -524,66 +524,6 @@ class InternationalTopicLandingPagePanels:
     )
 
 
-class InternationalGuideLandingPagePanels:
-
-    content_panels = [
-        FieldPanel('title'),
-        FieldPanel('display_title'),
-        ImageChooserPanel('hero_image'),
-        FieldPanel('teaser'),
-        MultiFieldPanel(
-            heading="Attractive features",
-            children=[
-                FieldPanel('section_one_content'),
-                HelpPanel(
-                    'For accessibility reasons, use only '
-                    '"#### [Your text here]" for subheadings '
-                    'in this markdown field'
-                ),
-                ImageChooserPanel('section_one_image'),
-                FieldPanel('section_one_image_caption'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading="Feature banner",
-            children=[
-                FieldPanel('section_two_heading'),
-                FieldPanel('section_two_teaser'),
-                FieldPanel('section_two_button_text'),
-                FieldPanel('section_two_button_url'),
-                ImageChooserPanel('section_two_image'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading="Guides section",
-            children=[
-                FieldPanel('guides_section_heading'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading="Section three",
-            children=[
-                FieldPanel('section_three_title'),
-                FieldPanel('section_three_text'),
-                FieldPanel('section_three_cta_text'),
-                FieldPanel('section_three_cta_link'),
-            ]
-        ),
-        SearchEngineOptimisationPanel()
-    ]
-
-    settings_panels = [
-        SearchEngineOptimisationPanel(),
-        FieldPanel('slug'),
-        FieldPanel('tags', widget=CheckboxSelectMultiple)
-    ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
-
-
 class InternationalEUExitFormPagePanels:
 
     content_panels_before_form = [
