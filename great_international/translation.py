@@ -1,7 +1,7 @@
 from modeltranslation.decorators import register
 
 from core.translation import BaseTranslationOptions
-from great_international.models import capital_invest, find_a_supplier, great_international, invest, investment_atlas
+from great_international.models import capital_invest, find_a_supplier, great_international, investment_atlas
 
 
 @register(great_international.InternationalArticlePage)
@@ -228,96 +228,6 @@ class InternationalEUExitFormSuccessPageTranslationOptions(
     BaseTranslationOptions
 ):
     fields = []
-
-
-@register(invest.InvestInternationalHomePage)
-class InvestHomePageTranslation(BaseTranslationOptions):
-    fields = (
-        'breadcrumbs_label',
-        'heading',
-        'sub_heading',
-        'hero_call_to_action_text',
-        'hero_call_to_action_url',
-
-        'teaser',
-
-        'benefits_section_title',
-        'benefits_section_intro',
-        'benefits_section_content',
-        'benefits_section_cta_text',
-        'benefits_section_cta_url',
-        'benefits_section_img',
-
-        'eu_exit_section_title',
-        'eu_exit_section_content',
-        'eu_exit_section_call_to_action_text',
-        'eu_exit_section_call_to_action_url',
-        'eu_exit_section_img',
-
-        'sector_title',
-        'sector_intro',
-        'hpo_title',
-        'hpo_intro',
-
-        'featured_card_one_image',
-        'featured_card_one_title',
-        'featured_card_one_summary',
-        'featured_card_one_cta_link',
-
-        'featured_card_two_image',
-        'featured_card_two_title',
-        'featured_card_two_summary',
-        'featured_card_two_cta_link',
-
-        'featured_card_three_image',
-        'featured_card_three_title',
-        'featured_card_three_summary',
-        'featured_card_three_cta_link',
-
-        'how_we_help_title',
-        'how_we_help_lead_in',
-        # how we help
-        'how_we_help_text_one',
-        'how_we_help_icon_one',
-
-        'how_we_help_text_two',
-        'how_we_help_icon_two',
-
-        'how_we_help_text_three',
-        'how_we_help_icon_three',
-
-        'how_we_help_text_four',
-        'how_we_help_icon_four',
-
-        'how_we_help_text_five',
-        'how_we_help_icon_five',
-
-        'how_we_help_text_six',
-        'how_we_help_cta_text',
-        'how_we_help_cta_link',
-        'sector_button_text',
-        'sector_button_url',
-        'contact_section_title',
-        'contact_section_content',
-        'contact_section_call_to_action_text',
-        'contact_section_call_to_action_url',
-
-        'how_to_expand_title',
-        'how_to_expand_intro',
-
-        'how_to_expand_title_one',
-        'how_to_expand_text_one',
-        'how_to_expand_title_two',
-        'how_to_expand_text_two',
-        'how_to_expand_title_three',
-        'how_to_expand_text_three',
-        'how_to_expand_title_four',
-        'how_to_expand_text_four',
-        'isd_section_title',
-        'isd_section_text',
-        'isd_section_cta_text',
-        'isd_section_cta_link',
-    )
 
 
 @register(investment_atlas.ForeignDirectInvestmentFormPage)

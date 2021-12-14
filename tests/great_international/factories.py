@@ -111,34 +111,6 @@ class fuzzyURL(factory.fuzzy.BaseFuzzyAttribute):
         return self.protocol + '://' + ''.join(chars) + '.' + self.tld
 
 
-class InvestInternationalHomePageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.invest.InvestInternationalHomePage
-
-    breadcrumbs_label = factory.fuzzy.FuzzyText(length=10)
-    heading_en_gb = factory.fuzzy.FuzzyText(length=100)
-    sub_heading = factory.fuzzy.FuzzyText(length=100)
-    hero_image = factory.SubFactory(
-        wagtail_factories.ImageFactory
-    )
-    benefits_section_title = factory.fuzzy.FuzzyText(length=10)
-    sector_title = factory.fuzzy.FuzzyText(length=10)
-    sector_button_text = factory.fuzzy.FuzzyText(length=10)
-    sector_button_url = factory.fuzzy.FuzzyText(length=10)
-    hpo_title = factory.fuzzy.FuzzyText(length=10)
-    how_we_help_text_one_en_gb = factory.fuzzy.FuzzyText(length=10)
-    how_we_help_text_two_en_gb = factory.fuzzy.FuzzyText(length=10)
-    how_we_help_text_three_en_gb = factory.fuzzy.FuzzyText(length=10)
-    how_we_help_text_four_en_gb = factory.fuzzy.FuzzyText(length=10)
-    how_we_help_text_five_en_gb = factory.fuzzy.FuzzyText(length=10)
-    contact_section_title = factory.fuzzy.FuzzyText(length=10)
-    contact_section_call_to_action_text = factory.fuzzy.FuzzyText(length=10)
-    contact_section_call_to_action_url = factory.fuzzy.FuzzyText(length=10)
-    slug = 'invest-home'
-    parent = None
-
-
 class ForeignDirectInvestmentFormPageFactory(
     wagtail_factories.PageFactory
 ):

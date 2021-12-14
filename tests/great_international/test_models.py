@@ -5,7 +5,6 @@ from great_international.models import (
     capital_invest,
     find_a_supplier,
     great_international,
-    invest,
     investment_atlas,
 )
 from . import factories
@@ -19,12 +18,8 @@ def test_models_hierarchy():
         great_international.InternationalTopicLandingPage,
         great_international.InternationalEUExitFormPage,
         great_international.InternationalEUExitFormSuccessPage,
-        invest.InvestInternationalHomePage,
         investment_atlas.InvestmentAtlasLandingPage,
         find_a_supplier.InternationalTradeHomePage,
-    ]
-    assert invest.InvestInternationalHomePage.allowed_subpage_models() == [
-        great_international.AboutDitServicesPage
     ]
     assert great_international.InternationalHomePage.allowed_parent_page_models() == [Page]
     # topic landing
