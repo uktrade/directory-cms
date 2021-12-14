@@ -46,8 +46,6 @@ MODELS_SERIALIZERS_MAPPING = {
     # Pages using these exist in Wagtail but are draft or redirected
     # --------------------------------------------------------------
     great_international.models.invest.InvestInternationalHomePage: great_international.serializers.InvestInternationalHomePageSerializer,  # NOQA
-    great_international.models.invest.InvestRegionPage: great_international.serializers.InvestRegionPageSerializer,  # NOQA
-    great_international.models.invest.InvestRegionLandingPage: great_international.serializers.InvestRegionLandingPageSerializer,  # NOQA
 
     # Not sure!
     # ---------

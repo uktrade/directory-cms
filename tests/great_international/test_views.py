@@ -153,35 +153,6 @@ def test_international_topic_landing_page_view_sectors_alphabetical_order(
 
 
 @pytest.mark.django_db
-def test_invest_region_page(admin_client, international_root_page):
-    page = factories.InvestRegionPageFactory(
-        live=True, featured=True, parent=international_root_page
-    )
-    factories.InvestRegionPageFactory(live=True, parent=page)
-    cache.rebuild_all_cache()
-
-    url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
-
-    response = admin_client.get(url)
-    assert response.status_code == 200
-
-
-@pytest.mark.django_db
-def test_invest_region_landing_page(admin_client, international_root_page):
-    page = factories.InvestRegionLandingPageFactory(
-        live=True, parent=international_root_page
-    )
-    factories.InvestRegionPageFactory(live=True, parent=page)
-    cache.rebuild_all_cache()
-
-    url = reverse('api:api:pages:detail', kwargs={'pk': page.pk})
-
-    response = admin_client.get(url)
-    assert response.status_code == 200
-    assert len(response.json()['regions']) == 1
-
-
-@pytest.mark.django_db
 def test_international_trade_home_page_exposes_industries(
     admin_client, international_root_page
 ):

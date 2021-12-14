@@ -24,7 +24,6 @@ def test_models_hierarchy():
         find_a_supplier.InternationalTradeHomePage,
     ]
     assert invest.InvestInternationalHomePage.allowed_subpage_models() == [
-        invest.InvestRegionLandingPage,
         great_international.AboutDitServicesPage
     ]
     assert great_international.InternationalHomePage.allowed_parent_page_models() == [Page]
