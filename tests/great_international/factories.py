@@ -139,13 +139,6 @@ class InvestInternationalHomePageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
-class InvestHighPotentialOpportunitiesPageFactory(wagtail_factories.PageFactory):
-    class Meta:
-        model = models.invest.InvestHighPotentialOpportunitiesPage
-
-    parent = None
-
-
 class ForeignDirectInvestmentFormPageFactory(
     wagtail_factories.PageFactory
 ):

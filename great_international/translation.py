@@ -320,13 +320,6 @@ class InvestHomePageTranslation(BaseTranslationOptions):
     )
 
 
-@register(invest.InvestHighPotentialOpportunitiesPage)
-class InvestHighPotentialOpportunitiesPageTranslationOptions(
-    BaseTranslationOptions
-):
-    fields = []
-
-
 @register(investment_atlas.ForeignDirectInvestmentFormPage)
 class ForeignDirectInvestmentFormPageTranslationOptions(
     BaseTranslationOptions

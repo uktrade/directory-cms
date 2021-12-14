@@ -31,7 +31,6 @@ class InvestInternationalHomePage(
     slug_identity = slugs.INVEST_INTERNATIONAL_HOME_PAGE
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
-        'InvestHighPotentialOpportunitiesPage',
         'InvestRegionLandingPage',
         'great_international.AboutDitServicesPage',
     ]
@@ -282,28 +281,6 @@ class InvestInternationalHomePage(
         blank=True,
         verbose_name="Investment Support Directory section cta link"
     )
-
-
-class InvestHighPotentialOpportunitiesPage(
-    ExclusivePageMixin,
-    BaseInternationalPage,
-    panels.InvestHighPotentialOpportunitiesPagePanels,
-):
-    """
-    An empty page in lieu of a landing page so we don't break the
-    tree based routing pattern.
-    This page's url will redirect to an existing page on the frontend.
-    """
-
-    slug_identity = slugs.INVEST_INTERNATIONAL_HIGH_POTENTIAL_OPPORTUNITIES
-
-    parent_page_types = ['InvestInternationalHomePage']
-    subpage_types = []
-
-    def save(self, *args, **kwargs):
-        # title is used for tree_based_breadcrumbs that are displayed in the UI
-        self.title = 'High potential opportunities'
-        return super().save(*args, **kwargs)
 
 
 class InvestRegionLandingPage(
