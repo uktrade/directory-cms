@@ -136,23 +136,6 @@ class InternationalGuideLandingPageFactory(wagtail_factories.PageFactory):
     parent = None
 
 
-class InternationalCapitalInvestLandingPageFactory(
-    wagtail_factories.PageFactory
-):
-
-    class Meta:
-        model = models.capital_invest.InternationalCapitalInvestLandingPage
-
-    hero_title = factory.fuzzy.FuzzyText(length=10)
-    hero_image = factory.SubFactory(
-        wagtail_factories.ImageFactory
-    )
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    last_published_at = timezone.now()
-    parent = None
-
-
 class InvestInternationalHomePageFactory(wagtail_factories.PageFactory):
 
     class Meta:
