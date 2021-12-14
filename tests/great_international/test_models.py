@@ -28,9 +28,7 @@ def test_models_hierarchy():
         invest.InvestRegionLandingPage,
         great_international.AboutDitServicesPage
     ]
-    assert invest.InvestHighPotentialOpportunitiesPage.allowed_subpage_models() == [
-        invest.InvestHighPotentialOpportunityDetailPage,
-    ]
+    assert invest.InvestHighPotentialOpportunitiesPage.allowed_subpage_models() == []
     assert great_international.InternationalHomePage.allowed_parent_page_models() == [Page]
     # topic landing
     assert great_international.InternationalTopicLandingPage.allowed_subpage_models() == [

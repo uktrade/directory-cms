@@ -1,4 +1,3 @@
-from directory_constants import cms
 import pytest
 from rest_framework.reverse import reverse
 
@@ -154,39 +153,6 @@ def test_international_topic_landing_page_view_sectors_alphabetical_order(
 
 
 @pytest.mark.django_db
-def test_invest_home_page(document, admin_client, international_root_page):
-    page = factories.InvestInternationalHomePageFactory(live=True, parent=international_root_page)
-
-    factories.InvestHighPotentialOpportunityDetailPageFactory(
-        title='Featured',
-        live=True,
-        pdf_document=document,
-        featured=True,
-        parent=international_root_page,
-    )
-
-    factories.InvestHighPotentialOpportunityDetailPageFactory(
-        title='Not Featured',
-        live=True,
-        pdf_document=document,
-        featured=False,
-        parent=international_root_page,
-    )
-    cache.rebuild_all_cache()
-
-    url = reverse(
-        'api:lookup-by-slug',
-        kwargs={'slug': page.slug}
-    )
-
-    response = admin_client.get(url, {'service_name': cms.GREAT_INTERNATIONAL})
-    assert response.status_code == 200
-    high_potential_ops = response.json()['high_potential_opportunities']
-    assert len(high_potential_ops) == 1
-    assert high_potential_ops[0]['title'] == 'Featured'
-
-
-@pytest.mark.django_db
 def test_invest_region_page(admin_client, international_root_page):
     page = factories.InvestRegionPageFactory(
         live=True, featured=True, parent=international_root_page
@@ -213,34 +179,6 @@ def test_invest_region_landing_page(admin_client, international_root_page):
     response = admin_client.get(url)
     assert response.status_code == 200
     assert len(response.json()['regions']) == 1
-
-
-@pytest.mark.django_db
-def test_high_potential_opportunity_api(document, admin_client, international_root_page):
-    factories.InvestHighPotentialOpportunityDetailPageFactory(
-        parent=international_root_page,
-        live=True,
-        pdf_document=document,
-    )
-    page = factories.InvestHighPotentialOpportunityDetailPageFactory(
-        parent=international_root_page,
-        live=True,
-        pdf_document=document,
-        slug='some-nice-slug',
-    )
-    cache.rebuild_all_cache()
-
-    url = reverse(
-        'api:lookup-by-slug',
-        kwargs={'slug': page.slug}
-    )
-
-    response = admin_client.get(url, {'service_name': cms.GREAT_INTERNATIONAL})
-
-    assert response.status_code == 200
-    parsed = response.json()
-    assert 'other_opportunities' in parsed
-    assert 'other_opportunities' not in parsed['other_opportunities'][0]
 
 
 @pytest.mark.django_db
