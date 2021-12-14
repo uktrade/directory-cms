@@ -24,11 +24,9 @@ def test_models_hierarchy():
         find_a_supplier.InternationalTradeHomePage,
     ]
     assert invest.InvestInternationalHomePage.allowed_subpage_models() == [
-        invest.InvestHighPotentialOpportunitiesPage,
         invest.InvestRegionLandingPage,
         great_international.AboutDitServicesPage
     ]
-    assert invest.InvestHighPotentialOpportunitiesPage.allowed_subpage_models() == []
     assert great_international.InternationalHomePage.allowed_parent_page_models() == [Page]
     # topic landing
     assert great_international.InternationalTopicLandingPage.allowed_subpage_models() == [
@@ -71,20 +69,6 @@ def test_uses_tree_base_routing_always_true(international_root_page):
         parent=international_root_page
     )
     assert page.uses_tree_based_routing is True
-
-
-@pytest.mark.django_db
-def test_hpo_folder_page(international_root_page):
-    int_home = factories.InternationalHomePageFactory(
-        parent=international_root_page
-    )
-    invest_home = factories.InvestInternationalHomePageFactory(
-        parent=int_home
-    )
-    invest_hpo_folder = factories.InvestHighPotentialOpportunitiesPageFactory(
-        parent=invest_home
-    )
-    assert invest_hpo_folder.title == 'High potential opportunities'
 
 
 @pytest.mark.django_db
