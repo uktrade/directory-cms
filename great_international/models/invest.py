@@ -3,7 +3,6 @@ from django.db import models
 from directory_constants import slugs
 
 from core.models import (
-    ExclusivePageMixin,
     WagtailAdminExclusivePageMixin,
 )
 from core.model_fields import MarkdownField
@@ -31,7 +30,6 @@ class InvestInternationalHomePage(
     slug_identity = slugs.INVEST_INTERNATIONAL_HOME_PAGE
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = [
-        'InvestRegionLandingPage',
         'great_international.AboutDitServicesPage',
     ]
 
@@ -280,126 +278,4 @@ class InvestInternationalHomePage(
         max_length=255,
         blank=True,
         verbose_name="Investment Support Directory section cta link"
-    )
-
-
-class InvestRegionLandingPage(
-    ExclusivePageMixin,
-    BaseInternationalPage,
-    panels.InvestRegionLandingPagePanels,
-):
-
-    parent_page_types = ['InvestInternationalHomePage']
-    subpage_types = ['InvestRegionPage']
-    slug_identity = slugs.INVEST_INTERNATIONAL_REGION_LANDING_PAGE
-
-    # page fields
-    heading = models.CharField(max_length=255)
-
-    hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-
-class InvestRegionPage(
-    BaseInternationalPage,
-    panels.InvestRegionPagePanels,
-):
-
-    parent_page_types = ['InvestRegionLandingPage']
-
-    featured = models.BooleanField(default=False)
-    description = models.TextField(
-        help_text="This is the description shown when the "
-                  "sector is featured on another page i.e. "
-                  "the Invest Home Page"
-    )  # appears in card on external pages
-
-    # page fields
-    heading = models.CharField(max_length=255)
-
-    hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    pullout_text = MarkdownField(blank=True, null=True)
-    pullout_stat = models.CharField(max_length=255, blank=True, null=True)
-    pullout_stat_text = models.CharField(max_length=255, blank=True, null=True)
-
-    subsection_title_one = models.CharField(max_length=200)
-    subsection_content_one = MarkdownField()
-    subsection_map_one = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    subsection_title_two = models.CharField(max_length=200)
-    subsection_content_two = MarkdownField()
-    subsection_map_two = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    subsection_title_three = models.CharField(max_length=200, blank=True)
-    subsection_content_three = MarkdownField(blank=True)
-    subsection_map_three = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    subsection_title_four = models.CharField(max_length=200, blank=True)
-    subsection_content_four = MarkdownField(blank=True)
-    subsection_map_four = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    subsection_title_five = models.CharField(max_length=200, blank=True)
-    subsection_content_five = MarkdownField(blank=True)
-    subsection_map_five = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    subsection_title_six = models.CharField(max_length=200, blank=True)
-    subsection_content_six = MarkdownField(blank=True)
-    subsection_map_six = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    subsection_title_seven = models.CharField(max_length=200, blank=True)
-    subsection_content_seven = MarkdownField(blank=True)
-    subsection_map_seven = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
     )

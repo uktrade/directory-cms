@@ -21,9 +21,6 @@ from .models.great_international import (
     AboutUkRegionPage,
     AboutUkRegionListingPage,
 )
-from .models.invest import (
-    InvestRegionPage,
-)
 from .models.investment_atlas import (
     ForeignDirectInvestmentFormPage,
     InvestmentOpportunityPage,
@@ -1015,45 +1012,6 @@ class PulloutSerializer(serializers.Serializer):
     text = core_fields.MarkdownToHTMLField()
     stat = serializers.CharField(allow_null=True)
     stat_text = serializers.CharField(allow_null=True)
-
-
-class InvestRegionPageSerializer(BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer):
-    featured = serializers.BooleanField()
-    description = serializers.CharField()
-    heading = serializers.CharField(max_length=255)
-    pullout = serializers.SerializerMethodField()
-    subsections = serializers.SerializerMethodField()
-
-    def get_pullout(self, instance):
-        return PulloutSerializer(
-            {
-                'text': instance.pullout_text,
-                'stat': instance.pullout_stat,
-                'stat_text': instance.pullout_stat_text
-            }
-        ).data
-
-    def get_subsections(self, instance):
-        data = [
-            SubsectionProxyDataWrapper(instance=instance, suffix=num)
-            for num in num2words_list(7)
-        ]
-        serializer = SubsectionSerializer(data, many=True)
-        return serializer.data
-
-
-class InvestRegionLandingPageSerializer(
-    BasePageSerializer, ChildPagesSerializerHelper, HeroSerializer
-):
-    heading = serializers.CharField(max_length=255)
-    regions = serializers.SerializerMethodField()
-
-    def get_regions(self, instance):
-        return self.get_child_pages_data_for(
-            instance,
-            InvestRegionPage,
-            InvestRegionPageSerializer
-        )
 
 
 # FAS serializers

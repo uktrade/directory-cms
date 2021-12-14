@@ -187,39 +187,6 @@ class ForeignDirectInvestmentFormSuccessPageFactory(
     parent = None
 
 
-class InvestRegionPageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.invest.InvestRegionPage
-
-    description_en_gb = factory.fuzzy.FuzzyText(length=100)
-    heading_en_gb = factory.fuzzy.FuzzyText(length=100)
-    hero_image = factory.SubFactory(
-        wagtail_factories.ImageFactory
-    )
-    pullout_text_en_gb = factory.fuzzy.FuzzyText(length=10)
-    pullout_stat_en_gb = factory.fuzzy.FuzzyText(length=10)
-    pullout_stat_text_en_gb = factory.fuzzy.FuzzyText(length=10)
-    subsection_title_one_en_gb = factory.fuzzy.FuzzyText(length=10)
-    subsection_content_one_en_gb = factory.fuzzy.FuzzyText(length=10)
-    subsection_title_two_en_gb = factory.fuzzy.FuzzyText(length=10)
-    subsection_content_two_en_gb = factory.fuzzy.FuzzyText(length=10)
-    slug = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    title_en_gb = factory.Sequence(lambda n: '123-555-{0}'.format(n))
-    parent = None
-
-
-class InvestRegionLandingPageFactory(wagtail_factories.PageFactory):
-
-    class Meta:
-        model = models.invest.InvestRegionLandingPage
-
-    heading_en_gb = factory.fuzzy.FuzzyText(length=100)
-    hero_image = factory.SubFactory(
-        wagtail_factories.ImageFactory
-    )
-
-
 class InternationalTradeHomePageFactory(wagtail_factories.PageFactory):
 
     class Meta:
