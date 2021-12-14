@@ -33,7 +33,6 @@ class InvestInternationalHomePage(
     subpage_types = [
         'InvestHighPotentialOpportunitiesPage',
         'InvestRegionLandingPage',
-        'InternationalGuideLandingPage',
         'great_international.AboutDitServicesPage',
     ]
 

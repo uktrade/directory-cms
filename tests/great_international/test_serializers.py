@@ -9,7 +9,6 @@ from great_international.serializers import (
     InternationalArticlePageSerializer,
     InternationalCampaignPageSerializer,
     InternationalHomePageSerializer,
-    InternationalGuideLandingPageSerializer,
     AboutUkRegionPageSerializer,
     ForeignDirectInvestmentFormPageSerializer,
     ForeignDirectInvestmentFormSuccessPageSerializer,
@@ -27,7 +26,6 @@ from tests.great_international.factories import (
     InternationalArticlePageFactory,
     InternationalCampaignPageFactory,
     InternationalHomePageFactory,
-    InternationalGuideLandingPageFactory,
     AboutUkRegionPageFactory,
     ForeignDirectInvestmentFormPageFactory,
     ForeignDirectInvestmentFormSuccessPageFactory,
@@ -111,36 +109,6 @@ def test_related_article_page_serializer_no_pages(
     )
 
     assert len(serializer.data['related_pages']) == 0
-
-
-@pytest.mark.django_db
-def test_guide_landing_page_serializer_guide_list(international_root_page, image, rf):
-    """
-    The serializer for InternationalGuideLandingPage should include a list
-    of decendants of type InternationalArticlePage only
-    """
-    page = InternationalGuideLandingPageFactory(
-        parent=international_root_page,
-        slug='page-slug',
-        section_one_image=image,
-        section_two_image=image,
-    )
-
-    InternationalArticlePageFactory(parent=page, slug='one')
-    InternationalArticlePageFactory(parent=page, slug='two')
-    # This page in not an InternationalArticlePage, so should not be included
-    InternationalCampaignPageFactory(parent=page, slug='three')
-
-    serializer = InternationalGuideLandingPageSerializer(
-        instance=page,
-        context={'request': rf.get('/')}
-    )
-
-    assert len(serializer.data['guides']) == 2
-    for item in serializer.data['guides']:
-        assert 'title' in item
-        assert 'teaser' in item
-        assert 'thumbnail' in item
 
 
 @pytest.mark.django_db
@@ -548,13 +516,13 @@ def test_invest_international_landing_page_how_to_expand(international_root_page
 def test_atlas_opportunity_page_can_add_sector_as_related(rf, international_root_page):
     # Based on test_opportunity_page_can_add_sector_as_related
 
-    guide_landing_page = InternationalGuideLandingPageFactory(
+    topic_landing_page = InternationalTopicLandingPageFactory(
         parent=international_root_page,
         slug='page-slug',
     )
 
     sector = InternationalInvestmentSectorPageFactory(
-        parent=guide_landing_page,
+        parent=topic_landing_page,
         slug='sector-a-test'
     )
 
@@ -629,22 +597,22 @@ def test_atlas_opportunity_list_page_related_opportunities(rf, international_roo
     # Regions and Sub-sector do not matter
 
     # make a landing page
-    guide_landing_page = InternationalGuideLandingPageFactory(
+    topic_landing_page = InternationalTopicLandingPageFactory(
         parent=international_root_page,
         slug='page-slug',
     )
 
     # set up some sectors and subsectors, to help show they don't influence results
     sector_a = InternationalInvestmentSectorPageFactory(
-        parent=guide_landing_page,
+        parent=topic_landing_page,
         slug='sectorA'
     )
     sector_b = InternationalInvestmentSectorPageFactory(
-        parent=guide_landing_page,
+        parent=topic_landing_page,
         slug='sectorB'
     )
     sector_c = InternationalInvestmentSectorPageFactory(
-        parent=guide_landing_page,
+        parent=topic_landing_page,
         slug='sectorC'
     )
     subsector_a1 = InternationalInvestmentSubSectorPageFactory(
@@ -1044,13 +1012,13 @@ def test_atlas_opportunity_list_page_related_opportunities__no_opportunities(rf,
 
 @pytest.mark.django_db
 def test_atlas_opportunity_page_can_add_sub_sector_as_related(rf, international_root_page):
-    guide_landing_page = InternationalTopicLandingPageFactory(
+    topic_landing_page = InternationalTopicLandingPageFactory(
         parent=international_root_page,
         slug='page-slug',
     )
 
     sector = InternationalInvestmentSectorPageFactory(
-        parent=guide_landing_page,
+        parent=topic_landing_page,
         slug='sector'
     )
 
@@ -1296,22 +1264,22 @@ def test_atlas_opportunity_listing_page_serializer__planning_status__is_none(
 @pytest.fixture
 def sector_pages_with_related_opportunities(international_root_page):
     # make a landing page
-    guide_landing_page = InternationalGuideLandingPageFactory(
+    topic_landing_page = InternationalTopicLandingPageFactory(
         parent=international_root_page,
         slug='page-slug',
     )
 
     # Add three Sector Pages, one will have no opportunities associated with it
     sector_a = InternationalInvestmentSectorPageFactory(
-        parent=guide_landing_page,
+        parent=topic_landing_page,
         slug='sectorA'
     )
     InternationalInvestmentSectorPageFactory(
-        parent=guide_landing_page,
+        parent=topic_landing_page,
         slug='sectorB'
     )
     sector_c = InternationalInvestmentSectorPageFactory(
-        parent=guide_landing_page,
+        parent=topic_landing_page,
         slug='sectorC'
     )
 

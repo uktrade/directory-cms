@@ -17,7 +17,6 @@ def test_models_hierarchy():
     assert great_international.InternationalHomePage.allowed_subpage_models() == [
         great_international.InternationalArticleListingPage,
         great_international.InternationalTopicLandingPage,
-        great_international.InternationalGuideLandingPage,
         great_international.InternationalEUExitFormPage,
         great_international.InternationalEUExitFormSuccessPage,
         invest.InvestInternationalHomePage,
@@ -27,7 +26,6 @@ def test_models_hierarchy():
     assert invest.InvestInternationalHomePage.allowed_subpage_models() == [
         invest.InvestHighPotentialOpportunitiesPage,
         invest.InvestRegionLandingPage,
-        great_international.InternationalGuideLandingPage,
         great_international.AboutDitServicesPage
     ]
     assert invest.InvestHighPotentialOpportunitiesPage.allowed_subpage_models() == [
@@ -39,10 +37,6 @@ def test_models_hierarchy():
             great_international.InternationalArticleListingPage,
             great_international.InternationalCampaignPage,
             great_international.InternationalInvestmentSectorPage,
-        ]
-    # guide landing
-    assert great_international.InternationalGuideLandingPage.allowed_subpage_models() == [
-            great_international.InternationalArticlePage,
         ]
     # article listing
     assert great_international.InternationalArticleListingPage.allowed_subpage_models() == [

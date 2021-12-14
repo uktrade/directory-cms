@@ -14,7 +14,6 @@ from .models.great_international import (
     InternationalArticlePage,
     InternationalCampaignPage,
     InternationalEUExitFormPage,
-    InternationalGuideLandingPage,
     InternationalInvestmentSectorPage,
     InternationalInvestmentSubSectorPage,
     WhyInvestInTheUKPage,
@@ -702,48 +701,13 @@ class InternationalTopicLandingPageSerializer(
             InternationalCampaignPage,
             RelatedCampaignPageSerializer
         )
-        guides = self.get_child_pages_data_for(
-            obj,
-            InternationalGuideLandingPage,
-            InternationalGuideLandingPageSerializer
-        )
         sectors = self.get_child_pages_data_for(
             obj,
             InternationalInvestmentSectorPage,  # NB this is the new Sector page, not the old one
             InternationalInvestmentSectorPageSerializer
         )
         sectors = sorted(sectors, key=lambda x: x['heading'])
-        return articles + campaigns + guides + sectors
-
-
-class InternationalGuideLandingPageSerializer(BasePageSerializer, HeroSerializer):
-
-    display_title = serializers.CharField()
-
-    teaser = serializers.CharField()
-
-    section_one_content = core_fields.MarkdownToHTMLField()
-    section_one_image = wagtail_fields.ImageRenditionField('fill-640x360')
-    section_one_image_caption = serializers.CharField()
-
-    section_two_heading = serializers.CharField()
-    section_two_teaser = serializers.CharField()
-    section_two_button_text = serializers.CharField()
-    section_two_button_url = serializers.CharField()
-    section_two_image = wagtail_fields.ImageRenditionField('fill-640x360')
-
-    guides_section_heading = serializers.CharField()
-    guides = serializers.SerializerMethodField()
-
-    section_three_title = serializers.CharField(max_length=255)
-    section_three_text = serializers.CharField()
-    section_three_cta_text = serializers.CharField(max_length=255)
-    section_three_cta_link = serializers.CharField(max_length=255)
-
-    def get_guides(self, obj):
-        article_list = InternationalArticlePage.objects.child_of(obj).live().order_by('-first_published_at')
-        serializer = RelatedArticlePageSerializer(article_list, many=True)
-        return serializer.data
+        return articles + campaigns + sectors
 
 
 class EUExitGenericFormPageSerializer(BasePageSerializer):

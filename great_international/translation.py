@@ -218,30 +218,6 @@ class InternationalTopicLandingPageTranslationOptions(BaseTranslationOptions):
     )
 
 
-@register(great_international.InternationalGuideLandingPage)
-class InternationalGuideLandingPageTranslationOptions(
-    BaseTranslationOptions
-):
-    fields = (
-        'display_title',
-        'hero_image',
-        'teaser',
-        'section_one_content',
-        'section_one_image',
-        'section_one_image_caption',
-        'section_two_heading',
-        'section_two_teaser',
-        'section_two_button_text',
-        'section_two_button_url',
-        'section_two_image',
-        'guides_section_heading',
-        'section_three_title',
-        'section_three_text',
-        'section_three_cta_text',
-        'section_three_cta_link',
-    )
-
-
 @register(great_international.InternationalEUExitFormPage)
 class InternationalEUExitFormPageTranslationOptions(BaseTranslationOptions):
     fields = []
