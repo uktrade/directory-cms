@@ -13,7 +13,6 @@ from great_international.serializers import (
     ForeignDirectInvestmentFormPageSerializer,
     ForeignDirectInvestmentFormSuccessPageSerializer,
     AboutDitServicesPageSerializer,
-    InvestInternationalHomePageSerializer,
     AboutUkRegionListingPageSerializer,
     InvestmentOpportunityPageSerializer,
     InvestmentOpportunityListingPageSerializer,
@@ -31,7 +30,6 @@ from tests.great_international.factories import (
     ForeignDirectInvestmentFormSuccessPageFactory,
     InternationalTopicLandingPageFactory,
     AboutDitServicesPageFactory,
-    InvestInternationalHomePageFactory,
     AboutUkRegionListingPageFactory,
     InvestmentOpportunityPageFactory,
     InvestmentOpportunityRelatedSectorsFactory,
@@ -488,26 +486,6 @@ def test_international_homepage_serializer(rf, international_root_page, image):
         'case_study_cta_link',
     ]:
         assert example_field_name not in serializer.data
-
-
-@pytest.mark.django_db
-def test_invest_international_landing_page_how_to_expand(international_root_page, rf):
-    homepage = InvestInternationalHomePageFactory(
-        parent=international_root_page,
-        slug='expand',
-    )
-
-    serializer = InvestInternationalHomePageSerializer(
-        instance=homepage,
-        context={'request': rf.get('/')}
-    )
-
-    serialized_pages = serializer.data
-
-    assert len(serialized_pages['how_to_expand']) == 4
-    for how_to in serialized_pages['how_to_expand']:
-        assert 'title' in how_to
-        assert 'text' in how_to
 
 
 # Investment Atlas Serializer tests

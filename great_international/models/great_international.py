@@ -15,7 +15,6 @@ from great_international.blocks import great_international as blocks
 from great_international.panels import great_international as panels
 
 from . import find_a_supplier as fas_models
-from . import invest as invest_models
 from .base import BaseInternationalPage
 
 
@@ -570,7 +569,6 @@ class InternationalHomePage(
             InternationalTopicLandingPage,
             InternationalEUExitFormPage,
             InternationalEUExitFormSuccessPage,
-            invest_models.InvestInternationalHomePage,
             investment_atlas_models.InvestmentAtlasLandingPage,
             fas_models.InternationalTradeHomePage,
         ]
@@ -979,7 +977,6 @@ class AboutDitServicesFields(Orderable, AboutDitServiceField):
 class AboutDitServicesPage(panels.AboutDitServicesPagePanels, BaseInternationalPage):
     parent_page_types = [
         'great_international.InternationalTradeHomePage',
-        'great_international.InvestInternationalHomePage'
     ]
 
     breadcrumbs_label = models.CharField(max_length=255)

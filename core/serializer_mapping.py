@@ -43,10 +43,6 @@ MODELS_SERIALIZERS_MAPPING = {
     great_international.models.find_a_supplier.InternationalTradeIndustryContactPage: great_international.serializers.InternationalTradeIndustryContactPageSerializer,  # NOQA
 
 
-    # Pages using these exist in Wagtail but are draft or redirected
-    # --------------------------------------------------------------
-    great_international.models.invest.InvestInternationalHomePage: great_international.serializers.InvestInternationalHomePageSerializer,  # NOQA
-
     # Not sure!
     # ---------
     # The following only has one page which exists as a draft, but does have children pages...
