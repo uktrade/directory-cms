@@ -45,89 +45,6 @@ class EntitySummarySerializerBase(serializers.Serializer):
         return instance.__class__.__name__
 
 
-class SectionThreeSubsectionProxyDataWrapper:
-    def __init__(self, instance, position_number):
-        self.position_number = position_number
-        self.instance = instance
-
-    @property
-    def heading(self):
-        return getattr(
-            self.instance,
-            f'section_three_subsection_{self.position_number}_heading'
-        )
-
-    @property
-    def teaser(self):
-        return getattr(
-            self.instance,
-            f'section_three_subsection_{self.position_number}_teaser'
-        )
-
-    @property
-    def body(self):
-        return getattr(
-            self.instance,
-            f'section_three_subsection_{self.position_number}_body'
-        )
-
-
-class SectionTwoSubsectionProxyDataWrapper:
-
-    def __init__(self, instance, position_number):
-        self.position_number = position_number
-        self.instance = instance
-
-    @property
-    def icon(self):
-        return getattr(
-            self.instance,
-            f'section_two_subsection_{self.position_number}_icon'
-        )
-
-    @property
-    def heading(self):
-        return getattr(
-            self.instance,
-            f'section_two_subsection_{self.position_number}_heading'
-        )
-
-    @property
-    def body(self):
-        return getattr(
-            self.instance,
-            f'section_two_subsection_{self.position_number}_body'
-        )
-
-
-class StatisticProxyDataWrapper:
-
-    def __init__(self, instance, position_number):
-        self.position_number = position_number
-        self.instance = instance
-
-    @property
-    def number(self):
-        return getattr(
-            self.instance,
-            f'statistic_{self.position_number}_number'
-        )
-
-    @property
-    def heading(self):
-        return getattr(
-            self.instance,
-            f'statistic_{self.position_number}_heading'
-        )
-
-    @property
-    def smallprint(self):
-        return getattr(
-            self.instance,
-            f'statistic_{self.position_number}_smallprint'
-        )
-
-
 class EconomicsStatisticProxyDataWrapper:
 
     def __init__(self, instance, position_number):
@@ -211,69 +128,6 @@ class RegionSubsectionProxyDataWrapper:
         )
 
 
-class InvestHowWeHelpProxyDataWrapper:
-
-    def __init__(self, instance, position_number):
-        self.position_number = position_number
-        self.instance = instance
-
-    @property
-    def text(self):
-        return getattr(
-            self.instance,
-            f'how_we_help_text_{self.position_number}'
-        )
-
-    @property
-    def icon(self):
-        return getattr(
-            self.instance,
-            f'how_we_help_icon_{self.position_number}'
-        )
-
-
-class ExpandHowToExpandProxyDataWrapper:
-
-    def __init__(self, instance, position_number):
-        self.position_number = position_number
-        self.instance = instance
-
-    @property
-    def title(self):
-        return getattr(
-            self.instance,
-            f'how_to_expand_title_{self.position_number}'
-        )
-
-    @property
-    def text(self):
-        return getattr(
-            self.instance,
-            f'how_to_expand_text_{self.position_number}'
-        )
-
-
-class HowWeHelpProxyDataWrapper:
-
-    def __init__(self, instance, position_number):
-        self.position_number = position_number
-        self.instance = instance
-
-    @property
-    def text(self):
-        return getattr(
-            self.instance,
-            f'how_we_help_{self.position_number}_text'
-        )
-
-    @property
-    def icon(self):
-        return getattr(
-            self.instance,
-            f'how_we_help_{self.position_number}_icon'
-        )
-
-
 class AboutUkRegionsProxyDataWrapper:
 
     def __init__(self, instance):
@@ -282,24 +136,6 @@ class AboutUkRegionsProxyDataWrapper:
     @property
     def text(self):
         return self.instance.featured_description
-
-
-class SectionThreeSubsectionSerializer(serializers.Serializer):
-    heading = serializers.CharField(max_length=255)
-    teaser = serializers.CharField()
-    body = core_fields.MarkdownToHTMLField()
-
-
-class SectionTwoSubsectionSerializer(serializers.Serializer):
-    icon = wagtail_fields.ImageRenditionField('original')
-    heading = serializers.CharField(max_length=255)
-    body = serializers.CharField()
-
-
-class StatisticSerializer(serializers.Serializer):
-    number = serializers.CharField(max_length=255)
-    heading = serializers.CharField(max_length=255)
-    smallprint = serializers.CharField(max_length=255)
 
 
 class EconomicStatSerializer(serializers.Serializer):
@@ -312,22 +148,6 @@ class LocationStatSerializer(serializers.Serializer):
     number = serializers.CharField(max_length=255)
     heading = serializers.CharField(max_length=255)
     smallprint = serializers.CharField(max_length=255)
-
-
-class HowWeHelpSerializer(serializers.Serializer):
-    text = serializers.CharField(max_length=255)
-    icon = wagtail_fields.ImageRenditionField('original')
-
-
-class HowWeHelpWithTitleSerializer(serializers.Serializer):
-    icon = wagtail_fields.ImageRenditionField('original')
-    title = serializers.CharField(max_length=255)
-    text = serializers.CharField(max_length=255)
-
-
-class HowToExpandSerializer(serializers.Serializer):
-    title = serializers.CharField(max_length=255)
-    text = core_fields.MarkdownToHTMLField()
 
 
 class AboutUkRegionSerializer(serializers.Serializer):
@@ -360,71 +180,6 @@ class RelatedCampaignPageSerializer(BasePageSerializer):
     thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='campaign_hero_image')
 
 
-class RelatedCapitalInvestPageSerializer(BasePageSerializer):
-
-    title = serializers.CharField(max_length=255, source='hero_title')
-    image = wagtail_fields.ImageRenditionField('fill-640x360', source='hero_image')
-    featured_description = serializers.CharField(max_length=255)
-
-
-class RelatedCapitalInvestOpportunityPageSerializer(BasePageSerializer):
-    title = serializers.CharField(max_length=255, source='hero_title')
-    hero_image = wagtail_fields.ImageRenditionField('fill-640x360')
-    sector = serializers.CharField(max_length=255)
-    scale = serializers.CharField(max_length=255)
-
-    related_sectors = serializers.SerializerMethodField()
-
-    def get_related_sectors(self, instance):
-        serializer = RelatedSectorSerializer(
-            instance.related_sectors.all(),
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-        return serializer.data
-
-    sub_sectors = serializers.SerializerMethodField()
-
-    def get_sub_sectors(self, instance):
-        serializer = RelatedSubSectorSerializer(
-            instance.related_sub_sectors.all(),
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-        sub_sectors_list = [sub_sector['related_sub_sector']
-                            for sub_sector in serializer.data]
-        return sub_sectors_list
-
-
-class RegionCardFieldSerializer(serializers.Serializer):
-    region_card_image = wagtail_fields.ImageRenditionField('fill-640x360')
-    region_card_title = serializers.CharField(max_length=255)
-    region_card_summary = core_fields.MarkdownToHTMLField()
-
-
-class HomesInEnglandCardFieldSerializer(serializers.Serializer):
-    homes_in_england_card_image = wagtail_fields.ImageRenditionField(
-        'fill-640x360'
-    )
-    homes_in_england_card_title = serializers.CharField(max_length=255)
-    homes_in_england_card_pdf_document = core_fields.DocumentURLField()
-
-
-class RelatedRegionSerializer(serializers.Serializer):
-    related_region = serializers.SerializerMethodField()
-
-    def get_related_region(self, obj):
-        region = obj.related_region
-
-        if not region:
-            return []
-        serializer = RelatedCapitalInvestPageSerializer(
-            region.specific)
-        return serializer.data
-
-
 class RelatedSectorSerializer(serializers.Serializer):
     related_sector = serializers.SerializerMethodField()
 
@@ -449,21 +204,6 @@ class RelatedSubSectorSerializer(serializers.Serializer):
         serializer = MinimalPageSerializer(
             sector.specific)
         return serializer.data['heading']
-
-
-class RelatedOpportunitySerializer(serializers.Serializer):
-    opportunities = serializers.SerializerMethodField()
-
-    def get_opportunities(self, opportunity_pages):
-
-        serializer = RelatedCapitalInvestOpportunityPageSerializer(
-            opportunity_pages,
-            many=True,
-            allow_null=True,
-            context=self.context
-        )
-
-        return serializer.data
 
 
 class RelatedDitServicesPageSerializer(BasePageSerializer):
@@ -745,34 +485,6 @@ class MinimalPageWithHeroTitleAndHeroImageSerializer(BasePageSerializer):
 
 # Invest seralizers
 
-class SubsectionProxyDataWrapper:
-
-    def __init__(self, instance, suffix):
-        self.suffix = suffix
-        self.instance = instance
-
-    @property
-    def title(self):
-        return getattr(self.instance, f'subsection_title_{self.suffix}')
-
-    @property
-    def content(self):
-        return getattr(self.instance, f'subsection_content_{self.suffix}')
-
-    @property
-    def map(self):
-        return getattr(self.instance, f'subsection_map_{self.suffix}', None)
-
-
-class SubsectionSerializer(serializers.Serializer):
-    title = serializers.CharField(max_length=255)
-    content = core_fields.MarkdownToHTMLField()
-    map = wagtail_fields.ImageRenditionField(
-        'original',
-        allow_null=True
-    )
-
-
 class RegionSubsectionSerializer(serializers.Serializer):
     title = serializers.CharField(max_length=255)
     content = core_fields.MarkdownToHTMLField()
@@ -780,50 +492,6 @@ class RegionSubsectionSerializer(serializers.Serializer):
         'original',
         allow_null=True
     )
-
-
-class FeaturedCardsDataWrapper:
-
-    def __init__(self, instance, position_number):
-        self.position_number = position_number
-        self.instance = instance
-
-    @property
-    def image(self):
-        return getattr(
-            self.instance,
-            f'featured_card_{self.position_number}_image'
-        )
-
-    @property
-    def title(self):
-        return getattr(
-            self.instance,
-            f'featured_card_{self.position_number}_title'
-        )
-
-    @property
-    def summary(self):
-        return getattr(
-            self.instance,
-            f'featured_card_{self.position_number}_summary'
-        )
-
-    @property
-    def cta_link(self):
-        return getattr(
-            self.instance,
-            f'featured_card_{self.position_number}_cta_link'
-        )
-
-
-class FeaturedCardsSerializer(serializers.Serializer):
-    image = wagtail_fields.ImageRenditionField(
-        'fill-640x360'
-    )
-    title = serializers.CharField(max_length=255)
-    summary = core_fields.MarkdownToHTMLField(max_length=255)
-    cta_link = serializers.CharField(max_length=255)
 
 
 class InvestmentOpportunityForFormPageSerializer(BasePageSerializer):
@@ -909,12 +577,6 @@ class ForeignDirectInvestmentFormSuccessPageSerializer(
             context=self.context
         )
         return serializer.data
-
-
-class PulloutSerializer(serializers.Serializer):
-    text = core_fields.MarkdownToHTMLField()
-    stat = serializers.CharField(allow_null=True)
-    stat_text = serializers.CharField(allow_null=True)
 
 
 # FAS serializers
