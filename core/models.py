@@ -279,7 +279,7 @@ class BasePage(Page):
 
         return [
             page for page in ancestors
-            if page.specific_class and not page.specific_class.folder_page
+            if not page.specific_class.folder_page
         ]
 
     @property
