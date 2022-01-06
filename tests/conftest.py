@@ -20,7 +20,8 @@ from django.utils import translation
 from core.models import RoutingSettings
 from groups.models import GroupInfo
 from users.models import UserProfile
-from .great_international.factories import InternationalHomePageFactory, InternationalArticlePageFactory
+from .great_international.factories import InternationalHomePageFactory, InternationalArticlePageFactory, \
+    InvestHighPotentialOpportunityDetailPageFactory
 from .users.factories import UserFactory
 
 
@@ -352,6 +353,15 @@ def page(international_root_page):
         parent=international_root_page,
         slug='the-slug'
     )
+
+
+@pytest.fixture
+def high_potential_opportunity_page(page):
+    pdf_document = Document.objects.create(
+        title='document.pdf',
+        file=page.article_image.file  # not really pdf
+    )
+    return InvestHighPotentialOpportunityDetailPageFactory(pdf_document=pdf_document)
 
 
 @pytest.fixture()
