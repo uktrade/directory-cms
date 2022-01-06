@@ -5,19 +5,19 @@ from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 
 from core import fields
-from great_international.serializers import InternationalArticlePageSerializer
-from tests.great_international.factories import InternationalArticlePageFactory
+from great_international.serializers import InternationalSectorPageSerializer, InternationalArticlePageSerializer
+from tests.great_international.factories import InternationalSectorPageFactory
 
 
 @pytest.mark.django_db
 def test_meta_field(rf, international_root_page):
-    article_page = InternationalArticlePageFactory(
+    sector_page = InternationalSectorPageFactory(
         parent=international_root_page,
         slug='test-slug',
     )
 
-    serializer = InternationalArticlePageSerializer(
-        instance=article_page,
+    serializer = InternationalSectorPageSerializer(
+        instance=sector_page,
         context={'request': rf.get('/')}
     )
     assert serializer.data['meta'] == {
@@ -31,20 +31,20 @@ def test_meta_field(rf, international_root_page):
             )
         ],
         'slug': 'test-slug',
-        'pk': article_page.pk
+        'pk': sector_page.pk
     }
 
 
 @pytest.mark.django_db
 def test_meta_field_slug_translation(international_root_page, rf):
-    article_page = InternationalArticlePageFactory(
+    sector_page = InternationalSectorPageFactory(
         parent=international_root_page,
         slug='test-slug',
     )
 
     with translation.override('de'):
-        serializer = InternationalArticlePageSerializer(
-            instance=article_page,
+        serializer = InternationalSectorPageSerializer(
+            instance=sector_page,
             context={'request': rf.get('/')}
         )
         data = serializer.data['meta']
@@ -60,7 +60,7 @@ def test_meta_field_slug_translation(international_root_page, rf):
             )
         ],
         'slug': 'test-slug',
-        'pk': article_page.pk,
+        'pk': sector_page.pk,
     }
 
 
@@ -98,33 +98,33 @@ def test_meta_field_contains_draft_token(page_with_reversion, rf):
 
 @pytest.mark.django_db
 def test_meta_field_draft(international_root_page, rf):
-    article_page = InternationalArticlePageFactory(
+    sector_page = InternationalSectorPageFactory(
         parent=international_root_page,
         slug='test-slug',
     )
-    serializer = InternationalArticlePageSerializer(
-        instance=article_page,
+    serializer = InternationalSectorPageSerializer(
+        instance=sector_page,
         context={'is_draft': True}
     )
 
-    assert serializer.data['meta']['url'] == article_page.get_url(is_draft=True)
+    assert serializer.data['meta']['url'] == sector_page.get_url(is_draft=True)
 
 
 @pytest.mark.django_db
 def test_markdown_to_html_field_without_slug_hyperlinks(international_root_page, rf):
-    article_page = InternationalArticlePageFactory(
+    sector_page = InternationalSectorPageFactory(
         parent=international_root_page,
         slug='test-slug',
     )
-    article_page.hero_text_en_gb = (
-        '[hyperlink](slug:{slug})'.format(slug=article_page.slug)
+    sector_page.hero_text_en_gb = (
+        '[hyperlink](slug:{slug})'.format(slug=sector_page.slug)
     )
 
     class TestSerializer(Serializer):
         hero_text_en_gb = fields.MarkdownToHTMLField()
 
     serializer = TestSerializer(
-        instance=article_page,
+        instance=sector_page,
         context={'request': rf.get('/')}
     )
 
