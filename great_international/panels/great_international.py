@@ -524,123 +524,6 @@ class InternationalTopicLandingPagePanels:
     )
 
 
-class InternationalCuratedTopicLandingPagePanels:
-
-    content_panels = [
-        FieldPanel('title'),
-        FieldPanel('display_title'),
-        ImageChooserPanel('hero_image'),
-        FieldPanel('teaser'),
-        MultiFieldPanel(
-            heading="featured content section",
-            children=[
-                FieldPanel('feature_section_heading'),
-                FieldRowPanel([
-                    MultiFieldPanel([
-                        FieldPanel('feature_one_heading'),
-                        ImageChooserPanel('feature_one_image'),
-                        FieldPanel('feature_one_content'),
-                    ]),
-                    MultiFieldPanel([
-                        FieldPanel('feature_two_heading'),
-                        ImageChooserPanel('feature_two_image'),
-                        FieldPanel('feature_two_content'),
-                    ]),
-                ]),
-                FieldRowPanel([
-                    MultiFieldPanel([
-                        FieldPanel('feature_three_heading'),
-                        ImageChooserPanel('feature_three_image'),
-                        FieldPanel('feature_three_url'),
-                    ]),
-                    MultiFieldPanel([
-                        FieldPanel('feature_four_heading'),
-                        ImageChooserPanel('feature_four_image'),
-                        FieldPanel('feature_four_url'),
-                    ]),
-                    MultiFieldPanel([
-                        FieldPanel('feature_five_heading'),
-                        ImageChooserPanel('feature_five_image'),
-                        FieldPanel('feature_five_url'),
-                    ]),
-                ]),
-            ]
-        ),
-        SearchEngineOptimisationPanel()
-    ]
-
-    settings_panels = [
-        SearchEngineOptimisationPanel(),
-        FieldPanel('slug'),
-        FieldPanel('tags', widget=CheckboxSelectMultiple)
-    ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
-
-
-class InternationalGuideLandingPagePanels:
-
-    content_panels = [
-        FieldPanel('title'),
-        FieldPanel('display_title'),
-        ImageChooserPanel('hero_image'),
-        FieldPanel('teaser'),
-        MultiFieldPanel(
-            heading="Attractive features",
-            children=[
-                FieldPanel('section_one_content'),
-                HelpPanel(
-                    'For accessibility reasons, use only '
-                    '"#### [Your text here]" for subheadings '
-                    'in this markdown field'
-                ),
-                ImageChooserPanel('section_one_image'),
-                FieldPanel('section_one_image_caption'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading="Feature banner",
-            children=[
-                FieldPanel('section_two_heading'),
-                FieldPanel('section_two_teaser'),
-                FieldPanel('section_two_button_text'),
-                FieldPanel('section_two_button_url'),
-                ImageChooserPanel('section_two_image'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading="Guides section",
-            children=[
-                FieldPanel('guides_section_heading'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading="Section three",
-            children=[
-                FieldPanel('section_three_title'),
-                FieldPanel('section_three_text'),
-                FieldPanel('section_three_cta_text'),
-                FieldPanel('section_three_cta_link'),
-            ]
-        ),
-        SearchEngineOptimisationPanel()
-    ]
-
-    settings_panels = [
-        SearchEngineOptimisationPanel(),
-        FieldPanel('slug'),
-        FieldPanel('tags', widget=CheckboxSelectMultiple)
-    ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
-
-
 class InternationalEUExitFormPagePanels:
 
     content_panels_before_form = [
@@ -690,90 +573,6 @@ class InternationalEUExitFormSuccessPagePanels:
         FieldPanel('title_en_gb'),
         FieldPanel('slug'),
     ]
-
-
-class AboutDitLandingPagePanels:
-
-    content_panels = [
-        FieldPanel('breadcrumbs_label'),
-        MultiFieldPanel(
-            heading="Hero",
-            children=[
-                FieldPanel('title'),
-                FieldPanel('hero_title'),
-                ImageChooserPanel('hero_image'),
-            ],
-        ),
-        MultiFieldPanel(
-            heading="Intro",
-            classname='collapsible',
-            children=[
-                FieldPanel('intro')
-            ],
-        ),
-        MultiFieldPanel(
-            heading="Section one",
-            classname='collapsible',
-            children=[
-                HelpPanel('Required for section to show: Section one content'),
-                FieldPanel('section_one_content'),
-                ImageChooserPanel('section_one_image'),
-            ],
-        ),
-        MultiFieldPanel(
-            heading="Related pages",
-            classname='collapsible',
-            children=[
-                HelpPanel('Required for section to show: title and at least one related page'),
-                FieldPanel('how_dit_help_title'),
-                FieldRowPanel([
-                    MultiFieldPanel([
-                        PageChooserPanel(
-                            'related_page_one',
-                            'great_international.AboutDitServicesPage'
-                        ),
-                    ]),
-                    MultiFieldPanel([
-                        PageChooserPanel(
-                            'related_page_two',
-                            'great_international.AboutDitServicesPage'
-                        ),
-                    ]),
-                    MultiFieldPanel([
-                       PageChooserPanel(
-                           'related_page_three',
-                           'great_international.AboutDitServicesPage'
-                       ),
-                    ]),
-                ]),
-            ],
-        ),
-        MultiFieldPanel(
-            heading="Case study",
-            classname='collapsible',
-            children=[
-                HelpPanel('Required fields for section to show: '
-                          'Case Study Image, Case Study Title'),
-                ImageChooserPanel('case_study_image'),
-                FieldPanel('case_study_title'),
-                FieldPanel('case_study_text'),
-                HelpPanel('CTAs require both text and a link to show '
-                          'on page. '),
-                FieldPanel('case_study_cta_text'),
-                FieldPanel('case_study_cta_link'),
-            ],
-        ),
-        SearchEngineOptimisationPanel()
-    ]
-
-    settings_panels = [
-        FieldPanel('slug'),
-    ]
-
-    edit_handler = make_translated_interface(
-        content_panels=content_panels,
-        settings_panels=settings_panels
-    )
 
 
 class AboutDitServiceFieldPanels:
@@ -940,21 +739,21 @@ class AboutUkLandingPagePanels:
                     MultiFieldPanel([
                         PageChooserPanel(
                             'scotland',
-                            ['great_international.AboutUkRegionPage', 'great_international.InvestRegionPage']
+                            ['great_international.AboutUkRegionPage']
                         ),
                         FieldPanel('scotland_text')
                     ]),
                     MultiFieldPanel([
                         PageChooserPanel(
                             'northern_ireland',
-                            ['great_international.AboutUkRegionPage', 'great_international.InvestRegionPage']
+                            ['great_international.AboutUkRegionPage']
                         ),
                         FieldPanel('northern_ireland_text')
                     ]),
                     MultiFieldPanel([
                         PageChooserPanel(
                             'north_england',
-                            ['great_international.AboutUkRegionPage', 'great_international.InvestRegionPage']
+                            ['great_international.AboutUkRegionPage']
                         ),
                         FieldPanel('north_england_text')
                     ]),
@@ -963,21 +762,21 @@ class AboutUkLandingPagePanels:
                     MultiFieldPanel([
                         PageChooserPanel(
                             'wales',
-                            ['great_international.AboutUkRegionPage', 'great_international.InvestRegionPage']
+                            ['great_international.AboutUkRegionPage']
                         ),
                         FieldPanel('wales_text')
                     ]),
                     MultiFieldPanel([
                         PageChooserPanel(
                             'midlands',
-                            ['great_international.AboutUkRegionPage', 'great_international.InvestRegionPage']
+                            ['great_international.AboutUkRegionPage']
                         ),
                         FieldPanel('midlands_text')
                     ]),
                     MultiFieldPanel([
                         PageChooserPanel(
                             'south_england',
-                            ['great_international.AboutUkRegionPage', 'great_international.InvestRegionPage']
+                            ['great_international.AboutUkRegionPage']
                         ),
                         FieldPanel('south_england_text')
                     ]),
