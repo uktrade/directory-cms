@@ -1,49 +1,10 @@
 # Changelog
 
 ## Pre-release
-
-### Implemented enhancements
-
-### Fixed bugs
-
-## [2.2.3](https://github.com/uktrade/directory-cms/releases/tag/2.2.3)
-[Full Changelog](https://github.com/uktrade/directory-cms/compare/2.2.2...2.2.3)
-
-### Implemented enhancements
-- GP2-3415 - Move Capital Invest form to Atlas
-- GP2-3334 - Remove redundant models and pages
-
-### Fixed bugs
-
-## [2.2.2](https://github.com/uktrade/directory-cms/releases/tag/2.2.2)
-[Full Changelog](https://github.com/uktrade/directory-cms/compare/2.2.1...2.2.2)
-
 ### Implemented enhancements
 - GP2-3387 - Management command to purge admin users
-
-### Fixed bugs
-
-## [2.2.1](https://github.com/uktrade/directory-cms/releases/tag/2.2.1)
-[Full Changelog](https://github.com/uktrade/directory-cms/compare/2.2.0...2.2.1)
-
-### Implemented enhancements
-- Updated AWS REGION in settings
-
-### Fixed bugs
-
-## [2.2.0](https://github.com/uktrade/directory-cms/releases/tag/2.2.0)
-[Full Changelog](https://github.com/uktrade/directory-cms/compare/2.1.0...2.2.0)
-
-### Implemented enhancements
-- GP2-3740: Python 3.9 upgrade
-
-### Fixed bugs
-
-## [2.1.0](https://github.com/uktrade/directory-cms/releases/tag/2.1.0)
-[Full Changelog](https://github.com/uktrade/directory-cms/compare/2.0.0...2.1.0)
-
-### Implemented enhancements
 - NOTICKET: Added GreatMedia to d-cms
+- GP2-3740: Python 3.9 upgrade
 
 ### Fixed bugs
 
