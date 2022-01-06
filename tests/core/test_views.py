@@ -14,7 +14,7 @@ from core import cache, helpers, permissions, serializer_mapping, views
 from core.helpers import CachedResponse
 from conf.signature import SignatureCheckPermission
 from components.models import ComponentsApp
-from tests.great_international.factories import InternationalSectorPageFactory
+from tests.great_international.factories import InternationalArticlePageFactory
 from tests.core.helpers import make_test_video
 
 
@@ -362,7 +362,7 @@ def test_unserializable_page_requested(settings, client):
 @pytest.mark.django_db
 def test_lookup_by_path(international_root_page, page, admin_client):
     # Creating a semi-realistic page structure and moving page into it
-    parent_page = InternationalSectorPageFactory(parent=international_root_page)
+    parent_page = InternationalArticlePageFactory(parent=international_root_page)
     page.move(target=parent_page, pos='last-child')
 
     cache.rebuild_all_cache()
@@ -453,7 +453,7 @@ def test_cache_etags_match(admin_client, international_root_page):
     service_name = cms.GREAT_INTERNATIONAL
 
     # given there exists a page that is cached
-    page = InternationalSectorPageFactory.create(parent=international_root_page, live=True)
+    page = InternationalArticlePageFactory.create(parent=international_root_page, live=True)
     url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
     admin_client.get(url, {'service_name': service_name})
 
@@ -480,7 +480,7 @@ def test_cache_miss_slow_database_read(admin_client, international_root_page):
 
     service_name = cms.GREAT_INTERNATIONAL
 
-    page = InternationalSectorPageFactory.create(parent=international_root_page, live=True)
+    page = InternationalArticlePageFactory.create(parent=international_root_page, live=True)
 
     url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
 
@@ -496,7 +496,7 @@ def test_cache_miss_slow_database_read(admin_client, international_root_page):
 def test_cache_etags_mismatch(admin_client, international_root_page):
     service_name = cms.GREAT_INTERNATIONAL
     # given there exists a page that is cached
-    page = InternationalSectorPageFactory.create(parent=international_root_page, live=True)
+    page = InternationalArticlePageFactory.create(parent=international_root_page, live=True)
 
     # when the page is retrieved
     url = reverse('api:lookup-by-slug', kwargs={'slug': page.slug})
