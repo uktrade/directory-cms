@@ -645,27 +645,6 @@ class InternationalHomePage(
 
     # news
     news_title = models.CharField(max_length=255, blank=True)
-    related_page_one = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    related_page_two = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    related_page_three = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
 
     study_in_uk_cta_text = models.CharField(max_length=255, blank=True)
     visit_uk_cta_text = models.CharField(max_length=255, blank=True)
@@ -701,30 +680,6 @@ class InternationalHomePage(
 
     how_dit_help_title = models.CharField(max_length=255, blank=True)
 
-    related_how_dit_help_page_one = models.ForeignKey(
-        'great_international.AboutDitServicesPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-
-    related_how_dit_help_page_two = models.ForeignKey(
-        'great_international.AboutDitServicesPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-
-    related_how_dit_help_page_three = models.ForeignKey(
-        'great_international.AboutDitServicesPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-
     how_we_help_title = models.CharField(max_length=255, blank=True)
     how_we_help_intro = models.TextField(blank=True)
     how_we_help_one_icon = models.ForeignKey(
@@ -753,29 +708,8 @@ class InternationalHomePage(
     how_we_help_three_text = MarkdownField(blank=True)
 
     ways_of_doing_business_title = models.CharField(max_length=255, blank=True)
-    related_page_expand = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
     related_page_expand_description = models.TextField(max_length=255, blank=True)
-    related_page_invest_capital = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
     related_page_invest_capital_description = models.TextField(max_length=255, blank=True)
-    related_page_buy = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
     related_page_buy_description = models.TextField(max_length=255, blank=True)
 
     case_study_image = models.ForeignKey(

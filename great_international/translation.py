@@ -219,9 +219,6 @@ class InternationalHomePageTranslationOptions(BaseTranslationOptions):
         'tariffs_link',
         'tariffs_image',
         'how_dit_help_title',
-        'related_how_dit_help_page_one',
-        'related_how_dit_help_page_two',
-        'related_how_dit_help_page_three',
         'section_two_heading',
         'section_two_teaser',
         'section_two_subsection_one_icon',
@@ -257,9 +254,6 @@ class InternationalHomePageTranslationOptions(BaseTranslationOptions):
         'news_title',
         'study_in_uk_cta_text',
         'visit_uk_cta_text',
-        'related_page_one',
-        'related_page_two',
-        'related_page_three',
 
         # New International Home Page fields
         'is_new_page_ready',
@@ -292,11 +286,8 @@ class InternationalHomePageTranslationOptions(BaseTranslationOptions):
         'how_we_help_three_text',
 
         'ways_of_doing_business_title',
-        'related_page_expand',
         'related_page_expand_description',
-        'related_page_invest_capital',
         'related_page_invest_capital_description',
-        'related_page_buy',
         'related_page_buy_description',
 
         'case_study_image',
