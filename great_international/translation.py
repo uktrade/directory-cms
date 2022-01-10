@@ -146,9 +146,6 @@ class InternationalArticlePageTranslationOptions(BaseTranslationOptions):
         'cta_teaser',
         'cta_link_label',
         'cta_link',
-        'related_page_one',
-        'related_page_two',
-        'related_page_three',
     )
 
 

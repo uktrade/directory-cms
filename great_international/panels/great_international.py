@@ -300,22 +300,6 @@ class InternationalArticlePagePanels:
                 FieldPanel('cta_link'),
             ]
         ),
-        MultiFieldPanel(
-            heading='Related articles',
-            children=[
-                FieldRowPanel([
-                    PageChooserPanel(
-                        'related_page_one',
-                        'great_international.InternationalArticlePage'),
-                    PageChooserPanel(
-                        'related_page_two',
-                        'great_international.InternationalArticlePage'),
-                    PageChooserPanel(
-                        'related_page_three',
-                        'great_international.InternationalArticlePage'),
-                ]),
-            ]
-        ),
         SearchEngineOptimisationPanel(),
     ]
 

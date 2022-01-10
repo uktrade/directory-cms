@@ -828,27 +828,6 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
         verbose_name='CTA link'
     )
 
-    related_page_one = models.ForeignKey(
-        'great_international.InternationalArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    related_page_two = models.ForeignKey(
-        'great_international.InternationalArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
-    related_page_three = models.ForeignKey(
-        'great_international.InternationalArticlePage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
     tags = ParentalManyToManyField(snippets.Tag, blank=True)
 
 
