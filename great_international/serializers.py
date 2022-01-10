@@ -289,7 +289,7 @@ class PageWithRelatedPagesSerializer(BasePageSerializer):
         return serialized
 
 
-class InternationalArticlePageSerializer(PageWithRelatedPagesSerializer):
+class InternationalArticlePageSerializer(BasePageSerializer):
     type_of_article = serializers.CharField()
 
     display_title = serializers.CharField(source='article_title')
