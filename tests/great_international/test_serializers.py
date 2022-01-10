@@ -6,7 +6,6 @@ from django.core.files.temp import NamedTemporaryFile
 from django.core.files import File
 
 from great_international.serializers import (
-    InternationalArticlePageSerializer,
     InternationalCampaignPageSerializer,
     InternationalHomePageSerializer,
     AboutUkRegionPageSerializer,
@@ -37,7 +36,7 @@ from tests.great_international.factories import (
     PlanningStatusFactory,
     InvestmentTypeFactory,
     InternationalInvestmentSectorPageFactory,
-    InternationalInvestmentSubSectorPageFactory
+    InternationalInvestmentSubSectorPageFactory,
 )
 
 from great_international.models.great_international import (
@@ -51,12 +50,7 @@ from great_international.models.investment_atlas import (
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize('parent_page_class,serializer_class', [
-    (InternationalArticlePageFactory, InternationalArticlePageSerializer)
-])
-def test_related_article_page_serializer_has_pages(
-        parent_page_class, serializer_class, international_root_page, rf
-):
+def test_campaign_page_serializer_has_related_pages(international_root_page, rf):
     related_page_one = InternationalArticlePageFactory(
         parent=international_root_page,
         slug='one'
@@ -69,7 +63,7 @@ def test_related_article_page_serializer_has_pages(
         parent=international_root_page,
         slug='three'
     )
-    article = parent_page_class(
+    article = InternationalCampaignPageFactory(
         parent=international_root_page,
         slug='article-slug',
         related_page_one=related_page_one,
@@ -77,7 +71,7 @@ def test_related_article_page_serializer_has_pages(
         related_page_three=related_page_three
     )
 
-    serializer = serializer_class(
+    serializer = InternationalCampaignPageSerializer(
         instance=article,
         context={'request': rf.get('/')}
     )
@@ -86,14 +80,8 @@ def test_related_article_page_serializer_has_pages(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize('parent_page_class,serializer_class', (
-        (InternationalArticlePageFactory, InternationalArticlePageSerializer),
-        (InternationalCampaignPageFactory, InternationalCampaignPageSerializer),
-))
-def test_related_article_page_serializer_no_pages(
-        parent_page_class, serializer_class, international_root_page, rf
-):
-    article = parent_page_class(
+def test_campaign_page_serializer_no_related_pages(international_root_page, rf):
+    article = InternationalCampaignPageFactory(
         parent=international_root_page,
         slug='article-slug',
         related_page_one=None,
@@ -101,7 +89,7 @@ def test_related_article_page_serializer_no_pages(
         related_page_three=None,
     )
 
-    serializer = serializer_class(
+    serializer = InternationalCampaignPageSerializer(
         instance=article,
         context={'request': rf.get('/')}
     )
