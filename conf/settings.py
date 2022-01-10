@@ -24,7 +24,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 
 env = environ.Env()
 for env_file in env.list('ENV_FILES', default=[]):
-    env.read_env(f'conf/env/{env_file}')
+    env.read_env(os.path.join(os.path.dirname(__file__), f'env/{env_file}'))
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
