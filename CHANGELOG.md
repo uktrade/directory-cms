@@ -4,6 +4,8 @@
 
 ### Implemented enhancements
 
+- GLS-45 - Remove unused and deprecated models
+
 ### Fixed bugs
 
 ## [2.2.3](https://github.com/uktrade/directory-cms/releases/tag/2.2.3)
