@@ -1,4 +1,4 @@
-django==2.2.*
+django==2.2.25
 djangorestframework==3.12.*
 django-environ==0.4.5
 gunicorn==20.1.0
@@ -20,9 +20,9 @@ wagtailmedia==0.*
 pytube==9.2.2
 django-filter==2.2.0
 django-redis==4.10.0
-celery[redis]==4.4.7
-django-celery-beat==2.0.0
-kombu==4.*
+celery[redis]>=5.2.2
+django-celery-beat==2.2.1
+kombu<6.0,>=5.2.3
 requests[security]==2.25.1
 markdown==2.*
 bleach==3.*
