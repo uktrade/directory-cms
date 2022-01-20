@@ -39,27 +39,3 @@ def test_tag_deserializer(rf):
     assert len(actual['tags']) == 2
     assert legal in actual['tags']
     assert eagle in actual['tags']
-
-
-@pytest.mark.django_db
-def test_document_field_serialize(high_potential_opportunity_page):
-
-    data = UpstreamModelSerializer.serialize(high_potential_opportunity_page)
-
-    assert data['(document)pdf_document'] == (
-        high_potential_opportunity_page.pdf_document.file.name
-    )
-
-
-@pytest.mark.django_db
-def test_document_field_deserializer(rf, high_potential_opportunity_page):
-    serialized_data = {
-        '(document)pdf_document': (
-            high_potential_opportunity_page.pdf_document.file.name
-        )
-    }
-    actual = UpstreamModelSerializer.deserialize(serialized_data, rf)
-
-    assert actual['pdf_document'] == (
-        high_potential_opportunity_page.pdf_document.pk
-    )
