@@ -16,7 +16,6 @@ attrs==21.4.0
     #   pytest
 beautifulsoup4==4.8.2
     # via
-    #   -r requirements_test.in
     #   directory-components
     #   wagtail
 billiard==3.6.4.0
@@ -31,7 +30,7 @@ botocore==1.9.23
     # via
     #   boto3
     #   s3transfer
-celery[redis]==5.2.3
+celery[redis]==5.2.2
     # via
     #   -r requirements.in
     #   django-celery-beat
@@ -42,7 +41,7 @@ certifi==2021.10.8
     #   sentry-sdk
 cffi==1.15.0
     # via cryptography
-chardet==4.0.0
+charset-normalizer==2.0.10
     # via requests
 click==8.0.3
     # via
@@ -67,13 +66,8 @@ coverage[toml]==6.2
 coveralls==3.3.1
     # via -r requirements_test.in
 cryptography==3.3.2
-    # via
-    #   -r requirements.in
-    #   pyopenssl
-    #   requests
-deprecated==1.2.13
-    # via redis
-directory-components==20.3.1
+    # via -r requirements.in
+directory-components==22.0.0
     # via -r requirements.in
 directory-constants==18.7.0
     # via
@@ -177,7 +171,7 @@ html2text==2018.1.9
     # via -r requirements.in
 html5lib==1.1
     # via wagtail
-idna==2.10
+idna==3.3
     # via requests
 iniconfig==1.1.1
     # via pytest
@@ -214,10 +208,9 @@ packaging==21.3
     #   bleach
     #   pytest
     #   pytest-sugar
-    #   redis
 pep517==0.12.0
     # via pip-tools
-pillow==8.4.0
+pillow==9.0.0
     # via wagtail
 pip-tools==6.4.0
     # via -r requirements_test.in
@@ -241,11 +234,9 @@ pyflakes==2.4.0
     # via flake8
 pyjwt==2.3.0
     # via notifications-python-client
-pyopenssl==21.0.0
-    # via requests
-pyparsing==3.0.6
+pyparsing==3.0.7
     # via packaging
-pyrsistent==0.18.0
+pyrsistent==0.18.1
     # via jsonschema
 pytest==6.2.5
     # via
@@ -276,11 +267,11 @@ pytz==2021.3
     #   django-modelcluster
     #   django-timezone-field
     #   l18n
-redis==4.1.0
+redis==3.5.3
     # via
     #   celery
     #   django-redis
-requests[security]==2.25.1
+requests[security]==2.27.1
     # via
     #   -r requirements.in
     #   codecov
@@ -310,7 +301,6 @@ six==1.16.0
     #   jsonschema
     #   l18n
     #   mohawk
-    #   pyopenssl
     #   python-dateutil
     #   requests-mock
     #   w3lib
@@ -345,9 +335,9 @@ vine==5.0.0
     #   amqp
     #   celery
     #   kombu
-w3lib==1.22.0
+w3lib==1.22
     # via -r requirements.in
-wagtail==2.11.8
+wagtail==2.11.9
     # via
     #   -r requirements.in
     #   wagtail-factories
@@ -371,8 +361,6 @@ whitenoise==4.1.2
     # via -r requirements.in
 willow==1.4
     # via wagtail
-wrapt==1.13.3
-    # via deprecated
 xlrd==2.0.1
     # via tablib
 xlsxwriter==1.4.5
