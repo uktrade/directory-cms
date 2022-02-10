@@ -65,7 +65,7 @@ directory-healthcheck==1.1.2
     # via -r requirements.in
 dj-database-url==0.5.0
     # via -r requirements.in
-django==2.2.26
+django==2.2.27
     # via
     #   -r requirements.in
     #   directory-components
@@ -173,9 +173,9 @@ openpyxl==3.0.9
     # via tablib
 packaging==21.3
     # via bleach
-pillow==9.0.0
+pillow==9.0.1
     # via wagtail
-prompt-toolkit==3.0.26
+prompt-toolkit==3.0.27
     # via click-repl
 psycogreen==1.0.2
     # via -r requirements.in
