@@ -8,6 +8,7 @@ from great_international.blocks.great_international import (
     MarkdownBlock,
     InternationalInvestmentPageCopyBlockBase,
 )
+from great_international.validators import validate_lat_long
 
 
 class InlineOpportunityImageBlock(BaseAltTextImageBlock):
@@ -216,12 +217,12 @@ class OpportunityLocationBlock(blocks.StructBlock):
         required=False,
         label='Linked Region',
         page_type='great_international.AboutUkRegionPage'
-
     )
     map_coordinate = blocks.CharBlock(
         max_length=200,
         label='Linked Location Coordinates',
         help_text='Latitude and longitude Coordinates, e.g. 176.0944492, -38.50245621',
+        validators=[validate_lat_long],
     )  # deliberately not a pointfield yet
 
     def get_api_representation(self, value, context=None):
