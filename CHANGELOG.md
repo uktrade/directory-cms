@@ -4,10 +4,9 @@
 
 ### Implemented enhancements
 
-
-
 ### Fixed bugs
 
+- GLS-193 - prevent invalid latitude/longitude in linked location coordinates
 
 
 ## [2.3.0](https://github.com/uktrade/directory-cms/releases/tag/2.3.0)
