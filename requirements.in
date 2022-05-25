@@ -31,7 +31,7 @@ wagtail-modeltranslation==0.10.17
 urllib3==1.26.8
 w3lib==1.22
 django-admin-ip-restrictor==2.1.0
-notifications-python-client==5.3.*
+notifications-python-client==6.3.*
 num2words==0.5.10
 pycountry==19.8.18
 elastic-apm==5.10.1
