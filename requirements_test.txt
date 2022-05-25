@@ -230,7 +230,7 @@ pycparser==2.21
     # via cffi
 pyflakes==2.4.0
     # via flake8
-pyjwt==2.3.0
+pyjwt==2.4.0
     # via notifications-python-client
 pyparsing==3.0.7
     # via packaging
