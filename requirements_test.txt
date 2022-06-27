@@ -30,11 +30,13 @@ botocore==1.20.112
     # via
     #   boto3
     #   s3transfer
+build==0.8.0
+    # via pip-tools
 celery[redis]==5.2.2
     # via
     #   -r requirements.in
     #   django-celery-beat
-certifi==2022.5.18.1
+certifi==2022.6.15
     # via
     #   elastic-apm
     #   requests
@@ -58,7 +60,7 @@ click-repl==0.2.0
     # via celery
 codecov==2.1.12
     # via -r requirements_test.in
-coverage[toml]==6.4
+coverage[toml]==6.4.1
     # via
     #   codecov
     #   coveralls
@@ -67,13 +69,13 @@ coveralls==3.3.1
     # via -r requirements_test.in
 cryptography==3.3.2
     # via -r requirements.in
-directory-components==22.0.0
+directory-components==37.3.0
     # via -r requirements.in
-directory-constants==18.7.0
+directory-constants==21.3.0
     # via
     #   -r requirements.in
     #   directory-components
-directory-healthcheck==1.1.2
+directory-healthcheck==2.0.0
     # via -r requirements.in
 dj-database-url==0.5.0
     # via -r requirements.in
@@ -101,14 +103,12 @@ django-admin-ip-restrictor==2.1.0
     # via -r requirements.in
 django-celery-beat==2.2.1
     # via -r requirements.in
-django-debug-toolbar==3.2.4
+django-debug-toolbar==3.2a1
     # via -r requirements_test.in
 django-environ==0.4.5
     # via -r requirements.in
 django-filter==2.4.0
-    # via
-    #   -r requirements.in
-    #   wagtail
+    # via wagtail
 django-health-check==3.8.0
     # via directory-healthcheck
 django-ipware==2.1.0
@@ -123,7 +123,7 @@ django-redis==4.10.0
     # via -r requirements.in
 django-staff-sso-client==1.0.1
     # via -r requirements.in
-django_storages==1.7.1
+django-storages==1.7.1
     # via -r requirements.in
 django-taggit==1.5.1
     # via wagtail
@@ -151,7 +151,7 @@ factory-boy==2.12.0
     # via
     #   -r requirements_test.in
     #   wagtail-factories
-faker==13.11.1
+faker==13.14.0
     # via factory-boy
 flake8==4.0.1
     # via -r requirements_test.in
@@ -175,7 +175,7 @@ jmespath==0.10.0
     # via
     #   boto3
     #   botocore
-jsonschema==3.0.1
+jsonschema==3.2.0
     # via directory-components
 kombu==5.2.3
     # via
@@ -200,17 +200,18 @@ openpyxl==3.0.10
 packaging==21.3
     # via
     #   bleach
+    #   build
     #   pytest
     #   pytest-sugar
 pep517==0.12.0
-    # via pip-tools
-pillow==9.1.1
+    # via build
+pillow==8.4.0
     # via wagtail
-pip-tools==6.6.2
+pip-tools==6.7.0
     # via -r requirements_test.in
 pluggy==1.0.0
     # via pytest
-prompt-toolkit==3.0.29
+prompt-toolkit==3.0.30
     # via click-repl
 psycogreen==1.0.2
     # via -r requirements.in
@@ -310,11 +311,10 @@ termcolor==1.1.0
     # via pytest-sugar
 tomli==2.0.1
     # via
+    #   build
     #   coverage
     #   pep517
     #   pytest
-unidecode==1.3.4
-    # via wagtail
 urllib3==1.26.8
     # via
     #   -r requirements.in
@@ -329,7 +329,7 @@ vine==5.0.0
     #   kombu
 w3lib==1.22
     # via -r requirements.in
-wagtail==2.11.9
+wagtail==2.12.6
     # via
     #   -r requirements.in
     #   wagtail-factories
@@ -337,7 +337,7 @@ wagtail==2.11.9
     #   wagtailmedia
 wagtail-factories==2.0.1
     # via -r requirements_test.in
-wagtail-modeltranslation==0.10.17
+wagtail-modeltranslation==0.10.18
     # via -r requirements.in
 wagtailmedia==0.5.0
     # via -r requirements.in
@@ -359,9 +359,9 @@ xlsxwriter==1.4.5
     # via wagtail
 xlwt==1.3.0
     # via tablib
-zope.event==4.5.0
+zope-event==4.5.0
     # via gevent
-zope.interface==5.4.0
+zope-interface==5.4.0
     # via gevent
 
 # The following packages are considered to be unsafe in a requirements file:

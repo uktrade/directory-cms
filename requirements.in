@@ -1,4 +1,4 @@
-django==2.2.28
+Django<3.2,>=2.2
 djangorestframework==3.12.*
 django-environ==0.4.5
 gunicorn==20.1.0
@@ -10,14 +10,13 @@ psycopg2==2.8.* --no-binary psycopg2
 django-pglocks==1.0.2
 boto3==1.17.*
 sigauth==4.1.0
-directory-healthcheck==1.*
-directory-components==22.*
-directory-constants==18.*
+directory-healthcheck==2.0.0
+directory-components==37.3.0
+directory-constants==21.3.*
 django-staff-sso-client==1.*
 html2text==2018.1.9
 wagtailmedia==0.*
 pytube==9.2.2
-django-filter>=2.4.0
 django-redis==4.10.0
 celery[redis]==5.2.2
 django-celery-beat==2.2.1
@@ -26,8 +25,8 @@ requests[security]==2.27.1
 markdown==2.*
 bleach==3.*
 bleach-whitelist==0.*
-wagtail==2.11.*
-wagtail-modeltranslation==0.10.17
+wagtail==2.12.*
+wagtail-modeltranslation==0.10.*
 urllib3==1.26.8
 w3lib==1.22
 django-admin-ip-restrictor==2.1.0
