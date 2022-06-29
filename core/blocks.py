@@ -4,7 +4,7 @@ from wagtailmedia.blocks import AbstractMediaChooserBlock
 
 
 class VideoChooserBlock(AbstractMediaChooserBlock):
-    def render_basic(self, value, context=None):
+    def render_basic(self, value):
         """We don't need any HTML rendering"""
         if not value:
             return ''
