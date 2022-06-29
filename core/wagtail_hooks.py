@@ -10,7 +10,7 @@ from core import helpers, models
 
 
 @hooks.register('register_page_listing_more_buttons')
-def add_copy_button(page, page_perms, is_parent=False):
+def add_copy_button(page, page_perms, is_parent=False, next_url=None):
     if isinstance(page, models.BasePage):
         yield Button(
             'Copy upstream',
@@ -27,7 +27,7 @@ def add_copy_button(page, page_perms, is_parent=False):
 
 
 @helpers.replace_hook('register_page_listing_buttons', page_listing_buttons)
-def update_default_listing_buttons(page, page_perms, is_parent=False):
+def update_default_listing_buttons(page, page_perms, is_parent=False, next_url=None):
     buttons = list(page_listing_buttons(page, page_perms, is_parent))
     if isinstance(page, models.BasePage):
         for button in buttons:
