@@ -5,13 +5,14 @@
 ### Implemented enhancements
 
 ### Fixed bugs
+* GLS-301 - Fix select2 vulnerability
 
 ## [2.3.2](https://github.com/uktrade/directory-cms/releases/tag/2.3.2)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2.3.1...2.3.2)
 
 ### Fixed bugs
 
-- GLS-193 - prevent invalid latitude/longitude in linked location coordinates 
+- GLS-193 - prevent invalid latitude/longitude in linked location coordinates
 - GLS-190 - fix Django vulnerability
 
 ## [2.3.1](https://github.com/uktrade/directory-cms/releases/tag/2.3.1)
