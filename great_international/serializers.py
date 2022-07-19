@@ -863,6 +863,8 @@ class InvestmentAtlasLandingPageSerializer(BasePageSerializer):
     )
     hero_video = GreatMediaSerializer()
     hero_strapline = serializers.CharField()
+    hero_cta_text = serializers.CharField()
+    hero_cta_link = serializers.CharField()
     downpage_sections = StreamFieldSerializer()
 
 
