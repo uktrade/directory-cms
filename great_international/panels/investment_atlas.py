@@ -34,6 +34,8 @@ class InvestmentAtlasLandingPagePanels:
                 ImageChooserPanel('mobile_hero_image'),
                 FieldPanel('hero_title'),
                 FieldPanel('hero_strapline'),
+                FieldPanel('hero_cta_text'),
+                FieldPanel('hero_cta_link'),
             ]
         ),
         MultiFieldPanel(
