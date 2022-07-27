@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+* GLS-316 - Add functionality to store a hero CTA title and URL for the investment atlas landing page.
 
 ### Fixed bugs
 
