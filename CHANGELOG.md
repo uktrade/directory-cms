@@ -5,6 +5,11 @@
 ### Implemented enhancements
 
 ### Fixed bugs
+
+## [2.3.3](https://github.com/uktrade/directory-cms/releases/tag/2.3.3)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2.3.2...2.3.3)
+
+### Fixed bugs
 * GLS-301 - Fix select2 vulnerability
 
 ## [2.3.2](https://github.com/uktrade/directory-cms/releases/tag/2.3.2)
