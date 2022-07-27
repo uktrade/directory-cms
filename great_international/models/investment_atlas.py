@@ -164,6 +164,13 @@ class InvestmentAtlasLandingPage(
         on_delete=models.SET_NULL,
         related_name='+',
     )
+    hero_cta_text = models.CharField(
+        blank=True,
+        max_length=100,
+    )
+    hero_cta_link = models.URLField(
+        blank=True,
+    )
 
     downpage_sections = StreamField(
         [

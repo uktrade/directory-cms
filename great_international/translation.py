@@ -343,6 +343,8 @@ class InvestmentAtlasLandingPageTranslationOptions(
         'mobile_hero_image',
         'hero_video',
         'hero_strapline',
+        'hero_cta_text',
+        'hero_cta_link',
         'downpage_sections',
     )
 
