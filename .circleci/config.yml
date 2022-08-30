@@ -3,7 +3,7 @@ jobs:
   test:
     working_directory: /tmp/cci-test
     docker:
-      - image: circleci/python:3.9.7
+      - image: cimg/python:3.9.13
       - image: circleci/redis:3.2-alpine
     steps:
       - checkout
