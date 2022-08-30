@@ -93,7 +93,7 @@ class WagtailAdminPageForm(WagtailFixedAdminPageForm):
 class WagtailAdminPageExclusivePageForm(WagtailAdminPageForm):
 
     def __init__(self, *args, **kwargs):
-        if(
+        if (
             hasattr(self._meta.model, 'slug_identity') and 'initial' not in kwargs
         ):
             kwargs['initial'] = {
