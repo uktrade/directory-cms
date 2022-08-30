@@ -4,6 +4,7 @@
 
 ### Implemented enhancements
 * GLS-316 - Add functionality to store a hero CTA title and URL for the investment atlas landing page.
+* GLS-403 - Upgrade to Python version 3.9.13
 
 ### Fixed bugs
 
