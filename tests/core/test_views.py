@@ -532,7 +532,7 @@ def test_pages_view(admin_client):
 def test_robots_txt(client):
     response = client.get('/robots.txt')
     assert response.content == b'User-agent: * \nDisallow: /'
-    assert response._headers['content-type'] == ('Content-Type', 'text/plain')
+    assert response.headers['Content-Type'] == 'text/plain'
 
 
 @pytest.mark.django_db
