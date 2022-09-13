@@ -9,7 +9,7 @@ from core.constants import ARTICLE_TYPES
 from core.fields import single_struct_block_stream_field_factory
 from core.mixins import ServiceHomepageMixin
 from core.model_fields import MarkdownField
-from core.models import FormPageMetaClass, WagtailAdminExclusivePageMixin
+from core.models import WagtailAdminExclusivePageMixin
 from export_readiness import snippets
 from great_international.blocks import great_international as blocks
 from great_international.panels import great_international as panels
@@ -185,8 +185,6 @@ class InternationalHomePage(
         return [
             InternationalArticleListingPage,
             InternationalTopicLandingPage,
-            InternationalEUExitFormPage,
-            InternationalEUExitFormSuccessPage,
             investment_atlas_models.InvestmentAtlasLandingPage,
             fas_models.InternationalTradeHomePage,
         ]
@@ -474,69 +472,6 @@ class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, 
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
-    )
-
-
-class InternationalEUExitFormPage(
-    WagtailAdminExclusivePageMixin,
-    BaseInternationalPage,
-    metaclass=FormPageMetaClass
-):
-    # metaclass creates <fild_name>_label and <field_name>_help_text
-    form_field_names = [
-        'first_name',
-        'last_name',
-        'email',
-        'organisation_type',
-        'company_name',
-        'country',
-        'city',
-        'comment',
-    ]
-
-    full_path_override = '/eu-exit-news/contact/'
-    slug_identity = slugs.EUEXIT_INTERNATIONAL_FORM
-
-    subpage_types = [
-        'great_international.InternationalEUExitFormSuccessPage']
-
-    breadcrumbs_label = models.CharField(max_length=50)
-    heading = models.CharField(max_length=255)
-    body_text = MarkdownField()
-    submit_button_text = models.CharField(max_length=50)
-    disclaimer = models.TextField(max_length=500)
-
-    content_panels_before_form = \
-        panels.InternationalEUExitFormPagePanels.content_panels_before_form
-    content_panels_after_form = \
-        panels.InternationalEUExitFormPagePanels.content_panels_after_form
-    settings_panels = panels.InternationalEUExitFormPagePanels.settings_panels
-
-
-class InternationalEUExitFormSuccessPage(
-    panels.InternationalEUExitFormSuccessPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage,
-):
-    full_path_override = '/eu-exit-news/contact/success/'
-    slug_identity = slugs.EUEXIT_FORM_SUCCESS
-
-    parent_page_types = ['great_international.InternationalEUExitFormPage']
-
-    breadcrumbs_label = models.CharField(max_length=50)
-    heading = models.CharField(
-        max_length=255,
-        verbose_name='Title'
-    )
-    body_text = models.CharField(
-        max_length=255,
-        verbose_name='Body text',
-    )
-    next_title = models.CharField(
-        max_length=255,
-        verbose_name='Title'
-    )
-    next_body_text = models.CharField(
-        max_length=255,
-        verbose_name='Body text',
     )
 
 
