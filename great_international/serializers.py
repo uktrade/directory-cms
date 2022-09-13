@@ -13,7 +13,6 @@ from .models.great_international import (
     InternationalArticleListingPage,
     InternationalArticlePage,
     InternationalCampaignPage,
-    InternationalEUExitFormPage,
     InternationalInvestmentSectorPage,
     InternationalInvestmentSubSectorPage,
     WhyInvestInTheUKPage,
@@ -444,30 +443,6 @@ class InternationalTopicLandingPageSerializer(
         )
         sectors = sorted(sectors, key=lambda x: x['heading'])
         return articles + campaigns + sectors
-
-
-class EUExitGenericFormPageSerializer(BasePageSerializer):
-    breadcrumbs_label = serializers.CharField()
-    heading = serializers.CharField()
-    body_text = core_fields.MarkdownToHTMLField()
-    submit_button_text = serializers.CharField()
-    disclaimer = core_fields.MarkdownToHTMLField()
-
-
-class InternationalEUExitFormPageSerializer(
-    EUExitGenericFormPageSerializer,
-    metaclass=FormPageSerializerMetaclass
-):
-    class Meta:
-        model_class = InternationalEUExitFormPage
-
-
-class InternationalEUExitFormSuccessPageSerializer(BasePageSerializer):
-    breadcrumbs_label = serializers.CharField()
-    heading = serializers.CharField()
-    body_text = serializers.CharField()
-    next_title = serializers.CharField()
-    next_body_text = serializers.CharField()
 
 
 class MinimalPageSerializer(BasePageSerializer):
