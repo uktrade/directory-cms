@@ -508,57 +508,6 @@ class InternationalTopicLandingPagePanels:
     )
 
 
-class InternationalEUExitFormPagePanels:
-
-    content_panels_before_form = [
-        MultiFieldPanel(
-            heading='Hero',
-            children=[
-                FieldPanel('breadcrumbs_label'),
-                FieldPanel('heading'),
-                FieldPanel('body_text'),
-            ]
-        ),
-    ]
-    content_panels_after_form = [
-        FieldPanel('disclaimer', widget=Textarea),
-        FieldPanel('submit_button_text'),
-        SearchEngineOptimisationPanel(),
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-    ]
-
-
-class InternationalEUExitFormSuccessPagePanels:
-
-    content_panels = [
-        FieldPanel('breadcrumbs_label'),
-        MultiFieldPanel(
-            heading='heading',
-            children=[
-                FieldPanel('heading'),
-                FieldPanel('body_text'),
-            ]
-        ),
-        MultiFieldPanel(
-            heading='Next steps',
-            children=[
-                FieldPanel('next_title'),
-                FieldPanel('next_body_text'),
-            ]
-        ),
-        SearchEngineOptimisationPanel(),
-    ]
-
-    settings_panels = [
-        FieldPanel('title_en_gb'),
-        FieldPanel('slug'),
-    ]
-
-
 class AboutDitServiceFieldPanels:
 
     panels = [

@@ -87,18 +87,6 @@ class InternationalTopicLandingPageTranslationOptions(BaseTranslationOptions):
     )
 
 
-@register(great_international.InternationalEUExitFormPage)
-class InternationalEUExitFormPageTranslationOptions(BaseTranslationOptions):
-    fields = []
-
-
-@register(great_international.InternationalEUExitFormSuccessPage)
-class InternationalEUExitFormSuccessPageTranslationOptions(
-    BaseTranslationOptions
-):
-    fields = []
-
-
 @register(investment_atlas.ForeignDirectInvestmentFormPage)
 class ForeignDirectInvestmentFormPageTranslationOptions(
     BaseTranslationOptions
