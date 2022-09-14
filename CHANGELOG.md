@@ -3,10 +3,15 @@
 ## Pre-release
 
 ### Implemented enhancements
-* GLS-403 - Upgrade to Python version 3.9.13
-* GLS-407 - Remove International EU exit form
 
 ### Fixed bugs
+
+## [2.5.0](https://github.com/uktrade/directory-cms/releases/tag/2.5.0)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2.4.0...2.5.0)
+
+### Implemented enhancements
+* GLS-403 - Upgrade to Python version 3.9.13
+* GLS-407 - Remove International EU exit form
 
 ## [2.4.0](https://github.com/uktrade/directory-cms/releases/tag/2.4.0)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2.3.3...2.4.0)
