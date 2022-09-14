@@ -16,8 +16,6 @@ def test_models_hierarchy():
     assert great_international.InternationalHomePage.allowed_subpage_models() == [
         great_international.InternationalArticleListingPage,
         great_international.InternationalTopicLandingPage,
-        great_international.InternationalEUExitFormPage,
-        great_international.InternationalEUExitFormSuccessPage,
         investment_atlas.InvestmentAtlasLandingPage,
         find_a_supplier.InternationalTradeHomePage,
     ]
@@ -36,13 +34,6 @@ def test_models_hierarchy():
     # campaign
     assert great_international.InternationalCampaignPage.allowed_subpage_models() == [
             great_international.InternationalArticlePage,
-        ]
-    # EU Exit forms
-    assert great_international.InternationalEUExitFormPage.allowed_subpage_models() == [
-            great_international.InternationalEUExitFormSuccessPage,
-        ]
-    assert great_international.InternationalEUExitFormSuccessPage.allowed_parent_page_models() == [
-            great_international.InternationalEUExitFormPage,
         ]
     assert capital_invest.CapitalInvestContactFormPage.allowed_subpage_models() == [
             capital_invest.CapitalInvestContactFormSuccessPage
