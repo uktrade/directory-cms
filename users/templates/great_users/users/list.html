@@ -4,22 +4,22 @@
         <tr>
             <th class="name">
                 {% if ordering == "name" %}
-                    <a href="{% url 'wagtailusers_users:index' %}" class="icon icon-arrow-down-after teal">
+                    <a href="{% url 'great_users:index' %}" class="icon icon-arrow-down-after teal">
                         {% trans "Name" %}
                     </a>
                 {% else %}
-                    <a href="{% url 'wagtailusers_users:index' %}?ordering=name" class="icon icon-arrow-down-after">
+                    <a href="{% url 'great_users:index' %}?ordering=name" class="icon icon-arrow-down-after">
                         {% trans "Name" %}
                     </a>
                 {% endif %}
             </th>
             <th class="username">
                 {% if ordering == "username" %}
-                    <a href="{% url 'wagtailusers_users:index' %}" class="icon icon-arrow-down-after teal">
+                    <a href="{% url 'great_users:index' %}" class="icon icon-arrow-down-after teal">
                         {% trans "Username" %}
                     </a>
                 {% else %}
-                    <a href="{% url 'wagtailusers_users:index' %}?ordering=username" class="icon icon-arrow-down-after">
+                    <a href="{% url 'great_users:index' %}?ordering=username" class="icon icon-arrow-down-after">
                         {% trans "Username" %}
                     </a>
                 {% endif %}
@@ -35,7 +35,7 @@
                 <td class="title" valign="top">
                     <h2>
                         <span class="avatar small"><img src="{% avatar_url user size=25 %}" /></span>
-                        <a href="{% url 'wagtailusers_users:edit' user.pk %}">{{ user.get_full_name|default:user.get_username }}</a>
+                        <a href="{% url 'great_users:edit' user.pk %}">{{ user.get_full_name|default:user.get_username }}</a>
                     </h2>
                     <ul class="actions">
                         {% user_listing_buttons user %}

@@ -52,7 +52,7 @@ class WagtailUserActionBaseView(mixins.WagtailAdminPermissionRequiredMixin):
             self.request,
             _(self.form_valid_message).format(user),
             buttons=[messages.button(
-                reverse('wagtailusers_users:edit', args=(user.pk,)),
+                reverse('great_users:edit', args=(user.pk,)),
                 _('Edit')
             )])
         hook_name = 'after_{action}_user'.format(action=self.hook_action)
@@ -68,7 +68,7 @@ class CreateUserView(
 ):
     form_class = forms.UserCreationForm
     model = User
-    template_name = 'wagtailusers/users/create.html'
+    template_name = 'great_users/users/create.html'
     permission_required = add_user_perm
     hook_action = 'create'
     form_invalid_message = 'The user could not be created due to errors.'
@@ -77,7 +77,7 @@ class CreateUserView(
     def form_valid(self, form):
         self.object = form.save()
         self.handle_success_message()
-        return redirect('wagtailusers_users:index')
+        return redirect('great_users:index')
 
 
 class EditUserView(
@@ -141,7 +141,7 @@ class EditUserView(
             self.notify_user()
 
         self.handle_success_message()
-        return redirect('wagtailusers_users:index')
+        return redirect('great_users:index')
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -172,7 +172,7 @@ class SSORequestAccessView(EditView):
     permission_required = None
     error_message = 'There was a problem with your submission'
     template_name = "sso/request_access.html"
-    success_url = reverse_lazy('sso:request_access_success')
+    success_url = reverse_lazy('great_sso:request_access_success')
 
     def dispatch(self, request):
         self.get_object()
