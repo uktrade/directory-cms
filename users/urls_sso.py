@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 
 from . import views
 
-app_name = 'sso'
+app_name = 'great_sso'
 urlpatterns = [
     url(
         r'^$',
