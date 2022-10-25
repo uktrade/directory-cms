@@ -10,7 +10,7 @@ amqp==5.1.1
     # via kombu
 anyascii==0.3.1
     # via wagtail
-attrs==21.4.0
+attrs==22.1.0
     # via jsonschema
 beautifulsoup4==4.8.2
     # via
@@ -32,12 +32,12 @@ celery[redis]==5.2.2
     # via
     #   -r requirements.in
     #   django-celery-beat
-certifi==2022.5.18.1
+certifi==2022.9.24
     # via
     #   elastic-apm
     #   requests
     #   sentry-sdk
-cffi==1.15.0
+cffi==1.15.1
     # via cryptography
 charset-normalizer==2.0.12
     # via requests
@@ -90,7 +90,7 @@ django-celery-beat==2.2.1
     # via -r requirements.in
 django-environ==0.4.5
     # via -r requirements.in
-django-filter==2.4.0
+django-filter==2.2.0
     # via
     #   -r requirements.in
     #   wagtail
@@ -101,14 +101,16 @@ django-ipware==2.1.0
 django-modelcluster==5.3
     # via wagtail
 django-modeltranslation==0.18.2
-    # via wagtail-modeltranslation
+    # via
+    #   -r requirements.in
+    #   wagtail-modeltranslation
 django-pglocks==1.0.2
     # via -r requirements.in
 django-redis==4.10.0
     # via -r requirements.in
 django-staff-sso-client==1.0.1
     # via -r requirements.in
-django_storages==1.7.1
+django-storages==1.7.1
     # via -r requirements.in
 django-taggit==1.5.1
     # via wagtail
@@ -133,7 +135,7 @@ et-xmlfile==1.1.0
     # via openpyxl
 gevent==21.8.0
     # via -r requirements.in
-greenlet==1.1.2
+greenlet==1.1.3.post0
     # via gevent
 gunicorn==20.1.0
     # via -r requirements.in
@@ -141,7 +143,7 @@ html2text==2018.1.9
     # via -r requirements.in
 html5lib==1.1
     # via wagtail
-idna==3.3
+idna==3.4
     # via requests
 jmespath==0.10.0
     # via
@@ -163,15 +165,17 @@ notifications-python-client==6.3.0
     # via -r requirements.in
 num2words==0.5.10
     # via -r requirements.in
-oauthlib==3.2.0
-    # via requests-oauthlib
+oauthlib==3.2.1
+    # via
+    #   -r requirements.in
+    #   requests-oauthlib
 openpyxl==3.0.10
     # via tablib
 packaging==21.3
     # via bleach
-pillow==9.1.1
+pillow==9.2.0
     # via wagtail
-prompt-toolkit==3.0.29
+prompt-toolkit==3.0.31
     # via click-repl
 psycogreen==1.0.2
     # via -r requirements.in
@@ -181,7 +185,7 @@ pycountry==19.8.18
     # via -r requirements.in
 pycparser==2.21
     # via cffi
-pyjwt==2.4.0
+pyjwt==2.5.0
     # via notifications-python-client
 pyparsing==3.0.9
     # via packaging
@@ -195,7 +199,7 @@ python-dateutil==2.8.2
     #   python-crontab
 pytube==9.2.2
     # via -r requirements.in
-pytz==2022.1
+pytz==2022.4
     # via
     #   celery
     #   django
@@ -234,11 +238,11 @@ six==1.16.0
     #   w3lib
 soupsieve==2.3.2.post1
     # via beautifulsoup4
-sqlparse==0.4.2
+sqlparse==0.4.3
     # via django
 tablib[xls,xlsx]==3.2.1
     # via wagtail
-unidecode==1.3.4
+unidecode==1.3.6
     # via wagtail
 urllib3==1.26.8
     # via
@@ -279,9 +283,9 @@ xlsxwriter==1.4.5
     # via wagtail
 xlwt==1.3.0
     # via tablib
-zope.event==4.5.0
+zope-event==4.5.0
     # via gevent
-zope.interface==5.4.0
+zope-interface==5.5.0
     # via gevent
 
 # The following packages are considered to be unsafe in a requirements file:
