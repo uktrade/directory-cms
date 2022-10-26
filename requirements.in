@@ -17,7 +17,7 @@ django-staff-sso-client==1.*
 html2text==2018.1.9
 wagtailmedia==0.*
 pytube==9.2.2
-django-filter==2.2.*
+django-filter>=2.4.0
 django-redis==4.10.0
 celery[redis]==5.2.2
 django-celery-beat==2.2.1
