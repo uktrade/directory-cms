@@ -28,6 +28,7 @@ bleach==3.*
 bleach-whitelist==0.*
 wagtail==2.11.*
 wagtail-modeltranslation==0.10.17
+django-modeltranslation==0.18.2
 urllib3==1.26.8
 w3lib==1.22
 django-admin-ip-restrictor==2.1.0
@@ -39,3 +40,4 @@ gevent==21.8.0
 psycogreen==1.0.2
 wagtailmedia==0.5.0
 cryptography==3.3.2
+oauthlib==3.2.1
