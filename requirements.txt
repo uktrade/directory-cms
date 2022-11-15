@@ -173,7 +173,7 @@ openpyxl==3.0.10
     # via tablib
 packaging==21.3
     # via bleach
-pillow==9.2.0
+pillow==9.3.0
     # via wagtail
 prompt-toolkit==3.0.31
     # via click-repl
