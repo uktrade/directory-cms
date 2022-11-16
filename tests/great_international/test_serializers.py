@@ -485,6 +485,31 @@ def test_international_homepage_serializer(rf, international_root_page, image, t
 # Investment Atlas Serializer tests
 
 @pytest.mark.django_db
+def test_atlas_opportunity_serializer_video_fields(international_root_page, rf, test_video):
+    opportunity_page = InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        slug='opp',
+        related_sectors=[]
+    )
+
+    opportunity_page.intro_video = test_video
+    opportunity_page.intro_video.save()
+
+    opportunity_page.hero_video = test_video
+    opportunity_page.hero_video.save()
+
+    serialized_opportunity = InvestmentOpportunityPageSerializer(
+        instance=opportunity_page,
+        context={'request': rf.get('/')}
+    )
+    for video_field in [serialized_opportunity.data['intro_video'], serialized_opportunity.data['hero_video']]:
+        assert video_field['title'] == test_video.title
+        assert video_field['transcript'] == 'Test transcript note'
+        assert video_field['thumbnail'] == test_video.thumbnail.url
+        assert video_field['sources'][0]['src'] == test_video.url
+
+
+@pytest.mark.django_db
 def test_atlas_opportunity_page_can_add_sector_as_related(rf, international_root_page):
     # Based on test_opportunity_page_can_add_sector_as_related
 
