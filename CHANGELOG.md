@@ -3,6 +3,7 @@
 ## Pre-release
 
 ### Implemented enhancements
+* KLS-27 - Add intro_video field to investment opportunity page
 
 ### Fixed bugs
 
