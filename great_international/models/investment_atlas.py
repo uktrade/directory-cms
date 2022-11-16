@@ -364,6 +364,13 @@ class InvestmentOpportunityPage(
         blank=True,
         help_text='Goes beside the opportunity intro text'
     )
+    intro_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
     opportunity_summary = models.TextField(
         blank=False,
         help_text=(

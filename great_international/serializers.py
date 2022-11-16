@@ -857,6 +857,7 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
     intro_image = wagtail_fields.ImageRenditionField(
         IMAGE_RENDITION_SPEC,
     )
+    intro_video = GreatMediaSerializer()
     hero_video = GreatMediaSerializer()
 
     # Key facts
