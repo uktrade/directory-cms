@@ -363,6 +363,7 @@ class InvestmentOpportunityPageTranslationOptions(
         'strapline',
         'introduction',
         'intro_image',
+        'intro_video',
         'opportunity_summary',
         'promoter',
         'location',
