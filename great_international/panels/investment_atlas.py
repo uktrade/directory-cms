@@ -110,6 +110,7 @@ class InvestmentOpportunityPagePanels:
                 FieldPanel('strapline'),
                 FieldPanel('introduction'),
                 ImageChooserPanel('intro_image'),
+                MediaChooserPanel('intro_video'),
                 FieldPanel('opportunity_summary'),
             ],
         ),
