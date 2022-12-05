@@ -13,7 +13,6 @@ from .models.great_international import (
     InternationalArticleListingPage,
     InternationalArticlePage,
     InternationalCampaignPage,
-    InternationalEUExitFormPage,
     InternationalInvestmentSectorPage,
     InternationalInvestmentSubSectorPage,
     WhyInvestInTheUKPage,
@@ -446,30 +445,6 @@ class InternationalTopicLandingPageSerializer(
         return articles + campaigns + sectors
 
 
-class EUExitGenericFormPageSerializer(BasePageSerializer):
-    breadcrumbs_label = serializers.CharField()
-    heading = serializers.CharField()
-    body_text = core_fields.MarkdownToHTMLField()
-    submit_button_text = serializers.CharField()
-    disclaimer = core_fields.MarkdownToHTMLField()
-
-
-class InternationalEUExitFormPageSerializer(
-    EUExitGenericFormPageSerializer,
-    metaclass=FormPageSerializerMetaclass
-):
-    class Meta:
-        model_class = InternationalEUExitFormPage
-
-
-class InternationalEUExitFormSuccessPageSerializer(BasePageSerializer):
-    breadcrumbs_label = serializers.CharField()
-    heading = serializers.CharField()
-    body_text = serializers.CharField()
-    next_title = serializers.CharField()
-    next_body_text = serializers.CharField()
-
-
 class MinimalPageSerializer(BasePageSerializer):
     heading = serializers.CharField(max_length=255)
 
@@ -882,6 +857,7 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
     intro_image = wagtail_fields.ImageRenditionField(
         IMAGE_RENDITION_SPEC,
     )
+    intro_video = GreatMediaSerializer()
     hero_video = GreatMediaSerializer()
 
     # Key facts

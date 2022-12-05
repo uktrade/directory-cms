@@ -38,7 +38,7 @@ celery[redis]==5.2.2
     # via
     #   -r requirements.in
     #   django-celery-beat
-certifi==2022.6.15
+certifi==2022.9.24
     # via
     #   elastic-apm
     #   requests
@@ -153,7 +153,7 @@ html2text==2018.1.9
     # via -r requirements.in
 html5lib==1.1
     # via wagtail
-idna==3.3
+idna==3.4
     # via requests
 importlib-metadata==4.12.0
     # via twine
@@ -179,17 +179,19 @@ notifications-python-client==6.3.0
     # via -r requirements.in
 num2words==0.5.10
     # via -r requirements.in
-oauthlib==3.2.0
-    # via requests-oauthlib
+oauthlib==3.2.1
+    # via
+    #   -r requirements.in
+    #   requests-oauthlib
 openpyxl==3.0.10
     # via tablib
 packaging==21.3
     # via bleach
-pillow==9.2.0
-    # via wagtail
 pkginfo==1.8.3
     # via twine
-prompt-toolkit==3.0.30
+pillow==9.3.0
+    # via wagtail
+prompt-toolkit==3.0.31
     # via click-repl
 psycogreen==1.0.2
     # via -r requirements.in
@@ -201,7 +203,7 @@ pycparser==2.21
     # via cffi
 pygments==2.13.0
     # via readme-renderer
-pyjwt==2.4.0
+pyjwt==2.5.0
     # via notifications-python-client
 pyparsing==3.0.9
     # via packaging
@@ -215,7 +217,7 @@ python-dateutil==2.8.2
     #   python-crontab
 pytube==9.2.2
     # via -r requirements.in
-pytz==2022.2.1
+pytz==2022.4
     # via
     #   celery
     #   django
@@ -261,11 +263,12 @@ six==1.16.0
     #   w3lib
 soupsieve==2.3.2.post1
     # via beautifulsoup4
-sqlparse==0.4.2
+sqlparse==0.4.3
     # via django
 tablib[xls,xlsx]==3.2.1
     # via wagtail
 telepath==0.2
+unidecode==1.3.6
     # via wagtail
 tqdm==4.64.0
     # via twine
@@ -315,7 +318,7 @@ zipp==3.8.1
     # via importlib-metadata
 zope-event==4.5.0
     # via gevent
-zope-interface==5.4.0
+zope-interface==5.5.0
     # via gevent
 
 # The following packages are considered to be unsafe in a requirements file:

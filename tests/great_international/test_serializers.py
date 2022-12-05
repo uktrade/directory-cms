@@ -49,6 +49,15 @@ from great_international.models.investment_atlas import (
 )
 
 
+@pytest.fixture
+def test_video():
+    test_video = make_test_video(duration=70, transcript='Test transcript note')
+    with NamedTemporaryFile(delete=True) as img_tmp:
+        test_video.thumbnail.save('test.jpg', File(img_tmp))
+        test_video.save()
+    return test_video
+
+
 @pytest.mark.django_db
 def test_campaign_page_serializer_has_related_pages(international_root_page, rf):
     related_page_one = InternationalArticlePageFactory(
@@ -393,17 +402,14 @@ def test_about_uk_region_listing_page_has_empty_regions_if_no_parent(rf, interna
 
 
 @pytest.mark.django_db
-def test_international_homepage_serializer(rf, international_root_page, image):
+def test_international_homepage_serializer(rf, international_root_page, image, test_video):
     home_page = InternationalHomePageFactory(
         slug='international',
         parent=international_root_page,  # This is tautological, but irrelevant here
     )
     home_page.hero_subtitle = "THIS LEGACY FIELD SHOULD NOT BE USED"
-    fake_video = make_test_video(duration=70, transcript='Test transcript note')
-    with NamedTemporaryFile(delete=True) as img_tmp:
-        fake_video.thumbnail.save('test.jpg', File(img_tmp))
-        fake_video.save()
-    home_page.hero_video = fake_video
+
+    home_page.hero_video = test_video
     home_page.hero_video.save()
 
     home_page.homepage_link_panels = [
@@ -453,8 +459,8 @@ def test_international_homepage_serializer(rf, international_root_page, image):
     }
     assert serializer.data['hero_video']['title'] == 'Test file'
     assert serializer.data['hero_video']['transcript'] == 'Test transcript note'
-    assert serializer.data['hero_video']['thumbnail'] == fake_video.thumbnail.url
-    assert serializer.data['hero_video']['sources'][0]['src'] == fake_video.url
+    assert serializer.data['hero_video']['thumbnail'] == test_video.thumbnail.url
+    assert serializer.data['hero_video']['sources'][0]['src'] == test_video.url
 
     # confirm the legacy fields are not exposed:
     for example_field_name in [
@@ -477,6 +483,31 @@ def test_international_homepage_serializer(rf, international_root_page, image):
 
 
 # Investment Atlas Serializer tests
+
+@pytest.mark.django_db
+def test_atlas_opportunity_serializer_video_fields(international_root_page, rf, test_video):
+    opportunity_page = InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        slug='opp',
+        related_sectors=[]
+    )
+
+    opportunity_page.intro_video = test_video
+    opportunity_page.intro_video.save()
+
+    opportunity_page.hero_video = test_video
+    opportunity_page.hero_video.save()
+
+    serialized_opportunity = InvestmentOpportunityPageSerializer(
+        instance=opportunity_page,
+        context={'request': rf.get('/')}
+    )
+    for video_field in [serialized_opportunity.data['intro_video'], serialized_opportunity.data['hero_video']]:
+        assert video_field['title'] == test_video.title
+        assert video_field['transcript'] == 'Test transcript note'
+        assert video_field['thumbnail'] == test_video.thumbnail.url
+        assert video_field['sources'][0]['src'] == test_video.url
+
 
 @pytest.mark.django_db
 def test_atlas_opportunity_page_can_add_sector_as_related(rf, international_root_page):

@@ -32,8 +32,6 @@ MODELS_SERIALIZERS_MAPPING = {
 
     # Still used but old styles for content
     # -------------------------------------
-    great_international.models.great_international.InternationalEUExitFormPage: great_international.serializers.InternationalEUExitFormPageSerializer,  # NOQA
-    great_international.models.great_international.InternationalEUExitFormSuccessPage: great_international.serializers.InternationalEUExitFormSuccessPageSerializer,  # NOQA
     # 2 pages redirected, 1 with old style:
     great_international.models.great_international.AboutDitServicesPage: great_international.serializers.AboutDitServicesPageSerializer,  # NOQA
 

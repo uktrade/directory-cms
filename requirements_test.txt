@@ -42,7 +42,8 @@ celery[redis]==5.2.2
     # via
     #   -r requirements.in
     #   django-celery-beat
-certifi==2022.6.15
+
+certifi==2022.9.24
     # via
     #   elastic-apm
     #   requests
@@ -68,7 +69,7 @@ codecov==2.1.12
     # via -r requirements_test.in
 colorama==0.4.5
     # via twine
-coverage[toml]==6.4.4
+coverage[toml]==6.5.0
     # via
     #   codecov
     #   coveralls
@@ -129,6 +130,7 @@ django-modelcluster==5.3
     # via wagtail
 django-modeltranslation==0.18.4
     # via wagtail-modeltranslation
+
 django-pglocks==1.0.2
     # via -r requirements.in
 django-redis==5.2.0
@@ -136,6 +138,7 @@ django-redis==5.2.0
 django-staff-sso-client==4.0.1
     # via -r requirements.in
 django-storages==1.13.1
+
     # via -r requirements.in
 django-taggit==1.5.1
     # via wagtail
@@ -165,7 +168,7 @@ factory-boy==2.12.0
     # via
     #   -r requirements_test.in
     #   wagtail-factories
-faker==14.1.0
+faker==15.1.0
     # via factory-boy
 flake8==5.0.4
     # via -r requirements_test.in
@@ -173,7 +176,7 @@ freezegun==0.3.14
     # via -r requirements_test.in
 gevent==21.8.0
     # via -r requirements.in
-greenlet==1.1.3
+greenlet==1.1.3.post0
     # via gevent
 gunicorn==20.1.0
     # via -r requirements.in
@@ -181,7 +184,7 @@ html2text==2018.1.9
     # via -r requirements.in
 html5lib==1.1
     # via wagtail
-idna==3.3
+idna==3.4
     # via requests
 importlib-metadata==4.12.0
     # via twine
@@ -211,8 +214,10 @@ notifications-python-client==6.3.0
     # via -r requirements.in
 num2words==0.5.10
     # via -r requirements.in
-oauthlib==3.2.0
-    # via requests-oauthlib
+oauthlib==3.2.1
+    # via
+    #   -r requirements.in
+    #   requests-oauthlib
 openpyxl==3.0.10
     # via tablib
 packaging==21.3
@@ -223,15 +228,15 @@ packaging==21.3
     #   pytest-sugar
 pep517==0.13.0
     # via build
-pillow==9.2.0
+pillow==9.3.0
     # via wagtail
-pip-tools==6.8.0
+pip-tools==6.9.0
     # via -r requirements_test.in
 pkginfo==1.8.3
     # via twine
 pluggy==1.0.0
     # via pytest
-prompt-toolkit==3.0.30
+prompt-toolkit==3.0.31
     # via click-repl
 psycogreen==1.0.2
     # via -r requirements.in
@@ -249,19 +254,19 @@ pyflakes==2.5.0
     # via flake8
 pygments==2.13.0
     # via readme-renderer
-pyjwt==2.4.0
+pyjwt==2.5.0
     # via notifications-python-client
 pyparsing==3.0.9
     # via packaging
 pyrsistent==0.18.1
     # via jsonschema
-pytest==7.1.2
+pytest==7.1.3
     # via
     #   -r requirements_test.in
     #   pytest-cov
     #   pytest-django
     #   pytest-sugar
-pytest-cov==3.0.0
+pytest-cov==4.0.0
     # via -r requirements_test.in
 pytest-django==4.5.2
     # via -r requirements_test.in
@@ -277,7 +282,7 @@ python-dateutil==2.8.2
     #   python-crontab
 pytube==9.2.2
     # via -r requirements.in
-pytz==2022.2.1
+pytz==2022.4
     # via
     #   celery
     #   django
@@ -301,7 +306,7 @@ requests[security]==2.27.1
     #   requests-toolbelt
     #   twine
     #   wagtail
-requests-mock==1.9.3
+requests-mock==1.10.0
     # via -r requirements_test.in
 requests-oauthlib==1.3.1
     # via django-staff-sso-client
@@ -330,7 +335,7 @@ six==1.16.0
     #   w3lib
 soupsieve==2.3.2.post1
     # via beautifulsoup4
-sqlparse==0.4.2
+sqlparse==0.4.3
     # via
     #   django
     #   django-debug-toolbar
@@ -338,7 +343,7 @@ tablib[xls,xlsx]==3.2.1
     # via wagtail
 telepath==0.2
     # via wagtail
-termcolor==1.1.0
+termcolor==2.0.1
     # via pytest-sugar
 tomli==2.0.1
     # via
@@ -350,6 +355,8 @@ tqdm==4.64.0
     # via twine
 twine==3.8.0
     # via wagtail-modeltranslation
+unidecode==1.3.6
+    # via wagtail
 urllib3==1.26.8
     # via
     #   -r requirements.in
@@ -399,7 +406,7 @@ zipp==3.8.1
     # via importlib-metadata
 zope-event==4.5.0
     # via gevent
-zope-interface==5.4.0
+zope-interface==5.5.0
     # via gevent
 
 # The following packages are considered to be unsafe in a requirements file:
