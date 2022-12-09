@@ -36,7 +36,7 @@ celery[redis]==5.2.2
     # via
     #   -r requirements.in
     #   django-celery-beat
-certifi==2022.9.24
+certifi==2022.12.7
     # via
     #   elastic-apm
     #   requests
