@@ -3,9 +3,15 @@
 ## Pre-release
 
 ### Implemented enhancements
-* KLS-27 - Add intro_video field to investment opportunity page
+* KLS-249 - Add ability to get related investment opportunities by investment_type
 
 ### Fixed bugs
+
+## [2.6.0](https://github.com/uktrade/directory-cms/releases/tag/2.6.0)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2.5.1...2.6.0)
+
+### Implemented enhancements
+* KLS-27 - Add intro_video field to investment opportunity page
 
 ## [2.5.1](https://github.com/uktrade/directory-cms/releases/tag/2.5.1)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2.5.0...2.5.1)
