@@ -155,6 +155,7 @@ class InvestmentOpportunityPagePanels:
                 FieldPanel('important_links'),
             ],
         ),
+        FieldPanel('get_related_opportunities_by', heading='How to match related opportunities'),
         SearchEngineOptimisationPanel(),
     ]
 
