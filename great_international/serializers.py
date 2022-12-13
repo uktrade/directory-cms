@@ -25,6 +25,7 @@ from .models.investment_atlas import (
     InvestmentOpportunityPage,
     InvestmentGeneralContentPage,
     InvestmentOpportunityListingPage,
+    INVESTMENT_TYPE
 )
 
 
@@ -934,9 +935,7 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
         sub_sectors_list = [sub_sector['related_sub_sector'] for sub_sector in serializer.data]
         return sub_sectors_list
 
-    def get_related_opportunities(self, instance):
-        # Related opportunities are defined as based on SECTOR.
-
+    def get_related_opportunities_by_sector(self, instance):
         related_sectors_set = set(sector.related_sector_id for sector in instance.related_sectors.all())
 
         if not related_sectors_set:
@@ -951,6 +950,27 @@ class InvestmentOpportunityPageSerializer(BasePageSerializer, HeroSerializer):
             opp_sectors_set = set(sector.related_sector_id for sector in opp.related_sectors.all())
             if opp_sectors_set.intersection(related_sectors_set):
                 related_opps.append(opp)
+
+        return related_opps
+
+    def get_related_opportunities_by_investment_type(self, instance):
+        if not instance.investment_type:
+            return []
+
+        possible_opps = InvestmentOpportunityPage.objects.live().public().exclude(
+            id=instance.id
+        ).order_by('-priority_weighting').distinct()
+
+        return [opp for opp in possible_opps if opp.investment_type == instance.investment_type]
+
+    def get_related_opportunities(self, instance):
+        # Related opportunities are by default based on SECTOR,
+        # but can also be based on investment type
+
+        if instance.get_related_opportunities_by == INVESTMENT_TYPE:
+            related_opps = self.get_related_opportunities_by_investment_type(instance)
+        else:
+            related_opps = self.get_related_opportunities_by_sector(instance)
 
         if not related_opps:
             return []
