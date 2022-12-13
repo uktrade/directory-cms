@@ -377,7 +377,8 @@ class InvestmentOpportunityPageTranslationOptions(
         'contact_name',
         'contact_avatar',
         'contact_job_title',
-        'contact_link'
+        'contact_link',
+        'get_related_opportunities_by'
     )
 
 
