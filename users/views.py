@@ -173,6 +173,9 @@ class SSORequestAccessView(EditView):
     error_message = 'There was a problem with your submission'
     template_name = "sso/request_access.html"
     success_url = reverse_lazy('great_sso:request_access_success')
+    edit_url_name = 'wagtailadmin_workflows:edit'
+    delete_url_name = 'wagtailadmin_workflows:disable'
+    delete_item_label = _('Disable')
 
     def dispatch(self, request):
         self.get_object()
