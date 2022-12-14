@@ -74,6 +74,9 @@ db.sqlite3
 
 .direnv/
 
+# VS Code
+.vscode/
+
 # PyTest
 .pytest_cache/
 
