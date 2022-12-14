@@ -44,6 +44,7 @@ from great_international.models.great_international import (
     InternationalInvestmentSectorPage,
 )
 from great_international.models.investment_atlas import (
+    INVESTMENT_TYPE,
     InvestmentOpportunityPage,
     InvestmentOpportunityRelatedSubSectors,
 )
@@ -56,6 +57,20 @@ def test_video():
         test_video.thumbnail.save('test.jpg', File(img_tmp))
         test_video.save()
     return test_video
+
+
+@pytest.fixture
+def fdi_investment_type():
+    return InvestmentTypeFactory(
+        name=settings.FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT
+    )
+
+
+@pytest.fixture
+def non_fdi_investment_type():
+    InvestmentTypeFactory(
+        name=f'Not {settings.FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT}'
+    )
 
 
 @pytest.mark.django_db
@@ -589,8 +604,8 @@ def test_atlas_opportunity_page_null_case_related_sector__alt(rf, international_
 
 
 @pytest.mark.django_db
-def test_atlas_opportunity_list_page_related_opportunities(rf, international_root_page):
-    # Unlike with the old CapInvest opps, Atlas ones are associated by Sector.
+def test_atlas_opportunity_list_page_related_opportunities_by_sector(rf, international_root_page):
+    # Opportunities are by default matched by sector
     # Regions and Sub-sector do not matter
 
     # make a landing page
@@ -1004,6 +1019,88 @@ def test_atlas_opportunity_list_page_related_opportunities__no_opportunities(rf,
         instance=opportunity,
         context={'request': rf.get('/')}
     )
+    assert opportunity_serializer.data['related_opportunities'] == []
+
+
+@pytest.mark.django_db
+def test_atlas_opportunity_page_related_opportunities_by_investment_type(
+    rf, international_root_page, fdi_investment_type, non_fdi_investment_type
+):
+
+    # Create 3 FDI type opportunities
+    InvestmentOpportunityPageFactory.create_batch(
+        3,
+        parent=international_root_page,
+        investment_type=fdi_investment_type
+    )
+
+    # Create 2 NON FDI type opportunities
+    InvestmentOpportunityPageFactory.create_batch(
+        2,
+        parent=international_root_page,
+        investment_type=non_fdi_investment_type
+    )
+
+    opportunity = InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        get_related_opportunities_by=INVESTMENT_TYPE,
+        investment_type=fdi_investment_type
+    )
+
+    opportunity_serializer = InvestmentOpportunityPageSerializer(
+        instance=opportunity,
+        context={'request': rf.get('/')}
+    )
+
+    assert len(opportunity_serializer.data['related_opportunities']) == 3
+    for opp in opportunity_serializer.data['related_opportunities']:
+        # investment_type not returned from related opportunity serializer, so need to fetch the object
+        obj = InvestmentOpportunityPage.objects.get(pk=opp['id'])
+        assert obj.investment_type == fdi_investment_type
+
+
+@pytest.mark.django_db
+def test_atlas_opportunity_page_related_opportunities_by_investment_type_no_matches(
+    rf, international_root_page, fdi_investment_type, non_fdi_investment_type
+):
+
+    # Create 2 NON FDI type opportunities
+    InvestmentOpportunityPageFactory.create_batch(
+        2,
+        parent=international_root_page,
+        investment_type=non_fdi_investment_type
+    )
+
+    # Create opportunity with a different investment type
+    opportunity = InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        get_related_opportunities_by=INVESTMENT_TYPE,
+        investment_type=fdi_investment_type
+    )
+
+    opportunity_serializer = InvestmentOpportunityPageSerializer(
+        instance=opportunity,
+        context={'request': rf.get('/')}
+    )
+
+    assert opportunity_serializer.data['related_opportunities'] == []
+
+
+@pytest.mark.django_db
+def test_atlas_opportunity_page_related_opportunities_by_investment_type_no_type_set(rf, international_root_page):
+
+    # Create opportunity with no investment type
+    opportunity = InvestmentOpportunityPageFactory(
+        parent=international_root_page,
+        get_related_opportunities_by=INVESTMENT_TYPE,
+        investment_type=None
+    )
+
+    opportunity_serializer = InvestmentOpportunityPageSerializer(
+        instance=opportunity,
+        context={'request': rf.get('/')}
+    )
+
     assert opportunity_serializer.data['related_opportunities'] == []
 
 
