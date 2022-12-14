@@ -1,6 +1,7 @@
 import pytest
 
 from core.blocks import InternalOrExternalLinkBlock
+from core.blocks_serializers import ColumnWithTitleIconTextBlockStreamChildBaseSerializer
 
 pytestmark = pytest.mark.django_db
 
@@ -46,3 +47,11 @@ def test_internal_or_external_link_block__custom_get_api_representation(
             'external_link': 'https://www.example.com/external/'
         }
     ) == international_root_page.get_url()
+
+
+def test_block_serializer(
+    international_root_page,
+):
+
+    block = ColumnWithTitleIconTextBlockStreamChildBaseSerializer()
+    assert block is not None
