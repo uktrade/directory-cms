@@ -1,20 +1,20 @@
 django==3.2.15
-djangorestframework==3.12.*
-django-environ==0.4.5
-gunicorn==20.1.0
-sentry-sdk==0.13.4
-django_storages==1.13.1
-whitenoise==6.2.0
-dj-database-url==0.5.0
-psycopg2==2.8.* --no-binary psycopg2
-django-pglocks==1.0.2
+djangorestframework==3.14.*
+django-environ==0.*
+gunicorn==20.*
+sentry-sdk==1.*
+django_storages==1.13.*
+whitenoise==6.*
+dj-database-url==1.*
+psycopg2==2.9.* --no-binary psycopg2
+django-pglocks==1.0.*
 boto3==1.24.*
 sigauth==5.1.1
 directory-healthcheck==3.*
 directory-components==38.*
 directory-constants==22.*
 django-staff-sso-client==4.*
-html2text==2018.1.9
+html2text==2020.*
 wagtailmedia==0.*
 pytube==9.2.2
 django-filter>=2.4.0
@@ -26,10 +26,10 @@ requests[security]==2.27.1
 markdown==2.*
 bleach==3.*
 bleach-whitelist==0.*
-wagtail==2.15.5
+wagtail==2.16.*
 wagtail-modeltranslation==0.11.0
 django-modeltranslation==0.18.2
-urllib3==1.26.8
+urllib3==1.26.*
 w3lib==1.22
 django-admin-ip-restrictor==2.2.0
 notifications-python-client==6.3.*
@@ -39,5 +39,5 @@ elastic-apm==5.10.1
 gevent==21.8.0
 psycogreen==1.0.2
 wagtailmedia==0.5.0
-cryptography==3.3.2
-oauthlib==3.2.1
+cryptography==38.*
+oauthlib==3.2.*
