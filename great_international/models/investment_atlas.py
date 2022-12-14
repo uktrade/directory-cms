@@ -37,6 +37,14 @@ TIME_TO_INVESTMENT_DECISION_OPTIONS = (
     (TIME_TO_INVESTMENT_DECISION_2Y_PLUS, '2 years +'),
 )
 
+INVESTMENT_TYPE = 'INVESTMENT_TYPE'
+RELATED_SECTORS = 'RELATED_SECTORS'
+
+GET_RELATED_OPPORTUNITIES_OPTIONS = (
+    (INVESTMENT_TYPE, 'Investment type'),
+    (RELATED_SECTORS, 'Related sectors')
+)
+
 # FOR ALL THE SNIPPETS:
 # TODO: translation support: https://wagtail-modeltranslation.readthedocs.io/en/latest/Registering%20Models.html
 
@@ -486,6 +494,13 @@ class InvestmentOpportunityPage(
         blank=True,
         null=True,
         max_length=1500,
+    )
+
+    get_related_opportunities_by = models.CharField(
+        choices=GET_RELATED_OPPORTUNITIES_OPTIONS,
+        default=RELATED_SECTORS,
+        help_text='Used to determine what related opportunities are dislayed on the page.',
+        max_length=50
     )
 
 
