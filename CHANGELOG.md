@@ -1,6 +1,7 @@
 # Changelog
 
 ## Pre-release
+* KLS-205 - Upgrade django and wagtail
 
 ### Implemented enhancements
 * KLS-249 - Add ability to get related investment opportunities by investment_type
