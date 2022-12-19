@@ -8,5 +8,5 @@ from . import urls as users_urls
 # This will run before every hook in the wagtail core
 def register_admin_urls():
     return [
-        url(r'^users/', include(users_urls, namespace='wagtailusers_users')),
+        url(r'^dit_users/', include(users_urls, namespace='great_users'))
     ]
