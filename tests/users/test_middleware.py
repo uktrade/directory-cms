@@ -19,7 +19,9 @@ class MockProfile:
 
 class MockUser:
     def __init__(
-        self, authenticated=False, superuser=False,
+        self,
+        authenticated=False,
+        superuser=False,
         assignment_status=None,
     ):
         self.authenticated = authenticated
@@ -44,11 +46,14 @@ def test_process_request_returns_none_if_user_is_a_superuser(rf):
     assert result is None
 
 
-@pytest.mark.parametrize('url', (
-    '/',
-    '/healthcheck/',
-    '/activity-stream/v1/',
-))
+@pytest.mark.parametrize(
+    'url',
+    (
+        '/',
+        '/healthcheck/',
+        '/activity-stream/v1/',
+    ),
+)
 def test_process_request_returns_none_if_url_not_in_admin(rf, url):
     request = rf.get(url)
     request.user = MockUser(authenticated=True, superuser=False)
@@ -56,10 +61,13 @@ def test_process_request_returns_none_if_url_not_in_admin(rf, url):
     assert result is None
 
 
-@pytest.mark.parametrize('url', (
-    reverse('sso:request_access'),
-    reverse('sso:request_access_success'),
-))
+@pytest.mark.parametrize(
+    'url',
+    (
+        reverse('great_sso:request_access'),
+        reverse('great_sso:request_access_success'),
+    ),
+)
 def test_process_request_returns_none_if_user_requesting_access(rf, url):
     request = rf.get(url)
     request.user = MockUser(authenticated=True, superuser=False)
@@ -67,19 +75,14 @@ def test_process_request_returns_none_if_user_requesting_access(rf, url):
     assert result is None
 
 
-@pytest.mark.parametrize('assignment_status, redirects_to', (
+@pytest.mark.parametrize(
+    'assignment_status, redirects_to',
     (
-        UserProfile.STATUS_CREATED,
-        reverse('sso:request_access')
+        (UserProfile.STATUS_CREATED, reverse('great_sso:request_access')),
+        (UserProfile.STATUS_AWAITING_APPROVAL, reverse('great_sso:request_access_success')),
     ),
-    (
-        UserProfile.STATUS_AWAITING_APPROVAL,
-        reverse('sso:request_access_success')
-    ),
-))
-def test_process_request_redirects_for_assignment_status(
-    rf, assignment_status, redirects_to
-):
+)
+def test_process_request_redirects_for_assignment_status(rf, assignment_status, redirects_to):
     request = rf.get('/admin/')
     request.user = MockUser(
         authenticated=True,

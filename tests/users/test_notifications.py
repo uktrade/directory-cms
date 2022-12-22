@@ -68,7 +68,7 @@ def test_notify_team_leader_of_pending_access_request(rf):
             user_name=kwargs['user_name'],
             user_email=kwargs['user_email'],
             user_role=kwargs['user_role'],
-            review_url='http://testserver/admin/users/%s/' % kwargs['user_id'],
+            review_url='http://testserver/admin/dit_users/%s/' % kwargs['user_id'],
         ),
     )
     mocked_method.assert_called_with(**expected_call_args)

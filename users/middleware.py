@@ -8,8 +8,8 @@ class SSORedirectUsersToRequestAccessViews(MiddlewareMixin):
 
     admin_root_url = reverse_lazy('wagtailadmin_home')
     ignore_admin_urls = (
-        reverse_lazy('sso:request_access'),
-        reverse_lazy('sso:request_access_success'),
+        reverse_lazy('great_sso:request_access'),
+        reverse_lazy('great_sso:request_access_success'),
     )
 
     def process_request(self, request):
@@ -32,7 +32,7 @@ class SSORedirectUsersToRequestAccessViews(MiddlewareMixin):
         profile = user.userprofile
 
         if profile.assignment_status == UserProfile.STATUS_CREATED:
-            return redirect('sso:request_access')
+            return redirect('great_sso:request_access')
 
         if profile.assignment_status == UserProfile.STATUS_AWAITING_APPROVAL:
-            return redirect('sso:request_access_success')
+            return redirect('great_sso:request_access_success')
