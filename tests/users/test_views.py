@@ -36,25 +36,25 @@ USER_DETAILS_CHANGING = {
 
 @pytest.mark.django_db
 def test_create_user_view_get(admin_client):
-    url = reverse('wagtailusers_users:add')
+    url = reverse('great_users:add')
     response = admin_client.get(url)
     assert response.status_code == status.HTTP_200_OK
 
 
 @pytest.mark.django_db
 def test_create_user_view(admin_client):
-    url = reverse('wagtailusers_users:add')
+    url = reverse('great_users:add')
 
     response = admin_client.post(url, data=USER_DETAILS_CREATE)
 
     assert response.context['message'] == 'User test created.'
     assert response.status_code == status.HTTP_302_FOUND
-    assert response.url == reverse('wagtailusers_users:index')
+    assert response.url == reverse('great_users:index')
 
 
 @pytest.mark.django_db
 def test_create_user_view_invalid_form(admin_client):
-    url = reverse('wagtailusers_users:add')
+    url = reverse('great_users:add')
 
     post_data = USER_DETAILS.copy()
     post_data.update(email='This is not an email address')
@@ -68,7 +68,7 @@ def test_create_user_view_invalid_form(admin_client):
 @pytest.mark.django_db
 def test_get_edit_user_view(admin_client):
     user = UserFactory(**USER_DETAILS)
-    url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
+    url = reverse('great_users:edit', kwargs={'pk': user.pk})
     response = admin_client.get(url)
     assert response.status_code == status.HTTP_200_OK
     assert response.context['can_delete'] is True
@@ -77,7 +77,7 @@ def test_get_edit_user_view(admin_client):
 @pytest.mark.django_db
 def test_edit_user_view(team_leaders_group, admin_client):
     user = UserFactory(**USER_DETAILS)
-    url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
+    url = reverse('great_users:edit', kwargs={'pk': user.pk})
 
     # We'll add the user to a group, as well as changing their details
     post_data = USER_DETAILS_CHANGING.copy()
@@ -86,7 +86,7 @@ def test_edit_user_view(team_leaders_group, admin_client):
 
     assert response.context['message'] == 'User johnsmith updated.'
     assert response.status_code == status.HTTP_302_FOUND
-    assert response.url == reverse('wagtailusers_users:index')
+    assert response.url == reverse('great_users:index')
 
     # The user's details should have changed to reflect the posted values
     user.refresh_from_db()
@@ -100,7 +100,7 @@ def test_edit_user_view(team_leaders_group, admin_client):
 
 @pytest.mark.django_db
 def test_edit_user_view_invalid_form(admin_client, approved_user):
-    url = reverse('wagtailusers_users:edit', kwargs={'pk': approved_user.pk})
+    url = reverse('great_users:edit', kwargs={'pk': approved_user.pk})
 
     post_data = USER_DETAILS.copy()
     post_data.update(email='This is not an email address')
@@ -122,7 +122,7 @@ def test_edit_user_view_cannot_change_personal_details_when_sso_enforced(
     user = UserFactory(**USER_DETAILS)
 
     # Post changes to the view
-    url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
+    url = reverse('great_users:edit', kwargs={'pk': user.pk})
     admin_client.post(url, data=USER_DETAILS_CHANGING)
 
     # The users details should remain unchanged, because the
@@ -149,7 +149,7 @@ def test_edit_user_view_preserves_ability_to_update_is_active(admin_client):
     # Post using the same details + 'is_active=on'
     post_data = USER_DETAILS.copy()
     post_data.update(is_active='on')
-    url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
+    url = reverse('great_users:edit', kwargs={'pk': user.pk})
     admin_client.post(url, data=post_data)
 
     # The change to 'is_active' should have been applied, because that field
@@ -170,7 +170,7 @@ def test_edit_user_view_warns_administrator_if_user_is_awaiting_approval(
     settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] = True
 
     user = user_awaiting_approval
-    url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
+    url = reverse('great_users:edit', kwargs={'pk': user.pk})
     response = admin_client.get(url)
 
     message = response.context['message']
@@ -191,7 +191,7 @@ def test_edit_user_view_marks_user_as_approved_if_added_to_group(
 
     user = user_awaiting_approval
     profile = user_awaiting_approval.userprofile
-    url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
+    url = reverse('great_users:edit', kwargs={'pk': user.pk})
 
     group = Group.objects.get(pk=profile.self_assigned_group_id)
     group.permissions.add(Permission.objects.get(codename='access_admin'))
@@ -209,7 +209,7 @@ def test_edit_user_view_marks_user_as_approved_if_added_to_group(
     # Ensure the post was successful
     assert response.context['message'] == 'User %s updated.' % user.username
     assert response.status_code == status.HTTP_302_FOUND
-    assert response.url == reverse('wagtailusers_users:index')
+    assert response.url == reverse('great_users:index')
 
     # The UserProfile should have been updated
     profile.refresh_from_db()
@@ -238,7 +238,7 @@ def test_edit_user_view_does_not_mark_user_as_approved_if_not_added_to_a_group(a
     profile.assignment_status = UserProfile.STATUS_AWAITING_APPROVAL
     profile.self_assigned_group_id = groups_with_info[0].id
     profile.save()
-    url = reverse('wagtailusers_users:edit', kwargs={'pk': user.pk})
+    url = reverse('great_users:edit', kwargs={'pk': user.pk})
 
     with patch(
         'users.views.notify_user_of_access_request_approval'
@@ -254,7 +254,7 @@ def test_edit_user_view_does_not_mark_user_as_approved_if_not_added_to_a_group(a
     # Ensure the post was successful
     assert response.context['message'] == 'User %s updated.' % user.username
     assert response.status_code == status.HTTP_302_FOUND
-    assert response.url == reverse('wagtailusers_users:index')
+    assert response.url == reverse('great_users:index')
 
     # The UserProfile should NOT have been updated
     profile.refresh_from_db()
@@ -304,7 +304,7 @@ def test_force_staff_sso(client):
 def test_ssorequestaccessview_responds_based_on_assignment_status(
     admin_client, admin_user, assignment_status, expected_status_code
 ):
-    url = reverse('sso:request_access')
+    url = reverse('great_sso:request_access')
     profile = admin_user.userprofile
     profile.assignment_status = assignment_status
     profile.save()
@@ -316,7 +316,7 @@ def test_ssorequestaccessview_responds_based_on_assignment_status(
 def test_ssorequestaccessview_shows_unlimited_visibilty_groups_only(
     admin_client, groups_with_info
 ):
-    url = reverse('sso:request_access')
+    url = reverse('great_sso:request_access')
 
     # Visbility is set to 'unrestricted' for all groups in `groups_with_info`,
     # so choices should reflect that by default
@@ -344,7 +344,7 @@ def test_ssorequestaccessview_shows_unlimited_visibilty_groups_only(
 def test_ssorequestaccessview_with_no_team_leaders_group(admin_client):
     # If no 'team leaders group' has been designated, the 'team_leaders'
     # field should only have a 'blank' option
-    url = reverse('sso:request_access')
+    url = reverse('great_sso:request_access')
     response = admin_client.get(url)
     team_leader_field = response.context['form']['team_leader'].field
     assert tuple(team_leader_field.choices) == (BLANK_CHOICE,)
@@ -356,7 +356,7 @@ def test_ssorequestaccessview_with_team_leaders_group_but_no_members(
 ):
     # If the designated 'team leaders group' has no members, the 'team_leaders'
     # field should only have a 'blank' option
-    url = reverse('sso:request_access')
+    url = reverse('great_sso:request_access')
     response = admin_client.get(url)
     team_leader_field = response.context['form']['team_leader'].field
     assert team_leaders_group.user_set.all().exists() is False
@@ -367,7 +367,7 @@ def test_ssorequestaccessview_with_team_leaders_group_but_no_members(
 def test_ssorequestaccessview_with_team_leaders(
     admin_client, team_leaders_group, team_leaders
 ):
-    url = reverse('sso:request_access')
+    url = reverse('great_sso:request_access')
 
     # When team leaders are defined, they will appear as choices
     # for the 'team_leaders' field
@@ -388,7 +388,7 @@ def test_ssorequestaccessview_with_team_leaders(
 def test_ssorequestaccessview_fails_validation_if_form_incomplete(
     admin_client, groups_with_info, team_leaders
 ):
-    url = reverse('sso:request_access')
+    url = reverse('great_sso:request_access')
     response = admin_client.post(url, data={})
 
     # Should still be on the same view
@@ -411,7 +411,7 @@ def test_ssorequestaccessview_post_with_complete_data(
         autospec=True
     ) as mocked_method:
         response = admin_client.post(
-            reverse('sso:request_access'),
+            reverse('great_sso:request_access'),
             data={
                 'self_assigned_group': group.id,
                 'team_leader': team_leader.id,
@@ -419,7 +419,7 @@ def test_ssorequestaccessview_post_with_complete_data(
         )
 
     # Should be redirected to the success url
-    success_url = reverse('sso:request_access_success')
+    success_url = reverse('great_sso:request_access_success')
     assert response.url == success_url
 
     # The UserProfile for `admin_user` should have been updated
@@ -443,8 +443,8 @@ def test_ssorequestaccessview_post_with_complete_data(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize('url', (
-    reverse('sso:request_access'),
-    reverse('sso:request_access_success'),
+    reverse('great_sso:request_access'),
+    reverse('great_sso:request_access_success'),
 ))
 def test_ssorequestaccess_views_only_available_to_authenticated_users(
     client, admin_client, url
