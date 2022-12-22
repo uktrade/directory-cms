@@ -15,7 +15,7 @@ def notify_team_leader_of_pending_access_request(
         'user_email': user_email,
         'user_role': user_role,
         'review_url': request.build_absolute_uri(
-            reverse('wagtailusers_users:edit', args=(user_id,))
+            reverse('great_users:edit', args=(user_id,))
         ),
     }
     return notifications_client.send_email_notification(
