@@ -5,6 +5,7 @@
 
 ### Implemented enhancements
 * KLS-249 - Add ability to get related investment opportunities by investment_type
+* KLS-288 patch django v3.2.16
 
 ### Fixed bugs
 
