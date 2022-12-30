@@ -1,4 +1,4 @@
-django==3.2.15
+django==3.2.16
 djangorestframework==3.14.*
 django-environ==0.*
 gunicorn==20.*
