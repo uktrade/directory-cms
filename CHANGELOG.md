@@ -5,8 +5,10 @@
 
 ### Implemented enhancements
 * KLS-249 - Add ability to get related investment opportunities by investment_type
+* KLS-288 patch django v3.2.16
 
 ### Fixed bugs
+Fix for elastic apm failure in pipeline
 
 ## [2.6.0](https://github.com/uktrade/directory-cms/releases/tag/2.6.0)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2.5.1...2.6.0)
