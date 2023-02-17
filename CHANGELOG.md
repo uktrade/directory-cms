@@ -1,5 +1,8 @@
 # Changelog
 
+## Updated django version
+- Django upgraded to 3.2.17
+
 ## Pre-release
 * KLS-205 - Upgrade django and wagtail
 
