@@ -39,5 +39,5 @@ elastic-apm>6.0
 gevent==21.8.0
 psycogreen==1.0.2
 wagtailmedia==0.5.0
-cryptography==38.*
+cryptography==39.*
 oauthlib==3.2.*
