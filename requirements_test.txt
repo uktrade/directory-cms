@@ -75,8 +75,10 @@ coverage[toml]==6.5.0
     #   pytest-cov
 coveralls==3.3.1
     # via -r requirements_test.in
-cryptography==38.0.4
-    # via -r requirements.in
+cryptography==39.0.1
+    # via
+    #   -r requirements.in
+    #   secretstorage
 directory-components==38.2.1
     # via -r requirements.in
 directory-constants==22.0.2
@@ -196,6 +198,10 @@ iniconfig==2.0.0
     # via pytest
 jaraco-classes==3.2.3
     # via keyring
+jeepney==0.8.0
+    # via
+    #   keyring
+    #   secretstorage
 jmespath==1.0.1
     # via
     #   boto3
@@ -321,6 +327,8 @@ rfc3986==2.0.0
     # via twine
 s3transfer==0.6.0
     # via boto3
+secretstorage==3.3.3
+    # via keyring
 sentry-sdk==1.15.0
     # via -r requirements.in
 sigauth==5.1.1
