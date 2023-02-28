@@ -1,17 +1,39 @@
 # Changelog
 
 
-## Upgraded Django version
--upgraded version to 3.2.18
 ## Pre-release
-* KLS-205 - Upgrade django and wagtail
+
 
 ### Implemented enhancements
-* KLS-249 - Add ability to get related investment opportunities by investment_type
+
+## [2.9.2](https://github.com/uktrade/directory-cms/releases/tag/2.9.2)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2.9.1...2.9.2)
+
+### Implemented enhancements
+* KLS-411 - Upgraded Cryptography to 39.0.1
+
+## [2.9.1](https://github.com/uktrade/directory-cms/releases/tag/2.9.1)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2.9.0...2.9.1)
+
+### Implemented enhancements
+* Upgraded Django version to 3.2.18
+## [2.9.0](https://github.com/uktrade/directory-cms/releases/tag/2.9.0)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2.8.0...2.9.0)
+### Implemented enhancements
 * KLS-288 patch django v3.2.16
 
 ### Fixed bugs
 Fix for elastic apm failure in pipeline
+
+## [2.8.0](https://github.com/uktrade/directory-cms/releases/tag/2.8.0)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2.7.0...2.8.0)
+### Implemented enhancements
+* KLS-205 - Upgrade django and wagtail
+
+## [2.7.0](https://github.com/uktrade/directory-cms/releases/tag/2.7.0)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2.6.0...2.7.0)
+### Implemented enhancements
+* KLS-249 - Add ability to get related investment opportunities by investment_type
 
 ## [2.6.0](https://github.com/uktrade/directory-cms/releases/tag/2.6.0)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2.5.1...2.6.0)
