@@ -9,6 +9,9 @@ class InternationalArticlePageTranslationOptions(BaseTranslationOptions):
     fields = (
         'article_title',
         'article_subheading',
+        'hero_image',
+        'hero_video',
+        'type_of_article',
         'article_teaser',
         'article_body_text',
         'cta_title',

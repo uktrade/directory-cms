@@ -7,13 +7,15 @@ from wagtail.admin.edit_handlers import (
     MultiFieldPanel,
     ObjectList,
     PageChooserPanel,
-    StreamFieldPanel,
+    StreamFieldPanel
 )
+
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmedia.edit_handlers import MediaChooserPanel
 from wagtailmedia.widgets import AdminMediaChooser
-
+from wagtail.images.blocks import ImageChooserBlock
+from wagtailmedia.blocks import AbstractMediaChooserBlock
 from core.helpers import make_translated_interface
 from core.panels import SearchEngineOptimisationPanel
 
@@ -276,13 +278,15 @@ class BaseInternationalSectorPagePanels:
         content_panels=content_panels,
         settings_panels=settings_panels
     )
-
-
+    
 class InternationalArticlePagePanels:
 
     content_panels = [
         FieldPanel('title'),
         FieldPanel('article_title'),
+        FieldPanel('type_of_article'),
+        ImageChooserPanel('hero_image'),
+        MediaChooserPanel('hero_video'),
         MultiFieldPanel(
             heading='Article content',
             children=[
