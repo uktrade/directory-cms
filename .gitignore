@@ -7,7 +7,7 @@ __pycache__/
 staticfiles
 BrowserStackLocal
 node_modules/
-
+venv/
 .env
 ENV/
 

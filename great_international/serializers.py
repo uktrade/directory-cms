@@ -295,6 +295,8 @@ class InternationalArticlePageSerializer(BasePageSerializer):
     display_title = serializers.CharField(source='article_title')
     article_title = serializers.CharField()
     article_teaser = serializers.CharField()
+    hero_image = wagtail_fields.ImageRenditionField('original')
+    hero_video = core_fields.VideoField()
     article_subheading = serializers.CharField()
 
     article_image = wagtail_fields.ImageRenditionField('original')
