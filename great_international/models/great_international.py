@@ -187,8 +187,9 @@ class InternationalHomePage(
             fas_models.InternationalTradeHomePage,
         ]
 
+
 class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseInternationalPage):
-    
+
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
@@ -196,11 +197,11 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
         'great_international.WhyInvestInTheUKPage',
         'great_international.InvestmentGeneralContentPage',
     ]
-    
+
     subpage_types = []
 
-    type_of_article = models.TextField(choices=ARTICLE_TYPES, null=True, blank =True)
-    
+    type_of_article = models.TextField(choices=ARTICLE_TYPES, null=True, blank=True)
+
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -208,7 +209,7 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    
+
     hero_video = models.ForeignKey(
         'wagtailmedia.Media',
         null=True,
@@ -216,7 +217,6 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
         on_delete=models.SET_NULL,
         related_name='+',
     )
-    
     article_title = models.TextField()
     article_subheading = models.TextField(
         blank=True,
@@ -449,7 +449,7 @@ class InternationalTopicLandingPage(panels.InternationalTopicLandingPagePanels, 
     ]
 
     landing_page_title = models.CharField(max_length=255)
-    #actuially this is the one
+
     hero_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
