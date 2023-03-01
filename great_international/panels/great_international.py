@@ -276,9 +276,10 @@ class BaseInternationalSectorPagePanels:
         content_panels=content_panels,
         settings_panels=settings_panels
     )
-    
+
+
 class InternationalArticlePagePanels:
-    
+
     content_panels = [
         FieldPanel('title'),
         FieldPanel('article_title'),
