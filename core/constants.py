@@ -13,4 +13,5 @@ ARTICLE_TYPES = [
     ('Advice', 'Advice'),
     ('Case study', 'Case study'),
     ('Campaign', 'Campaign'),
+    ('Freeport landing', 'Freeport landing')
 ]
