@@ -311,6 +311,25 @@ class InternationalArticlePageSerializer(BasePageSerializer):
     cta_link = serializers.CharField()
 
     tags = core_fields.TagsListField()
+    
+    freeport_data = serializers.SerializerMethodField()
+    # import pdb
+    # pdb.set_trace()
+    def get_freeport_data(self, instance):
+        # if instance.type_of_article == 'Freeport landing':
+            queryset = InvestmentOpportunityPage.objects.live().public().filter(investment_type__name = 'Freeport')
+            import pdb
+            # pdb.set_trace()
+            if not queryset:
+                return []
+
+            serializer = InvestmentOpportunityForListPageSerializer(
+                queryset,
+                many=True,
+                allow_null=True,
+                context=self.context
+            )
+            return serializer.data
 
 
 class GreatMediaSerializer(serializers.Serializer):
