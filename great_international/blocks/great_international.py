@@ -106,7 +106,7 @@ sector_page_block_spec_list = [
                     'columns',
                     blocks.StreamBlock(
                         [
-                            ('text', MarkdownBlock()),
+                            ('text', blocks.RichTextBlock()),
                         ],
                     ),
                 ),
