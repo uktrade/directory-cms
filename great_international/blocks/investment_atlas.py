@@ -28,13 +28,13 @@ class InlineOpportunityImageBlock(BaseAltTextImageBlock):
 # This is separate because it's used in both PageSectionBlock, below, and
 # the ReusableContentSection snippet model
 page_section_block_spec_list = [
-    ('text', MarkdownBlock()),
+    ('text', blocks.RichTextBlock()),
     ('image', InlineOpportunityImageBlock()),
     (
         'columns',
         blocks.StreamBlock(
             [
-                ('text', MarkdownBlock()),
+                ('text', blocks.RichTextBlock()),
             ],
             help_text="Smaller snippets of content"
         ),
@@ -187,7 +187,7 @@ general_page_block_list_spec = [
                     'columns',
                     blocks.StreamBlock(
                         [
-                            ('text', MarkdownBlock()),
+                            ('text', blocks.RichTextBlock()),
                         ],
                     ),
                 ),
