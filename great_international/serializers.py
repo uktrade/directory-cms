@@ -311,12 +311,12 @@ class InternationalArticlePageSerializer(BasePageSerializer):
     cta_link = serializers.CharField()
 
     tags = core_fields.TagsListField()
-    
+
     freeport_data = serializers.SerializerMethodField()
- 
+
     def get_freeport_data(self, instance):
         if instance.type_of_article == 'Freeport landing':
-            queryset = InvestmentOpportunityPage.objects.live().public().filter(investment_type__name = 'Freeport')
+            queryset = InvestmentOpportunityPage.objects.live().public().filter(investment_type__name='Freeport')
             if not queryset:
                 return []
 
