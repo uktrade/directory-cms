@@ -283,7 +283,7 @@ class InternationalArticlePagePanels:
     content_panels = [
         FieldPanel('title'),
         FieldPanel('article_title'),
-        FieldPanel('type_of_article'),
+        FieldPanel('type_of_article', widget=Select),
         ImageChooserPanel('hero_image'),
         MediaChooserPanel('hero_video'),
         MultiFieldPanel(
@@ -312,7 +312,6 @@ class InternationalArticlePagePanels:
     ]
 
     settings_panels = [
-        FieldPanel('type_of_article', widget=Select),
         FieldPanel('slug'),
         FieldPanel('tags', widget=CheckboxSelectMultiple)
     ]
