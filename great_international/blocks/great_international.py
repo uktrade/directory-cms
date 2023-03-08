@@ -5,15 +5,15 @@ from wagtail.images.blocks import ImageChooserBlock
 
 from core import blocks as core_blocks
 from core.helpers import render_markdown
-from core.widgets import MarkdownTextarea
+from django.utils.safestring import mark_safe
 
 
 class MarkdownBlock(blocks.FieldBlock):
-    def __init__(self, required=True, help_text=None, **kwargs):
+    def __init__(self, required=True, help_text=mark_safe('Enter content in Markdown format - <a href=https://stackedit.io/app# target=\'_blank\'> Guide </a>'), **kwargs):
         self.field = forms.CharField(
             required=required,
             help_text=help_text,
-            widget=MarkdownTextarea(),
+            widget=forms.Textarea(),
         )
         super().__init__(**kwargs)
 
