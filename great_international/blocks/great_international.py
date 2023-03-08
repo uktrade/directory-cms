@@ -9,7 +9,9 @@ from django.utils.safestring import mark_safe
 
 
 class MarkdownBlock(blocks.FieldBlock):
-    def __init__(self, required=True, help_text=mark_safe('Enter content in Markdown format - <a href=https://stackedit.io/app# target=\'_blank\'> Guide </a>'), **kwargs):
+    def __init__(self, required=True, help_text=mark_safe(
+            'Enter content in Markdown format - <a href=https://stackedit.io/app# target=\'_blank\'> Guide </a>'),
+            **kwargs):
         self.field = forms.CharField(
             required=required,
             help_text=help_text,
