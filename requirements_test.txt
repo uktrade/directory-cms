@@ -75,10 +75,8 @@ coverage[toml]==6.5.0
     #   pytest-cov
 coveralls==3.3.1
     # via -r requirements_test.in
-cryptography==39.0.1
-    # via
-    #   -r requirements.in
-    #   secretstorage
+cryptography==39.0.2
+    # via -r requirements.in
 directory-components==38.2.1
     # via -r requirements.in
 directory-constants==22.0.2
@@ -118,7 +116,7 @@ django-celery-beat==2.2.1
     # via -r requirements.in
 django-debug-toolbar==3.2.4
     # via -r requirements_test.in
-django-environ==0.9.0
+django-environ==0.10.0
     # via -r requirements.in
 django-filter==21.1
     # via
@@ -142,7 +140,7 @@ django-staff-sso-client==4.1.1
     # via -r requirements.in
 django-storages==1.13.2
     # via -r requirements.in
-django-taggit==2.1.0
+django-taggit==1.5.1
     # via wagtail
 django-timezone-field==4.2.3
     # via django-celery-beat
@@ -162,7 +160,7 @@ docutils==0.19
     # via readme-renderer
 draftjs-exporter==2.1.7
     # via wagtail
-elastic-apm==6.15.0
+elastic-apm==6.15.1
     # via -r requirements.in
 et-xmlfile==1.1.0
     # via openpyxl
@@ -172,15 +170,15 @@ factory-boy==2.12.0
     # via
     #   -r requirements_test.in
     #   wagtail-factories
-faker==17.0.0
+faker==17.6.0
     # via factory-boy
 flake8==6.0.0
     # via -r requirements_test.in
 freezegun==0.3.14
     # via -r requirements_test.in
-gevent==21.8.0
+gevent==22.10.2
     # via -r requirements.in
-greenlet==1.1.3.post0
+greenlet==2.0.2
     # via gevent
 gunicorn==20.1.0
     # via -r requirements.in
@@ -198,10 +196,6 @@ iniconfig==2.0.0
     # via pytest
 jaraco-classes==3.2.3
     # via keyring
-jeepney==0.8.0
-    # via
-    #   keyring
-    #   secretstorage
 jmespath==1.0.1
     # via
     #   boto3
@@ -222,7 +216,7 @@ mccabe==0.7.0
     # via flake8
 mohawk==1.1.0
     # via sigauth
-more-itertools==9.0.0
+more-itertools==9.1.0
     # via jaraco-classes
 notifications-python-client==6.3.0
     # via -r requirements.in
@@ -242,13 +236,13 @@ packaging==23.0
     #   pytest-sugar
 pillow==9.4.0
     # via wagtail
-pip-tools==6.12.2
+pip-tools==6.12.3
     # via -r requirements_test.in
 pkginfo==1.9.6
     # via twine
 pluggy==1.0.0
     # via pytest
-prompt-toolkit==3.0.36
+prompt-toolkit==3.0.38
     # via click-repl
 psycogreen==1.0.2
     # via -r requirements.in
@@ -270,7 +264,7 @@ pyproject-hooks==1.0.0
     # via build
 pyrsistent==0.19.3
     # via jsonschema
-pytest==7.2.1
+pytest==7.2.2
     # via
     #   -r requirements_test.in
     #   pytest-cov
@@ -327,9 +321,7 @@ rfc3986==2.0.0
     # via twine
 s3transfer==0.6.0
     # via boto3
-secretstorage==3.3.3
-    # via keyring
-sentry-sdk==1.15.0
+sentry-sdk==1.16.0
     # via -r requirements.in
 sigauth==5.1.1
     # via -r requirements.in
@@ -365,7 +357,7 @@ tomli==2.0.1
     #   coverage
     #   pyproject-hooks
     #   pytest
-tqdm==4.64.1
+tqdm==4.65.0
     # via twine
 twine==3.8.0
     # via wagtail-modeltranslation
@@ -384,7 +376,7 @@ vine==5.0.0
     #   kombu
 w3lib==1.22
     # via -r requirements.in
-wagtail==2.16.3
+wagtail==2.15.6
     # via
     #   -r requirements.in
     #   wagtail-factories
@@ -404,11 +396,11 @@ webencodings==0.5.1
     #   html5lib
 wheel==0.38.4
     # via pip-tools
-whitenoise==6.3.0
+whitenoise==6.4.0
     # via -r requirements.in
 willow==1.4.1
     # via wagtail
-wrapt==1.14.1
+wrapt==1.15.0
     # via elastic-apm
 xlrd==2.0.1
     # via tablib
@@ -416,7 +408,7 @@ xlsxwriter==3.0.8
     # via wagtail
 xlwt==1.3.0
     # via tablib
-zipp==3.14.0
+zipp==3.15.0
     # via importlib-metadata
 zope-event==4.6
     # via gevent
