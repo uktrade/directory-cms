@@ -2,8 +2,8 @@
 
 
 ## Pre-release
-
-
+### Fixed bugs 
+* KLS-358 - Missing content on Investment Opportunity content editing panels
 ### Implemented enhancements
 
 ## [2.9.2](https://github.com/uktrade/directory-cms/releases/tag/2.9.2)
