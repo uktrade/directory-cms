@@ -1,8 +1,7 @@
 # Changelog
 
 
-## Pre-release
-### Added freeport map data
+## [2.9.3](https://github.com/uktrade/directory-cms/releases/tag/2.9.2)
 * KLS-248 Added freeport data for map to international article page
 ### Fixed bugs 
 * KLS-358 - Missing content on Investment Opportunity content editing panels
