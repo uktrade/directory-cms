@@ -18,6 +18,7 @@ from great_international.serializers import (
     InvestmentOpportunityForListPageSerializer,
     InternationalInvestmentSectorPageSerializer,
     InternationalInvestmentSubSectorPageSerializer,
+    InternationalArticlePageSerializer
 )
 from tests.core.helpers import make_test_video
 from tests.great_international.factories import (
@@ -63,6 +64,12 @@ def test_video():
 def fdi_investment_type():
     return InvestmentTypeFactory(
         name=settings.FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT
+    )
+    
+@pytest.fixture
+def freeport_investment_type():
+    return InvestmentTypeFactory(
+        name='Freeport'
     )
 
 
@@ -1613,3 +1620,53 @@ def test_foreign_direct_investment_form_sucess_page_serializer(
     assert len(serializer.data['opportunity_list']) == 2
     assert serializer.data['opportunity_list'][0]['meta']['slug'] == 'opp_1__fdi'
     assert serializer.data['opportunity_list'][1]['meta']['slug'] == 'opp_3__fdi'
+
+
+@pytest.mark.django_db
+def test_freeport_data(
+    rf, international_root_page, freeport_investment_type, non_fdi_investment_type
+):
+
+    
+    InvestmentOpportunityPageFactory.create_batch(
+        2,
+        parent=international_root_page,
+        investment_type= freeport_investment_type
+    )
+    
+    InvestmentOpportunityPageFactory.create_batch(
+        2,
+        parent=international_root_page,
+        investment_type=non_fdi_investment_type
+    )
+
+
+    opportunity = InternationalArticlePageFactory(
+        type_of_article ='Freeport landing'
+    )
+
+    freeport_data = InternationalArticlePageSerializer(
+        instance=opportunity,
+    ).get_freeport_data(instance=opportunity)
+
+    assert len(freeport_data) == 2
+
+@pytest.mark.django_db
+def test_freeport_data_has_no_results(
+    rf, international_root_page, non_fdi_investment_type
+):
+    InvestmentOpportunityPageFactory.create_batch(
+        2,
+        parent=international_root_page,
+        investment_type=non_fdi_investment_type
+    )
+
+    opportunity = InternationalArticlePageFactory(
+        type_of_article ='Freeport landing'
+    )
+
+    freeport_data = InternationalArticlePageSerializer(
+        instance=opportunity,
+    ).get_freeport_data(instance=opportunity)
+
+    assert freeport_data == []
