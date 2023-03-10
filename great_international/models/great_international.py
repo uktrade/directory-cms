@@ -4,7 +4,6 @@ from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtail.core.blocks import PageChooserBlock
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Orderable
-
 from core.constants import ARTICLE_TYPES
 from core.fields import single_struct_block_stream_field_factory
 from core.mixins import ServiceHomepageMixin
@@ -13,7 +12,6 @@ from core.models import WagtailAdminExclusivePageMixin
 from export_readiness import snippets
 from great_international.blocks import great_international as blocks
 from great_international.panels import great_international as panels
-
 from . import find_a_supplier as fas_models
 from .base import BaseInternationalPage
 
@@ -191,6 +189,7 @@ class InternationalHomePage(
 
 
 class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseInternationalPage):
+
     parent_page_types = [
         'great_international.InternationalArticleListingPage',
         'great_international.InternationalCampaignPage',
@@ -198,10 +197,26 @@ class InternationalArticlePage(panels.InternationalArticlePagePanels, BaseIntern
         'great_international.WhyInvestInTheUKPage',
         'great_international.InvestmentGeneralContentPage',
     ]
+
     subpage_types = []
 
-    type_of_article = models.TextField(choices=ARTICLE_TYPES, null=True)
+    type_of_article = models.TextField(choices=ARTICLE_TYPES, null=True, blank=True)
 
+    hero_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    hero_video = models.ForeignKey(
+        'wagtailmedia.Media',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
     article_title = models.TextField()
     article_subheading = models.TextField(
         blank=True,
