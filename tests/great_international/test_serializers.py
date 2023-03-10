@@ -65,7 +65,8 @@ def fdi_investment_type():
     return InvestmentTypeFactory(
         name=settings.FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT
     )
-    
+
+
 @pytest.fixture
 def freeport_investment_type():
     return InvestmentTypeFactory(
@@ -1625,22 +1626,20 @@ def test_foreign_direct_investment_form_sucess_page_serializer(
 @pytest.mark.django_db
 def test_freeport_data(international_root_page, freeport_investment_type, non_fdi_investment_type):
 
-    
     InvestmentOpportunityPageFactory.create_batch(
         2,
         parent=international_root_page,
-        investment_type= freeport_investment_type
+        investment_type=freeport_investment_type
     )
-    
+
     InvestmentOpportunityPageFactory.create_batch(
         2,
         parent=international_root_page,
         investment_type=non_fdi_investment_type
     )
 
-
     opportunity = InternationalArticlePageFactory(
-        type_of_article ='Freeport landing'
+        type_of_article='Freeport landing'
     )
 
     freeport_data = InternationalArticlePageSerializer(
@@ -1648,6 +1647,7 @@ def test_freeport_data(international_root_page, freeport_investment_type, non_fd
     ).get_freeport_data(instance=opportunity)
 
     assert len(freeport_data) == 2
+
 
 @pytest.mark.django_db
 def test_freeport_data_has_no_results(international_root_page, non_fdi_investment_type):
@@ -1658,7 +1658,7 @@ def test_freeport_data_has_no_results(international_root_page, non_fdi_investmen
     )
 
     opportunity = InternationalArticlePageFactory(
-        type_of_article ='Freeport landing'
+        type_of_article='Freeport landing'
     )
 
     freeport_data = InternationalArticlePageSerializer(
