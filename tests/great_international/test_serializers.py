@@ -1638,13 +1638,13 @@ def test_freeport_data(international_root_page, freeport_investment_type, non_fd
         investment_type=non_fdi_investment_type
     )
 
-    opportunity = InternationalArticlePageFactory(
+    freeport_landing_page = InternationalArticlePageFactory(
         type_of_article='Freeport landing'
     )
 
     freeport_data = InternationalArticlePageSerializer(
-        instance=opportunity,
-    ).get_freeport_data(instance=opportunity)
+        instance=freeport_landing_page,
+    ).get_freeport_data(instance=freeport_landing_page)
 
     assert len(freeport_data) == 2
 
@@ -1657,12 +1657,12 @@ def test_freeport_data_has_no_results(international_root_page, non_fdi_investmen
         investment_type=non_fdi_investment_type
     )
 
-    opportunity = InternationalArticlePageFactory(
+    freeport_landing_page = InternationalArticlePageFactory(
         type_of_article='Freeport landing'
     )
 
     freeport_data = InternationalArticlePageSerializer(
-        instance=opportunity,
-    ).get_freeport_data(instance=opportunity)
+        instance=freeport_landing_page,
+    ).get_freeport_data(instance=freeport_landing_page)
 
     assert freeport_data == []
