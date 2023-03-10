@@ -2,6 +2,8 @@
 
 
 ## Pre-release
+### Added freeport map data
+* KLS-248 Added freeport data for map to international article page
 ### Fixed bugs 
 * KLS-358 - Missing content on Investment Opportunity content editing panels
 ### Implemented enhancements
