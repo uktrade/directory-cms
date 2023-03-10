@@ -1623,9 +1623,7 @@ def test_foreign_direct_investment_form_sucess_page_serializer(
 
 
 @pytest.mark.django_db
-def test_freeport_data(
-    rf, international_root_page, freeport_investment_type, non_fdi_investment_type
-):
+def test_freeport_data(international_root_page, freeport_investment_type, non_fdi_investment_type):
 
     
     InvestmentOpportunityPageFactory.create_batch(
@@ -1652,9 +1650,7 @@ def test_freeport_data(
     assert len(freeport_data) == 2
 
 @pytest.mark.django_db
-def test_freeport_data_has_no_results(
-    rf, international_root_page, non_fdi_investment_type
-):
+def test_freeport_data_has_no_results(international_root_page, non_fdi_investment_type):
     InvestmentOpportunityPageFactory.create_batch(
         2,
         parent=international_root_page,
