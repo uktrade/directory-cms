@@ -1,8 +1,16 @@
 # Changelog
 
 
+## Pre-release
+* Included serializer to retrieve freeport map data
+### Fixed bugs 
+
+### Implemented enhancements
+
 ## [2.9.3](https://github.com/uktrade/directory-cms/releases/tag/2.9.3)
-* KLS-248 Added freeport data for map to international article page
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2.9.2...2.9.3)
+### Implemented enhancements
+* KLS-247 - Add hero_image and hero_video to article page for freeports work
 ### Fixed bugs 
 
 ### Implemented enhancements
