@@ -3,8 +3,15 @@
 
 ## Pre-release
 ### Fixed bugs 
-* KLS-358 - Missing content on Investment Opportunity content editing panels
+
 ### Implemented enhancements
+
+## [2.9.3](https://github.com/uktrade/directory-cms/releases/tag/2.9.3)
+[Full Changelog](https://github.com/uktrade/directory-cms/compare/2.9.2...2.9.3)
+### Implemented enhancements
+* KLS-247 - Add hero_image and hero_video to article page for freeports work
+### Fixed bugs 
+* KLS-358 - Missing content on Investment Opportunity content editing panels
 
 ## [2.9.2](https://github.com/uktrade/directory-cms/releases/tag/2.9.2)
 [Full Changelog](https://github.com/uktrade/directory-cms/compare/2.9.1...2.9.2)
