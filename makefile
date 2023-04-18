@@ -18,7 +18,6 @@ pytest:
 pytest_codecov:
 	ENV_FILES='test,dev' \
 	pytest \
-	    ${TESTFILES}
 		--junitxml=test-reports/junit.xml \
 		--cov-config=.coveragerc \
 		--cov-report=term \
