@@ -18,8 +18,8 @@ html2text==2020.*
 wagtailmedia==0.*
 pytube==9.2.2
 django-filter>=2.4.0
-django-redis==5.2.0
-celery[redis]==5.2.2
+django-redis
+celery[redis]
 django-celery-beat==2.2.1
 kombu==5.2.3
 requests[security]==2.27.1
