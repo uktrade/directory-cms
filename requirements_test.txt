@@ -64,14 +64,12 @@ click-plugins==1.1.1
     # via celery
 click-repl==0.2.0
     # via celery
-codecov==2.1.13
-    # via -r requirements_test.in
 colorama==0.4.6
     # via twine
 coverage[toml]==6.5.0
     # via
-    #   codecov
     #   coveralls
+    #   pytest-codecov
     #   pytest-cov
 coveralls==3.3.1
     # via -r requirements_test.in
@@ -178,6 +176,10 @@ freezegun==0.3.14
     # via -r requirements_test.in
 gevent==22.10.2
     # via -r requirements.in
+gitdb==4.0.10
+    # via gitpython
+gitpython==3.1.31
+    # via -r requirements_test.in
 greenlet==2.0.2
     # via gevent
 gunicorn==20.1.0
@@ -267,11 +269,16 @@ pyrsistent==0.19.3
 pytest==7.3.1
     # via
     #   -r requirements_test.in
+    #   pytest-codecov
     #   pytest-cov
     #   pytest-django
     #   pytest-sugar
-pytest-cov==4.0.0
+pytest-codecov==0.5.1
     # via -r requirements_test.in
+pytest-cov==4.0.0
+    # via
+    #   -r requirements_test.in
+    #   pytest-codecov
 pytest-django==4.5.2
     # via -r requirements_test.in
 pytest-sugar==0.9.7
@@ -303,9 +310,9 @@ redis==4.5.4
 requests[security]==2.27.1
     # via
     #   -r requirements.in
-    #   codecov
     #   coveralls
     #   notifications-python-client
+    #   pytest-codecov
     #   requests-mock
     #   requests-oauthlib
     #   requests-toolbelt
@@ -339,6 +346,8 @@ six==1.16.0
     #   python-dateutil
     #   requests-mock
     #   w3lib
+smmap==5.0.0
+    # via gitdb
 soupsieve==2.4.1
     # via beautifulsoup4
 sqlparse==0.4.4
