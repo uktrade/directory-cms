@@ -2,9 +2,9 @@ from django.db import models
 
 from directory_constants import slugs
 
-from wagtail.core.fields import StreamField
-from wagtail.core.models import Orderable
-from wagtail.admin.edit_handlers import (
+from wagtail.fields import StreamField
+from wagtail.models import Orderable
+from wagtail.admin.panels import (
     HelpPanel,
     FieldPanel,
     PageChooserPanel,

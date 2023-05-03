@@ -4,8 +4,8 @@ import factory
 import pytest
 from unittest import mock
 
-from wagtail.core.models import Page
-from wagtail.core.signals import page_published
+from wagtail.models import Page
+from wagtail.signals import page_published
 
 from core import cache
 
@@ -121,7 +121,7 @@ def test_cache_populator(translated_page):
         )
 
 
-@mock.patch('wagtail.core.signals.page_published.connect')
+@mock.patch('wagtail.signals.page_published.connect')
 @mock.patch('core.cache.page_unpublished.connect')
 def test_subscriber_subscribe_to_publish(mock_page_unpublished, mock_page_published):
 

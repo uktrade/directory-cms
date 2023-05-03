@@ -1,4 +1,4 @@
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     FieldRowPanel,
     HelpPanel,

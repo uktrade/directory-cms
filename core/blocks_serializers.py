@@ -3,7 +3,7 @@ from collections import OrderedDict
 from rest_framework import serializers
 from rest_framework.fields import SkipField
 from rest_framework.relations import PKOnlyObject
-from wagtail.core.blocks import StructValue
+from wagtail.blocks import StructValue
 from wagtail.images.api import fields as wagtail_fields
 
 
@@ -11,7 +11,7 @@ class StreamChildBaseSerializer(serializers.Serializer):
 
     def to_representation(self, stream_child):
         """
-        instance is wagtail.core.blocks.stream_block.StreamValue.StreamChild
+        instance is wagtail.blocks.stream_block.StreamValue.StreamChild
         instance.value is either an instance of StructValue, if struct block, or a single value
         """
         ret = OrderedDict()

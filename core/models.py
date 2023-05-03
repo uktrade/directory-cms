@@ -8,9 +8,9 @@ from directory_constants import choices
 from modeltranslation import settings as modeltranslation_settings
 from modeltranslation.utils import build_localized_fieldname
 from modeltranslation.translator import translator
-from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
-from wagtail.contrib.settings.models import BaseSetting, register_setting
-from wagtail.core.models import Page, PageBase, Site
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
+from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
+from wagtail.models import Page, PageBase, Site
 
 from django.core import signing
 from django.conf import settings
@@ -90,7 +90,7 @@ class Breadcrumb(models.Model):
 
 
 @register_setting
-class RoutingSettings(BaseSetting):
+class RoutingSettings(BaseSiteSetting):
     root_path_prefix = models.CharField(
         blank=True,
         max_length=100,

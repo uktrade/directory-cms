@@ -1,5 +1,5 @@
 import pytest
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 from great_international.models import (
     capital_invest,
