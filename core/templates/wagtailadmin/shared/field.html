@@ -1,10 +1,14 @@
 {% load wagtailadmin_tags %}
+{% load core_tags %}
+
 <div class="field {{ field|fieldtype }} {{ field|widgettype }} {{ field_classes }}{% if field.field.widget.attrs.required_for_language %}required-for-language-container{% endif %}">
     {% if show_label|default_if_none:True %}{{ field.label_tag }}{% endif %}
     <div class="field-content">
         <div class="input {{ input_classes }} ">
             {% block form_field %}
-                {{ field|render_with_errors }}
+                {% if field|not_string %}
+                    {{ field|render_with_errors }}
+                {% endif %}
             {% endblock %}
             
             {# This span only used on rare occasions by certain types of input #}
@@ -14,12 +18,14 @@
             <p class="help">{{ field.help_text }}</p>
         {% endif %}
 
-        {% if field|has_unrendered_errors %}
-            <p class="error-message">
-                {% for error in field.errors %}
-                    <span>{{ error|escape }}</span>
-                {% endfor %}
-            </p>
+        {% if field|not_string %}
+            {% if field|has_unrendered_errors %}
+                <p class="error-message">
+                    {% for error in field.errors %}
+                        <span>{{ error|escape }}</span>
+                    {% endfor %}
+                </p>
+            {% endif %}
         {% endif %}
     </div>
 </div>

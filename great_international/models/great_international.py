@@ -173,6 +173,7 @@ class InternationalHomePage(
         [
             ('link_panel', blocks.InternationalHomepagePanelBlock()),
         ],
+        use_json_field=True,
         blank=True,
         null=True,
     )
@@ -937,6 +938,7 @@ class WhyInvestInTheUKPage(
         [
             ('article_panel', blocks.InternationalUKStrengthPanelBlock()),
         ],
+        use_json_field=True,
         blank=True,
         null=True,
     )

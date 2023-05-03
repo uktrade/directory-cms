@@ -99,5 +99,6 @@ def single_struct_block_stream_field_factory(
             min_num=min_num,
             required=required
         ),
+        use_json_field=True,
         **kwargs)
     return field

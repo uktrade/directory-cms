@@ -88,6 +88,7 @@ class ReusableContentSection(models.Model):
 
     content = StreamField(
         investment_atlas_blocks.page_section_block_spec_list,
+        use_json_field=True,
         blank=False,
     )
 
@@ -190,6 +191,7 @@ class InvestmentAtlasLandingPage(
                 ),
             ),
         ],
+        use_json_field=True,
         null=True,
         blank=True,
     )
@@ -398,6 +400,7 @@ class InvestmentOpportunityPage(
     regions_with_locations = StreamField([
         ('location', investment_atlas_blocks.OpportunityLocationBlock())
     ],
+        use_json_field=True,
         null=True,
         blank=True,
     )
@@ -464,6 +467,7 @@ class InvestmentOpportunityPage(
                 )
             )
         ],
+        use_json_field=True,
         null=True,
         blank=True,
     )
