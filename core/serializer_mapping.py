@@ -9,7 +9,7 @@ import great_international.serializers
 
 MODELS_SERIALIZERS_MAPPING = {
     # core page
-    wagtail.core.models.Page: core.serializers.WagtailPageSerializer,
+    wagtail.models.Page: core.serializers.WagtailPageSerializer,
 
     # Atlas core
     # ----------

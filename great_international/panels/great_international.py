@@ -1,5 +1,5 @@
 from django.forms import CheckboxSelectMultiple, Select, Textarea
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     FieldRowPanel,
     HelpPanel,

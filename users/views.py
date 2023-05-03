@@ -7,7 +7,7 @@ from django.utils.translation import ugettext as _
 from django.views import generic
 from wagtail.admin import messages
 from wagtail.admin.views.generic import EditView
-from wagtail.core import hooks
+from wagtail import hooks
 from wagtail.users.utils import user_can_delete_user
 from wagtail.users.views.users import add_user_perm, change_user_perm
 
