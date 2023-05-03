@@ -158,6 +158,8 @@ class BasePage(Page):
 
     _base_form_class = forms.WagtailAdminPageForm
 
+    preview_modes = []
+    
     def __init__(self, *args, **kwargs):
         self.signer = signing.Signer()
         #  workaround modeltranslation patching Page.clean in an unpythonic way
