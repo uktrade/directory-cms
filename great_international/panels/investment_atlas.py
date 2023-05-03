@@ -4,10 +4,8 @@ from wagtail.admin.panels import (
     HelpPanel,
     InlinePanel,
     MultiFieldPanel,
-    StreamFieldPanel,
 )
 
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmedia.edit_handlers import MediaChooserPanel
 
 from core.helpers import make_translated_interface
@@ -29,9 +27,9 @@ class InvestmentAtlasLandingPagePanels:
             heading='Hero',
             classname='collapsible',
             children=[
-                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_image'),
                 MediaChooserPanel('hero_video'),
-                ImageChooserPanel('mobile_hero_image'),
+                FieldPanel('mobile_hero_image'),
                 FieldPanel('hero_title'),
                 FieldPanel('hero_strapline'),
                 FieldPanel('hero_cta_text'),
@@ -42,7 +40,7 @@ class InvestmentAtlasLandingPagePanels:
             heading='Downpage content panels',
             classname='collapsible',
             children=[
-                StreamFieldPanel('downpage_sections'),
+                FieldPanel('downpage_sections'),
             ],
         ),
         SearchEngineOptimisationPanel(),
@@ -105,11 +103,11 @@ class InvestmentOpportunityPagePanels:
             children=[
                 FieldPanel('title'),
                 FieldPanel('breadcrumbs_label'),
-                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_image'),
                 MediaChooserPanel('hero_video'),
                 FieldPanel('strapline'),
                 FieldPanel('introduction'),
-                ImageChooserPanel('intro_image'),
+                FieldPanel('intro_image'),
                 MediaChooserPanel('intro_video'),
                 FieldPanel('opportunity_summary'),
             ],
@@ -142,7 +140,7 @@ class InvestmentOpportunityPagePanels:
             classname='collapsible',
             children=[
                 FieldPanel('contact_name'),
-                ImageChooserPanel('contact_avatar'),
+                FieldPanel('contact_avatar'),
                 FieldPanel('contact_job_title'),
                 FieldPanel('contact_link'),
             ],
@@ -151,7 +149,7 @@ class InvestmentOpportunityPagePanels:
             heading='The Opportunity',
             classname='collapsible',
             children=[
-                StreamFieldPanel('main_content'),
+                FieldPanel('main_content'),
                 FieldPanel('important_links'),
             ],
         ),
@@ -164,7 +162,7 @@ class InvestmentOpportunityPagePanels:
             heading='Location and Relevant Regions',
             classname='collapsible',
             children=[
-                StreamFieldPanel('regions_with_locations'),
+                FieldPanel('regions_with_locations'),
             ]
         ),
         FieldRowPanel(
@@ -196,14 +194,14 @@ class InvestmentGeneralContentPagePanels:
             classname='collapsible',
             children=[
                 FieldPanel('title'),
-                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_image'),
                 MediaChooserPanel('hero_video'),
                 FieldPanel('strapline'),
                 FieldPanel('introduction'),
-                ImageChooserPanel('intro_image'),
+                FieldPanel('intro_image'),
             ],
         ),
-        StreamFieldPanel('main_content'),
+        FieldPanel('main_content'),
         SearchEngineOptimisationPanel(),
     ]
     settings_panels = [

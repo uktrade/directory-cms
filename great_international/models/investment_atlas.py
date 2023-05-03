@@ -8,7 +8,6 @@ from wagtail.admin.panels import (
     HelpPanel,
     FieldPanel,
     PageChooserPanel,
-    StreamFieldPanel,
 )
 
 from .base import BaseInternationalPage
@@ -108,7 +107,7 @@ class ReusableContentSection(models.Model):
             "Content Section in an Opportunity page.</li></ul>"
         ),
         FieldPanel('title'),
-        StreamFieldPanel('content'),
+        FieldPanel('content'),
         FieldPanel('block_slug'),
     ]
 
