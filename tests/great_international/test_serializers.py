@@ -509,6 +509,7 @@ def test_international_homepage_serializer(rf, international_root_page, image, t
 
 @pytest.mark.django_db
 def test_atlas_opportunity_serializer_video_fields(international_root_page, rf, test_video):
+   
     opportunity_page = InvestmentOpportunityPageFactory(
         parent=international_root_page,
         slug='opp',
@@ -525,6 +526,7 @@ def test_atlas_opportunity_serializer_video_fields(international_root_page, rf, 
         instance=opportunity_page,
         context={'request': rf.get('/')}
     )
+
     for video_field in [serialized_opportunity.data['intro_video'], serialized_opportunity.data['hero_video']]:
         assert video_field['title'] == test_video.title
         assert video_field['transcript'] == 'Test transcript note'

@@ -137,6 +137,7 @@ def test_video_block_get_api_representation():
     block = GreatMediaBlock()
 
     block_response = block.get_api_representation(value=video)
+
     assert block_response == {
         'title': 'Test file',
         'transcript': 'Test transcript',
