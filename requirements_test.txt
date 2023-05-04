@@ -23,9 +23,7 @@ beautifulsoup4==4.9.3
 billiard==3.6.4.0
     # via celery
 bleach==3.3.1
-    # via
-    #   -r requirements.in
-    #   readme-renderer
+    # via -r requirements.in
 bleach-whitelist==0.0.11
     # via -r requirements.in
 boto3==1.24.96
@@ -36,8 +34,6 @@ botocore==1.27.96
     #   s3transfer
 build==0.10.0
     # via pip-tools
-bump2version==1.0.1
-    # via wagtail-modeltranslation
 celery[redis]==5.2.7
     # via
     #   -r requirements.in
@@ -64,8 +60,6 @@ click-plugins==1.1.1
     # via celery
 click-repl==0.2.0
     # via celery
-colorama==0.4.6
-    # via twine
 coverage[toml]==6.5.0
     # via
     #   coveralls
@@ -97,7 +91,9 @@ django==3.2.18
     #   django-debug-toolbar
     #   django-filter
     #   django-health-check
+    #   django-modelcluster
     #   django-modeltranslation
+    #   django-permissionedforms
     #   django-redis
     #   django-staff-sso-client
     #   django-storages
@@ -108,6 +104,7 @@ django==3.2.18
     #   sigauth
     #   wagtail
     #   wagtail-modeltranslation
+    #   wagtailmedia
 django-admin-ip-restrictor==2.2.0
     # via -r requirements.in
 django-celery-beat==2.2.1
@@ -124,12 +121,14 @@ django-health-check==3.16.5
     # via directory-healthcheck
 django-ipware==3.0.7
     # via django-admin-ip-restrictor
-django-modelcluster==5.3
+django-modelcluster==6.0
     # via wagtail
 django-modeltranslation==0.18.2
     # via
     #   -r requirements.in
     #   wagtail-modeltranslation
+django-permissionedforms==0.1
+    # via wagtail
 django-pglocks==1.0.4
     # via -r requirements.in
 django-redis==5.2.0
@@ -138,7 +137,7 @@ django-staff-sso-client==4.1.1
     # via -r requirements.in
 django-storages==1.13.2
     # via -r requirements.in
-django-taggit==1.5.1
+django-taggit==2.1.0
     # via wagtail
 django-timezone-field==4.2.3
     # via django-celery-beat
@@ -154,8 +153,6 @@ docopt==0.6.2
     #   coveralls
     #   notifications-python-client
     #   num2words
-docutils==0.19
-    # via readme-renderer
 draftjs-exporter==2.1.7
     # via wagtail
 elastic-apm==6.15.1
@@ -168,7 +165,7 @@ factory-boy==2.12.0
     # via
     #   -r requirements_test.in
     #   wagtail-factories
-faker==18.4.0
+faker==18.6.2
     # via factory-boy
 flake8==6.0.0
     # via -r requirements_test.in
@@ -190,22 +187,14 @@ html5lib==1.1
     # via wagtail
 idna==3.4
     # via requests
-importlib-metadata==6.4.1
-    # via
-    #   keyring
-    #   twine
 iniconfig==2.0.0
     # via pytest
-jaraco-classes==3.2.3
-    # via keyring
 jmespath==1.0.1
     # via
     #   boto3
     #   botocore
 jsonschema==3.2.0
     # via directory-components
-keyring==23.13.1
-    # via twine
 kombu==5.2.3
     # via
     #   -r requirements.in
@@ -218,8 +207,6 @@ mccabe==0.7.0
     # via flake8
 mohawk==1.1.0
     # via sigauth
-more-itertools==9.1.0
-    # via jaraco-classes
 notifications-python-client==6.3.0
     # via -r requirements.in
 num2words==0.5.10
@@ -240,8 +227,6 @@ pillow==9.5.0
     # via wagtail
 pip-tools==6.13.0
     # via -r requirements_test.in
-pkginfo==1.9.6
-    # via twine
 pluggy==1.0.0
     # via pytest
 prompt-toolkit==3.0.38
@@ -258,8 +243,6 @@ pycparser==2.21
     # via cffi
 pyflakes==3.0.1
     # via flake8
-pygments==2.15.0
-    # via readme-renderer
 pyjwt==2.6.0
     # via notifications-python-client
 pyproject-hooks==1.0.0
@@ -301,8 +284,6 @@ pytz==2023.3
     #   django-timezone-field
     #   djangorestframework
     #   l18n
-readme-renderer==37.3
-    # via twine
 redis==4.5.4
     # via
     #   celery
@@ -315,20 +296,14 @@ requests[security]==2.27.1
     #   pytest-codecov
     #   requests-mock
     #   requests-oauthlib
-    #   requests-toolbelt
-    #   twine
     #   wagtail
 requests-mock==1.10.0
     # via -r requirements_test.in
 requests-oauthlib==1.3.1
     # via django-staff-sso-client
-requests-toolbelt==0.10.1
-    # via twine
-rfc3986==2.0.0
-    # via twine
 s3transfer==0.6.0
     # via boto3
-sentry-sdk==1.19.1
+sentry-sdk==1.21.1
     # via -r requirements.in
 sigauth==5.1.1
     # via -r requirements.in
@@ -358,7 +333,7 @@ tablib[xls,xlsx]==3.4.0
     # via wagtail
 telepath==0.3
     # via wagtail
-termcolor==2.2.0
+termcolor==2.3.0
     # via pytest-sugar
 tomli==2.0.1
     # via
@@ -366,10 +341,6 @@ tomli==2.0.1
     #   coverage
     #   pyproject-hooks
     #   pytest
-tqdm==4.65.0
-    # via twine
-twine==3.8.0
-    # via wagtail-modeltranslation
 typing-extensions==4.5.0
     # via dj-database-url
 urllib3==1.26.15
@@ -379,7 +350,6 @@ urllib3==1.26.15
     #   elastic-apm
     #   requests
     #   sentry-sdk
-    #   twine
 vine==5.0.0
     # via
     #   amqp
@@ -387,7 +357,7 @@ vine==5.0.0
     #   kombu
 w3lib==1.22
     # via -r requirements.in
-wagtail==2.15.6
+wagtail==3.0.3
     # via
     #   -r requirements.in
     #   wagtail-factories
@@ -395,9 +365,9 @@ wagtail==2.15.6
     #   wagtailmedia
 wagtail-factories==2.0.1
     # via -r requirements_test.in
-wagtail-modeltranslation==0.11.0
+wagtail-modeltranslation==0.12.0
     # via -r requirements.in
-wagtailmedia==0.5.0
+wagtailmedia==0.12.0
     # via -r requirements.in
 wcwidth==0.2.6
     # via prompt-toolkit
@@ -419,8 +389,6 @@ xlsxwriter==3.1.0
     # via wagtail
 xlwt==1.3.0
     # via tablib
-zipp==3.15.0
-    # via importlib-metadata
 zope-event==4.6
     # via gevent
 zope-interface==6.0

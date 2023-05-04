@@ -1,4 +1,4 @@
-from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.admin.panels import FieldPanel
 
 from core.helpers import make_translated_interface
 from core.panels import SearchEngineOptimisationPanel

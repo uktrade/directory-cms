@@ -77,7 +77,7 @@ INSTALLED_APPS = [
     'wagtail.images',
     'wagtail.search',
     'wagtail.admin',
-    'wagtail.core',
+    'wagtail',
     'wagtail.api.v2',
     'wagtail.sites',
     'modelcluster',
@@ -357,6 +357,7 @@ WAGTAILMEDIA_MEDIA_MODEL = 'core.GreatMedia'
 WAGTAIL_EMAIL_MANAGEMENT_ENABLED = False
 
 BASE_URL = env.str('BASE_URL')
+WAGTAILADMIN_BASE_URL = env.str('BASE_URL')
 
 APP_URL_EXPORT_READINESS = env.str('APP_URL_EXPORT_READINESS')
 APP_URL_GREAT_INTERNATIONAL = env.str('APP_URL_GREAT_INTERNATIONAL')
