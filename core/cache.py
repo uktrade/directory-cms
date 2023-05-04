@@ -4,8 +4,8 @@ from urllib.parse import urlencode
 
 from directory_constants import cms, slugs
 from rest_framework.renderers import JSONRenderer
-from wagtail.core.signals import page_published, page_unpublished
-from wagtail.core.models import Page, Site
+from wagtail.signals import page_published, page_unpublished
+from wagtail.models import Page, Site
 
 from django.conf import settings
 from django.core.cache import cache

@@ -1,7 +1,6 @@
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel, FieldRowPanel, MultiFieldPanel, ObjectList
 )
-from wagtail.images.edit_handlers import ImageChooserPanel
 
 from core.helpers import make_translated_interface
 from core.panels import SearchEngineOptimisationPanel
@@ -10,8 +9,8 @@ from core.panels import SearchEngineOptimisationPanel
 class InternationalTradeHomePagePanels:
 
     image_panels = [
-        ImageChooserPanel('hero_image'),
-        ImageChooserPanel('mobile_hero_image'),
+        FieldPanel('hero_image'),
+        FieldPanel('mobile_hero_image'),
     ]
 
     content_panels = [
@@ -51,19 +50,19 @@ class InternationalTradeHomePagePanels:
                     classname='full field-row-panel',
                     children=[
                         MultiFieldPanel([
-                            ImageChooserPanel('services_column_one_icon'),
+                            FieldPanel('services_column_one_icon'),
                             FieldPanel('services_column_one'),
                         ]),
                         MultiFieldPanel([
-                            ImageChooserPanel('services_column_two_icon'),
+                            FieldPanel('services_column_two_icon'),
                             FieldPanel('services_column_two'),
                         ]),
                         MultiFieldPanel([
-                            ImageChooserPanel('services_column_three_icon'),
+                            FieldPanel('services_column_three_icon'),
                             FieldPanel('services_column_three'),
                         ]),
                         MultiFieldPanel([
-                            ImageChooserPanel('services_column_four_icon'),
+                            FieldPanel('services_column_four_icon'),
                             FieldPanel('services_column_four'),
                         ]),
                     ],

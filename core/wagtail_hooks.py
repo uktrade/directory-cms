@@ -1,5 +1,5 @@
 from wagtail.admin.widgets import Button, PageListingButton
-from wagtail.core import hooks
+from wagtail import hooks
 from wagtail.admin.wagtail_hooks import page_listing_buttons
 
 from django.conf import settings

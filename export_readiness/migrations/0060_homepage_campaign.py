@@ -2,8 +2,8 @@
 
 import core.blocks
 from django.db import migrations
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.images.blocks
 
 
@@ -17,6 +17,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='homepage',
             name='campaign',
-            field=wagtail.core.fields.StreamField([('campaign', wagtail.core.blocks.StructBlock([('heading', wagtail.core.blocks.CharBlock()), ('subheading', wagtail.core.blocks.CharBlock()), ('related_link', wagtail.core.blocks.RichTextBlock()), ('image', wagtail.images.blocks.ImageChooserBlock()), ('video', core.blocks.VideoChooserBlock()), ('video_transcript', wagtail.core.blocks.RichTextBlock())]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('campaign', wagtail.blocks.StructBlock([('heading', wagtail.blocks.CharBlock()), ('subheading', wagtail.blocks.CharBlock()), ('related_link', wagtail.blocks.RichTextBlock()), ('image', wagtail.images.blocks.ImageChooserBlock()), ('video', core.blocks.VideoChooserBlock()), ('video_transcript', wagtail.blocks.RichTextBlock())]))], blank=True, null=True),
         ),
     ]

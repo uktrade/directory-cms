@@ -2,8 +2,8 @@
 
 from django.db import migrations, models
 import great_international.blocks.investment_atlas
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.images.blocks
 
 
@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=200)),
-                ('content', wagtail.core.fields.StreamField([('text', great_international.blocks.investment_atlas.MarkdownBlock()), ('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.core.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.core.blocks.CharBlock(max_length=255, required=False)), ('custom_css_class', wagtail.core.blocks.CharBlock(help_text="Only needed if special styling is involved: check with a developer. If in doubt, it's not needed", max_length=255, required=False))])), ('columns', wagtail.core.blocks.StreamBlock([('text', great_international.blocks.investment_atlas.MarkdownBlock())], help_text='Smaller snippets of content'))])),
+                ('content', wagtail.fields.StreamField([('text', great_international.blocks.investment_atlas.MarkdownBlock()), ('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.blocks.CharBlock(max_length=255, required=False)), ('custom_css_class', wagtail.blocks.CharBlock(help_text="Only needed if special styling is involved: check with a developer. If in doubt, it's not needed", max_length=255, required=False))])), ('columns', wagtail.blocks.StreamBlock([('text', great_international.blocks.investment_atlas.MarkdownBlock())], help_text='Smaller snippets of content'))])),
                 ('block_slug', models.CharField(blank=True, help_text="Only needed if special styling is involved: check with a developer. If in doubt, it's not needed", max_length=255)),
             ],
         ),

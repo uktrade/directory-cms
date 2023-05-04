@@ -1,4 +1,4 @@
-from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 
 
 class SearchEngineOptimisationPanel(MultiFieldPanel):

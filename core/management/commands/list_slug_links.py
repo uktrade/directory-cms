@@ -1,6 +1,6 @@
 from django.core.management import BaseCommand
 from django.core.management.base import no_translations
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 from django.forms.models import model_to_dict
 from django.urls import reverse

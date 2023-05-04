@@ -2,7 +2,7 @@ from unittest import mock
 
 import pytest
 from django.test import override_settings
-from wagtail.core.blocks import StreamBlock
+from wagtail.blocks import StreamBlock
 
 from core.blocks import DEFAULT_IMAGE_RENDITION_SPEC, GreatMediaBlock
 from great_international.blocks.great_international import FeaturedImageBlock, MarkdownBlock
