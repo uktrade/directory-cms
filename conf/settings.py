@@ -353,7 +353,16 @@ DIRECTORY_HEALTHCHECK_BACKENDS = [
 
 WAGTAIL_SITE_NAME = 'directory-cms'
 WAGTAIL_PASSWORD_RESET_ENABLED = False
-WAGTAILMEDIA_MEDIA_MODEL = 'core.GreatMedia'
+
+WAGTAILMEDIA = {
+    "MEDIA_MODEL": "core.GreatMedia",  # string, dotted-notation. Defaults to "wagtailmedia.Media"
+    "MEDIA_FORM_BASE": "",  # string, dotted-notation. Defaults to an empty string
+    "AUDIO_EXTENSIONS": [],  # list of extensions
+    "VIDEO_EXTENSIONS": [],  # list of extensions
+}
+
+
+# WAGTAILMEDIA_MEDIA_MODEL = 'core.GreatMedia'
 WAGTAIL_EMAIL_MANAGEMENT_ENABLED = False
 
 BASE_URL = env.str('BASE_URL')
