@@ -10,15 +10,13 @@ from core import wagtail_hooks
 
 @pytest.mark.django_db
 def test_update_default_listing_buttons_from_base_page(page_with_reversion):
-    import pdb
-    
     buttons = wagtail_hooks.update_default_listing_buttons(
         page=page_with_reversion, page_perms=Mock()
     )
 
     expected_url = 'http://great.gov.uk/international/content/123-555-206/'
     assert len(buttons) == 4
-    pdb;pdb.set_trace()
+ 
     assert buttons[1].url == expected_url
 
 

@@ -341,7 +341,7 @@ class BasePage(Page):
         return redirect(self.get_url())
 
     def get_latest_nested_revision_as_page(self):
-        revision = self.get_latest_revision_as_page()
+        revision = self.get_latest_revision_as_object()
         foreign_key_names = [
             field.name for field in revision._meta.get_fields()
             if isinstance(field, models.ForeignKey)
@@ -349,7 +349,7 @@ class BasePage(Page):
         for name in foreign_key_names:
             field = getattr(revision, name)
             if hasattr(field, 'get_latest_revision_as_page'):
-                setattr(revision, name, field.get_latest_revision_as_page())
+                setattr(revision, name, field.get_latest_revision_as_object())
         return revision
 
     @classmethod
