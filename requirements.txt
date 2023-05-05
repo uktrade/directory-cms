@@ -16,7 +16,7 @@ async-timeout==4.0.2
     # via redis
 attrs==23.1.0
     # via jsonschema
-beautifulsoup4==4.9.3
+beautifulsoup4==4.11.2
     # via
     #   directory-components
     #   wagtail
@@ -100,7 +100,7 @@ django-celery-beat==2.2.1
     # via -r requirements.in
 django-environ==0.10.0
     # via -r requirements.in
-django-filter==21.1
+django-filter==22.1
     # via
     #   -r requirements.in
     #   wagtail
@@ -124,7 +124,7 @@ django-staff-sso-client==4.1.1
     # via -r requirements.in
 django-storages==1.13.2
     # via -r requirements.in
-django-taggit==2.1.0
+django-taggit==3.1.0
     # via wagtail
 django-timezone-field==4.2.3
     # via django-celery-beat
@@ -271,12 +271,12 @@ vine==5.0.0
     #   kombu
 w3lib==1.22
     # via -r requirements.in
-wagtail==3.0.3
+wagtail==4.0.4
     # via
     #   -r requirements.in
     #   wagtail-modeltranslation
     #   wagtailmedia
-wagtail-modeltranslation==0.12.0
+wagtail-modeltranslation==0.13.0
     # via -r requirements.in
 wagtailmedia==0.12.0
     # via -r requirements.in

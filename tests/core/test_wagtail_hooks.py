@@ -10,11 +10,12 @@ from core import wagtail_hooks
 
 @pytest.mark.django_db
 def test_update_default_listing_buttons_from_base_page(page_with_reversion):
+    
     buttons = wagtail_hooks.update_default_listing_buttons(
         page=page_with_reversion, page_perms=Mock()
     )
 
-    assert len(buttons) == 5
+    assert len(buttons) == 4
     assert buttons[1].url == page_with_reversion.get_url(is_draft=True)
 
 

@@ -27,8 +27,8 @@ def add_copy_button(page, page_perms, next_url=None, is_parent=False):
 
 
 @helpers.replace_hook('register_page_listing_buttons', page_listing_buttons)
-def update_default_listing_buttons(page, page_perms, next_url=None, is_parent=False):
-    buttons = list(page_listing_buttons(page, page_perms, next_url, is_parent))
+def update_default_listing_buttons(page, page_perms, next_url=None):
+    buttons = list(page_listing_buttons(page, page_perms, next_url))
     if isinstance(page, models.BasePage):
         for button in buttons:
             if helpers.get_button_url_name(button) == 'view_draft':

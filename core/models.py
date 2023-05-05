@@ -9,7 +9,7 @@ from modeltranslation import settings as modeltranslation_settings
 from modeltranslation.utils import build_localized_fieldname
 from modeltranslation.translator import translator
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
-from wagtail.contrib.settings.models import BaseSetting, register_setting
+from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.models import Page, PageBase, Site
 
 from django.core import signing
@@ -90,7 +90,7 @@ class Breadcrumb(models.Model):
 
 
 @register_setting
-class RoutingSettings(BaseSetting):
+class RoutingSettings(BaseSiteSetting):
     root_path_prefix = models.CharField(
         blank=True,
         max_length=100,
@@ -150,6 +150,9 @@ class BasePage(Page):
     folder_page = False
     # overrides page.slug when generating the url
     slug_override = None
+
+    # remove preview from all pages
+    preview_modes = []
 
     subpage_types = []
     content_panels = []
