@@ -370,7 +370,7 @@ class PreloadPageView(FormView):
             instance=self.page,
             parent_page=self.parent_page,
         )
-        edit_handler = edit_handler.bind_to(
+        edit_handler = edit_handler.get_bound_panel(
             instance=self.page,
             form=form,
             request=self.request
