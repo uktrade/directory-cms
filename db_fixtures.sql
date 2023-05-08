@@ -12285,14 +12285,14 @@ ALTER SEQUENCE public.wagtailcore_page_id_seq OWNED BY public.wagtailcore_page.i
 
 
 --
--- Name: wagtailcore_pagerevision; Type: TABLE; Schema: public; Owner: -
+-- Name: wagtailcore_revision; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.wagtailcore_pagerevision (
+CREATE TABLE public.wagtailcore_revision (
     id integer NOT NULL,
     submitted_for_moderation boolean NOT NULL,
     created_at timestamp with time zone NOT NULL,
-    content_json text NOT NULL,
+    content text NOT NULL,
     approved_go_live_at timestamp with time zone,
     page_id integer NOT NULL,
     user_id integer
@@ -12300,10 +12300,10 @@ CREATE TABLE public.wagtailcore_pagerevision (
 
 
 --
--- Name: wagtailcore_pagerevision_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: wagtailcore_revision_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.wagtailcore_pagerevision_id_seq
+CREATE SEQUENCE public.wagtailcore_revision_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -12312,10 +12312,10 @@ CREATE SEQUENCE public.wagtailcore_pagerevision_id_seq
 
 
 --
--- Name: wagtailcore_pagerevision_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: wagtailcore_revision_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.wagtailcore_pagerevision_id_seq OWNED BY public.wagtailcore_pagerevision.id;
+ALTER SEQUENCE public.wagtailcore_revision_id_seq OWNED BY public.wagtailcore_revision.id;
 
 
 --
@@ -13089,10 +13089,10 @@ ALTER TABLE ONLY public.wagtailcore_page ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
--- Name: wagtailcore_pagerevision id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: wagtailcore_revision id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.wagtailcore_pagerevision ALTER COLUMN id SET DEFAULT nextval('public.wagtailcore_pagerevision_id_seq'::regclass);
+ALTER TABLE ONLY public.wagtailcore_revision ALTER COLUMN id SET DEFAULT nextval('public.wagtailcore_revision_id_seq'::regclass);
 
 
 --
@@ -15322,10 +15322,10 @@ COPY public.wagtailcore_page (id, path, depth, numchild, title, slug, live, has_
 
 
 --
--- Data for Name: wagtailcore_pagerevision; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: wagtailcore_revision; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.wagtailcore_pagerevision (id, submitted_for_moderation, created_at, content_json, approved_go_live_at, page_id, user_id) FROM stdin;
+COPY public.wagtailcore_revision (id, submitted_for_moderation, created_at, content, approved_go_live_at, page_id, user_id) FROM stdin;
 2	f	2019-09-16 13:28:41.244+01	{"pk": 4, "path": "000100020001", "depth": 3, "numchild": 0, "title": "Advice", "title_en_gb": "Advice", "title_de": null, "title_ja": null, "title_zh_hans": null, "title_fr": null, "title_es": null, "title_pt": null, "title_ar": null, "draft_title": "Advice", "slug": "advice", "content_type": 52, "live": true, "has_unpublished_changes": false, "url_path": "/great-domestic-home/advice/", "owner": 1, "seo_title": "", "seo_title_en_gb": "", "seo_title_de": null, "seo_title_ja": null, "seo_title_zh_hans": null, "seo_title_fr": null, "seo_title_es": null, "seo_title_pt": null, "seo_title_ar": null, "show_in_menus": false, "search_description": "", "search_description_en_gb": "", "search_description_de": null, "search_description_ja": null, "search_description_zh_hans": null, "search_description_fr": null, "search_description_es": null, "search_description_pt": null, "search_description_ar": null, "go_live_at": null, "expire_at": null, "expired": false, "locked": false, "first_published_at": null, "last_published_at": null, "latest_revision_created_at": null, "live_revision": null, "service_name": "EXPORT_READINESS", "uses_tree_based_routing": false, "landing_page_title": "Advice", "hero_image": 1, "hero_teaser": null, "banner_text": "", "teaser": ""}	\N	4	1
 3	f	2019-09-16 13:29:21.034+01	{"pk": 5, "path": "0001000200010001", "depth": 4, "numchild": 0, "title": "Article listing page", "title_en_gb": "Article listing page", "title_de": null, "title_ja": null, "title_zh_hans": null, "title_fr": null, "title_es": null, "title_pt": null, "title_ar": null, "draft_title": "Article listing page", "slug": "article-listing-page", "content_type": 50, "live": true, "has_unpublished_changes": false, "url_path": "/great-domestic-home/advice/article-listing-page/", "owner": 1, "seo_title": "", "seo_title_en_gb": "", "seo_title_de": null, "seo_title_ja": null, "seo_title_zh_hans": null, "seo_title_fr": null, "seo_title_es": null, "seo_title_pt": null, "seo_title_ar": null, "show_in_menus": false, "search_description": "", "search_description_en_gb": "", "search_description_de": null, "search_description_ja": null, "search_description_zh_hans": null, "search_description_fr": null, "search_description_es": null, "search_description_pt": null, "search_description_ar": null, "go_live_at": null, "expire_at": null, "expired": false, "locked": false, "first_published_at": null, "last_published_at": null, "latest_revision_created_at": null, "live_revision": null, "service_name": "EXPORT_READINESS", "uses_tree_based_routing": false, "landing_page_title": "Article listing page", "hero_image": 1, "hero_teaser": null, "list_teaser": ""}	\N	5	1
 4	f	2019-09-16 13:31:20.418+01	{"pk": 6, "path": "00010002000100010001", "depth": 5, "numchild": 0, "title": "Example advice article", "title_en_gb": "Example advice article", "title_de": null, "title_ja": null, "title_zh_hans": null, "title_fr": null, "title_es": null, "title_pt": null, "title_ar": null, "draft_title": "Example advice article", "slug": "example-advice-article", "content_type": 51, "live": true, "has_unpublished_changes": false, "url_path": "/great-domestic-home/advice/article-listing-page/example-advice-article/", "owner": 1, "seo_title": "", "seo_title_en_gb": "", "seo_title_de": null, "seo_title_ja": null, "seo_title_zh_hans": null, "seo_title_fr": null, "seo_title_es": null, "seo_title_pt": null, "seo_title_ar": null, "show_in_menus": false, "search_description": "", "search_description_en_gb": "", "search_description_de": null, "search_description_ja": null, "search_description_zh_hans": null, "search_description_fr": null, "search_description_es": null, "search_description_pt": null, "search_description_ar": null, "go_live_at": null, "expire_at": null, "expired": false, "locked": false, "first_published_at": null, "last_published_at": null, "latest_revision_created_at": null, "live_revision": null, "service_name": "EXPORT_READINESS", "uses_tree_based_routing": false, "type_of_article": "Advice", "article_title": "Example advice article", "article_subheading": "Article subheading", "article_teaser": "Article teaser", "article_image": 1, "article_video": null, "article_body_text": "Bacon ipsum dolor amet cow ham tail bacon, brisket shank turkey hamburger buffalo picanha pork loin filet mignon jowl flank pancetta. Biltong cow flank buffalo tri-tip chicken burgdoggen. Boudin flank jerky shank tenderloin, bacon biltong cow burgdoggen. Pork chop short ribs pork belly corned beef pancetta brisket, beef doner chicken cow rump venison tenderloin porchetta.\r\n\r\nSwine pork loin t-bone alcatra, drumstick ham turducken venison ham hock flank pork. Corned beef turducken leberkas landjaeger. Pig venison pork chop ribeye jerky biltong buffalo prosciutto hamburger porchetta sirloin pancetta andouille. Shank hamburger fatback pancetta. Chuck t-bone pork belly filet mignon shoulder, leberkas picanha pork corned beef. Turkey venison alcatra pork chop fatback shoulder. Jerky biltong kevin ham hock porchetta tail sirloin fatback rump beef.\r\n\r\nBeef porchetta biltong t-bone. Kevin venison andouille jowl pancetta pig. Swine meatloaf tenderloin burgdoggen pork loin kevin. Pork loin short ribs short loin salami sausage beef ribs shoulder landjaeger brisket pig tri-tip kevin cupim bacon. Short loin boudin t-bone, spare ribs ball tip ribeye alcatra burgdoggen kevin chicken cupim. Ground round picanha shank, jowl beef ribs sirloin short ribs turducken sausage bacon pancetta drumstick capicola bresaola. Boudin meatball jerky chicken frankfurter rump.\r\n\r\nCorned beef alcatra chuck pork meatball pork chop. Pastrami pig ham, landjaeger meatloaf tongue tail tri-tip flank beef ribs brisket. Pork belly pork fatback meatloaf turducken doner tongue drumstick bacon. Swine kevin landjaeger drumstick pork chop hamburger pancetta doner biltong tenderloin corned beef shankle short loin jowl ham hock.\r\n\r\nBuffalo pig filet mignon beef ribs landjaeger pork chop turkey pork spare ribs pastrami tenderloin pancetta. Shoulder meatball leberkas landjaeger alcatra. Leberkas buffalo cow ground round. Salami bresaola turducken cow tri-tip, pork shank burgdoggen boudin pork belly hamburger pork loin shoulder jerky. Capicola buffalo short loin sirloin pork chop kevin ribeye short ribs prosciutto swine picanha chuck chicken cow ham. Cow capicola pork, beef drumstick doner jerky rump ground round. Meatball frankfurter tri-tip, kielbasa filet mignon ham cupim hamburger.", "cta_title": "CTA title", "cta_teaser": "CTA teaser", "cta_link_label": "CTA link", "cta_link": "/contact", "related_page_one": null, "related_page_two": null, "related_page_three": null, "tags": []}	\N	6	1
@@ -15832,10 +15832,10 @@ SELECT pg_catalog.setval('public.wagtailcore_page_id_seq', 29, true);
 
 
 --
--- Name: wagtailcore_pagerevision_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: wagtailcore_revision_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.wagtailcore_pagerevision_id_seq', 56, true);
+SELECT pg_catalog.setval('public.wagtailcore_revision_id_seq', 56, true);
 
 
 --
@@ -17162,11 +17162,11 @@ ALTER TABLE ONLY public.wagtailcore_page
 
 
 --
--- Name: wagtailcore_pagerevision wagtailcore_pagerevision_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: wagtailcore_revision wagtailcore_revision_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.wagtailcore_pagerevision
-    ADD CONSTRAINT wagtailcore_pagerevision_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.wagtailcore_revision
+    ADD CONSTRAINT wagtailcore_revision_pkey PRIMARY KEY (id);
 
 
 --
@@ -33703,31 +33703,31 @@ CREATE INDEX wagtailcore_page_slug_e7c11b8f_like ON public.wagtailcore_page USIN
 
 
 --
--- Name: wagtailcore_pagerevision_created_at_66954e3b; Type: INDEX; Schema: public; Owner: -
+-- Name: wagtailcore_revision_created_at_66954e3b; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX wagtailcore_pagerevision_created_at_66954e3b ON public.wagtailcore_pagerevision USING btree (created_at);
-
-
---
--- Name: wagtailcore_pagerevision_page_id_d421cc1d; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX wagtailcore_pagerevision_page_id_d421cc1d ON public.wagtailcore_pagerevision USING btree (page_id);
+CREATE INDEX wagtailcore_revision_created_at_66954e3b ON public.wagtailcore_revision USING btree (created_at);
 
 
 --
--- Name: wagtailcore_pagerevision_submitted_for_moderation_c682e44c; Type: INDEX; Schema: public; Owner: -
+-- Name: wagtailcore_revision_page_id_d421cc1d; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX wagtailcore_pagerevision_submitted_for_moderation_c682e44c ON public.wagtailcore_pagerevision USING btree (submitted_for_moderation);
+CREATE INDEX wagtailcore_revision_page_id_d421cc1d ON public.wagtailcore_revision USING btree (page_id);
 
 
 --
--- Name: wagtailcore_pagerevision_user_id_2409d2f4; Type: INDEX; Schema: public; Owner: -
+-- Name: wagtailcore_revision_submitted_for_moderation_c682e44c; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX wagtailcore_pagerevision_user_id_2409d2f4 ON public.wagtailcore_pagerevision USING btree (user_id);
+CREATE INDEX wagtailcore_revision_submitted_for_moderation_c682e44c ON public.wagtailcore_revision USING btree (submitted_for_moderation);
+
+
+--
+-- Name: wagtailcore_revision_user_id_2409d2f4; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX wagtailcore_revision_user_id_2409d2f4 ON public.wagtailcore_revision USING btree (user_id);
 
 
 --
@@ -51842,7 +51842,7 @@ ALTER TABLE ONLY public.wagtailcore_page
 --
 
 ALTER TABLE ONLY public.wagtailcore_page
-    ADD CONSTRAINT wagtailcore_page_live_revision_id_930bd822_fk_wagtailco FOREIGN KEY (live_revision_id) REFERENCES public.wagtailcore_pagerevision(id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT wagtailcore_page_live_revision_id_930bd822_fk_wagtailco FOREIGN KEY (live_revision_id) REFERENCES public.wagtailcore_revision(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -51854,19 +51854,19 @@ ALTER TABLE ONLY public.wagtailcore_page
 
 
 --
--- Name: wagtailcore_pagerevision wagtailcore_pagerevi_page_id_d421cc1d_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: wagtailcore_revision wagtailcore_pagerevi_page_id_d421cc1d_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.wagtailcore_pagerevision
+ALTER TABLE ONLY public.wagtailcore_revision
     ADD CONSTRAINT wagtailcore_pagerevi_page_id_d421cc1d_fk_wagtailco FOREIGN KEY (page_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: wagtailcore_pagerevision wagtailcore_pagerevision_user_id_2409d2f4_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: wagtailcore_revision wagtailcore_revision_user_id_2409d2f4_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.wagtailcore_pagerevision
-    ADD CONSTRAINT wagtailcore_pagerevision_user_id_2409d2f4_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.wagtailcore_revision
+    ADD CONSTRAINT wagtailcore_revision_user_id_2409d2f4_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
