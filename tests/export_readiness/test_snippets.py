@@ -1,7 +1,7 @@
 import pytest
 
-
 from export_readiness.snippets import Tag
+
 
 @pytest.mark.django_db
 def test_tag_str():
