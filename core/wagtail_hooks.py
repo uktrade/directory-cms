@@ -31,7 +31,8 @@ def update_default_listing_buttons(page, page_perms, next_url=None, button_url_n
     buttons = list(page_listing_buttons(page, page_perms, next_url))
     if isinstance(page, models.BasePage):
         for button in buttons:
-            if (button_url_name and button_url_name == 'view_draft') or helpers.get_button_url_name(button) == 'view_draft':
+            if (button_url_name and button_url_name == 'view_draft') or \
+                    helpers.get_button_url_name(button) == 'view_draft':
                 button.url = page.get_url(is_draft=True)
 
     else:
