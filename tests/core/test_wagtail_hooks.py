@@ -16,7 +16,6 @@ def test_update_default_listing_buttons_from_base_page(page_with_reversion):
 
     expected_url = 'http://great.gov.uk/international/content/123-555-206/'
     assert len(buttons) == 4
- 
     assert buttons[1].url == expected_url
 
 

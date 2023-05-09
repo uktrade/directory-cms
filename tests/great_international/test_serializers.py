@@ -509,7 +509,6 @@ def test_international_homepage_serializer(rf, international_root_page, image, t
 
 @pytest.mark.django_db
 def test_atlas_opportunity_serializer_video_fields(international_root_page, rf, test_video):
-   
     opportunity_page = InvestmentOpportunityPageFactory(
         parent=international_root_page,
         slug='opp',
