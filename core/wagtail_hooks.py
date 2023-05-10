@@ -1,5 +1,5 @@
 from wagtail.admin.widgets import Button, PageListingButton
-from wagtail.core import hooks
+from wagtail import hooks
 from wagtail.admin.wagtail_hooks import page_listing_buttons
 
 from django.conf import settings
@@ -27,11 +27,12 @@ def add_copy_button(page, page_perms, next_url=None, is_parent=False):
 
 
 @helpers.replace_hook('register_page_listing_buttons', page_listing_buttons)
-def update_default_listing_buttons(page, page_perms, next_url=None, is_parent=False):
-    buttons = list(page_listing_buttons(page, page_perms, next_url, is_parent))
+def update_default_listing_buttons(page, page_perms, next_url=None, button_url_name=None):
+    buttons = list(page_listing_buttons(page, page_perms, next_url))
     if isinstance(page, models.BasePage):
         for button in buttons:
-            if helpers.get_button_url_name(button) == 'view_draft':
+            if (button_url_name and button_url_name == 'view_draft') or \
+                    helpers.get_button_url_name(button) == 'view_draft':
                 button.url = page.get_url(is_draft=True)
 
     else:

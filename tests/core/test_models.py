@@ -7,7 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils import translation
 from django.test import TestCase
 
-from wagtail.core.models import Page, Site
+from wagtail.models import Page, Site
 from tests.core.helpers import make_test_video
 
 

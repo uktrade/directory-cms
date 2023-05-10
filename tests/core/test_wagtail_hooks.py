@@ -1,6 +1,7 @@
 from unittest.mock import Mock
 
 import pytest
+import re
 
 from django.utils import translation
 from django.urls import reverse
@@ -14,8 +15,23 @@ def test_update_default_listing_buttons_from_base_page(page_with_reversion):
         page=page_with_reversion, page_perms=Mock()
     )
 
-    assert len(buttons) == 5
-    assert buttons[1].url == page_with_reversion.get_url(is_draft=True)
+    expected_url = 'http://great.gov.uk/international/content/123-555-206/'
+    assert len(buttons) == 4
+    assert buttons[1].url == expected_url
+
+
+@pytest.mark.django_db
+def test_update_default_listing_buttons_from_base_page_button_url_name_view_draft(
+    page_with_reversion
+):
+    button_url_name = 'view_draft'
+    buttons = wagtail_hooks.update_default_listing_buttons(
+        page=page_with_reversion, page_perms=Mock(), button_url_name=button_url_name,
+    )
+
+    expected_url = r'http://great[.]gov[.]uk/international/content/123-555-208/[?]draft_token=\w+'
+    assert len(buttons) == 4
+    assert re.match(expected_url, buttons[1].url)
 
 
 @pytest.mark.django_db

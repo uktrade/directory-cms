@@ -1,6 +1,6 @@
 from directory_constants import cms
 from modeltranslation.utils import build_localized_fieldname
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 from django.conf import settings
 from django.core.management.base import BaseCommand

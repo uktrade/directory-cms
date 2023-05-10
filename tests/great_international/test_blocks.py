@@ -2,7 +2,7 @@ from unittest import mock
 
 import pytest
 from django.test import override_settings
-from wagtail.core.blocks import StreamBlock
+from wagtail.blocks import StreamBlock
 
 from core.blocks import DEFAULT_IMAGE_RENDITION_SPEC, GreatMediaBlock
 from great_international.blocks.great_international import FeaturedImageBlock, MarkdownBlock
@@ -137,6 +137,7 @@ def test_video_block_get_api_representation():
     block = GreatMediaBlock()
 
     block_response = block.get_api_representation(value=video)
+
     assert block_response == {
         'title': 'Test file',
         'transcript': 'Test transcript',

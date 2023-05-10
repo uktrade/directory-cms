@@ -1,6 +1,6 @@
 """Streamfield blocks for Investment Atlas pages"""
 
-from wagtail.core import blocks
+from wagtail import blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from core.blocks import ButtonBlock, BaseAltTextImageBlock, GreatMediaBlock

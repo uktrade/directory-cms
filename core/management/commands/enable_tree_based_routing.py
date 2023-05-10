@@ -1,7 +1,7 @@
 from directory_constants import cms
 from django.core.management import BaseCommand
 from django.core.management.base import no_translations
-from wagtail.core.models import Page
+from wagtail.models import Page
 
 from core import filters
 

@@ -1,15 +1,13 @@
-{% extends "wagtailadmin/base.html" %}
+{% extends "wagtailadmin/generic/edit.html" %}
 {% load i18n static %}
 {% block titletag %}{% trans "Welcome to Wagtail!" %}{% endblock %}
 
 {% block extra_css %}
-    {% include "wagtailadmin/pages/_editor_css.html" %}
     {{ form.media.css }}
     <link rel="stylesheet" href="{% static 'wagtailadmin/sso/css/request_access.css' %}" type="text/css" />
 {% endblock %}
 
 {% block extra_js %}
-    {% include "wagtailadmin/pages/_editor_js.html" %}
     {{ form.media.js }}
     <script src="{% static 'wagtailadmin/sso/js/request_access.js' %}"></script>
 {% endblock %}

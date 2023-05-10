@@ -1,5 +1,5 @@
 from django.forms import CheckboxSelectMultiple, Select, Textarea
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     FieldRowPanel,
     HelpPanel,
@@ -7,11 +7,8 @@ from wagtail.admin.edit_handlers import (
     MultiFieldPanel,
     ObjectList,
     PageChooserPanel,
-    StreamFieldPanel
 )
 
-from wagtail.documents.edit_handlers import DocumentChooserPanel
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmedia.edit_handlers import MediaChooserPanel
 from wagtailmedia.widgets import AdminMediaChooser
 from core.helpers import make_translated_interface
@@ -24,7 +21,7 @@ class InternationalHomePagePanels:
         FieldPanel('title'),
         FieldPanel('hero_title'),
         MediaChooserPanel('hero_video'),
-        StreamFieldPanel('homepage_link_panels'),
+        FieldPanel('homepage_link_panels'),
         SearchEngineOptimisationPanel(),
     ]
 
@@ -47,7 +44,7 @@ class BaseInternationalSectorPagePanels:
             children=[
                 FieldPanel('heading'),
                 FieldPanel('sub_heading'),
-                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_image'),
                 FieldPanel('heading_teaser'),
                 FieldPanel('featured_description')
             ]
@@ -65,7 +62,7 @@ class BaseInternationalSectorPagePanels:
                         FieldPanel('section_one_body'),
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel('section_one_image'),
+                                FieldPanel('section_one_image'),
                                 FieldPanel('section_one_image_caption'),
                                 FieldPanel('section_one_image_caption_company')
                             ]
@@ -136,7 +133,7 @@ class BaseInternationalSectorPagePanels:
                     [
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel(
+                                FieldPanel(
                                     'section_two_subsection_one_icon'),
                                 FieldPanel(
                                     'section_two_subsection_one_heading'),
@@ -146,7 +143,7 @@ class BaseInternationalSectorPagePanels:
                         ),
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel(
+                                FieldPanel(
                                     'section_two_subsection_two_icon'),
                                 FieldPanel(
                                     'section_two_subsection_two_heading'),
@@ -156,7 +153,7 @@ class BaseInternationalSectorPagePanels:
                         ),
                         MultiFieldPanel(
                             [
-                                ImageChooserPanel(
+                                FieldPanel(
                                     'section_two_subsection_three_icon'),
                                 FieldPanel(
                                     'section_two_subsection_three_heading'),
@@ -185,7 +182,7 @@ class BaseInternationalSectorPagePanels:
                         'great_international.InternationalArticlePage',
                         'great_international.InternationalCampaignPage',
                     ]),
-                ImageChooserPanel('case_study_image')
+                FieldPanel('case_study_image')
             ]
         ),
         MultiFieldPanel(
@@ -284,7 +281,7 @@ class InternationalArticlePagePanels:
         FieldPanel('title'),
         FieldPanel('article_title'),
         FieldPanel('type_of_article', widget=Select),
-        ImageChooserPanel('hero_image'),
+        FieldPanel('hero_image'),
         MediaChooserPanel('hero_video'),
         MultiFieldPanel(
             heading='Article content',
@@ -307,7 +304,7 @@ class InternationalArticlePagePanels:
     ]
 
     image_panels = [
-        ImageChooserPanel('article_image'),
+        FieldPanel('article_image'),
         FieldPanel('article_video', widget=AdminMediaChooser),
     ]
 
@@ -333,7 +330,7 @@ class InternationalArticleListingPagePanels:
         MultiFieldPanel(
             heading='Hero',
             children=[
-                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_image'),
                 FieldPanel('hero_teaser')
             ]
         ),
@@ -362,7 +359,7 @@ class InternationalCampaignPagePanels:
                 FieldPanel('campaign_heading'),
                 FieldPanel('campaign_subheading'),
                 FieldPanel('campaign_teaser'),
-                ImageChooserPanel('campaign_hero_image'),
+                FieldPanel('campaign_hero_image'),
             ]
         ),
         MultiFieldPanel(
@@ -370,25 +367,25 @@ class InternationalCampaignPagePanels:
             children=[
                 FieldPanel('section_one_heading'),
                 FieldPanel('section_one_intro'),
-                ImageChooserPanel('section_one_image'),
+                FieldPanel('section_one_image'),
                 FieldRowPanel([
                     MultiFieldPanel(
                         children=[
-                            ImageChooserPanel('selling_point_one_icon'),
+                            FieldPanel('selling_point_one_icon'),
                             FieldPanel('selling_point_one_heading'),
                             FieldPanel('selling_point_one_content'),
                         ]
                     ),
                     MultiFieldPanel(
                         children=[
-                            ImageChooserPanel('selling_point_two_icon'),
+                            FieldPanel('selling_point_two_icon'),
                             FieldPanel('selling_point_two_heading'),
                             FieldPanel('selling_point_two_content'),
                         ]
                     ),
                     MultiFieldPanel(
                         children=[
-                            ImageChooserPanel('selling_point_three_icon'),
+                            FieldPanel('selling_point_three_icon'),
                             FieldPanel('selling_point_three_heading'),
                             FieldPanel('selling_point_three_content'),
                         ]
@@ -405,7 +402,7 @@ class InternationalCampaignPagePanels:
             children=[
                 FieldPanel('section_two_heading'),
                 FieldPanel('section_two_intro'),
-                ImageChooserPanel('section_two_image'),
+                FieldPanel('section_two_image'),
                 FieldRowPanel([
                     FieldPanel('section_two_contact_button_text'),
                     FieldPanel('section_two_contact_button_url'),
@@ -464,7 +461,7 @@ class InternationalTopicLandingPagePanels:
         MultiFieldPanel(
             heading='Hero content',
             children=[
-                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_image'),
                 MediaChooserPanel('hero_video'),
                 FieldPanel('hero_teaser')
             ]
@@ -514,7 +511,7 @@ class AboutDitServiceFieldPanels:
 
     panels = [
         MultiFieldPanel([
-            ImageChooserPanel('icon'),
+            FieldPanel('icon'),
             FieldPanel('title'),
             FieldPanel('summary'),
             FieldPanel('link_text'),
@@ -598,9 +595,9 @@ class AboutDitServicesPagePanels:
     ]
 
     image_panels = [
-        ImageChooserPanel('hero_image'),
-        ImageChooserPanel('ebook_section_image'),
-        ImageChooserPanel('case_study_image'),
+        FieldPanel('hero_image'),
+        FieldPanel('ebook_section_image'),
+        FieldPanel('case_study_image'),
     ]
 
     settings_panels = [
@@ -619,19 +616,19 @@ class AboutDitServicesPagePanels:
 class AboutUkLandingPagePanels:
 
     image_panels = [
-        ImageChooserPanel('hero_image'),
-        ImageChooserPanel('why_choose_uk_image'),
+        FieldPanel('hero_image'),
+        FieldPanel('why_choose_uk_image'),
         MultiFieldPanel(
             heading="How we help images",
             children=[
-                ImageChooserPanel('how_we_help_one_icon'),
-                ImageChooserPanel('how_we_help_two_icon'),
-                ImageChooserPanel('how_we_help_three_icon'),
-                ImageChooserPanel('how_we_help_four_icon'),
-                ImageChooserPanel('how_we_help_five_icon'),
-                ImageChooserPanel('how_we_help_six_icon'),
+                FieldPanel('how_we_help_one_icon'),
+                FieldPanel('how_we_help_two_icon'),
+                FieldPanel('how_we_help_three_icon'),
+                FieldPanel('how_we_help_four_icon'),
+                FieldPanel('how_we_help_five_icon'),
+                FieldPanel('how_we_help_six_icon'),
             ]),
-        ImageChooserPanel('ebook_section_image'),
+        FieldPanel('ebook_section_image'),
     ]
 
     content_panels = [
@@ -772,7 +769,7 @@ class AboutUkLandingPagePanels:
                     HelpPanel('CTAs require both text and a link to show '
                               'on page. '),
                     FieldPanel('ebook_section_cta_text'),
-                    DocumentChooserPanel('ebook_section_cta_link'),
+                    FieldPanel('ebook_section_cta_link'),
                 ]),
             ]
         ),
@@ -804,7 +801,7 @@ class AboutUkLandingPagePanels:
 
 class AboutUkRegionListingPagePanels:
     image_panels = [
-        ImageChooserPanel('hero_image'),
+        FieldPanel('hero_image'),
         MediaChooserPanel('hero_video')
     ]
 
@@ -875,7 +872,7 @@ class AboutUkRegionPagePanels:
             heading="Hero",
             children=[
                 FieldPanel('hero_title'),
-                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_image'),
             ],
         ),
         FieldPanel('featured_description'),
@@ -885,7 +882,7 @@ class AboutUkRegionPagePanels:
             children=[
                 HelpPanel('Required fields for section to show: '
                           'Region Summary Section Content'),
-                ImageChooserPanel('region_summary_section_image'),
+                FieldPanel('region_summary_section_image'),
                 FieldPanel('region_summary_section_strapline'),
                 FieldPanel('region_summary_section_intro'),
                 FieldPanel('region_summary_section_content'),
@@ -989,7 +986,7 @@ class AboutUkRegionPagePanels:
                 HelpPanel('Required fields for section to show: '
                           'Property and Infrastructure Section Title, '
                           'Property and Infrastructure Section Content'),
-                ImageChooserPanel('property_and_infrastructure_section_image'),
+                FieldPanel('property_and_infrastructure_section_image'),
                 FieldPanel('property_and_infrastructure_section_title'),
                 FieldPanel('property_and_infrastructure_section_content'),
             ],
@@ -1003,17 +1000,17 @@ class AboutUkRegionPagePanels:
                 FieldRowPanel([
                     MultiFieldPanel([
                         FieldPanel('sub_section_one_title'),
-                        ImageChooserPanel('sub_section_one_icon'),
+                        FieldPanel('sub_section_one_icon'),
                         FieldPanel('sub_section_one_content')
                     ]),
                     MultiFieldPanel([
                         FieldPanel('sub_section_two_title'),
-                        ImageChooserPanel('sub_section_two_icon'),
+                        FieldPanel('sub_section_two_icon'),
                         FieldPanel('sub_section_two_content')
                     ]),
                     MultiFieldPanel([
                         FieldPanel('sub_section_three_title'),
-                        ImageChooserPanel('sub_section_three_icon'),
+                        FieldPanel('sub_section_three_icon'),
                         FieldPanel('sub_section_three_content')
                     ]),
                 ]),
@@ -1025,7 +1022,7 @@ class AboutUkRegionPagePanels:
             children=[
                 HelpPanel('Required fields for section to show: '
                           'Case Study Image, Case Study Title'),
-                ImageChooserPanel('case_study_image'),
+                FieldPanel('case_study_image'),
                 FieldPanel('case_study_title'),
                 FieldPanel('case_study_text'),
                 HelpPanel('Cta\'s require both text and a link to show '
@@ -1063,7 +1060,7 @@ class AboutUkArticleFieldPanels:
 
     panels = [
         MultiFieldPanel([
-            ImageChooserPanel('image'),
+            FieldPanel('image'),
             FieldPanel('title'),
             FieldPanel('summary'),
             HelpPanel('Both link text and link URL required for link to show'),
@@ -1082,7 +1079,7 @@ class AboutUkWhyChooseTheUkPagePanels:
             heading="Hero",
             children=[
                 FieldPanel('hero_title'),
-                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_image'),
             ],
         ),
         MultiFieldPanel(
@@ -1101,7 +1098,7 @@ class AboutUkWhyChooseTheUkPagePanels:
                 FieldRowPanel([
                     FieldPanel('section_one_body'),
                     MultiFieldPanel([
-                        ImageChooserPanel('section_one_image'),
+                        FieldPanel('section_one_image'),
                         FieldPanel('section_one_video', widget=AdminMediaChooser)
                     ])
                 ])
@@ -1175,7 +1172,7 @@ class AboutUkWhyChooseTheUkPagePanels:
             children=[
                 HelpPanel('Required fields for section to show: title, body'),
                 FieldRowPanel([
-                    ImageChooserPanel('ebook_section_image'),
+                    FieldPanel('ebook_section_image'),
                     FieldPanel('ebook_section_image_alt_text')
                 ]),
                 MultiFieldPanel([
@@ -1251,7 +1248,7 @@ class InternationalInvestmentSectorPagePanels:
             classname='collapsible',
             children=[
                 FieldPanel('heading'),
-                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_image'),
                 MediaChooserPanel('hero_video'),
                 FieldPanel('standfirst'),
                 FieldPanel('featured_description')
@@ -1262,7 +1259,7 @@ class InternationalInvestmentSectorPagePanels:
             classname='collapsible',
             children=[
                 FieldPanel('intro_text'),
-                ImageChooserPanel('intro_image'),
+                FieldPanel('intro_image'),
             ]
         ),
         MultiFieldPanel(
@@ -1270,7 +1267,7 @@ class InternationalInvestmentSectorPagePanels:
             classname='collapsible',
             children=[
                 FieldPanel('contact_name'),
-                ImageChooserPanel('contact_avatar'),
+                FieldPanel('contact_avatar'),
                 FieldPanel('contact_job_title'),
                 FieldPanel('contact_link'),
                 FieldPanel('contact_link_button_preamble'),
@@ -1285,13 +1282,13 @@ class InternationalInvestmentSectorPagePanels:
                 HelpPanel('See the dedicated tab for selecting the opportunities themselves'),
             ]
         ),
-        StreamFieldPanel('downpage_content'),
+        FieldPanel('downpage_content'),
         MultiFieldPanel(
             heading='Early opportunities',
             classname='collapsible',
             children=[
                 FieldPanel('early_opportunities_header'),
-                StreamFieldPanel('early_opportunities'),
+                FieldPanel('early_opportunities'),
             ]
         ),
         SearchEngineOptimisationPanel()
@@ -1306,7 +1303,7 @@ class InternationalInvestmentSectorPagePanels:
         FieldRowPanel(
             heading='Related Opportunities',
             children=[
-                StreamFieldPanel('manually_selected_related_opportunities'),
+               FieldPanel('manually_selected_related_opportunities'),
             ]
         ),
     ]
@@ -1343,11 +1340,11 @@ class WhyInvestInTheUKPagePanels:
             classname='collapsible',
             children=[
                 FieldPanel('title'),
-                ImageChooserPanel('hero_image'),
+                FieldPanel('hero_image'),
                 MediaChooserPanel('hero_video'),
                 FieldPanel('strapline'),
                 FieldPanel('introduction'),
-                ImageChooserPanel('intro_image'),
+                FieldPanel('intro_image'),
             ],
         ),
         MultiFieldPanel(
@@ -1356,7 +1353,7 @@ class WhyInvestInTheUKPagePanels:
             children=[
                 FieldPanel('uk_strength_title'),
                 FieldPanel('uk_strength_intro'),
-                StreamFieldPanel('uk_strength_panels'),
+                FieldPanel('uk_strength_panels'),
             ],
         ),
 
