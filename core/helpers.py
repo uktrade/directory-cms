@@ -8,9 +8,9 @@ import markdown
 
 from bleach_whitelist import markdown_tags, markdown_attrs
 from modeltranslation.utils import build_localized_fieldname
-from wagtail.admin.edit_handlers import ObjectList, TabbedInterface
-from wagtail.core import hooks
-from wagtail.core.models import Page
+from wagtail.admin.panels import ObjectList, TabbedInterface
+from wagtail import hooks
+from wagtail.models import Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
 

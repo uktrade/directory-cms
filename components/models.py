@@ -5,7 +5,7 @@ from core.models import (
     ExclusivePageMixin,
     ServiceMixin,
 )
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel, MultiFieldPanel
 )
 from core.mixins import ServiceNameUniqueSlugMixin

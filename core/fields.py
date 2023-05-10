@@ -1,6 +1,6 @@
 from rest_framework import fields
-from wagtail.core import blocks
-from wagtail.core.fields import StreamField
+from wagtail import blocks
+from wagtail.fields import StreamField
 
 from conf import settings
 from core import helpers, models
@@ -99,5 +99,6 @@ def single_struct_block_stream_field_factory(
             min_num=min_num,
             required=required
         ),
+        use_json_field=True,
         **kwargs)
     return field

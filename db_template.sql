@@ -12595,14 +12595,14 @@ ALTER SEQUENCE public.wagtailcore_page_id_seq OWNED BY public.wagtailcore_page.i
 
 
 --
--- Name: wagtailcore_pagerevision; Type: TABLE; Schema: public; Owner: -
+-- Name: wagtailcore_revision; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.wagtailcore_pagerevision (
+CREATE TABLE public.wagtailcore_revision (
     id integer NOT NULL,
     submitted_for_moderation boolean NOT NULL,
     created_at timestamp with time zone NOT NULL,
-    content_json text NOT NULL,
+    content text NOT NULL,
     approved_go_live_at timestamp with time zone,
     page_id integer NOT NULL,
     user_id integer
@@ -12610,10 +12610,10 @@ CREATE TABLE public.wagtailcore_pagerevision (
 
 
 --
--- Name: wagtailcore_pagerevision_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: wagtailcore_revision_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.wagtailcore_pagerevision_id_seq
+CREATE SEQUENCE public.wagtailcore_revision_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -12622,10 +12622,10 @@ CREATE SEQUENCE public.wagtailcore_pagerevision_id_seq
 
 
 --
--- Name: wagtailcore_pagerevision_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: wagtailcore_revision_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.wagtailcore_pagerevision_id_seq OWNED BY public.wagtailcore_pagerevision.id;
+ALTER SEQUENCE public.wagtailcore_revision_id_seq OWNED BY public.wagtailcore_revision.id;
 
 
 --
@@ -13413,10 +13413,10 @@ ALTER TABLE ONLY public.wagtailcore_page ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
--- Name: wagtailcore_pagerevision id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: wagtailcore_revision id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.wagtailcore_pagerevision ALTER COLUMN id SET DEFAULT nextval('public.wagtailcore_pagerevision_id_seq'::regclass);
+ALTER TABLE ONLY public.wagtailcore_revision ALTER COLUMN id SET DEFAULT nextval('public.wagtailcore_revision_id_seq'::regclass);
 
 
 --
@@ -15769,10 +15769,10 @@ COPY public.wagtailcore_page (id, path, depth, numchild, title, slug, live, has_
 
 
 --
--- Data for Name: wagtailcore_pagerevision; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: wagtailcore_revision; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.wagtailcore_pagerevision (id, submitted_for_moderation, created_at, content_json, approved_go_live_at, page_id, user_id) FROM stdin;
+COPY public.wagtailcore_revision (id, submitted_for_moderation, created_at, content, approved_go_live_at, page_id, user_id) FROM stdin;
 \.
 
 
@@ -16218,10 +16218,10 @@ SELECT pg_catalog.setval('public.wagtailcore_page_id_seq', 2, true);
 
 
 --
--- Name: wagtailcore_pagerevision_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: wagtailcore_revision_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.wagtailcore_pagerevision_id_seq', 1, false);
+SELECT pg_catalog.setval('public.wagtailcore_revision_id_seq', 1, false);
 
 
 --
@@ -17596,11 +17596,11 @@ ALTER TABLE ONLY public.wagtailcore_page
 
 
 --
--- Name: wagtailcore_pagerevision wagtailcore_pagerevision_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: wagtailcore_revision wagtailcore_revision_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.wagtailcore_pagerevision
-    ADD CONSTRAINT wagtailcore_pagerevision_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.wagtailcore_revision
+    ADD CONSTRAINT wagtailcore_revision_pkey PRIMARY KEY (id);
 
 
 --
@@ -34242,31 +34242,31 @@ CREATE INDEX wagtailcore_page_slug_e7c11b8f_like ON public.wagtailcore_page USIN
 
 
 --
--- Name: wagtailcore_pagerevision_created_at_66954e3b; Type: INDEX; Schema: public; Owner: -
+-- Name: wagtailcore_revision_created_at_66954e3b; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX wagtailcore_pagerevision_created_at_66954e3b ON public.wagtailcore_pagerevision USING btree (created_at);
-
-
---
--- Name: wagtailcore_pagerevision_page_id_d421cc1d; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX wagtailcore_pagerevision_page_id_d421cc1d ON public.wagtailcore_pagerevision USING btree (page_id);
+CREATE INDEX wagtailcore_revision_created_at_66954e3b ON public.wagtailcore_revision USING btree (created_at);
 
 
 --
--- Name: wagtailcore_pagerevision_submitted_for_moderation_c682e44c; Type: INDEX; Schema: public; Owner: -
+-- Name: wagtailcore_revision_page_id_d421cc1d; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX wagtailcore_pagerevision_submitted_for_moderation_c682e44c ON public.wagtailcore_pagerevision USING btree (submitted_for_moderation);
+CREATE INDEX wagtailcore_revision_page_id_d421cc1d ON public.wagtailcore_revision USING btree (page_id);
 
 
 --
--- Name: wagtailcore_pagerevision_user_id_2409d2f4; Type: INDEX; Schema: public; Owner: -
+-- Name: wagtailcore_revision_submitted_for_moderation_c682e44c; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX wagtailcore_pagerevision_user_id_2409d2f4 ON public.wagtailcore_pagerevision USING btree (user_id);
+CREATE INDEX wagtailcore_revision_submitted_for_moderation_c682e44c ON public.wagtailcore_revision USING btree (submitted_for_moderation);
+
+
+--
+-- Name: wagtailcore_revision_user_id_2409d2f4; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX wagtailcore_revision_user_id_2409d2f4 ON public.wagtailcore_revision USING btree (user_id);
 
 
 --
@@ -52469,7 +52469,7 @@ ALTER TABLE ONLY public.wagtailcore_page
 --
 
 ALTER TABLE ONLY public.wagtailcore_page
-    ADD CONSTRAINT wagtailcore_page_live_revision_id_930bd822_fk_wagtailco FOREIGN KEY (live_revision_id) REFERENCES public.wagtailcore_pagerevision(id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT wagtailcore_page_live_revision_id_930bd822_fk_wagtailco FOREIGN KEY (live_revision_id) REFERENCES public.wagtailcore_revision(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -52481,19 +52481,19 @@ ALTER TABLE ONLY public.wagtailcore_page
 
 
 --
--- Name: wagtailcore_pagerevision wagtailcore_pagerevi_page_id_d421cc1d_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: wagtailcore_revision wagtailcore_pagerevi_page_id_d421cc1d_fk_wagtailco; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.wagtailcore_pagerevision
+ALTER TABLE ONLY public.wagtailcore_revision
     ADD CONSTRAINT wagtailcore_pagerevi_page_id_d421cc1d_fk_wagtailco FOREIGN KEY (page_id) REFERENCES public.wagtailcore_page(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: wagtailcore_pagerevision wagtailcore_pagerevision_user_id_2409d2f4_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: wagtailcore_revision wagtailcore_revision_user_id_2409d2f4_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.wagtailcore_pagerevision
-    ADD CONSTRAINT wagtailcore_pagerevision_user_id_2409d2f4_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.wagtailcore_revision
+    ADD CONSTRAINT wagtailcore_revision_user_id_2409d2f4_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --

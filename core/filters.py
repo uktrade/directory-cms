@@ -1,6 +1,6 @@
 import django_filters
 from django.contrib.contenttypes.models import ContentType
-from wagtail.core.models import PAGE_MODEL_CLASSES, Page
+from wagtail.models import PAGE_MODEL_CLASSES, Page
 
 
 class ServiceNameFilter(django_filters.FilterSet):
