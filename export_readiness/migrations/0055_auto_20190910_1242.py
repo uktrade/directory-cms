@@ -2,8 +2,8 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.images.blocks
 
 
@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='homepage',
             name='how_dit_helps_columns',
-            field=wagtail.core.fields.StreamField([('columns', wagtail.core.blocks.StructBlock([('heading', wagtail.core.blocks.CharBlock()), ('content', wagtail.core.blocks.RichTextBlock()), ('icon', wagtail.images.blocks.ImageChooserBlock(required=False))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('columns', wagtail.blocks.StructBlock([('heading', wagtail.blocks.CharBlock()), ('content', wagtail.blocks.RichTextBlock()), ('icon', wagtail.images.blocks.ImageChooserBlock(required=False))]))], blank=True, null=True),
         ),
         migrations.AddField(
             model_name='homepage',
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='homepage',
             name='questions',
-            field=wagtail.core.fields.StreamField([('questions', wagtail.core.blocks.StructBlock([('heading', wagtail.core.blocks.CharBlock()), ('content', wagtail.core.blocks.RichTextBlock())]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('questions', wagtail.blocks.StructBlock([('heading', wagtail.blocks.CharBlock()), ('content', wagtail.blocks.RichTextBlock())]))], blank=True, null=True),
         ),
         migrations.AddField(
             model_name='homepage',
@@ -59,7 +59,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='homepage',
             name='what_is_new_pages',
-            field=wagtail.core.fields.StreamField([('pages', wagtail.core.blocks.PageChooserBlock(page_type=['export_readiness.ArticlePage']))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('pages', wagtail.blocks.PageChooserBlock(page_type=['export_readiness.ArticlePage']))], blank=True, null=True),
         ),
         migrations.AddField(
             model_name='homepage',

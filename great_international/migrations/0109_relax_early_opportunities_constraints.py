@@ -2,8 +2,8 @@
 
 from django.db import migrations
 import great_international.blocks.great_international
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.images.blocks
 
 
@@ -17,46 +17,46 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='internationalinvestmentsectorpage',
             name='early_opportunities',
-            field=wagtail.core.fields.StreamField([('early_opportunity', wagtail.core.blocks.StructBlock([('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.core.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.core.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('early_opportunity', wagtail.blocks.StructBlock([('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
         ),
         migrations.AlterField(
             model_name='internationalinvestmentsectorpage',
             name='early_opportunities_ar',
-            field=wagtail.core.fields.StreamField([('early_opportunity', wagtail.core.blocks.StructBlock([('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.core.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.core.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('early_opportunity', wagtail.blocks.StructBlock([('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
         ),
         migrations.AlterField(
             model_name='internationalinvestmentsectorpage',
             name='early_opportunities_de',
-            field=wagtail.core.fields.StreamField([('early_opportunity', wagtail.core.blocks.StructBlock([('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.core.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.core.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('early_opportunity', wagtail.blocks.StructBlock([('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
         ),
         migrations.AlterField(
             model_name='internationalinvestmentsectorpage',
             name='early_opportunities_en_gb',
-            field=wagtail.core.fields.StreamField([('early_opportunity', wagtail.core.blocks.StructBlock([('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.core.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.core.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('early_opportunity', wagtail.blocks.StructBlock([('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
         ),
         migrations.AlterField(
             model_name='internationalinvestmentsectorpage',
             name='early_opportunities_es',
-            field=wagtail.core.fields.StreamField([('early_opportunity', wagtail.core.blocks.StructBlock([('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.core.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.core.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('early_opportunity', wagtail.blocks.StructBlock([('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
         ),
         migrations.AlterField(
             model_name='internationalinvestmentsectorpage',
             name='early_opportunities_fr',
-            field=wagtail.core.fields.StreamField([('early_opportunity', wagtail.core.blocks.StructBlock([('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.core.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.core.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('early_opportunity', wagtail.blocks.StructBlock([('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
         ),
         migrations.AlterField(
             model_name='internationalinvestmentsectorpage',
             name='early_opportunities_ja',
-            field=wagtail.core.fields.StreamField([('early_opportunity', wagtail.core.blocks.StructBlock([('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.core.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.core.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('early_opportunity', wagtail.blocks.StructBlock([('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
         ),
         migrations.AlterField(
             model_name='internationalinvestmentsectorpage',
             name='early_opportunities_pt',
-            field=wagtail.core.fields.StreamField([('early_opportunity', wagtail.core.blocks.StructBlock([('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.core.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.core.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('early_opportunity', wagtail.blocks.StructBlock([('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
         ),
         migrations.AlterField(
             model_name='internationalinvestmentsectorpage',
             name='early_opportunities_zh_hans',
-            field=wagtail.core.fields.StreamField([('early_opportunity', wagtail.core.blocks.StructBlock([('image', wagtail.core.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.core.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.core.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('early_opportunity', wagtail.blocks.StructBlock([('image', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(required=True)), ('image_alt', wagtail.blocks.CharBlock(max_length=255, required=True)), ('caption', wagtail.blocks.CharBlock(max_length=255, required=False))], blank=True)), ('text', great_international.blocks.great_international.MarkdownBlock(blank=False))]))], blank=True, null=True),
         ),
     ]

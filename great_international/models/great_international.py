@@ -1,9 +1,9 @@
 from directory_constants import slugs
 from django.db import models
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from wagtail.core.blocks import PageChooserBlock
-from wagtail.core.fields import StreamField
-from wagtail.core.models import Orderable
+from wagtail.blocks import PageChooserBlock
+from wagtail.fields import StreamField
+from wagtail.models import Orderable
 from core.constants import ARTICLE_TYPES
 from core.fields import single_struct_block_stream_field_factory
 from core.mixins import ServiceHomepageMixin
@@ -173,6 +173,7 @@ class InternationalHomePage(
         [
             ('link_panel', blocks.InternationalHomepagePanelBlock()),
         ],
+        use_json_field=True,
         blank=True,
         null=True,
     )
@@ -937,6 +938,7 @@ class WhyInvestInTheUKPage(
         [
             ('article_panel', blocks.InternationalUKStrengthPanelBlock()),
         ],
+        use_json_field=True,
         blank=True,
         null=True,
     )

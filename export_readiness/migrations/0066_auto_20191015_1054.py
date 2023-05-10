@@ -2,8 +2,8 @@
 
 import core.blocks
 from django.db import migrations
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.images.blocks
 
 
@@ -17,21 +17,21 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='homepage',
             name='campaign',
-            field=wagtail.core.fields.StreamField([('campaign', wagtail.core.blocks.StructBlock([('heading', wagtail.core.blocks.CharBlock()), ('subheading', wagtail.core.blocks.CharBlock()), ('related_link_text', wagtail.core.blocks.CharBlock()), ('related_link_url', wagtail.core.blocks.CharBlock()), ('image', wagtail.images.blocks.ImageChooserBlock()), ('video', core.blocks.VideoChooserBlock()), ('video_transcript', wagtail.core.blocks.RichTextBlock())]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('campaign', wagtail.blocks.StructBlock([('heading', wagtail.blocks.CharBlock()), ('subheading', wagtail.blocks.CharBlock()), ('related_link_text', wagtail.blocks.CharBlock()), ('related_link_url', wagtail.blocks.CharBlock()), ('image', wagtail.images.blocks.ImageChooserBlock()), ('video', core.blocks.VideoChooserBlock()), ('video_transcript', wagtail.blocks.RichTextBlock())]))], blank=True, null=True),
         ),
         migrations.AlterField(
             model_name='homepage',
             name='chevron_links',
-            field=wagtail.core.fields.StreamField([('links', wagtail.core.blocks.StructBlock([('source', wagtail.core.blocks.CharBlock(help_text='The source or the type of the link, e.g. GOV.UK/Advice')), ('text', wagtail.core.blocks.CharBlock()), ('url', wagtail.core.blocks.CharBlock())]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('links', wagtail.blocks.StructBlock([('source', wagtail.blocks.CharBlock(help_text='The source or the type of the link, e.g. GOV.UK/Advice')), ('text', wagtail.blocks.CharBlock()), ('url', wagtail.blocks.CharBlock())]))], blank=True, null=True),
         ),
         migrations.AlterField(
             model_name='homepage',
             name='how_dit_helps_columns',
-            field=wagtail.core.fields.StreamField([('columns', wagtail.core.blocks.StructBlock([('source', wagtail.core.blocks.CharBlock(help_text='The source or the type of the link, e.g. GOV.UK/Advice')), ('text', wagtail.core.blocks.CharBlock()), ('url', wagtail.core.blocks.CharBlock()), ('image', wagtail.images.blocks.ImageChooserBlock(required=False)), ('image_alt', wagtail.core.blocks.CharBlock(required=False)), ('content', wagtail.core.blocks.RichTextBlock())]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('columns', wagtail.blocks.StructBlock([('source', wagtail.blocks.CharBlock(help_text='The source or the type of the link, e.g. GOV.UK/Advice')), ('text', wagtail.blocks.CharBlock()), ('url', wagtail.blocks.CharBlock()), ('image', wagtail.images.blocks.ImageChooserBlock(required=False)), ('image_alt', wagtail.blocks.CharBlock(required=False)), ('content', wagtail.blocks.RichTextBlock())]))], blank=True, null=True),
         ),
         migrations.AlterField(
             model_name='homepage',
             name='what_is_new_pages',
-            field=wagtail.core.fields.StreamField([('pages', wagtail.core.blocks.StructBlock([('source', wagtail.core.blocks.CharBlock(help_text='The source or the type of the link, e.g. GOV.UK/Advice')), ('text', wagtail.core.blocks.CharBlock()), ('url', wagtail.core.blocks.CharBlock()), ('image', wagtail.images.blocks.ImageChooserBlock(required=False)), ('image_alt', wagtail.core.blocks.CharBlock(required=False)), ('content', wagtail.core.blocks.RichTextBlock())]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('pages', wagtail.blocks.StructBlock([('source', wagtail.blocks.CharBlock(help_text='The source or the type of the link, e.g. GOV.UK/Advice')), ('text', wagtail.blocks.CharBlock()), ('url', wagtail.blocks.CharBlock()), ('image', wagtail.images.blocks.ImageChooserBlock(required=False)), ('image_alt', wagtail.blocks.CharBlock(required=False)), ('content', wagtail.blocks.RichTextBlock())]))], blank=True, null=True),
         ),
     ]

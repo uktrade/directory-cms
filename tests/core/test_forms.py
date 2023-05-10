@@ -15,7 +15,7 @@ def test_required_for_language(translated_page, settings, rf):
     edit_handler = translated_page.get_edit_handler()
     form_class = edit_handler.get_form_class()
     form = form_class()
-    edit_handler.bind_to(
+    edit_handler.get_bound_panel(
         instance=translated_page,
         form=form,
         request=rf
@@ -41,7 +41,7 @@ def test_slug_read_only_when_editing_a_page(translated_page, rf):
     edit_handler = translated_page.get_edit_handler()
     form_class = edit_handler.get_form_class()
     form = form_class(instance=translated_page)
-    edit_handler.bind_to(
+    edit_handler.get_bound_panel(
         instance=translated_page,
         form=form,
         request=rf
@@ -57,7 +57,7 @@ def test_slug_editable_when_creating_a_page(translated_page, rf):
     edit_handler = translated_page.get_edit_handler()
     form_class = edit_handler.get_form_class()
     form = form_class()
-    edit_handler.bind_to(
+    edit_handler.get_bound_panel(
         instance=translated_page,
         form=form,
         request=rf.get(path='/')
@@ -74,7 +74,7 @@ def test_wagtailadminexclusivepageform_when_slug_identity_set_on_model(rf):
     form = form_class()
     assert isinstance(form, forms.WagtailAdminPageExclusivePageForm)
 
-    edit_handler.bind_to(
+    edit_handler.get_bound_panel(
         instance=InternationalHomePage(),
         form=form,
         request=rf.get(path='/')
@@ -97,7 +97,7 @@ def test_wagtailadminexclusivepageform_when_slug_identity_not_set_on_model(rf):
         form = form_class()
         assert isinstance(form, forms.WagtailAdminPageExclusivePageForm)
 
-        edit_handler.bind_to(
+        edit_handler.get_bound_panel(
             instance=InternationalHomePage(),
             form=form,
             request=rf.get('/')

@@ -6,7 +6,7 @@ from modeltranslation.utils import build_localized_fieldname
 from six import b
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
-from wagtail.core.models import GroupPagePermission, Locale, Page, Site
+from wagtail.models import GroupPagePermission, Locale, Page, Site
 from wagtail_factories.factories import ImageFactory
 
 from django.contrib.auth.models import Group, Permission

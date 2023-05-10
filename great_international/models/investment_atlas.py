@@ -2,13 +2,12 @@ from django.db import models
 
 from directory_constants import slugs
 
-from wagtail.core.fields import StreamField
-from wagtail.core.models import Orderable
-from wagtail.admin.edit_handlers import (
+from wagtail.fields import StreamField
+from wagtail.models import Orderable
+from wagtail.admin.panels import (
     HelpPanel,
     FieldPanel,
     PageChooserPanel,
-    StreamFieldPanel,
 )
 
 from .base import BaseInternationalPage
@@ -89,6 +88,7 @@ class ReusableContentSection(models.Model):
 
     content = StreamField(
         investment_atlas_blocks.page_section_block_spec_list,
+        use_json_field=True,
         blank=False,
     )
 
@@ -108,7 +108,7 @@ class ReusableContentSection(models.Model):
             "Content Section in an Opportunity page.</li></ul>"
         ),
         FieldPanel('title'),
-        StreamFieldPanel('content'),
+        FieldPanel('content'),
         FieldPanel('block_slug'),
     ]
 
@@ -191,6 +191,7 @@ class InvestmentAtlasLandingPage(
                 ),
             ),
         ],
+        use_json_field=True,
         null=True,
         blank=True,
     )
@@ -399,6 +400,7 @@ class InvestmentOpportunityPage(
     regions_with_locations = StreamField([
         ('location', investment_atlas_blocks.OpportunityLocationBlock())
     ],
+        use_json_field=True,
         null=True,
         blank=True,
     )
@@ -465,6 +467,7 @@ class InvestmentOpportunityPage(
                 )
             )
         ],
+        use_json_field=True,
         null=True,
         blank=True,
     )
