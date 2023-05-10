@@ -1,8 +1,8 @@
 import pytest
 from django.utils import translation
 from rest_framework.serializers import Serializer
-from wagtail.core import blocks
-from wagtail.core.fields import StreamField
+from wagtail import blocks
+from wagtail.fields import StreamField
 
 from core import fields
 from great_international.serializers import InternationalArticlePageSerializer

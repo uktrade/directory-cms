@@ -1,7 +1,6 @@
 from django.db import models
 
-from wagtail.admin.edit_handlers import FieldPanel
-from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.admin.panels import FieldPanel
 from wagtail.snippets.models import register_snippet
 
 
@@ -33,7 +32,7 @@ class IndustryTag(models.Model):
 
     panels = [
         FieldPanel('name'),
-        ImageChooserPanel('icon')
+        FieldPanel('icon')
     ]
 
 

@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from wagtail.core import hooks
+from wagtail import hooks
 
 from . import urls as users_urls
 

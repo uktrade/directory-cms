@@ -1,8 +1,8 @@
 import requests
-from wagtail.core.models import Locale
+from wagtail.models import Locale
 from django.core.files.base import ContentFile
 from django.core.files import File
-from wagtail.core.models import Collection
+from wagtail.models import Collection
 from wagtailmedia import models as wagtailmedia_models
 
 

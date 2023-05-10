@@ -2,7 +2,7 @@ import abc
 from datetime import date, datetime
 import json
 
-from wagtail.core.models import Page
+from wagtail.models import Page
 from wagtail.documents.models import Document
 from wagtail.images.models import Image
 

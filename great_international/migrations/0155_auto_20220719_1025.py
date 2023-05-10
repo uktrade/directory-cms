@@ -2,8 +2,8 @@
 
 from django.db import migrations, models
 import great_international.validators
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 
 
 class Migration(migrations.Migration):
@@ -106,6 +106,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='investmentopportunitypage',
             name='regions_with_locations',
-            field=wagtail.core.fields.StreamField([('location', wagtail.core.blocks.StructBlock([('region', wagtail.core.blocks.PageChooserBlock(label='Linked Region', page_type=['great_international.AboutUkRegionPage'], required=False)), ('map_coordinate', wagtail.core.blocks.CharBlock(help_text='Latitude and longitude Coordinates, e.g. 176.0944492, -38.50245621', label='Linked Location Coordinates', max_length=200, validators=[great_international.validators.validate_lat_long]))]))], blank=True, null=True),
+            field=wagtail.fields.StreamField([('location', wagtail.blocks.StructBlock([('region', wagtail.blocks.PageChooserBlock(label='Linked Region', page_type=['great_international.AboutUkRegionPage'], required=False)), ('map_coordinate', wagtail.blocks.CharBlock(help_text='Latitude and longitude Coordinates, e.g. 176.0944492, -38.50245621', label='Linked Location Coordinates', max_length=200, validators=[great_international.validators.validate_lat_long]))]))], blank=True, null=True),
         ),
     ]

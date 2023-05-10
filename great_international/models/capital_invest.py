@@ -1,10 +1,9 @@
 from django.db import models
 
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel, MultiFieldPanel, PageChooserPanel
 )
-from wagtail.documents.edit_handlers import DocumentChooserPanel
-from wagtail.images.edit_handlers import ImageChooserPanel
+
 
 from core.models import WagtailAdminExclusivePageMixin
 from core.model_fields import MarkdownField
@@ -27,7 +26,7 @@ class RegionCardField(models.Model):
 
     panels = [
         MultiFieldPanel([
-            ImageChooserPanel('region_card_image'),
+            FieldPanel('region_card_image'),
             FieldPanel('region_card_title'),
             FieldPanel('region_card_summary'),
         ]),
@@ -56,9 +55,9 @@ class HomesInEnglandCardField(models.Model):
 
     panels = [
         MultiFieldPanel([
-            ImageChooserPanel('homes_in_england_card_image'),
+            FieldPanel('homes_in_england_card_image'),
             FieldPanel('homes_in_england_card_title'),
-            DocumentChooserPanel('homes_in_england_card_pdf_document'),
+            FieldPanel('homes_in_england_card_pdf_document'),
         ]),
     ]
 

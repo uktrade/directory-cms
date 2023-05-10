@@ -1,6 +1,6 @@
 # Blocks for the main Great International site, not specific to any sub-section (eg investment_atlas)
 from django import forms
-from wagtail.core import blocks
+from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 
 from core import blocks as core_blocks

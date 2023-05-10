@@ -6,7 +6,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from wagtail.admin.api.views import PagesAdminAPIViewSet
-from wagtail.core.models import Orderable, Page, Site
+from wagtail.models import Orderable, Page, Site
 
 from core.models import GreatMedia
 
@@ -370,7 +370,7 @@ class PreloadPageView(FormView):
             instance=self.page,
             parent_page=self.parent_page,
         )
-        edit_handler = edit_handler.bind_to(
+        edit_handler = edit_handler.get_bound_panel(
             instance=self.page,
             form=form,
             request=self.request

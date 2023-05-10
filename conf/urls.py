@@ -5,7 +5,7 @@ import directory_healthcheck.views
 from django.contrib import admin
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.api.v2.router import WagtailAPIRouter
-from wagtail.core import urls as wagtail_urls
+from wagtail import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 from django.conf.urls import include, url
