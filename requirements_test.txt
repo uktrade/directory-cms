@@ -38,7 +38,7 @@ celery[redis]==5.2.7
     # via
     #   -r requirements.in
     #   django-celery-beat
-certifi==2022.12.7
+certifi==2023.5.7
     # via
     #   elastic-apm
     #   requests
@@ -75,11 +75,11 @@ directory-constants==22.0.2
     # via
     #   -r requirements.in
     #   directory-components
-directory-healthcheck==3.0.4
+directory-healthcheck==3.1.0
     # via -r requirements.in
 dj-database-url==1.3.0
     # via -r requirements.in
-django==3.2.18
+django==3.2.19
     # via
     #   -r requirements.in
     #   directory-components
@@ -117,7 +117,7 @@ django-filter==22.1
     # via
     #   -r requirements.in
     #   wagtail
-django-health-check==3.16.5
+django-health-check==3.17.0
     # via directory-healthcheck
 django-ipware==3.0.7
     # via django-admin-ip-restrictor
@@ -165,7 +165,7 @@ factory-boy==2.12.0
     # via
     #   -r requirements_test.in
     #   wagtail-factories
-faker==18.6.2
+faker==18.9.0
     # via factory-boy
 flake8==6.0.0
     # via -r requirements_test.in
@@ -243,7 +243,7 @@ pycparser==2.21
     # via cffi
 pyflakes==3.0.1
     # via flake8
-pyjwt==2.6.0
+pyjwt==2.7.0
     # via notifications-python-client
 pyproject-hooks==1.0.0
     # via build
@@ -284,7 +284,7 @@ pytz==2023.3
     #   django-timezone-field
     #   djangorestframework
     #   l18n
-redis==4.5.4
+redis==4.5.5
     # via
     #   celery
     #   django-redis
@@ -303,7 +303,7 @@ requests-oauthlib==1.3.1
     # via django-staff-sso-client
 s3transfer==0.6.1
     # via boto3
-sentry-sdk==1.22.1
+sentry-sdk==1.23.1
     # via -r requirements.in
 sigauth==5.1.1
     # via -r requirements.in
