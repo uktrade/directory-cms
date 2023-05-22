@@ -97,7 +97,6 @@ MIDDLEWARE = [
     'core.middleware.MaintenanceModeMiddleware',
     'core.middleware.StubSiteMiddleware',
     'directory_components.middleware.MaintenanceModeMiddleware',
-    'admin_ip_restrictor.middleware.AdminIPRestrictorMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -141,9 +140,7 @@ else:
 
 # # Database
 # hard to get rid of this
-DATABASES = {
-    'default': dj_database_url.config()
-}
+DATABASES = {'default': dj_database_url.config()}
 
 API_CACHE_EXPIRE_SECONDS = env.int('API_CACHE_EXPIRE_SECONDS', 60 * 60 * 24 * 30)  # 30 days
 
@@ -160,7 +157,7 @@ else:
             'LOCATION': REDIS_URL,
             'OPTIONS': {
                 'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            }
+            },
         }
     }
 
@@ -203,25 +200,15 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_HOST = env.str('STATIC_HOST', '')
 STATIC_URL = STATIC_HOST + '/static/'
-STATICFILES_STORAGE = env.str(
-    'STATICFILES_STORAGE',
-    'whitenoise.storage.CompressedManifestStaticFilesStorage'
-)
-DEFAULT_FILE_STORAGE = env.str(
-    'DEFAULT_FILE_STORAGE',
-    'core.storage_backends.ImmutableFilesS3Boto3Storage'
-)
+STATICFILES_STORAGE = env.str('STATICFILES_STORAGE', 'whitenoise.storage.CompressedManifestStaticFilesStorage')
+DEFAULT_FILE_STORAGE = env.str('DEFAULT_FILE_STORAGE', 'core.storage_backends.ImmutableFilesS3Boto3Storage')
 
 # Logging for development
 if DEBUG:
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
-        'filters': {
-            'require_debug_false': {
-                '()': 'django.utils.log.RequireDebugFalse'
-            }
-        },
+        'filters': {'require_debug_false': {'()': 'django.utils.log.RequireDebugFalse'}},
         'handlers': {
             'console': {
                 'level': 'DEBUG',
@@ -279,17 +266,14 @@ if DEBUG:
                 'level': 'WARNING',
                 'propagate': False,
             },
-        }
+        },
     }
 else:
     LOGGING = {
         "version": 1,
         "disable_existing_loggers": True,
         "formatters": {
-            "verbose": {
-                "format": "%(levelname)s %(asctime)s %(module)s "
-                          "%(process)d %(thread)d %(message)s"
-            }
+            "verbose": {"format": "%(levelname)s %(asctime)s %(module)s " "%(process)d %(thread)d %(message)s"}
         },
         "handlers": {
             "console": {
@@ -304,11 +288,7 @@ else:
                 "handlers": ["console"],
                 "propagate": False,
             },
-            "sentry_sdk": {
-                "level": "ERROR",
-                "handlers": ["console"],
-                "propagate": False
-            },
+            "sentry_sdk": {"level": "ERROR", "handlers": ["console"], "propagate": False},
             "django.security.DisallowedHost": {
                 "level": "ERROR",
                 "handlers": ["console"],
@@ -321,7 +301,7 @@ if env.str('SENTRY_DSN', ''):
     sentry_sdk.init(
         dsn=env.str('SENTRY_DSN'),
         environment=env.str('SENTRY_ENVIRONMENT'),
-        integrations=[DjangoIntegration(), CeleryIntegration()]
+        integrations=[DjangoIntegration(), CeleryIntegration()],
     )
 
 SIGNATURE_SECRET = env.str('SIGNATURE_SECRET')
@@ -391,7 +371,7 @@ AWS_REGION = env.str('AWS_REGION', 'eu-west-2')
 # Email and notifications
 EMAIL_BACKED_CLASSES = {
     'default': 'django.core.mail.backends.smtp.EmailBackend',
-    'console': 'django.core.mail.backends.console.EmailBackend'
+    'console': 'django.core.mail.backends.console.EmailBackend',
 }
 EMAIL_BACKED_CLASS_NAME = env.str('EMAIL_BACKEND_CLASS_NAME', 'default')
 EMAIL_BACKEND = EMAIL_BACKED_CLASSES[EMAIL_BACKED_CLASS_NAME]
@@ -406,14 +386,14 @@ DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL', '')
 # so using an invalid default here to prevent breakages locally / in tests
 GOVNOTIFY_API_KEY = env.str(
     'GOVNOTIFY_API_KEY',
-    'directory_cms_invalid-03185ee5-578c-4ffc-8774-2288e7b34e63-e82262ea-ae8c-4c6d-8570-c16afdc8347f' # noqa
+    'directory_cms_invalid-03185ee5-578c-4ffc-8774-2288e7b34e63-e82262ea-ae8c-4c6d-8570-c16afdc8347f',  # noqa
 )
 GOVNOTIFY_REPLY_TO_EMAIL_ID = env.str('GOVNOTIFY_REPLY_TO_EMAIL_ID', '')
 GOVNOTIFY_USER_PENDING_APPROVAL_TEMPLATE_ID = env.str('GOVNOTIFY_USER_PENDING_APPROVAL_TEMPLATE_ID', '')
 GOVNOTIFY_USER_APPROVED_TEMPLATE_ID = env.str('GOVNOTIFY_USER_APPROVED_TEMPLATE_ID', '')
 
 # Translation
-MODELTRANSLATION_CUSTOM_FIELDS = ('RichTextField', )
+MODELTRANSLATION_CUSTOM_FIELDS = ('RichTextField',)
 MODELTRANSLATION_FALLBACK_LANGUAGES = ()
 WAGTAILMODELTRANSLATION_TRANSLATE_SLUGS = False
 
@@ -432,7 +412,7 @@ FEATURE_FLAGS = {
 if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
     AUTHENTICATION_BACKENDS = [
         'django.contrib.auth.backends.ModelBackend',
-        'authbroker_client.backends.AuthbrokerBackend'
+        'authbroker_client.backends.AuthbrokerBackend',
     ]
     LOGIN_URL = reverse_lazy('authbroker_client:login')
     LOGIN_REDIRECT_URL = reverse_lazy('wagtailadmin_home')
@@ -442,9 +422,7 @@ if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
     AUTHBROKER_CLIENT_ID = env.str('AUTHBROKER_CLIENT_ID')
     AUTHBROKER_CLIENT_SECRET = env.str('AUTHBROKER_CLIENT_SECRET')
 
-    MIDDLEWARE.append(
-        'users.middleware.SSORedirectUsersToRequestAccessViews'
-    )
+    MIDDLEWARE.append('users.middleware.SSORedirectUsersToRequestAccessViews')
     # Disable password management in Wagtail admin
     WAGTAIL_PASSWORD_MANAGEMENT_ENABLED = False
     WAGTAIL_PASSWORD_RESET_ENABLED = False
@@ -453,30 +431,15 @@ if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
 else:
     LOGIN_URL = '/admin/login/'
 
-REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': (
-        'django_filters.rest_framework.DjangoFilterBackend',
-    )
-}
+REST_FRAMEWORK = {'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)}
 
 if FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
-
     INSTALLED_APPS += ['debug_toolbar']
 
-    MIDDLEWARE = (
-        ['debug_toolbar.middleware.DebugToolbarMiddleware'] +
-        MIDDLEWARE
-    )
+    MIDDLEWARE = ['debug_toolbar.middleware.DebugToolbarMiddleware'] + MIDDLEWARE
     INTERNAL_IPS = ['127.0.0.1', '10.0.2.2']
 
 ENVIRONMENT_CSS_THEME_FILE = env.str('ENVIRONMENT_CSS_THEME_FILE', '')
-
-# Admin restrictor
-RESTRICT_ADMIN = env.bool('IP_RESTRICTOR_RESTRICT_IPS', False)
-ALLOWED_ADMIN_IPS = env.list('IP_RESTRICTOR_ALLOWED_ADMIN_IPS', default=[])
-ALLOWED_ADMIN_IP_RANGES = env.list('IP_RESTRICTOR_ALLOWED_ADMIN_IP_RANGES', default=[])
-RESTRICTED_APP_NAMES = ['admin', 'wagtailadmin']
-TRUST_PRIVATE_IP = True
 
 # Celery
 CELERY_BROKER_URL = REDIS_URL
@@ -512,6 +475,5 @@ if env.str('ELASTIC_APM_SERVER_URL', ''):
 # if the phrasing of that string changes at short notice.
 FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT = 'Foreign Direct Investment'
 FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL = env.str(
-    'FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL',
-    FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT
+    'FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL', FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT
 )
