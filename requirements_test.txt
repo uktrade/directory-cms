@@ -86,7 +86,6 @@ django==3.2.19
     #   directory-constants
     #   directory-healthcheck
     #   dj-database-url
-    #   django-admin-ip-restrictor
     #   django-celery-beat
     #   django-debug-toolbar
     #   django-filter
@@ -105,8 +104,6 @@ django==3.2.19
     #   wagtail
     #   wagtail-modeltranslation
     #   wagtailmedia
-django-admin-ip-restrictor==2.2.0
-    # via -r requirements.in
 django-celery-beat==2.2.1
     # via -r requirements.in
 django-debug-toolbar==3.2.4
@@ -119,8 +116,6 @@ django-filter==22.1
     #   wagtail
 django-health-check==3.17.0
     # via directory-healthcheck
-django-ipware==3.0.7
-    # via django-admin-ip-restrictor
 django-modelcluster==6.0
     # via wagtail
 django-modeltranslation==0.18.2
