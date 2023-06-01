@@ -14,9 +14,7 @@ from wagtail.models import Page, PageBase, Site
 
 from django.core import signing
 from django.conf import settings
-from django.contrib.contenttypes.fields import (
-    GenericForeignKey, GenericRelation
-)
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import models, transaction
 from django.shortcuts import redirect
@@ -26,12 +24,11 @@ from core import constants, forms
 from core.helpers import get_page_full_url
 from core.wagtail_fields import FormHelpTextField, FormLabelField
 from wagtailmedia.models import Media
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 
 
 class GreatMedia(Media):
-
     transcript = models.TextField(
         verbose_name=_('Transcript'), blank=True, null=True  # left null because was an existing field
     )
@@ -75,12 +72,7 @@ class GreatMedia(Media):
 
 
 class Breadcrumb(models.Model):
-    service_name = models.CharField(
-        max_length=50,
-        choices=choices.CMS_APP_CHOICES,
-        null=True,
-        db_index=True
-    )
+    service_name = models.CharField(max_length=50, choices=choices.CMS_APP_CHOICES, null=True, db_index=True)
     label = models.CharField(max_length=50)
     slug = models.SlugField()
 
@@ -133,8 +125,7 @@ class BasePage(Page):
         default=False,
         verbose_name="tree-based routing enabled",
         help_text=(
-            "Allow this page's URL to be determined by its slug, and "
-            "the slugs of its ancestors in the page tree."
+            "Allow this page's URL to be determined by its slug, and " "the slugs of its ancestors in the page tree."
         ),
     )
 
@@ -273,17 +264,14 @@ class BasePage(Page):
     @property
     def ancestors_in_app(self):
         """
-            Used by `full_path` and `get_tree_based_breadcrumbs`
-            in BasePageSerializer.
-            Starts at 2 to exclude the root page and the app page.
-            Ignores 'folder' pages.
+        Used by `full_path` and `get_tree_based_breadcrumbs`
+        in BasePageSerializer.
+        Starts at 2 to exclude the root page and the app page.
+        Ignores 'folder' pages.
         """
         ancestors = self.get_ancestors()[2:]
 
-        return [
-            page for page in ancestors
-            if page.specific_class and not page.specific_class.folder_page
-        ]
+        return [page for page in ancestors if page.specific_class and not page.specific_class.folder_page]
 
     @property
     def full_path(self):
@@ -333,8 +321,7 @@ class BasePage(Page):
         # available languages, so there should be no need to expose the draft
         # url
         return [
-            (language_code, self.get_url(language_code=language_code))
-            for language_code in self.translated_languages
+            (language_code, self.get_url(language_code=language_code)) for language_code in self.translated_languages
         ]
 
     def serve(self, request, *args, **kwargs):
@@ -343,8 +330,7 @@ class BasePage(Page):
     def get_latest_nested_revision_as_page(self):
         revision = self.get_latest_revision_as_object()
         foreign_key_names = [
-            field.name for field in revision._meta.get_fields()
-            if isinstance(field, models.ForeignKey)
+            field.name for field in revision._meta.get_fields() if isinstance(field, models.ForeignKey)
         ]
         for name in foreign_key_names:
             field = getattr(revision, name)
@@ -360,19 +346,15 @@ class BasePage(Page):
     def get_translatable_string_fields(cls):
         text_fields = ['TextField', 'CharField']
         return [
-            name for name in cls.get_translatable_fields()
+            name
+            for name in cls.get_translatable_fields()
             if cls._meta.get_field(name).get_internal_type() in text_fields
         ]
 
     @classmethod
     def get_required_translatable_fields(cls):
-        fields = [
-            cls._meta.get_field(name) for name in cls.get_translatable_fields()
-        ]
-        return [
-            field.name for field in fields
-            if not field.blank and field.model is cls
-        ]
+        fields = [cls._meta.get_field(name) for name in cls.get_translatable_fields()]
+        return [field.name for field in fields if not field.blank and field.model is cls]
 
     @property
     def translated_languages(self):
@@ -406,7 +388,8 @@ class BasePage(Page):
     def language_names(self):
         if len(self.translated_languages) > 1:
             names = [
-                label for code, label, _ in settings.LANGUAGES_DETAILS
+                label
+                for code, label, _ in settings.LANGUAGES_DETAILS
                 if code in self.translated_languages and code != settings.LANGUAGE_CODE
             ]
             return 'Translated to {}'.format(', '.join(names))
@@ -440,22 +423,12 @@ class AbstractObjectHash(models.Model):
 
 class DocumentHash(AbstractObjectHash):
     document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.CASCADE,
-        related_name='+'
+        'wagtaildocs.Document', null=True, blank=True, on_delete=models.CASCADE, related_name='+'
     )
 
 
 class ImageHash(AbstractObjectHash):
-    image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.CASCADE,
-        related_name='+'
-    )
+    image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.CASCADE, related_name='+')
 
 
 class WagtailAdminExclusivePageMixin:
@@ -479,6 +452,7 @@ class ExclusivePageMixin(WagtailAdminExclusivePageMixin):
     prevents anything other than the `slug_identity` class attribute
     value being used as the `slug` when creating new pages.
     """
+
     read_only_fields = ['slug']
 
     def save(self, *args, **kwargs):
@@ -530,13 +504,12 @@ class ServiceMixin(models.Model):
     def allowed_subpage_models(cls):
         allowed_name = getattr(cls, 'service_name_value', None)
         return [
-            model for model in Page.allowed_subpage_models()
+            model
+            for model in Page.allowed_subpage_models()
             if getattr(model, 'service_name_value', None) == allowed_name
         ]
 
-    settings_panels = [
-        FieldPanel('title_en_gb')
-    ]
+    settings_panels = [FieldPanel('title_en_gb')]
     content_panels = []
     promote_panels = []
 
@@ -545,6 +518,7 @@ class FormPageMetaClass(PageBase):
     """Metaclass that adds <field_name>_label and <field_name>_help_text to a
     Page when given a list of form_field_names.
     """
+
     def __new__(mcls, name, bases, attrs):
         form_field_names = attrs['form_field_names']
         for field_name in form_field_names:
@@ -557,11 +531,10 @@ class FormPageMetaClass(PageBase):
                 children=[
                     FieldPanel(name + '_label'),
                     FieldPanel(name + '_help_text'),
-                ]
-            ) for name in form_field_names
+                ],
+            )
+            for name in form_field_names
         ]
-        attrs['content_panels'] = (
-            attrs['content_panels_before_form'] + form_panels + attrs['content_panels_after_form']
-        )
+        attrs['content_panels'] = attrs['content_panels_before_form'] + form_panels + attrs['content_panels_after_form']
 
         return super().__new__(mcls, name, bases, attrs)

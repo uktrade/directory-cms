@@ -2,10 +2,16 @@ import pytest
 
 from django.conf import settings
 from django.utils import translation
+from unittest import mock
 
 from core import middleware
 
 pytestmark = pytest.mark.django_db
+
+
+@pytest.fixture
+def mock_get_response(autouse=True):
+    return mock.MagicMock()
 
 
 def test_locale_middleware_installed():
@@ -15,7 +21,7 @@ def test_locale_middleware_installed():
 
 def test_locale_middleware_sets_querystring_language(rf):
     request = rf.get('/', {'lang': 'en-gb'})
-    instance = middleware.LocaleQuerystringMiddleware()
+    instance = middleware.LocaleQuerystringMiddleware(mock_get_response)
 
     instance.process_request(request)
 
@@ -25,7 +31,7 @@ def test_locale_middleware_sets_querystring_language(rf):
 
 def test_locale_middleware_ignored_invalid_querystring_language(rf):
     request = rf.get('/', {'lang': 'plip'})
-    instance = middleware.LocaleQuerystringMiddleware()
+    instance = middleware.LocaleQuerystringMiddleware(mock_get_response)
 
     instance.process_request(request)
 
@@ -35,7 +41,7 @@ def test_locale_middleware_ignored_invalid_querystring_language(rf):
 
 def test_locale_middleware_handles_missing_querystring_language(rf):
     request = rf.get('/')
-    instance = middleware.LocaleQuerystringMiddleware()
+    instance = middleware.LocaleQuerystringMiddleware(mock_get_response)
 
     instance.process_request(request)
 
@@ -52,7 +58,7 @@ def test_maintenance_mode_middleware_feature_flag_on(rf, settings):
     settings.FEATURE_FLAGS['MAINTENANCE_MODE_ON'] = True
     request = rf.get('/')
 
-    response = middleware.MaintenanceModeMiddleware().process_request(request)
+    response = middleware.MaintenanceModeMiddleware(mock_get_response).process_request(request)
 
     assert response.status_code == 503
     assert response.content == b'CMS is offline for maintenance'
@@ -63,6 +69,6 @@ def test_maintenance_mode_middleware_feature_flag_off(rf, settings):
 
     request = rf.get('/')
 
-    response = middleware.MaintenanceModeMiddleware().process_request(request)
+    response = middleware.MaintenanceModeMiddleware(mock_get_response).process_request(request)
 
     assert response is None
