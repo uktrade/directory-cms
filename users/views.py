@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.views import generic
 from wagtail.admin import messages
 from wagtail.admin.views.generic import EditView
@@ -40,10 +40,7 @@ class WagtailUserActionBaseView(mixins.WagtailAdminPermissionRequiredMixin):
         return kwargs
 
     def form_invalid(self, form):
-        messages.error(
-            self.request,
-            _(self.form_invalid_message)
-        )
+        messages.error(self.request, _(self.form_invalid_message))
         return super().form_invalid(form)
 
     def handle_success_message(self):
@@ -51,10 +48,8 @@ class WagtailUserActionBaseView(mixins.WagtailAdminPermissionRequiredMixin):
         messages.success(
             self.request,
             _(self.form_valid_message).format(user),
-            buttons=[messages.button(
-                reverse('great_users:edit', args=(user.pk,)),
-                _('Edit')
-            )])
+            buttons=[messages.button(reverse('great_users:edit', args=(user.pk,)), _('Edit'))],
+        )
         hook_name = 'after_{action}_user'.format(action=self.hook_action)
         for fn in hooks.get_hooks(hook_name):
             result = fn(self.request, user)
@@ -62,17 +57,14 @@ class WagtailUserActionBaseView(mixins.WagtailAdminPermissionRequiredMixin):
                 return result
 
 
-class CreateUserView(
-    WagtailUserActionBaseView,
-    generic.CreateView
-):
+class CreateUserView(WagtailUserActionBaseView, generic.CreateView):
     form_class = forms.UserCreationForm
     model = User
     template_name = 'great_users/users/create.html'
     permission_required = add_user_perm
     hook_action = 'create'
     form_invalid_message = 'The user could not be created due to errors.'
-    form_valid_message = 'User ''{0}'' created.'
+    form_valid_message = 'User ' '{0}' ' created.'
 
     def form_valid(self, form):
         self.object = form.save()
@@ -80,17 +72,14 @@ class CreateUserView(
         return redirect('great_users:index')
 
 
-class EditUserView(
-    WagtailUserActionBaseView,
-    generic.UpdateView
-):
+class EditUserView(WagtailUserActionBaseView, generic.UpdateView):
     form_class = forms.UserEditForm
     model = User
     template_name = 'wagtailusers/users/edit.html'
     permission_required = change_user_perm
     hook_action = 'edit'
     form_invalid_message = 'The user could not be saved due to errors.'
-    form_valid_message = 'User ''{0}'' updated.'
+    form_valid_message = 'User ' '{0}' ' updated.'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -100,10 +89,7 @@ class EditUserView(
             UserProfile.STATUS_CREATED,
             UserProfile.STATUS_AWAITING_APPROVAL,
         )
-        if (
-            settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] and
-            self.is_approval and request.method == 'GET'
-        ):
+        if settings.FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON'] and self.is_approval and request.method == 'GET':
             # Warn the current user that this is an 'approval'
             message_text = (
                 "This user is awaiting approval and will be automatically "
