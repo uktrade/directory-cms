@@ -10,7 +10,7 @@ amqp==5.1.1
     # via kombu
 anyascii==0.3.2
     # via wagtail
-asgiref==3.7.1
+asgiref==3.7.2
     # via django
 async-timeout==4.0.2
     # via redis
@@ -71,7 +71,7 @@ cron-descriptor==1.4.0
     # via django-celery-beat
 cryptography==39.0.2
     # via -r requirements.in
-directory-components==39.1.0
+directory-components==39.1.2
     # via -r requirements.in
 directory-constants==23.1.0
     # via
