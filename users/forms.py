@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib.auth.models import Group
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from wagtail.users import forms as wagtail_forms
 
 from core.widgets import Select2Widget
@@ -26,9 +26,7 @@ class EntryPointAwareUserActionForm(forms.Form):
     is_superuser = forms.BooleanField(
         label=_("Superuser"),
         required=False,
-        help_text=_(
-            "Superusers have full access to manage any object or setting."
-        ),
+        help_text=_("Superusers have full access to manage any object or setting."),
     )
 
     groups = GroupWithSummariesMultipleChoiceField(
@@ -44,9 +42,7 @@ class EntryPointAwareUserActionForm(forms.Form):
         """
         super().__init__(*args, **kwargs)
         self.fields["groups"].queryset = (
-            self.get_groups_queryset(user)
-            .select_related('info')
-            .order_by('info__seniority_level', 'name')
+            self.get_groups_queryset(user).select_related('info').order_by('info__seniority_level', 'name')
         )
 
     def get_groups_queryset(self, user):
@@ -69,10 +65,7 @@ class EntryPointAwareUserActionForm(forms.Form):
             ).distinct()
 
 
-class UserEditForm(
-    EntryPointAwareUserActionForm,
-    wagtail_forms.UserEditForm
-):
+class UserEditForm(EntryPointAwareUserActionForm, wagtail_forms.UserEditForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         """
@@ -87,24 +80,16 @@ class UserEditForm(
             self.fields['last_name'].disabled = True
 
 
-class UserCreationForm(
-    EntryPointAwareUserActionForm,
-    wagtail_forms.UserCreationForm
-):
+class UserCreationForm(EntryPointAwareUserActionForm, wagtail_forms.UserCreationForm):
     pass
 
 
 class UserNameWithEmailChoiceField(forms.ModelChoiceField):
-
     def label_from_instance(self, obj):
-        return "{name} <{email}>".format(
-            name=obj.get_full_name(),
-            email=obj.email
-        )
+        return "{name} <{email}>".format(name=obj.get_full_name(), email=obj.email)
 
 
 class SSORequestAccessForm(forms.ModelForm):
-
     self_assigned_group = GroupChoiceFieldWithRolesModal(
         label="Which best describes your content role?",
         empty_label=None,
