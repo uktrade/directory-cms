@@ -21,7 +21,7 @@ django-redis
 celery[redis]
 django-celery-beat==2.5.0
 kombu==5.2.3
-requests[security]==2.27.1
+requests[security]>=2.31.0
 markdown==2.*
 bleach==3.*
 bleach-whitelist==0.*
