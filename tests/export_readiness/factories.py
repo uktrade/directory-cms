@@ -2,7 +2,7 @@ import factory
 import factory.fuzzy
 import wagtail_factories
 
-from export_readiness import snippets
+from core import snippets
 
 
 class TagFactory(factory.django.DjangoModelFactory):
