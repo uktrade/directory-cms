@@ -1,6 +1,6 @@
 import pytest
 
-from export_readiness.snippets import Tag
+from core.snippets import Tag
 
 
 @pytest.mark.django_db
