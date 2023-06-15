@@ -87,7 +87,6 @@ INSTALLED_APPS = [
     'wagtailmedia',
     'great_international.apps.GreatInternationalConfig',
     'components.apps.ComponentsConfig',
-    'export_readiness.apps.GreatDomesticConfig',
     'django_filters',
     'authbroker_client',
     'django_celery_beat',
