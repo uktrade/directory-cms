@@ -24,7 +24,6 @@ def test_update_default_listing_buttons_from_base_page(page_with_reversion):
 def test_update_default_listing_buttons_from_base_page_button_url_name_view_draft(
     page_with_reversion
 ):
-    import pdb
     button_url_name = 'view_draft'
     buttons = wagtail_hooks.update_default_listing_buttons(
         page=page_with_reversion, page_perms=Mock(), button_url_name=button_url_name,
@@ -32,7 +31,6 @@ def test_update_default_listing_buttons_from_base_page_button_url_name_view_draf
 
     expected_url = r'http://great[.]gov[.]uk/international/content/123-555-209/[?]draft_token=\w+'
     assert len(buttons) == 4
-    pdb;pdb.set_trace()
     assert re.match(expected_url, buttons[1].url)
 
 
