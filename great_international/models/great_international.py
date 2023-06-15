@@ -9,7 +9,7 @@ from core.fields import single_struct_block_stream_field_factory
 from core.mixins import ServiceHomepageMixin
 from core.model_fields import MarkdownField
 from core.models import WagtailAdminExclusivePageMixin
-from export_readiness import snippets
+from core import snippets
 from great_international.blocks import great_international as blocks
 from great_international.panels import great_international as panels
 from . import find_a_supplier as fas_models
