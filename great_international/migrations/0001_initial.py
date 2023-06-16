@@ -29,6 +29,7 @@ class Migration(migrations.Migration):
         ('wagtailmedia', '0004_duration_optional_floatfield'),
         ('wagtailimages', '0024_index_image_file_hash'),
         ('wagtailcore', '0078_referenceindex'),
+        ('core', '0001_initial'),
     ]
 
     operations = [
