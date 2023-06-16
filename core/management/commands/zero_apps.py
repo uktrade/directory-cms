@@ -1,10 +1,6 @@
-from directory_constants import cms
 from django.core.management import BaseCommand
 from django.core.management.base import no_translations
-from wagtail.models import Page
 from django.db.migrations.recorder import MigrationRecorder
-
-from core import filters
 
 
 APPS_MAPPING = {
