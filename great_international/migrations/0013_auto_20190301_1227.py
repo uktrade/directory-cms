@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='internationalsectorpage',
             name='tags',
-            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag'),
+            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag'),
         ),
         migrations.AlterField(
             model_name='internationalsectorpage',

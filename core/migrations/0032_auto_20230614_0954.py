@@ -3,41 +3,15 @@
 from django.db import migrations
 
 
+"""
+effectively removing this migration
+"""
 class Migration(migrations.Migration):
 
     dependencies = [
         ('core', '0031_region_tag_industrytag_country'),
     ]
 
-    def copy_export_readiness_data(apps, schema_editor):
-        ExportReadinessTag = apps.get_model("export_readiness", "Tag")
-        ExportReadinessIndustryTag = apps.get_model("export_readiness", "IndustryTag")
-        ExportReadinessRegion = apps.get_model("export_readiness", "Region")
-        ExportReadinessCountry = apps.get_model("export_readiness", "Country")
-
-        CoreTag = apps.get_model("core", "Tag")
-        CoreIndustryTag = apps.get_model("core", "IndustryTag")
-        CoreRegion = apps.get_model("core", "Region")
-        CoreCountry = apps.get_model("core", "Country")
-
-        CoreRegion.objects.bulk_create(ExportReadinessRegion.objects.all())
-        CoreTag.objects.bulk_create(ExportReadinessTag.objects.all())
-        CoreCountry.objects.bulk_create(ExportReadinessCountry.objects.all())
-        CoreIndustryTag.objects.bulk_create(ExportReadinessIndustryTag.objects.all())
-
-
-    def delete_export_readiness_data(apps, schema_editor):
-        Tag = apps.get_model("core", "Tag")
-        IndustryTag = apps.get_model("core", "IndustryTag")
-        Region = apps.get_model("core", "Region")
-        Country = apps.get_model("core", "Country")
-
-        Country.objects.all().delete()
-        IndustryTag.objects.all().delete()
-        Region.objects.all().delete()
-        Tag.objects.all().delete()
-
-
     operations = [
-        migrations.RunPython(copy_export_readiness_data, delete_export_readiness_data),
+        migrations.RunPython(migrations.RunPython.noop, migrations.RunPython.noop),
     ]

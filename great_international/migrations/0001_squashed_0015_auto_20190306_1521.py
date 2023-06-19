@@ -142,7 +142,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
                 ('service_name', models.CharField(choices=[('FIND_A_SUPPLIER', 'Find a Supplier'), ('EXPORT_READINESS', 'Export Readiness'), ('INVEST', 'Invest'), ('COMPONENTS', 'Components'), ('GREAT_INTERNATIONAL', 'Great International')], db_index=True, max_length=100, null=True)),
-                ('tags', modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag')),
+                ('tags', modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag')),
             ],
             options={
                 'abstract': False,
@@ -152,22 +152,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='internationalarticlelistingpage',
             name='tags',
-            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag'),
+            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag'),
         ),
         migrations.AddField(
             model_name='internationalarticlepage',
             name='tags',
-            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag'),
+            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag'),
         ),
         migrations.AddField(
             model_name='internationalcampaignpage',
             name='tags',
-            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag'),
+            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag'),
         ),
         migrations.AddField(
             model_name='internationaltopiclandingpage',
             name='tags',
-            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag'),
+            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag'),
         ),
         migrations.CreateModel(
             name='InternationalLocalisedFolderPage',
@@ -204,7 +204,7 @@ class Migration(migrations.Migration):
             name='InternationalSectorPage',
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('service_name', models.CharField(choices=[('FIND_A_SUPPLIER', 'Find a Supplier'), ('EXPORT_READINESS', 'Export Readiness'), ('INVEST', 'Invest'), ('COMPONENTS', 'Components'), ('GREAT_INTERNATIONAL', 'Great International')], db_index=True, max_length=100, null=True)),
+                ('service_name', models.CharField(choices=[('FIND_A_SUPPLIER', 'Find a Supplier'), ('INVEST', 'Invest'), ('COMPONENTS', 'Components'), ('GREAT_INTERNATIONAL', 'Great International')], db_index=True, max_length=100, null=True)),
                 ('heading', models.CharField(max_length=255)),
                 ('sub_heading', models.CharField(blank=True, max_length=255)),
                 ('heading_teaser', models.TextField(blank=True)),
@@ -256,7 +256,7 @@ class Migration(migrations.Migration):
                 ('section_two_subsection_three_icon', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image', verbose_name='Highlight 3 icon')),
                 ('section_two_subsection_two_icon', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image', verbose_name='Highlight 2 icon')),
                 ('case_study_cta_page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailcore.Page')),
-                ('tags', modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag')),
+                ('tags', modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag')),
                 ('section_one_image_caption', models.CharField(blank=True, max_length=255, verbose_name='Bullets image caption')),
                 ('section_one_image_caption_company', models.CharField(blank=True, max_length=255, verbose_name='Bullets image caption — company name')),
             ],
