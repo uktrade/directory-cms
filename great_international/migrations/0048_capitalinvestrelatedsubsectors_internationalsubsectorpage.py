@@ -527,7 +527,7 @@ class Migration(migrations.Migration):
                 ('section_two_subsection_two_icon_ja', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image', verbose_name='Spotlight 2 icon')),
                 ('section_two_subsection_two_icon_pt', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image', verbose_name='Spotlight 2 icon')),
                 ('section_two_subsection_two_icon_zh_hans', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image', verbose_name='Spotlight 2 icon')),
-                ('tags', modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag')),
+                ('tags', modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag')),
             ],
             options={
                 'abstract': False,

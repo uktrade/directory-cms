@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
                 ('hero_image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image')),
                 ('section_one_image', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image', verbose_name='image')),
                 ('section_two_image', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image', verbose_name='image')),
-                ('tags', modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag')),
+                ('tags', modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag')),
             ],
             options={
                 'abstract': False,
