@@ -13,7 +13,6 @@ class Migration(migrations.Migration):
     dependencies = [
         ('wagtailcore', '0040_page_draft_title'),
         ('wagtailforms', '0003_capitalizeverbose'),
-        ('export_readiness', '0049_auto_20190207_0924'),
         ('great_international', '0006_internationaltopiclandingpage'),
     ]
 

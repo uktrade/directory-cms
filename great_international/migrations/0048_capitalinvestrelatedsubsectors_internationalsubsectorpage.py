@@ -11,7 +11,6 @@ import modelcluster.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('export_readiness', '0051_auto_20190627_1424'),
         ('wagtailcore', '0041_group_collection_permissions_verbose_name_plural'),
         ('wagtailimages', '0001_squashed_0021'),
         ('great_international', '0047_investregionlandingpage_investsectorpage'),

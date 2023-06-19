@@ -6,7 +6,7 @@ from django.contrib.messages.storage.fallback import FallbackStorage
 from django.http import HttpRequest
 
 from core.upstream_serializers import UpstreamModelSerializer
-from tests.export_readiness.factories import (
+from tests.core.factories import (
     TagFactory
 )
 

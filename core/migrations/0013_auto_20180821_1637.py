@@ -9,7 +9,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('core', '0012_auto_20180821_1634'),
-        ('export_readiness', '0012_auto_20180821_0810'),
     ]
 
     operations = [
