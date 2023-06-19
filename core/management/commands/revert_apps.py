@@ -365,18 +365,17 @@ class Command(BaseCommand):
         for migration in core:
             MigrationRecorder.Migration.objects.create(
                 app='core',
-                name = migration,
+                name=migration,
             )
 
         for migration in export_readiness:
             MigrationRecorder.Migration.objects.create(
                 app='export_readiness',
-                name = migration,
+                name=migration,
             )
 
         for migration in great_international:
             MigrationRecorder.Migration.objects.create(
                 app='great_international',
-                name = migration,
+                name=migration,
             )
-
