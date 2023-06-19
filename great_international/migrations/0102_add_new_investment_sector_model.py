@@ -16,7 +16,6 @@ class Migration(migrations.Migration):
     dependencies = [
         ('wagtailimages', '0022_uploadedimage'),
         ('wagtailcore', '0059_apply_collection_ordering'),
-        ('export_readiness', '0075_auto_20200518_1253'),
         ('great_international', '0101_remove_limit_on_atlas_landing_page_block_main_content'),
     ]
 

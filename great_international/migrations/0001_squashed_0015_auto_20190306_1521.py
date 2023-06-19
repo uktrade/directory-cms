@@ -18,11 +18,8 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailforms', '0003_capitalizeverbose'),
-        ('export_readiness', '0049_auto_20190207_0924'),
         ('wagtailimages', '0021_image_file_hash'),
-        ('export_readiness', '0047_allcontactpagespage'),
         ('wagtailcore', '0040_page_draft_title'),
-        ('export_readiness', '0050_auto_20190219_1633'),
     ]
 
     operations = [
