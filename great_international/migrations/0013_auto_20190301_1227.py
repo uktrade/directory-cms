@@ -12,7 +12,6 @@ import modelcluster.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('export_readiness', '0050_auto_20190219_1633'),
         ('wagtailcore', '0040_page_draft_title'),
         ('great_international', '0012_internationalsectorpage'),
     ]
@@ -30,7 +29,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='internationalsectorpage',
             name='tags',
-            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag'),
+            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag'),
         ),
         migrations.AlterField(
             model_name='internationalsectorpage',
