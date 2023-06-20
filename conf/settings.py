@@ -87,7 +87,6 @@ INSTALLED_APPS = [
     'wagtailmedia',
     'great_international.apps.GreatInternationalConfig',
     'components.apps.ComponentsConfig',
-    'export_readiness.apps.GreatDomesticConfig',
     'django_filters',
     'authbroker_client',
     'django_celery_beat',
@@ -348,7 +347,6 @@ WAGTAIL_EMAIL_MANAGEMENT_ENABLED = False
 BASE_URL = env.str('BASE_URL')
 WAGTAILADMIN_BASE_URL = env.str('BASE_URL')
 
-APP_URL_EXPORT_READINESS = env.str('APP_URL_EXPORT_READINESS')
 APP_URL_GREAT_INTERNATIONAL = env.str('APP_URL_GREAT_INTERNATIONAL')
 APP_URL_COMPONENTS = ''
 COPY_DESTINATION_URLS = env.list('COPY_DESTINATION_URLS')

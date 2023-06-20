@@ -16,7 +16,6 @@ class Migration(migrations.Migration):
     dependencies = [
         ('wagtailimages', '0022_uploadedimage'),
         ('wagtailcore', '0059_apply_collection_ordering'),
-        ('export_readiness', '0075_auto_20200518_1253'),
         ('great_international', '0101_remove_limit_on_atlas_landing_page_block_main_content'),
     ]
 
@@ -163,7 +162,7 @@ class Migration(migrations.Migration):
                 ('intro_image_pt', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image')),
                 ('intro_image_zh_hans', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image')),
                 ('manually_selected_related_opportunities', modelcluster.fields.ParentalManyToManyField(blank=True, help_text='Max 3 will be shown. If none is selected, three will be automatically chosen based on priority and/or most recently created', to='great_international.InvestmentOpportunityPage')),
-                ('tags', modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag')),
+                ('tags', modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag')),
             ],
             options={
                 'abstract': False,

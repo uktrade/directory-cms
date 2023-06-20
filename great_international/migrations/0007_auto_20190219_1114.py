@@ -13,7 +13,6 @@ class Migration(migrations.Migration):
     dependencies = [
         ('wagtailcore', '0040_page_draft_title'),
         ('wagtailforms', '0003_capitalizeverbose'),
-        ('export_readiness', '0049_auto_20190207_0924'),
         ('great_international', '0006_internationaltopiclandingpage'),
     ]
 
@@ -23,7 +22,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
                 ('service_name', models.CharField(choices=[('FIND_A_SUPPLIER', 'Find a Supplier'), ('EXPORT_READINESS', 'Export Readiness'), ('INVEST', 'Invest'), ('COMPONENTS', 'Components'), ('GREAT_INTERNATIONAL', 'Great International')], db_index=True, max_length=100, null=True)),
-                ('tags', modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag')),
+                ('tags', modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag')),
             ],
             options={
                 'abstract': False,
@@ -37,27 +36,27 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='internationalarticlelistingpage',
             name='tags',
-            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag'),
+            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag'),
         ),
         migrations.AddField(
             model_name='internationalarticlepage',
             name='tags',
-            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag'),
+            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag'),
         ),
         migrations.AddField(
             model_name='internationalcampaignpage',
             name='tags',
-            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag'),
+            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag'),
         ),
         migrations.AddField(
             model_name='internationalmarketingpages',
             name='tags',
-            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag'),
+            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag'),
         ),
         migrations.AddField(
             model_name='internationaltopiclandingpage',
             name='tags',
-            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag'),
+            field=modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag'),
         ),
         migrations.DeleteModel(
             name='InternationalUKHQPages',

@@ -14,7 +14,6 @@ class Migration(migrations.Migration):
     dependencies = [
         ('wagtailimages', '0021_image_file_hash'),
         ('wagtailcore', '0040_page_draft_title'),
-        ('export_readiness', '0034_auto_20190314_1250'),
         ('great_international', '0003_auto_20190313_0855'),
     ]
 
@@ -36,7 +35,7 @@ class Migration(migrations.Migration):
                 ('hero_image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image')),
                 ('section_one_image', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image', verbose_name='image')),
                 ('section_two_image', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image', verbose_name='image')),
-                ('tags', modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag')),
+                ('tags', modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag')),
             ],
             options={
                 'abstract': False,
