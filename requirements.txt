@@ -59,7 +59,7 @@ click-repl==0.2.0
     # via celery
 cron-descriptor==1.4.0
     # via django-celery-beat
-cryptography==39.0.2
+cryptography==41.0.0
     # via -r requirements.in
 directory-components==39.1.2
     # via -r requirements.in
