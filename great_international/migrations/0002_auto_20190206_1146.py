@@ -13,7 +13,6 @@ class Migration(migrations.Migration):
     dependencies = [
         ('wagtailcore', '0040_page_draft_title'),
         ('wagtailimages', '0021_image_file_hash'),
-        ('export_readiness', '0047_allcontactpagespage'),
         ('great_international', '0001_initial'),
     ]
 
@@ -44,9 +43,6 @@ class Migration(migrations.Migration):
                 ('cta_box_button_url', models.CharField(max_length=255)),
                 ('cta_box_button_text', models.CharField(max_length=255)),
                 ('campaign_hero_image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image')),
-                ('related_page_one', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='export_readiness.ArticlePage')),
-                ('related_page_three', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='export_readiness.ArticlePage')),
-                ('related_page_two', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='export_readiness.ArticlePage')),
                 ('section_one_image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image')),
                 ('section_two_image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image')),
                 ('selling_point_one_icon', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image')),

@@ -15,7 +15,7 @@ def test_update_default_listing_buttons_from_base_page(page_with_reversion):
         page=page_with_reversion, page_perms=Mock()
     )
 
-    expected_url = 'http://great.gov.uk/international/content/123-555-206/'
+    expected_url = 'http://great.gov.uk/international/content/123-555-207/'
     assert len(buttons) == 4
     assert buttons[1].url == expected_url
 
@@ -29,7 +29,7 @@ def test_update_default_listing_buttons_from_base_page_button_url_name_view_draf
         page=page_with_reversion, page_perms=Mock(), button_url_name=button_url_name,
     )
 
-    expected_url = r'http://great[.]gov[.]uk/international/content/123-555-208/[?]draft_token=\w+'
+    expected_url = r'http://great[.]gov[.]uk/international/content/123-555-209/[?]draft_token=\w+'
     assert len(buttons) == 4
     assert re.match(expected_url, buttons[1].url)
 

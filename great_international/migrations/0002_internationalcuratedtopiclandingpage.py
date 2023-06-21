@@ -13,7 +13,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailimages', '0021_image_file_hash'),
-        ('export_readiness', '0032_auto_20190307_1512'),
         ('wagtailcore', '0040_page_draft_title'),
         ('great_international', '0001_squashed_0015_auto_20190306_1521'),
     ]
@@ -37,7 +36,7 @@ class Migration(migrations.Migration):
                 ('featured_page_three', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='great_international.InternationalArticlePage')),
                 ('featured_page_two', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='great_international.InternationalArticlePage')),
                 ('hero_image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image')),
-                ('tags', modelcluster.fields.ParentalManyToManyField(blank=True, to='export_readiness.Tag')),
+                ('tags', modelcluster.fields.ParentalManyToManyField(blank=True, to='core.Tag')),
             ],
             options={
                 'abstract': False,
