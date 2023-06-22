@@ -151,9 +151,9 @@ def enable_signature_check(mock_signature_check):
 @pytest.fixture
 def uploaded_file():
     return SimpleUploadedFile(
-        name='test_image.png',
-        content=open('core/static/core/logo.png', 'rb').read(),
-        content_type='image/png'
+        name='test_image.svg',
+        content=open('core/static/core/logo.svg', 'rb').read(),
+        content_type='image/svg'
     )
 
 
