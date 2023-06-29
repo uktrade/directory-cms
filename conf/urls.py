@@ -107,7 +107,7 @@ if settings.FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
     ] + urlpatterns
 
 
-if settings.FEATURE_GREAT_CMS_OPENAPI_ENABLED:
+if settings.FEATURE_DIRECTORY_CMS_OPENAPI_ENABLED:
     urlpatterns = [
         path('openapi/', SpectacularAPIView.as_view(), name='schema'),
         path(
