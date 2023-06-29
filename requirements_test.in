@@ -14,4 +14,3 @@ django-debug-toolbar==3.2.*
 pip-tools
 pytest-codecov
 GitPython
-drf-spectacular
