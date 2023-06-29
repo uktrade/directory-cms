@@ -19,6 +19,7 @@ def test_update_default_listing_buttons_from_base_page(page_with_reversion):
     assert len(buttons) == 4
     assert re.match(expected_url, buttons[1].url)
 
+
 @pytest.mark.django_db
 def test_update_default_listing_buttons_from_base_page_button_url_name_view_draft(
     page_with_reversion
