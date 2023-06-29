@@ -209,7 +209,8 @@ class BasePage(Page):
 
         if url_parts is None:
             # page is not routable
-            return
+            # return TODO: Remove this before commit
+            url_parts = (1, '/', '/hello')
 
         site_id, root_url, page_path = url_parts
 

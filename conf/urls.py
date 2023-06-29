@@ -14,6 +14,11 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView
 from django.urls import path, re_path
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView,
+)
 
 import core.views
 from groups.views import GroupInfoModalView
@@ -99,4 +104,20 @@ if settings.FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
 
     urlpatterns = [
         re_path(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
+
+
+if settings.FEATURE_GREAT_CMS_OPENAPI_ENABLED:
+    urlpatterns = [
+        path('openapi/', SpectacularAPIView.as_view(), name='schema'),
+        path(
+            'openapi/ui/',
+            login_required(SpectacularSwaggerView.as_view(url_name='schema'), login_url='admin:login'),
+            name='swagger-ui',
+        ),
+        path(
+            'openapi/ui/redoc/',
+            login_required(SpectacularRedocView.as_view(url_name='schema'), login_url='admin:login'),
+            name='redoc',
+        ),
     ] + urlpatterns

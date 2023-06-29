@@ -345,3 +345,4 @@ class DatabaseCacheSubscriber:
 def rebuild_all_cache():
     for page in Page.objects.live().specific():
         CachePopulator.populate_async(page)
+

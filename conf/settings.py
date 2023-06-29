@@ -90,6 +90,7 @@ INSTALLED_APPS = [
     'django_filters',
     'authbroker_client',
     'django_celery_beat',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -429,7 +430,10 @@ if FEATURE_FLAGS['ENFORCE_STAFF_SSO_ON']:
 else:
     LOGIN_URL = '/admin/login/'
 
-REST_FRAMEWORK = {'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)}
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+}
 
 if FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:
     INSTALLED_APPS += ['debug_toolbar']
@@ -475,3 +479,18 @@ FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT = 'Foreign Direct Investment'
 FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL = env.str(
     'FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL', FOREIGN_DIRECT_INVESTMENT_SNIPPET_LABEL_DEFAULT
 )
+
+
+# Resolves DEFAULT_AUTO_FIELD warnings on Django 3.2 and above
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+# OpenAPI
+FEATURE_GREAT_CMS_OPENAPI_ENABLED = env.bool('FEATURE_GREAT_CMS_OPENAPI_ENABLED', False)
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Directory CMS API',
+    'DESCRIPTION': 'Directory CMS API - the Department for Business and Trade (DBT)',
+    'VERSION': os.environ.get('GIT_TAG', 'dev'),
+    'SERVE_INCLUDE_SCHEMA': False,
+    'PREPROCESSING_HOOKS': ['conf.preprocessors.preprocessing_filter_admin_spec'],
+}
