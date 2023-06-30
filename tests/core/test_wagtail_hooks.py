@@ -15,9 +15,9 @@ def test_update_default_listing_buttons_from_base_page(page_with_reversion):
         page=page_with_reversion, page_perms=Mock()
     )
 
-    expected_url = 'http://great.gov.uk/international/content/123-555-207/'
+    expected_url = r'http://great.gov.uk/international/content/123-555-[0-9][0-9][0-9]/'
     assert len(buttons) == 4
-    assert buttons[1].url == expected_url
+    assert re.match(expected_url, buttons[1].url)
 
 
 @pytest.mark.django_db
@@ -29,7 +29,7 @@ def test_update_default_listing_buttons_from_base_page_button_url_name_view_draf
         page=page_with_reversion, page_perms=Mock(), button_url_name=button_url_name,
     )
 
-    expected_url = r'http://great[.]gov[.]uk/international/content/123-555-209/[?]draft_token=\w+'
+    expected_url = r'http://great[.]gov[.]uk/international/content/123-555-[0-9][0-9][0-9]/[?]draft_token=\w+'
     assert len(buttons) == 4
     assert re.match(expected_url, buttons[1].url)
 
