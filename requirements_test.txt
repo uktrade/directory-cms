@@ -34,7 +34,7 @@ botocore==1.27.96
     #   s3transfer
 build==0.10.0
     # via pip-tools
-celery[redis]==5.3.0
+celery[redis]==5.3.1
     # via
     #   -r requirements.in
     #   django-celery-beat
@@ -58,7 +58,7 @@ click-didyoumean==0.3.0
     # via celery
 click-plugins==1.1.1
     # via celery
-click-repl==0.2.0
+click-repl==0.3.0
     # via celery
 coverage[toml]==6.5.0
     # via
@@ -69,7 +69,7 @@ coveralls==3.3.1
     # via -r requirements_test.in
 cron-descriptor==1.4.0
     # via django-celery-beat
-cryptography==41.0.0
+cryptography==41.0.1
     # via -r requirements.in
 directory-components==39.1.2
     # via -r requirements.in
@@ -99,8 +99,10 @@ django==4.1.9
     #   django-staff-sso-client
     #   django-storages
     #   django-taggit
+    #   django-timezone-field
     #   django-treebeard
     #   djangorestframework
+    #   drf-spectacular
     #   sigauth
     #   wagtail
     #   wagtail-modeltranslation
@@ -127,7 +129,7 @@ django-permissionedforms==0.1
     # via wagtail
 django-pglocks==1.0.4
     # via -r requirements.in
-django-redis==5.2.0
+django-redis==5.3.0
     # via -r requirements.in
 django-staff-sso-client==4.2.0
     # via -r requirements.in
@@ -135,13 +137,14 @@ django-storages==1.13.2
     # via -r requirements.in
 django-taggit==3.1.0
     # via wagtail
-django-timezone-field==5.0
+django-timezone-field==5.1
     # via django-celery-beat
 django-treebeard==4.7
     # via wagtail
 djangorestframework==3.14.0
     # via
     #   -r requirements.in
+    #   drf-spectacular
     #   sigauth
     #   wagtail
 docopt==0.6.2
@@ -151,6 +154,8 @@ docopt==0.6.2
     #   num2words
 draftjs-exporter==2.1.7
     # via wagtail
+drf-spectacular==0.26.3
+    # via -r requirements.in
 ecs-logging==2.0.2
     # via elastic-apm
 elastic-apm==6.16.2
@@ -163,7 +168,7 @@ factory-boy==2.12.0
     # via
     #   -r requirements_test.in
     #   wagtail-factories
-faker==18.10.1
+faker==18.11.2
     # via factory-boy
 flake8==6.0.0
     # via -r requirements_test.in
@@ -185,6 +190,8 @@ html5lib==1.1
     # via wagtail
 idna==3.4
     # via requests
+inflection==0.5.1
+    # via drf-spectacular
 iniconfig==2.0.0
     # via pytest
 jmespath==1.0.1
@@ -192,8 +199,10 @@ jmespath==1.0.1
     #   boto3
     #   botocore
 jsonschema==3.2.0
-    # via directory-components
-kombu==5.3.0
+    # via
+    #   directory-components
+    #   drf-spectacular
+kombu==5.3.1
     # via
     #   -r requirements.in
     #   celery
@@ -225,7 +234,7 @@ pillow==9.5.0
     # via wagtail
 pip-tools==6.13.0
     # via -r requirements_test.in
-pluggy==1.0.0
+pluggy==1.2.0
     # via pytest
 prompt-toolkit==3.0.38
     # via click-repl
@@ -247,7 +256,7 @@ pyproject-hooks==1.0.0
     # via build
 pyrsistent==0.19.3
     # via jsonschema
-pytest==7.3.2
+pytest==7.4.0
     # via
     #   -r requirements_test.in
     #   pytest-codecov
@@ -281,7 +290,9 @@ pytz==2023.3
     #   django-timezone-field
     #   djangorestframework
     #   l18n
-redis==4.5.5
+pyyaml==6.0
+    # via drf-spectacular
+redis==4.6.0
     # via
     #   celery
     #   django-redis
@@ -300,14 +311,13 @@ requests-oauthlib==1.3.1
     # via django-staff-sso-client
 s3transfer==0.6.1
     # via boto3
-sentry-sdk==1.25.1
+sentry-sdk==1.26.0
     # via -r requirements.in
 sigauth==5.2.0
     # via -r requirements.in
 six==1.16.0
     # via
     #   bleach
-    #   click-repl
     #   django-pglocks
     #   freezegun
     #   html5lib
@@ -335,7 +345,7 @@ tomli==2.0.1
     #   coverage
     #   pyproject-hooks
     #   pytest
-typing-extensions==4.6.3
+typing-extensions==4.7.0
     # via
     #   asgiref
     #   dj-database-url
@@ -345,6 +355,8 @@ tzdata==2023.3
     # via
     #   celery
     #   django-celery-beat
+uritemplate==4.1.1
+    # via drf-spectacular
 urllib3==1.26.16
     # via
     #   -r requirements.in
@@ -385,7 +397,7 @@ willow==1.4.1
     # via wagtail
 wrapt==1.15.0
     # via elastic-apm
-zope-event==4.6
+zope-event==5.0
     # via gevent
 zope-interface==6.0
     # via gevent
