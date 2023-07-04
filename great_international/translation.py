@@ -14,6 +14,8 @@ class InternationalArticlePageTranslationOptions(BaseTranslationOptions):
         'type_of_article',
         'article_teaser',
         'article_body_text',
+        'article_video',
+        'article_image',
         'cta_title',
         'cta_teaser',
         'cta_link_label',
