@@ -29,6 +29,28 @@ from .models.investment_atlas import (
 )
 
 
+class GreatMediaSerializer(serializers.Serializer):
+    title = serializers.CharField()
+    transcript = serializers.SerializerMethodField()
+    sources = serializers.SerializerMethodField()
+    url = serializers.CharField()
+    thumbnail = serializers.SerializerMethodField()
+    subtitles = serializers.SerializerMethodField()
+
+    def get_transcript(self, obj):
+        return obj.greatmedia.transcript
+
+    def get_sources(self, obj):
+        return obj.greatmedia.sources
+
+    def get_subtitles(self, obj):
+        return obj.greatmedia.subtitles
+
+    def get_thumbnail(self, obj):
+        if obj.thumbnail:
+            return obj.thumbnail.url
+
+
 class EntitySummarySerializerBase(serializers.Serializer):
     """Base class for nested entities that don't need full page representations"""
 
@@ -301,7 +323,7 @@ class InternationalArticlePageSerializer(BasePageSerializer):
 
     article_image = wagtail_fields.ImageRenditionField('original')
     article_image_thumbnail = wagtail_fields.ImageRenditionField('fill-640x360', source='article_image')
-    article_video = core_fields.VideoField()
+    article_video = GreatMediaSerializer()
 
     article_body_text = core_fields.MarkdownToHTMLField()
 
@@ -327,28 +349,6 @@ class InternationalArticlePageSerializer(BasePageSerializer):
                 context=self.context
             )
             return serializer.data
-
-
-class GreatMediaSerializer(serializers.Serializer):
-    title = serializers.CharField()
-    transcript = serializers.SerializerMethodField()
-    sources = serializers.SerializerMethodField()
-    url = serializers.CharField()
-    thumbnail = serializers.SerializerMethodField()
-    subtitles = serializers.SerializerMethodField()
-
-    def get_transcript(self, obj):
-        return obj.greatmedia.transcript
-
-    def get_sources(self, obj):
-        return obj.greatmedia.sources
-
-    def get_subtitles(self, obj):
-        return obj.greatmedia.subtitles
-
-    def get_thumbnail(self, obj):
-        if obj.thumbnail:
-            return obj.thumbnail.url
 
 
 class InternationalHomePageSerializer(BasePageSerializer):
