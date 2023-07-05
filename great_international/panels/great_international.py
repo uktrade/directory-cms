@@ -276,7 +276,6 @@ class BaseInternationalSectorPagePanels:
 
 
 class InternationalArticlePagePanels:
-
     content_panels = [
         FieldPanel('title'),
         FieldPanel('article_title'),
@@ -288,8 +287,10 @@ class InternationalArticlePagePanels:
             children=[
                 FieldPanel('article_subheading'),
                 FieldPanel('article_teaser'),
-                FieldPanel('article_body_text')
-            ]
+                FieldPanel('article_body_text'),
+                FieldPanel('article_image'),
+                MediaChooserPanel('article_video'),
+            ],
         ),
         MultiFieldPanel(
             heading='CTA fields',
@@ -298,27 +299,16 @@ class InternationalArticlePagePanels:
                 FieldPanel('cta_teaser'),
                 FieldPanel('cta_link_label'),
                 FieldPanel('cta_link'),
-            ]
+            ],
         ),
         SearchEngineOptimisationPanel(),
     ]
 
-    image_panels = [
-        FieldPanel('article_image'),
-        FieldPanel('article_video', widget=AdminMediaChooser),
-    ]
-
-    settings_panels = [
-        FieldPanel('slug'),
-        FieldPanel('tags', widget=CheckboxSelectMultiple)
-    ]
+    settings_panels = [FieldPanel('slug'), FieldPanel('tags', widget=CheckboxSelectMultiple)]
 
     edit_handler = make_translated_interface(
         content_panels=content_panels,
         settings_panels=settings_panels,
-        other_panels=[
-            ObjectList(image_panels, heading='Images')
-        ],
     )
 
 
