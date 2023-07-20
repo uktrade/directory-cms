@@ -1,28 +1,18 @@
-from django.db import models
-
 from directory_constants import slugs
-
+from django.db import models
+from modelcluster.fields import ParentalKey
+from wagtail.admin.panels import FieldPanel, HelpPanel, PageChooserPanel
 from wagtail.fields import StreamField
 from wagtail.models import Orderable
-from wagtail.admin.panels import (
-    HelpPanel,
-    FieldPanel,
-    PageChooserPanel,
-)
+from wagtail.snippets.models import register_snippet
+from wagtailmarkdown.fields import MarkdownField
 
-from .base import BaseInternationalPage
-
-from core.fields import single_struct_block_stream_field_factory
-from core.model_fields import MarkdownField
-
-from core.models import ExclusivePageMixin, FormPageMetaClass, WagtailAdminExclusivePageMixin
-
-from modelcluster.fields import ParentalKey
 import great_international.blocks.investment_atlas as investment_atlas_blocks
 import great_international.panels.investment_atlas as investment_atlas_panels
+from core.fields import single_struct_block_stream_field_factory
+from core.models import ExclusivePageMixin, FormPageMetaClass, WagtailAdminExclusivePageMixin
 
-from wagtail.snippets.models import register_snippet
-
+from .base import BaseInternationalPage
 
 TIME_TO_INVESTMENT_DECISION_0M_6M = 'TIME_TO_INVESTMENT_DECISION_0M_6M'
 TIME_TO_INVESTMENT_DECISION_6M_12M = 'TIME_TO_INVESTMENT_DECISION_6M_12M'
@@ -39,10 +29,7 @@ TIME_TO_INVESTMENT_DECISION_OPTIONS = (
 INVESTMENT_TYPE = 'INVESTMENT_TYPE'
 RELATED_SECTORS = 'RELATED_SECTORS'
 
-GET_RELATED_OPPORTUNITIES_OPTIONS = (
-    (INVESTMENT_TYPE, 'Investment type'),
-    (RELATED_SECTORS, 'Related sectors')
-)
+GET_RELATED_OPPORTUNITIES_OPTIONS = ((INVESTMENT_TYPE, 'Investment type'), (RELATED_SECTORS, 'Related sectors'))
 
 # FOR ALL THE SNIPPETS:
 # TODO: translation support: https://wagtail-modeltranslation.readthedocs.io/en/latest/Registering%20Models.html
@@ -51,9 +38,7 @@ GET_RELATED_OPPORTUNITIES_OPTIONS = (
 @register_snippet
 class InvestmentType(models.Model):
     # TODO: add modeltranslation support as required, at the snippet model level
-    name = models.CharField(
-        max_length=99
-    )
+    name = models.CharField(max_length=99)
 
     def __str__(self):
         return self.name
@@ -62,12 +47,8 @@ class InvestmentType(models.Model):
 @register_snippet
 class PlanningStatus(models.Model):
     # TODO: add modeltranslation support as required, at the snippet model level
-    name = models.CharField(
-        max_length=50
-    )
-    verbose_description = models.CharField(
-        max_length=500
-    )
+    name = models.CharField(max_length=50)
+    verbose_description = models.CharField(max_length=500)
 
     def __str__(self):
         return self.name
@@ -95,7 +76,7 @@ class ReusableContentSection(models.Model):
     block_slug = models.CharField(
         max_length=255,
         blank=True,
-        help_text="Only needed if special styling is involved: check with a developer. If in doubt, it's not needed"
+        help_text="Only needed if special styling is involved: check with a developer. If in doubt, it's not needed",
     )
 
     panels = [
@@ -139,11 +120,7 @@ class InvestmentAtlasLandingPage(
     breadcrumbs_label = models.CharField(max_length=100)
 
     hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=False
+        'wagtailimages.Image', null=True, on_delete=models.SET_NULL, related_name='+', blank=False
     )
     mobile_hero_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -151,13 +128,13 @@ class InvestmentAtlasLandingPage(
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        help_text='Dedicated image for use on small/mobile-screen rendering of the page'
+        help_text='Dedicated image for use on small/mobile-screen rendering of the page',
     )
     hero_title = models.CharField(
         blank=False,
         null=False,
         max_length=150,
-        help_text='Distinct from the page title, this is the title text for the main hero'
+        help_text='Distinct from the page title, this is the title text for the main hero',
     )
 
     hero_strapline = models.TextField(
@@ -185,9 +162,7 @@ class InvestmentAtlasLandingPage(
             (
                 'panel',
                 investment_atlas_blocks.AtlasLandingPagePanelBlock(
-                    help_text=(
-                        "If 'Block slug' is set to 'with-regions-map', the panel will show the regions map"
-                    ),
+                    help_text=("If 'Block slug' is set to 'with-regions-map', the panel will show the regions map"),
                 ),
             ),
         ],
@@ -208,16 +183,16 @@ class InvestmentOpportunityListingPage(
     BaseInternationalPage,
     investment_atlas_panels.InvestmentOpportunityListingPagePanels,
 ):
-    parent_page_types = ['great_international.InvestmentAtlasLandingPage', ]
+    parent_page_types = [
+        'great_international.InvestmentAtlasLandingPage',
+    ]
     subpage_types = [
         'great_international.InvestmentOpportunityPage',
     ]
 
     # `title` comes from the base class
     breadcrumbs_label = models.CharField(max_length=50)
-    search_results_title = models.CharField(
-        max_length=255
-    )
+    search_results_title = models.CharField(max_length=255)
     hero_video = models.ForeignKey(
         'wagtailmedia.Media',
         null=True,
@@ -255,16 +230,11 @@ class RelatedSector(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
     )
 
     panels = [
-        PageChooserPanel(
-            'related_sector',
-            [
-                'great_international.InternationalInvestmentSectorPage'
-            ]
-        ),
+        PageChooserPanel('related_sector', ['great_international.InternationalInvestmentSectorPage']),
     ]
 
     class Meta:
@@ -288,14 +258,11 @@ class RelatedSubSector(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
     )
 
     panels = [
-        PageChooserPanel(
-            'related_sub_sector',
-            ['great_international.InternationalInvestmentSubSectorPage']
-        ),
+        PageChooserPanel('related_sub_sector', ['great_international.InternationalInvestmentSubSectorPage']),
     ]
 
     class Meta:
@@ -339,7 +306,7 @@ class InvestmentOpportunityPage(
         on_delete=models.SET_NULL,
         related_name='+',
         blank=True,
-        help_text='Main page hero image, above the opportunity title'
+        help_text='Main page hero image, above the opportunity title',
     )
     hero_video = models.ForeignKey(
         'wagtailmedia.Media',
@@ -351,10 +318,7 @@ class InvestmentOpportunityPage(
     strapline = models.CharField(
         max_length=200,
         blank=False,
-        help_text=(
-            'A single sentence which directly brings to the direct opportunity '
-            'to the fore. 200 chars max.'
-        )
+        help_text=('A single sentence which directly brings to the direct opportunity ' 'to the fore. 200 chars max.'),
     )
     introduction = MarkdownField(
         blank=False,
@@ -371,7 +335,7 @@ class InvestmentOpportunityPage(
         on_delete=models.SET_NULL,
         related_name='+',
         blank=True,
-        help_text='Goes beside the opportunity intro text'
+        help_text='Goes beside the opportunity intro text',
     )
     intro_video = models.ForeignKey(
         'wagtailmedia.Media',
@@ -395,11 +359,10 @@ class InvestmentOpportunityPage(
         help_text=(
             'Verbose display name for the location. '
             'Geospatial and region data is set in the Location and Relevant Regions tab.'
-        )
+        ),
     )
-    regions_with_locations = StreamField([
-        ('location', investment_atlas_blocks.OpportunityLocationBlock())
-    ],
+    regions_with_locations = StreamField(
+        [('location', investment_atlas_blocks.OpportunityLocationBlock())],
         use_json_field=True,
         null=True,
         blank=True,
@@ -416,12 +379,7 @@ class InvestmentOpportunityPage(
         help_text='Verbose description of investment scale',
     )
     scale_value = models.DecimalField(
-        default=0,
-        null=True,
-        blank=True,
-        max_digits=10,
-        decimal_places=2,
-        verbose_name="Scale value (in millions)"
+        default=0, null=True, blank=True, max_digits=10, decimal_places=2, verbose_name="Scale value (in millions)"
     )
 
     # Note that a `related_sectors` reverse relation
@@ -452,20 +410,18 @@ class InvestmentOpportunityPage(
     # The Opportunity
     main_content = StreamField(
         [
-            ('content_section', investment_atlas_blocks.PageSectionBlock(
-                help_text=(
-                    "If 'Block slug' is set to 'with-key-links', the 'Key links' "
-                    "panel is shown next to the text. "
-                    "If 'Block slug' is set to 'with-region-spotlight', "
-                    "the 'Region spotlight' panel is shown next to the text."
-                )
-            )),
             (
-                'snippet_content',
-                investment_atlas_blocks.ReusableSnippetChooserBlock(
-                    ReusableContentSection
-                )
-            )
+                'content_section',
+                investment_atlas_blocks.PageSectionBlock(
+                    help_text=(
+                        "If 'Block slug' is set to 'with-key-links', the 'Key links' "
+                        "panel is shown next to the text. "
+                        "If 'Block slug' is set to 'with-region-spotlight', "
+                        "the 'Region spotlight' panel is shown next to the text."
+                    )
+                ),
+            ),
+            ('snippet_content', investment_atlas_blocks.ReusableSnippetChooserBlock(ReusableContentSection)),
         ],
         use_json_field=True,
         null=True,
@@ -483,11 +439,7 @@ class InvestmentOpportunityPage(
         blank=True,
     )
     contact_avatar = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
+        'wagtailimages.Image', null=True, on_delete=models.SET_NULL, related_name='+', blank=True
     )
     contact_job_title = models.CharField(
         max_length=255,
@@ -503,7 +455,7 @@ class InvestmentOpportunityPage(
         choices=GET_RELATED_OPPORTUNITIES_OPTIONS,
         default=RELATED_SECTORS,
         help_text='Used to determine what related opportunities are dislayed on the page.',
-        max_length=50
+        max_length=50,
     )
 
 
@@ -511,7 +463,9 @@ class InvestmentGeneralContentPage(
     investment_atlas_panels.InvestmentGeneralContentPagePanels,
     BaseInternationalPage,
 ):
-    parent_page_types = ['great_international.InvestmentAtlasLandingPage', ]
+    parent_page_types = [
+        'great_international.InvestmentAtlasLandingPage',
+    ]
     subpage_types = [
         'great_international.InvestmentGeneralContentPage',
         'great_international.InternationalArticlePage',
@@ -524,7 +478,7 @@ class InvestmentGeneralContentPage(
         on_delete=models.SET_NULL,
         related_name='+',
         blank=True,
-        help_text='Main page hero image, above the opportunity title'
+        help_text='Main page hero image, above the opportunity title',
     )
     hero_video = models.ForeignKey(
         'wagtailmedia.Media',
@@ -534,11 +488,7 @@ class InvestmentGeneralContentPage(
         related_name='+',
     )
     strapline = models.CharField(
-        max_length=200,
-        blank=False,
-        help_text=(
-            'A single sentence which goes beneath the page title'
-        )
+        max_length=200, blank=False, help_text=('A single sentence which goes beneath the page title')
     )
     introduction = MarkdownField(
         blank=False,
@@ -549,7 +499,7 @@ class InvestmentGeneralContentPage(
         on_delete=models.SET_NULL,
         related_name='+',
         blank=True,
-        help_text='Goes beside the opportunity intro text'
+        help_text='Goes beside the opportunity intro text',
     )
 
     main_content = single_struct_block_stream_field_factory(
@@ -591,12 +541,8 @@ class ForeignDirectInvestmentFormPage(
     content_panels_before_form = (
         investment_atlas_panels.ForeignDirectInvestmentFormPagePanels.content_panels_before_form
     )
-    content_panels_after_form = (
-        investment_atlas_panels.ForeignDirectInvestmentFormPagePanels.content_panels_after_form
-    )
-    settings_panels = (
-        investment_atlas_panels.ForeignDirectInvestmentFormPagePanels.settings_panels
-    )
+    content_panels_after_form = investment_atlas_panels.ForeignDirectInvestmentFormPagePanels.content_panels_after_form
+    settings_panels = investment_atlas_panels.ForeignDirectInvestmentFormPagePanels.settings_panels
 
 
 class ForeignDirectInvestmentFormSuccessPage(
@@ -609,27 +555,18 @@ class ForeignDirectInvestmentFormSuccessPage(
     parent_page_types = ['ForeignDirectInvestmentFormPage']
 
     breadcrumbs_label = models.CharField(max_length=50)
-    heading = models.CharField(
-        max_length=255,
-        verbose_name='section title'
-    )
+    heading = models.CharField(max_length=255, verbose_name='section title')
     sub_heading = models.CharField(
         max_length=255,
         verbose_name='section body',
     )
-    next_steps_title = models.CharField(
-        max_length=255,
-        verbose_name='section title'
-    )
+    next_steps_title = models.CharField(max_length=255, verbose_name='section title')
     next_steps_body = models.CharField(
         max_length=255,
         verbose_name='section body',
     )
     # These are deprecated / unused for the time being
-    documents_title = models.CharField(
-        max_length=255,
-        verbose_name='section title'
-    )
+    documents_title = models.CharField(max_length=255, verbose_name='section title')
     documents_body = models.CharField(
         max_length=255,
         verbose_name='section body',

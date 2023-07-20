@@ -1,16 +1,11 @@
-from django.db import models
 from directory_constants import cms
-from core.models import (
-    BasePage,
-    ExclusivePageMixin,
-    ServiceMixin,
-)
-from wagtail.admin.panels import (
-    FieldPanel, MultiFieldPanel
-)
-from core.mixins import ServiceNameUniqueSlugMixin
+from django.db import models
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
+from wagtailmarkdown.fields import MarkdownField
+
 from core.helpers import make_translated_interface
-from core.model_fields import MarkdownField
+from core.mixins import ServiceNameUniqueSlugMixin
+from core.models import BasePage, ExclusivePageMixin, ServiceMixin
 
 
 class BaseComponentsPage(ServiceNameUniqueSlugMixin, BasePage):
@@ -40,7 +35,7 @@ class BannerComponent(BaseComponentsPage):
             children=[
                 FieldPanel('banner_label'),
                 FieldPanel('banner_content'),
-            ]
+            ],
         ),
     ]
 

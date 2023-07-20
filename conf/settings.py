@@ -15,12 +15,11 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 
 import dj_database_url
-from django.urls import reverse_lazy
 import environ
 import sentry_sdk
+from django.urls import reverse_lazy
 from sentry_sdk.integrations.celery import CeleryIntegration
 from sentry_sdk.integrations.django import DjangoIntegration
-
 
 env = environ.Env()
 for env_file in env.list('ENV_FILES', default=[]):
@@ -91,6 +90,7 @@ INSTALLED_APPS = [
     'authbroker_client',
     'django_celery_beat',
     'drf_spectacular',
+    'wagtailmarkdown',
 ]
 
 MIDDLEWARE = [
@@ -385,7 +385,7 @@ DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL', '')
 # so using an invalid default here to prevent breakages locally / in tests
 GOVNOTIFY_API_KEY = env.str(
     'GOVNOTIFY_API_KEY',
-    'directory_cms_invalid-03185ee5-578c-4ffc-8774-2288e7b34e63-e82262ea-ae8c-4c6d-8570-c16afdc8347f',  # noqa
+    'directory_cms_invalid-03185ee5-578c-4ffc-8774-2288e7b34e63-e82262ea-ae8c-4c6d-8570-c16afdc8347f',  # noqa /PS-IGNORE
 )
 GOVNOTIFY_REPLY_TO_EMAIL_ID = env.str('GOVNOTIFY_REPLY_TO_EMAIL_ID', '')
 GOVNOTIFY_USER_PENDING_APPROVAL_TEMPLATE_ID = env.str('GOVNOTIFY_USER_PENDING_APPROVAL_TEMPLATE_ID', '')
@@ -432,7 +432,7 @@ else:
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
 }
 
 if FEATURE_FLAGS['DEBUG_TOOLBAR_ON']:

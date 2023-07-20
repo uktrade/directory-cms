@@ -1,26 +1,24 @@
-from num2words import num2words
 import copy
 import os
 from urllib.parse import urljoin
 
 import bleach
 import markdown
-
-from bleach_whitelist import markdown_tags, markdown_attrs
-from modeltranslation.utils import build_localized_fieldname
-from wagtail.admin.panels import ObjectList, TabbedInterface
-from wagtail import hooks
-from wagtail.models import Page
-from wagtail.documents.models import Document
-from wagtail.images.models import Image
-
+from bleach_whitelist import markdown_attrs, markdown_tags
 from django.conf import settings
-from django.core.files.storage import default_storage
 from django.core.files.images import get_image_dimensions
+from django.core.files.storage import default_storage
 from django.http import JsonResponse
+from django.urls import Resolver404, resolve
 from django.utils.safestring import mark_safe
 from django.utils.translation import trans_real
-from django.urls import resolve, Resolver404
+from modeltranslation.utils import build_localized_fieldname
+from num2words import num2words
+from wagtail import hooks
+from wagtail.admin.panels import ObjectList, TabbedInterface
+from wagtail.documents.models import Document
+from wagtail.images.models import Image
+from wagtail.models import Page
 
 from core import permissions
 
@@ -51,37 +49,20 @@ def translate_panel(panel, language_code):
 
     panel = copy.deepcopy(panel)
     if hasattr(panel, 'field_name'):
-        panel.field_name = build_localized_fieldname(
-            field_name=panel.field_name, lang=language_code
-        )
+        panel.field_name = build_localized_fieldname(field_name=panel.field_name, lang=language_code)
     if hasattr(panel, 'relation_name'):
-        panel.relation_name = build_localized_fieldname(
-            field_name=panel.relation_name, lang=language_code
-        )
+        panel.relation_name = build_localized_fieldname(field_name=panel.relation_name, lang=language_code)
     if hasattr(panel, 'children'):
-        panel.children = [
-            translate_panel(child, language_code) for child in panel.children
-        ]
+        panel.children = [translate_panel(child, language_code) for child in panel.children]
     return panel
 
 
-def make_translated_interface(
-    content_panels, settings_panels=None, other_panels=None
-):
+def make_translated_interface(content_panels, settings_panels=None, other_panels=None):
     panels = []
     for code, name in settings.LANGUAGES:
-        panels.append(
-            ObjectList(
-                [translate_panel(panel, code) for panel in content_panels],
-                heading=name
-            )
-        )
+        panels.append(ObjectList([translate_panel(panel, code) for panel in content_panels], heading=name))
     if settings_panels:
-        panels.append(
-            ObjectList(
-                settings_panels, classname='settings', heading='Settings'
-            )
-        )
+        panels.append(ObjectList(settings_panels, classname='settings', heading='Settings'))
     if other_panels:
         panels += other_panels
     return TabbedInterface(panels)
@@ -154,15 +135,16 @@ def inline_formset(items, initial=0, min=0, max=1000):
         defaults.update(item)
         return defaults
 
-    data_dict = {str(index): to_form(index, item)
-                 for index, item in enumerate(items)}
+    data_dict = {str(index): to_form(index, item) for index, item in enumerate(items)}
 
-    data_dict.update({
-        'TOTAL_FORMS': str(len(data_dict)),
-        'INITIAL_FORMS': str(initial),
-        'MIN_NUM_FORMS': str(min),
-        'MAX_NUM_FORMS': str(max),
-    })
+    data_dict.update(
+        {
+            'TOTAL_FORMS': str(len(data_dict)),
+            'INITIAL_FORMS': str(initial),
+            'MIN_NUM_FORMS': str(min),
+            'MAX_NUM_FORMS': str(max),
+        }
+    )
     return data_dict
 
 
@@ -172,6 +154,7 @@ def replace_hook(hook_name, original_fn):
     def inner(fn):
         hooks.register('register_page_listing_buttons', fn)
         return fn
+
     return inner
 
 
@@ -191,7 +174,7 @@ def render_markdown(text, context=None):
             'tables',
             'smarty',
         ],
-        output_format='html5'
+        output_format='html5',
     )
     sanitised_html = bleach.clean(
         html,
@@ -201,7 +184,7 @@ def render_markdown(text, context=None):
     return mark_safe(sanitised_html)
 
 
-class LinkPattern(markdown.inlinepatterns.LinkPattern):
+class LinkPattern(markdown.inlinepatterns.LinkInlineProcessor):
     def sanitize_url(self, url):
         if url.startswith('slug:'):
             slug = url.split(':')[1]
@@ -212,13 +195,11 @@ class LinkPattern(markdown.inlinepatterns.LinkPattern):
 
 class LinkerExtension(markdown.Extension):
     def extendMarkdown(self, md, md_globals):
-        md.inlinePatterns['link'] = LinkPattern(
-            markdown.inlinepatterns.LINK_RE, md
-        )
+        md.inlinePatterns['link'] = LinkPattern(markdown.inlinepatterns.LINK_RE, md)
 
 
 def get_page_full_url(domain, full_path):
-    """ Urljoin quirkiness
+    """Urljoin quirkiness
 
     urljoin('http://great.gov.uk/international/', 'test/')
     http://great.gov.uk/international/test/
