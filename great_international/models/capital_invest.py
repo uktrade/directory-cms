@@ -1,35 +1,28 @@
-from django.db import models
-
-from wagtail.admin.panels import (
-    FieldPanel, MultiFieldPanel, PageChooserPanel
-)
-
-
-from core.models import WagtailAdminExclusivePageMixin
-from core.model_fields import MarkdownField
-
-from great_international.models.base import BaseInternationalPage
-import great_international.panels.capital_invest as panels
 from directory_constants import slugs
+from django.db import models
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel, PageChooserPanel
+from wagtailmarkdown.fields import MarkdownField
+
+import great_international.panels.capital_invest as panels
+from core.models import WagtailAdminExclusivePageMixin
+from great_international.models.base import BaseInternationalPage
 
 
 class RegionCardField(models.Model):
     region_card_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
+        'wagtailimages.Image', null=True, on_delete=models.SET_NULL, related_name='+', blank=True
     )
     region_card_title = models.CharField(max_length=255, blank=True)
     region_card_summary = MarkdownField(blank=True)
 
     panels = [
-        MultiFieldPanel([
-            FieldPanel('region_card_image'),
-            FieldPanel('region_card_title'),
-            FieldPanel('region_card_summary'),
-        ]),
+        MultiFieldPanel(
+            [
+                FieldPanel('region_card_image'),
+                FieldPanel('region_card_title'),
+                FieldPanel('region_card_summary'),
+            ]
+        ),
     ]
 
     class Meta:
@@ -38,27 +31,21 @@ class RegionCardField(models.Model):
 
 class HomesInEnglandCardField(models.Model):
     homes_in_england_card_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        blank=True
+        'wagtailimages.Image', null=True, on_delete=models.SET_NULL, related_name='+', blank=True
     )
     homes_in_england_card_title = models.CharField(max_length=255, blank=True)
     homes_in_england_card_pdf_document = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
+        'wagtaildocs.Document', null=True, blank=True, on_delete=models.SET_NULL, related_name='+'
     )
 
     panels = [
-        MultiFieldPanel([
-            FieldPanel('homes_in_england_card_image'),
-            FieldPanel('homes_in_england_card_title'),
-            FieldPanel('homes_in_england_card_pdf_document'),
-        ]),
+        MultiFieldPanel(
+            [
+                FieldPanel('homes_in_england_card_image'),
+                FieldPanel('homes_in_england_card_title'),
+                FieldPanel('homes_in_england_card_pdf_document'),
+            ]
+        ),
     ]
 
     class Meta:
@@ -67,18 +54,11 @@ class HomesInEnglandCardField(models.Model):
 
 class RelatedRegion(models.Model):
     related_region = models.ForeignKey(
-        'great_international.AboutUkRegionPage',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
+        'great_international.AboutUkRegionPage', null=True, blank=True, on_delete=models.SET_NULL, related_name='+'
     )
 
     panels = [
-        PageChooserPanel(
-            'related_region',
-            ['great_international.AboutUkRegionPage']
-        ),
+        PageChooserPanel('related_region', ['great_international.AboutUkRegionPage']),
     ]
 
     class Meta:
@@ -88,9 +68,7 @@ class RelatedRegion(models.Model):
 class CapitalInvestContactFormPage(
     panels.CapitalInvestContactFormPagePanels, WagtailAdminExclusivePageMixin, BaseInternationalPage
 ):
-    parent_page_types = [
-        'great_international.InvestmentAtlasLandingPage'
-    ]
+    parent_page_types = ['great_international.InvestmentAtlasLandingPage']
     slug_identity = slugs.CONTACT_FORM_SLUG
 
     breadcrumbs_label = models.CharField(max_length=255, blank=True)
@@ -99,16 +77,14 @@ class CapitalInvestContactFormPage(
     comment = models.TextField(
         max_length=255,
         default="To provide you with the best help, we may forward your message to "
-                "appropriate Capital Investment team colleagues in British embassies, "
-                "high commissions and consulates located internationally. "
+        "appropriate Capital Investment team colleagues in British embassies, "
+        "high commissions and consulates located internationally. ",
     )
     cta_text = models.CharField(max_length=255)
 
     @classmethod
     def allowed_subpage_models(cls):
-        return [
-            CapitalInvestContactFormSuccessPage
-        ]
+        return [CapitalInvestContactFormSuccessPage]
 
 
 class CapitalInvestContactFormSuccessPage(
@@ -116,7 +92,7 @@ class CapitalInvestContactFormSuccessPage(
 ):
     parent_page_types = [
         'great_international.CapitalInvestContactFormPage',
-        'great_international.InvestmentAtlasLandingPage'
+        'great_international.InvestmentAtlasLandingPage',
     ]
     slug_identity = slugs.FORM_SUCCESS_SLUG
 
