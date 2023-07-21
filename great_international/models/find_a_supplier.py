@@ -1,40 +1,30 @@
-from django.db import models
-
 from directory_constants import slugs
+from django.db import models
+from wagtailmarkdown.fields import MarkdownField
 
-from core.models import ExclusivePageMixin, BreadcrumbMixin
-from core.model_fields import MarkdownField
+import great_international.panels.find_a_supplier as panels
+from core.models import BreadcrumbMixin, ExclusivePageMixin
 
 from .base import BaseInternationalPage
-import great_international.panels.find_a_supplier as panels
 
 
 class InternationalTradeHomePage(
-    panels.InternationalTradeHomePagePanels, ExclusivePageMixin,
-    BreadcrumbMixin, BaseInternationalPage,
+    panels.InternationalTradeHomePagePanels,
+    ExclusivePageMixin,
+    BreadcrumbMixin,
+    BaseInternationalPage,
 ):
     slug_identity = slugs.FAS_INTERNATIONAL_HOME_PAGE
     parent_page_types = ['great_international.InternationalHomePage']
     subpage_types = ['InternationalTradeIndustryContactPage', 'great_international.AboutDitServicesPage']
 
     hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
+        'wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+'
     )
     mobile_hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
+        'wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+'
     )
-    hero_image_caption = models.CharField(
-        max_length=255,
-        blank=True
-    )
+    hero_image_caption = models.CharField(max_length=255, blank=True)
     breadcrumbs_label = models.CharField(max_length=50)
     hero_text = MarkdownField(blank=False)
     search_field_placeholder = models.CharField(max_length=500)
@@ -51,32 +41,16 @@ class InternationalTradeHomePage(
         blank=False,
     )
     services_column_one_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
+        'wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+'
     )
     services_column_two_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
+        'wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+'
     )
     services_column_three_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
+        'wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+'
     )
     services_column_four_icon = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
+        'wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+'
     )
 
     how_we_help_cta_text = models.CharField(max_length=255, blank=True)
@@ -84,7 +58,9 @@ class InternationalTradeHomePage(
 
 
 class InternationalTradeIndustryContactPage(
-    panels.InternationalTradeIndustryContactPagePanels, ExclusivePageMixin, BreadcrumbMixin,
+    panels.InternationalTradeIndustryContactPagePanels,
+    ExclusivePageMixin,
+    BreadcrumbMixin,
     BaseInternationalPage,
 ):
     parent_page_types = ['InternationalTradeHomePage']
