@@ -79,11 +79,11 @@ directory-constants==23.1.1
     # via
     #   -r requirements.in
     #   directory-components
-directory-healthcheck==3.1.1
+directory-healthcheck==3.1.2
     # via -r requirements.in
 dj-database-url==2.0.0
     # via -r requirements.in
-django==4.1.9
+django==4.1.10
     # via
     #   -r requirements.in
     #   directory-components
@@ -170,7 +170,7 @@ factory-boy==2.12.0
     # via
     #   -r requirements_test.in
     #   wagtail-factories
-faker==19.1.0
+faker==19.2.0
     # via factory-boy
 flake8==6.0.0
     # via -r requirements_test.in
@@ -376,7 +376,7 @@ vine==5.0.0
     #   amqp
     #   celery
     #   kombu
-w3lib==1.22.0
+w3lib==1.22
     # via -r requirements.in
 wagtail==4.1.5
     # via
@@ -387,11 +387,11 @@ wagtail==4.1.5
     #   wagtailmedia
 wagtail-factories==2.0.1
     # via -r requirements_test.in
-wagtail-markdown==0.11.0
+wagtail-markdown==0.11
     # via -r requirements.in
 wagtail-modeltranslation==0.13.0
     # via -r requirements.in
-wagtailmedia==0.14.2
+wagtailmedia==0.14.3
     # via -r requirements.in
 wcwidth==0.2.6
     # via prompt-toolkit
