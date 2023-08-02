@@ -71,7 +71,7 @@ coveralls==3.3.1
     # via -r requirements_test.in
 cron-descriptor==1.4.0
     # via django-celery-beat
-cryptography==41.0.2
+cryptography==41.0.3
     # via -r requirements.in
 directory-components==39.1.2
     # via -r requirements.in
