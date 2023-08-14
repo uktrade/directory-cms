@@ -42,6 +42,7 @@ celery[redis]==5.3.1
     #   django-celery-beat
 certifi==2023.7.22
     # via
+    #   -r requirements.in
     #   elastic-apm
     #   requests
     #   sentry-sdk
@@ -164,7 +165,7 @@ elastic-apm==6.18.0
     # via -r requirements.in
 et-xmlfile==1.1.0
     # via openpyxl
-exceptiongroup==1.1.2
+exceptiongroup==1.1.3
     # via pytest
 factory-boy==2.12.0
     # via
@@ -376,7 +377,7 @@ vine==5.0.0
     #   amqp
     #   celery
     #   kombu
-w3lib==1.22.0
+w3lib==1.22
     # via -r requirements.in
 wagtail==4.1.5
     # via
@@ -387,7 +388,7 @@ wagtail==4.1.5
     #   wagtailmedia
 wagtail-factories==2.0.1
     # via -r requirements_test.in
-wagtail-markdown==0.11.0
+wagtail-markdown==0.11
     # via -r requirements.in
 wagtail-modeltranslation==0.13.0
     # via -r requirements.in

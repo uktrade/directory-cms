@@ -40,6 +40,7 @@ celery[redis]==5.3.1
     #   django-celery-beat
 certifi==2023.7.22
     # via
+    #   -r requirements.in
     #   elastic-apm
     #   requests
     #   sentry-sdk
@@ -289,7 +290,7 @@ vine==5.0.0
     #   amqp
     #   celery
     #   kombu
-w3lib==1.22.0
+w3lib==1.22
     # via -r requirements.in
 wagtail==4.1.5
     # via
@@ -297,7 +298,7 @@ wagtail==4.1.5
     #   wagtail-markdown
     #   wagtail-modeltranslation
     #   wagtailmedia
-wagtail-markdown==0.11.0
+wagtail-markdown==0.11
     # via -r requirements.in
 wagtail-modeltranslation==0.13.0
     # via -r requirements.in
