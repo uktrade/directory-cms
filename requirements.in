@@ -9,7 +9,7 @@ dj-database-url==2.*
 psycopg2==2.9.* --no-binary psycopg2
 django-pglocks==1.0.*
 boto3==1.24.*
-sigauth==5.2.0
+sigauth==5.2.2
 directory-healthcheck==3.*
 directory-components==39.*
 directory-constants==23.*
@@ -41,3 +41,4 @@ wagtailmedia==0.14.*
 cryptography==41.*
 oauthlib==3.2.*
 drf-spectacular
+certifi==2023.7.22
