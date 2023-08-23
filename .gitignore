@@ -115,3 +115,6 @@ conf/.env
 conf/env/secrets-do-not-commit
 
 .pii-secret-hook/file_content/pii-secret-log
+
+#Docker config file
+Dockerfile.dev
