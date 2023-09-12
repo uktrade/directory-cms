@@ -4,7 +4,7 @@ pytest
 pytest-cov
 pytest-django
 pytest-sugar
-flake8
+flake8==6.1.0
 requests_mock
 freezegun==0.3.14
 coveralls
