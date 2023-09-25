@@ -35,7 +35,7 @@ notifications-python-client==6.3.*
 num2words==0.5.10
 pycountry==19.8.18
 elastic-apm>6.0
-gevent==22.10.*
+gevent==23.9.*
 psycogreen==1.0.2
 wagtailmedia==0.14.*
 cryptography==41.*
