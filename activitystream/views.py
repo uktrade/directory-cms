@@ -5,6 +5,7 @@ from activitystream.authentication import (
     ActivityStreamHawkResponseMiddleware,
 )
 from django.utils.decorators import decorator_from_middleware
+from django.db.models import Q
 from wagtail.models import Page
 import django_filters.rest_framework
 from activitystream.serializers import WagtailPageSerializer
@@ -24,7 +25,7 @@ class ActivityStreamBaseView(ListAPIView):
 
 
 class CMSContentActivityStreamView(ActivityStreamBaseView):
-    queryset = Page.objects.all().filter(live=True)
+    queryset = Page.objects.exclude(Q(live=False) | Q(first_published_at__isnull=True) | Q(last_published_at__isnull=True))  # noqa:E501
     serializer_class = WagtailPageSerializer
     pagination_class = ActivityStreamCMSContentPagination
     filterset_class = ActivityStreamCMSContentFilter
