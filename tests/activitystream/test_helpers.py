@@ -5,6 +5,7 @@ from mohawk.exc import HawkFail
 from activitystream.helpers import lookup_credentials, seen_nonce
 
 
+@pytest.mark.django_db
 @override_settings(ACTIVITY_STREAM_ACCESS_KEY_ID='good-key')
 def test_lookup_credentials__mismatching_key():
     with pytest.raises(HawkFail):
@@ -19,6 +20,7 @@ def test_lookup_credentials__mismatching_key():
         }
     },
 )
+@pytest.mark.django_db
 def test_seen_nonce__seen_before(caplog):
     assert not seen_nonce('access-key', '123-nonce-value', None)
     assert not caplog.records
