@@ -15,8 +15,7 @@ from django.core.cache import cache
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.utils import translation
-from datetime import datetime
+from django.utils import translation, timezone
 
 from core.models import RoutingSettings
 from groups.models import GroupInfo
@@ -25,8 +24,10 @@ from .great_international.factories import InternationalHomePageFactory, Interna
 from .users.factories import UserFactory
 
 
+@pytest.mark.django_db
 @pytest.fixture()
-def en_locale(transactional_db):
+def en_locale():
+    # Equivalent for unittest is in tests.core.helpers.SetUpLocaleMixin
     return Locale.objects.get_or_create(language_code='en-gb')
 
 
@@ -48,7 +49,8 @@ def wagtail_initial_data(request, en_locale):
             numchild=1,
             locale=locale,
             url_path='/',
-            last_published_at=datetime.now(),
+            last_published_at=timezone.now(),
+            first_published_at=timezone.now(),
         ),
     )
     Page.objects.get_or_create(
@@ -62,7 +64,8 @@ def wagtail_initial_data(request, en_locale):
             numchild=0,
             url_path='/home/',
             locale=locale,
-            last_published_at=datetime.now(),
+            last_published_at=timezone.now(),
+            first_published_at=timezone.now(),
         ),
     )
 
