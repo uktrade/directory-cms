@@ -7,6 +7,7 @@ from freezegun import freeze_time
 from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient
+from activitystream.authentication import NO_CREDENTIALS_MESSAGE
 
 URL = 'http://testserver' + reverse('activitystream:cms-content')
 URL_INCORRECT_DOMAIN = 'http://incorrect' + reverse('activitystream:cms-content')
@@ -148,3 +149,14 @@ def test_if_61_seconds_in_past_401_returned(api_client, en_locale):
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
     error = {'detail': 'Incorrect authentication credentials.'}
     assert response.json() == error
+
+
+@pytest.mark.django_db
+def test_error_for_no_authorization_field_in_header(api_client):
+    response = api_client.get(
+        URL,
+        content_type='',
+        HTTP_X_FORWARDED_FOR='1.2.3.4, 123.123.123.123',
+    )
+    assert response.status_code == 401
+    assert response.json()['detail'] == NO_CREDENTIALS_MESSAGE
