@@ -15,7 +15,7 @@ from django.core.cache import cache
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.utils import translation
+from django.utils import translation, timezone
 
 from core.models import RoutingSettings
 from groups.models import GroupInfo
@@ -35,10 +35,7 @@ def en_locale():
 def wagtail_initial_data(request, en_locale):
     if not request.node.get_closest_marker('django_db'):
         return
-    page_content_type, _ = ContentType.objects.get_or_create(
-        model='page',
-        app_label='wagtailcore'
-    )
+    page_content_type, _ = ContentType.objects.get_or_create(model='page', app_label='wagtailcore')
     locale = Locale.objects.get(language_code='en-gb')
 
     root, _ = Page.objects.get_or_create(
@@ -52,7 +49,9 @@ def wagtail_initial_data(request, en_locale):
             numchild=1,
             locale=locale,
             url_path='/',
-        )
+            last_published_at=timezone.now(),
+            first_published_at=timezone.now(),
+        ),
     )
     Page.objects.get_or_create(
         slug='home',
@@ -65,17 +64,14 @@ def wagtail_initial_data(request, en_locale):
             numchild=0,
             url_path='/home/',
             locale=locale,
-        )
+            last_published_at=timezone.now(),
+            first_published_at=timezone.now(),
+        ),
     )
 
-    wagtailadmin_content_type, _ = ContentType.objects.get_or_create(
-        app_label='wagtailadmin',
-        model='admin'
-    )
+    wagtailadmin_content_type, _ = ContentType.objects.get_or_create(app_label='wagtailadmin', model='admin')
     admin_permission, created = Permission.objects.get_or_create(
-        content_type=wagtailadmin_content_type,
-        codename='access_admin',
-        name='Can access Wagtail admin'
+        content_type=wagtailadmin_content_type, codename='access_admin', name='Can access Wagtail admin'
     )
 
     moderators_group = Group.objects.create(name='Moderators')
@@ -151,9 +147,7 @@ def enable_signature_check(mock_signature_check):
 @pytest.fixture
 def uploaded_file():
     return SimpleUploadedFile(
-        name='test_image.png',
-        content=open('core/static/core/logo.png', 'rb').read(),
-        content_type='image/png'
+        name='test_image.png', content=open('core/static/core/logo.png', 'rb').read(), content_type='image/png'
     )
 
 
@@ -196,6 +190,7 @@ def feature_flags(settings):
 @pytest.fixture
 def groups_with_info():
     from django.contrib.auth.models import Group
+
     groups = []
     for i, group in enumerate(Group.objects.select_related('info').all(), 1):
         try:
@@ -268,17 +263,9 @@ def international_site(international_root_page, request):
         return
 
     site, created = Site.objects.get_or_create(
-        port=80,
-        hostname='great.gov.uk',
-        defaults={
-            'root_page': international_root_page,
-            'site_name': 'international'
-        }
+        port=80, hostname='great.gov.uk', defaults={'root_page': international_root_page, 'site_name': 'international'}
     )
-    RoutingSettings.objects.get_or_create(
-        site=site,
-        defaults={'root_path_prefix': '/international/content/'}
-    )
+    RoutingSettings.objects.get_or_create(site=site, defaults={'root_path_prefix': '/international/content/'})
     return site
 
 
@@ -324,7 +311,7 @@ def site_with_translated_page_as_root(translated_page):
 
 @pytest.fixture
 def page_with_reversion(admin_user, translated_page):
-    translated_page.title = 'published-title',
+    translated_page.title = ('published-title',)
     translated_page.title_en_gb = 'published-title'
     translated_page.save()
 
@@ -348,10 +335,7 @@ def site_with_revised_page_as_root(page_with_reversion):
 
 @pytest.fixture
 def page(international_root_page):
-    return InternationalArticlePageFactory(
-        parent=international_root_page,
-        slug='the-slug'
-    )
+    return InternationalArticlePageFactory(parent=international_root_page, slug='the-slug')
 
 
 @pytest.fixture()
