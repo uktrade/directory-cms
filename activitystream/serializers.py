@@ -16,7 +16,7 @@ class WagtailPageSerializer(serializers.Serializer):
                 first_published_at=obj.first_published_at.isoformat(),
                 last_published_at=obj.last_published_at.isoformat(),
                 content_type_id=obj.content_type_id,
-                content=PageCache.get(obj.id, lang='en-gb'),
+                content=f"{PageCache.get(obj.id, lang='en-gb')}",
             )
         except Exception as e:
             result = {"error": f"Could not parse content for class {obj.specific_class}. Error: {e}"}
