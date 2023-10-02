@@ -13,7 +13,7 @@ def test_wagtail_page_serializer(international_site):
     article = InternationalArticlePageFactory(parent=international_site.root_page)
 
     serialized_article = WagtailPageSerializer().to_representation(article)
-    # serialized_article.object.content is None because the page is not available in the Redis cache.
+    # serialized_article.object.content is "None" because the page is not available in the Redis cache.
     # Serializing of actual article content / caching is covered by other unit tests.
     assert serialized_article == {
         'id': ('dit:cmsContent:international:' + str(article.id) + ':Update'),
@@ -29,7 +29,7 @@ def test_wagtail_page_serializer(international_site):
             'first_published_at': article.first_published_at.isoformat(),
             'last_published_at': article.last_published_at.isoformat(),
             'content_type_id': article.content_type_id,
-            'content': None,
+            'content': "None",
         },
     }
 
