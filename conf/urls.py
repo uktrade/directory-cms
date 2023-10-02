@@ -22,6 +22,7 @@ from drf_spectacular.views import (
 
 import core.views
 from groups.views import GroupInfoModalView
+import activitystream.urls
 
 api_router = WagtailAPIRouter('api')
 api_router.register_endpoint('pages', core.views.PagesOptionalDraftAPIEndpoint)
@@ -50,6 +51,7 @@ healthcheck_urls = [
 
 
 urlpatterns = [
+    path('activity-stream/', include(activitystream.urls, namespace='activitystream')),
     re_path(r'^django-admin/', admin.site.urls),
     re_path(r'^api/', include((api_urls, 'api'))),
     re_path(r'^healthcheck/', include((healthcheck_urls, 'healthcheck'))),
