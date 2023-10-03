@@ -62,7 +62,7 @@ click-repl==0.3.0
     # via celery
 cron-descriptor==1.4.0
     # via django-celery-beat
-cryptography==41.0.3
+cryptography==41.0.4
     # via -r requirements.in
 directory-components==39.1.3
     # via -r requirements.in
@@ -151,7 +151,7 @@ elastic-apm==6.18.0
     # via -r requirements.in
 et-xmlfile==1.1.0
     # via openpyxl
-gevent==22.10.2
+gevent==23.9.1
     # via -r requirements.in
 greenlet==2.0.2
     # via gevent
