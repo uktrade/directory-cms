@@ -1,5 +1,4 @@
 import pytest
-from wagtail.models import Page
 from django.conf import settings
 
 from activitystream.serializers import WagtailPageSerializer
