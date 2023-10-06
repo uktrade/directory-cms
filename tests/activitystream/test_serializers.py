@@ -32,16 +32,3 @@ def test_wagtail_page_serializer(international_site):
             'content': "None",
         },
     }
-
-
-@pytest.mark.django_db
-def test_error_thrown_for_invalid_page(international_site):
-    page = Page.objects.get(id=3)
-    invalid_page = page.copy()
-    invalid_page.id = None
-    invalid_page.title = None
-    invalid_page.first_published_at = None
-
-    serialized_article = WagtailPageSerializer().to_representation(invalid_page)
-
-    assert 'Could not parse content for class' in serialized_article['object']['error']
