@@ -8,6 +8,7 @@ from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient
 from activitystream.authentication import NO_CREDENTIALS_MESSAGE
+from wagtail.models import Page
 
 URL = 'http://testserver' + reverse('activitystream:cms-content')
 URL_INCORRECT_DOMAIN = 'http://incorrect' + reverse('activitystream:cms-content')
@@ -56,6 +57,8 @@ def test_site_pages_returned_with_authentication(api_client, en_locale):
     """If the Authorization and X-Forwarded-For headers are correct, then
     the correct, and authentic, data is returned
     """
+    Page.objects.all().update(url_path='/great-international-home/')
+
     sender = auth_sender()
     response = api_client.get(
         URL,
