@@ -25,7 +25,7 @@ class ActivityStreamBaseView(ListAPIView):
 
 
 class CMSContentActivityStreamView(ActivityStreamBaseView):
-    queryset = Page.objects.exclude(Q(live=False) | Q(first_published_at__isnull=True) | Q(last_published_at__isnull=True))  # noqa:E501
+    queryset = Page.objects.exclude(Q(live=False) | Q(first_published_at__isnull=True) | Q(last_published_at__isnull=True)).filter(Q(url_path__contains="/great-international-home/"))  # noqa:E501
     serializer_class = WagtailPageSerializer
     pagination_class = ActivityStreamCMSContentPagination
     filterset_class = ActivityStreamCMSContentFilter
