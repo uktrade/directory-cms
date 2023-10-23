@@ -181,7 +181,7 @@ gevent==23.9.1
     # via -r requirements.in
 gitdb==4.0.10
     # via gitpython
-gitpython==3.1.35
+gitpython==3.1.37
     # via -r requirements_test.in
 greenlet==2.0.2
     # via gevent
