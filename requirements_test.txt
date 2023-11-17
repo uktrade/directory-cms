@@ -238,7 +238,7 @@ packaging==23.1
     #   build
     #   pytest
     #   pytest-sugar
-pillow==9.5.0
+pillow==10.0.1
     # via wagtail
 pip-tools==7.3.0
     # via -r requirements_test.in
