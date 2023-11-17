@@ -199,7 +199,7 @@ openpyxl==3.1.2
     # via wagtail
 packaging==23.1
     # via bleach
-pillow==9.5.0
+pillow==10.0.1
     # via wagtail
 prompt-toolkit==3.0.39
     # via click-repl
