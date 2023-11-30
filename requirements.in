@@ -42,3 +42,4 @@ cryptography==41.*
 oauthlib==3.2.*
 drf-spectacular
 certifi==2023.7.22
+willow==1.6.*
