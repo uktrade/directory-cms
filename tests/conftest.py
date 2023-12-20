@@ -85,14 +85,13 @@ def wagtail_initial_data(request, en_locale):
     GroupPagePermission.objects.create(
         group=moderators_group,
         page=root,
-        permission_type='edit',
+        permission_type='change',
     )
     GroupPagePermission.objects.create(
         group=moderators_group,
         page=root,
         permission_type='publish',
     )
-
     GroupPagePermission.objects.create(
         group=editors_group,
         page=root,
@@ -101,7 +100,7 @@ def wagtail_initial_data(request, en_locale):
     GroupPagePermission.objects.create(
         group=editors_group,
         page=root,
-        permission_type='edit',
+        permission_type='change',
     )
 
     # Also set up an Image (and implicitly also a Collection),
