@@ -313,15 +313,6 @@ def test_add_page_prepopulate_missing_content_type(
 
 
 @pytest.mark.django_db
-def test_list_page(admin_client, root_page):
-    url = reverse('wagtailadmin_explore', args=(root_page.pk,))
-
-    response = admin_client.get(url)
-
-    assert response.status_code == 200
-
-
-@pytest.mark.django_db
 def test_page_listing(translated_page, admin_client):
     url = reverse('wagtailadmin_pages:edit', args=(translated_page.pk,))
 

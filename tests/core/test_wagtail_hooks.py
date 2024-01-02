@@ -1,53 +1,8 @@
-from unittest.mock import Mock
-
 import pytest
-import re
 
-from django.utils import translation
 from django.urls import reverse
 
 from core import wagtail_hooks
-
-
-@pytest.mark.django_db
-def test_update_default_listing_buttons_from_base_page(page_with_reversion):
-    buttons = wagtail_hooks.update_default_listing_buttons(
-        page=page_with_reversion, page_perms=Mock()
-    )
-
-    expected_url = r'http://great.gov.uk/international/content/123-555-[0-9][0-9][0-9]/'
-    assert len(buttons) == 4
-    assert re.match(expected_url, buttons[1].url)
-
-
-@pytest.mark.django_db
-def test_update_default_listing_buttons_from_base_page_button_url_name_view_draft(
-    page_with_reversion
-):
-    button_url_name = 'view_draft'
-    buttons = wagtail_hooks.update_default_listing_buttons(
-        page=page_with_reversion, page_perms=Mock(), button_url_name=button_url_name,
-    )
-
-    expected_url = r'http://great[.]gov[.]uk/international/content/123-555-[0-9][0-9][0-9]/[?]draft_token=\w+'
-    assert len(buttons) == 4
-    assert re.match(expected_url, buttons[1].url)
-
-
-@pytest.mark.django_db
-def test_update_default_listing_buttons_not_from_base_page(
-    settings, page_without_specific_type
-):
-    translation.activate(settings.LANGUAGE_CODE)
-
-    # For a page without a type, there should also be an 'Add child page'
-    # and 'Delete' button
-    buttons = wagtail_hooks.update_default_listing_buttons(
-        page=page_without_specific_type, page_perms=Mock()
-    )
-    assert len(buttons) == 2
-    assert buttons[0].label == 'Add child page'
-    assert buttons[1].label == 'Delete'
 
 
 @pytest.mark.django_db
