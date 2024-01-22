@@ -244,7 +244,7 @@ packaging==23.2
     #   build
     #   pytest
     #   pytest-sugar
-pillow==10.1.0
+pillow==10.2.0
     # via
     #   pillow-heif
     #   wagtail
