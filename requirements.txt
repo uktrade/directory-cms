@@ -76,7 +76,7 @@ directory-healthcheck==3.2
     # via -r requirements.in
 dj-database-url==2.1.0
     # via -r requirements.in
-django==4.2.8
+django==4.2.7
     # via
     #   -r requirements.in
     #   directory-components
@@ -256,7 +256,7 @@ s3transfer==0.6.2
     # via boto3
 sentry-sdk==1.39.2
     # via -r requirements.in
-sigauth==5.2.3
+sigauth==5.2.4
     # via -r requirements.in
 six==1.16.0
     # via
