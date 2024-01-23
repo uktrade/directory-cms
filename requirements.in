@@ -1,4 +1,4 @@
-django==4.2.3
+django==4.2.8
 djangorestframework==3.14.*
 django-environ==0.*
 gunicorn==20.*
@@ -9,7 +9,7 @@ dj-database-url==2.*
 psycopg2==2.9.* --no-binary psycopg2
 django-pglocks==1.0.*
 boto3==1.24.*
-sigauth==5.2.2
+sigauth==5.2.3
 directory-healthcheck==3.2
 directory-components==40.*
 directory-constants==24.*
