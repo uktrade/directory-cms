@@ -13,4 +13,4 @@ wagtail-factories==4.1.0
 django-debug-toolbar==3.2.*
 pip-tools
 pytest-codecov
-GitPython
+GitPython>=3.1.41
