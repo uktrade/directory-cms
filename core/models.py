@@ -250,7 +250,7 @@ class BasePage(Page):
     def get_url_path_parts(self):
         return [self.view_path, self.slug + '/']
 
-    def get_url(self, is_draft=False, language_code=settings.LANGUAGE_CODE):
+    def get_url(self, request=None, is_draft=False, language_code=settings.LANGUAGE_CODE):
         url = self.full_url
         querystring = {}
         if is_draft:
