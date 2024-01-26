@@ -72,7 +72,7 @@ directory-constants==24.1.0
     # via
     #   -r requirements.in
     #   directory-components
-directory-healthcheck==3.2
+directory-healthcheck==3.3
     # via -r requirements.in
 dj-database-url==2.1.0
     # via -r requirements.in
@@ -191,7 +191,7 @@ markdown==3.5.2
     #   wagtail-markdown
 mohawk==1.1.0
     # via sigauth
-notifications-python-client==6.3.0
+notifications-python-client==9.0.0
     # via -r requirements.in
 num2words==0.5.10
     # via -r requirements.in
@@ -307,7 +307,7 @@ wagtail==5.2.2
     #   wagtail-markdown
     #   wagtail-modeltranslation
     #   wagtailmedia
-wagtail-markdown==0.11.0
+wagtail-markdown==0.11.1
     # via -r requirements.in
 wagtail-modeltranslation==0.14.1
     # via -r requirements.in

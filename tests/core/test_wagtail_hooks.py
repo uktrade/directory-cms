@@ -8,7 +8,7 @@ from core import wagtail_hooks
 @pytest.mark.django_db
 def test_add_copy_button(page_with_reversion):
     page = page_with_reversion
-    buttons = list(wagtail_hooks.add_copy_button(page=page, page_perms=None))
+    buttons = list(wagtail_hooks.add_copy_button(page=page))
 
     assert len(buttons) == 2
     assert buttons[0].label == 'Copy upstream'
