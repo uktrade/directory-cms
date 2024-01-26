@@ -9,7 +9,7 @@ from core import models
 
 
 @hooks.register('register_page_listing_more_buttons')
-def add_copy_button(page, page_perms, next_url=None, is_parent=False):
+def add_copy_button(page, user=None, next_url=None):
     if isinstance(page, models.BasePage):
         yield Button(
             'Copy upstream',
