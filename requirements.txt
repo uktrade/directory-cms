@@ -149,7 +149,7 @@ drf-spectacular==0.27.2
     # via -r requirements.in
 ecs-logging==2.1.0
     # via elastic-apm
-elastic-apm==6.21.4.post8347027212
+elastic-apm==6.22.0
     # via -r requirements.in
 et-xmlfile==1.1.0
     # via openpyxl
@@ -165,7 +165,7 @@ html2text==2020.1.16
     # via -r requirements.in
 html5lib==1.1
     # via wagtail
-idna==3.6
+idna==3.7
     # via requests
 importlib-metadata==7.1.0
     # via markdown
@@ -254,7 +254,7 @@ requests-oauthlib==2.0.0
     # via django-staff-sso-client
 s3transfer==0.6.2
     # via boto3
-sentry-sdk==1.44.0
+sentry-sdk==1.45.0
     # via -r requirements.in
 sigauth==5.2.6
     # via -r requirements.in
@@ -270,11 +270,11 @@ six==1.16.0
     #   w3lib
 soupsieve==2.5
     # via beautifulsoup4
-sqlparse==0.4.4
+sqlparse==0.5.0
     # via django
 telepath==0.3.1
     # via wagtail
-typing-extensions==4.10.0
+typing-extensions==4.11.0
     # via
     #   asgiref
     #   dj-database-url
@@ -309,7 +309,7 @@ wagtail==5.2.2
     #   wagtailmedia
 wagtail-markdown==0.11.1
     # via -r requirements.in
-wagtail-modeltranslation==0.14.1
+wagtail-modeltranslation==0.14.4
     # via -r requirements.in
 wagtailmedia==0.14.5
     # via -r requirements.in
@@ -331,7 +331,7 @@ zipp==3.18.1
     # via importlib-metadata
 zope-event==5.0
     # via gevent
-zope-interface==6.2
+zope-interface==6.3
     # via gevent
 
 # The following packages are considered to be unsafe in a requirements file:
