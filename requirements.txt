@@ -159,7 +159,7 @@ gevent==23.9.1
     # via -r requirements.in
 greenlet==3.0.3
     # via gevent
-gunicorn==20.1.0
+gunicorn==22.0.0
     # via -r requirements.in
 html2text==2020.1.16
     # via -r requirements.in
@@ -204,7 +204,9 @@ oauthlib==3.2.2
 openpyxl==3.1.2
     # via wagtail
 packaging==24.0
-    # via bleach
+    # via
+    #   bleach
+    #   gunicorn
 pillow==10.3.0
     # via
     #   pillow-heif
@@ -249,7 +251,6 @@ requests[security]==2.31.0
     # via
     #   -r requirements.in
     #   notifications-python-client
-    #   requests
     #   requests-oauthlib
     #   wagtail
 requests-oauthlib==2.0.0
