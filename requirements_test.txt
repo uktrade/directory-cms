@@ -65,7 +65,6 @@ click-repl==0.3.0
     # via celery
 coverage[toml]==6.5.0
     # via
-    #   coverage
     #   coveralls
     #   pytest-codecov
     #   pytest-cov
@@ -168,13 +167,13 @@ elastic-apm==6.22.0
     # via -r requirements.in
 et-xmlfile==1.1.0
     # via openpyxl
-exceptiongroup==1.2.0
+exceptiongroup==1.2.1
     # via pytest
 factory-boy==3.3.0
     # via
     #   -r requirements_test.in
     #   wagtail-factories
-faker==24.9.0
+faker==24.11.0
     # via factory-boy
 filetype==1.2.0
     # via willow
@@ -190,7 +189,7 @@ gitpython==3.1.43
     # via -r requirements_test.in
 greenlet==3.0.3
     # via gevent
-gunicorn==20.1.0
+gunicorn==22.0.0
     # via -r requirements.in
 html2text==2020.1.16
     # via -r requirements.in
@@ -244,6 +243,7 @@ packaging==24.0
     # via
     #   bleach
     #   build
+    #   gunicorn
     #   pytest
     #   pytest-sugar
 pillow==10.3.0
@@ -323,7 +323,6 @@ requests[security]==2.31.0
     #   coveralls
     #   notifications-python-client
     #   pytest-codecov
-    #   requests
     #   requests-mock
     #   requests-oauthlib
     #   wagtail
