@@ -314,7 +314,7 @@ class PreloadPageView(FormView):
         self.page = self.get_page()
         try:
             return super().dispatch(request, *args, **kwargs)
-        except ValidationError as error:
+        except ValidationError:
             return HttpResponseBadRequest('Validation error preloading page')
 
     def get_page_content_type(self):
