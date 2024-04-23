@@ -71,6 +71,10 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
     'rest_framework',
+<<<<<<< HEAD
+=======
+    'wagtailmarkdown',
+>>>>>>> parent of b80638ff (Replace youtube video url field with self-hosted videos)
     'find_a_supplier.apps.FindASupplierConfig',
 ]
 

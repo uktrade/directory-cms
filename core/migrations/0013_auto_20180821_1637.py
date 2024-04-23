@@ -4,6 +4,45 @@ from __future__ import unicode_literals
 
 from django.db import migrations
 
+import html2text
+from wagtail.core.models import Orderable
+from wagtail.core.rich_text import expand_db_html
+from wagtail.core.fields import RichTextField
+from wagtailmarkdown.fields import MarkdownField
+
+
+def html_to_markdown(apps, schema_editor):
+    Page = apps.get_model('wagtailcore', 'Page')
+    for base_class in [Page, Orderable]:
+        for model_class in base_class.__subclasses__():
+            if not hasattr(model_class, 'objects'):
+                continue
+            field_names = []
+            for field in model_class._meta.get_fields():
+                if (
+                    isinstance(field, RichTextField) or
+                    isinstance(field, MarkdownField)
+                ):
+                    field_names.append(field.name)
+            for page in model_class.objects.all():
+                for field_name in field_names:
+                    value = getattr(page, field_name)
+                    if value:
+                        html = expand_db_html(value)
+                        markdown = html2text.html2text(html).strip()
+                        setattr(page, field_name, markdown)
+                page.save()
+
+    IndustryArticlePage = apps.get_model(
+        'find_a_supplier', 'IndustryArticlePage'
+    )
+
+    for page in IndustryArticlePage.objects.all():
+        page.proposition_text_en_gb = (
+            page.proposition_text_en_gb.replace('### ', '')
+        )
+        page.save()
+
 
 class Migration(migrations.Migration):
 
@@ -12,11 +51,15 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+<<<<<<< HEAD:core/migrations/0013_auto_20180821_1637.py
         migrations.RunPython(
             migrations.RunPython.noop,
            reverse_code=migrations.RunPython.noop,
             elidable=True
         )
+=======
+        migrations.RunPython(html_to_markdown, migrations.RunPython.noop)
+>>>>>>> parent of b80638ff (Replace youtube video url field with self-hosted videos):find_a_supplier/migrations/0052_html_to_markdown.py
     ]
 
 

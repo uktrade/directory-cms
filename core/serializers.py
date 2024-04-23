@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 from rest_framework import serializers
 from wagtail.images.api import fields as wagtail_fields
+=======
+from rest_framework import fields
+from wagtail.core.models import Page
+from wagtail.embeds import embeds
+from wagtail.embeds.exceptions import EmbedUnsupportedProviderException
+from django.conf import settings
+from django.utils import translation
+>>>>>>> parent of b80638ff (Replace youtube video url field with self-hosted videos)
 
 from core import fields
 
@@ -89,3 +98,37 @@ class ChildPagesSerializerHelper(serializers.Serializer):
             context=self.context
         )
         return serializer.data
+<<<<<<< HEAD
+=======
+
+
+class APIBreadcrumbsSerializer(fields.DictField):
+    def __init__(self, app_label, *args, **kwargs):
+        self.app_label = app_label
+        super().__init__(*args, **kwargs)
+
+    def get_attribute(self, instance):
+        queryset = (
+            Page.objects.all()
+                .filter(content_type__app_label=self.app_label)
+                .only('breadcrumbs_label', 'slug')
+                .select_related('content_tyle__model')
+                .specific()
+        )
+        return {
+            item.content_type.model: {
+                'label': item.breadcrumbs_label, 'slug': item.slug,
+            }
+            for item in queryset
+            if isinstance(item, models.ExclusivePageMixin)
+            and isinstance(item, models.BasePage)
+        }
+
+
+class APIVideoSerializer(fields.CharField):
+    def to_representation(self, value):
+        try:
+            return embeds.get_embed(value).html
+        except EmbedUnsupportedProviderException:
+            return ''
+>>>>>>> parent of b80638ff (Replace youtube video url field with self-hosted videos)

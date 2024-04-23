@@ -89,6 +89,7 @@ class FieldAttributesField(fields.DictField):
         }
 
 
+<<<<<<< HEAD
 def single_struct_block_stream_field_factory(
         field_name, block_class_instance, max_num=None, min_num=None, required=False, **kwargs
 ):
@@ -102,3 +103,14 @@ def single_struct_block_stream_field_factory(
         use_json_field=True,
         **kwargs)
     return field
+=======
+class MarkdownField(OriginalMarkdownField):
+    def __init__(self, validators=None, *args, **kwargs):
+        validators = validators or []
+        validators.append(core_validators.slug_hyperlinks)
+        super().__init__(validators=validators, *args, **kwargs)
+
+    def formfield(self, **kwargs):
+        kwargs['widget'] = widgets.MarkdownTextarea
+        return super().formfield(**kwargs)
+>>>>>>> parent of b80638ff (Replace youtube video url field with self-hosted videos)
