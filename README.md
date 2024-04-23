@@ -53,7 +53,7 @@ Secrets such as API keys and environment specific configurations are placed in `
 | make db_template              | Drop, then set up fresh db from template |
 | make load_fixtures            | Load fixtures from `fixtures/data.json` |
 
-### Setting up the local database
+### Setting up the local database.
 
     $ make database
 
