@@ -6,7 +6,7 @@ django-modeltranslation==0.18.11
 django-pglocks==1.0.4
 django-redis==5.4.0
 django-storages==1.13.2
-djangorestframework==3.14.0
+djangorestframework==3.15.2
 wagtail-markdown==0.11.1
 wagtail-modeltranslation==0.14.*
 wagtail==5.2.2
