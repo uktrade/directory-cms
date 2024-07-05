@@ -63,16 +63,16 @@ click-plugins==1.1.1
     # via celery
 click-repl==0.3.0
     # via celery
-coverage[toml]==6.5.0
+coverage[toml]==7.5.4
     # via
     #   coveralls
     #   pytest-codecov
     #   pytest-cov
-coveralls==3.3.1
+coveralls==4.0.1
     # via -r requirements_test.in
 cron-descriptor==1.4.3
     # via django-celery-beat
-cryptography==42.0.5
+cryptography==42.0.8
     # via -r requirements.in
 defusedxml==0.7.1
     # via willow
@@ -146,7 +146,7 @@ django-timezone-field==6.1.0
     # via django-celery-beat
 django-treebeard==4.7.1
     # via wagtail
-djangorestframework==3.14.0
+djangorestframework==3.15.2
     # via
     #   -r requirements.in
     #   drf-spectacular
@@ -161,9 +161,9 @@ draftjs-exporter==2.1.7
     # via wagtail
 drf-spectacular==0.27.2
     # via -r requirements.in
-ecs-logging==2.1.0
+ecs-logging==2.2.0
     # via elastic-apm
-elastic-apm==6.22.0
+elastic-apm==6.22.3
     # via -r requirements.in
 et-xmlfile==1.1.0
     # via openpyxl
@@ -173,7 +173,7 @@ factory-boy==3.3.0
     # via
     #   -r requirements_test.in
     #   wagtail-factories
-faker==24.11.0
+faker==26.0.0
     # via factory-boy
 filetype==1.2.0
     # via willow
@@ -199,7 +199,7 @@ idna==3.7
     # via
     #   -r requirements.in
     #   requests
-importlib-metadata==7.1.0
+importlib-metadata==8.0.0
     # via
     #   build
     #   markdown
@@ -237,26 +237,26 @@ oauthlib==3.2.2
     # via
     #   -r requirements.in
     #   requests-oauthlib
-openpyxl==3.1.2
+openpyxl==3.1.5
     # via wagtail
-packaging==24.0
+packaging==24.1
     # via
     #   bleach
     #   build
     #   gunicorn
     #   pytest
     #   pytest-sugar
-pillow==10.3.0
+pillow==10.4.0
     # via
     #   pillow-heif
     #   wagtail
-pillow-heif==0.16.0
+pillow-heif==0.17.0
     # via willow
 pip-tools==7.4.1
     # via -r requirements_test.in
-pluggy==1.4.0
+pluggy==1.5.0
     # via pytest
-prompt-toolkit==3.0.43
+prompt-toolkit==3.0.47
     # via click-repl
 psycogreen==1.0.2
     # via -r requirements.in
@@ -272,13 +272,13 @@ pyflakes==3.1.0
     # via flake8
 pyjwt==2.8.0
     # via notifications-python-client
-pyproject-hooks==1.0.0
+pyproject-hooks==1.1.0
     # via
     #   build
     #   pip-tools
 pyrsistent==0.20.0
     # via jsonschema
-pytest==8.1.1
+pytest==8.2.2
     # via
     #   -r requirements_test.in
     #   pytest-codecov
@@ -295,7 +295,7 @@ pytest-django==4.8.0
     # via -r requirements_test.in
 pytest-sugar==1.0.0
     # via -r requirements_test.in
-python-crontab==3.0.0
+python-crontab==3.2.0
     # via django-celery-beat
 python-dateutil==2.9.0.post0
     # via
@@ -309,15 +309,14 @@ pytube==9.2.2
 pytz==2024.1
     # via
     #   django-modelcluster
-    #   djangorestframework
     #   l18n
 pyyaml==6.0.1
     # via drf-spectacular
-redis==5.0.3
+redis==5.0.7
     # via
     #   celery
     #   django-redis
-requests[security]==2.31.0
+requests[security]==2.32.3
     # via
     #   -r requirements.in
     #   coveralls
@@ -364,9 +363,8 @@ tomli==2.0.1
     #   build
     #   coverage
     #   pip-tools
-    #   pyproject-hooks
     #   pytest
-typing-extensions==4.11.0
+typing-extensions==4.12.2
     # via
     #   asgiref
     #   dj-database-url
@@ -379,7 +377,7 @@ tzdata==2024.1
     #   django-celery-beat
 uritemplate==4.1.1
     # via drf-spectacular
-urllib3==1.26.18
+urllib3==1.26.19
     # via
     #   -r requirements.in
     #   botocore
@@ -422,13 +420,13 @@ willow[heif]==1.6.3
     # via
     #   -r requirements.in
     #   wagtail
-wrapt==1.14.1
+wrapt==1.16.0
     # via elastic-apm
-zipp==3.18.1
+zipp==3.19.2
     # via importlib-metadata
 zope-event==5.0
     # via gevent
-zope-interface==6.3
+zope-interface==6.4.post2
     # via gevent
 
 # The following packages are considered to be unsafe in a requirements file:
