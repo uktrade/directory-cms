@@ -38,7 +38,7 @@ psycopg2==2.9.* --no-binary psycopg2
 pycountry==19.8.18
 pytube==9.2.2
 requests[security]>=2.32.0
-sentry-sdk==1.*
+sentry-sdk==2.*
 urllib3==1.26.19
 w3lib==1.22
 whitenoise==6.4.*
