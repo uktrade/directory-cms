@@ -303,7 +303,7 @@ vine==5.1.0
     #   kombu
 w3lib==1.22.0
     # via -r requirements.in
-wagtail==5.2.2
+wagtail==5.2.6
     # via
     #   -r requirements.in
     #   wagtail-markdown
