@@ -62,7 +62,7 @@ click-repl==0.3.0
     # via celery
 cron-descriptor==1.4.3
     # via django-celery-beat
-cryptography==42.0.8
+cryptography==43.0.1
     # via -r requirements.in
 defusedxml==0.7.1
     # via willow
