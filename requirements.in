@@ -22,7 +22,7 @@ bleach==3.*
 boto3==1.24.*
 celery[redis]
 certifi==2024.7.4
-cryptography==42.*
+cryptography==43.*
 dj-database-url==2.1.*
 drf-spectacular
 elastic-apm>6.0
