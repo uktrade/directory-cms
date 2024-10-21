@@ -20,7 +20,7 @@ beautifulsoup4==4.11.2
     # via
     #   directory-components
     #   wagtail
-billiard==4.2.0
+billiard==4.2.1
     # via celery
 bleach==3.3.1
     # via
@@ -34,7 +34,7 @@ botocore==1.27.96
     # via
     #   boto3
     #   s3transfer
-build==1.2.1
+build==1.2.2.post1
     # via pip-tools
 celery[redis]==5.3.1
     # via
@@ -46,9 +46,9 @@ certifi==2024.7.4
     #   elastic-apm
     #   requests
     #   sentry-sdk
-cffi==1.17.0
+cffi==1.17.1
     # via cryptography
-charset-normalizer==3.3.2
+charset-normalizer==3.4.0
     # via requests
 click==8.1.7
     # via
@@ -63,14 +63,14 @@ click-plugins==1.1.1
     # via celery
 click-repl==0.3.0
     # via celery
-coverage[toml]==7.6.1
+coverage[toml]==7.6.3
     # via
     #   coveralls
     #   pytest-codecov
     #   pytest-cov
 coveralls==4.0.1
     # via -r requirements_test.in
-cron-descriptor==1.4.3
+cron-descriptor==1.4.5
     # via django-celery-beat
 cryptography==43.0.1
     # via -r requirements.in
@@ -86,7 +86,7 @@ directory-healthcheck==3.5
     # via -r requirements.in
 dj-database-url==2.1.0
     # via -r requirements.in
-django==4.2.15
+django==4.2.16
     # via
     #   -r requirements.in
     #   directory-components
@@ -173,7 +173,7 @@ factory-boy==3.3.0
     # via
     #   -r requirements_test.in
     #   wagtail-factories
-faker==26.3.0
+faker==30.6.0
     # via factory-boy
 filetype==1.2.0
     # via willow
@@ -187,7 +187,7 @@ gitdb==4.0.11
     # via gitpython
 gitpython==3.1.43
     # via -r requirements_test.in
-greenlet==3.0.3
+greenlet==3.1.1
     # via gevent
 gunicorn==22.0.0
     # via -r requirements.in
@@ -199,7 +199,7 @@ idna==3.7
     # via
     #   -r requirements.in
     #   requests
-importlib-metadata==8.2.0
+importlib-metadata==8.5.0
     # via
     #   build
     #   markdown
@@ -221,7 +221,7 @@ kombu==5.3.1
     #   celery
 l18n==2021.3
     # via wagtail
-markdown==3.6
+markdown==3.7
     # via
     #   -r requirements.in
     #   wagtail-markdown
@@ -256,11 +256,11 @@ pip-tools==7.4.1
     # via -r requirements_test.in
 pluggy==1.5.0
     # via pytest
-prompt-toolkit==3.0.47
+prompt-toolkit==3.0.48
     # via click-repl
 psycogreen==1.0.2
     # via -r requirements.in
-psycopg2==2.9.9
+psycopg2==2.9.10
     # via -r requirements.in
 pycodestyle==2.11.1
     # via flake8
@@ -272,26 +272,26 @@ pyflakes==3.1.0
     # via flake8
 pyjwt==2.9.0
     # via notifications-python-client
-pyproject-hooks==1.1.0
+pyproject-hooks==1.2.0
     # via
     #   build
     #   pip-tools
 pyrsistent==0.20.0
     # via jsonschema
-pytest==8.3.2
+pytest==8.3.3
     # via
     #   -r requirements_test.in
     #   pytest-codecov
     #   pytest-cov
     #   pytest-django
     #   pytest-sugar
-pytest-codecov==0.5.1
+pytest-codecov==0.6.0
     # via -r requirements_test.in
 pytest-cov==5.0.0
     # via
     #   -r requirements_test.in
     #   pytest-codecov
-pytest-django==4.8.0
+pytest-django==4.9.0
     # via -r requirements_test.in
 pytest-sugar==1.0.0
     # via -r requirements_test.in
@@ -306,13 +306,13 @@ python-dateutil==2.9.0.post0
     #   python-crontab
 pytube==9.2.2
     # via -r requirements.in
-pytz==2024.1
+pytz==2024.2
     # via
     #   django-modelcluster
     #   l18n
 pyyaml==6.0.2
     # via drf-spectacular
-redis==5.0.8
+redis==5.1.1
     # via
     #   celery
     #   django-redis
@@ -331,9 +331,9 @@ requests-oauthlib==2.0.0
     # via django-staff-sso-client
 s3transfer==0.6.2
     # via boto3
-sentry-sdk==2.12.0
+sentry-sdk==2.17.0
     # via -r requirements.in
-sigauth==5.2.7
+sigauth==5.3.0
     # via -r requirements.in
 six==1.16.0
     # via
@@ -348,7 +348,7 @@ six==1.16.0
     #   w3lib
 smmap==5.0.1
     # via gitdb
-soupsieve==2.5
+soupsieve==2.6
     # via beautifulsoup4
 sqlparse==0.5.1
     # via
@@ -356,9 +356,9 @@ sqlparse==0.5.1
     #   django-debug-toolbar
 telepath==0.3.1
     # via wagtail
-termcolor==2.4.0
+termcolor==2.5.0
     # via pytest-sugar
-tomli==2.0.1
+tomli==2.0.2
     # via
     #   build
     #   coverage
@@ -370,8 +370,9 @@ typing-extensions==4.12.2
     #   dj-database-url
     #   django-modeltranslation
     #   drf-spectacular
+    #   faker
     #   kombu
-tzdata==2024.1
+tzdata==2024.2
     # via
     #   celery
     #   django-celery-beat
@@ -422,11 +423,11 @@ willow[heif]==1.6.3
     #   wagtail
 wrapt==1.16.0
     # via elastic-apm
-zipp==3.20.0
+zipp==3.20.2
     # via importlib-metadata
 zope-event==5.0
     # via gevent
-zope-interface==7.0.1
+zope-interface==7.1.0
     # via gevent
 
 # The following packages are considered to be unsafe in a requirements file:
